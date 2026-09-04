@@ -1,8 +1,8 @@
 {
   "ticker": "VG",
-  "fetched_at": "2026-09-03T00:02:57Z",
+  "fetched_at": "2026-09-04T06:37:55Z",
   "_schema": "v2",
-  "current_price": 14.73,
+  "current_price": 14.479999542236328,
   "info": {
     "symbol": "VG",
     "longName": "Venture Global, Inc.",
@@ -13,13 +13,13 @@
     "city": "Arlington",
     "website": "https://ventureglobal.com",
     "fullTimeEmployees": 2000,
-    "marketCap": 36826365952,
-    "enterpriseValue": 80967401472,
-    "trailingPE": 11.15909,
-    "forwardPE": 14.769138,
-    "priceToSalesTrailing12Months": 2.1725187,
-    "enterpriseToRevenue": 4.777,
-    "priceToBook": 4.291958,
+    "marketCap": 36201345024,
+    "enterpriseValue": 79392342016,
+    "trailingPE": 11.224806,
+    "forwardPE": 14.518474,
+    "priceToSalesTrailing12Months": 2.1356466,
+    "enterpriseToRevenue": 4.684,
+    "priceToBook": 4.2191143,
     "grossMargins": 0.46923,
     "operatingMargins": 0.47794,
     "profitMargins": 0.22052,
@@ -32,8 +32,8 @@
     "currentRatio": 1.185,
     "fiftyTwoWeekHigh": 17.62,
     "fiftyTwoWeekLow": 5.72,
-    "averageVolume": 14281471,
-    "averageVolume10days": 12586290,
+    "averageVolume": 14367795,
+    "averageVolume10days": 12755120,
     "beta": null,
     "sharesOutstanding": 531488393,
     "sharesFloat": 521644373,
@@ -173,7 +173,7 @@
     "avg_price_target": 16.61111,
     "high_price_target": 22.0,
     "low_price_target": 14.0,
-    "current_price": 14.73,
+    "current_price": 14.48,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T12:15:30",
@@ -309,18 +309,20 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.042090970807875085,
+  "options_implied_move": 0.026933702508927525,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 62.025977890373106,
+    "ma20": 14.130499982833863,
+    "ma50": 13.272399978637695,
+    "ma200": 11.331645965576172,
+    "rsi14": 54.74265954150732,
     "high_20d": 15.15999984741211,
-    "low_5d": 13.720000267028809,
-    "low_10d": 13.699999809265137,
+    "low_5d": 14.109999656677246,
+    "low_10d": 13.720000267028809,
     "high_52w": 17.595752837261305,
     "low_52w": 5.704279297886197,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.6107140949794224,
+    "atr14_pct": 4.217638910816582,
+    "position_in_52w_range_pct": 73.79842552978755
   },
   "ohlc_2y": [
     {
@@ -750,7 +752,7 @@
     {
       "date": "2025-04-10",
       "open": 8.4436,
-      "high": 8.4536,
+      "high": 8.4535,
       "low": 7.4018,
       "close": 7.7491,
       "volume": 9008300.0
@@ -1232,7 +1234,7 @@
       "open": 16.1407,
       "high": 16.4883,
       "low": 15.8725,
-      "close": 16.3096,
+      "close": 16.3095,
       "volume": 4260900.0
     },
     {
@@ -1278,7 +1280,7 @@
     {
       "date": "2025-07-17",
       "open": 15.9619,
-      "high": 16.3394,
+      "high": 16.3393,
       "low": 15.5149,
       "close": 16.1705,
       "volume": 3256400.0
@@ -1343,7 +1345,7 @@
       "date": "2025-07-29",
       "open": 15.2964,
       "high": 15.7235,
-      "low": 14.6706,
+      "low": 14.6707,
       "close": 15.5646,
       "volume": 7326100.0
     },
@@ -1742,7 +1744,7 @@
     {
       "date": "2025-10-08",
       "open": 12.9085,
-      "high": 13.1969,
+      "high": 13.197,
       "low": 12.7793,
       "close": 12.9583,
       "volume": 5071600.0
@@ -3524,6 +3526,14 @@
       "volume": 11900000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 14.55,
+      "high": 14.65,
+      "low": 14.11,
+      "close": 14.18,
+      "volume": 6155200.0
+    },
+    {
       "date": "2026-08-31",
       "open": 14.58,
       "high": 14.83,
@@ -3541,30 +3551,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 13959404.0
+      "open": 14.75,
+      "high": 14.97,
+      "low": 14.27,
+      "close": 14.73,
+      "volume": 13988300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 14.68,
+      "high": 14.85,
+      "low": 14.39,
+      "close": 14.48,
+      "volume": 8306500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 12.8232,
-      "high": 12.9424,
-      "low": 12.3961,
-      "close": 12.9126,
-      "volume": 5315300.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 12.8232,
-      "high": 13.0615,
-      "low": 12.6046,
-      "close": 12.6344,
-      "volume": 6620400.0
-    },
     {
       "date": "2025-09-04",
       "open": 12.6344,
@@ -3760,7 +3762,7 @@
     {
       "date": "2025-10-08",
       "open": 12.9085,
-      "high": 13.1969,
+      "high": 13.197,
       "low": 12.7793,
       "close": 12.9583,
       "volume": 5071600.0
@@ -5542,6 +5544,14 @@
       "volume": 11900000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 14.55,
+      "high": 14.65,
+      "low": 14.11,
+      "close": 14.18,
+      "volume": 6155200.0
+    },
+    {
       "date": "2026-08-31",
       "open": 14.58,
       "high": 14.83,
@@ -5559,11 +5569,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 13959404.0
+      "open": 14.75,
+      "high": 14.97,
+      "low": 14.27,
+      "close": 14.73,
+      "volume": 13988300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 14.68,
+      "high": 14.85,
+      "low": 14.39,
+      "close": 14.48,
+      "volume": 8306500.0
     }
   ],
   "ai_synthesis": null,

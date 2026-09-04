@@ -1,8 +1,8 @@
 {
   "ticker": "FSLY",
-  "fetched_at": "2026-09-03T00:00:41Z",
+  "fetched_at": "2026-09-04T06:35:37Z",
   "_schema": "v2",
-  "current_price": 20.43,
+  "current_price": 21.1200008392334,
   "info": {
     "symbol": "FSLY",
     "longName": "Fastly, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.fastly.com",
     "fullTimeEmployees": 1140,
-    "marketCap": 3254499072,
-    "enterpriseValue": 3315292928,
+    "marketCap": 3364416256,
+    "enterpriseValue": 3425210112,
     "trailingPE": null,
-    "forwardPE": 34.992462,
-    "priceToSalesTrailing12Months": 4.7360697,
-    "enterpriseToRevenue": 4.825,
-    "priceToBook": 3.2798202,
+    "forwardPE": 36.174294,
+    "priceToSalesTrailing12Months": 4.896025,
+    "enterpriseToRevenue": 4.984,
+    "priceToBook": 3.3905926,
     "grossMargins": 0.61472,
     "operatingMargins": -0.07873,
     "profitMargins": -0.11802,
@@ -32,8 +32,8 @@
     "currentRatio": 3.361,
     "fiftyTwoWeekHigh": 34.82,
     "fiftyTwoWeekLow": 7.055,
-    "averageVolume": 5778990,
-    "averageVolume10days": 4369560,
+    "averageVolume": 5607265,
+    "averageVolume10days": 4048820,
     "beta": 0.36,
     "sharesOutstanding": 159300000,
     "sharesFloat": 150834798,
@@ -173,7 +173,7 @@
     "avg_price_target": 27.0,
     "high_price_target": 32.0,
     "low_price_target": 20.0,
-    "current_price": 20.43,
+    "current_price": 21.12,
     "recent_rating_changes": [
       {
         "date": "2026-08-06T17:22:38",
@@ -309,28 +309,22 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.048947626040137054,
+  "options_implied_move": 0.03077651392856636,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 41.023444416973526,
+    "ma20": 24.847000312805175,
+    "ma50": 22.110900115966796,
+    "ma200": 18.59547499656677,
+    "rsi14": 42.78437219310107,
     "high_20d": 30.690000534057617,
-    "low_5d": 20.579999923706055,
-    "low_10d": 20.579999923706055,
+    "low_5d": 19.760000228881836,
+    "low_10d": 19.760000228881836,
     "high_52w": 34.81999969482422,
     "low_52w": 7.054999828338623,
-    "position_in_52w_range_pct": NaN
+    "atr14": 1.8489998408726283,
+    "atr14_pct": 8.754733747158989,
+    "position_in_52w_range_pct": 50.65730624357852
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 5.94,
-      "high": 6.13,
-      "low": 5.84,
-      "close": 5.9,
-      "volume": 2352300.0
-    },
     {
       "date": "2024-09-04",
       "open": 5.9,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 3559848.0
+      "open": 20.56,
+      "high": 20.835,
+      "low": 20.11,
+      "close": 20.43,
+      "volume": 3560900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 20.3,
+      "high": 21.215,
+      "low": 19.76,
+      "close": 21.12,
+      "volume": 3708600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 7.45,
-      "high": 7.54,
-      "low": 7.28,
-      "close": 7.36,
-      "volume": 1971400.0
-    },
     {
       "date": "2025-09-04",
       "open": 7.31,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 3559848.0
+      "open": 20.56,
+      "high": 20.835,
+      "low": 20.11,
+      "close": 20.43,
+      "volume": 3560900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 20.3,
+      "high": 21.215,
+      "low": 19.76,
+      "close": 21.12,
+      "volume": 3708600.0
     }
   ],
   "ai_synthesis": null,

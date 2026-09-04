@@ -1,8 +1,8 @@
 {
   "ticker": "UEC",
-  "fetched_at": "2026-09-03T00:02:50Z",
+  "fetched_at": "2026-09-04T06:37:48Z",
   "_schema": "v2",
-  "current_price": 11.62,
+  "current_price": 11.510000228881836,
   "info": {
     "symbol": "UEC",
     "longName": "Uranium Energy Corp.",
@@ -13,13 +13,13 @@
     "city": "Corpus Christi",
     "website": "https://www.uraniumenergy.com",
     "fullTimeEmployees": 171,
-    "marketCap": 5750416896,
-    "enterpriseValue": 5249430528,
+    "marketCap": 5695981056,
+    "enterpriseValue": 5209841152,
     "trailingPE": null,
-    "forwardPE": -129.1111,
-    "priceToSalesTrailing12Months": 284.6741,
-    "enterpriseToRevenue": 259.873,
-    "priceToBook": 4.033322,
+    "forwardPE": -127.888885,
+    "priceToSalesTrailing12Months": 281.97925,
+    "enterpriseToRevenue": 257.913,
+    "priceToBook": 3.9951406,
     "grossMargins": 0.0,
     "operatingMargins": -6.2965803,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 32.667,
     "fiftyTwoWeekHigh": 20.34,
     "fiftyTwoWeekLow": 8.91,
-    "averageVolume": 9658223,
-    "averageVolume10days": 9721540,
+    "averageVolume": 9622801,
+    "averageVolume10days": 9943680,
     "beta": 1.208,
     "sharesOutstanding": 494872366,
     "sharesFloat": 485741971,
@@ -167,8 +167,15 @@
     "avg_price_target": 18.02778,
     "high_price_target": 26.75,
     "low_price_target": 12.0,
-    "current_price": 11.62,
+    "current_price": 11.51,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-03T20:28:22",
+        "firm": "Jefferies",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-06-10T10:12:20",
         "firm": "HC Wainwright & Co.",
@@ -231,17 +238,16 @@
         "to_grade": "Market Perform",
         "from_grade": "Outperform",
         "action": "down"
-      },
-      {
-        "date": "2025-09-03T18:00:30",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-09-03T12:19:00Z",
+      "title": "Uranium Energy Rose as Jefferies Started Coverage",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/uranium-energy-rose-jefferies-started-121900247.html",
+      "source": "GuruFocus.com"
+    },
     {
       "date": "2026-09-02T16:30:00Z",
       "title": "NuScale Advances Key Safety Component Toward SMR Commercialization",
@@ -295,36 +301,24 @@
       "title": "2 Nuclear Stocks to Buy and What Each One Needs to Go Right",
       "url": "https://www.fool.com/investing/2026/08/19/2-nuclear-stocks-to-buy-and-what-each-one-needs-to/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-11T13:25:01Z",
-      "title": "Insider Sheds Over 55,000 Shares of North American Uranium Stock",
-      "url": "https://www.fool.com/coverage/filings/2026/08/11/insider-sheds-over-55-000-shares-of-north-american-uranium-stock/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.04561101549053357,
+  "options_implied_move": 0.04778453423657586,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 50.26663579507145,
+    "ma20": 11.871000003814697,
+    "ma50": 10.792199993133545,
+    "ma200": 13.264100012779236,
+    "rsi14": 49.07308128977639,
     "high_20d": 13.800000190734863,
-    "low_5d": 11.40999984741211,
-    "low_10d": 10.930000305175781,
+    "low_5d": 11.34000015258789,
+    "low_10d": 11.34000015258789,
     "high_52w": 20.34000015258789,
     "low_52w": 8.90999984741211,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.7664284706115723,
+    "atr14_pct": 6.658804998877299,
+    "position_in_52w_range_pct": 22.74715933552848
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 5.09,
-      "high": 5.12,
-      "low": 4.67,
-      "close": 4.72,
-      "volume": 7555300.0
-    },
     {
       "date": "2024-09-04",
       "open": 4.69,
@@ -4302,6 +4296,14 @@
       "volume": 8711100.0
     },
     {
+      "date": "2026-08-28",
+      "open": 13.61,
+      "high": 13.67,
+      "low": 12.4,
+      "close": 12.4,
+      "volume": 10143700.0
+    },
+    {
       "date": "2026-08-31",
       "open": 12.31,
       "high": 12.4,
@@ -4319,30 +4321,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 8731562.0
+      "open": 11.63,
+      "high": 11.93,
+      "low": 11.42,
+      "close": 11.62,
+      "volume": 8737100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.75,
+      "high": 11.92,
+      "low": 11.34,
+      "close": 11.51,
+      "volume": 7845700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 10.41,
-      "high": 11.03,
-      "low": 10.12,
-      "close": 10.98,
-      "volume": 11729500.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 11.38,
-      "high": 11.61,
-      "low": 11.03,
-      "close": 11.51,
-      "volume": 13825100.0
-    },
     {
       "date": "2025-09-04",
       "open": 11.66,
@@ -6320,6 +6314,14 @@
       "volume": 8711100.0
     },
     {
+      "date": "2026-08-28",
+      "open": 13.61,
+      "high": 13.67,
+      "low": 12.4,
+      "close": 12.4,
+      "volume": 10143700.0
+    },
+    {
       "date": "2026-08-31",
       "open": 12.31,
       "high": 12.4,
@@ -6337,11 +6339,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 8731562.0
+      "open": 11.63,
+      "high": 11.93,
+      "low": 11.42,
+      "close": 11.62,
+      "volume": 8737100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.75,
+      "high": 11.92,
+      "low": 11.34,
+      "close": 11.51,
+      "volume": 7845700.0
     }
   ],
   "ai_synthesis": null,

@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-19_000",
-  "generated_at": "2026-09-03T00:03:14+00:00",
+  "generated_at": "2026-09-04T06:38:12+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -10,7 +10,7 @@
     "entry_price": 96.72,
     "original_qty": 621,
     "current_qty": 621,
-    "stop_price": 92.0,
+    "stop_price": 104.0,
     "initial_stop": 93.0,
     "closed": false,
     "exit_date": null,
@@ -28,8 +28,8 @@
     "volume": 25243800.0,
     "ma20": 93.542,
     "ma50": 99.6476,
-    "ma200": 96.53477500000001,
-    "rsi14": 49.60136065801312,
+    "ma200": 96.534775,
+    "rsi14": 49.601359432859915,
     "atr14": 4.582714285714286,
     "atr14_pct": 4.785125076448039,
     "high_52w": 153.86,
@@ -41,22 +41,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 4.228494623655917,
-    "mfe_date": "2026-08-25",
+    "mfe_R": 7.569892473118281,
+    "mfe_date": "2026-09-03",
     "mae_R": 1.2177419354838717,
     "mae_date": "2026-08-19",
-    "optimal_exit_price": 112.45,
-    "optimal_exit_date": "2026-08-25",
-    "optimal_R": 4.228494623655917,
-    "days_to_optimal": 6,
+    "optimal_exit_price": 124.88,
+    "optimal_exit_date": "2026-09-03",
+    "optimal_R": 7.569892473118281,
+    "days_to_optimal": 15,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 14
+    "hold_calendar_days": 16
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-19 at $96.72 (qty 621) with stop $93.00 (currently trailed to $92.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.54), MA stack mixed, RSI 50, 36% through 52W range, ATR 4.8% of price. **In progress.** Peak so far +4.23R; worst drawdown -1.22R.",
+  "narrative": "Entered **HOOD** long on 2026-08-19 at $96.72 (qty 621) with stop $93.00 (currently trailed to $104.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.54), MA stack mixed, RSI 50, 36% through 52W range, ATR 4.8% of price. **In progress.** Peak so far +7.57R; worst drawdown -1.22R.",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -320,7 +320,15 @@
       "high": 107.46,
       "low": 101.89,
       "close": 106.99,
-      "volume": 16549518.0
+      "volume": 16848800.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 113.8,
+      "high": 124.88,
+      "low": 113.04,
+      "close": 124.72,
+      "volume": 51380900.0
     }
   ]
 }

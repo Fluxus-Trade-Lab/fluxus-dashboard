@@ -1,8 +1,8 @@
 {
   "ticker": "JCTC",
-  "fetched_at": "2026-09-03T00:01:17Z",
+  "fetched_at": "2026-09-04T06:36:11Z",
   "_schema": "v2",
-  "current_price": 2.99,
+  "current_price": 2.9200000762939453,
   "info": {
     "symbol": "JCTC",
     "longName": "Jewett-Cameron Trading Company Ltd.",
@@ -13,13 +13,13 @@
     "city": "North Plains",
     "website": "https://www.jewettcameron.com",
     "fullTimeEmployees": 45,
-    "marketCap": 10525138,
-    "enterpriseValue": 10613601,
+    "marketCap": 10278730,
+    "enterpriseValue": 10543199,
     "trailingPE": null,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": 0.26704153,
-    "enterpriseToRevenue": 0.269,
-    "priceToBook": 0.7124136,
+    "priceToSalesTrailing12Months": 0.26078972,
+    "enterpriseToRevenue": 0.267,
+    "priceToBook": 0.69573504,
     "grossMargins": 0.081140004,
     "operatingMargins": -0.07798,
     "profitMargins": -0.20947,
@@ -32,8 +32,8 @@
     "currentRatio": 4.221,
     "fiftyTwoWeekHigh": 3.82,
     "fiftyTwoWeekLow": 1.54,
-    "averageVolume": 23271,
-    "averageVolume10days": 10670,
+    "averageVolume": 23333,
+    "averageVolume10days": 10270,
     "beta": 0.34,
     "sharesOutstanding": 3520113,
     "sharesFloat": 2257800,
@@ -119,7 +119,7 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 2.99
+    "current_price": 2.92
   },
   "news": [
     {
@@ -173,26 +173,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 54.39994595976862,
+    "ma20": 2.9845000386238096,
+    "ma50": 2.7344000148773193,
+    "ma200": 2.2025500005483627,
+    "rsi14": 52.44910597618081,
     "high_20d": 3.319999933242798,
-    "low_5d": 2.9000000953674316,
+    "low_5d": 2.880000114440918,
     "low_10d": 2.869999885559082,
     "high_52w": 3.819999933242798,
     "low_52w": 1.5399999618530273,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.14785708699907577,
+    "atr14_pct": 5.0635987375293325,
+    "position_in_52w_range_pct": 60.52632156831743
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 4.59,
-      "high": 4.59,
-      "low": 4.28,
-      "close": 4.46,
-      "volume": 2400.0
-    },
     {
       "date": "2024-09-04",
       "open": 4.46,
@@ -4170,6 +4164,14 @@
       "volume": 12900.0
     },
     {
+      "date": "2026-08-28",
+      "open": 2.88,
+      "high": 3.02,
+      "low": 2.88,
+      "close": 2.96,
+      "volume": 3400.0
+    },
+    {
       "date": "2026-08-31",
       "open": 3.01,
       "high": 3.01,
@@ -4187,30 +4189,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 11867.0
+      "open": 3.1,
+      "high": 3.1,
+      "low": 2.94,
+      "close": 2.99,
+      "volume": 11900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 2.96,
+      "high": 2.99,
+      "low": 2.92,
+      "close": 2.92,
+      "volume": 3300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 3.62,
-      "high": 3.67,
-      "low": 3.58,
-      "close": 3.67,
-      "volume": 20800.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 3.66,
-      "high": 3.66,
-      "low": 3.59,
-      "close": 3.61,
-      "volume": 22500.0
-    },
     {
       "date": "2025-09-04",
       "open": 3.61,
@@ -6188,6 +6182,14 @@
       "volume": 12900.0
     },
     {
+      "date": "2026-08-28",
+      "open": 2.88,
+      "high": 3.02,
+      "low": 2.88,
+      "close": 2.96,
+      "volume": 3400.0
+    },
+    {
       "date": "2026-08-31",
       "open": 3.01,
       "high": 3.01,
@@ -6205,11 +6207,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 11867.0
+      "open": 3.1,
+      "high": 3.1,
+      "low": 2.94,
+      "close": 2.99,
+      "volume": 11900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 2.96,
+      "high": 2.99,
+      "low": 2.92,
+      "close": 2.92,
+      "volume": 3300.0
     }
   ],
   "ai_synthesis": null,

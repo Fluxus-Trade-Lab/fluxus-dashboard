@@ -1,8 +1,8 @@
 {
   "ticker": "BDSX",
-  "fetched_at": "2026-09-02T23:58:14Z",
+  "fetched_at": "2026-09-04T06:33:22Z",
   "_schema": "v2",
-  "current_price": 27.15999984741211,
+  "current_price": 26.475000381469727,
   "info": {
     "symbol": "BDSX",
     "longName": "Biodesix, Inc.",
@@ -13,13 +13,13 @@
     "city": "Louisville",
     "website": "https://www.biodesix.com",
     "fullTimeEmployees": 334,
-    "marketCap": 286568352,
-    "enterpriseValue": 306316544,
+    "marketCap": 279340864,
+    "enterpriseValue": 321140864,
     "trailingPE": null,
-    "forwardPE": -123.454544,
-    "priceToSalesTrailing12Months": 2.7838657,
-    "enterpriseToRevenue": 2.976,
-    "priceToBook": 31.326414,
+    "forwardPE": -120.34091,
+    "priceToSalesTrailing12Months": 2.7136543,
+    "enterpriseToRevenue": 3.12,
+    "priceToBook": 30.536333,
     "grossMargins": 0.82504,
     "operatingMargins": -0.20014,
     "profitMargins": -0.26969,
@@ -32,8 +32,8 @@
     "currentRatio": 2.849,
     "fiftyTwoWeekHigh": 31.31,
     "fiftyTwoWeekLow": 5.26,
-    "averageVolume": 95514,
-    "averageVolume10days": 175390,
+    "averageVolume": 98324,
+    "averageVolume10days": 169730,
     "beta": 0.563,
     "sharesOutstanding": 10551118,
     "sharesFloat": 4976751,
@@ -173,7 +173,7 @@
     "avg_price_target": 34.0,
     "high_price_target": 40.0,
     "low_price_target": 27.0,
-    "current_price": 27.16,
+    "current_price": 26.475,
     "recent_rating_changes": [
       {
         "date": "2026-08-10T12:15:57",
@@ -311,28 +311,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 25.123500061035156,
-    "ma50": 22.874999923706056,
-    "ma200": 14.69077499628067,
-    "rsi14": 56.8578831371865,
+    "ma20": 25.544750022888184,
+    "ma50": 23.18449993133545,
+    "ma200": 14.877799997329712,
+    "rsi14": 54.70033487302207,
     "high_20d": 31.309999465942383,
     "low_5d": 24.06999969482422,
-    "low_10d": 21.90999984741211,
+    "low_10d": 23.950000762939453,
     "high_52w": 31.309999465942383,
     "low_52w": 5.260000228881836,
-    "atr14": 2.6521643229893277,
-    "atr14_pct": 9.764964425219,
-    "position_in_52w_range_pct": 84.06909888647446
+    "atr14": 2.6119285311017717,
+    "atr14_pct": 9.865641146241124,
+    "position_in_52w_range_pct": 81.43954231831972
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 39.6,
-      "high": 40.0,
-      "low": 36.2,
-      "close": 37.0,
-      "volume": 7695.0
-    },
     {
       "date": "2024-09-04",
       "open": 37.8,
@@ -4310,6 +4302,14 @@
       "volume": 162300.0
     },
     {
+      "date": "2026-08-28",
+      "open": 28.29,
+      "high": 28.624,
+      "low": 26.65,
+      "close": 26.83,
+      "volume": 108500.0
+    },
+    {
       "date": "2026-08-31",
       "open": 26.71,
       "high": 27.1,
@@ -4328,29 +4328,21 @@
     {
       "date": "2026-09-02",
       "open": 25.21,
-      "high": 27.4013,
+      "high": 27.401,
       "low": 24.07,
       "close": 27.16,
-      "volume": 141224.0
+      "volume": 141200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 27.29,
+      "high": 27.29,
+      "low": 25.952,
+      "close": 26.475,
+      "volume": 56500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 8.46,
-      "high": 9.24,
-      "low": 8.46,
-      "close": 8.68,
-      "volume": 37670.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 8.8,
-      "high": 8.86,
-      "low": 8.22,
-      "close": 8.44,
-      "volume": 1039530.0
-    },
     {
       "date": "2025-09-04",
       "open": 10.8,
@@ -6328,6 +6320,14 @@
       "volume": 162300.0
     },
     {
+      "date": "2026-08-28",
+      "open": 28.29,
+      "high": 28.624,
+      "low": 26.65,
+      "close": 26.83,
+      "volume": 108500.0
+    },
+    {
       "date": "2026-08-31",
       "open": 26.71,
       "high": 27.1,
@@ -6346,10 +6346,18 @@
     {
       "date": "2026-09-02",
       "open": 25.21,
-      "high": 27.4013,
+      "high": 27.401,
       "low": 24.07,
       "close": 27.16,
-      "volume": 141224.0
+      "volume": 141200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 27.29,
+      "high": 27.29,
+      "low": 25.952,
+      "close": 26.475,
+      "volume": 56500.0
     }
   ],
   "ai_synthesis": null,

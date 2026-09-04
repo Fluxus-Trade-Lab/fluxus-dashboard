@@ -1,8 +1,8 @@
 {
   "ticker": "EWTX",
-  "fetched_at": "2026-09-03T00:00:25Z",
+  "fetched_at": "2026-09-04T06:35:24Z",
   "_schema": "v2",
-  "current_price": 41.98,
+  "current_price": 41.95000076293945,
   "info": {
     "symbol": "EWTX",
     "longName": "Edgewise Therapeutics, Inc.",
@@ -13,13 +13,13 @@
     "city": "Boulder",
     "website": "https://edgewisetx.com",
     "fullTimeEmployees": 127,
-    "marketCap": 4559201280,
-    "enterpriseValue": 4131405568,
+    "marketCap": 4555943424,
+    "enterpriseValue": 4098824192,
     "trailingPE": null,
-    "forwardPE": -23.114958,
+    "forwardPE": -23.09844,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 10.098629,
+    "priceToBook": 10.091413,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 16.236,
     "fiftyTwoWeekHigh": 48.4,
     "fiftyTwoWeekLow": 13.685,
-    "averageVolume": 1356733,
-    "averageVolume10days": 1169260,
+    "averageVolume": 1354640,
+    "averageVolume10days": 1045870,
     "beta": 0.325,
     "sharesOutstanding": 108604129,
     "sharesFloat": 74261331,
@@ -173,7 +173,7 @@
     "avg_price_target": 51.69231,
     "high_price_target": 66.0,
     "low_price_target": 36.0,
-    "current_price": 41.98,
+    "current_price": 41.95,
     "recent_rating_changes": [
       {
         "date": "2026-08-20T17:54:51",
@@ -309,28 +309,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.1250595521676989,
+  "options_implied_move": 0.12514898461308469,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 47.53143559339162,
+    "ma20": 43.67950019836426,
+    "ma50": 42.21330009460449,
+    "ma200": 32.879025058746336,
+    "rsi14": 46.478244031848135,
     "high_20d": 46.59000015258789,
     "low_5d": 40.63999938964844,
     "low_10d": 40.63999938964844,
     "high_52w": 48.400001525878906,
     "low_52w": 13.6850004196167,
-    "position_in_52w_range_pct": NaN
+    "atr14": 2.1849278041294644,
+    "atr14_pct": 5.208409450279985,
+    "position_in_52w_range_pct": 81.42013378252221
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 18.75,
-      "high": 20.4,
-      "low": 17.68,
-      "close": 17.88,
-      "volume": 1075300.0
-    },
     {
       "date": "2024-09-04",
       "open": 17.81,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 884178.0
+      "open": 42.61,
+      "high": 43.94,
+      "low": 40.76,
+      "close": 41.98,
+      "volume": 1003500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 42.32,
+      "high": 42.995,
+      "low": 41.395,
+      "close": 41.95,
+      "volume": 976800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 14.64,
-      "high": 15.01,
-      "low": 14.44,
-      "close": 14.635,
-      "volume": 1028800.0
-    },
     {
       "date": "2025-09-04",
       "open": 14.63,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 884178.0
+      "open": 42.61,
+      "high": 43.94,
+      "low": 40.76,
+      "close": 41.98,
+      "volume": 1003500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 42.32,
+      "high": 42.995,
+      "low": 41.395,
+      "close": 41.95,
+      "volume": 976800.0
     }
   ],
   "ai_synthesis": null,

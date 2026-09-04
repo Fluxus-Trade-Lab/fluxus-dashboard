@@ -1,8 +1,8 @@
 {
   "ticker": "ARM",
-  "fetched_at": "2026-09-02T23:55:36Z",
+  "fetched_at": "2026-09-04T06:30:53Z",
   "_schema": "v2",
-  "current_price": 234.86000061035156,
+  "current_price": 242.58999633789062,
   "info": {
     "symbol": "ARM",
     "longName": "Arm Holdings plc",
@@ -13,13 +13,13 @@
     "city": "Cambridge",
     "website": "https://www.arm.com",
     "fullTimeEmployees": 9584,
-    "marketCap": 250830143488,
-    "enterpriseValue": 247384752128,
-    "trailingPE": 237.23232,
-    "forwardPE": 76.730576,
-    "priceToSalesTrailing12Months": 48.64821,
-    "enterpriseToRevenue": 47.98,
-    "priceToBook": 29.063234,
+    "marketCap": 259085778944,
+    "enterpriseValue": 255683117056,
+    "trailingPE": 237.83333,
+    "forwardPE": 79.25602,
+    "priceToSalesTrailing12Months": 50.24938,
+    "enterpriseToRevenue": 49.589,
+    "priceToBook": 30.019798,
     "grossMargins": 0.97537005,
     "operatingMargins": 0.07603,
     "profitMargins": 0.20247999,
@@ -32,8 +32,8 @@
     "currentRatio": 5.252,
     "fiftyTwoWeekHigh": 452.7,
     "fiftyTwoWeekLow": 100.02,
-    "averageVolume": 7227788,
-    "averageVolume10days": 3557270,
+    "averageVolume": 7076826,
+    "averageVolume10days": 3367040,
     "beta": 3.909,
     "sharesOutstanding": 1067998569,
     "sharesFloat": 142610040,
@@ -173,7 +173,7 @@
     "avg_price_target": 286.44104,
     "high_price_target": 500.0,
     "low_price_target": 125.0,
-    "current_price": 234.86,
+    "current_price": 242.59,
     "recent_rating_changes": [
       {
         "date": "2026-07-31T11:42:35",
@@ -249,6 +249,18 @@
   },
   "news": [
     {
+      "date": "2026-09-03T19:38:30Z",
+      "title": "Nvidia Sold Every Arm Share, but Its Vera CPU Still Uses Arm. Is That Really a Contradiction?",
+      "url": "https://finance.yahoo.com/technology/articles/nvidia-sold-every-arm-share-193830193.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-03T17:44:00Z",
+      "title": "Can ARM's AGI CPU Push Unlock $15B in Revenues by FY'31?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/arms-agi-cpu-push-unlock-174400028.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-02T00:35:01Z",
       "title": "ARM vs. Sandisk: Comparing Steady Historical Revenue Generation Against Rapid Sequential Revenue Expansion",
       "url": "https://www.fool.com/coverage/charts/2026/09/01/arm-vs-sandisk-comparing-steady-historical-revenue-generation-against-rapid-sequential-revenue-expansion/",
@@ -295,44 +307,24 @@
       "title": "Wall Street May Be Sleeping on This Massive AI CPU Opportunity",
       "url": "https://247wallst.com/investing/2026/08/31/wall-street-may-be-sleeping-on-this-massive-ai-cpu-opportunity/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-29T03:00:48Z",
-      "title": "IBM Introduces New Mainframe Processor Combining Its Own Tech With Arm Architecture",
-      "url": "https://finance.yahoo.com/technology/articles/ibm-introduces-mainframe-processor-combining-030048930.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-28T18:30:00Z",
-      "title": "ARM's Expanding AI Growth Opportunity Goes Beyond Market Hype",
-      "url": "https://finance.yahoo.com/technology/ai/articles/arms-expanding-ai-growth-opportunity-183000282.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.036617559301926325,
+  "options_implied_move": 0.029473597872688648,
   "technicals": {
-    "ma20": 257.0685005187988,
-    "ma50": 277.8209991455078,
-    "ma200": 200.69922496795655,
-    "rsi14": 38.95558698006398,
+    "ma20": 254.8640007019043,
+    "ma50": 275.4911993408203,
+    "ma200": 201.2133249282837,
+    "rsi14": 43.18218872711833,
     "high_20d": 299.2850036621094,
-    "low_5d": 229.3000030517578,
-    "low_10d": 229.3000030517578,
+    "low_5d": 225.4600067138672,
+    "low_10d": 225.4600067138672,
     "high_52w": 452.70001220703125,
     "low_52w": 100.0199966430664,
-    "atr14": 13.541073390415736,
-    "atr14_pct": 5.76559369634052,
-    "position_in_52w_range_pct": 38.23295849402318
+    "atr14": 14.35500008719308,
+    "atr14_pct": 5.917391608843906,
+    "position_in_52w_range_pct": 40.42474577609476
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 129.865,
-      "high": 130.39,
-      "low": 122.04,
-      "close": 123.74,
-      "volume": 6382500.0
-    },
     {
       "date": "2024-09-04",
       "open": 121.7,
@@ -4339,18 +4331,18 @@
       "high": 236.44,
       "low": 229.39,
       "close": 234.86,
-      "volume": 2423600.0
+      "volume": 2428200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 231.09,
+      "high": 244.07,
+      "low": 225.46,
+      "close": 242.59,
+      "volume": 3988700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 133.65,
-      "high": 134.1,
-      "low": 130.71,
-      "close": 131.42,
-      "volume": 3202100.0
-    },
     {
       "date": "2025-09-04",
       "open": 131.135,
@@ -6357,7 +6349,15 @@
       "high": 236.44,
       "low": 229.39,
       "close": 234.86,
-      "volume": 2423600.0
+      "volume": 2428200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 231.09,
+      "high": 244.07,
+      "low": 225.46,
+      "close": 242.59,
+      "volume": 3988700.0
     }
   ],
   "ai_synthesis": null,

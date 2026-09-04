@@ -1,8 +1,8 @@
 {
   "ticker": "DCTH",
-  "fetched_at": "2026-09-03T00:00:11Z",
+  "fetched_at": "2026-09-04T06:35:13Z",
   "_schema": "v2",
-  "current_price": 16.58,
+  "current_price": 16.479999542236328,
   "info": {
     "symbol": "DCTH",
     "longName": "Delcath Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Queensbury",
     "website": "https://www.delcath.com",
     "fullTimeEmployees": 156,
-    "marketCap": 575306048,
-    "enterpriseValue": 475621248,
-    "trailingPE": 1658.0,
-    "forwardPE": 368.44443,
-    "priceToSalesTrailing12Months": 6.029324,
-    "enterpriseToRevenue": 4.985,
-    "priceToBook": 4.7398515,
+    "marketCap": 571836160,
+    "enterpriseValue": 478397152,
+    "trailingPE": 1648.0,
+    "forwardPE": 366.2222,
+    "priceToSalesTrailing12Months": 5.992959,
+    "enterpriseToRevenue": 5.014,
+    "priceToBook": 4.7112637,
     "grossMargins": 0.87052,
     "operatingMargins": 0.08221,
     "profitMargins": 0.00558,
@@ -32,8 +32,8 @@
     "currentRatio": 9.83,
     "fiftyTwoWeekHigh": 17.42,
     "fiftyTwoWeekLow": 8.12,
-    "averageVolume": 562319,
-    "averageVolume10days": 437060,
+    "averageVolume": 565467,
+    "averageVolume10days": 428820,
     "beta": 0.523,
     "sharesOutstanding": 34698795,
     "sharesFloat": 28777793,
@@ -45,22 +45,10 @@
         "yearBorn": 1963
       },
       {
-        "name": "Dr. Martha S. Rook Ph.D.",
-        "title": "Chief Operating Officer",
-        "age": 54,
-        "yearBorn": 1971
-      },
-      {
         "name": "Dr. Vojislav  Vukovic M.D., M.Sc., Ph.D.",
         "title": "Chief Medical Officer",
         "age": 58,
         "yearBorn": 1967
-      },
-      {
-        "name": "Ms. Sandra  Pennell CPA",
-        "title": "Chief Financial Officer",
-        "age": 46,
-        "yearBorn": 1979
       },
       {
         "name": "Mr. David  Hoffman J.D.",
@@ -69,10 +57,16 @@
         "yearBorn": 1970
       },
       {
-        "name": "Dr. Johnny  John M.D.",
-        "title": "Senior Vice President of Clinical Operations & Medical Affairs",
-        "age": 60,
-        "yearBorn": 1965
+        "name": "Mr. Kevin  Muir",
+        "title": "Chief Commercial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Michael  Brunner M.D.",
+        "title": "Senior Vice President of Interventional Oncology",
+        "age": null,
+        "yearBorn": null
       }
     ]
   },
@@ -173,7 +167,7 @@
     "avg_price_target": 24.0,
     "high_price_target": 32.0,
     "low_price_target": 21.0,
-    "current_price": 16.58,
+    "current_price": 16.48,
     "recent_rating_changes": [
       {
         "date": "2026-08-07T11:07:59",
@@ -309,28 +303,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.05126658624849217,
+  "options_implied_move": 0.048543690668782655,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 58.94171412341273,
+    "ma20": 16.69349980354309,
+    "ma50": 14.367399959564208,
+    "ma200": 11.222274961471557,
+    "rsi14": 59.16536153369521,
     "high_20d": 17.420000076293945,
     "low_5d": 16.100000381469727,
     "low_10d": 16.100000381469727,
     "high_52w": 17.420000076293945,
     "low_52w": 8.119999885559082,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.45114244733537945,
+    "atr14_pct": 2.7375149263757783,
+    "position_in_52w_range_pct": 89.8924675830212
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 10.93,
-      "high": 10.95,
-      "low": 10.36,
-      "close": 10.56,
-      "volume": 280800.0
-    },
     {
       "date": "2024-09-04",
       "open": 10.46,
@@ -4333,22 +4321,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 448646.0
+      "open": 16.39,
+      "high": 16.781,
+      "low": 16.315,
+      "close": 16.58,
+      "volume": 448600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 16.69,
+      "high": 16.69,
+      "low": 16.28,
+      "close": 16.48,
+      "volume": 268600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 10.86,
-      "high": 11.14,
-      "low": 10.83,
-      "close": 10.9,
-      "volume": 388800.0
-    },
     {
       "date": "2025-09-04",
       "open": 10.93,
@@ -6351,11 +6339,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 448646.0
+      "open": 16.39,
+      "high": 16.781,
+      "low": 16.315,
+      "close": 16.58,
+      "volume": 448600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 16.69,
+      "high": 16.69,
+      "low": 16.28,
+      "close": 16.48,
+      "volume": 268600.0
     }
   ],
   "ai_synthesis": null,

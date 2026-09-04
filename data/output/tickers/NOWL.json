@@ -1,8 +1,8 @@
 {
   "ticker": "NOWL",
-  "fetched_at": "2026-09-03T00:01:58Z",
+  "fetched_at": "2026-09-04T06:36:52Z",
   "_schema": "v2",
-  "current_price": 7.58,
+  "current_price": 8.550000190734863,
   "info": {
     "symbol": "NOWL",
     "longName": "GraniteShares 2x Long NOW Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 24.6,
     "fiftyTwoWeekLow": 3.49,
-    "averageVolume": 16830812,
-    "averageVolume10days": 8343990,
+    "averageVolume": 16230785,
+    "averageVolume10days": 7632240,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,18 +49,20 @@
     "current_price": null
   },
   "news": [],
-  "options_implied_move": 0.17810026385224276,
+  "options_implied_move": 0.16374268640567965,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 65.99511068050863,
+    "ma20": 7.080500054359436,
+    "ma50": 5.7720000314712525,
+    "ma200": 7.8753750145435335,
+    "rsi14": 64.34969334505993,
     "high_20d": 9.090999603271484,
-    "low_5d": 6.989999771118164,
+    "low_5d": 7.539999961853027,
     "low_10d": 6.119999885559082,
     "high_52w": 24.600000381469727,
     "low_52w": 3.490000009536743,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.7139285291944232,
+    "atr14_pct": 8.35004109085361,
+    "position_in_52w_range_pct": 23.969683050909346
   },
   "ohlc_2y": [
     {
@@ -2353,22 +2355,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7411009.0
+      "open": 7.95,
+      "high": 8.25,
+      "low": 7.54,
+      "close": 7.58,
+      "volume": 7752400.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.04,
+      "high": 8.705,
+      "low": 8.02,
+      "close": 8.55,
+      "volume": 6551200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 21.9,
-      "high": 22.3,
-      "low": 21.5,
-      "close": 22.3,
-      "volume": 23300.0
-    },
     {
       "date": "2025-09-04",
       "open": 21.58,
@@ -4371,11 +4373,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7411009.0
+      "open": 7.95,
+      "high": 8.25,
+      "low": 7.54,
+      "close": 7.58,
+      "volume": 7752400.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.04,
+      "high": 8.705,
+      "low": 8.02,
+      "close": 8.55,
+      "volume": 6551200.0
     }
   ],
   "ai_synthesis": null,

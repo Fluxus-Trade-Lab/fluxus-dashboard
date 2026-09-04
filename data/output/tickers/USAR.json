@@ -1,8 +1,8 @@
 {
   "ticker": "USAR",
-  "fetched_at": "2026-09-03T00:02:52Z",
+  "fetched_at": "2026-09-04T06:37:50Z",
   "_schema": "v2",
-  "current_price": 17.85,
+  "current_price": 17.690000534057617,
   "info": {
     "symbol": "USAR",
     "longName": "USA Rare Earth, Inc.",
@@ -13,13 +13,13 @@
     "city": "Stillwater",
     "website": "https://www.usare.com",
     "fullTimeEmployees": 132,
-    "marketCap": 4368253952,
-    "enterpriseValue": 2706209024,
+    "marketCap": 4328232448,
+    "enterpriseValue": 2811438592,
     "trailingPE": null,
-    "forwardPE": 595.0,
-    "priceToSalesTrailing12Months": 331.88376,
-    "enterpriseToRevenue": 205.608,
-    "priceToBook": 2.0714867,
+    "forwardPE": 589.6667,
+    "priceToSalesTrailing12Months": 328.84308,
+    "enterpriseToRevenue": 213.603,
+    "priceToBook": 2.052919,
     "grossMargins": -0.097399995,
     "operatingMargins": -7.95636,
     "profitMargins": 0.0,
@@ -32,10 +32,10 @@
     "currentRatio": 32.787,
     "fiftyTwoWeekHigh": 43.98,
     "fiftyTwoWeekLow": 11.45,
-    "averageVolume": 12943217,
-    "averageVolume10days": 13197000,
+    "averageVolume": 12709882,
+    "averageVolume10days": 13079160,
     "beta": 2.583,
-    "sharesOutstanding": 244720099,
+    "sharesOutstanding": 244671142,
     "sharesFloat": 227283792,
     "companyOfficers": [
       {
@@ -173,7 +173,7 @@
     "avg_price_target": 35.55556,
     "high_price_target": 45.0,
     "low_price_target": 21.0,
-    "current_price": 17.85,
+    "current_price": 17.69,
     "recent_rating_changes": [
       {
         "date": "2026-09-02T16:25:02",
@@ -309,28 +309,22 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.05210084033613445,
+  "options_implied_move": 0.03617863090325193,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 45.68367120890984,
+    "ma20": 18.55200023651123,
+    "ma50": 17.73250005722046,
+    "ma200": 19.222750029563905,
+    "rsi14": 47.88484468395226,
     "high_20d": 20.520000457763672,
     "low_5d": 16.959999084472656,
-    "low_10d": 16.950000762939453,
+    "low_10d": 16.959999084472656,
     "high_52w": 43.97999954223633,
     "low_52w": 11.449999809265137,
-    "position_in_52w_range_pct": NaN
+    "atr14": 1.2553574698311942,
+    "atr14_pct": 7.096424148853593,
+    "position_in_52w_range_pct": 19.18229565328846
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 10.79,
-      "high": 10.79,
-      "low": 10.68,
-      "close": 10.68,
-      "volume": 37300.0
-    },
     {
       "date": "2024-09-04",
       "open": 10.7,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 8006123.0
+      "open": 17.36,
+      "high": 17.9,
+      "low": 17.28,
+      "close": 17.85,
+      "volume": 8076600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 18.045,
+      "high": 18.18,
+      "low": 17.6,
+      "close": 17.69,
+      "volume": 7512900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 14.2,
-      "high": 14.3,
-      "low": 13.66,
-      "close": 13.76,
-      "volume": 2563500.0
-    },
     {
       "date": "2025-09-04",
       "open": 13.77,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 8006123.0
+      "open": 17.36,
+      "high": 17.9,
+      "low": 17.28,
+      "close": 17.85,
+      "volume": 8076600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 18.045,
+      "high": 18.18,
+      "low": 17.6,
+      "close": 17.69,
+      "volume": 7512900.0
     }
   ],
   "ai_synthesis": null,

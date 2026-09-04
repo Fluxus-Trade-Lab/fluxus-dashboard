@@ -1,8 +1,8 @@
 {
   "ticker": "ORIC",
-  "fetched_at": "2026-09-03T00:02:14Z",
+  "fetched_at": "2026-09-04T06:37:08Z",
   "_schema": "v2",
-  "current_price": 13.13,
+  "current_price": 12.739999771118164,
   "info": {
     "symbol": "ORIC",
     "longName": "ORIC Pharmaceuticals, Inc.",
@@ -13,13 +13,13 @@
     "city": "South San Francisco",
     "website": "https://www.oricpharma.com",
     "fullTimeEmployees": 111,
-    "marketCap": 1360959360,
-    "enterpriseValue": 1077319680,
+    "marketCap": 1320534784,
+    "enterpriseValue": 1061771840,
     "trailingPE": null,
-    "forwardPE": -8.130735,
+    "forwardPE": -7.8892283,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 3.5689046,
+    "priceToBook": 3.4628975,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 13.186,
     "fiftyTwoWeekHigh": 14.93,
     "fiftyTwoWeekLow": 7.23,
-    "averageVolume": 1581042,
-    "averageVolume10days": 1057410,
+    "averageVolume": 1569331,
+    "averageVolume10days": 1072730,
     "beta": 0.972,
     "sharesOutstanding": 103652656,
     "sharesFloat": 88685212,
@@ -173,7 +173,7 @@
     "avg_price_target": 20.66667,
     "high_price_target": 27.0,
     "low_price_target": 14.0,
-    "current_price": 13.13,
+    "current_price": 12.74,
     "recent_rating_changes": [
       {
         "date": "2026-08-10T11:49:56",
@@ -309,28 +309,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.1865955826351866,
+  "options_implied_move": 0.19230769576261686,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 49.315411462926086,
+    "ma20": 13.607499933242797,
+    "ma50": 12.111700000762939,
+    "ma200": 10.656824986934662,
+    "rsi14": 47.58848090959143,
     "high_20d": 14.680000305175781,
-    "low_5d": 12.670000076293945,
-    "low_10d": 12.670000076293945,
+    "low_5d": 12.59000015258789,
+    "low_10d": 12.59000015258789,
     "high_52w": 14.930000305175781,
     "low_52w": 7.230000019073486,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.695357186453683,
+    "atr14_pct": 5.458062786076902,
+    "position_in_52w_range_pct": 71.55843567940717
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 10.17,
-      "high": 10.73,
-      "low": 9.89,
-      "close": 10.07,
-      "volume": 484200.0
-    },
     {
       "date": "2024-09-04",
       "open": 9.96,
@@ -4308,6 +4302,14 @@
       "volume": 1061000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 13.59,
+      "high": 13.925,
+      "low": 13.2,
+      "close": 13.24,
+      "volume": 765400.0
+    },
+    {
       "date": "2026-08-31",
       "open": 13.18,
       "high": 13.18,
@@ -4325,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1545422.0
+      "open": 12.97,
+      "high": 13.53,
+      "low": 12.825,
+      "close": 13.13,
+      "volume": 1546200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 13.17,
+      "high": 13.41,
+      "low": 12.59,
+      "close": 12.74,
+      "volume": 916400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 10.2,
-      "high": 10.57,
-      "low": 10.06,
-      "close": 10.38,
-      "volume": 1072300.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 10.32,
-      "high": 10.85,
-      "low": 10.18,
-      "close": 10.6,
-      "volume": 1178700.0
-    },
     {
       "date": "2025-09-04",
       "open": 10.62,
@@ -6326,6 +6320,14 @@
       "volume": 1061000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 13.59,
+      "high": 13.925,
+      "low": 13.2,
+      "close": 13.24,
+      "volume": 765400.0
+    },
+    {
       "date": "2026-08-31",
       "open": 13.18,
       "high": 13.18,
@@ -6343,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1545422.0
+      "open": 12.97,
+      "high": 13.53,
+      "low": 12.825,
+      "close": 13.13,
+      "volume": 1546200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 13.17,
+      "high": 13.41,
+      "low": 12.59,
+      "close": 12.74,
+      "volume": 916400.0
     }
   ],
   "ai_synthesis": null,

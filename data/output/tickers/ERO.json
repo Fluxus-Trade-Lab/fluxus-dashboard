@@ -1,8 +1,8 @@
 {
   "ticker": "ERO",
-  "fetched_at": "2026-09-03T00:00:23Z",
+  "fetched_at": "2026-09-04T06:35:22Z",
   "_schema": "v2",
-  "current_price": 34.76,
+  "current_price": 35.31999969482422,
   "info": {
     "symbol": "ERO",
     "longName": "Ero Copper Corp.",
@@ -13,13 +13,13 @@
     "city": "Vancouver",
     "website": "https://www.ero.com",
     "fullTimeEmployees": null,
-    "marketCap": 3625559296,
-    "enterpriseValue": 4108079616,
-    "trailingPE": 11.783051,
-    "forwardPE": 7.353283,
-    "priceToSalesTrailing12Months": 3.4703345,
-    "enterpriseToRevenue": 3.932,
-    "priceToBook": 2.9875374,
+    "marketCap": 3683969024,
+    "enterpriseValue": 4160230912,
+    "trailingPE": 11.972881,
+    "forwardPE": 7.4717484,
+    "priceToSalesTrailing12Months": 3.5262437,
+    "enterpriseToRevenue": 3.982,
+    "priceToBook": 3.0356681,
     "grossMargins": 0.42992002,
     "operatingMargins": 0.37643,
     "profitMargins": 0.29794002,
@@ -31,9 +31,9 @@
     "debtToEquity": 47.066,
     "currentRatio": 1.371,
     "fiftyTwoWeekHigh": 40.83,
-    "fiftyTwoWeekLow": 14.355,
-    "averageVolume": 1337104,
-    "averageVolume10days": 1947790,
+    "fiftyTwoWeekLow": 14.89,
+    "averageVolume": 1343653,
+    "averageVolume10days": 1942740,
     "beta": 1.586,
     "sharesOutstanding": 104302633,
     "sharesFloat": 101975641,
@@ -173,7 +173,7 @@
     "avg_price_target": 40.06667,
     "high_price_target": 44.0,
     "low_price_target": 33.0,
-    "current_price": 34.76,
+    "current_price": 35.32,
     "recent_rating_changes": [
       {
         "date": "2026-07-16T11:18:13",
@@ -295,28 +295,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.09579976985040277,
+  "options_implied_move": 0.09399773580650715,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 51.29177654939663,
+    "ma20": 36.383000183105466,
+    "ma50": 30.31760009765625,
+    "ma200": 28.878300018310547,
+    "rsi14": 52.74675194553926,
     "high_20d": 40.83000183105469,
-    "low_5d": 34.52000045776367,
-    "low_10d": 33.25,
+    "low_5d": 34.189998626708984,
+    "low_10d": 34.189998626708984,
     "high_52w": 40.83000183105469,
     "low_52w": 14.354999542236328,
-    "position_in_52w_range_pct": NaN
+    "atr14": 2.0503575461251393,
+    "atr14_pct": 5.805089365347866,
+    "position_in_52w_range_pct": 79.18790685597938
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 20.4,
-      "high": 20.58,
-      "low": 19.12,
-      "close": 19.23,
-      "volume": 462800.0
-    },
     {
       "date": "2024-09-04",
       "open": 19.17,
@@ -4319,22 +4313,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1085913.0
+      "open": 35.62,
+      "high": 36.35,
+      "low": 34.39,
+      "close": 34.76,
+      "volume": 1132100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 35.82,
+      "high": 36.0,
+      "low": 34.19,
+      "close": 35.32,
+      "volume": 1097000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 14.92,
-      "high": 15.22,
-      "low": 14.84,
-      "close": 14.86,
-      "volume": 586000.0
-    },
     {
       "date": "2025-09-04",
       "open": 14.76,
@@ -6337,11 +6331,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1085913.0
+      "open": 35.62,
+      "high": 36.35,
+      "low": 34.39,
+      "close": 34.76,
+      "volume": 1132100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 35.82,
+      "high": 36.0,
+      "low": 34.19,
+      "close": 35.32,
+      "volume": 1097000.0
     }
   ],
   "ai_synthesis": null,

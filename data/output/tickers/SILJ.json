@@ -1,8 +1,8 @@
 {
   "ticker": "SILJ",
-  "fetched_at": "2026-09-03T00:02:35Z",
+  "fetched_at": "2026-09-04T06:37:30Z",
   "_schema": "v2",
-  "current_price": 31.64,
+  "current_price": 32.38999938964844,
   "info": {
     "symbol": "SILJ",
     "longName": "Amplify Junior Silver Miners ETF",
@@ -15,7 +15,7 @@
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": 19.685371,
+    "trailingPE": 20.151999,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 41.1,
     "fiftyTwoWeekLow": 18.5,
-    "averageVolume": 4289961,
-    "averageVolume10days": 4693800,
+    "averageVolume": 4309038,
+    "averageVolume10days": 4452160,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -110,28 +110,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.03350189633375474,
+  "options_implied_move": 0.03179993885177963,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 51.637370276556844,
+    "ma20": 30.975499820709228,
+    "ma50": 27.557799949645997,
+    "ma200": 29.662766342163085,
+    "rsi14": 61.01648400034622,
     "high_20d": 33.58000183105469,
     "low_5d": 29.920000076293945,
     "low_10d": 29.920000076293945,
     "high_52w": 41.099998474121094,
     "low_52w": 18.158366118447173,
-    "position_in_52w_range_pct": NaN
+    "atr14": 1.3599999291556222,
+    "atr14_pct": 4.198826658793536,
+    "position_in_52w_range_pct": 62.03409177935632
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 10.7546,
-      "high": 10.7546,
-      "low": 10.205,
-      "close": 10.2691,
-      "volume": 2875300.0
-    },
     {
       "date": "2024-09-04",
       "open": 10.2691,
@@ -4134,22 +4128,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4623912.0
+      "open": 30.85,
+      "high": 31.7,
+      "low": 30.8,
+      "close": 31.64,
+      "volume": 4640500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 32.73,
+      "high": 32.85,
+      "low": 31.75,
+      "close": 32.39,
+      "volume": 3753500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 18.6688,
-      "high": 18.7473,
-      "low": 18.2958,
-      "close": 18.5706,
-      "volume": 5400400.0
-    },
     {
       "date": "2025-09-04",
       "open": 18.3056,
@@ -6152,11 +6146,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4623912.0
+      "open": 30.85,
+      "high": 31.7,
+      "low": 30.8,
+      "close": 31.64,
+      "volume": 4640500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 32.73,
+      "high": 32.85,
+      "low": 31.75,
+      "close": 32.39,
+      "volume": 3753500.0
     }
   ],
   "ai_synthesis": null,

@@ -1,6 +1,6 @@
 {
   "trade_id": "ZETA_2026-08-09_000",
-  "generated_at": "2026-09-03T00:03:14+00:00",
+  "generated_at": "2026-09-04T06:38:12+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ZETA",
@@ -39,10 +39,10 @@
     "high": 26.65,
     "low": 25.0,
     "volume": 9232200.0,
-    "ma20": 22.244,
-    "ma50": 21.4038,
+    "ma20": 22.244000000000003,
+    "ma50": 21.403799999999997,
     "ma200": 19.00905,
-    "rsi14": 68.29130092228692,
+    "rsi14": 68.29130093529483,
     "atr14": 1.5817142857142856,
     "atr14_pct": 5.937365937365937,
     "high_52w": 28.5,
@@ -54,22 +54,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 4.969387755102036,
-    "mfe_date": "2026-09-01",
+    "mfe_R": 5.683673469387753,
+    "mfe_date": "2026-09-03",
     "mae_R": 0.8979591836734679,
     "mae_date": "2026-08-10",
-    "optimal_exit_price": 32.05,
-    "optimal_exit_date": "2026-09-01",
-    "optimal_R": 4.969387755102036,
-    "days_to_optimal": 23,
+    "optimal_exit_price": 32.75,
+    "optimal_exit_date": "2026-09-03",
+    "optimal_R": 5.683673469387753,
+    "days_to_optimal": 25,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 24
+    "hold_calendar_days": 26
   },
   "lesson": "In progress",
-  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (currently trailed to $27.18) (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +4.97R; worst drawdown -0.90R.",
+  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (currently trailed to $27.18) (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +5.68R; worst drawdown -0.90R.",
   "ohlc_window": [
     {
       "date": "2026-07-10",
@@ -352,6 +352,14 @@
       "volume": 10018900.0
     },
     {
+      "date": "2026-08-28",
+      "open": 29.8,
+      "high": 30.835,
+      "low": 29.55,
+      "close": 30.54,
+      "volume": 9276200.0
+    },
+    {
       "date": "2026-08-31",
       "open": 30.41,
       "high": 31.049,
@@ -371,9 +379,17 @@
       "date": "2026-09-02",
       "open": 30.94,
       "high": 31.75,
-      "low": 30.3367,
+      "low": 30.337,
       "close": 30.44,
-      "volume": 8656007.0
+      "volume": 8668200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 30.9,
+      "high": 32.75,
+      "low": 30.9,
+      "close": 32.68,
+      "volume": 10639400.0
     }
   ]
 }

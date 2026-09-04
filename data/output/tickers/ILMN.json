@@ -1,8 +1,8 @@
 {
   "ticker": "ILMN",
-  "fetched_at": "2026-09-02T23:58:04Z",
+  "fetched_at": "2026-09-04T06:33:10Z",
   "_schema": "v2",
-  "current_price": 213.25,
+  "current_price": 221.66000366210938,
   "info": {
     "symbol": "ILMN",
     "longName": "Illumina, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Diego",
     "website": "https://www.illumina.com",
     "fullTimeEmployees": 8600,
-    "marketCap": 32200749056,
-    "enterpriseValue": 32635629568,
-    "trailingPE": 39.785446,
-    "forwardPE": 34.979946,
-    "priceToSalesTrailing12Months": 7.1652756,
-    "enterpriseToRevenue": 7.262,
-    "priceToBook": 11.346103,
+    "marketCap": 33470660608,
+    "enterpriseValue": 34829660160,
+    "trailingPE": 41.431778,
+    "forwardPE": 36.347538,
+    "priceToSalesTrailing12Months": 7.447855,
+    "enterpriseToRevenue": 7.75,
+    "priceToBook": 11.793562,
     "grossMargins": 0.67934996,
     "operatingMargins": 0.21139,
     "profitMargins": 0.18336001,
@@ -32,8 +32,8 @@
     "currentRatio": 1.796,
     "fiftyTwoWeekHigh": 231.81,
     "fiftyTwoWeekLow": 88.0,
-    "averageVolume": 1964668,
-    "averageVolume10days": 2042190,
+    "averageVolume": 1932246,
+    "averageVolume10days": 2010240,
     "beta": 1.464,
     "sharesOutstanding": 151000000,
     "sharesFloat": 149532280,
@@ -173,8 +173,15 @@
     "avg_price_target": 198.89474,
     "high_price_target": 230.0,
     "low_price_target": 113.0,
-    "current_price": 213.25,
+    "current_price": 221.66,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-03T13:23:48",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-08-03T21:20:21",
         "firm": "Canaccord Genuity",
@@ -237,17 +244,16 @@
         "to_grade": "Underweight",
         "from_grade": "Underweight",
         "action": "main"
-      },
-      {
-        "date": "2026-07-17T18:11:23",
-        "firm": "Leerink Partners",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-09-03T17:51:00Z",
+      "title": "10x Genomics Rallies 84% in 3 Months: Is There More Upside Ahead?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/10x-genomics-rallies-84-3-175100530.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-02T21:00:23Z",
       "title": "3 High-Flying Stocks We Keep Off Our Radar",
@@ -301,38 +307,24 @@
       "title": "What Is Really Moving Tempus AI Stock Right Now?",
       "url": "https://www.trefis.com/articles/612597/what-is-really-moving-tempus-ai-stock-right-now/2026-08-24",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-08-17T19:10:20Z",
-      "title": "1 Unpopular Stock That Deserves Some Love and 2 Facing Headwinds",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/1-unpopular-stock-deserves-love-191020096.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.06935521688159436,
+  "options_implied_move": 0.09564197261458376,
   "technicals": {
-    "ma20": 205.60800018310547,
-    "ma50": 196.43279907226562,
-    "ma200": 150.87709972381592,
-    "rsi14": 56.4683243325464,
+    "ma20": 207.00500030517577,
+    "ma50": 197.36419921875,
+    "ma200": 151.38204975128173,
+    "rsi14": 61.72481703092824,
     "high_20d": 231.80999755859375,
     "low_5d": 206.82000732421875,
-    "low_10d": 200.3000030517578,
+    "low_10d": 206.82000732421875,
     "high_52w": 231.80999755859375,
     "low_52w": 88.0,
-    "atr14": 9.642143249511719,
-    "atr14_pct": 4.521520867297406,
-    "position_in_52w_range_pct": 87.09408394848788
+    "atr14": 10.073571341378349,
+    "atr14_pct": 4.544604879071527,
+    "position_in_52w_range_pct": 92.94208047507345
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 131.3,
-      "high": 133.67,
-      "low": 129.77,
-      "close": 130.26,
-      "volume": 1121600.0
-    },
     {
       "date": "2024-09-04",
       "open": 128.06,
@@ -4335,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": 208.66,
+      "open": 208.62,
       "high": 214.98,
       "low": 207.13,
       "close": 213.25,
-      "volume": 1771386.0
+      "volume": 1771400.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 213.24,
+      "high": 221.76,
+      "low": 210.94,
+      "close": 221.66,
+      "volume": 1715200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 97.52,
-      "high": 98.05,
-      "low": 95.8,
-      "close": 96.07,
-      "volume": 1163500.0
-    },
     {
       "date": "2025-09-04",
       "open": 95.86,
@@ -6353,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": 208.66,
+      "open": 208.62,
       "high": 214.98,
       "low": 207.13,
       "close": 213.25,
-      "volume": 1771386.0
+      "volume": 1771400.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 213.24,
+      "high": 221.76,
+      "low": 210.94,
+      "close": 221.66,
+      "volume": 1715200.0
     }
   ],
   "ai_synthesis": null,

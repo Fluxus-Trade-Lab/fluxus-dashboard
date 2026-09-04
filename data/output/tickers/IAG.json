@@ -1,8 +1,8 @@
 {
   "ticker": "IAG",
-  "fetched_at": "2026-09-03T00:01:11Z",
+  "fetched_at": "2026-09-04T06:36:05Z",
   "_schema": "v2",
-  "current_price": 20.2,
+  "current_price": 20.940000534057617,
   "info": {
     "symbol": "IAG",
     "longName": "IAMGOLD Corporation",
@@ -13,13 +13,13 @@
     "city": "Toronto",
     "website": "https://www.iamgold.com",
     "fullTimeEmployees": 3800,
-    "marketCap": 11534200832,
-    "enterpriseValue": 11095489536,
-    "trailingPE": 10.202021,
-    "forwardPE": 8.466372,
-    "priceToSalesTrailing12Months": 3.1327615,
-    "enterpriseToRevenue": 3.014,
-    "priceToBook": 2.6374202,
+    "marketCap": 11956740096,
+    "enterpriseValue": 12037640192,
+    "trailingPE": 10.575758,
+    "forwardPE": 8.7765255,
+    "priceToSalesTrailing12Months": 3.2475257,
+    "enterpriseToRevenue": 3.269,
+    "priceToBook": 2.7340386,
     "grossMargins": 0.50301,
     "operatingMargins": 0.44976002,
     "profitMargins": 0.31403,
@@ -32,8 +32,8 @@
     "currentRatio": 1.712,
     "fiftyTwoWeekHigh": 24.87,
     "fiftyTwoWeekLow": 9.28,
-    "averageVolume": 5700484,
-    "averageVolume10days": 5922910,
+    "averageVolume": 5736127,
+    "averageVolume10days": 5387990,
     "beta": 2.255,
     "sharesOutstanding": 571000000,
     "sharesFloat": 569663860,
@@ -173,7 +173,7 @@
     "avg_price_target": 23.66667,
     "high_price_target": 34.0,
     "low_price_target": 20.0,
-    "current_price": 20.2,
+    "current_price": 20.94,
     "recent_rating_changes": [
       {
         "date": "2026-08-21T18:26:12",
@@ -309,28 +309,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": 0.09653465346534655,
+  "options_implied_move": 0.11222540305946364,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 53.22529240172748,
+    "ma20": 19.807500076293945,
+    "ma50": 16.99880001068115,
+    "ma200": 17.79220000267029,
+    "rsi14": 61.74420571830516,
     "high_20d": 22.31999969482422,
     "low_5d": 19.25,
     "low_10d": 19.25,
     "high_52w": 24.8700008392334,
     "low_52w": 9.279999732971191,
-    "position_in_52w_range_pct": NaN
+    "atr14": 1.0035712378365653,
+    "atr14_pct": 4.792603687876315,
+    "position_in_52w_range_pct": 74.79153286527239
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 4.87,
-      "high": 4.91,
-      "low": 4.71,
-      "close": 4.86,
-      "volume": 8646300.0
-    },
     {
       "date": "2024-09-04",
       "open": 4.81,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4161920.0
+      "open": 19.88,
+      "high": 20.43,
+      "low": 19.75,
+      "close": 20.2,
+      "volume": 4176900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 20.92,
+      "high": 21.0,
+      "low": 20.49,
+      "close": 20.94,
+      "volume": 3512000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 9.59,
-      "high": 9.7,
-      "low": 9.41,
-      "close": 9.51,
-      "volume": 10236900.0
-    },
     {
       "date": "2025-09-04",
       "open": 9.33,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4161920.0
+      "open": 19.88,
+      "high": 20.43,
+      "low": 19.75,
+      "close": 20.2,
+      "volume": 4176900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 20.92,
+      "high": 21.0,
+      "low": 20.49,
+      "close": 20.94,
+      "volume": 3512000.0
     }
   ],
   "ai_synthesis": null,

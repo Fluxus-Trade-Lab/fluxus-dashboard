@@ -1,8 +1,8 @@
 {
   "ticker": "USO",
-  "fetched_at": "2026-09-03T00:02:54Z",
+  "fetched_at": "2026-09-04T06:37:52Z",
   "_schema": "v2",
-  "current_price": 141.15,
+  "current_price": 142.08999633789062,
   "info": {
     "symbol": "USO",
     "longName": "United States Oil Fund, LP",
@@ -15,11 +15,11 @@
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 42.992435,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
+    "priceToBook": 2.0563846,
     "grossMargins": null,
     "operatingMargins": null,
     "profitMargins": null,
@@ -32,10 +32,10 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 154.08,
     "fiftyTwoWeekLow": 65.99,
-    "averageVolume": 5981341,
-    "averageVolume10days": 4209170,
+    "averageVolume": 6009791,
+    "averageVolume10days": 4243860,
     "beta": null,
-    "sharesOutstanding": null,
+    "sharesOutstanding": 119100000,
     "sharesFloat": null,
     "companyOfficers": []
   },
@@ -49,6 +49,24 @@
     "current_price": null
   },
   "news": [
+    {
+      "date": "2026-09-04T01:49:11Z",
+      "title": "Oil ETFs Are Crushing Oil Itself, Thanks to the Futures Curve",
+      "url": "http://www.etf.com/sections/features/oil-etfs-are-crushing-oil-itself-thanks-futures-curve?utm_source=yahoo-finance&utm_medium=rss&utm_campaign=yahoo-finance-rss",
+      "source": "etf.com"
+    },
+    {
+      "date": "2026-09-03T13:25:03Z",
+      "title": "Sector Update: Energy Stocks Rise Pre-Bell Thursday",
+      "url": "https://finance.yahoo.com/energy/articles/sector-energy-stocks-rise-pre-132503315.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-03T13:20:19Z",
+      "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Thursday as Markets Weigh Oil Prices, Tech Earnings",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-132019027.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-09-02T23:26:17Z",
       "title": "The Best-Performing Commodity ETFs of 2026: Oil and Broad Baskets Lead the Pack",
@@ -90,48 +108,24 @@
       "title": "Chart of the Day 8-31-26- What Will it Take to Break this Stalemate",
       "url": "https://finance.yahoo.com/energy/articles/chart-day-8-31-26-142000324.html",
       "source": "MoneyShow"
-    },
-    {
-      "date": "2026-08-31T13:28:55Z",
-      "title": "Sector Update: Energy Stocks Advance Premarket Monday",
-      "url": "https://finance.yahoo.com/energy/articles/sector-energy-stocks-advance-premarket-132855770.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T13:28:01Z",
-      "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Monday as US, Iran Exchange Attacks",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-equity-futures-132801663.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T14:26:00Z",
-      "title": "Geopolitical Risks Lift Oil Prices: 4 ETFs to Watch",
-      "url": "https://finance.yahoo.com/energy/articles/geopolitical-risks-lift-oil-prices-142600360.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.02493800921006022,
+  "options_implied_move": 0.018368640068041165,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 65.44152115504248,
-    "high_20d": 141.0399932861328,
-    "low_5d": 127.4800033569336,
+    "ma20": 130.74199905395508,
+    "ma50": 123.22539978027343,
+    "ma200": 107.13784996032715,
+    "rsi14": 66.4007055819038,
+    "high_20d": 143.4600067138672,
+    "low_5d": 128.0,
     "low_10d": 125.41000366210938,
     "high_52w": 154.0800018310547,
     "low_52w": 65.98999786376953,
-    "position_in_52w_range_pct": NaN
+    "atr14": 3.795001438685826,
+    "atr14_pct": 2.6708435051692843,
+    "position_in_52w_range_pct": 86.38891479943977
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 72.15,
-      "high": 72.15,
-      "low": 70.85,
-      "close": 71.09,
-      "volume": 4967800.0
-    },
     {
       "date": "2024-09-04",
       "open": 70.62,
@@ -4134,22 +4128,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4671877.0
+      "open": 139.42,
+      "high": 142.18,
+      "low": 138.44,
+      "close": 141.15,
+      "volume": 4700100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 142.12,
+      "high": 143.46,
+      "low": 140.97,
+      "close": 142.09,
+      "volume": 4026100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 75.61,
-      "high": 75.83,
-      "low": 74.59,
-      "close": 74.83,
-      "volume": 6270900.0
-    },
     {
       "date": "2025-09-04",
       "open": 73.87,
@@ -6152,11 +6146,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 4671877.0
+      "open": 139.42,
+      "high": 142.18,
+      "low": 138.44,
+      "close": 141.15,
+      "volume": 4700100.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 142.12,
+      "high": 143.46,
+      "low": 140.97,
+      "close": 142.09,
+      "volume": 4026100.0
     }
   ],
   "ai_synthesis": null,

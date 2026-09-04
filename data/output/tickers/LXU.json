@@ -1,8 +1,8 @@
 {
   "ticker": "LXU",
-  "fetched_at": "2026-09-03T00:01:34Z",
+  "fetched_at": "2026-09-04T06:36:27Z",
   "_schema": "v2",
-  "current_price": 11.54,
+  "current_price": 11.229999542236328,
   "info": {
     "symbol": "LXU",
     "longName": "LSB Industries, Inc.",
@@ -13,13 +13,13 @@
     "city": "Oklahoma City",
     "website": "https://www.lsbindustries.com",
     "fullTimeEmployees": 513,
-    "marketCap": 830851200,
-    "enterpriseValue": 1076601088,
-    "trailingPE": 23.08,
-    "forwardPE": 11.310398,
-    "priceToSalesTrailing12Months": 1.2625786,
-    "enterpriseToRevenue": 1.636,
-    "priceToBook": 1.5409267,
+    "marketCap": 808531968,
+    "enterpriseValue": 1080200960,
+    "trailingPE": 22.46,
+    "forwardPE": 11.006566,
+    "priceToSalesTrailing12Months": 1.2286618,
+    "enterpriseToRevenue": 1.641,
+    "priceToBook": 1.4995326,
     "grossMargins": 0.17323999,
     "operatingMargins": -0.01631,
     "profitMargins": 0.05584,
@@ -32,8 +32,8 @@
     "currentRatio": 2.426,
     "fiftyTwoWeekHigh": 17.22,
     "fiftyTwoWeekLow": 7.71,
-    "averageVolume": 830158,
-    "averageVolume10days": 656470,
+    "averageVolume": 818823,
+    "averageVolume10days": 675220,
     "beta": 0.319,
     "sharesOutstanding": 71997504,
     "sharesFloat": 59050193,
@@ -173,7 +173,7 @@
     "avg_price_target": 13.7,
     "high_price_target": 18.0,
     "low_price_target": 11.0,
-    "current_price": 11.54,
+    "current_price": 11.23,
     "recent_rating_changes": [
       {
         "date": "2026-08-10T15:42:25",
@@ -309,28 +309,22 @@
       "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.14038128249566725,
+  "options_implied_move": 0.12644702207327277,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 58.130941050331565,
-    "high_20d": 11.25,
-    "low_5d": 10.09000015258789,
+    "ma20": 10.472499895095826,
+    "ma50": 10.776199951171876,
+    "ma200": 11.47154996395111,
+    "rsi14": 57.41128476182628,
+    "high_20d": 11.6899995803833,
+    "low_5d": 10.319999694824219,
     "low_10d": 10.09000015258789,
     "high_52w": 17.219999313354492,
     "low_52w": 7.710000038146973,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.531428609575544,
+    "atr14_pct": 4.7322228961526385,
+    "position_in_52w_range_pct": 37.01366742756713
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 7.76,
-      "high": 7.8,
-      "low": 7.45,
-      "close": 7.47,
-      "volume": 339600.0
-    },
     {
       "date": "2024-09-04",
       "open": 7.43,
@@ -4308,6 +4302,14 @@
       "volume": 439800.0
     },
     {
+      "date": "2026-08-28",
+      "open": 10.47,
+      "high": 10.75,
+      "low": 10.32,
+      "close": 10.39,
+      "volume": 442800.0
+    },
+    {
       "date": "2026-08-31",
       "open": 10.72,
       "high": 10.83,
@@ -4325,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 787145.0
+      "open": 11.12,
+      "high": 11.64,
+      "low": 10.95,
+      "close": 11.54,
+      "volume": 787200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.53,
+      "high": 11.69,
+      "low": 11.06,
+      "close": 11.23,
+      "volume": 544200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 8.23,
-      "high": 8.45,
-      "low": 8.19,
-      "close": 8.41,
-      "volume": 550400.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 8.35,
-      "high": 8.35,
-      "low": 8.13,
-      "close": 8.26,
-      "volume": 320800.0
-    },
     {
       "date": "2025-09-04",
       "open": 8.35,
@@ -6326,6 +6320,14 @@
       "volume": 439800.0
     },
     {
+      "date": "2026-08-28",
+      "open": 10.47,
+      "high": 10.75,
+      "low": 10.32,
+      "close": 10.39,
+      "volume": 442800.0
+    },
+    {
       "date": "2026-08-31",
       "open": 10.72,
       "high": 10.83,
@@ -6343,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 787145.0
+      "open": 11.12,
+      "high": 11.64,
+      "low": 10.95,
+      "close": 11.54,
+      "volume": 787200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.53,
+      "high": 11.69,
+      "low": 11.06,
+      "close": 11.23,
+      "volume": 544200.0
     }
   ],
   "ai_synthesis": null,

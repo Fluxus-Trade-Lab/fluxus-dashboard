@@ -1,8 +1,8 @@
 {
   "ticker": "RCAT",
-  "fetched_at": "2026-09-03T00:02:20Z",
+  "fetched_at": "2026-09-04T06:37:15Z",
   "_schema": "v2",
-  "current_price": 8.32,
+  "current_price": 8.539999961853027,
   "info": {
     "symbol": "RCAT",
     "longName": "Red Cat Holdings, Inc.",
@@ -13,13 +13,13 @@
     "city": "South Salt Lake",
     "website": "https://redcat.red",
     "fullTimeEmployees": 244,
-    "marketCap": 1270583552,
-    "enterpriseValue": 949213504,
+    "marketCap": 1304180736,
+    "enterpriseValue": 993500672,
     "trailingPE": null,
-    "forwardPE": -14.990991,
-    "priceToSalesTrailing12Months": 17.760216,
-    "enterpriseToRevenue": 13.268,
-    "priceToBook": 2.6960466,
+    "forwardPE": -15.387387,
+    "priceToSalesTrailing12Months": 18.229837,
+    "enterpriseToRevenue": 13.887,
+    "priceToBook": 2.7673364,
     "grossMargins": 0.0975,
     "operatingMargins": -1.91416,
     "profitMargins": -1.36265,
@@ -32,8 +32,8 @@
     "currentRatio": 14.857,
     "fiftyTwoWeekHigh": 18.78,
     "fiftyTwoWeekLow": 5.77,
-    "averageVolume": 9954353,
-    "averageVolume10days": 6100490,
+    "averageVolume": 9567170,
+    "averageVolume10days": 6077000,
     "beta": 1.349,
     "sharesOutstanding": 152714362,
     "sharesFloat": 138815828,
@@ -59,6 +59,18 @@
       {
         "name": "Mr. Sam  Pelletier",
         "title": "Vice President of Finance & Accounting",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. B. Barrett Hinckley",
+        "title": "President of BLUE OPS",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Mitch  McDonald",
+        "title": "Divisional Chief Executive Officer of UAS Operations",
         "age": null,
         "yearBorn": null
       }
@@ -161,7 +173,7 @@
     "avg_price_target": 16.75,
     "high_price_target": 25.0,
     "low_price_target": 9.0,
-    "current_price": 8.32,
+    "current_price": 8.54,
     "recent_rating_changes": [
       {
         "date": "2026-09-02T09:34:09",
@@ -297,28 +309,22 @@
       "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": 0.06490384615384616,
+  "options_implied_move": 0.043325527125613314,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 41.25459559695924,
+    "ma20": 9.483249950408936,
+    "ma50": 8.965699920654297,
+    "ma200": 10.97439995765686,
+    "rsi14": 44.52375752653602,
     "high_20d": 11.760000228881836,
-    "low_5d": 8.199999809265137,
-    "low_10d": 8.199999809265137,
+    "low_5d": 8.050000190734863,
+    "low_10d": 8.050000190734863,
     "high_52w": 18.780000686645508,
     "low_52w": 5.769999980926514,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.6152142797197614,
+    "atr14_pct": 7.20391431461167,
+    "position_in_52w_range_pct": 21.291313072019012
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 3.09,
-      "high": 3.14,
-      "low": 2.86,
-      "close": 2.95,
-      "volume": 848600.0
-    },
     {
       "date": "2024-09-04",
       "open": 2.94,
@@ -4321,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 5506457.0
+      "open": 8.1,
+      "high": 8.33,
+      "low": 8.05,
+      "close": 8.32,
+      "volume": 5555300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.71,
+      "high": 8.75,
+      "low": 8.38,
+      "close": 8.54,
+      "volume": 6462100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 8.96,
-      "high": 9.09,
-      "low": 8.53,
-      "close": 8.57,
-      "volume": 2812500.0
-    },
     {
       "date": "2025-09-04",
       "open": 8.57,
@@ -6339,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 5506457.0
+      "open": 8.1,
+      "high": 8.33,
+      "low": 8.05,
+      "close": 8.32,
+      "volume": 5555300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.71,
+      "high": 8.75,
+      "low": 8.38,
+      "close": 8.54,
+      "volume": 6462100.0
     }
   ],
   "ai_synthesis": null,

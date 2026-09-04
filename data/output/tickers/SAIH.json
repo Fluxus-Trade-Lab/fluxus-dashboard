@@ -1,8 +1,8 @@
 {
   "ticker": "SAIH",
-  "fetched_at": "2026-09-02T23:58:06Z",
+  "fetched_at": "2026-09-04T06:33:12Z",
   "_schema": "v2",
-  "current_price": 25.399999618530273,
+  "current_price": 25.0049991607666,
   "info": {
     "symbol": "SAIH",
     "longName": "SAIHEAT Limited",
@@ -13,13 +13,13 @@
     "city": "Singapore",
     "website": "https://www.saiheat.com",
     "fullTimeEmployees": 16,
-    "marketCap": 46667216,
-    "enterpriseValue": 42086664,
+    "marketCap": 45941484,
+    "enterpriseValue": 46575944,
     "trailingPE": null,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": 10.320039,
-    "enterpriseToRevenue": 9.307,
-    "priceToBook": 6.290242,
+    "priceToSalesTrailing12Months": 10.15955,
+    "enterpriseToRevenue": 10.3,
+    "priceToBook": 6.1924214,
     "grossMargins": -0.5188,
     "operatingMargins": -2.76052,
     "profitMargins": -1.42724,
@@ -30,14 +30,21 @@
     "freeCashflow": -3153250,
     "debtToEquity": 56.697,
     "currentRatio": 2.302,
-    "fiftyTwoWeekHigh": 28.3,
+    "fiftyTwoWeekHigh": 28.41,
     "fiftyTwoWeekLow": 5.65,
-    "averageVolume": 8514,
-    "averageVolume10days": 20340,
+    "averageVolume": 9612,
+    "averageVolume10days": 18580,
     "beta": 1.711,
     "sharesOutstanding": 1195249,
     "sharesFloat": 1089613,
-    "companyOfficers": []
+    "companyOfficers": [
+      {
+        "name": "Mr. Jianwei  Li",
+        "title": "CEO, Acting CFO & Executive Chairman",
+        "age": 47,
+        "yearBorn": 1978
+      }
+    ]
   },
   "earnings_history": [],
   "next_earnings": {
@@ -50,7 +57,7 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 25.4
+    "current_price": 25.005
   },
   "news": [
     {
@@ -62,28 +69,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 22.27449998855591,
-    "ma50": 17.2371199798584,
-    "ma200": 11.119710011482239,
-    "rsi14": 72.13466132448904,
-    "high_20d": 28.299999237060547,
+    "ma20": 22.587249946594238,
+    "ma50": 17.733419971466063,
+    "ma200": 11.293485007286073,
+    "rsi14": 69.36066689516451,
+    "high_20d": 28.40999984741211,
     "low_5d": 22.950000762939453,
-    "low_10d": 19.75,
-    "high_52w": 28.299999237060547,
+    "low_10d": 22.1200008392334,
+    "high_52w": 28.40999984741211,
     "low_52w": 5.650000095367432,
-    "atr14": 2.1201425279889787,
-    "atr14_pct": 8.347017952087894,
-    "position_in_52w_range_pct": 87.19646919018163
+    "atr14": 1.8367853164672852,
+    "atr14_pct": 7.345672377982888,
+    "position_in_52w_range_pct": 85.03953987811614
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 12.495,
-      "high": 12.75,
-      "low": 11.79,
-      "close": 12.3,
-      "volume": 1207.0
-    },
     {
       "date": "2024-09-04",
       "open": 12.105,
@@ -4061,6 +4060,14 @@
       "volume": 2300.0
     },
     {
+      "date": "2026-08-28",
+      "open": 24.0,
+      "high": 24.24,
+      "low": 23.75,
+      "close": 23.75,
+      "volume": 1800.0
+    },
+    {
       "date": "2026-08-31",
       "open": 23.7,
       "high": 24.59,
@@ -4078,30 +4085,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": 23.76,
-      "high": 28.3,
+      "open": 23.9,
+      "high": 28.41,
       "low": 23.3,
       "close": 25.4,
-      "volume": 70723.0
+      "volume": 70700.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 25.76,
+      "high": 26.56,
+      "low": 24.95,
+      "close": 25.005,
+      "volume": 24200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 6.393,
-      "high": 7.3,
-      "low": 6.393,
-      "close": 6.85,
-      "volume": 7800.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 6.733,
-      "high": 6.83,
-      "low": 6.56,
-      "close": 6.83,
-      "volume": 1600.0
-    },
     {
       "date": "2025-09-04",
       "open": 6.3,
@@ -6079,6 +6078,14 @@
       "volume": 2300.0
     },
     {
+      "date": "2026-08-28",
+      "open": 24.0,
+      "high": 24.24,
+      "low": 23.75,
+      "close": 23.75,
+      "volume": 1800.0
+    },
+    {
       "date": "2026-08-31",
       "open": 23.7,
       "high": 24.59,
@@ -6096,11 +6103,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": 23.76,
-      "high": 28.3,
+      "open": 23.9,
+      "high": 28.41,
       "low": 23.3,
       "close": 25.4,
-      "volume": 70723.0
+      "volume": 70700.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 25.76,
+      "high": 26.56,
+      "low": 24.95,
+      "close": 25.005,
+      "volume": 24200.0
     }
   ],
   "ai_synthesis": null,

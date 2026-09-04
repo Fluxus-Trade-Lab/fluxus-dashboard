@@ -1,8 +1,8 @@
 {
   "ticker": "NEBX",
-  "fetched_at": "2026-09-03T00:01:49Z",
+  "fetched_at": "2026-09-04T06:36:42Z",
   "_schema": "v2",
-  "current_price": 21.25,
+  "current_price": 22.540000915527344,
   "info": {
     "symbol": "NEBX",
     "longName": "Tradr 2X Long NBIS Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 70.769,
     "fiftyTwoWeekLow": 6.616333,
-    "averageVolume": 2730653,
-    "averageVolume10days": 2353440,
+    "averageVolume": 2762412,
+    "averageVolume10days": 1916870,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,18 +49,20 @@
     "current_price": null
   },
   "news": [],
-  "options_implied_move": 0.2376470588235294,
+  "options_implied_move": 4.812777089342101,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 41.98250998293432,
+    "ma20": 26.11600008010864,
+    "ma50": 28.82740005493164,
+    "ma200": 22.568908338546752,
+    "rsi14": 45.192011941385786,
     "high_20d": 41.599998474121094,
     "low_5d": 19.350000381469727,
     "low_10d": 19.350000381469727,
     "high_52w": 70.76899719238281,
     "low_52w": 6.6163330078125,
-    "position_in_52w_range_pct": NaN
+    "atr14": 3.6872854232788086,
+    "atr14_pct": 16.358852145115545,
+    "position_in_52w_range_pct": 24.82152239523784
   },
   "ohlc_2y": [
     {
@@ -2016,6 +2018,14 @@
       "volume": 2659400.0
     },
     {
+      "date": "2026-08-28",
+      "open": 22.82,
+      "high": 23.5,
+      "low": 21.51,
+      "close": 22.39,
+      "volume": 2091600.0
+    },
+    {
       "date": "2026-08-31",
       "open": 21.52,
       "high": 22.19,
@@ -2033,11 +2043,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1408990.0
+      "open": 19.52,
+      "high": 21.397,
+      "low": 19.4,
+      "close": 21.25,
+      "volume": 1437900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 21.13,
+      "high": 22.71,
+      "low": 19.635,
+      "close": 22.54,
+      "volume": 1406700.0
     }
   ],
   "ohlc_1y": [
@@ -3994,6 +4012,14 @@
       "volume": 2659400.0
     },
     {
+      "date": "2026-08-28",
+      "open": 22.82,
+      "high": 23.5,
+      "low": 21.51,
+      "close": 22.39,
+      "volume": 2091600.0
+    },
+    {
       "date": "2026-08-31",
       "open": 21.52,
       "high": 22.19,
@@ -4011,11 +4037,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1408990.0
+      "open": 19.52,
+      "high": 21.397,
+      "low": 19.4,
+      "close": 21.25,
+      "volume": 1437900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 21.13,
+      "high": 22.71,
+      "low": 19.635,
+      "close": 22.54,
+      "volume": 1406700.0
     }
   ],
   "ai_synthesis": null,

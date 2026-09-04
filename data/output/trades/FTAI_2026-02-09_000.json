@@ -1,6 +1,6 @@
 {
   "trade_id": "FTAI_2026-02-09_000",
-  "generated_at": "2026-09-03T00:03:13+00:00",
+  "generated_at": "2026-09-04T06:38:11+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FTAI",
@@ -28,49 +28,49 @@
     ]
   },
   "entry_snapshot": {
-    "close": 273.8425,
-    "open": 273.4646,
-    "high": 278.4367,
+    "close": 273.8426,
+    "open": 273.4647,
+    "high": 278.4368,
     "low": 267.3888,
     "volume": 1069000.0,
-    "ma20": 272.021765,
-    "ma50": 220.15207999999998,
+    "ma20": 272.02175500000004,
+    "ma50": 220.152074,
     "ma200": null,
-    "rsi14": 60.67261370063967,
-    "atr14": 15.166199999999995,
-    "atr14_pct": 5.538292996886895,
+    "rsi14": 60.65905380068644,
+    "atr14": 15.166207142857141,
+    "atr14_pct": 5.538293582830846,
     "high_52w": 308.2692,
-    "low_52w": 147.2863,
-    "position_in_52w_range_pct": 78.61468516221287,
+    "low_52w": 148.6653,
+    "position_in_52w_range_pct": 78.42997570861363,
     "high_20d": 308.2692,
     "low_10d": 254.5807,
     "low_5d": 254.5807
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 0.898197969543146,
+    "mfe_R": 0.8982064297800354,
     "mfe_date": "2026-02-09",
     "mae_R": 1.153730964467006,
     "mae_date": "2026-02-11",
-    "optimal_exit_price": 278.4367,
+    "optimal_exit_price": 278.4368,
     "optimal_exit_date": "2026-02-09",
-    "optimal_R": 0.898197969543146,
+    "optimal_R": 0.8982064297800354,
     "days_to_optimal": 0,
     "realized_R": -0.6159052453468679,
-    "capture_pct": -68.57121327719524,
-    "missed_R": 1.5141032148900138,
+    "capture_pct": -68.57056740260687,
+    "missed_R": 1.5141116751269033,
     "post_exit_R": 2.417165820642979,
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **FTAI** long on 2026-02-09 at $267.82 (qty 291) with stop $256.00 (1R = $11.82/sh = $3,440). Setup: **Long in mixed structure** \u2014 price above MA20 ($272.02), RSI 61, 79% through 52W range, ATR 5.5% of price. Realized **-0.62R**, peak was **+0.90R** on 2026-02-09 (day +0) \u2014 captured **-69%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **FTAI** long on 2026-02-09 at $267.82 (qty 291) with stop $256.00 (1R = $11.82/sh = $3,440). Setup: **Long in mixed structure** \u2014 price above MA20 ($272.02), RSI 61, 78% through 52W range, ATR 5.5% of price. Realized **-0.62R**, peak was **+0.90R** on 2026-02-09 (day +0) \u2014 captured **-69%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-01-12",
       "open": 240.2511,
       "high": 245.8974,
-      "low": 238.6611,
-      "close": 243.2742,
+      "low": 238.661,
+      "close": 243.2741,
       "volume": 1281000.0
     },
     {
@@ -84,7 +84,7 @@
     {
       "date": "2026-01-14",
       "open": 251.2096,
-      "high": 256.0126,
+      "high": 256.0127,
       "low": 248.6042,
       "close": 250.6328,
       "volume": 1310900.0
@@ -94,7 +94,7 @@
       "open": 254.4017,
       "high": 275.2745,
       "low": 254.1282,
-      "close": 265.3602,
+      "close": 265.3601,
       "volume": 2641700.0
     },
     {
@@ -116,9 +116,9 @@
     {
       "date": "2026-01-21",
       "open": 278.1086,
-      "high": 285.4176,
+      "high": 285.4175,
       "low": 269.6461,
-      "close": 285.3977,
+      "close": 285.3976,
       "volume": 2428500.0
     },
     {
@@ -139,10 +139,10 @@
     },
     {
       "date": "2026-01-26",
-      "open": 290.7376,
+      "open": 290.7377,
       "high": 297.3306,
       "low": 285.8362,
-      "close": 287.3168,
+      "close": 287.3169,
       "volume": 1736800.0
     },
     {
@@ -163,10 +163,10 @@
     },
     {
       "date": "2026-01-29",
-      "open": 278.4368,
+      "open": 278.4367,
       "high": 279.8737,
       "low": 271.8239,
-      "close": 274.4691,
+      "close": 274.469,
       "volume": 1159800.0
     },
     {
@@ -188,7 +188,7 @@
     {
       "date": "2026-02-03",
       "open": 283.4486,
-      "high": 288.3709,
+      "high": 288.371,
       "low": 273.4746,
       "close": 284.8806,
       "volume": 1523000.0
@@ -219,10 +219,10 @@
     },
     {
       "date": "2026-02-09",
-      "open": 273.4646,
-      "high": 278.4367,
+      "open": 273.4647,
+      "high": 278.4368,
       "low": 267.3888,
-      "close": 273.8425,
+      "close": 273.8426,
       "volume": 1069000.0
     },
     {
@@ -235,10 +235,10 @@
     },
     {
       "date": "2026-02-11",
-      "open": 273.4646,
-      "high": 273.4646,
+      "open": 273.4647,
+      "high": 273.4647,
       "low": 254.1829,
-      "close": 264.485,
+      "close": 264.4851,
       "volume": 1681200.0
     },
     {
@@ -275,7 +275,7 @@
     },
     {
       "date": "2026-02-19",
-      "open": 286.0043,
+      "open": 286.0042,
       "high": 290.4493,
       "low": 280.8532,
       "close": 287.3666,
@@ -285,8 +285,8 @@
       "date": "2026-02-20",
       "open": 286.1037,
       "high": 294.5662,
-      "low": 281.7482,
-      "close": 288.1224,
+      "low": 281.7481,
+      "close": 288.1223,
       "volume": 971300.0
     }
   ]

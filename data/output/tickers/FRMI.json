@@ -1,8 +1,8 @@
 {
   "ticker": "FRMI",
-  "fetched_at": "2026-09-03T00:00:39Z",
+  "fetched_at": "2026-09-04T06:35:36Z",
   "_schema": "v2",
-  "current_price": 4.77,
+  "current_price": 4.860000133514404,
   "info": {
     "symbol": "FRMI",
     "longName": "Fermi Inc.",
@@ -13,13 +13,13 @@
     "city": "Amarillo",
     "website": "https://www.fermiamerica.com",
     "fullTimeEmployees": 35,
-    "marketCap": 3055029248,
-    "enterpriseValue": 3568881152,
+    "marketCap": 3112671232,
+    "enterpriseValue": 3626523392,
     "trailingPE": null,
-    "forwardPE": 41.15972,
+    "forwardPE": 41.93632,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 2.9499073,
+    "priceToBook": 3.005566,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,17 +32,47 @@
     "currentRatio": 1.102,
     "fiftyTwoWeekHigh": 36.99,
     "fiftyTwoWeekLow": 4.47,
-    "averageVolume": 19775730,
-    "averageVolume10days": 15139190,
+    "averageVolume": 20033130,
+    "averageVolume10days": 14548850,
     "beta": null,
     "sharesOutstanding": 640467348,
     "sharesFloat": 462475067,
     "companyOfficers": [
       {
+        "name": "Mr. Jacobo Ortiz Blanes",
+        "title": "Chief Operating Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
         "name": "Mr. Charles Lynn Hamilton",
         "title": "Chief Site Officer",
         "age": 51,
         "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Lee Alan McIntire",
+        "title": "CEO & Director",
+        "age": 76,
+        "yearBorn": 1949
+      },
+      {
+        "name": "Mr. Robert L. Masson II",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Barry  Sievert",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Sezin  Uzman",
+        "title": "VP of Nuclear Supply Chain & Compliance",
+        "age": null,
+        "yearBorn": null
       }
     ]
   },
@@ -143,7 +173,7 @@
     "avg_price_target": 17.125,
     "high_price_target": 35.0,
     "low_price_target": 6.0,
-    "current_price": 4.77,
+    "current_price": 4.86,
     "recent_rating_changes": [
       {
         "date": "2026-08-14T20:41:26",
@@ -279,18 +309,20 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": 0.07966457023060798,
+  "options_implied_move": 0.055555554029327846,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 35.06266223937486,
+    "ma20": 5.811499977111817,
+    "ma50": 6.548600025177002,
+    "ma200": 8.055200023651123,
+    "rsi14": 38.361988470532026,
     "high_20d": 7.675000190734863,
-    "low_5d": 4.610000133514404,
-    "low_10d": 4.610000133514404,
+    "low_5d": 4.5,
+    "low_10d": 4.5,
     "high_52w": 36.9900016784668,
     "low_52w": 4.46999979019165,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.34507131576538086,
+    "atr14_pct": 7.10023263962032,
+    "position_in_52w_range_pct": 1.1992629787126972
   },
   "ohlc_2y": [
     {
@@ -2143,11 +2175,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 15939966.0
+      "open": 4.66,
+      "high": 4.825,
+      "low": 4.5,
+      "close": 4.77,
+      "volume": 16039300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 4.8,
+      "high": 4.91,
+      "low": 4.718,
+      "close": 4.86,
+      "volume": 10998600.0
     }
   ],
   "ohlc_1y": [
@@ -4001,11 +4041,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 15939966.0
+      "open": 4.66,
+      "high": 4.825,
+      "low": 4.5,
+      "close": 4.77,
+      "volume": 16039300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 4.8,
+      "high": 4.91,
+      "low": 4.718,
+      "close": 4.86,
+      "volume": 10998600.0
     }
   ],
   "ai_synthesis": null,

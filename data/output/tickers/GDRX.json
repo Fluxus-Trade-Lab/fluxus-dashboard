@@ -1,8 +1,8 @@
 {
   "ticker": "GDRX",
-  "fetched_at": "2026-09-03T00:00:49Z",
+  "fetched_at": "2026-09-04T06:35:45Z",
   "_schema": "v2",
-  "current_price": 3.45,
+  "current_price": 3.5299999713897705,
   "info": {
     "symbol": "GDRX",
     "longName": "GoodRx Holdings, Inc.",
@@ -13,13 +13,13 @@
     "city": "Santa Monica",
     "website": "https://www.goodrx.com",
     "fullTimeEmployees": 697,
-    "marketCap": 1176951552,
-    "enterpriseValue": 1419788544,
-    "trailingPE": 57.500004,
-    "forwardPE": 9.680678,
-    "priceToSalesTrailing12Months": 1.4988621,
-    "enterpriseToRevenue": 1.808,
-    "priceToBook": 1.8119748,
+    "marketCap": 1204243200,
+    "enterpriseValue": 1447080192,
+    "trailingPE": 58.833336,
+    "forwardPE": 9.905158,
+    "priceToSalesTrailing12Months": 1.5336185,
+    "enterpriseToRevenue": 1.843,
+    "priceToBook": 1.8539915,
     "grossMargins": 0.90826,
     "operatingMargins": 0.11792,
     "profitMargins": 0.02069,
@@ -32,8 +32,8 @@
     "currentRatio": 1.381,
     "fiftyTwoWeekHigh": 5.81,
     "fiftyTwoWeekLow": 1.77,
-    "averageVolume": 1410480,
-    "averageVolume10days": 1873310,
+    "averageVolume": 1404916,
+    "averageVolume10days": 1626430,
     "beta": 1.58,
     "sharesOutstanding": 107181201,
     "sharesFloat": 93968497,
@@ -173,7 +173,7 @@
     "avg_price_target": 4.03077,
     "high_price_target": 5.0,
     "low_price_target": 2.65,
-    "current_price": 3.45,
+    "current_price": 3.53,
     "recent_rating_changes": [
       {
         "date": "2026-08-21T15:06:26",
@@ -309,28 +309,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": 0.40579710144927533,
+  "options_implied_move": 0.3456090679569277,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 51.07158847016203,
+    "ma20": 3.581750011444092,
+    "ma50": 3.2667000007629396,
+    "ma200": 2.6897749960422517,
+    "rsi14": 54.37246836602434,
     "high_20d": 3.890000104904175,
     "low_5d": 3.444999933242798,
     "low_10d": 3.4149999618530273,
     "high_52w": 5.809999942779541,
     "low_52w": 1.7699999809265137,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.12928571019853866,
+    "atr14_pct": 3.6624847378579024,
+    "position_in_52w_range_pct": 43.564356610934155
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 7.85,
-      "high": 7.955,
-      "low": 7.78,
-      "close": 7.86,
-      "volume": 1041900.0
-    },
     {
       "date": "2024-09-04",
       "open": 7.76,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1298372.0
+      "open": 3.46,
+      "high": 3.57,
+      "low": 3.45,
+      "close": 3.45,
+      "volume": 1298500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 3.48,
+      "high": 3.58,
+      "low": 3.46,
+      "close": 3.53,
+      "volume": 1460600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 4.3,
-      "high": 4.325,
-      "low": 4.25,
-      "close": 4.29,
-      "volume": 1108000.0
-    },
     {
       "date": "2025-09-04",
       "open": 4.29,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1298372.0
+      "open": 3.46,
+      "high": 3.57,
+      "low": 3.45,
+      "close": 3.45,
+      "volume": 1298500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 3.48,
+      "high": 3.58,
+      "low": 3.46,
+      "close": 3.53,
+      "volume": 1460600.0
     }
   ],
   "ai_synthesis": null,

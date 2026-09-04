@@ -1,8 +1,8 @@
 {
   "ticker": "CORT",
-  "fetched_at": "2026-09-02T23:59:53Z",
+  "fetched_at": "2026-09-04T06:34:56Z",
   "_schema": "v2",
-  "current_price": 110.43000030517578,
+  "current_price": 112.80000305175781,
   "info": {
     "symbol": "CORT",
     "longName": "Corcept Therapeutics Incorporated",
@@ -13,13 +13,13 @@
     "city": "Redwood City",
     "website": "https://www.corcept.com",
     "fullTimeEmployees": 730,
-    "marketCap": 11937306624,
-    "enterpriseValue": 11957420032,
-    "trailingPE": 245.40001,
-    "forwardPE": 25.083475,
-    "priceToSalesTrailing12Months": 14.368223,
-    "enterpriseToRevenue": 14.392,
-    "priceToBook": 16.88532,
+    "marketCap": 12193500160,
+    "enterpriseValue": 11894723584,
+    "trailingPE": 245.21739,
+    "forwardPE": 25.621805,
+    "priceToSalesTrailing12Months": 14.676588,
+    "enterpriseToRevenue": 14.317,
+    "priceToBook": 17.247707,
     "grossMargins": 0.98305,
     "operatingMargins": 0.16124001,
     "profitMargins": 0.066420004,
@@ -32,8 +32,8 @@
     "currentRatio": 2.859,
     "fiftyTwoWeekHigh": 126.38,
     "fiftyTwoWeekLow": 28.66,
-    "averageVolume": 1081569,
-    "averageVolume10days": 858570,
+    "averageVolume": 1087037,
+    "averageVolume10days": 868690,
     "beta": 0.455,
     "sharesOutstanding": 108098397,
     "sharesFloat": 96486467,
@@ -173,7 +173,7 @@
     "avg_price_target": 141.0,
     "high_price_target": 165.0,
     "low_price_target": 50.0,
-    "current_price": 110.43,
+    "current_price": 112.8,
     "recent_rating_changes": [
       {
         "date": "2026-07-30T18:13:46",
@@ -309,30 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07126686569094519,
+  "options_implied_move": 0.07269503349425854,
   "technicals": {
-    "ma20": 115.54749984741211,
-    "ma50": 102.23300003051757,
-    "ma200": 66.25400016784668,
-    "rsi14": 48.50299400665676,
+    "ma20": 115.94949989318847,
+    "ma50": 103.5384001159668,
+    "ma200": 66.63095016479492,
+    "rsi14": 51.99860005853599,
     "high_20d": 126.37999725341797,
-    "low_5d": 108.7249984741211,
-    "low_10d": 108.7249984741211,
+    "low_5d": 108.7300033569336,
+    "low_10d": 108.7300033569336,
     "high_52w": 126.37999725341797,
     "low_52w": 28.65999984741211,
-    "atr14": 4.3325010027204245,
-    "atr14_pct": 3.9233007251176866,
-    "position_in_52w_range_pct": 83.67785778588048
+    "atr14": 4.396428789411273,
+    "atr14_pct": 3.8975431475777436,
+    "position_in_52w_range_pct": 86.10315742719663
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 35.06,
-      "high": 35.54,
-      "low": 34.11,
-      "close": 34.26,
-      "volume": 579400.0
-    },
     {
       "date": "2024-09-04",
       "open": 34.13,
@@ -4310,6 +4302,14 @@
       "volume": 640500.0
     },
     {
+      "date": "2026-08-28",
+      "open": 117.14,
+      "high": 118.67,
+      "low": 112.97,
+      "close": 113.88,
+      "volume": 917900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 113.64,
       "high": 114.53,
@@ -4327,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": 113.39,
+      "open": 113.38,
       "high": 115.78,
-      "low": 108.725,
+      "low": 108.73,
       "close": 110.43,
-      "volume": 951109.0
+      "volume": 960800.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 110.38,
+      "high": 114.61,
+      "low": 109.43,
+      "close": 112.8,
+      "volume": 611100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 69.33,
-      "high": 71.61,
-      "low": 69.33,
-      "close": 71.38,
-      "volume": 806300.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 71.43,
-      "high": 72.52,
-      "low": 70.74,
-      "close": 71.34,
-      "volume": 405900.0
-    },
     {
       "date": "2025-09-04",
       "open": 71.48,
@@ -6328,6 +6320,14 @@
       "volume": 640500.0
     },
     {
+      "date": "2026-08-28",
+      "open": 117.14,
+      "high": 118.67,
+      "low": 112.97,
+      "close": 113.88,
+      "volume": 917900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 113.64,
       "high": 114.53,
@@ -6345,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": 113.39,
+      "open": 113.38,
       "high": 115.78,
-      "low": 108.725,
+      "low": 108.73,
       "close": 110.43,
-      "volume": 951109.0
+      "volume": 960800.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 110.38,
+      "high": 114.61,
+      "low": 109.43,
+      "close": 112.8,
+      "volume": 611100.0
     }
   ],
   "ai_synthesis": null,

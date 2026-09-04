@@ -1,8 +1,8 @@
 {
   "ticker": "HNST",
-  "fetched_at": "2026-09-03T00:01:04Z",
+  "fetched_at": "2026-09-04T06:35:59Z",
   "_schema": "v2",
-  "current_price": 5.72,
+  "current_price": 5.849999904632568,
   "info": {
     "symbol": "HNST",
     "longName": "The Honest Company, Inc.",
@@ -13,13 +13,13 @@
     "city": "Los Angeles",
     "website": "https://www.honest.com",
     "fullTimeEmployees": 174,
-    "marketCap": 613666624,
-    "enterpriseValue": 517275648,
+    "marketCap": 627613568,
+    "enterpriseValue": 531222624,
     "trailingPE": null,
-    "forwardPE": 48.847137,
-    "priceToSalesTrailing12Months": 1.7942945,
-    "enterpriseToRevenue": 1.512,
-    "priceToBook": 3.73612,
+    "forwardPE": 49.957302,
+    "priceToSalesTrailing12Months": 1.8350738,
+    "enterpriseToRevenue": 1.553,
+    "priceToBook": 3.8210318,
     "grossMargins": 0.40138,
     "operatingMargins": 0.04859,
     "profitMargins": -0.03556,
@@ -32,8 +32,8 @@
     "currentRatio": 3.942,
     "fiftyTwoWeekHigh": 5.96,
     "fiftyTwoWeekLow": 2.07,
-    "averageVolume": 2023209,
-    "averageVolume10days": 2411550,
+    "averageVolume": 2027404,
+    "averageVolume10days": 2442720,
     "beta": 2.171,
     "sharesOutstanding": 107284379,
     "sharesFloat": 96588126,
@@ -173,7 +173,7 @@
     "avg_price_target": 5.2,
     "high_price_target": 5.7,
     "low_price_target": 5.0,
-    "current_price": 5.72,
+    "current_price": 5.85,
     "recent_rating_changes": [
       {
         "date": "2026-08-13T14:47:19",
@@ -309,28 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.14685314685314688,
+  "options_implied_move": 0.1589743615659789,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 69.99849299211729,
-    "high_20d": 5.909999847412109,
-    "low_5d": 5.429999828338623,
-    "low_10d": 4.800000190734863,
-    "high_52w": 5.909999847412109,
+    "ma20": 5.304500031471252,
+    "ma50": 4.446700029373169,
+    "ma200": 3.2889250099658964,
+    "rsi14": 72.47821672648334,
+    "high_20d": 5.960000038146973,
+    "low_5d": 5.5,
+    "low_10d": 4.900000095367432,
+    "high_52w": 5.960000038146973,
     "low_52w": 2.069999933242798,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.2778570992606027,
+    "atr14_pct": 4.749694081884854,
+    "position_in_52w_range_pct": 97.17223314786739
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 4.63,
-      "high": 4.67,
-      "low": 4.24,
-      "close": 4.3,
-      "volume": 1433600.0
-    },
     {
       "date": "2024-09-04",
       "open": 4.25,
@@ -4308,6 +4302,14 @@
       "volume": 2341400.0
     },
     {
+      "date": "2026-08-28",
+      "open": 5.77,
+      "high": 5.96,
+      "low": 5.66,
+      "close": 5.67,
+      "volume": 3036300.0
+    },
+    {
       "date": "2026-08-31",
       "open": 5.58,
       "high": 5.78,
@@ -4325,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2212706.0
+      "open": 5.59,
+      "high": 5.84,
+      "low": 5.5,
+      "close": 5.72,
+      "volume": 2372800.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 5.89,
+      "high": 5.928,
+      "low": 5.7,
+      "close": 5.85,
+      "volume": 2564900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 3.83,
-      "high": 3.89,
-      "low": 3.79,
-      "close": 3.84,
-      "volume": 2815300.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 3.87,
-      "high": 4.1,
-      "low": 3.87,
-      "close": 3.96,
-      "volume": 3750800.0
-    },
     {
       "date": "2025-09-04",
       "open": 3.96,
@@ -6326,6 +6320,14 @@
       "volume": 2341400.0
     },
     {
+      "date": "2026-08-28",
+      "open": 5.77,
+      "high": 5.96,
+      "low": 5.66,
+      "close": 5.67,
+      "volume": 3036300.0
+    },
+    {
       "date": "2026-08-31",
       "open": 5.58,
       "high": 5.78,
@@ -6343,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2212706.0
+      "open": 5.59,
+      "high": 5.84,
+      "low": 5.5,
+      "close": 5.72,
+      "volume": 2372800.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 5.89,
+      "high": 5.928,
+      "low": 5.7,
+      "close": 5.85,
+      "volume": 2564900.0
     }
   ],
   "ai_synthesis": null,

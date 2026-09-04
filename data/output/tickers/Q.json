@@ -1,8 +1,8 @@
 {
   "ticker": "Q",
-  "fetched_at": "2026-09-03T00:02:18Z",
+  "fetched_at": "2026-09-04T06:37:13Z",
   "_schema": "v2",
-  "current_price": 117.69,
+  "current_price": 118.47000122070312,
   "info": {
     "symbol": "Q",
     "longName": "Qnity Electronics, Inc.",
@@ -13,13 +13,13 @@
     "city": "Wilmington",
     "website": "https://www.qnityelectronics.com",
     "fullTimeEmployees": 10000,
-    "marketCap": 24621754368,
-    "enterpriseValue": 28474753024,
-    "trailingPE": 42.182796,
-    "forwardPE": 21.88303,
-    "priceToSalesTrailing12Months": 4.725865,
-    "enterpriseToRevenue": 5.465,
-    "priceToBook": 3.3939903,
+    "marketCap": 24800415744,
+    "enterpriseValue": 28637935616,
+    "trailingPE": 42.01064,
+    "forwardPE": 22.028063,
+    "priceToSalesTrailing12Months": 4.7601566,
+    "enterpriseToRevenue": 5.497,
+    "priceToBook": 3.416484,
     "grossMargins": 0.46219003,
     "operatingMargins": 0.22323,
     "profitMargins": 0.11248,
@@ -32,10 +32,10 @@
     "currentRatio": 2.008,
     "fiftyTwoWeekHigh": 177.28,
     "fiftyTwoWeekLow": 70.5,
-    "averageVolume": 1958719,
-    "averageVolume10days": 1984170,
+    "averageVolume": 1976033,
+    "averageVolume10days": 2001810,
     "beta": null,
-    "sharesOutstanding": 209208543,
+    "sharesOutstanding": 209339207,
     "sharesFloat": 208698074,
     "companyOfficers": [
       {
@@ -43,6 +43,12 @@
         "title": "CEO & Director",
         "age": 48,
         "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Peter W. Hennessey",
+        "title": "SVP & General Counsel",
+        "age": 47,
+        "yearBorn": 1978
       },
       {
         "name": "Ms. Kathleen  Fortebuono",
@@ -57,22 +63,16 @@
         "yearBorn": 1965
       },
       {
+        "name": "Mr. Michael G. Goss",
+        "title": "Interim CFO, VP, Principal Accounting Officer & Controller",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
         "name": "Mr. John Francis Singer",
         "title": "Chief Operations & Engineering Officer",
         "age": 60,
         "yearBorn": 1965
-      },
-      {
-        "name": "Mr. Randy  King",
-        "title": "Chief Technology & Sustainability Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Bruce  Mathews",
-        "title": "Chief Information Officer",
-        "age": null,
-        "yearBorn": null
       }
     ]
   },
@@ -173,7 +173,7 @@
     "avg_price_target": 176.75,
     "high_price_target": 189.0,
     "low_price_target": 150.0,
-    "current_price": 117.69,
+    "current_price": 118.47,
     "recent_rating_changes": [
       {
         "date": "2026-07-14T14:20:54",
@@ -309,18 +309,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.09873396210383212,
+  "options_implied_move": 0.10382375177903286,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 32.241157369124736,
+    "ma20": 129.78478355407714,
+    "ma50": 136.44664108276368,
+    "ma200": 121.2826342010498,
+    "rsi14": 36.65450131392125,
     "high_20d": 146.57241988740495,
     "low_5d": 113.33000183105469,
     "low_10d": 113.33000183105469,
     "high_52w": 177.16207129619235,
-    "low_52w": 70.31920605144661,
-    "position_in_52w_range_pct": NaN
+    "low_52w": 70.31921169543715,
+    "atr14": 5.722831924996137,
+    "atr14_pct": 4.830616920763607,
+    "position_in_52w_range_pct": 45.06692324147193
   },
   "ohlc_2y": [
     {
@@ -416,7 +418,7 @@
       "open": 98.1975,
       "high": 101.888,
       "low": 95.2551,
-      "close": 96.2825,
+      "close": 96.2824,
       "volume": 2492600.0
     },
     {
@@ -494,9 +496,9 @@
     {
       "date": "2025-11-25",
       "open": 72.8128,
-      "high": 78.8572,
-      "low": 72.7529,
-      "close": 77.8099,
+      "high": 78.8573,
+      "low": 72.753,
+      "close": 77.81,
       "volume": 3033500.0
     },
     {
@@ -605,7 +607,7 @@
     },
     {
       "date": "2025-12-16",
-      "open": 76.3616,
+      "open": 76.3617,
       "high": 78.9869,
       "low": 76.0023,
       "close": 78.358,
@@ -661,7 +663,7 @@
     },
     {
       "date": "2025-12-26",
-      "open": 83.4787,
+      "open": 83.4788,
       "high": 84.2773,
       "low": 83.324,
       "close": 84.0577,
@@ -765,8 +767,8 @@
     },
     {
       "date": "2026-01-15",
-      "open": 93.4706,
-      "high": 97.663,
+      "open": 93.4707,
+      "high": 97.6631,
       "low": 92.722,
       "close": 92.9516,
       "volume": 4533800.0
@@ -799,7 +801,7 @@
       "date": "2026-01-22",
       "open": 105.8083,
       "high": 107.645,
-      "low": 97.723,
+      "low": 97.7229,
       "close": 98.5814,
       "volume": 3652300.0
     },
@@ -829,7 +831,7 @@
     },
     {
       "date": "2026-01-28",
-      "open": 100.7575,
+      "open": 100.7574,
       "high": 102.9135,
       "low": 99.0705,
       "close": 102.2448,
@@ -854,7 +856,7 @@
     {
       "date": "2026-02-02",
       "open": 96.056,
-      "high": 100.6476,
+      "high": 100.6477,
       "low": 95.7266,
       "close": 100.4879,
       "volume": 1998200.0
@@ -903,13 +905,13 @@
       "date": "2026-02-10",
       "open": 108.0642,
       "high": 112.2057,
-      "low": 107.1578,
+      "low": 107.1579,
       "close": 109.1023,
       "volume": 4257600.0
     },
     {
       "date": "2026-02-11",
-      "open": 110.4199,
+      "open": 110.42,
       "high": 114.6722,
       "low": 108.8628,
       "close": 114.3029,
@@ -1005,7 +1007,7 @@
     },
     {
       "date": "2026-03-02",
-      "open": 124.2846,
+      "open": 124.2847,
       "high": 125.9227,
       "low": 121.1483,
       "close": 123.9251,
@@ -1117,7 +1119,7 @@
     },
     {
       "date": "2026-03-20",
-      "open": 110.9402,
+      "open": 110.9403,
       "high": 111.8142,
       "low": 106.0959,
       "close": 107.4643,
@@ -1302,7 +1304,7 @@
     {
       "date": "2026-04-23",
       "open": 138.4381,
-      "high": 145.8294,
+      "high": 145.8295,
       "low": 138.2383,
       "close": 139.9663,
       "volume": 2629000.0
@@ -1414,7 +1416,7 @@
     {
       "date": "2026-05-13",
       "open": 170.5206,
-      "high": 171.3197,
+      "high": 171.3196,
       "low": 160.0328,
       "close": 161.8307,
       "volume": 2660600.0
@@ -1423,7 +1425,7 @@
       "date": "2026-05-14",
       "open": 163.4089,
       "high": 165.3716,
-      "low": 160.702,
+      "low": 160.7021,
       "close": 163.9283,
       "volume": 2162300.0
     },
@@ -2029,11 +2031,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2101422.0
+      "open": 116.58,
+      "high": 118.77,
+      "low": 114.75,
+      "close": 117.69,
+      "volume": 2101600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 117.65,
+      "high": 119.12,
+      "low": 114.39,
+      "close": 118.47,
+      "volume": 1537100.0
     }
   ],
   "ohlc_1y": [
@@ -2130,7 +2140,7 @@
       "open": 98.1975,
       "high": 101.888,
       "low": 95.2551,
-      "close": 96.2825,
+      "close": 96.2824,
       "volume": 2492600.0
     },
     {
@@ -2208,9 +2218,9 @@
     {
       "date": "2025-11-25",
       "open": 72.8128,
-      "high": 78.8572,
-      "low": 72.7529,
-      "close": 77.8099,
+      "high": 78.8573,
+      "low": 72.753,
+      "close": 77.81,
       "volume": 3033500.0
     },
     {
@@ -2319,7 +2329,7 @@
     },
     {
       "date": "2025-12-16",
-      "open": 76.3616,
+      "open": 76.3617,
       "high": 78.9869,
       "low": 76.0023,
       "close": 78.358,
@@ -2375,7 +2385,7 @@
     },
     {
       "date": "2025-12-26",
-      "open": 83.4787,
+      "open": 83.4788,
       "high": 84.2773,
       "low": 83.324,
       "close": 84.0577,
@@ -2479,8 +2489,8 @@
     },
     {
       "date": "2026-01-15",
-      "open": 93.4706,
-      "high": 97.663,
+      "open": 93.4707,
+      "high": 97.6631,
       "low": 92.722,
       "close": 92.9516,
       "volume": 4533800.0
@@ -2513,7 +2523,7 @@
       "date": "2026-01-22",
       "open": 105.8083,
       "high": 107.645,
-      "low": 97.723,
+      "low": 97.7229,
       "close": 98.5814,
       "volume": 3652300.0
     },
@@ -2543,7 +2553,7 @@
     },
     {
       "date": "2026-01-28",
-      "open": 100.7575,
+      "open": 100.7574,
       "high": 102.9135,
       "low": 99.0705,
       "close": 102.2448,
@@ -2568,7 +2578,7 @@
     {
       "date": "2026-02-02",
       "open": 96.056,
-      "high": 100.6476,
+      "high": 100.6477,
       "low": 95.7266,
       "close": 100.4879,
       "volume": 1998200.0
@@ -2617,13 +2627,13 @@
       "date": "2026-02-10",
       "open": 108.0642,
       "high": 112.2057,
-      "low": 107.1578,
+      "low": 107.1579,
       "close": 109.1023,
       "volume": 4257600.0
     },
     {
       "date": "2026-02-11",
-      "open": 110.4199,
+      "open": 110.42,
       "high": 114.6722,
       "low": 108.8628,
       "close": 114.3029,
@@ -2719,7 +2729,7 @@
     },
     {
       "date": "2026-03-02",
-      "open": 124.2846,
+      "open": 124.2847,
       "high": 125.9227,
       "low": 121.1483,
       "close": 123.9251,
@@ -2831,7 +2841,7 @@
     },
     {
       "date": "2026-03-20",
-      "open": 110.9402,
+      "open": 110.9403,
       "high": 111.8142,
       "low": 106.0959,
       "close": 107.4643,
@@ -3016,7 +3026,7 @@
     {
       "date": "2026-04-23",
       "open": 138.4381,
-      "high": 145.8294,
+      "high": 145.8295,
       "low": 138.2383,
       "close": 139.9663,
       "volume": 2629000.0
@@ -3128,7 +3138,7 @@
     {
       "date": "2026-05-13",
       "open": 170.5206,
-      "high": 171.3197,
+      "high": 171.3196,
       "low": 160.0328,
       "close": 161.8307,
       "volume": 2660600.0
@@ -3137,7 +3147,7 @@
       "date": "2026-05-14",
       "open": 163.4089,
       "high": 165.3716,
-      "low": 160.702,
+      "low": 160.7021,
       "close": 163.9283,
       "volume": 2162300.0
     },
@@ -3743,11 +3753,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2101422.0
+      "open": 116.58,
+      "high": 118.77,
+      "low": 114.75,
+      "close": 117.69,
+      "volume": 2101600.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 117.65,
+      "high": 119.12,
+      "low": 114.39,
+      "close": 118.47,
+      "volume": 1537100.0
     }
   ],
   "ai_synthesis": null,

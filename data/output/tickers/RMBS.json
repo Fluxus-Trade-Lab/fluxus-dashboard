@@ -1,8 +1,8 @@
 {
   "ticker": "RMBS",
-  "fetched_at": "2026-09-03T00:02:30Z",
+  "fetched_at": "2026-09-04T06:37:25Z",
   "_schema": "v2",
-  "current_price": 84.72,
+  "current_price": 84.33999633789062,
   "info": {
     "symbol": "RMBS",
     "longName": "Rambus Inc.",
@@ -13,13 +13,13 @@
     "city": "San Jose",
     "website": "https://www.rambus.com",
     "fullTimeEmployees": 791,
-    "marketCap": 9188867072,
-    "enterpriseValue": 8385721856,
-    "trailingPE": 38.862385,
-    "forwardPE": 22.917923,
-    "priceToSalesTrailing12Months": 12.149266,
-    "enterpriseToRevenue": 11.087,
-    "priceToBook": 6.265345,
+    "marketCap": 9120271360,
+    "enterpriseValue": 8344506368,
+    "trailingPE": 38.866356,
+    "forwardPE": 22.815126,
+    "priceToSalesTrailing12Months": 12.058571,
+    "enterpriseToRevenue": 11.033,
+    "priceToBook": 6.2372427,
     "grossMargins": 0.80357003,
     "operatingMargins": 0.36671,
     "profitMargins": 0.3169,
@@ -32,10 +32,10 @@
     "currentRatio": 9.754,
     "fiftyTwoWeekHigh": 174.1,
     "fiftyTwoWeekLow": 72.45,
-    "averageVolume": 2907107,
-    "averageVolume10days": 1894200,
+    "averageVolume": 2915408,
+    "averageVolume10days": 1754250,
     "beta": 1.887,
-    "sharesOutstanding": 108461603,
+    "sharesOutstanding": 108136967,
     "sharesFloat": 107614518,
     "companyOfficers": [
       {
@@ -173,7 +173,7 @@
     "avg_price_target": 147.5,
     "high_price_target": 180.0,
     "low_price_target": 100.0,
-    "current_price": 84.72,
+    "current_price": 84.34,
     "recent_rating_changes": [
       {
         "date": "2025-04-29T11:03:34",
@@ -309,28 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.10151085930122757,
+  "options_implied_move": 0.09331278565000743,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 36.40173953454589,
+    "ma20": 92.37799987792968,
+    "ma50": 99.87320022583008,
+    "ma200": 107.99999996185302,
+    "rsi14": 36.543656549598666,
     "high_20d": 104.11000061035156,
-    "low_5d": 82.97000122070312,
-    "low_10d": 82.97000122070312,
+    "low_5d": 81.4800033569336,
+    "low_10d": 81.4800033569336,
     "high_52w": 174.10000610351562,
     "low_52w": 72.44999694824219,
-    "position_in_52w_range_pct": NaN
+    "atr14": 4.089285169328962,
+    "atr14_pct": 4.8485716704872655,
+    "position_in_52w_range_pct": 11.696997854162616
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 43.41,
-      "high": 43.75,
-      "low": 40.38,
-      "close": 40.58,
-      "volume": 2588400.0
-    },
     {
       "date": "2024-09-04",
       "open": 40.19,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2181925.0
+      "open": 84.05,
+      "high": 84.8,
+      "low": 82.09,
+      "close": 84.72,
+      "volume": 2182300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 83.45,
+      "high": 84.82,
+      "low": 81.48,
+      "close": 84.34,
+      "volume": 1958800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 73.52,
-      "high": 74.87,
-      "low": 72.68,
-      "close": 73.67,
-      "volume": 1027300.0
-    },
     {
       "date": "2025-09-04",
       "open": 73.49,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 2181925.0
+      "open": 84.05,
+      "high": 84.8,
+      "low": 82.09,
+      "close": 84.72,
+      "volume": 2182300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 83.45,
+      "high": 84.82,
+      "low": 81.48,
+      "close": 84.34,
+      "volume": 1958800.0
     }
   ],
   "ai_synthesis": null,

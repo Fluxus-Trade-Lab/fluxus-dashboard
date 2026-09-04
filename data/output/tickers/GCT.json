@@ -1,8 +1,8 @@
 {
   "ticker": "GCT",
-  "fetched_at": "2026-09-03T00:00:47Z",
+  "fetched_at": "2026-09-04T06:35:43Z",
   "_schema": "v2",
-  "current_price": 50.5,
+  "current_price": 50.869998931884766,
   "info": {
     "symbol": "GCT",
     "longName": "GigaCloud Technology Inc.",
@@ -13,13 +13,13 @@
     "city": "El Monte",
     "website": "https://www.gigacloudtech.com",
     "fullTimeEmployees": 1644,
-    "marketCap": 1803366912,
-    "enterpriseValue": 1820655872,
-    "trailingPE": 12.02381,
-    "forwardPE": 10.455486,
-    "priceToSalesTrailing12Months": 1.2296947,
-    "enterpriseToRevenue": 1.241,
-    "priceToBook": 3.4234967,
+    "marketCap": 1816579712,
+    "enterpriseValue": 1945641728,
+    "trailingPE": 11.997642,
+    "forwardPE": 10.532091,
+    "priceToSalesTrailing12Months": 1.2387043,
+    "enterpriseToRevenue": 1.327,
+    "priceToBook": 3.4485795,
     "grossMargins": 0.23961,
     "operatingMargins": 0.115439996,
     "profitMargins": 0.10647,
@@ -31,9 +31,9 @@
     "debtToEquity": 94.92,
     "currentRatio": 2.091,
     "fiftyTwoWeekHigh": 56.27,
-    "fiftyTwoWeekLow": 25.15,
-    "averageVolume": 672546,
-    "averageVolume10days": 510630,
+    "fiftyTwoWeekLow": 25.39,
+    "averageVolume": 667945,
+    "averageVolume10days": 514620,
     "beta": 1.643,
     "sharesOutstanding": 28839563,
     "sharesFloat": 26810889,
@@ -173,7 +173,7 @@
     "avg_price_target": 57.0,
     "high_price_target": 73.0,
     "low_price_target": 40.0,
-    "current_price": 50.5,
+    "current_price": 50.87,
     "recent_rating_changes": [
       {
         "date": "2025-08-08T22:25:33",
@@ -309,28 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.08,
+  "options_implied_move": 0.09534106746285131,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 49.162681277965504,
-    "high_20d": 56.27000045776367,
+    "ma20": 51.03600006103515,
+    "ma50": 43.061399955749515,
+    "ma200": 40.63190001487732,
+    "rsi14": 56.64606833873166,
+    "high_20d": 54.77000045776367,
     "low_5d": 46.0099983215332,
     "low_10d": 46.0099983215332,
     "high_52w": 56.27000045776367,
-    "low_52w": 25.149999618530273,
-    "position_in_52w_range_pct": NaN
+    "low_52w": 25.202999114990234,
+    "atr14": 2.416571480887277,
+    "atr14_pct": 4.750484630681987,
+    "position_in_52w_range_pct": 82.61820809064015
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 20.15,
-      "high": 21.45,
-      "low": 20.0,
-      "close": 21.05,
-      "volume": 1992300.0
-    },
     {
       "date": "2024-09-04",
       "open": 20.54,
@@ -4308,6 +4302,14 @@
       "volume": 307500.0
     },
     {
+      "date": "2026-08-28",
+      "open": 51.83,
+      "high": 53.71,
+      "low": 51.6,
+      "close": 52.95,
+      "volume": 896900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 52.15,
       "high": 52.388,
@@ -4325,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 452267.0
+      "open": 47.5,
+      "high": 50.668,
+      "low": 47.235,
+      "close": 50.5,
+      "volume": 452300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 50.955,
+      "high": 52.118,
+      "low": 50.74,
+      "close": 50.87,
+      "volume": 574800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 26.1,
-      "high": 26.32,
-      "low": 25.363,
-      "close": 25.44,
-      "volume": 583700.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 25.6,
-      "high": 25.89,
-      "low": 25.15,
-      "close": 25.56,
-      "volume": 756000.0
-    },
     {
       "date": "2025-09-04",
       "open": 25.63,
@@ -6326,6 +6320,14 @@
       "volume": 307500.0
     },
     {
+      "date": "2026-08-28",
+      "open": 51.83,
+      "high": 53.71,
+      "low": 51.6,
+      "close": 52.95,
+      "volume": 896900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 52.15,
       "high": 52.388,
@@ -6343,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 452267.0
+      "open": 47.5,
+      "high": 50.668,
+      "low": 47.235,
+      "close": 50.5,
+      "volume": 452300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 50.955,
+      "high": 52.118,
+      "low": 50.74,
+      "close": 50.87,
+      "volume": 574800.0
     }
   ],
   "ai_synthesis": null,

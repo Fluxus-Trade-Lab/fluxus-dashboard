@@ -1,8 +1,8 @@
 {
   "ticker": "NEO",
-  "fetched_at": "2026-09-03T00:01:52Z",
+  "fetched_at": "2026-09-04T06:36:44Z",
   "_schema": "v2",
-  "current_price": 17.4,
+  "current_price": 17.459999084472656,
   "info": {
     "symbol": "NEO",
     "longName": "NeoGenomics, Inc.",
@@ -13,13 +13,13 @@
     "city": "Fort Myers",
     "website": "https://www.neogenomics.com",
     "fullTimeEmployees": 2500,
-    "marketCap": 2235472640,
-    "enterpriseValue": 2544725504,
+    "marketCap": 2273497600,
+    "enterpriseValue": 2546010112,
     "trailingPE": null,
-    "forwardPE": 50.634384,
-    "priceToSalesTrailing12Months": 2.9172482,
-    "enterpriseToRevenue": 3.321,
-    "priceToBook": 2.8329532,
+    "forwardPE": 50.808983,
+    "priceToSalesTrailing12Months": 2.96687,
+    "enterpriseToRevenue": 3.322,
+    "priceToBook": 2.842722,
     "grossMargins": 0.43917,
     "operatingMargins": -0.048449997,
     "profitMargins": -0.0677,
@@ -32,10 +32,10 @@
     "currentRatio": 3.603,
     "fiftyTwoWeekHigh": 19.76,
     "fiftyTwoWeekLow": 7.07,
-    "averageVolume": 2844323,
-    "averageVolume10days": 1881430,
+    "averageVolume": 2852458,
+    "averageVolume10days": 1904700,
     "beta": 1.73,
-    "sharesOutstanding": 128475440,
+    "sharesOutstanding": 130211780,
     "sharesFloat": 117018000,
     "companyOfficers": [
       {
@@ -57,6 +57,12 @@
         "yearBorn": 1976
       },
       {
+        "name": "Ms. Alicia C. Olivo",
+        "title": "Executive VP of Business Development & General Counsel",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
         "name": "Mr. Gary  Passman",
         "title": "Chief People & Culture Officer",
         "age": null,
@@ -67,12 +73,6 @@
         "title": "Executive VP & CFO",
         "age": 49,
         "yearBorn": 1976
-      },
-      {
-        "name": "Mr. Gregory D. Aunan",
-        "title": "Senior VP & Chief Accounting Officer",
-        "age": 56,
-        "yearBorn": 1969
       }
     ]
   },
@@ -173,7 +173,7 @@
     "avg_price_target": 19.72222,
     "high_price_target": 35.0,
     "low_price_target": 16.0,
-    "current_price": 17.4,
+    "current_price": 17.46,
     "recent_rating_changes": [
       {
         "date": "2026-07-29T09:37:58",
@@ -309,28 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.12931034482758622,
+  "options_implied_move": 0.11111111693730044,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 59.51307082444367,
+    "ma20": 16.909499883651733,
+    "ma50": 15.546399936676025,
+    "ma200": 11.628650016784668,
+    "rsi14": 59.06971879402847,
     "high_20d": 19.760000228881836,
-    "low_5d": 16.579999923706055,
-    "low_10d": 15.979999542236328,
+    "low_5d": 17.049999237060547,
+    "low_10d": 16.209999084472656,
     "high_52w": 19.760000228881836,
     "low_52w": 7.070000171661377,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.890714168548584,
+    "atr14_pct": 5.101455986562477,
+    "position_in_52w_range_pct": 81.87548357731876
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 16.21,
-      "high": 16.5,
-      "low": 15.77,
-      "close": 15.87,
-      "volume": 570300.0
-    },
     {
       "date": "2024-09-04",
       "open": 15.73,
@@ -4308,6 +4302,14 @@
       "volume": 5098000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 18.36,
+      "high": 18.75,
+      "low": 17.89,
+      "close": 18.05,
+      "volume": 1723900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 17.77,
       "high": 18.08,
@@ -4325,30 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1794474.0
+      "open": 17.4,
+      "high": 18.18,
+      "low": 17.26,
+      "close": 17.4,
+      "volume": 1794500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 17.5,
+      "high": 17.9,
+      "low": 17.05,
+      "close": 17.46,
+      "volume": 2247400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-02",
-      "open": 8.76,
-      "high": 9.04,
-      "low": 8.55,
-      "close": 8.81,
-      "volume": 5658800.0
-    },
-    {
-      "date": "2025-09-03",
-      "open": 8.85,
-      "high": 8.85,
-      "low": 8.16,
-      "close": 8.19,
-      "volume": 3430900.0
-    },
     {
       "date": "2025-09-04",
       "open": 8.14,
@@ -6326,6 +6320,14 @@
       "volume": 5098000.0
     },
     {
+      "date": "2026-08-28",
+      "open": 18.36,
+      "high": 18.75,
+      "low": 17.89,
+      "close": 18.05,
+      "volume": 1723900.0
+    },
+    {
       "date": "2026-08-31",
       "open": 17.77,
       "high": 18.08,
@@ -6343,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 1794474.0
+      "open": 17.4,
+      "high": 18.18,
+      "low": 17.26,
+      "close": 17.4,
+      "volume": 1794500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 17.5,
+      "high": 17.9,
+      "low": 17.05,
+      "close": 17.46,
+      "volume": 2247400.0
     }
   ],
   "ai_synthesis": null,

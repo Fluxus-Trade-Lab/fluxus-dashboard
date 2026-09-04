@@ -1,8 +1,8 @@
 {
   "ticker": "IOVA",
-  "fetched_at": "2026-09-03T00:01:13Z",
+  "fetched_at": "2026-09-04T06:36:07Z",
   "_schema": "v2",
-  "current_price": 8.62,
+  "current_price": 8.699999809265137,
   "info": {
     "symbol": "IOVA",
     "longName": "Iovance Biotherapeutics, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Carlos",
     "website": "https://www.iovance.com",
     "fullTimeEmployees": 975,
-    "marketCap": 3904613632,
-    "enterpriseValue": 3652944640,
+    "marketCap": 3940851200,
+    "enterpriseValue": 3689182464,
     "trailingPE": null,
-    "forwardPE": -30.004524,
-    "priceToSalesTrailing12Months": 12.015342,
-    "enterpriseToRevenue": 11.241,
-    "priceToBook": 5.3046155,
+    "forwardPE": -30.282988,
+    "priceToSalesTrailing12Months": 12.126853,
+    "enterpriseToRevenue": 11.352,
+    "priceToBook": 5.353846,
     "grossMargins": 0.48401,
     "operatingMargins": -0.52264,
     "profitMargins": -0.89091,
@@ -32,8 +32,8 @@
     "currentRatio": 4.345,
     "fiftyTwoWeekHigh": 9.36,
     "fiftyTwoWeekLow": 1.76,
-    "averageVolume": 16448960,
-    "averageVolume10days": 16760830,
+    "averageVolume": 16393641,
+    "averageVolume10days": 15575320,
     "beta": 0.701,
     "sharesOutstanding": 452971432,
     "sharesFloat": 394361458,
@@ -173,7 +173,7 @@
     "avg_price_target": 10.0,
     "high_price_target": 14.0,
     "low_price_target": 6.0,
-    "current_price": 8.62,
+    "current_price": 8.7,
     "recent_rating_changes": [
       {
         "date": "2026-08-25T13:59:54",
@@ -309,28 +309,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.05220417633410673,
+  "options_implied_move": 0.04022988593945308,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 65.94651797806347,
+    "ma20": 7.67449996471405,
+    "ma50": 5.806599988937378,
+    "ma200": 3.8965500020980834,
+    "rsi14": 69.1432812203833,
     "high_20d": 9.359999656677246,
     "low_5d": 7.659999847412109,
     "low_10d": 7.659999847412109,
     "high_52w": 9.359999656677246,
     "low_52w": 1.7599999904632568,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.5921428884778704,
+    "atr14_pct": 6.806240246663718,
+    "position_in_52w_range_pct": 91.315791100016
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 11.5,
-      "high": 11.8,
-      "low": 10.76,
-      "close": 10.85,
-      "volume": 6597500.0
-    },
     {
       "date": "2024-09-04",
       "open": 10.74,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 12296857.0
+      "open": 8.31,
+      "high": 8.69,
+      "low": 8.3,
+      "close": 8.62,
+      "volume": 12393200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.65,
+      "high": 8.79,
+      "low": 8.55,
+      "close": 8.7,
+      "volume": 14590700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 2.18,
-      "high": 2.28,
-      "low": 2.15,
-      "close": 2.21,
-      "volume": 7318400.0
-    },
     {
       "date": "2025-09-04",
       "open": 2.2,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 12296857.0
+      "open": 8.31,
+      "high": 8.69,
+      "low": 8.3,
+      "close": 8.62,
+      "volume": 12393200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 8.65,
+      "high": 8.79,
+      "low": 8.55,
+      "close": 8.7,
+      "volume": 14590700.0
     }
   ],
   "ai_synthesis": null,

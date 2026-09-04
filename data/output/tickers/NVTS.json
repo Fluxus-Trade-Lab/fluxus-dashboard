@@ -1,8 +1,8 @@
 {
   "ticker": "NVTS",
-  "fetched_at": "2026-09-03T00:02:05Z",
+  "fetched_at": "2026-09-04T06:36:59Z",
   "_schema": "v2",
-  "current_price": 11.21,
+  "current_price": 11.100000381469727,
   "info": {
     "symbol": "NVTS",
     "longName": "Navitas Semiconductor Corporation",
@@ -13,13 +13,13 @@
     "city": "Torrance",
     "website": "https://navitassemi.com",
     "fullTimeEmployees": 190,
-    "marketCap": 2926857984,
-    "enterpriseValue": 2378501376,
+    "marketCap": 2898137856,
+    "enterpriseValue": 2345864704,
     "trailingPE": null,
-    "forwardPE": -88.95413,
-    "priceToSalesTrailing12Months": 80.11107,
-    "enterpriseToRevenue": 65.102,
-    "priceToBook": 3.651466,
+    "forwardPE": -88.08126,
+    "priceToSalesTrailing12Months": 79.324974,
+    "enterpriseToRevenue": 64.209,
+    "priceToBook": 3.6156354,
     "grossMargins": 0.3812,
     "operatingMargins": -2.54972,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 21.793,
     "fiftyTwoWeekHigh": 34.17,
     "fiftyTwoWeekLow": 5.44,
-    "averageVolume": 19842947,
-    "averageVolume10days": 12555420,
+    "averageVolume": 17806775,
+    "averageVolume10days": 12153050,
     "beta": 3.882,
     "sharesOutstanding": 261093488,
     "sharesFloat": 242874384,
@@ -173,7 +173,7 @@
     "avg_price_target": 14.075,
     "high_price_target": 21.0,
     "low_price_target": 8.0,
-    "current_price": 11.21,
+    "current_price": 11.1,
     "recent_rating_changes": [
       {
         "date": "2026-07-28T12:29:57",
@@ -249,6 +249,12 @@
   },
   "news": [
     {
+      "date": "2026-09-03T02:11:21Z",
+      "title": "GLOBALFOUNDRIES (GFS) Draws Focus As GaN Shipments Start And Valuation Debate Deepens",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/globalfoundries-gfs-draws-focus-gan-021121815.html",
+      "source": "Simply Wall St."
+    },
+    {
       "date": "2026-09-02T20:10:38Z",
       "title": "What Could GLOBALFOUNDRIES (GFS) First U.S. GaN Shipments Mean For AI Demand?",
       "url": "https://finance.yahoo.com/technology/ai/articles/could-globalfoundries-gfs-first-u-201038457.html",
@@ -301,36 +307,24 @@
       "title": "Why Navitas Semiconductor Stock Is Up Today",
       "url": "https://www.fool.com/investing/2026/08/25/why-navitas-semiconductor-stock-is-up-today/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-25T11:11:49Z",
-      "title": "Navitas Accelerates AI Power Push With Claros Acquisition, Eyes $8 Billion Market",
-      "url": "https://finance.yahoo.com/technology/ai/articles/navitas-accelerates-ai-power-push-111149281.html",
-      "source": "Benzinga"
     }
   ],
-  "options_implied_move": 0.04817127564674398,
+  "options_implied_move": 0.03603603479759853,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 36.82830123301006,
+    "ma20": 12.77000002861023,
+    "ma50": 13.033900012969971,
+    "ma200": 12.889224998950958,
+    "rsi14": 38.5102760718107,
     "high_20d": 14.949999809265137,
     "low_5d": 10.800000190734863,
     "low_10d": 10.800000190734863,
     "high_52w": 34.16999816894531,
     "low_52w": 5.440000057220459,
-    "position_in_52w_range_pct": NaN
+    "atr14": 0.8229999542236328,
+    "atr14_pct": 7.414413747206207,
+    "position_in_52w_range_pct": 19.700663753052574
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 3.01,
-      "high": 3.035,
-      "low": 2.57,
-      "close": 2.58,
-      "volume": 4524600.0
-    },
     {
       "date": "2024-09-04",
       "open": 2.55,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7293532.0
+      "open": 10.86,
+      "high": 11.355,
+      "low": 10.84,
+      "close": 11.21,
+      "volume": 7345000.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.11,
+      "high": 11.385,
+      "low": 10.93,
+      "close": 11.1,
+      "volume": 12111300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 5.77,
-      "high": 5.85,
-      "low": 5.67,
-      "close": 5.73,
-      "volume": 9690100.0
-    },
     {
       "date": "2025-09-04",
       "open": 5.64,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7293532.0
+      "open": 10.86,
+      "high": 11.355,
+      "low": 10.84,
+      "close": 11.21,
+      "volume": 7345000.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.11,
+      "high": 11.385,
+      "low": 10.93,
+      "close": 11.1,
+      "volume": 12111300.0
     }
   ],
   "ai_synthesis": null,

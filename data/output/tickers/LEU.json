@@ -1,8 +1,8 @@
 {
   "ticker": "LEU",
-  "fetched_at": "2026-09-03T00:01:28Z",
+  "fetched_at": "2026-09-04T06:36:21Z",
   "_schema": "v2",
-  "current_price": 171.49,
+  "current_price": 170.4600067138672,
   "info": {
     "symbol": "LEU",
     "longName": "Centrus Energy Corp.",
@@ -13,13 +13,13 @@
     "city": "Bethesda",
     "website": "https://www.centrusenergy.com",
     "fullTimeEmployees": 467,
-    "marketCap": 3421715712,
-    "enterpriseValue": 2667265536,
-    "trailingPE": 90.73545,
-    "forwardPE": 44.862488,
-    "priceToSalesTrailing12Months": 7.2203326,
-    "enterpriseToRevenue": 5.628,
-    "priceToBook": 4.0474396,
+    "marketCap": 3401164288,
+    "enterpriseValue": 2710164224,
+    "trailingPE": 90.19048,
+    "forwardPE": 44.593037,
+    "priceToSalesTrailing12Months": 7.176966,
+    "enterpriseToRevenue": 5.719,
+    "priceToBook": 4.02313,
     "grossMargins": 0.23655,
     "operatingMargins": 0.053379998,
     "profitMargins": 0.102340005,
@@ -32,8 +32,8 @@
     "currentRatio": 5.395,
     "fiftyTwoWeekHigh": 464.25,
     "fiftyTwoWeekLow": 142.13,
-    "averageVolume": 771253,
-    "averageVolume10days": 607540,
+    "averageVolume": 766388,
+    "averageVolume10days": 615550,
     "beta": 1.35,
     "sharesOutstanding": 19233658,
     "sharesFloat": 19189063,
@@ -173,8 +173,15 @@
     "avg_price_target": 253.25,
     "high_price_target": 340.0,
     "low_price_target": 180.0,
-    "current_price": 171.49,
+    "current_price": 170.46,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-03T20:30:25",
+        "firm": "Jefferies",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-08-25T11:30:16",
         "firm": "Stifel",
@@ -236,13 +243,6 @@
         "firm": "B of A Securities",
         "to_grade": "Neutral",
         "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-09T11:01:40",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
         "action": "main"
       }
     ]
@@ -309,28 +309,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.1259548661729547,
+  "options_implied_move": 0.10500996887819439,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 44.180058592941485,
+    "ma20": 182.65999908447264,
+    "ma50": 174.13939971923827,
+    "ma200": 210.95855010986327,
+    "rsi14": 45.42417712957567,
     "high_20d": 208.57000732421875,
     "low_5d": 163.02999877929688,
     "low_10d": 163.02999877929688,
     "high_52w": 464.25,
     "low_52w": 142.1300048828125,
-    "position_in_52w_range_pct": NaN
+    "atr14": 12.244284493582589,
+    "atr14_pct": 7.183083427971317,
+    "position_in_52w_range_pct": 8.794859760490253
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-03",
-      "open": 38.65,
-      "high": 38.99,
-      "low": 35.58,
-      "close": 35.87,
-      "volume": 308600.0
-    },
     {
       "date": "2024-09-04",
       "open": 35.94,
@@ -4333,22 +4327,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 608054.0
+      "open": 168.09,
+      "high": 174.17,
+      "low": 165.98,
+      "close": 171.49,
+      "volume": 608300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 170.5,
+      "high": 175.6,
+      "low": 168.81,
+      "close": 170.46,
+      "volume": 431100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 207.5,
-      "high": 209.95,
-      "low": 197.88,
-      "close": 201.54,
-      "volume": 1061700.0
-    },
     {
       "date": "2025-09-04",
       "open": 202.0,
@@ -6351,11 +6345,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 608054.0
+      "open": 168.09,
+      "high": 174.17,
+      "low": 165.98,
+      "close": 171.49,
+      "volume": 608300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 170.5,
+      "high": 175.6,
+      "low": 168.81,
+      "close": 170.46,
+      "volume": 431100.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "OKLL",
-  "fetched_at": "2026-09-03T00:02:08Z",
+  "fetched_at": "2026-09-04T06:37:01Z",
   "_schema": "v2",
-  "current_price": 2.32,
+  "current_price": 2.3499999046325684,
   "info": {
     "symbol": "OKLL",
     "longName": "Defiance Daily Target 2X Long OKLO ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 169.957,
     "fiftyTwoWeekLow": 2.12,
-    "averageVolume": 12598465,
-    "averageVolume10days": 11124320,
+    "averageVolume": 12282952,
+    "averageVolume10days": 11081470,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,18 +49,20 @@
     "current_price": null
   },
   "news": [],
-  "options_implied_move": 0.2370689655172414,
+  "options_implied_move": 0.2510638399758781,
   "technicals": {
-    "ma20": NaN,
-    "ma50": NaN,
-    "ma200": NaN,
-    "rsi14": 39.33420418797562,
+    "ma20": 2.816500020027161,
+    "ma50": 3.280800013542175,
+    "ma200": 12.46147496342659,
+    "rsi14": 41.64977802116319,
     "high_20d": 3.871000051498413,
-    "low_5d": 2.1600000858306885,
-    "low_10d": 2.1600000858306885,
+    "low_5d": 2.119999885559082,
+    "low_10d": 2.119999885559082,
     "high_52w": 169.95700073242188,
-    "low_52w": 2.1600000858306885,
-    "position_in_52w_range_pct": NaN
+    "low_52w": 2.119999885559082,
+    "atr14": 0.32821428775787354,
+    "atr14_pct": 13.966566003294844,
+    "position_in_52w_range_pct": 0.13703773179511358
   },
   "ohlc_2y": [
     {
@@ -2465,22 +2467,22 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7649727.0
+      "open": 2.17,
+      "high": 2.34,
+      "low": 2.12,
+      "close": 2.32,
+      "volume": 8031500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 2.34,
+      "high": 2.48,
+      "low": 2.31,
+      "close": 2.35,
+      "volume": 6205900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-03",
-      "open": 30.85,
-      "high": 32.29,
-      "low": 28.333,
-      "close": 28.79,
-      "volume": 1250600.0
-    },
     {
       "date": "2025-09-04",
       "open": 28.03,
@@ -4483,11 +4485,19 @@
     },
     {
       "date": "2026-09-02",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 7649727.0
+      "open": 2.17,
+      "high": 2.34,
+      "low": 2.12,
+      "close": 2.32,
+      "volume": 8031500.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 2.34,
+      "high": 2.48,
+      "low": 2.31,
+      "close": 2.35,
+      "volume": 6205900.0
     }
   ],
   "ai_synthesis": null,
