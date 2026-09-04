@@ -156,7 +156,17 @@ def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dic
     for i, sym in enumerate(tickers, start=1):
         try:
             logger.info(f"[{i}/{len(tickers)}] {sym}")
-            data = fetch_ticker_data(sym)
+            # Last night's file, so the quarterly sections can be carried
+            # forward instead of re-read. A missing or unreadable file just
+            # means a full fetch, which is the old behaviour.
+            prior = None
+            prior_path = output_dir / f"{sym.upper()}.json"
+            if prior_path.exists():
+                try:
+                    prior = json.loads(prior_path.read_text())
+                except (ValueError, OSError):
+                    prior = None
+            data = fetch_ticker_data(sym, prior=prior)
             if write_ticker_json(sym, data, output_dir) is None:
                 skipped_no_bars.append(sym)
             else:

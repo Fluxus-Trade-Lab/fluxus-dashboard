@@ -454,8 +454,56 @@ def fetch_ohlc_and_technicals(tk: yf.Ticker) -> dict:
 
 # ── main entry ─────────────────────────────────────────────────────────────
 
-def fetch_ticker_data(symbol: str) -> dict:
-    """Fetch all L1 numeric data for one ticker. Returns the JSON dict."""
+#: Sections whose underlying facts change once a quarter. Re-reading them
+#: nightly costs three yfinance endpoints per ticker -- roughly a thousand
+#: requests a night across the tracked list -- and returns the same numbers
+#: for eighty-odd of those nights. `next_earnings` is deliberately NOT here:
+#: the date moves, and it is the one an open position acts on.
+QUARTERLY_SECTIONS = ('earnings_history', 'quarterly_metrics', 'analyst')
+
+#: How stale a carried-forward quarterly section may be before it is re-read.
+#: A week is short against a quarter and long against a night, and it means a
+#: name reports at most once between refreshes.
+QUARTERLY_MAX_AGE_DAYS = 7
+
+
+def _quarterly_carry(prior: Optional[dict],
+                     max_age_days: int = QUARTERLY_MAX_AGE_DAYS,
+                     today: Optional[date] = None) -> Optional[dict]:
+    """Last night's quarterly sections, if they are still usable.
+
+    Returns None -- meaning "go ask the vendor" -- when there is no prior
+    file, when its stamp is missing or older than `max_age_days`, or when any
+    section is empty. That last case matters: an empty section is what a
+    throttled fetch leaves behind, and carrying it forward would freeze one
+    night's failure into a week of silence.
+    """
+    if not prior:
+        return None
+    stamp = prior.get('quarterly_asof')
+    if not stamp:
+        return None
+    try:
+        asof = datetime.fromisoformat(str(stamp).replace('Z', '')).date()
+    except ValueError:
+        return None
+    ref = today or datetime.utcnow().date()
+    if (ref - asof).days > max_age_days or asof > ref:
+        return None
+    carried = {k: prior.get(k) for k in QUARTERLY_SECTIONS}
+    if any(not carried[k] for k in QUARTERLY_SECTIONS):
+        return None
+    carried['quarterly_asof'] = str(stamp)
+    return carried
+
+
+def fetch_ticker_data(symbol: str, prior: Optional[dict] = None) -> dict:
+    """Fetch all L1 numeric data for one ticker. Returns the JSON dict.
+
+    `prior` is last night's file for this ticker, if any. Its quarterly
+    sections are carried forward while fresh (see `_quarterly_carry`); pass
+    None to force a full read.
+    """
     logger.info(f"Fetching ticker data for {symbol}")
     tk = yf.Ticker(symbol)
     info = fetch_info(tk)
@@ -466,16 +514,37 @@ def fetch_ticker_data(symbol: str) -> dict:
         pass
 
     technicals = fetch_ohlc_and_technicals(tk)
+
+    carried = _quarterly_carry(prior)
+    if carried:
+        logger.info(f"  {symbol}: quarterly sections carried from "
+                    f"{carried['quarterly_asof']} (3 endpoints not called)")
+        quarterly = carried
+    else:
+        quarterly = {
+            'earnings_history': fetch_earnings_history(tk),
+            'quarterly_metrics': fetch_quarterly_metrics(tk),
+            'analyst': fetch_analyst(tk),
+            'quarterly_asof': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+        }
+
     out = {
         'ticker': symbol.upper(),
         'fetched_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
         '_schema': 'v2',
         'current_price': current_price,
         'info': info,
-        'earnings_history': fetch_earnings_history(tk),
+        'earnings_history': quarterly['earnings_history'],
+        # Not carried: the next earnings date moves, and it is the field an
+        # open position acts on.
         'next_earnings': fetch_next_earnings(tk),
-        'quarterly_metrics': fetch_quarterly_metrics(tk),
-        'analyst': fetch_analyst(tk),
+        'quarterly_metrics': quarterly['quarterly_metrics'],
+        'analyst': quarterly['analyst'],
+        # `fetched_at` describes the price and info above it. The quarterly
+        # sections carry their own stamp so a reader can tell which night
+        # each number is from -- one timestamp for a file assembled from two
+        # nights would be a small lie told every night.
+        'quarterly_asof': quarterly['quarterly_asof'],
         'news': fetch_news(tk),
         'options_implied_move': fetch_options_implied_move(tk, current_price),
         'technicals': {
