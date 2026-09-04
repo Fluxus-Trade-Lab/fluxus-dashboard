@@ -1,0 +1,22 @@
+[
+  {"query": "用 /tearsheet 给 NVDA 做一页", "should_trigger": true},
+  {"query": "跑 tearsheet skill，票是 AAOI", "should_trigger": true},
+  {"query": "给 AAOI 做个 tearsheet", "should_trigger": true},
+  {"query": "把 NVDA 的个股页 AI 段刷一遍", "should_trigger": true},
+  {"query": "这只票一页纸的 AI 叙事段该更新了", "should_trigger": true},
+  {"query": "写一下 AAPL 的 Bull vs Bear Summary", "should_trigger": true},
+  {"query": "ticker 页显示 Stale，AAPL 的 AI 段要重跑", "should_trigger": true},
+  {"query": "帮 TSLA 写 Trade Plan 那段，进场止损目标都要有", "should_trigger": true},
+  {"query": "AAOI 的 catalysts 和 management commentary 帮我合成一版，带脚注出处", "should_trigger": true},
+  {"query": "L1 数据已经拉好了，NVDA 的 ai_synthesis 该生成了", "should_trigger": true},
+  {"query": "看一下 NVDA 的 GEX", "should_trigger": false},
+  {"query": "个股页 Signal History 怎么算的", "should_trigger": false},
+  {"query": "跑一下 run_tickers 把 AAOI 拉进来", "should_trigger": false},
+  {"query": "tearsheet 页面的字号改小", "should_trigger": false},
+  {"query": "NVDA 的 next_earnings 字段是哪来的", "should_trigger": false},
+  {"query": "Signal History 里 preset: 前缀的标签给个显示规则", "should_trigger": false},
+  {"query": "TickerSignalHistory.jsx 里 momentum_97 的显示名改成 Composite 97", "should_trigger": false},
+  {"query": "run_tickers 加 --refresh-existing，把冻在 08-07 的文件刷新", "should_trigger": false},
+  {"query": "ticker_events.csv 的 atr_ext 列跨日期能不能比", "should_trigger": false},
+  {"query": "run_tickers 季度三端点的 quarterly_asof 戳是几天内沿用", "should_trigger": false}
+]

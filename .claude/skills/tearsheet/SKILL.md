@@ -1,6 +1,7 @@
 ---
 name: tearsheet
 description: Synthesizes the AI narrative layer (bull/bear case, trade plan, management commentary, peers, catalysts) for one ticker's tearsheet — the 个股页 AI 段 of a stock's 一页纸 — and writes it back into that ticker's ai_synthesis JSON field. Use when a ticker's L1 numeric data is already fetched and its 个股页 AI 段 needs synthesizing or refreshing, e.g. "写 <SYMBOL> 的 tearsheet" or "刷新这只票一页纸的 AI 叙事段". Uses Max-subscription compute + WebSearch/WebFetch — no paid API tokens.
+when_to_use: 触发词：tearsheet、一页纸、个股页 AI 段、bull/bear case、给 <票> 做个 tearsheet、刷新 <票> 的 AI 叙事、写 <票> 的交易计划段。不触发：看 GEX、看 Signal History、跑 run_tickers 拉 L1 数据、改 tearsheet 前端组件、问某个字段怎么算。
 allowed-tools: Bash, Read, Edit, Write, WebFetch, WebSearch
 ---
 
