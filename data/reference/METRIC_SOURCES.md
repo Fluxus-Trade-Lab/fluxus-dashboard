@@ -20,6 +20,8 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 
 ## 规矩
 
+> 引用顺序（09-04 起）：**本机一手（见 [CANON_LIBRARY.md](CANON_LIBRARY.md)）→ 发明者/官方网页 → 社区复刻**。
+
 > **动手算一个量之前，先查它有没有专业口径和公开源。有就照抄，没有才自己造，
 > 并把「查了什么、为什么没有」写进本表。**
 
@@ -48,6 +50,12 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `bo_count_*` 的**聚合** | *(无标准)* | Stockbee 的是**单日横截面广度**（今天全市场有多少只） | ⚠️ **自造**：逐票纵向滚动计数。已在代码里明写 |
 | `h_score_pctl` → 页面 **Composite Score** | IBD Composite Rating 的**形状**（多因子合成后再排 1–99） | 合成后必须再排名成百分位 | ✅ 排名一致（2026-09-04 落地）。**权重是自造的**：IBD 六个系数专有、查无可引用的表；20% 基本面 + 30% 行业 + 50% RS。Andy 09-04 定名 Composite Score，不再叫 RS |
 | `h_score`（原值） | *(无标准)* | 五个百分位的加权平均 | ⚠️ **自造且不是百分位**（顶档 0.6%、IQR 29）。保留仅为归档连续性，**不上页** |
+| `wk_tight_3` | IBD **3 Tight Closes** | **closes within 1.5%**、vol drops、secondary BP（+10 cents）——本机 `CAN_SLIM_Chart_Pattern_Cheat_Sheet.pdf` | ⚠️ **阈值对、形式偏离**：表只给 1.5%，IBD 文章说相邻周两两比较；我们是三根全域带宽。待改（方案 C） |
+| `dcr_pct` | TraderLion **Closing Range** | (close − low)/(high − low)——本机 `The-TraderLion-Ultimate-Trading-Guide.pdf` | ✅ 一致 |
+| `pocket_pivot` | TraderLion **10-Day Pocket Pivot** | 上涨日量 > 过去 10 日任一**下跌日**量——同上 | ✅ 一致（`vol10_green` 是另一个量：比前 10 根**全部**bar） |
+| `atr_from_sma50` | SteveDJacobs **ATR Matrix** `extAtrAsPctOfATR` | (close/SMA50−1)/(ATR/close)——本机 `ATR Matrix.txt` | ✅ 一致；≥7× 减仓 / ≥11× 衰竭来自本机 `Candles Stage Analysis.txt`（@TradeDudeNYC），**不是 Weinstein 原书** |
+| `rs_line_pctl_21/63/126` | @jfsrev **1-Month RS** | RS=close/SPY 的自百分位，`rank/(N−1)×100`，严格排名——本机 `1-Month Relative Strength.txt` | ⚠️ 我们用 `<=`（下限 1/n），它用严格排名（下限 0）。并入方案 D |
+| 新高/新低 · Record High Percent · RANA | Gregory Morris《Market Breadth Indicators》 | 52 周；adjusted for Total Issues；Cohen 10 日 NH/(NH+NL)；Ratio-Adjusted McClellan——本机 epub | ✅ 一手依据补齐（08-31 采用时引的是 StockCharts） |
 | `new_highs_4w` / `new_lows_4w` | *(查过，无标准)* | 52 周是机构惯例；该时间尺度的标准量是 %above-20MA / T2108 / McClellan | ⚠️ **自造**。仅供研究，不得当标准读数上页 |
 | — | McClellan Summation Index | McClellan 振荡器累加 | 🔲 我们没有 |
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |
