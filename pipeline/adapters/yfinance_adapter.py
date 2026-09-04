@@ -55,6 +55,51 @@ def adr_pct_20(high, low, n: int = 20):
     return float(((h / l) - 1).mean() * 100)
 
 
+
+BREAKOUT_MIN_CHANGE = 0.04
+BREAKOUT_MIN_VOLUME = 100_000
+
+
+def breakout_days(closes, volumes):
+    """Stockbee 4% breakout days, as a boolean array aligned to `closes[1:]`.
+
+    All three of the scan's conditions, which every source states together:
+
+        close >= 4% above the previous close
+        volume > the PREVIOUS bar's volume        (range expansion)
+        volume > 100,000                          (liquidity floor)
+
+    Before 2026-09-04 this asked `volume >= 9,000,000` and omitted `v > v1`
+    entirely. The 9M figure belongs to a different Stockbee scan (EP 9
+    Million) where it applies to `maxv65`, not to the day's volume -- and as a
+    daily floor it is true for essentially every large cap, so dropping the
+    expansion condition left only "the stock rose 4% today".
+
+    Measured on our own 2026-09-03 universe: among names averaging over 9M
+    shares 98.8% carried a count (median 18); between 2M and 9M, 73% (median
+    2); under 2M, 16-25% (median ZERO). The field was ranking stocks by the
+    volume they trade rather than by how often they burst, in a scan Pradeep
+    writes explicitly for small and mid caps.
+    """
+    import numpy as _np
+    c = _np.asarray(closes, dtype=float)
+    v = _np.asarray(volumes, dtype=float)
+    if c.size < 2 or v.size != c.size:
+        # Empty, not all-False. An array of False is a CLAIM -- "no breakouts
+        # on these days" -- and mismatched or absent inputs support no claim.
+        # Same NULL-is-not-zero rule the breadth counts follow: a zero reads
+        # as the calmest possible answer, which is the wrong thing for a data
+        # outage to say.
+        return _np.zeros(0, dtype=bool)
+    with _np.errstate(divide="ignore", invalid="ignore"):
+        chg = (c[1:] - c[:-1]) / c[:-1]
+    today, prev = v[1:], v[:-1]
+    out = ((chg >= BREAKOUT_MIN_CHANGE)
+           & (today >= BREAKOUT_MIN_VOLUME)
+           & (today > prev))
+    return _np.nan_to_num(out, nan=False).astype(bool)
+
+
 def _flatten_yf_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Flatten yfinance MultiIndex columns for single-ticker downloads.
     yfinance >=0.2.31 returns MultiIndex columns like ('Close', 'SPY')
@@ -920,17 +965,45 @@ class YfinanceAdapter(BaseAdapter):
                 # 21EMA Low Dist%: how far today's low is from 21EMA
                 ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
 
-                # Sugar Babies breakout counts: days with vol >= 9M AND change >= 4%.
-                # Pradeep's literal rule for habitual big-volume movers.
+                # Stockbee 4% breakout days. The scan's own three conditions,
+                # which every source states together (Pradeep Bonde's TC2000
+                # scan, and the TradingView replicas of it):
+                #
+                #     close >= 4% above the previous close
+                #     volume > the PREVIOUS bar's volume       (range expansion)
+                #     volume > 100,000                         (liquidity floor)
+                #
+                # Until 2026-09-04 this asked for `volume >= 9,000,000` and had
+                # no `v > v1` at all, under a comment calling it "Pradeep's
+                # literal rule". Two things were wrong with that. The 9M number
+                # is from a DIFFERENT Stockbee scan -- EP 9 Million -- where it
+                # applies to `maxv65`, not to the day's volume. And a 9M floor
+                # is effectively true for every large cap, which made the
+                # missing volume-expansion condition invisible: what survived
+                # was "the stock rose 4% today", nothing more.
+                #
+                # The damage was directional, and measurable in our own data on
+                # 2026-09-03: of names averaging over 9M shares, 98.8% carried a
+                # count, median 18; between 2M and 9M, 73%, median 2; under 2M,
+                # 16-25%, median ZERO. So the field ranked stocks by how much
+                # volume they trade, not by how often they burst -- while the
+                # scan it is named after is one Pradeep writes explicitly for
+                # small and mid caps.
+                #
+                # NOT adopted: a "close within 30% of the bar's high" filter and
+                # a gap-up-fade exclusion appear in one community TradingView
+                # replica but in no primary Stockbee source. Unattested extras
+                # stay out; see data/reference/METRIC_SOURCES.md.
+                #
+                # THE AGGREGATION IS STILL OURS. Stockbee's 4% scan is a daily
+                # CROSS-SECTIONAL breadth count -- how many names in the market
+                # did this today. Counting per ticker over a trailing window is
+                # our own construct and has no standard behind it.
                 closes = hist['Close'].values
                 vols = hist['Volume'].values
                 bo_1m = bo_3m = bo_6m = bo_1y = 0
                 if n >= 2:
-                    prev_close = closes[:-1]
-                    today_close = closes[1:]
-                    chg = (today_close - prev_close) / prev_close
-                    today_vol = vols[1:]
-                    is_bo = (today_vol >= 9_000_000) & (chg >= 0.04)
+                    is_bo = breakout_days(closes, vols)
                     bo_1y = int(is_bo.sum())
                     bo_6m = int(is_bo[-126:].sum()) if n - 1 >= 126 else bo_1y
                     bo_3m = int(is_bo[-63:].sum()) if n - 1 >= 63 else min(bo_1y, int(is_bo.sum()))
