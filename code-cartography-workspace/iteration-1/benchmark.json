@@ -1,0 +1,26 @@
+{
+  "skill_name": "code-cartography",
+  "with_skill": { "pass_rate": 1.0 },
+  "without_skill": { "pass_rate": 0.0 },
+  "delta": { "pass_rate": 1.0 },
+  "per_eval": [
+    {
+      "id": 1,
+      "request": "WatchlistPage.jsx 1195 行，加功能不知道改哪，整理一下",
+      "with": { "A": true, "B": true, "C": true },
+      "without": { "A": false, "B": false, "C": false }
+    },
+    {
+      "id": 2,
+      "request": "run_all.py 太长了，能不能拆",
+      "with": { "A": true, "B": true, "C": true },
+      "without": { "A": false, "B": false, "C": false }
+    },
+    {
+      "id": 3,
+      "request": "给 ScreenerPage 加一个新列，改哪",
+      "with": { "A": true, "B": true, "C": true },
+      "without": { "A": false, "B": false, "C": false }
+    }
+  ]
+}

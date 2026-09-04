@@ -1,0 +1,8 @@
+{
+  "skill_name": "code-cartography",
+  "evals": [
+    {"id": 1, "prompt": "frontend/src/components/watchlist/WatchlistPage.jsx 有 1195 行，加功能不知道改哪，整理一下", "expected_output": "带 file:line 的拆分建议，先有消费者清单和三个数，不直接重写", "files": []},
+    {"id": 2, "prompt": "pipeline/screeners/run_all.py 太长了，能不能拆", "expected_output": "同上，且先说拆了省什么", "files": []},
+    {"id": 3, "prompt": "给 ScreenerPage 加一个新列，改哪", "expected_output": "先画那个组件的地图再指位置；不产出重写", "files": []}
+  ]
+}
