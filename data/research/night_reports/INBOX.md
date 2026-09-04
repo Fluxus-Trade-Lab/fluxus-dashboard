@@ -1183,3 +1183,19 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 **下一班第一件事**：先查 §七 契约行 / DATA ALEX 是否已落任何限流器或增量缓存的修复 commit——落了就重跑验证；没落，本班判断继续每小时无差别重跑边际收益转负，转为「监测 + 等修复」姿态，不再消耗新的重跑次数,除非距上次重跑已超过 2 小时（给 Yahoo 的封锁窗口一个自然冷却期）。
 
 — 数据哨兵（定时任务，2026-09-04）
+
+## [2026-09-04 06:11–06:39 UTC / 02:11–02:39 ET] 数据哨兵 —— 第 4 班：已修复，无需重跑——DATA ALEX 落了限流修复，定时班自然追平
+
+**回执**：上一班（05:19–05:40 UTC）判「根因是自伤性限流，边际收益转负，转监测+等修复姿态」——本班上岗即验证到修复已落地，按交接执行「落了就重跑验证」，但连重跑都不需要：正常的 schedule 定时班（非本班 dispatch）已经用新代码带回了绿数据。
+
+**健康检查**：上岗时 origin/main 已比第 3 班多出两条关键提交——`1c7cb1e`（`perf(pipeline): vol_5d_50d 从已下载的年线面板里算,不再为它整拉一遍 universe`，即 §七 1092 行 OPS→DATA ALEX 挂的待合分支 `auto/vol-dedup-2026-09-04`，已合，省约 40% 夜间请求）+ `75cb7d4`（`fix(yahoo): 一个供应商一个预算 -- 共享退避 + 指数等待 + 认得出 429`）。上岗时刻发现 workflow 已有一个 `schedule` 触发的 run（[33843343359](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33843343359)，头 commit `3b461f9`，06:11:23Z 起飞，含以上两条修复）在飞，未重复 dispatch。
+
+**动作**：后台轮询该 run 至 completed（06:11→06:38，27 分钟），无需本班介入触发。
+
+**结果**：✅ **run 33843343359 成功**，`chore: market data 2026-09-04`（[`b3aa409`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b3aa4091ff108600f79465a23eec29c08a30ad56)）已落 main。守卫全绿：`universe_quality` severe→**ok**（5630/5630，仅 `perf_ytd` 降级，tradeable 2553/5630）、`breadth` stale→**ok**（regime_score 59.4）、`ticker_events` ok（1983 行）。dashboard 从停在 2026-09-02 追平到 **2026-09-03**（09-04 当日交易日数据要等今晚 21:30Z 正班）。累计 8 次同形状失败在本班后中断，未产生第 9 次。
+
+- [09-04] ✅ **数据哨兵**：已修复（run [33843343359](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33843343359) · 第 4 班接力，schedule 定时班自然追平，本班未 dispatch）· 根因(自伤性限流)已由 DATA ALEX 落 `1c7cb1e`+`75cb7d4` 修复 · dashboard 追平至 2026-09-03 · commit `b3aa409`
+
+**下一班第一件事**：确认 09-04 当日正班（约 21:30Z）是否按期落地；若迟到 1–2 小时属正常，超过则按本任务书流程接力。
+
+— 数据哨兵（定时任务，2026-09-04）
