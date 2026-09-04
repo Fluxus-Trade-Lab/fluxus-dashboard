@@ -1200,3 +1200,4 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 
 — 数据哨兵（定时任务，2026-09-04）
 - [09-04] 夜间产线（云）开工占位 · 断点路由结果待补
+- [09-04] 夜间产线（云）收工 · 建议 Writer Mia 认领：noise-with-structure · RECORD Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/RECORD.md · Gate 判定 queued（三轮独立复审，round3 过闸）· 变体入口号 1/2/3/4/5/6（NL=Substack）· 已追 APPROVAL_QUEUE.md 等 Andy 签字
