@@ -51,7 +51,8 @@ export default function OverviewTab({
       out[r.ticker] = {
         ema10: r.ema10, ema20: r.ema20,
         wk_ema10: r.wk_ema10, wk_ema20: r.wk_ema20,
-        atr_pct: r.adr_pct,  // ADR is the closest proxy already on universe
+        atr_pct: r.atr_pct,  // the real thing since 2026-09-04; adr_pct is
+        // now Qullamaggie ADR% (intraday, no gaps) and not a proxy for this
       }
     }
     return out

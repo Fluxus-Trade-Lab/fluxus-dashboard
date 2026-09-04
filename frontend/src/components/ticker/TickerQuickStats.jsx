@@ -19,7 +19,7 @@ export default function TickerQuickStats({ tickerData, universe }) {
       info.fiftyTwoWeekLow ?? implied(u.close, u.low_52w),
       info.fiftyTwoWeekHigh ?? implied(u.close, u.high_52w_dist))],
     ['Avg Vol 20D', formatVolume(info.averageVolume10days || info.averageVolume || u.avg_volume)],
-    ['ATR / %PX', formatAtrPx(u.atr, u.adr_pct)],
+    ['ATR / %PX', formatAtrPx(u.atr, u.atr_pct)],
     ['Fwd P/S', formatRatio(info.priceToSalesTrailing12Months ?? info.priceToBook)],
     ['Fwd P/E', formatRatio(info.forwardPE)],
     ['Next ER', formatNextER(tickerData?.next_earnings)],

@@ -93,7 +93,7 @@ export function indicators(u) {
     : (ld * (1 + hd)) / (ld - hd) * 100
   return [
     { label: 'ATR', value: u.atr == null ? null
-        : `$${u.atr.toFixed(2)}${u.adr_pct == null ? '' : ` · ${u.adr_pct.toFixed(1)}% of price`}`,
+        : `$${u.atr.toFixed(2)}${u.atr_pct == null ? '' : ` · ${u.atr_pct.toFixed(1)}% of price`}`,
       from: 'universe' },
     { label: 'ATR 位（离 MA50）', value: n1(u.atr_from_sma50),
       from: 'universe', note: '全站同一个口径；≥7 是减仓区' },

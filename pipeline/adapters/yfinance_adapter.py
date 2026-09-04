@@ -20,6 +20,41 @@ from ..screeners.atr_enrichment import atr_multiple_from_levels
 logger = logging.getLogger(__name__)
 
 
+def adr_pct_20(high, low, n: int = 20):
+    """ADR% -- the industry definition. NOT ATR%.
+
+        100 * (mean over the last `n` bars of High_i / Low_i - 1)
+
+    No gaps, arithmetic mean, and每 bar divided by its OWN low. This is the
+    Qullamaggie / Deepvue / TradingView quantity. TradingView's own docs say
+    it plainly: ADR% excludes gaps, ATR% includes them; in every source found
+    they are two different indicators, never aliases for each other.
+
+    Until 2026-09-04 the pipeline published ATR(14)/close*100 under the name
+    `adr_pct`. The gates on it use a 3.5-10 band BORROWED from Qullamaggie,
+    and a borrowed threshold only holds on the ruler it was borrowed from.
+    Measured on 400 names sampled across five dollar-volume bands, ours/theirs
+    had a median of 1.088 with an inter-quartile range of 0.146 -- the ratio
+    is not a constant, so no coefficient could have calibrated it away. At the
+    >=3.0 gate, 19 names (7.1% of everything that passed) were passing only
+    because our reading ran high.
+
+    The old quantity survives as `atr_pct`: stop distances and R-multiple
+    sizing genuinely want true range, because a stop must respect gaps.
+
+    Returns None rather than a number when there are fewer than `n` bars or a
+    low is non-positive -- a NULL is honest, a silently substituted ATR% is
+    not.
+    """
+    if high is None or low is None or len(high) < n or len(low) < n:
+        return None
+    h = high.iloc[-n:].astype(float)
+    l = low.iloc[-n:].astype(float)
+    if not (l > 0).all() or h.isna().any() or l.isna().any():
+        return None
+    return float(((h / l) - 1).mean() * 100)
+
+
 def _flatten_yf_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Flatten yfinance MultiIndex columns for single-ticker downloads.
     yfinance >=0.2.31 returns MultiIndex columns like ('Close', 'SPY')
@@ -951,6 +986,7 @@ class YfinanceAdapter(BaseAdapter):
                     # weeks. Emitted, not enforced here -- the consumer picks
                     # its own floor per window.
                     'bars_n': int(n),
+                    'adr_pct': adr_pct_20(hist['High'], hist['Low']),
                     'high_20d': (close / float(hist['High'].iloc[-20:].max()) - 1) if n >= 20 else None,
                     'low_20d': (close / float(hist['Low'].iloc[-20:].min()) - 1) if n >= 20 else None,
                     'from_open_pct': from_open_pct,

@@ -10,7 +10,9 @@ export default function TickerHeader({ symbol, universe }) {
   const changePct = u.change_pct != null ? u.change_pct * 100 : null
   const sector = u.sector || 'Unknown'
   const industry = u.industry || ''
-  const atrPct = u.adr_pct
+  // ATR%, not ADR% -- they are different quantities and since 2026-09-04
+  // the pipeline ships both under their own names.
+  const atrPct = u.atr_pct
   return (
     <div className="border-b border-[var(--color-border)] pb-4 mb-4">
       <div className="flex items-start justify-between gap-4 flex-wrap">

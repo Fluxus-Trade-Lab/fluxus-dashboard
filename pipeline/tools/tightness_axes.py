@@ -81,7 +81,10 @@ def collect(bars_path: Path = BARS) -> pd.DataFrame:
                 "fwd20": (float(c.iloc[i + 20]) / p0 - 1) * 100,
                 "atr_pctl_252": float(m["atr14__pct252"].iloc[i]),
                 "atr_pctl_63": float(m["atr14__pct63"].iloc[i]),
-                "adr_pct": float(m["atr14__abs"].iloc[i]),
+                # ATR%, not ADR% -- renamed 2026-09-04 with the pipeline column.
+                # It holds atr14__abs; calling it adr_pct made a research frame
+                # disagree with the production column of the same name.
+                "atr_pct": float(m["atr14__abs"].iloc[i]),
                 "rs_pctl_21": float(sig["rs_pctl_21"].iloc[i]),
                 "rs_pctl_63": float(sig["rs_pctl_63"].iloc[i]),
                 "dist_52wh": float(sig["dist_52wh"].iloc[i]),
@@ -140,7 +143,7 @@ def main(argv=None) -> int:
     d.to_csv(args.out / "axes_sample.csv", index=False)
     fd = d[d.first_day]
     print(f"{len(d)} setup-days, {len(fd)} first-days, base win {_win(fd):.1f}%\n")
-    for col in ("atr_pctl_252", "atr_pctl_63", "adr_pct"):
+    for col in ("atr_pctl_252", "atr_pctl_63", "atr_pct"):
         print(f"== {col} ==")
         print(axis_table(fd, col).to_string(index=False), "\n")
     print("== 组合: 压缩(timing) x RS线63日自百分位(选股) ==")

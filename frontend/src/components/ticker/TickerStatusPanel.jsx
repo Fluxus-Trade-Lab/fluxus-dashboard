@@ -40,7 +40,10 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
   })
   const u = universe || {}
   const px = t.lastPrice || t.entryPrice
-  const atrDollars = (u.adr_pct ?? 0) * 0.01 * px
+  // ATR is already published in dollars; going through a percentage was a
+  // detour, and the percentage it used (`adr_pct`) stopped being ATR% on
+  // 2026-09-04. A stop distance must respect gaps, so true range is right.
+  const atrDollars = u.atr ?? 0
   const stopSugg = suggestStop(
     { state: legState, stopPrice: t.stopPrice, entryPrice: t.entryPrice, direction: t.direction },
     u,

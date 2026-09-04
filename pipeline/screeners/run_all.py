@@ -341,7 +341,19 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
                            & tradeable).fillna(False).astype(bool)
 
     # --- Derived technical columns ---
-    df['adr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
+    # ATR% -- gap-INCLUSIVE volatility. Renamed from `adr_pct` on 2026-09-04:
+    # this quantity is not ADR%, and it was being published under that name
+    # while the gates on it used a 3.5-10 band borrowed from Qullamaggie,
+    # whose ADR% is a different formula. A borrowed threshold only holds on
+    # the ruler it was borrowed from. It stays under its own name because
+    # stop distances and R-multiple sizing want true range -- a stop must
+    # respect gaps.
+    df['atr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
+    # `adr_pct` now arrives from the adapter computed the industry way. When
+    # the bars were not there to compute it the column stays NULL: a null is
+    # honest, a silently substituted ATR% is what we are fixing.
+    if 'adr_pct' not in df.columns:
+        df['adr_pct'] = pd.NA
     # These two are RATIOS (close / MA), not ATR multiples, despite the `_r`.
     # Kept unchanged because things read them; the ATR reading is the separate
     # column below. See data/reference/screener_inventory_2026-08-17.md.
@@ -428,7 +440,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
+    for col in ['adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
         if col in df.columns:            # ti65/mdt come from enrichment; absent on the fallback path
             df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
 
@@ -849,7 +861,7 @@ def main():
         'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
         'rs_ibd',
         'f_score', 'i_score', 'h_score', 'tradeable',   # tradeable: the field the scores are measured on
-        'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
+        'adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'rs_line_pctl_63', 'rs_line_pctl_126', 'perf_5d',
