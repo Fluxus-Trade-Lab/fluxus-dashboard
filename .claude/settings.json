@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch *)",
+      "mcp__claude-in-chrome__get_page_text",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-in-chrome__find",
+      "mcp__ccd_session_mgmt__list_sessions",
+      "mcp__Claude_Browser__read_console_messages",
+      "mcp__Claude_Browser__read_page",
+      "mcp__ccd_session_mgmt__search_session_transcripts",
+      "mcp__scheduled-tasks__list_scheduled_tasks",
+      "mcp__ccd_session_mgmt__list_events",
+      "mcp__Claude_Browser__get_page_text",
+      "mcp__claude-in-chrome__read_page",
+      "mcp__Claude_Browser__find",
+      "mcp__claude-in-chrome__list_connected_browsers",
+      "mcp__claude-in-chrome__read_console_messages",
+      "mcp__Claude_Browser__tabs_context",
+      "mcp__visualize__read_me",
+      "mcp__claude-in-chrome__read_network_requests",
+      "mcp__Claude_Browser__preview_logs",
+      "mcp__tradingview__tv_health_check"
+    ]
+  }
+}
