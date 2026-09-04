@@ -47,6 +47,13 @@
 - `.claude/settings.json` 提交进仓库（官方原话「Commit a setting there to apply it in cloud sessions」）。
 - 各任务书收工节加固定行；个人类任务写死 `skill-none`。
 
+### 3.3b hook 丙（新增，Andy 09-04「改成 TaskCompleted hook」）
+- **和 hook 乙不是一回事**：乙守「收工有没有留痕」（Stop），丙守「任务标完成前它点名的测试是不是绿的」（TaskCompleted）。两个都要。
+- 官方契约（hooks 参考页原文）：事件在 `TaskUpdate` 标 completed 时触发；输入带 `task_id` `task_subject` `task_description`；**阻止＝exit 2，stderr 原文回给模型**（`continue:false` 对 TaskUpdate 触发的场合被忽略）。官方示例就是「跑测试，不过 exit 2」。
+- 我们的版本：从 `task_subject + task_description` 里抓 `pipeline/tests/test_*.py` 路径，只跑点名的（全套收集就超两分钟，不能每次全跑）；没点名测试的任务（文档、归档）放行；红了 exit 2 并把 pytest 尾巴 15 行塞进 stderr。
+- **它守的是「绿」，不是「先红后绿」。** 先写会红的测试这一步，hook 量不到——它只看完成那一刻。红-先靠三样：writing-plans 把「跑测试确认失败」写成独立步骤、SDD 的 reviewer 审 spec 符合性、每个 agent 预加载 `superpowers:test-driven-development`（官方：subagent 可 `skills:` 预加载）。这是诚实的边界，别把 hook 丙说成 TDD 闸。
+- 同样写进 `.claude/settings.json`（入库），与 Stop 并列。
+
 ### 3.4 权限补根
 - 用户级 `~/.claude/settings.json`：`permissions.allow` 加这个项目定时任务实际用的只读命令与 git 读命令（从 transcript 统计，不是拍）。
 - 本机 10 个定时任务：**Andy 在桌面端逐个「Run now → always allow」**（官方唯一解法），或在编辑表单设权限模式。这一步只有他能做。
