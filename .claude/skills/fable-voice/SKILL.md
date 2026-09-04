@@ -92,9 +92,12 @@ Andy 看完前后对照页（七组病例），原话：「**都批 改的不错
 ——七个病的判法、两个梗（货运场/检修场）、货运比喻链的诊断页重写，全部通过。
 账本从今天起是**批过的现行规矩**，不再是提案。下一步：出现第一条「划掉」时，本节记第一刀。
 
-### [2026-09-05] 改 · 描述优化器 · 测试集触发率 4/8(50%)→4/8(50%)
-`skill-creator/scripts/run_loop.py` 用 `.claude/skills/fable-voice/evals/trigger_eval.json`（20 条，10 条替换自 Andy 真实说法/verdicts.md/commit log）跑满 5 轮（train=12/test=8，holdout=0.4，model=claude-fable-5-1）。**best_description 与 Step 1 写的 frontmatter 逐字相同**——5 轮里没有任何候选描述在 held-out 测试集上超过它（exit_reason=max_iterations(5)，best_score=4/8，出现在 iteration 1）。描述文本本次未再改。
-⚠️ 留痕但不是本次任务范围：test 集 run-level recall 全程 ≤17%（iteration4 train 17% 已是全程最高），短板在**漏报**（该触发没触发）不是误报；下一轮调优该先查样本量/阈值，不是继续磨措辞。完整报告：`/var/folders/ck/n06ysb_13c1367dlllfzn6yw0000gn/T/skill_description_report_fable-voice_20260905_001821.html`（本机临时目录，非仓库路径）。
+### [2026-09-05] 改 · 描述优化器 · 读数无分辨率（测试集 4/8→4/8）
+用 skill-creator 的 `run_loop.py` 跑了 5 轮（eval 20 条，10 条来自 Andy 原话/verdicts.md/commit log；train 12 / test 8；model claude-fable-5-1）。best_description 与手写原文逐字相同，best_score 4/8 出现在第 1 轮。
+**这不是「描述已最优」。** 控制器复核 `run_eval.py` 后判定这次读数量不出东西，两个原因：
+1. 优化器从 skill-creator 目录启动，它向上找 `.claude/` 时停在了 `~`——`claude -p` 在家目录跑，仓库的 CLAUDE.md 和项目 skill 都不在场；在场的是用户级 `shuorenhua`，同类问句（「有没有 ai 味」「说人话」）被它接走了，第 5 轮候选描述自己写出了 "outranks shuorenhua"。
+2. 「回 andy：数据修好了」这类纯内容句 0/3——单靠 description 不会让模型为一句平常回复去调 skill；这一档靠 hook 乙 + CLAUDE.md 兜，不靠措辞。
+数字（第 5 轮）：train precision 100% / recall 6%，test recall 8%。描述文本未改；eval 文件保留。待裁：fable-voice 与 shuorenhua 谁让路（进终审清单）。
 
 ## 五、手感库（读他的句子，拆出结构学走；声音不搬）
 
