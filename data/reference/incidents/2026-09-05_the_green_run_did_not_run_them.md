@@ -1,7 +1,7 @@
 # 那次绿色的运行没跑到它们
 
 **日期**：2026-09-05（夜间组 Nighty Zac）
-**形状**：接线了 —— 接线的那次没跑到 614 个测试，其中一条已经红了 9 天。
+**形状**：接线了 —— 接线的那次没跑到 614 个测试，其中一条已经红了 8 天半。
 **同族**：`pitfall_tested_the_module_not_the_wiring` · `pitfall_a_negative_control_is_not_a_calibration_check` ·
 `pitfall_my_gate_had_no_resolution`（都是「闸在，但它量的东西不在它眼里」）
 
@@ -12,7 +12,7 @@
 `.github/workflows/tests.yml` 在 2026-09-04 落地，`audit_wiring.tests_have_ci()` 从 False 变 True，
 `DATA_RELIABILITY.md` §六.5 那条「这 1,302 条测试没有任何自动触发点」的缺口被当作关闭。
 **它没关闭。** 那次调用跑的是 `pytest pipeline/tests -q -m "not slow"`，在一个 depth-1 的 checkout 里 ——
-按 ast 计，**仓库 1,950 个测试函数中 614 个不在任何自动运行里**。
+按 ast 计，**仓库 1,988 个测试函数中 614 个不在任何自动运行里**。
 
 ## 二、614 是怎么分的（每个数都现场量过）
 
@@ -26,7 +26,7 @@
 而那次运行自己说了 —— `1327 passed, 4 skipped, 3 deselected`，然后 exit 0。
 「skipped」和「deselected」不是错误，没有人读它们，也没有任何东西因为它们变红。
 
-## 三、那条红了 9 天的测试
+## 三、那条红了 8 天半的测试
 
 `tests/test_no_naive_clock.py::test_no_bare_naive_clock_in_trading_code`
 
@@ -43,7 +43,10 @@ a2494136 (08-27, board v3) 1 failed
 882475da (origin/main, 09-05) 1 failed
 ```
 
-红了 **9 天**。没人看见，因为 09-04 之前 CI 一条测试都不跑，09-04 之后 CI 只跑另一个根。
+红到今天：**8 天 12 小时**（日历日跨 9 天 —— 这两个数不一样，写「9 天」是把日历差当成了经过时长）。
+没人看见，因为 09-04 之前 CI 一条测试都不跑，09-04 之后 CI 只跑另一个根。
+**且中间一秒都没绿过**：对 `6f66f5f9^..origin/main` 之间碰过 `pipeline/`／`scripts/`／该测试文件的
+**全部 75 个 commit** 复跑，flips=0，违规处数只增不减（1 → 3）。
 
 三处违规里**只有一处是真错**（详见修复分支 `f0899fac`）：
 `federation_board.py` 在 `marketcal` 取不到时的退路里用 `date.today()` 算「上一场完成的交易日」。
@@ -80,7 +83,7 @@ def tests_have_ci(workflows: Path) -> bool:
 | 改动 | 收回什么 |
 |---|---|
 | `fetch-depth: 0` | 4 条复现真实事故的回归测试 |
-| 目标加上 `tests` | 607 条，含这条红了 9 天的守卫 |
+| 目标加上 `tests` | 607 条，含这条红了 8 天半的守卫 |
 | 去掉 `-m "not slow"`（或另开一个跑 slow 的 job） | 端到端 smoke |
 | 把 `audit_ci_test_coverage` 挂进 `audit_wiring (reported)` 旁边 | 下一个盲点自己会喊 |
 
@@ -106,6 +109,62 @@ def tests_have_ci(workflows: Path) -> bool:
 → 三选一，交给动 workflow 的那条线：把 `ib_async` 加进 requirements ·
 把那个 import 改成 `pipeline/ibkr.py` 那样的懒加载 · 或在 CI 目标里显式 `--ignore=tests/gex/test_resting.py`
 并把理由写在旁边（别静默 ignore —— 静默 ignore 正是这份档案在讲的病）。
+
+## 六点五、⚠️ 独立验证推翻了我自己的三条（当晚，两个对抗性 verifier）
+
+按宪法「研究结论走 fan-out，≥2 个不同视角独立验证」派了两个 verifier。**它们赢了三次**，
+每一条我都自己复跑复核过之后才改：
+
+**① 我转抄了一个过期的数。** 上面这份档案第一版写「1,950 个测试函数」——
+那是我**在把自己那 41 条新测试加进去之前**跑出来的读数。工具此刻打印的是 **1,988**。
+同一个坑账 `pitfall_i_quoted_a_stale_number_three_times` / `pitfall_a_measurement_expires`：
+**我量的数也会过期，而且最容易过期的是我自己刚改动的那部分。**
+
+**② 「红了 9 天」是日历日差，不是经过时长。** 实际 8 天 12 小时。
+（verifier 还把我的验证做宽了：不只复跑碰过那两个文件的 commit，而是复跑了区间内碰过
+`pipeline/`／`scripts/` 的全部 75 个 —— flips=0，中间一秒没绿过。结论更强，措辞更准。）
+
+**③ `federation_board.py` 那三处裸时钟，我判错了一处。**
+我说 `now = datetime.datetime.now()` 「本来就该是本地」，给它挂了 `# localtime-ok` 豁免。
+verifier 指出：**错的不是 `now`，是减法的另一边。** 同文件取 git 日期用的是 `--date=format:`，
+而 `%ad` 默认按**每个 commit 自己记录的时区**渲染，云端跑的班是 `+0000`。
+我自己复核：近 14 天 686 个 commit 里 **8 个落在错的本地日**
+（`ab3c0bd3` 09-03→09-04 · `f7b62b87` 09-01→09-02 · `2b8c4be5` 等四条 08-30→08-31 · …），
+而错位的恰好是夜间数据班那批最有代表性的 commit。
+→ **只挂豁免不改格式串，守卫会变绿而 bug 被冻在里面。** 已改 `--date=format-local:`（`d3fda100`）。
+
+> 这一条值得单独记：**豁免让检查变绿，不让东西变对。**
+> 一个带 opt-out 的守卫，opt-out 用错的时候比没有守卫更糟 —— 它给了那个 bug 一张通行证。
+
+## 六点六、然后 verifier 把我这个新工具造成了假绿，五次
+
+另一个 verifier 的任务是「证明这个审计器会 under-report」。**它成功了五次**，我逐个复现属实：
+
+| 形状 | 首版结果 |
+|---|---|
+| `if: false` 挂在 pytest step 上 | **0 violations**，一条测试没跑 |
+| job 级 `if:` | 同上 |
+| `pytest $PYTEST_ARGS` | `$PYTEST_ARGS` 被当成**目标路径**，藏在里面的 `--ignore=` 彻底隐形 |
+| `on: push: paths: ['frontend/**']` | `_triggers` 只读键名不读过滤器 |
+| `pytest tests --collect-only` | **最毒**：清空 `tests` 桶 → 工具报 T2「这条声明现在不排除任何东西，删掉它」 |
+
+最后一条是这份档案里第二严重的事：**工具亲自指挥人走进假绿。**
+它的 anti-rot 机制（T2 逼你删掉已修好的借口）在被喂了一个「看着像跑测试其实什么都不跑」的
+选项时，把「测试没被排除」和「测试根本没跑」当成了同一件事。
+
+另有 5 个注射变异体在首版的 41 条测试下**全部存活**，方向清一色是 under-report——
+其中 `test_render_names_the_owner_of_every_bucket_it_prints` 是**空断言**
+（只数 `"owner:"` 出现次数，把 render 改成对每个桶都印 `owner: ?` 照样 41 绿），
+正是坑账 `pitfall_a_test_that_reads_its_own_constant` 的形状。
+另一条正对照 `test_two_checkouts_report_the_shallow_one_not_the_deep_one` 的 fixture 是 `[0, 1]`，
+**而 0 在 `min` 之前就被过滤掉了，min == max == 1 —— 这条正对照测不出它命名的那件事。**
+
+全部已修（`83dc972d`）：四种形状变成 caveat → T5 → `certified=False`，
+报告顶部直接打「NOT CERTIFIED，下面每个数都是排除量的**下界**」；
+`--collect-only` 移出已建模选项；测试 41 → 69；复跑 12 个变异体 11 个 KILLED。
+
+**这一节本身就是那条教训的第二个实例**：我写了一个工具去问「那个绿覆盖了多少」，
+而它自己的绿，在被人认真攻击之前，同样没有分辨率。
 
 ## 七、教训
 

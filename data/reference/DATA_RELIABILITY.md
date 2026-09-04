@@ -128,7 +128,7 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    `tests.yml` 于 09-04 落地，`audit_wiring.tests_have_ci()` 从 False 变 True。
    **那是个 bool，而缺口住在集合里。** 它跑的是
    `pytest pipeline/tests -q -m "not slow"`，在一个 depth-1 的 checkout 里 ——
-   按 ast 计，仓库 1,950 个测试函数中 **614 个不在任何自动运行里**：
+   按 ast 计，仓库 **1,988** 个测试函数中 **614 个不在任何自动运行里**：
 
    | 漏掉的原因 | 条数 | 里面有什么 |
    |---|---|---|
@@ -140,7 +140,7 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    **钉着我们最严重那次数据事故的检查，不在我们读它绿的那次运行里。**
 
    被漏掉的根里那条红的是 `tests/test_no_naive_clock.py`，
-   自 `6f66f5f9`（2026-08-27 16:18 JST）起红了 **9 天**（父提交 `494f4689` 绿，二分出来的）。
+   自 `6f66f5f9`（2026-08-27 16:18 JST）起红到今天（**8 天 12 小时**，日历日跨 9 天；父提交 `494f4689` 绿，二分出来的）。
    事故档 [`2026-09-05_the_green_run_did_not_run_them.md`](incidents/2026-09-05_the_green_run_did_not_run_them.md)。
 
    **已建**：`pipeline/tools/audit_ci_test_coverage.py`（+41 条测试，commit `aabf4d98`），
