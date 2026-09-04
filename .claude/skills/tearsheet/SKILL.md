@@ -1,5 +1,6 @@
 ---
-description: Synthesize the AI narrative sections (Bull/Bear, Trade Plan, Management commentary, Peers, Catalysts) for one ticker's tear-sheet. Uses Max-subscription compute + WebSearch/WebFetch — no paid API tokens.
+name: tearsheet
+description: Synthesizes the AI narrative layer (bull/bear case, trade plan, management commentary, peers, catalysts) for one ticker's tearsheet — the 个股页 AI 段 of a stock's 一页纸 — and writes it back into that ticker's ai_synthesis JSON field. Use when a ticker's L1 numeric data is already fetched and its 个股页 AI 段 needs synthesizing or refreshing, e.g. "写 <SYMBOL> 的 tearsheet" or "刷新这只票一页纸的 AI 叙事段". Uses Max-subscription compute + WebSearch/WebFetch — no paid API tokens.
 allowed-tools: Bash, Read, Edit, Write, WebFetch, WebSearch
 ---
 
