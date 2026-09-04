@@ -122,3 +122,34 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    `test_no_test_calls_check_site_without_a_history_dir` 用 AST 扫全套测试、带具名豁免清单钉住它。
    实测：本夜在干净树上跑完 1,302 条测试后 `git status --short` 为空；
    该检查的**阳性对照已做**（往 `data/history/quality/breadth_last.csv` 注射一行，`git status` 立即报出）。
+
+6. **⚠️ 第 5 条的缺口只关了一半：CI 现在跑测试了，但它跑不到 614 个。**（Nighty Zac 实测，2026-09-05）
+
+   `tests.yml` 于 09-04 落地，`audit_wiring.tests_have_ci()` 从 False 变 True。
+   **那是个 bool，而缺口住在集合里。** 它跑的是
+   `pytest pipeline/tests -q -m "not slow"`，在一个 depth-1 的 checkout 里 ——
+   按 ast 计，仓库 1,950 个测试函数中 **614 个不在任何自动运行里**：
+
+   | 漏掉的原因 | 条数 | 里面有什么 |
+   |---|---|---|
+   | 只指了 `pipeline/tests` 一个测试根 | 607 | 整个 `tests/` 根，**其中一条是红的** |
+   | `-m "not slow"` | 3 | 含 `test_run_all_end_to_end` —— 就是上面第 0 条记着「首跑抓了三只真虫」的那条 |
+   | `actions/checkout` 无 `fetch-depth` = depth 1 | 4 | 唯一用真实事故数字复现 08-27 覆盖事故的四条 |
+
+   那次运行自己说了 —— `1327 passed, 4 skipped, 3 deselected`，然后 exit 0。
+   **钉着我们最严重那次数据事故的检查，不在我们读它绿的那次运行里。**
+
+   被漏掉的根里那条红的是 `tests/test_no_naive_clock.py`，
+   自 `6f66f5f9`（2026-08-27 16:18 JST）起红了 **9 天**（父提交 `494f4689` 绿，二分出来的）。
+   事故档 [`2026-09-05_the_green_run_did_not_run_them.md`](incidents/2026-09-05_the_green_run_did_not_run_them.md)。
+
+   **已建**：`pipeline/tools/audit_ci_test_coverage.py`（+41 条测试，commit `aabf4d98`），
+   把那个 bool 换成集合，按 `audit_wiring` 的棘轮形状声明今天的 614 条（带 owner／理由／日期），
+   今天绿、任一变化就红；整工具的阳性对照＝喂一个修好的 workflow 后 excluded 归零且三条 T2 全响。
+   它自己无自动触发，已登记进 `audit_wiring.KNOWN_UNWIRED`。
+
+   **仍欠**（四条都要动 `.github/workflows/tests.yml`，不属夜间组边界）：
+   `fetch-depth: 0` · 目标加 `tests` · slow 另开 job · 把本工具挂进 `audit_wiring (reported)` 旁边。
+   ⚠️ **顺序**：先合修复分支 `auto/night-20260905-805da3-fbclock`（`f0899fac`，修那条红的），再改 workflow ——
+   反过来 CI 首日就红。实测：修复分支上 `pipeline/tests + tests`（除 `tests/gex`，本机缺 jinja2/ib_async）
+   **2004 passed / 6 skipped 全绿**；`origin/main` 上单跑 `tests` 是 **1 failed / 528 passed**。
