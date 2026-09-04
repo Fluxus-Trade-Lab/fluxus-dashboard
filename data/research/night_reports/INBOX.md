@@ -1122,3 +1122,23 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
    回 Gate 记 `rounds 2`。不重选信号、不重做查证、不重跑角度与旗舰。
 
 — Marketing Steve（夜间产线，2026-09-04）
+
+## [2026-09-04 03:16–04:10 UTC] 数据哨兵 —— 首班：修了一个持续性发布闸 bug，上游限流仍未解
+
+**回执**：本轮定时任务首次上岗，无历史回执可对。
+
+**健康检查**：`data/output/breadth.json` 最新 session = 2026-09-02，落后一个交易日（2026-09-03 未落地）。
+
+**动作**：
+1. 上岗时已有一个 workflow_dispatch 重跑在飞（run 33832579731），轮询到完成——失败，universe_quality severe（yfinance 批次限流，`ad_ratio_20` 等约 65 列 96–98% 缺失，"a feed that worked has died"）。判为 **B 类上游限流**。
+2. 排查历史失败链（02:08→03:36 UTC 共 4 次重跑）时发现：run 9e0c42e（02:30，session 2026-09-03）**自身守卫全绿**（fundamentals/breadth/universe_quality/watchlist/shortlist 全 ok），却仍以 exit 1 收场——`Audit run ledger` 步骤在 `Commit and push` **之前**执行，命中了一个真 bug：`pipeline/tools/audit_ledger.py` 的 L2 分类表不认识 `no_downgrade`（89ba7d94 09-03 新接的闸）合法的日常状态字 `no-baseline`，把它当未知状态字直接判违规——而 `no_downgrade.py` 自己的文档写明 "不同 session 一律 no-baseline,全部放行"。**这意味着即使今晚 yfinance 限流解除、流水线重新算出全绿数据,发布仍会被这个 bug 挡住**——不是一次性故障,是每天都会踩的常驻闸门。
+3. 已修复并推 main：[`d35afe3`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d35afe3)（`pipeline/tools/audit_ledger.py` + 回归测试，用 9e0c42e 真实现场形状做阳性对照：撤掉修复必红,复现原始报错字符串）。全量测试 1361 passed / 5 skipped。修改范围在 CLAUDE.md safe-merge 白名单内（`pipeline/tools/audit_*`），已自行合并,未待批。
+4. 用修复后的 main 再重跑一次（run 33834496056,03:47–04:10 UTC）：仍败于 universe_quality severe，与第 1 次同一形状（yfinance 限流未解，本班未再触发 audit_ledger 那一步，因为 run_all.py 自身先退出）。
+
+**结果**：dashboard 仍停在 **2026-09-02**。已修复的是"就算数据算对了也发不出去"的闸门 bug；未解决的是上游 yfinance 限流本身——过去 2 小时（02:08–04:10 UTC）连续 5 次尝试全部撞同一堵墙，本班判断继续重跑边际收益低，交给下一班。
+
+- [09-04] 🔴 **数据哨兵**：B 上游限流(yfinance,universe_quality severe,~5400/5630 列缺失) · run 33834496056 · 已重试至第 1 班(另修复 audit_ledger no_downgrade 分类 bug,d35afe3) · dashboard 停在 2026-09-02 · 下一步：下个整点接力重跑,ET 04:00–16:15 盘中禁窗内只告警不重跑
+
+**下一班第一件事**：确认此刻 ET 时段（04:00 后进入盘中禁窗，禁跑到 16:15 ET）；禁窗内只监测/告警，16:15 ET 后再重跑 `daily-data-update.yml`；若仍是 universe_quality severe/yfinance 限流,继续判 B 类可重跑,不需要再查 audit_ledger（已修）。
+
+— 数据哨兵（定时任务，2026-09-04）
