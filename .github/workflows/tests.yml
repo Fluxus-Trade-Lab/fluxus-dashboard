@@ -1,0 +1,67 @@
+# The test suite finally has an automatic trigger.
+#
+# Until 2026-09-04 no workflow ran pytest. `audit_wiring` had been printing
+# that fact as its own last line -- "the test suite itself has no automatic
+# trigger" -- and nothing acted on it. What it cost, measured on that day:
+#
+#   * two tests in test_audit_wiring.py had been red for an unknown stretch,
+#     and the red was a REAL hole: the auditor could not see a call written
+#     as the compact `- run: |` step form, so a wired guard read as UNWIRED;
+#   * the suite could not finish at all -- a wall-retry test and a shared
+#     rate limiter, each correct alone, together slept the real 30/60/120s
+#     backoff ladder;
+#   * both were invisible because running the suite was a thing a human had
+#     to remember to type.
+#
+# SEVERITY: loud, not blocking (DATA_RELIABILITY.md §二点五). This runs on its
+# own trigger and never gates the nightly data pipeline. A red suite must be
+# impossible to miss; it must not be able to stop the dashboard from updating.
+#
+# PyYAML is installed here ON PURPOSE and is absent from pipeline/requirements
+# by design: `audit_wiring._run_blocks` has a YAML path and a regex fallback,
+# and each environment exercises one of them. Local runs cover the fallback,
+# CI covers the YAML branch. Removing it here would leave the YAML branch
+# with no coverage anywhere -- which is exactly the state the compact-step
+# hole survived in.
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements.txt
+          pip install pytest PyYAML
+
+      - name: pytest
+        run: |
+          python -m pytest pipeline/tests -q -m "not slow" --tb=short
+
+      # Reported, never blocking: this one prints which guards nobody calls.
+      # It is allowed to be red without failing the job, because its verdict
+      # is a to-do list, not a defect in this commit.
+      - name: audit_wiring (reported)
+        if: always()
+        continue-on-error: true
+        run: |
+          python -m pipeline.tools.audit_wiring

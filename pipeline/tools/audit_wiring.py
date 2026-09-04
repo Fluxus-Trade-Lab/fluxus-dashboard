@@ -86,11 +86,6 @@ EXEMPT: dict[str, str] = {
         "development instrument -- measures how many mutants the suite kills. "
         "Minutes to hours per run; belongs in a research window, not a cron."
     ),
-    "audit_wiring": (
-        "this file. It has no automatic trigger either, and says so rather "
-        "than exempting itself quietly -- see the ⏰ line in the report. "
-        "Wiring it needs .github/workflows/, outside the night lane."
-    ),
 }
 
 # Known-unwired baseline. (owner, found_on, why_it_matters)
@@ -119,6 +114,58 @@ SKIP_DIRS = {".venv", "venv", ".git", ".claude", "node_modules", "__pycache__",
 
 # ---------- workflows ----------
 
+def _run_blocks_regex(text: str) -> list[str]:
+    """`run:` bodies, found without a YAML parser. Both step forms.
+
+    A regex gets this wrong in both directions and we have been bitten by
+    each, in the same afternoon:
+
+    * UNDER-reads -- `^\\s*run:` cannot see the compact `- run: |` form,
+      because a step written without a `name:` puts `- ` in front. A guard
+      wired that way was reported UNWIRED.
+    * OVER-reads -- a continuation of `(?:\\s+.*\\n)+` swallows blank lines
+      and every following step to EOF, since in YAML each of those lines is
+      indented. Text that is not a command counted as one.
+
+    And the two were entangled: every `run:` in `daily-data-update.yml` is the
+    INLINE form, `run: python -m pipeline.tools.audit_archives ...`, which the
+    old head pattern never matched. Those calls were being found only because
+    the over-read swallowed them out of a later part of the file. Fixing the
+    over-read alone made the real repository's two wired guards vanish. One
+    bug was covering for the other.
+
+    So handle both forms deliberately:
+      inline        `run: cmd`      -> the rest of that line
+      block scalar  `run: |`        -> the lines indented STRICTLY deeper,
+                                       blank lines kept only when a deeper
+                                       line follows
+    """
+    out: list[str] = []
+    lines = text.splitlines()
+    block = re.compile(r"^(\s*)(?:-\s+)?run:\s*[|>][-+]?\s*$")
+    inline = re.compile(r"^\s*(?:-\s+)?run:[ \t]+(\S.*)$")
+    for i, line in enumerate(lines):
+        m = block.match(line)
+        if m:
+            indent = len(m.group(1))
+            body, pending = [], []
+            for nxt in lines[i + 1:]:
+                if not nxt.strip():             # blank: keep only if more follows
+                    pending.append(nxt)
+                    continue
+                if len(nxt) - len(nxt.lstrip()) <= indent:
+                    break
+                body.extend(pending); pending = []
+                body.append(nxt)
+            if body:
+                out.append("\n".join(body) + "\n")
+            continue
+        m = inline.match(line)
+        if m:
+            out.append(m.group(1) + "\n")
+    return out
+
+
 def _run_blocks(text: str) -> list[str]:
     """Every `run:` body in a workflow, comment lines stripped."""
     try:
@@ -142,8 +189,7 @@ def _run_blocks(text: str) -> list[str]:
         # written without a `name:` puts `- ` in front of it. A guard wired
         # that way read as UNWIRED, which is the one direction that hurts --
         # an auditor that under-reports says nothing is wrong.
-        blocks = re.findall(r"^\s*(?:-\s+)?run:\s*[|>]?-?\s*\n((?:\s+.*\n)+)",
-                            text, re.MULTILINE)
+        blocks = _run_blocks_regex(text)
     out = []
     for b in blocks:
         out.append("\n".join(ln for ln in b.splitlines()

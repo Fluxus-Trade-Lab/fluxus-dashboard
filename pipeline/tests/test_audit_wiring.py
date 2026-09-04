@@ -267,3 +267,53 @@ class TestBothParsePaths:
             "# python -m pipeline.tools.audit_x")
         root = tree(tmp_path, guards=["audit_x"], workflows={"n.yml": commented})
         assert run(root)["status"]["audit_x"][0] == "UNWIRED"
+
+    SPILLOVER = """\
+        name: nightly
+        on:
+          schedule:
+            - cron: '30 21 * * 1-5'
+        jobs:
+          go:
+            runs-on: ubuntu-latest
+            steps:
+              - name: unrelated
+                run: |
+                  echo hello
+
+              - name: mentions pipeline/tools/audit_x but does not run it
+                uses: actions/upload-artifact@v4
+                with:
+                  path: pipeline/tools/audit_x.py
+        """
+
+    def test_text_outside_a_run_block_is_not_a_call(self, tmp_path, parse_path):
+        """The over-read direction, which had no test until 2026-09-04.
+
+        The regex fallback's continuation pattern used to swallow blank lines
+        and every following step to EOF -- in YAML each of those lines is
+        indented, so nothing stopped it. A module named anywhere below the
+        first `run:` then counted as being executed. Here `audit_x` appears
+        only as an artifact path, and the answer must be UNWIRED.
+        """
+        root = tree(tmp_path, guards=["audit_x"],
+                    workflows={"n.yml": self.SPILLOVER})
+        assert run(root)["status"]["audit_x"][0] == "UNWIRED"
+
+    def test_a_second_run_block_is_still_found(self, tmp_path, parse_path):
+        """Fixing the over-read must not reintroduce an under-read.
+
+        Stopping the body at the first shallower line is only correct if the
+        NEXT run block is still picked up on its own.
+        """
+        # Append INSIDE the steps list, at the same indent as the other
+        # steps. (Concatenating onto the template's trailing indent line put
+        # the head deeper than its own body -- a fixture bug that read as a
+        # code bug.)
+        two = self.SPILLOVER.replace(
+            "                  path: pipeline/tools/audit_x.py",
+            "                  path: nothing\n"
+            "              - run: |\n"
+            "                  python -m pipeline.tools.audit_x")
+        root = tree(tmp_path, guards=["audit_x"], workflows={"n.yml": two})
+        assert run(root)["status"]["audit_x"][0] == "ci"
