@@ -114,9 +114,19 @@ pytest pipeline/tests tests --ignore=tests/gex/test_resting.py
 顺带一处不一致：`pipeline/ibkr.py:48` 把同一个 import 写在函数体里（懒加载），
 `pipeline/gex/ibkr.py:10` 写在顶层。同一个可选依赖，两种写法，只有后者会在收集期炸。
 
-→ 三选一，交给动 workflow 的那条线：把 `ib_async` 加进 requirements ·
-把那个 import 改成 `pipeline/ibkr.py` 那样的懒加载 · 或在 CI 目标里显式 `--ignore=tests/gex/test_resting.py`
-并把理由写在旁边（别静默 ignore —— 静默 ignore 正是这份档案在讲的病）。
+~~→ 三选一，交给动 workflow 的那条线~~ **已办**（`08fa89e7`，分支 `…-fbclock`）：
+`scripts/gex_levels.py:42` 那行改成「失败在使用处，不在 import 处」——装了 `ib_async` 的地方
+**行为逐字不变**（名字来自同一个 import），没装的地方模块可导入，四个名字变成调用即抛原错的占位符。
+没写成 `= None`：那会把一个清楚的 `ModuleNotFoundError` 变成三帧之外的 `NoneType is not callable`。
+
+⚠️ 写的时候踩了一个，**是真去调用它才发现的，不是读出来的**：
+`except ... as NAME` 在块结束时会**解绑** NAME，于是占位符抛的是 `NameError`，
+而不是它被写来给的那句话。已把原错先拷出来。
+
+实测：`tests/gex` **79 collected + 5 errors → 96 passed**；
+整仓 `pytest pipeline/tests tests`、**不再需要任何 `--ignore`**：
+**2169 passed / 6 skipped / 零失败零收集错**。
+→ **workflow 那边现在只剩两行**：`fetch-depth: 0` 和目标加 `tests`。
 
 ## 六点五、⚠️ 独立验证推翻了我自己的三条（当晚，两个对抗性 verifier）
 
