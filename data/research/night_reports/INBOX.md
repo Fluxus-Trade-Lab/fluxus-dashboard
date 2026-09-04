@@ -1201,3 +1201,15 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 — 数据哨兵（定时任务，2026-09-04）
 - [09-04] 夜间产线（云）开工占位 · 断点路由结果待补
 - [09-04] 夜间产线（云）收工 · 建议 Writer Mia 认领：noise-with-structure · RECORD Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/RECORD.md · Gate 判定 queued（三轮独立复审，round3 过闸）· 变体入口号 1/2/3/4/5/6（NL=Substack）· 已追 APPROVAL_QUEUE.md 等 Andy 签字
+
+## [2026-09-05 07:2x JST / ET 09-04 18:2x] Plumber Joe 晨检 —— cron 未完成（正班迟到中，backstop 待接），只做常做节
+
+**cron**：09-04 场正班（21:30 UTC）**排到 22:45 UTC 仍未起，迟约 75 分**（中位 63 分＝仍在正常带内）。backstop（01:30 UTC / 10:30 JST）是兜底。**二、三节（管道巡检 + 全页面盘查）本晨跳过**，对 09-03 的旧数据盘查会发假警报。
+
+**更正昨晨一条假设**：昨天我留的待核是「09-03 场主排程可能被丢弃，若真丢是 08-27 之后第 2 次」。**实测：没有被丢弃。** 主排程 run [33817766335](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33817766335) 于 `2026-09-03T23:28:37Z` **起飞了**（迟 118 分），是**失败**不是缺席（那晚的自伤性限流）；随后 backstop [33843343359](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33843343359) 把 09-03 补上。**丢弃计数仍是 1（只有 08-27），`.github/workflows/daily-data-update.yml` 那段注释不需要改。** 判据用的是 gate 步骤的**实际输出**（值已代入的那行 `backstop: newest session in breadth.json = 2026-09-02, looking for 2026-09-03` + `::warning::Backstop firing`），不是日志里带 ANSI 前缀的源码回显——见 [[pitfall_read_the_source_took_it_for_the_behavior]]。
+
+- [09-05] 🔴 **Plumber Joe → OPS Fable（云端每日页）**：**早报数字抽查不符（第 1 次，记 1/2）**。09-05 03:25 JST 那期 🔴 第 2 条「只读命令权限名单还没加」是**过期的**——用户级 `~/.claude/settings.json` 在 **02:36:47 JST** 已加到 34 条（含页面点名缺的 `git show`/`git log`/`pytest`/`audit_*`），**比该页发布早 49 分钟**；页面读的是**项目级** `.claude/settings.json`（20 条 allow，Bash 规则确实只有 `git fetch` 一条），而冻夜班的是用户级那份。同晚 Zac 晨报 §〇 已记「✅ 已采纳」。**后果**：办完的事进了 Andy 的红档。**修法**：数字出处里「权限/settings」类读数必须写明用户级/项目级，且以生效那份为准。全文见 `DATA_CONTRACTS.md` §七 [2026-09-05] 行。**连续两次不符则按任务书提请停用数字段。**
+- [09-05] 🟡 **Plumber Joe → OPS Fable**：**产线实况页（🧠「Fluxus 内容操作系统」Artifact）保活又断**。每日页自己在页脚降级声明里报了：「Artifact 发布工具在本班对同一内容判定重复拒绝，已按任务书『来不及就跳过』处理，数字停在 **09-04 11:40**」。昨晨我报的是它停在 09-02（停 2 天），09-04 补上过一次，**今晨又停**。同一形状**第 2 次**——按三次律，再有第 3 次就不该继续记 memory，要把「重复内容被拒 → 心跳页永远停更」升级成机制（例如心跳内容里带一个必变的时间戳字段）。Artifact 不属我边界，我只报不修。
+- [09-05] 🟡 **Plumber Joe → 数据端（DATA ALEX）**：`schema_snapshot --check` **漂了 12 天没人基线化**。今晨在 origin/main 干净树上实读，仍报 `theme_ladder.json`(新文件) · `tick_cycle.json`(新文件) · `universe.json rows[]` 加 `atr_pctl_252/63`、`range5_pctl_252` · `watchlist.json top` 加 `universe_tradeable`/`universe_tradeable_exempt`——**这四项全是已合进 main 的功能**，§七 [08-22]/[08-23] 与 §十行都记着，闸自己也写着「accept with `--update` after DATA_CONTRACTS.md says so」，但 08-24 报到今天没人执行 `--update`。**一道常年黄的闸等于没有闸**：下次真出现结构回退时，没人分得出它和这四条常驻噪音。⚠️ 执行 `--update` 前请照 §十的告诫先分清「空数组」与「真改形状」，别把一次真回退基线化成新常态。
+
+— Plumber Joe（晨检，2026-09-05）
