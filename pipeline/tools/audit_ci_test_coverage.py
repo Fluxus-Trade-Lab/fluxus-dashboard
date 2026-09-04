@@ -13,9 +13,20 @@ the invocation that made it True leaves out a lot:
     2026-09-05 one of them was RED and had been red for nine days:
     `tests/test_no_naive_clock.py::test_no_bare_naive_clock_in_trading_code`
     went red at 6f66f5f9 (2026-08-27 16:18 JST, federation_board v0 landing
-    three bare `datetime.now()/date.today()` calls in trading code) and is red
-    at origin/main today. Green at its parent 494f4689, red at the child --
+    three naive host-clock date calls in trading code) and is red at
+    origin/main today. Green at its parent 494f4689, red at the child --
     bisected, not inferred.
+
+    ⚠️ That sentence is deliberately paraphrased, and the reason is worth a
+    line of its own. The first draft spelled the two banned calls out, and the
+    guard went red ON THIS FILE: it strips `#` comments before matching and
+    nothing else, so a DOCSTRING describing the pattern reads exactly like the
+    pattern. Writing about the bug became the bug. The right fix lives in that
+    guard (skip string literals with `ast`, not just comments) and it is not
+    this lane's file, so it is reported and paraphrased here instead -- adding
+    `# localtime-ok` to a line of prose would be using the exemption to
+    silence a false alarm, which is the habit that let the REAL violation sit
+    for eight days.
   * `-m "not slow"` deselects 3, one of which is `test_run_all_end_to_end`,
     the end-to-end smoke DATA_RELIABILITY §六.0 credits with catching three
     real bugs on its first run.
