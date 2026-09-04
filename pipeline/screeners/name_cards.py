@@ -423,7 +423,11 @@ def archive(payload: Mapping[str, Any], path: Path = LOG) -> int:
 
 def manual_tickers(path: Path = MANUAL) -> List[str]:
     try:
-        return [t.upper() for t in json.loads(path.read_text()).get("tickers", [])][:20]
+        # dict.fromkeys: the GAS sheet can list a name twice (2026-09-03 had
+        # ABSI twice), and a duplicate here becomes two identical cards and an
+        # I2 (date,ticker) violation that blocks the nightly publish.
+        raw = [t.upper() for t in json.loads(path.read_text()).get("tickers", [])]
+        return list(dict.fromkeys(raw))[:20]
     except Exception:  # noqa: BLE001
         return []
 
