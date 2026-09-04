@@ -1,0 +1,36 @@
+==============================================================================
+DATA
+  gold   monthly fixes:  701  1968-04 -> 2026-08   returns: 700
+         non-consecutive month gaps: 0 []
+  silver monthly fixes:  704  1968-01 -> 2026-08   returns: 703
+         non-consecutive month gaps: 0 []
+==============================================================================
+PRE-REGISTERED CELLS (Bonferroni alpha = 0.05/4 = 0.0125)
+
+--- IN-SAMPLE  (Baur 1980-2010, replication check) ---
+  gold   month  9: n= 31  mean= +2.52%  t=+2.83  p_t=0.0042  signs=22/31  p_sign=0.0147  (p_min=4.66e-10)  <<< significant after correction
+  gold   month 11: n= 31  mean= +1.89%  t=+2.57  p_t=0.0077  signs=20/31  p_sign=0.0748  (p_min=4.66e-10)  <<< significant after correction
+  gold   month 10: n= 31  mean= -1.15%  t=-1.29  p_t=0.8973  signs=13/31  p_sign=0.8595  (p_min=4.66e-10)
+  silver month 10: n= 31  mean= -2.29%  t=-1.33  p_t=0.9035  signs=13/31  p_sign=0.8595  (p_min=4.66e-10)
+
+--- OUT-OF-SAMPLE (2011-, the only verdict) ---
+  gold   month  9: n= 15  mean= -1.35%  t=-0.95  p_t=0.8212  signs=4/15  p_sign=0.9824  (p_min=3.05e-05)
+  gold   month 11: n= 15  mean= -0.94%  t=-0.83  p_t=0.7900  signs=9/15  p_sign=0.3036  (p_min=3.05e-05)
+  gold   month 10: n= 15  mean= +0.95%  t=+1.06  p_t=0.1540  signs=8/15  p_sign=0.5000  (p_min=3.05e-05)
+  silver month 10: n= 15  mean= +1.96%  t=+1.25  p_t=0.1158  signs=10/15  p_sign=0.1509  (p_min=3.05e-05)
+
+==============================================================================
+ALL 12 MONTHS -- context only, NOT tested (would be 24 comparisons)
+  gold   in   1:+0.97  2:-0.96  3:-0.94  4:+0.63  5:+0.29  6:-0.18  7:-0.29  8:+0.75  9:+2.52 10:-1.15 11:+1.89 12:-0.28
+  gold   out  1:+3.86  2:+1.11  3:+0.05  4:+1.18  5:-0.93  6:-1.42  7:+1.92  8:+2.70  9:-1.35 10:+0.95 11:-0.94 12:+0.15
+  silver in   1:+2.28  2:-0.17  3:-1.31  4:-0.68  5:+0.34  6:-2.87  7:+1.13  8:-0.95  9:+2.99 10:-2.29 11:+1.35 12:+0.02
+  silver out  1:+4.45  2:+0.10  3:-1.79  4:+1.97  5:-1.71  6:-3.54  7:+3.71  8:+3.18  9:-3.29 10:+1.96 11:-2.11 12:+2.17
+
+==============================================================================
+PRE-1980 (reported, in no test): regime differs, gold was pegged/just freed
+  gold   month  9: n= 12  mean= +2.15%  t=+0.84  p_t=0.2084  signs=6/12  p_sign=0.6128  (p_min=2.44e-04)
+  gold   month 10: n= 12  mean= +2.09%  t=+1.49  p_t=0.0826  signs=7/12  p_sign=0.3872  (p_min=2.44e-04)
+  gold   month 11: n= 12  mean= -0.55%  t=-0.21  p_t=0.5829  signs=7/12  p_sign=0.3872  (p_min=2.44e-04)
+  silver month  9: n= 12  mean= +3.68%  t=+0.87  p_t=0.2021  signs=7/12  p_sign=0.3872  (p_min=2.44e-04)
+  silver month 10: n= 12  mean= +1.78%  t=+0.88  p_t=0.2000  signs=8/12  p_sign=0.1938  (p_min=2.44e-04)
+  silver month 11: n= 12  mean= -0.26%  t=-0.15  p_t=0.5588  signs=7/12  p_sign=0.3872  (p_min=2.44e-04)
