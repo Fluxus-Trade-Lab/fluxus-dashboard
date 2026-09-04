@@ -106,6 +106,20 @@ KNOWN_UNWIRED: dict[str, tuple[str, str, str]] = {
         "no_downgrade imports STATUS_RANK from it, which is a table, not a "
         "call; the gate itself has never been invoked automatically",
     ),
+    # Declared by its own author on the night it was written, which is the
+    # shape of `pitfall_i_changed_the_rule_to_fit_what_i_did` and is said out
+    # loud here for that reason. What makes it legitimate is that nothing was
+    # changed to accommodate it: this is the channel this table exists for,
+    # the entry names an owner outside the author's lane, and W2 deletes the
+    # excuse the moment somebody wires it. Wiring is three lines next to the
+    # `audit_wiring (reported)` step in tests.yml -- a file the night shift
+    # cannot merge.
+    "audit_ci_test_coverage": (
+        "DATA ALEX / whoever owns .github/workflows", "2026-09-05",
+        "it is the only reader of what the wired pytest run leaves out: 614 "
+        "of the repository's test functions, including a second test root "
+        "(tests/, 607) that has been carrying a red test since 2026-08-27",
+    ),
 }
 
 SKIP_DIRS = {".venv", "venv", ".git", ".claude", "node_modules", "__pycache__",
