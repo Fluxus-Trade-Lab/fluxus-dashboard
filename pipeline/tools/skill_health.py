@@ -6,6 +6,9 @@ from pathlib import Path
 
 
 def summarize(skills_root: Path) -> dict:
+    # 约定：workspace 在仓库根，与 .claude/ 平级（不是 skills_root 的兄弟）。
+    # skills_root 通常是 <repo>/.claude/skills，所以仓库根是 skills_root.parent.parent。
+    repo_root = skills_root.parent.parent
     out = {"skills": 0, "with_evals": 0, "last_delta": {}}
     for d in sorted(p for p in skills_root.iterdir() if p.is_dir() and not p.name.startswith("_")):
         if not (d / "SKILL.md").exists():
@@ -13,9 +16,12 @@ def summarize(skills_root: Path) -> dict:
         out["skills"] += 1
         if (d / "evals" / "evals.json").exists():
             out["with_evals"] += 1
-        ws = skills_root.parent / f"{d.name}-workspace"
+        ws = repo_root / f"{d.name}-workspace"
         if ws.exists():
-            its = sorted(ws.glob("iteration-*/benchmark.json"))
+            its = sorted(
+                ws.glob("iteration-*/benchmark.json"),
+                key=lambda p: int(p.parent.name.removeprefix("iteration-")),
+            )
             if its:
                 try:
                     out["last_delta"][d.name] = json.loads(its[-1].read_text())["delta"]["pass_rate"]
