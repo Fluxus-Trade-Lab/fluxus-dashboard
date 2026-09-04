@@ -177,3 +177,93 @@ def test_the_two_guards_we_believe_are_wired_still_are():
     ci = W.ci_invocations(root / ".github" / "workflows")
     assert "audit_archives" in ci
     assert "audit_ledger" in ci
+
+
+class TestBothParsePaths:
+    """The auditor has two parsers, and only one of them was ever tested.
+
+    `_run_blocks` uses PyYAML when it is importable and a regex when it is
+    not. PyYAML is absent locally, so the regex is what every local run --
+    and every test in this file -- has actually been exercising. On
+    2026-09-04 that regex could not see the compact step form:
+
+        steps:
+          - run: |
+              python -m pipeline.tools.audit_x
+
+    because it required `run:` to be preceded by whitespace only, and a step
+    written without a `name:` puts `- ` in front. Two tests here had been red
+    for exactly that reason, unseen, because no workflow runs pytest and the
+    suite could not finish anyway.
+
+    An auditor that misses a real call under-reports: it calls a wired guard
+    UNWIRED and never fires W2 when the excuse should be deleted. These tests
+    pin BOTH forms on BOTH paths, so the answer cannot depend on whether a
+    package happens to be installed.
+    """
+
+    COMPACT = """\
+        name: nightly
+        on:
+          schedule:
+            - cron: '30 21 * * 1-5'
+        jobs:
+          go:
+            runs-on: ubuntu-latest
+            steps:
+              - run: |
+                  python -m pipeline.tools.audit_x
+        """
+
+    NAMED = """\
+        name: nightly
+        on:
+          schedule:
+            - cron: '30 21 * * 1-5'
+        jobs:
+          go:
+            runs-on: ubuntu-latest
+            steps:
+              - name: audit
+                run: |
+                  python -m pipeline.tools.audit_x
+        """
+
+    @pytest.fixture(params=["compact", "named"])
+    def workflow(self, request):
+        return {"compact": self.COMPACT, "named": self.NAMED}[request.param]
+
+    @pytest.fixture(params=["with_yaml", "regex_fallback"])
+    def parse_path(self, request, monkeypatch):
+        if request.param == "with_yaml":
+            # Do not let this parameter claim coverage it does not have: with
+            # PyYAML absent the YAML branch is unreachable, and a test named
+            # `with_yaml` that silently ran the regex would be a green nobody
+            # earned. Skipped loudly instead.
+            pytest.importorskip("yaml", reason="PyYAML absent: YAML branch unreachable here")
+        if request.param == "regex_fallback":
+            import builtins
+            real = builtins.__import__
+
+            def no_yaml(name, *a, **k):
+                if name == "yaml":
+                    raise ImportError("PyYAML unavailable (forced)")
+                return real(name, *a, **k)
+            monkeypatch.setattr(builtins, "__import__", no_yaml)
+        return request.param
+
+    def test_a_real_call_is_seen_on_every_path_and_form(
+            self, tmp_path, workflow, parse_path):
+        root = tree(tmp_path, guards=["audit_x"], workflows={"n.yml": workflow})
+        out = run(root)
+        assert out["status"]["audit_x"][0] == "ci", (
+            f"{parse_path} missed a genuine call")
+
+    def test_a_commented_out_call_is_not_seen_on_every_path_and_form(
+            self, tmp_path, parse_path):
+        """Discrimination control: if it says 'ci' to both, it says nothing."""
+        commented = self.NAMED.replace(
+            "python -m pipeline.tools.audit_x",
+            "# python -m pipeline.tools.audit_x")
+        root = tree(tmp_path, guards=["audit_x"], workflows={"n.yml": commented})
+        assert run(root)["status"]["audit_x"][0] == "UNWIRED"

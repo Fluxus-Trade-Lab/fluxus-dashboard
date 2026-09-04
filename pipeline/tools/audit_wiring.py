@@ -134,8 +134,15 @@ def _run_blocks(text: str) -> list[str]:
             for step in job.get("steps") or []:
                 if isinstance(step, dict) and isinstance(step.get("run"), str):
                     blocks.append(step["run"])
-    else:                                    # fallback: indented run: blocks
-        blocks = re.findall(r"^\s*run:\s*[|>]?-?\s*\n((?:\s+.*\n)+)",
+    else:
+        # Fallback for environments without PyYAML -- which is the LOCAL one,
+        # so this branch is what the tests actually exercise. It missed the
+        # compact list-item form `- run: |` until 2026-09-04: the old pattern
+        # required `run:` to be preceded by whitespace only, and a step
+        # written without a `name:` puts `- ` in front of it. A guard wired
+        # that way read as UNWIRED, which is the one direction that hurts --
+        # an auditor that under-reports says nothing is wrong.
+        blocks = re.findall(r"^\s*(?:-\s+)?run:\s*[|>]?-?\s*\n((?:\s+.*\n)+)",
                             text, re.MULTILINE)
     out = []
     for b in blocks:

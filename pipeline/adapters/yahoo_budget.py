@@ -55,6 +55,18 @@ THROTTLE_MARKERS = (
 # through its slot.
 _BACKOFF_LADDER = (30, 60, 120, 300, 600)
 
+# Indirection so a test can neutralise the wait without neutralising the
+# decision to wait. 2026-09-04: wiring this limiter into
+# `fundamentals_store.refresh` made `TestWallRetry` -- a test that walls on
+# purpose -- sleep the real ladder, 30s then 60s and up. The whole pytest run
+# stopped finishing, which is also why two red tests in test_audit_wiring sat
+# unnoticed. Neither change was wrong on its own; they were only wrong
+# together, and nothing caught it because no workflow runs pytest.
+#
+# Patched in pipeline/tests/conftest.py for the entire suite, and the calls
+# are recorded there so a test can still assert that a backoff was REQUESTED.
+_sleep = time.sleep
+
 # A batch is judged "refused" when this share or more of it came back empty.
 # Below it, misses are ordinary dataless names (delisted, halted, too new);
 # the healthy floor is ~2% of the universe.
@@ -111,7 +123,7 @@ class YahooBudget:
         waited = 0.0
         while remaining > 0:
             chunk = min(remaining, 30.0)
-            time.sleep(chunk)
+            _sleep(chunk)
             remaining -= chunk
             waited += chunk
         with self._lock:

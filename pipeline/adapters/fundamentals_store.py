@@ -62,6 +62,12 @@ MAX_CONSECUTIVE_FAILURES = 40   # a throttle wall, not a run of dead symbols
 # tomorrow's queue (the victims are un-stamped, see below) is the right answer.
 WALL_COOLDOWN_S = int(os.environ.get('FUNDAMENTALS_COOLDOWN', '90'))
 WALL_RETRIES = 1
+# Same indirection as yahoo_budget's: tests neutralise the WAIT, never the
+# decision to wait. Before 2026-09-04 only tests that remembered to set
+# WALL_COOLDOWN_S=0 avoided a real 90-second sleep, so any new test touching
+# this path silently cost 90s -- and one that walled through the shared
+# limiter as well cost the whole ladder on top. See pipeline/tests/conftest.py.
+_sleep = time.sleep
 RETRY_WORKERS = 2               # gentler on the way back in
 
 
@@ -204,7 +210,7 @@ def refresh(store: Dict[str, Dict], tickers: Iterable[str], *, budget: int = BUD
         retries_used += 1
         log.warning("fundamentals: cooling down %ds before retry %d/%d (%d names left)",
                     WALL_COOLDOWN_S, retries_used, WALL_RETRIES, len(remaining))
-        time.sleep(WALL_COOLDOWN_S)
+        _sleep(WALL_COOLDOWN_S)
         todo = remaining
         workers_now = RETRY_WORKERS
 

@@ -27,6 +27,7 @@ evidence.
 """
 from __future__ import annotations
 
+import importlib
 import subprocess
 from pathlib import Path
 
@@ -103,3 +104,60 @@ def _repo_data_stays_clean():
             + "\n\nA path argument was left on its real default. Sandbox every "
               "exit of the function, not just the one you passed."
         )
+
+
+# --------------------------------------------------------------------------
+# No unit test may spend real wall-clock time in a backoff.
+#
+# 2026-09-04: the shared Yahoo limiter (`yahoo_budget`) was wired into
+# `fundamentals_store.refresh`, and `TestWallRetry` -- a test whose whole job
+# is to wall on purpose -- began sleeping the real ladder: 30s, then 60s, and
+# up. The suite stopped finishing. Two unrelated red tests in
+# `test_audit_wiring` had been sitting behind that wall unseen, and no
+# workflow runs pytest, so nothing said a word.
+#
+# Neither change was wrong alone. What was missing is this: a module that
+# sleeps for real is reachable from unit tests the moment anyone wires it in,
+# and the wiring is exactly the kind of edit nobody thinks to test.
+#
+# The fixture removes the WAIT, never the DECISION to wait: every requested
+# duration is recorded, so a test can still assert that a backoff was asked
+# for and how long it would have been. Ask for the `slept` fixture to read it.
+@pytest.fixture(autouse=True)
+def _no_real_backoff_sleeps(monkeypatch, request):
+    recorded: list[float] = []
+
+    def _record(seconds):
+        recorded.append(float(seconds))
+
+    # Every module that can sleep in a vendor-backoff path. Adding a module
+    # here is cheaper than discovering it the way we discovered the second
+    # one: a regression test written for the FIRST sleep failed on the
+    # SECOND, still 90 seconds long, in the same call stack.
+    patched = 0
+    for mod_path in ("pipeline.adapters.yahoo_budget",
+                     "pipeline.adapters.fundamentals_store"):
+        try:
+            mod = importlib.import_module(mod_path)
+        except ImportError:                # module absent -> nothing to patch
+            continue
+        # Deliberately NOT `except Exception`: the first version of this loop
+        # used one and swallowed a NameError from a missing import, leaving
+        # the fixture inert. The `assert patched` below is what made that
+        # loud instead of silent -- keep both.
+        if not hasattr(mod, "_sleep"):
+            raise AssertionError(
+                f"{mod_path} has no `_sleep` indirection -- either it lost one "
+                "or this list is stale. A silently unpatched module is how the "
+                "suite stopped finishing on 2026-09-04.")
+        monkeypatch.setattr(mod, "_sleep", _record, raising=True)
+        patched += 1
+    assert patched, "no backoff module could be patched -- the fixture is inert"
+    request.node._recorded_sleeps = recorded
+    yield recorded
+
+
+@pytest.fixture
+def slept(_no_real_backoff_sleeps):
+    """Seconds the limiter ASKED to sleep, in order. Nothing actually waited."""
+    return _no_real_backoff_sleeps

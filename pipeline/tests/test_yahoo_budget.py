@@ -76,19 +76,23 @@ def test_success_clears_the_streak(budget):
 
 # -- the wiring: does anyone actually wait? --------------------------------
 
-def test_before_batch_blocks_after_a_refusal(budget, monkeypatch):
-    """The test that would have caught a gate wired to nothing."""
-    slept = []
-    monkeypatch.setattr(yb.time, "sleep", lambda s: slept.append(s))
+def test_before_batch_blocks_after_a_refusal(budget, slept):
+    """The test that would have caught a gate wired to nothing.
+
+    `slept` is the suite-wide fixture (pipeline/tests/conftest.py): it records
+    what the limiter ASKED to sleep and never actually waits. This used to
+    patch `yb.time.sleep` locally, which stopped reaching the call site on
+    2026-09-04 when the sleep moved behind a module-level `_sleep`
+    indirection -- the indirection exists so no test can spend the real
+    ladder (30s, 60s, ...) the way the fundamentals wall test was doing.
+    """
     budget.note_batch(500, 0)            # sets the clock
     budget.before_batch("caller B")
     assert slept, "before_batch returned without waiting on an active backoff"
     assert sum(slept) > 0
 
 
-def test_before_batch_is_free_when_healthy(budget, monkeypatch):
-    slept = []
-    monkeypatch.setattr(yb.time, "sleep", lambda s: slept.append(s))
+def test_before_batch_is_free_when_healthy(budget, slept):
     budget.note_batch(500, 495)
     budget.before_batch("caller B")
     assert slept == []
@@ -106,10 +110,8 @@ def test_backoff_grows_with_the_streak(budget, monkeypatch):
     assert second > first
 
 
-def test_one_callers_wall_is_every_callers_wall(budget, monkeypatch):
+def test_one_callers_wall_is_every_callers_wall(budget, slept):
     """The whole point: fundamentals hits the wall, the OHLC sweep waits."""
-    slept = []
-    monkeypatch.setattr(yb.time, "sleep", lambda s: slept.append(s))
     budget.note_batch(40, 0, None, "fundamentals wall")
     budget.before_batch("enrich pass 1")
     assert slept
