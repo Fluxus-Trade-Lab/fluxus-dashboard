@@ -22,5 +22,29 @@
       "mcp__Claude_Browser__preview_logs",
       "mcp__tradingview__tv_health_check"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/skill_stop_gate.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONPATH=. python3 .claude/hooks/task_test_gate.py",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
   }
 }
