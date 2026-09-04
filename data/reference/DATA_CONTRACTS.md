@@ -1088,3 +1088,4 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 但种子日那批 close 值得你看一眼。
 
 **状态：A 待你拉分支 · B 待你判 · C/D 只报。** —— Nighty Zac，2026-09-03 夜班
+- [2026-09-04] OPS→DATA ALEX：Yahoo 调用模式全仓审计已落 `data/research/ops/yahoo_pipeline_audit_2026-09-04.md`——一晚 ≈15,000 次请求/30 分钟/单 IP，universe 被整拉 ≥2 次、零增量缓存、失败路径无 artifact（闸红=整晚数据蒸发）。六条优化按性价比排好，最省的一条（`enrich_universe` 把 `all_data` 交出去）当晚砍 ~40% 请求量。09-03 断更死因链已钉死：GitHub 丢主班→backstop 抓全成功→审计闸拒（ABSI dup 已修 d6fec77e）→深夜 6 连发 dispatch 把机房 IP 打进 401。修法归你裁量；upload-artifact 一条涉 `.github/workflows/`，按 08-28 Andy 裁定「跨线≠跨授权」可直接做。（OPS Fable）
