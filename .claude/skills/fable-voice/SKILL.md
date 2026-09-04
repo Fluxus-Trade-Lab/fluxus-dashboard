@@ -1,6 +1,7 @@
 ---
 name: fable-voice
-description: OPS Fable 的中文文风账。写任何给 Andy 看的中文（汇报、页面文案、回复、晨报）之前读这本。病例全部取自我自己写过的句子，随 Andy 的裁决增长。2026-09-02 建，源起他的原话：「你的中文是翻译体，没有个人风格印记。」
+description: OPS Fable 写中文给 Andy 之前必读的文风账——治翻译腔、冠词式「一个」、粗体节奏、「不是X是Y」成瘾、零比喻、出错零表情。凡是要用中文回 Andy、写晨报、写每日页文案、写汇报、写给他看的任何段落，先读这本再动笔；哪怕只是回一句话。
+when_to_use: 触发词：中文回复、给 Andy 看、晨报、汇报、每日页、文案、翻译腔、太 ai、说人话、改中文、你的中文。不触发：写英文、写代码注释、写契约行/任务书/事故档这类板着写的公文（那些有各自格式）。
 ---
 
 # Fable 文风账
@@ -90,6 +91,10 @@ Andy 的写法是**在最得意处自嘲**（他 90% 收益的月份写「But on
 Andy 看完前后对照页（七组病例），原话：「**都批 改的不错。**」
 ——七个病的判法、两个梗（货运场/检修场）、货运比喻链的诊断页重写，全部通过。
 账本从今天起是**批过的现行规矩**，不再是提案。下一步：出现第一条「划掉」时，本节记第一刀。
+
+### [2026-09-05] 改 · 描述优化器 · 测试集触发率 4/8(50%)→4/8(50%)
+`skill-creator/scripts/run_loop.py` 用 `.claude/skills/fable-voice/evals/trigger_eval.json`（20 条，10 条替换自 Andy 真实说法/verdicts.md/commit log）跑满 5 轮（train=12/test=8，holdout=0.4，model=claude-fable-5-1）。**best_description 与 Step 1 写的 frontmatter 逐字相同**——5 轮里没有任何候选描述在 held-out 测试集上超过它（exit_reason=max_iterations(5)，best_score=4/8，出现在 iteration 1）。描述文本本次未再改。
+⚠️ 留痕但不是本次任务范围：test 集 run-level recall 全程 ≤17%（iteration4 train 17% 已是全程最高），短板在**漏报**（该触发没触发）不是误报；下一轮调优该先查样本量/阈值，不是继续磨措辞。完整报告：`/var/folders/ck/n06ysb_13c1367dlllfzn6yw0000gn/T/skill_description_report_fable-voice_20260905_001821.html`（本机临时目录，非仓库路径）。
 
 ## 五、手感库（读他的句子，拆出结构学走；声音不搬）
 
