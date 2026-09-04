@@ -320,6 +320,29 @@ jobs:
           done
           echo "push failed after 3 rebase attempts"; exit 1
 
+      # "Do not publish" and "do not keep" are different things, and until now
+      # this workflow only implemented the first. A tripped gate skipped
+      # `Commit and push`, and data/output/ -- ~15,000 Yahoo requests and 25
+      # minutes of a runner's life -- died with the container. 2026-09-03 is
+      # the case in point: Yahoo answered every batch, fundamentals came back
+      # 400/400, and the night was thrown away over ONE duplicate row in
+      # shortlist_log.csv. The only way back to that data was to ask Yahoo for
+      # all of it again, six times, from a datacenter IP -- which is how a C
+      # class bug (dup row, fixed in d6fec77e) turned into `HTTP 401 Invalid
+      # Crumb` and two days of a stale dashboard.
+      #
+      # With the artifact, a failed gate costs a re-audit, not a re-fetch.
+      # Retention is short on purpose: this is a repair buffer, not an archive.
+      - name: Preserve fetched data when a gate failed
+        if: failure()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-output-${{ github.run_id }}
+          path: data/output/
+          retention-days: 7
+          if-no-files-found: warn
+
       # The ledger must survive the night it describes. Until now a run that
       # tripped ANY gate skipped `Commit and push`, so its run_ledger line --
       # the only record of what actually happened -- died with the runner.
