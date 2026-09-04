@@ -87,13 +87,21 @@ def tests_have_ci(workflows: Path) -> bool:
 | 去掉 `-m "not slow"`（或另开一个跑 slow 的 job） | 端到端 smoke |
 | 把 `audit_ci_test_coverage` 挂进 `audit_wiring (reported)` 旁边 | 下一个盲点自己会喊 |
 
-⚠️ 加 `tests` 之前先知道它会不会红。本机实测（两次都排除 `tests/gex`，本机缺 `jinja2`/`ib_async`，
-那是环境不是代码）：
+⚠️ 加 `tests` 之前先知道它会不会红 —— 已经替你跑过了，**在一个装了 `jinja2` 的干净 venv 里**
+（`jinja2>=3.1` 本来就在 `pipeline/requirements.txt:27`，CI 会装；本机没装不算数），
+命令就是 workflow 该写的那条：
 
-- `origin/main` 上单跑 `tests` → **1 failed / 528 passed**（就是上面那条守卫）
-- 修复分支上跑 `pipeline/tests + tests` → **2004 passed / 6 skipped，全绿**
+```
+pytest pipeline/tests tests --ignore=tests/gex/test_resting.py
+```
 
-所以顺序是：**先合修复分支，再改 workflow**。反过来会让 CI 首日就红。
+| 在哪 | 结果 |
+|---|---|
+| `origin/main`（`e1e5ea21`） | **1 failed / 2161 passed / 6 skipped** —— 唯一那条就是本档案讲的守卫 |
+| 修复分支 `…-fbclock`（同基） | **2162 passed / 6 skipped，零失败** |
+
+所以顺序是：**先合修复分支，再改 workflow**。反过来 CI 首日就红，而且红的是一条
+「已经红了八天半、和这次改动无关」的老账 —— 那种红最容易被当成噪声关掉。
 
 **还有一件必须先办的**（现场量的，不是推断）：`tests/gex/` 有 79 条测试 + 5 个收集不了的文件。
 其中 4 个缺的是 `jinja2`，而 `jinja2>=3.1` **已经在** `pipeline/requirements.txt:27` 里 ——
@@ -165,6 +173,21 @@ verifier 指出：**错的不是 `now`，是减法的另一边。** 同文件取
 
 **这一节本身就是那条教训的第二个实例**：我写了一个工具去问「那个绿覆盖了多少」，
 而它自己的绿，在被人认真攻击之前，同样没有分辨率。
+
+## 六点七、⚠️ 第五条：我写这个 bug 的散文，被守卫当成了这个 bug
+
+写完上面这份档案之后，`audit_ci_test_coverage.py` 的 docstring 里逐字出现了那两个被禁的调用
+（因为我在解释 `federation_board` 犯了什么错）。而 `tests/test_no_naive_clock.py` 匹配前
+**只剥 `#` 注释，不剥字符串字面量** —— 于是**描述这个模式的 docstring 读起来就是这个模式**，
+守卫对我这个新文件报红。
+
+**没有用 `# localtime-ok` 去消音**，改成了转述。理由写在 `e1e5ea21` 里：
+拿豁免去压一个误报，正是让那条真违规坐了八天半的那个习惯（见 §六点五 第 3 条）。
+
+**真正的修法在守卫那边**：用 `ast` 跳过字符串字面量，不只跳注释
+（那份守卫自己的 docstring 写着「skip the module docstring … is overkill here」——
+09-05 之后不再 overkill 了，它已经产生了第一个假阳性）。
+`tests/` 不属夜间组边界 → **只报不改，已列门铃。**
 
 ## 七、教训
 
