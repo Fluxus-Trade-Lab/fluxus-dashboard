@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/skill_stop_gate.py",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/skill_stop_gate.py",
             "timeout": 10
           }
         ]
@@ -40,7 +40,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "PYTHONPATH=. python3 .claude/hooks/task_test_gate.py",
+            "command": "PYTHONPATH=\"$CLAUDE_PROJECT_DIR\" python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/task_test_gate.py",
             "timeout": 600
           }
         ]

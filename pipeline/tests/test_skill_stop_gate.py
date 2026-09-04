@@ -37,7 +37,8 @@ def test_missing_field_passes(gate):
     assert gate.verdict({}) == {}
 
 
-def test_receipt_must_be_a_line_start_not_inside_code(gate):
-    """正文里引用了规矩不算留痕；留痕是那一行本身。"""
+def test_receipt_must_be_a_line_start_not_mid_sentence(gate):
+    """留痕是**行首**那一行；句子中间提一嘴 `skill-used:` 不算。
+    （围栏代码块里的留痕行是**算**的——R13 判可接受，别把这条读成「代码块里不算」。）"""
     v = gate.verdict({"last_assistant_message": "规矩是要写 `skill-used:` 那一行，我下次写。", "stop_hook_active": False})
     assert v.get("decision") == "block"

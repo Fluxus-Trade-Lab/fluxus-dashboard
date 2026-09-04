@@ -1,5 +1,12 @@
 """周检的四个数里能在仓库里量的两个：有评估集的 skill 数、最近 benchmark 的 delta。
-另两个（描述优化器触发率、/plugin Not-used-recently）从各自产物/交互终端取，写进周检。"""
+另两个从仓库外取，写进周检：
+  · `skill-used:` / `skill-skipped:` 的行数比 —— 过去 7 天各任务书回复里数（hook 乙强制留痕，
+    数据天然在）。这一格原本是「描述优化器触发率」，R24 作废：模拟器有确定性缺陷，
+    它的 4/8 永久标「仪器缺陷，不可用作评分」；真读数比模拟触发更贴近我们要管的事。
+  · /plugin 的 Not-used-recently 清单 —— 交互终端里读。
+
+⚠️ last_delta 是**裸数**，别裸着读：delta 的正确读法见 docs/superpowers/verdicts.md
+（§七 契约行：9 比 0 读的是「照没照单子做」，不是「答案更好」）。CLI 会把这句附在输出里。"""
 from __future__ import annotations
 import argparse, json
 from pathlib import Path
@@ -30,11 +37,19 @@ def summarize(skills_root: Path) -> dict:
     return out
 
 
+CAVEAT = ("delta 读法见 docs/superpowers/verdicts.md："
+          "9 比 0 读的是照没照单子做，不是答案更好")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--root", default=".claude/skills"); ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv); s = summarize(Path(a.root))
-    print(json.dumps(s, ensure_ascii=False) if a.json else
-          f"自建 skill {s['skills']} · 有评估集 {s['with_evals']} · 最近 delta {s['last_delta']}")
+    if a.json:
+        # summarize() 的已有键一个不动；caveat 只在输出层追加。
+        print(json.dumps({**s, "caveat": CAVEAT}, ensure_ascii=False))
+    else:
+        print(f"自建 skill {s['skills']} · 有评估集 {s['with_evals']} · 最近 delta {s['last_delta']}")
+        print(f"（{CAVEAT}）")
     return 0
 
 
