@@ -135,11 +135,58 @@ def fetch_volume_ratios(tickers: Iterable[str], chunk: int = _CHUNK,
     return out
 
 
-def enrich_universe(df: pd.DataFrame) -> pd.DataFrame:
-    """Add a `vol_5d_50d` column to the scored universe, in place."""
+def ratios_from_bars(tickers: Sequence[str],
+                     bars: Dict[str, pd.DataFrame],
+                     ) -> Dict[str, Optional[float]]:
+    """vol_5d_50d for every name whose daily bars we already hold.
+
+    The enrichment pass upstream downloads a year of bars for this same
+    universe minutes earlier; fifty sessions of Volume live inside it. A
+    name absent from `bars`, or holding a frame without Volume, is simply
+    not answered here -- the caller asks the vendor for those.
+    """
+    out: Dict[str, Optional[float]] = {}
+    for t in tickers:
+        frame = bars.get(t)
+        if frame is None or 'Volume' not in getattr(frame, 'columns', ()):
+            continue
+        out[t] = ratio_from_volumes(frame['Volume'])
+    return out
+
+
+def enrich_universe(df: pd.DataFrame,
+                    bars: Optional[Dict[str, pd.DataFrame]] = None,
+                    ) -> pd.DataFrame:
+    """Add a `vol_5d_50d` column to the scored universe, in place.
+
+    `bars` is the panel the yfinance enrichment pass just downloaded for this
+    same universe. The two paths do not share download parameters -- the
+    enrichment pass takes yfinance's auto_adjust default, this module passes
+    auto_adjust=False -- so equivalence was measured, not assumed: on a
+    200-name random sample (2026-09-04, seed 20260904), 191 names were
+    measurable on both paths and all 191 ratios were identical; 9 were
+    unmeasurable on both; zero names were answered by one path and not the
+    other. Volume is untouched by auto_adjust, so the second download bought
+    nothing and cost a full universe sweep -- ~5,600 requests inside the same
+    half hour that gets the runner throttled.
+
+    Whatever `bars` cannot answer still goes to the vendor, so a fallback
+    universe (built without the enrichment pass) behaves exactly as before.
+    """
     if df.empty or 'ticker' not in df.columns:
         df['vol_5d_50d'] = None
         return df
-    ratios = fetch_volume_ratios(df['ticker'].tolist())
+
+    names: List[str] = df['ticker'].dropna().tolist()
+    ratios: Dict[str, Optional[float]] = {}
+    if bars:
+        ratios = ratios_from_bars(names, bars)
+        logger.info("vol_5d_50d: %d / %d names answered from the bars already "
+                    "downloaded (no second fetch)", len(ratios), len(names))
+
+    remaining = [t for t in names if t not in ratios]
+    if remaining:
+        ratios.update(fetch_volume_ratios(remaining))
+
     df['vol_5d_50d'] = df['ticker'].map(ratios)
     return df

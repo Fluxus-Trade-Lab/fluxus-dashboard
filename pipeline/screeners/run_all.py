@@ -826,7 +826,10 @@ def main():
     # ship even when the vendor does not.
     try:
         from pipeline.screeners.volume_enrichment import enrich_universe
-        scored_universe = enrich_universe(scored_universe)
+        scored_universe = enrich_universe(
+            scored_universe,
+            bars=getattr(yf_adapter, 'last_universe_bars', None),
+        )
     except Exception as e:
         logger.warning(f"vol_5d_50d enrichment failed, column ships unmeasured: {e}")
         if 'vol_5d_50d' not in scored_universe.columns:

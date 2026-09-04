@@ -977,6 +977,14 @@ class YfinanceAdapter(BaseAdapter):
 
         logger.info(f"  Enriched {len(enriched)}/{len(all_data)} tickers")
 
+        # Keep the panel. It cost the night's largest single block of vendor
+        # requests, and downstream steps used to buy their own copy of the
+        # same bars minutes later -- volume_enrichment re-downloaded the whole
+        # universe at period=3mo for one ratio that is computable from these
+        # frames. Held on the instance rather than returned so no caller's
+        # signature changes; a caller that does not want it never looks.
+        self.last_universe_bars = all_data
+
         # Merge enriched data back into universe
         enrich_df = pd.DataFrame.from_dict(enriched, orient='index')
         enrich_df.index.name = 'ticker'
