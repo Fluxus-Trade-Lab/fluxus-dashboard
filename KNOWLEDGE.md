@@ -53,6 +53,8 @@
 | **一屏决策台（把要 Andy 拍的事收敛成可点的一屏）** | 本表下方〈一屏决策台 SOP〉 | **08-31（Andy 原话「以后都做成这样的，减少决策摩擦和成本」）** |
 | **视觉方案选一（把可逆的设计决策做成可点的预览稿）** | 本表下方〈视觉方案选一 SOP〉 | **09-02（三次律①：轨迹图 / Today 版面 / STOP 格连续三次成功；Andy 原话「用了 artifact 非常的直观」）** |
 | **项目状态交接（一页索引，不是第九个信箱）** | 根目录 [`HANDOFF.md`](HANDOFF.md) | **09-04（三次律①：命名式交接干过 6 次、每次从零重写；Andy 原话「当前项目进度和下一步计划整理成交接说明，下次打开不用重新解释」）** |
+| **技能操作系统 v2（按官方机制建的：description/when_to_use/paths 触发 · hook 乙查留痕 · hook 丙守测试 · 评估回路）** | [`docs/superpowers/specs/2026-09-04-skill-os-v2-design.md`](docs/superpowers/specs/2026-09-04-skill-os-v2-design.md) | **09-05** |
+| **先画地图再动刀（改乱文件之前先盘消费者、量三个数、给 file:line）** | [`.claude/skills/code-cartography/SKILL.md`](.claude/skills/code-cartography/SKILL.md) | **09-05** |
 
 ## 一屏决策台 SOP（Andy 2026-08-31 定：「以后都做成这样的，减少决策摩擦和成本」）
 

@@ -37,7 +37,7 @@ grep -rn "import(.*$T"  --include='*.jsx' --include='*.js' $D | grep -v node_mod
 
 范围含 `pipeline/`、`data/reference/`、`docs/`。命中不等于消费者：逐条打开看是不是代码 import，不是就明写「查过，是文档提及，不计入 M」。
 
-堵的是：基线的 grep 只覆盖 `frontend/src`。整仓搜会命中 `pipeline/tests/test_federation_board_lane.py`、`data/reference/DATA_CONTRACTS.md`、`docs/ 下四份规划文档，这些确认后全是文字提及、不计入 M。这一步的产出是一句「排除了什么」，不是一个更大的数。
+堵的是：基线的 grep 只覆盖 `frontend/src`。整仓搜会命中 `pipeline/tests/test_federation_board_lane.py`、`data/reference/DATA_CONTRACTS.md`、`docs/` 下四份规划文档，这些确认后全是文字提及、不计入 M。这一步的产出是一句「排除了什么」，不是一个更大的数。
 
 ### 1c · 查一次「按路径字符串挂载」
 
@@ -63,6 +63,8 @@ grep -n "fetch(" $F | wc -l   # 0（数据经 useWatchlist hook 拿）
 ```
 
 堵的是：基线唯一的量数动作是 `wc -l` 加 `ls`。它断言「9 个展示组件」「五层不相关的东西」「页面级状态与路由」，一个都没数过。而 9 个 `useState` + 1 个 `useEffect` 全留在壳层，意味着壳层不是纯路由拼装，「瘦身到 ~200 行」这个目标没有配任何计算依据。数字要出现在方案正文里，不是留在脑内印象里。
+
+py 文件换算成同一套三个数：`def` 数、模块级 `import` 数、直接 I/O 调用次数，行数阈值是 800（不是 jsx 的 300）。
 
 ### 3 · 每条建议先说「拆了省什么」，再说搬哪去
 

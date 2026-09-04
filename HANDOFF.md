@@ -6,7 +6,7 @@
 **谁维护**：OPS（Fable）在每次有跨线状态变化时改这一页；各线只改自己那一格。
 **怎么判断它过期了**：看「最后核对」那一行的日期。超过 3 天没动 = 当参考不当权威，去读它指向的原件。
 
-**最后核对：2026-09-04 · 由 OPS Fable**
+**最后核对：2026-09-05 · 由 OPS Fable**
 
 ---
 
@@ -57,6 +57,7 @@ Python 管线 → 静态 JSON → React 前端；GitHub Actions 每晚跑数据�
 | [`night_reports/INBOX.md`](data/research/night_reports/INBOX.md) | 挂单 · 裁决 · 🔴 哨兵告警 · 收藏夹 | Andy 查「办没办」只看这一处 |
 | `night_reports/YYYY-MM-DD.md` | 夜班晨报（首节固定是回执） | 看昨晚发生了什么 |
 | [`incidents/`](data/reference/incidents/) | 事故档（根因 + 机制 + 验证） | 同形状的坑第二次出现时 |
+| [`docs/superpowers/verdicts.md`](docs/superpowers/verdicts.md) | skill 的四档裁决（用/修/退/建）+ 每次改动的前后读数 | 想知道某个 skill 该不该用、为什么退的 |
 
 ⚠️ **`NOW.md` 不是交接文件**——全文 0 次提到「交接」。它只约束 Andy 的时间，AI 的定时任务不受它限制。
 
