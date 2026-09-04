@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-09-03",
- "ok": false,
- "violations": 1,
+ "ok": true,
+ "violations": 0,
  "warnings": 0,
  "archives": [
   {
@@ -14,7 +14,7 @@
   },
   {
    "archive": "ticker_events.csv",
-   "rows": 118651,
+   "rows": 118649,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -22,7 +22,7 @@
   },
   {
    "archive": "watchlist_hits.csv",
-   "rows": 9821,
+   "rows": 9818,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -70,13 +70,11 @@
   },
   {
    "archive": "shortlist_log.csv",
-   "rows": 119,
-   "violations": [
-    "I2 1 duplicate rows on ['date', 'ticker']"
-   ],
+   "rows": 118,
+   "violations": [],
    "warnings": [],
    "drop_dates": [],
-   "drop_dupes": 1
+   "drop_dupes": 0
   },
   {
    "archive": "regime_ledger.csv",
