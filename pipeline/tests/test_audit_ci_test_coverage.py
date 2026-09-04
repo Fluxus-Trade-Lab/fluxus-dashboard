@@ -55,6 +55,39 @@ def test_two_checkouts_report_the_shallow_one_not_the_deep_one():
     assert cov.checkout_depth(text) == 1
 
 
+def test_the_shallowest_of_two_shallow_checkouts_is_reported():
+    """min, not max -- and a fixture that can tell them apart.
+
+    The [0, 1] fixture above cannot: 0 is filtered out before the comparison,
+    so min == max == 1 and swapping them changes nothing. This one fails if
+    `min` becomes `max`.
+    """
+    text = ("      - uses: actions/checkout@v4\n"
+            "        with:\n"
+            "          fetch-depth: 5\n"
+            "      - uses: actions/checkout@v4\n"
+            "        with:\n"
+            "          fetch-depth: 50\n")
+    assert cov.checkout_depth(text) == 5
+
+
+@pytest.mark.parametrize("value", ["0", "'0'", '"0"'])
+def test_a_quoted_zero_is_still_full_history(value):
+    assert cov.checkout_depth("      - uses: actions/checkout@v4\n"
+                              "        with:\n"
+                              f"          fetch-depth: {value}\n") == 0
+
+
+def test_fetch_depth_is_found_past_the_seventh_line():
+    """Six sibling keys are enough to push it out of a fixed-size window."""
+    text = ("      - uses: actions/checkout@v4\n"
+            "        with:\n"
+            "          repository: a\n          ref: b\n          token: c\n"
+            "          path: d\n          clean: true\n          submodules: false\n"
+            "          fetch-depth: 0\n")
+    assert cov.checkout_depth(text) == 0
+
+
 def test_fetch_depth_belonging_to_a_later_step_is_not_borrowed():
     text = ("      - uses: actions/checkout@v4\n"
             "      - uses: actions/setup-python@v6\n"
@@ -107,6 +140,20 @@ def test_an_expression_we_cannot_model_says_so_instead_of_guessing(expr):
 def test_an_unmodelled_marker_expression_becomes_an_unmodelled_option():
     _, markers, unmodelled = cov.parse_pytest_args(["-m", "slow or flaky"])
     assert markers == set() and unmodelled
+
+
+@pytest.mark.parametrize("opt", ["--ignore=tests", "--deselect", "-k",
+                                 "--collect-only", "--co", "--ignore-glob"])
+def test_every_selector_we_do_not_model_is_reported(opt):
+    """`-k` was the only one with a test; `--ignore` is the likelier addition.
+
+    `--collect-only` is in here because it is the one option that looks like a
+    test run and executes nothing -- modelling it as harmless let a
+    `pytest tests --collect-only` step empty a bucket, after which the audit
+    printed T2 and told a human to delete the entry.
+    """
+    _, _, unmodelled = cov.parse_pytest_args([opt, "tests"])
+    assert unmodelled, f"{opt} silently modelled"
 
 
 def test_dash_k_is_reported_as_unmodelled_and_eats_its_argument():
@@ -209,9 +256,28 @@ def test_a_history_gated_test_runs_when_the_checkout_is_full():
     assert cov.excluded_tests(t, [_step(depth=0)]) == {}
 
 
-def test_a_history_gated_test_is_excluded_by_a_shallow_checkout():
+@pytest.mark.parametrize("depth", [1, 5, 50, None])
+def test_a_history_gated_test_is_excluded_by_any_shallow_checkout(depth):
+    """Any depth but 0 is shallow.
+
+    Testing only depth 1 let `!= 0` be rewritten as `== 1` with every test
+    still green -- and a `fetch-depth: 50` checkout would then have read as
+    full history, which is the under-report direction.
+    """
     t = _tests(("pipeline/tests/test_x.py", "test_a", (), True))
-    assert list(cov.excluded_tests(t, [_step(depth=1)])) == ["shallow-checkout"]
+    assert list(cov.excluded_tests(t, [_step(depth=depth)])) == ["shallow-checkout"]
+
+
+def test_ignore_in_its_space_separated_form_does_not_leave_a_fake_target():
+    """`--ignore tests` must not turn `tests` into a covered target path.
+
+    Reported-as-unmodelled is only half the job: the option also has to eat its
+    argument. If it does not, `pytest pipeline/tests --ignore tests` reads as
+    covering BOTH roots -- the exclusion becomes coverage.
+    """
+    targets, _, unmodelled = cov.parse_pytest_args(
+        ["pipeline/tests", "--ignore", "tests"])
+    assert unmodelled and targets == ["pipeline/tests"]
 
 
 def test_a_test_one_step_skips_and_another_runs_is_not_excluded():
@@ -297,21 +363,208 @@ def test_the_real_repository_is_green_on_its_declared_set():
 
 
 def test_the_repository_really_does_have_a_second_untriggered_test_root():
-    """The finding this tool was written for, pinned so it cannot quietly go away."""
+    """The finding this tool was written for, pinned so it cannot quietly go away.
+
+    The first version wrapped the real assertion in an `if`, so a change that
+    made the condition false left the test asserting nothing and still green.
+    Now the two outcomes are both spelled out and neither is silence.
+    """
     steps = cov.pytest_steps(cov.ROOT / ".github" / "workflows")
     assert steps, "no automatic trigger runs pytest at all"
-    targets = {t for s in steps for t in s["targets"]}
     assert (cov.ROOT / "tests").is_dir()
-    if "tests" not in targets and not any(not s["targets"] for s in steps):
-        buckets = cov.excluded_tests(cov.suite_tests(cov.ROOT), steps)
-        assert len(buckets.get("tests", [])) > 100
+    targets = {t for s in steps for t in s["targets"]}
+    covered = "tests" in targets or any(not s["targets"] for s in steps)
+    buckets = cov.excluded_tests(cov.suite_tests(cov.ROOT), steps)
+    if covered:
+        # The day this becomes true, the finding is fixed -- and DECLARED must
+        # lose its entry, which is T2's job. Say so instead of going quiet.
+        assert not buckets.get("tests"), \
+            "tests/ is a CI target but still reported as excluded"
+        assert "tests" not in cov.DECLARED, \
+            "tests/ now runs in CI -- delete the DECLARED entry (T2)"
+    else:
+        assert len(buckets.get("tests", [])) > 100, \
+            "tests/ is not a CI target, so it must show up as excluded"
+
+
+ONLY_DISPATCH = """\
+name: t
+on:
+  workflow_dispatch:
+jobs:
+  pytest:
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pytest pipeline/tests tests -q
+"""
+
+
+def test_a_workflow_only_a_human_can_press_is_not_an_automatic_trigger(tmp_path):
+    """T6's foundation had no coverage: deleting the trigger filter kept 41 green."""
+    wf = tmp_path / ".github" / "workflows"
+    wf.mkdir(parents=True)
+    (wf / "t.yml").write_text(ONLY_DISPATCH)
+    assert cov.pytest_steps(wf) == []
+    res = cov.check([], cov.pytest_steps(wf), declared={})
+    assert any(c == "T6" for c, _ in res["violations"])
+
+
+# ---------- the four shapes that moved an exclusion off the command line ----
+
+def _wf_file(tmp_path, text):
+    wf = tmp_path / ".github" / "workflows"
+    wf.mkdir(parents=True, exist_ok=True)
+    (wf / "tests.yml").write_text(text)
+    return wf
+
+
+_ON = "name: t\non:\n  push:\n  pull_request:\n"
+_CHECKOUT = "jobs:\n  pytest:\n    steps:\n      - uses: actions/checkout@v4\n"
+
+
+def test_an_if_on_the_pytest_step_is_not_certifiable(tmp_path):
+    """`if: false` ran zero tests and the first version reported no violations."""
+    wf = _wf_file(tmp_path, _ON + _CHECKOUT +
+                  "      - name: pytest\n        if: false\n"
+                  '        run: |\n          python -m pytest pipeline/tests -q\n')
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert not res["certified"] and any(c == "T5" for c, _ in res["violations"])
+
+
+def test_an_if_on_the_job_taints_every_step_under_it(tmp_path):
+    wf = _wf_file(tmp_path, _ON +
+                  "jobs:\n  pytest:\n    if: github.event_name == 'schedule'\n"
+                  "    steps:\n      - uses: actions/checkout@v4\n"
+                  "      - name: pytest\n"
+                  '        run: |\n          python -m pytest pipeline/tests -q\n')
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert not res["certified"]
+
+
+def test_an_if_on_an_unrelated_step_does_not_cry_wolf(tmp_path):
+    """This repository's real tests.yml has `if: always()` on its audit step.
+
+    An audit that went red on that would be ignored inside a week, and being
+    ignored is the disease this whole file is about.
+    """
+    wf = _wf_file(tmp_path, _ON + _CHECKOUT +
+                  "      - name: pytest\n"
+                  '        run: |\n          python -m pytest pipeline/tests tests -q\n'
+                  "      - name: audit\n        if: always()\n"
+                  "        continue-on-error: true\n"
+                  "        run: |\n          python -m pipeline.tools.audit_wiring\n")
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert res["certified"], cov.render(res)
+
+
+def test_an_argument_built_at_runtime_is_not_certifiable(tmp_path):
+    """`$PYTEST_ARGS` was read as a target PATH; an --ignore inside it vanished."""
+    wf = _wf_file(tmp_path, _ON + _CHECKOUT +
+                  "      - name: pytest\n        run: |\n"
+                  "          PYTEST_ARGS='--ignore=pipeline/tests'\n"
+                  "          python -m pytest pipeline/tests $PYTEST_ARGS -q\n")
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert not res["certified"]
+
+
+def test_a_paths_filtered_trigger_is_not_certifiable(tmp_path):
+    """`_triggers` reads key names, never the filters under them."""
+    wf = _wf_file(tmp_path,
+                  "name: t\non:\n  push:\n    paths: ['frontend/**']\n" + _CHECKOUT +
+                  "      - name: pytest\n"
+                  '        run: |\n          python -m pytest pipeline/tests tests -q\n')
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert not res["certified"]
+
+
+def test_collect_only_does_not_get_to_empty_a_bucket(tmp_path):
+    """The worst one: the tool used to instruct a human into a false green.
+
+    A `pytest tests --collect-only` step emptied the `tests` bucket, and the
+    audit then printed T2 -- "declared exclusion 'tests' excludes nothing now,
+    delete the entry". Following its own advice produced 0 violations with 607
+    tests never run.
+    """
+    wf = _wf_file(tmp_path, _ON + _CHECKOUT +
+                  "      - name: pytest\n"
+                  '        run: |\n          python -m pytest pipeline/tests -q\n'
+                  "      - name: collect\n"
+                  '        run: |\n          python -m pytest tests --collect-only -q\n')
+    res = cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf))
+    assert not res["certified"]
+    assert any(c == "T5" and "--collect-only" in m for c, m in res["violations"])
+
+
+def test_render_shouts_when_it_could_not_read_the_run(tmp_path):
+    wf = _wf_file(tmp_path, _ON + _CHECKOUT +
+                  "      - name: pytest\n        if: false\n"
+                  '        run: |\n          python -m pytest pipeline/tests -q\n')
+    text = cov.render(cov.check(cov.suite_tests(cov.ROOT), cov.pytest_steps(wf)))
+    assert "NOT CERTIFIED" in text and "LOWER BOUND" in text
+
+
+# ---------- markers the ast pass used to miss ----------
+
+def test_a_bare_mark_import_is_still_a_marker(tmp_path):
+    _write_suite(tmp_path, "pipeline/tests", """\
+        from pytest import mark
+        @mark.slow
+        def test_a(): pass
+        """)
+    assert cov.suite_tests(tmp_path)[0]["markers"] == {"slow"}
+
+
+def test_a_marker_on_the_class_reaches_its_methods(tmp_path):
+    _write_suite(tmp_path, "pipeline/tests", """\
+        import pytest
+        @pytest.mark.slow
+        class TestThing:
+            def test_a(self): pass
+        """)
+    assert cov.suite_tests(tmp_path)[0]["markers"] == {"slow"}
+
+
+def test_an_annotated_pytestmark_still_reaches_every_test(tmp_path):
+    _write_suite(tmp_path, "tests", """\
+        import pytest
+        pytestmark: list = [pytest.mark.slow]
+        def test_a(): pass
+        """)
+    assert cov.suite_tests(tmp_path)[0]["markers"] == {"slow"}
+
+
+def test_a_skipif_that_asks_the_machine_counts_even_without_the_keywords(tmp_path):
+    """`shutil.which("git") is None` reached for the environment and read as free."""
+    _write_suite(tmp_path, "pipeline/tests", """\
+        import pytest, shutil
+        @pytest.mark.skipif(shutil.which("git") is None, reason="needs git")
+        def test_a(): pass
+        """)
+    assert cov.suite_tests(tmp_path)[0]["history_gated"] is True
+
+
+def test_t3_uses_the_repo_it_was_given_not_the_module_constant(tmp_path):
+    """`--repo` was half-honoured: T3 went and asked the real repository."""
+    res = cov.check([], [], declared={"tests": ("o", "r", "d")}, repo=tmp_path)
+    assert any(c == "T3" and "tests" in m for c, m in res["violations"])
 
 
 def test_render_names_the_owner_of_every_bucket_it_prints():
+    """It must print the OWNER, not the string "owner:".
+
+    The first version counted occurrences of the literal `owner:`, which a
+    render that printed `owner: ?` for every bucket passed just as happily --
+    the shape of pitfall_a_test_that_reads_its_own_constant.
+    """
     tests = cov.suite_tests(cov.ROOT)
     steps = cov.pytest_steps(cov.ROOT / ".github" / "workflows")
-    text = cov.render(cov.check(tests, steps))
-    assert text.count("owner:") == len(cov.excluded_tests(tests, steps))  # one per bucket
+    res = cov.check(tests, steps)
+    text = cov.render(res)
+    assert text.count("owner:") == len(res["buckets"])
+    assert "?" not in [cov.DECLARED[k][0] for k in res["buckets"]]
+    for key in res["buckets"]:
+        assert cov.DECLARED[key][0] in text
+        assert cov.DECLARED[key][2] in text        # the date it was found
 
 
 # ---------- the control that matters: can it see the fix? ----------
