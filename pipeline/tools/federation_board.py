@@ -13,9 +13,15 @@ def git(*a):
 def show(p):
     return git("show", "origin/main:" + p)
 
-now = datetime.datetime.now()  # localtime-ok 这块板量的是「各线什么时候干的活」,
-# 不是交易日:下面每一处 now 的对手方都是本机 git 提交时间(同样是 JST),换成 ET 会让
-# 「几小时前提交」整体偏 13 小时。交易日在 _last_sess 那段单独用 ET 取,见下。
+# now 用本机时钟是对的 —— 这块板量的是「各线什么时候干的活」,读它的人在 JST。
+# ⚠️ 但它的对手方必须也在 JST:下面取 git 日期用的是 --date=format-local: 而不是
+# --date=format:。%ad 默认按**每个 commit 自己记录的时区**渲染,云端跑的班是 +0000,
+# 拿那种串去减一个 JST 的 now,近 14 天 686 个 commit 里有 8 个落在错的本地日
+# (ab3c0bd3 09-03->09-04 · f7b62b87 09-01->09-02 · 2b8c4be5 等 08-30->08-31),
+# 而且错的恰好是夜间数据班那批最有代表性的 commit。
+# 只给这一行挂 localtime-ok 会让守卫变绿、把那个 bug 冻在里面 —— 豁免的是 now,
+# 修的是格式串,两件事。
+now = datetime.datetime.now()  # localtime-ok 看板读者在 JST;对手方已统一为 format-local:
 TODAY = now.strftime("%m-%d")
 
 ROSTER = [
@@ -165,7 +171,7 @@ def lane_owed_to(text, paths=None):
 # ---------- git 数据 ----------
 # 一次 git log 同时取 commit 元信息与改动路径（不为每个 commit 单独起进程）
 _raw = git("log", "origin/main", "--since=14 days ago", "--name-only",
-           "--format=%x00%h|%ad|%s", "--date=format:%m-%d %H:%M")
+           "--format=%x00%h|%ad|%s", "--date=format-local:%m-%d %H:%M")
 log14, commit_paths, _cur = [], {}, None
 for _l in _raw.split("\n"):
     if _l.startswith("\x00"):
@@ -327,7 +333,7 @@ for b in git("branch", "-r", "--no-merged", "origin/main").splitlines():
         continue
     n = git("rev-list", "--count", "origin/main.." + b).strip()
     if n and n != "0":
-        last = git("log", "-1", "--format=%ad|%s", "--date=format:%m-%d", b).strip().split("|", 1)
+        last = git("log", "-1", "--format=%ad|%s", "--date=format-local:%m-%d", b).strip().split("|", 1)
         bpaths = git("diff", "--name-only", "origin/main..." + b).split()
         add("claim", 2, "%s（+%s）%s" % (b.replace("origin/", ""), n, ("· " + last[1][:60]) if len(last) > 1 else ""),
             # 待合分支挂在**该去合它的那条线**名下（谁的文件边界谁合），不是「谁提交的」。
@@ -555,8 +561,10 @@ def last_nonempty(csv_text, col):
 def stale_days(d):
     """读数距今几天；解析不了返回 None。"""
     try:
-        # d 来自 data/growth/metrics.csv 的 date 列,是 Andy 本机记账那天,
-        # 不是交易日;两边同一个 JST 框架里相减才对得上。
+        # d 是 data/growth/metrics.csv 的 date 列。那一列的时区口径是 JST
+        # (增长官周一记的业务读数日,全部 +0900 提交,口径表在 data/growth/README.md),
+        # 不是交易日 —— 所以两边都在 JST 里相减才自洽。理由是「这一列的口径是 JST」,
+        # 不是「日期都可以用本地时钟」。
         return (datetime.date.today() - datetime.date.fromisoformat(d)).days  # localtime-ok 见上
     except Exception:
         return None
