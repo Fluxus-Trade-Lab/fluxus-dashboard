@@ -92,6 +92,21 @@ def tests_have_ci(workflows: Path) -> bool:
 
 所以顺序是：**先合修复分支，再改 workflow**。反过来会让 CI 首日就红。
 
+**还有一件必须先办的**（现场量的，不是推断）：`tests/gex/` 有 79 条测试 + 5 个收集不了的文件。
+其中 4 个缺的是 `jinja2`，而 `jinja2>=3.1` **已经在** `pipeline/requirements.txt:27` 里 ——
+那 4 个只是本机没装，CI 装完就好。**第 5 个不一样**：`tests/gex/test_resting.py` 缺 `ib_async`，
+而 `ib_async` **在任何 requirements / pyproject / workflow 里都不存在**
+（`grep -rn "ib_async" --include=*.txt --include=*.toml --include=*.cfg --include=*.yml` 零命中），
+且 `pipeline/gex/ibkr.py:10` 是**模块顶层** import。
+所以只要把 `tests` 加进 CI 目标，那个文件就是一个 collection error，CI 直接红。
+
+顺带一处不一致：`pipeline/ibkr.py:48` 把同一个 import 写在函数体里（懒加载），
+`pipeline/gex/ibkr.py:10` 写在顶层。同一个可选依赖，两种写法，只有后者会在收集期炸。
+
+→ 三选一，交给动 workflow 的那条线：把 `ib_async` 加进 requirements ·
+把那个 import 改成 `pipeline/ibkr.py` 那样的懒加载 · 或在 CI 目标里显式 `--ignore=tests/gex/test_resting.py`
+并把理由写在旁边（别静默 ignore —— 静默 ignore 正是这份档案在讲的病）。
+
 ## 七、教训
 
 > **「有人跑测试」是个 bool，「跑到了哪些测试」是个集合。**
