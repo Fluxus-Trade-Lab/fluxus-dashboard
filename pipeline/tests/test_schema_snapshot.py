@@ -40,6 +40,23 @@ class TestShape:
         s = shape(payload)
         assert s["groups{}[]"] is EMPTY
 
+    def test_rare_field_far_down_a_large_ticker_dict_is_not_sampled_away(self):
+        """2026-09-04: ticker_events.json's events{} is keyed by ~5,000
+        tickers; VCP only hits ~35 of them. A field that low-hit-rate
+        screener contributes (num_contractions, pct_to_pivot) can have every
+        one of its rows sit past a small, alphabetic-order sample window on
+        any given night. That is not the collection being empty (the
+        EMPTY-vs-removed bug the 08-24/08-25 tests above cover) -- the field
+        is still being emitted, just outside the window the old code
+        sampled (first 50 keys, first 20 items each)."""
+        events = {}
+        for i in range(80):  # past the old 50-key window
+            events[f"T{i:03d}"] = [{"date": "2026-09-04", "screener": "gainer"}
+                                    for _ in range(25)]  # past the old 20-item window
+        events["ZZZZ"] = [{"date": "2026-09-04", "screener": "vcp", "num_contractions": 3}]
+        s = shape({"events": events})
+        assert "num_contractions" in s["events{}[]"]
+
 
 class TestDiffThreeStates:
     def test_empty_today_is_not_a_removal(self):
