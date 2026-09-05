@@ -1402,3 +1402,21 @@ Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日
 — Nighty Zac
 - [09-05] 夜间产线（云）开工占位 · 断点路由结果待补
 - [09-06] 夜间产线（云）收工：建议 Writer Mia 认领 · autumn-effect-decay · RECORD `Fluxus_Brand/ops/campaigns/2026-09-06_autumn-effect-decay/RECORD.md` · Gate 判定 4 轮后终轮过闸(queued) · 变体入口号 1/3/4/5(hook：验证回收钩🆕/时间戳锚/反面先行钩/能不能变红钩) · 未经 Mia 成稿/Vera 配图，按毛坯审 · 已追 APPROVAL_QUEUE.md 等 Andy 签字
+
+## [2026-09-05 22:16 UTC / 18:16 ET] 数据哨兵 —— 第 7 班：数据健康，但发现 main 分支 git 历史被整体替换（非本班动作）
+
+**数据本身**：健康。`run_ledger.jsonl` 最新一条是 run [33949769881](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33949769881)（第 6 班收工那次），session 2026-09-04，universe_quality degraded（非 severe，tradeable 2553/5631），dashboard 追平到 2026-09-04 交易日——这是当前最近的完整交易日（09-05 周六，09-06 周日不开盘）。**按流程①已达健康线，本不需要动作**，但巡检 git 历史时发现下面这件事，按「出错即报」规矩立即登记，不等下一班。
+
+**🔴 发现的问题（与数据抓取无关，是仓库层面）**：origin/main 当前 HEAD 是 `0db42eb`（`roster(steve): v4 = 25 人`），往回只有 **50 个 commit**，根提交是 `1ad0f10`（`skill(daily-recap): 首次对卷的六条裁决进账`，作者 zhuandy531-art，时间 2026-09-05T17:05:35Z）。这个根提交把 `.claude/`、`CLAUDE.md`、`TEAM.md`、`DATA_CONTRACTS.md` 等一大批文件当作「new file」一次性写入——**说明 main 原本 1800+ commit 的完整历史在这次提交前后被整体替换掉了，不是正常的增量提交**。
+
+- 受影响：第 6 班自己那条成功记录 `chore: market data 2026-09-05`（commit `2e75f20d`）、其父提交链（含本班之前引用的一切 commit 哈希，如 `086b834b` 等）**都不在当前 main 的祖先链上**——`git merge-base --is-ancestor 2e75f20d origin/main` 返回否。这些 commit 本身在 GitHub 上还能按 sha 直接取到（未被 GC），但没有任何分支指向它们的直接后继链……
+- **好消息：完整旧历史没有丢，活在分支 `feat/rotation-v3`（tip `fc5688b4`，2026-09-05T07:06:24Z，1818 个 commit）**——这是目前找到的最新、最完整的旧 main 谱系,其余 `auto/night-2026090{4,5}-*`、`fix/schema-snapshot-sampling-2026-09-05`（1785–1792 commits）也是同一根上的旧历史分支,可交叉核对。
+- 当前 main 的**文件内容**恰好是好的（第 6 班那次成功 run 的输出），像是替换历史的那个提交直接把当时工作区快照整个提交了一遍，而不是接着旧历史往下续——所以 dashboard 现在看到的数字没错,错的是 git 历史本身（审计链、blame、CLAUDE.md 里靠 commit 哈希做的「存量追认」等都会对不上）。
+- **本班没有做任何 force-push /历史重写操作**——这不是本次运行造成的,是巡检时发现的既成事实,具体是哪个会话/哪次 push 造成的,本班未继续深挖（超出数据哨兵范围）。
+- **未采取恢复动作**：把 main 指回 `feat/rotation-v3`（或以其为基做 merge）需要 force-push 主分支,是不可逆、影响全体协作者的操作,按宪法「外部动作与跨线授权」与 Git Safety Protocol，**必须由 Andy 或 OPS Fable 决定**，本班只报告不动手。
+
+**→ 路由给 OPS Fable**（TEAM.md：`TEAM.md`/`CLAUDE.md`/仓库架构是你的边界）：请核实这次历史替换的成因（哪个 commit/session 触发的 force-push），并决定是否将 main 恢复到 `feat/rotation-v3` 或其他候选分支的完整谱系上。**已通知 Andy。**
+
+- [09-05] 🔴 **数据哨兵**：数据健康（dashboard 追平 2026-09-04），**但发现 main 分支 git 历史被整体替换**——当前 main 只剩 50 commit（根 `1ad0f10`），旧的 1800+ commit 完整历史仍活在分支 `feat/rotation-v3`（tip `fc5688b4`，未丢失）。已路由 OPS Fable 核实成因与是否恢复；本班未做任何 push/reset 操作。详见本节全文。
+
+— 数据哨兵（定时任务，2026-09-05）
