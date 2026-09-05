@@ -1,26 +1,56 @@
-date: 2026-09-04
-tier: B
-source: queue
+date: 2026-09-05
+tier: A
+source: 2026-09-03_noise-with-structure
 gate: 🎮 4/5 · streak 1 周
 ---
 ## C1
-bucket: LINE（自嘲） | entry: -
-I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me.
-why: 本周 4/5，今天发这一条就过关；队列本来就把 09-04 排给它，且是你自己的原话打磨句（Own_Lines #29，原话「我现在还时不时micromanage 就心态上的问题」），不是任何人代写的声音。
+bucket: ARC | entry: 2
+Before Python reuses a compiled copy of a source file, it has to decide whether
+the cached copy is stale. By default it decides by comparing two things: the
+source file's last-modified time, truncated to whole seconds, and the source
+file's size in bytes. That is the entire test. It has been the default since the
+hash-based alternative arrived in 3.7, and it is still the default today.
+
+Translated out of the jargon: whether you get fresh output is not decided by what
+is in your file. It is decided by a rounded clock and a length.
+
+Now point that at a tool whose job is to edit one line at a time — 20 into 21,
+== into !=. Neither edit moves the byte count by one. Run fast enough and the
+second version can be handed the compiled bytes of the first one, while the
+report prints the second one's name.
+
+Two fields, and neither of them is source code — which is also why reading the
+diff more carefully was never the fix. But the rule is the part worth keeping:
+freshness gets decided by a rounded timestamp and a length, and any edit that
+leaves both untouched is invisible to it.
+
+docs.python.org/3/reference/import.html#cached-bytecode-invalidation
+why: 09-03 卡三轮过闸，这是包里第一条今天就能整条粘出去的——不挂长文、不等配图、零跑分数字。入口 1（V1）虽然排在前面，但它整条的作用是给长文当入口推，长文没成稿、配图（原 V7 三行表）没人画，它今天在物理上发不出去。C6 那条唯一需要复查的口径我刚在本机 3.14.3 上重跑过：`source_mtime = int(...)` 仍在，默认写的仍是 timestamp pyc，没翻。
 ---
 ## C2
-bucket: SPICE（冷嘲） | entry: 5 批判常见做法
-「长期投资者」这个身份，通常是在浮亏百分之二十那天获得的。
-why: 中文条，靶子是流行做法不是对手盘；备在 C1 之后，是因为你 09-01/09-03 发的四条全是英文 ARC/QT，中文圈这周还没拿到东西。
+bucket: ARC | entry: 3
+Sept 1, 07:55 — a commit that says: run our own test-checker four times against
+the same code on the same machine and it returns 43, 47, 49, 43. Six percentage
+points. Six of the forty-nine verdicts change sides between two of the runs.
+Written down at the time as: a thing you measure with is worth about what a guess
+is worth, until you have measured it.
+
+Sept 2, 04:55 — the next commit. Cause located, intervention run, dispersion
+gone, fix in main, and seven tests on a tool that had been running four nights
+with none of its own.
+
+Twenty-one hours between those two timestamps. The gap is the claim here: the
+expensive part was not the fix. It was somebody asking a different question
+instead of running it a fifth time.
+why: 同一包的入口 3，也不需要图和长文。它交的是票根——两个自有 commit 的时间戳，谁都能去仓库里核。跟 C1 不撞：C1 讲机制，这条讲代价。
 ---
 ## C3
-bucket: LINE（教学） | entry: 4 可复用物
-底部的仓位永远比消息先到。
-why: 队列排的 09-03 那条，那天你发了 $MU 帖没轮到它，逾期未发不是新排期；判据形态，能单独被截图。
+bucket: LINE | entry: -
+普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。
+why: 队列今天（09-05 六）排的就是它，你自己的原话（Own_Lines #127）。本周还差 1 件过关，这条 10 秒发完就 5/5；而且 09-01 之后中文圈一条没拿到。
 ---
 ## notes
-产线状态：最新 campaign `2026-09-03_noise-with-structure` status=`angle`（卡在③角度站，②查证站单站 167 分钟吃掉预算 2.8 倍），不是 queued/approved，本班按规矩不端 campaign 变体。
-判决已录：你 09-04 03:36 否掉 `2026-08-29_extension-arithmetic/V1`（原话「太ai slop了，也不行」），那包最后一个活着的变体死了 = 整卡死绝，已 append 进 `Fluxus_Brand/voice/verdicts.jsonl`。第一条 rejected 级判例，此前三条都是 edited。
-今天三条全部是你自己说过的话（Own_Lines #29 / #97 + Ammo D3），现场读源核过原文，无一个字是我写的。
-门铃待按：素材箱 `94cbc57e` 行把「6 个百分点」写成「6%」（单位错），Joe 原文一律 `6pp` —— 收件线 Plumber Joe 或 OPS。
-陈旧提醒：无（三条都不依赖盘面读数，无保质期）。
+- 陈旧闸：本卡全部数字关账，零处引用当前杀死率。唯一需要复查的 C6（CPython 缓存判据）今早本机 3.14.3 复跑通过，未过期。
+- 09-03 包仍在 `APPROVAL_QUEUE.md` 待你签字，两件事没定：① 等 Mia/Vera 成稿还是按毛坯发 ② V1 长文的配图谁画。C1/C2 是这包里不受这两件事影响的两条。
+- ⚠️ 同一包的前一张卡（08-29 extension-arithmetic）昨天被你一句「太ai slop了，也不行」判死，整包零发布。本包和它一样是**毛坯**，没过 Mia 的笔。C1/C2 你看着不对就直接否，判例我记进 verdicts。
+- 昨天备的三条一条没发，队列 #29（micromanage）已逾期，本班未把它顺延成新排期。
