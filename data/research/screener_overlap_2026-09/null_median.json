@@ -1,0 +1,2166 @@
+{
+ "R": 2000,
+ "seed": 20260906,
+ "pairs": [
+  {
+   "a": "episodic_pivot",
+   "b": "gainers_4pct",
+   "obs": 1.0,
+   "null_median": 0.3333333333333333,
+   "null_p95": 0.4,
+   "null_max": 0.5,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "vol_up_gainers",
+   "obs": 1.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "gainers_4pct",
+   "obs": 1.0,
+   "null_median": 0.3651515151515151,
+   "null_p95": 0.3917306052855925,
+   "null_max": 0.40731707317073174,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "gainers_4pct",
+   "obs": 1.0,
+   "null_median": 0.36363636363636365,
+   "null_p95": 0.46153846153846156,
+   "null_max": 0.5,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:sugar_babies",
+   "obs": 1.0,
+   "null_median": 0.0,
+   "null_p95": 0.18181818181818182,
+   "null_max": 0.3333333333333333,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:vol_up_gainers",
+   "obs": 1.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "vol_up_gainers",
+   "obs": 1.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.10526315789473684,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "gainers_4pct",
+   "obs": 1.0,
+   "null_median": 0.34672830725462306,
+   "null_p95": 0.36626016260162597,
+   "null_max": 0.38526762056173824,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "momentum_97",
+   "obs": 0.8125,
+   "null_median": 0.14814814814814814,
+   "null_p95": 0.16666666666666666,
+   "null_max": 0.18181818181818182,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "momentum_97",
+   "obs": 0.7692307692307693,
+   "null_median": 0.14285714285714285,
+   "null_p95": 0.16666666666666666,
+   "null_max": 0.2,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:4_bullish",
+   "obs": 0.75,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.6201923076923077,
+   "null_median": 0.0625,
+   "null_p95": 0.08,
+   "null_max": 0.096875,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "gainers_4pct",
+   "obs": 0.5833333333333334,
+   "null_median": 0.3548387096774194,
+   "null_p95": 0.38596491228070173,
+   "null_max": 0.43209876543209874,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:pp_count",
+   "obs": 0.5652173913043478,
+   "null_median": 0.11764705882352941,
+   "null_p95": 0.14285714285714285,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.5588235294117647,
+   "null_median": 0.06547619047619048,
+   "null_p95": 0.07738095238095238,
+   "null_max": 0.08771929824561403,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.5419580419580419,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "gainers_4pct",
+   "obs": 0.5352112676056338,
+   "null_median": 0.35555555555555557,
+   "null_p95": 0.37623762376237624,
+   "null_max": 0.4,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "vol_up_gainers",
+   "obs": 0.5352112676056338,
+   "null_median": 0.08695652173913043,
+   "null_p95": 0.09859154929577464,
+   "null_max": 0.11320754716981132,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "gainers_4pct",
+   "obs": 0.5132404181184669,
+   "null_median": 0.3390804597701149,
+   "null_p95": 0.3771551724137931,
+   "null_max": 0.4115384615384615,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "gainers_4pct",
+   "obs": 0.5119047619047619,
+   "null_median": 0.35714285714285715,
+   "null_p95": 0.3944444444444445,
+   "null_max": 0.42857142857142855,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:pp_count",
+   "obs": 0.5119047619047619,
+   "null_median": 0.1,
+   "null_p95": 0.1266025641025641,
+   "null_max": 0.14907407407407408,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:4_bullish",
+   "obs": 0.5,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.49056603773584906,
+   "null_median": 0.0,
+   "null_p95": 0.014492753623188406,
+   "null_max": 0.03508771929824561,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "momentum_97",
+   "obs": 0.4838709677419355,
+   "null_median": 0.13513513513513514,
+   "null_p95": 0.15384615384615385,
+   "null_max": 0.17647058823529413,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:4_bullish",
+   "obs": 0.4807692307692308,
+   "null_median": 0.039351851851851846,
+   "null_p95": 0.07142857142857142,
+   "null_max": 0.1,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:4_bullish",
+   "obs": 0.47320574162679424,
+   "null_median": 0.04464285714285714,
+   "null_p95": 0.06458333333333333,
+   "null_max": 0.08333333333333333,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.45454545454545453,
+   "null_median": 0.07142857142857142,
+   "null_p95": 0.08333333333333333,
+   "null_max": 0.09523809523809523,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "vol_up_gainers",
+   "obs": 0.4472222222222222,
+   "null_median": 0.09090909090909091,
+   "null_p95": 0.1,
+   "null_max": 0.11538461538461539,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.4117647058823529,
+   "null_median": 0.0625,
+   "null_p95": 0.08333333333333333,
+   "null_max": 0.1111111111111111,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "ema21_watch",
+   "b": "healthy_charts",
+   "obs": 0.3955910852713178,
+   "null_median": 0.2622655122655123,
+   "null_p95": 0.27253932063222164,
+   "null_max": 0.2876131221719457,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "vol_up_gainers",
+   "obs": 0.36363636363636365,
+   "null_median": 0.0792778649921507,
+   "null_p95": 0.093841642228739,
+   "null_max": 0.11805555555555555,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:4_bullish",
+   "obs": 0.36363636363636365,
+   "null_median": 0.058823529411764705,
+   "null_p95": 0.07142857142857142,
+   "null_max": 0.07692307692307693,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "vol_up_gainers",
+   "obs": 0.36363636363636365,
+   "null_median": 0.07407407407407407,
+   "null_p95": 0.09523809523809523,
+   "null_max": 0.1111111111111111,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:4_bullish",
+   "obs": 0.35775560224089636,
+   "null_median": 0.056873315363881405,
+   "null_p95": 0.06662975267626431,
+   "null_max": 0.08001422475106686,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.35,
+   "null_median": 0.0,
+   "null_p95": 0.02857142857142857,
+   "null_max": 0.041666666666666664,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "momentum_97",
+   "obs": 0.3484848484848485,
+   "null_median": 0.0,
+   "null_p95": 0.1111111111111111,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.3333333333333333,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:4_bullish",
+   "obs": 0.3284313725490196,
+   "null_median": 0.05555555555555555,
+   "null_p95": 0.07106812447434818,
+   "null_max": 0.08333333333333333,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:sugar_babies",
+   "obs": 0.3157894736842105,
+   "null_median": 0.2,
+   "null_p95": 0.23333333333333334,
+   "null_max": 0.2857142857142857,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "gainers_4pct",
+   "obs": 0.29792899408284024,
+   "null_median": 0.34210526315789475,
+   "null_p95": 0.35933297471759007,
+   "null_max": 0.37662337662337664,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "ema21_watch",
+   "obs": 0.29411764705882354,
+   "null_median": 0.18622543566926214,
+   "null_p95": 0.1954307362235924,
+   "null_max": 0.20519908415703356,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "momentum_97",
+   "obs": 0.26666666666666666,
+   "null_median": 0.1388888888888889,
+   "null_p95": 0.15,
+   "null_max": 0.17647058823529413,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "vol_up_gainers",
+   "obs": 0.2641509433962264,
+   "null_median": 0.08596192100028417,
+   "null_p95": 0.09076704545454545,
+   "null_max": 0.09602219626168224,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "healthy_charts",
+   "obs": 0.25,
+   "null_median": 0.26666666666666666,
+   "null_p95": 0.3,
+   "null_max": 0.3333333333333333,
+   "p_perm": 0.8360819590204898
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.25,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "healthy_charts",
+   "obs": 0.2456896551724138,
+   "null_median": 0.25,
+   "null_p95": 0.28174603174603174,
+   "null_max": 0.310989010989011,
+   "p_perm": 0.7701149425287356
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "healthy_charts",
+   "obs": 0.24390243902439024,
+   "null_median": 0.2529411764705882,
+   "null_p95": 0.26506024096385544,
+   "null_max": 0.2807017543859649,
+   "p_perm": 0.8885557221389305
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:sugar_babies",
+   "obs": 0.2426470588235294,
+   "null_median": 0.20714285714285713,
+   "null_p95": 0.2792207792207792,
+   "null_max": 0.3333333333333333,
+   "p_perm": 0.23488255872063968
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.23863636363636365,
+   "null_median": 0.07019704433497537,
+   "null_p95": 0.08514492753623187,
+   "null_max": 0.10172413793103449,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "vol_up_gainers",
+   "obs": 0.23205128205128206,
+   "null_median": 0.08012820512820512,
+   "null_p95": 0.09639953542392567,
+   "null_max": 0.1111111111111111,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.225,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "momentum_97",
+   "obs": 0.22401433691756273,
+   "null_median": 0.13030560271646857,
+   "null_p95": 0.15384615384615385,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "gainers_4pct",
+   "obs": 0.20869565217391306,
+   "null_median": 0.3333333333333333,
+   "null_p95": 0.38181818181818183,
+   "null_max": 0.42857142857142855,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "healthy_charts",
+   "obs": 0.2077922077922078,
+   "null_median": 0.2597402597402597,
+   "null_p95": 0.2724583109198494,
+   "null_max": 0.2848689771766695,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:sugar_babies",
+   "obs": 0.2,
+   "null_median": 0.2,
+   "null_p95": 0.23076923076923078,
+   "null_max": 0.25735294117647056,
+   "p_perm": 0.6296851574212894
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.2,
+   "null_median": 0.01827436582109479,
+   "null_p95": 0.0260840108401084,
+   "null_max": 0.03540100250626566,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vcp",
+   "b": "ema21_watch",
+   "obs": 0.2,
+   "null_median": 0.18585526315789475,
+   "null_p95": 0.2,
+   "null_max": 0.2222222222222222,
+   "p_perm": 0.13093453273363317
+  },
+  {
+   "a": "vcp",
+   "b": "healthy_charts",
+   "obs": 0.1875,
+   "null_median": 0.2554347826086957,
+   "null_p95": 0.2768199233716475,
+   "null_max": 0.29583333333333334,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "momentum_97",
+   "obs": 0.17647058823529413,
+   "null_median": 0.14035567715458275,
+   "null_p95": 0.1508502125531383,
+   "null_max": 0.1628118503118503,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:4_bullish",
+   "obs": 0.17524832214765101,
+   "null_median": 0.060259365994236314,
+   "null_p95": 0.06637820751670517,
+   "null_max": 0.07144888334026911,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:pp_count",
+   "obs": 0.17465156794425088,
+   "null_median": 0.1165158371040724,
+   "null_p95": 0.1371473354231975,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.17021440098363175,
+   "null_median": 0.025974025974025976,
+   "null_p95": 0.0344181459566075,
+   "null_max": 0.03896103896103896,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.16666666666666666,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "healthy_charts",
+   "obs": 0.16666666666666666,
+   "null_median": 0.25,
+   "null_p95": 0.2727272727272727,
+   "null_max": 0.3125,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:sugar_babies",
+   "obs": 0.16666666666666666,
+   "null_median": 0.2,
+   "null_p95": 0.23809523809523808,
+   "null_max": 0.29411764705882354,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:pocket_pivot",
+   "obs": 0.15849282296650719,
+   "null_median": 0.018706293706293706,
+   "null_p95": 0.023399014778325122,
+   "null_max": 0.029411764705882353,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:sugar_babies",
+   "obs": 0.15833333333333333,
+   "null_median": 0.19821428571428573,
+   "null_p95": 0.2236111111111111,
+   "null_max": 0.25,
+   "p_perm": 0.9975012493753124
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.14879240943070732,
+   "null_median": 0.025,
+   "null_p95": 0.032782515991471216,
+   "null_max": 0.038461538461538464,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "momentum_97",
+   "obs": 0.14376876876876876,
+   "null_median": 0.14087301587301587,
+   "null_p95": 0.15268065268065267,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.3148425787106447
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:4_bullish",
+   "obs": 0.14285714285714285,
+   "null_median": 0.0,
+   "null_p95": 0.07142857142857142,
+   "null_max": 0.1111111111111111,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "healthy_charts",
+   "obs": 0.14285714285714285,
+   "null_median": 0.25,
+   "null_p95": 0.2788888888888889,
+   "null_max": 0.3076923076923077,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "momentum_97",
+   "obs": 0.14285714285714285,
+   "null_median": 0.0,
+   "null_p95": 0.1111111111111111,
+   "null_max": 0.16666666666666666,
+   "p_perm": 0.01249375312343828
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:pp_count",
+   "obs": 0.14035087719298245,
+   "null_median": 0.11538461538461539,
+   "null_p95": 0.12962962962962962,
+   "null_max": 0.14285714285714285,
+   "p_perm": 0.001999000499750125
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "momentum_97",
+   "obs": 0.14,
+   "null_median": 0.14606741573033707,
+   "null_p95": 0.15384615384615385,
+   "null_max": 0.16216216216216217,
+   "p_perm": 0.8495752123938031
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:pocket_pivot",
+   "obs": 0.13680926916221034,
+   "null_median": 0.014202256244963738,
+   "null_p95": 0.020442219440967878,
+   "null_max": 0.03149801587301587,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:pp_count",
+   "obs": 0.13636363636363635,
+   "null_median": 0.12,
+   "null_p95": 0.13333333333333333,
+   "null_max": 0.14285714285714285,
+   "p_perm": 0.012993503248375811
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "ema21_watch",
+   "obs": 0.13333333333333333,
+   "null_median": 0.1774193548387097,
+   "null_p95": 0.19021739130434784,
+   "null_max": 0.20218579234972678,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.13157894736842105,
+   "null_median": 0.022222222222222223,
+   "null_p95": 0.02857142857142857,
+   "null_max": 0.03571428571428571,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "momentum_97",
+   "obs": 0.1291315136476427,
+   "null_median": 0.1417301658449126,
+   "null_p95": 0.1474699137685966,
+   "null_max": 0.15263482280431434,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.125,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:pp_count",
+   "obs": 0.12422839506172839,
+   "null_median": 0.10791925465838509,
+   "null_p95": 0.125,
+   "null_max": 0.14415584415584415,
+   "p_perm": 0.14742628685657172
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "gainers_4pct",
+   "obs": 0.12260983382654222,
+   "null_median": 0.3570833333333333,
+   "null_p95": 0.3756443298969072,
+   "null_max": 0.3941058079355952,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "gainers_4pct",
+   "obs": 0.1195774875020158,
+   "null_median": 0.3438476840011367,
+   "null_p95": 0.3575712143928036,
+   "null_max": 0.370236773954865,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:pp_count",
+   "obs": 0.11842105263157894,
+   "null_median": 0.11842105263157894,
+   "null_p95": 0.12987012987012986,
+   "null_max": 0.13609467455621302,
+   "p_perm": 0.5377311344327836
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:pp_count",
+   "obs": 0.11627906976744186,
+   "null_median": 0.12413793103448276,
+   "null_p95": 0.13068181818181818,
+   "null_max": 0.1375,
+   "p_perm": 0.9645177411294353
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "healthy_charts",
+   "obs": 0.11594202898550725,
+   "null_median": 0.24299065420560748,
+   "null_p95": 0.25925925925925924,
+   "null_max": 0.2777777777777778,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.11555555555555555,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.00909090909090909,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "healthy_charts",
+   "b": "momentum_97",
+   "obs": 0.11159003831417624,
+   "null_median": 0.14579959514170038,
+   "null_p95": 0.15174350655014218,
+   "null_max": 0.15750026530828823,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.1111111111111111,
+   "null_median": 0.0625,
+   "null_p95": 0.09090909090909091,
+   "null_max": 0.11764705882352941,
+   "p_perm": 0.004497751124437781
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.10869565217391304,
+   "null_median": 0.06810035842293907,
+   "null_p95": 0.07352941176470588,
+   "null_max": 0.08357348703170028,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "vol_up_gainers",
+   "obs": 0.10819949281487742,
+   "null_median": 0.08537616229923922,
+   "null_p95": 0.09090909090909091,
+   "null_max": 0.10323010323010323,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "gainers_4pct",
+   "obs": 0.10752688172043011,
+   "null_median": 0.3559322033898305,
+   "null_p95": 0.3763440860215054,
+   "null_max": 0.3949579831932773,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:sugar_babies",
+   "obs": 0.10714285714285714,
+   "null_median": 0.2,
+   "null_p95": 0.23076923076923078,
+   "null_max": 0.2909090909090909,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:4_bullish",
+   "obs": 0.1038961038961039,
+   "null_median": 0.05555555555555555,
+   "null_p95": 0.06493506493506493,
+   "null_max": 0.07692307692307693,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "healthy_charts",
+   "obs": 0.10261524822695035,
+   "null_median": 0.23097271975750894,
+   "null_p95": 0.24218665219750407,
+   "null_max": 0.2561475409836066,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0975609756097561,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.09482020547945205,
+   "null_median": 0.028790389395194696,
+   "null_p95": 0.03480629539951574,
+   "null_max": 0.04,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:pp_count",
+   "obs": 0.08974358974358974,
+   "null_median": 0.12345679012345678,
+   "null_p95": 0.13043478260869565,
+   "null_max": 0.13846153846153847,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:pocket_pivot",
+   "obs": 0.08957219251336898,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.015625,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.08823529411764706,
+   "null_median": 0.02040816326530612,
+   "null_p95": 0.024390243902439025,
+   "null_max": 0.035398230088495575,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:sugar_babies",
+   "obs": 0.08732931089234677,
+   "null_median": 0.18807854137447405,
+   "null_p95": 0.201061726749739,
+   "null_max": 0.21611657303370785,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "healthy_charts",
+   "obs": 0.08403954802259886,
+   "null_median": 0.2510162601626016,
+   "null_p95": 0.26479591836734695,
+   "null_max": 0.2765912185159973,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:pocket_pivot",
+   "obs": 0.08387445887445888,
+   "null_median": 0.019049346879535557,
+   "null_p95": 0.021739130434782608,
+   "null_max": 0.023952954675846242,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:pocket_pivot",
+   "obs": 0.08333333333333333,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "healthy_charts",
+   "obs": 0.08333333333333333,
+   "null_median": 0.25,
+   "null_p95": 0.26666666666666666,
+   "null_max": 0.28762437810945274,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "episodic_pivot",
+   "obs": 0.08333333333333333,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "healthy_charts",
+   "obs": 0.08127062706270627,
+   "null_median": 0.252859117757949,
+   "null_p95": 0.26152293967714524,
+   "null_max": 0.271022594921966,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:pocket_pivot",
+   "obs": 0.08029001074113856,
+   "null_median": 0.017246506095747842,
+   "null_p95": 0.021739130434782608,
+   "null_max": 0.025217207035388853,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.08,
+   "null_median": 0.02564102564102564,
+   "null_p95": 0.025974025974025976,
+   "null_max": 0.02702702702702703,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.07910783055198972,
+   "null_median": 0.023809523809523808,
+   "null_p95": 0.029211087420042643,
+   "null_max": 0.04124149659863945,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.07865168539325842,
+   "null_median": 0.06593406593406594,
+   "null_p95": 0.07547169811320754,
+   "null_max": 0.08333333333333333,
+   "p_perm": 0.01649175412293853
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "episodic_pivot",
+   "obs": 0.07767722473604827,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.07692307692307693,
+   "null_median": 0.0662280701754386,
+   "null_p95": 0.07735042735042735,
+   "null_max": 0.08974358974358974,
+   "p_perm": 0.10694652673663169
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:sugar_babies",
+   "obs": 0.07692307692307693,
+   "null_median": 0.19230769230769232,
+   "null_p95": 0.21103238866396762,
+   "null_max": 0.22859216255442671,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.07417582417582418,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.06896551724137931,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:sugar_babies",
+   "obs": 0.06574760700472498,
+   "null_median": 0.17656225650615553,
+   "null_p95": 0.18771828454031844,
+   "null_max": 0.20006940559802766,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.06542056074766354,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.06504065040650407,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.008333333333333333,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.06493506493506493,
+   "null_median": 0.012987012987012988,
+   "null_p95": 0.012987012987012988,
+   "null_max": 0.01775147928994083,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.06422018348623854,
+   "null_median": 0.012048192771084338,
+   "null_p95": 0.016666666666666666,
+   "null_max": 0.019230769230769232,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0625,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:4_bullish",
+   "obs": 0.060240963855421686,
+   "null_median": 0.057692307692307696,
+   "null_p95": 0.06451612903225806,
+   "null_max": 0.07407407407407407,
+   "p_perm": 0.2128935532233883
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:sugar_babies",
+   "obs": 0.05969267139479905,
+   "null_median": 0.18280956848030017,
+   "null_p95": 0.20069792412312099,
+   "null_max": 0.2325895875591616,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:pp_count",
+   "obs": 0.05714285714285714,
+   "null_median": 0.11538461538461539,
+   "null_p95": 0.13157894736842105,
+   "null_max": 0.15151515151515152,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.05263157894736842,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:pp_count",
+   "obs": 0.05263157894736842,
+   "null_median": 0.11764705882352941,
+   "null_p95": 0.1282051282051282,
+   "null_max": 0.14482758620689656,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "episodic_pivot",
+   "obs": 0.05173951828724353,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "preset:pocket_pivot",
+   "obs": 0.05,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:sugar_babies",
+   "obs": 0.047337278106508875,
+   "null_median": 0.18911900065746218,
+   "null_p95": 0.20355029585798817,
+   "null_max": 0.22485207100591717,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "episodic_pivot",
+   "obs": 0.045454545454545456,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.044913801794535746,
+   "null_median": 0.02702702702702703,
+   "null_p95": 0.03380308512664254,
+   "null_max": 0.037980769230769235,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.0429813542205473,
+   "null_median": 0.029679360187834763,
+   "null_p95": 0.032909959139467336,
+   "null_max": 0.03646064096883769,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0425531914893617,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "vol_up_gainers",
+   "obs": 0.04201680672268908,
+   "null_median": 0.08743169398907104,
+   "null_p95": 0.09433962264150944,
+   "null_max": 0.10810810810810811,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:4_bullish",
+   "obs": 0.03843118686868687,
+   "null_median": 0.03626943005181347,
+   "null_p95": 0.04166779697799962,
+   "null_max": 0.04737367021276596,
+   "p_perm": 0.29185407296351823
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:sugar_babies",
+   "obs": 0.038218111002921135,
+   "null_median": 0.18840020576131689,
+   "null_p95": 0.20255963548646475,
+   "null_max": 0.2229032258064516,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "momentum_97",
+   "obs": 0.03803475935828877,
+   "null_median": 0.13367697594501718,
+   "null_p95": 0.140625,
+   "null_max": 0.14736842105263157,
+   "p_perm": 1.0
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.037383177570093455,
+   "null_median": 0.02185792349726776,
+   "null_p95": 0.024691358024691357,
+   "null_max": 0.02857142857142857,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "ema21_watch",
+   "b": "gainers_4pct",
+   "obs": 0.03735426650454188,
+   "null_median": 0.34289604201108626,
+   "null_p95": 0.3588569335043048,
+   "null_max": 0.3751039809863339,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "vcp",
+   "obs": 0.03667503586800574,
+   "null_median": 0.03141025641025641,
+   "null_p95": 0.03524297469337059,
+   "null_max": 0.03934468524251806,
+   "p_perm": 0.015492253873063468
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "ema21_watch",
+   "obs": 0.036553773996509595,
+   "null_median": 0.1547049441786284,
+   "null_p95": 0.1653757812082688,
+   "null_max": 0.17539482342618995,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "episodic_pivot",
+   "obs": 0.036375661375661374,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:pp_count",
+   "obs": 0.03414634146341464,
+   "null_median": 0.124,
+   "null_p95": 0.1301482701812191,
+   "null_max": 0.13793103448275862,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.0316677807486631,
+   "null_median": 0.04259657867905291,
+   "null_p95": 0.04918869546529121,
+   "null_max": 0.05670103092783505,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:pp_count",
+   "obs": 0.031088917525773196,
+   "null_median": 0.11715176715176716,
+   "null_p95": 0.1262641655814469,
+   "null_max": 0.13756998880179172,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "vol_up_gainers",
+   "obs": 0.028195887216451134,
+   "null_median": 0.08491336841852307,
+   "null_p95": 0.09000900090009001,
+   "null_max": 0.09504830917874396,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:4_bullish",
+   "obs": 0.026785714285714284,
+   "null_median": 0.05921052631578947,
+   "null_p95": 0.06529209621993128,
+   "null_max": 0.07228915662650602,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:pocket_pivot",
+   "obs": 0.02649122807017544,
+   "null_median": 0.015542406311637082,
+   "null_p95": 0.023668639053254437,
+   "null_max": 0.025974025974025976,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:pocket_pivot",
+   "obs": 0.026415470494417864,
+   "null_median": 0.01883780332056194,
+   "null_p95": 0.021731459154266893,
+   "null_max": 0.02376916868442292,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.02564102564102564,
+   "null_median": 0.029962967119290765,
+   "null_p95": 0.0336734693877551,
+   "null_max": 0.0365381982475356,
+   "p_perm": 0.968015992003998
+  },
+  {
+   "a": "healthy_charts",
+   "b": "vcp",
+   "obs": 0.025,
+   "null_median": 0.032210903603093755,
+   "null_p95": 0.035429611498148494,
+   "null_max": 0.03861061419200954,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.024390243902439025,
+   "null_median": 0.0,
+   "null_p95": 0.014492753623188406,
+   "null_max": 0.02127659574468085,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.023952954675846242,
+   "null_median": 0.0221001221001221,
+   "null_p95": 0.02506265664160401,
+   "null_max": 0.033520599250936325,
+   "p_perm": 0.12593703148425786
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.021725465545690263,
+   "null_median": 0.06772547728768927,
+   "null_p95": 0.07439911448450348,
+   "null_max": 0.08309728246437106,
+   "p_perm": 1.0
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "ema21_watch",
+   "obs": 0.021553325901151988,
+   "null_median": 0.18320636104525717,
+   "null_p95": 0.19255793226381462,
+   "null_max": 0.201617829443015,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "vol_up_gainers",
+   "obs": 0.020997519977955362,
+   "null_median": 0.08399007991182145,
+   "null_p95": 0.09239403337763993,
+   "null_max": 0.10079646515816729,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.020618556701030927,
+   "null_median": 0.0,
+   "null_p95": 0.005319148936170213,
+   "null_max": 0.010101010101010102,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "episodic_pivot",
+   "obs": 0.020071024840101145,
+   "null_median": 0.005684754521963825,
+   "null_p95": 0.006230590062111801,
+   "null_max": 0.00867059265756171,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "vcp",
+   "obs": 0.01948051948051948,
+   "null_median": 0.03508771929824561,
+   "null_p95": 0.04,
+   "null_max": 0.0449438202247191,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.019230769230769232,
+   "null_median": 0.010638297872340425,
+   "null_p95": 0.016666666666666666,
+   "null_max": 0.021052631578947368,
+   "p_perm": 0.019490254872563718
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.016129032258064516,
+   "null_median": 0.005780346820809248,
+   "null_p95": 0.0066518847006651885,
+   "null_max": 0.007716049382716049,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.015706806282722512,
+   "null_median": 0.010869565217391304,
+   "null_p95": 0.015957446808510637,
+   "null_max": 0.020833333333333332,
+   "p_perm": 0.09645177411294353
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.015463917525773196,
+   "null_median": 0.022922636103151862,
+   "null_p95": 0.02608695652173913,
+   "null_max": 0.029850746268656716,
+   "p_perm": 0.9995002498750625
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.013157894736842105,
+   "null_median": 0.013605442176870748,
+   "null_p95": 0.015463917525773196,
+   "null_max": 0.017391304347826087,
+   "p_perm": 0.6281859070464768
+  },
+  {
+   "a": "momentum_97",
+   "b": "episodic_pivot",
+   "obs": 0.013072453861927546,
+   "null_median": 0.0,
+   "null_p95": 0.005917159763313609,
+   "null_max": 0.011472715318869165,
+   "p_perm": 0.0004997501249375312
+  },
+  {
+   "a": "momentum_97",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.011111111111111112,
+   "null_median": 0.0,
+   "null_p95": 0.005917159763313609,
+   "null_max": 0.012658227848101266,
+   "p_perm": 0.02798600699650175
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.010526315789473684,
+   "null_median": 0.016304347826086956,
+   "null_p95": 0.021052631578947368,
+   "null_max": 0.026737967914438502,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:pocket_pivot",
+   "obs": 0.010309278350515464,
+   "null_median": 0.015706806282722512,
+   "null_p95": 0.020202020202020204,
+   "null_max": 0.021164021164021163,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:pocket_pivot",
+   "obs": 0.009304137095378223,
+   "null_median": 0.01878969654199012,
+   "null_p95": 0.021390986044383435,
+   "null_max": 0.024124265602483097,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.008977272727272726,
+   "null_median": 0.005479493184411217,
+   "null_p95": 0.0103896804835924,
+   "null_max": 0.010810810810810811,
+   "p_perm": 0.2563718140929535
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.008787052284890903,
+   "null_median": 0.013230832069086242,
+   "null_p95": 0.015781922525107607,
+   "null_max": 0.01767857142857143,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.004946076153676848,
+   "null_p95": 0.007624491377639993,
+   "null_max": 0.009349060725207515,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "momentum_97",
+   "obs": 0.0,
+   "null_median": 0.1462044395724856,
+   "null_p95": 0.15381878557874762,
+   "null_max": 0.16080808080808082,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:4_bullish",
+   "obs": 0.0,
+   "null_median": 0.057692307692307696,
+   "null_p95": 0.06521739130434782,
+   "null_max": 0.07207207207207207,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0,
+   "null_median": 0.0125,
+   "null_p95": 0.014814814814814815,
+   "null_max": 0.01904761904761905,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:pocket_pivot",
+   "obs": 0.0,
+   "null_median": 0.017940466613032984,
+   "null_p95": 0.02165262172284644,
+   "null_max": 0.02484567901234568,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0038461538461538464,
+   "null_p95": 0.00784313725490196,
+   "null_max": 0.009345794392523364,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.0,
+   "null_median": 0.06672764050598608,
+   "null_p95": 0.07373428474345906,
+   "null_max": 0.08668813741277509,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.0,
+   "null_median": 0.022058823529411766,
+   "null_p95": 0.025974025974025976,
+   "null_max": 0.029850746268656716,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.0,
+   "null_median": 0.02817460317460317,
+   "null_p95": 0.03333333333333333,
+   "null_max": 0.037980769230769235,
+   "p_perm": 1.0
+  },
+  {
+   "a": "ema21_watch",
+   "b": "vol_up_gainers",
+   "obs": 0.0,
+   "null_median": 0.08383492932056544,
+   "null_p95": 0.08948863636363637,
+   "null_max": 0.09825489650051053,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.14285714285714285,
+   "null_p95": 0.2,
+   "null_max": 0.25,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "healthy_charts",
+   "obs": 0.0,
+   "null_median": 0.23214285714285715,
+   "null_p95": 0.2583333333333333,
+   "null_max": 0.3333333333333333,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:pocket_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:pp_count",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.1111111111111111,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "preset:sugar_babies",
+   "obs": 0.0,
+   "null_median": 0.1,
+   "null_p95": 0.2,
+   "null_max": 0.3333333333333333,
+   "p_perm": 1.0
+  },
+  {
+   "a": "episodic_pivot",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "gainers_4pct",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.03217181300672762,
+   "null_p95": 0.03611352627002856,
+   "null_max": 0.04,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0063092110500756315,
+   "null_p95": 0.007249802994483846,
+   "null_max": 0.008771929824561403,
+   "p_perm": 1.0
+  },
+  {
+   "a": "healthy_charts",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.00625,
+   "null_p95": 0.007352941176470588,
+   "null_max": 0.008333333333333333,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.18706293706293708,
+   "null_p95": 0.19763313609467456,
+   "null_max": 0.2077922077922078,
+   "p_perm": 1.0
+  },
+  {
+   "a": "momentum_97",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.03145956607495069,
+   "null_p95": 0.038461538461538464,
+   "null_max": 0.04,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.1702127659574468,
+   "null_p95": 0.18840579710144928,
+   "null_max": 0.20588235294117646,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:4_bullish",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.03260869565217391,
+   "null_p95": 0.038461538461538464,
+   "null_max": 0.047619047619047616,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.2,
+   "null_p95": 0.2222222222222222,
+   "null_max": 0.25,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:monthly_leader_97",
+   "b": "vol_up_gainers",
+   "obs": 0.0,
+   "null_median": 0.06666666666666667,
+   "null_p95": 0.09545454545454546,
+   "null_max": 0.11764705882352941,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.16666666666666666,
+   "null_p95": 0.2,
+   "null_max": 0.23076923076923078,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pocket_pivot",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.03612903225806452,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.009708737864077669,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:pp_count",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.008403361344537815,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.09090909090909091,
+   "null_p95": 0.15384615384615385,
+   "null_max": 0.25,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "healthy_charts",
+   "obs": 0.0,
+   "null_median": 0.2,
+   "null_p95": 0.2631578947368421,
+   "null_max": 0.3333333333333333,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:pocket_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:pp_count",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.14285714285714285,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:stockbee_9m_setup",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.005025125628140704,
+   "null_p95": 0.005235602094240838,
+   "null_max": 0.005405405405405406,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:sugar_babies",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.031088917525773196,
+   "null_p95": 0.0340702102997185,
+   "null_max": 0.04092312522894971,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.17606543263021954,
+   "null_p95": 0.19139194139194138,
+   "null_max": 0.21024684270952926,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:vol_up_gainers",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.034523809523809526,
+   "null_p95": 0.03963893249607535,
+   "null_max": 0.046065428824049515,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.16666666666666666,
+   "null_p95": 0.19047619047619047,
+   "null_max": 0.20689655172413793,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_20_gainers",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.017543859649122806,
+   "null_max": 0.034482758620689655,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.18181818181818182,
+   "null_p95": 0.2,
+   "null_max": 0.2222222222222222,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "preset:weekly_momentum_97",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.030303030303030304,
+   "null_p95": 0.037037037037037035,
+   "null_max": 0.04880952380952381,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "episodic_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "gainers_4pct",
+   "obs": 0.0,
+   "null_median": 0.33739837398373984,
+   "null_p95": 0.36602870813397126,
+   "null_max": 0.396969696969697,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "momentum_97",
+   "obs": 0.0,
+   "null_median": 0.14142857142857143,
+   "null_p95": 0.15384615384615385,
+   "null_max": 0.1710801393728223,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:4_bullish",
+   "obs": 0.0,
+   "null_median": 0.05555555555555555,
+   "null_p95": 0.06666666666666667,
+   "null_max": 0.07692307692307693,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:pocket_pivot",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.025657894736842105,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:stockbee_9m_setup",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.0,
+   "null_max": 0.0,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:sugar_babies",
+   "obs": 0.0,
+   "null_median": 0.20730397422126745,
+   "null_p95": 0.23148148148148145,
+   "null_max": 0.2667994026879045,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:vol_up_gainers",
+   "obs": 0.0,
+   "null_median": 0.06666666666666667,
+   "null_p95": 0.07692307692307693,
+   "null_max": 0.08792270531400967,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:weekly_20_gainers",
+   "obs": 0.0,
+   "null_median": 0.0,
+   "null_p95": 0.018518518518518517,
+   "null_max": 0.027777777777777776,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "preset:weekly_momentum_97",
+   "obs": 0.0,
+   "null_median": 0.021073646850044363,
+   "null_p95": 0.030776515151515152,
+   "null_max": 0.04040816326530612,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vcp",
+   "b": "vol_up_gainers",
+   "obs": 0.0,
+   "null_median": 0.08081632653061224,
+   "null_p95": 0.09175084175084175,
+   "null_max": 0.11269841269841269,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "ema21_watch",
+   "obs": 0.0,
+   "null_median": 0.18210526315789471,
+   "null_p95": 0.19649122807017544,
+   "null_max": 0.21046587926509186,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "preset:monthly_leader_97",
+   "obs": 0.0,
+   "null_median": 0.008626459433330853,
+   "null_p95": 0.014288630332720964,
+   "null_max": 0.018771929824561405,
+   "p_perm": 1.0
+  },
+  {
+   "a": "vol_up_gainers",
+   "b": "vcp",
+   "obs": 0.0,
+   "null_median": 0.030834914611005692,
+   "null_p95": 0.03681120144534779,
+   "null_max": 0.044532409698169226,
+   "p_perm": 1.0
+  }
+ ]
+}
