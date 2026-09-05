@@ -1301,3 +1301,5 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 — 数据哨兵（定时任务，2026-09-05）
 
 - [09-05] 🟢 **数据哨兵**：C_gate(schema_snapshot 缺 `--update`，与 D_code 同根因) · run 33948238153 · 已重试至第 6 班 · 修复：手动精确应用 CI 日志给出的字段级 diff 到 `data/reference/schema_snapshot.json`(universe.json 11 删 12 增 + watchlist.json hybrid_rs→composite_score)，不碰 Yahoo · dashboard 仍停在 2026-09-03(09-04 交易日缺失，等下一次 run 用新闸验证) · artifact 403 第 3 次复证，请 OPS 周检评估机制化(见 §七同日条目)
+
+- [09-05] 🟢 **数据哨兵**：已修复，第 6 班收工 · run [33949769881](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33949769881)（code `086b834b`，含本班的 schema_snapshot 修复）成功，`chore: market data 2026-09-05` 已落 main（commit `2e75f20d`）· universe_quality degraded(非severe，tradeable 2553/5631) · **dashboard 追平到 2026-09-04 交易日** · 全程未再触碰 Yahoo 之外的重跑（本班只 dispatch 一次做验证，基于两次连续健康抓取的证据判断风险可控）
