@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { STATES, STATE_LADDER, WINDOWS, windowBounds, countsAt, namesByState } from './rotationLogic'
+import { STATES, STATE_LADDER, WINDOWS, windowBounds, visibleFrom, countsAt, namesByState } from './rotationLogic'
 
 const W = 640, H = 440, PAD = { l: 6, r: 6, t: 6, b: 16 }
 const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → top, so Leading sits darkest on top
@@ -25,14 +25,17 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
   const total = Math.max(1, ...(h?.measurable ?? [Object.keys(ladder?.themes ?? {}).length]))
   const bounds = windowBounds(dates, wk)
   const end = bounds?.end ?? m - 1
-  const x = (i) => PAD.l + (i * (W - PAD.l - PAD.r)) / Math.max(1, m - 1)
+  // draw only as far back as the oldest window the select can reach
+  const from = visibleFrom(dates)
+  const idx = Array.from({ length: Math.max(0, m - from) }, (_, i) => i + from)
+  const x = (i) => PAD.l + ((i - from) * (W - PAD.l - PAD.r)) / Math.max(1, m - 1 - from)
   const y = (v) => PAD.t + (1 - v / total) * (H - PAD.t - PAD.b)
   const stacks = []
   if (h) {
-    let base = dates.map(() => 0)
+    let base = idx.map(() => 0)
     STACK.forEach((k) => {
-      const top = base.map((b, i) => b + (h[k]?.[i] ?? 0))
-      stacks.push({ k, d: `M${top.map((v, i) => `${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' L')} L${base.map((v, i) => `${x(i).toFixed(1)} ${y(v).toFixed(1)}`).reverse().join(' L')} Z` })
+      const top = base.map((b, j) => b + (h[k]?.[idx[j]] ?? 0))
+      stacks.push({ k, d: `M${top.map((v, j) => `${x(idx[j]).toFixed(1)} ${y(v).toFixed(1)}`).join(' L')} L${base.map((v, j) => `${x(idx[j]).toFixed(1)} ${y(v).toFixed(1)}`).reverse().join(' L')} Z` })
       base = top
     })
   }
@@ -41,10 +44,10 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
   const indexAt = (e) => {
     const svg = svgRef.current; const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY
     const p = pt.matrixTransform(svg.getScreenCTM().inverse())
-    return Math.max(0, Math.min(m - 1, Math.round((p.x - PAD.l) / ((W - PAD.l - PAD.r) / Math.max(1, m - 1)))))
+    return Math.max(from, Math.min(m - 1, from + Math.round((p.x - PAD.l) / ((W - PAD.l - PAD.r) / Math.max(1, m - 1 - from)))))
   }
   const hc = hov == null ? null : countsAt(h, hov)
-  const tipX = hov == null ? 0 : hov > m / 2 ? x(hov) - 134 : x(hov) + 8
+  const tipX = hov == null ? 0 : hov - from > (m - from) / 2 ? x(hov) - 134 : x(hov) + 8
 
   return (
     <div className="rot-card">
@@ -58,13 +61,13 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
           <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label={t('rot.expand')} onClick={onToggle} disabled={!m}>{open ? '−' : '+'}</button>
         </div>
       </div>
-      {m > 1 ? (
+      {m - from > 1 ? (
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label="four-state counts by session, two-week board"
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
           {stacks.map(({ k, d }) => <path key={k} d={d} fill={STATE_LADDER[k]} stroke="var(--color-surface)" strokeWidth="1" />)}
-          {bounds && bounds.start > 0 && <rect x={PAD.l} y={PAD.t} width={(x(bounds.start) - PAD.l).toFixed(1)} height={H - PAD.t - PAD.b} fill="var(--color-surface)" opacity=".6" />}
+          {bounds && bounds.start > from && <rect x={PAD.l} y={PAD.t} width={(x(bounds.start) - PAD.l).toFixed(1)} height={H - PAD.t - PAD.b} fill="var(--color-surface)" opacity=".6" />}
           {bounds && bounds.end < m - 1 && <rect x={x(bounds.end).toFixed(1)} y={PAD.t} width={(x(m - 1) - x(bounds.end)).toFixed(1)} height={H - PAD.t - PAD.b} fill="var(--color-surface)" opacity=".6" />}
-          <text className="rot-mono" x={x(0)} y={H - 4}>{dates[0].slice(5)}</text>
+          <text className="rot-mono" x={x(from)} y={H - 4}>{dates[from].slice(5)}</text>
           <text className="rot-mono" x={x(m - 1)} y={H - 4} textAnchor="end">{dates[m - 1].slice(5)}</text>
           {hov != null && (
             <g style={{ pointerEvents: 'none' }}>

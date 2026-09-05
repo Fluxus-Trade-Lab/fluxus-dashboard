@@ -19,8 +19,8 @@ export const STATE_LADDER = {
 }
 /** the three Flux lines: pair + ink — never greys, two greys cannot be told apart (brief §18.9) */
 export const LINE = ['var(--color-took)', 'var(--color-refused)', 'var(--color-text)']
-/** the Flux y-axis is fixed so adding a line never rescales the others (Andy: ±15%, the overflow clips) */
-export const Y_MAX = 0.15
+/** the Flux y-axis is fixed so adding a line never rescales the others (Andy 2026-09-04: ±20%, the overflow clips) */
+export const Y_MAX = 0.20
 /** two-week relative strength = ten sessions */
 export const R2W_LAG = 10
 /** the prior three weeks (rs_1w_1m) as weeks, for a per-week pace */
@@ -32,6 +32,16 @@ export const BOARDS = [
   { key: 'long', word: 'rot.persist', title: 'Quarter' },
 ]
 export const WINDOWS = ['rot.win0', 'rot.win1', 'rot.win2', 'rot.win3', 'rot.win4']
+
+/**
+ * The first session Terrain draws: the start of the oldest window the select
+ * offers. The archive runs deeper than the page reads (90 sessions against ten
+ * weeks), and drawing what no control can reach is just a longer picture
+ * (Andy 2026-09-04: 「不需要展示更早以前的数据」).
+ */
+export function visibleFrom(dates, windows = WINDOWS) {
+  return windowBounds(dates, windows.length - 1)?.start ?? 0
+}
 
 export const fmtPct = (x, d = 1) => (x == null || !Number.isFinite(x) ? '—' : `${x >= 0 ? '+' : '−'}${Math.abs(x * 100).toFixed(d)}%`)
 

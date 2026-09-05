@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
-  wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, countsAt, namesByState,
-  R2W_LAG, PRIOR_WEEKS,
+  wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, visibleFrom, countsAt, namesByState,
+  R2W_LAG, PRIOR_WEEKS, Y_MAX,
 } from './rotationLogic'
 
 const row = (group, o = {}) => ({ group, kind: 'theme', rs_0_1w: 0.02, rs_1w_1m: 0.03, excess_3m: 0.1, ...o })
@@ -87,6 +87,21 @@ describe('the Flux line and its windows', () => {
     expect(windowBounds(dates, 0)).toEqual({ start: 3, end: 5 })     // (08-19, 09-02]
     expect(windowBounds(dates, 1)).toEqual({ start: 1, end: 2 })     // (08-05, 08-19]
     expect(windowBounds(dates, 3)).toBeNull()
+  })
+  it('the y-axis is fixed at ±20% — a line added never rescales the others', () => {
+    expect(Y_MAX).toBe(0.20)
+  })
+  it('Terrain draws only back to the oldest window the select can reach', () => {
+    // a session a day for 100 days: the oldest window (8–10w ago) opens 70 days back
+    const dates = Array.from({ length: 100 }, (_, i) => new Date(Date.UTC(2026, 5, 1) + i * 86400e3).toISOString().slice(0, 10))
+    const from = visibleFrom(dates)
+    const daysApart = (a, b) => (Date.parse(b) - Date.parse(a)) / 86400e3
+    // the window is (D − 70d, D − 56d], so the session exactly 70 days out is outside it
+    expect(daysApart(dates[from], dates[dates.length - 1])).toBe(69)
+    expect(from).toBe(windowBounds(dates, 4).start)
+  })
+  it('a short archive stays whole rather than starting past its end', () => {
+    expect(visibleFrom(['2026-09-01', '2026-09-02'])).toBe(0)
   })
   it('counts and names on a session', () => {
     const h = { Leading: [1, 2], Weakening: [0, 0], Improving: [3, 1], Lagging: [0, 1] }
