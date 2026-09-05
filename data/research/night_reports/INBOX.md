@@ -1213,3 +1213,23 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 - [09-05] 🟡 **Plumber Joe → 数据端（DATA ALEX）**：`schema_snapshot --check` **漂了 12 天没人基线化**。今晨在 origin/main 干净树上实读，仍报 `theme_ladder.json`(新文件) · `tick_cycle.json`(新文件) · `universe.json rows[]` 加 `atr_pctl_252/63`、`range5_pctl_252` · `watchlist.json top` 加 `universe_tradeable`/`universe_tradeable_exempt`——**这四项全是已合进 main 的功能**，§七 [08-22]/[08-23] 与 §十行都记着，闸自己也写着「accept with `--update` after DATA_CONTRACTS.md says so」，但 08-24 报到今天没人执行 `--update`。**一道常年黄的闸等于没有闸**：下次真出现结构回退时，没人分得出它和这四条常驻噪音。⚠️ 执行 `--update` 前请照 §十的告诫先分清「空数组」与「真改形状」，别把一次真回退基线化成新常态。
 
 — Plumber Joe（晨检，2026-09-05）
+
+## [2026-09-05 00:16–00:32 UTC / 2026-09-04 20:16–20:32 ET] 数据哨兵 —— 第 1 班：09-04 正班分诊 C_gate，闸的 bug 已修好但留分支未合，artifact 回收被本会话的出口代理拦住
+
+**健康检查**：`chore: market data` 最新是 `b3aa409`（2026-09-04）＝session 2026-09-03 数据。当日正班（21:30Z）早已过点，`gh` 显示已有一班 run [33928622845](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33928622845)（23:13→23:41Z，code `12dedb7`）**已完成且失败**。判定：不健康。
+
+**分诊**：`python3 -m pipeline.tools.failure_class --run-id 33928622845` → **C_gate**（抓取正常，闸挡的；universe_quality degraded 非 severe，tradeable 2554/5631，errors 0）。查 job 日志锁定卡在哪一步：`Audit archives`/`Audit run ledger`/`claim_registry` 全绿，**`schema_snapshot --check` 报 3 处「removed」判 exit 1**，`Validate outputs`/`Commit and push` 未执行——数据从未落 `data/output/`，只有 `chore(ledger)` 记了失败。
+
+**根因逐条查证**（不肉眼判，读代码+读历史 commit）：
+1. `watchlist.json` 两处 `removed [hybrid_rs]` —— **真删除**，`14f4420`（Andy 09-04 亲定，hybrid_rs 改名 composite_score）没跟 `schema_snapshot --update`。
+2. `ticker_events.json events{}[]: removed [num_contractions, pct_to_pivot]` —— **假阳性**，代码仍在发这两个字段；`schema_snapshot.py` 的 dict-of-lists 分支只采样前 50 个 ticker 键、每键前 20 条，`events{}` 按 ticker 键有约 5000 个，VCP 一晚仅命中 ~35 支，字母序前 50 名没撞上就判「删除」。**这是 08-24/08-25 那两次 schema_snapshot 假阳性的同一家族第三次**（前两次是"空集合≠删除"，这次是"稀疏字段被采样漏掉"）。
+
+**修复**：把 dict-of-lists 分支改成对所有 key 的全部条目取键并集（不再按前缀截断），加回归测试复现（旧代码红、新代码绿），14/14 单测通过，对 main 当前 committed data/output 重跑 `--check` 仍 exit 0（无回归）。**留在分支 `fix/schema-snapshot-sampling-2026-09-05`（commit `3cd93000`）未合 main**——该文件不在 `audit_*` 自合白名单内。`hybrid_rs`→`composite_score` 的 baseline 更新未做（需要新数据跑一遍，见下）。全文见 `DATA_CONTRACTS.md` §七 [2026-09-05] 行。
+
+**⚠️ artifact 回收受阻**：按任务书 C_gate 路径本该下载 `data-output-33928622845`（已确认存在，7 天有效期到 09-11）放回 `data/output/` 重审提交，**不碰 Yahoo**。但下载 URL 落在 `productionresultssa13.blob.core.windows.net`，本会话出口代理对该域名返回 403（组织策略拒绝，非 TLS/凭证问题，`__agentproxy/status` 确认），按规矩不可绕过。**这一晚的好数据我这个会话拿不到**，需要网络不受限的会话/人工完成下载→放回→`audit_archives`→直推 main。
+
+- [09-05] 🔴 **数据哨兵**：C_gate · run 33928622845 · 已重试至第 1 班 · dashboard 停在 2026-09-03 · 下一步：①分支 `fix/schema-snapshot-sampling-2026-09-05` 待合 main（DATA ALEX 或 Andy 点头）②`data-output-33928622845` artifact 待人工/无限网络会话下载回收（本会话代理 403 拦住）③backstop 01:30Z 若分支未合会在同一假阳性上再败一次、白烧一轮 Yahoo 请求
+
+**下一班第一件事**：查分支是否已合；若已合且 backstop（01:30Z）已跑，核实 09-04 数据是否落地；若分支未合，不要重新造轮子，直接跟催合并或亲自合并（判断是否已过冲突判据）。
+
+— 数据哨兵（定时任务，2026-09-05）
