@@ -9,21 +9,34 @@ safe to commit to the public repo.
 
 Usage:
     python pipeline/portfolio/performance_review.py --period h1 --label h1_2026
-    python pipeline/portfolio/truth_snapshot.py            # -> performance_truth.json
+    python pipeline/portfolio/truth_snapshot.py                        # Period 1 (H1_2026)
+    python pipeline/portfolio/performance_review.py --period annual --label ytd_2026
+    python pipeline/portfolio/truth_snapshot.py --review ytd_2026 \
+        --key YTD_2026 --range 2025-12-31..2026-08-30                  # merge Period 2
+
+Multi-period: the snapshot MERGES into an existing performance_truth.json, so
+each period is regenerated independently and none is clobbered.
 """
 from __future__ import annotations
 
 import datetime as dt
 
 from pipeline.marketcal import market_today
+import argparse
 import json
 import os
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--review", default="h1_2026", help="review label (reviews/<label>.json)")
+    ap.add_argument("--key", default="H1_2026", help="period key in performance_truth.json")
+    ap.add_argument("--range", dest="range_", default="2025-12-31..2026-07-22")
+    args = ap.parse_args()
+
     here = os.path.dirname(os.path.abspath(__file__))
     repo = os.path.abspath(os.path.join(here, "..", ".."))
-    src = os.path.join(repo, "data", "portfolio", "reviews", "h1_2026.json")
+    src = os.path.join(repo, "data", "portfolio", "reviews", f"{args.review}.json")
     if not os.path.exists(src):
         raise SystemExit(f"Review JSON not found: {src}. Run performance_review.py first.")
 
@@ -34,13 +47,8 @@ def main() -> None:
     r = m.get("risk", {})
     ce = d.get("capital_efficiency") or {}
 
-    truth = {
-        "_note": "Canonical source of truth. Aggregate-only (public-safe). See PERFORMANCE_TRUTH.md.",
-        "generated": market_today().isoformat(),
-        "source_csv": d.get("source_csv"),
-        "periods": {
-            "H1_2026": {
-                "range": "2025-12-31..2026-07-22",
+    period = {
+                "range": args.range_,
                 "starting_capital": o["capital"],
                 "ending_equity": round(o["ending_equity"]),
                 "return_pct": round(o["return_pct"], 4),
@@ -67,14 +75,22 @@ def main() -> None:
                 "peak_leverage_x": round(ce["peak_leverage_pct"] / 100, 2) if ce.get("peak_leverage_pct") is not None else None,
                 "avg_deployed_pct_of_start": round(ce["avg_deployed_pct_of_start"]) if ce.get("avg_deployed_pct_of_start") is not None else None,
                 "monthly_pnl": {k: round(v["pnl"]) for k, v in d.get("monthly", {}).items()},
-            }
-        },
+                "source_csv": d.get("source_csv"),
     }
 
     out = os.path.join(repo, "performance_truth.json")
+    truth = {"_note": "Canonical source of truth. Aggregate-only (public-safe). See PERFORMANCE_TRUTH.md.",
+             "periods": {}}
+    if os.path.exists(out):
+        try:
+            truth = json.load(open(out))
+        except ValueError:
+            pass
+    truth["generated"] = market_today().isoformat()
+    truth.setdefault("periods", {})[args.key] = period
     with open(out, "w") as f:
         json.dump(truth, f, indent=2)
-    print(f"✓ wrote {out}")
+    print(f"✓ wrote {out} (period {args.key}; {len(truth['periods'])} period(s) total)")
 
 
 if __name__ == "__main__":

@@ -8,12 +8,38 @@ If another document disagrees, this file wins; fix the other document.
 - **Source data:** `data/portfolio/portfolio_YYYY-MM-DD.csv` (latest = truth; git-ignored, local-only)
 - **Engine:** `pipeline/portfolio/performance_review.py` + `pipeline/portfolio/mtm.py`
 - **Machine-readable copy:** [`performance_truth.json`](performance_truth.json)
-- **Regenerate:** `python pipeline/portfolio/performance_review.py --period h1 --label h1_2026`
-  then `python pipeline/portfolio/truth_snapshot.py`
+- **Regenerate:** Period 1: `performance_review.py --period h1 --label h1_2026` → `truth_snapshot.py`;
+  Period 2: `performance_review.py --period annual --label ytd_2026` →
+  `truth_snapshot.py --review ytd_2026 --key YTD_2026 --range 2025-12-31..2026-08-30`
+  (the snapshot MERGES periods — regenerating one never clobbers another)
 - Numbers below are **aggregate only** (no per-trade rows) so this file is safe to
   commit to the public repo.
 
 ---
+
+## Period 2 — YTD 2026 · 2025-12-31 → 2026-08-30  *(as of export 2026-08-31)*
+
+Account: **$1,000,000 → $2,143,642 realized** · **+114.36% realized** · MTM equity
+**$2,151,613** at the 2026-08-28 close (+115.2%, 8 positions still open, marked to market).
+
+| Metric | Value | Notes |
+|---|---|---|
+| Net realized P&L | **+$1,143,642** (+114.36%) | 373-trade log; per-leg engine |
+| Trades | **373** = 365 fully closed + 8 partially exited | bucketed by last exit leg; the 8 partials' realized legs are included, remainder still open |
+| Win rate | 39.9% | consistent with H1 |
+| Payoff / Profit factor | 3.57× / 2.68 | both improved vs H1 (3.40× / 2.48) |
+| Expectancy | +$3,066 / trade (**+0.91R**) | |
+| Total R | **+338.8R** | |
+| Avg hold | 7.0 days | |
+| **Max drawdown (MTM)** | **−$207,329 · −17.9% of peak** | still the Jan 28 → Mar 19 episode — **no new low since March** |
+| Peak equity | $2,205,551 | late Aug |
+| Sharpe / Sortino | 2.72 / 4.97 | daily MTM returns, annualized |
+| Ann. volatility | 43.3% | |
+| Return on deployed | 111.8% | leverage avg 0.74× / peak 1.56× |
+| SQN (N capped at 100) | **2.77 — "Good"** | Van Tharp band; uncapped √N would overstate |
+| Risk per trade | **median 0.30% · mean 0.37% of entry-day equity** | HOUSE RULE 2026-09-01: denominator is entry-day equity, never starting capital (÷$1M misreads this as 0.52%). 7 outlier trades >1% (max 8.1%) |
+
+> Aug 2026 monthly (MTM): **+12.9%** after July's −6.4%; intra-month DD only −2.4%.
 
 ## Period 1 — H1 2026 · 2025-12-31 → 2026-07-22  *(as of export 2026-07-26)*
 
