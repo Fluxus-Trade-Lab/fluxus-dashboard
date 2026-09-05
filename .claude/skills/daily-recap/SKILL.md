@@ -99,3 +99,4 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **Founders Note 日期对位首例**：9/4 场用的是 09-06 那条（次日早晨写的才是对上一场的复盘）；「取 T 与 T 后第一条给他挑」的规则经实战确认
 - **中文成品走 fable-voice 文风账**：ZH 版不是 EN 的翻译层，是按文风账重写的一版——能逐字倒译回英文的句子就重写。他裁「中文不行，改改中文」后全篇过账，v3 获批
 - 完整产线定型：数据读取 → 四问过滤 → Andy 原话收集 → founders_note.py 取 note → 亮主题截图（静态页）/ 他交付物抽图（Portfolio）→ 双语 HTML → weasyprint → pdftotext 禁词 grep → 交付。工具与脚本：`pipeline/tools/founders_note.py` + 会话存档的 build_recap.py（待固化位置，下轮迁入 pipeline/content/）
+- 补：他说的「中文表达训练」= `biaoda` skill（~/Desktop/中文表达训练/ 的说明书与风格卡，他自己训练的）。**下轮起 ZH 版过两本账：fable-voice（治翻译腔）+ biaoda（他的风格卡）**，本轮只过了前者
