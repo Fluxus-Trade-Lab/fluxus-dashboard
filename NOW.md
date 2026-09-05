@@ -144,6 +144,7 @@
 ## 停车场（想做但现在不做的，写这里防丢）
 
 - 3D 特效网站方向（08-30 存入，定时提醒已挂 12-20）
+- **Library = 问答界面 + 每日概念**（09-04 存入）——Andy 贴 TraderLion 截图定的方向。和 08-17 挂的「Library 视觉化改版」是**同一块地**，下次一起接，分开做必返工。语料不缺（课程正文全成稿），缺切块检索和「谁能问」的边界。参照拆解 [`docs/plans/2026-09-04-library-ai-assistant-reference.md`](docs/plans/2026-09-04-library-ai-assistant-reference.md)
 
 ## 🔭 观察中（到期自动复查，不用 Andy 记）
 
