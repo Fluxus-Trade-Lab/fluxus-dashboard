@@ -319,3 +319,4 @@
   错在**同名文件有第二份**。任何「某处只有 X」的读数，先问「还有没有第二个某处」。
   出处：`DATA_CONTRACTS.md` §七 [2026-09-05] 行 · commit `70997955`。
 - [2026-09-05][DATA] 把 Jeff Sun 公开的 20 个扫描器（13 TV + 7 Finviz）逆向成机器可读规格并与自家面板对比：他一晚 122 个名字、我们 239 个、只重叠 20——候选池和触发器是两种仪器不是竞品；本地复刻 recall 0.79 但 precision 0.032，缺的是 float/FCF/短仓率这类字段不是逻辑。出处 data/research/jeff_scanner_2026-09/PLAN.md
+- [daily-recap skill 第一轮闭环] 六轮内容纠正+一轮展现形态+中文文风重写，全部带 Andy 原话进裁决记录；产出 9/4 双语 PDF v3 获批；Founders Note 从截图改为 pipeline 取数（founders_note.py，GAS Meta tab）——「复盘源头是别人的视频」这个卡点从今天起有了自己的源头。出处 .claude/skills/daily-recap/SKILL.md
