@@ -19,8 +19,35 @@ export const STATE_LADDER = {
 }
 /** the three Flux lines: pair + ink — never greys, two greys cannot be told apart (brief §18.9) */
 export const LINE = ['var(--color-took)', 'var(--color-refused)', 'var(--color-text)']
-/** the Flux y-axis is fixed so adding a line never rescales the others (Andy 2026-09-04: ±20%, the overflow clips) */
+/** the Flux y-axis is fixed so adding a line never rescales the others (Andy 2026-09-04: ±20%) */
 export const Y_MAX = 0.20
+/** share of the half-height kept for values past ±Y_MAX — the saturating tail */
+export const Y_TAIL = 0.12
+
+/**
+ * The Flux y-scale: linear to ±Y_MAX, then a saturating tail.
+ *
+ * NOT normalisation (that rescales a series to a common range). This is soft
+ * clipping — the same idea as matplotlib's `symlog`, linear where the reader
+ * does arithmetic and compressed where they only need "off the scale". Inside
+ * ±Y_MAX every labelled gridline is honest, so distances between −20% and +20%
+ * still read as percentages. Past it the overflow x = |v|/max − 1 is squashed
+ * by x/(1+x), which approaches the frame without reaching it: +25%, +40% and
+ * +100% land at three visibly different heights and none glues itself to the
+ * top edge (Andy 2026-09-04: 「仍然是在上沿，但不要太贴在顶部了」). tanh was the
+ * first try and saturates too fast — it put +40% and +100% on the same pixel.
+ * The hover reads the true value, so nothing is hidden, only bent.
+ *
+ * @returns signed fraction of the half-height, in (−1, 1)
+ */
+export function yFrac(v, max = Y_MAX, tail = Y_TAIL) {
+  if (!Number.isFinite(v)) return null
+  const lin = 1 - tail
+  const t = v / max
+  if (Math.abs(t) <= 1) return t * lin
+  const over = Math.abs(t) - 1
+  return Math.sign(t) * (lin + tail * (over / (1 + over)))
+}
 /** two-week relative strength = ten sessions */
 export const R2W_LAG = 10
 /** the prior three weeks (rs_1w_1m) as weeks, for a per-week pace */

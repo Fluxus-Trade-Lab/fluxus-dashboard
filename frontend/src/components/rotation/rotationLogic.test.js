@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, visibleFrom, countsAt, namesByState,
-  R2W_LAG, PRIOR_WEEKS, Y_MAX,
+  R2W_LAG, PRIOR_WEEKS, Y_MAX, Y_TAIL, yFrac,
 } from './rotationLogic'
 
 const row = (group, o = {}) => ({ group, kind: 'theme', rs_0_1w: 0.02, rs_1w_1m: 0.03, excess_3m: 0.1, ...o })
@@ -90,6 +90,28 @@ describe('the Flux line and its windows', () => {
   })
   it('the y-axis is fixed at ±20% — a line added never rescales the others', () => {
     expect(Y_MAX).toBe(0.20)
+  })
+  describe('the saturating y-scale', () => {
+    const lin = 1 - Y_TAIL
+    it('is linear inside ±20%, so the labelled gridlines stay honest', () => {
+      expect(yFrac(0)).toBe(0)
+      expect(yFrac(0.10)).toBeCloseTo(0.5 * lin, 12)
+      expect(yFrac(Y_MAX)).toBeCloseTo(lin, 12)
+      expect(yFrac(-Y_MAX)).toBeCloseTo(-lin, 12)
+      // equal steps inside the range cover equal distance — that is what makes it readable
+      expect(yFrac(0.10) - yFrac(0.05)).toBeCloseTo(yFrac(0.15) - yFrac(0.10), 12)
+    })
+    it('bends past the range without ever touching the frame', () => {
+      const over = [0.25, 0.40, 1.0, 10].map((v) => yFrac(v))
+      over.forEach((f) => { expect(f).toBeGreaterThan(lin); expect(f).toBeLessThan(1) })
+      // still monotone out there: a bigger move still sits higher
+      expect(over).toEqual([...over].sort((a, b) => a - b))
+    })
+    it('is symmetric, and refuses a value it cannot place', () => {
+      expect(yFrac(-0.45)).toBeCloseTo(-yFrac(0.45), 12)
+      expect(yFrac(null)).toBeNull()
+      expect(yFrac(NaN)).toBeNull()
+    })
   })
   it('Terrain draws only back to the oldest window the select can reach', () => {
     // a session a day for 100 days: the oldest window (8–10w ago) opens 70 days back

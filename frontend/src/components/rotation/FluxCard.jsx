@@ -1,14 +1,15 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
+import { LINE, STATE_LADDER, Y_MAX, Y_TAIL, R2W_LAG, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
 
 /**
  * FLUX · 轨迹 · 线 — up to three themes' two-week relative strength against
  * the benchmark, every session, over the ladder's ten-week calendar. The
- * y-axis is fixed at ±15% so a line added never moves the others; what
- * overflows is clipped and the hover still reads the true value. The lines
+ * y-axis is fixed at ±20% so a line added never moves the others; past that
+ * the scale saturates instead of clipping — a line off the scale rides just
+ * inside the frame and the hover still reads the true value. The lines
  * are blue, red, ink; the benchmark's zero line carries its name in the same
  * column as theirs. Under each line, its two-week state per session in the
  * grey ladder. No markers — a sudden week is read from the hover (Andy
@@ -23,7 +24,8 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
   const n = dates.length
   const drawn = Math.max(0, n - lag)            // sessions with a whole two-week window behind them
   const x = (i) => PAD.l + ((i - lag) * (W - PAD.l - PAD.r)) / Math.max(1, drawn - 1)
-  const y = (v) => PAD.t + ((Y_MAX - v) / (2 * Y_MAX)) * (H - PAD.t - PAD.b)
+  const midY = PAD.t + (H - PAD.t - PAD.b) / 2, halfH = (H - PAD.t - PAD.b) / 2
+  const y = (v) => midY - yFrac(v) * halfH
   const lines = shown.map((o, j) => ({ ...o, j, r2w: r2wSeries(o.rel) })).filter((o) => o.rel?.length)
   const ends = spreadLabels(
     [{ name: benchmark, j: -1, v: 0 }, ...lines.map((o) => { const last = [...o.r2w].reverse().find((v) => v != null); return { name: o.name, j: o.j, v: last ?? null } }).filter((e) => e.v != null)],
@@ -52,6 +54,9 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`two-week relative strength vs ${benchmark}`}
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
           <defs><clipPath id={clip}><rect x={PAD.l - 4} y={PAD.t - 4} width={W - PAD.l - PAD.r + 8} height={H - PAD.t - PAD.b + 8} /></clipPath></defs>
+          {/* the saturating band, tinted so the bend past ±20% is visible without a sentence */}
+          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={(halfH * Y_TAIL).toFixed(1)} fill="var(--color-text)" opacity=".045" />
+          <rect x={PAD.l} y={(midY + halfH * (1 - Y_TAIL)).toFixed(1)} width={W - PAD.l - PAD.r} height={(halfH * Y_TAIL).toFixed(1)} fill="var(--color-text)" opacity=".045" />
           {[-Y_MAX, -Y_MAX / 2, 0, Y_MAX / 2, Y_MAX].map((v) => (
             <g key={v}>
               <line x1={PAD.l} x2={W - PAD.r} y1={y(v).toFixed(1)} y2={y(v).toFixed(1)} stroke={v === 0 ? 'var(--color-border)' : 'var(--color-border-light)'} strokeWidth={v === 0 ? 1 : 0.6} />
@@ -71,7 +76,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
           {hov != null && (
             <g style={{ pointerEvents: 'none' }}>
               <line x1={x(hov).toFixed(1)} x2={x(hov).toFixed(1)} y1={PAD.t} y2={H - PAD.b} stroke="var(--color-text-secondary)" strokeWidth=".8" strokeDasharray="3 3" />
-              {lines.map((o) => (o.r2w[hov] != null && Math.abs(o.r2w[hov]) <= Y_MAX
+              {lines.map((o) => (o.r2w[hov] != null
                 ? <circle key={o.name} cx={x(hov).toFixed(1)} cy={y(o.r2w[hov]).toFixed(1)} r="4" fill="var(--color-surface)" stroke={LINE[o.j]} strokeWidth="2" /> : null))}
               <rect x={tipX} y={PAD.t + 4} rx="6" width="170" height={18 + 15 * (lines.length + 1)} fill="var(--color-surface)" stroke="var(--color-border)" />
               <text className="rot-mono rot-ink" x={tipX + 8} y={PAD.t + 18}>{dates[hov]}</text>
