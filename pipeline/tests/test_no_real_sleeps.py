@@ -74,3 +74,50 @@ def test_the_walling_fundamentals_test_finishes_promptly():
     elapsed = time.monotonic() - t0
     assert elapsed < 10, f"walling took {elapsed:.0f}s -- the limiter is sleeping for real"
     assert r["retries"] == 1
+
+
+class TestNoVendorNetwork:
+    """The suite must not depend on a website being up.
+
+    2026-09-04: `run_all` gained an S&P 500 membership fetch, and
+    `test_run_all_end_to_end` began scraping 26 pages of Finviz on every run
+    -- from milliseconds to 22 seconds, with the result depending on someone
+    else's uptime and on whether our own nightly job had been rate-limited.
+    Same failure family as the real 30-second backoff sleep: an external
+    dependency reachable from a unit test the moment anyone wires it in.
+    """
+
+    def test_membership_defaults_to_empty_not_to_the_network(self):
+        from pipeline.adapters.finviz_adapter import FinvizAdapter
+        import time
+        t0 = time.monotonic()
+        got = FinvizAdapter().fetch_index_members("sp500")
+        assert got == set(), "something reached the vendor"
+        assert time.monotonic() - t0 < 1.0
+
+    def test_a_test_can_set_membership_explicitly(self, sp500_members):
+        from pipeline.adapters.finviz_adapter import FinvizAdapter
+        sp500_members["members"] = {"AAPL", "MSFT"}
+        assert FinvizAdapter().fetch_index_members("sp500") == {"AAPL", "MSFT"}
+
+    def test_empty_membership_is_the_null_path_not_a_fallback(self, sp500_members):
+        """The default must exercise the honest branch.
+
+        With no members the index-scoped readings go NULL. If they instead
+        fell back to the whole universe, every test would silently bless the
+        substitution that made the numbers incomparable in the first place.
+        """
+        import pandas as pd
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        u = pd.DataFrame({
+            'ticker': ['A', 'B'], 'industry': ['Software'] * 2,
+            'close': [50.0] * 2, 'avg_volume': [2e6] * 2, 'bars_n': [250] * 2,
+            'change_pct': [0.01] * 2, 'perf_1m': [0.0] * 2, 'perf_3m': [0.0] * 2,
+            'sma20_dist': [0.05] * 2, 'sma40_dist': [0.05] * 2,
+            'sma50_dist': [0.05] * 2, 'sma200_dist': [0.05] * 2,
+            'high_52w': [-0.2] * 2, 'low_52w': [0.2] * 2,
+            'in_sp500': [False, False],
+        })
+        r = compute_snapshot(u)
+        assert r['pct_above_200sma'] == 100.0
+        assert r['pct_above_200sma_sp500'] is None

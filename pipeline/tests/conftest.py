@@ -161,3 +161,47 @@ def _no_real_backoff_sleeps(monkeypatch, request):
 def slept(_no_real_backoff_sleeps):
     """Seconds the limiter ASKED to sleep, in order. Nothing actually waited."""
     return _no_real_backoff_sleeps
+
+
+# --------------------------------------------------------------------------
+# No unit test may reach the vendor over the network.
+#
+# Same shape as `_no_real_backoff_sleeps` above, and found the same way. On
+# 2026-09-04 `run_all` gained an S&P 500 membership fetch for the index-scoped
+# breadth family; `test_run_all_end_to_end` promptly started scraping 26 pages
+# of Finviz on every run, taking it from milliseconds to 22 seconds and making
+# the suite's total runtime depend on a website being up.
+#
+# A test that silently talks to a vendor is worse than a slow test: it passes
+# or fails on someone else's uptime, and it can be rate-limited by our own
+# nightly job. So the default is an empty membership set -- which is exactly
+# the "vendor unavailable" path, and the path whose behaviour (NULL columns,
+# never a fallback to the whole universe) most needs covering.
+#
+# A test that wants real membership asks for the `sp500_members` fixture and
+# sets it explicitly. Nothing here reaches the network either way.
+@pytest.fixture(autouse=True)
+def _no_vendor_network(monkeypatch, request):
+    box = {"members": set()}
+
+    def _stub(self, index="sp500"):
+        return set(box["members"])
+
+    try:
+        from pipeline.adapters import finviz_adapter as _fa
+    except ImportError:
+        yield box
+        return
+    if not hasattr(_fa.FinvizAdapter, "fetch_index_members"):
+        raise AssertionError(
+            "FinvizAdapter.fetch_index_members is gone -- either it moved or "
+            "this list is stale. An unpatched vendor call is how the suite "
+            "started scraping 26 pages per run on 2026-09-04.")
+    monkeypatch.setattr(_fa.FinvizAdapter, "fetch_index_members", _stub, raising=True)
+    yield box
+
+
+@pytest.fixture
+def sp500_members(_no_vendor_network):
+    """Set membership for a test: `sp500_members['members'] = {"AAPL", ...}`."""
+    return _no_vendor_network
