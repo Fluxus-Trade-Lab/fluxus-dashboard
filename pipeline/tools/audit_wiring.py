@@ -86,6 +86,14 @@ EXEMPT: dict[str, str] = {
         "development instrument -- measures how many mutants the suite kills. "
         "Minutes to hours per run; belongs in a research window, not a cron."
     ),
+    "audit_metric_names": (
+        "naming-collision check at the moment a new field is PROPOSED, not an "
+        "invariant on data the pipeline produces every night -- there is no "
+        "cron trigger for 'someone is about to name a field after a standard "
+        "it doesn't match'. Meant to be typed before adding a row to "
+        "data/reference/METRIC_SOURCES.md's 登记表, the same manual cadence "
+        "as audit_unpushed at 收工 (Andy 2026-09-06 「撞名立机制」)."
+    ),
 }
 
 # Known-unwired baseline. (owner, found_on, why_it_matters)
