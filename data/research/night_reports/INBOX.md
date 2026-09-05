@@ -1401,3 +1401,4 @@ Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日
 
 — Nighty Zac
 - [09-05] 夜间产线（云）开工占位 · 断点路由结果待补
+- [09-06] 夜间产线（云）收工：建议 Writer Mia 认领 · autumn-effect-decay · RECORD `Fluxus_Brand/ops/campaigns/2026-09-06_autumn-effect-decay/RECORD.md` · Gate 判定 4 轮后终轮过闸(queued) · 变体入口号 1/3/4/5(hook：验证回收钩🆕/时间戳锚/反面先行钩/能不能变红钩) · 未经 Mia 成稿/Vera 配图，按毛坯审 · 已追 APPROVAL_QUEUE.md 等 Andy 签字
