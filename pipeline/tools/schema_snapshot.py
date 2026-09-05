@@ -28,7 +28,10 @@ from typing import Any, Dict, List
 
 OUTPUT = Path("data/output")
 SNAPSHOT = Path("data/reference/schema_snapshot.json")
-SAMPLE = 200
+# Bounds the key-union scan, not a real limit at this repo's sizes (largest
+# collection is universe.json's ~5,631 rows) -- see the 2026-09-04 incident
+# note on the dict-of-lists branch below for why a small sample is unsafe.
+SAMPLE = 20000
 
 # A collection that was measured and held nothing. Distinct from a path that
 # is ABSENT (the parent key vanished) -- that one is a real removal. Without
@@ -53,12 +56,33 @@ def _walk(node: Any, path: str, out: Dict[str, Any], depth: int) -> None:
             _walk(vals[0], path + "{}", out, depth + 1)
             return
         if path and vals and len(vals) > 3 and all(isinstance(x, list) for x in vals[:5]):
-            # a dict keyed by ticker/date whose values are row lists
-            inner = [e for x in vals[:50] for e in x[:20] if isinstance(e, dict)]
-            ks = set()
-            for e in inner[:SAMPLE]:
-                ks.update(e.keys())
-            out[path + "{}[]"] = sorted(ks) if inner else EMPTY
+            # a dict keyed by ticker/date whose values are row lists (e.g.
+            # ticker_events.json's events{}, keyed by ~5,000 tickers).
+            #
+            # This used to sample only the first 50 keys' first 20 items —
+            # cheap, but the sample window sits at the alphabetic front of a
+            # ~5,000-ticker dict. A field a low-hit-rate screener contributes
+            # (VCP: ~35/5,631 tickers) can have every one of its rows fall
+            # outside that window on a given night, and the live shape then
+            # reads as the field having been REMOVED though the code never
+            # stopped emitting it. 2026-09-04: exactly this blocked a good
+            # run's commit over num_contractions/pct_to_pivot, sampled away
+            # because no VCP ticker landed in the first 50 keys that night.
+            # Same false-positive family as the 08-24/08-25 empty-collection
+            # bugs (`EMPTY` above) -- there the collection was silent, here
+            # it was just sparse and unluckily ordered out of a small sample.
+            # Fix: union over every entry, capped only at SAMPLE for cost
+            # (harmless at this repo's sizes; see SAMPLE's comment).
+            saw_any = False
+            ks: set = set()
+            for x in vals:
+                for e in x:
+                    if isinstance(e, dict):
+                        saw_any = True
+                        ks.update(e.keys())
+                        if len(ks) >= SAMPLE:
+                            break
+            out[path + "{}[]"] = sorted(ks) if saw_any else EMPTY
             return
         for k, v in node.items():
             _walk(v, f"{path}.{k}" if path else k, out, depth + 1)
