@@ -295,6 +295,64 @@ class TestSparseByDesign:
         assert not is_sparse_by_design("sp_setup") and not is_sparse_by_design("close")
 
 
+class TestRetiredFields:
+    """2026-09-05: run 33941627503 and its retry 33946894465 both aborted as
+    universe_quality=severe. Both were real, healthy pulls (tradeable/bars
+    counts matched the prior good run almost exactly) -- the "dead feeds"
+    were wk_tight_3, rs_ibd, ad_ratio_20, atr_pctl_252/63, bo_count_1m/6m,
+    cmf21, ema21_low_dist, ema21_r, range5_pctl_252, rs_126d, sma50_r,
+    vol10_green_count_30d, all of them columns the same day's own commits
+    (2de45d8, f117732, b264b47) deliberately renamed or deleted per
+    data/research/ops/field_audit_2026-09-04.md #6-#7. The guard had no way
+    to tell a deliberate removal from a vendor dying -- exactly the shape it
+    already knows how to get wrong the other direction (change_pct)."""
+
+    # The exact severe list from run 33941627503's ledger entry.
+    RETIRED_SEVERE_SHAPE = [
+        "ad_ratio_20", "atr_pctl_252", "atr_pctl_63", "bo_count_1m",
+        "bo_count_6m", "cmf21", "ema21_low_dist", "ema21_r",
+        "range5_pctl_252", "rs_126d", "rs_ibd", "sma50_r",
+        "vol10_green_count_30d", "wk_tight_3",
+    ]
+
+    def test_retired_field_is_excluded_from_discovery(self):
+        """Even though history still remembers a healthy wk_tight_3, a
+        retired field must not come back for grading -- unlike an accidental
+        rename, discovery should not resurrect it."""
+        rows_ = [{"ticker": "A", "close": 1.0}]  # today's row: field is gone
+        hist = [{"date": "2026-09-03", "wk_tight_3": "0.02", "rs_ibd": "0.01"}]
+        fields = Q.discovered_fields(rows_, hist)
+        assert "wk_tight_3" not in fields
+        assert "rs_ibd" not in fields
+
+    def test_is_retired_matches_the_production_severe_list(self):
+        for field in self.RETIRED_SEVERE_SHAPE:
+            assert Q.is_retired(field), f"{field} should be in RETIRED_FIELDS"
+
+    def test_production_shape_no_longer_aborts_the_run(self):
+        """Positive control: reproduce run 33941627503's real history+today
+        shape. Before the fix (RETIRED_FIELDS empty) this asserts severe --
+        confirming the test actually catches the regression -- after the fix
+        it must not."""
+        hist = [{"date": "2026-09-03", **{f: "0.01" for f in self.RETIRED_SEVERE_SHAPE}}]
+        today_rates = {f: 1.0 for f in self.RETIRED_SEVERE_SHAPE}  # gone from today's rows
+        fields = [f for f in today_rates if not Q.is_retired(f)]
+        rates = {f: today_rates[f] for f in fields}
+        v = Q.assess(rates, hist)
+        assert v["status"] == "ok"
+        assert v["fields"] == {}
+
+    def test_without_the_fix_the_same_shape_is_severe(self):
+        """Negative control on the raw guard: grading the retired fields
+        directly (bypassing discovered_fields' exclusion) reproduces the
+        production abort -- proof this is the mechanism that broke, not a
+        red herring."""
+        hist = [{"date": "2026-09-03", **{f: "0.01" for f in self.RETIRED_SEVERE_SHAPE}}]
+        rates = {f: 1.0 for f in self.RETIRED_SEVERE_SHAPE}
+        v = Q.assess(rates, hist)
+        assert v["status"] == "severe"
+
+
 class TestRequiredBlocks:
     """2026-08-19: breadth.json shipped without regime/state_board/verdict/
     conditions and check_site said ok -- block-level presence now graded."""

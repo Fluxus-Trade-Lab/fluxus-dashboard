@@ -64,6 +64,31 @@ TRACKED: List[str] = [
 # a feed regression, and grading free-text noise would drown real alarms.
 UNGRADED: frozenset = frozenset({"ticker"})
 
+# Retired 2026-09-05: columns the pipeline deliberately stopped producing,
+# per the deletion/rename plan in data/research/ops/field_audit_2026-09-04.md
+# (#6-#7) -- executed same-day by commits 2de45d8, f117732, b264b47.
+# universe_quality.csv still carries a healthy baseline for each of them from
+# before the change, so without this list every one reads as a "dead feed"
+# (100% missing against a <30% historical floor) the run right after a
+# deliberate removal -- the guard cannot tell "we killed this on purpose"
+# from "the vendor stopped sending it". That false alarm is what aborted
+# run 33941627503 and 33946894465 (both real B_vendor-looking, both actually
+# fine data): tradeable/bars counts on both matched the prior healthy run
+# almost exactly, and every "severe" field here traces to one of these
+# renames/deletions, not to a vendor gap.
+# wk_tight_3 -> three_weeks_tight, rs_ibd -> rs_rating; the rest are the
+# dead-field batch (#7) removed outright with zero consumers.
+RETIRED_FIELDS: frozenset = frozenset({
+    "wk_tight_3", "rs_ibd",
+    "ad_ratio_20", "atr_pctl_252", "atr_pctl_63", "bo_count_1m", "bo_count_3m",
+    "bo_count_6m", "bo_count_1y", "cmf21", "ema21_low_dist", "ema21_r",
+    "range5_pctl_252", "rs_126d", "sma50_r", "vol10_green_count_30d",
+})
+
+
+def is_retired(field: str) -> bool:
+    return field in RETIRED_FIELDS
+
 # Sparse-by-design columns: null on most rows BY DEFINITION, so a high null
 # rate is not a symptom. `sp_signal` is set only on the day a structure crosses
 # a level (~12% of rows on a normal day); `sp_1st`, `sp_2nd`, `sp_phase`... only
@@ -96,7 +121,7 @@ def discovered_fields(rows: Sequence[Mapping[str, Any]],
         fields.update(r.keys())
     for h in history[:1]:                     # header via first row's keys
         fields.update(k for k in h.keys() if k != "date")
-    return sorted(fields - UNGRADED)
+    return sorted(fields - UNGRADED - RETIRED_FIELDS)
 
 # Enough history for a median to mean anything. Below this the guard uses the
 # absolute ceiling only, and says so rather than pretending to a baseline.
