@@ -171,7 +171,7 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    **08-14 那条 `change_pct` 看不见，只有 `volume` 看得见** —— 那次修复盯的是大声死掉的那一列，
    旁边安静退化的那一列没有人验收。**空值检查看不见错值。**
 
-   **已建**：`pipeline/tools/audit_event_agreement.py`（+21 条测试，6 个变异体全部被杀，commit `7e4bf9f0`）。
+   **已建**：`pipeline/tools/audit_event_agreement.py`（+21 条测试，6 个变异体全部被杀，commit `2793493d`）。
    查四个跨筛子必须相等的字段 `change_pct` `volume` `sector` `atr_ext`
    （后两个全库 26,108 / 18,558 例可比、**0 例不一致**，是干净对照）；
    明确**不查** `group`(28.5% 分歧) 与 `rel_volume`(42.4%) —— 它们的分歧散布在每一个日期上，

@@ -328,11 +328,11 @@
   可用角度：**修复之后的第一天没有人验收** —— 瘫痪那七天每天有人看（筛子返回空集，很难忽略），
   数据回来那天，「回来」本身被当成了修好的证据。另一句：**空值检查看不见错值**，
   那次修复盯的是大声死掉的那一列，旁边安静退化的那一列没人验。
-  出处：`data/reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md` · commit `7e4bf9f0`。
+  出处：`data/reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md` · commit `2793493d`。
 - [2026-09-06][NULL/方法] **中位数差点让我把「相关」写成「冗余」。** 对账 17 个筛子谁是谁的影子：
   中位包含度 0.812 的那一对（两个动能筛），**逐日看只有 24% 的日子真的高度重叠，最低的一天只有 3%**；
   而真嵌套（代码写死的那种）是 110 天里 110 天都等于 1.000、最低也是 1.000。
   两者中位数只差 0.19，**性质是两种东西**。可用角度：一个汇总统计量足以让两件不同的事看起来一样，
   判「重复」必须连着**最差的那一天**一起看。另有一条：同一个名字 `Vol Up Gainers` 在我们两个界面上
   指着两张单子，中位 Jaccard **0.346**（09-04 当天 99 只 vs 30 只、交集 15）。
-  出处：`data/research/screener_overlap_2026-09/results.md` · commit `4f113924`。
+  出处：`data/research/screener_overlap_2026-09/results.md` · commit `c0856cb1`。
