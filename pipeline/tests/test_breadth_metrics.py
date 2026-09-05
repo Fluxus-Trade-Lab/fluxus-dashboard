@@ -441,3 +441,68 @@ class TestIndexScopedBreadth:
         r = compute_snapshot(self._uni(in_sp500=[False] * 4))
         assert r['pct_above_200sma_sp500'] is None
         assert r['sp500_members'] is None
+
+
+class TestStockbeeBreadth:
+    """`up_4pct` counts only the price leg of a three-condition scan.
+
+    Pradeep Bonde's 4% scan is a daily cross-sectional count and asks for
+    close >= +4%, volume above the PREVIOUS day's, and volume over 100,000,
+    on US common stocks. Our archive column has only ever had the first.
+    `bo_count_*` was corrected to all three on 2026-09-04, but that is the
+    per-ticker rolling count -- our own aggregation. This is the reading
+    Stockbee actually publishes.
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            'ticker': ['EXPAND', 'SHRINK', 'SPAC', 'THIN'],
+            'industry': ['Software - Application', 'Software - Application',
+                         'Shell Companies', 'Software - Application'],
+            'close': [50.0] * 4, 'avg_volume': [2_000_000] * 4, 'bars_n': [250] * 4,
+            'change_pct': [0.05] * 4,            # all four cleared +4%
+            'volume':      [900_000, 800_000, 900_000, 50_000],
+            'prev_volume': [500_000, 900_000, 500_000, 10_000],
+            'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
+            'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
+            'sma50_dist': [0.0] * 4, 'sma200_dist': [0.0] * 4,
+            'high_52w': [-0.2] * 4, 'low_52w': [0.2] * 4,
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_each_condition_removes_its_own_name(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['up_4pct'] == 4              # price leg alone
+        assert r['up_4pct_stockbee'] == 1     # SHRINK, SPAC and THIN all fail
+
+    def test_volume_expansion_is_required(self):
+        """The condition the archive column never had."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni(volume=[900_000] * 4,
+                                       prev_volume=[1_000_000] * 4))
+        assert r['up_4pct'] == 4
+        assert r['up_4pct_stockbee'] == 0
+
+    def test_the_hundred_thousand_floor_applies(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni(volume=[99_999] * 4, prev_volume=[1] * 4))
+        assert r['up_4pct_stockbee'] == 0
+
+    def test_the_original_columns_do_not_move(self):
+        """574 archive rows. This is additive or it is a level break."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        with_v = compute_snapshot(self._uni())
+        without = compute_snapshot(self._uni().drop(columns=['prev_volume']))
+        assert with_v['up_4pct'] == without['up_4pct'] == 4
+        assert with_v['down_4pct'] == without['down_4pct']
+
+    def test_missing_prev_volume_is_null_not_zero(self):
+        """Zero would read as 'nobody expanded today' -- the calmest possible
+        rendering of a column that has not arrived yet."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni().drop(columns=['prev_volume']))
+        assert r['up_4pct_stockbee'] is None
+        assert r['down_4pct_stockbee'] is None

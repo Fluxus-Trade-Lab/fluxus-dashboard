@@ -226,6 +226,10 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         logger.exception("S&P 500 membership fetch failed - index-scoped breadth will be NULL")
 
     tradeable = df.apply(is_tradeable, axis=1)
+    # S&P's FALR beside our own floor -- reported, never gating. See
+    # pipeline/themes/__init__.py:falr for the two approximations it carries.
+    from pipeline.themes import falr as _falr
+    df['falr_252'] = df.apply(_falr, axis=1)
     df['tradeable'] = tradeable
     logger.info("Scores computed on %d tradeable of %d rows",
                 int(tradeable.sum()), len(df))
@@ -291,7 +295,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # column is calendar-based in all but a rounding of cases.
     #
     # rs_1m / rs_3m / rs_6m are the honest names and are the ones to use. The
-    # rs_21d / rs_63d / rs_126d aliases are kept only until the frontend moves
+    # rs_21d / rs_63d aliases are kept: TickerStats prints both, the 4%
+    # Bullish panel gates on rs_21d, and a preset filters on rs21d. rs_126d
+    # had none of those readers and was dropped 2026-09-05.
     # off them (ResultsTable, screenerFilter, TickerStats, ThemeMembers all
     # read the old keys today). Same Series object, not a recomputation.
     #
@@ -303,7 +309,6 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['rs_6m'] = score_against_tradeable('perf_6m')
     df['rs_21d'] = df['rs_1m']
     df['rs_63d'] = df['rs_3m']
-    df['rs_126d'] = df['rs_6m']
 
     # --- IBD-style RS: 40% 3mo + 40% 6mo + 20% 1yr ---
     #
@@ -452,8 +457,6 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # These two are RATIOS (close / MA), not ATR multiples, despite the `_r`.
     # Kept unchanged because things read them; the ATR reading is the separate
     # column below. See data/reference/screener_inventory_2026-08-17.md.
-    df['ema21_r'] = 1 + pd.to_numeric(df['sma20_dist'], errors='coerce')
-    df['sma50_r'] = 1 + pd.to_numeric(df['sma50_dist'], errors='coerce')
 
     # --- ATR Matrix: how many ATRs the price sits above its 50-day SMA ---
     # Steve Jacobs's framing (learnt from @jfsrev and @RealSimpleAriel), and
@@ -512,7 +515,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         df['high_52w_dist'] = h
 
     # Round score columns to integers
-    for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d', 'rs_126d',
+    for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d',
                 'rs_rating', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
 
@@ -535,12 +538,12 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
+    for col in ['adr_pct', 'atr_pct', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
         if col in df.columns:            # ti65/mdt come from enrichment; absent on the fallback path
             df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
 
     # Round new enrichment columns
-    for col in ['from_open_pct', 'dcr_pct', 'ema21_low_dist']:
+    for col in ['from_open_pct', 'dcr_pct']:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
 
@@ -953,24 +956,24 @@ def main():
         'high_52w', 'low_52w', 'eps_growth_next_y', 'revenue_growth', 'eps_growth_this_y',
         'fund_source', 'fund_asof',
         'rs_1m', 'rs_3m', 'rs_6m',
-        'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
+        'rs_21d', 'rs_63d',   # deprecated aliases, drop once the UI moves
         'rs_rating',
-        'f_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable',   # tradeable: the field the scores are measured on
-        'adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
+        'f_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable', 'falr_252',   # tradeable: the field the scores are measured on
+        'adr_pct', 'atr_pct', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
-        'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
+        'vol10_green', 'vol10_green_count_10d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'rs_line_pctl_63', 'rs_line_pctl_126', 'perf_5d',
         'atr_pct_pctl_252', 'range5_pct_pctl_252',
         'cross_ema21_up', 'cross_sma50_up',
-        'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 'ad_ratio_20', 'cmf21',
+        'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 
         'bar_date', 'bars_stale', 'bar_scale_mismatch', 'bar_scale_jumps',
         'in_sp500',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',
-        'trend_base', 'vcs', 'ema21_low_dist',
+        'trend_base', 'vcs', 
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
-        'bo_count_1m', 'bo_count_3m', 'bo_count_6m', 'bo_count_1y',
+        'bo_count_3m', 'bo_count_1y',
         'ema10', 'ema20', 'wk_ema10', 'wk_ema20',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]

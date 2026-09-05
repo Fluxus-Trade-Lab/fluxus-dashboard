@@ -99,6 +99,38 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     # Stockbee MM scans
     up_4pct = int((chg >= 0.04).sum())
     down_4pct = int((chg <= -0.04).sum())
+
+    # --- Stockbee's 4% breadth, all three conditions (2026-09-05) ----------
+    # The pair above counts only the price move. Pradeep Bonde's scan is a
+    # daily CROSS-SECTIONAL count -- how many names in the market did this
+    # today -- and it asks for three things together:
+    #
+    #     close >= 4% above the previous close
+    #     volume > the PREVIOUS day's volume     (range expansion)
+    #     volume > 100,000                       (liquidity floor)
+    #     universe: US common stocks (his own text excludes ETFs)
+    #
+    # `bo_count_*` was corrected to these three on 2026-09-04, but that is the
+    # PER-TICKER rolling count, which is our own aggregation. This is the
+    # reading Stockbee actually publishes, and until now the archive had only
+    # the price leg of it.
+    #
+    # Shipped beside `up_4pct`/`down_4pct`, which keep 574 rows of archive and
+    # do not change. NULL, not zero, until `prev_volume` is in the universe --
+    # a zero would read as "nobody expanded today", the calmest possible
+    # rendering of a missing column. (The column landed in code on 2026-09-04
+    # at 15:45 JST, seven minutes after that night's run, so the first real
+    # readings arrive with the next one.)
+    pv = pd.to_numeric(universe.get('prev_volume', pd.Series(dtype=float)), errors='coerce')
+    vol = pd.to_numeric(universe.get('volume', pd.Series(dtype=float)), errors='coerce')
+    industry_sb = universe.get('industry', pd.Series(dtype=object))
+    if pv.notna().sum() == 0 or vol.notna().sum() == 0:
+        up_4pct_sb = down_4pct_sb = None
+    else:
+        common_sb = ~industry_sb.isin(_EXCLUDED_INDUSTRIES) if industry_sb is not None else True
+        expanded = (vol > pv) & (vol >= 100_000)
+        up_4pct_sb = int(((chg >= 0.04) & expanded & common_sb).sum())
+        down_4pct_sb = int(((chg <= -0.04) & expanded & common_sb).sum())
     up_25pct_qtr = int((perf_3m >= 0.25).sum())
     down_25pct_qtr = int((perf_3m <= -0.25).sum())
     up_25pct_month = int((perf_1m >= 0.25).sum())
@@ -236,6 +268,8 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'universe_size': n,
         'up_4pct': up_4pct,
         'down_4pct': down_4pct,
+        'up_4pct_stockbee': up_4pct_sb,
+        'down_4pct_stockbee': down_4pct_sb,
         'up_25pct_qtr': up_25pct_qtr,
         'down_25pct_qtr': down_25pct_qtr,
         'up_25pct_month': up_25pct_month,
