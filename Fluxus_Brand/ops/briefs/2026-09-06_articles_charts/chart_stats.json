@@ -129,7 +129,26 @@
     100
    ],
    "boot_median": 83,
-   "note": "conclusion direction stable across the whole CI; Muninn's 91 (n=829) sits inside it"
+   "boot_deciles": [
+    55,
+    72,
+    76,
+    79,
+    81,
+    83,
+    86,
+    89,
+    92,
+    97,
+    100
+   ],
+   "point_estimate_percentile_of_own_dist": "P80",
+   "censoring": {
+    "exact_100_pct": 5.1,
+    "peak_le_d5_pct": 21.1,
+    "note": "ratio-to-max is bounded at 100 and inherits the peak-day instability; the boot median 83 has its OWN downward tilt (later/higher resampled peaks drag the ratio down)"
+   },
+   "citation_rule": "anchor on Muninn's 91 (n=829); ours is the REPLICATION \u2014 quote as 'point 92 (P80 of its own resampling dist), range 70-100'; never let 92 stand alone"
   }
  },
  "heat": {
