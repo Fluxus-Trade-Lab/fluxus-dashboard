@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-09-04",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 28,
+ "lines": 31,
  "runs": [
   {
    "session": "2026-09-04",
@@ -13,11 +13,56 @@
     "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)"
    ],
    "fund_fail_rate": 0.0,
+   "universe_rows": 5631,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-04",
+   "code_sha": "671cee2",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)",
+    "L5 guard(s) present last session, missing now: screeners, shortlist, shortlist_feedback, site_quality, watchlist",
+    "(superseded attempt) L2 universe_quality status='severe'",
+    "(superseded attempt) L4 error in universe_quality: severe: ad_ratio_20, atr_pctl_252, atr_pctl_63, bo_count_1m, bo_count_6m, cmf21,"
+   ],
+   "fund_fail_rate": 0.0,
+   "universe_rows": 5631,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-04",
+   "code_sha": "97dcd9a",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)",
+    "L5 guard(s) present last session, missing now: screeners, shortlist, shortlist_feedback, site_quality, watchlist",
+    "(superseded attempt) L2 universe_quality status='severe'",
+    "(superseded attempt) L4 error in universe_quality: severe: ad_ratio_20, atr_pctl_252, atr_pctl_63, bo_count_1m, bo_count_6m, cmf21,"
+   ],
+   "fund_fail_rate": 0.0,
+   "universe_rows": 5631,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-04",
+   "code_sha": "9e6cc74",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 universe_quality degraded",
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)"
+   ],
+   "fund_fail_rate": 0.0,
    "universe_rows": 5631
   }
  ],
  "violations": 0,
- "warnings": 2,
- "top": [],
+ "warnings": 12,
+ "top": [
+  "L6 2026-09-04: 4 lines (re-run; both happened, not a violation)"
+ ],
  "ok": true
 }
