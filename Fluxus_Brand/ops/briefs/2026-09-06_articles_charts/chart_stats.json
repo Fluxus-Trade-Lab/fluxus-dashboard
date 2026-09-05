@@ -1,0 +1,121 @@
+{
+ "risk_pct": {
+  "median": 0.298,
+  "mean": 0.371,
+  "over_0p5_share_pct": 19.3,
+  "over_1_n": 7,
+  "n": 373
+ },
+ "size_pct": {
+  "median": 7.6,
+  "mean": 7.8,
+  "max": 22.4,
+  "over_20_n": 3
+ },
+ "corr_size_R": {
+  "ytd": -0.02,
+  "n_ytd": 373,
+  "aug": -0.15,
+  "n_aug": 42
+ },
+ "equal_risk_index": 1.544,
+ "winner_path": {
+  "n": 139,
+  "d1": 5.3,
+  "d3": 8.9,
+  "d5": 11.1,
+  "peak_day": 9,
+  "peak": 12.1,
+  "d20": 7.4,
+  "d5_share_of_peak_pct": 92.0,
+  "mean_d20": 11.9
+ },
+ "capture": {
+  "median_pct": 34.0,
+  "mean_pct": 42.0,
+  "n": 145
+ },
+ "top10": [
+  {
+   "rank": 1,
+   "full_move_pct": 174.0,
+   "captured_pct": 96.5,
+   "capture_ratio_pct": 55.0,
+   "hold_days": 6
+  },
+  {
+   "rank": 2,
+   "full_move_pct": 146.8,
+   "captured_pct": 78.0,
+   "capture_ratio_pct": 53.0,
+   "hold_days": 86
+  },
+  {
+   "rank": 3,
+   "full_move_pct": 136.3,
+   "captured_pct": 83.9,
+   "capture_ratio_pct": 62.0,
+   "hold_days": 42
+  },
+  {
+   "rank": 4,
+   "full_move_pct": 90.4,
+   "captured_pct": 59.2,
+   "capture_ratio_pct": 65.0,
+   "hold_days": 20
+  },
+  {
+   "rank": 5,
+   "full_move_pct": 89.1,
+   "captured_pct": 12.2,
+   "capture_ratio_pct": 14.0,
+   "hold_days": 16
+  },
+  {
+   "rank": 6,
+   "full_move_pct": 34.8,
+   "captured_pct": 26.2,
+   "capture_ratio_pct": 75.0,
+   "hold_days": 7
+  },
+  {
+   "rank": 7,
+   "full_move_pct": 30.7,
+   "captured_pct": 26.9,
+   "capture_ratio_pct": 87.0,
+   "hold_days": 1
+  },
+  {
+   "rank": 8,
+   "full_move_pct": 28.2,
+   "captured_pct": 20.0,
+   "capture_ratio_pct": 71.0,
+   "hold_days": 4
+  },
+  {
+   "rank": 9,
+   "full_move_pct": 9.7,
+   "captured_pct": 9.7,
+   "capture_ratio_pct": 100.0,
+   "hold_days": 1
+  },
+  {
+   "rank": 10,
+   "full_move_pct": 9.7,
+   "captured_pct": 9.7,
+   "capture_ratio_pct": 100.0,
+   "hold_days": 1
+  }
+ ],
+ "pareto_top10_share_pct": 46.0,
+ "mu_case": {
+  "avg_exit_pct": 12.2,
+  "all_out_day": 13,
+  "path_peak_pct": 188.5
+ },
+ "heat": {
+  "committed_median": 3.11,
+  "true_exposure_median": 6.12,
+  "peak_total": 30.0
+ }
+}
