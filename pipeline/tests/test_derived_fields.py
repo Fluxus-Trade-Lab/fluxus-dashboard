@@ -174,11 +174,16 @@ class TestAtrFromSma50:
         out = compute_universe_scores(_frame(sma50_dist=None))
         assert pd.isna(out["atr_from_sma50"].iloc[0])
 
-    def test_it_is_not_the_old_ratio_column(self):
-        """`sma50_r` stays what it always was (close/SMA50) so nothing reading
-        it changes meaning; the new column is a different quantity."""
+    def test_the_old_ratio_column_stays_gone(self):
+        """`sma50_r` was `1 + sma50_dist` -- close/SMA50 wearing an "_r" that
+        suggested an ATR multiple. It was dropped on 2026-09-05 with nothing
+        reading it. This guards the direction that actually bit us on
+        2026-08-24: the two were confused for each other, so the discrimination
+        control survives as "it must not come back", and `atr_from_sma50` must
+        keep being the ATR quantity rather than the ratio.
+        """
         out = compute_universe_scores(_frame())
-        assert out["sma50_r"].iloc[0] == pytest.approx(1.10)
+        assert "sma50_r" not in out.columns
         assert out["atr_from_sma50"].iloc[0] != pytest.approx(1.10)
 
 
@@ -295,9 +300,16 @@ class TestEma21AtrDist:
         out = compute_universe_scores(df)
         assert "ema21_atr_dist" in out and pd.isna(out["ema21_atr_dist"].iloc[0])
 
-    def test_old_ratio_column_untouched(self):
+    def test_the_old_ratio_column_stays_gone(self):
+        """`ema21_r` was `1 + sma20_dist`: neither an EMA21 nor an R multiple.
+
+        Dropped 2026-09-05, zero readers. Same shape as `sma50_r` above -- the
+        control now guards against it returning, and against
+        `ema21_atr_dist` drifting into being the ratio again.
+        """
         out = compute_universe_scores(_frame(ema21=96.0))
-        assert out["ema21_r"].iloc[0] == pytest.approx(1.05)
+        assert "ema21_r" not in out.columns
+        assert out["ema21_atr_dist"].iloc[0] != pytest.approx(1.05)
 
 
 class TestStockbeeAnticipationInputs:

@@ -36,7 +36,6 @@ _RANGES: Dict[str, tuple] = {
     "sma200Dist": ("sma200_dist", 100.0),
     "ema21Atr": ("ema21_atr_dist", 1.0),
     "sma50Atr": ("atr_from_sma50", 1.0),
-    "ema21LowDist": ("ema21_low_dist", 100.0),
     "adrPct": ("adr_pct", 1.0),
     "vcs": ("vcs", 1.0),
     "dcrPct": ("dcr_pct", 100.0),
@@ -46,14 +45,11 @@ _RANGES: Dict[str, tuple] = {
     "iScore": ("i_score", 1.0),
     "rs21d": ("rs_21d", 1.0),
     "rs63d": ("rs_63d", 1.0),
-    "rs126d": ("rs_126d", 1.0),
     "rsIbd": ("rs_rating", 1.0),   # renamed 2026-09-04; preset key kept for compatibility
     "perf1wPctile": ("perf_1w_pctile", 1.0),
     "perf3mPctile": ("perf_3m_pctile", 1.0),
     "high52wDist": ("high_52w_dist", 100.0),
-    "boCount1m": ("bo_count_1m", 1.0),
     "boCount3m": ("bo_count_3m", 1.0),
-    "boCount6m": ("bo_count_6m", 1.0),
     "boCount1y": ("bo_count_1y", 1.0),
     "relVolume": ("rel_volume", 1.0),
 }

@@ -599,6 +599,12 @@ def accumulation_flow(hist: pd.DataFrame) -> dict:
     CMF is the different one.
 
         ad_ratio_20 = sum(volume on up days) / sum(volume), last 20 sessions
+
+    NO LONGER PUBLISHED (2026-09-05). Both readings were computed every night
+    for 5,555 of 5,630 rows and read by nothing -- no page, no preset, no
+    screener, no scan. Kept as a function because the maths is right and
+    someone may want it; removed from the row so the nightly stops computing
+    it and universe.json stops carrying it to every browser.
                       (up = close > prior close). 0.5 = balanced; the ratio,
                       not the OBV level, so names of different size compare.
         cmf21       = Chaikin Money Flow, 21 sessions:
@@ -1085,7 +1091,6 @@ class YfinanceAdapter(BaseAdapter):
                 af = accumulation_flow(hist)
 
                 # 21EMA Low Dist%: how far today's low is from 21EMA
-                ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
 
                 # Stockbee 4% breakout days. The scan's own three conditions,
                 # which every source states together (Pradeep Bonde's TC2000
@@ -1202,7 +1207,6 @@ class YfinanceAdapter(BaseAdapter):
                     'pp_count_10d': pp_count_10,
                     'vol10_green': v10,
                     'vol10_green_count_10d': v10_count_10,
-                    'vol10_green_count_30d': v10_count_30,
                     'trend_base': trend_base,
                     'vcs': vcs,
                     **sp_row,
@@ -1216,8 +1220,6 @@ class YfinanceAdapter(BaseAdapter):
                     # debt of 2026-08-24). export_cols filters silently on
                     # missing columns, so nothing ever went red.
                     'prev_volume': sb['prev_volume'],
-                    'ad_ratio_20': af['ad_ratio_20'], 'cmf21': af['cmf21'],
-                    'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
                     'rs_line_pctl_21': rs_line_pctl_21,
                     'rs_line_pctl_63': rs_line_pctl_63,
@@ -1232,9 +1234,7 @@ class YfinanceAdapter(BaseAdapter):
                     'ema20': ema20,
                     'wk_ema10': wk_ema10,
                     'wk_ema20': wk_ema20,
-                    'bo_count_1m': bo_1m,
                     'bo_count_3m': bo_3m,
-                    'bo_count_6m': bo_6m,
                     'bo_count_1y': bo_1y,
                 }
             except Exception as e:

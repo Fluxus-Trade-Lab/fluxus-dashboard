@@ -9,7 +9,9 @@ import pytest
 
 from pipeline.screeners.run_all import compute_universe_scores
 
-SCORE_COLS = ["rs_21d", "rs_63d", "rs_126d", "rs_rating",
+# rs_126d dropped 2026-09-05 (alias, zero readers; rs_21d and rs_63d
+# stay -- TickerStats prints both and a preset filters on rs21d).
+SCORE_COLS = ["rs_21d", "rs_63d", "rs_rating",
               "f_score", "i_score", "h_score"]
 
 

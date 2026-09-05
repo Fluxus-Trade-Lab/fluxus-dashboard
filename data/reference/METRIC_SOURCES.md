@@ -61,6 +61,9 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `atr_from_sma50` | SteveDJacobs **ATR Matrix** `extAtrAsPctOfATR` | (close/SMA50−1)/(ATR/close)——本机 `ATR Matrix.txt` | ✅ 一致；≥7× 减仓 / ≥11× 衰竭来自本机 `Candles Stage Analysis.txt`（@TradeDudeNYC），**不是 Weinstein 原书** |
 | `rs_line_pctl_21/63/126` | oratnek 的 **RS 1M** | 自百分位，`count(RS_i <= RS_today)/n × 100` | ✅ **保持 `<=`，不改**。09-04 一度按 IV Percentile 的严格 `<` 去改，**撤回了**：这个 `<=` 是 08-18 从他页面逆向工程出来的，29 个数全部精确复现且有 fixture 钉住。外部真值验证过的复现，优先于形式上更「标准」的比较符 |
 | 新高/新低 · Record High Percent · RANA | Gregory Morris《Market Breadth Indicators》 | 52 周；adjusted for Total Issues；Cohen 10 日 NH/(NH+NL)；Ratio-Adjusted McClellan——本机 epub | ✅ 一手依据补齐（08-31 采用时引的是 StockCharts） |
+| `is_tradeable` | S&P **FALR**（换手率） | 年美元成交额 ÷ 流通调整市值 ≥ 0.1——[S&P 方法书](https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf) | ⚠️ **标准形状 · 三条偏离已声明**：①绝对量非比值（FALR 会把 BRK 判负；我们问「一天能不能建仓」）②两个常量各自拍的、松紧从未对齐 ③窗口 09-05 前从未声明（实测 20 日，58/58 误差 0.0000）。09-05 补上证券类型过滤 |
+| `falr_252` | S&P FALR | 同上 | ⚠️ **报告值不做闸**。分子由 20 日均量外推一年、分母未做流通调整，两处近似。实测 09-03：FALR≥0.1 通过率 96.7%、我们的闸 45.3%，只 FALR 过 2810 支——**两把尺子测的不是同一件事** |
+| `up_4pct_stockbee` / `down_4pct_stockbee` | Stockbee **4% breadth** | 当日全市场满足「涨 ≥4% 且 量 > 前一日 且 量 > 100k」的普通股家数 | ✅ **一致**（2026-09-05 落地）。原 `up_4pct`/`down_4pct` 只有涨幅一条件，保留不动（574 行档案） |
 | `new_highs_4w` / `new_lows_4w` | *(查过，无标准)* | 52 周是机构惯例；该时间尺度的标准量是 %above-20MA / T2108 / McClellan | ⚠️ **自造**。仅供研究，不得当标准读数上页 |
 | — | McClellan Summation Index | McClellan 振荡器累加 | 🔲 我们没有 |
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |
@@ -87,3 +90,25 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 来源：[StockCharts ChartSchool 市场指标目录](https://chartschool.stockcharts.com/table-of-contents/market-indicators) ·
 [Barchart 新高新低汇总（池子排除规则）](https://www.barchart.com/stocks/highs-lows/summary) ·
 [AAII: Using New Highs and New Lows to Measure Market Breadth](https://www.aaii.com/journal/article/455994-using-new-highs-and-new-lows-to-measure-market-breadth)
+
+
+## 已删除的字段（2026-09-05，第二关 I 项）
+
+删前**逐个现场复查**了消费者，不只信底账——底账的印象「bo_count 全家零消费者」是错的：
+`boCount3m` 与 `boCount1y` **有真 preset 在用**，只有 1m/6m 没有。
+
+| 删掉 | 为什么 |
+|---|---|
+| `rs_126d` | `rs_6m` 的别名。前端只在 `?? ` 回落位出现（本名在前，永不触发），无 preset |
+| `ema21_r` · `sma50_r` | 仿射复制（`1 + sma20_dist` / `1 + sma50_dist`）。名字骗人两次：既不是 EMA21 也不是 R 倍数。零读者 |
+| `ad_ratio_20` · `cmf21` | 每晚为 5,555 行计算，无页面、无 preset、无扫描读它 |
+| `vol10_green_count_30d` | 同上（10d 那个有读者，保留） |
+| `bo_count_1m` · `bo_count_6m` | preset 只用 3m 与 1y |
+| `ema21_low_dist` | 两条筛选路径实证走不通；`preset_hits` 里那条是死映射 |
+
+**没删（有真消费者，与底账不同）**：`volume`（`quality.py` 用它的缺失率）· `rs_63d`/`rs_21d`
+（`TickerStats` 直接打印、4% Bullish 面板闸、preset `rs21d`）· `c_low52w`（Anticipation 面板三分之一条闸）。
+
+两条区分对照没有删掉，改成守「它不该回来」：`sma50_r` 与 `ema21_r` 各自那条断言现在检查
+**列不存在**，同时仍然断言 `atr_from_sma50` / `ema21_atr_dist` 不等于旧比值——08-24 那次
+misport 正是把这两者搞混，对照要留着。
