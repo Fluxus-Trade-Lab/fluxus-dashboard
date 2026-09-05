@@ -1281,3 +1281,21 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 **下一班第一件事**：健康检查优先——若 21:30Z 或某次接力已把 09-04 数据落 main 则收工报健康；仍未落地则读新一班 ledger 判类，B_vendor 继续每小时最多一发、优先等原生窗口，不要连续两班背靠背重跑。
 
 — 数据哨兵（定时任务，2026-09-05）
+
+## [2026-09-05 05:15–05:42 UTC / 2026-09-04 01:15–01:42 ET] 数据哨兵 —— 第 5 班：B_vendor 是误诊，真凶是 D_code——今天自己的字段删除/改名 commit 把闸打成了假阳性，已修好合 main
+
+**接力**：按第 4 班交接判断退避已足（距 03:22 失败 ~1h42m，且这段时间只发生过一次重试，不是 08-27/08-30 那种密集重试），在可发窗口内 dispatch 一次（run [33946894465](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33946894465)）。
+
+**没有直接接受工具的 B_vendor 判词**：`failure_class` 判 B_vendor 是对的读法（universe_quality=severe），但两次「B_vendor」失败（03:22 的 33941627503 与本班 05:20 的 33946894465）在 `tradeable`(2553/2553)、`bars_missing`(60/60)、`bars_stale`(12/12)、以及全部 21 个 degraded 字段上**逐字节相同**——真实上游限流不会在两次独立抓取间产出完全一致的结果，这是「先读这一段」警告的同一种坑：闸拒了好数据，不是数据真坏。
+
+**根因**：今天自己的三个 feature commit（`2de45d8`、`f117732`、`b264b47`）执行了 `data/research/ops/field_audit_2026-09-04.md` #6/#7 早就写明要做的死字段删除与改名（`wk_tight_3→three_weeks_tight`、`rs_ibd→rs_rating`，外加 `ad_ratio_20`/`atr_pctl_252`/`atr_pctl_63`/`bo_count_1m,6m`/`cmf21`/`ema21_low_dist`/`ema21_r`/`range5_pctl_252`/`rs_126d`/`sma50_r`/`vol10_green_count_30d` 整批删除）。`universe_quality.csv` 里这些字段的历史基线还是「健康」，闸的死字段判据（`rate>=33% missing 且历史 min<30%`）在删除当天就必然对每一个字段都判「死了」——闸分不清「我们自己删的」和「上游不给了」。
+
+**修复**（已合 main）：`pipeline/quality.py` 新增 `RETIRED_FIELDS`（同 `SPARSE_BY_DESIGN` 形状），把这批字段整体逐出 `discovered_fields()`，不再参与分级。回归测试用生产原始 severe 字段集做阳性对照（不加白名单必须红、加了必须绿）+ 反向对照（绕过白名单直接喂 assess 必须仍判 severe，证明不是误判成因本身有问题）。1585 条全仓测试全绿。commit `bd4d5f4`，直推 main 标准动作，已核实 `origin/main` 上有此 commit。
+
+**本班到此不再 dispatch**：按 D_code 分诊的标准动作「不重跑，改代码，合 main，再让下一班跑」——数据本身在 05:20 那次抓取已经是好的，下一次跑理应会过闸,交下一班验证并落地。
+
+- [09-05] 🟢 **数据哨兵**：D_code(此前两班误诊 B_vendor) · 根因已定位并修复,commit `bd4d5f4` 已合 main · dashboard 仍停在 2026-09-03(09-04 交易日缺失) · 下一步：下一班直接 dispatch 一次,预期通过(数据本身早已是好的,只是闸误判)；若仍败,按新一轮 ledger 重新分诊,不要再套用本班的 D_code 结论
+
+**下一班第一件事**：直接 `workflow_dispatch` 一次（不必再等待，本班已用掉的是诊断额度不是 dispatch 额度，且这不是新的一次 B_vendor 重试，是验证 D_code 修复）；成功则确认 09-04 market data 落 main、INBOX 回执改绿；若仍失败，读新 ledger 重新走分诊，不要假设还是同一根因。
+
+— 数据哨兵（定时任务，2026-09-05）
