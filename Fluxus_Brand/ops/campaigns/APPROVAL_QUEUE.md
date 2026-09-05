@@ -52,4 +52,14 @@
     2. **V1 长文的配图（三行对照表，原 V7）谁来画**——Vera 无 routine，若要按计划带图发布，需你亲自出或指派
   · 判定全文：[`RECORD.md`](2026-09-03_noise-with-structure/RECORD.md) `## review` 节（round 1 退回 → round 2 退回窄范围一处 → round 3 独立新上下文 Gate 过闸，三轮均为不同子 agent 独立复审）
 
+- **[09-06] `2026-09-06_autumn-effect-decay`** · 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-06_autumn-effect-decay/RECORD.md`](2026-09-06_autumn-effect-decay/RECORD.md)
+  （旗舰＝`## flagship` 节正文 · 四条变体见 `## distribution` 节 V1–V4）
+  · **经过 3 轮修改，第 4 轮（终轮）过闸**——按 `roles/06_gate.md`/`PIPELINE.md` 断点续跑节明文，`rounds=3` 达上限后本轮只能放行或 killed，不产生第 5 轮；四轮均为互不知情的独立新上下文子 agent
+  · 平台 **X**（旗舰＝长推，200 词内，无 Article，随 08-29 先例 · V1＝三行骨架入口推 · V2/V3/V4＝长推）· 入口 **1/3/4/5**，无重复；hook 四型（验证回收钩🆕/时间戳锚/反面先行钩/能不能变红钩）互不重复
+  · ⚠️ **未经 Writer Mia 成稿 / Visual Vera 配图**（两线尚无夜跑 routine，按 PIPELINE〈过渡条款〉以**毛坯**过闸）——你看到的是毛坯，不是成稿；flagship 配的样本内/样本外对照小表目前只是文字占位，尚未画图
+  · ⏰ **窗口**：机制本身常青（"发表即失效"的判据不随盘面变）；唯一时效物是稿子里"我们现在正处在九月"的紧迫感，本月内发不受影响，过了 9 月这句开场仍可用但需改措辞
+  · **需你定的事**：本卡零 CTA（比"停在订阅"更保守），无需你在 CTA 上拍板；主要待你决定的是**发不发、什么时候发、要不要等 Mia/Vera 有 routine 再配图**
+  · 顺带（不用回）：research 源文件 `data/research/gold_autumn_2026-09/results.md` 开头「一句话」摘要段写"16 个九月只有 4 个是涨"，与下方详表及本卡全篇统一引用的"4/15"不一致，疑为源文件自身笔误——已挂门铃给 Nighty Zac 线核对，不影响本卡数字（本卡统一用与详表一致的 15）
+  · 判定全文：[`RECORD.md`](2026-09-06_autumn-effect-decay/RECORD.md) `## review` 节 round 3（终轮）
+
 ## 已批

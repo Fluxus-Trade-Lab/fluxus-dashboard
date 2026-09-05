@@ -1,6 +1,6 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **review**
+status: **queued**
 rounds: 3
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
@@ -295,6 +295,36 @@ round 2 的自查节（distribution 节"round 2 补做"）**只检查了①，�
 ⛔ Gate 不代笔：收口另写，本站不产替代文案。
 
 **收工三问**：①本轮踩的坑＝差点直接采信 round 2 自查"已改好"的结论收工——`feedback_no_mirrored_aphorism_closings` 记的是两种形状，只核对"像不像格言"不够，必须回头比对"这句话是不是正文说过的事实换了个词序"；②`roles/06_gate.md`"独立复算+不采信自查"的强制顺序帮了——如果只是复核 round 1 点名的两条是否改好，这条新问题会被漏掉；建议给 04/05 两站的契约补一句"收口自查除了查格言/镜像句，还要回读正文最后两段，任何数字/事实重复出现即打回"；③下轮（旗舰站断点续跑）第一件事：flagship 与 V2 的收口去掉对已说数字的复述，改成不复述任何正文已给事实的新句子；V3 顺手把"run check 3 before check 1"换成不需要绕弯的直接说法；V4 与 V1 不需要动；改完分发站同步核对，回 Gate。
+
+---
+
+**⑦ Gate · round 3（终轮）· 2026-09-06 06:12 JST（UTC 09-05 21:12）· 独立新上下文子 agent（与 round 1/round 2 均不同会话）· rounds 3（已达上限，本轮只能放行或 killed）**
+
+## 判定：**放行 → APPROVAL_QUEUE（status=queued）**
+
+本轮从零独立复核，不采信 round 2 自查节与 round 2 Gate 判定的"已改好"结论——自己重读正文原句下判断。
+
+**硬闸复核（通过）**：distribution 入口号现场清点 **1/3/4/5**，齐全不重复；hook 类型（验证回收钩🆕/时间戳锚/反面先行钩/能不能变红钩）现场核对 `brain/hooks.md`，四型互不重复，「验证回收钩」确已登记为⏳未测新型。CTA 冻结线：本轮独立用 Python 对 flagship+distribution 两节原文（不含元数据节）做 `subscribe/join/sign up/whop/会员/付费/cta` 大小写不敏感扫描，**零命中**——比"停在订阅"更保守，全卡零 CTA，未越 `brain/offers.md` 冻结线。"一月效应"未证实旁证：对 flagship+distribution 两节原文（隔离元数据节，避免把 research 节自己讨论"为什么不能写"的那句话误判成命中）做 `january/winter/一月/冬季` 扫描，**零命中**——旁证确实没有被升级成正文主张。
+
+**独立复算（抽查 3 处，逐位对上，未见劣化）**：现场 `git show origin/main:data/research/gold_autumn_2026-09/results.md`——① 样本内黄金九月 +2.52%/t+2.83/p0.0042，Baur 报 +2.2%，算术均值口径下我方 +2.68%，均逐字对上表格；② 样本外 H1 −1.35%、4/15、p单尾0.8212，逐字对上；③ 「十月在标准文献里没有对应结果」这句判断——results.md 原文确写"老话里「十月」那一半，标准文献里从来没有对应结果"，对上。**顺带记一条不影响本轮判定的既存瑕疵**：results.md 开头「一句话」段写的是"16 个九月里只有 4 个是涨的"，与下方 H1 表格及本卡全篇统一引用的"4/15"不一致（15 才是与"2011–2026-08"窗口年数相符的数字，16 疑为 results.md 自身笔误）——**这是 research 源文件的既存问题，不是本卡写作站引入的错误**，本卡五份资产统一使用与详表一致的 15，未把源文件的笔误带进来，故不构成本轮退回理由；建议登记一条门铃给 Nighty Zac 线核对源文件（见下"门铃待按"）。全部改稿自报词数（flagship 143 / V2 77 / V3 155 / V4 100）现场用 Python 独立重数，**逐位相符**，未手改。
+
+**round 1/round 2 拦下的三处问题，本轮逐句独立复核，确认真的解决、且未复发到新句子里**：
+- **格言体/镜像句**（round 1 拦）：flagship 现收口"the rise is dead. Nobody proved the fall."、V2"the line we cut for lack of proof stays cut."、V3"Most people stop at check 2. Check 3 is the one that would have saved you here."、V4"It failed: four up Septembers out of the last fifteen since 2011."——逐句读过，**均是落在本案具体事实上的陈述，不是可以套用到任何话题的通则+实例结构**，也没有"不是A是B"的字面镜像句式。V3 的"Most people stop at check 2"读起来最接近"通则"形状，但它说的是"check 2/check 3"——这是本文自己刚定义的三步法内部编号，脱离本文语境无法复用，判定不构成格言体。
+- **复述正文**（round 2 拦）：flagship 正文第 3 段已说"Four up years out of fifteen."，round 3 改稿后的收口已不再重复这个数字，全文停在新信息句"Nobody proved the fall."；V2 正文第 3 段已说"-1.35%, four up years out of fifteen"，收口"The line we cut for lack of proof stays cut."不含任何数字，不复述。逐句核对，**两处均未复发**。
+- **V3 的"绕弯俏皮话"**（round 2 记为不构成退回理由的风格瑕疵）：round 2 那句"Run check 3 before you run check 1 next time."已被换成"Most people stop at check 2. Check 3 is the one that would have saved you here."——不再需要在脑内反转顺序才能懂，一读即明，瑕疵已顺手清除。
+
+**整体语感复核（终轮专项，本轮独立判断，不采信前两轮的自查评分）**：五份资产完整读一遍——flagship 的"Ruler's calibrated."、V4 的反问开场"has this rule ever been allowed to fail?"、V3 的直接祈使句结构、V2 的时间戳叙事，各自至少有一样 Voice Bible §4.8 要求的修辞（反讽/反问/反转），且各自收口都是能被复述的具体断言（"Nobody proved the fall." / "The line we cut for lack of proof stays cut." / "Check 3 is the one that would have saved you here." / "It failed: four up Septembers..."）。三轮打磨后**读起来仍然自然连贯，没有为了避开负面清单条款而变得生硬或支离破碎**——这是本轮最主观的一项判断，结论：**通过，不因语感问题退回**。
+
+**其余逐条（通过，留痕备查）**：跨资产病复核——五份资产开头故事仍互不相同（老话引语／编辑决策时间线／三步检验法／反问／同上），语气未漂移；四条分发变体互相独立成立（单读 V2/V3/V4 任一条都能获得完整故事）；research 节其余四条主张（LBMA 数据缺口 0、t 分布校准 df=30、判断链两条 commit `164317fc`/`7e924be4`、坑账登记）本轮未逐位重算，round 1/round 2 已核实，抽查未见劣化迹象。
+
+### 门铃待按 / 待认领
+- **待认领 · Nighty Zac 线**：`data/research/gold_autumn_2026-09/results.md` 开头「一句话」段写"16 个九月只有 4 个是涨"，与下方 H1 详表及全篇统一引用的"4/15"（15 年窗口）不一致，疑为源文件自身笔误——不影响本卡判定（本卡统一用与详表一致的 15），但建议该线下次碰这份文件时顺手核对更正。
+
+⛔ Gate 不代笔：未发现需要代笔修正的内容，本卡按现状放行。
+
+**⚠️ 契约执行**：本卡已达 `rounds=3` 上限，按 `roles/06_gate.md` 与 `PIPELINE.md` 断点续跑节明文，本轮为终轮，只能放行或 killed，不产生 round 4/5。**判定：放行**。status 改 `queued`，`rounds` 不再 +1（终态）。已在 `APPROVAL_QUEUE.md` 追一行。
+
+**收工三问**：①本轮踩的坑＝差点把 results.md 自身"16 个九月"那处既存笔误误判成本卡写作站引入的数字错误——独立复算时必须同时看"详表"和"一句话摘要"两处，两处不一致时先判断哪处是权威、哪处是源头笔误，不能默认凡是不一致就是下游写作的错；②`roles/06_gate.md`"终轮只能二选一、不许再拖"这条帮了——若无此契约，本轮很可能会因为 V3"Most people stop at check 2"读起来略像格言而再退一轮，但契约精神明确要求"不影响读者理解、不违反硬指标"的软瑕疵应倾向放行，判断因此收敛得更快；建议给 research 站补一句"『一句话』摘要段的数字必须与下方详表用同一份现算脚本输出，不许手改摘要句"以杜绝这类既存不一致的源头；③下轮（Andy 审批后）第一件事：若 Andy 批准发布，需 Writer Mia 成稿 + Visual Vera 配图（本卡按毛坯过闸，尚未成稿配图）；若 Andy 否决，判例入 `voice/verdicts.jsonl`。
 
 ---
 
