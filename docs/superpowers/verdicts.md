@@ -19,3 +19,4 @@
 ### [2026-09-04] 改 · superpowers 五件 · 单件不退（R11）
 ### [2026-09-04] 改 · ralph-loop · 退→用（R12：Andy 09-02 用它跑过 5 小时冲刺）
 ### [2026-09-05] 改 · tearsheet · 描述优化器 · 测试集 4/8→4/8（description-only harness，家目录跑；阳性对照 2/6）· 5 轮候选无一超过原描述，description 不动、只加 when_to_use；点名「跑 tearsheet skill」的问句 0/3、「用 /tearsheet…」2/3，harness 本身量不出这个 skill，4/8 不能当描述的属性读
+### [2026-09-06] 建 · daily-recap · 判据版复盘 skill（b4346b67）；评估集=Andy 六份真 PDF，首个真金标；A/B/C 三条法与四问全部可溯源到他原话
