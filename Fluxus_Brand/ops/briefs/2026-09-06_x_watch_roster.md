@@ -1,13 +1,13 @@
 # X 日调研 · 名单
 
-## ✅ 定稿 v2(Andy 2026-09-06 在 artifact 上逐条批注;v1 后他又批「这一行的人都去掉」,末行 14 个撤回)—— **30 人**(v3:Andy 加 LanceB 与 Linda Raschke)
+## ✅ 定稿 v2(Andy 2026-09-06 在 artifact 上逐条批注;v1 后他又批「这一行的人都去掉」,末行 14 个撤回)—— **25 人**(v4:Andy 09-06 再删 5 个)
 
 **Andy 的批注原文:** C 组「大号一个都不太想要」· B 组 alphatrends / traderstewie / WallStJesus「去」、SteveUrkelDude「不留」· D 组 RealSimpleAriel / NickSchmidt / jbulltard1 / GnT「留」,末行 14 个 handle 先批「留」后改「这一行的人都去掉」→ 去。未批注的按 Steve 建议默认(B 组的 留? 视为留)。
 
 | 组 | 进名单 | 数 |
 |---|---|---|
-| A 核心圈 | @wey_how12640 @ShakePryzby1 @Muninn @Hrundel75 @ohiain @ZaStocks @thesetupfactory @RealJGBanks @jfsrev @RichardMoglen @ConnorJBates_ @Clement_Ang17 @1ChartMaster | 13 |
-| B 付费漏斗 | @pennycheck @DeepValueBagger @TheProfInvestor @moninvestor @HunterAllen4 @Jake__Wujastyk @TheShortBear @Remzztrades @Venu_7_ @Speculator_io @ripster47 | 11 |
+| A 核心圈 | @wey_how12640 @ShakePryzby1 @Muninn @ohiain @ZaStocks @thesetupfactory @RealJGBanks @jfsrev @ConnorJBates_ @Clement_Ang17 @1ChartMaster | 11 |
+| B 付费漏斗 | @TheProfInvestor @moninvestor @HunterAllen4 @Jake__Wujastyk @TheShortBear @Remzztrades @Venu_7_ @ripster47 | 8 |
 | C 大号 | (无) | 0 |
 | D 圈内人 | @RealSimpleAriel @NickSchmidt_ @jbulltard1 @GnT_Trades | 4 |
 | F Andy 点名加(09-06) | **@TheOneLanceB**(Lance Breitstein)· **@LindaRaschke** | 2 |
@@ -15,6 +15,8 @@
 ⚠️ **两个新加的都有仿冒号**:`@TheOneLancecB` / `@TheOneeLanceB` 不是 Lance,`@LindaRaschkers` 不是 Linda。加 List 只认上面两个精确 handle(WebSearch 09-06 核过:x.com/TheOneLanceB · x.com/LindaRaschke)。
 
 **未表态(7 个,默认不进,Andy 一句话即可加):** @OliverKell_ @TedHZhang @agnostoxxx @FranVezz @AdamMancini4 @CheddarFlow @Stockpatternpro
+
+**Andy 09-06 二次删(5 个):** @Hrundel75(收藏比 4.11 全库最高,但删)· @RichardMoglen(TraderLion 守门人)· @pennycheck · @DeepValueBagger · @Speculator_io。
 
 **去掉:** B 组 @alphatrends @traderstewie @WallStJesus @SteveUrkelDude · C 组全部 14 · D 组末行 14 个(maojietrading … legen_eth)· E 组全部。
 
