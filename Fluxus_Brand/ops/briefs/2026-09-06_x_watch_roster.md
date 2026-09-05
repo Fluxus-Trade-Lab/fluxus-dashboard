@@ -1,21 +1,19 @@
 # X 日调研 · 名单
 
-## ✅ 定稿 v1(Andy 2026-09-06 在 artifact 上逐条批注)—— **42 人**
+## ✅ 定稿 v2(Andy 2026-09-06 在 artifact 上逐条批注;v1 后他又批「这一行的人都去掉」,末行 14 个撤回)—— **28 人**
 
-**Andy 的批注原文:** C 组「大号一个都不太想要」· B 组 alphatrends / traderstewie / WallStJesus「去」、SteveUrkelDude「不留」· D 组 RealSimpleAriel / NickSchmidt / jbulltard1 / GnT「留」,末行 14 个 handle 整格「留」。未批注的按 Steve 建议默认(B 组的 留? 视为留)。
+**Andy 的批注原文:** C 组「大号一个都不太想要」· B 组 alphatrends / traderstewie / WallStJesus「去」、SteveUrkelDude「不留」· D 组 RealSimpleAriel / NickSchmidt / jbulltard1 / GnT「留」,末行 14 个 handle 先批「留」后改「这一行的人都去掉」→ 去。未批注的按 Steve 建议默认(B 组的 留? 视为留)。
 
 | 组 | 进名单 | 数 |
 |---|---|---|
 | A 核心圈 | @wey_how12640 @ShakePryzby1 @Muninn @Hrundel75 @ohiain @ZaStocks @thesetupfactory @RealJGBanks @jfsrev @RichardMoglen @ConnorJBates_ @Clement_Ang17 @1ChartMaster | 13 |
 | B 付费漏斗 | @pennycheck @DeepValueBagger @TheProfInvestor @moninvestor @HunterAllen4 @Jake__Wujastyk @TheShortBear @Remzztrades @Venu_7_ @Speculator_io @ripster47 | 11 |
 | C 大号 | (无) | 0 |
-| D 圈内人 | @RealSimpleAriel @NickSchmidt_ @jbulltard1 @GnT_Trades @maojietrading @ichartline @flame_ry @firesidealpha @cfromhertz @TJ_Research @SuperLuckeee @RileyColemanT @NickDoesFutures @CFlanders7 @BlogJulianKomar @BearBullTraders @0xKyne @legen_eth | 18 |
-
-⚠️ **D 组 18 个里 14 个只在别人帖子的引用里出现过一次,handle 没核过** —— 跑手加 List 时逐个进主页确认存在、是本人、还在发帖;对不上的记进 README 问 Andy。
+| D 圈内人 | @RealSimpleAriel @NickSchmidt_ @jbulltard1 @GnT_Trades | 4 |
 
 **未表态(7 个,默认不进,Andy 一句话即可加):** @OliverKell_ @TedHZhang @agnostoxxx @FranVezz @AdamMancini4 @CheddarFlow @Stockpatternpro
 
-**去掉:** B 组 @alphatrends @traderstewie @WallStJesus @SteveUrkelDude · C 组全部 14 · E 组全部。
+**去掉:** B 组 @alphatrends @traderstewie @WallStJesus @SteveUrkelDude · C 组全部 14 · D 组末行 14 个(maojietrading … legen_eth)· E 组全部。
 
 ---
 
