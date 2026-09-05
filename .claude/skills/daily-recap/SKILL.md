@@ -78,3 +78,6 @@ when_to_use: 复盘、recap、briefing、market recap、每日市场、生成 PD
 - **我们的数字当裁判**：transcript 自打架（小盘均线在头顶 vs Russell 在 50/100 上方），
   我方 IWM 50 日下方 −0.34% 裁定前者对。对卷时凡数字冲突，以可溯源字段为准并标注。
 - HOOD/META 论点股：无新事件仍可入——挂在「行情对论点的回应」下（HOOD 周 +16.5% 收复 120◇）。
+### [2026-09-06] 五档放行
+Andy 原话「可以放行 这个五档是可以用的」——自家五档（Defence / Caution / Neutral / Constructive / Euphoria）
+连同其中的 Neutral 一词照用；它是我们的方案，不算借词。复盘与页面继续用它，三套档位词的收敛不再立项。
