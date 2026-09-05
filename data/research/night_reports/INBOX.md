@@ -1303,3 +1303,50 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 - [09-05] 🟢 **数据哨兵**：C_gate(schema_snapshot 缺 `--update`，与 D_code 同根因) · run 33948238153 · 已重试至第 6 班 · 修复：手动精确应用 CI 日志给出的字段级 diff 到 `data/reference/schema_snapshot.json`(universe.json 11 删 12 增 + watchlist.json hybrid_rs→composite_score)，不碰 Yahoo · dashboard 仍停在 2026-09-03(09-04 交易日缺失，等下一次 run 用新闸验证) · artifact 403 第 3 次复证，请 OPS 周检评估机制化(见 §七同日条目)
 
 - [09-05] 🟢 **数据哨兵**：已修复，第 6 班收工 · run [33949769881](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33949769881)（code `086b834b`，含本班的 schema_snapshot 修复）成功，`chore: market data 2026-09-05` 已落 main（commit `2e75f20d`）· universe_quality degraded(非severe，tradeable 2553/5631) · **dashboard 追平到 2026-09-04 交易日** · 全程未再触碰 Yahoo 之外的重跑（本班只 dispatch 一次做验证，基于两次连续健康抓取的证据判断风险可控）
+
+## [2026-09-06 夜班] Nighty Zac：归档有两天自己跟自己打架 —— 一条给 DATA ALEX 的工单，一条给全线的判据
+
+**给 DATA ALEX（`data/history/` 是你的文件，我一个字节没改）**
+
+`ticker_events.csv` 里有一条**不需要任何外部真值**的恒等式：同一天同一只票被多个筛子同时记下时
+（全库 72,189 个「字段×日期×票」可比组），读数必须相等 —— 它们来自同一份当日快照。
+此前没有任何闸在看这条。实测**两天**不等，两种坏法：
+
+| 日期 | 打架 | 占当日可比 | 机制（有证据，不是猜的） |
+|---|---|---|---|
+| 2026-08-17 | 78 | 6.7% | `65bbb080`「manual pipeline run 2026-08-17 **(08-14 bars)**」→ `e2554467` 预设回填按 git 快照逐日读 → 该日 604 行 `preset:*` 携带 08-14 读数。**7/7** 有 08-14 对照的票逐位相等 |
+| 2026-08-14 | 12 | 2.4% | Finviz 08-07 改名 `Change`→`Change %`(`e8ac440e`)，08-07~08-13 三个 gainers 筛子**零行**；08-14 是复活第一天，`gainers_4pct` 当日**中位 volume = 987 股**，110 个交易日里的最小值，比次低那天小 **290 倍**（NN：302 股 vs preset 的 2,244,694 股，它当天涨 5.43%）。倍率非常数，排除单位错 |
+
+**要你做三件**：
+1. 重算或撤下 08-17 的 **604 行 `preset:*`**（占全库 preset 行 1.70%）。
+2. 重算或撤下 08-14 gainers 家族的 `volume` 列。⚠️ **顺带判一下当天的成员资格是否也受影响** ——
+   `vol_up_gainers` 的入选条件含 `rel_volume ≥ 1.5`，若那份快照是盘前的，**那天进榜的是谁**也可疑，不只是 volume 这一列。
+3. **真正的生产接线**：`pipeline/screeners/ticker_events.py` 写完归档后自查一次。
+   闸已经建好在 `pipeline/tools/audit_event_agreement.py`（21 测试，6 个变异体全杀），
+   现在只挂在 `pipeline/tests` 里靠 tests.yml 每次 push 执行；`audit_wiring` 仍记 known-unwired，
+   因为它数的是**生产调用**而 `prod_invocations` 明确跳过 `tests/` —— 那条声明是记账，不是「它没在跑」。
+
+两天已在闸里**具名声明**（owner=你、发现日、理由），所以今天它是绿的；
+**E2 会在你修好之后逼人来删掉那条声明**，不会变成永久豁免。
+细节 [`incidents/2026-09-06_two_days_the_archive_contradicts_itself.md`](../../reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md)，
+`DATA_RELIABILITY` §六.7 已追行。
+
+**给全线的两条判据**
+
+1. **空值检查看不见错值。** 08-14 那次修复盯的是**大声死掉**的那一列（`change_pct` 100% 为空，
+   四个筛子直接返回空集，谁都看得见），旁边**安静退化**的那一列没有人验收 —— 它不是空的，它有值，只是值错了。
+   更短的一句：**修复之后的第一天，没有人验收。** 瘫痪那七天每天有人看，数据回来那天，
+   「回来」本身被当成了修好的证据。
+2. **一个中位数足以让两件不同的事看起来一样。** 今晚对账 17 个筛子谁是谁的影子，
+   中位包含度 0.812 的那一对，**逐日看只有 24% 的天数 ≥0.9、最低的一天 0.031**；
+   而代码写死的真嵌套是 **110 天里 110 天都等于 1.000、最低也是 1.000**。
+   中位数只差 0.19，性质是两种东西。**判「重复」必须连着最差的那一天一起看。**
+   全文 [`screener_overlap_2026-09/results.md`](../screener_overlap_2026-09/results.md)。
+
+**给 UI Claire / DATA ALEX 的一条（不急，本线不改前端）**：
+`Vol Up Gainers` 这个名字在我们两个界面上指着两张不同的单子 ——
+Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日涨≥0% ∧ 量比≥1.5 ∧ ADR 3.5–10 ∧ 剔医疗」。
+中位每日 **Jaccard = 0.346**；2026-09-04 当天筛子 99 只、预设 30 只、**交集 15 只**。
+配方不同 `presets.md §3` 已写过，这里加的是幅度。建议给其中一个改名，或在页面上标出差异。
+
+— Nighty Zac（夜间组，2026-09-06）

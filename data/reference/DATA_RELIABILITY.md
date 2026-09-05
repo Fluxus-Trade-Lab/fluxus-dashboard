@@ -153,3 +153,35 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    ⚠️ **顺序**：先合修复分支 `auto/night-20260905-805da3-fbclock`（`f0899fac`，修那条红的），再改 workflow ——
    反过来 CI 首日就红。实测：修复分支上 `pipeline/tests + tests`（除 `tests/gex`，本机缺 jinja2/ib_async）
    **2004 passed / 6 skipped 全绿**；`origin/main` 上单跑 `tests` 是 **1 failed / 528 passed**。
+
+7. **⚠️ 归档能自证自相矛盾，而此前没有任何闸在看这条。**（Nighty Zac 实测，2026-09-06）
+
+   `ticker_events.csv` 的同一天同一只票常被多个筛子同时记下 —— 归档里有 **72,189** 个
+   这样的「字段 × 日期 × 票」可比组。它们来自同一份当日快照，**在物理上必须相等**。
+   这条恒等式的价值：**它不需要任何外部真值**。计数类检查（行数够不够、字段缺不缺）
+   对一份内部自相矛盾的快照**全部是绿的**（§六.5 那条与 `pitfall_having_a_row_is_not_having_data` 同形）。
+
+   实测有**两天**不等，两种不同的坏法：
+
+   | 日期 | 打架的 (字段,票) | 占当日可比 | 机制 |
+   |---|---|---|---|
+   | 2026-08-17 | 78 | 6.7% | `65bbb080`「manual pipeline run 2026-08-17 **(08-14 bars)**」→ `e2554467` 的预设回填按 git 快照逐日读，该日 604 行 `preset:*` 携带 08-14 读数。**7/7** 有 08-14 对照的票逐位相等 |
+   | 2026-08-14 | 12 | 2.4% | Finviz 08-07 改名 `Change`→`Change %`（`e8ac440e`），08-07~08-13 三个 gainers 筛子**零行**；**08-14 是复活第一天**，当日 `gainers_4pct` 中位 volume = **987 股**，110 个交易日里的最小值，比次低那天小 **290 倍** |
+
+   **08-14 那条 `change_pct` 看不见，只有 `volume` 看得见** —— 那次修复盯的是大声死掉的那一列，
+   旁边安静退化的那一列没有人验收。**空值检查看不见错值。**
+
+   **已建**：`pipeline/tools/audit_event_agreement.py`（+21 条测试，6 个变异体全部被杀，commit `7e4bf9f0`）。
+   查四个跨筛子必须相等的字段 `change_pct` `volume` `sector` `atr_ext`
+   （后两个全库 26,108 / 18,558 例可比、**0 例不一致**，是干净对照）；
+   明确**不查** `group`(28.5% 分歧) 与 `rel_volume`(42.4%) —— 它们的分歧散布在每一个日期上，
+   是定义不同不是快照坏了，放进来闸会天天红然后被人学会跳过。棘轮形状，两天已具名声明，E2 逼人修好后删声明。
+   ⚠️ 第一版只查 `change_pct` 时有 **3 天（08-11/12/13）完全看不见**，扩到四字段后盲区 **0/114** ——
+   闸自己报覆盖面，因为「有闸」之后还得问「盖住了多少」。
+
+   **仍欠（归 DATA ALEX，本线不碰 `data/history/`）**：①重算或撤下 08-17 的 604 行 `preset:*`；
+   ②重算或撤下 08-14 gainers 家族的 `volume`，并判**当天的成员资格是否也受影响**
+   （`vol_up_gainers` 的入选含 `rel_volume ≥ 1.5`，若快照是盘前的，那天进榜的是谁也可疑）；
+   ③真正的生产接线 = `pipeline/screeners/ticker_events.py` 写完归档后自查一次
+   （现在只挂在 `pipeline/tests` 里靠 tests.yml 执行，`audit_wiring` 因此仍记 known-unwired）。
+   事故档 [`2026-09-06_two_days_the_archive_contradicts_itself.md`](incidents/2026-09-06_two_days_the_archive_contradicts_itself.md)。
