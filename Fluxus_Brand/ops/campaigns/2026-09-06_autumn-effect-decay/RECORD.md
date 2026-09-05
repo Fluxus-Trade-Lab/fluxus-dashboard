@@ -1,10 +1,12 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **flagship**
+status: **review**
 rounds: 2
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
 > 六站顺序亲自跑（Workflow/Agent 工具本轮未获用户显式 ultracode 授权，不触发多 agent 编排；Gate 用独立新上下文子 agent 跑，见 `## review`）。
+>
+> **round 2（工头亲执旗舰站+分发站，按 Gate round 1 退回理由改）**：flagship 收口去掉对仗格言、换成落在具体数字上的重话；口径句补上"我方对数均值换算成 Baur 算术均值口径"的说明；V2/V3/V4 三条收口的镜像句/格言体一并改掉（Gate round 1 指出这一步此前从未被自查覆盖）；research 表第 6 行的出处拆成两条 commit（Andy 原话 `164317fc` + 验证结案 `7e924be4`）。改动明细见各节内 "round 2 改稿说明"。status 改回 `review`，等第二轮独立子 agent 复审。
 
 ---
 
@@ -14,7 +16,7 @@ rounds: 2
 
 - **发生了什么**：Nighty Zac 09-05 完成了一份预注册研究，验证中文老话「金九银十」对应的英文文献 Baur (2013)《The autumn effect of gold》。用 LBMA 官方定盘价（1968 年起）复现他的样本内结果，再独立跑他发表之后的 15 年做样本外检验。出处 [`data/research/gold_autumn_2026-09/results.md`](../../../data/research/gold_autumn_2026-09/results.md) · commit `d1443bc6` · §七契约结案行 commit `7e924be4`。
 - **受众为何在意**：这不是一个孤立的黄金冷知识——它给读者一个可复用的怀疑动作：**任何被重复引用的季节性说法，先问它有没有名字（论文/权威源），再问它发表之后还灵不灵。** 读者手里握着的很多"常识"（金九银十只是最好查的一个）都还没被这样测过。
-- **票根**：`data/research/gold_autumn_2026-09/`（预注册 `00_prereg.md` + 可复跑 `run.py` + 原始输出 `run_output.txt`）+ 本线 08-31 的编辑决策（Andy 因"没有可验证的东西"从周信 #001 删掉这句话，§七 commit `7e924be4` 逐字记录他的原话）——**判断→兑现链**，先删后验，链条可查。
+- **票根**：`data/research/gold_autumn_2026-09/`（预注册 `00_prereg.md` + 可复跑 `run.py` + 原始输出 `run_output.txt`）+ 本线 08-31 的编辑决策（Andy 因"没有可验证的东西"从周信 #001 删掉这句话，原话逐字见 commit `164317fc`；验证结案见 §七 commit `7e924be4`）——**判断→兑现链**，先删后验，链条可查。
 - **衰减速度**：机制本身**慢/常青**（"发表即失效"的判据不随盘面变）。**唯一的时效物**：稿子里"我们现在正处在九月"这句话，保质期＝本月剩余天数；过了 9 月这句开场仍可用但失去"现在"的紧迫感，需改措辞。
 - **成品能回答的问题**："我看到一句反复被引用的市场老话，我怎么知道该不该信？"
 
@@ -46,7 +48,7 @@ rounds: 2
 | 3 | 样本外检验（2011–2026-08，四条预注册假设，只跑一次）：H1 黄金九月>0 → 均值 **−1.35%**，15 个九月只有 **4 个上涨**，不成立；H2 黄金十一月>0 → −0.94%，不成立；H3a 黄金十月>0 → +0.95%，不成立；H3b 白银十月>0 → +1.96%，不成立。**四条全部 NULL** | `results.md` §二 | ✅ 预注册在先（`00_prereg.md`），只跑一次 |
 | 4 | 诚实边界：九月均值翻负不等于"显著为负"——那是看了数据后才想到的方向，事后按同一套规矩算 `P(X≤4\|n=15,p=0.5)=0.0592`（双尾 0.1185），连未校正的 0.05 都过不去。检验本身有分辨率（该样本量下最小可能 p=3.05e-05，远小于校正后 0.0125），所以"没证出下跌"是数据的性质不是检验太钝 | `results.md` §二 | ✅ 坑账 `pitfall_positive_control_borrowed_from_elsewhere` 已登记 |
 | 5 | 数据源为 LBMA 官方黄金/白银定盘价（黄金 1968-04 起 701 个月、白银 1968-01 起 704 个月，非连续月缺口 0 个），非 yfinance 的 GLD（2004 年起）——工具边界不等于世界边界 | `results.md` §四 | ✅ |
-| 6 | 判断→兑现链：Andy 08-31 因「有可以验证的吗？没有我们就暂时删除」把这句老话从周信 #001 删掉；09-05 验证完成，结论支持删除 | `data/reference/DATA_CONTRACTS.md` §七 [2026-09-05] Nighty Zac→全线 行 · commit `7e924be4` | ✅ 编辑决策原话逐字可查 |
+| 6 | 判断→兑现链：Andy 08-31 因「金9银10 的老话有可以验证的吗？没有我们就暂时删除」把这句老话从周信 #001 删掉；09-05 验证完成，结论支持删除 | **原话**：commit `164317fc`（`content(#001): v7 -- 删掉 GLD/「金9银10」,验不了就不写`，作者 zhuandy531-art，含 Andy 逐字原话）；**验证结案**：`data/reference/DATA_CONTRACTS.md` §七 [2026-09-05] Nighty Zac→全线 行 · commit `7e924be4` | ✅（round 2 更正：round 1 把整条判断链错误地全部挂在 `7e924be4` 上，Gate 拦下——该 commit 只含验证结案，不含 Andy 原话，原话出自更早的 `164317fc`；已拆成两条日期分开引用） |
 | 7 | 自造实现的校准：本机无 scipy，t 分布 CDF 自己实现，对 6 个公开临界值验证（如 df=30, t=2.0423 → 计算值 0.024999，查表值 0.025），最大误差 5e-06 | `results.md` §四 | ✅ 自造工具已校准，未违反「先找口径别自己造」 |
 
 **未证实/单列**：样本外最强月份挪到冬季/夏末（一月 +3.86%/+4.45%）与 2024 年 extended reproduction 论文的 "reversed and replaced by winter effect" 一致——**这是旁证不是结论**（未预注册，results.md 原文明确说"不建议任何人拿它下单"）。本卡分发站**不得**把这句话升级成新主张。
@@ -87,15 +89,19 @@ rounds: 2
 
 > "Golden September, silver October." Every gold trader has heard some version of that line.
 >
-> Turns out half of it has a real paper behind it. Baur, 2013 — thirty years of LBMA fixing prices, and September and November were the only two months that came back positive and statistically significant. We ran his numbers first: +2.52% for September, against his published +2.2%. Same sign, same order of magnitude. The ruler's calibrated.
+> Turns out half of it has a real paper behind it. Baur, 2013 — thirty years of LBMA fixing prices, and September and November were the only two months that came back positive and statistically significant. We ran his numbers first. Our test reads +2.52% for September; convert to his own convention and that's +2.68%, against his published +2.2%. Same sign, same size. Ruler's calibrated.
 >
 > Then we ran the fifteen years since the paper came out. September since 2011: -1.35%. Four up years out of fifteen.
 >
 > We're not going to tell you it's bearish now — that's a claim we didn't pre-register, and picking a sign after you've already seen the data doesn't count as proof. What the test can say: the rise is dead. Nobody proved the fall.
 >
-> An edge has a shelf life the moment someone writes it down. This one's was fifteen years.
+> Four up Septembers out of the last fifteen. That's what's left of "golden September."
 
-**词数**：152（`python3 -c "print(len(text.split()))"` 现场计数，见 commit 附带脚本片段，非手数）。
+**词数**：157（`python3 -c "print(len(text.split()))"` 现场计数，round 2 改稿后重数）。
+
+### 🔧 round 2 改稿说明（对应 Gate round 1 退回理由）
+1. **收口改写**：删掉 "An edge has a shelf life the moment someone writes it down. This one's was fifteen years."（04_flagship.md 明文禁的对仗格言/`feedback_no_mirrored_aphorism_closings`）。改为直接落在具体数字上的重话："Four up Septembers out of the last fifteen. That's what's left of 'golden September.'"——不概括成一条通则，只说这一件事。
+2. **口径句改写**：原句把 +2.52%（对数均值）与 Baur 的 +2.2%（大概率算术均值）直接说成 "same order of magnitude"，未注明口径。改为："Our test reads +2.52% for September; convert to his own convention and that's +2.68%, against his published +2.2%."——把口径换算讲清楚（我方 +2.52% 是对数均值口径下的检验值，换算成 Baur 的算术均值口径是 +2.68%，与他的 +2.2% 同一量级），不引入"log/arithmetic mean"这类方法论黑话上台面。
 
 ### 配图占位（毛坯规格，等 Vera）
 样本内/样本外对照小表：
@@ -110,10 +116,10 @@ rounds: 2
 2. 对照 `data/content/posts.csv` 近 14 天（08-23 至今）逐条比对 note 列：无同内核帖——近期帖主题为 MRNA/HOOD/PLTR 形态、QT 引文、ATR 仓位算术、月度对账，均不涉及"效应发表后失效"这一内核。**通过**。
 3. `Fluxus_Brand/voice/Fluxus_Own_Lines.md` `亲缘:` 标注（全库仅 1 条，围棋复盘对）：与本稿内核无关。**通过（诚实边界：第 3 步现仍近乎空转，见 angles.md 原文说明）**。
 
-### verdicts.jsonl 负面清单自查（09-04 "太ai slop了" 判例为主要参照）
-- ❌ 未使用镜像句"不是A是B"（09-04 判例未点名此形状，但 08-24 判例已否，仍全篇自查零命中）
-- ❌ 未使用对仗格言收口（"An edge has a shelf life..."是陈述句不是对仗）
-- ✅ 有轻微反讽（"The ruler's calibrated."）满足 Voice Bible §4.8 第 2 条"至少一样修辞"
+### verdicts.jsonl 负面清单自查（09-04 "太ai slop了" 判例为主要参照；round 2 按 Gate round 1 指正重做）
+- ⚠️ **round 1 自查判定有误，已被 Gate 拦下并更正**：round 1 判"'An edge has a shelf life...'是陈述句不是对仗"——这个判法本身错了，`feedback_no_mirrored_aphorism_closings` 禁的是"通则+实例"的格言体整类，不要求字面对仗才算命中。round 2 已删除该收口，改为只陈述本案具体数字、不概括成通则的重话（见上方"round 2 改稿说明"）
+- ✅ 未使用镜像句"不是A是B"
+- ✅ 有轻微反讽（"Ruler's calibrated."）满足 Voice Bible §4.8 第 2 条"至少一样修辞"
 - ⚠️ **本稿比喻较弱**（§4.8 第 3 条"比喻优先于数据"未充分做到）——已用"edge 的保质期/shelf life"这一个意象贯穿全文（第2、5段），链条单一但存在，未违反"换喻体=破功"（第4条）
 - ✅ 开头非"我"字开头，第一句是读者已经听过的老话，符合"从读者在干嘉的地方开口"
 
@@ -150,11 +156,9 @@ There wasn't, so we did.
 
 09-05: we finished checking. Thirty years of LBMA data, a named paper (Baur 2013) as the benchmark, four pre-registered hypotheses. All four came back NULL. September's mean since 2011 is actually negative — -1.35%, four up years out of fifteen.
 
-The line we deleted for lack of proof turned out to have the opposite of proof.
-
-Cutting it wasn't caution. It was correct.
+We finished the math: four up Septembers out of the last fifteen since 2011. The line we cut for lack of proof stays cut.
 ```
-（90 词，现场计数）
+（91 词，round 2 改稿后重数——原收口"wasn't caution. It was correct."是字面镜像句，已删；改为只落在具体数字上）
 
 ### V3 · 可复用物（entry 4）
 ```
@@ -164,11 +168,11 @@ Before you trust the next "seasonal edge" someone quotes at you, run three check
 2. Can you reproduce their published number, on their published window? If you can't get their answer, don't trust your own.
 3. Now run it on everything since the paper came out. If the sign flipped, someone already traded the edge away.
 
-Gold's "September effect" has a real paper (Baur, 2013) and we reproduced it almost exactly — +2.52% against his +2.2%. Then check 3: -1.35% since 2011, four up years out of fifteen.
+Gold's "September effect" has a real paper (Baur, 2013). Our test reads +2.52%, which converts to +2.68% in his own convention, against his published +2.2% — check 2 passed. Then check 3: -1.35% since 2011, four up years out of fifteen.
 
-Passing two out of three still means you're trading a corpse.
+Gold aced the first two checks and failed the third. Run check 3 before you run check 1 next time.
 ```
-（140 词，现场计数）
+（158 词，round 2 改稿后重数——① 收口"still means you're trading a corpse"是格言体，已删，改为具体到本案的直接陈述+一句对读者的可执行建议；② 补上口径换算，不再把 +2.52% 与 +2.2% 直接说成"几乎完全一致"）
 
 ### V4 · 批判做法（entry 5）
 ```
@@ -176,13 +180,20 @@ Ask anyone who repeats "buy gold in September" one question: has this rule ever 
 
 Not "has it worked" — has anyone actually built the test that could report it broken? Most seasonal sayings never get that test. They just get repeated until repetition feels like evidence.
 
-We built it. Pre-registered thresholds, a named paper as the benchmark (Baur 2013), thirty years of LBMA gold prices split cleanly into before-and-after. The rule could have passed. It didn't: -1.35% average since 2011, four green Septembers out of fifteen.
+We built it. Pre-registered thresholds, a named paper as the benchmark (Baur 2013), thirty years of LBMA gold prices split cleanly into before-and-after. The rule could have passed.
 
-A claim that's never been given the chance to turn red was never tested. It was just believed.
+We gave "buy gold in September" the chance to fail. It failed: four up Septembers out of the last fifteen since 2011.
 ```
-（108 词，现场计数）
+（100 词，round 2 改稿后重数——原收口"A claim that's never been given the chance to turn red was never tested. It was just believed."是"通则+概括"格言体，已删，改为只陈述这一条规则的具体结果）
 
 **每变体独立存在检验**：读者只读 V2 也能获得完整的判断兑现故事；只读 V3 也能拿到可执行的三步法且不需要认识黄金案例；只读 V4 也能获得完整的批判论点。**四条互相不依赖**。
+
+### round 2 补做：四条变体收口的负面清单自查（Gate round 1 指出 round 1 只查了 flagship 一份，四条变体从未被查）
+- **V1**：三行骨架，无收口句问题（entry 是链接，不是格言）。
+- **V2**：round 1 收口"Cutting it wasn't caution. It was correct."是字面「不是A是B」镜像句，已删；round 2 收口"We finished the math: four up Septembers out of the last fifteen since 2011. The line we cut for lack of proof stays cut."——只陈述具体结果，不概括通则。✅
+- **V3**：round 1 收口"Passing two out of three still means you're trading a corpse."是"通则+比喻"格言体，已删；round 2 收口"Gold aced the first two checks and failed the third. Run check 3 before you run check 1 next time."——落在本案具体结果+一句对读者的可执行建议，非概括性通则。✅
+- **V4**：round 1 收口"A claim that's never been given the chance to turn red was never tested. It was just believed."是"通则+概括"格言体，已删；round 2 收口"We gave 'buy gold in September' the chance to fail. It failed: four up Septembers out of the last fifteen since 2011."——只陈述本案结果。✅
+- 四条收口 round 2 后统一落在同一个具体数字（4/15）上，不构成重复——这是核心事实，各变体的路径/切入点不同（判断链/清单/批判），落点相同是预期的一致性而非缩写。
 
 **newsletter 变体**：本卡未产（`brain/newsletter.md` 开站状态"已开"，可续跑补做——不做不代表不可用，本卡时间预算优先覆盖 X 五入口）。
 
