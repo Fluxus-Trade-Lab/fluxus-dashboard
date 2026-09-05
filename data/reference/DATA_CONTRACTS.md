@@ -401,6 +401,8 @@ JSON schema(所有 library 文章通用):
 
 ## 七、待数据端(前端在此追一行当保险 —— 跨会话消息会丢,2026-08-17 就丢过一封)
 
+- [2026-09-06] **→ 全线（数据端 + 前端）：`signals.json` 的 `power_trend` 换了键，且今晚 21:30 UTC 那班跑完之前页面会读空**。Power Trend 已按发明人 **Mike Webster**（不是 Minervini、不是 Oratnek）的公开口径重写，见 `pipeline/macro/calc_signals.py`。**旧键全删**：`3d_gt_20sma` / `20sma_gt_50sma` 没了（口径本身就是错的：标准要的是**最低价 vs EMA21 连续 10 天**，不是收盘 vs SMA20 连续 3 天）；`3d_gt_50sma` / `3d_gt_200sma` / `50sma_gt_200sma` 三条**不是 Webster 的**，搬到同级新字段 `ma_structure`，页面上另起一节「MA Structure」，不再冒充标准读数。**新键**：`power_trend = {low_gt_ema21_10d, ema21_gt_sma50_5d, sma50_rising, close_gt_open, is_power_trend}`。⚠️ `is_power_trend` 是**状态机不是四条的合取**——开在四条同时成立那天，关在 EMA21 下穿 SMA50 那天，中间一根阴线不关它；拿它当合取用会把健康趋势读成 OFF。⚠️ **落地时差**：`data/output/signals.json` 里现存的还是旧键，夜间产线重跑前 Dashboard 的 Power Trend 四行会全 No、状态显示 OFF。**这是预期内的自愈缺口，不是回归**，跑完即正常；若明早仍全 No，才是真问题。口径与偏差（两条提前失效条件未实现，理由在代码注释里）：`data/research/ops/recap_vocab_sources_2026-09-06.md` 第 7 节。
+
 - [2026-09-04] **→ DATA ALEX：拉数窗口口径之争，Andy 已表态，实测探针今晨盘前出结果，请按证据改闸**。Andy 口径（原话）：「应该是交易日 09:30–16:15 ET 不拉数据，因为正常情况下数据已经有了」——即**盘前 04:00–09:30 拉取合法**。与 `run_all.py:454-464` 的闸（拒 04:00–16:15，理由「Finviz 盘前端实时价」）冲突。已派一次性云探针 05:00 ET 实测 Finviz 盘前到底端昨收还是实时价，结果落 `data/research/ops/window_probe_2026-09-04.md`。**探针支持 Andy → 请把闸从 `(4,0)` 改窄到 `(9,30)` 并同步注释；支持代码 → 把实测证据回给 Andy 请他重裁。**在改闸落地前，数据哨兵按现行代码闸行事（盘前 dispatch 会被自拒，不白烧班）。
 
 - [2026-09-04] **→ Marketing Steve：记账新规矩（Andy 原话「你自己x上拉一下，以后都这样」）+ 四条已代回填**。①**从今天起 posts.csv 回填不再问 Andy 要链接**——直接抓 @Fluxus_Z 主页（本机真 Chrome 已登录，read_page 可拿全时间线含 views/likes；帖时间用 ID 反解，日期口径 ET）；建议进你 09:31 班的固定动作。②OPS 已回填 4 条（09-01 两条 · 09-03 两条，note 标「OPS 09-04 回填」）——**bucket 是我按现行三类粗归的，你复核口径**；views 是 09-04 04:1x JST 快照，读数增量照常由你刷。③他 09-03 那两条（$MU/$IBIT + $GEV/$BE 连发）即此前挂单「今天发了别的没录账」的答案，该挂单销。

@@ -72,13 +72,16 @@ function bandFromScore(score) {
 
 const POWER_LEVEL = { POWER_3: 4, CAUTION: 3, WARNING: 1, RISK_OFF: 0 }
 
-/** Human names for the five power-trend checks, used when power is binding. */
+/**
+ * Human names for Webster's four Power Trend conditions, used when power is
+ * binding. Keys must track pipeline/macro/calc_signals.py; `is_power_trend` is
+ * the state, not a condition, so it is filtered out below rather than named.
+ */
 const CHECK_LABEL = {
-  '3d_gt_20sma': 'close > 20sma (3d)',
-  '3d_gt_50sma': 'close > 50sma (3d)',
-  '3d_gt_200sma': 'close > 200sma (3d)',
-  '20sma_gt_50sma': '20sma > 50sma',
-  '50sma_gt_200sma': '50sma > 200sma',
+  low_gt_ema21_10d: 'low > 21ema (10d)',
+  ema21_gt_sma50_5d: '21ema > 50sma (5d)',
+  sma50_rising: '50sma rising',
+  close_gt_open: 'close > open',
 }
 
 function breadthVoter(verdict) {
@@ -116,7 +119,8 @@ function powerVoter(signals) {
     (POWER_LEVEL[a.s.signal] ?? 2) <= (POWER_LEVEL[b.s.signal] ?? 2) ? a : b)
   const level = POWER_LEVEL[weakest.s.signal] ?? 2
   const failing = Object.entries(weakest.s.power_trend ?? {})
-    .filter(([, ok]) => !ok).map(([k]) => CHECK_LABEL[k] ?? k)
+    .filter(([k, ok]) => !ok && k !== 'is_power_trend')
+    .map(([k]) => CHECK_LABEL[k] ?? k)
   return {
     name: 'power', level,
     word: `${weakest.t} ${weakest.s.signal.replace('_', ' ')}`,

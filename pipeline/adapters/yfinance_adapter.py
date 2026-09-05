@@ -16,6 +16,7 @@ from .yahoo_budget import BUDGET
 from ..constants.tickers import STOCK_GROUPS
 from ..constants.leveraged import get_leveraged_etfs
 from ..screeners.atr_enrichment import atr_multiple_from_levels
+from ..macro.calc_signals import calculate_ma_structure, calculate_power_trend
 
 logger = logging.getLogger(__name__)
 
@@ -1376,14 +1377,13 @@ class YfinanceAdapter(BaseAdapter):
                     'sma50': sma50,
                     'sma200': sma200,
                     'sma20': sma20,
-                    # Oratnek's Power Trend checks
-                    'power_trend': {
-                        '3d_gt_20sma': bool(hist['Close'].iloc[-3:].min() > sma20),
-                        '3d_gt_50sma': bool(hist['Close'].iloc[-3:].min() > sma50),
-                        '3d_gt_200sma': bool(hist['Close'].iloc[-3:].min() > sma200),
-                        '20sma_gt_50sma': bool(sma20 > sma50),
-                        '50sma_gt_200sma': bool(sma50 > sma200),
-                    },
+                    # Mike Webster's Power Trend -- an ON/OFF state, replayed
+                    # over the whole history rather than recomputed daily.
+                    # Definition and citations live in pipeline/macro/calc_signals.py.
+                    'power_trend': calculate_power_trend(hist),
+                    # Our own three MA checks, which used to sit inside
+                    # 'power_trend' claiming to be Webster's. They are not.
+                    'ma_structure': calculate_ma_structure(hist, sma50, sma200),
                     # Trend Status (Oratnek style)
                     'trend_status': {
                         '9ema_dist': round(float((close - hist['Close'].ewm(span=9).mean().iloc[-1]) / close * 100), 2),
