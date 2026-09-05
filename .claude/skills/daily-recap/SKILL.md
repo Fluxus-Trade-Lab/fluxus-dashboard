@@ -86,3 +86,9 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **截图用亮主题底色**，不用暗底（playwright `colorScheme:'light'`）
 - **Portfolio 以他最后发布的版本为权威**：生成前对照他最新交付物（老工具 PDF/tracker），不是本地最近一张截图——09-04 他的 tracker 已从 7 仓并成 3 名（ZETA、HOOD ×2、ETHA），我用了旧图
 - 正文里的方法论注脚（均线缠绕闸说明）与页脚数据出处段：**内部规则不上成品页**——留在工作稿 md，PDF 只给读者要读的
+### [2026-09-06] 截图规则（他原话「这几张截图都是有问题，原因之一是通过浏览器数据可能并不及时」）
+- **截图前先核数据新鲜度**，按页面的数据源分两类：
+  - **静态 JSON 页**（Dashboard / Themes，读 `data/output/*.json`）：headless 可截，但先确认当天收盘数据已落 main（页面顶部日期栏 = 天然核验水印，截出来必须是目标交易日）
+  - **浏览器状态页**（Portfolio，数据走 Google Sheets sync + localStorage）：**headless 干净 profile 里永远是空/旧的，禁止用无状态浏览器截**——只能用 Andy 自己浏览器的截图，或他最后交付物（上一份 PDF）里抽出的图。09-06 实测栽过：本地最近一张截图是 7 仓旧版，他的 tracker 已并成 3 名
+- **Founders Note 不截图**：最新内容在 Sheet 里，pipeline 能直接拿到文本——取文字进正文，不走图。（待接：pipeline 读 Founders Note 的取数路径）
+- 三尺度框架：他 09-06 裁「不急」——进停车场，立标准+验证之前不重提
