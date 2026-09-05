@@ -1,12 +1,14 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **flagship**
+status: **review**
 rounds: 3
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
 > 六站顺序亲自跑（Workflow/Agent 工具本轮未获用户显式 ultracode 授权，不触发多 agent 编排；Gate 用独立新上下文子 agent 跑，见 `## review`）。
 >
 > **round 2（工头亲执旗舰站+分发站，按 Gate round 1 退回理由改）**：flagship 收口去掉对仗格言、换成落在具体数字上的重话；口径句补上"我方对数均值换算成 Baur 算术均值口径"的说明；V2/V3/V4 三条收口的镜像句/格言体一并改掉（Gate round 1 指出这一步此前从未被自查覆盖）；research 表第 6 行的出处拆成两条 commit（Andy 原话 `164317fc` + 验证结案 `7e924be4`）。改动明细见各节内 "round 2 改稿说明"。status 改回 `review`，等第二轮独立子 agent 复审。
+>
+> **round 3（Gate round 2 拦下"收口复述正文"，工头再改）**：flagship 删掉收口整句、全文停在"Nobody proved the fall."；V2 删掉收口里复述正文的前半句；V3 顺手把同一形状的复述也改掉。**rounds=3，按 `roles/06_gate.md` 契约：下一轮（round 4）若仍不能过闸，只能放行进 APPROVAL_QUEUE 或判 killed，不产生 round 5。** 改动明细见各节内"round 3 改稿说明"。
 
 ---
 
@@ -94,14 +96,15 @@ rounds: 3
 > Then we ran the fifteen years since the paper came out. September since 2011: -1.35%. Four up years out of fifteen.
 >
 > We're not going to tell you it's bearish now — that's a claim we didn't pre-register, and picking a sign after you've already seen the data doesn't count as proof. What the test can say: the rise is dead. Nobody proved the fall.
->
-> Four up Septembers out of the last fifteen. That's what's left of "golden September."
 
-**词数**：157（`python3 -c "print(len(text.split()))"` 现场计数，round 2 改稿后重数）。
+**词数**：143（`python3 -c "print(len(text.split()))"` 现场计数，round 3 改稿后重数）。
 
 ### 🔧 round 2 改稿说明（对应 Gate round 1 退回理由）
 1. **收口改写**：删掉 "An edge has a shelf life the moment someone writes it down. This one's was fifteen years."（04_flagship.md 明文禁的对仗格言/`feedback_no_mirrored_aphorism_closings`）。改为直接落在具体数字上的重话："Four up Septembers out of the last fifteen. That's what's left of 'golden September.'"——不概括成一条通则，只说这一件事。
 2. **口径句改写**：原句把 +2.52%（对数均值）与 Baur 的 +2.2%（大概率算术均值）直接说成 "same order of magnitude"，未注明口径。改为："Our test reads +2.52% for September; convert to his own convention and that's +2.68%, against his published +2.2%."——把口径换算讲清楚（我方 +2.52% 是对数均值口径下的检验值，换算成 Baur 的算术均值口径是 +2.68%，与他的 +2.2% 同一量级），不引入"log/arithmetic mean"这类方法论黑话上台面。
+
+### 🔧 round 3 改稿说明（对应 Gate round 2 退回理由："复述正文"）
+round 2 的收口 "Four up Septembers out of the last fifteen. That's what's left of 'golden September.'" 与正文第 3 段 "September since 2011: -1.35%. Four up years out of fifteen." 是同一个数字换词序又说一遍——不是压缩是复述，`feedback_no_mirrored_aphorism_closings` 记录的第二种形状。**round 3 直接删掉这句收口**，全文停在第 4 段 "What the test can say: the rise is dead. Nobody proved the fall."——这句本身已经是具体、不概括、非镜像的重话，不需要再加一句总结。
 
 ### 配图占位（毛坯规格，等 Vera）
 样本内/样本外对照小表：
@@ -156,9 +159,9 @@ There wasn't, so we did.
 
 09-05: we finished checking. Thirty years of LBMA data, a named paper (Baur 2013) as the benchmark, four pre-registered hypotheses. All four came back NULL. September's mean since 2011 is actually negative — -1.35%, four up years out of fifteen.
 
-We finished the math: four up Septembers out of the last fifteen since 2011. The line we cut for lack of proof stays cut.
+The line we cut for lack of proof stays cut.
 ```
-（91 词，round 2 改稿后重数——原收口"wasn't caution. It was correct."是字面镜像句，已删；改为只落在具体数字上）
+（77 词，round 3 改稿后重数——round 2 收口"We finished the math: four up Septembers...since 2011."与正文第 3 段的"-1.35%, four up years out of fifteen"是同一数字复述，Gate round 2 拦下；round 3 删掉复述部分，收口只留"The line we cut for lack of proof stays cut."）
 
 ### V3 · 可复用物（entry 4）
 ```
@@ -170,9 +173,9 @@ Before you trust the next "seasonal edge" someone quotes at you, run three check
 
 Gold's "September effect" has a real paper (Baur, 2013). Our test reads +2.52%, which converts to +2.68% in his own convention, against his published +2.2% — check 2 passed. Then check 3: -1.35% since 2011, four up years out of fifteen.
 
-Gold aced the first two checks and failed the third. Run check 3 before you run check 1 next time.
+Most people stop at check 2. Check 3 is the one that would have saved you here.
 ```
-（158 词，round 2 改稿后重数——① 收口"still means you're trading a corpse"是格言体，已删，改为具体到本案的直接陈述+一句对读者的可执行建议；② 补上口径换算，不再把 +2.52% 与 +2.2% 直接说成"几乎完全一致"）
+（155 词，round 3 改稿后重数——round 2 收口"Gold aced the first two checks and failed the third"与开头第一句"it aced the first two and choked on the third"是同一句话复述，Gate round 2 虽未点名 V3 但同一形状存在，本轮一并改掉；口径换算说明保留（round 2 已修，Gate round 2 已核实 +2.68% 出处成立））
 
 ### V4 · 批判做法（entry 5）
 ```
@@ -190,10 +193,15 @@ We gave "buy gold in September" the chance to fail. It failed: four up September
 
 ### round 2 补做：四条变体收口的负面清单自查（Gate round 1 指出 round 1 只查了 flagship 一份，四条变体从未被查）
 - **V1**：三行骨架，无收口句问题（entry 是链接，不是格言）。
-- **V2**：round 1 收口"Cutting it wasn't caution. It was correct."是字面「不是A是B」镜像句，已删；round 2 收口"We finished the math: four up Septembers out of the last fifteen since 2011. The line we cut for lack of proof stays cut."——只陈述具体结果，不概括通则。✅
-- **V3**：round 1 收口"Passing two out of three still means you're trading a corpse."是"通则+比喻"格言体，已删；round 2 收口"Gold aced the first two checks and failed the third. Run check 3 before you run check 1 next time."——落在本案具体结果+一句对读者的可执行建议，非概括性通则。✅
-- **V4**：round 1 收口"A claim that's never been given the chance to turn red was never tested. It was just believed."是"通则+概括"格言体，已删；round 2 收口"We gave 'buy gold in September' the chance to fail. It failed: four up Septembers out of the last fifteen since 2011."——只陈述本案结果。✅
-- 四条收口 round 2 后统一落在同一个具体数字（4/15）上，不构成重复——这是核心事实，各变体的路径/切入点不同（判断链/清单/批判），落点相同是预期的一致性而非缩写。
+- **V2**：round 1 收口"Cutting it wasn't caution. It was correct."是字面「不是A是B」镜像句，已删。
+- **V3**：round 1 收口"Passing two out of three still means you're trading a corpse."是"通则+比喻"格言体，已删。
+- **V4**：round 1 收口"A claim that's never been given the chance to turn red was never tested. It was just believed."是"通则+概括"格言体，已删；round 2 收口"We gave 'buy gold in September' the chance to fail. It failed: four up Septembers out of the last fifteen since 2011."——只陈述本案结果，且该数字在 V4 正文只出现这一次（非复述）。✅ **Gate round 2 复核通过，未再改动。**
+
+### round 2 自查的错误 + round 3 更正（Gate round 2 指出：镜像句/格言体删掉了，但同一条 memory 记录的第二种形状——"收口复述正文已说过的话"——round 2 自查完全没查，flagship 与 V2 双双踩中，判定跨资产病）
+- **flagship**：round 2 收口"Four up Septembers out of the last fifteen. That's what's left of 'golden September.'"与正文第 3 段"Four up years out of fifteen."是同一数字复述。**round 3：直接删掉这句收口，全文停在"Nobody proved the fall."**（见 flagship 节内"round 3 改稿说明"）。
+- **V2**：round 2 收口"We finished the math: four up Septembers out of the last fifteen since 2011. The line we cut for lack of proof stays cut."前半句与正文第 3 段"-1.35%, four up years out of fifteen"复述。**round 3：删掉复述的前半句，收口只留"The line we cut for lack of proof stays cut."**
+- **V3**（Gate round 2 未点名为退回理由，但同一形状确实存在，本轮顺手一并改掉）：round 2 收口"Gold aced the first two checks and failed the third."与开头第一句"it aced the first two and choked on the third"复述同一件事。**round 3：改为"Most people stop at check 2. Check 3 is the one that would have saved you here."**——不复述开头，落在"检查顺序"这个新信息上。
+- **V4 未改动**：Gate round 2 已确认 V4 的数字只在收口出现一次，不构成复述。
 
 **newsletter 变体**：本卡未产（`brain/newsletter.md` 开站状态"已开"，可续跑补做——不做不代表不可用，本卡时间预算优先覆盖 X 五入口）。
 
