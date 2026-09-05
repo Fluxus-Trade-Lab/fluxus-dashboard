@@ -86,6 +86,41 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Tuple
 
 ARCHIVE = Path("data/history/ticker_events.csv")
+HISTORY = Path("data/history")
+
+# ---- 第二层：跨**文件**的同一条恒等式 ----
+# 两个归档若都为同一个 (交易日, 票) 记了同一个量，那也必须相等。
+# 这一层抓得到第一层抓不到的东西：2026-09-02 在 ticker_events 内部完全自洽，
+# 而 `delayed_ep_log` 那天记的是**前一场**的收盘价 —— 只有跨文件比才看得见。
+# 每一对都**只比实测能对齐的列**；`group` 全局排除（多义列，见上）。
+CROSS: Tuple[Tuple[str, str, str, str, Tuple[str, ...]], ...] = (
+    ("leaders_log", "date", "delayed_ep_log", "as_of", ("close",)),
+    ("ticker_events", "date", "momentum97_shadow", "date", ("change_pct", "sector")),
+    ("leaders_log", "date", "shortlist_log", "date", ("rs_1m", "rs_3m", "tml", "atr_from_sma50")),
+    ("leaders_log", "date", "shortlist_seat_log", "date", ("rs_1m", "rs_3m", "atr_from_sma50")),
+    ("shortlist_log", "date", "shortlist_seat_log", "date",
+     ("rs_1m", "rs_3m", "rs_line_pctl_21", "atr_from_sma50", "heat_rank", "seat", "state")),
+    ("asset_signals", "date", "shortlist_log", "date", ("rs_line_pctl_21", "atr_from_sma50")),
+)
+
+# 跨文件一律按较粗一方记录的精度比：`delayed_ep_log` 写的是 float32 残迹
+# （150.66 存成 `150.66000366210938`），精确比会把 71 例里的 54 例判成假分歧。
+CROSS_DECLARED: Dict[str, Tuple[str, str, str]] = {
+    "2026-09-02": (
+        "DATA ALEX", "2026-09-06",
+        "leaders_log 与 delayed_ep_log 对当天 11 只共同票的 close 全部不一致，而其中 "
+        "**10/11 的 delayed_ep 读数逐位等于 leaders_log 前一场(09-01)的读数** —— "
+        "delayed_ep_log 那天记的是前一场的收盘价。09-03 / 09-04 同一对比较零分歧。"
+        "旁证（是上下文不是证据）：git 历史里没有任何一条 `chore: market data 2026-09-02`",
+    ),
+    "2026-08-14": (
+        "DATA ALEX", "2026-09-06",
+        "同一天在 ticker_events 内部也坏（见 DECLARED）；这一层再独立报一次 —— "
+        "leaders_log 与 delayed_ep_log 对 9 只共同票里的 6 只 close 不一致。"
+        "两对互不相干的文件在同一天同时报错，是这天确实坏了的第二个证人",
+    ),
+}
+
 
 # CSV 里的读数由写入方 round(...,4)。归一到 6 位只是为了吃掉 float 的字符串往返，
 # 不是容差 —— 真实的分歧都在 10^-2 量级（见 docstring），不会被这一步抹平。
@@ -114,6 +149,37 @@ DECLARED: Dict[str, Tuple[str, str, str]] = {
         "7/7 有 08-14 对照的票逐位吻合。修法归数据端：重算或撤下该日的 preset:* 行",
     ),
 }
+
+
+def _load(name: str, root: Path = HISTORY) -> List[Mapping[str, str]]:
+    p = root / f"{name}.csv"
+    if not p.exists():
+        return []
+    with open(p, newline="") as fh:
+        return list(csv.DictReader(fh))
+
+
+def cross_disagreements(root: Path = HISTORY,
+                        pairs: Iterable = CROSS) -> Dict[str, List[dict]]:
+    """日期 -> 跨文件对不上的读数。比法：按较粗一方记录的精度。"""
+    by_date: Dict[str, List[dict]] = defaultdict(list)
+    for a, da, b, db, cols in pairs:
+        ra, rb = _load(a, root), _load(b, root)
+        if not ra or not rb:
+            continue
+        for col in cols:
+            A = {(r[da], r["ticker"]): r[col].strip()
+                 for r in ra if col in r and (r.get(col) or "").strip()}
+            B = {(r[db], r["ticker"]): r[col].strip()
+                 for r in rb if col in r and (r.get(col) or "").strip()}
+            for k in set(A) & set(B):
+                places = min(_decimals(A[k]), _decimals(B[k]))
+                if _norm(A[k], places) != _norm(B[k], places):
+                    by_date[k[0]].append({"field": col, "ticker": k[1],
+                                          "readings": {A[k]: [a], B[k]: [b]}})
+    for d in by_date:
+        by_date[d].sort(key=lambda x: (x["field"], x["ticker"]))
+    return dict(by_date)
 
 
 def _rows(path: Path) -> Iterable[Mapping[str, str]]:
@@ -199,8 +265,12 @@ def coverage(path: Path = ARCHIVE, fields: Iterable[str] = FIELDS) -> Dict[str, 
             "rows_total": rows_total, "rows_seen": rows_seen}
 
 
-def audit(path: Path = ARCHIVE, declared: Mapping[str, Tuple[str, str, str]] | None = None) -> Dict[str, Any]:
+def audit(path: Path = ARCHIVE, declared: Mapping[str, Tuple[str, str, str]] | None = None,
+          cross_root: Path | None = None,
+          cross_declared: Mapping[str, Tuple[str, str, str]] | None = None) -> Dict[str, Any]:
     declared = DECLARED if declared is None else declared
+    cross_declared = CROSS_DECLARED if cross_declared is None else cross_declared
+    cross_root = (HISTORY if path == ARCHIVE else path.parent) if cross_root is None else cross_root
     read = readings(path)                     # 整个归档只读这一遍
     bad = disagreements(path, _read=read)
     denom = multi_screener_counts(path, _read=read)
@@ -221,9 +291,31 @@ def audit(path: Path = ARCHIVE, declared: Mapping[str, Tuple[str, str, str]] | N
             v.append(("E3", f"{d}: 声明的日期在归档里不存在"))
         elif d not in bad:
             v.append(("E2", f"{d}: 已经不再不一致 —— 请删掉这条声明"))
+    # 第二层只在那些文件真的在场时才跑。**不在场 ≠ 干净** —— 沉默地判绿，
+    # 正是「豁免让检查变绿」的那个形状，所以这里报一个 cross_checked=False 出去，
+    # 而不是让 E2 对着一堆根本没读到的文件乱响。
+    # 「有没有跑成」问的是**有没有一对是齐的**，不是「有没有任一个文件在」——
+    # 一个文件孤零零地在，比不出任何东西，却会让这个标志说 True。
+    cross_checked = any((Path(cross_root) / f"{a}.csv").exists()
+                        and (Path(cross_root) / f"{b}.csv").exists()
+                        for a, _, b, _, _ in CROSS)
+    cross: Dict[str, List[dict]] = {}
+    if cross_checked:
+        cross = cross_disagreements(Path(cross_root))
+        for d in sorted(cross):
+            if d not in cross_declared:
+                v.append(("E5", f"{d}: {len(cross[d])} 处**跨文件**读数不一致，且没有声明"))
+        for d, entry in sorted(cross_declared.items()):
+            if len(entry) != 3 or not entry[0] or not entry[2]:
+                v.append(("E4", f"{d}: 跨文件声明缺 owner 或缺理由"))
+            elif d not in cross:
+                v.append(("E2", f"{d}: 跨文件已经不再不一致 —— 请删掉这条声明"))
+
     return {"violations": v, "disagreements": bad, "denominators": denom,
             "declared": dict(declared), "dates": len(all_dates),
-            "pairs_checked": sum(denom.values()), "coverage": cov}
+            "pairs_checked": sum(denom.values()), "coverage": cov,
+            "cross": cross, "cross_declared": dict(cross_declared),
+            "cross_checked": cross_checked}
 
 
 def _fmt(res: Dict[str, Any]) -> str:
@@ -233,8 +325,8 @@ def _fmt(res: Dict[str, Any]) -> str:
     L.append(f"  可比的 (字段,日期,票): {res['pairs_checked']}    归档日期: {cov['dates_total']}")
     L.append("")
     L.append("  这把闸看得见多少（有闸 ≠ 闸盖住了全部）:")
-    L.append(f"    行:   {cov['rows_seen']} / {cov['rows_total']} "
-             f"({cov['rows_seen'] / cov['rows_total']:.1%}) 至少带一个被查字段")
+    pct = f"{cov['rows_seen'] / cov['rows_total']:.1%}" if cov["rows_total"] else "n/a"
+    L.append(f"    行:   {cov['rows_seen']} / {cov['rows_total']} ({pct}) 至少带一个被查字段")
     L.append(f"    日期: {cov['dates_seen']} / {cov['dates_total']}")
     if cov["dates_blind"]:
         L.append(f"    ⚠️ 完全看不见的日期 {len(cov['dates_blind'])} 天: "
@@ -256,6 +348,22 @@ def _fmt(res: Dict[str, Any]) -> str:
             L.append(f"      e.g.   [{x['field']}] {x['ticker']}: {r}")
         if n > 3:
             L.append(f"      ... 另有 {n - 3} 个")
+    L.append("")
+    L.append("  第二层 —— 跨**文件**的同一条恒等式（两个归档都记了同一个量）:")
+    cross = res.get("cross", {})
+    if not res.get("cross_checked"):
+        L.append("    ⚠️ 没跑 —— 这个目录里找不到要对照的归档。**不在场不等于干净。**")
+    elif not cross:
+        L.append("    零分歧")
+    for d in sorted(cross):
+        entry = res["cross_declared"].get(d)
+        L.append(f"    {'[declared]' if entry else '[UNDECLARED]'} {d}: {len(cross[d])} 处")
+        if entry:
+            L.append(f"        owner: {entry[0]}  (发现于 {entry[1]})")
+            L.append(f"        why:   {entry[2]}")
+        for x in cross[d][:3]:
+            r = "  ".join(f"{v}={'/'.join(sc)}" for v, sc in x["readings"].items())
+            L.append(f"        e.g.   [{x['field']}] {x['ticker']}: {r}")
     L.append("")
     L.append("声明是欠条，不是结案。")
     L.append("")

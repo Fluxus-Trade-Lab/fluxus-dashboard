@@ -255,3 +255,80 @@ def test_the_real_archive_agrees_with_itself():
         "ticker_events 里出现了新的读数不一致 —— 同一天同一只票，两个筛子报了两个数。\n"
         "先跑 `python3 -m pipeline.tools.audit_event_agreement` 看是哪一天、哪些票。\n"
         + "\n".join(f"  {c} {m}" for c, m in res["violations"]))
+
+
+# ---------- 第二层：跨文件的同一条恒等式 ----------
+
+def _write_named(tmp_path: Path, name: str, head: list[str], rows: list[list[str]]) -> None:
+    with open(tmp_path / f"{name}.csv", "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(head)
+        w.writerows(rows)
+
+
+def _two_logs(tmp_path: Path, leaders_close: str, ep_close: str, date: str = "2026-09-09"):
+    _write_named(tmp_path, "leaders_log", ["date", "ticker", "close"], [[date, "AMLX", leaders_close]])
+    _write_named(tmp_path, "delayed_ep_log", ["as_of", "ticker", "close"], [[date, "AMLX", ep_close]])
+    return tmp_path
+
+
+def test_the_cross_file_layer_catches_a_real_disagreement(tmp_path):
+    """真数：2026-09-02 的 AMLX —— leaders_log 34.49，delayed_ep_log 33.81
+    （33.81 正是 leaders_log 前一场 09-01 的读数）。"""
+    _two_logs(tmp_path, "34.49", "33.810001373291016", date="2026-09-02")
+    bad = A.cross_disagreements(tmp_path)
+    assert list(bad) == ["2026-09-02"]
+    assert bad["2026-09-02"][0]["field"] == "close" and bad["2026-09-02"][0]["ticker"] == "AMLX"
+
+
+def test_the_float32_artifact_is_not_a_disagreement(tmp_path):
+    """`delayed_ep_log` 把 150.66 存成 `150.66000366210938`。精确比会把 71 例里的 54 例
+    判成假分歧；按较粗一方的精度比才对。"""
+    _two_logs(tmp_path, "150.66", "150.66000366210938")
+    assert A.cross_disagreements(tmp_path) == {}
+
+
+def test_an_undeclared_cross_file_date_is_an_E5(tmp_path):
+    _write_named(tmp_path, "ticker_events", ["date", "ticker", "screener", "change_pct"], [])
+    _two_logs(tmp_path, "34.49", "33.81", date="2026-09-09")
+    res = A.audit(tmp_path / "ticker_events.csv", declared={}, cross_root=tmp_path, cross_declared={})
+    assert [c for c, _ in res["violations"]] == ["E5"]
+    assert res["cross_checked"] is True
+
+
+def test_a_declared_cross_file_date_is_green_and_a_stale_one_is_an_E2(tmp_path):
+    _write_named(tmp_path, "ticker_events", ["date", "ticker", "screener", "change_pct"], [])
+    _two_logs(tmp_path, "34.49", "33.81", date="2026-09-09")
+    ok = A.audit(tmp_path / "ticker_events.csv", declared={}, cross_root=tmp_path,
+                 cross_declared={"2026-09-09": ("DATA ALEX", "2026-09-06", "为什么")})
+    assert ok["violations"] == []
+    stale = A.audit(tmp_path / "ticker_events.csv", declared={}, cross_root=tmp_path,
+                    cross_declared={"2026-09-09": ("DATA ALEX", "2026-09-06", "为什么"),
+                                    "2025-01-01": ("DATA ALEX", "2026-09-06", "早修好了")})
+    assert [c for c, _ in stale["violations"]] == ["E2"]
+
+
+def test_missing_cross_files_are_reported_as_not_checked_not_as_clean(tmp_path):
+    """**不在场不等于干净。** 沉默判绿正是「豁免让检查变绿」的那个形状。"""
+    _write_named(tmp_path, "ticker_events", ["date", "ticker", "screener", "change_pct"], [])
+    res = A.audit(tmp_path / "ticker_events.csv", declared={}, cross_root=tmp_path,
+                  cross_declared={"2026-09-02": ("DATA ALEX", "2026-09-06", "为什么")})
+    assert res["cross_checked"] is False
+    assert res["violations"] == []          # 没读到文件时不许对着空气报 E2
+    assert "没跑" in A._fmt(res)             # 但必须在输出里说出来
+
+
+def test_the_cross_pairs_do_not_include_the_polymorphic_group_column(tmp_path):
+    """`ticker_events × leaders_log` 的 `group` 实测 **1699/1699 全部不一致** ——
+    多义列，跨文件层同样不能碰。写死，不引常量。"""
+    for _, _, _, _, cols in A.CROSS:
+        assert "group" not in cols
+    assert ("leaders_log", "date", "delayed_ep_log", "as_of", ("close",)) in A.CROSS
+
+
+def test_an_empty_archive_does_not_crash_the_formatter(tmp_path):
+    """上一条测试在写的时候把这个揪出来了：空归档时覆盖率那行会 ZeroDivisionError。
+    崩溃不是「红」，崩溃是这把闸对这份输入**没有结论**（协议：红得不是地方）。"""
+    _write(tmp_path, [], "empty.csv")
+    out = A._fmt(A.audit(tmp_path / "empty.csv", declared={}, cross_root=tmp_path, cross_declared={}))
+    assert "n/a" in out
