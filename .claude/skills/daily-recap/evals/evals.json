@@ -1,0 +1,8 @@
+{
+  "skill_name": "daily-recap",
+  "gold_standard": "Andy 已交付的真实 PDF（本机 ~/Documents/Trading/01_Market_Reports_Daily/2026-08 与 2026-09，_EN 六份）——这是首个有真金标的评估集",
+  "evals": [
+    {"id": 1, "prompt": "做 2026-09-04（周五）的复盘", "expected_output": "含周五 Weekly 节；Big Picture 骨架句可溯源到 Andy 当日 Discord 原话；每个数字标来源字段；均线只以事件出现且先过震荡闸；留白处标 ⟨Andy⟩；FTD/distribution day 不出现（B 法）", "files": []},
+    {"id": 2, "prompt": "做 2026-09-03（周四）的复盘，然后与真实 PDF Market_Recap_2026-09-03_EN.pdf 对比选材", "expected_output": "无 Weekly 节；对比报告分三栏：我们也选了/他们有我们数据里没有/我们有他们没提；不许照抄真 PDF 措辞", "files": []}
+  ]
+}
