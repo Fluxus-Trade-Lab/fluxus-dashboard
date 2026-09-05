@@ -1,7 +1,7 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **queued**
-rounds: 1
+status: **flagship**
+rounds: 2
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
 > 六站顺序亲自跑（Workflow/Agent 工具本轮未获用户显式 ultracode 授权，不触发多 agent 编排；Gate 用独立新上下文子 agent 跑，见 `## review`）。
@@ -197,7 +197,43 @@ A claim that's never been given the chance to turn red was never tested. It was 
 **暂缺执行者（Visual Vera 线无夜跑 routine）——本卡不配图，按毛坯审。样本内/样本外对照小表见 flagship 节配图占位。**
 
 ## review
-→ 见下方 Gate 独立子 agent 判定（追加中）
+
+**⑦ Gate · 2026-09-06 05:53 JST（UTC 08-05 20:53）· 独立新上下文子 agent · rounds 1（未到上限）**
+
+## 判定：**退回 ④ 旗舰站**（⑤ 分发站需在旗舰改完后同步重跑收口）
+
+硬闸先过：distribution 节入口号 **1/3/4/5，齐全不重复**；hook 类型（验证回收钩🆕 / 时间戳锚 / 反面先行钩 / 能不能变红钩）逐条对过 `brain/hooks.md`〈类型登记〉，四型互不重复，且「验证回收钩」的机制定义（"此前公开留过一个'验证不了就先不发'的悬念…本帖回来交验证结果"）与在册的「时间戳锚」（入场当天公开）、「时差票根钩」（并置两个自有时间戳）确实是不同机制，非换皮——**硬闸通过，进逐句审**。
+
+独立复算 research 节全部数字（现场 `git show origin/main:data/research/gold_autumn_2026-09/results.md` + `git show 7e924be4 -- data/reference/DATA_CONTRACTS.md`）：样本内 +2.52%/t+2.83/p0.0042、+1.89%/t+2.57/p0.0077（Baur 报 +2.2%/+1.8%，算术均值口径下我方 +2.68%/+2.00%）；样本外 H1 −1.35%/4 of 15、H2 −0.94%、H3a +0.95%、H3b +1.96%；P(X≤4|n=15)=0.0592（双尾0.1185）；最小可能 p=3.05e-05；LBMA 黄金 1968-04 起701月/白银1968-01起704月缺口0；t 分布校准 df=30 t=2.0423→0.024999（误差5e-06）——**逐位对上，散文四条变体+旗舰零手打数字**（V1–V4、flagship 词数 152/90/140/108 现场复数亦对：152/90/140/108）。BRAIN §三五条、CTA 冻结线（`brain/offers.md`：全卡零 CTA，无一处指向付费/会员/Whop，比"停在订阅"更保守）、"一月效应"未证实项零泄漏（全文五份资产 grep "January/winter/一月/冬季" 零命中）均通过。`writing`/`visual` 两节按过渡条款以毛坯审，不算缺字段。
+
+**逐句审拦下两处，均落在④/⑤边界内，故退回旗舰站（分发站的问题是旗舰问题的下游同构，随旗舰改完一起重跑）：**
+
+### ⛔ 退回理由 1（硬伤 · 违反 04_flagship.md 角色契约明文）：收口是「对仗格言」，契约白纸黑字禁止
+
+flagship 收口：*"An edge has a shelf life the moment someone writes it down. This one's was fifteen years."*
+
+`roles/04_flagship.md` returns 字段原文：**「压缩收尾（一读就懂的重话，不要对仗格言）」**——这不是软性文风偏好，是角色契约的书面条款。这句收口是「一般化真理 + 具体实例」的格言结构，属于本产线反复记录、已升级为 memory 的 `feedback_no_mirrored_aphorism_closings`（跨会话至少复现两次的形状；Andy 原话：「他删了我评分第一的收口句；要一读就懂的重话，不要要回味的巧话」，见 `Fluxus_Substack/drafts/001_after_party_dessert/001_DRAFT_v14.md:144` 等多处记录）。RECORD 自查节（flagship 下「verdicts.jsonl 负面清单自查」）只查了「镜像句」与「对仗格言」两个窄形状，且判定「'An edge has a shelf life...'是陈述句不是对仗」——**这个判定本身就是本条要拦的错**：`feedback_no_mirrored_aphorism_closings` 禁的是"格言体收口"这整类，不要求字面对仗才算命中。
+
+**同一形状在分发站被放大到四份**：V2 收口 *"Cutting it wasn't caution. It was correct."* 是字面「不是A是B」镜像句（`wasn't X. It was Y.`），比 flagship 更直接命中「镜像句」这条负面清单本身；V3 收口 *"Passing two out of three still means you're trading a corpse."*、V4 收口 *"A claim that's never been given the chance to turn red was never tested. It was just believed."* 同属格言/警句体。**RECORD 的负面清单自查只覆盖了 flagship 一份，四条 X 变体的收口从未被自查过**——这是本卡"逐句审四条 X 变体"这一步事实上空转的证据。
+
+### 🔴 退回理由 2（口径混用未按 research 节自己的要求注明）
+
+flagship 正文：*"We ran his numbers first: +2.52% for September, against his published +2.2%. Same sign, same order of magnitude."* V3 正文重复同一比较："we reproduced it almost exactly — +2.52% against his +2.2%."
+
+`results.md` 原文（§一表格脚注）已写明：+2.52% 是**对数月收益均值**，Baur 报的 +2.2% **大概率是算术均值**——同一样本、同一窗口下我方算术均值口径实际是 **+2.68%**（比 +2.52% 更接近 +2.2%）。RECORD 自己的 research 节「未证实项之二」已明确要求：**"正文若要引用具体百分比需注明口径，不能把两种口径的数字混着摆在一句话里当'完全一致'"**——flagship 与 V3 把 +2.52%（对数）与 +2.2%（算术）并置成 "same order of magnitude" / "almost exactly"，**正是 research 节自己划的那条线**，且未注明口径。这不是新发现的问题，是 research 节已经预见、但写作没接住的一处。
+
+⛔ Gate 不代笔：两处修法均由旗舰站定（收口另写一句"一读就懂的重话"、或按 04_flagship.md 边界留空槽给 Andy；口径句改为要么注明"对数均值"要么改引算术均值 +2.68% 与 +2.2% 对比），本站不写替代文案。
+
+### 其余逐条（通过，留痕备查）
+
+- **跨资产病**：五个入口开头故事互不相同（V1 起于"过期检验"、V2 起于编辑决策时间线、V3 起于三步检验法、V4 起于反问"这条规矩被允许失败过吗"、flagship 起于读者已听过的老话）；语气未漂移，全 EN，主语是机制不是人；四变体互相独立成立（只读 V2/V3/V4 任一条都能获得完整故事），非缩写重建。
+- **AI 腔其余项**：开头无"我"字句（V2 以日期+"we"开头，属已在册的"时间戳锚"型合法用法，非违规）；方法论黑话（"pre-registered"在 V1/V4/flagship 出现三次）判定为核心论点本身（可复现性方法）而非内部量具泄漏（不同于"轮动/宽度"类内部仪表读数），不拦但建议成稿时至少一处口语化解释。
+- **research 节次要瑕疵（不拦路，随手记）**：research 表第 6 行把 Andy 逐字原话（"有可以验证的吗？没有我们就暂时删除"）的出处标成 `commit 7e924be4`——**该 commit 是 09-05 结案条目，不含这句逐字引用**；原话实际出自 DATA_CONTRACTS §七 `[2026-08-31]` 挂单条目（另一个更早的 commit）。7e924be4 只对得上"验证完成、结论支持删除"那半句。建议旗舰站改稿时把出处拆成两个日期条目，不影响判断链本身成立。
+
+### 门铃待按 / 待认领
+无（本卡问题全部落在④/⑤边界内，不涉及其他线）。
+
+**收工三问**：①本轮踩的坑＝自查节的"负面清单自查"只做了字面模式匹配（"是不是对仗"）而没有对齐 memory 里真正的判据（"是不是巧话"），四条分发变体的收口完全没被自查覆盖——这是流程性漏检，不是这一条稿子独有；②`roles/06_gate.md` 帮了：硬闸+独立复算的强制顺序让口径问题在"进逐句审"之前就被 research 节自己的文字兜住了一半；建议给 04/05 两站契约都补一句"收口/结尾句自查必须覆盖旗舰+全部分发变体，不能只查旗舰"；③下轮（旗舰站断点续跑）第一件事：重写 flagship 收口为非格言体的"重话"，并修正 +2.52%/+2.2% 那句口径说明，然后分发站同步重写 V2/V3/V4 三处收口 + V3 的口径句，改完回 Gate。
 
 ## decision
 （owns：Andy 本人——待批）
