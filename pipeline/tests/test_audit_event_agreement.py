@@ -152,12 +152,44 @@ def test_one_screener_alone_is_never_a_disagreement(tmp_path):
     assert res["violations"] == [] and res["pairs_checked"] == 0
 
 
-def test_group_and_rel_volume_are_deliberately_not_checked(tmp_path):
-    """它们在**每一个**日期上都分歧（28.5% / 42.4%）——那是定义不同，不是快照坏了。
-    把它们放进来闸会天天红，然后被人学会跳过。这条测试钉住那个选择。"""
-    rows = [_row("2026-09-03", "CCC", "gainers_4pct", group="10", rel_volume="1.5"),
-            _row("2026-09-03", "CCC", "preset:pp_count", group="90", rel_volume="9.9")]
+def test_group_is_deliberately_not_checked(tmp_path):
+    """`group` 是**多义列**：momentum_97 往里写它自己的 RS 桶（97/98/99/100），
+    别的筛子写别的东西 —— 实测 111 个日期上都分歧，其中 953 例差得远
+    （healthy_charts 说 65、momentum_97 说 97）。同一个列名两个量。
+    放进来闸会天天红，然后被人学会跳过。这条测试钉住那个选择。"""
+    rows = [_row("2026-09-03", "CCC", "healthy_charts", group="65"),
+            _row("2026-09-03", "CCC", "momentum_97", group="97")]
     assert A.audit(_write(tmp_path, rows), declared={})["violations"] == []
+
+
+# ---------- 比法按字段定 ----------
+
+def test_rel_volume_is_compared_at_the_coarser_recorded_precision(tmp_path):
+    """`vol_up_gainers` 把 rel_volume 四舍五入到 2 位，预设那边写全精度。
+    精确比之下 42.38% 的可比组「不一致」，而那全是精度不是分歧。"""
+    rows = [_row("2026-03-16", "BELFA", "vol_up_gainers", rel_volume="1.96"),
+            _row("2026-03-16", "BELFA", "preset:vol_up_gainers", rel_volume="1.963872")]
+    assert A.audit(_write(tmp_path, rows), declared={})["violations"] == []
+
+
+def test_rel_volume_still_catches_a_real_disagreement(tmp_path):
+    """真数：2026-08-17 的 AIR，0.58 vs 3.3。按精度比也必须红 ——
+    否则上一条就把这把闸对 rel_volume 变成了摆设。"""
+    rows = [_row("2026-08-17", "AIR", "preset:pp_count", rel_volume="0.580454"),
+            _row("2026-08-17", "AIR", "vol_up_gainers", rel_volume="3.3")]
+    res = A.audit(_write(tmp_path, rows), declared={})
+    assert [c for c, _ in res["violations"]] == ["E1"]
+    assert res["disagreements"]["2026-08-17"][0]["field"] == "rel_volume"
+
+
+def test_change_pct_is_NOT_compared_at_the_coarser_precision(tmp_path):
+    """真数：2026-08-17 的 CHRD，一侧写 "0.0"（一位小数）、另一侧 "0.0405"。
+    若按 1 位比，两边都成了 0.0 —— 实测这样会漏掉 6 例。所以没有全局容差。"""
+    rows = [_row("2026-08-17", "CHRD", "preset:pp_count", change_pct="0.0"),
+            _row("2026-08-17", "CHRD", "gainers_4pct", change_pct="0.0405")]
+    res = A.audit(_write(tmp_path, rows), declared={})
+    assert [c for c, _ in res["violations"]] == ["E1"]
+    assert res["disagreements"]["2026-08-17"][0]["field"] == "change_pct"
 
 
 # ---------- 覆盖面：这把闸自己看得见多少 ----------
@@ -194,9 +226,10 @@ def test_the_exit_code_is_1_only_when_there_is_a_real_violation(tmp_path, capsys
 
 # ---------- 钉住字段表本身 ----------
 
-def test_the_checked_fields_are_the_four_that_must_be_equal(tmp_path):
+def test_the_checked_fields_are_the_five_that_must_be_equal(tmp_path):
     """写死，不引 A.FIELDS —— 引了就跟着常量一起动，永远不会红。"""
-    assert set(A.FIELDS) == {"change_pct", "volume", "sector", "atr_ext"}
+    assert set(A.FIELDS) == {"change_pct", "volume", "sector", "atr_ext", "rel_volume"}
+    assert set(A.PRECISION_AWARE) == {"rel_volume"}
 
 
 # ---------- 真接线：这条测试就是这把闸今天的自动触发点 ----------

@@ -42,8 +42,23 @@
   ✅ `change_pct` `volume` —— 同一份当日快照的同一个数
   ✅ `sector` `atr_ext` —— 干净对照：全库 26,108 / 18,558 例可比，**0 例不一致**
      （它们证明这把尺子不是「凡是比就报红」）
-  ❌ `group`（28.5% 不一致）`rel_volume`（42.4%）—— 分歧**散布在每一个日期上**，
-     这是各筛子定义不同，不是快照坏了。把它们放进来，闸就会天天红、然后被人学会跳过。
+  ✅ `rel_volume` —— **但要按精度比**，见下。它是入选闸的输入
+     （`vol_up_gainers` 要 ≥1.5），所以它对不上不是化妆品问题，是「谁进榜」的问题。
+  ❌ `group`（28.5% 不一致，其中 953 例差得远：`healthy_charts` 说 65、`momentum_97` 说 97）——
+     **这一列是多义的**：momentum_97 往里写的是它自己的 RS 桶（97/98/99/100），
+     别的筛子写的是别的东西。同一个列名两个量，分歧散布在 111 个日期上。
+     放进来闸会天天红，然后被人学会跳过。
+
+**两种比法，按字段定，每条都有实测依据**（不是一刀切，也不是拍的容差）：
+  * 默认**精确比**（归一到 6 位只为吃掉 float 的字符串往返）。
+  * `rel_volume` 走**按较粗一方记录的精度比**：`vol_up_gainers` 把它四舍五入到 2 位
+    （`1.96`），预设那边写全精度（`1.963872`）—— 精确比之下 **42.38%** 的可比组「不一致」，
+    而那全是精度不是分歧。按粗精度比之后是 **0.19%（13 例）**，
+    **且 13 例全部落在下面已知的那两天**（08-14 四例、08-17 九例）。
+    → 它本来就能独立指认出这两天。
+  * ⚠️ **`change_pct` 绝不能这么比**：实测会漏掉 **6 例**，
+    全是一侧写 `"0.0"`（一位小数）、另一侧写 `"0.0412"` —— 按 1 位比就两边都成了 0.0。
+    这就是为什么这里没有一个全局容差。
 
 为什么这条恒等式值得单独立一个闸：**它是少数几个不需要外部真值就能自证的检查。**
 「行数对不对」「字段缺不缺」这类计数检查，对一份内部自相矛盾的快照全部是绿的
@@ -77,7 +92,12 @@ ARCHIVE = Path("data/history/ticker_events.csv")
 _PLACES = 6
 
 # 跨筛子必须相等的字段（理由见 docstring 的「字段的选法」）。
-FIELDS: Tuple[str, ...] = ("change_pct", "volume", "sector", "atr_ext")
+FIELDS: Tuple[str, ...] = ("change_pct", "volume", "sector", "atr_ext", "rel_volume")
+
+# 比法**按字段定，不搞一刀切**，每条都有实测依据（见 docstring「两种比法」）：
+#   rel_volume 走「按较粗一方记录的精度比」—— 42.38% → 0.19%，剩下的全在已知的坏日子里；
+#   change_pct 绝不能这么比 —— 会漏掉 6 例，全是 "0.0"（一位小数）撞上 "0.0412"。
+PRECISION_AWARE: Tuple[str, ...] = ("rel_volume",)
 
 # 日期 -> (owner, 发现日, 理由)。改这张表 = 打一张新欠条，请照上面的体例写清出处。
 DECLARED: Dict[str, Tuple[str, str, str]] = {
@@ -101,10 +121,15 @@ def _rows(path: Path) -> Iterable[Mapping[str, str]]:
         yield from csv.DictReader(fh)
 
 
-def _norm(raw: str):
-    """数值归一到 6 位；不是数就按去空白的字符串比（sector 这类）。"""
+def _decimals(raw: str) -> int:
+    raw = raw.strip()
+    return len(raw.split(".", 1)[1]) if "." in raw else 0
+
+
+def _norm(raw: str, places: int = _PLACES):
+    """数值归一到 places 位；不是数就按去空白的字符串比（sector 这类）。"""
     try:
-        v = round(float(raw), _PLACES)
+        v = round(float(raw), places)
     except ValueError:
         return raw.strip()
     return None if v != v else v      # NaN 当作没有读数
@@ -113,16 +138,25 @@ def _norm(raw: str):
 def readings(path: Path = ARCHIVE,
              fields: Iterable[str] = FIELDS) -> Dict[Tuple[str, str, str], Dict[Any, List[str]]]:
     """(field, date, ticker) -> {读数: [记下这个数的筛子]}，只收非空的。"""
-    out: Dict[Tuple[str, str, str], Dict[Any, List[str]]] = defaultdict(lambda: defaultdict(list))
+    raw_rows: Dict[Tuple[str, str, str], List[Tuple[str, str]]] = defaultdict(list)
     for r in _rows(path):
         for f in fields:
             raw = (r.get(f) or "").strip()
-            if not raw:
-                continue
-            v = _norm(raw)
+            if raw:
+                raw_rows[(f, r.get("date", ""), r.get("ticker", ""))].append(
+                    (raw, r.get("screener", "")))
+
+    out: Dict[Tuple[str, str, str], Dict[Any, List[str]]] = defaultdict(lambda: defaultdict(list))
+    for key, items in raw_rows.items():
+        places = _PLACES
+        if key[0] in PRECISION_AWARE:
+            # 两个读数只在「它们都被记到的那个精度」上有可比性。
+            places = min(_decimals(raw) for raw, _ in items)
+        for raw, screener in items:
+            v = _norm(raw, places)
             if v is None:
                 continue
-            out[(f, r.get("date", ""), r.get("ticker", ""))][v].append(r.get("screener", ""))
+            out[key][v].append(screener)
     return out
 
 
