@@ -113,6 +113,25 @@
   "all_out_day": 13,
   "path_peak_pct": 188.5
  },
+ "bootstrap_1000x": {
+  "peak_day": {
+   "p5": 4,
+   "p25": 6,
+   "median": 9,
+   "p75": 11,
+   "p95": 18,
+   "note": "trimodal (mass at d4/d9/d11) \u2014 DO NOT quote a point peak day"
+  },
+  "d5_share_of_peak_pct": {
+   "point_estimate_full_sample": 92,
+   "ci90": [
+    70,
+    100
+   ],
+   "boot_median": 83,
+   "note": "conclusion direction stable across the whole CI; Muninn's 91 (n=829) sits inside it"
+  }
+ },
  "heat": {
   "committed_median": 3.11,
   "true_exposure_median": 6.12,
