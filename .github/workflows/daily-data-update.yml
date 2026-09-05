@@ -5,8 +5,17 @@ name: Daily Market Data Update
 
 on:
   schedule:
-    # 16:30 EST = 21:30 UTC Mon-Fri (after US market close)
-    - cron: '30 21 * * 1-5'
+    # 16:20 ET = 20:20 UTC Mon-Fri. The pipeline's own gate opens at 16:15 ET
+    # (run_all.py:454-464), so this is the earliest slot it will accept, and
+    # GitHub's cron only ever fires late, never early. Was '30 21' (16:30 ET
+    # +1h) until 2026-09-05; Andy moved it up 70 minutes because the front page
+    # is time-sensitive and should show the close as soon as it exists.
+    # NOT :30 on purpose -- on-the-hour and half-hour slots are the busiest on
+    # GitHub's scheduler; an odd minute is a cheap hedge against queueing.
+    # ⚠️ UNVERIFIED: nobody has measured whether Finviz/Yahoo have settled
+    # official closes by 16:20 ET. Monday's first run under this schedule must
+    # be checked against an independent source before its data is trusted.
+    - cron: '20 20 * * 1-5'
     # BACKSTOP, four hours later (21:30 ET the same session). GitHub dropped
     # the 2026-08-27 run outright — no queued entry, nothing in the run list.
     # That is the FIRST miss in 49 business days: over 2026-06-19 → 2026-08-26
