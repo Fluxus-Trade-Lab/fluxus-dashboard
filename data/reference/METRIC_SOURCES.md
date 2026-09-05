@@ -64,6 +64,7 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `is_tradeable` | S&P **FALR**（换手率） | 年美元成交额 ÷ 流通调整市值 ≥ 0.1——[S&P 方法书](https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf) | ⚠️ **标准形状 · 三条偏离已声明**：①绝对量非比值（FALR 会把 BRK 判负；我们问「一天能不能建仓」）②两个常量各自拍的、松紧从未对齐 ③窗口 09-05 前从未声明（实测 20 日，58/58 误差 0.0000）。09-05 补上证券类型过滤 |
 | `falr_252` | S&P FALR | 同上 | ⚠️ **报告值不做闸**。分子由 20 日均量外推一年、分母未做流通调整，两处近似。实测 09-03：FALR≥0.1 通过率 96.7%、我们的闸 45.3%，只 FALR 过 2810 支——**两把尺子测的不是同一件事** |
 | `up_4pct_stockbee` / `down_4pct_stockbee` | Stockbee **4% breadth** | 当日全市场满足「涨 ≥4% 且 量 > 前一日 且 量 > 100k」的普通股家数 | ✅ **一致**（2026-09-05 落地）。原 `up_4pct`/`down_4pct` 只有涨幅一条件，保留不动（574 行档案） |
+| `oops_buy` / `oops_sell` | Larry Williams **Oops!**（《Long-Term Secrets to Short-Term Trading》1999） | buy：今开 < 昨低 且 今高 ≥ 昨低；sell：今开 > 昨高 且 今低 ≤ 昨高。跳空必须严格 | ✅ **一致**（2026-09-05 落地，Andy「A 做」）。TraderLion 借的是这个名字，本机 Trade-Lab 图集标了 23 次但一句定义都没有——定义是 Williams 的。**只做触发不做「守住了没」**，后者不在定义里 |
 | `new_highs_4w` / `new_lows_4w` | *(查过，无标准)* | 52 周是机构惯例；该时间尺度的标准量是 %above-20MA / T2108 / McClellan | ⚠️ **自造**。仅供研究，不得当标准读数上页 |
 | — | McClellan Summation Index | McClellan 振荡器累加 | 🔲 我们没有 |
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |

@@ -32,7 +32,7 @@
 
 - **Stan Weinstein《Secrets for Profiting in Bull and Bear Markets》原书**——本机无；阶段口径只有 TraderLion 转述。
 - **TraderLion 对 "three weeks tight" 的文字定义**——三本 TraderLion 材料一处都没有；IBD 那张表有数字。
-- **"oops reversal" 的定义**——只在 Trade-Lab 图集作标签出现 23 次，无一句定义；Larry Williams 原创，TraderLion 借用。
+- ~~"oops reversal" 的定义~~ → **09-05 从发明者处补齐**：Larry Williams《Long-Term Secrets to Short-Term Trading》，开盘跳出昨日区间后盘中收回即触发（buy/sell 对称）。本机 Trade-Lab 图集只当标签用了 23 次。已实现 `oops_buy`/`oops_sell`。**本机仍无一手文本**，引的是二手转述的一致口径。
 - **"mini coil"**——本机所有书与转录零命中（只在我们自己的研究 README 里）。是口头/视频词汇。
 - **IBD RS Rating 的季度权重**——无一手；网上是社区互抄。
 - **Deepvue RMV 公式**——无（图集里只当标签）。
@@ -40,4 +40,4 @@
 ## 用法
 
 1. `METRIC_SOURCES.md` 的「标准口径」列，凡本表有的，先引本表路径。
-2. 想给一个词写代码之前，先在本表「没有」一节找一眼——**在那里的词，没有定义就不能进代码**，先补定义再动手。
+2. 想给一个词写代码之前，先在本表「没有」一节找一眼——**在那里的词，没有定义就不能进代码**，先补定义再动手。09-05 的 `oops reversal` 就是这条走通的第一例：查到发明者定义 → 挪出「没有」→ 才进代码。`mini coil` 仍在「没有」里。

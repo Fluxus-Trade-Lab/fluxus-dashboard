@@ -441,6 +441,46 @@ def three_weeks_tight(weekly_close, weekly_high=None,
     return (True, bp)
 
 
+def oops_reversal(open_, high, low, prev_high, prev_low):
+    """Larry Williams' Oops! pattern, both sides. Returns (oops_buy, oops_sell).
+
+    From "Long-Term Secrets to Short-Term Trading" (Williams, 1999), as every
+    secondary source states it and as TraderLion borrows it -- the Trade-Lab
+    Breakouts model book on this machine labels 23 bars "Oops Reversal" and
+    defines none of them, so the definition is Williams', not TraderLion's:
+
+        OOPS BUY   today opens BELOW yesterday's low, then trades back UP
+                   through yesterday's low. Buy stop sits at yesterday's low.
+        OOPS SELL  today opens ABOVE yesterday's high, then trades back DOWN
+                   through yesterday's high. Sell stop sits at yesterday's high.
+
+    The idea is a gap that fails: the open expresses overnight panic, the
+    reclaim of yesterday's range says the panic was the wrong side.
+
+    On daily bars the "trades back through" leg is observable only as the
+    day's extreme having reached the level: high >= prev_low for the buy,
+    low <= prev_high for the sell. That is the whole of the pattern. Whether
+    the reclaim HELD into the close is a separate question and not part of
+    the definition, so it is deliberately not folded in here -- add a column
+    for it if a page wants it, do not quietly tighten this one.
+
+    Gaps must be strict: an open exactly at yesterday's low is not below it.
+    Any missing input -> (False, False); a NULL row is honest, a guessed
+    pattern is not.
+    """
+    try:
+        o, h, l, ph, pl = (float(open_), float(high), float(low),
+                           float(prev_high), float(prev_low))
+    except (TypeError, ValueError):
+        return (False, False)
+    import math as _m
+    if any(_m.isnan(x) for x in (o, h, l, ph, pl)):
+        return (False, False)
+    buy = (o < pl) and (h >= pl)
+    sell = (o > ph) and (l <= ph)
+    return (bool(buy), bool(sell))
+
+
 def bar_consistency(hist: pd.DataFrame, expected_session, vendor_close) -> tuple[str, str | None]:
     """Is this ticker's bar history usable for TODAY's derived columns?
 
@@ -1129,6 +1169,9 @@ class YfinanceAdapter(BaseAdapter):
                 _wk = hist['Close'].resample('W-FRI').last().dropna()
                 _wkh = hist['High'].resample('W-FRI').max().dropna()
                 _twt = three_weeks_tight(_wk, _wkh)
+                _oops = (oops_reversal(hist['Open'].iloc[-1], hist['High'].iloc[-1], hist['Low'].iloc[-1],
+                                       hist['High'].iloc[-2], hist['Low'].iloc[-2])
+                         if n >= 2 else (False, False))
 
                 closes = hist['Close'].values
                 vols = hist['Volume'].values
@@ -1174,6 +1217,10 @@ class YfinanceAdapter(BaseAdapter):
                     'wk_band_3': (lambda w: bool(len(w) >= 3 and (w.iloc[-3:].max() - w.iloc[-3:].min()) / w.iloc[-1] <= 0.015))(hist['Close'].resample('W-FRI').last().dropna()),
                     'three_weeks_tight': _twt[0],
                     'twt_buy_point': _twt[1],
+                    # Larry Williams' Oops! -- see oops_reversal(). Andy 2026-09-05:
+                    # "A 做". T1: the definition is the author's, verbatim.
+                    'oops_buy': _oops[0],
+                    'oops_sell': _oops[1],
                     'range5_pct': float((hist['High'].iloc[-5:].max() - hist['Low'].iloc[-5:].min()) / close * 100) if n >= 5 and close else None,
                     'dist_hi20_pct': float((close / hist['Close'].iloc[-20:].max() - 1) * 100) if n >= 20 else None,
                     'low_52w': (close / float(hist['Low'].min()) - 1),
