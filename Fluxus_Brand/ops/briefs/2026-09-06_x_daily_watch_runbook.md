@@ -8,7 +8,7 @@
 
 ## 〇、免费方案的核心:一张 X List,一页看完所有人
 
-不再逐个账号进主页。**把名单建成一个私密 List,List 时间线是纯时序、无算法、一页滚完。** 一天一次滚 24 小时的量(名单 30 人 · 估 200–400 条),比逐人访问少 30 次页面加载,也少 30 次 45 秒超时的机会。
+不再逐个账号进主页。**把名单建成一个私密 List,List 时间线是纯时序、无算法、一页滚完。** 一天一次滚 24 小时的量(名单 42 人 · Andy 估总量 <500 条),比逐人访问少 30 次页面加载,也少 30 次 45 秒超时的机会。
 
 工具照旧 `mcp__claude-in-chrome__*`(Andy 的登录态 Chrome)。**不用 headless Playwright**(X 对 headless 回空页,且用他的 cookie 走无头有封号风险)。
 
@@ -17,7 +17,7 @@
 ## 一、一次性准备(第 1 天)
 
 1. **建 List**:x.com → Lists → New。名字 `fx-watch`,**Private 打勾**。⚠️ 这是在 Andy 账号里建东西 —— 开建前在会话里问他一句,他点头再动。
-2. **加成员**:按 roster 的 A + B 组(28 人)加;C/D 组等 Andy 定去留再加。加完记下 List URL(`https://x.com/i/lists/<id>`),写进 `data/content/x_watch/README.md`。
+2. **加成员**:按 roster「定稿 v1」的 42 人加。⚠️ D 组 14 个未核 handle 逐个进主页确认存在且是本人,对不上的记进 README 问 Andy,不猜。加完记下 List URL(`https://x.com/i/lists/<id>`),写进 `data/content/x_watch/README.md`。
 3. **建目录**:
    ```
    data/content/x_watch/
