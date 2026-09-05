@@ -1,7 +1,7 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **review**
-rounds: 2
+status: **flagship**
+rounds: 3
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
 > 六站顺序亲自跑（Workflow/Agent 工具本轮未获用户显式 ultracode 授权，不触发多 agent 编排；Gate 用独立新上下文子 agent 跑，见 `## review`）。
@@ -245,6 +245,50 @@ flagship 正文：*"We ran his numbers first: +2.52% for September, against his 
 无（本卡问题全部落在④/⑤边界内，不涉及其他线）。
 
 **收工三问**：①本轮踩的坑＝自查节的"负面清单自查"只做了字面模式匹配（"是不是对仗"）而没有对齐 memory 里真正的判据（"是不是巧话"），四条分发变体的收口完全没被自查覆盖——这是流程性漏检，不是这一条稿子独有；②`roles/06_gate.md` 帮了：硬闸+独立复算的强制顺序让口径问题在"进逐句审"之前就被 research 节自己的文字兜住了一半；建议给 04/05 两站契约都补一句"收口/结尾句自查必须覆盖旗舰+全部分发变体，不能只查旗舰"；③下轮（旗舰站断点续跑）第一件事：重写 flagship 收口为非格言体的"重话"，并修正 +2.52%/+2.2% 那句口径说明，然后分发站同步重写 V2/V3/V4 三处收口 + V3 的口径句，改完回 Gate。
+
+---
+
+**⑦ Gate · round 2 · 2026-09-06 06:05 JST（UTC 09-05 21:05）· 独立新上下文子 agent（与 round 1 不同会话）· rounds 2→3**
+
+## 判定：**退回 ④ 旗舰站**（⑤ 分发站需在旗舰改完后同步重跑受影响的收口）
+
+本轮从零独立复核，不采信 round 2 自查节的"已改好"结论。
+
+**硬闸复核（通过）**：distribution 入口号 1/3/4/5 齐全不重复；hook 类型（验证回收钩🆕/时间戳锚/反面先行钩/能不能变红钩）互不重复，`brain/hooks.md` 现场核对「验证回收钩」确已登记（⏳ 未测状态，符合首用登记规范）。CTA 冻结线：全卡 grep `subscribe/join/sign up/whop/会员/付费/cta` 零命中（未逐字沿用 round 1 的判断，本轮重新 grep 一遍）。"一月效应"未证实项：对 flagship+distribution 全段 grep `january/winter/一月/冬季` 零命中，round 1 判断复核成立。
+
+**独立复算（通过）**：
+- 四份改稿的词数现场用 Python 重数——flagship 157、V2 91、V3 158、V4 100，与 RECORD 自报**逐位相符**，未手改。
+- 口径换算独立核对 `git show origin/main:data/research/gold_autumn_2026-09/results.md`：原文 §一表格脚注确有"算术均值口径下是 +2.68% / +2.00%"这句，flagship/V3 引用的 +2.68% **不是自造数字，是 results.md 原文自带的换算值**——round 2 的口径改写准确、未引入新的口径混用，也未把"log/arithmetic mean"黑话搬上正文。
+- research 表第 6 行的出处更正**逐字核实为真**：`git show 164317fc` 的 commit message 确含 Andy 逐字原话「金9银10 的老话有可以验证的吗？没有我们就暂时删除」，`git show 7e924be4` 只是验证结案行、不含这句引用——round 2 的拆分修正准确。
+
+**round 1 拦下的两处，本轮复核确认真的解决**：flagship/V2/V3/V4 现有收口逐句读过，均不再是"通则+实例"的格言体，也不再是"不是A是B"的镜像句；口径句不再把 +2.52%（对数）与 +2.2%（算术）无说明地并置成"完全一致"。round 1 的两条退回理由**已解决，不再复发**。
+
+### ⛔ 新问题（round 2 改稿本身引入，round 2 自查完全没覆盖到）：flagship 与 V2 的收口在「复述正文」
+
+`feedback_no_mirrored_aphorism_closings` 这条 memory 记的不是一种形状，是**两种**（见 `Fluxus_Substack/drafts/001_after_party_dessert/001_DRAFT_v14.md:144`）：①对仗格言 ②复述正文（把正文段落已经给过的事实换个语序在收口再说一遍）。该记录原话说得很直白：「这一轮我已经避开了…（没写对仗格言）…仍然翻车…说明'不写格言'只是必要条件，不是充分条件。」
+
+round 2 的自查节（distribution 节"round 2 补做"）**只检查了①，完全没检查②**——而 flagship 和 V2 恰好踩进了②：
+
+- **flagship**：正文第 3 段已经说过 "September since 2011: -1.35%. **Four up years out of fifteen.**"；收口（第 5 段）是 "**Four up Septembers out of the last fifteen.** That's what's left of 'golden September.'"——同一个数字、同一件事，换个词序在收口又说了一遍，不是新信息，也不是压缩，是复述。
+- **V2**：正文第 3 段已经说 "…-1.35%, **four up years out of fifteen**"；收口是 "We finished the math: **four up Septembers out of the last fifteen** since 2011. The line we cut for lack of proof stays cut."——同样的重复。
+- **V4 不在此列**：round 2 把这个数字从正文段落挪走、只在收口出现一次（"It failed: four up Septembers out of the last fifteen since 2011."），干净，没有重复。
+- **V3 不在此列**（收口未复述具体数字），但另记一条不构成退回理由的风格瑕疵：收口 "Gold aced the first two checks and failed the third. **Run check 3 before you run check 1 next time.**" 是个需要绕一下弯才能懂的反转俏皮话（字面顺序矛盾，得在脑内翻译成"优先做验证测试这一步"才成立）——不是"对仗格言"也不是"镜像句"，未违反契约明文，但有向 Andy 明确否决过的"回味的巧话"（而非"一读就懂的重话"）滑的风险。**建议**旗舰站这次重写收口时一并处理，但**只此一条不作为退回理由**。
+
+**为什么这构成退回而不是备注**：这不是新发现的风格偏好，是同一条 memory 记录在案、Andy 亲自否决过的失败形状之一，且在 flagship（主资产）与 V2 两份独立资产里同时出现——跨资产病，不是单点笔误。round 2 的自查方法论本身有漏洞：只测了"是不是格言"，没有回去比对"这句话正文是否已经说过"，这条 memory 早就写明这一步不能省。
+
+### 其余逐条（通过，留痕备查）
+- 跨资产病其余项：五份资产开头故事互不相同，语气未漂移，未见 round 1 已查过的问题复发。
+- V3 口径句、V4 正文均未引入新的数字或口径问题。
+- research 节其余六条主张本轮未重新逐条复算（round 1 已逐位对过，本轮抽查第 2/6 条，均对得上，未见劣化）。
+
+### 门铃待按 / 待认领
+无（问题全部落在④/⑤边界内）。
+
+⛔ Gate 不代笔：收口另写，本站不产替代文案。
+
+**收工三问**：①本轮踩的坑＝差点直接采信 round 2 自查"已改好"的结论收工——`feedback_no_mirrored_aphorism_closings` 记的是两种形状，只核对"像不像格言"不够，必须回头比对"这句话是不是正文说过的事实换了个词序"；②`roles/06_gate.md`"独立复算+不采信自查"的强制顺序帮了——如果只是复核 round 1 点名的两条是否改好，这条新问题会被漏掉；建议给 04/05 两站的契约补一句"收口自查除了查格言/镜像句，还要回读正文最后两段，任何数字/事实重复出现即打回"；③下轮（旗舰站断点续跑）第一件事：flagship 与 V2 的收口去掉对已说数字的复述，改成不复述任何正文已给事实的新句子；V3 顺手把"run check 3 before check 1"换成不需要绕弯的直接说法；V4 与 V1 不需要动；改完分发站同步核对，回 Gate。
+
+---
 
 ## decision
 （owns：Andy 本人——待批）
