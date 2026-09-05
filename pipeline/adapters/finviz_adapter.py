@@ -105,6 +105,45 @@ class FinvizAdapter(BaseAdapter):
             "Pipeline will use yfinance fallback universe."
         )
 
+    # Finviz's own Index filter. Verified 2026-09-04: `f=idx_sp500` returns
+    # "#1 / 503 Total" -- 503 rather than 500 because of dual-share-class
+    # names, which is what StockCharts' $SPX breadth family also carries.
+    INDEX_FILTERS = {"sp500": "idx_sp500", "ndx": "idx_ndx", "djia": "idx_dji"}
+
+    def fetch_index_members(self, index: str = "sp500") -> set[str]:
+        """Tickers in a named index, for the index-scoped breadth family.
+
+        StockCharts' percent-above-MA indicators are always attached to an
+        index -- $SPXA200R is the S&P 500, $NYA200R the NYSE. Ours were
+        computed on a 5,630-name Finviz screener universe that corresponds to
+        no published index, so they could not be compared with any published
+        reading. On 2026-09-03 our full-universe %>200SMA read 53.45 while
+        S5TH (S&P 500) read 66.40; our own >=$10B slice read 70.09. Same
+        market, three rulers.
+
+        Returns an empty set on any failure -- the caller ships the
+        index-scoped columns as NULL rather than falling back to the whole
+        universe, which is the substitution that made the readings
+        incomparable in the first place.
+        """
+        f = self.INDEX_FILTERS.get(index)
+        if not f:
+            raise ValueError(f"unknown index {index!r}; have {sorted(self.INDEX_FILTERS)}")
+        try:
+            session = requests.Session()
+            session.headers.update(self.HEADERS if hasattr(self, "HEADERS") else
+                                   {"User-Agent": "Mozilla/5.0"})
+            df = self._scrape_view(session, "111", {"f": f}, max_pages=60)
+        except Exception as e:
+            logger.warning("Finviz index membership (%s) failed: %s", index, e)
+            return set()
+        if df is None or "Ticker" not in df.columns:
+            logger.warning("Finviz index membership (%s): no rows", index)
+            return set()
+        members = {str(t).strip().upper() for t in df["Ticker"] if str(t).strip()}
+        logger.info("Finviz index %s: %d members", index, len(members))
+        return members
+
     def _fetch_csv(self) -> pd.DataFrame | None:
         """Try CSV export endpoint (requires Finviz Elite)."""
         params = {'v': '152', 'f': 'cap_1.0to,ind_stocksonly', 'ft': '4'}
