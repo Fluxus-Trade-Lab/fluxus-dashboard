@@ -1,0 +1,144 @@
+# 17 个筛子，几个是别人的影子？
+
+*2026-09-06 夜间轮 · Nighty Zac · 数据 `data/history/ticker_events.csv`（2026-03-09 → 2026-09-04，114 个交易日，121,198 行，17 个筛子/预设）· 零新数据、零网络*
+
+**一句话**：面板层面的真冗余只有**代码写死**的那几对；非定义的高重叠**全都不稳**，
+而我一开始差点把「中位包含度 0.81」写成「冗余」——**中位数在这里会骗人**。
+顺带在数据里撞见两天读数自相矛盾的归档（另立事故档）。
+
+---
+
+## 0 · 先算分辨率（不然后面每个数都白报）
+
+置换检验的最小可能 p = `1/(R+1)`。240 对 × Bonferroni：
+
+| R | 最小可能 p | 240 对校正后的地板 | 能不能声称显著 |
+|---|---|---|---|
+| 100 | 0.0099 | **2.38** | 不能，物理上不可能 |
+| 2000 | 0.0005 | **0.12** | 仍然不能 |
+| ≥4800 | ≤0.0104 | ≤0.050 | 勉强可以 |
+
+**所以本文不报 p 值。** 再往上堆 R，报出来的是我的算力预算不是数据
+（协议：先算这个检验的最小可能 p）。下面用的是**幅度**，以及零分布的**整个范围**——
+每一对的观测值都远在 2000 次随机重排的**最大值**之外，这比一个被 R 卡住的 p 更有信息量。
+
+**口径不是自造的**：Jaccard index `|A∩B|/|A∪B|`、overlap coefficient `|A∩B|/min(|A|,|B|)`、
+以及用 hypergeometric / 单尾 Fisher 判集合重叠显著性，都是集合富集分析的标准件
+（[GeneOverlap 手册](https://bioconductor.org/packages/devel/bioc/vignettes/GeneOverlap/inst/doc/GeneOverlap.pdf)、
+[vissE `computeMsigOverlap`](https://rdrr.io/github/DavisLaboratory/vissE/man/computeMsigOverlap.html)、
+[OScal, Sci Rep 2015](https://www.nature.com/articles/srep10583)）。
+**自造的只有一处并在此明写**：标准 overlap coefficient 用 `min(|A|,|B|)`，
+而「A 是不是 B 的影子」是个**有方向**的问题，min 会把方向抹掉，
+所以另报**有向包含度** `C(A→B) = |A∩B|/|A|`。
+
+## 1 · 阳性对照：先证明这把尺子能报出真嵌套
+
+从源码读出阈值，挑出**必然成立**的嵌套，再去问数据同不同意。
+这是真阳性对照（不是借来的名单，是我们自己的代码）：
+
+| 断言（从阈值推出） | 天数 | 违反的天 | 最差 C |
+|---|---|---|---|
+| `vol_up_gainers`(涨≥4% ∧ 量比≥1.5) ⊆ `gainers_4pct`(涨≥4%) | 110 | **0** | 1.000 |
+| `episodic_pivot`(涨≥10% ∧ 量比≥3 ∧ 市值≥5亿) ⊆ `gainers_4pct` | 106 | **0** | 1.000 |
+| `episodic_pivot` ⊆ `vol_up_gainers` | 106 | **0** | 1.000 |
+| `preset:stockbee_9m_setup`(日涨≥5%) ⊆ `gainers_4pct` | 83 | **0** | 1.000 |
+| `preset:stockbee_9m_setup` ⊆ `vol_up_gainers` | 83 | **0** | 1.000 |
+| **阴性对照** `preset:4_bullish`(量比≥1) ⊄ `vol_up_gainers`(量比≥1.5) | 100 | **100** | 0.000 |
+
+尺子既报得出绿也报得出红。**第 6 行是关键**——一个从来只会绿的检查是装饰。
+
+> ⚠️ 还有第 7 条断言：`preset:4_bullish`(日涨≥4%) ⊆ `gainers_4pct`(涨≥4%)。
+> 它**100 天里有 1 天不成立**（2026-08-17，4 只里漏 2 只）。这一格是本轮真正的发现的入口，见 §5。
+
+## 2 · 冗余分两层，混在一起就把设计当成了发现
+
+8 对的中位包含度 = 1.000。**其中 6 对是上表那些**——阈值单调决定的恒等式，
+不是发现（协议：固定参照物之后，相关性塌成恒等式）。剩下的：
+
+| A → B | 中位 C | 中位 J | 2000 次随机重排的最大值 | 性质 |
+|---|---|---|---|---|
+| `preset:weekly_momentum_97` → `momentum_97` | 0.812 | 0.167 | 0.182 | 经验，非定义 |
+| `preset:monthly_leader_97` → `momentum_97` | 0.769 | 0.063 | 0.200 | 经验，非定义 |
+| `preset:pocket_pivot` → `preset:vol_up_gainers` | 0.620 | 0.143 | 0.097 | 经验，非定义 |
+| `preset:monthly_leader_97` → `preset:pp_count` | 0.565 | 0.063 | 0.167 | 经验，非定义 |
+| `preset:stockbee_9m_setup` → `preset:sugar_babies` | 1.000 | 0.020 | 0.333 | ⚠️ 中位 \|A\|=3，不下结论 |
+
+## 3 · ⭐ 中位数在这里会骗人（本轮最值钱的一条）
+
+差一点就把上表第一行写成「Weekly Momentum 97 是 Composite 97 的影子」。逐日展开之后不是：
+
+| A → B | 中位 C | C=1.00 的天 | C≥0.9 的天 | **最低的一天** |
+|---|---|---|---|---|
+| `preset:weekly_momentum_97` → `momentum_97` | 0.812 | 13.0% | **24.0%** | **0.031** |
+| `preset:monthly_leader_97` → `momentum_97` | 0.769 | 7.1% | 10.6% | 0.000 |
+| `preset:pocket_pivot` → `preset:vol_up_gainers` | 0.620 | 3.1% | 4.2% | 0.000 |
+| *（对照）* `vol_up_gainers` → `gainers_4pct` | 1.000 | **100.0%** | 100.0% | **1.000** |
+
+**中位 0.81 的那一对，只有四分之一的日子真的高度重叠，最低的一天只有 3%。**
+它和最后一行（真嵌套：110 天里 110 天都是 1.000、最低也是 1.000）在中位数上只差 0.19，
+在**性质**上是两种东西：一个是「相关」，一个是「嵌套」。
+→ **「冗余」这个词只发给最后一行那种。** 判冗余必须连着「最差的一天」一起看。
+
+档案里 `scanner_validation_2026-08/presets.md §4` 写着这三个 97 系「三个不重复」。
+**作为「三个问题不同」它是对的**（一周分位 / 四窗口合成 / 月度领先＋H 分，谓词各不相同）；
+**作为「三张名单不同」，中位数上两个各有 8 成落在第三个里，但逐日看并不稳定。**
+两句都要说，只说一句都会误导。
+
+## 4 · 同一个名字，两个量
+
+`vol_up_gainers`（Python 筛子）和 `preset:vol_up_gainers`（Screener 页预设）同名，配方不同：
+
+| | 日涨 | 量比 | ADR | 其他 |
+|---|---|---|---|---|
+| `pipeline/screeners/vol_up_gainers.py` | **≥4%** | ≥1.5 | — | — |
+| 预设 "Vol Up Gainers" | **≥0%** | ≥1.5 | **3.5–10** | 市值≥1、剔医疗 |
+
+配方不同这件事 `presets.md §3` **已经写过了**，本文加的是**幅度**：
+
+- 中位每日 **Jaccard = 0.346**（n=103 天；最小 0.011，最大 0.725）
+- 最后一个交易日 2026-09-04：筛子 **99** 只、预设 **30** 只、**交集 15** 只
+
+前端 `scanSets.js:24` 把筛子那份标成 `Vol-up`；Screener 页的预设也叫 Vol Up Gainers。
+**同一个名字在两个界面上指着两张七成不重合的单子。**
+→ 建议（**UI Claire / DATA ALEX 的文件，本线不改**）：给其中一个改名，
+或在页面上标出配方差异。这是"让推理被看懂"那一条。
+
+## 5 · 半路撞见的：归档有两天自己跟自己打架
+
+§1 那条「100 天里有 1 天不成立」的线索拉出来的是一个数据问题，不是重叠问题：
+**同一天同一只票被多个筛子记下时，`change_pct` / `volume` 必须相等**，而 2026-08-17 与 2026-08-14 不等。
+机制、证据与修法在事故档
+[`2026-09-06_two_days_the_archive_contradicts_itself.md`](../../reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md)，
+闸在 `pipeline/tools/audit_event_agreement.py`。
+
+**它对本文结论的影响，量过**（08-17 的 604 行 preset = 全库 preset 行的 1.70%）：
+
+| A → B | 含 08-17 | 剔 08-17 |
+|---|---|---|
+| `preset:weekly_momentum_97` → `momentum_97` | 0.812 | 0.812 |
+| `preset:monthly_leader_97` → `momentum_97` | 0.769 | 0.774 |
+| `preset:pocket_pivot` → `preset:vol_up_gainers` | 0.620 | 0.625 |
+| `vol_up_gainers` → `preset:vol_up_gainers` | 0.559 | 0.559 |
+
+**结论不动。** 但这是量出来的，不是估出来的。
+
+## 6 · 这轮没有说什么（老实话）
+
+- **没有说哪个筛子该删。** 集合重叠不等于信息重叠：两张几乎一样的名单，
+  如果排序或用途不同，仍可以各有各的用。要判「删」得看前瞻收益，而**算不了**——
+  本机只有 217 只票的 OHLC，全池前瞻收益需要联网重抓，夜里不碰上游。
+- **`group` 与 `rel_volume` 没有查。** 它们的分歧散布在每一个日期上（28.5% / 42.4%），
+  那是各筛子定义不同。**⚠️ `rel_volume` 四成对不上，本身可能是另一条「同一个量两个定义」，
+  本轮没查，留个钩子。**
+- **随机基线的抽样池用的是「当日所有命中的并集」**（中位 614 只），
+  不是真实扫描池（`breadth_archive.universe_size` 中位 2,573）。
+  这让随机重叠**偏大**，也就是让零分布**偏保守**——效应量若有偏差，是被低估不是被夸大。
+- 没有预注册。本文是描述性的对账，不是假设检验；这也是不报 p 的第二个理由。
+
+## 复现
+
+```bash
+python3 data/research/screener_overlap_2026-09/overlap.py       # 包含度 / Jaccard / lift → overlap.json
+python3 data/research/screener_overlap_2026-09/null_median.py 2000   # 同一统计量的零分布 → null_median.json
+python3 -m pipeline.tools.audit_event_agreement                  # §5 的那把闸
+```
