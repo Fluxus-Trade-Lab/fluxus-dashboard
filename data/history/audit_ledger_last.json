@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-09-04",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 31,
+ "lines": 32,
  "runs": [
   {
    "session": "2026-09-04",
@@ -56,13 +56,26 @@
     "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)"
    ],
    "fund_fail_rate": 0.0,
+   "universe_rows": 5631,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-04",
+   "code_sha": "086b834",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 universe_quality degraded",
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-03, candidate is 2026-09-04 -- a different day is the market moving, not the pipeline)"
+   ],
+   "fund_fail_rate": 0.0,
    "universe_rows": 5631
   }
  ],
  "violations": 0,
- "warnings": 12,
+ "warnings": 14,
  "top": [
-  "L6 2026-09-04: 4 lines (re-run; both happened, not a violation)"
+  "L6 2026-09-04: 5 lines (re-run; both happened, not a violation)"
  ],
  "ok": true
 }

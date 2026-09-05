@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-04T06:38:12.824220+00:00",
+  "generated_at": "2026-09-05T06:46:31.954154+00:00",
   "trades": [
     {
       "trade_id": "XXRP_2026-09-02_000",
       "ticker": "XXRP",
       "direction": "long",
       "entry_date": "2026-09-02",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
+      "exit_date": "2026-09-04",
+      "closed": true,
+      "realized_R": -0.060000000000002274,
       "optimal_R": 2.9299999999999997,
-      "capture_pct": null,
+      "capture_pct": -2.047781569965948,
       "setup_type": "Long below MA200 \u2014 counter-trend",
-      "lesson": "In progress",
+      "lesson": "Choppy / no edge",
       "hold_days": 2
     },
     {
@@ -20,13 +20,27 @@
       "ticker": "TSLA",
       "direction": "long",
       "entry_date": "2026-09-02",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
+      "exit_date": "2026-09-04",
+      "closed": true,
+      "realized_R": -0.8781817940731316,
       "optimal_R": 0.5224825839138688,
-      "capture_pct": null,
+      "capture_pct": -168.07867307169414,
       "setup_type": "Long below MA200 \u2014 counter-trend",
-      "lesson": "In progress",
+      "lesson": "Failed setup",
+      "hold_days": 2
+    },
+    {
+      "trade_id": "PURR_2026-09-02_000",
+      "ticker": "PURR",
+      "direction": "long",
+      "entry_date": "2026-09-02",
+      "exit_date": "2026-09-04",
+      "closed": true,
+      "realized_R": -0.33076923076923176,
+      "optimal_R": 0.48461538461538356,
+      "capture_pct": -68.25396825396861,
+      "setup_type": "Long in mixed structure",
+      "lesson": "Choppy / no edge",
       "hold_days": 2
     },
     {
@@ -41,7 +55,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 2
+      "hold_days": 3
     },
     {
       "trade_id": "SAIL_2026-08-26_000",
@@ -148,12 +162,12 @@
       "entry_date": "2026-08-20",
       "exit_date": null,
       "closed": false,
-      "realized_R": 0.0,
+      "realized_R": 0.9124355065666054,
       "optimal_R": 5.068292682926836,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 15
+      "hold_days": 16
     },
     {
       "trade_id": "SOXL_2026-08-19_000",
@@ -223,7 +237,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 16
+      "hold_days": 17
     },
     {
       "trade_id": "SOXL_2026-08-18_000",
@@ -517,7 +531,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 26
+      "hold_days": 27
     },
     {
       "trade_id": "IOT_2026-08-09_000",

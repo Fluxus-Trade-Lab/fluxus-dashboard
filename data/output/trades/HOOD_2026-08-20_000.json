@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-20_000",
-  "generated_at": "2026-09-04T06:38:12+00:00",
+  "generated_at": "2026-09-05T06:46:31+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-20",
     "entry_price": 104.1,
     "original_qty": 1248,
-    "current_qty": 1248,
-    "stop_price": 104.0,
+    "current_qty": 999,
+    "stop_price": 104.1,
     "initial_stop": 100.0,
     "closed": false,
     "exit_date": null,
     "hold_business_days": null,
     "r_dollars": 5116.799999999993,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 4668.75,
+    "realized_R": 0.9124355065666054,
+    "trims": [
+      {
+        "date": "2026-09-03",
+        "price": 122.85,
+        "qty": 249,
+        "type": "trim_1_5"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 95.1,
@@ -53,10 +60,10 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 15
+    "hold_calendar_days": 16
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 (qty 1248) with stop $100.00 (currently trailed to $104.00) (1R = $4.10/sh = $5,117). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.07R; worst drawdown -2.55R.",
+  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 (qty 1248) with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = $5,117). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.07R; worst drawdown -2.55R.",
   "ohlc_window": [
     {
       "date": "2026-07-21",

@@ -1,6 +1,6 @@
 {
   "trade_id": "TSLA_2026-09-02_000",
-  "generated_at": "2026-09-04T06:38:12+00:00",
+  "generated_at": "2026-09-05T06:46:31+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TSLA",
@@ -9,16 +9,29 @@
     "entry_date": "2026-09-02",
     "entry_price": 375.79,
     "original_qty": 1003,
-    "current_qty": 1003,
+    "current_qty": 0,
     "stop_price": 360.0,
     "initial_stop": 360.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-04",
+    "hold_business_days": 2,
     "r_dollars": 15837.37000000002,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": -13908.09000000001,
+    "realized_R": -0.8781817940731316,
+    "trims": [
+      {
+        "date": "2026-09-04",
+        "price": 363.42,
+        "qty": 501,
+        "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-04",
+        "price": 360.43,
+        "qty": 502,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 357.01,
@@ -49,14 +62,14 @@
     "optimal_exit_date": "2026-09-03",
     "optimal_R": 0.5224825839138688,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.8781817940731316,
+    "capture_pct": -168.07867307169414,
+    "missed_R": 1.4006643779870003,
     "post_exit_R": null,
     "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **TSLA** long on 2026-09-02 at $375.79 (qty 1003) with stop $360.00 (1R = $15.79/sh = $15,837). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($344.32), MA20 < MA50 < MA200 (death alignment), RSI 53, 30% through 52W range, ATR 3.7% of price. **In progress.** Peak so far +0.52R; worst drawdown -1.64R.",
+  "lesson": "Failed setup",
+  "narrative": "Entered **TSLA** long on 2026-09-02 at $375.79 (qty 1003) with stop $360.00 (1R = $15.79/sh = $15,837). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($344.32), MA20 < MA50 < MA200 (death alignment), RSI 53, 30% through 52W range, ATR 3.7% of price. Realized **-0.88R**, peak was **+0.52R** on 2026-09-03 (day +1) \u2014 captured **-168%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-08-03",

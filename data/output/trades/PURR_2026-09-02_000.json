@@ -1,0 +1,261 @@
+{
+  "trade_id": "PURR_2026-09-02_000",
+  "generated_at": "2026-09-05T06:46:31+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "PURR",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-09-02",
+    "entry_price": 12.3,
+    "original_qty": 1776,
+    "current_qty": 0,
+    "stop_price": 11.0,
+    "initial_stop": 11.0,
+    "closed": true,
+    "exit_date": "2026-09-04",
+    "hold_business_days": 2,
+    "r_dollars": 2308.800000000001,
+    "realized_pl": -763.6800000000027,
+    "realized_R": -0.33076923076923176,
+    "trims": [
+      {
+        "date": "2026-09-04",
+        "price": 11.87,
+        "qty": 1776,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 11.32,
+    "open": 11.23,
+    "high": 11.76,
+    "low": 10.93,
+    "volume": 18221900.0,
+    "ma20": 9.23675,
+    "ma50": 8.0467,
+    "ma200": null,
+    "rsi14": 63.815496800345194,
+    "atr14": 1.301,
+    "atr14_pct": 11.492932862190813,
+    "high_52w": 14.14,
+    "low_52w": 3.01,
+    "position_in_52w_range_pct": 74.66307277628033,
+    "high_20d": 14.14,
+    "low_10d": 8.88,
+    "low_5d": 10.93
+  },
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 0.48461538461538356,
+    "mfe_date": "2026-09-03",
+    "mae_R": 1.053846153846154,
+    "mae_date": "2026-09-02",
+    "optimal_exit_price": 12.93,
+    "optimal_exit_date": "2026-09-03",
+    "optimal_R": 0.48461538461538356,
+    "days_to_optimal": 1,
+    "realized_R": -0.33076923076923176,
+    "capture_pct": -68.25396825396861,
+    "missed_R": 0.8153846153846154,
+    "post_exit_R": null,
+    "hold_calendar_days": 2
+  },
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **PURR** long on 2026-09-02 at $12.30 (qty 1776) with stop $11.00 (1R = $1.30/sh = $2,309). Setup: **Long in mixed structure** \u2014 price above MA20 ($9.24), RSI 64, 75% through 52W range, ATR 11.5% of price. Realized **-0.33R**, peak was **+0.48R** on 2026-09-03 (day +1) \u2014 captured **-68%** of the move. **Lesson: Choppy / no edge.**",
+  "ohlc_window": [
+    {
+      "date": "2026-08-03",
+      "open": 6.34,
+      "high": 6.705,
+      "low": 6.17,
+      "close": 6.58,
+      "volume": 8229900.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 6.7,
+      "high": 6.84,
+      "low": 6.565,
+      "close": 6.81,
+      "volume": 7525300.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 6.94,
+      "high": 7.09,
+      "low": 6.73,
+      "close": 6.82,
+      "volume": 7457900.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 6.5,
+      "high": 6.91,
+      "low": 6.45,
+      "close": 6.67,
+      "volume": 4992000.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 6.82,
+      "high": 6.919,
+      "low": 6.625,
+      "close": 6.81,
+      "volume": 5943500.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 6.77,
+      "high": 6.77,
+      "low": 6.525,
+      "close": 6.6,
+      "volume": 5715400.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 6.65,
+      "high": 6.665,
+      "low": 6.53,
+      "close": 6.57,
+      "volume": 4858500.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 6.78,
+      "high": 6.94,
+      "low": 6.665,
+      "close": 6.75,
+      "volume": 5400500.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 6.78,
+      "high": 7.03,
+      "low": 6.71,
+      "close": 6.82,
+      "volume": 4456800.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 6.76,
+      "high": 6.83,
+      "low": 6.56,
+      "close": 6.68,
+      "volume": 5438700.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 7.26,
+      "high": 7.32,
+      "low": 7.06,
+      "close": 7.15,
+      "volume": 9720300.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 6.97,
+      "high": 7.37,
+      "low": 6.91,
+      "close": 7.2,
+      "volume": 9727800.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 7.26,
+      "high": 9.438,
+      "low": 6.89,
+      "close": 9.39,
+      "volume": 62000000.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 9.55,
+      "high": 10.276,
+      "low": 8.88,
+      "close": 10.08,
+      "volume": 45428100.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 10.52,
+      "high": 11.27,
+      "low": 10.43,
+      "close": 10.58,
+      "volume": 36045200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 10.97,
+      "high": 11.4,
+      "low": 10.42,
+      "close": 10.64,
+      "volume": 28472100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 10.51,
+      "high": 12.1,
+      "low": 10.43,
+      "close": 11.87,
+      "volume": 29871300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 11.585,
+      "high": 11.92,
+      "low": 11.19,
+      "close": 11.56,
+      "volume": 19635500.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 12.18,
+      "high": 14.14,
+      "low": 11.961,
+      "close": 12.83,
+      "volume": 42837000.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 12.675,
+      "high": 13.86,
+      "low": 11.57,
+      "close": 11.61,
+      "volume": 38014800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 12.185,
+      "high": 12.62,
+      "low": 11.22,
+      "close": 12.25,
+      "volume": 40605500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.73,
+      "high": 11.86,
+      "low": 11.02,
+      "close": 11.355,
+      "volume": 24313900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 11.23,
+      "high": 11.76,
+      "low": 10.93,
+      "close": 11.32,
+      "volume": 18221900.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 11.65,
+      "high": 12.93,
+      "low": 11.54,
+      "close": 12.77,
+      "volume": 36217500.0
+    }
+  ]
+}

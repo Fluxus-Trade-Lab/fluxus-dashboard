@@ -1,6 +1,6 @@
 {
   "trade_id": "XXRP_2026-09-02_000",
-  "generated_at": "2026-09-04T06:38:12+00:00",
+  "generated_at": "2026-09-05T06:46:31+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "XXRP",
@@ -9,16 +9,23 @@
     "entry_date": "2026-09-02",
     "entry_price": 34.0,
     "original_qty": 2610,
-    "current_qty": 2610,
+    "current_qty": 0,
     "stop_price": 33.0,
     "initial_stop": 33.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-04",
+    "hold_business_days": 2,
     "r_dollars": 2610.0,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": -156.60000000000593,
+    "realized_R": -0.060000000000002274,
+    "trims": [
+      {
+        "date": "2026-09-04",
+        "price": 33.94,
+        "qty": 2610,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 30.76,
@@ -49,14 +56,14 @@
     "optimal_exit_date": "2026-09-03",
     "optimal_R": 2.9299999999999997,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.060000000000002274,
+    "capture_pct": -2.047781569965948,
+    "missed_R": 2.990000000000002,
     "post_exit_R": null,
     "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **XXRP** long on 2026-09-02 at $34.00 (qty 2610) with stop $33.00 (1R = $1.00/sh = $2,610). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($26.13), MA stack mixed, RSI 57, 4% through 52W range, ATR 12.3% of price. **In progress.** Peak so far +2.93R; worst drawdown -4.06R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **XXRP** long on 2026-09-02 at $34.00 (qty 2610) with stop $33.00 (1R = $1.00/sh = $2,610). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($26.13), MA stack mixed, RSI 57, 4% through 52W range, ATR 12.3% of price. Realized **-0.06R**, peak was **+2.93R** on 2026-09-03 (day +1) \u2014 captured **-2%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-08-03",
