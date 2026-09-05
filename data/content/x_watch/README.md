@@ -3,7 +3,7 @@
 **底盘 List:** `Copybook` — https://x.com/i/lists/2083551367399182754 — 30 Members · 私密 · Andy 2026-09-06 指定。
 **方案** [`../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md) · **手册** [`..._runbook.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_runbook.md) · **名单** [`..._roster.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_watch_roster.md)
 
-## Andy 授权删的五张 List(先存成员再删,25 人一个都还没抓到)
+## 其余五张 List —— **Andy 自己删,跑手不碰**(09-06 原话「我自己加人员名单,自己删 list」)
 
 | List | ID | 成员 | 已抓到的 |
 |---|---|---|---|
@@ -13,7 +13,9 @@
 | 机构 | `2010371377032003689` | 4 | ✅ 2:@ConnorJBates_ · @TedHZhang(均 Revere Asset PM,Turbotection) |
 | 预测 | (未取) | 1 | ❌ 0 |
 
-⚠️ **删 List 不可逆。抓全成员之前不删** —— 这 25 人里可能正有我们缺的视角。
+⚠️ 只留一句提醒给 Andy:**删之前值得瞄一眼 Wizards 那 8 个和 Top 那 7 个** —— 我们一个都没看到,里面可能正有缺的视角(尤其做期权的)。删完这张表就作废。
+
+⛔ **成员名单与 List 的增删全归 Andy。** 跑手只读当时 List 里的人,不加不删不代劳。
 
 ---
 
