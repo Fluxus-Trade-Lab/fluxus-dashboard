@@ -92,3 +92,6 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
   - **浏览器状态页**（Portfolio，数据走 Google Sheets sync + localStorage）：**headless 干净 profile 里永远是空/旧的，禁止用无状态浏览器截**——只能用 Andy 自己浏览器的截图，或他最后交付物（上一份 PDF）里抽出的图。09-06 实测栽过：本地最近一张截图是 7 仓旧版，他的 tracker 已并成 3 名
 - **Founders Note 不截图**：最新内容在 Sheet 里，pipeline 能直接拿到文本——取文字进正文，不走图。（待接：pipeline 读 Founders Note 的取数路径）
 - 三尺度框架：他 09-06 裁「不急」——进停车场，立标准+验证之前不重提
+### [2026-09-06] Founders Note 取数已接（他指示「把 founders note 的 pipeline 取数接上」）
+- 工具：`pipeline/tools/founders_note.py --date YYYY-MM-DD`（GAS Meta tab，key `writing:founders-daily:YYYY-MM`）；凭证 `.env` 的 GAS_URL / GAS_SYNC_TOKEN（token 他一次性填，浏览器扩展保护读不出）
+- **日期对位是判断，留给 Andy**：他的复盘写在次日早晨——9/4 场的 note 实测是 **09-06 那条**（「AI trade rallies. MU/SNDK leads. Split tape」），而 09-04 那条是 NFP 前对周四的看法。取数取 T 与 T 后第一条，两条都给他挑，机器不定
