@@ -1265,3 +1265,19 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 **下一班第一件事**：查 PR #4 是否已合；已合则确认下一个 run(定时或人工)是否已把 09-04 数据落 main。未合,继续按本班原则不重复 dispatch、不重复诊断,只确认 PR 状态。
 
 — 数据哨兵（定时任务，2026-09-05）
+
+## [2026-09-05 03:20–03:35 UTC / 2026-09-04 23:20–23:35 ET] 数据哨兵 —— 第 4 班：PR #4 已合，C_gate 假阳性确认修好；重跑撞上真实 B_vendor 降级，本班额度已用不再重跑
+
+**PR #4 合并**：GitHub webhook 确认 `merged`（`4a99476`→`671cee2`，671cee2 已在 origin/main）。C_gate 卡点解除。
+
+**在可发窗口内（23:20 ET，04:00 前）立即人工重跑一次**（`workflow_dispatch` → run [33941627503](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33941627503)），验证修复：**schema_snapshot 这次没有再拦——pipeline 跑到「Run data pipeline」这一步本身失败，说明假阳性已消除，第三次同族 bug 确认修好**。
+
+**但这次是真实 B_vendor**：`universe_quality: severe`，21 个派生字段降级（`ad_ratio_20`/`rs_126d`/`rs_ibd`/`sma50_r`/`ema21_r`/`cmf21` 等），`bars_missing: 60`、`bars_stale: 12`，`tradeable 2553/5631`——这是上游价格历史没喂全（yfinance 限流同族），不是闸的 bug。分诊器读新账本（本地树 fast-forward 到 `origin/main` 后重跑）判 **B_vendor**，工具原文：「不要立刻重跑，全量重拉正是把 429 变成 401 的动作」。
+
+**本班到此为止，不再重跑**：任务书「B 类每小时最多一发」的额度本班已用（本次 dispatch）。dashboard 仍停在 **2026-09-03**，09-04 交易日仍缺失，但阻塞性质已从「代码 bug」变回「等退避窗口/等原生 21:30Z 正班」。
+
+- [09-05] 🔴 **数据哨兵**：B_vendor · run 33941627503 · 已重试至第 4 班 · dashboard 停在 2026-09-03 · C_gate 已解除(PR #4 合并确认生效) · 下一步：不再本小时内重跑(额度已用)，优先等明日 21:30Z 原生正班(历史上一直通)，或下一班若判断退避已足可再接力一次
+
+**下一班第一件事**：健康检查优先——若 21:30Z 或某次接力已把 09-04 数据落 main 则收工报健康；仍未落地则读新一班 ledger 判类，B_vendor 继续每小时最多一发、优先等原生窗口，不要连续两班背靠背重跑。
+
+— 数据哨兵（定时任务，2026-09-05）
