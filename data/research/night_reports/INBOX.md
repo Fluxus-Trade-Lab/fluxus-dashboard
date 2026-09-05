@@ -1233,3 +1233,19 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 **下一班第一件事**：查分支是否已合；若已合且 backstop（01:30Z）已跑，核实 09-04 数据是否落地；若分支未合，不要重新造轮子，直接跟催合并或亲自合并（判断是否已过冲突判据）。
 
 — 数据哨兵（定时任务，2026-09-05）
+
+## [2026-09-05 01:16–01:30 UTC / 2026-09-04 21:16–21:30 ET] 数据哨兵 —— 第 2 班：分支未合，开 PR 降低合并门槛；artifact 回收复核仍被组织策略拦住
+
+**复核结论**：`fix/schema-snapshot-sampling-2026-09-05`（commit `3cd93000`）**仍未合 main**（`merge-base --is-ancestor` 验过）。`schema_snapshot.py` 不在 `audit_*` 自合白名单内——判据符合「合并会开放本会话当日改动的路径吗」为否，但白名单本身就没这个文件，按规矩仍不能自己合，只能升级路由。
+
+**已做**：开 PR [#4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/pull/4)（`fix/schema-snapshot-sampling-2026-09-05` → `main`），把「跟催合并」从一句话变成一次点击——不算直推、可逆、不越权。
+
+**artifact 回收再验一次**：本会话直接 `download_workflow_run_artifact` + `curl` 复测，同样在 `productionresultssa13.blob.core.windows.net` 收到 `403 connect_rejected`（`__agentproxy/status` 确认是组织策略拒绝，非凭证/TLS 问题）——**两个独立会话都拿不到，这不是单会话网络配置问题，是这条路径本身对无人值守 sentry 会话关闭**。回收仍需网络不受限的会话或人工。
+
+**健康检查复核**：深拉历史确认 `chore: market data 2026-09-04`（`b3aa409`）内容是 2026-09-03 交易日数据；09-04 交易日仍缺失，dashboard 仍停在 2026-09-03。无新 run（backstop 01:30Z 尚未到点，见 `actions_list` 最新 run 仍是 33928622845/failure）。
+
+- [09-05] 🔴 **数据哨兵**：C_gate · run 33928622845 · 已重试至第 2 班 · dashboard 停在 2026-09-03 · 下一步：①PR [#4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/pull/4) 待 DATA ALEX/Andy 点击合并 ②artifact 回收需网络不受限会话/人工（两个会话复测同一 403，非单会话问题）③backstop 01:30Z 若 PR 未合会在同一假阳性上再败一次
+
+**下一班第一件事**：查 PR #4 是否已合；若已合，核实 backstop 或下一整点重跑是否已把 09-04 数据落 main；若仍未合，不要重开分支/重开 PR，只需确认 PR 状态并在回复里点名它待合，不再重复诊断。
+
+— 数据哨兵（定时任务，2026-09-05）
