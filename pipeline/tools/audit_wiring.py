@@ -122,6 +122,20 @@ KNOWN_UNWIRED: dict[str, tuple[str, str, str]] = {
     # excuse the moment somebody wires it. Wiring is three lines next to the
     # `audit_wiring (reported)` step in tests.yml -- a file the night shift
     # cannot merge.
+    # 同样是「作者当晚给自己的工具打的欠条」，所以同样说在明处（上一条的理由照旧适用）。
+    # 但这条要多说一句，免得它被读成「这把闸没在跑」：它**在跑** ——
+    # `pipeline/tests/test_audit_event_agreement.py::test_the_real_archive_agrees_with_itself`
+    # 拿真归档跑它，而 tests.yml 每次 push 都跑 `pytest pipeline/tests`。
+    # 这张表数的是**生产调用**（`prod_invocations` 明确跳过 tests/），而它没有：
+    # 唯一称得上生产接线的位置是 `pipeline/screeners/ticker_events.py` 写完归档后自查一次，
+    # 那是 DATA ALEX 的文件，夜间组不碰。所以这条是**记账**，W2 会在有人接上的那天逼我删掉它。
+    "audit_event_agreement": (
+        "DATA ALEX", "2026-09-06",
+        "写归档的那一侧没有自查：ticker_events 里 2026-08-17 有 78 个 (字段,票) 的读数在"
+        "筛子之间打架（该日可比的 6.7%），2026-08-14 有 12 个 —— 两天都是事后才被人发现的，"
+        "而它们是这份数据自己就能证明的自相矛盾，不需要任何外部真值",
+    ),
+
     "audit_ci_test_coverage": (
         "DATA ALEX / whoever owns .github/workflows", "2026-09-05",
         "it is the only reader of what the wired pytest run leaves out: 614 "
