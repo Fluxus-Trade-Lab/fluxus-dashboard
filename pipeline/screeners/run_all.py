@@ -65,6 +65,31 @@ FALLBACK_TICKERS = [
 ]
 
 
+
+def _quarter_excess(df, lag_days: int):
+    """Return over the trailing `lag_days` sessions, relative to SPY.
+
+    The universe carries calendar-ish performance columns (perf_3m, perf_6m,
+    perf_1y) rather than exact session lags, so map each quarter onto the
+    closest one we actually have and say so. 189 sessions has no column of
+    its own; it is interpolated between 6m and 1y, which is a real
+    approximation and is why this whole quantity is tagged as a community
+    reconstruction rather than a standard.
+    """
+    import pandas as _pd
+    col = {63: 'perf_3m', 126: 'perf_6m', 252: 'perf_1y'}.get(lag_days)
+    if col is not None and col in df.columns:
+        return _pd.to_numeric(df[col], errors='coerce')
+    if 'perf_6m' not in df.columns or 'perf_1y' not in df.columns:
+        # No inputs, no reading. NaN rather than 0: a zero excess return is a
+        # claim that the name matched the index, which absent data cannot say.
+        return _pd.Series(float('nan'), index=df.index)
+    m6 = _pd.to_numeric(df['perf_6m'], errors='coerce')
+    y1 = _pd.to_numeric(df['perf_1y'], errors='coerce')
+    return m6 + (y1 - m6) * 0.5
+
+
+
 def build_fallback_universe(yf_adapter: YfinanceAdapter) -> pd.DataFrame:
     """Build a universe DataFrame from yfinance when Finviz is unavailable.
     Downloads ~200 liquid stocks and computes the standard columns.
@@ -183,6 +208,23 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # the lowest rank to keep everyone else's denominator; outside it there is
     # no denominator to protect).
     from pipeline.themes import is_tradeable  # noqa: PLC0415
+    # Index membership for the index-scoped breadth family (2026-09-04).
+    # StockCharts' percent-above-MA is always attached to a named index; ours
+    # was computed on the whole screener universe and so matched no published
+    # reading. Own failure domain: a membership fetch that fails leaves the
+    # column absent and breadth ships those readings NULL.
+    try:
+        from pipeline.adapters.finviz_adapter import FinvizAdapter as _FA
+        _members = _FA().fetch_index_members('sp500')
+        if _members:
+            df['in_sp500'] = df['ticker'].astype(str).str.upper().isin(_members)
+            logger.info("S&P 500 membership: %d of %d universe rows",
+                        int(df['in_sp500'].sum()), len(df))
+        else:
+            logger.warning("S&P 500 membership empty - index-scoped breadth will be NULL")
+    except Exception:
+        logger.exception("S&P 500 membership fetch failed - index-scoped breadth will be NULL")
+
     tradeable = df.apply(is_tradeable, axis=1)
     df['tradeable'] = tradeable
     logger.info("Scores computed on %d tradeable of %d rows",
@@ -279,8 +321,33 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     #   * a leader that has stopped. A name can hold a top score on last
     #     year's advance while going nowhere now; this measures the record,
     #     not the current state. Read it beside rs_1m to see which it is.
-    df['rs_ibd'] = (0.4 * df['rs_3m'] + 0.4 * df['rs_6m']
-                    + 0.2 * score_against_tradeable('perf_1y'))
+    # IBD-style RS Rating. IBD publishes only "12 months, ranked 1-99 against
+    # the whole market" -- the six coefficients are proprietary and no citable
+    # table exists (checked 2026-09-04; the TraderLion material on this machine
+    # covers the RS LINE, not the rating). Every community reconstruction that
+    # can be found agrees on one shape, so that is what we adopt (Andy
+    # 2026-09-04: "RS ibd换成用复刻的2:1:1:1"):
+    #
+    #     0.4*q1 + 0.2*q2 + 0.2*q3 + 0.2*q4     of return vs SPY,
+    #     the most recent quarter double-weighted, then ranked 1-99.
+    #
+    # skyte/relative-strength, Optuma's script, the TradingView replica. They
+    # cite each other rather than IBD, so this is a COMMUNITY RECONSTRUCTION,
+    # not IBD's formula, and the name says `rs_rating` rather than `rs_ibd`.
+    # What it buys us is the only thing available: several independent
+    # implementations to check against.
+    #
+    # The previous form was 0.4*rs_3m + 0.4*rs_6m + 0.2*rank(perf_1y) -- one
+    # quarter, two quarters, one year, which matches neither IBD nor the
+    # reconstruction. It gates three theme cards and displays nowhere, so a
+    # change here silently changes membership; the switch reports its diff.
+    _q = {}
+    for name, lag in (('q1', 63), ('q2', 126), ('q3', 189), ('q4', 252)):
+        _q[name] = _quarter_excess(df, lag)
+    df['_rs_raw'] = (0.4 * _q['q1'] + 0.2 * _q['q2']
+                     + 0.2 * _q['q3'] + 0.2 * _q['q4'])
+    df['rs_rating'] = score_against_tradeable('_rs_raw')
+    df.drop(columns=['_rs_raw'], inplace=True)
 
     # --- F score (fundamental) ---
     # Source since 2026-08-17: fundamentals_store (yfinance primary, Finviz
@@ -446,7 +513,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
 
     # Round score columns to integers
     for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d', 'rs_126d',
-                'rs_ibd', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
+                'rs_rating', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
@@ -881,22 +948,23 @@ def main():
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
         'atr', 'rel_volume', 'avg_volume', 'volume', 'prev_volume', 'vol_5d_50d', 'days_since_52wh',
-        'wk_tight_3', 'range5_pct', 'dist_hi20_pct',
+        'wk_band_3', 'three_weeks_tight', 'twt_buy_point', 'range5_pct', 'dist_hi20_pct',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y', 'revenue_growth', 'eps_growth_this_y',
         'fund_source', 'fund_asof',
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
-        'rs_ibd',
+        'rs_rating',
         'f_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable',   # tradeable: the field the scores are measured on
         'adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'rs_line_pctl_63', 'rs_line_pctl_126', 'perf_5d',
-        'atr_pctl_252', 'atr_pctl_63', 'range5_pctl_252',
+        'atr_pct_pctl_252', 'range5_pct_pctl_252',
         'cross_ema21_up', 'cross_sma50_up',
         'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 'ad_ratio_20', 'cmf21',
-        'bar_date', 'bars_stale', 'bar_scale_mismatch',
+        'bar_date', 'bars_stale', 'bar_scale_mismatch', 'bar_scale_jumps',
+        'in_sp500',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',

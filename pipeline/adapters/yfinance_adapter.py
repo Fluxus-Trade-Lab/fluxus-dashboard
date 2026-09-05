@@ -232,7 +232,7 @@ def range5_pctl(hist: pd.DataFrame, n: int = 252) -> float | None:
         win = rng.dropna().iloc[-n:]
         if len(win) < 60 or not np.isfinite(float(win.iloc[-1])):
             return None
-        return float((win <= win.iloc[-1]).mean() * 100.0)
+        return float((win < win.iloc[-1]).mean() * 100.0)
     except Exception:
         return None
 
@@ -299,7 +299,7 @@ def atr_pctl(hist: pd.DataFrame, n: int = 252, period: int = 14) -> float | None
         win = atrp.iloc[-n:]
         if len(win) < 60 or not np.isfinite(float(win.iloc[-1])):
             return None
-        return float((win <= win.iloc[-1]).mean() * 100.0)
+        return float((win < win.iloc[-1]).mean() * 100.0)
     except Exception:
         return None
 
@@ -327,6 +327,120 @@ def _expected_session():
         return None
 
 
+# Split ratios a vendor actually applies. A bar series left half-adjusted
+# oscillates between two price levels by one of these factors; a genuine split
+# moves the level ONCE and stays there.
+_SPLIT_RATIOS = (2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 10.0, 20.0, 1.5, 2.5)
+_SPLIT_TOL = 0.03          # |log(ratio) - log(split)| tolerance
+
+
+def scale_jumps(hist, tol: float = _SPLIT_TOL) -> int:
+    """How many day-over-day moves in this history look like an unadjusted split.
+
+    `bar_consistency` only ever compared the NEWEST close against the vendor's,
+    so corruption in the middle of a series was invisible to it. MNST on
+    2026-09-03: its bars alternated between ~$48 and ~$94 (2026-07-30 closed
+    97.65, 07-31 closed 48.19, 08-03 closed 93.55), identical in the adjusted
+    and unadjusted feeds, yet its newest bar agreed with Finviz so the guard
+    passed it. Only 3 names in a 5,630-row universe were flagged, and the false
+    ATR that came out of MNST's history read 13.22% against a true intraday
+    2.37%. Every rolling column -- ATR, all moving averages, 52-week extremes,
+    perf_1m/3m/6m, the self-percentiles -- eats those fake gaps.
+
+    Vendors detect this by comparing adjusted against unadjusted closes, which
+    does not work here: both of MNST's feeds carry the same defect. So use the
+    other published check -- a day-over-day close ratio sitting on a split
+    ratio. Two conditions, because a real gap must not count:
+
+      * the ratio (or its inverse) is within `tol` in log space of a real
+        split ratio, and
+      * the day's own high-low range cannot explain the move, i.e. the close
+        landed outside the bar it supposedly traded in.
+
+    A genuine split, or a genuine 100% gap, produces ONE such day. Half-adjusted
+    history produces many, because it keeps crossing back. Callers should treat
+    >= 2 as corruption; the count is published so the reading stays measurable
+    rather than being silently filtered.
+
+    tol is ours, not a vendor's: 0.03 in log space is +/-3%, wide enough for a
+    dividend on top of a split and far narrower than the gap between adjacent
+    split ratios.
+    """
+    import numpy as _np
+    try:
+        c = _np.asarray(hist["Close"], dtype=float)
+        h = _np.asarray(hist["High"], dtype=float)
+        l = _np.asarray(hist["Low"], dtype=float)
+    except Exception:
+        return 0
+    if c.size < 2:
+        return 0
+    prev, cur = c[:-1], c[1:]
+    with _np.errstate(divide="ignore", invalid="ignore"):
+        ratio = cur / prev
+    ok = _np.isfinite(ratio) & (ratio > 0)
+    if not ok.any():
+        return 0
+    lr = _np.log(_np.where(ok, ratio, 1.0))
+    on_split = _np.zeros(lr.shape, dtype=bool)
+    for r in _SPLIT_RATIOS:
+        lg = _np.log(r)
+        on_split |= (_np.abs(lr - lg) <= tol) | (_np.abs(lr + lg) <= tol)
+    # a real gap trades: the close sits inside the day's own range, and the
+    # range itself spans the move. A half-adjusted bar does not.
+    day_lo, day_hi = l[1:], h[1:]
+    unexplained = ~((prev >= day_lo * (1 - tol)) & (prev <= day_hi * (1 + tol)))
+    return int((ok & on_split & unexplained).sum())
+
+
+# IBD Three Weeks Tight. Threshold from the CAN SLIM chart-pattern sheet on
+# this machine ("3 Tight Closes: closes within 1.5%, vol drops, secondary BP;
+# all BP +10 cents"); IBD's own articles say roughly 1%, sometimes up to 1.5%.
+# We take the sheet's number because it is the primary source we hold.
+_TWT_BAND = 0.015
+_TWT_WEEKS = 3
+_BUY_POINT_PAD = 0.10       # "all BP +10 cents" -- same sheet
+
+
+def three_weeks_tight(weekly_close, weekly_high=None,
+                      band: float = _TWT_BAND, weeks: int = _TWT_WEEKS):
+    """IBD's Three Weeks Tight: each week closes within `band` of the PRIOR week.
+
+    Returns (is_tight, buy_point) -- buy_point is the highest high of those
+    weeks plus ten cents, or None when the pattern is absent or highs were not
+    supplied.
+
+    The comparison is PAIRWISE and that is the whole point. Until 2026-09-04
+    `wk_tight_3` asked whether the three closes fitted inside one band:
+    `(max - min) / last <= 1.5%`. Those are not the same test. A stock closing
+    +1.4%, +1.4% week over week satisfies IBD and fails ours -- and a steady
+    drift up on shrinking volume is exactly the thing the pattern is named
+    for, holders declining to take profits. The band-width version rejects the
+    pattern precisely when it is working.
+
+    The old quantity survives as `wk_band_3`; the 2026-08-20 tightness study
+    was run on it and its readings should stay reproducible.
+    """
+    try:
+        w = [float(x) for x in weekly_close.dropna().iloc[-weeks:]]
+    except Exception:
+        return (False, None)
+    if len(w) < weeks:
+        return (False, None)
+    for prev, cur in zip(w[:-1], w[1:]):
+        if prev <= 0 or abs(cur / prev - 1.0) > band:
+            return (False, None)
+    bp = None
+    if weekly_high is not None:
+        try:
+            hs = [float(x) for x in weekly_high.dropna().iloc[-weeks:]]
+            if len(hs) == weeks:
+                bp = round(max(hs) + _BUY_POINT_PAD, 2)
+        except Exception:
+            bp = None
+    return (True, bp)
+
+
 def bar_consistency(hist: pd.DataFrame, expected_session, vendor_close) -> tuple[str, str | None]:
     """Is this ticker's bar history usable for TODAY's derived columns?
 
@@ -338,6 +452,10 @@ def bar_consistency(hist: pd.DataFrame, expected_session, vendor_close) -> tuple
                        session while looking populated (FIRY/FBRX 2026-08-14)
       'scale_mismatch' newest close differs from the vendor close by more than
                        20% -- history on a pre-split scale (BYND 2026-08)
+      'scale_history'  the newest bar agrees, but the history CROSSES a split
+                       ratio two or more times -- half-adjusted bars (MNST
+                       2026-09). The endpoint check cannot see this, and every
+                       rolling column is computed on the corrupted middle.
 
     A guard that only counts nulls cannot see either; this is the check that
     makes them visible, and the caller nulls the derived columns rather than
@@ -357,6 +475,10 @@ def bar_consistency(hist: pd.DataFrame, expected_session, vendor_close) -> tuple
         v = None
     if v and v > 0 and c > 0 and abs(c / v - 1.0) > SCALE_MISMATCH_TOL:
         return "scale_mismatch", str(last_date)
+    # The endpoint agreed. That says nothing about the middle -- MNST's newest
+    # bar matched Finviz while its history oscillated $48 <-> $94.
+    if scale_jumps(hist) >= 2:
+        return "scale_history", str(last_date)
     return "ok", str(last_date)
 
 
@@ -854,7 +976,8 @@ class YfinanceAdapter(BaseAdapter):
                 # Publish the fact, not a number that is a session late or a
                 # split off. Finviz-sourced columns on the row are untouched.
                 enriched[ticker] = {'bar_date': bar_date, 'bars_stale': status == 'stale',
-                                    'bar_scale_mismatch': status == 'scale_mismatch'}
+                                    'bar_scale_mismatch': status in ('scale_mismatch', 'scale_history'),
+                                    'bar_scale_jumps': scale_jumps(hist)}
                 continue
             try:
                 close = float(hist['Close'].iloc[-1])
@@ -898,7 +1021,6 @@ class YfinanceAdapter(BaseAdapter):
                 # separated outcomes; see atr_pctl's docstring for the numbers
                 # and the two conditions on using it).
                 atr_pctl_252 = atr_pctl(hist, 252)
-                atr_pctl_63 = atr_pctl(hist, 63)
                 range5_pctl_252 = range5_pctl(hist, 252)
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
@@ -999,6 +1121,10 @@ class YfinanceAdapter(BaseAdapter):
                 # CROSS-SECTIONAL breadth count -- how many names in the market
                 # did this today. Counting per ticker over a trailing window is
                 # our own construct and has no standard behind it.
+                _wk = hist['Close'].resample('W-FRI').last().dropna()
+                _wkh = hist['High'].resample('W-FRI').max().dropna()
+                _twt = three_weeks_tight(_wk, _wkh)
+
                 closes = hist['Close'].values
                 vols = hist['Volume'].values
                 bo_1m = bo_3m = bo_6m = bo_1y = 0
@@ -1036,7 +1162,13 @@ class YfinanceAdapter(BaseAdapter):
                     'days_since_52wh': int(n - 1 - int(hist['High'].values.argmax())),
                     # tightness family (2026-08-20 study: every variant carries
                     # positive edge; weekly tight = offense, daily coil = defense)
-                    'wk_tight_3': (lambda w: bool(len(w) >= 3 and (w.iloc[-3:].max() - w.iloc[-3:].min()) / w.iloc[-1] <= 0.015))(hist['Close'].resample('W-FRI').last().dropna()),
+                    # Renamed 2026-09-04: this is a BAND WIDTH over three weekly
+                    # closes, not IBD's Three Weeks Tight (which compares each
+                    # week with the one before). Kept under an honest name so
+                    # the 2026-08-20 tightness study stays reproducible.
+                    'wk_band_3': (lambda w: bool(len(w) >= 3 and (w.iloc[-3:].max() - w.iloc[-3:].min()) / w.iloc[-1] <= 0.015))(hist['Close'].resample('W-FRI').last().dropna()),
+                    'three_weeks_tight': _twt[0],
+                    'twt_buy_point': _twt[1],
                     'range5_pct': float((hist['High'].iloc[-5:].max() - hist['Low'].iloc[-5:].min()) / close * 100) if n >= 5 and close else None,
                     'dist_hi20_pct': float((close / hist['Close'].iloc[-20:].max() - 1) * 100) if n >= 20 else None,
                     'low_52w': (close / float(hist['Low'].min()) - 1),
@@ -1090,12 +1222,12 @@ class YfinanceAdapter(BaseAdapter):
                     'rs_line_pctl_21': rs_line_pctl_21,
                     'rs_line_pctl_63': rs_line_pctl_63,
                     'rs_line_pctl_126': rs_line_pctl_126,
-                    'atr_pctl_252': atr_pctl_252,
-                    'atr_pctl_63': atr_pctl_63,
-                    'range5_pctl_252': range5_pctl_252,
+                    'atr_pct_pctl_252': atr_pctl_252,
+                    'range5_pct_pctl_252': range5_pctl_252,
                     'cross_ema21_up': cross_ema21_up,
                     'cross_sma50_up': cross_sma50_up,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
+                    'bar_scale_jumps': scale_jumps(hist),
                     'ema10': ema10,
                     'ema20': ema20,
                     'wk_ema10': wk_ema10,
