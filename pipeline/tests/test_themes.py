@@ -57,13 +57,13 @@ class TestForeignListingFilter:
 class TestResolveThemeMembers:
     UNIVERSE = [
         {"ticker": "NVDA", "industry": "Semiconductors", "market_cap": 3e12,
-         "adr_pct": 3.0, "rs_ibd": 95},
+         "adr_pct": 3.0, "rs_rating": 95},
         {"ticker": "AMD", "industry": "Semiconductors", "market_cap": 3e11,
-         "adr_pct": 4.0, "rs_ibd": 88},
+         "adr_pct": 4.0, "rs_rating": 88},
         {"ticker": "CCJ", "industry": "Uranium", "market_cap": 3e10,
-         "adr_pct": 6.0, "rs_ibd": 92},
+         "adr_pct": 6.0, "rs_rating": 92},
         {"ticker": "TINY", "industry": "Uranium", "market_cap": 5e8,
-         "adr_pct": 9.0, "rs_ibd": 96},
+         "adr_pct": 9.0, "rs_rating": 96},
     ]
 
     def test_industry_backbone(self):
@@ -104,10 +104,10 @@ class TestRuleThemesAgainstRealShape:
     predicate depends on is entirely null in the feed."""
 
     ROWS = [
-        {"ticker": "A", "market_cap": 5e8, "adr_pct": 6.0, "rs_ibd": 95,
+        {"ticker": "A", "market_cap": 5e8, "adr_pct": 6.0, "rs_rating": 95,
          "perf_6m": 0.4, "sma200_dist": 0.1, "high_52w": -0.02,
          "eps_growth_next_y": None, "perf_1y": 0.5, "perf_3m": 0.2},
-        {"ticker": "B", "market_cap": 5e9, "adr_pct": 1.0, "rs_ibd": 40,
+        {"ticker": "B", "market_cap": 5e9, "adr_pct": 1.0, "rs_rating": 40,
          "perf_6m": -0.3, "sma200_dist": -0.2, "high_52w": -0.40,
          "eps_growth_next_y": None, "perf_1y": -0.2, "perf_3m": -0.1},
     ]

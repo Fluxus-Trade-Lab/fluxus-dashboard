@@ -37,7 +37,7 @@ class TestScoreAllRows:
         with_out = compute_universe_scores(u).set_index("ticker")
         alone = compute_universe_scores(u[u.market_cap > 1e9]).set_index("ticker")
         field = alone.index
-        for c in ("rs_1m", "rs_3m", "rs_6m", "rs_ibd", "i_score", "h_score"):
+        for c in ("rs_1m", "rs_3m", "rs_6m", "rs_rating", "i_score", "h_score"):
             pd.testing.assert_series_equal(with_out.loc[field, c], alone[c], check_names=False)
 
     def test_outsiders_score_on_the_field_ruler(self):

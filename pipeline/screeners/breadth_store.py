@@ -38,6 +38,8 @@ BREADTH_COLUMNS = [
     'new_highs_4w_common', 'new_lows_4w_common',
     'common_universe', 'short_history_n',
     'record_high_pct', 'high_low_index',
+    'pct_above_20sma_sp500', 't2108_sp500',
+    'pct_above_50sma_sp500', 'pct_above_200sma_sp500', 'sp500_members',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
 ]
 

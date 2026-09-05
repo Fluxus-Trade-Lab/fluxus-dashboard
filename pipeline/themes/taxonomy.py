@@ -76,7 +76,7 @@ def _num(row: Mapping[str, Any], key: str) -> float | None:
 def _high_octane(row: Mapping[str, Any]) -> bool:
     """Fast movers with real momentum and enough size to be tradeable."""
     adr = _num(row, "adr_pct")
-    rs = _num(row, "rs_ibd")
+    rs = _num(row, "rs_rating")
     cap = _num(row, "market_cap")
     return (
         adr is not None and adr >= 5.0
@@ -102,7 +102,7 @@ def _growth_factor(row: Mapping[str, Any]) -> bool:
     fundamental definition is unavailable.  Standing in for it: names with
     strong medium-term relative strength that are still trending.
     """
-    rs = _num(row, "rs_ibd")
+    rs = _num(row, "rs_rating")
     p6 = _num(row, "perf_6m")
     sma200 = _num(row, "sma200_dist")
     return (
@@ -129,7 +129,7 @@ def _value_factor(row: Mapping[str, Any]) -> bool:
 
 def _leaders_52w(row: Mapping[str, Any]) -> bool:
     dist = _num(row, "high_52w")
-    rs = _num(row, "rs_ibd")
+    rs = _num(row, "rs_rating")
     return (
         dist is not None and dist >= -0.05
         and rs is not None and rs >= 85.0

@@ -9,7 +9,7 @@ import pytest
 
 from pipeline.screeners.run_all import compute_universe_scores
 
-SCORE_COLS = ["rs_21d", "rs_63d", "rs_126d", "rs_ibd",
+SCORE_COLS = ["rs_21d", "rs_63d", "rs_126d", "rs_rating",
               "f_score", "i_score", "h_score"]
 
 

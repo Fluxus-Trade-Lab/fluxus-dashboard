@@ -54,10 +54,20 @@ class TestAtrPctl:
         v = atr_pctl(h, 252)
         assert v is not None and v < 25, v
 
-    def test_all_time_high_volatility_reads_100(self):
+    def test_all_time_high_volatility_reads_the_ceiling(self):
+        """The most volatile day in the window reads (n-1)/n x 100, not 100.
+
+        The comparator went strict on 2026-09-04 to match the published IV
+        Percentile definition -- "the share of days with volatility LOWER than
+        today". Today is not lower than itself, so a series at its own maximum
+        reads 99.58 on a 238-day window rather than 100. The old `<=` put the
+        floor at 1/n instead of 0 and the ceiling at exactly 100, which is the
+        one thing a percentile of this kind cannot be.
+        """
         from pipeline.adapters.yfinance_adapter import atr_pctl
         h = self._hist([1.0] * 200 + [20.0] * 5)
-        assert atr_pctl(h, 252) == 100.0
+        v = atr_pctl(h, 252)
+        assert v is not None and 99.0 < v < 100.0, v
 
     def test_shorter_window_can_disagree_with_the_long_one(self):
         """The whole point of carrying both: quiet vs the quarter, loud vs the
@@ -98,9 +108,20 @@ class TestRange5Pctl:
         v = range5_pctl(self._bars([6.0] * 200 + [0.2] * 20))
         assert v is not None and v < 20, v
 
-    def test_explosive_tail_reads_high(self):
+    def test_explosive_tail_reads_the_ceiling(self):
+        """At its own max the reading sits just below 100, and TIES DO NOT COUNT.
+
+        Two consequences of the 2026-09-04 strict comparator, both correct and
+        both worth pinning. Today is not lower than itself, so a maximum can
+        never read exactly 100. And when the tail repeats that maximum -- five
+        identical 5-day ranges here -- none of those days counts as "lower",
+        so the reading is (n-5)/n rather than (n-1)/n. The published IV
+        Percentile behaves the same way; a run of equal days is genuinely not
+        evidence that today is more extreme than they were.
+        """
         from pipeline.adapters.yfinance_adapter import range5_pctl
-        assert range5_pctl(self._bars([1.0] * 200 + [25.0] * 5)) == 100.0
+        v = range5_pctl(self._bars([1.0] * 200 + [25.0] * 5))
+        assert v is not None and 95.0 < v < 100.0, v
 
     def test_separates_the_two_compressed_states(self):
         """The PURR 2026-08-21 shape: a year of high volatility at a low price,
@@ -112,7 +133,10 @@ class TestRange5Pctl:
         closes = [30.0] * 120 + [30.0 * 1.012 ** i for i in range(1, 120)] + [128.0, 150.0, 160.0]
         ranges = [3.0] * 120 + [3.0 * 1.012 ** i for i in range(1, 120)] + [25.0, 28.0, 22.0]
         h = self._bars(ranges, closes)
-        assert range5_pctl(h, 252) == 100.0            # the tape is violent
+        # >99 rather than ==100: the comparator went strict on 2026-09-04, so
+        # a series at its own maximum reads (n-1)/n x 100. The GAP is the
+        # point of this test and is untouched by that change.
+        assert range5_pctl(h, 252) > 99                # the tape is violent
         assert atr_pctl(h, 252) < 50                   # the ratio says otherwise
         assert range5_pctl(h, 252) - atr_pctl(h, 252) > 40
 

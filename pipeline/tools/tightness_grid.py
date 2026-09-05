@@ -74,7 +74,15 @@ def measures(df: pd.DataFrame) -> pd.DataFrame:
     sma20, sd = c.rolling(20).mean(), c.rolling(20).std()
     out["bbw"] = (4 * sd) / sma20 * 100
     out["sd20"] = c.pct_change().rolling(20).std() * 100
-    # RMV as its authors define it: volume-damped bar range, min-max vs prior 15
+    # RMV -- OUR APPROXIMATION, not Deepvue's formula. Their knowledge base
+    # describes the output only ("current range against the average of the
+    # past 15 bars, 0-100, near 0 when tight") and publishes no calculation;
+    # the TraderLion Trade-Lab model book on this machine uses "Low RMV" and
+    # "RMV Tight Signal" purely as chart labels. The volume damping below is
+    # a guess of ours. The comment here used to read "RMV as its authors
+    # define it", which was a claim we could not support -- and naming a
+    # quantity after someone else's indicator is how a house measurement ends
+    # up read as a standard one. Research column; not shipped to any page.
     volratio = (v / v.rolling(30).mean()).clip(upper=1.0)
     out["rmv"] = _minmax((h - l) * volratio, 15)
     return out

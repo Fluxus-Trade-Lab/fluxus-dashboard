@@ -378,3 +378,66 @@ class TestMinimumHistory:
         for k in ('new_highs_common', 'new_lows_common',
                   'new_highs_4w_common', 'new_lows_4w_common', 'short_history_n'):
             assert r[k] is None, f"{k} must be NULL when bar counts are absent"
+
+
+class TestIndexScopedBreadth:
+    """Percent-above-MA is meaningless without saying WHICH index.
+
+    StockCharts publishes this family per index -- $SPXA200R for the S&P 500,
+    $NYA200R for the NYSE. Ours was computed on a 5,630-name screener universe
+    matching no published index, so it could not be compared with anything.
+    Measured 2026-09-03 on the same market: our full universe read 53.45 for
+    %>200SMA, our >=$10B slice 70.09, Andy's reference card 70.77, and that
+    card's own S5TH chart 66.40.
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            'ticker': ['IN1', 'IN2', 'OUT1', 'OUT2'],
+            'industry': ['Software - Application'] * 4,
+            'close': [50.0] * 4, 'avg_volume': [2_000_000] * 4, 'bars_n': [250] * 4,
+            'change_pct': [0.01] * 4, 'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
+            # members strong, non-members weak: the two readings must diverge
+            'sma20_dist': [0.05, 0.05, -0.05, -0.05],
+            'sma40_dist': [0.05, 0.05, -0.05, -0.05],
+            'sma50_dist': [0.05, 0.05, -0.05, -0.05],
+            'sma200_dist': [0.05, 0.05, -0.05, -0.05],
+            'high_52w': [-0.2] * 4, 'low_52w': [0.2] * 4,
+            'in_sp500': [True, True, False, False],
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_the_index_reading_differs_from_the_universe_reading(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['pct_above_200sma'] == 50.0        # whole universe
+        assert r['pct_above_200sma_sp500'] == 100.0  # members only
+        assert r['sp500_members'] == 2
+
+    def test_the_whole_universe_columns_are_untouched(self):
+        """574 rows of archive stand behind them; this must be additive."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        with_idx = compute_snapshot(self._uni())
+        without = compute_snapshot(self._uni().drop(columns=['in_sp500']))
+        for k in ('pct_above_20sma', 't2108', 'pct_above_50sma', 'pct_above_200sma'):
+            assert with_idx[k] == without[k]
+
+    def test_missing_membership_is_null_not_the_whole_universe(self):
+        """The substitution that caused the problem must not be the fallback.
+
+        Silently reporting the 5,630-name reading under an S&P 500 name is
+        precisely how a number stops being comparable.
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni().drop(columns=['in_sp500']))
+        for k in ('pct_above_20sma_sp500', 't2108_sp500',
+                  'pct_above_50sma_sp500', 'pct_above_200sma_sp500', 'sp500_members'):
+            assert r[k] is None, f"{k} fell back instead of going NULL"
+
+    def test_an_empty_membership_set_is_also_null(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni(in_sp500=[False] * 4))
+        assert r['pct_above_200sma_sp500'] is None
+        assert r['sp500_members'] is None

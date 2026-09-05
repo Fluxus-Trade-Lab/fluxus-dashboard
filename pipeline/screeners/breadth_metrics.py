@@ -119,6 +119,45 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     pct_above_50 = round(float((sma50 > 0).sum()) / n * 100, 2)
     pct_above_200 = round(float((sma200 > 0).sum()) / n * 100, 2)
 
+    # --- The same family, attached to a named index (2026-09-04) ------------
+    # StockCharts' percent-above-MA indicators are ALWAYS index-scoped:
+    # $SPXA200R is the S&P 500, $NYA200R the NYSE. Ours were computed on a
+    # 5,630-name screener universe matching no published index, so they were
+    # not comparable with any published reading -- including the S5TH chart on
+    # Andy's own reference card. Measured 2026-09-03: our full universe read
+    # 53.45 for %>200SMA, our >=$10B slice 70.09, his card 70.77, S5TH 66.40.
+    # Same market, four rulers, and only one of them has a name.
+    #
+    # Shipped ALONGSIDE the full-universe columns, never instead: those have
+    # 574 rows of archive behind them. NULL, not a fallback to the whole
+    # universe, when membership is unavailable -- substituting the wide
+    # universe is exactly what made the reading incomparable.
+    in_idx = universe.get('in_sp500')
+    if in_idx is None:
+        idx_cols = {k: None for k in
+                    ('pct_above_20sma_sp500', 't2108_sp500',
+                     'pct_above_50sma_sp500', 'pct_above_200sma_sp500',
+                     'sp500_members')}
+    else:
+        mask = in_idx.fillna(False).astype(bool)
+        m = int(mask.sum())
+        if m == 0:
+            idx_cols = {k: None for k in
+                        ('pct_above_20sma_sp500', 't2108_sp500',
+                         'pct_above_50sma_sp500', 'pct_above_200sma_sp500',
+                         'sp500_members')}
+        else:
+            def _idx_pct(dist):
+                sub = dist[mask].dropna()
+                return round(float((sub > 0).sum()) / len(sub) * 100, 2) if len(sub) else None
+            idx_cols = {
+                'pct_above_20sma_sp500': _idx_pct(sma20),
+                't2108_sp500': _idx_pct(sma40),
+                'pct_above_50sma_sp500': _idx_pct(sma50),
+                'pct_above_200sma_sp500': _idx_pct(sma200),
+                'sp500_members': m,
+            }
+
     # Advances / Declines
     advances = int((chg > 0).sum())
     declines = int((chg < 0).sum())
@@ -207,6 +246,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'down_13pct_34d': down_13pct_34d,
         't2108': t2108,
         'pct_above_200sma': pct_above_200,
+        **idx_cols,
         'pct_above_50sma': pct_above_50,
         'pct_above_20sma': pct_above_20,
         'advances': advances,

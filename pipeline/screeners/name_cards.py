@@ -155,7 +155,7 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
             # compression, self-percentile (2026-08-23 study): atr_pctl_252 is
             # the tightness reading with the measured edge; adr_pct/atr is the
             # ABSOLUTE one that sizes stops. Two jobs, two fields, never swap.
-            "atr_pctl_252", "atr_pctl_63", "range5_pctl_252", "adr_pct",
+            "atr_pct_pctl_252", "range5_pct_pctl_252", "adr_pct",
             "high_52w", "high_52w_dist", "vcs", "trend_base", "sector", "market_cap",
             "sp_signal", "perf_1m", "perf_3m", "label", "category", "hi20")},
         "heat": {"rank": heat_rank, "score": heat.get("score") if heat else None,
@@ -314,7 +314,7 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
             return False
         above50 = (r.get("sma50_dist") or 0) > 0
         if mode == "3wt":
-            return r.get("wk_tight_3") is True and above50 and (r.get("high_52w") or -1) >= -0.15
+            return r.get("three_weeks_tight") is True and above50 and (r.get("high_52w") or -1) >= -0.15
         rng, hi20 = r.get("range5_pct"), r.get("dist_hi20_pct")
         return (rng is not None and rng <= 5 and hi20 is not None and hi20 >= -3 and above50)
 

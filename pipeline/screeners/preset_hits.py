@@ -47,7 +47,7 @@ _RANGES: Dict[str, tuple] = {
     "rs21d": ("rs_21d", 1.0),
     "rs63d": ("rs_63d", 1.0),
     "rs126d": ("rs_126d", 1.0),
-    "rsIbd": ("rs_ibd", 1.0),
+    "rsIbd": ("rs_rating", 1.0),   # renamed 2026-09-04; preset key kept for compatibility
     "perf1wPctile": ("perf_1w_pctile", 1.0),
     "perf3mPctile": ("perf_3m_pctile", 1.0),
     "high52wDist": ("high_52w_dist", 100.0),
