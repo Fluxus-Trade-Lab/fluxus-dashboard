@@ -32,6 +32,15 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 自造的量必须在代码注释和契约行里**明写它是自造的**，并写清它偏离了哪个标准、为什么。
 自造量**不得**出现在页面上冒充标准读数。
 
+> **命名新发布字段前，先查本表（Andy 2026-09-06 定，原话「候选行批了，Power Trend 改判定对齐
+> Webster，撞名立机制」）**：一个标准的名字/缩写，只有它那一行的状态是 ✅ 一致 时才能拿来当
+> 我们的字段名；口径不一致或本来就是自造，就必须换一个不同的名字，并在状态列自报偏离。
+> 三次律第四次：`wk_band_3`（原名 `wk_tight_3`，冒用了 IBD "3 Tight Closes" 的形态名）·
+> `rs_ibd`（现 `rs_rating`，冒用了 IBD RS Rating 的名字）· `sp_phase`（oratnek Structure
+> Pivot 的内部阶段 1/2/3，与 Weinstein 的 stage 撞名但无共享定义）·
+> `vcs`（oratnek Volatility Contraction Score，与 Minervini 的 VCP 撞名但测的不是收缩次数）。
+> 机制见 [`pipeline/tools/audit_metric_names.py`](../../pipeline/tools/audit_metric_names.py)。
+
 ## 登记表
 
 | 我们发的 | 标准名 | 标准口径 | 状态 |
@@ -69,6 +78,17 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | — | McClellan Summation Index | McClellan 振荡器累加 | 🔲 我们没有 |
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |
 | — | Bullish Percent Index | P&F 买入信号占比 | 🔲 我们没有 |
+| —（拟 `climax_signs`） | O'Neil **Climax Top / Climax Run** | 长期上涨（典型 ≥18 周）之后加速的 1–2 周终段，同时看七个征兆：①**exhaustion gap**（跳空高开于昨日高点之上，重量）②**该轮最大单日涨幅** ③**该轮最大单日成交量** ④连续 7–8 个上涨日（或 10 日中 8 日涨）⑤**该轮最大周振幅**（周高−周低大于本轮起点以来任何一周）⑥价格刺穿上轨通道线（该线由 4–5 个月内 ≥3 个高点连成）⑦距 200 日均线 +70~100% 以上 | 🔲 **我们没有**。七条里只有第 ⑦ 条现成（`sma200_dist`）；①②③⑤⑥ 需要「本轮上涨起点」这个锚，而我们**没有任何字段定义"本轮"** |
+| —（拟 `ftd`） | O'Neil / IBD **Follow-Through Day** | 前置：指数创新低后出现 **rally attempt 第 1 天**（当日收盘高于开盘 / 高于前收，或小跌但收在当日区间上半部）；随后 2、3 日**不得跌破第 1 天的低点**，跌破则重新计数。**第 4 天或以后**（最佳 4–7 天，最迟约 10 天）某大盘指数**收涨 ≥1.25%**（IBD 现代口径抬到 **≥1.7%**，2% 更好）**且成交量高于前一交易日**——成交量只需高于前一日，不要求高于均量 | 🔲 **我们没有**，且**指数成交量在 `data/output/` 里根本不存在** |
+| —（拟 `dist_day` / `dist_count_25`） | IBD **Distribution Day** | 某大盘指数（Nasdaq Composite 或 S&P 500）**收跌 >0.2%** **且当日成交量高于前一交易日**（同样只要求高于前一日，不要求高于均量）。计数看**滚动 25 个交易日**窗口；一天在下列任一条件下出列：已过 25 个交易日，或指数自该日收盘起**涨 ≥5%**。**4–5 天 = Under Pressure，6 天以上通常先于回调** | 🔲 **我们没有**；缺的字段与 FTD 同一个（指数日量） |
+| —（拟 `sfp`） | **查过，无单一权威**。现代通用名 Swing Failure Pattern (SFP) | 通行描述：一根 K 线的**影线**穿越前一个 swing high / swing low，**收盘回到该极值之内**。Wyckoff 谱系里的对应物是有阶段前提的 **Upthrust After Distribution (UTAD)** 与 **Spring / Shakeout**；SFP 是把同一机制**剥掉阶段前提**推广到任意 swing 极值 | ⚠️ **不得当作标准读数**。同一形状在四套体系里叫四个名字（Wyckoff upthrust / Wilder failure swing / SFP / SMC 的 liquidity sweep），**没有一套给出可判定的数值门槛** |
+| —（拟 `weinstein_stage`） | Weinstein **Four Stages**（原书 Ch.2） | 以 **30 周均线（30-week MA）的斜率 + 价格相对它的位置**判定：**Stage 1 基地区**＝MA 由跌转**平**，价格在 MA 上下来回、仍在阻力位下方的箱体内；**Stage 2 上升期**＝价格**放量突破阻力区与 30 周 MA**，MA 突破后不久**转升**，此后每次回调都**守在上升的 MA 之上**、峰与谷双双抬高；**Stage 3 顶部区**＝MA 失去上升斜率**转平**，价格开始在 MA **上下反复穿刺**（Stage 2 时回调始终守在 MA 上或之上），放量滞涨（churning）；**Stage 4 下跌期**＝价格**跌破支撑区**、MA **下行**且价格在 MA 之下（**破位不需要放量也成立**，放量更凶） | 🔲 **我们没有**；**30 周均线的值与斜率两个都没发**（见下） |
+| —（拟 `vcp_contractions`） | Minervini **Volatility Contraction Pattern (VCP)** | 整理期内**2 到 6 次逐次变浅的回撤**（理想 2–4 次），**每次约为前一次深度的一半**（示例 25%→15%→8%→3%，或 20%→10%→5%）；**成交量随之收缩，末端出现明显的 volume dry-up**；Minervini 用 **"footprint" 速记**记录（周数、最大回撤/最小回撤、收缩次数，写成 `2T`/`3T`/`4T`，T = 收缩次数）；买点＝突破 pivot 且**放量** | ⚠️ **有可引定义，但只有作者本人的散文式描述——"每次约一半"没有容差、"volume dry-up"没有阈值** |
+| `vcs` | oratnek **Volatility Contraction Score v2**（**不是 VCP**） | ATR13/ATR63、stdev13/stdev63、vol5/vol50 三个比值加权 0.4/0.4/0.2，乘 trendFactor，EMA3 平滑 + daysTight 奖励 | ✅ 一致（`pipeline/screeners/vcs.py`，逐字移植自 `indicators/third_party/oratnek_vcs_v2.pine`）。**它测的是压缩程度，不是收缩次数**——与 VCP 同源不同物 |
+| `power_trend`（`signals.json` 五项 + `PowerTrend.jsx`） | **Mike Webster / IBD Market School — Power Trend**（**不是 Minervini**） | 四条同时成立才**开启**：①**当日最低价**在 **21 日 EMA 之上，已连续 ≥10 个交易日** ②**21 日 EMA 在 50 日 SMA 之上，已连续 ≥5 个交易日** ③**50 日 SMA 处于上升**（斜率向上）④**当日收盘高于开盘**（阳线）。**关闭**：21 日 EMA 下穿 50 日 SMA（另有两条提前失效：指数在距高点 >10% 时跌破 50 日线；指数收盘跌破当初那个 follow-through day 的最低价） | ⚠️ **五项检查与标准口径无一条对上**（逐条对照见下） |
+| —（拟 `adx14`） | **"均线缠绕所以忽略均线" ——查过，无标准。** 但它想表达的那件事**有标准**：Wilder **ADX**（趋势有无） | Wilder《New Concepts in Technical Trading Systems》(1978)：**ADX < 20 = 无趋势**，ADX > 25 = 强趋势，20–25 是灰区 | 🔲 **我们没有 ADX**。这是本轮唯一「口语说法无标准，但它指的现象有一个干净的标准量，而我们恰好没建」的词条 |
+
+来源（本批 2026-09-06 追加，源 [`recap_vocab_sources_2026-09-06.md`](../research/ops/recap_vocab_sources_2026-09-06.md)；Andy 批「候选行批了，Power Trend 改判定对齐 Webster，撞名立机制」，口语三词 hot potato / the tell / lone standout 被裁「都是口语，忽略」，未登记）。
 
 ## 已登记的债
 
