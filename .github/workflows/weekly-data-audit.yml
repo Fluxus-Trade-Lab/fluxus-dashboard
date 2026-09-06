@@ -32,6 +32,13 @@ jobs:
           python -m pipeline.tools.audit_archives --json audit.json | tee audit.txt
       - name: Schema drift
         run: python -m pipeline.tools.schema_snapshot --check | tee schema.txt
+      - name: Deploy cost
+        id: deploycost
+        continue-on-error: true
+        run: |
+          # checkout@v4 默认 depth=1,回放窗口会缩成 1 条 commit;按时间深挖
+          git fetch --shallow-since="30 days ago" origin main 2>/dev/null || git fetch --unshallow origin main 2>/dev/null || true
+          python -m pipeline.tools.audit_deploy_cost --json deploy_cost.json | tee deploy.txt
       - name: Run ledger, last 7 runs
         run: |
           python - <<'PY' | tee ledger.txt
@@ -64,7 +71,7 @@ jobs:
         run: |
           # guarded in the shell: a step's own env is not in scope for its if:
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then echo "no webhook, skipping"; exit 0; fi
-          BODY=$(printf '**Weekly data audit — %s**\n```\n%s\n\n%s\n\n%s\n\n%s\n\ncron:\n%s\n```' "$(date -u +%F)" "$(tail -12 audit.txt)" "$(head -8 schema.txt)" "$(cat ledger.txt)" "$(cat quality.txt)" "$(cat runs.txt)")
+          BODY=$(printf '**Weekly data audit — %s**\n```\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\ncron:\n%s\n```' "$(date -u +%F)" "$(tail -12 audit.txt)" "$(head -8 schema.txt)" "$(cat deploy.txt)" "$(cat ledger.txt)" "$(cat quality.txt)" "$(cat runs.txt)")
           python - "$BODY" <<'PY'
           import json, os, sys, urllib.request
           payload = json.dumps({"content": sys.argv[1][:1900]}).encode()
@@ -72,5 +79,5 @@ jobs:
           urllib.request.urlopen(req, timeout=20)
           PY
       - name: Fail if violations
-        if: steps.audit.outcome == 'failure'
+        if: steps.audit.outcome == 'failure' || steps.deploycost.outcome == 'failure'
         run: exit 1
