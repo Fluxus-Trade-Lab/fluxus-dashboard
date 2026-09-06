@@ -137,11 +137,19 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "posts").mkdir(exist_ok=True)
 
-    mem, _ = paged("/twitter/list/members", {"listId": a.list_id}, k, 10, "members")
-    (OUT / "members.json").write_text(json.dumps(
-        [{"h": x.get("userName"), "name": x.get("name"),
-          "followers": x.get("followers"), "bio": (x.get("description") or "")[:200]}
-         for x in mem], ensure_ascii=False, indent=1))
+    # 私密 List 的成员读不到（09-06 起 HTTP 400 list_id is required；此前是 200 + 空数组）。
+    # 两种失败都不该让整轮抓取死掉，更不该把 members.json 覆盖成 []：
+    # 名册是 Andy 手写的，空结果是 API 的性质，不是花名册的事实。
+    try:
+        mem, _ = paged("/twitter/list/members", {"listId": a.list_id}, k, 10, "members")
+    except SystemExit as e:
+        print(f"members 读不到（{e}），跳过；members.json 保持原样", file=sys.stderr)
+        mem = []
+    if mem:
+        (OUT / "members.json").write_text(json.dumps(
+            [{"h": x.get("userName"), "name": x.get("name"),
+              "followers": x.get("followers"), "bio": (x.get("description") or "")[:200]}
+             for x in mem], ensure_ascii=False, indent=1))
 
     raw, pages = paged("/twitter/list/tweets", {"listId": a.list_id}, k,
                        a.max_pages, "tweets")
