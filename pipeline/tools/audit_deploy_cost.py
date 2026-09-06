@@ -166,24 +166,44 @@ def check_gate_covers_sources(gate: Dict[str, Any], sources: Dict[str, int]) -> 
 
 
 def deploy_rate(repo: Path, days: int, watched: Sequence[str]) -> Dict[str, Any]:
-    """按闸的规则回放:过去 days 天里真正会触发构建的 commit 有多少。"""
+    """按闸的规则回放:过去 days 天里真正会触发构建的 commit 有多少。
+
+    一次 `git log --name-only` 拿全,不要每条 commit 起一个子进程——第一版
+    在真实仓库(14 天 783 条 commit)上跑了两分钟还没完,而一个跑不完的检查
+    等于没有这个检查。
+    """
     since = f"{days} days ago"
-    shas = [s for s in _git(repo, "log", "origin/main", f"--since={since}", "--format=%H").split() if s]
-    build = 0
-    for sha in shas:
-        # 闸在拿不到父 commit 时兜底偏向构建;回放必须复刻这个分支,
-        # 否则预测出来的是一个比闸更乐观的世界。
-        if not _git(repo, "rev-parse", "--verify", f"{sha}^").strip():
+    SEP = "\x1e"
+    raw = _git(repo, "log", "origin/main", f"--since={since}",
+               f"--format={SEP}%H %P", "--name-only")
+    build = skip = 0
+    for chunk in raw.split(SEP):
+        chunk = chunk.strip("\n")
+        if not chunk:
+            continue
+        head, _, rest = chunk.partition("\n")
+        parents = head.split()[1:]
+        if not parents:
+            # 闸在拿不到父 commit 时兜底偏向构建;回放必须复刻这个分支,
+            # 否则预测出来的是一个比闸更乐观的世界。
             build += 1
             continue
-        names = [n for n in _git(repo, "diff-tree", "--no-commit-id", "--name-only", "-r", sha).split("\n") if n]
+        names = [n for n in rest.split("\n") if n]
+        if len(parents) > 1 and not names:
+            # merge commit 的 --name-only 默认为空;当它没改动处理(Vercel 也只
+            # 看这次 push 带来的树变化)
+            skip += 1
+            continue
         if any(any(n == w or n.startswith(w.rstrip("/") + "/") for w in watched) for n in names):
             build += 1
+        else:
+            skip += 1
+    total = build + skip
     return {
         "days": days,
-        "commits": len(shas),
+        "commits": total,
         "would_build": build,
-        "would_skip": len(shas) - build,
+        "would_skip": skip,
         "builds_per_day": round(build / days, 2) if days else 0.0,
     }
 
@@ -240,8 +260,25 @@ def stale_shipped(repo: Path, sources: Dict[str, int], max_depth: int = 3) -> Li
     return out
 
 
+def head_is_stale(repo: Path) -> Optional[int]:
+    """检出的树落后 origin/main 多少个 commit(取不到返回 None)。
+
+    ⚠️ 这个工具审的是**检出了什么**,而 Vercel 构建的是 **main**。共享主树常年
+    停在某条落后一百多个 commit 的分支上(宪法主树保护第 3 条),在那里跑就会
+    读到旧的 vercel.json 并报「没有 ignoreCommand」——闸明明已经在 main 上了。
+    一个会对着旧副本喊狼来了的检查,几次之后就没人再信它的阳性。
+    所以落后时要在读数上写明,别让它冒充 main 的状态。
+    """
+    out = _git(repo, "rev-list", "--count", "HEAD..origin/main").strip()
+    try:
+        return int(out)
+    except ValueError:
+        return None
+
+
 def audit(repo: Path, days: int = 14, budget_gb: float = 10.0) -> Dict[str, Any]:
     gate = read_gate(repo)
+    behind = head_is_stale(repo)
     sources = artifact_sources(repo, gate)
     findings: List[Finding] = []
     findings += check_gate_covers_sources(gate, sources)
@@ -267,8 +304,17 @@ def audit(repo: Path, days: int = 14, budget_gb: float = 10.0) -> Dict[str, Any]
         ))
     findings += stale_shipped(repo, sources)
 
+    if behind:
+        findings.insert(0, Finding(
+            "D0", "warning",
+            f"检出的树落后 origin/main {behind} 个 commit —— 以下读数反映的是这棵树,"
+            f"不是 Vercel 实际构建的 main;先 `git fetch && git checkout origin/main` 再判",
+            {"behind": behind},
+        ))
+
     return {
         "gate": gate,
+        "head_behind_main": behind,
         "artifact_mb": round(artifact_bytes / 1048576, 1),
         "sources_mb": {k: round(v / 1048576, 1) for k, v in sorted(sources.items(), key=lambda x: -x[1])},
         "deploy_rate": rate,

@@ -152,3 +152,28 @@ def test_deploy_rate_replays_the_gate(repo: Path) -> None:
     # init 是根 commit,拿不到父 —— 闸兜底构建,回放也必须这么算
     assert r["would_build"] == 2      # init（无父,兜底构建）+ frontend change
     assert r["would_skip"] == 1       # 纯 docs
+
+
+def test_stale_checkout_is_flagged(repo: Path) -> None:
+    """阳性对照 D0:检出的树落后 origin/main 时必须说清楚。
+
+    否则在共享主树(常年落后一百多个 commit)上跑,会读到旧 vercel.json 并
+    报「没有 ignoreCommand」——闸其实已经在 main 上了。真实发生过。
+    """
+    _run(repo, "checkout", "-q", "-b", "side", "HEAD~0")
+    (repo / "later.md").write_text("main moved on")
+    _run(repo, "add", "-A")
+    _run(repo, "commit", "-qm", "main moves ahead")
+    _run(repo, "update-ref", "refs/remotes/origin/main", "HEAD")
+    _run(repo, "reset", "-q", "--hard", "HEAD~1")
+
+    res = adc.audit(repo, days=7, budget_gb=100.0)
+    assert res["head_behind_main"] == 1
+    assert "D0" in [f["code"] for f in res["findings"]]
+
+
+def test_fresh_checkout_is_not_flagged(repo: Path) -> None:
+    """反向对照:树和 main 一致时不许报 D0（否则这条警告会变成常年噪音）。"""
+    res = adc.audit(repo, days=7, budget_gb=100.0)
+    assert res["head_behind_main"] == 0
+    assert "D0" not in [f["code"] for f in res["findings"]]
