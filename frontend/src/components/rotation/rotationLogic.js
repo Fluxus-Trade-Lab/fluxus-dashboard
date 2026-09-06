@@ -71,9 +71,15 @@ export function sampleIndices(n, lag = R2W_LAG, step = FLUX_STEP) {
 export const PRIOR_WEEKS = 3.2
 /** `word` is a translation key — the cards speak one language at a time */
 export const BOARDS = [
-  { key: 'rs2w', word: 'rot.burst', title: 'RS 0–2w' },
-  { key: 'acc', word: 'rot.turn', title: 'Acceleration' },
-  { key: 'long', word: 'rot.persist', title: 'Quarter' },
+  { key: 'rs2w', word: 'rot.burst', title: 'RS Last 2 weeks' },
+  // NOT "RS 0–1w": `rs_0_1w` is a real field on every group (this week's
+  // excess) and the neighbouring column already reads "RS Last 2 weeks", so a
+  // window-shaped name here would be read as a cumulative window it is not.
+  // This column is a difference of two: this week's excess minus the weekly
+  // pace of the three weeks before it (Andy 2026-09-06 chose the plain-English
+  // set and asked for the RS prefix on all three).
+  { key: 'acc', word: 'rot.turn', title: 'RS This week vs prior 3' },
+  { key: 'long', word: 'rot.persist', title: 'RS Last 13 weeks' },
 ]
 export const WINDOWS = ['rot.win0', 'rot.win1', 'rot.win2', 'rot.win3', 'rot.win4']
 
