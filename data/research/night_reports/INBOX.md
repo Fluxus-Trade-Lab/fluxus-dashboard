@@ -1467,3 +1467,17 @@ Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日
 2. **口述桶升级为「今天做」**(Andy 原话「这个变成今天做」):上一条挂单的 C14/C21 账本跑**今天**执行,蒸馏厂线见单即跑;三张口述(C26/C17/C19,约 21 分钟)今天他开口就录——哪个会话接到「录口述」都按「先落盘再切卡」办。
 3. **Substack About 两问已裁**(原话「会员数不放。discord不算订阅权益。」):与 Steve §4 默认一致,定稿文案零改动,About 悬案闭(`00_SETUP.md` §4 已标)。站上仍是旧版 About——**只差 Andy 登录 Substack 把 §4 定稿粘上去**,这一步在他。
 — 模型R&D线（交互会话,2026-09-06）
+
+## [2026-09-06 05:15–05:22 UTC / 2026-09-06 01:15–01:22 ET / 2026-09-06 14:15–14:22 JST] 数据哨兵 —— 第 9 班：健康检查正常，且纠正第 7/8 班的「main 历史被替换」误报——那是本环境浅克隆的假象，不是真实历史重写
+
+**数据面**：`git log origin/main --grep='chore: market data' -1` 命中 `fc371bbc`（2026-09-06 05:15:09 UTC 落地，session 2026-09-04），本班上岗时该 commit 刚落 8 分钟。run_ledger 该班 `no_downgrade: ok`，`universe_quality: degraded`（非 severe，tradeable 2554/5631，仅 i_score 一项降级），`shortlist/watchlist/screeners` 全 ok。**dashboard 追平到 2026-09-04 交易日（周五收盘），本周末（09-05/09-06）无交易日缺口，属正常。** 本班未 dispatch、未碰 Yahoo。
+
+**纠错——第 7/8 班的「main 历史被整体替换」是假警报**：
+本云端会话每次开工都是**浅克隆**（`git rev-parse --is-shallow-repository` = true，`.git/shallow` 落着两个截断点），在浅克隆上直接 `git log origin/main --oneline | wc -l` 恒等于约 50、`tail -1` 给出的「根」其实是**浅克隆的截断边界**，不是仓库真实的根提交——每个新会话截断点必然不同（本班撞到的截断点是 `87d2174`，与第 7 班的 `1ad0f10`、第 8 班的 `9b8e86e0`都不同），看起来像「历史又被换了一次」，实际是**同一个假象复现了三次**。
+验证动作：①`mcp__github__list_commits` 拉 main 第 3 页（commit 201-300）能正常返回，说明服务端历史远超 50 条；②本地 `git fetch --unshallow` 后 `git log origin/main --oneline | wc -l` = **1929**，真实根提交 `fe449ab7`（2026-03-01，"Add Fluxus Capital Market Dashboard data pipeline"）——**main 的 git 历史完整,从未被重写或替换,`feat/rotation-v3` 也安然无恙(56b78f0 起完整链条)**。
+第 8 班已就此误报直接 `PushNotification` 告知 Andy（称"历史第二次被整体替换"）——**该条通知内容有误，请勿据此采取任何仓库恢复/force-push 类动作**，本班已通过等效渠道向 Andy 补发纠正通知。
+
+**同形状假警报复现第 3 次，按三次律②升级为机制建议（路由 OPS Fable 周检执行）**：任何会话诊断「main 分支历史完整性/是否被 force-push」时，**禁止**只凭本地浅克隆的 `git log --oneline` 计数或 `tail -1` 取根下结论；必须先 `git fetch --unshallow`（或改用 `mcp__github__list_commits` 翻到深页 / `search_commits`）拿到服务端真实深度后再判断。建议把这条写进 `DATA_RELIABILITY.md` 或数据哨兵任务书的「先读这一段」区。
+
+- [09-06] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-04）。**纠正第 7/8 班误报**：main 的 git 历史从未被重写，浅克隆截断边界被误读为「新根」，真实历史 1929 commit 完整（根 `fe449ab7`，2026-03-01）；`feat/rotation-v3` 亦完整无损。第 8 班对 Andy 发的「历史第二次被整体替换」PushNotification 有误，已补发纠正通知，不需要任何仓库恢复动作。同形状假警报第 3 次出现，已建议 OPS 周检把「浅克隆下禁止直接判定历史完整性」写进机制（三次律②）。
+— 数据哨兵（定时任务，2026-09-06）
