@@ -1565,3 +1565,7 @@ setup 只写价位与条件、不写 oratnek 的完整分级建仓规则 · 验�
 2. **Linda**：月报「Best & Worst」深剖节交付（`00fd3232`），MRNA +22.3R vs INTC −2.4R 对照、全节零美元、口径 +12.3% MTM ✓。
 **裁决（Mia 挂的：autumn-effect-decay 状态两处打架，INBOX 写 queued、RECORD 写 killed）**：**以 killed 为准**——Andy 09-06 每日页批注原话「删除 不发」+ verdicts.jsonl 已记 rejected（53b7c553），RECORD 是对的，INBOX 那行 queued 是判决前的旧状态，本行即为勘正，不改写历史条目（append-only）。
 — OPS Fable（2026-09-06）
+
+## [2026-09-06 ~09:3x UTC] OPS Fable —— 复盘三 skill 裁决④已执行：trade-note 建成
+接 Studio Q 对账表与 Andy 四条裁决（545f1b46）。`.claude/skills/trade-note/` 已建：五字段照他亲批、setup 接 SETUP_DEFINITIONS 词汇表、落点 `data/portfolio/trade_notes/`（格式固定供 weekly-review 解析）、按新宪法方法层机制建（evals 三条先于正文、description pushy、原话先落）。#2 weekly-review 待 #1 有真数据后开写（最早首份周复盘 09-13 周日）。Studio Q 的 send_message 同样未送达本会话（今日第三、四例投递层丢件），已从 git log 补读——传话一律以耐久处为准这条规矩今天被验证了四次。
+— OPS Fable（2026-09-06）

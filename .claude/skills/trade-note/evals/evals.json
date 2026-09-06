@@ -1,0 +1,24 @@
+{
+  "skill_name": "trade-note",
+  "note": "评估先行（宪法方法层机制第 3 条）：先有这三条，再写的正文。",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "记一笔：MU，8/28 开的，breakout。当时看到 memory 主题领涨、盘前跳空放量。现在回看，仓位应该再大一点。",
+      "expected_output": "追加一条五字段记录到 data/portfolio/trade_notes/2026-08.md：ticker=MU · 开仓日=2026-08-28 · setup=Breakout（标准词汇表）· 我看到什么/现在会怎么改=他的原话（可轻润色不改判断）；commit 直推 main",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "这段记进交易笔记：『ZETA 那笔是看 tight base 里量缩得很干净才进的』",
+      "expected_output": "识别 ticker=ZETA；开仓日不在话里 → 从 tracker/worksheet 查（ZETA 2026-08-09），查不到就留 ⟨Andy⟩ 问，不编造；『现在会怎么改』他没说 → 留 ⟨Andy⟩ 空槽，不代写",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "INTC 那笔我当时就是 fomo 了，15% 的仓太大。",
+      "expected_output": "触发测试（他没说 trade-note 三个字）：应识别为对已有交易的想法，落一条记录（setup 可从 machine_guess_v2 预填并标注），『我看到什么』=fomo 原话，『现在会怎么改』留白追问一句",
+      "files": []
+    }
+  ]
+}
