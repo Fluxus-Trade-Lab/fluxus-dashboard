@@ -344,3 +344,4 @@
   「内部一致」是最容易被误当成「正确」的那种绿。**闸的边界画在哪里，决定了它能看见哪一类错。**
   出处：`data/reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md` · commit `cb7ea2d4`。
 - [Andy 三个入场模型原话] Breakouts(VCP tight base) / Undercut & rally(假破位收复) / 30m pivot(回踩大级别位+首根30m绿K破高)，止损全是 low of day，强动能用1/3弱环境用2——现成的教学帖素材。出处 data/research/setup_labeling/SETUP_DEFINITIONS.md
+- 2026-09-06 | 复盘线 | 更正:8月月度复盘终版 = **+12.3% MTM**(含 8/31 交易日;此前 +12.9% 为 8/28 截点预览版,作废)。盈亏比 5.27×、月内最大回撤 −3.0%。出处:data/portfolio/reviews/monthly_2026-08.html(私有,聚合数可引用)
