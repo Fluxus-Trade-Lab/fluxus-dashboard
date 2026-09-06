@@ -1420,3 +1420,20 @@ Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日
 - [09-05] 🔴 **数据哨兵**：数据健康（dashboard 追平 2026-09-04），**但发现 main 分支 git 历史被整体替换**——当前 main 只剩 50 commit（根 `1ad0f10`），旧的 1800+ commit 完整历史仍活在分支 `feat/rotation-v3`（tip `fc5688b4`，未丢失）。已路由 OPS Fable 核实成因与是否恢复；本班未做任何 push/reset 操作。详见本节全文。
 
 — 数据哨兵（定时任务，2026-09-05）
+
+## [2026-09-06 01:15 UTC / 2026-09-05 21:15 ET / 2026-09-06 10:15 JST] 数据哨兵 —— 第 8 班：数据健康，但 main 的 git 历史又被替换了一次（第 7 班报告之后，非本班动作）
+
+**数据本身**：健康，无需动作。`run_ledger.jsonl` 最新一条仍是 run [33949769881](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33949769881)，session 2026-09-04，universe_quality degraded（非 severe），tradeable 2553/5631，event_date 2026-09-04。今日 ET 仍是 09-05（周六），最近交易日仍是 09-04（周五）——dashboard 已追平，健康线达标，流程①到此为止。
+
+**🔴 第 7 班报告的问题没有被处理，而且又发生了一次**：第 7 班（22:24 UTC）报告 main 被整体替换、根提交是 `1ad0f10`（作者时间 2026-09-05T17:05:35Z），当时已路由 OPS Fable 并声称「已通知 Andy」。本班巡检发现：
+- `git fetch` 对本地 `origin/main` 引用报 **forced update**（`7a3352f...a774ea3`），说明第 7 班的报告 commit（`2612bffa`）push 到 main 之后，**main 又被 force-push 了一次**。
+- 当前 main 仍然只有 **50 个 commit**，但**根提交换成了另一个**：`9b8e86e0`（`metrics: 补回被 shell 吃掉的两个反引号段`，作者时间 2026-09-06T02:26:23+09:00 = 2026-09-05T17:26:23Z）——**不是**第 7 班报告的那个根（`1ad0f10`）。两次替换的根提交、消息、作者时间都不同，**是两次独立的历史重写事件，不是同一次事故的重复读数**。
+- 第 7 班自己的报告 commit `2612bffa` 这次**被保留下来了**（在当前 50 个 commit 里排第 2），后面跟着 roster/campaign/guard/brief 等一大批 09-06 JST 时段的正常工作提交——像是有人把「新根 + 第7班报告 + 之后的正常提交」重新拼了一条链，而不是接回 `feat/rotation-v3` 的完整历史。
+- 好消息不变：`feat/rotation-v3`（tip `fc5688b4`，1818 commits）依旧存在、未被这次操作波及，仍是目前最完整的旧历史谱系，可随时用于恢复。
+- 本班同样**没有做任何 push/reset 操作**——恢复 main 到完整谱系需要 force-push 共享主分支，按宪法「外部动作与跨线授权」属于不可逆、影响全体协作者的操作，不是巡检脚本能替 Andy/OPS Fable 决定的事。
+
+**→ 再次路由给 OPS Fable，且升级**：这不再是一次性事故,是**同一形状发生第二次**——建议启动「三次律」的坑位追踪:下一次(第三次)如果还发生,必须从「事后报告」升级为「机制」(例如给 main 加分支保护规则禁止 force-push,或排查是哪个自动化脚本在用错误的方式做「直推main标准动作」)。**已用 PushNotification 直接告知 Andy**（因为上一班「已通知 Andy」之后问题仍在恶化,不能只在 INBOX 里等回执）。
+
+- [09-06] 🔴 **数据哨兵**：数据健康（dashboard 仍追平 2026-09-04）。**main 的 git 历史第二次被整体替换**——新根 `9b8e86e0`（与第 7 班报告的根 `1ad0f10` 不同,两次独立事件）,当前仍只有 50 commit。完整历史仍安全存在于 `feat/rotation-v3`（tip `fc5688b4`,1818 commits,未受影响）。已再次路由 OPS Fable 并升级为「同形状第二次,建议按三次律追踪」;已直接 PushNotification 告知 Andy。本班未做任何 push/reset。详见本节全文。
+
+— 数据哨兵（定时任务，2026-09-06）
