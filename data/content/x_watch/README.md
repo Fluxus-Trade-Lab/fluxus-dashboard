@@ -1,7 +1,50 @@
 # X 日调研 · 数据目录
 
-**底盘 List:** `Copybook` — https://x.com/i/lists/2083551367399182754 — 30 Members · 私密 · Andy 2026-09-06 指定。
-**方案** [`../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md) · **手册** [`..._runbook.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_runbook.md) · **名单** [`..._roster.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_watch_roster.md)
+## ⏱ 现行日常参数(Andy 2026-09-07 亲批,原话「60页ok,测试5天试试」)
+
+```bash
+.venv/bin/python Fluxus_Brand/ops/tools/x_watch/fetch.py --days 1 --max-pages 60
+```
+
+| 项 | 值 | 定于 |
+|---|---|---|
+| `--max-pages` | **60**(约 5–6 分钟) | Andy 09-07 |
+| 跑点 | 每日 09:00 JST(= 前一日 20:00 ET,收盘后 4 小时) | Andy 09-06 |
+| 源 | twitterapi.io `/twitter/list/tweets` · Copybook `2083551367399182754` | Andy 09-06 |
+| 名单 | `members.json` **34 人**,Andy 截图录入 | Andy 09-07 |
+| 测试窗口 | **09-08 · 09-09 · 09-10 · 09-11 · 09-14**(5 个交易日),第 5 天日报附评估节 | Andy 09-07 |
+
+**为什么是 60 不是 25**:周五 09-04 一天就 403 条,25 页(500 条上限)只翻到当天 11:33 ET。详见下面「25 页事故」。
+
+### ⛔ 每次跑完必做的两条核对
+
+1. **翻到底了吗** —— `runlog.csv` 最后一行的 `oldest_raw_utc` 必须**早于** `since_et` 的 00:00 ET。没早于就是没翻到底,加页重跑,别拿半天样本写报告。
+2. **名单被覆盖了吗** —— `fetch.py` 每跑一次拿 API 成员接口结果覆盖 `members.json`,而私密 List 的成员接口**永远返回空**。被写成 `[]` 就 `git checkout origin/main -- data/content/x_watch/members.json` 恢复。**永远不要提交 `[]`。**
+
+---
+
+## ⚠️ 25 页事故(2026-09-06,报告已作废重写)
+
+首跑 `--max-pages 25` 只翻到 09-04 11:33 ET,周五拿到 232 条 / 30 人。补到 60 页后是 **403 条 / 33 人**,起点 00:02 ET。**覆盖率 57.6%。**
+
+被砍掉的 42% 不是随机的一半,是**时间上连着的前半天** —— 盘前、开盘、以及所有非美时区的人。@LindaRaschke、@ripster47、@Clement_Ang17 这些人恰好在那个时段活动。
+
+**而首跑的每个闸都是绿的**:500 条、30 人、2.2 分钟、25 页。条数没有「该等于多少」的先验,**没有任何计数维度会因为「少了半天」而变红**。
+
+据此写出去的判断,错的两条已撤回(全表见 [`daily/2026-09-04_首跑.md`](daily/2026-09-04_首跑.md) 顶部更正块):
+- 「@NickSchmidt 收藏比 0.02,精简先砍这里」→ 补全后 **0.68**
+- 「@LindaRaschke 是事件源不是日更源」→ 周五她发了 **15 条**
+
+`fetch.py` 里那条 `oldest > since` 的警告按逻辑当时打印过。**闸响了没人读** —— 所以现在把读它写成了任务书里的动作。
+
+**额度**:免费额度只够一次运行(首跑 25 页 500 条用光,第二班 HTTP 402)。Andy 09-06 11:20 ET 充值。
+
+---
+
+## 底盘 List
+
+**`Copybook`** — https://x.com/i/lists/2083551367399182754 — **34 Members** · 私密 · Andy 2026-09-06 指定。
+**方案** [`../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_plan.md) · **手册** [`..._runbook.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_runbook.md) · **名单** [`..._roster.md`](../../../Fluxus_Brand/ops/briefs/2026-09-06_x_watch_roster.md) · **对账** [`roster_reconcile_2026-09-07.md`](roster_reconcile_2026-09-07.md)
 
 ## 其余五张 List —— **Andy 自己删,跑手不碰**(09-06 原话「我自己加人员名单,自己删 list」)
 
@@ -19,7 +62,7 @@
 
 ---
 
-## 2026-09-06 试跑:免费方案的天花板已经量到了
+## 📦 留档 · 2026-09-06 浏览器法试跑(已被 twitterapi.io 取代,不再是现行做法)
 
 **结论:浏览器法在这个账号上一次只能拿到约 9 条帖、5 个作者,再滚不动。** 这不是选择器写错,是 X 的限速:
 - `following` 列表 533 人,只吐 **16** 个就停(重开 session 无效)
