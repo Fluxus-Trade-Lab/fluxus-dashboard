@@ -2,7 +2,7 @@
 // Fluxus 行业组轮动 Top10 → Discord webhook
 // 用法: 挂在任意图表的 10 分钟周期上 → 创建警报 → 条件选本指标的「Any alert() function call」
 //      → Webhook URL 填 Discord webhook → 到期设 Open-ended (Premium)。
-// 名单: Jeff Sun 2026-09-05 行业组 ETF 表 48 个砍 8 个商品/重复项 (SVIX/USO/UNG/PALL/AMLP/GUNR/GXC/ILF)。
+// 名单: Jeff Sun 2026-09-05 行业组 ETF 表 48 个, Andy 2026-09-06 亲定砍 8 个 (SVIX/FCG/PALL/AMLP/GNR/GXC/ILF/UNG)。
 // 消息体是 Discord JSON ({"content": ...})。若 Discord 回 400, 在 webhook URL 末尾加 /slack 并把 content 改成 text。
 indicator("Fluxus 行业组轮动 Top10", overlay = false, dynamic_requests = true)
 
@@ -11,15 +11,15 @@ bool showBottom = input.bool(true, "附带垫底 3 个")
 bool rthOnly    = input.bool(true, "只在美股常规时段推送")
 
 var string[] syms = array.from(
-     "BLOK", "BUZZ", "KCE",  "EWY",  "AIQ",  "BOAT", "CNBS", "SLX",  "DRAM", "ARKF",
-     "IBIT", "IAI",  "ARKW", "MAGS", "ARGT", "FXI",  "KURE", "KIE",  "ARKK", "GNR",
-     "PBE",  "EWZ",  "MOO",  "WOOD", "NLR",  "URA",  "SIL",  "ETHA", "IHF",  "XOP",
-     "WGMI", "HYDR", "ESPO", "XRPI", "XME",  "XHS",  "FDN",  "FCG",  "SOLZ", "OIH")
+     "BLOK", "BUZZ", "KCE",  "EWY",  "AIQ",  "BOAT", "CNBS", "SLX",  "USO",  "DRAM",
+     "ARKF", "IBIT", "IAI",  "ARKW", "MAGS", "ARGT", "FXI",  "KURE", "KIE",  "ARKK",
+     "PBE",  "EWZ",  "MOO",  "WOOD", "NLR",  "URA",  "SIL",  "ETHA", "GUNR", "IHF",
+     "XOP",  "WGMI", "HYDR", "ESPO", "XRPI", "XME",  "XHS",  "FDN",  "SOLZ", "OIH")
 var string[] names = array.from(
-     "Blockchain", "Social Media", "Capital Markets", "South Korea", "AI Software", "Shipping", "Cannabis", "Steel", "Memory", "ARK Fintech",
-     "Bitcoin", "Broker-Dealers", "ARK Next-Gen", "Mag 7", "Argentina", "China Large-Cap", "China Health", "Insurance", "ARK Innovation", "Nat Resources",
-     "Biotech", "Brazil", "Agriculture", "Timber", "Nuclear", "Uranium", "Silver Miners", "Ether", "Health Providers", "Oil&Gas E&P",
-     "Internet Infra", "Hydrogen", "E-Sports", "XRP", "Metals&Mining", "Health Facilities", "US Internet", "NatGas E&P", "Solana", "Oil Services")
+     "Blockchain", "Social Media", "Capital Markets", "South Korea", "AI Software", "Shipping", "Cannabis", "Steel", "Crude Oil", "Memory",
+     "ARK Fintech", "Bitcoin", "Broker-Dealers", "ARK Next-Gen", "Mag 7", "Argentina", "China Large-Cap", "China Health", "Insurance", "ARK Innovation",
+     "Biotech", "Brazil", "Agriculture", "Timber", "Nuclear", "Uranium", "Silver Miners", "Ether", "Upstream Nat Res", "Health Providers",
+     "Oil&Gas E&P", "Internet Infra", "Hydrogen", "E-Sports", "XRP", "Metals&Mining", "Health Facilities", "US Internet", "Solana", "Oil Services")
 
 f_chg(string s) =>
     request.security(s, "D", 100.0 * (close / close[1] - 1))
