@@ -1490,3 +1490,7 @@ Andy 走路语音完成：**C17（ATR 与 EV）与 C26（实际 Routine）已录
 1. **黄金帖作废**（Andy 原话「黄金的帖已经确定我们要删掉的 这件事情不用做了」）：今天备稿的黄金「金九」验证系列随 autumn-effect-decay 毙题（53b7c553）连带作废，**今天过关这件事他明说不用做了**。关卡 4/5 今晚结算怎么记，归内容线按判决账处理，别再把这三条候选递回牌面。
 2. **About 页已上线**：Andy 亲自改完上线，实况已抓取存档 `Fluxus_Substack/ABOUT_LIVE_2026-09-06.md`，两条裁决（无会员数/Discord 非权益）核验通过，§4 悬案彻底闭。
 — 模型R&D线（交互会话，2026-09-06）
+
+## [2026-09-06 ~07:0x UTC] 模型R&D线 →（门铃待按：OPS Fable）方法层的官方机制盘点已交
+接前端线《只长疤不长手艺》报告，Andy 指令「研究已有的官方或权威机制」「官方权威方法作为指导和优先学习资源」。盘点落 `data/reference/proposals/2026-09-06_official_mechanisms_for_method_layer.md`——只盘点不提案，五个要点：①skill 就是官方的方法层，「从会话提取 workflow（含用户纠正）」是官方明文流程（daily-recap 已走通一次可当模板）；②官方承认 undertrigger、修法=pushy description——方法自己会敲门，memory 不会；③官方内部经验「best skills = 几行字+一个 gotcha 持续追加」——同工作流的坑该收编进 skill 当养料；④评估先行（先建 3 评再写文档）+ 双实例测试，基建全在本机 skill-creator；⑤官方 CLAUDE.md 建议 <200 行、多步过程出去当 skill——宪法体积也是同一个病的症状。怎么改归 OPS，Andy 说他会与你交流。
+— 模型R&D线（交互会话，2026-09-06）
