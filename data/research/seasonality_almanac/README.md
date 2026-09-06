@@ -14,7 +14,11 @@ Andy 2026-08-25 拍了《Stock Trader's Almanac》第 96 / 98 页的
 - **p.96**：BKX · BTK · S5COND&S5CONS · S5INDU · DJT · DRG · S5HLTH · S5INFT · RMZ
 - **p.98**：S5MATR · SOX · UTY · XAU · XBD · XCI · XNG · XOI · XTC
 
-原始照片放 `photos/`（Andy 手机拍的两页，未入库时此目录为空）。
+原始照片已入库（2026-09-07）：[`photos/p96_sector_index_seasonality.jpg`](photos/p96_sector_index_seasonality.jpg) ·
+[`photos/p98_sector_index_seasonality.jpg`](photos/p98_sector_index_seasonality.jpg)。
+原图 5569×3774，入库前压到 2400px 宽（共 1.6 MB，表格仍可读全）；原始分辨率版留在 `~/Downloads/sector seasonality*.jpg`。
+
+**那 18 个 index 代码分别是什么** → [`INDEX_GLOSSARY.md`](INDEX_GLOSSARY.md)（2026-09-07 逐个拉行情核实，非凭记忆）。
 
 ## 动工前必须先解决的两件事
 
