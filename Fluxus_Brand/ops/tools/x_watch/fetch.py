@@ -24,6 +24,8 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
 API = "https://api.twitterapi.io"
+QPS_SLEEP = 5.2          # 免费档硬限：每 5 秒 1 个请求（实测 429 原文如此）
+_last = [0.0]
 LIST_ID = "2083551367399182754"          # Copybook（Andy 09-06 指定）
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "data" / "content" / "x_watch"
@@ -55,13 +57,17 @@ def key() -> str:
 def get(path: str, params: dict, k: str, tries: int = 3) -> dict:
     url = f"{API}{path}?{urlencode(params)}"
     for i in range(tries):
+        wait = QPS_SLEEP - (time.time() - _last[0])
+        if wait > 0:
+            time.sleep(wait)
+        _last[0] = time.time()
         try:
             with urlopen(Request(url, headers={"X-API-Key": k}), timeout=45) as r:
                 return json.loads(r.read())
         except HTTPError as e:
             body = e.read()[:300].decode("utf-8", "replace")
             if e.code in (429, 500, 502, 503) and i < tries - 1:
-                time.sleep(3 * (i + 1)); continue
+                time.sleep(QPS_SLEEP * (i + 2)); continue
             sys.exit(f"HTTP {e.code} on {path}: {body}")
         except Exception as e:
             if i < tries - 1:
@@ -121,10 +127,11 @@ def main() -> None:
                 print(f"  {f:14} = {t.get(f, '❌ 缺')}")
             au = t.get("author") or {}
             print(f"  author.userName = {au.get('userName')}")
-        m = get("/twitter/list/members", {"listId": a.list_id}, k)
+        m = get("/twitter/list/members", {"list_id": a.list_id}, k)
         mem = m.get("members") or m.get("data") or []
-        print("=== 成员本页 ===", len(mem),
-              "· has_next:", m.get("has_next_page"))
+        print("=== 成员本页 ===", len(mem), "· has_next:", m.get("has_next_page"))
+        if not mem:
+            print("  ⚠️ 私密 List 的成员第三方 API 读不到（时间线读得到）")
         if mem:
             print("  样本:", [x.get("userName") for x in mem[:5]])
         return
@@ -137,7 +144,10 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "posts").mkdir(exist_ok=True)
 
-    mem, _ = paged("/twitter/list/members", {"listId": a.list_id}, k, 10, "members")
+    mem, _ = paged("/twitter/list/members", {"list_id": a.list_id}, k, 10, "members")
+    if not mem:
+        print("⚠️ 成员接口返回 0 —— Copybook 是私密 List，第三方 API 看不到成员。"
+              "名单对账只能靠时间线里出现过的作者（不完整），或 Andy 自己截图。")
     (OUT / "members.json").write_text(json.dumps(
         [{"h": x.get("userName"), "name": x.get("name"),
           "followers": x.get("followers"), "bio": (x.get("description") or "")[:200]}
