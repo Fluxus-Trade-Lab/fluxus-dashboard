@@ -1,8 +1,8 @@
 {
   "ticker": "SLV",
-  "fetched_at": "2026-09-04T06:32:06Z",
+  "fetched_at": "2026-09-06T05:08:58Z",
   "_schema": "v2",
-  "current_price": 60.54999923706055,
+  "current_price": 59.81999969482422,
   "info": {
     "symbol": "SLV",
     "longName": "iShares Silver Trust",
@@ -19,7 +19,7 @@
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 2.8363314,
+    "priceToBook": null,
     "grossMargins": null,
     "operatingMargins": null,
     "profitMargins": null,
@@ -31,11 +31,11 @@
     "debtToEquity": null,
     "currentRatio": null,
     "fiftyTwoWeekHigh": 109.83,
-    "fiftyTwoWeekLow": 36.97,
-    "averageVolume": 18519954,
-    "averageVolume10days": 18792350,
+    "fiftyTwoWeekLow": 37.01,
+    "averageVolume": 18045698,
+    "averageVolume10days": 16737700,
     "beta": null,
-    "sharesOutstanding": 341449984,
+    "sharesOutstanding": null,
     "sharesFloat": null,
     "companyOfficers": []
   },
@@ -48,7 +48,14 @@
     "low_price_target": null,
     "current_price": null
   },
+  "quarterly_asof": "2026-09-06T05:08:58Z",
   "news": [
+    {
+      "date": "2026-09-04T13:33:30Z",
+      "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Friday After August Jobs Report Tops Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-133330774.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-09-03T13:20:19Z",
       "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Thursday as Markets Weigh Oil Prices, Tech Earnings",
@@ -102,38 +109,24 @@
       "title": "GLD, IBIT and Other ETFs to Play Debasement Trade",
       "url": "https://finance.yahoo.com/markets/commodities/articles/gld-ibit-other-etfs-play-122900313.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-25T13:09:24Z",
-      "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Tuesday as Chip Stocks Recover",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-equity-futures-130924933.html",
-      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.02031379051194372,
+  "options_implied_move": 0.026412571181218272,
   "technicals": {
-    "ma20": 59.956499862670896,
-    "ma50": 55.856599960327145,
-    "ma200": 65.24595003128051,
-    "rsi14": 55.348152686994226,
+    "ma20": 60.07249984741211,
+    "ma50": 56.0057999420166,
+    "ma200": 65.31770002365113,
+    "rsi14": 52.93286792766844,
     "high_20d": 64.30999755859375,
     "low_5d": 57.849998474121094,
     "low_10d": 57.849998474121094,
     "high_52w": 109.83000183105469,
-    "low_52w": 36.630001068115234,
-    "atr14": 1.96285765511649,
-    "atr14_pct": 3.241713756975728,
-    "position_in_52w_range_pct": 32.6775927863867
+    "low_52w": 36.970001220703125,
+    "atr14": 1.945000239780971,
+    "atr14_pct": 3.251421346879842,
+    "position_in_52w_range_pct": 31.36151287771838
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 25.62,
-      "high": 25.88,
-      "low": 25.58,
-      "close": 25.68,
-      "volume": 11322400.0
-    },
     {
       "date": "2024-09-05",
       "open": 26.38,
@@ -4140,18 +4133,18 @@
       "high": 60.95,
       "low": 59.6,
       "close": 60.55,
-      "volume": 13757800.0
+      "volume": 13837400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 59.16,
+      "high": 59.97,
+      "low": 59.13,
+      "close": 59.82,
+      "volume": 12599500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 37.2,
-      "high": 37.22,
-      "low": 36.63,
-      "close": 36.93,
-      "volume": 45258500.0
-    },
     {
       "date": "2025-09-05",
       "open": 37.41,
@@ -6158,7 +6151,15 @@
       "high": 60.95,
       "low": 59.6,
       "close": 60.55,
-      "volume": 13757800.0
+      "volume": 13837400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 59.16,
+      "high": 59.97,
+      "low": 59.13,
+      "close": 59.82,
+      "volume": 12599500.0
     }
   ],
   "ai_synthesis": null,

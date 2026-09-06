@@ -1,8 +1,8 @@
 {
   "ticker": "CCJ",
-  "fetched_at": "2026-09-04T06:34:39Z",
+  "fetched_at": "2026-09-06T05:11:30Z",
   "_schema": "v2",
-  "current_price": 100.62000274658203,
+  "current_price": 100.73999786376953,
   "info": {
     "symbol": "CCJ",
     "longName": "Cameco Corporation",
@@ -13,13 +13,13 @@
     "city": "Saskatoon",
     "website": "https://www.cameco.com",
     "fullTimeEmployees": null,
-    "marketCap": 43823329280,
-    "enterpriseValue": 43932774400,
-    "trailingPE": 164.95082,
-    "forwardPE": 53.208103,
-    "priceToSalesTrailing12Months": 12.612402,
-    "enterpriseToRevenue": 12.644,
-    "priceToBook": 8.53618,
+    "marketCap": 43875594240,
+    "enterpriseValue": 43985039360,
+    "trailingPE": 173.68965,
+    "forwardPE": 53.05851,
+    "priceToSalesTrailing12Months": 12.627444,
+    "enterpriseToRevenue": 12.659,
+    "priceToBook": 8.482008,
     "grossMargins": 0.35112998,
     "operatingMargins": 0.09111,
     "profitMargins": 0.102139995,
@@ -31,10 +31,10 @@
     "debtToEquity": 17.131,
     "currentRatio": 3.061,
     "fiftyTwoWeekHigh": 135.24,
-    "fiftyTwoWeekLow": 74.63,
-    "averageVolume": 3324219,
-    "averageVolume10days": 3020650,
-    "beta": 0.992,
+    "fiftyTwoWeekLow": 74.99,
+    "averageVolume": 3303990,
+    "averageVolume10days": 2894530,
+    "beta": 1.012,
     "sharesOutstanding": 435532978,
     "sharesFloat": 434478989,
     "companyOfficers": [
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 813772000.0,
+      "gross_profit": 190136000.0,
+      "operating_income": 74139000.0,
+      "eps": 0.06,
+      "cash": 1112718000.0,
+      "operating_cashflow": 131033000.0,
+      "gross_margin_pct": 23.36477539163304,
+      "yoy_pct": -7.2112709460260715
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 845365000.0,
       "gross_profit": 301584000.0,
@@ -117,7 +128,7 @@
       "cash": 1075117000.0,
       "operating_cashflow": -22276000.0,
       "gross_margin_pct": 35.67500428808858,
-      "yoy_pct": 7.085220766323119
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -145,22 +156,11 @@
       "period_end": "2025-06-30T00:00:00",
       "revenue": 877016000.0,
       "gross_profit": 257090000.0,
-      "operating_income": 165964000.0,
+      "operating_income": 156260000.0,
       "eps": 0.74,
       "cash": 716292000.0,
       "operating_cashflow": 465200000.0,
       "gross_margin_pct": 29.31417442783256,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 789432000.0,
-      "gross_profit": 270137000.0,
-      "operating_income": 188028000.0,
-      "eps": 0.16,
-      "cash": 361469000.0,
-      "operating_cashflow": 110191000.0,
-      "gross_margin_pct": 34.21916010498688,
       "yoy_pct": null
     }
   ],
@@ -170,10 +170,10 @@
     "bullish": 19,
     "neutral": 5,
     "bearish": 0,
-    "avg_price_target": 130.67366,
-    "high_price_target": 174.74347,
-    "low_price_target": 85.89704,
-    "current_price": 100.62,
+    "avg_price_target": 130.87393,
+    "high_price_target": 174.14107,
+    "low_price_target": 85.60092,
+    "current_price": 100.74,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T17:21:06",
@@ -247,7 +247,20 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:30Z",
   "news": [
+    {
+      "date": "2026-09-05T20:43:01Z",
+      "title": "3 Nuclear Stocks to Buy With $2,000 After One Fell 83%",
+      "url": "https://www.fool.com/investing/2026/09/05/3-nuclear-stocks-to-buy-with-usd2-000-after-one-fell-83/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-04T16:57:00Z",
+      "title": "Energy Fuels' Q2 Loss Widens: Is a Recovery on the Horizon?",
+      "url": "https://finance.yahoo.com/energy/articles/energy-fuels-q2-loss-widens-165700473.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-03T14:25:22Z",
       "title": "Jefferies launches nuclear coverage on $55tn capex outlook to 2100",
@@ -295,44 +308,24 @@
       "title": "The US Army Is Driving the Next Big Breakthrough in Nuclear Power",
       "url": "https://www.barrons.com/articles/us-army-microreactor-bet-catalyst-nuclear-stocks-60cc308a?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-26T19:32:01Z",
-      "title": "Cameco Owns the Refinery at the Center of Canada's Uranium Threat",
-      "url": "https://www.fool.com/investing/2026/08/26/cameco-owns-the-refinery-at-the-center-of-canada-s-uranium-threat/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-26T04:53:00Z",
-      "title": "UUUU, LEU, CCJ, BWXT Stocks In Focus: Trump\u2019s Saudi Nuclear Push Reportedly Faces Congress Debate And Israel Hurdle",
-      "url": "https://stocktwits.com/news-articles/markets/equity/uuuu-leu-ccj-bwxt-stocks-in-focus-trump-s-saudi-nuclear-push-reportedly-faces-congress-debate-and-israel-hurdle/cZYNSfWRJow",
-      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.02176505605466595,
+  "options_implied_move": 0.04496724335974186,
   "technicals": {
-    "ma20": 99.67950019836425,
-    "ma50": 95.45120010375976,
-    "ma200": 105.27294586181641,
-    "rsi14": 53.86463573605325,
+    "ma20": 99.84700012207031,
+    "ma50": 95.39440002441407,
+    "ma200": 105.36230262756348,
+    "rsi14": 54.05207982993094,
     "high_20d": 111.54000091552734,
     "low_5d": 94.69000244140625,
     "low_10d": 94.69000244140625,
     "high_52w": 135.24000549316406,
     "low_52w": 74.48496818910202,
-    "atr14": 4.388572692871094,
-    "atr14_pct": 4.36153108037971,
-    "position_in_52w_range_pct": 43.01706610215947
+    "atr14": 4.272858755929129,
+    "atr14_pct": 4.241471954076579,
+    "position_in_52w_range_pct": 43.21457255185015
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 37.7329,
-      "high": 39.6653,
-      "low": 37.703,
-      "close": 38.8485,
-      "volume": 4981900.0
-    },
     {
       "date": "2024-09-05",
       "open": 38.9979,
@@ -496,7 +489,7 @@
     {
       "date": "2024-10-03",
       "open": 49.8058,
-      "high": 49.9951,
+      "high": 49.995,
       "low": 49.0985,
       "close": 49.7659,
       "volume": 4937700.0
@@ -616,7 +609,7 @@
     {
       "date": "2024-10-24",
       "open": 54.6967,
-      "high": 54.9955,
+      "high": 54.9956,
       "low": 52.9734,
       "close": 53.6408,
       "volume": 4872500.0
@@ -4339,18 +4332,18 @@
       "high": 101.53,
       "low": 98.69,
       "close": 100.62,
-      "volume": 3217000.0
+      "volume": 3228900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 99.54,
+      "high": 101.54,
+      "low": 99.52,
+      "close": 100.74,
+      "volume": 1554900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 76.7805,
-      "high": 77.8085,
-      "low": 75.5828,
-      "close": 76.1617,
-      "volume": 2194900.0
-    },
     {
       "date": "2025-09-05",
       "open": 76.8803,
@@ -6357,7 +6350,15 @@
       "high": 101.53,
       "low": 98.69,
       "close": 100.62,
-      "volume": 3217000.0
+      "volume": 3228900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 99.54,
+      "high": 101.54,
+      "low": 99.52,
+      "close": 100.74,
+      "volume": 1554900.0
     }
   ],
   "ai_synthesis": null,

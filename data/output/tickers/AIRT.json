@@ -1,8 +1,8 @@
 {
   "ticker": "AIRT",
-  "fetched_at": "2026-09-04T06:33:23Z",
+  "fetched_at": "2026-09-06T05:10:33Z",
   "_schema": "v2",
-  "current_price": 32.95000076293945,
+  "current_price": 31.75,
   "info": {
     "symbol": "AIRT",
     "longName": "Air T, Inc.",
@@ -13,13 +13,13 @@
     "city": "Charlotte",
     "website": "https://www.airt.com",
     "fullTimeEmployees": 1666,
-    "marketCap": 88849976,
-    "enterpriseValue": 353184608,
-    "trailingPE": 1.3798158,
+    "marketCap": 85614160,
+    "enterpriseValue": 349966496,
+    "trailingPE": 1.345339,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": 0.23904902,
-    "enterpriseToRevenue": 0.95,
-    "priceToBook": 1.3602775,
+    "priceToSalesTrailing12Months": 0.23034312,
+    "enterpriseToRevenue": 0.942,
+    "priceToBook": 1.3107377,
     "grossMargins": 0.22662,
     "operatingMargins": -0.085489996,
     "profitMargins": 0.17167999,
@@ -32,9 +32,9 @@
     "currentRatio": 1.428,
     "fiftyTwoWeekHigh": 35.0,
     "fiftyTwoWeekLow": 18.35,
-    "averageVolume": 10825,
-    "averageVolume10days": 21640,
-    "beta": 0.258,
+    "averageVolume": 11957,
+    "averageVolume10days": 28230,
+    "beta": 0.275,
     "sharesOutstanding": 2696509,
     "sharesFloat": 919893,
     "companyOfficers": [
@@ -84,6 +84,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 115461000.0,
+      "gross_profit": 17253000.0,
+      "operating_income": -12825000.0,
+      "eps": -5.86,
+      "cash": 16667000.0,
+      "operating_cashflow": -2830000.0,
+      "gross_margin_pct": 14.942707927352092,
+      "yoy_pct": 62.91942994214759
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 120938000.0,
       "gross_profit": 17287000.0,
@@ -92,7 +103,7 @@
       "cash": 20332000.0,
       "operating_cashflow": -44000.0,
       "gross_margin_pct": 14.294101109659497,
-      "yoy_pct": 82.36899645630702
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -126,25 +137,15 @@
       "operating_cashflow": -1095000.0,
       "gross_margin_pct": 22.42415690701284,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 66315000.0,
-      "gross_profit": 9713000.0,
-      "operating_income": -2794000.0,
-      "eps": null,
-      "cash": 5932000.0,
-      "operating_cashflow": 4119000.0,
-      "gross_margin_pct": 14.646761667797634,
-      "yoy_pct": null
     }
   ],
   "analyst": {
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 32.95
+    "current_price": 31.75
   },
+  "quarterly_asof": "2026-09-06T05:10:33Z",
   "news": [
     {
       "date": "2026-09-03T17:30:00Z",
@@ -185,28 +186,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 30.649000549316405,
-    "ma50": 28.831200218200685,
-    "ma200": 23.200700101852416,
-    "rsi14": 59.26048778419199,
+    "ma20": 30.636500549316406,
+    "ma50": 29.02400020599365,
+    "ma200": 23.254450101852417,
+    "rsi14": 54.607014323612724,
     "high_20d": 34.650001525878906,
     "low_5d": 31.290000915527344,
-    "low_10d": 28.0,
+    "low_10d": 28.440000534057617,
     "high_52w": 35.0,
     "low_52w": 18.350000381469727,
-    "atr14": 1.8257147925240653,
-    "atr14_pct": 5.540864188924511,
-    "position_in_52w_range_pct": 87.68769198781817
+    "atr14": 1.8285718645368303,
+    "atr14_pct": 5.759281463108127,
+    "position_in_52w_range_pct": 80.48048003326691
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 22.3,
-      "high": 22.89,
-      "low": 22.26,
-      "close": 22.57,
-      "volume": 25100.0
-    },
     {
       "date": "2024-09-05",
       "open": 22.6,
@@ -4214,17 +4207,17 @@
       "low": 31.49,
       "close": 32.95,
       "volume": 45100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 33.13,
+      "high": 33.75,
+      "low": 31.75,
+      "close": 31.75,
+      "volume": 38200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 21.88,
-      "high": 21.88,
-      "low": 21.88,
-      "close": 21.88,
-      "volume": 0.0
-    },
     {
       "date": "2025-09-05",
       "open": 25.0,
@@ -6232,6 +6225,14 @@
       "low": 31.49,
       "close": 32.95,
       "volume": 45100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 33.13,
+      "high": 33.75,
+      "low": 31.75,
+      "close": 31.75,
+      "volume": 38200.0
     }
   ],
   "ai_synthesis": null,

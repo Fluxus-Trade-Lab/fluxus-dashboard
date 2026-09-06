@@ -1,11 +1,11 @@
 {
   "ticker": "ACOG",
-  "fetched_at": "2026-09-04T06:33:34Z",
+  "fetched_at": "2026-09-06T05:10:21Z",
   "_schema": "v2",
-  "current_price": 9.210000038146973,
+  "current_price": 9.520000457763672,
   "info": {
     "symbol": "ACOG",
-    "longName": "Alpha Cognition Inc.",
+    "longName": "Alpha Cognition Inc. Common Stock",
     "sector": "Healthcare",
     "industry": "Biotechnology",
     "exchange": "NCM",
@@ -13,13 +13,13 @@
     "city": "Grapevine",
     "website": "https://www.alphacognition.com",
     "fullTimeEmployees": 71,
-    "marketCap": 200574160,
-    "enterpriseValue": 159189936,
+    "marketCap": 207325312,
+    "enterpriseValue": 165941072,
     "trailingPE": null,
-    "forwardPE": -14.854838,
-    "priceToSalesTrailing12Months": 13.143177,
-    "enterpriseToRevenue": 10.431,
-    "priceToBook": 3.7870066,
+    "forwardPE": -15.354839,
+    "priceToSalesTrailing12Months": 13.585565,
+    "enterpriseToRevenue": 10.874,
+    "priceToBook": 3.914474,
     "grossMargins": 0.90375,
     "operatingMargins": -1.27294,
     "profitMargins": -1.37696,
@@ -32,9 +32,9 @@
     "currentRatio": 9.033,
     "fiftyTwoWeekHigh": 10.14,
     "fiftyTwoWeekLow": 4.5,
-    "averageVolume": 104469,
-    "averageVolume10days": 203010,
-    "beta": 2.232,
+    "averageVolume": 105614,
+    "averageVolume10days": 151240,
+    "beta": 2.242,
     "sharesOutstanding": 21777868,
     "sharesFloat": 11611741,
     "companyOfficers": [
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 6092974.0,
+      "gross_profit": 5701917.0,
+      "operating_income": -7756008.0,
+      "eps": -0.4,
+      "cash": 41384287.0,
+      "operating_cashflow": -6858716.0,
+      "gross_margin_pct": 93.58183704706437,
+      "yoy_pct": 267.55877315802076
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 3533798.0,
       "gross_profit": 3262022.0,
@@ -117,7 +128,7 @@
       "cash": 54248275.0,
       "operating_cashflow": -11797992.0,
       "gross_margin_pct": 92.30923782287499,
-      "yoy_pct": 20.662871066367018
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -144,23 +155,12 @@
     {
       "period_end": "2025-06-30T00:00:00",
       "revenue": 1657687.0,
-      "gross_profit": 1123590.0,
-      "operating_income": -5737001.0,
-      "eps": -0.65,
+      "gross_profit": 1453829.0,
+      "operating_income": -8447277.0,
+      "eps": -0.82,
       "cash": 39405210.0,
       "operating_cashflow": -6139496.0,
-      "gross_margin_pct": 67.78058825339163,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 2928654.0,
-      "gross_profit": 2092113.0,
-      "operating_income": -3333867.0,
-      "eps": -0.11,
-      "cash": 45527197.0,
-      "operating_cashflow": -2044280.0,
-      "gross_margin_pct": 71.4359907315784,
+      "gross_margin_pct": 87.7022622485427,
       "yoy_pct": null
     }
   ],
@@ -173,7 +173,7 @@
     "avg_price_target": 18.0,
     "high_price_target": 21.0,
     "low_price_target": 12.0,
-    "current_price": 9.21,
+    "current_price": 9.52,
     "recent_rating_changes": [
       {
         "date": "2026-08-20T10:47:38",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:10:21Z",
   "news": [
     {
       "date": "2026-08-17T12:09:51Z",
@@ -309,20 +310,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.006302520705350314,
   "technicals": {
-    "ma20": 9.18250002861023,
-    "ma50": 8.539800024032592,
-    "ma200": 6.588324995040893,
-    "rsi14": 53.679540671657016,
+    "ma20": 9.202000045776368,
+    "ma50": 8.600200033187866,
+    "ma200": 6.6064249968528745,
+    "rsi14": 58.11318012434807,
     "high_20d": 10.140000343322754,
     "low_5d": 8.920000076293945,
     "low_10d": 8.920000076293945,
     "high_52w": 10.140000343322754,
     "low_52w": 4.5,
-    "atr14": 0.6376429285321917,
-    "atr14_pct": 6.923375959730005,
-    "position_in_52w_range_pct": 83.51063389070859
+    "atr14": 0.6120715141296387,
+    "atr14_pct": 6.42932231826194,
+    "position_in_52w_range_pct": 89.00709489684509
   },
   "ohlc_2y": [
     {
@@ -3948,17 +3949,17 @@
       "low": 9.01,
       "close": 9.21,
       "volume": 90800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 9.22,
+      "high": 9.54,
+      "low": 9.098,
+      "close": 9.52,
+      "volume": 45900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 8.17,
-      "high": 8.48,
-      "low": 8.06,
-      "close": 8.35,
-      "volume": 56600.0
-    },
     {
       "date": "2025-09-05",
       "open": 8.22,
@@ -5966,6 +5967,14 @@
       "low": 9.01,
       "close": 9.21,
       "volume": 90800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 9.22,
+      "high": 9.54,
+      "low": 9.098,
+      "close": 9.52,
+      "volume": 45900.0
     }
   ],
   "ai_synthesis": null,

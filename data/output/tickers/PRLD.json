@@ -1,8 +1,8 @@
 {
   "ticker": "PRLD",
-  "fetched_at": "2026-09-04T06:32:55Z",
+  "fetched_at": "2026-09-06T05:09:43Z",
   "_schema": "v2",
-  "current_price": 5.25,
+  "current_price": 5.460000038146973,
   "info": {
     "symbol": "PRLD",
     "longName": "Prelude Therapeutics Incorporated",
@@ -13,13 +13,13 @@
     "city": "Wilmington",
     "website": "https://preludetx.com",
     "fullTimeEmployees": 79,
-    "marketCap": 418137856,
-    "enterpriseValue": 406616352,
+    "marketCap": 435727040,
+    "enterpriseValue": 428245280,
     "trailingPE": null,
-    "forwardPE": -7.0,
-    "priceToSalesTrailing12Months": 18.64689,
-    "enterpriseToRevenue": 18.133,
-    "priceToBook": 4.04157,
+    "forwardPE": -7.28,
+    "priceToSalesTrailing12Months": 19.43128,
+    "enterpriseToRevenue": 19.098,
+    "priceToBook": 4.2032332,
     "grossMargins": 1.0,
     "operatingMargins": -2.70933,
     "profitMargins": -2.6974702,
@@ -32,10 +32,10 @@
     "currentRatio": 4.072,
     "fiftyTwoWeekHigh": 6.83,
     "fiftyTwoWeekLow": 0.981,
-    "averageVolume": 487870,
-    "averageVolume10days": 706980,
-    "beta": 0.938,
-    "sharesOutstanding": 64917172,
+    "averageVolume": 492149,
+    "averageVolume10days": 509320,
+    "beta": 0.963,
+    "sharesOutstanding": 65075350,
     "sharesFloat": 22068723,
     "companyOfficers": [
       {
@@ -84,6 +84,12 @@
       "eps_surprise_pct": 0.2432
     },
     {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.13,
+      "eps_estimate": -0.26667,
+      "eps_surprise_pct": 0.5125
+    },
+    {
       "period_end": "2025-12-31T00:00:00",
       "eps_actual": -0.2,
       "eps_estimate": -0.18,
@@ -92,22 +98,27 @@
     {
       "period_end": "2025-09-30T00:00:00",
       "eps_actual": -0.26,
-      "eps_estimate": -0.36667,
-      "eps_surprise_pct": 0.2909
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.41,
-      "eps_estimate": -0.43133,
-      "eps_surprise_pct": 0.0495
+      "eps_estimate": -0.355,
+      "eps_surprise_pct": 0.2676
     }
   ],
   "next_earnings": {
     "date": "2026-11-11",
-    "revenue_low": 0,
-    "revenue_high": 0
+    "revenue_low": 5989000,
+    "revenue_high": 100000000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 5704000.0,
+      "gross_profit": null,
+      "operating_income": -15454000.0,
+      "eps": -0.14,
+      "cash": 26329000.0,
+      "operating_cashflow": -15574000.0,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 4580000.0,
@@ -151,17 +162,6 @@
       "operating_cashflow": -26075000.0,
       "gross_margin_pct": null,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 0.0,
-      "gross_profit": null,
-      "operating_income": -34606000.0,
-      "eps": -0.42,
-      "cash": 40269000.0,
-      "operating_cashflow": -34231000.0,
-      "gross_margin_pct": null,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 8.0,
     "high_price_target": 10.0,
     "low_price_target": 6.0,
-    "current_price": 5.25,
+    "current_price": 5.46,
     "recent_rating_changes": [
       {
         "date": "2026-07-29T10:27:03",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:09:43Z",
   "news": [
     {
       "date": "2026-08-12T16:07:21Z",
@@ -309,30 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.22285714285714284,
+  "options_implied_move": 0.21428571278858036,
   "technicals": {
-    "ma20": 5.759000015258789,
-    "ma50": 5.020199961662293,
-    "ma200": 3.5992499846220016,
-    "rsi14": 45.74509467298151,
+    "ma20": 5.787000012397766,
+    "ma50": 5.04739996433258,
+    "ma200": 3.6182999849319457,
+    "rsi14": 49.5311384097336,
     "high_20d": 6.829999923706055,
     "low_5d": 5.110000133514404,
     "low_10d": 5.110000133514404,
     "high_52w": 6.829999923706055,
     "low_52w": 0.9810000061988831,
-    "atr14": 0.4924286774226597,
-    "atr14_pct": 9.37959385566971,
-    "position_in_52w_range_pct": 72.98683627987728
+    "atr14": 0.4866429397038051,
+    "atr14_pct": 8.912874291278634,
+    "position_in_52w_range_pct": 76.57719430874992
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 5.02,
-      "high": 5.25,
-      "low": 4.8,
-      "close": 5.18,
-      "volume": 399000.0
-    },
     {
       "date": "2024-09-05",
       "open": 5.23,
@@ -4340,17 +4333,17 @@
       "low": 5.11,
       "close": 5.25,
       "volume": 578000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 5.19,
+      "high": 5.519,
+      "low": 5.19,
+      "close": 5.46,
+      "volume": 400300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 1.21,
-      "high": 1.21,
-      "low": 1.12,
-      "close": 1.14,
-      "volume": 52200.0
-    },
     {
       "date": "2025-09-05",
       "open": 1.16,
@@ -6358,6 +6351,14 @@
       "low": 5.11,
       "close": 5.25,
       "volume": 578000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 5.19,
+      "high": 5.519,
+      "low": 5.19,
+      "close": 5.46,
+      "volume": 400300.0
     }
   ],
   "ai_synthesis": null,

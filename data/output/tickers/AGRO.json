@@ -1,8 +1,8 @@
 {
   "ticker": "AGRO",
-  "fetched_at": "2026-09-04T06:33:42Z",
+  "fetched_at": "2026-09-06T05:10:29Z",
   "_schema": "v2",
-  "current_price": 11.600000381469727,
+  "current_price": 11.770000457763672,
   "info": {
     "symbol": "AGRO",
     "longName": "Adecoagro S.A.",
@@ -13,13 +13,13 @@
     "city": "Luxembourg City",
     "website": "https://www.adecoagro.com",
     "fullTimeEmployees": null,
-    "marketCap": 1673972480,
-    "enterpriseValue": 3816307456,
-    "trailingPE": 31.351353,
-    "forwardPE": 9.297256,
-    "priceToSalesTrailing12Months": 1.0146278,
-    "enterpriseToRevenue": 2.313,
-    "priceToBook": 0.9618574,
+    "marketCap": 1698504832,
+    "enterpriseValue": 3840839680,
+    "trailingPE": 30.973686,
+    "forwardPE": 9.433509,
+    "priceToSalesTrailing12Months": 1.0294974,
+    "enterpriseToRevenue": 2.328,
+    "priceToBook": 0.9759536,
     "grossMargins": 0.2591,
     "operatingMargins": 0.16995001,
     "profitMargins": 0.02999,
@@ -32,9 +32,9 @@
     "currentRatio": 1.729,
     "fiftyTwoWeekHigh": 15.89,
     "fiftyTwoWeekLow": 6.89,
-    "averageVolume": 875203,
-    "averageVolume10days": 905660,
-    "beta": -0.058,
+    "averageVolume": 862031,
+    "averageVolume10days": 806770,
+    "beta": -0.04,
     "sharesOutstanding": 144307966,
     "sharesFloat": 32838721,
     "companyOfficers": [
@@ -99,9 +99,20 @@
   "next_earnings": {
     "date": "2026-11-11",
     "revenue_low": 557943960,
-    "revenue_high": 770482320
+    "revenue_high": 557943960
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 531011000.0,
+      "gross_profit": 173197000.0,
+      "operating_income": 91954000.0,
+      "eps": 0.174945,
+      "cash": 302463000.0,
+      "operating_cashflow": 124953000.0,
+      "gross_margin_pct": 32.616461805875964,
+      "yoy_pct": 38.97900963149079
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 398680000.0,
@@ -111,7 +122,7 @@
       "cash": 172531000.0,
       "operating_cashflow": -2581000.0,
       "gross_margin_pct": 29.739891642419984,
-      "yoy_pct": 22.480077172156587
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -138,23 +149,12 @@
     {
       "period_end": "2025-06-30T00:00:00",
       "revenue": 382080000.0,
-      "gross_profit": 74602000.0,
+      "gross_profit": 65071000.0,
       "operating_income": 5695000.0,
-      "eps": -0.176,
+      "eps": -0.170312,
       "cash": 180607000.0,
-      "operating_cashflow": 130107000.0,
-      "gross_margin_pct": 19.525230318257954,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 325506000.0,
-      "gross_profit": 74055000.0,
-      "operating_income": 5534000.0,
-      "eps": 0.18,
-      "cash": 179530000.0,
-      "operating_cashflow": -19070000.0,
-      "gross_margin_pct": 22.750732705387918,
+      "operating_cashflow": 128931000.0,
+      "gross_margin_pct": 17.030726549413735,
       "yoy_pct": null
     }
   ],
@@ -164,10 +164,10 @@
     "bullish": 1,
     "neutral": 5,
     "bearish": 1,
-    "avg_price_target": 13.17143,
+    "avg_price_target": 13.16667,
     "high_price_target": 16.0,
     "low_price_target": 10.5,
-    "current_price": 11.6,
+    "current_price": 11.77,
     "recent_rating_changes": [
       {
         "date": "2026-08-27T14:53:52",
@@ -241,6 +241,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:10:29Z",
   "news": [
     {
       "date": "2026-09-02T14:14:00Z",
@@ -303,30 +304,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.12068965120349584,
+  "options_implied_move": 0.10280373431947197,
   "technicals": {
-    "ma20": 10.449999952316285,
-    "ma50": 10.16419994354248,
-    "ma200": 10.437485172748566,
-    "rsi14": 62.39156202810368,
+    "ma20": 10.565999984741211,
+    "ma50": 10.213599948883056,
+    "ma200": 10.458319013118745,
+    "rsi14": 63.9746012990168,
     "high_20d": 12.079999923706055,
-    "low_5d": 10.640000343322754,
+    "low_5d": 11.0,
     "low_10d": 10.609999656677246,
     "high_52w": 15.751677257200384,
     "low_52w": 6.830022510390342,
-    "atr14": 0.5757143156869071,
-    "atr14_pct": 4.9630542823651504,
-    "position_in_52w_range_pct": 53.46516993145135
+    "atr14": 0.577857221875872,
+    "atr14_pct": 4.909576885315315,
+    "position_in_52w_range_pct": 55.37064689865555
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 10.5513,
-      "high": 10.781,
-      "low": 10.5321,
-      "close": 10.714,
-      "volume": 779000.0
-    },
     {
       "date": "2024-09-05",
       "open": 10.7715,
@@ -499,8 +492,8 @@
       "date": "2024-10-04",
       "open": 10.8098,
       "high": 10.8385,
-      "low": 10.7045,
-      "close": 10.7045,
+      "low": 10.7044,
+      "close": 10.7044,
       "volume": 276300.0
     },
     {
@@ -996,7 +989,7 @@
       "open": 9.3253,
       "high": 9.4031,
       "low": 9.1697,
-      "close": 9.267,
+      "close": 9.2669,
       "volume": 425000.0
     },
     {
@@ -1124,7 +1117,7 @@
       "open": 9.1016,
       "high": 9.3156,
       "low": 9.1016,
-      "close": 9.267,
+      "close": 9.2669,
       "volume": 276400.0
     },
     {
@@ -4334,17 +4327,17 @@
       "low": 11.28,
       "close": 11.6,
       "volume": 830800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 11.49,
+      "high": 11.93,
+      "low": 11.4,
+      "close": 11.77,
+      "volume": 568500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 8.1881,
-      "high": 8.2971,
-      "low": 8.1385,
-      "close": 8.2079,
-      "volume": 331800.0
-    },
     {
       "date": "2025-09-05",
       "open": 8.2575,
@@ -6352,6 +6345,14 @@
       "low": 11.28,
       "close": 11.6,
       "volume": 830800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 11.49,
+      "high": 11.93,
+      "low": 11.4,
+      "close": 11.77,
+      "volume": 568500.0
     }
   ],
   "ai_synthesis": null,

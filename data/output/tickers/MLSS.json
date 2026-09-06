@@ -1,6 +1,6 @@
 {
   "ticker": "MLSS",
-  "fetched_at": "2026-09-04T06:36:35Z",
+  "fetched_at": "2026-09-06T05:13:25Z",
   "_schema": "v2",
   "current_price": 0.4699999988079071,
   "info": {
@@ -13,13 +13,13 @@
     "city": "Roseland",
     "website": "https://www.milestonescientific.com",
     "fullTimeEmployees": 15,
-    "marketCap": 41609804,
-    "enterpriseValue": 40158736,
+    "marketCap": 41636424,
+    "enterpriseValue": 40185360,
     "trailingPE": null,
-    "forwardPE": -13.397142,
-    "priceToSalesTrailing12Months": 4.4166293,
-    "enterpriseToRevenue": 4.263,
-    "priceToBook": 12.023077,
+    "forwardPE": -13.405714,
+    "priceToSalesTrailing12Months": 4.419455,
+    "enterpriseToRevenue": 4.265,
+    "priceToBook": 12.030768,
     "grossMargins": 0.70233,
     "operatingMargins": -0.37365,
     "profitMargins": -0.43983,
@@ -32,9 +32,9 @@
     "currentRatio": 1.846,
     "fiftyTwoWeekHigh": 0.64,
     "fiftyTwoWeekLow": 0.22,
-    "averageVolume": 171937,
-    "averageVolume10days": 89450,
-    "beta": 1.051,
+    "averageVolume": 168322,
+    "averageVolume10days": 84250,
+    "beta": 1.075,
     "sharesOutstanding": 88739185,
     "sharesFloat": 71285962,
     "companyOfficers": [
@@ -103,6 +103,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 2841038.0,
+      "gross_profit": 1910167.0,
+      "operating_income": -1061563.0,
+      "eps": -0.01,
+      "cash": 2066770.0,
+      "operating_cashflow": -585127.0,
+      "gross_margin_pct": 67.23482755246498,
+      "yoy_pct": 22.275858566469232
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 2162033.0,
       "gross_profit": 1564024.0,
@@ -111,7 +122,7 @@
       "cash": 1194424.0,
       "operating_cashflow": 86842.0,
       "gross_margin_pct": 72.34043143652293,
-      "yoy_pct": -3.1529461302084782
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -145,17 +156,6 @@
       "operating_cashflow": -1764184.0,
       "gross_margin_pct": 69.62038609560028,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 2232420.0,
-      "gross_profit": 1647435.0,
-      "operating_income": -1997853.0,
-      "eps": -0.02,
-      "cash": 2246387.0,
-      "operating_cashflow": -1008089.0,
-      "gross_margin_pct": 73.79592549789018,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -167,7 +167,7 @@
     "avg_price_target": 1.25,
     "high_price_target": 1.5,
     "low_price_target": 1.0,
-    "current_price": 0.4689,
+    "current_price": 0.4692,
     "recent_rating_changes": [
       {
         "date": "2025-11-20T13:39:36",
@@ -192,6 +192,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:13:25Z",
   "news": [
     {
       "date": "2026-08-14T23:02:15Z",
@@ -238,28 +239,20 @@
   ],
   "options_implied_move": 0.6382978739593839,
   "technicals": {
-    "ma20": 0.4905000001192093,
-    "ma50": 0.4303999990224838,
-    "ma200": 0.3428999996185303,
-    "rsi14": 50.29494695782225,
+    "ma20": 0.4900000005960464,
+    "ma50": 0.43339999914169314,
+    "ma200": 0.3436999996006489,
+    "rsi14": 50.29494668676991,
     "high_20d": 0.5799999833106995,
     "low_5d": 0.44999998807907104,
     "low_10d": 0.44999998807907104,
     "high_52w": 0.6399999856948853,
     "low_52w": 0.2199999988079071,
-    "atr14": 0.03428571777684348,
-    "atr14_pct": 7.294833588043548,
+    "atr14": 0.032857147710663934,
+    "atr14_pct": 6.990882509362074,
     "position_in_52w_range_pct": 59.52381138223105
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 1.05,
-      "high": 1.05,
-      "low": 0.98,
-      "close": 0.98,
-      "volume": 59700.0
-    },
     {
       "date": "2024-09-05",
       "open": 0.99,
@@ -4267,17 +4260,17 @@
       "low": 0.45,
       "close": 0.47,
       "volume": 44100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 0.45,
+      "high": 0.47,
+      "low": 0.45,
+      "close": 0.47,
+      "volume": 37800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 0.63,
-      "high": 0.64,
-      "low": 0.61,
-      "close": 0.62,
-      "volume": 23600.0
-    },
     {
       "date": "2025-09-05",
       "open": 0.62,
@@ -6285,6 +6278,14 @@
       "low": 0.45,
       "close": 0.47,
       "volume": 44100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 0.45,
+      "high": 0.47,
+      "low": 0.45,
+      "close": 0.47,
+      "volume": 37800.0
     }
   ],
   "ai_synthesis": null,

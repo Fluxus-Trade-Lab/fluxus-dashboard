@@ -171,20 +171,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "NESR",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 52,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 0.7,
-              "chase": false,
-              "atr_from_sma50": 3.1,
-              "composite_score": 86.0,
-              "sector": "Energy",
-              "group": "Oil & Gas",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "IAG",
               "rs_1m": 89,
               "rs_line_pctl_21": 57,
@@ -196,6 +182,20 @@
               "composite_score": 86.0,
               "sector": "Basic Materials",
               "group": "Gold Miners",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "NESR",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 52,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.7,
+              "chase": false,
+              "atr_from_sma50": 3.1,
+              "composite_score": 86.0,
+              "sector": "Energy",
+              "group": "Oil & Gas",
               "group_state": "Leading"
             },
             {
@@ -437,20 +437,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "GTLB",
-              "rs_1m": 97,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 1.1,
-              "chase": false,
-              "atr_from_sma50": 6.6,
-              "composite_score": 97.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "BRZE",
               "rs_1m": 95,
               "rs_line_pctl_21": 71,
@@ -476,6 +462,20 @@
               "composite_score": 98.0,
               "sector": "Healthcare",
               "group": "Medical Care Facilities",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GTLB",
+              "rs_1m": 97,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 1.1,
+              "chase": false,
+              "atr_from_sma50": 6.6,
+              "composite_score": 97.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
               "group_state": "Weakening"
             },
             {
@@ -695,6 +695,20 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "GEO",
+              "rs_1m": 72,
+              "rs_line_pctl_21": 62,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 2.9,
+              "chase": false,
+              "atr_from_sma50": 0.8,
+              "composite_score": 90.0,
+              "sector": "Industrials",
+              "group": "Security & Protection Services",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "EWTX",
               "rs_1m": 49,
               "rs_line_pctl_21": 33,
@@ -734,20 +748,6 @@
               "composite_score": 87.0,
               "sector": "Technology",
               "group": "Fintech",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "GEO",
-              "rs_1m": 72,
-              "rs_line_pctl_21": 62,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 2.9,
-              "chase": false,
-              "atr_from_sma50": 0.8,
-              "composite_score": 87.0,
-              "sector": "Industrials",
-              "group": "Security & Protection Services",
               "group_state": "Weakening"
             },
             {
@@ -927,7 +927,7 @@
               "chg_pct": 11.2,
               "chase": false,
               "atr_from_sma50": 1.7,
-              "composite_score": 57.0,
+              "composite_score": 58.0,
               "sector": "Financial",
               "group": "Financials",
               "group_state": "Weakening"
@@ -1207,7 +1207,7 @@
               "chg_pct": 1.0,
               "chase": false,
               "atr_from_sma50": -0.7,
-              "composite_score": 7.0,
+              "composite_score": 6.0,
               "sector": "Energy",
               "group": "Oil & Gas",
               "group_state": "Leading"
@@ -1319,7 +1319,7 @@
               "chg_pct": 2.2,
               "chase": false,
               "atr_from_sma50": 4.6,
-              "composite_score": 57.0,
+              "composite_score": 61.0,
               "sector": "Technology",
               "group": "Computer Hardware",
               "group_state": "Improving"
@@ -1557,7 +1557,7 @@
               "chg_pct": 6.7,
               "chase": false,
               "atr_from_sma50": -3.1,
-              "composite_score": 23.0,
+              "composite_score": 22.0,
               "sector": "Technology",
               "group": "Semiconductors Broad",
               "group_state": "Lagging"
@@ -1571,7 +1571,7 @@
               "chg_pct": 0.4,
               "chase": false,
               "atr_from_sma50": -3.1,
-              "composite_score": 20.0,
+              "composite_score": 21.0,
               "sector": "Industrials",
               "group": "Travel & Leisure",
               "group_state": "Lagging"
@@ -1739,7 +1739,7 @@
               "chg_pct": -2.0,
               "chase": false,
               "atr_from_sma50": 2.8,
-              "composite_score": 90.0,
+              "composite_score": 91.0,
               "sector": "Communication Services",
               "group": "Advertising Agencies",
               "group_state": "Weakening"
@@ -1906,7 +1906,7 @@
             },
             {
               "ticker": "NAVN",
-              "rs_1m": 32,
+              "rs_1m": 31,
               "rs_line_pctl_21": 19,
               "rs_high": false,
               "top_3m": true,
@@ -2087,20 +2087,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "NESR",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 52,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 0.7,
-              "chase": false,
-              "atr_from_sma50": 3.1,
-              "composite_score": 86.0,
-              "sector": "Energy",
-              "group": "Oil & Gas",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "BILL",
               "rs_1m": 68,
               "rs_line_pctl_21": 67,
@@ -2127,6 +2113,20 @@
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
+            },
+            {
+              "ticker": "NESR",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 52,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.7,
+              "chase": false,
+              "atr_from_sma50": 3.1,
+              "composite_score": 86.0,
+              "sector": "Energy",
+              "group": "Oil & Gas",
+              "group_state": "Leading"
             },
             {
               "ticker": "NUTX",
@@ -2242,7 +2242,7 @@
             },
             {
               "ticker": "NAVN",
-              "rs_1m": 32,
+              "rs_1m": 31,
               "rs_line_pctl_21": 19,
               "rs_high": false,
               "top_3m": true,
@@ -2897,7 +2897,7 @@
               "chg_pct": -19.9,
               "chase": false,
               "atr_from_sma50": 0.1,
-              "composite_score": 81.0,
+              "composite_score": 80.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Weakening"
@@ -2925,7 +2925,7 @@
               "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 1.9,
-              "composite_score": 75.0,
+              "composite_score": 76.0,
               "sector": "Technology",
               "group": "Fintech",
               "group_state": "Weakening"
@@ -2967,7 +2967,7 @@
               "chg_pct": 2.2,
               "chase": false,
               "atr_from_sma50": 4.6,
-              "composite_score": 57.0,
+              "composite_score": 61.0,
               "sector": "Technology",
               "group": "Computer Hardware",
               "group_state": "Improving"
@@ -2995,7 +2995,7 @@
               "chg_pct": -0.6,
               "chase": false,
               "atr_from_sma50": 0.4,
-              "composite_score": 54.0,
+              "composite_score": 53.0,
               "sector": "Energy",
               "group": "Oil & Gas",
               "group_state": "Leading"
@@ -3603,7 +3603,7 @@
               "chg_pct": 11.2,
               "chase": false,
               "atr_from_sma50": 1.7,
-              "composite_score": 57.0,
+              "composite_score": 58.0,
               "sector": "Financial",
               "group": "Financials",
               "group_state": "Weakening"
@@ -4246,7 +4246,7 @@
             },
             {
               "ticker": "BSY",
-              "rs_1m": 33,
+              "rs_1m": 32,
               "rs_line_pctl_21": 5,
               "rs_high": false,
               "top_3m": false,
@@ -4273,6 +4273,20 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "MMYT",
+              "rs_1m": 21,
+              "rs_line_pctl_21": 5,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -2.6,
+              "chase": false,
+              "atr_from_sma50": -0.8,
+              "composite_score": 53.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Lagging"
+            },
+            {
               "ticker": "WLY",
               "rs_1m": 19,
               "rs_line_pctl_21": 5,
@@ -4285,20 +4299,6 @@
               "sector": "Communication Services",
               "group": "Publishing",
               "group_state": null
-            },
-            {
-              "ticker": "MMYT",
-              "rs_1m": 21,
-              "rs_line_pctl_21": 5,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -2.6,
-              "chase": false,
-              "atr_from_sma50": -0.8,
-              "composite_score": 52.0,
-              "sector": "Consumer Cyclical",
-              "group": "Travel & Leisure",
-              "group_state": "Lagging"
             },
             {
               "ticker": "CL",
@@ -4407,7 +4407,7 @@
               "chg_pct": -2.3,
               "chase": false,
               "atr_from_sma50": -1.7,
-              "composite_score": 31.0,
+              "composite_score": 32.0,
               "sector": "Communication Services",
               "group": "Entertainment",
               "group_state": "Leading"
@@ -5091,7 +5091,7 @@
       "chg_pct": 2.2,
       "chase": false,
       "atr_from_sma50": 4.6,
-      "composite_score": 57.0,
+      "composite_score": 61.0,
       "sector": "Technology",
       "group": "Computer Hardware",
       "group_state": "Improving"
@@ -5124,7 +5124,7 @@
         "compression",
         "trouble"
       ],
-      "rs_1m": 62,
+      "rs_1m": 63,
       "rs_line_pctl_21": 33,
       "rs_high": false,
       "top_3m": false,

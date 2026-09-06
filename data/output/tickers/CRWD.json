@@ -1,8 +1,8 @@
 {
   "ticker": "CRWD",
-  "fetched_at": "2026-09-04T06:31:12Z",
+  "fetched_at": "2026-09-06T05:08:04Z",
   "_schema": "v2",
-  "current_price": 214.97000122070312,
+  "current_price": 213.10000610351562,
   "info": {
     "symbol": "CRWD",
     "longName": "CrowdStrike Holdings, Inc.",
@@ -13,13 +13,13 @@
     "city": "Austin",
     "website": "https://www.crowdstrike.com",
     "fullTimeEmployees": 11706,
-    "marketCap": 220115271680,
-    "enterpriseValue": 215959404544,
-    "trailingPE": 5374.25,
-    "forwardPE": 134.26814,
-    "priceToSalesTrailing12Months": 40.791206,
-    "enterpriseToRevenue": 40.021,
-    "priceToBook": 43.14068,
+    "marketCap": 218200522752,
+    "enterpriseValue": 214044655616,
+    "trailingPE": 5327.5005,
+    "forwardPE": 132.8885,
+    "priceToSalesTrailing12Months": 40.43637,
+    "enterpriseToRevenue": 39.666,
+    "priceToBook": 42.765404,
     "grossMargins": 0.75185996,
     "operatingMargins": -0.02259,
     "profitMargins": 0.00834,
@@ -32,11 +32,11 @@
     "currentRatio": 1.57,
     "fiftyTwoWeekHigh": 233.88,
     "fiftyTwoWeekLow": 85.68,
-    "averageVolume": 10270566,
-    "averageVolume10days": 12843710,
-    "beta": 1.234,
+    "averageVolume": 10100203,
+    "averageVolume10days": 13182660,
+    "beta": 1.255,
     "sharesOutstanding": 1023934842,
-    "sharesFloat": 1006220769,
+    "sharesFloat": 1006282205,
     "companyOfficers": [
       {
         "name": "Mr. George R. Kurtz",
@@ -104,10 +104,21 @@
   ],
   "next_earnings": {
     "date": "2026-12-01",
-    "revenue_low": 1515800000,
+    "revenue_low": 1525457000,
     "revenue_high": 1554686000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 1470897000.0,
+      "gross_profit": 1096895000.0,
+      "operating_income": -33232000.0,
+      "eps": 0.01,
+      "cash": 5013847000.0,
+      "operating_cashflow": 530268000.0,
+      "gross_margin_pct": 74.57320261037992,
+      "yoy_pct": 25.83040193267132
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 1385629000.0,
@@ -117,7 +128,7 @@
       "cash": 4552801000.0,
       "operating_cashflow": 590937000.0,
       "gross_margin_pct": 75.29807762395274,
-      "yoy_pct": 25.574252741894842
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -144,23 +155,12 @@
     {
       "period_end": "2025-07-31T00:00:00",
       "revenue": 1168952000.0,
-      "gross_profit": 858669000.0,
-      "operating_income": -112979000.0,
+      "gross_profit": 860401000.0,
+      "operating_income": -105457000.0,
       "eps": -0.0775,
       "cash": 4972436000.0,
       "operating_cashflow": 332832000.0,
-      "gross_margin_pct": 73.45630958328486,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 1103434000.0,
-      "gross_profit": 815559000.0,
-      "operating_income": -118713000.0,
-      "eps": -0.11,
-      "cash": 4614153000.0,
-      "operating_cashflow": 384107000.0,
-      "gross_margin_pct": 73.91099059844086,
+      "gross_margin_pct": 73.6044764883417,
       "yoy_pct": null
     }
   ],
@@ -170,11 +170,39 @@
     "bullish": 41,
     "neutral": 11,
     "bearish": 1,
-    "avg_price_target": 230.32,
+    "avg_price_target": 231.54,
     "high_price_target": 300.0,
     "low_price_target": 119.0,
-    "current_price": 214.97,
+    "current_price": 213.1,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-04T19:37:00",
+        "firm": "Macquarie",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T17:44:26",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T13:39:20",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T11:39:30",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-09-03T18:21:59",
         "firm": "Raymond James",
@@ -216,123 +244,88 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "reit"
-      },
-      {
-        "date": "2026-09-02T13:22:05",
-        "firm": "DA Davidson",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-01T15:57:37",
-        "firm": "Truist Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-28T16:54:02",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-28T14:12:12",
-        "firm": "Argus Research",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:08:04Z",
   "news": [
     {
-      "date": "2026-09-04T03:31:10Z",
-      "title": "US Just Took Down a 20-Year-Old Russian-Linked Cybercrime Operation \u2014 CrowdStrike Helps Disrupt Sality Botnet Behind Years of Attacks",
-      "url": "https://www.yahoo.com/news/us/articles/us-just-took-down-20-033110652.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-09-03T22:10:00Z",
-      "title": "Zscaler Makes Bid to Join the Ranks of AI Winners",
-      "url": "https://www.barrons.com/articles/zscaler-earnings-stock-price-09a82175?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-03T21:43:18Z",
-      "title": "Guidewire Software, HubSpot, CrowdStrike, ServiceNow, and Dynatrace Shares Are Soaring, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/guidewire-software-hubspot-crowdstrike-servicenow-214318240.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-03T20:12:24Z",
-      "title": "Can Commvault Systems (CVLT) Justify Its Valuation After Clumio Won FedRAMP Ready Status?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/commvault-systems-cvlt-justify-valuation-201224533.html",
+      "date": "2026-09-06T00:14:30Z",
+      "title": "CrowdStrike (CRWD) Unveiled A Broad AI Security Platform Push",
+      "url": "https://finance.yahoo.com/technology/ai/articles/crowdstrike-crwd-unveiled-broad-ai-001430063.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-09-03T18:54:16Z",
-      "title": "Jim Cramer Explains Why CrowdStrike (CRWD) Upended the Tech Bear Thesis",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-why-crowdstrike-185416478.html",
+      "date": "2026-09-05T17:00:09Z",
+      "title": "AI\u2019s Next Winners? Investor Bets on Snowflake, CrowdStrike and Palantir",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-next-winners-investor-bets-170009073.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-05T14:42:23Z",
+      "title": "CrowdStrike (CRWD) Stock Faces High Expectations After Strong Gains, DA Davidson Stays Bullish",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/crowdstrike-crwd-stock-faces-high-144223749.html",
       "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-03T18:05:00Z",
-      "title": "CrowdStrike Raises Long-Term Growth Targets as AI Opportunity Expands, Oppenheimer Says",
-      "url": "https://finance.yahoo.com/technology/ai/articles/crowdstrike-raises-long-term-growth-180500620.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-03T17:44:00Z",
-      "title": "Why Nebius Group Should Find A Floor at Current Levels",
-      "url": "https://www.barrons.com/articles/nebius-group-stock-finds-floor-technicals-cf8c131c?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-03T17:17:14Z",
-      "title": "Jim Cramer Calls CrowdStrike (CRWD) a Cybersecurity Heavy Hitter",
-      "url": "https://finance.yahoo.com/technology/ai/articles/jim-cramer-calls-crowdstrike-crwd-171714906.html",
+      "date": "2026-09-04T22:50:32Z",
+      "title": "Jim Cramer Couldn\u2019t Stop Gushing About This Computer Hardware AI Stock",
+      "url": "https://finance.yahoo.com/technology/ai/articles/jim-cramer-couldn-t-stop-225032126.html",
       "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-03T16:45:56Z",
-      "title": "The malware that hijacked crypto payments for 8 years",
-      "url": "http://videos.coindesk.com/previews/6Yzx5e4L",
-      "source": "CoinDesk"
+      "date": "2026-09-04T22:50:17Z",
+      "title": "CrowdStrike and Palo Alto Made the SaaSmageddon Survivor List. Can AI Expand Their Moats Faster Than It Compresses Software Prices?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/crowdstrike-palo-alto-made-saasmageddon-225017164.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-03T16:34:54Z",
-      "title": "CrowdStrike Raises Growth Targets on AI Cybersecurity Opportunity, RBC Says",
-      "url": "https://finance.yahoo.com/technology/ai/articles/crowdstrike-raises-growth-targets-ai-163454170.html",
+      "date": "2026-09-04T22:50:09Z",
+      "title": "There Are A Lot Of Zscaler Inc. (NASDAQ:ZS) Shorts, Says Jim Cramer",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/lot-zscaler-inc-nasdaq-zs-225009241.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-04T22:46:36Z",
+      "title": "Jim Cramer Is Excited About These Two Cybersecurity Stocks",
+      "url": "https://finance.yahoo.com/technology/ai/articles/jim-cramer-excited-two-cybersecurity-224636953.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-04T21:39:22Z",
+      "title": "The Gap Between CRWD Stock And Its Own Numbers",
+      "url": "https://www.trefis.com/articles/614384/the-gap-between-crwd-stock-and-its-own-numbers/2026-09-04",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-04T17:50:37Z",
+      "title": "Commvault (CVLT) Turns Cyberattacks Into Automated Recovery Through New CrowdStrike (CRWD) Deal",
+      "url": "https://finance.yahoo.com/technology/articles/commvault-cvlt-turns-cyberattacks-automated-175037526.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-04T16:41:15Z",
+      "title": "Zscaler's Conservative Outlook Reflects Red Canary, Competitive Headwinds, Oppenheimer Says",
+      "url": "https://finance.yahoo.com/technology/articles/zscaler-apos-conservative-outlook-reflects-164115818.html",
       "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.02739917182189955,
+  "options_implied_move": 0.04927264054089005,
   "technicals": {
-    "ma20": 210.6269989013672,
-    "ma50": 199.94484924316407,
-    "ma200": 142.0863248825073,
-    "rsi14": 53.980710492657494,
+    "ma20": 210.5609992980957,
+    "ma50": 200.81359924316405,
+    "ma200": 142.48959987640382,
+    "rsi14": 53.11900028502337,
     "high_20d": 233.8800048828125,
     "low_5d": 200.60000610351562,
     "low_10d": 181.24000549316406,
     "high_52w": 233.8800048828125,
     "low_52w": 85.68000030517578,
-    "atr14": 13.926002502441406,
-    "atr14_pct": 6.478114352403992,
-    "position_in_52w_range_pct": 87.2402138474948
+    "atr14": 13.984573364257812,
+    "atr14_pct": 6.562446252331243,
+    "position_in_52w_range_pct": 85.97840881414348
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 65.11,
-      "high": 66.7995,
-      "low": 64.6025,
-      "close": 64.83,
-      "volume": 17488800.0
-    },
     {
       "date": "2024-09-05",
       "open": 63.85,
@@ -4339,18 +4332,18 @@
       "high": 215.1,
       "low": 203.76,
       "close": 214.97,
-      "volume": 12058900.0
+      "volume": 12070100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 212.5,
+      "high": 218.31,
+      "low": 211.32,
+      "close": 213.1,
+      "volume": 8422800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 103.3,
-      "high": 103.8725,
-      "low": 100.665,
-      "close": 103.115,
-      "volume": 11053600.0
-    },
     {
       "date": "2025-09-05",
       "open": 103.5175,
@@ -6357,7 +6350,15 @@
       "high": 215.1,
       "low": 203.76,
       "close": 214.97,
-      "volume": 12058900.0
+      "volume": 12070100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 212.5,
+      "high": 218.31,
+      "low": 211.32,
+      "close": 213.1,
+      "volume": 8422800.0
     }
   ],
   "ai_synthesis": null,

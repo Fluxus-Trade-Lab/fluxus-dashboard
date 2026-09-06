@@ -1,8 +1,8 @@
 {
   "ticker": "AXTI",
-  "fetched_at": "2026-09-04T06:34:19Z",
+  "fetched_at": "2026-09-06T05:11:08Z",
   "_schema": "v2",
-  "current_price": 56.20000076293945,
+  "current_price": 61.63999938964844,
   "info": {
     "symbol": "AXTI",
     "longName": "AXT, Inc.",
@@ -13,13 +13,13 @@
     "city": "Fremont",
     "website": "https://www.axt.com",
     "fullTimeEmployees": 1541,
-    "marketCap": 3685214464,
-    "enterpriseValue": 3360265216,
-    "trailingPE": 1873.3334,
-    "forwardPE": 25.24708,
-    "priceToSalesTrailing12Months": 29.362152,
-    "enterpriseToRevenue": 26.773,
-    "priceToBook": 4.082226,
+    "marketCap": 4041932800,
+    "enterpriseValue": 3709492480,
+    "trailingPE": 2054.6667,
+    "forwardPE": 27.690924,
+    "priceToSalesTrailing12Months": 32.204327,
+    "enterpriseToRevenue": 29.556,
+    "priceToBook": 4.477373,
     "grossMargins": 0.32184,
     "operatingMargins": 0.21902001,
     "profitMargins": 0.0323,
@@ -31,10 +31,10 @@
     "debtToEquity": 10.667,
     "currentRatio": 4.765,
     "fiftyTwoWeekHigh": 143.16,
-    "fiftyTwoWeekLow": 2.98,
-    "averageVolume": 10343608,
-    "averageVolume10days": 7218760,
-    "beta": 1.933,
+    "fiftyTwoWeekLow": 3.02,
+    "averageVolume": 10310466,
+    "averageVolume10days": 7396550,
+    "beta": 1.92,
     "sharesOutstanding": 65573212,
     "sharesFloat": 61608463,
     "companyOfficers": [
@@ -98,14 +98,14 @@
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "revenue": null,
-      "gross_profit": null,
-      "operating_income": null,
+      "revenue": 47589000.0,
+      "gross_profit": 21366000.0,
+      "operating_income": 10423000.0,
       "eps": 0.17,
-      "cash": null,
-      "operating_cashflow": null,
-      "gross_margin_pct": null,
-      "yoy_pct": null
+      "cash": 412167000.0,
+      "operating_cashflow": 10784000.0,
+      "gross_margin_pct": 44.89692996280653,
+      "yoy_pct": 164.76577278290864
     },
     {
       "period_end": "2026-03-31T00:00:00",
@@ -116,7 +116,7 @@
       "cash": 41769000.0,
       "operating_cashflow": -11684000.0,
       "gross_margin_pct": 29.63155548952607,
-      "yoy_pct": 39.098987394089676
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -161,7 +161,7 @@
     "avg_price_target": 91.6,
     "high_price_target": 125.0,
     "low_price_target": 55.0,
-    "current_price": 56.2,
+    "current_price": 61.64,
     "recent_rating_changes": [
       {
         "date": "2026-07-31T15:06:48",
@@ -235,6 +235,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:08Z",
   "news": [
     {
       "date": "2026-08-27T14:51:00Z",
@@ -297,30 +298,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.05747330882831575,
+  "options_implied_move": 0.11632057220954645,
   "technicals": {
-    "ma20": 71.13749980926514,
-    "ma50": 63.05519966125488,
-    "ma200": 54.36214997768402,
-    "rsi14": 41.91281582642116,
+    "ma20": 69.79049968719482,
+    "ma50": 62.906799697875975,
+    "ma200": 54.61909997463226,
+    "rsi14": 46.71349941616425,
     "high_20d": 97.79000091552734,
     "low_5d": 52.7599983215332,
     "low_10d": 52.7599983215332,
     "high_52w": 143.16000366210938,
-    "low_52w": 2.9100000858306885,
-    "atr14": 7.818570273263114,
-    "atr14_pct": 13.91204656071641,
-    "position_in_52w_range_pct": 37.99643445151542
+    "low_52w": 2.9800000190734863,
+    "atr14": 7.128570284162249,
+    "atr14_pct": 11.564844832492636,
+    "position_in_52w_range_pct": 41.846196209233135
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 2.46,
-      "high": 2.49,
-      "low": 2.4,
-      "close": 2.46,
-      "volume": 143700.0
-    },
     {
       "date": "2024-09-05",
       "open": 2.46,
@@ -4327,18 +4320,18 @@
       "high": 57.77,
       "low": 52.76,
       "close": 56.2,
-      "volume": 7201900.0
+      "volume": 7225400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 57.69,
+      "high": 62.5,
+      "low": 56.01,
+      "close": 61.64,
+      "volume": 10812100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 3.06,
-      "high": 3.08,
-      "low": 2.91,
-      "close": 2.96,
-      "volume": 442200.0
-    },
     {
       "date": "2025-09-05",
       "open": 3.01,
@@ -6345,7 +6338,15 @@
       "high": 57.77,
       "low": 52.76,
       "close": 56.2,
-      "volume": 7201900.0
+      "volume": 7225400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 57.69,
+      "high": 62.5,
+      "low": 56.01,
+      "close": 61.64,
+      "volume": 10812100.0
     }
   ],
   "ai_synthesis": null,

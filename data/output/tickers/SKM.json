@@ -1,8 +1,8 @@
 {
   "ticker": "SKM",
-  "fetched_at": "2026-09-04T06:37:33Z",
+  "fetched_at": "2026-09-06T05:14:19Z",
   "_schema": "v2",
-  "current_price": 37.279998779296875,
+  "current_price": 38.70000076293945,
   "info": {
     "symbol": "SKM",
     "longName": "SK Telecom Co., Ltd.",
@@ -13,13 +13,13 @@
     "city": "Seoul",
     "website": "https://www.sktelecom.com",
     "fullTimeEmployees": 4840,
-    "marketCap": 14311420928,
-    "enterpriseValue": 8275774406656,
-    "trailingPE": 26.820143,
-    "forwardPE": 13.850344,
-    "priceToSalesTrailing12Months": 0.00083898066,
+    "marketCap": 14856545280,
+    "enterpriseValue": 8276318617600,
+    "trailingPE": 27.841728,
+    "forwardPE": 14.377906,
+    "priceToSalesTrailing12Months": 0.0008709376,
     "enterpriseToRevenue": 0.485,
-    "priceToBook": 1.271203,
+    "priceToBook": 1.3196234,
     "grossMargins": 0.70395,
     "operatingMargins": 0.1303,
     "profitMargins": 0.04381,
@@ -32,11 +32,11 @@
     "currentRatio": 1.232,
     "fiftyTwoWeekHigh": 47.18,
     "fiftyTwoWeekLow": 19.66,
-    "averageVolume": 2466682,
-    "averageVolume10days": 1843320,
-    "beta": 0.687,
+    "averageVolume": 2449669,
+    "averageVolume10days": 1934350,
+    "beta": 0.712,
     "sharesOutstanding": 383890040,
-    "sharesFloat": 264666975,
+    "sharesFloat": 264663143,
     "companyOfficers": [
       {
         "name": "Mr. Jai Hun  Jung",
@@ -84,6 +84,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 4359057000000.0,
+      "gross_profit": 3883890000000.0,
+      "operating_income": 573834000000.0,
+      "eps": 1212.675,
+      "cash": 1203896000000.0,
+      "operating_cashflow": 1207412000000.0,
+      "gross_margin_pct": 89.0993166641317,
+      "yoy_pct": 0.46780647005135734
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 4392312000000.0,
       "gross_profit": 3849435000000.0,
@@ -92,7 +103,7 @@
       "cash": 1474680000000.0,
       "operating_cashflow": 1064237000000.0,
       "gross_margin_pct": 87.64029058045057,
-      "yoy_pct": -1.3787360085968592
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -119,23 +130,12 @@
     {
       "period_end": "2025-06-30T00:00:00",
       "revenue": 4338760000000.0,
-      "gross_profit": null,
-      "operating_income": 338260000000.0,
+      "gross_profit": 3839216000000.0,
+      "operating_income": 350641000000.0,
       "eps": 220.335,
       "cash": 2353159000000.0,
       "operating_cashflow": 1404457000000.0,
-      "gross_margin_pct": NaN,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 4453717000000.0,
-      "gross_profit": 3893860000000.0,
-      "operating_income": 574886000000.0,
-      "eps": 934.62,
-      "cash": 2297239000000.0,
-      "operating_cashflow": 1252032000000.0,
-      "gross_margin_pct": 87.42944376573544,
+      "gross_margin_pct": 88.48648000811292,
       "yoy_pct": null
     }
   ],
@@ -148,7 +148,7 @@
     "avg_price_target": 35.0,
     "high_price_target": 40.0,
     "low_price_target": 30.0,
-    "current_price": 37.28,
+    "current_price": 38.7,
     "recent_rating_changes": [
       {
         "date": "2026-07-16T10:26:17",
@@ -180,6 +180,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:14:19Z",
   "news": [
     {
       "date": "2026-08-28T14:23:00Z",
@@ -242,30 +243,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.10005365134484455,
+  "options_implied_move": 0.10077519181174754,
   "technicals": {
-    "ma20": 37.79849967956543,
-    "ma50": 34.6629997253418,
-    "ma200": 31.016299858093262,
-    "rsi14": 50.90474796720407,
+    "ma20": 38.020499801635744,
+    "ma50": 34.765999755859376,
+    "ma200": 31.10934986114502,
+    "rsi14": 56.76701063858858,
     "high_20d": 41.0099983215332,
     "low_5d": 36.310001373291016,
     "low_10d": 36.310001373291016,
     "high_52w": 47.18000030517578,
     "low_52w": 19.65999984741211,
-    "atr14": 1.1999994005475725,
-    "atr14_pct": 3.218882617598104,
-    "position_in_52w_range_pct": 64.0261578444632
+    "atr14": 1.1842850276402064,
+    "atr14_pct": 3.0601679697492963,
+    "position_in_52w_range_pct": 69.18604868756813
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 22.3214,
-      "high": 22.5216,
-      "low": 22.3214,
-      "close": 22.4644,
-      "volume": 249000.0
-    },
     {
       "date": "2024-09-05",
       "open": 22.7122,
@@ -4273,17 +4266,17 @@
       "low": 36.31,
       "close": 37.28,
       "volume": 2138300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 38.26,
+      "high": 38.7,
+      "low": 38.21,
+      "close": 38.7,
+      "volume": 2695800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 21.78,
-      "high": 21.78,
-      "low": 21.56,
-      "close": 21.67,
-      "volume": 351800.0
-    },
     {
       "date": "2025-09-05",
       "open": 21.91,
@@ -6291,6 +6284,14 @@
       "low": 36.31,
       "close": 37.28,
       "volume": 2138300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 38.26,
+      "high": 38.7,
+      "low": 38.21,
+      "close": 38.7,
+      "volume": 2695800.0
     }
   ],
   "ai_synthesis": null,

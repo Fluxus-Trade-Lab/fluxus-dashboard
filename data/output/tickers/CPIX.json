@@ -1,8 +1,8 @@
 {
   "ticker": "CPIX",
-  "fetched_at": "2026-09-04T06:34:58Z",
+  "fetched_at": "2026-09-06T05:11:47Z",
   "_schema": "v2",
-  "current_price": 6.75,
+  "current_price": 6.789999961853027,
   "info": {
     "symbol": "CPIX",
     "longName": "Cumberland Pharmaceuticals Inc.",
@@ -13,13 +13,13 @@
     "city": "Nashville",
     "website": "https://www.cumberlandpharma.com",
     "fullTimeEmployees": 88,
-    "marketCap": 101135976,
-    "enterpriseValue": 101656192,
+    "marketCap": 101735296,
+    "enterpriseValue": 102255512,
     "trailingPE": null,
-    "forwardPE": 48.214287,
-    "priceToSalesTrailing12Months": 2.282757,
-    "enterpriseToRevenue": 2.294,
-    "priceToBook": 5.798969,
+    "forwardPE": 48.5,
+    "priceToSalesTrailing12Months": 2.2962842,
+    "enterpriseToRevenue": 2.308,
+    "priceToBook": 5.833333,
     "grossMargins": 0.84950995,
     "operatingMargins": -18.98654,
     "profitMargins": -0.24644,
@@ -32,9 +32,9 @@
     "currentRatio": 0.956,
     "fiftyTwoWeekHigh": 9.28,
     "fiftyTwoWeekLow": 1.85,
-    "averageVolume": 92684,
-    "averageVolume10days": 87690,
-    "beta": 0.11,
+    "averageVolume": 91831,
+    "averageVolume10days": 74360,
+    "beta": 0.104,
     "sharesOutstanding": 14983107,
     "sharesFloat": 8750134,
     "companyOfficers": [
@@ -98,14 +98,14 @@
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "revenue": 8801241.0,
+      "revenue": 166458.0,
       "gross_profit": null,
-      "operating_income": 5474322.0,
-      "eps": -0.29,
+      "operating_income": -3160461.0,
+      "eps": -0.27,
       "cash": 3862402.0,
       "operating_cashflow": 168740.0,
       "gross_margin_pct": NaN,
-      "yoy_pct": -18.787983755826943
+      "yoy_pct": -56.28694553791127
     },
     {
       "period_end": "2026-03-31T00:00:00",
@@ -142,13 +142,13 @@
     },
     {
       "period_end": "2025-06-30T00:00:00",
-      "revenue": 10837363.0,
+      "revenue": 380797.0,
       "gross_profit": 8825974.0,
-      "operating_income": 7337047.0,
+      "operating_income": -3119519.0,
       "eps": -0.05,
       "cash": 16087281.0,
       "operating_cashflow": 843801.0,
-      "gross_margin_pct": 81.44023596884223,
+      "gross_margin_pct": 2317.763532800941,
       "yoy_pct": null
     }
   ],
@@ -156,7 +156,7 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 6.75,
+    "current_price": 6.79,
     "recent_rating_changes": [
       {
         "date": "2019-12-03T14:13:26",
@@ -209,6 +209,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:47Z",
   "news": [
     {
       "date": "2026-08-05T05:05:32Z",
@@ -271,30 +272,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": 0.20444444444444443,
+  "options_implied_move": 0.18409425729346665,
   "technicals": {
-    "ma20": 7.720000004768371,
-    "ma50": 6.418234090805054,
-    "ma200": 3.9152417397499084,
-    "rsi14": 44.66157938739697,
+    "ma20": 7.66949999332428,
+    "ma50": 6.461600561141967,
+    "ma200": 3.9418249732255934,
+    "rsi14": 45.19548556612722,
     "high_20d": 9.279999732971191,
     "low_5d": 6.28000020980835,
     "low_10d": 6.28000020980835,
     "high_52w": 9.279999732971191,
     "low_52w": 1.4345808447452695,
-    "atr14": 0.645714282989502,
-    "atr14_pct": 9.566137525770399,
-    "position_in_52w_range_pct": 67.7518846473818
+    "atr14": 0.6292856761387416,
+    "atr14_pct": 9.26783033393429,
+    "position_in_52w_range_pct": 68.26173584108999
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 1.0856,
-      "high": 1.0856,
-      "low": 0.9926,
-      "close": 0.9926,
-      "volume": 15600.0
-    },
     {
       "date": "2024-09-05",
       "open": 0.9926,
@@ -4302,17 +4295,17 @@
       "low": 6.41,
       "close": 6.75,
       "volume": 17700.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 6.75,
+      "high": 6.9,
+      "low": 6.65,
+      "close": 6.79,
+      "volume": 14000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 2.7994,
-      "high": 2.8381,
-      "low": 2.6908,
-      "close": 2.8381,
-      "volume": 34400.0
-    },
     {
       "date": "2025-09-05",
       "open": 2.8381,
@@ -6320,6 +6313,14 @@
       "low": 6.41,
       "close": 6.75,
       "volume": 17700.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 6.75,
+      "high": 6.9,
+      "low": 6.65,
+      "close": 6.79,
+      "volume": 14000.0
     }
   ],
   "ai_synthesis": null,

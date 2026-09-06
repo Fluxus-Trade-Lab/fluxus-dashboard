@@ -1,8 +1,8 @@
 {
   "ticker": "BABA",
-  "fetched_at": "2026-09-04T06:34:21Z",
+  "fetched_at": "2026-09-06T05:11:10Z",
   "_schema": "v2",
-  "current_price": 111.80999755859375,
+  "current_price": 113.23999786376953,
   "info": {
     "symbol": "BABA",
     "longName": "Alibaba Group Holding Limited",
@@ -13,13 +13,13 @@
     "city": "Hangzhou",
     "website": "https://www.alibabagroup.com",
     "fullTimeEmployees": 132165,
-    "marketCap": 277917564928,
-    "enterpriseValue": 206639562752,
-    "trailingPE": 25.29638,
-    "forwardPE": 11.9767,
-    "priceToSalesTrailing12Months": 0.2659572,
-    "enterpriseToRevenue": 0.198,
-    "priceToBook": 1.6734779,
+    "marketCap": 281472008192,
+    "enterpriseValue": 209976999936,
+    "trailingPE": 25.61991,
+    "forwardPE": 12.129876,
+    "priceToSalesTrailing12Months": 0.2693587,
+    "enterpriseToRevenue": 0.201,
+    "priceToBook": 1.694881,
     "grossMargins": 0.38199002,
     "operatingMargins": 0.07295,
     "profitMargins": 0.07039,
@@ -32,9 +32,9 @@
     "currentRatio": 1.362,
     "fiftyTwoWeekHigh": 192.67,
     "fiftyTwoWeekLow": 91.99,
-    "averageVolume": 12718403,
-    "averageVolume10days": 16334320,
-    "beta": 0.51,
+    "averageVolume": 12562220,
+    "averageVolume10days": 11846140,
+    "beta": 0.5,
     "sharesOutstanding": 2485623615,
     "sharesFloat": 2216597781,
     "companyOfficers": [
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 268953000000.0,
+      "gross_profit": 102857000000.0,
+      "operating_income": 19619000000.0,
+      "eps": 3.68,
+      "cash": 142914000000.0,
+      "operating_cashflow": 22945000000.0,
+      "gross_margin_pct": 38.243484921157226,
+      "yoy_pct": 8.60118230420106
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 243380000000.0,
       "gross_profit": 83988000000.0,
@@ -117,7 +128,7 @@
       "cash": 131530000000.0,
       "operating_cashflow": 9410000000.0,
       "gross_margin_pct": 34.50899827430356,
-      "yoy_pct": 2.9291109475838795
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 20672000000.0,
       "gross_margin_pct": 44.91100415098606,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 236454000000.0,
-      "gross_profit": 90828000000.0,
-      "operating_income": 28465000000.0,
-      "eps": 5.2,
-      "cash": 145487000000.0,
-      "operating_cashflow": 27520000000.0,
-      "gross_margin_pct": 38.41254535765942,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,10 +170,10 @@
     "bullish": 38,
     "neutral": 1,
     "bearish": 1,
-    "avg_price_target": 187.07507,
-    "high_price_target": 238.18825,
-    "low_price_target": 95.18978,
-    "current_price": 111.81,
+    "avg_price_target": 187.05423,
+    "high_price_target": 238.16339,
+    "low_price_target": 95.17985,
+    "current_price": 113.24,
     "recent_rating_changes": [
       {
         "date": "2026-08-28T15:21:58",
@@ -247,7 +247,50 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:10Z",
   "news": [
+    {
+      "date": "2026-09-05T22:45:25Z",
+      "title": "Michael Burry Says He Sold Alibaba, Calling It Pricey Before $10.2 Billion Share Sale",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/michael-burry-says-sold-alibaba-224525107.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-05T00:05:24Z",
+      "title": "Alibaba\u2019s Wan3.0 Expands Its AI Ambitions, Could Shareholders Be Paying the Bill?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/alibaba-wan3-0-expands-ai-000524030.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-04T22:02:51Z",
+      "title": "Exclusive-China's Xi seeks to bring large CEO delegation on US visit, sources say",
+      "url": "https://finance.yahoo.com/news/exclusive-chinas-xi-bring-large-104707459.html",
+      "source": "Reuters"
+    },
+    {
+      "date": "2026-09-04T13:29:00Z",
+      "title": "The Zacks Analyst Blog Highlights Amazon.com, AbbVie, Alibaba and Lulu's Fashion Lounge",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-analyst-blog-highlights-amazon-132900412.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T12:14:42Z",
+      "title": "Market Chatter: China's Xi Expected to Bring Large Business Delegation to US in Late September",
+      "url": "https://finance.yahoo.com/economy/policy/articles/market-chatter-china-apos-xi-121442143.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-04T11:25:00Z",
+      "title": "3 CEOs Are Buying Millions of Dollars of Their Beaten-Down Stocks",
+      "url": "https://www.marketbeat.com/articles/3-ceos-are-buying-millions-of-dollars-of-their-beaten-down-stocks/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-04T11:18:50Z",
+      "title": "Michael Burry Calls LULU Stock A 'Fat Pitch' Below $100 \u2013 Names JD, BABA As His Other Top Bets",
+      "url": "https://stocktwits.com/news-articles/markets/equity/michael-burry-lulu-jd-baba-stocks-fat-pitch-top-bets/cZsDcGaRJwp",
+      "source": "Stocktwits"
+    },
     {
       "date": "2026-09-03T21:40:31Z",
       "title": "Alibaba's $178 Billion One-Hour Market Still Lacks a Profit Scoreboard  I",
@@ -265,74 +308,24 @@
       "title": "OpenAI Rival Moonshot Makes Blockbuster $50 Billion Move",
       "url": "https://finance.yahoo.com/technology/ai/articles/openai-rival-moonshot-makes-blockbuster-154702072.html",
       "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-09-03T12:37:17Z",
-      "title": "E-Commerce Update - Alibaba Lawsuit Highlights Regulatory Challenges For Global Companies",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/e-commerce-alibaba-lawsuit-highlights-123717691.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-09-02T18:31:08Z",
-      "title": "China\u2019s AI Race Heats Up: Baidu Says Its AI Investments Could Pay Off as CFO Bets on Cloud Growth",
-      "url": "https://finance.yahoo.com/technology/ai/articles/china-ai-race-heats-baidu-183108440.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-09-01T11:35:00Z",
-      "title": "Alibaba Is Down 60% From Its All-Time High. Is This the Once-in-a-Decade Setup That Patient Investors Wait For?",
-      "url": "https://www.fool.com/investing/2026/09/01/alibaba-is-down-60-from-its-all-time-high-is-this/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-01T08:22:40Z",
-      "title": "Baidu\u2019s AI Profits to Match Those From Search Soon, CFO Says",
-      "url": "https://finance.yahoo.com/technology/ai/articles/baidu-ai-profits-match-those-082240043.html",
-      "source": "Bloomberg"
-    },
-    {
-      "date": "2026-09-01T04:14:16Z",
-      "title": "MU And SNDK's Nascent Rebound Faces A New Test \u2014 China's CXMT Reportedly Makes Major Breakthrough With New AI Memory Chip",
-      "url": "https://stocktwits.com/news-articles/markets/equity/mu-and-sndk-s-nascent-rebound-faces-a-new-test-china-s-cxmt-reportedly-makes-major-breakthrough-with-new-ai-memory-chip/cZso4JERJtO",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-31T16:14:59Z",
-      "title": "Alibaba (BABA) Report Flags AI Data Center Bottlenecks Shaping Its Next Investment Phase",
-      "url": "https://finance.yahoo.com/technology/ai/articles/alibaba-baba-report-flags-ai-161459552.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-31T13:55:43Z",
-      "title": "China memory leader CXMT begins small-batch production of HBM3E silicon - report",
-      "url": "https://finance.yahoo.com/technology/ai/articles/china-memory-leader-cxmt-begins-135543896.html",
-      "source": "Investing.com"
     }
   ],
-  "options_implied_move": 0.0164564890454966,
+  "options_implied_move": 0.0384139887147751,
   "technicals": {
-    "ma20": 121.7419994354248,
-    "ma50": 115.8029998779297,
-    "ma200": 134.7507724761963,
-    "rsi14": 38.137292273816016,
+    "ma20": 120.9834991455078,
+    "ma50": 116.16639984130859,
+    "ma200": 134.53559856414796,
+    "rsi14": 40.94769858722447,
     "high_20d": 132.57000732421875,
     "low_5d": 109.66999816894531,
     "low_10d": 109.66999816894531,
     "high_52w": 190.91662560874934,
     "low_52w": 91.98999786376953,
-    "atr14": 4.008857727050781,
-    "atr14_pct": 3.5854197429437824,
-    "position_in_52w_range_pct": 20.03505036674013
+    "atr14": 3.930286407470703,
+    "atr14_pct": 3.470758108101462,
+    "position_in_52w_range_pct": 21.480566440392348
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 80.751,
-      "high": 81.2675,
-      "low": 80.1956,
-      "close": 80.3612,
-      "volume": 11114100.0
-    },
     {
       "date": "2024-09-05",
       "open": 80.0056,
@@ -4339,18 +4332,18 @@
       "high": 112.06,
       "low": 109.67,
       "close": 111.81,
-      "volume": 8594600.0
+      "volume": 8605000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 112.37,
+      "high": 113.41,
+      "low": 111.97,
+      "close": 113.24,
+      "volume": 7165300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 131.9482,
-      "high": 133.0283,
-      "low": 128.8764,
-      "close": 129.7286,
-      "volume": 24730900.0
-    },
     {
       "date": "2025-09-05",
       "open": 133.8012,
@@ -6357,7 +6350,15 @@
       "high": 112.06,
       "low": 109.67,
       "close": 111.81,
-      "volume": 8594600.0
+      "volume": 8605000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 112.37,
+      "high": 113.41,
+      "low": 111.97,
+      "close": 113.24,
+      "volume": 7165300.0
     }
   ],
   "ai_synthesis": null,

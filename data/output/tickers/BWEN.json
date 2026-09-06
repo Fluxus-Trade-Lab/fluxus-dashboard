@@ -1,8 +1,8 @@
 {
   "ticker": "BWEN",
-  "fetched_at": "2026-09-04T06:34:29Z",
+  "fetched_at": "2026-09-06T05:11:20Z",
   "_schema": "v2",
-  "current_price": 4.110000133514404,
+  "current_price": 4.150000095367432,
   "info": {
     "symbol": "BWEN",
     "longName": "Broadwind, Inc.",
@@ -13,13 +13,13 @@
     "city": "Cicero",
     "website": "https://www.bwen.com",
     "fullTimeEmployees": 341,
-    "marketCap": 97231800,
-    "enterpriseValue": 102026800,
-    "trailingPE": 11.416667,
-    "forwardPE": 91.333336,
-    "priceToSalesTrailing12Months": 0.5689098,
-    "enterpriseToRevenue": 0.597,
-    "priceToBook": 1.4773544,
+    "marketCap": 98178096,
+    "enterpriseValue": 102973096,
+    "trailingPE": 11.527778,
+    "forwardPE": 92.22222,
+    "priceToSalesTrailing12Months": 0.5744466,
+    "enterpriseToRevenue": 0.603,
+    "priceToBook": 1.4917326,
     "grossMargins": 0.118319996,
     "operatingMargins": -0.01016,
     "profitMargins": 0.03199,
@@ -32,9 +32,9 @@
     "currentRatio": 2.722,
     "fiftyTwoWeekHigh": 5.7,
     "fiftyTwoWeekLow": 1.88,
-    "averageVolume": 577196,
-    "averageVolume10days": 316970,
-    "beta": 1.824,
+    "averageVolume": 554711,
+    "averageVolume10days": 280760,
+    "beta": 1.825,
     "sharesOutstanding": 23657373,
     "sharesFloat": 20573634,
     "companyOfficers": [
@@ -72,6 +72,12 @@
       "eps_surprise_pct": -1.0
     },
     {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.02,
+      "eps_estimate": -0.07333,
+      "eps_surprise_pct": 0.72730005
+    },
+    {
       "period_end": "2025-12-31T00:00:00",
       "eps_actual": -0.04,
       "eps_estimate": -0.04333,
@@ -82,20 +88,25 @@
       "eps_actual": 0.32,
       "eps_estimate": 0.05,
       "eps_surprise_pct": 5.4
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.04,
-      "eps_estimate": 0.01,
-      "eps_surprise_pct": -5.0
     }
   ],
   "next_earnings": {
     "date": "2026-11-16",
-    "revenue_low": 34000000,
-    "revenue_high": 34400000
+    "revenue_low": 22633000,
+    "revenue_high": 25000000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 24303000.0,
+      "gross_profit": 3796000.0,
+      "operating_income": -247000.0,
+      "eps": -0.03,
+      "cash": 17043000.0,
+      "operating_cashflow": -3776000.0,
+      "gross_margin_pct": 15.619470847220507,
+      "yoy_pct": 67.37603305785125
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 34057000.0,
@@ -105,7 +116,7 @@
       "cash": 943000.0,
       "operating_cashflow": 2905000.0,
       "gross_margin_pct": 13.779839680535572,
-      "yoy_pct": -7.549269775775014
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -125,30 +136,19 @@
       "operating_income": 559000.0,
       "eps": 0.32,
       "cash": 1195000.0,
-      "operating_cashflow": 4256000.0,
+      "operating_cashflow": -12726000.0,
       "gross_margin_pct": 10.217229141707543,
       "yoy_pct": null
     },
     {
       "period_end": "2025-06-30T00:00:00",
-      "revenue": 39235000.0,
-      "gross_profit": 3975000.0,
-      "operating_income": -165000.0,
+      "revenue": 14520000.0,
+      "gross_profit": 1004000.0,
+      "operating_income": -2381000.0,
       "eps": -0.04,
       "cash": 1037000.0,
-      "operating_cashflow": -12461000.0,
-      "gross_margin_pct": 10.131260354275518,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 36838000.0,
-      "gross_profit": 4326000.0,
-      "operating_income": 184000.0,
-      "eps": -0.02,
-      "cash": 1204000.0,
-      "operating_cashflow": -8037000.0,
-      "gross_margin_pct": 11.743308540094468,
+      "operating_cashflow": 4521000.0,
+      "gross_margin_pct": 6.914600550964186,
       "yoy_pct": null
     }
   ],
@@ -161,7 +161,7 @@
     "avg_price_target": 6.83333,
     "high_price_target": 8.0,
     "low_price_target": 6.0,
-    "current_price": 4.11,
+    "current_price": 4.15,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T17:58:54",
@@ -235,6 +235,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:20Z",
   "news": [
     {
       "date": "2026-08-12T02:12:56Z",
@@ -297,30 +298,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.24330899452913493,
+  "options_implied_move": 0.2626505963739005,
   "technicals": {
-    "ma20": 4.658000040054321,
-    "ma50": 4.59200002670288,
-    "ma200": 3.3789500069618223,
-    "rsi14": 41.057802636020206,
+    "ma20": 4.632500052452087,
+    "ma50": 4.588800029754639,
+    "ma200": 3.3856000077724455,
+    "rsi14": 42.11240725113805,
     "high_20d": 5.699999809265137,
     "low_5d": 4.03000020980835,
     "low_10d": 4.03000020980835,
     "high_52w": 5.699999809265137,
     "low_52w": 1.8799999952316284,
-    "atr14": 0.2964284760611398,
-    "atr14_pct": 7.212371446023967,
-    "position_in_52w_range_pct": 58.376969812680066
+    "atr14": 0.2742856230054583,
+    "atr14_pct": 6.609291968731236,
+    "position_in_52w_range_pct": 59.4240892838926
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 2.08,
-      "high": 2.15,
-      "low": 2.05,
-      "close": 2.07,
-      "volume": 113500.0
-    },
     {
       "date": "2024-09-05",
       "open": 2.08,
@@ -4328,17 +4321,17 @@
       "low": 4.03,
       "close": 4.11,
       "volume": 165000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 4.13,
+      "high": 4.17,
+      "low": 4.05,
+      "close": 4.15,
+      "volume": 153000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 2.05,
-      "high": 2.08,
-      "low": 1.99,
-      "close": 2.01,
-      "volume": 147700.0
-    },
     {
       "date": "2025-09-05",
       "open": 1.98,
@@ -6346,6 +6339,14 @@
       "low": 4.03,
       "close": 4.11,
       "volume": 165000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 4.13,
+      "high": 4.17,
+      "low": 4.05,
+      "close": 4.15,
+      "volume": 153000.0
     }
   ],
   "ai_synthesis": null,

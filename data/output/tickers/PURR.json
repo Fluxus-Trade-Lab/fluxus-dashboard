@@ -1,8 +1,8 @@
 {
   "ticker": "PURR",
-  "fetched_at": "2026-09-04T06:33:18Z",
+  "fetched_at": "2026-09-06T05:08:52Z",
   "_schema": "v2",
-  "current_price": 12.770000457763672,
+  "current_price": 12.180000305175781,
   "info": {
     "symbol": "PURR",
     "longName": "Hyperliquid Strategies Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.hypestrat.xyz",
     "fullTimeEmployees": 5,
-    "marketCap": 2526386176,
-    "enterpriseValue": 2388471040,
-    "trailingPE": 3.5276246,
-    "forwardPE": 43.28814,
-    "priceToSalesTrailing12Months": 267.05984,
-    "enterpriseToRevenue": 252.481,
-    "priceToBook": 2.1336675,
+    "marketCap": 2409661952,
+    "enterpriseValue": 2271746816,
+    "trailingPE": 3.7943926,
+    "forwardPE": 41.28814,
+    "priceToSalesTrailing12Months": 254.72113,
+    "enterpriseToRevenue": 240.142,
+    "priceToBook": 2.0350878,
     "grossMargins": 1.0,
     "operatingMargins": 95.9509,
     "profitMargins": 32.29831,
@@ -32,8 +32,8 @@
     "currentRatio": 41.618,
     "fiftyTwoWeekHigh": 14.14,
     "fiftyTwoWeekLow": 3.01,
-    "averageVolume": 15715452,
-    "averageVolume10days": 32344530,
+    "averageVolume": 15826512,
+    "averageVolume10days": 30573660,
     "beta": null,
     "sharesOutstanding": 197837597,
     "sharesFloat": 197554689,
@@ -91,6 +91,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 6334000.0,
+      "gross_profit": null,
+      "operating_income": 3113000.0,
+      "eps": null,
+      "cash": 137917000.0,
+      "operating_cashflow": -3836000.0,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 2626000.0,
       "gross_profit": null,
@@ -133,7 +144,7 @@
     "avg_price_target": 19.86667,
     "high_price_target": 22.6,
     "low_price_target": 17.0,
-    "current_price": 12.77,
+    "current_price": 12.18,
     "recent_rating_changes": [
       {
         "date": "2026-08-28T12:33:42",
@@ -207,6 +218,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:08:52Z",
   "news": [
     {
       "date": "2026-09-03T16:00:01Z",
@@ -269,19 +281,19 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": 0.0837901301209023,
+  "options_implied_move": 0.09688012893551157,
   "technicals": {
-    "ma20": 9.54175000190735,
-    "ma50": 8.14410002708435,
-    "rsi14": 70.08008958959918,
+    "ma20": 9.81025002002716,
+    "ma50": 8.227300024032592,
+    "rsi14": 65.13839392680813,
     "high_20d": 14.140000343322754,
     "low_5d": 10.930000305175781,
     "low_10d": 10.420000076293945,
     "high_52w": 14.140000343322754,
     "low_52w": 3.009999990463257,
-    "atr14": 1.3967143126896449,
-    "atr14_pct": 10.937464859999249,
-    "position_in_52w_range_pct": 87.69092684523497
+    "atr14": 1.448857205254691,
+    "atr14_pct": 11.895379055442325,
+    "position_in_52w_range_pct": 82.38993732247805
   },
   "ohlc_2y": [
     {
@@ -1794,7 +1806,15 @@
       "high": 12.93,
       "low": 11.54,
       "close": 12.77,
-      "volume": 36217500.0
+      "volume": 36490600.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 12.385,
+      "high": 12.545,
+      "low": 11.4,
+      "close": 12.18,
+      "volume": 27274000.0
     }
   ],
   "ohlc_1y": [
@@ -3308,7 +3328,15 @@
       "high": 12.93,
       "low": 11.54,
       "close": 12.77,
-      "volume": 36217500.0
+      "volume": 36490600.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 12.385,
+      "high": 12.545,
+      "low": 11.4,
+      "close": 12.18,
+      "volume": 27274000.0
     }
   ],
   "ai_synthesis": null,

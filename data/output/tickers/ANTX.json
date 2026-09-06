@@ -1,8 +1,8 @@
 {
   "ticker": "ANTX",
-  "fetched_at": "2026-09-04T06:34:03Z",
+  "fetched_at": "2026-09-06T05:10:52Z",
   "_schema": "v2",
-  "current_price": 5.949999809265137,
+  "current_price": 5.889999866485596,
   "info": {
     "symbol": "ANTX",
     "longName": "AN2 Therapeutics, Inc.",
@@ -13,13 +13,13 @@
     "city": "Menlo Park",
     "website": "https://www.an2therapeutics.com",
     "fullTimeEmployees": 21,
-    "marketCap": 224530592,
-    "enterpriseValue": 146143616,
+    "marketCap": 222266432,
+    "enterpriseValue": 143879440,
     "trailingPE": null,
-    "forwardPE": -7.4374995,
+    "forwardPE": -7.3624997,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 2.8455284,
+    "priceToBook": 2.816834,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,11 +32,11 @@
     "currentRatio": 14.322,
     "fiftyTwoWeekHigh": 7.19,
     "fiftyTwoWeekLow": 1.0,
-    "averageVolume": 287261,
-    "averageVolume10days": 223180,
+    "averageVolume": 286133,
+    "averageVolume10days": 208800,
     "beta": -0.992,
     "sharesOutstanding": 37736237,
-    "sharesFloat": 21409277,
+    "sharesFloat": 21407390,
     "companyOfficers": [
       {
         "name": "Mr. Eric E. Easom",
@@ -84,6 +84,12 @@
       "eps_surprise_pct": 0.25
     },
     {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.29,
+      "eps_estimate": -0.23,
+      "eps_surprise_pct": -0.2609
+    },
+    {
       "period_end": "2025-12-31T00:00:00",
       "eps_actual": -0.29,
       "eps_estimate": -0.24,
@@ -94,12 +100,6 @@
       "eps_actual": -0.31,
       "eps_estimate": -0.22,
       "eps_surprise_pct": -0.4091
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.21,
-      "eps_estimate": -0.31,
-      "eps_surprise_pct": 0.32259998
     }
   ],
   "next_earnings": {
@@ -108,6 +108,17 @@
     "revenue_high": 0
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 0.0,
+      "gross_profit": null,
+      "operating_income": -8904000.0,
+      "eps": -0.18,
+      "cash": 44318000.0,
+      "operating_cashflow": -6998000.0,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 0.0,
@@ -151,17 +162,6 @@
       "operating_cashflow": -7599000.0,
       "gross_margin_pct": null,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 0.0,
-      "gross_profit": null,
-      "operating_income": -11537000.0,
-      "eps": -0.35,
-      "cash": 19985000.0,
-      "operating_cashflow": -10624000.0,
-      "gross_margin_pct": null,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 9.0,
     "high_price_target": 9.0,
     "low_price_target": 9.0,
-    "current_price": 5.95,
+    "current_price": 5.89,
     "recent_rating_changes": [
       {
         "date": "2026-07-20T12:02:33",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:10:52Z",
   "news": [
     {
       "date": "2026-01-09T17:00:02Z",
@@ -261,30 +262,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.13445378582269318,
+  "options_implied_move": 0.13582343262043883,
   "technicals": {
-    "ma20": 5.814499950408935,
-    "ma50": 5.289999980926513,
-    "ma200": 3.356899992823601,
-    "rsi14": 58.53447808951873,
+    "ma20": 5.812499952316284,
+    "ma50": 5.304999980926514,
+    "ma200": 3.380749992132187,
+    "rsi14": 56.76528564211159,
     "high_20d": 7.190000057220459,
     "low_5d": 5.400000095367432,
     "low_10d": 5.400000095367432,
     "high_52w": 7.190000057220459,
     "low_52w": 1.0,
-    "atr14": 0.3517857279096331,
-    "atr14_pct": 5.912365364480253,
-    "position_in_52w_range_pct": 79.9676860017328
+    "atr14": 0.33214286395481657,
+    "atr14_pct": 5.6390979878408265,
+    "position_in_52w_range_pct": 78.99838160391533
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 1.08,
-      "high": 1.1,
-      "low": 1.03,
-      "close": 1.03,
-      "volume": 312000.0
-    },
     {
       "date": "2024-09-05",
       "open": 1.04,
@@ -4292,17 +4285,17 @@
       "low": 5.79,
       "close": 5.95,
       "volume": 199700.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 5.97,
+      "high": 6.06,
+      "low": 5.85,
+      "close": 5.89,
+      "volume": 77200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 1.28,
-      "high": 1.28,
-      "low": 1.18,
-      "close": 1.26,
-      "volume": 98700.0
-    },
     {
       "date": "2025-09-05",
       "open": 1.28,
@@ -6310,6 +6303,14 @@
       "low": 5.79,
       "close": 5.95,
       "volume": 199700.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 5.97,
+      "high": 6.06,
+      "low": 5.85,
+      "close": 5.89,
+      "volume": 77200.0
     }
   ],
   "ai_synthesis": null,

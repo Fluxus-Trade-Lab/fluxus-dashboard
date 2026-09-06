@@ -1,8 +1,8 @@
 {
   "ticker": "AIRJ",
-  "fetched_at": "2026-09-04T06:33:44Z",
+  "fetched_at": "2026-09-06T05:10:30Z",
   "_schema": "v2",
-  "current_price": 4.449999809265137,
+  "current_price": 4.570000171661377,
   "info": {
     "symbol": "AIRJ",
     "longName": "AirJoule Technologies Corporation",
@@ -13,13 +13,13 @@
     "city": "Ronan",
     "website": "https://airjouletech.com",
     "fullTimeEmployees": 16,
-    "marketCap": 326395872,
-    "enterpriseValue": 285116928,
+    "marketCap": 335197600,
+    "enterpriseValue": 293918592,
     "trailingPE": null,
-    "forwardPE": -15.892857,
+    "forwardPE": -16.321428,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 1.2958648,
+    "priceToBook": 1.3308096,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,9 +32,9 @@
     "currentRatio": 19.703,
     "fiftyTwoWeekHigh": 6.75,
     "fiftyTwoWeekLow": 2.22,
-    "averageVolume": 1633420,
-    "averageVolume10days": 1139520,
-    "beta": 0.861,
+    "averageVolume": 1570634,
+    "averageVolume10days": 986400,
+    "beta": 0.868,
     "sharesOutstanding": 73347394,
     "sharesFloat": 37625013,
     "companyOfficers": [
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 0.0,
+      "gross_profit": null,
+      "operating_income": -4113191.0,
+      "eps": -0.12,
+      "cash": 41417134.0,
+      "operating_cashflow": -1416110.0,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 0.0,
       "gross_profit": null,
@@ -151,17 +162,6 @@
       "operating_cashflow": -2235731.0,
       "gross_margin_pct": null,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 0.0,
-      "gross_profit": null,
-      "operating_income": -3190200.0,
-      "eps": 0.26,
-      "cash": 23000515.0,
-      "operating_cashflow": 72246.0,
-      "gross_margin_pct": null,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 9.55,
     "high_price_target": 12.0,
     "low_price_target": 8.0,
-    "current_price": 4.45,
+    "current_price": 4.57,
     "recent_rating_changes": [
       {
         "date": "2026-08-31T09:52:24",
@@ -233,6 +233,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:10:30Z",
   "news": [
     {
       "date": "2026-08-27T14:34:46Z",
@@ -295,30 +296,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.5280899102753162,
+  "options_implied_move": 0.1575492282176986,
   "technicals": {
-    "ma20": 5.259000039100647,
-    "ma50": 4.826900014877319,
-    "ma200": 3.8762249994277953,
-    "rsi14": 39.05207257713027,
+    "ma20": 5.191500043869018,
+    "ma50": 4.823800020217895,
+    "ma200": 3.878675000667572,
+    "rsi14": 42.30645166602377,
     "high_20d": 6.650000095367432,
     "low_5d": 4.329999923706055,
     "low_10d": 4.329999923706055,
     "high_52w": 6.75,
     "low_52w": 2.2200000286102295,
-    "atr14": 0.30671426228114534,
-    "atr14_pct": 6.892455627583397,
-    "position_in_52w_range_pct": 49.22736853728411
+    "atr14": 0.27457141876220703,
+    "atr14_pct": 6.008127099531145,
+    "position_in_52w_range_pct": 51.876383176448115
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 6.15,
-      "high": 6.76,
-      "low": 5.61,
-      "close": 6.22,
-      "volume": 38300.0
-    },
     {
       "date": "2024-09-05",
       "open": 6.15,
@@ -4326,17 +4319,17 @@
       "low": 4.35,
       "close": 4.45,
       "volume": 726400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 4.48,
+      "high": 4.68,
+      "low": 4.48,
+      "close": 4.57,
+      "volume": 762800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 4.6,
-      "high": 4.761,
-      "low": 4.52,
-      "close": 4.6,
-      "volume": 42600.0
-    },
     {
       "date": "2025-09-05",
       "open": 4.64,
@@ -6344,6 +6337,14 @@
       "low": 4.35,
       "close": 4.45,
       "volume": 726400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 4.48,
+      "high": 4.68,
+      "low": 4.48,
+      "close": 4.57,
+      "volume": 762800.0
     }
   ],
   "ai_synthesis": null,

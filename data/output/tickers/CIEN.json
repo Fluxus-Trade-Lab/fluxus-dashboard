@@ -1,8 +1,8 @@
 {
   "ticker": "CIEN",
-  "fetched_at": "2026-09-04T06:34:47Z",
+  "fetched_at": "2026-09-06T05:11:38Z",
   "_schema": "v2",
-  "current_price": 317.4599914550781,
+  "current_price": 321.0,
   "info": {
     "symbol": "CIEN",
     "longName": "Ciena Corporation",
@@ -13,13 +13,13 @@
     "city": "Hanover",
     "website": "https://www.ciena.com",
     "fullTimeEmployees": 8898,
-    "marketCap": 45046779904,
+    "marketCap": 45520535552,
     "enterpriseValue": 45315137536,
-    "trailingPE": 105.46844,
-    "forwardPE": 29.715034,
-    "priceToSalesTrailing12Months": 8.088628,
+    "trailingPE": 71.97309,
+    "forwardPE": 27.72023,
+    "priceToSalesTrailing12Months": 8.173696,
     "enterpriseToRevenue": 8.137,
-    "priceToBook": 15.541955,
+    "priceToBook": 14.901123,
     "grossMargins": 0.43047002,
     "operatingMargins": 0.15195,
     "profitMargins": 0.0787,
@@ -31,12 +31,12 @@
     "debtToEquity": 54.649,
     "currentRatio": 2.727,
     "fiftyTwoWeekHigh": 637.51,
-    "fiftyTwoWeekLow": 110.9,
-    "averageVolume": 2676168,
-    "averageVolume10days": 1632690,
-    "beta": 1.315,
-    "sharesOutstanding": 141897511,
-    "sharesFloat": 140874884,
+    "fiftyTwoWeekLow": 117.02,
+    "averageVolume": 2661377,
+    "averageVolume10days": 2451430,
+    "beta": 1.309,
+    "sharesOutstanding": 141808525,
+    "sharesFloat": 140877715,
     "companyOfficers": [
       {
         "name": "Mr. Gary B. Smith",
@@ -78,6 +78,12 @@
   },
   "earnings_history": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 2.11,
+      "eps_estimate": 1.72756,
+      "eps_surprise_pct": 0.2214
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "eps_actual": 1.64,
       "eps_estimate": 1.45989,
@@ -94,18 +100,12 @@
       "eps_actual": 0.91,
       "eps_estimate": 0.76964,
       "eps_surprise_pct": 0.1824
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 0.67,
-      "eps_estimate": 0.52523,
-      "eps_surprise_pct": 0.2756
     }
   ],
   "next_earnings": {
     "date": "2026-09-03",
-    "revenue_low": 1621247000,
-    "revenue_high": 1670000000
+    "revenue_low": 1571200000,
+    "revenue_high": 1803467800
   },
   "quarterly_metrics": [
     {
@@ -170,11 +170,60 @@
     "bullish": 13,
     "neutral": 6,
     "bearish": 1,
-    "avg_price_target": 551.86456,
-    "high_price_target": 720.0,
-    "low_price_target": 270.0,
-    "current_price": 317.46,
+    "avg_price_target": 504.12775,
+    "high_price_target": 660.0,
+    "low_price_target": 325.0,
+    "current_price": 321.0,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-04T17:40:35",
+        "firm": "B. Riley Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T16:10:36",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T16:09:37",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T13:54:38",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T13:35:32",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T12:30:48",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-04T11:34:09",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-09-03T19:32:48",
         "firm": "Needham",
@@ -195,59 +244,47 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "reit"
-      },
-      {
-        "date": "2026-08-24T12:54:59",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T12:39:18",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Market Perform",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-18T14:17:43",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-23T11:44:59",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-05T19:05:20",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-05T17:59:42",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-05T16:07:52",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:11:38Z",
   "news": [
+    {
+      "date": "2026-09-04T22:46:52Z",
+      "title": "NetApp Raised Guidance as Ciena\u2019s Revenue Jumped 37%. Are AI Networks and Storage Finally Converting Into Earnings?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/netapp-raised-guidance-ciena-revenue-224652965.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-04T21:14:47Z",
+      "title": "How Much Track Is Left For ANET Stock?",
+      "url": "https://www.trefis.com/articles/614379/how-much-track-is-left-for-anet-stock/2026-09-04",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-04T18:55:00Z",
+      "title": "Don't Overlook These 2 AI-Driven Tech Stocks After Earnings: CIEN, NTAP",
+      "url": "https://finance.yahoo.com/technology/ai/articles/dont-overlook-2-ai-driven-185500208.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T14:00:00Z",
+      "title": "Ciena Q3 Earnings Call Flags Supply as Key Constraint on 2027 Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ciena-q3-earnings-call-flags-140000577.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T13:20:00Z",
+      "title": "Ciena Outlines Strong 2027 Outlook: What's Fueling the Momentum?",
+      "url": "https://finance.yahoo.com/technology/articles/ciena-outlines-strong-2027-outlook-132000731.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T08:19:15Z",
+      "title": "US Stock Market Today: S&P 500 Futures Edge Higher As Yields Ease Before Jobs",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081915564.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-09-04T05:07:24Z",
       "title": "Ciena (CIEN) Stock Gets Fair Value Trim As Analysts Weigh AI Demand And Supply Limits",
@@ -271,68 +308,24 @@
       "title": "Update: Dow Marks Best Day in More Than 4 Weeks as Rate Hike Bets Ease",
       "url": "https://finance.yahoo.com/markets/stocks/articles/dow-marks-best-day-more-205409556.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-03T20:26:59Z",
-      "title": "US Equity Markets End Higher as Expectations Build for Fed to Keep Rates Steady",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-markets-end-higher-202659136.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-03T20:10:00Z",
-      "title": "Nvidia, Tesla, Robinhood, Snowflake, Ultragenyx, Ciena, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-ad4061d4?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-03T20:07:00Z",
-      "title": "Ciena Beats Earnings Estimates. The Stock Is the Worst Performer in S&P 500 Today.",
-      "url": "https://www.barrons.com/articles/ciena-earnings-stock-price-artificial-intelligence-c431a41a?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-03T19:52:50Z",
-      "title": "HPE Cannot Build AI Servers Fast Enough. Is the Stock Still Cheap?",
-      "url": "https://247wallst.com/investing/2026/09/03/hpe-cannot-build-ai-servers-fast-enough-is-the-stock-still-cheap/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-03T18:06:52Z",
-      "title": "Why Ciena Stock Just Crashed",
-      "url": "https://www.fool.com/investing/2026/09/03/why-ciena-stock-just-crashed/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-03T17:31:07Z",
-      "title": "Equities Jump Intraday, Yields Fall as Markets Split Over Fed's Next Move",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-jump-intraday-yields-fall-173107853.html",
-      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.040005041081836924,
+  "options_implied_move": 0.0707165109034268,
   "technicals": {
-    "ma20": 394.3185012817383,
-    "ma50": 408.0133996582031,
-    "ma200": 376.51854972839357,
-    "rsi14": 32.81527584895778,
+    "ma20": 389.7490005493164,
+    "ma50": 404.739599609375,
+    "ma200": 377.16464973449706,
+    "rsi14": 33.91577008548029,
     "high_20d": 462.69000244140625,
     "low_5d": 311.6000061035156,
     "low_10d": 311.6000061035156,
     "high_52w": 637.510009765625,
-    "low_52w": 110.9000015258789,
-    "atr14": 25.470711844308035,
-    "atr14_pct": 8.023282470198215,
-    "position_in_52w_range_pct": 39.22447099318327
+    "low_52w": 113.66000366210938,
+    "atr14": 24.225712367466517,
+    "atr14_pct": 7.54695089329175,
+    "position_in_52w_range_pct": 39.58003129180438
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 58.2,
-      "high": 59.24,
-      "low": 54.62,
-      "close": 54.93,
-      "volume": 4792000.0
-    },
     {
       "date": "2024-09-05",
       "open": 54.01,
@@ -4339,18 +4332,18 @@
       "high": 358.76,
       "low": 311.6,
       "close": 317.46,
-      "volume": 7524100.0
+      "volume": 7535400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 321.67,
+      "high": 328.85,
+      "low": 315.73,
+      "close": 321.0,
+      "volume": 3340000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 115.0,
-      "high": 122.0,
-      "low": 110.9,
-      "close": 116.92,
-      "volume": 11296500.0
-    },
     {
       "date": "2025-09-05",
       "open": 115.86,
@@ -6357,7 +6350,15 @@
       "high": 358.76,
       "low": 311.6,
       "close": 317.46,
-      "volume": 7524100.0
+      "volume": 7535400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 321.67,
+      "high": 328.85,
+      "low": 315.73,
+      "close": 321.0,
+      "volume": 3340000.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "VEEV",
-  "fetched_at": "2026-09-04T06:33:06Z",
+  "fetched_at": "2026-09-06T05:09:59Z",
   "_schema": "v2",
-  "current_price": 284.3800048828125,
+  "current_price": 275.0899963378906,
   "info": {
     "symbol": "VEEV",
     "longName": "Veeva Systems Inc.",
@@ -13,13 +13,13 @@
     "city": "Pleasanton",
     "website": "https://www.veeva.com",
     "fullTimeEmployees": 7928,
-    "marketCap": 46043639808,
-    "enterpriseValue": 38952386560,
-    "trailingPE": 46.090763,
-    "forwardPE": 27.768692,
-    "priceToSalesTrailing12Months": 13.31473,
-    "enterpriseToRevenue": 11.264,
-    "priceToBook": 6.3438034,
+    "marketCap": 44539502592,
+    "enterpriseValue": 37448253440,
+    "trailingPE": 45.02291,
+    "forwardPE": 26.861557,
+    "priceToSalesTrailing12Months": 12.879769,
+    "enterpriseToRevenue": 10.829,
+    "priceToBook": 6.1365666,
     "grossMargins": 0.74961,
     "operatingMargins": 0.29637,
     "profitMargins": 0.29345,
@@ -32,11 +32,11 @@
     "currentRatio": 5.458,
     "fiftyTwoWeekHigh": 310.5,
     "fiftyTwoWeekLow": 148.05,
-    "averageVolume": 2107193,
-    "averageVolume10days": 2264440,
-    "beta": 0.922,
+    "averageVolume": 2052212,
+    "averageVolume10days": 2290450,
+    "beta": 0.974,
     "sharesOutstanding": 161908850,
-    "sharesFloat": 148311745,
+    "sharesFloat": 148292316,
     "companyOfficers": [
       {
         "name": "Mr. Peter P. Gassner",
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 927963000.0,
+      "gross_profit": 695951000.0,
+      "operating_income": 275018000.0,
+      "eps": 1.66,
+      "cash": 1812012000.0,
+      "operating_cashflow": 238709000.0,
+      "gross_margin_pct": 74.99771003800798,
+      "yoy_pct": 17.60047447600437
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 882948000.0,
       "gross_profit": 662024000.0,
@@ -117,7 +128,7 @@
       "cash": 1896580000.0,
       "operating_cashflow": 1127116000.0,
       "gross_margin_pct": 74.97882094981811,
-      "yoy_pct": 16.32384463067309
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 238433000.0,
       "gross_margin_pct": 75.25564549140076,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 759043000.0,
-      "gross_profit": 585219000.0,
-      "operating_income": 233732000.0,
-      "eps": 1.37,
-      "cash": 1964982000.0,
-      "operating_cashflow": 877158000.0,
-      "gross_margin_pct": 77.09958460851361,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 294.07407,
     "high_price_target": 350.0,
     "low_price_target": 180.0,
-    "current_price": 284.38,
+    "current_price": 275.09,
     "recent_rating_changes": [
       {
         "date": "2026-08-28T15:38:49",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:09:59Z",
   "news": [
     {
       "date": "2026-09-04T04:38:39Z",
@@ -309,30 +310,22 @@
       "source": "Trefis"
     }
   ],
-  "options_implied_move": 0.06217033439916279,
+  "options_implied_move": 0.06179795785492341,
   "technicals": {
-    "ma20": 254.95750122070314,
-    "ma50": 217.6642007446289,
-    "ma200": 198.63155067443847,
-    "rsi14": 73.58830121303306,
+    "ma20": 257.1885009765625,
+    "ma50": 220.00440063476563,
+    "ma200": 198.6219506072998,
+    "rsi14": 65.9206278346989,
     "high_20d": 296.239990234375,
     "low_5d": 273.6000061035156,
     "low_10d": 238.92999267578125,
     "high_52w": 310.5,
     "low_52w": 148.0500030517578,
-    "atr14": 11.450714111328125,
-    "atr14_pct": 4.026553876756118,
-    "position_in_52w_range_pct": 83.92120922876377
+    "atr14": 11.79928697858538,
+    "atr14_pct": 4.289246114239799,
+    "position_in_52w_range_pct": 78.20252118971028
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 214.3,
-      "high": 218.0,
-      "low": 212.92,
-      "close": 216.83,
-      "volume": 788000.0
-    },
     {
       "date": "2024-09-05",
       "open": 215.84,
@@ -4340,17 +4333,17 @@
       "low": 277.85,
       "close": 284.38,
       "volume": 1505300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 279.56,
+      "high": 279.86,
+      "low": 273.61,
+      "close": 275.09,
+      "volume": 1152100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 268.3,
-      "high": 271.06,
-      "low": 262.85,
-      "close": 270.06,
-      "volume": 1266600.0
-    },
     {
       "date": "2025-09-05",
       "open": 271.59,
@@ -6358,6 +6351,14 @@
       "low": 277.85,
       "close": 284.38,
       "volume": 1505300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 279.56,
+      "high": 279.86,
+      "low": 273.61,
+      "close": 275.09,
+      "volume": 1152100.0
     }
   ],
   "ai_synthesis": null,

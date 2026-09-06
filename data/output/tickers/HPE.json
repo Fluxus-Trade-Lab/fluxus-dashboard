@@ -1,8 +1,8 @@
 {
   "ticker": "HPE",
-  "fetched_at": "2026-09-04T06:31:33Z",
+  "fetched_at": "2026-09-06T05:08:23Z",
   "_schema": "v2",
-  "current_price": 54.439998626708984,
+  "current_price": 52.0,
   "info": {
     "symbol": "HPE",
     "longName": "Hewlett Packard Enterprise Company",
@@ -13,30 +13,30 @@
     "city": "Spring",
     "website": "https://www.hpe.com",
     "fullTimeEmployees": 67000,
-    "marketCap": 72267186176,
-    "enterpriseValue": 84706467840,
-    "trailingPE": 48.60714,
-    "forwardPE": 11.94043,
-    "priceToSalesTrailing12Months": 1.8628445,
-    "enterpriseToRevenue": 2.183,
-    "priceToBook": 2.8483229,
-    "grossMargins": 0.33776,
-    "operatingMargins": 0.087,
-    "profitMargins": 0.040110003,
-    "returnOnEquity": 0.06315,
-    "totalCash": 5292000256,
-    "totalDebt": 21304000512,
-    "totalRevenue": 38793998336,
-    "freeCashflow": 3836000000,
-    "debtToEquity": 84.03,
-    "currentRatio": 1.088,
+    "marketCap": 69028167680,
+    "enterpriseValue": 83195166720,
+    "trailingPE": 26.804123,
+    "forwardPE": 11.412894,
+    "priceToSalesTrailing12Months": 1.6485914,
+    "enterpriseToRevenue": 1.987,
+    "priceToBook": 2.7206612,
+    "grossMargins": 0.36622003,
+    "operatingMargins": 0.12560001,
+    "profitMargins": 0.06666,
+    "returnOnEquity": 0.10936,
+    "totalCash": 6216000000,
+    "totalDebt": 20320999424,
+    "totalRevenue": 41870999552,
+    "freeCashflow": 4738625024,
+    "debtToEquity": 76.464,
+    "currentRatio": 1.113,
     "fiftyTwoWeekHigh": 64.25,
     "fiftyTwoWeekLow": 19.84,
-    "averageVolume": 20654008,
-    "averageVolume10days": 19046720,
-    "beta": 1.436,
+    "averageVolume": 21350280,
+    "averageVolume10days": 27365970,
+    "beta": 1.442,
     "sharesOutstanding": 1327464779,
-    "sharesFloat": 1317807618,
+    "sharesFloat": 1321066399,
     "companyOfficers": [
       {
         "name": "Mr. Antonio Fabio Neri",
@@ -78,22 +78,16 @@
   },
   "earnings_history": [
     {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": 0.79,
-      "eps_estimate": 0.53369,
-      "eps_surprise_pct": 0.48029998
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 1.11,
+      "eps_estimate": 0.93739,
+      "eps_surprise_pct": 0.1841
     },
     {
       "period_end": "2026-01-31T00:00:00",
       "eps_actual": 0.65,
       "eps_estimate": 0.58689,
       "eps_surprise_pct": 0.1075
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 0.62,
-      "eps_estimate": 0.5819,
-      "eps_surprise_pct": 0.0655
     },
     {
       "period_end": "2025-07-31T00:00:00",
@@ -104,10 +98,21 @@
   ],
   "next_earnings": {
     "date": "2026-09-02",
-    "revenue_low": 11626800000,
-    "revenue_high": 12644000000
+    "revenue_low": 12334600000,
+    "revenue_high": 14599000000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": null,
+      "gross_profit": null,
+      "operating_income": null,
+      "eps": 1.06,
+      "cash": null,
+      "operating_cashflow": null,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 10678000000.0,
@@ -151,17 +156,6 @@
       "operating_cashflow": 1305000000.0,
       "gross_margin_pct": 29.246935201401055,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 7627000000.0,
-      "gross_profit": 2169000000.0,
-      "operating_income": 294000000.0,
-      "eps": -0.82,
-      "cash": 11667000000.0,
-      "operating_cashflow": -461000000.0,
-      "gross_margin_pct": 28.43844237577029,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,11 +164,18 @@
     "bullish": 12,
     "neutral": 10,
     "bearish": 0,
-    "avg_price_target": 67.4795,
-    "high_price_target": 82.0,
+    "avg_price_target": 67.7795,
+    "high_price_target": 88.0,
     "low_price_target": 52.0,
-    "current_price": 54.44,
+    "current_price": 52.0,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-04T12:36:10",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
       {
         "date": "2026-09-03T18:18:55",
         "firm": "Raymond James",
@@ -237,21 +238,57 @@
         "to_grade": "Overweight",
         "from_grade": "Overweight",
         "action": "main"
-      },
-      {
-        "date": "2026-09-01T17:56:09",
-        "firm": "Deutsche Bank",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "init"
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:08:23Z",
   "news": [
     {
-      "date": "2026-09-03T16:48:08Z",
-      "title": "HPE CEO on AI boom: 'Customers are buying everything'",
-      "url": "https://finance.yahoo.com/markets/stocks/article/hpe-ceo-on-ai-boom-customers-are-buying-everything-164808652.html",
+      "date": "2026-09-06T03:11:33Z",
+      "title": "Arrow Electronics (ARW) Lands HPE Networking Deal On A Fair Value Debate",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/arrow-electronics-arw-lands-hpe-031133874.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-05T11:10:08Z",
+      "title": "Hewlett Packard Enterprise (HPE) Stock Looks Below Fair Value As Its 315% Run Continues",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/hewlett-packard-enterprise-hpe-stock-111008026.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-04T21:14:47Z",
+      "title": "How Much Track Is Left For ANET Stock?",
+      "url": "https://www.trefis.com/articles/614379/how-much-track-is-left-for-anet-stock/2026-09-04",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-04T20:51:33Z",
+      "title": "Cisco Systems Stock Rose On More Than Its AI Orders",
+      "url": "https://www.trefis.com/articles/614421/cisco-systems-stock-rose-on-more-than-its-ai-orders/2026-09-04",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-04T18:15:00Z",
+      "title": "DELL Stock Hits 52-Week High: Does it Have More Room to Run?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/dell-stock-hits-52-week-181500648.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T18:05:14Z",
+      "title": "Super Micro Surges 7% as Semiconductors Lead a Flat Tape; Hewlett Packard Enterprise Falls 3%, Dell Edges Higher",
+      "url": "https://247wallst.com/investing/2026/09/04/super-micro-surges-7-as-semiconductors-lead-a-flat-tape-hewlett-packard-enterprise-falls-3-dell-edges-higher/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-04T14:59:00Z",
+      "title": "ANET Rises 37.3% in Six Months: Is There More Room to Grow?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/anet-rises-37-3-six-145900406.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T10:43:13Z",
+      "title": "Why this veteran tech CEO is impressed by Nvidia's Jensen Huang buying Hugging Face for $12.9 billion",
+      "url": "https://finance.yahoo.com/markets/stocks/article/why-this-veteran-tech-ceo-is-impressed-by-nvidias-jensen-huang-buying-hugging-face-for-129-billion-104313626.html",
       "source": "Yahoo Finance"
     },
     {
@@ -265,74 +302,24 @@
       "title": "AI Infrastructure Demand Remains Red-Hot: HPE, AVGO, DELL Deliver",
       "url": "https://finance.yahoo.com/technology/ai/articles/ai-infrastructure-demand-remains-red-220200558.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-03T21:18:27Z",
-      "title": "Stocks to Watch Thursday Recap: Snowflake, Broadcom, HPE, Ultragenyx",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-09-03-2026/card/stocks-to-watch-snowflake-broadcom-hpe-ultragenyx-B5bXTn6F9Ms1A3hGwP4q?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-09-03T21:15:13Z",
-      "title": "Stock Market Today, Sept. 3: HPE Jumps 5%, Raises Fiscal Outlook on Record AI Server Demand",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/03/stock-market-today-sept-3-hpe-jumps-5-raises-fiscal-outlook-on-record-ai-server-demand/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-03T20:07:18Z",
-      "title": "Why Hewlett Packard Enterprise (HPE) Shares Are Getting Obliterated Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-hewlett-packard-enterprise-hpe-200718944.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-03T19:52:50Z",
-      "title": "HPE Cannot Build AI Servers Fast Enough. Is the Stock Still Cheap?",
-      "url": "https://247wallst.com/investing/2026/09/03/hpe-cannot-build-ai-servers-fast-enough-is-the-stock-still-cheap/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-03T19:26:06Z",
-      "title": "Dell Is Now Up 20% in a Month: Take Profits, or Buy More?",
-      "url": "https://247wallst.com/investing/2026/09/03/dell-is-now-up-20-in-a-month-take-profits-or-buy-more/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-03T19:06:00Z",
-      "title": "Could Dell Be the Next Magnificent Seven Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/could-dell-next-magnificent-seven-190600640.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-03T18:23:18Z",
-      "title": "HPE Q2 Deep Dive: AI and Networking Demand Drive Growth Amid Supply Constraints",
-      "url": "https://finance.yahoo.com/technology/articles/hpe-q2-deep-dive-ai-182318235.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.03600293992363177,
+  "options_implied_move": 0.06134615384615384,
   "technicals": {
-    "ma20": 54.47850017547607,
-    "ma50": 49.90120025634766,
-    "ma200": 32.97182028770447,
-    "rsi14": 55.4288078558848,
+    "ma20": 54.41750011444092,
+    "ma50": 50.006800231933596,
+    "ma200": 33.127286729812624,
+    "rsi14": 48.79187838335565,
     "high_20d": 63.439998626708984,
     "low_5d": 45.70000076293945,
     "low_10d": 45.70000076293945,
     "high_52w": 64.06257161473991,
     "low_52w": 19.621582932025888,
-    "atr14": 2.9124998365129744,
-    "atr14_pct": 5.349926359263469,
-    "position_in_52w_range_pct": 78.34752719672557
+    "atr14": 2.9839281354631697,
+    "atr14_pct": 5.738323337429173,
+    "position_in_52w_range_pct": 72.85710338070893
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 18.019,
-      "high": 18.1057,
-      "low": 17.6669,
-      "close": 17.8667,
-      "volume": 21890700.0
-    },
     {
       "date": "2024-09-05",
       "open": 16.3247,
@@ -351,10 +338,10 @@
     },
     {
       "date": "2024-09-09",
-      "open": 16.7531,
+      "open": 16.753,
       "high": 16.991,
       "low": 16.6864,
-      "close": 16.7531,
+      "close": 16.753,
       "volume": 13693000.0
     },
     {
@@ -400,7 +387,7 @@
     {
       "date": "2024-09-17",
       "open": 17.1052,
-      "high": 17.5145,
+      "high": 17.5146,
       "low": 16.8578,
       "close": 17.3242,
       "volume": 28391600.0
@@ -512,7 +499,7 @@
     {
       "date": "2024-10-07",
       "open": 19.6627,
-      "high": 20.0606,
+      "high": 20.0605,
       "low": 19.6531,
       "close": 19.9982,
       "volume": 10961300.0
@@ -537,7 +524,7 @@
       "date": "2024-10-10",
       "open": 19.8448,
       "high": 20.0749,
-      "low": 19.5476,
+      "low": 19.5477,
       "close": 19.6915,
       "volume": 18463700.0
     },
@@ -784,7 +771,7 @@
     {
       "date": "2024-11-22",
       "open": 20.909,
-      "high": 21.302,
+      "high": 21.3021,
       "low": 20.8227,
       "close": 21.187,
       "volume": 8865800.0
@@ -865,7 +852,7 @@
       "date": "2024-12-09",
       "open": 22.8647,
       "high": 22.9318,
-      "low": 22.1074,
+      "low": 22.1073,
       "close": 22.1553,
       "volume": 22240200.0
     },
@@ -1159,7 +1146,7 @@
     },
     {
       "date": "2025-02-04",
-      "open": 19.8534,
+      "open": 19.8533,
       "high": 20.1042,
       "low": 19.6701,
       "close": 20.0945,
@@ -1191,7 +1178,7 @@
     },
     {
       "date": "2025-02-10",
-      "open": 20.6348,
+      "open": 20.6347,
       "high": 20.7119,
       "low": 20.3309,
       "close": 20.6733,
@@ -1248,7 +1235,7 @@
     {
       "date": "2025-02-20",
       "open": 21.0882,
-      "high": 21.1894,
+      "high": 21.1895,
       "low": 20.7746,
       "close": 20.9724,
       "volume": 8675800.0
@@ -1624,7 +1611,7 @@
     {
       "date": "2025-04-29",
       "open": 15.9001,
-      "high": 16.0314,
+      "high": 16.0313,
       "low": 15.8125,
       "close": 15.8612,
       "volume": 10251100.0
@@ -1954,7 +1941,7 @@
       "open": 18.0637,
       "high": 18.196,
       "low": 17.8972,
-      "close": 18.0343,
+      "close": 18.0344,
       "volume": 17126500.0
     },
     {
@@ -4339,18 +4326,18 @@
       "high": 54.88,
       "low": 45.7,
       "close": 54.44,
-      "volume": 72060800.0
+      "volume": 72139300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 53.85,
+      "high": 54.64,
+      "low": 51.49,
+      "close": 52.0,
+      "volume": 30113300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 23.4123,
-      "high": 23.6817,
-      "low": 22.2172,
-      "close": 22.6874,
-      "volume": 62528800.0
-    },
     {
       "date": "2025-09-05",
       "open": 22.6874,
@@ -6357,7 +6344,15 @@
       "high": 54.88,
       "low": 45.7,
       "close": 54.44,
-      "volume": 72060800.0
+      "volume": 72139300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 53.85,
+      "high": 54.64,
+      "low": 51.49,
+      "close": 52.0,
+      "volume": 30113300.0
     }
   ],
   "ai_synthesis": null,

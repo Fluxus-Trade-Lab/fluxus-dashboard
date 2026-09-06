@@ -1,8 +1,8 @@
 {
   "ticker": "NMAX",
-  "fetched_at": "2026-09-04T06:36:48Z",
+  "fetched_at": "2026-09-06T05:13:37Z",
   "_schema": "v2",
-  "current_price": 10.859999656677246,
+  "current_price": 10.630000114440918,
   "info": {
     "symbol": "NMAX",
     "longName": "Newsmax, Inc.",
@@ -13,13 +13,13 @@
     "city": "Boca Raton",
     "website": "https://www.newsmax.com",
     "fullTimeEmployees": 500,
-    "marketCap": 1402684544,
-    "enterpriseValue": 1285963520,
-    "trailingPE": 63.88235,
-    "forwardPE": 155.14285,
-    "priceToSalesTrailing12Months": 6.900006,
-    "enterpriseToRevenue": 6.326,
-    "priceToBook": 12.39726,
+    "marketCap": 1372977664,
+    "enterpriseValue": 1256256512,
+    "trailingPE": 62.52941,
+    "forwardPE": 151.85715,
+    "priceToSalesTrailing12Months": 6.7538733,
+    "enterpriseToRevenue": 6.18,
+    "priceToBook": 12.134704,
     "grossMargins": 0.39639,
     "operatingMargins": 0.02411,
     "profitMargins": -0.031519998,
@@ -32,8 +32,8 @@
     "currentRatio": 2.386,
     "fiftyTwoWeekHigh": 13.6,
     "fiftyTwoWeekLow": 5.11,
-    "averageVolume": 1130362,
-    "averageVolume10days": 920630,
+    "averageVolume": 1116363,
+    "averageVolume10days": 870010,
     "beta": null,
     "sharesOutstanding": 89921348,
     "sharesFloat": 30944307,
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 54115485.0,
+      "gross_profit": 23333704.0,
+      "operating_income": 1304944.0,
+      "eps": 0.02,
+      "cash": 25883741.0,
+      "operating_cashflow": -123876.0,
+      "gross_margin_pct": 43.11834958145529,
+      "yoy_pct": 16.52838783951953
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 51658491.0,
       "gross_profit": 19928728.0,
@@ -117,7 +128,7 @@
       "cash": 17198760.0,
       "operating_cashflow": -2642837.0,
       "gross_margin_pct": 38.57783611991299,
-      "yoy_pct": 14.032107002060656
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": -23221904.0,
       "gross_margin_pct": 37.98849752487869,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 45301707.0,
-      "gross_profit": 19462136.0,
-      "operating_income": -11572780.0,
-      "eps": -0.49,
-      "cash": 126718693.0,
-      "operating_cashflow": -15725959.0,
-      "gross_margin_pct": 42.961153759614405,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 18.5,
     "high_price_target": 20.0,
     "low_price_target": 17.0,
-    "current_price": 10.86,
+    "current_price": 10.63,
     "recent_rating_changes": [
       {
         "date": "2025-08-21T17:50:25",
@@ -191,6 +191,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:13:37Z",
   "news": [
     {
       "date": "2026-08-24T13:40:02Z",
@@ -253,20 +254,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.029465930949937807,
+  "options_implied_move": 0.0733772334527415,
   "technicals": {
-    "ma20": 10.312999963760376,
-    "ma50": 9.027599935531617,
-    "ma200": 7.711049973964691,
-    "rsi14": 61.09321635497666,
+    "ma20": 10.395999956130982,
+    "ma50": 9.106799936294555,
+    "ma200": 7.726149973869323,
+    "rsi14": 57.8003494855011,
     "high_20d": 11.779999732971191,
     "low_5d": 10.204999923706055,
     "low_10d": 10.204999923706055,
-    "high_52w": 13.904999732971191,
+    "high_52w": 13.600000381469727,
     "low_52w": 5.110000133514404,
-    "atr14": 0.7225000517708915,
-    "atr14_pct": 6.652855199002368,
-    "position_in_52w_range_pct": 65.37805326924612
+    "atr14": 0.6471428871154785,
+    "atr14_pct": 6.0878916288658464,
+    "position_in_52w_range_pct": 65.01766572098647
   },
   "ohlc_2y": [
     {
@@ -3148,17 +3149,17 @@
       "low": 10.77,
       "close": 10.86,
       "volume": 791000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 10.8,
+      "high": 11.05,
+      "low": 10.505,
+      "close": 10.63,
+      "volume": 792900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 13.73,
-      "high": 13.905,
-      "low": 13.15,
-      "close": 13.32,
-      "volume": 650100.0
-    },
     {
       "date": "2025-09-05",
       "open": 13.4,
@@ -5166,6 +5167,14 @@
       "low": 10.77,
       "close": 10.86,
       "volume": 791000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 10.8,
+      "high": 11.05,
+      "low": 10.505,
+      "close": 10.63,
+      "volume": 792900.0
     }
   ],
   "ai_synthesis": null,

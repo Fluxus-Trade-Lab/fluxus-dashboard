@@ -1,6 +1,6 @@
 {
   "ticker": "FBRX",
-  "fetched_at": "2026-09-04T06:35:26Z",
+  "fetched_at": "2026-09-06T05:12:15Z",
   "_schema": "v2",
   "current_price": 76.99,
   "info": {
@@ -32,7 +32,7 @@
     "currentRatio": 10.01,
     "fiftyTwoWeekHigh": 77.2,
     "fiftyTwoWeekLow": 10.11,
-    "averageVolume": 1408774,
+    "averageVolume": 1426016,
     "averageVolume10days": 1690927,
     "beta": 2.645,
     "sharesOutstanding": 21229087,
@@ -97,6 +97,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 0.0,
+      "gross_profit": null,
+      "operating_income": -24603000.0,
+      "eps": -0.9808,
+      "cash": 49629000.0,
+      "operating_cashflow": -22702000.0,
+      "gross_margin_pct": null,
+      "yoy_pct": null
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 0.0,
       "gross_profit": null,
@@ -137,17 +148,6 @@
       "eps": -0.96,
       "cash": 106144000.0,
       "operating_cashflow": -10061000.0,
-      "gross_margin_pct": null,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 0.0,
-      "gross_profit": null,
-      "operating_income": -16124000.0,
-      "eps": -1.37,
-      "cash": 45856000.0,
-      "operating_cashflow": -10355000.0,
       "gross_margin_pct": null,
       "yoy_pct": null
     }
@@ -235,6 +235,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:12:15Z",
   "news": [
     {
       "date": "2026-08-28T09:16:01Z",
@@ -313,14 +314,6 @@
     "position_in_52w_range_pct": 99.98526931327443
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 7.31,
-      "high": 7.68,
-      "low": 7.3,
-      "close": 7.3,
-      "volume": 9562.0
-    },
     {
       "date": "2024-09-05",
       "open": 7.4,

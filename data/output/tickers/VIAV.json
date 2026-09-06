@@ -1,8 +1,8 @@
 {
   "ticker": "VIAV",
-  "fetched_at": "2026-09-04T06:37:57Z",
+  "fetched_at": "2026-09-06T05:14:41Z",
   "_schema": "v2",
-  "current_price": 33.630001068115234,
+  "current_price": 34.86000061035156,
   "info": {
     "symbol": "VIAV",
     "longName": "Viavi Solutions Inc.",
@@ -13,13 +13,13 @@
     "city": "Chandler",
     "website": "https://www.viavisolutions.com",
     "fullTimeEmployees": 4100,
-    "marketCap": 8298196992,
-    "enterpriseValue": 8347196928,
+    "marketCap": 8601699328,
+    "enterpriseValue": 8650698752,
     "trailingPE": null,
-    "forwardPE": 17.239878,
-    "priceToSalesTrailing12Months": 5.4654527,
-    "enterpriseToRevenue": 5.498,
-    "priceToBook": 5.7349935,
+    "forwardPE": 17.870417,
+    "priceToSalesTrailing12Months": 5.665349,
+    "enterpriseToRevenue": 5.698,
+    "priceToBook": 5.944748,
     "grossMargins": 0.6089,
     "operatingMargins": 0.14308,
     "profitMargins": -0.02002,
@@ -32,11 +32,11 @@
     "currentRatio": 1.846,
     "fiftyTwoWeekHigh": 60.43,
     "fiftyTwoWeekLow": 11.54,
-    "averageVolume": 6178582,
-    "averageVolume10days": 3110460,
-    "beta": 1.234,
+    "averageVolume": 6123277,
+    "averageVolume10days": 3146880,
+    "beta": 1.226,
     "sharesOutstanding": 246749828,
-    "sharesFloat": 244348952,
+    "sharesFloat": 244067657,
     "companyOfficers": [
       {
         "name": "Mr. Oleg  Khaykin",
@@ -110,14 +110,14 @@
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "revenue": null,
-      "gross_profit": null,
-      "operating_income": null,
+      "revenue": 443100000.0,
+      "gross_profit": 261700000.0,
+      "operating_income": 60300000.0,
       "eps": 0.13,
-      "cash": null,
-      "operating_cashflow": null,
-      "gross_margin_pct": null,
-      "yoy_pct": null
+      "cash": 647800000.0,
+      "operating_cashflow": 66700000.0,
+      "gross_margin_pct": 59.061160009027304,
+      "yoy_pct": 52.53012048192771
     },
     {
       "period_end": "2026-03-31T00:00:00",
@@ -128,7 +128,7 @@
       "cash": 499000000.0,
       "operating_cashflow": -26300000.0,
       "gross_margin_pct": 57.54670599803343,
-      "yoy_pct": 42.8370786516854
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -173,7 +173,7 @@
     "avg_price_target": 61.42857,
     "high_price_target": 70.0,
     "low_price_target": 44.0,
-    "current_price": 33.63,
+    "current_price": 34.86,
     "recent_rating_changes": [
       {
         "date": "2026-08-19T12:56:58",
@@ -247,7 +247,14 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:14:41Z",
   "news": [
+    {
+      "date": "2026-09-04T15:30:21Z",
+      "title": "Viavi Solutions (VIAV) Down 17.2% Since Last Earnings Report: Can It Rebound?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/viavi-solutions-viav-down-17-153021730.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-03T08:15:18Z",
       "title": "3 Industrials Stocks We Find Risky",
@@ -301,38 +308,24 @@
       "title": "Does Viavi Solutions (VIAV) Have the Potential to Rally 38.8% as Wall Street Analysts Expect?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/does-viavi-solutions-viav-potential-135501593.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-13T18:01:00Z",
-      "title": "Viavi Solutions Gains From AI Infrastructure Demand as Margins Expand",
-      "url": "https://finance.yahoo.com/technology/ai/articles/viavi-solutions-gains-ai-infrastructure-180100202.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.11061551834225035,
+  "options_implied_move": 0.09753298739158316,
   "technicals": {
-    "ma20": 38.79350051879883,
-    "ma50": 40.1236001586914,
-    "ma200": 34.72260000705719,
-    "rsi14": 36.91019101844663,
+    "ma20": 38.57950057983398,
+    "ma50": 39.81200019836426,
+    "ma200": 34.81340000629425,
+    "rsi14": 40.861742810870304,
     "high_20d": 46.65999984741211,
     "low_5d": 32.79999923706055,
     "low_10d": 32.79999923706055,
     "high_52w": 60.43000030517578,
     "low_52w": 11.539999961853027,
-    "atr14": 2.34357179914202,
-    "atr14_pct": 6.96869379931115,
-    "position_in_52w_range_pct": 45.18306596673852
+    "atr14": 2.220714569091797,
+    "atr14_pct": 6.370380178456919,
+    "position_in_52w_range_pct": 47.698916925214355
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 8.07,
-      "high": 8.31,
-      "low": 8.04,
-      "close": 8.16,
-      "volume": 1486300.0
-    },
     {
       "date": "2024-09-05",
       "open": 8.14,
@@ -4340,17 +4333,17 @@
       "low": 32.8,
       "close": 33.63,
       "volume": 5735400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 34.35,
+      "high": 35.03,
+      "low": 34.01,
+      "close": 34.86,
+      "volume": 3314800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 11.62,
-      "high": 11.87,
-      "low": 11.58,
-      "close": 11.73,
-      "volume": 5142300.0
-    },
     {
       "date": "2025-09-05",
       "open": 11.73,
@@ -6358,6 +6351,14 @@
       "low": 32.8,
       "close": 33.63,
       "volume": 5735400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 34.35,
+      "high": 35.03,
+      "low": 34.01,
+      "close": 34.86,
+      "volume": 3314800.0
     }
   ],
   "ai_synthesis": null,

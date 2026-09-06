@@ -1,8 +1,8 @@
 {
   "ticker": "PL",
-  "fetched_at": "2026-09-04T06:37:11Z",
+  "fetched_at": "2026-09-06T05:13:58Z",
   "_schema": "v2",
-  "current_price": 18.350000381469727,
+  "current_price": 18.1200008392334,
   "info": {
     "symbol": "PL",
     "longName": "Planet Labs PBC",
@@ -13,30 +13,30 @@
     "city": "San Francisco",
     "website": "https://www.planet.com",
     "fullTimeEmployees": 945,
-    "marketCap": 6539986432,
-    "enterpriseValue": 6297186304,
+    "marketCap": 6592926208,
+    "enterpriseValue": 6226130432,
     "trailingPE": null,
-    "forwardPE": 1835.0001,
-    "priceToSalesTrailing12Months": 19.486748,
-    "enterpriseToRevenue": 18.763,
-    "priceToBook": 14.738956,
-    "grossMargins": 0.55579,
-    "operatingMargins": -0.30459,
-    "profitMargins": -1.11171,
-    "returnOnEquity": -0.83985,
-    "totalCash": 730835008,
-    "totalDebt": 488035008,
-    "totalRevenue": 335612000,
-    "freeCashflow": 84853752,
-    "debtToEquity": 109.991,
-    "currentRatio": 2.806,
+    "forwardPE": 1409.0203,
+    "priceToSalesTrailing12Months": 17.428785,
+    "enterpriseToRevenue": 16.459,
+    "priceToBook": 14.554217,
+    "grossMargins": 0.55486,
+    "operatingMargins": -0.11995,
+    "profitMargins": -0.95132005,
+    "returnOnEquity": -0.71970004,
+    "totalCash": 865417984,
+    "totalDebt": 498623008,
+    "totalRevenue": 378278016,
+    "freeCashflow": 51749876,
+    "debtToEquity": 88.353,
+    "currentRatio": 2.843,
     "fiftyTwoWeekHigh": 51.76,
-    "fiftyTwoWeekLow": 6.255,
-    "averageVolume": 10107680,
-    "averageVolume10days": 5441030,
-    "beta": 2.123,
-    "sharesOutstanding": 332908730,
-    "sharesFloat": 294784093,
+    "fiftyTwoWeekLow": 7.29,
+    "averageVolume": 10315739,
+    "averageVolume10days": 11026110,
+    "beta": 2.108,
+    "sharesOutstanding": 340354193,
+    "sharesFloat": 300942310,
     "companyOfficers": [
       {
         "name": "Dr. William Spencer Marshall",
@@ -78,6 +78,12 @@
   },
   "earnings_history": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.02,
+      "eps_estimate": -0.02133,
+      "eps_surprise_pct": 1.9375999
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "eps_actual": -0.03,
       "eps_estimate": -0.042,
@@ -94,20 +100,25 @@
       "eps_actual": 0.0,
       "eps_estimate": -0.04063,
       "eps_surprise_pct": 1.0
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": -0.03,
-      "eps_estimate": -0.04545,
-      "eps_surprise_pct": 0.33990002
     }
   ],
   "next_earnings": {
     "date": "2026-09-03",
-    "revenue_low": 101272680,
-    "revenue_high": 107078000
+    "revenue_low": 102126000,
+    "revenue_high": 117693000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 116052000.0,
+      "gross_profit": 65632000.0,
+      "operating_income": -13509000.0,
+      "eps": -0.03,
+      "cash": 415130000.0,
+      "operating_cashflow": 52948000.0,
+      "gross_margin_pct": 56.55395857029607,
+      "yoy_pct": 58.139154607145784
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 94150000.0,
@@ -117,7 +128,7 @@
       "cash": 368090000.0,
       "operating_cashflow": 15440000.0,
       "gross_margin_pct": 53.53266064790228,
-      "yoy_pct": 42.081038255489325
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 67774000.0,
       "gross_margin_pct": 57.596816831548246,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 66265000.0,
-      "gross_profit": 36603000.0,
-      "operating_income": -22771000.0,
-      "eps": -0.04,
-      "cash": 133471000.0,
-      "operating_cashflow": 17346000.0,
-      "gross_margin_pct": 55.237304761186145,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,11 +170,25 @@
     "bullish": 7,
     "neutral": 3,
     "bearish": 1,
-    "avg_price_target": 38.72727,
-    "high_price_target": 53.0,
+    "avg_price_target": 35.36364,
+    "high_price_target": 50.0,
     "low_price_target": 25.0,
-    "current_price": 18.35,
+    "current_price": 18.12,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-04T13:23:35",
+        "firm": "Citizens",
+        "to_grade": "Market Perform",
+        "from_grade": "Market Perform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-04T09:46:42",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-07-14T16:07:31",
         "firm": "Goldman Sachs",
@@ -230,109 +244,88 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-03-25T17:39:58",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-20T17:20:49",
-        "firm": "Clear Street",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:13:58Z",
   "news": [
     {
-      "date": "2026-09-04T05:01:01Z",
-      "title": "Planet Labs PBC (PL) (Q2 2027) Earnings Call Highlights: Record Revenue and Strategic Expansion ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/planet-labs-pbc-pl-q2-050101963.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-09-04T04:09:02Z",
-      "title": "Planet Labs vs. Snowflake: Evaluating the Better High-Growth Stock to Buy for 2026",
-      "url": "https://www.fool.com/coverage/better-buy/2026/09/03/planet-labs-vs-snowflake-evaluating-the-better-high-growth-stock-to-buy-for-2026/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-04T03:18:52Z",
-      "title": "RKLB And FLY Investors, Take Note: Planet Labs Flags SpaceX Rideshare Crunch As Smaller Operators Seek Alternatives",
-      "url": "https://stocktwits.com/news-articles/markets/equity/rklb-fly-investors-planet-labs-spacex-rideshare-crunch-smaller-operators-alternatives/cZswqIGRJw2",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-03T23:04:01Z",
-      "title": "Planet Labs PBC Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/transcript-planet-labs-pbc-q2-earnings-call-highlights-2026-09-03/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-03T22:35:23Z",
-      "title": "Planet Labs Q2 2027 Earnings: Recap of $PL Earnings Call, Forecast",
-      "url": "https://www.thestreet.com/latest-news/planet-labs-q2-2027-earnings-live-updates-of-pl-earnings-call-forecast",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-09-03T22:26:47Z",
-      "title": "PL Stock Jumps 8% After-Hours As Planet Labs Delivers A Blowout Quarter \u2014 Retail Calls Q2 \u2018A Clean Beat\u2019 Despite Soft Q3 Outlook",
-      "url": "https://stocktwits.com/news-articles/markets/equity/pl-stock-jumps-8-percent-after-hours-as-planet-labs-delivers-blowout-quarter-retail-calls-q2-a-clean-beat-despite-soft-q3-outlook/cZsufoORJvH",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-03T21:20:03Z",
-      "title": "Planet Labs PBC (PL) Tops Q2 Earnings and Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/planet-labs-pbc-pl-tops-212003545.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-03T20:52:41Z",
-      "title": "Planet Labs (NYSE:PL) Exceeds Q2 CY2026 Expectations, Stock Soars",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/planet-labs-nyse-pl-exceeds-205241186.html",
+      "date": "2026-09-04T23:10:10Z",
+      "title": "PL Q2 Deep Dive: Strong Revenue Driven by Defense, Guidance Falls Short of Expectations",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pl-q2-deep-dive-strong-231010882.html",
       "source": "StockStory"
     },
     {
-      "date": "2026-09-03T20:43:00Z",
-      "title": "Planet Labs Earnings Top Wall Street Estimates as Military Space Business Grows",
-      "url": "https://www.barrons.com/articles/planet-labs-earnings-stock-price-2aba59c8?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-09-04T21:34:42Z",
+      "title": "Stock Market Today, Sept. 4: Planet Labs Dips 1% Despite Earnings Beat, Full-Year Guidance Raise",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/04/stock-market-today-sept-4-planet-labs-dips-1-despite-earnings-beat-full-year-guidance-raise/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-04T17:13:00Z",
+      "title": "How Putin\u2019s Space Failures Highlight SpaceX\u2019s Dominance",
+      "url": "https://www.barrons.com/articles/russia-satellite-failures-spacex-military-moat-ddaf09a5?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
     {
-      "date": "2026-09-03T17:03:17Z",
-      "title": "PL Stock Crashes To Over 8-Month Lows Ahead Of Q2 Results \u2014 Retail Says Earnings Could \u2018Cement\u2019 Shares Below $15",
-      "url": "https://stocktwits.com/news-articles/markets/equity/pl-stock-crashes-to-over-8-month-lows-ahead-of-q2-results-retail-says-earnings-could-cement-shares-below-15/cZsu5c9RJvl",
+      "date": "2026-09-04T15:30:00Z",
+      "title": "AST SpaceMobile Stock Soared 12%\u2014This Was the Catalyst",
+      "url": "https://www.marketbeat.com/articles/ast-spacemobile-stock-soared-12this-was-the-catalyst/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-04T15:12:35Z",
+      "title": "Planet Labs lifts revenue guidance on strong military demand: AlphaSpace",
+      "url": "https://finance.yahoo.com/video/planet-labs-lifts-revenue-guidance-151235842.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-09-04T14:00:00Z",
+      "title": "PL Q2 Earnings Call Highlights Satellite Services Expansion",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pl-q2-earnings-call-highlights-140000974.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-04T13:36:20Z",
+      "title": "Planet Labs Is \u2018On A Roll\u2019 In Defense And Intelligence, Says Craig-Hallum \u2014 Why Did The Firm Shave Its Target By Over 28%?",
+      "url": "https://stocktwits.com/news-articles/markets/equity/planet-labs-is-on-a-roll-in-defense-and-intelligence-says-craig-hallum-why-did-the-firm-shave-its-target-by-over-28/cZsD38LRJwC",
       "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-04T13:16:30Z",
+      "title": "Planet Labs Rallies 10% as Record Revenue Overrides Soft Q3 Guidance",
+      "url": "https://247wallst.com/investing/2026/09/04/planet-labs-rallies-10-as-record-revenue-overrides-soft-q3-guidance/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-04T13:10:00Z",
+      "title": "Defying Gravity: Space Stocks Reach Escape Velocity",
+      "url": "https://www.marketbeat.com/articles/defying-gravity-space-stocks-reach-escape-velocity/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-04T12:30:00Z",
+      "title": "Planet Labs PBC Q2 2027 Earnings Call Summary",
+      "url": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-planet-labs-pbc-q2-2027-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
+      "source": "Moby"
     }
   ],
-  "options_implied_move": 0.20163487319250137,
+  "options_implied_move": 0.07119204968285067,
   "technicals": {
-    "ma20": 22.11800012588501,
-    "ma50": 23.730800018310546,
-    "ma200": 26.943099989891053,
-    "rsi14": 29.345829786237957,
+    "ma20": 21.82750015258789,
+    "ma50": 23.56300003051758,
+    "ma200": 26.977649993896485,
+    "rsi14": 28.60594554108269,
     "high_20d": 25.530000686645508,
-    "low_5d": 17.829999923706055,
-    "low_10d": 17.829999923706055,
+    "low_5d": 17.725000381469727,
+    "low_10d": 17.725000381469727,
     "high_52w": 51.7599983215332,
     "low_52w": 6.255000114440918,
-    "atr14": 1.106285776410784,
-    "atr14_pct": 6.028805195709632,
-    "position_in_52w_range_pct": 26.57949839264847
+    "atr14": 1.2088571275983537,
+    "atr14_pct": 6.671396642437996,
+    "position_in_52w_range_pct": 26.074060415946203
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 2.45,
-      "high": 2.56,
-      "low": 2.39,
-      "close": 2.48,
-      "volume": 2310400.0
-    },
     {
       "date": "2024-09-05",
       "open": 2.48,
@@ -4339,18 +4332,18 @@
       "high": 20.1,
       "low": 17.83,
       "close": 18.35,
-      "volume": 31610000.0
+      "volume": 31952900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 19.64,
+      "high": 19.96,
+      "low": 17.725,
+      "close": 18.12,
+      "volume": 32100800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 6.55,
-      "high": 6.55,
-      "low": 6.29,
-      "close": 6.46,
-      "volume": 7159800.0
-    },
     {
       "date": "2025-09-05",
       "open": 6.61,
@@ -6357,7 +6350,15 @@
       "high": 20.1,
       "low": 17.83,
       "close": 18.35,
-      "volume": 31610000.0
+      "volume": 31952900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 19.64,
+      "high": 19.96,
+      "low": 17.725,
+      "close": 18.12,
+      "volume": 32100800.0
     }
   ],
   "ai_synthesis": null,

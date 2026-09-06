@@ -1,8 +1,8 @@
 {
   "ticker": "MDB",
-  "fetched_at": "2026-09-04T06:36:29Z",
+  "fetched_at": "2026-09-06T05:13:18Z",
   "_schema": "v2",
-  "current_price": 384.45001220703125,
+  "current_price": 368.739990234375,
   "info": {
     "symbol": "MDB",
     "longName": "MongoDB, Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.mongodb.com",
     "fullTimeEmployees": 5783,
-    "marketCap": 30969886720,
-    "enterpriseValue": 28613644288,
-    "trailingPE": 526.64386,
-    "forwardPE": 49.541378,
-    "priceToSalesTrailing12Months": 11.129158,
-    "enterpriseToRevenue": 10.282,
-    "priceToBook": 10.545011,
+    "marketCap": 29658468352,
+    "enterpriseValue": 27348103168,
+    "trailingPE": 526.7714,
+    "forwardPE": 47.48298,
+    "priceToSalesTrailing12Months": 10.657894,
+    "enterpriseToRevenue": 9.828,
+    "priceToBook": 10.114103,
     "grossMargins": 0.72688,
     "operatingMargins": 0.0368,
     "profitMargins": 0.02116,
@@ -32,11 +32,11 @@
     "currentRatio": 4.866,
     "fiftyTwoWeekHigh": 473.1,
     "fiftyTwoWeekLow": 215.68,
-    "averageVolume": 1627271,
-    "averageVolume10days": 2152050,
+    "averageVolume": 1647174,
+    "averageVolume10days": 2405980,
     "beta": 1.585,
-    "sharesOutstanding": 80556341,
-    "sharesFloat": 78448987,
+    "sharesOutstanding": 80431927,
+    "sharesFloat": 78452209,
     "companyOfficers": [
       {
         "name": "Mr. Chirantan Jitendra Desai",
@@ -97,17 +97,34 @@
     },
     {
       "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 1.32,
-      "eps_estimate": 0.79405,
-      "eps_surprise_pct": 0.6624
+      "eps_actual": -0.02,
+      "eps_estimate": -0.78355,
+      "eps_surprise_pct": 0.97449994
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 1.0,
+      "eps_estimate": 0.6562,
+      "eps_surprise_pct": 0.5239
     }
   ],
   "next_earnings": {
     "date": "2026-12-01",
-    "revenue_low": 758100000,
-    "revenue_high": 778000000
+    "revenue_low": 730000000,
+    "revenue_high": 754803810
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 771773000.0,
+      "gross_profit": 569765000.0,
+      "operating_income": 28400000.0,
+      "eps": 0.5,
+      "cash": 1002401000.0,
+      "operating_cashflow": 141878000.0,
+      "gross_margin_pct": 73.82546422328845,
+      "yoy_pct": 30.498882316935006
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 687616000.0,
@@ -117,7 +134,7 @@
       "cash": 1036354000.0,
       "operating_cashflow": 201631000.0,
       "gross_margin_pct": 72.15873394452717,
-      "yoy_pct": 25.245622151711977
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +168,6 @@
       "operating_cashflow": 72105000.0,
       "gross_margin_pct": 71.01328707038529,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 549014000.0,
-      "gross_profit": 390973000.0,
-      "operating_income": -53554000.0,
-      "eps": -0.46,
-      "cash": 657809000.0,
-      "operating_cashflow": 109929000.0,
-      "gross_margin_pct": 71.21366668245255,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,10 +176,10 @@
     "bullish": 31,
     "neutral": 9,
     "bearish": 0,
-    "avg_price_target": 453.90918,
-    "high_price_target": 560.0,
+    "avg_price_target": 454.72,
+    "high_price_target": 565.0,
     "low_price_target": 272.64,
-    "current_price": 384.45,
+    "current_price": 368.74,
     "recent_rating_changes": [
       {
         "date": "2026-09-02T19:12:30",
@@ -247,7 +253,20 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:13:18Z",
   "news": [
+    {
+      "date": "2026-09-05T20:10:21Z",
+      "title": "Why Is MongoDB (MDB) Putting A Veteran Executive In Charge Of AI Growth?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/why-mongodb-mdb-putting-veteran-201021717.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-05T10:37:07Z",
+      "title": "Jim Cramer Explains Why SanDisk (SNDK) Makes MongoDB (MDB) Look Expensive",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-why-sandisk-103707259.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-09-03T19:13:18Z",
       "title": "Why MongoDB Fell This Week",
@@ -259,6 +278,12 @@
       "title": "MongoDB missed one number and investors punished the stock",
       "url": "https://www.thestreet.com/investing/stocks/mongodb-stock-drop-atlas-earnings",
       "source": "TheStreet"
+    },
+    {
+      "date": "2026-09-03T13:45:00Z",
+      "title": "MongoDB\u2019s Spending Fears Collide With a Much Stronger Growth Story",
+      "url": "https://www.marketbeat.com/articles/mongodbs-spending-fears-collide-with-a-much-stronger-growth-story/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     },
     {
       "date": "2026-09-03T12:11:48Z",
@@ -289,50 +314,24 @@
       "title": "MongoDB Beat Every Estimate and Raised Guidance, Then Lost 13.6% in a Single Session",
       "url": "https://247wallst.com/investing/2026/09/02/mongodb-beat-every-estimate-and-raised-guidance-then-lost-13-6-in-a-single-session/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-02T16:38:44Z",
-      "title": "Rosenblatt Raises MongoDB (MDB) Price Target Despite Atlas Growth Concerns",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rosenblatt-raises-mongodb-mdb-price-163844853.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-09-02T15:36:24Z",
-      "title": "Why MongoDB Stock Crashed Wednesday Morning",
-      "url": "https://www.fool.com/investing/2026/09/02/why-mongodb-stock-crashed-wednesday-morning/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-02T14:37:00Z",
-      "title": "MongoDB Q2 Earnings Call Highlights Atlas Strength and AI Traction",
-      "url": "https://finance.yahoo.com/technology/ai/articles/mongodb-q2-earnings-call-highlights-143700076.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.029522693821343617,
+  "options_implied_move": 0.05136410614959754,
   "technicals": {
-    "ma20": 426.9239974975586,
-    "ma50": 371.9523992919922,
-    "ma200": 342.3023998260498,
-    "rsi14": 45.413079905330406,
+    "ma20": 425.4209976196289,
+    "ma50": 373.44519897460935,
+    "ma200": 342.4480997467041,
+    "rsi14": 42.22703282197648,
     "high_20d": 473.1000061035156,
-    "low_5d": 371.0,
-    "low_10d": 371.0,
+    "low_5d": 365.8999938964844,
+    "low_10d": 365.8999938964844,
     "high_52w": 473.1000061035156,
     "low_52w": 215.67999267578125,
-    "atr14": 24.418066842215403,
-    "atr14_pct": 6.351428291557958,
-    "position_in_52w_range_pct": 65.56212055308158
+    "atr14": 24.093069893973215,
+    "atr14_pct": 6.533891232860153,
+    "position_in_52w_range_pct": 59.459245425594055
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 281.53,
-      "high": 295.43,
-      "low": 278.98,
-      "close": 290.71,
-      "volume": 1860100.0
-    },
     {
       "date": "2024-09-05",
       "open": 291.5,
@@ -4340,17 +4339,17 @@
       "low": 375.5,
       "close": 384.45,
       "volume": 2664100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 378.34,
+      "high": 381.25,
+      "low": 365.9,
+      "close": 368.74,
+      "volume": 2066700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 311.6,
-      "high": 322.66,
-      "low": 306.01,
-      "close": 322.05,
-      "volume": 2750900.0
-    },
     {
       "date": "2025-09-05",
       "open": 325.05,
@@ -6358,6 +6357,14 @@
       "low": 375.5,
       "close": 384.45,
       "volume": 2664100.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 378.34,
+      "high": 381.25,
+      "low": 365.9,
+      "close": 368.74,
+      "volume": 2066700.0
     }
   ],
   "ai_synthesis": null,

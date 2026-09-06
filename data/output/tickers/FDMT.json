@@ -1,8 +1,8 @@
 {
   "ticker": "FDMT",
-  "fetched_at": "2026-09-04T06:32:59Z",
+  "fetched_at": "2026-09-06T05:09:49Z",
   "_schema": "v2",
-  "current_price": 14.699999809265137,
+  "current_price": 14.970000267028809,
   "info": {
     "symbol": "FDMT",
     "longName": "4D Molecular Therapeutics, Inc.",
@@ -13,13 +13,13 @@
     "city": "EmeryVille",
     "website": "https://www.4dmoleculartherapeutics.com",
     "fullTimeEmployees": 196,
-    "marketCap": 812089920,
-    "enterpriseValue": 489972896,
+    "marketCap": 827005888,
+    "enterpriseValue": 504888832,
     "trailingPE": null,
-    "forwardPE": -3.5970607,
-    "priceToSalesTrailing12Months": 8.826297,
-    "enterpriseToRevenue": 5.325,
-    "priceToBook": 1.9910605,
+    "forwardPE": -3.6631293,
+    "priceToSalesTrailing12Months": 8.988413,
+    "enterpriseToRevenue": 5.487,
+    "priceToBook": 2.027631,
     "grossMargins": -1.57704,
     "operatingMargins": -20.37159,
     "profitMargins": -1.94739,
@@ -31,10 +31,10 @@
     "debtToEquity": 9.62,
     "currentRatio": 8.033,
     "fiftyTwoWeekHigh": 16.93,
-    "fiftyTwoWeekLow": 6.09,
-    "averageVolume": 954231,
-    "averageVolume10days": 1062820,
-    "beta": 2.69,
+    "fiftyTwoWeekLow": 6.467,
+    "averageVolume": 946400,
+    "averageVolume10days": 928170,
+    "beta": 2.733,
     "sharesOutstanding": 55244211,
     "sharesFloat": 42436946,
     "companyOfficers": [
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 3781000.0,
+      "gross_profit": null,
+      "operating_income": -77025000.0,
+      "eps": -1.04,
+      "cash": 70372000.0,
+      "operating_cashflow": -69999000.0,
+      "gross_margin_pct": null,
+      "yoy_pct": 25106.666666666668
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 3047000.0,
       "gross_profit": null,
@@ -117,7 +128,7 @@
       "cash": 72488000.0,
       "operating_cashflow": -68125000.0,
       "gross_margin_pct": null,
-      "yoy_pct": 21664.285714285714
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": -43377000.0,
       "gross_margin_pct": null,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 14000.0,
-      "gross_profit": null,
-      "operating_income": -53621000.0,
-      "eps": -0.86,
-      "cash": 133526000.0,
-      "operating_cashflow": -47758000.0,
-      "gross_margin_pct": null,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 29.1,
     "high_price_target": 37.0,
     "low_price_target": 18.0,
-    "current_price": 14.7,
+    "current_price": 14.97,
     "recent_rating_changes": [
       {
         "date": "2026-07-31T15:50:48",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:09:49Z",
   "news": [
     {
       "date": "2026-08-17T23:51:33Z",
@@ -309,30 +310,22 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": 0.23809524118456213,
+  "options_implied_move": 0.23380093103329433,
   "technicals": {
-    "ma20": 14.068750047683716,
-    "ma50": 12.435600070953369,
-    "ma200": 10.0827250289917,
-    "rsi14": 58.90557054424573,
+    "ma20": 14.279750061035156,
+    "ma50": 12.504600067138671,
+    "ma200": 10.102825031280517,
+    "rsi14": 60.64799856514936,
     "high_20d": 16.93000030517578,
     "low_5d": 13.664999961853027,
     "low_10d": 13.664999961853027,
     "high_52w": 16.93000030517578,
-    "low_52w": 6.090000152587891,
-    "atr14": 1.2575000354221888,
-    "atr14_pct": 8.554422120669756,
-    "position_in_52w_range_pct": 79.42803999519997
+    "low_52w": 6.4670000076293945,
+    "atr14": 1.096428666796003,
+    "atr14_pct": 7.324172660242832,
+    "position_in_52w_range_pct": 81.26732311565928
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 14.72,
-      "high": 15.72,
-      "low": 14.61,
-      "close": 15.62,
-      "volume": 581300.0
-    },
     {
       "date": "2024-09-05",
       "open": 15.71,
@@ -4340,17 +4333,17 @@
       "low": 14.275,
       "close": 14.7,
       "volume": 782400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 14.5,
+      "high": 15.0,
+      "low": 14.33,
+      "close": 14.97,
+      "volume": 420600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 6.52,
-      "high": 6.65,
-      "low": 6.09,
-      "close": 6.61,
-      "volume": 646700.0
-    },
     {
       "date": "2025-09-05",
       "open": 6.64,
@@ -6358,6 +6351,14 @@
       "low": 14.275,
       "close": 14.7,
       "volume": 782400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 14.5,
+      "high": 15.0,
+      "low": 14.33,
+      "close": 14.97,
+      "volume": 420600.0
     }
   ],
   "ai_synthesis": null,

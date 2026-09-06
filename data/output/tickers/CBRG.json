@@ -1,8 +1,8 @@
 {
   "ticker": "CBRG",
-  "fetched_at": "2026-09-04T06:31:06Z",
+  "fetched_at": "2026-09-06T05:07:58Z",
   "_schema": "v2",
-  "current_price": 3.240000009536743,
+  "current_price": 3.890000104904175,
   "info": {
     "symbol": "CBRG",
     "longName": "Leverage Shares 2X Long CBRS Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 17.15,
     "fiftyTwoWeekLow": 2.56,
-    "averageVolume": 10125058,
-    "averageVolume10days": 10386920,
+    "averageVolume": 10606504,
+    "averageVolume10days": 12293820,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,20 +48,21 @@
     "low_price_target": null,
     "current_price": null
   },
+  "quarterly_asof": "2026-09-06T05:07:58Z",
   "news": [],
-  "options_implied_move": 0.22530864131212633,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 4.102500021457672,
-    "ma50": 4.287999997138977,
-    "rsi14": 44.7775835097315,
+    "ma20": 4.040500020980835,
+    "ma50": 4.29539999961853,
+    "rsi14": 50.187794785944384,
     "high_20d": 6.920000076293945,
     "low_5d": 2.559999942779541,
     "low_10d": 2.559999942779541,
     "high_52w": 17.149999618530273,
     "low_52w": 2.559999942779541,
-    "atr14": 0.6050000020435878,
-    "atr14_pct": 18.67283951428417,
-    "position_in_52w_range_pct": 4.660727086151992
+    "atr14": 0.5428571701049805,
+    "atr14_pct": 13.955196798596308,
+    "position_in_52w_range_pct": 9.11583407596065
   },
   "ohlc_2y": [
     {
@@ -678,7 +679,15 @@
       "high": 3.26,
       "low": 2.93,
       "close": 3.24,
-      "volume": 9657900.0
+      "volume": 9726800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 3.25,
+      "high": 4.13,
+      "low": 3.25,
+      "close": 3.89,
+      "volume": 28453500.0
     }
   ],
   "ohlc_1y": [
@@ -1296,7 +1305,15 @@
       "high": 3.26,
       "low": 2.93,
       "close": 3.24,
-      "volume": 9657900.0
+      "volume": 9726800.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 3.25,
+      "high": 4.13,
+      "low": 3.25,
+      "close": 3.89,
+      "volume": 28453500.0
     }
   ],
   "ai_synthesis": null,

@@ -1,6 +1,6 @@
 {
   "ticker": "DCTH",
-  "fetched_at": "2026-09-04T06:35:13Z",
+  "fetched_at": "2026-09-06T05:12:01Z",
   "_schema": "v2",
   "current_price": 16.479999542236328,
   "info": {
@@ -32,9 +32,9 @@
     "currentRatio": 9.83,
     "fiftyTwoWeekHigh": 17.42,
     "fiftyTwoWeekLow": 8.12,
-    "averageVolume": 565467,
-    "averageVolume10days": 428820,
-    "beta": 0.523,
+    "averageVolume": 554288,
+    "averageVolume10days": 384260,
+    "beta": 0.566,
     "sharesOutstanding": 34698795,
     "sharesFloat": 28777793,
     "companyOfficers": [
@@ -241,7 +241,14 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:12:01Z",
   "news": [
+    {
+      "date": "2026-09-04T12:56:00Z",
+      "title": "5 Stocks With Recent Price Strength Buoyed by a Strong August",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/5-stocks-recent-price-strength-125600954.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-28T16:00:02Z",
       "title": "What Makes Delcath Systems, Inc. (DCTH) a Strong Momentum Stock: Buy Now?",
@@ -295,38 +302,24 @@
       "title": "Delcath Systems, Inc. (DCTH) Tops Q2 Earnings and Revenue Estimates",
       "url": "https://finance.yahoo.com/markets/stocks/articles/delcath-systems-inc-dcth-tops-135005859.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-05T12:15:06Z",
-      "title": "Orthofix (OFIX) Q2 Earnings and Revenues Surpass Estimates",
-      "url": "https://finance.yahoo.com/healthcare/articles/orthofix-ofix-q2-earnings-revenues-121506145.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.048543690668782655,
+  "options_implied_move": 0.045509710001983734,
   "technicals": {
-    "ma20": 16.69349980354309,
-    "ma50": 14.367399959564208,
-    "ma200": 11.222274961471557,
-    "rsi14": 59.16536153369521,
+    "ma20": 16.761999797821044,
+    "ma50": 14.450599956512452,
+    "ma200": 11.261624960899352,
+    "rsi14": 59.16536070879426,
     "high_20d": 17.420000076293945,
     "low_5d": 16.100000381469727,
     "low_10d": 16.100000381469727,
     "high_52w": 17.420000076293945,
     "low_52w": 8.119999885559082,
-    "atr14": 0.45114244733537945,
-    "atr14_pct": 2.7375149263757783,
+    "atr14": 0.42899962833949495,
+    "atr14_pct": 2.6031531568918957,
     "position_in_52w_range_pct": 89.8924675830212
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 10.46,
-      "high": 11.04,
-      "low": 10.35,
-      "close": 10.86,
-      "volume": 283300.0
-    },
     {
       "date": "2024-09-05",
       "open": 10.86,
@@ -4334,17 +4327,17 @@
       "low": 16.28,
       "close": 16.48,
       "volume": 268600.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 16.32,
+      "high": 16.49,
+      "low": 16.25,
+      "close": 16.48,
+      "volume": 180800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 10.93,
-      "high": 11.1,
-      "low": 10.81,
-      "close": 11.1,
-      "volume": 298900.0
-    },
     {
       "date": "2025-09-05",
       "open": 11.12,
@@ -6352,6 +6345,14 @@
       "low": 16.28,
       "close": 16.48,
       "volume": 268600.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 16.32,
+      "high": 16.49,
+      "low": 16.25,
+      "close": 16.48,
+      "volume": 180800.0
     }
   ],
   "ai_synthesis": null,

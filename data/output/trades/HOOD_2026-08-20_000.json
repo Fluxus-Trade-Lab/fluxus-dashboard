@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-20_000",
-  "generated_at": "2026-09-05T06:46:31+00:00",
+  "generated_at": "2026-09-06T05:14:56+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -33,10 +33,10 @@
     "high": 101.61,
     "low": 93.65,
     "volume": 25193700.0,
-    "ma20": 93.218,
+    "ma20": 93.21799999999999,
     "ma50": 99.8742,
     "ma200": 96.276375,
-    "rsi14": 48.732270198214465,
+    "rsi14": 48.73227643343368,
     "atr14": 4.735571428571428,
     "atr14_pct": 4.979570377046718,
     "high_52w": 153.86,
@@ -60,7 +60,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 16
+    "hold_calendar_days": 17
   },
   "lesson": "In progress",
   "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 (qty 1248) with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = $5,117). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.07R; worst drawdown -2.55R.",
@@ -327,7 +327,15 @@
       "high": 124.88,
       "low": 113.04,
       "close": 124.72,
-      "volume": 51380900.0
+      "volume": 51637300.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 120.475,
+      "high": 124.7,
+      "low": 119.82,
+      "close": 122.11,
+      "volume": 23675800.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "AMDL",
-  "fetched_at": "2026-09-04T06:33:58Z",
+  "fetched_at": "2026-09-06T05:10:49Z",
   "_schema": "v2",
-  "current_price": 45.560001373291016,
+  "current_price": 49.75,
   "info": {
     "symbol": "AMDL",
     "longName": "GraniteShares 2x Long AMD Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 83.79,
     "fiftyTwoWeekLow": 8.875,
-    "averageVolume": 3490661,
-    "averageVolume10days": 1463640,
+    "averageVolume": 3360400,
+    "averageVolume10days": 1529800,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,6 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
+  "quarterly_asof": "2026-09-06T05:10:49Z",
   "news": [
     {
       "date": "2026-06-10T21:00:04Z",
@@ -68,30 +69,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.03467954241384759,
+  "options_implied_move": 0.09427135678391958,
   "technicals": {
-    "ma20": 50.067999839782715,
-    "ma50": 58.20139991760254,
-    "ma200": 34.7068749332428,
-    "rsi14": 41.41713596611687,
+    "ma20": 49.940999794006345,
+    "ma50": 57.79299995422363,
+    "ma200": 34.853574934005735,
+    "rsi14": 47.69381014385152,
     "high_20d": 59.4900016784668,
     "low_5d": 42.45000076293945,
     "low_10d": 42.45000076293945,
     "high_52w": 83.79000091552734,
     "low_52w": 8.875,
-    "atr14": 3.688143048967634,
-    "atr14_pct": 8.095133752848747,
-    "position_in_52w_range_pct": 48.968832576877745
+    "atr14": 3.7945714678083147,
+    "atr14_pct": 7.62727933227802,
+    "position_in_52w_range_pct": 54.56183608152102
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 11.38,
-      "high": 11.8,
-      "low": 11.05,
-      "close": 11.41,
-      "volume": 1039700.0
-    },
     {
       "date": "2024-09-05",
       "open": 10.99,
@@ -4099,17 +4092,17 @@
       "low": 42.45,
       "close": 45.56,
       "volume": 1577400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 46.44,
+      "high": 49.98,
+      "low": 45.9,
+      "close": 49.75,
+      "volume": 2164100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 10.26,
-      "high": 10.52,
-      "low": 9.972,
-      "close": 10.48,
-      "volume": 11302600.0
-    },
     {
       "date": "2025-09-05",
       "open": 9.885,
@@ -6117,6 +6110,14 @@
       "low": 42.45,
       "close": 45.56,
       "volume": 1577400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 46.44,
+      "high": 49.98,
+      "low": 45.9,
+      "close": 49.75,
+      "volume": 2164100.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "YSS",
-  "fetched_at": "2026-09-04T06:38:06Z",
+  "fetched_at": "2026-09-06T05:14:50Z",
   "_schema": "v2",
-  "current_price": 8.510000228881836,
+  "current_price": 8.960000038146973,
   "info": {
     "symbol": "YSS",
     "longName": "York Space Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Greenwood Village",
     "website": "https://www.yorkspacesystems.com",
     "fullTimeEmployees": 710,
-    "marketCap": 1168913152,
-    "enterpriseValue": 812229248,
+    "marketCap": 1230724096,
+    "enterpriseValue": 874040128,
     "trailingPE": null,
-    "forwardPE": -21.275,
-    "priceToSalesTrailing12Months": 2.8861911,
-    "enterpriseToRevenue": 2.005,
-    "priceToBook": 0.63032365,
+    "forwardPE": -22.4,
+    "priceToSalesTrailing12Months": 3.03881,
+    "enterpriseToRevenue": 2.158,
+    "priceToBook": 0.6636545,
     "grossMargins": 0.21150999,
     "operatingMargins": -0.38147,
     "profitMargins": -0.50064,
@@ -32,8 +32,8 @@
     "currentRatio": 5.335,
     "fiftyTwoWeekHigh": 44.54,
     "fiftyTwoWeekLow": 8.38,
-    "averageVolume": 2237572,
-    "averageVolume10days": 2770310,
+    "averageVolume": 2264339,
+    "averageVolume10days": 2513610,
     "beta": null,
     "sharesOutstanding": 137357605,
     "sharesFloat": 56628420,
@@ -97,6 +97,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 92547000.0,
+      "gross_profit": 22180000.0,
+      "operating_income": -35304000.0,
+      "eps": -0.31,
+      "cash": 534000000.0,
+      "operating_cashflow": -102182000.0,
+      "gross_margin_pct": 23.9662009573514,
+      "yoy_pct": 10.38657426734575
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 116343000.0,
       "gross_profit": 22150000.0,
@@ -119,25 +130,25 @@
       "yoy_pct": null
     },
     {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 106252000.0,
-      "gross_profit": 24602000.0,
-      "operating_income": -6600000.0,
-      "eps": -0.12,
-      "cash": null,
-      "operating_cashflow": -79496000.0,
-      "gross_margin_pct": 23.15438768211422,
+      "period_end": "2025-09-30T00:00:00",
+      "revenue": 90763000.0,
+      "gross_profit": 20266000.0,
+      "operating_income": -25770000.0,
+      "eps": null,
+      "cash": 22537000.0,
+      "operating_cashflow": 11593000.0,
+      "gross_margin_pct": 22.328481870365678,
       "yoy_pct": null
     },
     {
-      "period_end": "2024-12-31T00:00:00",
-      "revenue": 76606000.0,
-      "gross_profit": 15656000.0,
-      "operating_income": -16818000.0,
-      "eps": null,
-      "cash": 104656000.0,
-      "operating_cashflow": 67508000.0,
-      "gross_margin_pct": 20.437041485001174,
+      "period_end": "2025-06-30T00:00:00",
+      "revenue": 83839000.0,
+      "gross_profit": 9526000.0,
+      "operating_income": -21157000.0,
+      "eps": -0.194187,
+      "cash": null,
+      "operating_cashflow": -20326000.0,
+      "gross_margin_pct": 11.36225384367657,
       "yoy_pct": null
     }
   ],
@@ -150,7 +161,7 @@
     "avg_price_target": 16.85,
     "high_price_target": 33.0,
     "low_price_target": 11.0,
-    "current_price": 8.51,
+    "current_price": 8.96,
     "recent_rating_changes": [
       {
         "date": "2026-08-31T16:08:17",
@@ -224,6 +235,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:14:50Z",
   "news": [
     {
       "date": "2026-08-27T19:31:31Z",
@@ -286,19 +298,19 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.1833137436008007,
+  "options_implied_move": 0.21428571337339833,
   "technicals": {
-    "ma20": 9.860500001907349,
-    "ma50": 15.46560001373291,
-    "rsi14": 27.169606223206614,
+    "ma20": 9.738000011444091,
+    "ma50": 15.157000026702882,
+    "rsi14": 31.821329520296914,
     "high_20d": 11.930000305175781,
     "low_5d": 8.380000114440918,
     "low_10d": 8.380000114440918,
     "high_52w": 44.540000915527344,
     "low_52w": 8.380000114440918,
-    "atr14": 0.7149999482291085,
-    "atr14_pct": 8.401879306683114,
-    "position_in_52w_range_pct": 0.35951358285648083
+    "atr14": 0.6535714013235909,
+    "atr14_pct": 7.294323644431108,
+    "position_in_52w_range_pct": 1.6039820543605425
   },
   "ohlc_2y": [
     {
@@ -1508,6 +1520,14 @@
       "low": 8.38,
       "close": 8.51,
       "volume": 2679500.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 8.46,
+      "high": 8.97,
+      "low": 8.46,
+      "close": 8.96,
+      "volume": 2655300.0
     }
   ],
   "ohlc_1y": [
@@ -2718,6 +2738,14 @@
       "low": 8.38,
       "close": 8.51,
       "volume": 2679500.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 8.46,
+      "high": 8.97,
+      "low": 8.46,
+      "close": 8.96,
+      "volume": 2655300.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "FLY",
-  "fetched_at": "2026-09-04T06:35:34Z",
+  "fetched_at": "2026-09-06T05:12:22Z",
   "_schema": "v2",
-  "current_price": 21.059999465942383,
+  "current_price": 21.670000076293945,
   "info": {
     "symbol": "FLY",
     "longName": "Firefly Aerospace Inc.",
@@ -13,13 +13,13 @@
     "city": "Leander",
     "website": "https://www.fireflyspace.com",
     "fullTimeEmployees": 1409,
-    "marketCap": 3525541632,
-    "enterpriseValue": 2943674880,
+    "marketCap": 3627658496,
+    "enterpriseValue": 3045791744,
     "trailingPE": null,
-    "forwardPE": -12.081784,
-    "priceToSalesTrailing12Months": 12.283561,
-    "enterpriseToRevenue": 10.256,
-    "priceToBook": 2.8621907,
+    "forwardPE": -12.431732,
+    "priceToSalesTrailing12Months": 12.639353,
+    "enterpriseToRevenue": 10.612,
+    "priceToBook": 2.9450939,
     "grossMargins": 0.22920999,
     "operatingMargins": -0.80893,
     "profitMargins": -1.29058,
@@ -32,8 +32,8 @@
     "currentRatio": 2.727,
     "fiftyTwoWeekHigh": 62.17,
     "fiftyTwoWeekLow": 16.0,
-    "averageVolume": 4483120,
-    "averageVolume10days": 2375350,
+    "averageVolume": 4334685,
+    "averageVolume10days": 2190500,
     "beta": null,
     "sharesOutstanding": 167404645,
     "sharesFloat": 108091505,
@@ -97,23 +97,28 @@
     },
     {
       "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -1.5,
-      "eps_estimate": -0.42791,
-      "eps_surprise_pct": -2.5054
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -5.6566,
-      "eps_estimate": -0.45667,
-      "eps_surprise_pct": -11.3866005
+      "eps_actual": -0.5482,
+      "eps_estimate": -0.43791,
+      "eps_surprise_pct": -0.25190002
     }
   ],
   "next_earnings": {
     "date": "2026-11-11",
-    "revenue_low": 82212000,
-    "revenue_high": 95000000
+    "revenue_low": 100000000,
+    "revenue_high": 117325000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 117683000.0,
+      "gross_profit": 23875000.0,
+      "operating_income": -95197000.0,
+      "eps": -0.57,
+      "cash": 459817000.0,
+      "operating_cashflow": -81565000.0,
+      "gross_margin_pct": 20.287552152817316,
+      "yoy_pct": 656.8525307093704
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 80879000.0,
@@ -123,7 +128,7 @@
       "cash": 326179000.0,
       "operating_cashflow": -62545000.0,
       "gross_margin_pct": 21.5890404184028,
-      "yoy_pct": 44.80171873601289
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -157,17 +162,6 @@
       "operating_cashflow": -28082000.0,
       "gross_margin_pct": 25.69297060904238,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 55855000.0,
-      "gross_profit": 2220000.0,
-      "operating_income": -58544000.0,
-      "eps": -0.504939,
-      "cash": 176879000.0,
-      "operating_cashflow": -56537000.0,
-      "gross_margin_pct": 3.974577029809328,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -179,7 +173,7 @@
     "avg_price_target": 41.6,
     "high_price_target": 65.0,
     "low_price_target": 25.0,
-    "current_price": 21.06,
+    "current_price": 21.67,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T18:09:37",
@@ -253,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:12:22Z",
   "news": [
     {
       "date": "2026-09-04T03:18:52Z",
@@ -315,20 +310,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.04036087471771285,
+  "options_implied_move": 0.07383479438702595,
   "technicals": {
-    "ma20": 24.023500061035158,
-    "ma50": 23.390000076293944,
-    "ma200": 27.519199991226195,
-    "rsi14": 38.716207382561514,
+    "ma20": 23.77150011062622,
+    "ma50": 23.331200065612794,
+    "ma200": 27.530149993896483,
+    "rsi14": 42.47463132442366,
     "high_20d": 28.200000762939453,
     "low_5d": 20.35300064086914,
     "low_10d": 20.35300064086914,
     "high_52w": 62.16999816894531,
     "low_52w": 16.0,
-    "atr14": 1.301642826625279,
-    "atr14_pct": 6.180640359133236,
-    "position_in_52w_range_pct": 10.95949678712749
+    "atr14": 1.252999986921038,
+    "atr14_pct": 5.782187275078815,
+    "position_in_52w_range_pct": 12.280702406671697
   },
   "ohlc_2y": [
     {
@@ -2498,17 +2493,17 @@
       "low": 20.7,
       "close": 21.06,
       "volume": 1818200.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 21.52,
+      "high": 21.969,
+      "low": 21.08,
+      "close": 21.67,
+      "volume": 1798500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 44.4,
-      "high": 44.99,
-      "low": 42.275,
-      "close": 42.82,
-      "volume": 771000.0
-    },
     {
       "date": "2025-09-05",
       "open": 42.96,
@@ -4516,6 +4511,14 @@
       "low": 20.7,
       "close": 21.06,
       "volume": 1818200.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 21.52,
+      "high": 21.969,
+      "low": 21.08,
+      "close": 21.67,
+      "volume": 1798500.0
     }
   ],
   "ai_synthesis": null,

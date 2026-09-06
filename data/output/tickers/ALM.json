@@ -1,8 +1,8 @@
 {
   "ticker": "ALM",
-  "fetched_at": "2026-09-04T06:33:50Z",
+  "fetched_at": "2026-09-06T05:10:40Z",
   "_schema": "v2",
-  "current_price": 17.84000015258789,
+  "current_price": 17.56999969482422,
   "info": {
     "symbol": "ALM",
     "longName": "Almonty Industries Inc.",
@@ -13,13 +13,13 @@
     "city": "Dillon",
     "website": "https://almonty.com",
     "fullTimeEmployees": 341,
-    "marketCap": 5061954560,
-    "enterpriseValue": 4732402688,
-    "trailingPE": 81.09091,
-    "forwardPE": 14.333124,
-    "priceToSalesTrailing12Months": 58.995075,
-    "enterpriseToRevenue": 55.154,
-    "priceToBook": 12.898837,
+    "marketCap": 5068606464,
+    "enterpriseValue": 4654512640,
+    "trailingPE": 79.86363,
+    "forwardPE": 14.063107,
+    "priceToSalesTrailing12Months": 59.0726,
+    "enterpriseToRevenue": 54.247,
+    "priceToBook": 12.703619,
     "grossMargins": 0.49807,
     "operatingMargins": 0.37512,
     "profitMargins": 1.2523,
@@ -31,11 +31,11 @@
     "debtToEquity": 147.363,
     "currentRatio": 9.581,
     "fiftyTwoWeekHigh": 24.41,
-    "fiftyTwoWeekLow": 4.1,
-    "averageVolume": 6645391,
-    "averageVolume10days": 6175000,
-    "beta": 1.32,
-    "sharesOutstanding": 283741849,
+    "fiftyTwoWeekLow": 4.151,
+    "averageVolume": 6434125,
+    "averageVolume10days": 5472230,
+    "beta": 1.39,
+    "sharesOutstanding": 288480750,
     "sharesFloat": 218965544,
     "companyOfficers": [
       {
@@ -84,6 +84,12 @@
       "eps_surprise_pct": 0.73330003
     },
     {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.0048,
+      "eps_estimate": 0.02,
+      "eps_surprise_pct": -0.76
+    },
+    {
       "period_end": "2025-12-31T00:00:00",
       "eps_actual": -0.0476,
       "eps_estimate": 0.003,
@@ -94,12 +100,6 @@
       "eps_actual": -0.003,
       "eps_estimate": -0.014,
       "eps_surprise_pct": 0.7857
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.3,
-      "eps_estimate": -0.00975,
-      "eps_surprise_pct": -29.7692
     }
   ],
   "next_earnings": {
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 42989000.0,
+      "gross_profit": 26103000.0,
+      "operating_income": 16126000.0,
+      "eps": 0.62,
+      "cash": 1223136000.0,
+      "operating_cashflow": 21928000.0,
+      "gross_margin_pct": 60.720184233175935,
+      "yoy_pct": 497.73359288097885
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 25400000.0,
       "gross_profit": 13010000.0,
@@ -117,7 +128,7 @@
       "cash": 259853000.0,
       "operating_cashflow": 9678000.0,
       "gross_margin_pct": 51.22047244094489,
-      "yoy_pct": 221.19372787051086
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -137,7 +148,7 @@
       "operating_income": -3148000.0,
       "eps": 0.13,
       "cash": 111588000.0,
-      "operating_cashflow": 10849000.0,
+      "operating_cashflow": 8144000.0,
       "gross_margin_pct": 14.422081656124208,
       "yoy_pct": null
     },
@@ -151,17 +162,6 @@
       "operating_cashflow": -13221000.0,
       "gross_margin_pct": -13.125695216907676,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 7908000.0,
-      "gross_profit": 752000.0,
-      "operating_income": -3505000.0,
-      "eps": -0.13,
-      "cash": 16985000.0,
-      "operating_cashflow": -4401000.0,
-      "gross_margin_pct": 9.509357612544258,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,10 +170,10 @@
     "bullish": 8,
     "neutral": 1,
     "bearish": 0,
-    "avg_price_target": 26.141462,
-    "high_price_target": 33.33406,
-    "low_price_target": 20.125595,
-    "current_price": 17.84,
+    "avg_price_target": 26.088667,
+    "high_price_target": 33.221798,
+    "low_price_target": 20.057816,
+    "current_price": 17.57,
     "recent_rating_changes": [
       {
         "date": "2026-09-02T16:21:39",
@@ -247,6 +247,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:10:40Z",
   "news": [
     {
       "date": "2026-09-02T15:24:10Z",
@@ -309,30 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.15751120941511754,
+  "options_implied_move": 0.13375071376308925,
   "technicals": {
-    "ma20": 16.608250188827515,
-    "ma50": 15.225100116729736,
-    "ma200": 14.897700057029724,
-    "rsi14": 58.73745289694587,
+    "ma20": 16.777750158309935,
+    "ma50": 15.247500095367432,
+    "ma200": 14.953100056648255,
+    "rsi14": 56.76186808288469,
     "high_20d": 19.059999465942383,
     "low_5d": 16.6200008392334,
     "low_10d": 16.6200008392334,
     "high_52w": 24.40999984741211,
     "low_52w": 4.099999904632568,
-    "atr14": 1.1922856739589147,
-    "atr14_pct": 6.683215604042248,
-    "position_in_52w_range_pct": 67.65140466108205
+    "atr14": 1.1287142889840263,
+    "atr14_pct": 6.4240996504770775,
+    "position_in_52w_range_pct": 66.32200801645203
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 1.3837,
-      "high": 1.4175,
-      "low": 1.3793,
-      "close": 1.4175,
-      "volume": 11511.0
-    },
     {
       "date": "2024-09-05",
       "open": 1.404,
@@ -4340,17 +4333,17 @@
       "low": 17.05,
       "close": 17.84,
       "volume": 6016200.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 17.59,
+      "high": 17.93,
+      "low": 17.05,
+      "close": 17.57,
+      "volume": 5965300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 4.2,
-      "high": 4.23,
-      "low": 4.1,
-      "close": 4.22,
-      "volume": 281900.0
-    },
     {
       "date": "2025-09-05",
       "open": 4.19,
@@ -6358,6 +6351,14 @@
       "low": 17.05,
       "close": 17.84,
       "volume": 6016200.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 17.59,
+      "high": 17.93,
+      "low": 17.05,
+      "close": 17.57,
+      "volume": 5965300.0
     }
   ],
   "ai_synthesis": null,

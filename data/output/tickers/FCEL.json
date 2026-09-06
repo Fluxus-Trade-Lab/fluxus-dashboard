@@ -1,8 +1,8 @@
 {
   "ticker": "FCEL",
-  "fetched_at": "2026-09-04T06:35:28Z",
+  "fetched_at": "2026-09-06T05:12:17Z",
   "_schema": "v2",
-  "current_price": 14.670000076293945,
+  "current_price": 14.949999809265137,
   "info": {
     "symbol": "FCEL",
     "longName": "FuelCell Energy, Inc.",
@@ -13,30 +13,30 @@
     "city": "Danbury",
     "website": "https://www.fuelcellenergy.com",
     "fullTimeEmployees": 424,
-    "marketCap": 1172928000,
-    "enterpriseValue": 759711040,
+    "marketCap": 1195315200,
+    "enterpriseValue": 771104256,
     "trailingPE": null,
-    "forwardPE": -14.91369,
-    "priceToSalesTrailing12Months": 7.6096463,
-    "enterpriseToRevenue": 4.929,
-    "priceToBook": 1.2958219,
+    "forwardPE": -15.198341,
+    "priceToSalesTrailing12Months": 7.7548885,
+    "enterpriseToRevenue": 5.003,
+    "priceToBook": 1.3205547,
     "grossMargins": -0.32387,
     "operatingMargins": -1.4139,
     "profitMargins": -1.13602,
     "returnOnEquity": -0.21382,
     "totalCash": 658081984,
-    "totalDebt": 178122000,
+    "totalDebt": 166226000,
     "totalRevenue": 154136992,
-    "freeCashflow": null,
-    "debtToEquity": 17.082,
+    "freeCashflow": -12161500,
+    "debtToEquity": 15.941,
     "currentRatio": 8.673,
     "fiftyTwoWeekHigh": 37.88,
-    "fiftyTwoWeekLow": 3.81,
-    "averageVolume": 11119695,
-    "averageVolume10days": 7452000,
-    "beta": null,
+    "fiftyTwoWeekLow": 4.03,
+    "averageVolume": 11102969,
+    "averageVolume10days": 7193120,
+    "beta": 2.355,
     "sharesOutstanding": 79954196,
-    "sharesFloat": 76077831,
+    "sharesFloat": 76136383,
     "companyOfficers": [
       {
         "name": "Mr. Jason B. Few",
@@ -78,22 +78,16 @@
   },
   "earnings_history": [
     {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": -0.53,
-      "eps_estimate": -0.435,
-      "eps_surprise_pct": -0.2184
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": -0.64,
+      "eps_estimate": -0.39452,
+      "eps_surprise_pct": -0.6222
     },
     {
       "period_end": "2026-01-31T00:00:00",
       "eps_actual": -0.52,
       "eps_estimate": -0.67623,
       "eps_surprise_pct": 0.231
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": -0.9288,
-      "eps_estimate": -1.02847,
-      "eps_surprise_pct": 0.09689999
     },
     {
       "period_end": "2025-07-31T00:00:00",
@@ -104,10 +98,21 @@
   ],
   "next_earnings": {
     "date": "2026-09-02",
-    "revenue_low": 35605000,
-    "revenue_high": 42600000
+    "revenue_low": 41666000,
+    "revenue_high": 51848000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 33001000.0,
+      "gross_profit": -24503000.0,
+      "operating_income": -46660000.0,
+      "eps": -0.64,
+      "cash": 658082000.0,
+      "operating_cashflow": -12204000.0,
+      "gross_margin_pct": -74.2492651737826,
+      "yoy_pct": -29.399054403867964
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 35589000.0,
@@ -117,7 +122,7 @@
       "cash": 373167000.0,
       "operating_cashflow": -27296000.0,
       "gross_margin_pct": -36.328640872179605,
-      "yoy_pct": -4.85750949045608
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +156,6 @@
       "operating_cashflow": -26832000.0,
       "gross_margin_pct": -10.983462764478103,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 37406000.0,
-      "gross_profit": -9438000.0,
-      "operating_income": -35804000.0,
-      "eps": -1.79,
-      "cash": 116061000.0,
-      "operating_cashflow": -29885000.0,
-      "gross_margin_pct": -25.231246324119127,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,10 +164,10 @@
     "bullish": 3,
     "neutral": 3,
     "bearish": 2,
-    "avg_price_target": 22.83333,
+    "avg_price_target": 20.85714,
     "high_price_target": 32.0,
     "low_price_target": 8.0,
-    "current_price": 14.67,
+    "current_price": 14.95,
     "recent_rating_changes": [
       {
         "date": "2026-09-03T12:57:45",
@@ -247,6 +241,7 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:12:17Z",
   "news": [
     {
       "date": "2026-09-03T18:39:18Z",
@@ -309,30 +304,22 @@
       "source": "Proactive"
     }
   ],
-  "options_implied_move": 0.027266530192210557,
+  "options_implied_move": 0.09765886412220402,
   "technicals": {
-    "ma20": 19.18350019454956,
-    "ma50": 21.402000007629393,
-    "ma200": 13.381400003433228,
-    "rsi14": 34.987707077226176,
+    "ma20": 18.90950016975403,
+    "ma50": 21.308000011444094,
+    "ma200": 13.423250002861023,
+    "rsi14": 36.191270796558996,
     "high_20d": 24.3799991607666,
     "low_5d": 13.829999923706055,
     "low_10d": 13.829999923706055,
     "high_52w": 37.880001068115234,
     "low_52w": 3.809999942779541,
-    "atr14": 1.7949998038155692,
-    "atr14_pct": 12.23585408643731,
-    "position_in_52w_range_pct": 31.8755496765702
+    "atr14": 1.737142699105399,
+    "atr14_pct": 11.619683754302255,
+    "position_in_52w_range_pct": 32.69738625926104
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 11.7,
-      "high": 12.6,
-      "low": 11.4,
-      "close": 12.3,
-      "volume": 619170.0
-    },
     {
       "date": "2024-09-05",
       "open": 12.6,
@@ -4339,18 +4326,18 @@
       "high": 14.98,
       "low": 13.83,
       "close": 14.67,
-      "volume": 10059200.0
+      "volume": 10075900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 14.52,
+      "high": 15.09,
+      "low": 14.5,
+      "close": 14.95,
+      "volume": 5844200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 4.05,
-      "high": 4.05,
-      "low": 3.81,
-      "close": 3.92,
-      "volume": 1247700.0
-    },
     {
       "date": "2025-09-05",
       "open": 3.97,
@@ -6357,7 +6344,15 @@
       "high": 14.98,
       "low": 13.83,
       "close": 14.67,
-      "volume": 10059200.0
+      "volume": 10075900.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 14.52,
+      "high": 15.09,
+      "low": 14.5,
+      "close": 14.95,
+      "volume": 5844200.0
     }
   ],
   "ai_synthesis": null,

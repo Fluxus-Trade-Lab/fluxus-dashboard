@@ -1,8 +1,8 @@
 {
   "ticker": "OKTA",
-  "fetched_at": "2026-09-04T06:32:53Z",
+  "fetched_at": "2026-09-06T05:09:41Z",
   "_schema": "v2",
-  "current_price": 170.4199981689453,
+  "current_price": 170.60000610351562,
   "info": {
     "symbol": "OKTA",
     "longName": "Okta, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.okta.com",
     "fullTimeEmployees": 6366,
-    "marketCap": 29792983040,
-    "enterpriseValue": 27546982400,
-    "trailingPE": 102.66265,
-    "forwardPE": 38.922184,
-    "priceToSalesTrailing12Months": 9.695081,
-    "enterpriseToRevenue": 8.964,
-    "priceToBook": 4.2725697,
+    "marketCap": 29824450560,
+    "enterpriseValue": 27578449920,
+    "trailingPE": 103.39394,
+    "forwardPE": 38.963295,
+    "priceToSalesTrailing12Months": 9.705321,
+    "enterpriseToRevenue": 8.974,
+    "priceToBook": 4.277083,
     "grossMargins": 0.78132004,
     "operatingMargins": 0.13292,
     "profitMargins": 0.09632,
@@ -32,9 +32,9 @@
     "currentRatio": 1.525,
     "fiftyTwoWeekHigh": 174.85,
     "fiftyTwoWeekLow": 62.66,
-    "averageVolume": 3380712,
-    "averageVolume10days": 5098990,
-    "beta": 0.762,
+    "averageVolume": 3343882,
+    "averageVolume10days": 5115340,
+    "beta": 0.789,
     "sharesOutstanding": 167139757,
     "sharesFloat": 166665532,
     "companyOfficers": [
@@ -103,11 +103,22 @@
     }
   ],
   "next_earnings": {
-    "date": "2026-08-26",
+    "date": "2026-12-01",
     "revenue_low": 814620000,
     "revenue_high": 828059000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 805000000.0,
+      "gross_profit": 641000000.0,
+      "operating_income": 107000000.0,
+      "eps": 0.65,
+      "cash": 763000000.0,
+      "operating_cashflow": 234000000.0,
+      "gross_margin_pct": 79.62732919254658,
+      "yoy_pct": 10.576923076923084
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 765000000.0,
@@ -117,7 +128,7 @@
       "cash": 762000000.0,
       "operating_cashflow": 277000000.0,
       "gross_margin_pct": 77.77777777777779,
-      "yoy_pct": 11.191860465116289
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 167000000.0,
       "gross_margin_pct": 76.92307692307693,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 688000000.0,
-      "gross_profit": 533000000.0,
-      "operating_income": 39000000.0,
-      "eps": 0.35,
-      "cash": 494000000.0,
-      "operating_cashflow": 241000000.0,
-      "gross_margin_pct": 77.47093023255815,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -173,7 +173,7 @@
     "avg_price_target": 182.36536,
     "high_price_target": 203.0,
     "low_price_target": 127.0,
-    "current_price": 170.42,
+    "current_price": 170.6,
     "recent_rating_changes": [
       {
         "date": "2026-08-28T15:23:33",
@@ -247,10 +247,17 @@
       }
     ]
   },
+  "quarterly_asof": "2026-09-06T05:09:41Z",
   "news": [
     {
-      "date": "2026-09-03T22:10:00Z",
-      "title": "Zscaler Makes Bid to Join the Ranks of AI Winners",
+      "date": "2026-09-04T23:06:56Z",
+      "title": "Okta (OKTA) Stock Trades Near Fair Value But At A Premium On Earnings",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/okta-okta-stock-trades-near-230656012.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-04T14:35:00Z",
+      "title": "Zscaler Stock Falls After Earnings. How It\u2019s Bidding to Join the Ranks of AI Winners.",
       "url": "https://www.barrons.com/articles/zscaler-earnings-stock-price-09a82175?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
@@ -301,38 +308,24 @@
       "title": "Zacks Investment Ideas feature highlights: DICK'S Sporting Goods, Okta and CrowdStrike",
       "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-125400198.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-01T12:20:41Z",
-      "title": "Okta Stock Gets Stunning $200 Price Target Hike on AI Agent Growth",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/okta-stock-gets-stunning-200-122041928.html",
-      "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.0262293160898211,
+  "options_implied_move": 0.05076201459656067,
   "technicals": {
-    "ma20": 150.24749984741212,
-    "ma50": 144.9158006286621,
-    "ma200": 101.4036001586914,
-    "rsi14": 63.27119410175259,
+    "ma20": 151.36149978637695,
+    "ma50": 145.9426007080078,
+    "ma200": 101.85125019073486,
+    "rsi14": 63.35715660361538,
     "high_20d": 174.85000610351562,
     "low_5d": 157.72999572753906,
     "low_10d": 127.5999984741211,
     "high_52w": 174.85000610351562,
     "low_52w": 62.65999984741211,
-    "atr14": 9.949999673025948,
-    "atr14_pct": 5.838516476899647,
-    "position_in_52w_range_pct": 96.05133462203608
+    "atr14": 9.824285779680524,
+    "atr14_pct": 5.758666722273976,
+    "position_in_52w_range_pct": 96.21178379266844
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-04",
-      "open": 74.95,
-      "high": 76.926,
-      "low": 74.3,
-      "close": 75.26,
-      "volume": 2407600.0
-    },
     {
       "date": "2024-09-05",
       "open": 74.92,
@@ -4340,17 +4333,17 @@
       "low": 163.5,
       "close": 170.42,
       "volume": 3320500.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 168.38,
+      "high": 172.95,
+      "low": 167.47,
+      "close": 170.6,
+      "volume": 2339800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-04",
-      "open": 89.38,
-      "high": 90.85,
-      "low": 88.28,
-      "close": 89.74,
-      "volume": 2904500.0
-    },
     {
       "date": "2025-09-05",
       "open": 90.29,
@@ -6358,6 +6351,14 @@
       "low": 163.5,
       "close": 170.42,
       "volume": 3320500.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 168.38,
+      "high": 172.95,
+      "low": 167.47,
+      "close": 170.6,
+      "volume": 2339800.0
     }
   ],
   "ai_synthesis": null,
