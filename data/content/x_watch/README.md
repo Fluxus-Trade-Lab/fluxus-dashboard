@@ -47,7 +47,8 @@
 
 同类情况还有:@ArtofSpecuycky(8/14 刚开会员区)· @thesetupfactory(TSF bundle)· @1ChartMaster(whop 社群)· @Gaurav_Cx10(回复里常说「Check here」指向别处)。
 
-⏸ **要不要抓订阅区,等 Andy 拍。** 涉及三件事:只能抓他本人订阅的那几个 · 要用他登录态浏览器(真实鼠标滚轮,比 API 贵得多)· 付费内容的使用边界(SOP「原话只存不引」在这里尤其硬)。
+✅ **Andy 2026-09-07 批:「对的,抓 jeff 的 sub 内容」** —— 只抓 `@jfsrev` 一个,跟着 60 页测试窗口跑五天,日报单开一节。
+做法、边界、09-07 基线在 [`subs/README.md`](subs/README.md)。**基线读数:墙后 11 只票,公开区完全没出现过的 7 只(64%)。**
 
 ---
 
