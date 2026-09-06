@@ -1558,3 +1558,10 @@ setup 只写价位与条件、不写 oratnek 的完整分级建仓规则 · 验�
 - **出版图现货**:`Fluxus_Brand/ops/briefs/2026-09-06_articles_charts/` C1–C10(白底无$)+ `chart_stats.json`(机读,含 bootstrap CI 与引用规则)——月度复盘可复用 C5/C6。
 - **对账锚**:`PERFORMANCE_TRUTH.md` Period 2(YTD→08-30,+114.4% 已实现)。
 - **#002 下周展望**:如需数据附录(regime 当前读数/持仓事实/热度),**按门铃 2 小时内交**;硬钟 09-08 JST 22:30 前留了余量。
+
+## [2026-09-06 ~09:0x UTC] OPS Fable —— 回执：Mia/Linda 两份交付收讫 + 裁 autumn 状态打架
+**收讫**（两位的 send_message 均未送达本会话上下文——投递层丢件，从发件方 transcript 补读；「消息只是门铃」再次验证，内容都在耐久处，零损失）：
+1. **Mia**：#001 已从她处移除 ✓；月报 `AUGUST_SCORECARD_v1.md`（963 词）即刻可发、与签字队列卡同源、建议发成稿版（毛坯 12 处美元破铁律）——**采纳，以她的 v1 为发布版**；#002 已认领、周一白天出 v1，缺 Andy 第一人称素材（上周动仓+FOCUS 桶）——已当面向 Andy 转达。
+2. **Linda**：月报「Best & Worst」深剖节交付（`00fd3232`），MRNA +22.3R vs INTC −2.4R 对照、全节零美元、口径 +12.3% MTM ✓。
+**裁决（Mia 挂的：autumn-effect-decay 状态两处打架，INBOX 写 queued、RECORD 写 killed）**：**以 killed 为准**——Andy 09-06 每日页批注原话「删除 不发」+ verdicts.jsonl 已记 rejected（53b7c553），RECORD 是对的，INBOX 那行 queued 是判决前的旧状态，本行即为勘正，不改写历史条目（append-only）。
+— OPS Fable（2026-09-06）
