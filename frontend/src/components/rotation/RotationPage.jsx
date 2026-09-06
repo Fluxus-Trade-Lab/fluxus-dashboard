@@ -41,8 +41,12 @@ export default function RotationPage() {
   const stateDates = ladder.data?.history?.['2w']?.dates ?? null
   const shown = names.map((n) => ({ name: n, rel: seriesOf(n)?.rel ?? null, states: seriesOf(n)?.states_2w ?? null }))
 
-  // the first click builds on the three default lines rather than replacing them: a reader adding a fourth name drops the oldest
-  const toggle = (name) => setSelected((s) => { const base = s.length ? s : picks; return base.includes(name) ? base.filter((n) => n !== name) : [...base.slice(-2), name] })
+  // The name just clicked becomes the focus — the orange one — and the others
+  // fall back a place; a fourth drops the one that has been quiet longest.
+  const toggle = (name) => setSelected((s) => {
+    const base = s.length ? s : picks
+    return base.includes(name) ? base.filter((n) => n !== name) : [name, ...base].slice(0, 3)
+  })
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') setSelected([]) }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)

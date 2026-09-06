@@ -25,7 +25,7 @@ function Strip({ board, items, selected, onSelect, t }) {
       {items.map((it, j) => {
         const k = selected.indexOf(it.r.group)
         return (
-          <circle key={it.r.group} cx={dots[j].x.toFixed(1)} cy={dots[j].y.toFixed(1)} r={radius(it[board.key], lo, hi).toFixed(1)}
+          <circle key={it.r.group} cx={dots[j].x.toFixed(1)} cy={dots[j].y.toFixed(1)} r={(radius(it[board.key], lo, hi) + (k === 0 ? 1.5 : 0)).toFixed(1)}
                   fill={k >= 0 ? LINE[k] : 'var(--color-text)'} opacity={k >= 0 || named[j] ? 1 : 0.22}
                   stroke="var(--color-surface)" strokeWidth="1.5" style={{ cursor: 'pointer' }} onClick={() => onSelect(it.r.group)}>
             <title>{it.r.group} · {fmtPct(it[board.key])}</title>

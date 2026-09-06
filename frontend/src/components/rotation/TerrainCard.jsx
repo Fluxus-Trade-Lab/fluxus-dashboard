@@ -113,7 +113,7 @@ function StateBand({ ladder, wk, selected, onSelect }) {
           <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>
           <div className="rot-names">
             {byState[st].length ? byState[st].map((n) => (
-              <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} onClick={() => onSelect(n)}>{n}</button>
+              <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} data-focus={selected[0] === n} onClick={() => onSelect(n)}>{n}</button>
             )) : <span className="rot-meta">—</span>}
           </div>
         </div>

@@ -11,6 +11,18 @@
    the surface. */
 .rot { --rot-s1: #6b635a; --rot-s2: #988f86; --rot-s3: #c0bab0; --rot-s4: #ddd9ce; }
 html.dark .rot { --rot-s1: #d4d2d0; --rot-s2: #98948f; --rot-s3: #63605b; --rot-s4: #3f3c39; }
+/* The three compared themes. Orange is the one you are looking at — the only
+   warm thing on the page, so nothing competes with it; the other two fall back
+   to ink and a quiet grey. Blue and red are NOT used here: they mean
+   stronger/weaker elsewhere in the app, and a theme coloured red merely for
+   being second gets read as weakening (Andy 2026-09-06/07).
+   Measured on each ground: light 15.3 / 3.1 / 5.1 against the paper, adjacent
+   ΔE 16.1 normal and 12.7 deutan; dark 12.8 / 3.6 / 5.7, ΔE 20.5 / 11.9. The
+   first light grey tried, #b0aaa2, was 2.02 — under the 3:1 floor for a
+   graphic, and only caught because Andy asked whether both themes had been
+   tried. Each theme gets its own orange: burnt on paper, bright on ink. */
+.rot { --rot-focus: #a8481a; --rot-quiet: #8f867d; }
+html.dark .rot { --rot-focus: #ef7a3d; --rot-quiet: #7a7773; }
 .rot-card { background: var(--color-surface); border-radius: 24px; padding: 20px 24px 16px; }
 .rot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
 .rot-title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
@@ -43,6 +55,7 @@ html.dark .rot { --rot-s1: #d4d2d0; --rot-s2: #98948f; --rot-s3: #63605b; --rot-
 .rot-nmx { all: unset; cursor: pointer; color: var(--color-text-secondary); border-radius: 4px; padding: 0 4px; }
 .rot-nmx:hover { background: var(--color-hover-bg); }
 .rot-nmx[aria-pressed="true"] { background: var(--color-text); color: var(--color-bg); }
+.rot-nmx[data-focus="true"] { background: var(--rot-focus); color: #fff; }
 .rot-nmx + .rot-nmx::before { content: "·"; color: var(--color-text-muted); margin-right: 6px; }
 .rot-nmx small { color: var(--color-text-muted); font-size: 10px; margin-left: 3px; }
 .rot-nmx:focus-visible { outline: 2px solid var(--color-accent); }

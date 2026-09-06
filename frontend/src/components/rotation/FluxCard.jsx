@@ -74,7 +74,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
               const pts = at.filter((i) => o.r2w[i] != null).map((i) => [x(i), y(o.r2w[i])])
               return pts.length >= 2 ? (
                 <g key={o.name}>
-                  <path d={smoothPath(pts)} fill="none" stroke={LINE[o.j]} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+                  <path d={smoothPath(pts)} fill="none" stroke={LINE[o.j]} strokeWidth={o.j === 0 ? 2.6 : 2} strokeLinejoin="round" strokeLinecap="round" />
                   {pts.map(([cx, cy], k) => <circle key={k} cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="2.5" fill={LINE[o.j]} stroke="var(--color-surface)" strokeWidth="1.2" />)}
                 </g>
               ) : null

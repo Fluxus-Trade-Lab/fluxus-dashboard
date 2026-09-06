@@ -19,8 +19,9 @@ export const STATES = ['Leading', 'Weakening', 'Improving', 'Lagging']
 export const STATE_LADDER = {
   Leading: 'var(--rot-s1)', Weakening: 'var(--rot-s2)', Improving: 'var(--rot-s3)', Lagging: 'var(--rot-s4)',
 }
-/** the three Flux lines: pair + ink — never greys, two greys cannot be told apart (brief §18.9) */
-export const LINE = ['var(--color-took)', 'var(--color-refused)', 'var(--color-text)']
+/** The three compared themes, focus first: orange, ink, quiet grey. Tones and
+ * the measurements behind them live in rotation.css. */
+export const LINE = ['var(--rot-focus)', 'var(--color-text)', 'var(--rot-quiet)']
 /** the Flux y-axis is fixed so adding a line never rescales the others (Andy 2026-09-04: ±20%) */
 export const Y_MAX = 0.20
 /** share of the half-height kept for values past ±Y_MAX — the saturating tail */
