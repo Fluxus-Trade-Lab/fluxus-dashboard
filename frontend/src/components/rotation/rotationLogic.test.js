@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { STRIP_W, STRIP_X0, LABEL_DX, LABEL_MAX } from './PointsCard'
+import { STRIP_W, STRIP_X0, LABEL_DX, LABEL_FS, LABEL_ROOM, squeezeTo, textWidth } from './stripLayout'
 import {
   wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, visibleFrom, countsAt, namesByState,
   R2W_LAG, PRIOR_WEEKS, Y_MAX, Y_TAIL, yFrac, FLUX_STEP, sampleIndices,
@@ -53,11 +53,16 @@ describe('the three boards', () => {
 })
 
 describe('dots on a strip', () => {
-  it('the longest label we carry still fits inside the strip', () => {
-    // 225 = "Physical AI & Humanoid Robotics +10.0%" measured at 12px in the
-    // app font. Move the labels right or narrow the strip and this fails
-    // before anyone sees a name cut in half.
-    expect(STRIP_X0 + LABEL_DX + LABEL_MAX).toBeLessThanOrEqual(STRIP_W)
+  it('a label longer than the room is condensed, never cut', () => {
+    expect(LABEL_ROOM).toBe(STRIP_W - STRIP_X0 - LABEL_DX - 6)
+    expect(squeezeTo(LABEL_ROOM + 30)).toBe(LABEL_ROOM)     // too long: condense to exactly the room
+    expect(squeezeTo(LABEL_ROOM)).toBeUndefined()           // fits: leave the type alone
+    expect(squeezeTo(NaN)).toBeUndefined()                  // unmeasurable: never squeeze on a guess
+  })
+  it('the room holds a typical name at full size, so only the outliers condense', () => {
+    // "Crypto Equities +7.2%" is the median label; without canvas the estimate stands in
+    expect(textWidth('Crypto Equities +7.2%', LABEL_FS)).toBeLessThan(LABEL_ROOM)
+    expect(LABEL_FS).toBe(13)
   })
   it('the labels clear the widest the swarm can spread', () => {
     expect(LABEL_DX).toBeGreaterThan(28 + 10)      // dots reach ~28 either side of the axis

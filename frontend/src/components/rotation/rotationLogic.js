@@ -78,7 +78,7 @@ export const BOARDS = [
   // This column is a difference of two: this week's excess minus the weekly
   // pace of the three weeks before it (Andy 2026-09-06 chose the plain-English
   // set and asked for the RS prefix on all three).
-  { key: 'acc', word: 'rot.turn', title: 'RS This week vs prior 3' },
+  { key: 'acc', word: 'rot.accel', title: 'RS This week vs prior 3' },
   { key: 'long', word: 'rot.persist', title: 'RS Last 13 weeks' },
 ]
 export const WINDOWS = ['rot.win0', 'rot.win1', 'rot.win2', 'rot.win3', 'rot.win4']

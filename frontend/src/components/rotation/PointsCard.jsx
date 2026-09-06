@@ -1,13 +1,6 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import { BOARDS, LINE, fmtPct, radius, pack, spreadLabels } from './rotationLogic'
-
-// The strip sits right of centre and the labels get room for the longest name
-// we actually carry. Measured in the page's own font at 12px, the widest label
-// is "Physical AI & Humanoid Robotics +10.0%" at 225 units; at the old X0 = 70
-// it would have run off the right edge and been cut mid-word the first day that
-// theme reached the top five. Andy 2026-09-06 also asked for the column to move
-// right, away from the word above it.
-const W = 380, H = 620, PAD = { t: 46, b: 20 }, X0 = 96, LABEL_DX = 50, LABEL_MAX = 225
+import { STRIP_W as W, STRIP_H as H, STRIP_PAD as PAD, STRIP_X0 as X0, LABEL_DX, LABEL_FS, squeezeTo, textWidth } from './stripLayout'
 
 /**
  * MOMENTUM & ACCELERATION · 两种动能和加速度 · 点 — three vertical axes,
@@ -41,17 +34,17 @@ function Strip({ board, items, selected, onSelect, t }) {
       })}
       {labels.map(({ item: { it }, y: ly }) => {
         const k = selected.indexOf(it.r.group)
+        const squeeze = squeezeTo(textWidth(`${it.r.group} ${fmtPct(it[board.key])}`))
         return (
-          <text key={it.r.group} x={X0 + LABEL_DX} y={(ly + 4).toFixed(1)} style={{ cursor: 'pointer', fontSize: 12, fill: k >= 0 ? LINE[k] : 'var(--color-text)' }} onClick={() => onSelect(it.r.group)}>
-            {it.r.group} <tspan className="rot-mono" style={{ fill: 'var(--color-text-muted)', fontSize: 11 }}>{fmtPct(it[board.key])}</tspan>
+          <text key={it.r.group} x={X0 + LABEL_DX} y={(ly + 4).toFixed(1)} textLength={squeeze} lengthAdjust={squeeze ? 'spacingAndGlyphs' : undefined}
+                style={{ cursor: 'pointer', fontSize: LABEL_FS, fill: k >= 0 ? LINE[k] : 'var(--color-text)' }} onClick={() => onSelect(it.r.group)}>
+            {it.r.group} <tspan className="rot-mono" style={{ fill: 'var(--color-text-muted)', fontSize: 12 }}>{fmtPct(it[board.key])}</tspan>
           </text>
         )
       })}
     </svg>
   )
 }
-
-export { W as STRIP_W, X0 as STRIP_X0, LABEL_DX, LABEL_MAX }
 
 export default function PointsCard({ boards, selected, onSelect }) {
   const { t } = useLanguage()
