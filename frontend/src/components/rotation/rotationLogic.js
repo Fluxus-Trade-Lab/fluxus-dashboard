@@ -50,6 +50,23 @@ export function yFrac(v, max = Y_MAX, tail = Y_TAIL) {
 }
 /** two-week relative strength = ten sessions */
 export const R2W_LAG = 10
+/** Flux plots one point a week, not one a day (Andy 2026-09-06: 「选每周好」).
+ *
+ * The quantity is unchanged — it is the same two-week strength TSF plots, and
+ * theirs is this line sampled every ten sessions (brief §18.25). Measured over
+ * the three themes on screen that day, the daily line changed direction 24.7
+ * times per line; weekly 4.3; every three sessions 9.0 for the same distortion
+ * (3.1pp vs 3.5pp against the unplotted days). Three-day sampling bought half
+ * the calm at the full price, and its points drift across weekdays where a
+ * five-session step lands on the same one. */
+export const FLUX_STEP = 5
+
+/** the plotted sessions: every `step` back from the last, never earlier than `lag` */
+export function sampleIndices(n, lag = R2W_LAG, step = FLUX_STEP) {
+  const out = []
+  for (let i = n - 1; i >= lag; i -= step) out.unshift(i)
+  return out
+}
 /** the prior three weeks (rs_1w_1m) as weeks, for a per-week pace */
 export const PRIOR_WEEKS = 3.2
 /** `word` is a translation key — the cards speak one language at a time */

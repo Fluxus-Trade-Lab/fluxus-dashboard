@@ -1,19 +1,21 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { LINE, STATE_LADDER, Y_MAX, Y_TAIL, R2W_LAG, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
+import { LINE, STATE_LADDER, Y_MAX, Y_TAIL, R2W_LAG, FLUX_STEP, sampleIndices, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
 
 /**
  * FLUX · 轨迹 · 线 — up to three themes' two-week relative strength against
- * the benchmark, every session, over the ladder's ten-week calendar. The
+ * the benchmark over the ladder's ten-week calendar, one point a week. The
  * y-axis is fixed at ±20% so a line added never moves the others; past that
  * the scale saturates instead of clipping — a line off the scale rides just
  * inside the frame and the hover still reads the true value. The lines
  * are blue, red, ink; the benchmark's zero line carries its name in the same
  * column as theirs. Under each line, its two-week state per session in the
  * grey ladder. No markers — a sudden week is read from the hover (Andy
- * 2026-09-03: 突变记号不要了).
+ * 2026-09-03: 突变记号不要了). One point a week rather than one a day: the
+ * daily line was true and unreadable three at a time (brief §18.25), and the
+ * hover snaps to a plotted week so the number never disagrees with the line.
  */
 export default function FluxCard({ shown, dates, stateDates, benchmark, picked, loading, onSelect }) {
   const { t } = useLanguage()
@@ -26,15 +28,18 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
   const x = (i) => PAD.l + ((i - lag) * (W - PAD.l - PAD.r)) / Math.max(1, drawn - 1)
   const midY = PAD.t + (H - PAD.t - PAD.b) / 2, halfH = (H - PAD.t - PAD.b) / 2
   const y = (v) => midY - yFrac(v) * halfH
+  const at = sampleIndices(n, lag, FLUX_STEP)
   const lines = shown.map((o, j) => ({ ...o, j, r2w: r2wSeries(o.rel) })).filter((o) => o.rel?.length)
   const ends = spreadLabels(
-    [{ name: benchmark, j: -1, v: 0 }, ...lines.map((o) => { const last = [...o.r2w].reverse().find((v) => v != null); return { name: o.name, j: o.j, v: last ?? null } }).filter((e) => e.v != null)],
+    [{ name: benchmark, j: -1, v: 0 }, ...lines.map((o) => ({ name: o.name, j: o.j, v: [...at].reverse().map((i) => o.r2w[i]).find((v) => v != null) ?? null })).filter((e) => e.v != null)],
     (e) => y(e.v) + 3.5, 14,
   )
   const indexAt = (e) => {
     const svg = svgRef.current; const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY
     const p = pt.matrixTransform(svg.getScreenCTM().inverse())
-    return Math.max(lag, Math.min(n - 1, lag + Math.round((p.x - PAD.l) / ((W - PAD.l - PAD.r) / Math.max(1, drawn - 1)))))
+    const raw = lag + Math.round((p.x - PAD.l) / ((W - PAD.l - PAD.r) / Math.max(1, drawn - 1)))
+    // snap to a plotted week, so the readout never names a day the line does not pass through
+    return at.reduce((best, i) => (Math.abs(i - raw) < Math.abs(best - raw) ? i : best), at[0] ?? lag)
   }
   const stateIndex = (d) => (stateDates ? stateDates.indexOf(d) : -1)
   const tipX = hov == null ? 0 : hov - lag > drawn / 2 ? x(hov) - 178 : x(hov) + 8
@@ -66,8 +71,13 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
           {dates.map((d, i) => (i >= lag && (i - lag) % 10 === 0 ? <text key={d} className="rot-mono" x={x(i).toFixed(1)} y={H - 8} textAnchor="middle">{d.slice(5)}</text> : null))}
           <g clipPath={`url(#${clip})`}>
             {lines.map((o) => {
-              const pts = o.r2w.map((v, i) => (v == null || i < lag ? null : [x(i), y(v)])).filter(Boolean)
-              return pts.length >= 2 ? <path key={o.name} d={smoothPath(pts)} fill="none" stroke={LINE[o.j]} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" /> : null
+              const pts = at.filter((i) => o.r2w[i] != null).map((i) => [x(i), y(o.r2w[i])])
+              return pts.length >= 2 ? (
+                <g key={o.name}>
+                  <path d={smoothPath(pts)} fill="none" stroke={LINE[o.j]} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+                  {pts.map(([cx, cy], k) => <circle key={k} cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="2.5" fill={LINE[o.j]} stroke="var(--color-surface)" strokeWidth="1.2" />)}
+                </g>
+              ) : null
             })}
           </g>
           {ends.map(({ item: e, y: ly }) => (e.j < 0

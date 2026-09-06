@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, visibleFrom, countsAt, namesByState,
-  R2W_LAG, PRIOR_WEEKS, Y_MAX, Y_TAIL, yFrac,
+  R2W_LAG, PRIOR_WEEKS, Y_MAX, Y_TAIL, yFrac, FLUX_STEP, sampleIndices,
 } from './rotationLogic'
 
 const row = (group, o = {}) => ({ group, kind: 'theme', rs_0_1w: 0.02, rs_1w_1m: 0.03, excess_3m: 0.1, ...o })
@@ -81,6 +81,20 @@ describe('the Flux line and its windows', () => {
     const d = smoothPath([[0, 0], [10, 5], [20, 0], [30, 5]])
     expect(d.startsWith('M0.0 0.0')).toBe(true)
     expect((d.match(/ C/g) || []).length).toBe(3)
+  })
+  describe('weekly sampling', () => {
+    it('plots one point a week, anchored on the latest session', () => {
+      expect(FLUX_STEP).toBe(5)
+      const at = sampleIndices(60)
+      expect(at[at.length - 1]).toBe(59)                    // the newest session is always drawn
+      expect(at[0]).toBeGreaterThanOrEqual(R2W_LAG)         // never a point without a whole window behind it
+      at.slice(1).forEach((i, k) => expect(i - at[k]).toBe(5))
+      expect(at.length).toBe(10)
+    })
+    it('a series too short for a whole window plots nothing rather than a wrong point', () => {
+      expect(sampleIndices(10)).toEqual([])
+      expect(sampleIndices(11)).toEqual([10])
+    })
   })
   it('calendar windows count back fourteen days from the latest session', () => {
     const dates = ['2026-08-03', '2026-08-10', '2026-08-17', '2026-08-24', '2026-08-31', '2026-09-02']
