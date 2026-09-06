@@ -136,6 +136,20 @@ KNOWN_UNWIRED: dict[str, tuple[str, str, str]] = {
         "而它们是这份数据自己就能证明的自相矛盾，不需要任何外部真值",
     ),
 
+    # 第三条「作者当晚给自己的工具打的欠条」，理由与上面两条相同，同样说在明处。
+    # 它也**在跑**：`pipeline/tests/test_audit_stranded.py::test_real_repo_reports_a_
+    # denominator_and_never_silently_empty` 拿真仓库跑它，而 tests.yml 是 on: push /
+    # pull_request（2026-09-07 逐行核过，不是转抄上一条的说法）。这张表数的是**生产调用**，
+    # 而它没有：唯一该调它的位置是每早 Joe 生成晨报「待合分支」那一节的地方 ——
+    # 那不是夜间组的文件。W2 会在有人接上的那天逼我删掉这条。
+    "audit_stranded": (
+        "OPS Fable / 出晨报「待合分支」那节的那条线", "2026-09-07",
+        "「待合分支 · 建议合 y」这句话连写三晚，靠的是 ahead-by-N，而 ahead-by-N 分不清"
+        "「main 缺这段」和「main 已经用更好的版本盖过这段」：2026-09-07 实测 9 条分支里"
+        "只有 1 条（fbclock）是真滞留，其余 6 条是过期；其中 fix/alex-stockbee-s2-prev-volume "
+        "若照那句话合进去是**回退** —— main 已在 09-05 把它那个 grep 源码的测试换成真跑一遍的版本",
+    ),
+
     "audit_ci_test_coverage": (
         "DATA ALEX / whoever owns .github/workflows", "2026-09-05",
         "it is the only reader of what the wired pytest run leaves out: 614 "
