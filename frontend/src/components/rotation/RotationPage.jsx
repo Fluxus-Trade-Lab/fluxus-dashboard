@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import HowToRead from '../HowToRead'
+import { useLanguage } from '../../i18n/LanguageContext'
 import { useGroups } from '../../hooks/useGroups'
 import { useThemeLadder } from '../../hooks/useThemeLadder'
 import { boardsOf, defaultPicks, Y_MAX, R2W_LAG, PRIOR_WEEKS } from './rotationLogic'
@@ -26,6 +27,7 @@ import './rotation.css'
  * lines are the 30 themes; the plane counts every group the ladder measures.
  */
 export default function RotationPage() {
+  const { t } = useLanguage()
   const { themes, date, benchmark, loading, error } = useGroups()
   const ladder = useThemeLadder()
   const [selected, setSelected] = useState([])
@@ -60,7 +62,7 @@ export default function RotationPage() {
 
   return (
     <div className="rot space-y-5">
-      <PageHeader group="market" title="Rotation"
+      <PageHeader group="market" title={t('nav.rotation')}
         meta={[`vs ${benchmark} · ${date} · ${rows.length} themes${ladderDate ? ` · ladder ${ladderDate}` : ''}`, <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
 
       <div className="rot-grid2">

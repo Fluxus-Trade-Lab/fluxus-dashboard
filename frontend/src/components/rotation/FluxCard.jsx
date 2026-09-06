@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import { LINE, STATE_LADDER, Y_MAX, Y_TAIL, R2W_LAG, FLUX_STEP, sampleIndices, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
+import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, FLUX_STEP, sampleIndices, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
 
@@ -9,7 +9,9 @@ const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
  * the benchmark over the ladder's ten-week calendar, one point a week. The
  * y-axis is fixed at ±20% so a line added never moves the others; past that
  * the scale saturates instead of clipping — a line off the scale rides just
- * inside the frame and the hover still reads the true value. The lines
+ * inside the frame and the hover still reads the true value — the band that
+ * marked where the bend starts is gone (Andy 2026-09-07), so the ±20% gridline
+ * is the only thing that says it. The lines
  * are blue, red, ink; the benchmark's zero line carries its name in the same
  * column as theirs. Under each line, its two-week state per session in the
  * grey ladder. No markers — a sudden week is read from the hover (Andy
@@ -59,9 +61,6 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`two-week relative strength vs ${benchmark}`}
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
           <defs><clipPath id={clip}><rect x={PAD.l - 4} y={PAD.t - 4} width={W - PAD.l - PAD.r + 8} height={H - PAD.t - PAD.b + 8} /></clipPath></defs>
-          {/* the saturating band, tinted so the bend past ±20% is visible without a sentence */}
-          <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={(halfH * Y_TAIL).toFixed(1)} fill="var(--color-text)" opacity=".045" />
-          <rect x={PAD.l} y={(midY + halfH * (1 - Y_TAIL)).toFixed(1)} width={W - PAD.l - PAD.r} height={(halfH * Y_TAIL).toFixed(1)} fill="var(--color-text)" opacity=".045" />
           {[-Y_MAX, -Y_MAX / 2, 0, Y_MAX / 2, Y_MAX].map((v) => (
             <g key={v}>
               <line x1={PAD.l} x2={W - PAD.r} y1={y(v).toFixed(1)} y2={y(v).toFixed(1)} stroke={v === 0 ? 'var(--color-border)' : 'var(--color-border-light)'} strokeWidth={v === 0 ? 1 : 0.6} />

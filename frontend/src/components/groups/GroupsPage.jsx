@@ -262,9 +262,16 @@ export default function GroupsPage() {
 
   return (
     <div className="space-y-5">
-      <PageHeader group="market" title="Themes"
+      <PageHeader group="market" title="Themes (old)"
         meta={[`vs ${benchmark} · ${date} · ${rows.length} themes of ${themes.length} groups`,
                <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
+      {/* Off the rail since 2026-09-07 — the route stays so links that were
+          sent still land somewhere that says what it is. */}
+      <div className="text-[13px] rounded-[14px] px-4 py-3"
+           style={{ background: 'var(--color-surface)', color: 'var(--color-text-secondary)' }}>
+        这是旧的 Themes 页，已从导航下线，只保留链接可达。现在的 Themes 在{' '}
+        <a href="#/rotation" className="underline" style={{ color: 'var(--color-text)' }}>#/rotation</a>。
+      </div>
       <Reading text={readThemes(windowed, winKey)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}

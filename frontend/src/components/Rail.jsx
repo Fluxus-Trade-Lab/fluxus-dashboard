@@ -62,10 +62,11 @@ export const NAV_GROUPS = [
       // rail a table of contents instead of a set of destinations. The
       // routes still resolve — #/breadth and #/correction — so links that
       // were sent keep working.
-      { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
-      // Rotation: the chart-first funnel over the same groups (Andy 2026-09-03,
-      // "五件都留…进代码"). Beside Themes, not instead of it — that page stays.
-      { key: 'rotation', short: 'ROT', hash: '#/rotation' },
+      // Themes IS the Rotation page from 2026-09-07 (Andy: "让 theme 页面下线,
+      // 注明是旧的 theme, 让 rotation 页面改名为 theme"). The old Themes is off
+      // the rail but its route still resolves, and it says so at the top of
+      // itself — links that were sent keep landing somewhere honest.
+      { key: 'rotation', short: 'THM', hash: '#/rotation' },
       { key: 'rs-live', short: 'LIV', hash: '#/rs-live' },
       // RS Rotation and RS Leaderboard both merged into Themes — the first
       // was one of its layers, the second is what the whole page became. Both
