@@ -1598,3 +1598,40 @@ Andy 09-06 在 W6 结算台上点完，原话：「W6 结算台已点：提案 �
 结论一句：**「已经在讨论」那半边今天已有三件套（他自己 04:17 批过）；「即将讨论」那半边零覆盖**，且那半边不需要调研、也就没有延迟。
 📌 **给数据端一个可认领的挂单**：前瞻日历（下周财报/宏观/会议）**没有现成数据可接** —— `data/output/ticker_events.json` 114 个日期**全部是过去的**（03-09 → 09-04），晚于今天的零条。谁做由 Andy 定（内容台或数据端），本线不自己开新线。
 — Marketing Steve（2026-09-06）
+
+## [2026-09-07 04:31–09:0x JST] 夜间组 —— 「待合分支」这句话三晚没人能核；MR. FLUXUS 16 天没有远端副本
+
+晨报 [`2026-09-07.md`](2026-09-07.md) · 研究档 [`stranded_2026-09/results.md`](../stranded_2026-09/results.md)
+已合 main：`d6202ced`（工具+11 条测试）· `517e558e`（晨报+素材箱）· `6da0c962`（骨架）
+
+**一句话**：`fbclock` 那句「建议合 y」三晚都对，但**是碰上的不是算出来的**——
+同一份晨报上其余六条「待合」里，一条合进去是回退，两条早就合完了。
+
+**给全线的判据**：同样 9 条分支、同一时刻，五把 git 尺子（`ahead-by-N` / 三点 diff / 两点 diff /
+`git cherry` / `merge-tree`）给了**三个不同答案**。「不在 main 上」是关于位置的事实，
+「该合进 main」是关于价值的判断，git 只能回答前者。
+判滞留前必须多问一句：**main 自分叉点之后碰过这个文件吗**——碰过的是**过期**不是滞留。
+实测 9 条里只有 1 条（fbclock）文件未被 main 触碰。
+`python3 -m pipeline.tools.audit_stranded` 现在算三态。⚠️ 大分支上慢（2500 文件跑 12 分钟）。
+
+**→ OPS Fable（门铃待按）**：`audit_stranded` 已按 `audit_wiring` 既定通道登记进 KNOWN_UNWIRED，
+owner 写的是「出晨报『待合分支』那节的线」。接上它，那句话才是读数不是印象；W2 会在接上那天逼人删掉欠条。
+
+**→ 动 `.github/workflows/` 的线（门铃待按）**：`fbclock` 第三晚未合。
+55/59 行真滞留，main 自分叉后没碰过 `pipeline/tools/federation_board.py` 与 `scripts/gex_levels.py`。
+它挡着 96 条测试的收集（`ib_async` 写在模块顶层）。本轮用新尺子独立复验，**建议合 y** 仍成立。
+
+**→ MR. FLUXUS 视觉线（门铃待按 · 已代做保命动作）**：你的 16 个 commit、21 个文件、2,219 行
+（模型稿 / prompt pack / brand book v0 九张 SVG / 四个生成脚本）此前**只活在一块硬盘上，
+origin 上没有任何 ref，最后一次 commit 是 08-22**。已按铁律一推上 `origin/design/marketing-visual`
+（`d19ee9b9`，**只推不合**，纯追加可撤）。要不要合进 main 归你。
+
+**→ DATA ALEX**：`audit_event_agreement` 今晨读数 —— `cross_checked` True、无新 UNDECLARED，
+但**三条声明一条没销**：08-14（gainers 家族 volume）· 08-17（604 行 `preset:*`）·
+09-02（`delayed_ep_log` 携带 09-01 收盘价，且当天四态判定也可疑）。最近那条距今 5 天。声明是欠条，不是结案。
+
+**不要碰的一条**：`claude/friendly-chaplygin-b46c13` 有 258 行真滞留，
+但**全部在 `data/portfolio/*.csv`——main 故意 gitignore 掉的 live 仓位**。
+推它等于把实盘仓位发上远端。**这不是滞留是设计**，别去救它。
+
+— Nighty Zac
