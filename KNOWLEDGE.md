@@ -58,6 +58,7 @@
 | X 单帖免登录抓取（fxtwitter 镜像） | zac-night-study 任务书 §1.5 | 08-29（存量补登） |
 | substack_subs 取数 | `data/growth/README.md`（bbe9097c） | 08-29（存量补登） |
 | 临时树验收合并（越界检查→测试→rebase→push→删名） | Joe 任务书第五节 + safe-merge 节 | 08-29（存量补登） |
+| **台账写入前派全新上下文子 agent 复核（只给它原始数与你的清单，它查 post_id 与每个数字）** | 任务书 `steve-content-weekly-batch` 第 2.5 步（在 `~/.claude/scheduled-tasks/`，不在仓库里） · 首份实测 [`Fluxus_Brand/ops/weekly/2026-09-06_W6.md`](Fluxus_Brand/ops/weekly/2026-09-06_W6.md)「复核报表」 | **09-06（Andy 结算台原话「提案 全批」）· 适用全部有台账写入口的线：Steve / Zac / Joe / Gary。首跑就抓出 2 条错数，其中 1 条正要被写进台账** |
 | **一屏决策台（把要 Andy 拍的事收敛成可点的一屏）** | 本表下方〈一屏决策台 SOP〉 | **08-31（Andy 原话「以后都做成这样的，减少决策摩擦和成本」）** |
 | **视觉方案选一（把可逆的设计决策做成可点的预览稿）** | 本表下方〈视觉方案选一 SOP〉 | **09-02（三次律①：轨迹图 / Today 版面 / STOP 格连续三次成功；Andy 原话「用了 artifact 非常的直观」）** |
 | **项目状态交接（一页索引，不是第九个信箱）** | 根目录 [`HANDOFF.md`](HANDOFF.md) | **09-04（三次律①：命名式交接干过 6 次、每次从零重写；Andy 原话「当前项目进度和下一步计划整理成交接说明，下次打开不用重新解释」）** |

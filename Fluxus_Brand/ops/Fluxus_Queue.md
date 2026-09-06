@@ -17,22 +17,22 @@
 > ✅ **投递路径已换掉，不再是 Typefully**：08-31 Andy 选 A（「入口太多」），日推改成 09:25 备稿写 `data/content/today_draft.md`、
 > **10:07 老板早报把 C1 正文内联** —— 在早报里直接复制即可。W5 挂的「日推第一行印可复制原文」那条门铃**已解决**（解法比提案大：改的是整条链，不是第一行）。
 
-编排：主张 → 幽默 → 疼 → 教学 → 自嘲 → 重话 → 温。
-中英轮换 ✓ · 好笑的没排一起 ✓ · 一条只有中文圈能懂（#139）✓ · 一条承认自己毛病（#29）✓ · 一条让人疼（#127）✓
-**7 条全部未在任何历史队列出现过**（已核对 08-04→08-10、08-10→08-16 两批共 13 条）。
+~~编排：主张 → 幽默 → 疼 → 教学 → 自嘲 → 重话 → 温。~~ —— **09-06 Andy 踢掉 5 条后，编排作废**，剩 主张（EN）+ 疼（中）两条。
+~~**7 条全部未在任何历史队列出现过**~~（核对仍成立，但本周实发只剩 2 条，见下）。
 
 | # | 日期 | 语言 | 文案（直接粘） | 出处 |
 |---|---|---|---|---|
 | 1 | 09-07 一 | EN | Discipline is not a personality trait. It's a design problem. | [#77](../voice/Fluxus_Own_Lines.md:451) |
-| 2 | 09-08 二 | 中 | 大赚的日子，我妈说：低调点，晚饭多加一盘肉。亏了买菜钱，唠叨两句。这是我见过最好的风控。 | [#139](../voice/Fluxus_Own_Lines.md:789) |
-| 3 | 09-09 三 | EN | Borrowed conviction was never conviction. | [#76](../voice/Fluxus_Own_Lines.md:446) |
-| 4 | 09-10 四 | 中 | 底部的仓位永远比消息先到。 | [#97](../voice/Fluxus_Own_Lines.md:559) |
-| 5 | 09-11 五 | EN | I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me. | [#29](../voice/Fluxus_Own_Lines.md:174) |
-| 6 | 09-12 六 | 中 | 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。 | [#127](../voice/Fluxus_Own_Lines.md:721) |
-| 7 | 09-13 日 | EN | It stays a mess. Then one day you do the exact same thing with the exact same system, and it just works. | [#24](../voice/Fluxus_Own_Lines.md:145) |
+| 2 | 09-12 六 | 中 | 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。 | [#127](../voice/Fluxus_Own_Lines.md:721) |
 
-> 第 7 条排在 09-13 仍是故意的 —— 周日是周信发布日，温的那条给读者做落点。
-> （原本对着 09-06 的 #002；**#002 已改为 09-07 周一出 v1**，见 INBOX Writer Mia 09-06 行。）
+**⚠️ 本周只有 2 条，不是 7 条。** Andy 09-06 在结算台上逐条踢掉了 5 条：**09-08 #139 · 09-09 #76 · 09-10 #97 · 09-11 #29 · 09-13 #24**。
+留下的两条：一条英文主张（#77）、一条中文疼的（#127）。**中英各一，编排的起伏在 2 条上做不出来，本周不装作有编排。**
+
+**被踢的 5 条不作废，退回弹药库**（它们从未发出过，和 08-04 / 08-10 两批同性质）：
+#139 妈妈那条 · #76 borrowed conviction · #97 底部的仓位 · #29 micromanage 自嘲 · #24 it stays a mess。
+**下次挑之前先问一句**：这 5 条被踢是因为内容，还是因为「7 条太多」？我没问过他，别当成内容判决。
+
+> 原本排在 09-13 的温的那条（#24）已被踢掉，周日的落点空着——#002 周信本身就是那天的落点（09-07 周一出 v1，见 INBOX Writer Mia 09-06 行）。
 
 **冷嘲备选 3 条**（[`../voice/Fluxus_Ammo_Library.md`](../voice/Fluxus_Ammo_Library.md)，全是单句版，可独立成帖）：
 
