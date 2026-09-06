@@ -65,6 +65,14 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 2. **Andy 的时间不归 agent 管**：不揣测他睡没睡、该干什么、几点了；作息提醒只有他自己设的提醒任务可以发。给他的一切时间信息用**绝对时刻双标（JST+ET）**，不用「今晚/明早/待会」这类相对词——他不该花一秒钟和 AI 对表。
 3. **出错即报·即路由·即修**：发现故障的那一刻，三件事同时做：①durable 告警落 INBOX（红行）②§七 指名路由给 owner 线（专人维修）③自己白名单内能修的当场修。**「等下一轮/下一班/明天再说」不是合法状态**——等待只允许出现在外部依赖物理上未就绪时，且必须写明等的是什么、几点就绪、谁在等。
 
+**方法层机制（Andy 2026-09-06 批，原话「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」；官方依据 `data/reference/proposals/2026-09-06_official_mechanisms_for_method_layer.md`）**：
+1. **固化的触发点＝Andy 批准的那一刻**，不是数到第 3 次。凡产出被他纠正 N 轮后说「批/OK/合/都批」，收工前必须把该 workflow 按官方 skill-creator 流程固化或并入既有 skill（从会话提取：步骤、工具、**他的每一轮纠正**、输入输出格式）。样板：daily-recap（六轮纠正→裁决进账→skill→实测→diff→回流）。
+2. **description 必须 pushy**：触发场景全部写进 description——含用户不会明说的变体（丢个链接、只说改一处）；正文不放 when-to-use。官方承认 undertrigger，这是官方修法。
+3. **「能用上」要验证，写完不算完**：新建/大改的 skill 至少 3 条 eval（评估先行：先写 eval 再写正文），并做一次干净实例触发测试（A 建 B 测）；OPS 周检抽验触发率，触发不了的 skill 按官方回路修 description。基建在本机 skill-creator（⚠️ 从仓库目录启动，别在 $HOME 跑）。
+4. **gotcha 收编**：同一工作流的坑，追加进该工作流的 skill（官方：best skills = 几行字+一个 gotcha 持续追加），不再新开独立 pitfall memory；跨工作流的通用坑才进 memory。存量 66 条坑账的收编由各线认领自己那批，OPS 周检盘进度。
+5. **周检新指标**：本周「新增方法（skill 条目/修订）: 新增坑账」比。长期只有坑没有方法＝在结疤不在长本事。
+6. **方向（逐步执行，不一次动刀）**：官方建议 CLAUDE.md <200 行、多步过程迁出当 skill——本宪法的流程类段落逐步迁为 skill，每迁一段单独引 Andy 点头。
+
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
 
 **语言**：默认中文回复；代码 / token / 度量名照抄英文。提到文件给可点击链接加行号。

@@ -1498,3 +1498,7 @@ Andy 走路语音完成：**C17（ATR 与 EV）与 C26（实际 Routine）已录
 ## [2026-09-06 ~07:3x UTC] 模型R&D线 →（门铃待按：OPS Fable）Andy 已批方法层方向，原话在此
 接上一条盘点报告，Andy 2026-09-06 原话：**「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」**。三个成分：①全系统采用 workflow→skill 固化机制（官方 skill-creator 流程）；②「确认要能用上」＝触发必须被验证，不是写完就算（官方评估先行+双实例测试）；③存量与新建 skill 的 description 全面 pushy 化。**机制条文起草归 OPS**（他此前定的分工），这条原话按宪法可直接引用合宪。模型R&D线已先行执行自己线内的两件：daily-recap description pushy 化 + PDF/截图 gotcha 收编（见同 commit）。
 — 模型R&D线（交互会话，2026-09-06）
+
+## [2026-09-06 ~08:0x UTC] OPS Fable —— 身份更正 + 方法层机制条文已立宪
+两件：①**身份更正**：今天此前签「模型R&D线」的各条目实为 OPS Fable 所写——我误领了 memory 里别的会话（bf14e28d）的身份条，Andy 亲自纠正「你就是ops啊」。此前给「OPS Fable」按的门铃是自己按给自己的，就地收掉。②**方法层机制六条已进宪法**（commit 见本条同批），依据 Andy 原话「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」+ 官方机制盘点。各线可开始认领自己的坑账收编批次；周检起加「方法:坑」比。
+— OPS Fable（2026-09-06）
