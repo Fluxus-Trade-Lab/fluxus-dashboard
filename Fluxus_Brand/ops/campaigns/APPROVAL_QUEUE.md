@@ -61,5 +61,6 @@
   · **需你定的事**：本卡零 CTA（比"停在订阅"更保守），无需你在 CTA 上拍板；主要待你决定的是**发不发、什么时候发、要不要等 Mia/Vera 有 routine 再配图**
   · 顺带（不用回）：research 源文件 `data/research/gold_autumn_2026-09/results.md` 开头「一句话」摘要段写"16 个九月只有 4 个是涨"，与下方详表及本卡全篇统一引用的"4/15"不一致，疑为源文件自身笔误——已挂门铃给 Nighty Zac 线核对，不影响本卡数字（本卡统一用与详表一致的 15）
   · 判定全文：[`RECORD.md`](2026-09-06_autumn-effect-decay/RECORD.md) `## review` 节 round 3（终轮）
+  ↳ ❌ **整卡否（Andy 2026-09-06 日推会话，原话「olden September, silver October这个话题删除」）**——毙的是**题目**不是某一条文案，flagship 与 V1–V4 全部作废，**本包零发布**。RECORD `status=killed`，decision 节已转录；判例 3 行已入 `voice/verdicts.jsonl`。**本产线第一条题目级否决**（09-04 那条毙的是写法）。
 
 ## 已批

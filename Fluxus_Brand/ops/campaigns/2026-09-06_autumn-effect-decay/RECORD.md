@@ -1,6 +1,6 @@
 # CAMPAIGN: autumn-effect-decay · 2026-09-06
 
-status: **queued**
+status: **killed**
 rounds: 3
 
 > 云端夜间产线，2026-09-06 05:36 JST 开工（上一张卡 `2026-09-03_noise-with-structure` 已过闸 queued，非断点，本卡为新开）。
@@ -329,7 +329,17 @@ round 2 的自查节（distribution 节"round 2 补做"）**只检查了①，�
 ---
 
 ## decision
-（owns：Andy 本人——待批）
+（owns：Andy 本人 · 以下由 Steve 线**逐字转录**，不代他解释）
+
+**2026-09-06 · ❌ 整卡毙 · status=killed · 零发布。**
+
+> Andy 原话：「olden September, silver October这个话题删除」
+
+**毙的是题目，不是某一条文案。** 四条变体（flagship / V1 / V2 / V3 / V4）与配图占位一并作废，不再改稿、不再进队列、不另找发布窗口。判例已入 `Fluxus_Brand/voice/verdicts.jsonl`（3 行，含 flagship / V2 / V4 全文前 50 字）。
+
+**这是本产线第一条「题目级」否决**——09-04 的 rejected 毙的是一个变体的写法（「太ai slop了」），本条毙的是选题。本卡 signal 站的取用理由写的是「五条候选里四条都占的只有它」（外部权威源 + 判断→兑现链 + 读者可复用动作 + 日历贴合），**四条都占仍被毙**：选题闸的四问量的全是稿子的性质，没有一问量「这个题目 Andy 本人想不想跟自己的名字绑在一起」。金九银十／季节性老话这一族此后不再进 signal 站。
+
+**未被点名的部分（可换题复用，不随本卡作废）**：判断→兑现链这个结构（V2 的骨架）· 「能不能变红钩」反问（V4 的钩）· 「验证回收钩」🆕 已登记进 `brain/hooks.md`，本卡虽死，该型仍算首用未测。
 
 ## performance
 （T+24h/T+72h 读数 → keep/test/stop 提案，待发布后回填）
