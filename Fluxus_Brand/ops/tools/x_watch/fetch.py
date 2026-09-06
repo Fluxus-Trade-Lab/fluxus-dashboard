@@ -24,6 +24,8 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
 API = "https://api.twitterapi.io"
+QPS_SLEEP = 5.2          # 免费档硬限：每 5 秒 1 个请求（实测 429 原文如此）
+_last = [0.0]
 LIST_ID = "2083551367399182754"          # Copybook（Andy 09-06 指定）
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "data" / "content" / "x_watch"
@@ -55,13 +57,17 @@ def key() -> str:
 def get(path: str, params: dict, k: str, tries: int = 3) -> dict:
     url = f"{API}{path}?{urlencode(params)}"
     for i in range(tries):
+        wait = QPS_SLEEP - (time.time() - _last[0])
+        if wait > 0:
+            time.sleep(wait)
+        _last[0] = time.time()
         try:
             with urlopen(Request(url, headers={"X-API-Key": k}), timeout=45) as r:
                 return json.loads(r.read())
         except HTTPError as e:
             body = e.read()[:300].decode("utf-8", "replace")
             if e.code in (429, 500, 502, 503) and i < tries - 1:
-                time.sleep(3 * (i + 1)); continue
+                time.sleep(QPS_SLEEP * (i + 2)); continue
             sys.exit(f"HTTP {e.code} on {path}: {body}")
         except Exception as e:
             if i < tries - 1:
@@ -189,15 +195,31 @@ def main() -> None:
             for r in sorted(rs, key=lambda x: x["dt"]):
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
+    # mentions.csv 是 upsert，不是 append —— 同一个 ET 日期会被抓两次（两班制：
+    # 02:00 JST 的睡前速报抓前半天，13:30 JST 的主班重抓全天），append 会把同一批
+    # post_id 追加两遍。key = (date, ticker, handle, post_id)。
+    # ⚠️ 已存在的行**整行保留** —— stance 列是人工回填的，重抓不许把它抹掉。
+    HDR = ["date", "ticker", "handle", "post_id", "views", "bookmarks", "stance"]
     mp = OUT / "mentions.csv"
-    new = not mp.exists()
-    with mp.open("a", newline="", encoding="utf-8") as f:
+    existing, seen = [], set()
+    if mp.exists():
+        with mp.open(newline="", encoding="utf-8") as f:
+            for x in csv.DictReader(f):
+                existing.append([x.get(c, "") for c in HDR])
+                seen.add((x.get("date"), x.get("ticker"), x.get("handle"), x.get("post_id")))
+    added = 0
+    for r in rows:
+        for tk in r["tickers"]:
+            k = (r["et_date"], tk, r["h"], str(r["id"]))
+            if k in seen:
+                continue
+            seen.add(k)
+            existing.append([r["et_date"], tk, r["h"], r["id"], r["views"], r["bookmarks"], ""])
+            added += 1
+    with mp.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        if new:
-            w.writerow(["date", "ticker", "handle", "post_id", "views", "bookmarks", "stance"])
-        for r in rows:
-            for tk in r["tickers"]:
-                w.writerow([r["et_date"], tk, r["h"], r["id"], r["views"], r["bookmarks"], ""])
+        w.writerow(HDR)
+        w.writerows(existing)
 
     mins = (datetime.now(timezone.utc) - started).total_seconds() / 60
     lp = OUT / "runlog.csv"
@@ -213,7 +235,7 @@ def main() -> None:
                     since.date(), until.date()])
 
     print(f"成员 {len(mem)} · 拉到 {len(raw)} 条({pages} 页)· 窗口内 {len(rows)} 条 / "
-          f"{len({r['h'] for r in rows})} 人 · {mins:.1f} 分")
+          f"{len({r['h'] for r in rows})} 人 · mentions 新增 {added} 行 · {mins:.1f} 分")
     if raw and len(rows) < len(raw) * 0.1:
         print("⚠️ 窗口内留下的不到一成 —— 检查 --since/--until 是不是设窄了")
     if oldest and oldest.astimezone(ET) > since:
