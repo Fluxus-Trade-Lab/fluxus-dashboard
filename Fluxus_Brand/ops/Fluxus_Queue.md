@@ -10,11 +10,12 @@
 
 ---
 
-## 本周队列（2026-08-31 → 09-06）· 状态：待灌
+## 本周队列（2026-09-07 → 09-13）· 状态：整批顺延自 08-31
 
-> ⚠️ **灌之前先读 [W5 周报](weekly/2026-08-30_W5.md) 的「下周主线」。** Typefully 被要求灌 5 次、0 次发生；
-> 同一周 Andy 手动发了 6 条。**瓶颈不是「不想发」，是「要先打开一个他从没登录过的工具」。**
-> 建议改走每早 08:06 日推第一行直接递可复制原文（挂单已开，见周报「门铃待按」）。**下面 7 条两种走法通用。**
+> 📌 **W6 结算（09-06）：08-31 那批 7 条一条都没发出去，整批改期，编排不动、不重挑。**
+> 先例：08-17 也是「不重新挑」——重挑一遍不会让它更容易发出去。
+> ✅ **投递路径已换掉，不再是 Typefully**：08-31 Andy 选 A（「入口太多」），日推改成 09:25 备稿写 `data/content/today_draft.md`、
+> **10:07 老板早报把 C1 正文内联** —— 在早报里直接复制即可。W5 挂的「日推第一行印可复制原文」那条门铃**已解决**（解法比提案大：改的是整条链，不是第一行）。
 
 编排：主张 → 幽默 → 疼 → 教学 → 自嘲 → 重话 → 温。
 中英轮换 ✓ · 好笑的没排一起 ✓ · 一条只有中文圈能懂（#139）✓ · 一条承认自己毛病（#29）✓ · 一条让人疼（#127）✓
@@ -22,15 +23,16 @@
 
 | # | 日期 | 语言 | 文案（直接粘） | 出处 |
 |---|---|---|---|---|
-| 1 | 08-31 一 | EN | Discipline is not a personality trait. It's a design problem. | [#77](../voice/Fluxus_Own_Lines.md:451) |
-| 2 | 09-01 二 | 中 | 大赚的日子，我妈说：低调点，晚饭多加一盘肉。亏了买菜钱，唠叨两句。这是我见过最好的风控。 | [#139](../voice/Fluxus_Own_Lines.md:789) |
-| 3 | 09-02 三 | EN | Borrowed conviction was never conviction. | [#76](../voice/Fluxus_Own_Lines.md:446) |
-| 4 | 09-03 四 | 中 | 底部的仓位永远比消息先到。 | [#97](../voice/Fluxus_Own_Lines.md:559) |
-| 5 | 09-04 五 | EN | I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me. | [#29](../voice/Fluxus_Own_Lines.md:174) |
-| 6 | 09-05 六 | 中 | 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。 | [#127](../voice/Fluxus_Own_Lines.md:721) |
-| 7 | 09-06 日 | EN | It stays a mess. Then one day you do the exact same thing with the exact same system, and it just works. | [#24](../voice/Fluxus_Own_Lines.md:145) |
+| 1 | 09-07 一 | EN | Discipline is not a personality trait. It's a design problem. | [#77](../voice/Fluxus_Own_Lines.md:451) |
+| 2 | 09-08 二 | 中 | 大赚的日子，我妈说：低调点，晚饭多加一盘肉。亏了买菜钱，唠叨两句。这是我见过最好的风控。 | [#139](../voice/Fluxus_Own_Lines.md:789) |
+| 3 | 09-09 三 | EN | Borrowed conviction was never conviction. | [#76](../voice/Fluxus_Own_Lines.md:446) |
+| 4 | 09-10 四 | 中 | 底部的仓位永远比消息先到。 | [#97](../voice/Fluxus_Own_Lines.md:559) |
+| 5 | 09-11 五 | EN | I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me. | [#29](../voice/Fluxus_Own_Lines.md:174) |
+| 6 | 09-12 六 | 中 | 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。 | [#127](../voice/Fluxus_Own_Lines.md:721) |
+| 7 | 09-13 日 | EN | It stays a mess. Then one day you do the exact same thing with the exact same system, and it just works. | [#24](../voice/Fluxus_Own_Lines.md:145) |
 
-> 第 7 条排在 09-06 是故意的 —— 那天是 **#002 周信发布日**，温的那条给读者做落点。
+> 第 7 条排在 09-13 仍是故意的 —— 周日是周信发布日，温的那条给读者做落点。
+> （原本对着 09-06 的 #002；**#002 已改为 09-07 周一出 v1**，见 INBOX Writer Mia 09-06 行。）
 
 **冷嘲备选 3 条**（[`../voice/Fluxus_Ammo_Library.md`](../voice/Fluxus_Ammo_Library.md)，全是单句版，可独立成帖）：
 

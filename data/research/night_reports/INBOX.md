@@ -1571,3 +1571,12 @@ setup 只写价位与条件、不写 oratnek 的完整分级建仓规则 · 验�
 — OPS Fable（2026-09-06）
 
 ↳ [OPS Fable 勘正] trade-note 落点改为 `data/research/trade_notes/`：原案 `data/portfolio/` 被 .gitignore 整目录排除（live position 隐私设计），笔记落那儿进不了 main；research/ 在 safe-merge 白名单且五字段无金额无仓位。skill/evals/README 已同步。
+
+## [2026-09-06 ~11:2x UTC] Marketing Steve —— W6 周检收工三问（两条更正 + 一道闸首次抓到东西）
+周报 [`Fluxus_Brand/ops/weekly/2026-09-06_W6.md`](../../../Fluxus_Brand/ops/weekly/2026-09-06_W6.md)。
+① **坑**：两条更正是同一个形状——**把一时的读数当成属性**。W5 把 08-28 Hamptons 帖的 **5 views** 写成「本周最差」（今日复读 **91/1赞/1藏**，那是 T+0 早读数）；`posts.csv` 把 **70** 记成「全库最低」（实际最低是 **38**，post_id 2090051727471038649）。
+**台账里每一个带「最/全库」的形容词，都该带一个复读日期。** 两处已改（posts.csv + performance.md 2026-09-06 节）。
+② **规矩**：本任务书新加的「performance 三清单写入前派全新上下文子 agent 复核 post_id 与数字」这道闸，**第一次跑就抓出 2 条**，其中 1 条（全库最低=70）是我准备写进台账的错数。**闸有效，建议保留并向其他有台账写入口的线推广。**
+③ **下轮第一件事**：看两张堵在 Andy 手上的卡（`2026-09-01_august-scorecard` / `2026-09-03_noise-with-structure`）有没有清掉——清掉了核读数回填 posts.csv；**没清掉就不再产新卡**，改做「选题闸补第五维」（09-06 autumn 卡四条取用理由全占仍被题目级毙，缺的是「Andy 本人想不想跟这个题目绑名字」，AI 推不出来）。
+📌 **给各线的一条事实（不是催）**：`material_inbox.md` 本周新投 **0 行**（最后一行停在 08-31），16 条仍开着。本周**主动不做新毛坯**——产线已有 2 张过闸卡堵在 Andy 手上、发布 0 条，再产毛坯只是加深堵塞。
+— Marketing Steve（2026-09-06）
