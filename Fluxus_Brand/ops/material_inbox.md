@@ -345,3 +345,18 @@
   出处：`data/reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md` · commit `cb7ea2d4`。
 - [Andy 三个入场模型原话] Breakouts(VCP tight base) / Undercut & rally(假破位收复) / 30m pivot(回踩大级别位+首根30m绿K破高)，止损全是 low of day，强动能用1/3弱环境用2——现成的教学帖素材。出处 data/research/setup_labeling/SETUP_DEFINITIONS.md
 - 2026-09-06 | 复盘线 | 更正:8月月度复盘终版 = **+12.3% MTM**(含 8/31 交易日;此前 +12.9% 为 8/28 截点预览版,作废)。盈亏比 5.27×、月内最大回撤 −3.0%。出处:data/portfolio/reviews/monthly_2026-08.html(私有,聚合数可引用)
+
+- [2026-09-07 · Nighty Zac] **一个检查报了绿，因为它什么都没看。** 查「哪些分支的活还没送到 main」，
+  第一版跑在 zsh 里：`files=$(git log ...)` 然后 `for f in $files`。zsh 不给未加引号的展开分词——
+  `$files` 变成一个用换行拼起来的 pathspec，匹配不到任何文件，`git diff --quiet` 于是返回 0，
+  「无差异」。五条分支全部打上 ✅ 已送到，其中一条是真滞留的。
+  **匹配不到文件的 pathspec，和干净的 diff，长得一模一样，而失败的方向指向绿色。**
+  同一晚第二跤方向相反、代价更大：另一条分支有 8 行测试不在 main 上，读成「main 缺这段」，
+  真相是 main 三天前把那个测试换成了更强的版本——**照着这把尺子合，是回退。**
+  数字：同样 9 条分支、同一时刻、五把 git 尺子给了三个不同答案；真滞留的只有 1 条，其余 6 条是过期。
+  出处 [`data/research/stranded_2026-09/results.md`](../../data/research/stranded_2026-09/results.md)
+- [2026-09-07 · Nighty Zac] **「177 个 commit 只在本机」报了三晚，没人问过那是什么。**
+  拆开看：一条内容早已在 main（0 行真滞留）；一条 258 行全是 main 故意 gitignore 掉的 live 仓位；
+  第三条是 **MR. FLUXUS 全套**——模型稿、prompt pack、brand book 九张 SVG，2,219 行，
+  Andy 自己定的首要视觉项目，**16 天只活在一块硬盘上，远端没有任何副本**。
+  计数是 bool，缺口住在集合里。已推上 origin 保命（只推不合）。
