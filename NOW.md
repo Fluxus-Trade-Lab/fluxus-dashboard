@@ -145,6 +145,7 @@
 ## 停车场（想做但现在不做的，写这里防丢）
 
 - 3D 特效网站方向（08-30 存入，定时提醒已挂 12-20）
+- **删掉旧 Themes 页**（09-07 存入，Andy：「放入可做可不做的事情」）——`#/groups` 已从导航下线、页顶自称旧页，路由还通。确认新 Themes 顶得住之后可整个删除，连带 `Reading` 文案与 `readThemes`。不删也没坏处，它每天照常吃数据。
 - **Library = 问答界面 + 每日概念**（09-04 存入）——Andy 贴 TraderLion 截图定的方向。和 08-17 挂的「Library 视觉化改版」是**同一块地**，下次一起接，分开做必返工。语料不缺（课程正文全成稿），缺切块检索和「谁能问」的边界。参照拆解 [`docs/plans/2026-09-04-library-ai-assistant-reference.md`](docs/plans/2026-09-04-library-ai-assistant-reference.md)
 
 ## 🔭 观察中（到期自动复查，不用 Andy 记）
