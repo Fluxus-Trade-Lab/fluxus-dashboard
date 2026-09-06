@@ -19,6 +19,14 @@
 - `data/research/night_reports/*.md` — Zac 晨报（含 NULL 结果）；`INBOX.md` = 收件与裁决
 - `data/growth/weekly/*.md` + `metrics.csv` — 会员/收入的量化事实（PII 在 `private/` 不入库）
 
+## 方法层（怎么做对；动手前先查这里，别重新发明）
+> Andy 2026-09-06：「是应该找到怎么做然后进行学习，而不是仅仅把什么做错了放到记忆里面去。」
+> 三次律①（同类活成功干到第 3 次＝固化）过去没有落脚点，这一层就是它的落脚点。教训层管「别再犯」，这一层管「照着做」。
+- memory/`method_*` — 跨会话的标准动作（画图 · 取数 · 写稿…），索引在 `MEMORY.md` 的 Methods 节
+- `.claude/skills/` — 已经固化成 skill 的：`fable-voice`（中文文风账）· `shuorenhua` · `lieflat-charts`
+- `data/reference/DATA_RELIABILITY.md` — 数据层的标准动作（与教训层的事故档互为正反面）
+- `Fluxus_Brand/ops/campaigns/roles/*.md` — 内容线各角色的标准动作
+
 ## 教训层（防坑账；同形状事故先查这里）
 - memory/`MEMORY.md` 索引 + pitfall_* — 各会话共享的防坑账
 - `data/reference/incidents/` — 事故档（else 重绑/测试写真树/群发系列…）
