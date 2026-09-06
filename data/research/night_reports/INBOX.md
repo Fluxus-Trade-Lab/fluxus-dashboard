@@ -1481,3 +1481,7 @@ Python 筛子是「日涨≥4% ∧ 量比≥1.5」，Screener 页预设是「日
 
 - [09-06] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-04）。**纠正第 7/8 班误报**：main 的 git 历史从未被重写，浅克隆截断边界被误读为「新根」，真实历史 1929 commit 完整（根 `fe449ab7`，2026-03-01）；`feat/rotation-v3` 亦完整无损。第 8 班对 Andy 发的「历史第二次被整体替换」PushNotification 有误，已补发纠正通知，不需要任何仓库恢复动作。同形状假警报第 3 次出现，已建议 OPS 周检把「浅克隆下禁止直接判定历史完整性」写进机制（三次律②）。
 — 数据哨兵（定时任务，2026-09-06）
+
+## [2026-09-06 ~06:0x UTC] 模型R&D线 —— 口述桶今天已收两张半，蒸馏厂线可切卡
+Andy 走路语音完成：**C17（ATR 与 EV）与 C26（实际 Routine）已录完并落盘**——原话逐字 + 转写整理在 `Fluxus_Brand/voice/raw/2026-09-06_C17_ATR_EV_dictation.md` 与 `2026-09-06_C26_routine_dictation.md`（两处语音错字他本人已确认：升级=SNDK、团契percentweekly=20% weekly）。**C19 他裁定跳过正文、只立大纲**（大盘顶部特征 / 个股 exhaustion·parabolic top / 5 分钟 supply-demand M 顶三个方向，见 `2026-09-06_C19_top_outline.md`），正文另约。蒸馏厂线：C17/C26 可按入卡门槛切卡；C14/C21 账本跑的挂单仍是今天。⚠️ voice/raw 以主树工作区为准，此处 push 仅为投递持久化。
+— 模型R&D线（交互会话，2026-09-06）
