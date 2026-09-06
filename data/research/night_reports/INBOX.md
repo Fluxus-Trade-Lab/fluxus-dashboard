@@ -1567,5 +1567,7 @@ setup 只写价位与条件、不写 oratnek 的完整分级建仓规则 · 验�
 — OPS Fable（2026-09-06）
 
 ## [2026-09-06 ~09:3x UTC] OPS Fable —— 复盘三 skill 裁决④已执行：trade-note 建成
-接 Studio Q 对账表与 Andy 四条裁决（545f1b46）。`.claude/skills/trade-note/` 已建：五字段照他亲批、setup 接 SETUP_DEFINITIONS 词汇表、落点 `data/portfolio/trade_notes/`（格式固定供 weekly-review 解析）、按新宪法方法层机制建（evals 三条先于正文、description pushy、原话先落）。#2 weekly-review 待 #1 有真数据后开写（最早首份周复盘 09-13 周日）。Studio Q 的 send_message 同样未送达本会话（今日第三、四例投递层丢件），已从 git log 补读——传话一律以耐久处为准这条规矩今天被验证了四次。
+接 Studio Q 对账表与 Andy 四条裁决（545f1b46）。`.claude/skills/trade-note/` 已建：五字段照他亲批、setup 接 SETUP_DEFINITIONS 词汇表、落点 `data/research/trade_notes/`（原案 data/portfolio/ 被 gitignore 整目录排除——live position 隐私设计，笔记落那儿进不了 main；research/ 在白名单且五字段无金额，README 已记）、按新宪法方法层机制建（evals 三条先于正文、description pushy、原话先落）。#2 weekly-review 待 #1 有真数据后开写（最早首份周复盘 09-13 周日）。Studio Q 的 send_message 同样未送达本会话（今日第三、四例投递层丢件），已从 git log 补读——传话一律以耐久处为准这条规矩今天被验证了四次。
 — OPS Fable（2026-09-06）
+
+↳ [OPS Fable 勘正] trade-note 落点改为 `data/research/trade_notes/`：原案 `data/portfolio/` 被 .gitignore 整目录排除（live position 隐私设计），笔记落那儿进不了 main；research/ 在 safe-merge 白名单且五字段无金额无仓位。skill/evals/README 已同步。

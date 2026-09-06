@@ -1,6 +1,6 @@
 ---
 name: trade-note
-description: 把 Andy 对某一笔交易的想法落进仓库（data/portfolio/trade_notes/）。凡他讲到任何一笔具体交易的进出理由、悔手、复盘感想——「记一笔」「这笔我当时看到…」「那笔就是 fomo 了」「XX 那单应该…」，甚至只是聊天里带过一句对某票某单的评价——都用本 skill 当场落档，不许让那句话只活在对话框或 Discord 里。周复盘（weekly-review）靠读这些条目才能选出「本周最好的一笔」，漏记一条它就瞎一格。
+description: 把 Andy 对某一笔交易的想法落进仓库（data/research/trade_notes/）。凡他讲到任何一笔具体交易的进出理由、悔手、复盘感想——「记一笔」「这笔我当时看到…」「那笔就是 fomo 了」「XX 那单应该…」，甚至只是聊天里带过一句对某票某单的评价——都用本 skill 当场落档，不许让那句话只活在对话框或 Discord 里。周复盘（weekly-review）靠读这些条目才能选出「本周最好的一笔」，漏记一条它就瞎一格。
 when_to_use: 记一笔、trade note、交易笔记、这笔交易我、那单、复盘某笔、对持仓/已平仓的任何第一人称评价。不触发：盘面评论（那归 daily-recap 的原话收集）、组合层面数字（归 tracker）。
 ---
 
@@ -18,7 +18,7 @@ when_to_use: 记一笔、trade note、交易笔记、这笔交易我、那单、
 
 ## 落点与格式
 
-`data/portfolio/trade_notes/YYYY-MM.md`（按开仓月归档，append-only），一条一块：
+`data/research/trade_notes/YYYY-MM.md`（按开仓月归档，append-only），一条一块：
 
 ```markdown
 ## MU · 2026-08-28 · Breakout
