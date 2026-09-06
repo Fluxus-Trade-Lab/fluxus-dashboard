@@ -812,3 +812,64 @@ def regime_attribution(trades, breadth_path="data/output/breadth.json"):
         })
     return {"rows": out, "matched": matched, "total": total,
             "span": f"{dates[0]} → {dates[-1]}"}
+
+
+def trade_deep_dive(trade, equity_by_date, capital, breadth_path="data/output/breadth.json"):
+    """Everything a per-trade post-mortem needs, computed once (for the monthly
+    report's best/worst section). Percent/R only — liftable into public copy."""
+    import json as _json
+    from pipeline.tickers.ohlc_store import load_local_ohlc, trade_technicals
+    sign = 1 if trade.direction == "long" else -1
+    bars = load_local_ohlc(trade.ticker)
+    tech = trade_technicals(bars, trade.entry_date, trade.direction) if bars else None
+
+    def _eq_at(ds):
+        if not equity_by_date:
+            return capital
+        prior = [d for d in equity_by_date if d <= ds]
+        return equity_by_date[max(prior)] if prior else capital
+    eq0 = _eq_at(trade.entry_date)
+    size_pct = trade.orig_qty * trade.entry / eq0 * 100 if trade.orig_qty else None
+    risk_pct = trade.risk / eq0 * 100 if trade.risk else None
+
+    score = None
+    try:
+        doc = _json.load(open(breadth_path))
+        hist = {h["date"]: h["score"] for h in doc["conditions"]["history"]}
+        prior = [d for d in sorted(hist) if d <= trade.entry_date[:10]]
+        score = hist[prior[-1]] if prior else None
+    except Exception:  # noqa: BLE001
+        pass
+
+    path = None
+    capture = available = None
+    legs = []
+    if bars:
+        idx = -1
+        for k, b in enumerate(bars):
+            if b["date"] <= trade.entry_date[:10]:
+                idx = k
+            else:
+                break
+        jdx = idx
+        for k, b in enumerate(bars):
+            if b["date"] <= trade.exit_date[:10]:
+                jdx = k
+        if idx >= 0:
+            base = bars[idx]["close"]
+            end = min(len(bars), jdx + 11)
+            path = [(bars[k]["date"], (bars[k]["close"] / base - 1) * 100 * sign)
+                    for k in range(idx, end)]
+            available = max(p for _, p in path)
+            captured = (trade.avg_exit / trade.entry - 1) * 100 * sign if trade.avg_exit else None
+            capture = (captured / available * 100) if (captured is not None and available and available > 2) else None
+            for lg in trade.legs:
+                day = sum(1 for d, _ in path if d < lg.date)
+                legs.append({"date": lg.date, "day": day,
+                             "pct": (lg.price / trade.entry - 1) * 100 * sign,
+                             "qty_share": lg.qty / trade.orig_qty * 100 if trade.orig_qty else None})
+    return {"t": trade, "tech": tech, "bars": bars, "score": score,
+            "size_pct": size_pct, "risk_pct": risk_pct,
+            "avg_exit_pct": (trade.avg_exit / trade.entry - 1) * 100 * sign if trade.avg_exit else None,
+            "available_pct": available, "capture_pct": capture,
+            "path": path, "legs": legs}

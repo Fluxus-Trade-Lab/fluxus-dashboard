@@ -175,6 +175,10 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
     opens = _mtm.open_positions(trades, prices, m_end, m_end_eq) if prices else []
     sq = an.system_quality(closed) if len(closed) >= 10 else None
     regime = an.regime_attribution(closed)
+    dd_best = dd_worst = None
+    if closed:
+        dd_best = an.trade_deep_dive(max(closed, key=lambda x: x.pnl), eqbd, cap)
+        dd_worst = an.trade_deep_dive(min(closed, key=lambda x: x.pnl), eqbd, cap)
 
     # previous month's MTM return, for the vs-last-month card
     import datetime as _dt
@@ -199,6 +203,8 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
         "deployment": _both(lambda d: rc.deployment_curve(closed, month_eqbd, prev_eq, dark=d)),
         "cases": _both(lambda d: rc.case_studies_grid(cs, load_local_ohlc, dark=d)) if cs else None,
         "regime": _both(lambda d: rc.regime_attribution_chart(regime, dark=d)) if regime else None,
+        "dd_best": _both(lambda d: rc.trade_deep_dive_chart(dd_best, dark=d)) if dd_best else None,
+        "dd_worst": _both(lambda d: rc.trade_deep_dive_chart(dd_worst, dark=d)) if dd_worst else None,
     }
 
     doc = {
@@ -219,7 +225,8 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
             "open_n": len(opens), "end_equity": m_end_eq, "prev_ret": prev_ret,
         },
         "opens": opens, "rdist": rdist, "by_dir": by_dir, "by_tk": by_tk, "cs": cs,
-        "size_stats": ps_stats, "sq": sq, "regime": regime, "charts": charts,
+        "size_stats": ps_stats, "sq": sq, "regime": regime,
+        "dd_best": dd_best, "dd_worst": dd_worst, "charts": charts,
     }
     return doc, stem
 

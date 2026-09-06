@@ -154,6 +154,48 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <p class="cap">These positions were still open on the last trading day of the month — valued at the fill-anchored as-traded close, the same basis as the equity curve. Their unrealized P&amp;L is already inside the month return above.</p>
 </section>{% endif %}
 
+{# ---------- Best & worst trade deep dive (month scope) ---------- #}
+{% if d.scope == 'month' and d.dd_best %}
+<section>
+<p class="lbl">本月两笔 · Best &amp; worst trade — the full anatomy</p>
+{% for dd, tag, tone in [(d.dd_best, '最佳 · Best', 'pos'), (d.dd_worst, '最差 · Worst', 'neg')] %}
+{% if dd %}{% set t = dd.t %}
+<div style="margin-bottom:26px">
+<h2 style="font-size:16px;margin:0 0 8px"><span class="{{ tone }}">{{ tag }}</span> —
+<span class="mono">{{ t.ticker }}</span> {{ t.direction }} ·
+{{ t.entry_date[:10] }} → {{ t.exit_date[:10] }} · {{ t.hold_days }}d · {{ t.legs | length }} leg{{ 's' if (t.legs | length) != 1 }}</h2>
+{% set key = 'dd_best' if tone == 'pos' else 'dd_worst' %}
+{% if d.charts[key] and d.charts[key].light %}<div class="chart">{{ chart(d.charts[key], tag) }}</div>{% endif %}
+<div class="two" style="margin-top:12px">
+<table><thead><tr><th colspan="2">结果 · Outcome</th></tr></thead><tbody>
+<tr><td>R multiple</td><td class="r {{ tone }}">{{ t.R | signR }}</td></tr>
+<tr><td>平均出场(距入场)</td><td class="r">{{ dd.avg_exit_pct | pct(1) if dd.avg_exit_pct is not none else '—' }}</td></tr>
+<tr><td>可得行情(至出场+10日最高)</td><td class="r">{{ dd.available_pct | pct(1) if dd.available_pct is not none else '—' }}</td></tr>
+<tr><td>移动捕获率</td><td class="r">{{ dd.capture_pct | pct0(0) if dd.capture_pct is not none else '—' }}</td></tr>
+<tr><td>仓位(÷入场日权益)</td><td class="r">{{ dd.size_pct | pct0(1) if dd.size_pct is not none else '—' }}</td></tr>
+<tr><td>风险 1R(÷入场日权益)</td><td class="r">{{ dd.risk_pct | pct0(2) if dd.risk_pct is not none else '—' }}</td></tr>
+</tbody></table>
+<table><thead><tr><th colspan="2">入场时 · At entry</th></tr></thead><tbody>
+<tr><td>市场状态分(0–100)</td><td class="r">{{ dd.score | num(0) if dd.score is not none else '—' }}</td></tr>
+{% if dd.tech %}
+<tr><td>均线结构</td><td class="r mono">{{ dd.tech.stack }}</td></tr>
+<tr><td>距 20EMA(ATR 倍数)</td><td class="r">{{ dd.tech.ext_atr | num(1) if dd.tech.ext_atr is not none else '—' }}</td></tr>
+<tr><td>ATR(14) 占价</td><td class="r">{{ dd.tech.atr_pct | pct0(1) if dd.tech.atr_pct is not none else '—' }}</td></tr>
+<tr><td>入场日跳空</td><td class="r">{{ dd.tech.gap_pct | pct(1) if dd.tech.gap_pct is not none else '—' }}</td></tr>
+{% else %}<tr><td colspan="2" class="muted">本地 OHLC 不足,技术面缺</td></tr>{% endif %}
+</tbody></table>
+</div>
+{% if dd.legs %}
+<table style="margin-top:10px"><thead><tr><th>出场腿</th><th class="r">第几天</th><th class="r">距入场</th><th class="r">卖出占原仓</th></tr></thead>
+<tbody>{% for lg in dd.legs %}<tr><td>{{ lg.date }}</td><td class="r">d{{ lg.day }}</td>
+<td class="r {{ 'pos' if lg.pct>=0 else 'neg' }}">{{ lg.pct | pct(1) }}</td>
+<td class="r">{{ lg.qty_share | pct0(0) if lg.qty_share is not none else '—' }}</td></tr>{% endfor %}</tbody></table>
+{% endif %}
+</div>
+{% endif %}{% endfor %}
+<p class="cap">本节仅用 % 与 R(可直接摘入对外稿)。捕获率口径:实拿 ÷ 入场→出场+10 个交易日内最高收盘;风险与仓位一律 ÷ 入场当日权益。</p>
+</section>{% endif %}
+
 {# ---------- RR chart + position sizes (aligned bar-for-bar) ---------- #}
 {% if d.charts.rr %}
 <section>

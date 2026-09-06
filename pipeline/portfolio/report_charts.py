@@ -592,3 +592,49 @@ def regime_attribution_chart(attr, dark: bool = False):
     ax2.spines["right"].set_color(GREEN)
     ax2.axhline(0, color=p["zero"], lw=0.8)
     return _b64(fig, p["face"])
+
+
+def trade_deep_dive_chart(dd, dark: bool = False):
+    """One trade's story: % path from entry with entry/sell markers.
+    Percent-only — safe to lift into public copy."""
+    if not dd or not dd.get("path"):
+        return None
+    p = _pal(dark)
+    path = dd["path"]
+    xs = list(range(len(path)))
+    ys = [v for _, v in path]
+    t = dd["t"]
+    win = (t.pnl or 0) > 0
+    line = GREEN if win else RED
+
+    fig, ax = plt.subplots(figsize=(11, 3.6), dpi=150)
+    ax.plot(xs, ys, color=line, lw=2.0)
+    ax.axhline(0, color=p["zero"], lw=0.9)
+    # stop level in % terms
+    if t.initial_stop and t.entry:
+        sign = 1 if t.direction == "long" else -1
+        stop_pct = (t.initial_stop / t.entry - 1) * 100 * sign
+        ax.axhline(stop_pct, color=RED, lw=0.9, ls=":")
+        ax.annotate("initial stop", (xs[-1], stop_pct), ha="right", xytext=(0, -11),
+                    textcoords="offset points", fontsize=8, color=RED)
+    # merge same-day legs so labels don't overprint
+    byday = {}
+    for lg in dd["legs"]:
+        if 0 <= lg["day"] < len(xs):
+            b = byday.setdefault(lg["day"], {"qty": 0.0, "wpx": 0.0})
+            b["qty"] += lg["qty_share"] or 0
+            b["wpx"] += (lg["qty_share"] or 0) * lg["pct"]
+    for day, b in sorted(byday.items()):
+        avg_pct = b["wpx"] / b["qty"] if b["qty"] else 0
+        ax.plot([day], [ys[day]], "o", ms=8, color=p["ink"],
+                markerfacecolor="white", markeredgewidth=1.6, zorder=5)
+        ax.annotate(f"sold {b['qty']:.0f}% @ {avg_pct:+.0f}%", (day, ys[day]),
+                    xytext=(0, 10), textcoords="offset points", ha="center",
+                    fontsize=8, color=p["ink"])
+    if dd.get("avg_exit_pct") is not None:
+        ax.axhline(dd["avg_exit_pct"], color=p["mut"], lw=0.9, ls="--")
+        ax.annotate(f"avg exit {dd['avg_exit_pct']:+.0f}%", (0, dd["avg_exit_pct"]),
+                    xytext=(2, 4), textcoords="offset points", fontsize=8.5, color=p["mut"])
+    ax.set_ylabel("% from entry"); ax.set_xlabel("trading days since entry (path shown to exit +10d)")
+    ax.grid(axis="y", color=p["grid"], lw=0.7); _style(ax, p)
+    return _b64(fig, p["face"])
