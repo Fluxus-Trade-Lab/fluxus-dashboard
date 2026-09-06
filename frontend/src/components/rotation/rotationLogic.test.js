@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { STRIP_W, STRIP_X0, LABEL_DX, LABEL_MAX } from './PointsCard'
 import {
   wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, visibleFrom, countsAt, namesByState,
   R2W_LAG, PRIOR_WEEKS, Y_MAX, Y_TAIL, yFrac, FLUX_STEP, sampleIndices,
@@ -52,6 +53,15 @@ describe('the three boards', () => {
 })
 
 describe('dots on a strip', () => {
+  it('the longest label we carry still fits inside the strip', () => {
+    // 225 = "Physical AI & Humanoid Robotics +10.0%" measured at 12px in the
+    // app font. Move the labels right or narrow the strip and this fails
+    // before anyone sees a name cut in half.
+    expect(STRIP_X0 + LABEL_DX + LABEL_MAX).toBeLessThanOrEqual(STRIP_W)
+  })
+  it('the labels clear the widest the swarm can spread', () => {
+    expect(LABEL_DX).toBeGreaterThan(28 + 10)      // dots reach ~28 either side of the axis
+  })
   it('radius runs 3.5 → 10 across the range', () => {
     expect(radius(-1, -1, 1)).toBe(3.5)
     expect(radius(1, -1, 1)).toBe(10)
