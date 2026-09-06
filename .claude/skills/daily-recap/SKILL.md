@@ -1,6 +1,6 @@
 ---
 name: daily-recap
-description: 用我们自己的数据 + Andy 自己的话，生成每日市场复盘（Daily Market Recap，中英双语 PDF 的正文底稿）。取代「Revere 视频 transcript」作为源头。触发：Andy 说「做 X 月 X 日的复盘」「出 recap」「今天的 briefing」。产出是给 Andy 审的底稿，判断句留白，机器永不代他下判断。
+description: 用我们自己的数据 + Andy 自己的话，生成每日市场复盘（Daily Market Recap，中英双语 PDF）。凡 Andy 提到 复盘/recap/briefing/DailyBriefing/市场总结/收盘总结/双语 PDF/Revere/YouTube transcript 对比/给会员的日报——即使他没说「做复盘」三个字、即使只是给了一个 YouTube 链接或让改 PDF 里的一处——都必须先读本 skill 再动手：里面有他亲定的三条法、四问、均线规则、截图规则与裁决记录，跳过任何一条都会重演已付过学费的错误。产出是给 Andy 审的底稿，判断句留白，机器永不代他下判断。
 when_to_use: 复盘、recap、briefing、market recap、每日市场、生成 PDF 底稿。不触发：盘中提醒、个股 tearsheet（有专门 skill）、Substack 周刊（另一条流程）。
 ---
 
@@ -100,3 +100,11 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **中文成品走 fable-voice 文风账**：ZH 版不是 EN 的翻译层，是按文风账重写的一版——能逐字倒译回英文的句子就重写。他裁「中文不行，改改中文」后全篇过账，v3 获批
 - 完整产线定型：数据读取 → 四问过滤 → Andy 原话收集 → founders_note.py 取 note → 亮主题截图（静态页）/ 他交付物抽图（Portfolio）→ 双语 HTML → weasyprint → pdftotext 禁词 grep → 交付。工具与脚本：`pipeline/tools/founders_note.py` + 会话存档的 build_recap.py（待固化位置，下轮迁入 pipeline/content/）
 - 补：他说的「中文表达训练」= `biaoda` skill（~/Desktop/中文表达训练/ 的说明书与风格卡，他自己训练的）。**下轮起 ZH 版过两本账：fable-voice（治翻译腔）+ biaoda（他的风格卡）**，本轮只过了前者
+
+### [2026-09-06] 全系统裁决落地 + gotcha 收编第一批（Andy 原话「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」）
+- 本 skill 的 description 已按裁决 pushy 化（触发场景全列进 description——官方治 undertrigger 的标准修法）
+- **PDF/截图产线 gotcha 收编**（原散在 memory/会话，官方姿势是长在 skill 里）：
+  1. **CJK 字体**：weasyprint 走 fontconfig，**不认 PingFang**（.ttc 未被索引）——中文栈用 `"Hiragino Sans GB","Heiti SC"`，等宽块用 `Menlo,"Hiragino Sans GB",monospace`（Menlo 无 CJK，漏兜底=豆腐块）；渲染后必 rasterize 页 1 视觉核对
+  2. **macOS 截图文件名**含 U+202F（PM 前的窄不换行空格）——路径永不手打，用 glob 取真实路径、`Path.as_uri()` 编码
+  3. **weasyprint 环境**：PEP 668 挡 pip --user，装在 venv（当前 /tmp/pdfenv，重启即失；固化位置待迁 pipeline/content/）
+  4. **成品终检三件套**：pdftotext 禁词 grep（Spec §4 名单 + 领导力）必须 0 命中 · 每页 rasterize 过目 · 图片渲染进来了没有（weasyprint 图片路径错是静默跳过，不报错）

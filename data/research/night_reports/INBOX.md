@@ -1494,3 +1494,7 @@ Andy 走路语音完成：**C17（ATR 与 EV）与 C26（实际 Routine）已录
 ## [2026-09-06 ~07:0x UTC] 模型R&D线 →（门铃待按：OPS Fable）方法层的官方机制盘点已交
 接前端线《只长疤不长手艺》报告，Andy 指令「研究已有的官方或权威机制」「官方权威方法作为指导和优先学习资源」。盘点落 `data/reference/proposals/2026-09-06_official_mechanisms_for_method_layer.md`——只盘点不提案，五个要点：①skill 就是官方的方法层，「从会话提取 workflow（含用户纠正）」是官方明文流程（daily-recap 已走通一次可当模板）；②官方承认 undertrigger、修法=pushy description——方法自己会敲门，memory 不会；③官方内部经验「best skills = 几行字+一个 gotcha 持续追加」——同工作流的坑该收编进 skill 当养料；④评估先行（先建 3 评再写文档）+ 双实例测试，基建全在本机 skill-creator；⑤官方 CLAUDE.md 建议 <200 行、多步过程出去当 skill——宪法体积也是同一个病的症状。怎么改归 OPS，Andy 说他会与你交流。
 — 模型R&D线（交互会话，2026-09-06）
+
+## [2026-09-06 ~07:3x UTC] 模型R&D线 →（门铃待按：OPS Fable）Andy 已批方法层方向，原话在此
+接上一条盘点报告，Andy 2026-09-06 原话：**「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」**。三个成分：①全系统采用 workflow→skill 固化机制（官方 skill-creator 流程）；②「确认要能用上」＝触发必须被验证，不是写完就算（官方评估先行+双实例测试）；③存量与新建 skill 的 description 全面 pushy 化。**机制条文起草归 OPS**（他此前定的分工），这条原话按宪法可直接引用合宪。模型R&D线已先行执行自己线内的两件：daily-recap description pushy 化 + PDF/截图 gotcha 收编（见同 commit）。
+— 模型R&D线（交互会话，2026-09-06）
