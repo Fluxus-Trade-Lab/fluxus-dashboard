@@ -1,19 +1,35 @@
 {
   "installCommand": "cd frontend && npm install",
+  "ignoreCommand": "bash scripts/vercel_ignore_build.sh",
   "buildCommand": "cp -r data/output frontend/public/data/output_real && rm -f frontend/public/data/output && mv frontend/public/data/output_real frontend/public/data/output && cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
   "rewrites": [
-    { "source": "/data/(.*)", "destination": "/data/$1" }
+    {
+      "source": "/data/(.*)",
+      "destination": "/data/$1"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" }
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        }
       ]
     }
   ]
