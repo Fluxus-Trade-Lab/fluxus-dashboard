@@ -25,6 +25,7 @@ CHANGE in the Lagging share**, which is what the canary reads.
 """
 from __future__ import annotations
 
+import time
 from typing import Dict, List, Mapping, Optional, Sequence
 
 import numpy as np
@@ -277,11 +278,32 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
     }
 
 
-def fetch_bars(tickers: Sequence[str], period: str = "1y") -> Dict[str, pd.DataFrame]:
-    """Daily bars for the constituents. The one network call in this module."""
-    import yfinance as yf
-    data = yf.download(list(tickers), period=period, interval="1d",
-                       auto_adjust=True, progress=False, group_by="ticker", threads=True)
+def fetch_bars(tickers: Sequence[str], period: str = "1y",
+               required: Sequence[str] = ("SPY",), download=None, sleep=time.sleep,
+               ) -> Dict[str, pd.DataFrame]:
+    """Daily bars for the constituents. The one network call in this module.
+
+    A constituent that does not come back is dropped and the basket carries
+    on with the rest -- that is the right trade for 2,400 optional names.
+    THE BENCHMARK IS NOT ONE OF THEM: it is the denominator of every number
+    here, so it is re-fetched on its own and, still missing, raised.
+
+    2026-09-05: four re-dispatches inside three hours rate-limited the vendor,
+    the bulk download came back without SPY, and `build` died on
+    `bars["SPY"]` -- a KeyError three hundred lines from the cause. run_all
+    catches it per its own failure domain, so nothing went red; the ladder
+    simply stopped a session behind `groups.json` and the page kept showing
+    the previous day. Dropping the benchmark silently is what made a rate
+    limit look like a stale page.
+    """
+    if download is None:
+        import yfinance as yf
+
+        def download(ts):
+            return yf.download(ts, period=period, interval="1d", auto_adjust=True,
+                               progress=False, group_by="ticker", threads=True)
+
+    data = download(list(tickers))
     out: Dict[str, pd.DataFrame] = {}
     for t in tickers:
         try:
@@ -290,6 +312,31 @@ def fetch_bars(tickers: Sequence[str], period: str = "1y") -> Dict[str, pd.DataF
             continue
         if len(df) > 60:
             out[t] = df
+    for t in required:
+        if t in out:
+            continue
+        for attempt in range(3):
+            try:
+                one = download([t])
+                # Be strict about the two shapes a vendor returns. Accepting
+                # "whatever came back" once stored a whole multi-ticker panel
+                # AS the benchmark -- wrong numbers everywhere, no error.
+                if hasattr(one.columns, "levels"):
+                    df = one[t] if t in one.columns.levels[0] else pd.DataFrame()
+                else:
+                    df = one
+                df = df.dropna(how="all")
+            except Exception:                      # noqa: BLE001 - any vendor failure is a retry
+                df = pd.DataFrame()
+            if len(df) > 60 and "Close" in df.columns:
+                out[t] = df
+                break
+            if attempt < 2:
+                sleep(2 ** attempt)
+        else:
+            raise RuntimeError(
+                f"benchmark {t!r} came back empty {3} times -- refusing to build a "
+                f"board whose denominator is missing (got {len(out)} of {len(tickers)} tickers)")
     return out
 
 

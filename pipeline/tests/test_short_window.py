@@ -184,6 +184,45 @@ class TestFluxSeries:
         assert sum(1 for s in st[-1:] if s == "Leading") == h["Leading"][-1]
 
 
+class TestBenchmarkIsNotOptional:
+    """2026-09-05: the bulk download came back without SPY, `build` died on
+    `bars["SPY"]`, run_all swallowed it per its own failure domain, and the
+    page quietly showed the previous session. A constituent may go missing;
+    the denominator may not."""
+
+    def _panel(self, names, missing=()):
+        bars = _bars({n: 0.001 for n in names})
+        frames = {n: v for n, v in bars.items() if n not in missing}
+        return pd.concat(frames, axis=1) if frames else pd.DataFrame()
+
+    def test_missing_benchmark_is_refetched_alone(self):
+        calls = []
+
+        def download(ts):
+            calls.append(list(ts))
+            # the bulk call drops SPY the way a rate-limited vendor does
+            return self._panel(["A", "B", "SPY"], missing=("SPY",)) if len(ts) > 1 else self._panel(["SPY"])
+
+        out = SW.fetch_bars(["A", "B", "SPY"], download=download, sleep=lambda _: None)
+        assert "SPY" in out, "the benchmark must be re-fetched on its own"
+        assert set(out) == {"A", "B", "SPY"}
+        assert calls[0] == ["A", "B", "SPY"] and calls[1] == ["SPY"]
+
+    def test_a_benchmark_that_never_returns_raises_where_it_broke(self):
+        def download(ts):
+            return self._panel(["A", "B", "SPY"], missing=("SPY",))
+
+        with pytest.raises(RuntimeError, match="benchmark"):
+            SW.fetch_bars(["A", "B", "SPY"], download=download, sleep=lambda _: None)
+
+    def test_a_missing_constituent_is_still_only_dropped(self):
+        def download(ts):
+            return self._panel(["A", "B", "SPY"], missing=("B",))
+
+        out = SW.fetch_bars(["A", "B", "SPY"], download=download, sleep=lambda _: None)
+        assert set(out) == {"A", "SPY"}, "one absent name must not sink the basket"
+
+
 class TestArchive:
     def test_rewrites_todays_rows_and_keeps_history(self, tmp_path):
         path = tmp_path / "ladder.csv"
