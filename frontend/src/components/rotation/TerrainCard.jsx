@@ -1,8 +1,10 @@
-import { useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { STATES, STATE_LADDER, WINDOWS, windowBounds, visibleFrom, countsAt, namesByState } from './rotationLogic'
 
-const W = 640, H = 440, PAD = { l: 6, r: 6, t: 6, b: 16 }
+// short and wide: the names live under the chart in the same card now, so the
+// terrain gives up height to them and the card stays level with Flux beside it
+const W = 640, H = 230, PAD = { l: 6, r: 6, t: 6, b: 16 }
 const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → top, so Leading sits darkest on top
 
 /**
@@ -15,8 +17,9 @@ const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → t
  * Show, don't tell (Andy 2026-09-03): the expand is a "+", the names carry
  * no kind suffix, and nothing on the card says what it is.
  */
-export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle }) {
+export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle, selected, onSelect }) {
   const { t } = useLanguage()
+  const win = useId()
   const [hov, setHov] = useState(null)
   const svgRef = useRef(null)
   const h = ladder?.history?.['2w'] ?? null
@@ -64,9 +67,19 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
       {m - from > 1 ? (
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label="four-state counts by session, two-week board"
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
-          {stacks.map(({ k, d }) => <path key={k} d={d} fill={STATE_LADDER[k]} stroke="var(--color-surface)" strokeWidth="1" />)}
-          {bounds && bounds.start > from && <rect x={PAD.l} y={PAD.t} width={(x(bounds.start) - PAD.l).toFixed(1)} height={H - PAD.t - PAD.b} fill="var(--color-surface)" opacity=".6" />}
-          {bounds && bounds.end < m - 1 && <rect x={x(bounds.end).toFixed(1)} y={PAD.t} width={(x(m - 1) - x(bounds.end)).toFixed(1)} height={H - PAD.t - PAD.b} fill="var(--color-surface)" opacity=".6" />}
+          {/* A lightbox, not a tinted block: the whole terrain is drawn faint, the
+              picked fortnight is drawn again over it at full strength. Opacity
+              carries it, so it reads the same on paper and on ink — the old
+              version washed the outside toward the surface colour, which made
+              the window look like a dark slab in the light theme and something
+              else again in the dark one (Andy 2026-09-06). */}
+          <defs><clipPath id={win}><rect x={bounds ? x(bounds.start) : PAD.l} y={PAD.t - 2}
+                width={bounds ? Math.max(0, x(bounds.end) - x(bounds.start)) : W - PAD.l - PAD.r} height={H - PAD.t - PAD.b + 4} /></clipPath></defs>
+          <g opacity=".3">{stacks.map(({ k, d }) => <path key={k} d={d} fill={STATE_LADDER[k]} stroke="var(--color-surface)" strokeWidth="1" />)}</g>
+          <g clipPath={`url(#${win})`}>{stacks.map(({ k, d }) => <path key={k} d={d} fill={STATE_LADDER[k]} stroke="var(--color-surface)" strokeWidth="1" />)}</g>
+          {bounds && [bounds.start, bounds.end].map((i, k) => (
+            <line key={k} x1={x(i).toFixed(1)} x2={x(i).toFixed(1)} y1={PAD.t - 2} y2={H - PAD.b + 2} stroke="var(--color-border)" strokeWidth=".8" />
+          ))}
           <text className="rot-mono" x={x(from)} y={H - 4}>{dates[from].slice(5)}</text>
           <text className="rot-mono" x={x(m - 1)} y={H - 4} textAnchor="end">{dates[m - 1].slice(5)}</text>
           {hov != null && (
@@ -79,12 +92,13 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
           )}
         </svg>
       ) : <div className="rot-empty" style={{ minHeight: 110 }}>{loading ? '' : t('rot.noHistory')}</div>}
+      {open && <StateBand ladder={ladder} wk={wk} selected={selected} onSelect={onSelect} />}
     </div>
   )
 }
 
-/** the names under the plane — who sat in each state on the picked window's last session; spans the whole row */
-export function StateBand({ ladder, wk, selected, onSelect }) {
+/** the names under the terrain — who sat in each state on the picked window's last session */
+function StateBand({ ladder, wk, selected, onSelect }) {
   const h = ladder?.history?.['2w'] ?? null
   const dates = h?.dates ?? []
   const m = dates.length
@@ -93,7 +107,7 @@ export function StateBand({ ladder, wk, selected, onSelect }) {
   const end = windowBounds(dates, wk)?.end ?? m - 1
   const { byState, known } = namesByState(names, (n) => ladder?.series?.[n] ?? null, (n) => ladder?.themes?.[n]?.['2w'] ?? null, end, m - 1)
   return (
-    <div className="rot-card rot-span rot-band">
+    <div className="rot-band">
       {known ? STATES.map((st) => (
         <div key={st} className="rot-band-row">
           <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>

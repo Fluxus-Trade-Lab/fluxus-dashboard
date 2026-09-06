@@ -5,7 +5,7 @@ import HowToRead from '../HowToRead'
 import { useGroups } from '../../hooks/useGroups'
 import { useThemeLadder } from '../../hooks/useThemeLadder'
 import { boardsOf, defaultPicks, Y_MAX, R2W_LAG, PRIOR_WEEKS } from './rotationLogic'
-import TerrainCard, { StateBand } from './TerrainCard'
+import TerrainCard from './TerrainCard'
 import PointsCard from './PointsCard'
 import FluxCard from './FluxCard'
 import './rotation.css'
@@ -30,7 +30,7 @@ export default function RotationPage() {
   const ladder = useThemeLadder()
   const [selected, setSelected] = useState([])
   const [wk, setWk] = useState(0)          // the Terrain window, shared with the names band
-  const [open, setOpen] = useState(false)  // the band spans the row, so the page owns it
+  const [open, setOpen] = useState(true)   // the names open by default; the '−' folds them away
 
   const rows = useMemo(() => themes.filter((t) => t.kind === 'theme'), [themes])
   const seriesOf = useMemo(() => { const s = ladder.data?.series ?? {}; return (n) => s[n] ?? null }, [ladder.data])
@@ -60,9 +60,8 @@ export default function RotationPage() {
         meta={[`vs ${benchmark} · ${date} · ${rows.length} themes${ladderDate ? ` · ladder ${ladderDate}` : ''}`, <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
 
       <div className="rot-grid2">
-        <TerrainCard ladder={ladder.data} loading={ladder.loading} wk={wk} setWk={setWk} open={open} onToggle={() => setOpen((v) => !v)} />
+        <TerrainCard ladder={ladder.data} loading={ladder.loading} wk={wk} setWk={setWk} open={open} onToggle={() => setOpen((v) => !v)} selected={names} onSelect={toggle} />
         <FluxCard shown={shown} dates={seriesDates} stateDates={stateDates} benchmark={benchmark} picked={!!selected.length} loading={ladder.loading} onSelect={toggle} />
-        {open && <StateBand ladder={ladder.data} wk={wk} selected={names} onSelect={toggle} />}
       </div>
       <PointsCard boards={boards} selected={names} onSelect={toggle} />
 

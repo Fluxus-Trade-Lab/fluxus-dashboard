@@ -14,8 +14,10 @@
  * darkest.
  */
 export const STATES = ['Leading', 'Weakening', 'Improving', 'Lagging']
+/** the four states as one ordered ramp — the tones live in rotation.css so the
+ * terrain, the ribbons and the name band cannot drift apart */
 export const STATE_LADDER = {
-  Leading: 'var(--color-slot-1)', Weakening: 'var(--color-slot-2)', Improving: 'var(--color-slot-3)', Lagging: 'var(--color-untested)',
+  Leading: 'var(--rot-s1)', Weakening: 'var(--rot-s2)', Improving: 'var(--rot-s3)', Lagging: 'var(--rot-s4)',
 }
 /** the three Flux lines: pair + ink — never greys, two greys cannot be told apart (brief §18.9) */
 export const LINE = ['var(--color-took)', 'var(--color-refused)', 'var(--color-text)']
