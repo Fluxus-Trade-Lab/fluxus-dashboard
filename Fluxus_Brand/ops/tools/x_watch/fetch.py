@@ -191,15 +191,32 @@ def main() -> None:
             for r in sorted(rs, key=lambda x: x["dt"]):
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
+    # mentions.csv 是 upsert，不是 append —— 同一天可能被抓两次（两班制：02:00 JST
+    # 的睡前速报抓前半天，13:30 JST 的主班重抓全天），append 会把同一批 post_id
+    # 追加两遍。key = (date, ticker, handle, post_id)。
+    # ⚠️ 已存在的行**整行保留** —— stance 列是人工回填的，重抓不许把它抹掉。
+    HDR = ["date", "ticker", "handle", "post_id", "views", "bookmarks", "stance"]
     mp = OUT / "mentions.csv"
-    new = not mp.exists()
-    with mp.open("a", newline="", encoding="utf-8") as f:
+    existing, seen = [], set()
+    if mp.exists():
+        with mp.open(newline="", encoding="utf-8") as f:
+            rd = csv.DictReader(f)
+            for x in rd:
+                existing.append([x.get(c, "") for c in HDR])
+                seen.add((x.get("date"), x.get("ticker"), x.get("handle"), x.get("post_id")))
+    added = 0
+    for r in rows:
+        for tk in r["tickers"]:
+            k = (r["et_date"], tk, r["h"], str(r["id"]))
+            if k in seen:
+                continue
+            seen.add(k)
+            existing.append([r["et_date"], tk, r["h"], r["id"], r["views"], r["bookmarks"], ""])
+            added += 1
+    with mp.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        if new:
-            w.writerow(["date", "ticker", "handle", "post_id", "views", "bookmarks", "stance"])
-        for r in rows:
-            for tk in r["tickers"]:
-                w.writerow([r["et_date"], tk, r["h"], r["id"], r["views"], r["bookmarks"], ""])
+        w.writerow(HDR)
+        w.writerows(existing)
 
     mins = (datetime.now(timezone.utc) - started).total_seconds() / 60
     lp = OUT / "runlog.csv"
@@ -215,7 +232,7 @@ def main() -> None:
                     since.date(), until.date()])
 
     print(f"成员 {len(mem)} · 拉到 {len(raw)} 条({pages} 页)· 窗口内 {len(rows)} 条 / "
-          f"{len({r['h'] for r in rows})} 人 · {mins:.1f} 分")
+          f"{len({r['h'] for r in rows})} 人 · mentions 新增 {added} 行 · {mins:.1f} 分")
     if raw and len(rows) < len(raw) * 0.1:
         print("⚠️ 窗口内留下的不到一成 —— 检查 --since/--until 是不是设窄了")
     if oldest and oldest.astimezone(ET) > since:
