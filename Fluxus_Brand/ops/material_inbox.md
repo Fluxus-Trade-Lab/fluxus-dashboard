@@ -343,3 +343,4 @@
   而同一对文件在之后两天零分歧。可用角度：**自相矛盾要能被看见，前提是有两份读数放在一起** ——
   「内部一致」是最容易被误当成「正确」的那种绿。**闸的边界画在哪里，决定了它能看见哪一类错。**
   出处：`data/reference/incidents/2026-09-06_two_days_the_archive_contradicts_itself.md` · commit `cb7ea2d4`。
+- [Andy 三个入场模型原话] Breakouts(VCP tight base) / Undercut & rally(假破位收复) / 30m pivot(回踩大级别位+首根30m绿K破高)，止损全是 low of day，强动能用1/3弱环境用2——现成的教学帖素材。出处 data/research/setup_labeling/SETUP_DEFINITIONS.md
