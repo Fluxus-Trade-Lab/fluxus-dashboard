@@ -1,0 +1,370 @@
+<title>X 名单 Ticker 台账</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EDEFF1; --surface:#FFFFFF; --surface2:#F5F7F8; --raise:#E4E8EA;
+  --ink:#15191C; --ink2:#3A444A; --muted:#5F6A70; --faint:#8C979D;
+  --rule:#D5DADD; --rule2:#E6EAEC;
+  --brass:#B06A05; --brass-soft:#F5E7CE; --brass-line:#E0C48C;
+  --fwd:#1264B4; --fwd-soft:#E2ECF7;
+  --shadow:0 1px 2px rgba(21,25,28,.06),0 8px 24px -12px rgba(21,25,28,.18);
+  --sans:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#101416; --surface:#171C1F; --surface2:#1D2327; --raise:#232A2E;
+  --ink:#E4E9EB; --ink2:#C2CBCF; --muted:#8B979D; --faint:#6C777D;
+  --rule:#283035; --rule2:#212930;
+  --brass:#D4972B; --brass-soft:#33280F; --brass-line:#5A4517;
+  --fwd:#4290D2; --fwd-soft:#152836;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --ground:#101416; --surface:#171C1F; --surface2:#1D2327; --raise:#232A2E;
+  --ink:#E4E9EB; --ink2:#C2CBCF; --muted:#8B979D; --faint:#6C777D;
+  --rule:#283035; --rule2:#212930;
+  --brass:#D4972B; --brass-soft:#33280F; --brass-line:#5A4517;
+  --fwd:#4290D2; --fwd-soft:#152836;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 72px}
+h1{font-size:21px;font-weight:700;letter-spacing:-.015em;margin:0;text-wrap:balance}
+a{color:var(--brass)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:3px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ── 顶栏 ── */
+.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
+  padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:14px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);flex-basis:100%}
+.meta{margin-left:auto;display:flex;gap:14px;font-family:var(--mono);
+  font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── 重点 ── */
+.flags{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
+  gap:8px;margin:0 0 18px}
+.flag{background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  padding:9px 11px 10px;display:flex;flex-direction:column;gap:3px;
+  border-left:3px solid var(--rule);cursor:pointer;text-align:left;font:inherit;color:inherit}
+.flag:hover{background:var(--surface2)}
+.flag.wall{border-left-color:var(--brass)}
+.flag.fresh{border-left-color:var(--fwd)}
+.flag-k{font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+.flag.wall .flag-k{color:var(--brass)} .flag.fresh .flag-k{color:var(--fwd)}
+.flag-s{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:-.01em}
+.flag-w{font-size:11.5px;color:var(--muted);line-height:1.35}
+
+/* ── 工具条 ── */
+.bar{position:sticky;top:0;z-index:20;background:var(--ground);
+  padding:8px 0 9px;margin-bottom:2px;border-bottom:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.search{flex:1 1 210px;min-width:170px;position:relative}
+.search input{width:100%;padding:7px 10px 7px 27px;font:500 13px/1.4 var(--mono);
+  background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:2px}
+.search input::placeholder{color:var(--faint);font-weight:400}
+.search svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  width:13px;height:13px;stroke:var(--faint);fill:none;stroke-width:1.8}
+.seg{display:flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
+.seg button{font:500 12px var(--sans);padding:7px 11px;background:none;border:0;
+  color:var(--muted);cursor:pointer;border-right:1px solid var(--rule2)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.chip{font:500 11.5px var(--mono);padding:6px 9px;border:1px solid var(--rule);
+  border-radius:2px;background:var(--surface);color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--brass);color:var(--brass);background:var(--brass-soft)}
+select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
+  color:var(--ink);border:1px solid var(--rule);border-radius:2px}
+
+/* ── 表 ── */
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:2px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{position:sticky;top:44px;z-index:10;background:var(--surface2);
+  font:600 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);text-align:left;padding:8px 10px;white-space:nowrap;
+  border-bottom:1px solid var(--rule)}
+tbody td{padding:8px 10px;border-bottom:1px solid var(--rule2);vertical-align:middle}
+tbody tr.row{cursor:pointer}
+tbody tr.row:hover td{background:var(--surface2)}
+tbody tr.row.open td{background:var(--surface2)}
+.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sym{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:-.01em;white-space:nowrap}
+.sym .cur{color:var(--faint);font-weight:400}
+.tagi{font:500 9.5px var(--mono);color:var(--faint);border:1px solid var(--rule);
+  padding:0 3px;border-radius:2px;margin-left:5px;vertical-align:1px}
+.who{color:var(--muted);font-size:11.5px;max-width:290px;line-height:1.35}
+
+/* 墙后徽标 —— 全页只有它和「前瞻」用颜色 */
+.wallmark{display:inline-flex;align-items:center;gap:4px;font:600 10.5px var(--mono);
+  color:var(--brass);background:var(--brass-soft);border:1px solid var(--brass-line);
+  border-radius:2px;padding:1px 5px;white-space:nowrap}
+.wallmark::before{content:"";width:5px;height:5px;background:var(--brass);border-radius:50%}
+
+/* 立场:颜色只编「跑没跑」,词本身照写 */
+.st{display:inline-flex;gap:3px;flex-wrap:wrap}
+.st i{font:600 10.5px var(--mono);font-style:normal;padding:1px 5px;border-radius:2px;white-space:nowrap}
+.st i.f{color:var(--fwd);background:var(--fwd-soft);border:1px solid var(--fwd)}
+.st i.d{color:var(--ink2);background:var(--raise);border:1px solid var(--rule)}
+.st i.n{color:var(--faint);border:1px solid var(--rule)}
+
+/* 三日条 —— 单序列,量的是当日提及人数 */
+.spark{display:flex;align-items:flex-end;gap:2px;height:22px}
+.spark span{width:7px;background:var(--rule);border-radius:2px 2px 0 0;min-height:2px}
+.spark span.last{background:var(--ink)}
+.spark span.zero{background:var(--rule2);height:2px}
+.delta{font-family:var(--mono);font-size:11.5px;white-space:nowrap}
+.delta.up::before{content:"▲ ";font-size:8px;vertical-align:1px}
+.delta.dn::before{content:"▼ ";font-size:8px;vertical-align:1px}
+.delta.flat{color:var(--faint)}
+
+/* 展开的帖 */
+tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--rule)}
+.posts{display:flex;flex-direction:column}
+.post{display:grid;grid-template-columns:82px 132px 1fr auto;gap:12px;align-items:baseline;
+  padding:8px 14px;border-top:1px dashed var(--rule)}
+.post:first-child{border-top:0}
+.post .d{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.post .h{font-family:var(--mono);font-size:11.5px;color:var(--ink2);font-weight:500;
+  overflow:hidden;text-overflow:ellipsis}
+.post .t{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.post .t a{text-decoration:none;border-bottom:1px solid var(--brass-line)}
+.post .v{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
+.post.wallp{background:var(--brass-soft);border-left:3px solid var(--brass)}
+
+.empty{padding:34px 16px;text-align:center;color:var(--muted);font-size:13px}
+.note{font-size:11.5px;color:var(--muted);margin:10px 2px 0;line-height:1.6}
+.note code{font-family:var(--mono);font-size:11px;background:var(--raise);padding:1px 4px;border-radius:2px}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:0 2px}
+@media (max-width:720px){
+  .post{grid-template-columns:1fr;gap:3px}
+  .who{max-width:150px}
+  thead th{top:76px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Copybook List · 34 人 · 每日 ET 日历日</span>
+    <h1>X 名单 Ticker 台账</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="flags" id="flags"></div>
+
+  <div class="bar">
+    <label class="search">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg>
+      <input id="q" type="search" placeholder="搜 ticker 或 handle —— 例 INTC / ohiain" autocomplete="off">
+    </label>
+    <div class="seg" id="views" role="group" aria-label="视图">
+      <button data-v="t" aria-pressed="true">票</button>
+      <button data-v="p" aria-pressed="false">人</button>
+      <button data-v="w" aria-pressed="false">墙后</button>
+    </div>
+    <div class="seg" id="dates" role="group" aria-label="日期"></div>
+    <button class="chip" id="cash" aria-pressed="true">只看 $ 标记</button>
+    <button class="chip" id="idx" aria-pressed="false">含指数</button>
+    <button class="chip" id="wallonly" aria-pressed="false">只看墙后碰过的</button>
+    <select id="sort" aria-label="排序">
+      <option value="today">按当日人数</option>
+      <option value="total">按总提及</option>
+      <option value="views">按总曝光</option>
+      <option value="sym">按代码</option>
+    </select>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="scroll"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+  <p class="note" id="note"></p>
+</div>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const nf = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(1)+"k" : String(n||0);
+const FWD = new Set(["long","watching","short"]), DONE = new Set(["recap","exited"]);
+const DATES = D.dates, LAST = DATES[DATES.length-1], PREV = DATES[DATES.length-2] || null;
+
+const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, sort:"today", open:new Set() };
+
+const np = (t,d) => d && t.days[d] ? t.days[d].p.length : 0;
+
+$("#meta").innerHTML = [
+  ["窗口", DATES[0].slice(5)+" → "+LAST.slice(5)+"（ET）"],
+  ["帖", D.counts.posts], ["发帖人", D.counts.people],
+  ["代码", D.counts.cash+" 带 $ / "+D.counts.syms+" 全部"],
+  ["墙后", D.wall.length+" 条"],
+].map(([k,v]) => `${k} <b>${esc(v)}</b>`).join("");
+
+/* 重点 */
+$("#flags").innerHTML = D.highlights.length ? D.highlights.map(h => {
+  const cls = h.k.startsWith("墙后") ? "wall" : (h.k==="新进"||h.k==="加人") ? "fresh" : "";
+  return `<button class="flag ${cls}" data-sym="${esc(h.sym)}">
+    <span class="flag-k">${esc(h.k)}</span>
+    <span class="flag-s">$${esc(h.sym)}</span>
+    <span class="flag-w">${esc(h.why)}</span></button>`;
+}).join("") : `<div class="flag"><span class="flag-k">重点</span><span class="flag-w">今天没有触发任何一条判据。</span></div>`;
+
+$("#dates").innerHTML = `<button data-d="all" aria-pressed="true">全部</button>` +
+  DATES.map(d => `<button data-d="${d}" aria-pressed="false">${d.slice(5)}</button>`).join("");
+
+function spark(t){
+  const vals = DATES.map(d => np(t,d)), mx = Math.max(1, ...vals);
+  return `<div class="spark" role="img" aria-label="每日提及人数 ${vals.join("、")}">` +
+    vals.map((v,i) => `<span class="${v===0?"zero":""}${i===vals.length-1&&v>0?" last":""}" style="height:${v?Math.round(3+v/mx*19):2}px" title="${DATES[i]}：${v} 人"></span>`).join("") + `</div>`;
+}
+function stanceCells(t){
+  const e = Object.entries(t.st);
+  if (!e.length) return `<span class="st"><i class="n">未标</i></span>`;
+  e.sort((a,b) => b[1]-a[1]);
+  return `<span class="st">` + e.map(([k,n]) =>
+    `<i class="${FWD.has(k)?"f":DONE.has(k)?"d":"n"}">${esc(k)} ${n}</i>`).join("") + `</span>`;
+}
+function wallCell(t){
+  if (!t.wall.length) return "";
+  const kinds = [...new Set(t.wall.map(w => w.kind).filter(Boolean))].join("/");
+  const last = t.wall[t.wall.length-1];
+  return `<span class="wallmark" title="@jfsrev 墙后 ${esc(last.d)}">${esc(kinds||"墙后")}</span>`;
+}
+
+function tickers(){
+  let r = D.tickers.filter(t => {
+    if (S.cash && !t.cash) return false;
+    if (!S.idx && t.idx) return false;
+    if (S.wallonly && !t.wall.length) return false;
+    if (S.date !== "all" && !t.days[S.date]) return false;
+    if (S.q){
+      const q = S.q.toLowerCase();
+      if (!t.sym.toLowerCase().includes(q) && !t.m.some(m => m.h.toLowerCase().includes(q))) return false;
+    }
+    return true;
+  });
+  const key = S.date === "all" ? LAST : S.date;
+  const cmp = { today:(a,b)=>np(b,key)-np(a,key)||b.tv-a.tv, total:(a,b)=>b.tn-a.tn,
+                views:(a,b)=>b.tv-a.tv, sym:(a,b)=>a.sym.localeCompare(b.sym) }[S.sort];
+  return r.sort(cmp);
+}
+
+function render(){
+  const th = $("#thead"), tb = $("#tbody");
+  if (S.v === "t"){
+    const rows = tickers();
+    $("#count").textContent = rows.length + " 个代码";
+    th.innerHTML = `<tr><th>代码</th><th>墙后</th><th>${DATES.map(d=>d.slice(8)).join("·")} 人数</th>
+      <th class="num">${LAST.slice(5)}</th><th class="num">对比前日</th><th>立场</th>
+      <th class="num">提及</th><th class="num">曝光</th><th>谁在说</th></tr>`;
+    tb.innerHTML = rows.length ? rows.map(t => {
+      const n = np(t,LAST), o = np(t,PREV), d = n-o;
+      const who = [...new Set(t.m.filter(m => S.date==="all" || m.d===S.date).map(m => "@"+m.h))];
+      const open = S.open.has(t.sym);
+      return `<tr class="row${open?" open":""}" data-sym="${esc(t.sym)}" tabindex="0" aria-expanded="${open}">
+        <td class="sym"><span class="cur">$</span>${esc(t.sym)}${t.idx?'<span class="tagi">指数</span>':""}${t.cash?"":'<span class="tagi">裸码</span>'}</td>
+        <td>${wallCell(t)}</td><td>${spark(t)}</td>
+        <td class="num" style="font-size:15px;font-weight:600">${n||"—"}</td>
+        <td class="num"><span class="delta ${d>0?"up":d<0?"dn":"flat"}">${d>0?"+"+d:d<0?d:"持平"}</span></td>
+        <td>${stanceCells(t)}</td><td class="num">${t.tn}</td><td class="num">${nf(t.tv)}</td>
+        <td class="who">${esc(who.slice(0,4).join(" "))}${who.length>4?` +${who.length-4}`:""}</td></tr>` +
+        (open ? `<tr class="detail"><td colspan="9"><div class="posts">${detail(t)}</div></td></tr>` : "");
+    }).join("") : `<tr><td colspan="9" class="empty">没有符合的代码。试试关掉「只看 $ 标记」，或清空搜索。</td></tr>`;
+    $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
+      所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
+      「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光是抓取当时的快照。`;
+  } else if (S.v === "p"){
+    const q = S.q.toLowerCase();
+    const rows = D.people.filter(p => !q || p.h.toLowerCase().includes(q) || p.syms.some(s => s.toLowerCase().includes(q)));
+    $("#count").textContent = rows.length + " 人";
+    th.innerHTML = `<tr><th>Handle</th><th class="num">帖数</th><th class="num">出现天数</th>
+      <th class="num">曝光中位</th><th class="num">收藏合计</th><th>他提过的票（带 $ 的）</th></tr>`;
+    tb.innerHTML = rows.map(p => `<tr><td class="sym">@${esc(p.h)}</td>
+      <td class="num">${p.posts}</td><td class="num">${p.days}/${DATES.length}</td>
+      <td class="num">${nf(p.med)}</td><td class="num">${nf(p.bk)}</td>
+      <td class="who mono">${p.syms.length ? esc(p.syms.join(" ")) : "—"}</td></tr>`).join("");
+    $("#note").innerHTML = `曝光中位是该账号窗口内所有帖的中位数，用来判「这条帖是不是他的异常值」。
+      名单 34 人，这里只列窗口内真的发过帖的。`;
+  } else {
+    const q = S.q.toLowerCase();
+    const rows = D.wall.filter(w => !q || w.tickers.some(s => s.toLowerCase().includes(q)) || "jfsrev".includes(q));
+    $("#count").textContent = rows.length + " 条";
+    th.innerHTML = `<tr><th>日期 (ET)</th><th>类型</th><th>票</th><th>代理 / 杠杆</th>
+      <th class="num">公开区当天人数</th><th class="num">曝光</th></tr>`;
+    tb.innerHTML = rows.slice().reverse().map(w => {
+      const pub = w.tickers.map(s => {
+        const t = D.tickers.find(x => x.sym === s);
+        return t ? np(t, w.d) : 0;
+      });
+      const zero = w.tickers.length && pub.every(n => n === 0);
+      return `<tr><td class="mono" style="color:var(--muted)">${esc(w.d)}</td>
+        <td><span class="wallmark">${esc(w.kind || "—")}</span></td>
+        <td class="sym">${w.tickers.length ? w.tickers.map(s => "$"+esc(s)).join(" ") : "—"}</td>
+        <td class="mono" style="font-size:11.5px;color:var(--muted)">${esc(w.proxy || "—")}</td>
+        <td class="num" style="${zero?"color:var(--brass);font-weight:600":""}">${w.tickers.length ? pub.join(" / ") : "—"}</td>
+        <td class="num">${nf(w.views)}</td></tr>`;
+    }).join("");
+    $("#note").innerHTML = `⛔ <b>付费订阅内容，原话只存不引，永不进任何对外文案。</b>
+      这一栏在页面上只显示他用的那个词（Stalk / Focus / Update / Groups）、票、代理和杠杆，不显示正文。
+      「公开区当天人数」是 <b>0</b> 时标成铜色——那就是墙的代价：只看公开区的人看不见这一格。`;
+  }
+}
+
+function detail(t){
+  const ms = t.m.filter(m => S.date === "all" || m.d === S.date);
+  const wall = t.wall.map(w => `<div class="post wallp">
+      <span class="d mono">${esc(w.d)}</span><span class="h">@jfsrev · 墙后</span>
+      <span class="t"><b>${esc(w.kind)}</b>${w.proxy ? " · 代理 "+esc(w.proxy) : ""} —— 原话只存不引，见仓库 <code>subs/jfsrev/</code></span>
+      <span class="v">—</span></div>`).join("");
+  return wall + (ms.map(m => `<div class="post">
+      <span class="d mono">${esc(m.d.slice(5))}${m.rep ? " · 回复" : ""}</span>
+      <span class="h">@${esc(m.h)}${m.st ? ` <i class="st"><i class="${FWD.has(m.st)?"f":DONE.has(m.st)?"d":"n"}">${esc(m.st)}</i></i>` : ""}</span>
+      <span class="t">${esc(m.txt)} ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</span>
+      <span class="v">${nf(m.v)} 曝光 · ${m.bk} 收藏</span></div>`).join("") || `<div class="post"><span class="t">这一天没有公开区提及。</span></div>`);
+}
+
+/* 事件 */
+$("#q").addEventListener("input", e => { S.q = e.target.value.trim(); render(); });
+$("#views").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  S.v = b.dataset.v;
+  [...$("#views").children].forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+$("#dates").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  S.date = b.dataset.d;
+  [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+for (const [id, key] of [["#cash","cash"],["#idx","idx"],["#wallonly","wallonly"]]){
+  $(id).addEventListener("click", e => {
+    S[key] = !S[key]; e.currentTarget.setAttribute("aria-pressed", S[key]); render();
+  });
+}
+$("#sort").addEventListener("change", e => { S.sort = e.target.value; render(); });
+$("#flags").addEventListener("click", e => {
+  const b = e.target.closest(".flag"); if (!b || !b.dataset.sym) return;
+  S.v = "t"; S.q = b.dataset.sym; S.idx = true; S.date = "all";
+  $("#q").value = b.dataset.sym; $("#idx").setAttribute("aria-pressed", true);
+  [...$("#views").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.v === "t"));
+  [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.d === "all"));
+  S.open.add(b.dataset.sym); render();
+});
+function toggle(el){
+  const sym = el.dataset.sym; if (!sym) return;
+  S.open.has(sym) ? S.open.delete(sym) : S.open.add(sym); render();
+}
+$("#tbody").addEventListener("click", e => {
+  if (e.target.closest("a")) return;
+  const r = e.target.closest("tr.row"); if (r) toggle(r);
+});
+$("#tbody").addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const r = e.target.closest("tr.row"); if (r){ e.preventDefault(); toggle(r); }
+});
+render();
+</script>
