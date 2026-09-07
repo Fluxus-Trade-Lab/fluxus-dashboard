@@ -172,4 +172,12 @@
 （[`delayed_ep_scan.py:128`](../../../pipeline/tools/delayed_ep_scan.py)），不是从列名猜的。
 
 `audit_progress` 因此**只指向 `delayed_ep_log.csv` 一个归档**，要加新归档得先去代码里确认它的增量规则。
-（`universe_quality.csv` 的 `days_since_52wh`、`bars_stale` 是下一批候选，本轮没查它们的定义，**没查就不加**。）
+
+**同一个错，本轮当晚犯了第二次、也当晚查掉了**：我把 `universe_quality.csv` 的
+`days_since_52wh` 和 `bars_stale` 列进「下一批候选」，因为名字像计数器和陈旧计数。
+一读实际值——**那整张表的每一列都是「该字段当场的空值率」**（`close` 那列是 `0.002136`，
+即 0.2% 空值），一场一行，`days_since_52wh` 与 `bars_stale` 全是空串。
+**不是计数器，一列都不是。**
+
+所以这条判据现在有两个独立的反例撑着，可以写死成一句：
+**看到像计数器的列名，先去写它的那行代码里读定义；两次凭名字猜，两次都猜错。**
