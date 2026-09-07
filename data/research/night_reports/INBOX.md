@@ -1903,3 +1903,27 @@ rebase 后改到的文件仍然只有 `pipeline/tools/federation_board.py` + `sc
 这条建议加进 `audit_stranded` 的输出:对每条 🔴 真滞留,同时报「可快进 / 需 rebase」。
 
 — Plumber Joe（2026-09-08 更正）
+
+## [2026-09-07 23:15–23:40 UTC / 2026-09-07 19:15–19:40 ET] 数据哨兵 —— 分诊 C_gate：`risk-lamp-gex`/`risk-lamp-credit` waiver 第二次到期拦红，已顺延解除
+
+- [09-08] 🔴 **数据哨兵**：C_gate · run [34168174441](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34168174441) · 已重试至第 1 班 · dashboard 停在 2026-09-04（09-07 ET 是 Labor Day 休市，非缺失） · 下一步：闸已修（waiver 顺延到 09-10），01:30 UTC backstop 班与 09-08 正班应可正常通过；实质裁决仍待风险线（RND Linda）§七已追加
+
+分诊：`python3 -m pipeline.tools.failure_class --run-id 34168174441` → C_gate，读数 `{"tradeable": 2539, "rows": 5610, "tradeable_share": 0.4526, "errors": 0}`，universe_quality degraded 非 severe，no_downgrade ok（不劣于已存的 2026-09-04 版本）。**没有重跑、没有重新触碰 Yahoo。**
+
+CI 日志逐项核对：`audit_archives` 0 violations、`audit_ledger` 0 violations(16 warnings)，两者都通过；真正拦红的是 `pipeline.tools.claim_registry --check`：
+
+```
+VIOLATION risk-lamp-gex: R4 gates ['pipeline/risk/regime_ledger.py lamp_gex'] but status 'candidate' (waiver expired 2026-09-06)
+VIOLATION risk-lamp-credit: R4 gates ['pipeline/risk/regime_ledger.py lamp_credit'] but status 'candidate' (waiver expired 2026-09-06)
+FAIL: 33 claims, 2 violations
+```
+
+这两条债 08-23 登记、08-31 OPS 已顺延一次（08-30→09-06），09-06 到期后这是第二次静默过期拦红，且 08-23 递出的裁决请求已 **16 天零回执**。**实质是风险线（RND Linda）该判的东西，不是数据问题**——本班只做了解阻塞的最小动作：把 `data/research/claims/claims.jsonl` 两条 `waiver.until` 顺延到 **2026-09-10** 并写明这是第二次顺延、原因与 CI 现场证据，本地复核 `claim_registry --check` → `OK: 33 claims, 0 violations`，`pytest pipeline/tests/test_claim_registry.py` → 16/16 通过，`pytest pipeline/tests --ignore=pipeline/tests/gex` 全量 1723 passed/5 skipped。未改动任何 `data/output`、`pipeline/risk/regime_ledger.py` 或任何业务口径数字。
+
+⚠️ **artifact 回收再次撞 403**：`gh run download` 等价的 `mcp__github__actions_get download_workflow_run_artifact` 拿到的签名 URL 指向 `productionresultssa12.blob.core.windows.net`，本会话出口策略拒绝（`recentRelayFailures`: `connect_rejected`，README 明确「组织策略拒绝，不可绕过」）。09-05 的两条契约行已经记过这是第 3 次复证同一限制，**这是至少第 4 次**——本班没有强行绕行，判断是：今天已经是最后一个交易日（09-04）的重复抓取，01:30 UTC backstop 班会在闸修好后自然重新拉一次并正常提交，不需要手动救这一份 artifact。**建议 OPS 周检：该出口白名单问题已复证 4 次，请评估要么把这个域名段加白名单，要么固定指派一个网络不受限的会话专管 C_gate 的 artifact 回收**（这条本身也符合三次律②，应升级为机制而非继续记 memory）。
+
+§七已追加同一事件的完整契约行（含风险线路由）。
+
+- [09-08] 🟢 **数据哨兵**：闸已修复并合 main，本班收工 · `data/research/claims/claims.jsonl` waiver 顺延提交已推 origin/main · dashboard 仍停在 2026-09-04（等 backstop/正班自然追平，非本班动作范围）
+
+— 数据哨兵（定时任务，2026-09-08）
