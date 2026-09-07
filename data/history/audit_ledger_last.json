@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-09-04",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 33,
+ "lines": 34,
  "runs": [
   {
    "session": "2026-09-04",
@@ -81,13 +81,25 @@
     "L2 universe_quality degraded"
    ],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5631
+   "universe_rows": 5631,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-04",
+   "code_sha": "0fdf756",
+   "trigger": "schedule",
+   "violations": [],
+   "warnings": [
+    "L2 universe_quality degraded"
+   ],
+   "fund_fail_rate": 0.0,
+   "universe_rows": 5610
   }
  ],
  "violations": 0,
- "warnings": 15,
+ "warnings": 16,
  "top": [
-  "L6 2026-09-04: 6 lines (re-run; both happened, not a violation)"
+  "L6 2026-09-04: 7 lines (re-run; both happened, not a violation)"
  ],
  "ok": true
 }
