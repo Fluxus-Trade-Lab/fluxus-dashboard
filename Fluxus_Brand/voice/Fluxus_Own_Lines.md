@@ -24,7 +24,7 @@
 **3** ⭐⭐
 - 原话:「现在看不清晰,因为市场本身就不清晰。」
 - 打磨:**「看不清,是因为它本来就不清。」**
-- EN: **"It isn't unclear to me. It's unclear."**
+- EN: **"I can't see it clearly because the market isn't clear."**
 
 **4** ⭐
 - 原话:「我的视角都是大一点的模糊视角 而且变得也快」
@@ -34,7 +34,7 @@
 **5** ⭐⭐
 - 原话:「对啊 我讲的也模糊 / 没有硬数据边界条件」
 - 打磨:**「我讲得也模糊,因为我没有硬边界。谁说自己有,谁就是在卖东西。」**
-- EN: **"My version is vague too. I don't have hard boundaries. Anyone who says they do is selling something."**
+- EN: **"My version is vague too. I don't have hard boundaries."**
 
 ---
 
@@ -53,7 +53,7 @@
 **8** ⭐
 - 原话:「就是矮个子里拔高个儿 市场上还在均线上的没几个」
 - 打磨:**「这不是选强的,这是矮个子里拔高个儿。」**
-- EN: **"This isn't picking winners. This is picking the tallest man in a room of short men."**
+- EN: **"It's picking the tallest man in a room of short men. Not many are still above their moving average."**
 
 **9** ⭐
 - 原话:「多做多错」
@@ -72,7 +72,7 @@
 **11** ⭐⭐
 - 原话:「负面情绪也是有极值的」
 - 打磨:**「负面情绪也有极值。所有东西都有。」**
-- EN: **"Negative sentiment has a maximum too. Everything does."**
+- EN: **"Negative sentiment has a maximum too."**
 
 **12** ⭐⭐
 - 原话:「坏消息一来就是一堆一堆的来 / 而每一个都会有非零的概率发生」
@@ -140,7 +140,7 @@
 **23** ⭐⭐⭐ launchpad
 - 原话:「最后上升前的那个下跌就是launchpad,给地面一个结实的回踩就可以冲出去」
 - 打磨:**「起飞前的最后一跌不是失败,是发射台。脚得先结结实实踩到地上。」**
-- EN: **"The last drop before it runs isn't the failure. It's the launchpad. You have to hit the ground hard before you can leave it."**
+- EN: **"The last drop before it runs is the launchpad. Hit the ground hard enough and you can leave it."**
 
 **24** ⭐⭐⭐ 这条是给所有新手的
 - 原话:「特别混沌,直到有一天你就做同样的事情同样的策略,然后突然就赚大了。」
@@ -174,7 +174,7 @@
 **29** ⭐⭐⭐
 - 原话:「我现在还时不时micromanage 就心态上的问题 有时候不必要」
 - 打磨:**「我到现在还会去微操。那不是技术问题,是心态问题,而且大部分时候没必要。」**
-- EN: **"I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me."**
+- EN: **"I still micromanage positions. It's a temperament thing, and most of the time it's unnecessary."**
 
 **30** ⭐⭐
 - 原话:「我也不在乎对错 / 我就亏一点点」
@@ -221,7 +221,7 @@
 **37** ⭐⭐
 - 原话:「大多时候就是基础的routine准备工作做足。buy checklist, sell rules, IF THEN ELSE, etc」
 - 打磨:**「大多数时候赢的不是灵感,是准备:买入清单、卖出规则、如果就。」**
-- EN: **"Most of it isn't insight. It's homework — a buy checklist, sell rules, if-then-else."**
+- EN: **"Most of it is homework. A buy checklist, sell rules, if-then-else."**
 
 **38** ⭐⭐
 - 原话:「那你可不可以跟着已知的交易系统去判别市场」
@@ -256,7 +256,7 @@
 **42** ⭐⭐⭐
 - 原话:「我基本不关注这个。基本面已经有机构帮我做了筛检…我不关心。只关心价格。但我当然会关心谁在买卖,因为可以预测情绪和他们未来可能会走的招数」
 - 打磨:**「基本面已经有人替我筛过了,我不关心。我只关心价格,以及谁在买卖——因为那能告诉我他们下一步会怎么走。」**
-- EN: **"Somebody already screened the fundamentals for me, so I don't watch them. I watch price, and who is doing the buying and selling — because that tells me what they have to do next."**
+- EN: **"Somebody already screened the fundamentals for me, so I don't watch them. I watch price, and who is doing the buying and selling. That tells me what they have to do next."**
 
 **43** ⭐⭐
 - 原话:「我就轮动两个字,至于为啥他们动,我不是很在乎」
@@ -357,7 +357,7 @@
 **61** ⭐⭐
 - 原话:「做的好一个,就可以有自己的方法论 / 就可以复制 / 重复」
 - 打磨:**「把一个做透,你就有了方法论。有了方法论,才谈得上复制。」**
-- EN: **"Get one thing all the way right and you have a method. Only then does repeating it mean anything."**
+- EN: **"Get one thing all the way right and you have a method. Then you can repeat it."**
 
 **62** ⭐⭐
 - 原话:「所以保留自己的想法在这个交易过程中也是很重要的。其实这些price cycle,price action都是一次次出现过的。得经历过才会有一些身体上的反应」
@@ -426,7 +426,7 @@
 **74** ⭐⭐
 - 原话:「bullish要有bullish follow through,bearish也是一样的啊 / 小级别的变动只是告诉你哦 有人买了/有人空头回补了」
 - 打磨:**「看多要有看多的后续,看空也一样。小级别的波动只告诉你一件事:有人买了,或者有人回补了。」**
-- EN: **"Bullish needs bullish follow-through. So does bearish. A small move only tells you one thing — somebody bought, or somebody covered."**
+- EN: **"Bullish needs bullish follow-through. So does bearish. A small move only tells you one thing. Somebody bought."**
 
 **75** ⭐⭐ 顶/底的原句(声音圣经那句招牌的出处)
 - 原话:「底部就是一个event,而顶部是一个过程。底部一下下就过去了,顶部要花时间」
@@ -500,7 +500,7 @@
 **86** ⭐⭐
 - 原话:「入场就要期待被打止损。呵呵」
 - 打磨:**「入场的那一刻,就该期待被打止损。」**
-- EN: **"Enter every trade expecting to get stopped. Anything else is a bonus."**
+- EN: **"Enter every trade expecting to get stopped."**
 
 **87** ⭐⭐⭐ 心理学观察,几乎没人讲过
 - 原话:「没被打止损 和开始盈利 看似是一样的意思。但心态上是完全不同的。」
@@ -731,7 +731,7 @@
 **129** ⭐⭐⭐ 围棋复盘
 - 原话:「下围棋里每次棋下完都会和对手复盘的」+「多数人都经历过好几轮周期,不过还是水平上还是原地踏步」
 - 打磨:**「围棋手每盘下完都复盘。多数股民经历了好几轮周期,水平在原地踏步——因为他们只翻篇,不复盘。」**
-- EN: **"Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started — they turn the page, but never read it back."**
+- EN: **"Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started."**
 
 **130** ⭐⭐⭐
 - 原话:「你知道自己的那个痛点在那个位置,市场大部分时候都会去刺探一下 就是这样的不舒服」
@@ -750,7 +750,7 @@
 **132** ⭐⭐⭐ 对整个恐惧贩卖行业的一句判词
 - 原话:「贩卖恐惧和fomo都是生意哈哈」+「而且通常贩卖恐惧原自自己亲身经历,然后卖多了自己也会信」
 - 打磨:**「贩卖恐惧和贩卖FOMO都是生意。恐惧通常源自卖家的亲身经历——卖着卖着,自己也信了。」**
-- EN: **"Selling fear is a business, and so is selling FOMO. The fear is usually autobiographical — and after enough sales, the seller believes it too."**
+- EN: **"Selling fear is a business, and so is selling FOMO. The fear usually comes from something that actually happened to the seller. Sell it enough times and he believes it too."**
 
 **133** ⭐⭐
 - 原话:「卖不好就更名改姓继续」
@@ -760,7 +760,7 @@
 **134** ⭐⭐
 - 原话:「技术面大家水平都那样,都是明牌」
 - 打磨:**「技术面是明牌,大家水平都那样。桌上的差距从来不在牌面。」**
-- EN: **"The charts are face-up cards. Everyone reads them about the same. The edge was never in the cards."**
+- EN: **"The charts are face-up cards. Everyone reads them about the same."**
 
 **135** ⭐⭐
 - 原话:「大部分赚钱的都是时代红利」
@@ -880,7 +880,7 @@
 **153** ⭐⭐⭐ 这条是真洞见,不只是抖机灵
 - 原句(Gekko):*"It's a zero sum game. Somebody wins, somebody loses."*
 - **拆:** 长期看它不是零和,是负和 —— 手续费、点差、税。所以「不做」本身就是正期望。
-- EN: **"Long run it isn't zero sum, it's negative sum — fees, spread, tax. Which makes doing nothing a positive-expectancy move."**
+- EN: **"Long run it's negative sum. Fees, spread, tax."**
 
 **154** ⭐⭐
 - 原句(Lou Mannheim):*"The main thing about money is that it makes you do things you don't want to do."*
@@ -962,7 +962,7 @@
 **168** ⭐⭐
 - 原句(《让子弹飞》):「站着把钱挣了」
 - **拆:** 在这个市场里站着挣钱只有一个姿势:止损写在入场之前。
-- EN: **"There's exactly one way to make money standing up here — write the stop before the entry."**
+- EN: **"Write the stop before the entry."**
 
 **169** ⭐⭐ 现象,不是台词(中文独有的「市场迷信」标本)
 - 出处:《大时代》**丁蟹效应** —— 剧集重播就跌,港媒讨论了三十年
@@ -1029,7 +1029,7 @@
 **179** ⭐⭐⭐ 全批最高的一条
 - 原句(《倚天屠龙记》九阳真经):「他强由他强,清风拂山岗」
 - **拆:** 波动是它的,仓位是我的。这两件事一直是分开的,只是大多数人把它们绑在一起了。
-- EN: **"The volatility is theirs. The size is mine. Those were always two different things — most people just tie them together."**
+- EN: **"The volatility is theirs. The size is mine."**
 
 **180** ⭐⭐⭐
 - 原句(《沙丘》):*"Fear is the mind-killer."*
@@ -1044,7 +1044,7 @@
 **182** ⭐⭐
 - 原句(《义海雄风》):*"You can't handle the truth!"*
 - **拆:** 你扛不住的不是真相,是波动。真相谁都扛得住 —— 它不上杠杆。
-- EN: **"It's not the truth you can't handle. It's the volatility. The truth is fine — it isn't levered."**
+- EN: **"It's not the truth you can't handle. It's the volatility."**
 
 ## 十一、回撤与生存
 
