@@ -136,6 +136,21 @@ KNOWN_UNWIRED: dict[str, tuple[str, str, str]] = {
         "而它们是这份数据自己就能证明的自相矛盾，不需要任何外部真值",
     ),
 
+    # 第四条「作者当晚给自己的工具打的欠条」，理由与前三条相同，同样说在明处。
+    # 它也**在跑**：`pipeline/tests/test_audit_progress.py` 里五条 test_real_archive_*
+    # 拿真归档跑它（tests.yml 每次 push 跑 `pytest pipeline/tests`）。这张表数的是
+    # **生产调用**，而它没有：该调它的位置是 `pipeline/tools/delayed_ep_scan.py`
+    # 追完 `data/history/delayed_ep_log.csv` 之后自查一次 —— 那份归档归 DATA ALEX。
+    # W2 会在有人接上的那天逼我删掉这条。
+    "audit_progress": (
+        "DATA ALEX", "2026-09-08",
+        "写归档的那一侧只会问「这一场和上一场一样吗」，而 2026-09-02 那一整场是 09-01 的"
+        "复制品却答得出「不一样」：十列状态与价格 36/36 逐位相同，只有 today_relvol "
+        "（36/36）和 recent_range_pct（19/36）在第 4~5 位小数上动了 —— 供应商修订了上一场的"
+        "成交量，同一根 bar 被重抓时带着微幅修订回来。计数器 days_since 那天 36/36 是 0，"
+        "而它跟价格无关、只要真收了一根新 bar 就必须 +1",
+    ),
+
     # 第三条「作者当晚给自己的工具打的欠条」，理由与上面两条相同，同样说在明处。
     # 它也**在跑**：`pipeline/tests/test_audit_stranded.py::test_real_repo_reports_a_
     # denominator_and_never_silently_empty` 拿真仓库跑它，而 tests.yml 是 on: push /
