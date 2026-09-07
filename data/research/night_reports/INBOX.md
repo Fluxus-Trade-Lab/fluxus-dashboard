@@ -1772,3 +1772,81 @@ origin 上没有任何 ref，最后一次 commit 是 08-22**。已按铁律一�
 （工具 35 条测试、17 个变异体全杀。`python3 -m pipeline.tools.audit_progress --sweep`）
 
 — Nighty Zac
+
+## [2026-09-08 07:2x–08:0x JST] Plumber Joe —— 休市日巡检：数据全绿；`fbclock` 我替它做了验收，读数是 2073 passed
+
+> ET 2026-09-07 18:26（**Labor Day 休市**）· last completed session **2026-09-04** · 昨夜无排程班（周末+假日），属正常。
+> 管线全绿：`audit_archives` 0 violations / 0 warnings（session 2026-09-04）· 必备块 ALL PRESENT ·
+> `quality.status=ok` · `market_health.stale=false` · universe 5,631 行（**5,563 支 bar_date=09-04**，空 58，正常带）·
+> themes 56 · `theme_ladder.as_of=2026-09-04`（09-05 那个「ladder 落后一天」的 bug 没有复发）· `tick_cycle.stale_days=0`。
+
+### ① `auto/night-20260905-805da3-fbclock` —— 第 5 晚未合。本班替它跑完了验收，请谁来合
+
+Zac 09-08 写「建议合 y」。按规矩我没有照单全收，**用我自己的证据重验了一遍**，三条都成立：
+
+1. **main 上真的是红的**：`tests/test_no_naive_clock.py` 现场跑 → FAILED，3 处 offender
+   全在 `pipeline/tools/federation_board.py`（:16 `datetime.datetime.now()` · :504 `date.today()` · :551 `date.today()`）。
+2. **不是过期，是真滞留**：`git log $(merge-base)..origin/main -- <文件>` →
+   `pipeline/tools/federation_board.py` **0 次**、`scripts/gex_levels.py` **0 次**。main 自分叉后一次都没碰过。
+3. **分支是green的**：同一条测试在分支上 **1 passed**；分支全量
+   `pytest pipeline/tests tests --ignore=tests/gex` → **2073 passed, 6 skipped, 0 failed**（138s）。
+
+⚠️ 一条**给下一个跑这套测试的人**的说明，免得又被吓回去：`tests/gex/` 在本机会报
+`ModuleNotFoundError: No module named 'jinja2'` 的 collection error——**那是本机缺可选依赖，不是代码**。
+同口径下 **main 有 5 个 collection error，分支只有 4 个**（分支 tip `78e2c50e` 就是修这个的）——
+分支在这一维上也是**严格更好**，不是更差。
+
+**我不合它**：`pipeline/tools/federation_board.py` / `scripts/gex_levels.py` 都在 safe-merge 白名单外，
+按分级修复②我只验收不落地。**验收已完成，缺的只是一个有权的人执行一行**：
+
+```
+git push origin origin/auto/night-20260905-805da3-fbclock:main
+```
+
+它挡着的是 `§六.6` 那条「先合 fbclock 再改 workflow」的顺序闸，也就是 **614 条测试进 CI**。
+连续五晚了——**这不是没人发现，是发现的人没有落地权**（`pitfall_branch_work_is_not_delivered` 的原形）。
+
+### ② 🔴 09-07 云内容产线跑了，但 INBOX 零留痕 —— 归 OPS
+
+产线**确实跑了**：`71cdc9a9 content(daily): 09-07 备稿 B 档`（09-07 09:34，改 `data/content/today_draft.md` +63/−29）。
+但整个 INBOX **没有一条 `[09-07] 夜间产线（云）` 的开工行或收工行**（grep 计数 0）。
+
+⚠️ 这次和 09-03 那次**不是同一个形状，别照搬那次的结论**。09-03 是「班次被冻住、物理上无法留痕」
+（`pitfall_my_gate_had_no_resolution`）；**这次班次跑完了、产出落了 main，只是没写那一行**——
+是真·留痕缺失，闸这次没报是因为没人看，不是因为分辨率不够。
+（09-08 今天的那班还没到点，10:07 JST 才跑，不计入。）
+
+### ③ 早报数字抽查（Gate）—— ✅ 对上
+
+抽 `data/content/today_draft.md` 的「关卡 4/5：W6 已发 4 件（09-01 ×2、09-03 ×2）」。
+现场核权威源 `git show origin/main:data/content/posts.csv`：
+09-01 ARC + QT，09-03 ARC ×2，区间 08-31…09-06 共 **4** 条。**逐日逐条一致。**
+（memory 里记的「09-05 首次抽查不符 1/2」这轮没有复发。）
+
+### ④ 两条低烈度的，只登记不修
+
+- **`data/output/sentiment.json` 停在 2026-08-08**（30 天）。查过了：生产者 `pipeline/macro/sentiment.py`
+  **不在 `run_all` 里、不在 workflow 里、前端零消费、不在 `check_required_blocks` 的必备块里**。
+  `Fluxus_Brand/visual/2026-08-09_PAUSE_AND_ARCHITECTURE.md` 早在 08-09 就写过「每天在算，没人看」——
+  现在它连算都不算了。**这是一个死文件，不是一条坏数据**：没有页面因此显示陈旧内容。
+  建议数据端择日删，别再让它每天占一格新鲜度检查的假警报。
+- **`schema_snapshot --check` 有漂移但 exit 0**：`theme_ladder.json` / `tick_cycle.json` 两个新文件 +
+  `breadth`/`groups`/`universe` 的若干 added 字段，**纯新增、零 removed**，所以不拦闸。
+  基线该跟一次 `--update`——09-05 数据哨兵那两条契约行里说过「下一次拿到完整真实 output 再做完整版」，这笔还欠着。
+
+### 待合分支盘点（`audit_stranded`，本班独立跑，与 Zac 09-08 的读数一致）
+
+| 状态 | 分支 | 一句话 |
+|---|---|---|
+| 🔴 真滞留 | `auto/night-20260905-805da3-fbclock` | 55 行 · **本班已验收 2073 passed** · 建议合 y |
+| 🔴 真滞留 | `design/marketing-visual` | 2219 行 · MR. FLUXUS 保命副本 · 归视觉线，不催 |
+| 🟡 过期 | `night-20260831-2a66fb` / `night-20260903-5cea87` / `805da3-metricsrc` / `20260906-8acfa1` / `fix/alex-stockbee-s2-prev-volume` | 缺的行全落在 main 自分叉后改过的文件里 —— **别写「建议合」** |
+| ✅ 垃圾 | `auto/vol-dedup-2026-09-04` / `feat/morning-three-pages` / `voice/deslop-ammo` | 内容已全在 main（⚠️ `feat/morning-three-pages` 是主工作树当前分支，删远端前先看一眼） |
+
+### 门铃待按（本班只列不按）
+
+- **→ 有 `pipeline/tools/` 落地权的线（OPS Fable 或 Andy）**：`fbclock` 验收完了，见 ①，一行命令。
+- **→ OPS Fable**：09-07 云产线零留痕，见 ②（云 routine 归 OPS 修）。
+- **→ DATA ALEX**：`sentiment.json` 死文件请择日删，见 ④。
+
+— Plumber Joe（定时任务，2026-09-08）
