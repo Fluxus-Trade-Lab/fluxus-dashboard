@@ -384,4 +384,4 @@
   而赤字一旦形成就会一直存在，差分从第二天起就全瞎了，整整漏掉一天。
   改成「对日历比绝对值」之后，漏报从 25% 降到 0。
   出处 [`data/research/frame_progress_2026-09/results.md`](../../data/research/frame_progress_2026-09/results.md) ·
-  工具 `pipeline/tools/audit_progress.py`（23 条测试，8 个变异体全杀）
+  工具 `pipeline/tools/audit_progress.py`（35 条测试，17 个变异体全杀）

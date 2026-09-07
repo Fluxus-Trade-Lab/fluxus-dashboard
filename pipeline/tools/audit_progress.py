@@ -68,7 +68,26 @@ P3 全库只响 **1 次 / 836 次相邻转移**：CORT 的 base_high 在 08-17
 ⚠️ 反过来说清楚本闸**看不见**什么：它只说「帧对不对得上日历」，
 不说「状态错在哪」。`held` 和 `contracting` 吃的是当天的 high/low，归档里没有存。
 
+## 第二个模式：`--sweep` —— 不需要日历、不需要计数器、不需要懂这张表
+
+P1 要一份交易日历，P3 要知道哪一列是累积极值 —— 两条都得懂这张表。
+`--sweep` 不需要：它只问「**这一场有多少列，整列逐位重复了上一场？**」
+
+⚠️ **必须逐列问，不能逐行问。** 同一个查法写成「整行逐位相同的行占比」，
+在 2026-09-02 那一对上报 **0.0%** —— 16 个非键列里有 2 列带着供应商修订回来，
+**整行比法就此全废**。逐列问的话，那天是 **14/16 = 87.5%**。
+
+全库实测（`data/history` 的 8 个归档、**208** 个相邻场对，键列不计）：
+中位 14.3% · P95 37.5% · **最大 87.5% = `delayed_ep_log` 2026-09-02**，
+与第二名（`shortlist_log` 08-28 的 50.0%）差 **37.5 个百分点**。
+**除它之外没有第二个整场重放。**
+
+⚠️ 所以 `--sweep` **只报不判**，退出码永远 0：全库只有**一个**已知阳性，
+拿它凑一个阈值就是过拟合 —— 「没有先验证一个检查能报出阳性，就不该信它的阴性」
+在这里的形态是「只有一个阳性，就不该信它划出来的线」。它是给人读的排行，不是闸。
+
 Run:  python -m pipeline.tools.audit_progress [归档路径]
+      python -m pipeline.tools.audit_progress --sweep [目录]
       退出码 0=无违规 · 1=有违规 · 2=文件不在（本闸没有结论，不是绿）
 """
 from __future__ import annotations
@@ -240,8 +259,90 @@ def render(res: Dict[str, Any]) -> str:
     return "\n".join(L)
 
 
+# --sweep 的口径表：(文件名, 场次列, 行键列)。
+# ticker_events 的行键是 (ticker, screener) —— 同一天同一只票会被多个筛子各记一行。
+SWEEP: Sequence[tuple] = (
+    ("asset_signals.csv", "date", ("ticker",)),
+    ("delayed_ep_log.csv", "as_of", ("ticker",)),
+    ("groups_archive.csv", "date", ("group",)),
+    ("leaders_log.csv", "date", ("ticker",)),
+    ("momentum97_shadow.csv", "date", ("ticker",)),
+    ("shortlist_log.csv", "date", ("ticker",)),
+    ("watchlist_hits.csv", "date", ("ticker",)),
+    ("ticker_events.csv", "date", ("ticker", "screener")),
+)
+MIN_KEYS = 5            # 共同键太少时占比是噪声，不进排行
+
+
+def frozen_columns(rows: Sequence[Dict[str, str]], date_col: str,
+                   key_cols: Sequence[str]) -> List[Dict[str, Any]]:
+    """每对相邻场：有多少列在**全部共同键**上逐位重复了上一场。
+
+    逐列，不逐行 —— 见模块 docstring 里 2026-09-02 那个 0.0% vs 87.5%。
+
+    ⚠️ **键列不计**：它们按定义逐场相同，算进去就是白送的分母上的分子，
+    而且各归档的键列数不一样，会让归档之间不可比。
+    """
+    cols = [c for c in rows[0] if c != date_col and c not in key_cols]
+    by: Dict[str, Dict[tuple, Dict[str, str]]] = defaultdict(dict)
+    for r in rows:
+        by[r[date_col]][tuple(r.get(k, "") for k in key_cols)] = r
+    out = []
+    for a, b in zip(sorted(by), sorted(by)[1:]):
+        common = set(by[a]) & set(by[b])
+        if len(common) < MIN_KEYS:
+            continue
+        frozen = [c for c in cols
+                  if all(by[a][k][c] == by[b][k][c] for k in common)]
+        out.append({"session": b, "prev": a, "frozen": len(frozen),
+                    "columns": len(cols), "keys": len(common),
+                    "share": len(frozen) / len(cols)})
+    return out
+
+
+def sweep(history: Path) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
+    for fn, date_col, key_cols in SWEEP:
+        p = history / fn
+        if not p.exists():
+            continue
+        data = _rows(p)
+        if not data or date_col not in data[0]:
+            continue
+        for x in frozen_columns(data, date_col, key_cols):
+            x["archive"] = fn
+            rows.append(x)
+    rows.sort(key=lambda x: -x["share"])
+    return rows
+
+
+def render_sweep(rows: List[Dict[str, Any]], top: int = 8) -> str:
+    if not rows:
+        return "没有可比的相邻场对 —— 本次扫描没有结论，不是绿。"
+    shares = sorted(x["share"] for x in rows)
+    med = shares[len(shares) // 2]
+    L = ["整场重复度 —— 这一场有多少**列**逐位重复了上一场（逐列，不逐行）", ""]
+    L.append(f"  {len(rows)} 个相邻场对 · 中位 {100 * med:.1f}% · "
+             f"P95 {100 * shares[int(.95 * len(shares))]:.1f}% · "
+             f"最大 {100 * shares[-1]:.1f}%")
+    gap = 100 * (rows[0]["share"] - rows[1]["share"]) if len(rows) > 1 else 0.0
+    L.append(f"  第一名与第二名差 {gap:.1f} 个百分点")
+    L.append("")
+    for x in rows[:top]:
+        L.append(f"  {100 * x['share']:>5.1f}%  {x['archive']:<22} {x['session']}  "
+                 f"{x['frozen']}/{x['columns']} 列  ({x['keys']} 个共同键)")
+    L.append("")
+    L.append("只报不判：全库只有一个已知阳性（delayed_ep_log 2026-09-02），"
+             "拿它凑阈值就是过拟合。这是给人读的排行，不是闸。")
+    return "\n".join(L)
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     argv = sys.argv[1:] if argv is None else list(argv)
+    if argv and argv[0] == "--sweep":
+        d = Path(argv[1]) if len(argv) > 1 else ARCHIVE.parent
+        print(render_sweep(sweep(d)))
+        return 0
     path = Path(argv[0]) if argv else ARCHIVE
     if not path.exists():
         print(f"归档不存在: {path} —— 本闸没有结论，不是绿也不是红", file=sys.stderr)

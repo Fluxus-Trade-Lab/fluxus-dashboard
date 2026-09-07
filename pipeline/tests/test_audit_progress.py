@@ -353,3 +353,84 @@ def test_real_archive_august_rows_had_moving_prices_so_they_are_not_p2():
 
 def test_real_archive_has_exactly_these_five_violations():
     assert _codes(_real()) == ["P1", "P1", "P1", "P2", "P3"]
+
+
+# ---------- --sweep：不需要日历、不需要计数器、不需要懂这张表 ----------
+
+def _clean6():
+    """--sweep 要求共同键 ≥ MIN_KEYS(5)，所以这一组用 6 只票。"""
+    out = []
+    for i, t in enumerate(("AAA", "BBB", "CCC", "DDD", "EEE", "FFF")):
+        for j, d in enumerate(SESSIONS):
+            out.append(_row(d, t, _expected(d), round(10 + i + 0.5 * j, 2),
+                            round(20 + i + j, 2), relvol=str(1.0 + 0.01 * j)))
+    return out
+
+
+def _sweep_rows(rows, date_col="as_of", key=("ticker",)):
+    return ap.frozen_columns(rows, date_col, key)
+
+
+def test_sweep_counts_a_column_frozen_only_when_every_key_repeats(tmp_path):
+    rows = _clean6()
+    prev = {r["ticker"]: r for r in rows if r["as_of"] == "2026-09-02"}
+    for r in rows:                       # 只冻 AAA 的 close —— 不算这一列冻住
+        if r["as_of"] == "2026-09-03" and r["ticker"] == "AAA":
+            r["close"] = prev["AAA"]["close"]
+    hit = [x for x in _sweep_rows(rows) if x["session"] == "2026-09-03"][0]
+    assert hit["frozen"] == 1            # 只有 ep_date 一列本来就恒定
+    assert hit["columns"] == 5           # 6 列减掉键列 ticker —— 键列按定义就冻着
+    assert hit["keys"] == 6
+
+
+def test_sweep_column_view_sees_a_replay_that_the_row_view_reports_as_zero(tmp_path):
+    """本文件里最要紧的对照：同一份数据，逐行比 0%、逐列比 80%。
+
+    这就是 2026-09-02 的形状 —— 16 个非键列里 2 列带着供应商修订回来，
+    整行比法从此全废，而整列比法还看得见 14/16。
+    """
+    rows = _clean6()
+    prev = {r["ticker"]: r for r in rows if r["as_of"] == "2026-09-02"}
+    for r in rows:
+        if r["as_of"] == "2026-09-03":
+            for c in ("days_since", "close", "base_high"):
+                r[c] = prev[r["ticker"]][c]
+            r["today_relvol"] = str(float(prev[r["ticker"]]["today_relvol"]) * 1.464)
+
+    cols = [c for c in HEADER if c != "as_of"]
+    a = {r["ticker"]: r for r in rows if r["as_of"] == "2026-09-02"}
+    b = {r["ticker"]: r for r in rows if r["as_of"] == "2026-09-03"}
+    identical_rows = sum(all(a[t][c] == b[t][c] for c in cols) for t in a)
+    assert identical_rows == 0                     # ← 逐行比法：0%
+
+    hit = [x for x in _sweep_rows(rows) if x["session"] == "2026-09-03"][0]
+    assert hit["frozen"] == 4 and hit["columns"] == 5   # ← 逐列比法：4/5
+    assert hit["share"] > 0.75
+
+
+def test_sweep_skips_pairs_with_too_few_common_keys(tmp_path):
+    rows = [_row("2026-09-01", "AAA", 12, 10.0, 20.0),
+            _row("2026-09-02", "AAA", 13, 11.0, 21.0)]
+    assert _sweep_rows(rows) == []                 # 1 个共同键 < MIN_KEYS
+
+
+def test_sweep_on_the_real_archives_puts_2026_09_02_first_by_a_wide_margin():
+    hist = ap.ARCHIVE.parent
+    if not (hist / "delayed_ep_log.csv").exists():
+        pytest.skip("归档不在这棵树上")
+    rows = ap.sweep(hist)
+    top = rows[0]
+    assert top["archive"] == "delayed_ep_log.csv" and top["session"] == "2026-09-02"
+    assert top["frozen"] == 14 and top["columns"] == 16
+    # 断层写死（实测 37.5pp）：塌到 20pp 以内就说明这个读法不再有分辨率，该有人看一眼
+    assert (top["share"] - rows[1]["share"]) > 0.20
+
+
+def test_sweep_reports_and_never_gates(tmp_path):
+    """只报不判：阈值是拿唯一一个阳性凑的，所以退出码永远 0。"""
+    assert ap.main(["--sweep", str(ap.ARCHIVE.parent)]) == 0
+
+
+def test_sweep_says_so_when_there_is_nothing_to_compare(tmp_path):
+    out = ap.render_sweep([])
+    assert "没有结论" in out and "不是绿" in out
