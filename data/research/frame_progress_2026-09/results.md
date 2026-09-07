@@ -154,3 +154,22 @@
 
 凡是每场必须 +1 的计数器、每场只增不减的累积极值（最高价、最大回撤、累计行数、seq 号），
 都适用同一把尺子。
+
+---
+
+## 八、这把尺子不是免费的 —— 一次自找的阴性
+
+写完就想把它推到别的归档上。全库扫了一遍列名，`shortlist_log.csv` 有 `roster_streak`，
+名字正对上「计数器」。照同一条规则量：**60 个相邻对里 58 个「违规」。**
+
+不是归档坏了，是**我把列名当成了语义**。
+`roster_streak` 数的是「Sugar Babies 名册连续上榜次数」（[`name_cards.py:112`](../../../pipeline/screeners/name_cards.py)），
+不是「这份归档过了几场」；全库 133 行里它有 **117 行是 0**，另有 5/8/9/10 这些值。
+它根本不逐场递增。
+
+**所以判据要收紧成一句**：这把尺子要的不是「名字里带 count / streak / days 的列」，
+是**增量规则已经被确立的列** —— `days_since = len(post)` 是从生产代码里读出来的定义
+（[`delayed_ep_scan.py:128`](../../../pipeline/tools/delayed_ep_scan.py)），不是从列名猜的。
+
+`audit_progress` 因此**只指向 `delayed_ep_log.csv` 一个归档**，要加新归档得先去代码里确认它的增量规则。
+（`universe_quality.csv` 的 `days_since_52wh`、`bars_stale` 是下一批候选，本轮没查它们的定义，**没查就不加**。）
