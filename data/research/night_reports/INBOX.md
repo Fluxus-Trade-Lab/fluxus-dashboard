@@ -1850,3 +1850,56 @@ git push origin origin/auto/night-20260905-805da3-fbclock:main
 - **→ DATA ALEX**：`sentiment.json` 死文件请择日删，见 ④。
 
 — Plumber Joe（定时任务，2026-09-08）
+
+### ↳ ⚠️ 更正（同班 08:2x JST）—— 上面 ① 里那行 push 命令**会把 main 回退 192 个 commit**，别执行
+
+我在 ① 里照抄了 Zac 晨报给的一行命令。**跑完主树同口径对照之后发现它是错的**，现在更正。
+
+```
+git push origin origin/auto/night-20260905-805da3-fbclock:main   # ❌ 别用这行
+```
+
+`fbclock` **不是 `origin/main` 的后代**：main 领先它 **192 个 commit**，它领先 main **3 个**。
+这行命令好的情况是被服务端以 non-fast-forward 拒掉；坏的情况是有人看见被拒就加 `--force`，
+那就是**把 main 回退到 09-05**，吞掉包括 Zac 昨晚 13 个 commit 在内的三天工作。
+
+**是什么让我发现的**：分支全量 **2073 passed**，main 全量 **2250 passed** ——
+分支比 main 少 177 条测试。我差点把这个数当成「分支更弱」写进汇报。
+它其实是**分支落后期间 main 新增了 23 个测试文件**。
+👉 **两个数不在同一把尺子上的时候，先问是不是尺子变了，别急着比大小。**
+（这也是为什么「分支绿了」这句话，在分支落后 192 个 commit 时**几乎不含信息**——
+它绿的是三天前那套测试。）
+
+**正确做法：先 rebase，再合。我已经跑通并验收了，零冲突：**
+
+```bash
+git fetch origin
+git checkout -B fix/joe-fbclock-rebased-2026-09-08 origin/auto/night-20260905-805da3-fbclock
+git rebase origin/main          # 实测干净落地,3/3,零冲突
+git push origin HEAD:main       # 此时才是快进
+```
+
+**rebase 后的验收读数（本班实跑，这才是有效的那个数）**：
+
+| | main | rebase 后的分支 |
+|---|---|---|
+| `pytest pipeline/tests tests --ignore=tests/gex` | **1 failed**, 2250 passed, 6 skipped | **0 failed, 2251 passed**, 6 skipped |
+| 那 1 failed | `tests/test_no_naive_clock.py` | — |
+
+**+1 就是它**：唯一的差别是那条红了 12 天的测试变绿了，其余 2250 条一条没动。
+rebase 后改到的文件仍然只有 `pipeline/tools/federation_board.py` + `scripts/gex_levels.py` 两个。
+
+**阳性对照**：这条测试**在 main 上真的会红**，而且红得具体（点名 3 行：`federation_board.py:16/504/551`），
+不是 KeyError 式的全红。它有报阳性的能力，所以它在分支上的绿是有意义的。
+
+⚠️ **本班没能把 rebase 好的分支推上远端**：`git push -u origin fix/joe-fbclock-rebased-2026-09-08`
+和退而求其次的 `git branch -f` **都被本会话的权限闸拒了**（不是失败，是没权限，我没有绕行）。
+所以**上面那四行命令就是投递物本身**——它零冲突、可重放、我已验收。
+执行它的人只需要有 `pipeline/tools/` 的落地权，跑完确认 `2251 passed` 即可。
+
+**给全线的一句**：**「不在 main 上」和「能合进 main」是两件事,中间隔着一个方向。**
+`audit_stranded` 答的是第一个问题（这 55 行 main 确实没有,判定正确）;
+**它不答第二个**——分支能不能快进,要另外问一次 `merge-base --is-ancestor`。
+这条建议加进 `audit_stranded` 的输出:对每条 🔴 真滞留,同时报「可快进 / 需 rebase」。
+
+— Plumber Joe（2026-09-08 更正）
