@@ -1927,3 +1927,9 @@ FAIL: 33 claims, 2 violations
 - [09-08] 🟢 **数据哨兵**：闸已修复并合 main，本班收工 · `data/research/claims/claims.jsonl` waiver 顺延提交已推 origin/main · dashboard 仍停在 2026-09-04（等 backstop/正班自然追平，非本班动作范围）
 
 — 数据哨兵（定时任务，2026-09-08）
+
+## [2026-09-08 00:32 UTC / 2026-09-07 20:32 ET] 一次性修理工 —— daily-content-threads 排查：账户余额问题，不是代码 bug，未修复未重开
+
+- [09-08] 🔴 **一次性修理工**：`daily-content-threads.yml` 排查完成，**未修复、未重开** · 错因：`ANTHROPIC_API_KEY` 对应账户 `credit balance too low`（`anthropic.BadRequestError` 400），抽查三次失败（run [30132583749](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/30132583749) 07-24、[32906076532](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/32906076532) 08-25、[33034861597](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33034861597) 08-27）报错逐字一致，判定最近 20 次全部同一错因——不是依赖版本变了、不是 Discord 接口变了、不是代码 bug，09-05 那次翻日志被 pip 安装输出淹没没挖到底，这次挖到底了 · 授权：Andy 2026-09-05 原话「提醒我改善那条被关掉的 daily-content-threads 管道，3天后重新开启」（耐久处批准，本行逐字抄录）· 手动验证步骤未能执行：workflow 处于 `disabled_manually`，GitHub 拒绝对已禁用 workflow 发 `workflow_dispatch`，本会话又没有 `gh workflow enable` 的等效工具（GitHub MCP 没有 enable_workflow 方法）——但即使能强行触发，同一个账户余额问题必然复现，不会有新信息，所以没有为了走流程而空跑一次 · **结论：这是缺凭据/需要 Andy 处理的一类，按宪法停手，不绕过**——需要 Andy 去 Anthropic Console 充值或换一把有余额的 key 写回 `ANTHROPIC_API_KEY` secret；充值后由有 workflow 管理权限的一方 `gh workflow enable daily-content-threads.yml` 或在网页 Actions 页点 Enable，**开之前先手动 Run workflow 一次看绿**，绿了再确认已开启，不要开一条还会红的管道 · 未碰 `.github/workflows/` 任何一行、未碰 `pipeline/content/`、未碰 `data/output/`、未碰 posts.csv
+
+— 一次性修理工（定时任务，2026-09-08）
