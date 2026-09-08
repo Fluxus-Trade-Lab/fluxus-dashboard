@@ -365,7 +365,14 @@ signal 的 **20 格归因表逐格准确、三重内部闭合，可用**；但 *
 — ⑦ Gate，2026-09-02（第 2 轮 · 过闸）
 
 ## decision
-（owns：Andy 本人）
+（owns：Andy 本人 —— 本节只做转录，AI 不加判断）
+
+- **[2026-09-08] V2 ❌ 否**（日推会话 09:5x，Andy 原话逐字）：
+  > 「挺ai的，就是说了几句话不知道在说什么」
+
+  被否的是 V2（入口 2 · 同名两表钩 · 「Every "performance by market condition" table has a hidden timestamp…」），
+  由日推站当天作为 C1 端上。判例已入 [`voice/verdicts.jsonl`](../../../voice/verdicts.jsonl)（第 3 条 rejected 级）。
+  **本包其余三条（V1/V3/V4）与旗舰未经他过目，status 仍为 `queued`，未随此条作废**——等他单独裁。
 
 ## performance
 （发布后回填）
