@@ -1939,3 +1939,19 @@ FAIL: 33 claims, 2 violations
 - [09-08] 🟢 **数据哨兵**：backstop 班 run [34193453121](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34193453121) 已 completed/success，commit `fff81d0`（chore: market data 2026-09-08）已落 origin/main，errors 为空，`universe_quality` degraded（非 severe，非阻断）、`no_downgrade` ok · dashboard 追平到 2026-09-04（09-05/06 周末、09-07 Labor Day 休市，09-08 交易日尚未收盘，09-04 即当前最近已完成交易日，属正常）· 上一班（第 1 班）诊断的 C_gate（risk-lamp waiver 到期）修复生效，闭环无需继续动作 · 未碰 Yahoo/Finviz 抓取一次，全程只验证不重抓
 
 — 数据哨兵（定时任务，2026-09-08）
+
+## [2026-09-08 22:16–22:46 UTC / 2026-09-08 18:16–18:46 ET] 数据哨兵 —— 第 3 班：正排程疑似丢弃，手动重跑追平，随后取消迟到 145 分钟的重复排程
+
+- [09-08] 🔴 **数据哨兵**：A_infra · 无 run · 已重试至第 3 班 · dashboard 停在 2026-09-04 · 下一步：手动重跑
+
+健康检查：`origin/main` 最新 market data commit 仍是 06:31 UTC 那次（第 2 班已确认覆盖 09-04 收盘）。此时 ET 18:16，09-08 收盘（16:00 ET）已过 2h16m；主排程 cron 是 `20 20 * * 1-5`（16:20 ET，08-31→09-05 由 Andy 从 21:30 提前 70 分钟，`.github/workflows/daily-data-update.yml` 注释可查），即 09-08 20:20 UTC 应已触发。`actions_list` 查 `daily-data-update.yml` 最近 run：完全没有 09-08 20:20Z 前后的记录——不是失败，是**排程没留下任何痕迹**，与工作流注释里记录的 08-27 那次「GitHub 直接丢弃排程」同一形状。当时已过 116 分钟且零记录，backstop（`30 1 * * 2-6`，次日 01:30 UTC）还要等约 3 小时；`failure_class` 工具需要 run id 才能分诊，这里连 run 都没有，按规则「账本里没这班记录」等价 A_infra 处理。
+
+处于合法可发时段（20:15Z–07:59Z 内，现 22:18Z），且「重跑幂等的定时任务」在宪法里是预授权动作，遂 `workflow_dispatch` 手动触发（run [34285208856](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34285208856)）。22:43 UTC completed/success，commit `da17feb`（chore: market data 2026-09-08）已落 origin/main：`event_date 2026-09-08`、`tradeable 2552`、`errors: []`、`universe_quality` degraded（i_score/perf_ytd，非 severe）、`no_downgrade` no-baseline（09-04→09-08 换日属正常，非降级）。dashboard 追平到 09-08。
+
+- [09-08] 🟢 **数据哨兵**：A_infra 已修复，run 34285208856 成功，commit `da17feb` 已落 main，dashboard 追平到 2026-09-08
+
+追平后 22:45:17 UTC 原 20:20Z 排程突然出现（`event: schedule`，run [34287459419](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34287459419)），迟到 145 分钟——不是丢弃，是极端迟到（超过历史 median 63 分钟，仍在 worst 213 分钟以内）；但它会在数据已经追平的情况下对 Yahoo/Finviz 再抓一遍，两次全量抓取首尾相接正是 09-04 事故里把 429 打成 401 的那个动作形状。数据已是好的（`da17feb` 已验证 errors 空），这次不是「闸拒了好数据」而是「好数据到手后还有一发多余的重抓在路上」，性质相同：不需要再碰 Yahoo。已 `cancel_workflow_run` 取消该重复 run，未让它跑到抓取步骤。
+
+未改动任何业务口径、`data/output/pipeline` 代码；本班唯一改动是这条 INBOX 记录。
+
+— 数据哨兵（定时任务，2026-09-08）
