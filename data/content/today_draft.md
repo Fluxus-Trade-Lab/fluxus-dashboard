@@ -1,73 +1,55 @@
-date: 2026-09-07
+date: 2026-09-08
 tier: B
-source: queue（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周队列第 7 条）+ APPROVAL_QUEUE 待批两包（`2026-09-01_august-scorecard` / `2026-09-03_noise-with-structure`）
-gate: 🎮 4/5 · streak 1（W6 = 08-31→09-06，ET 时钟下今晚 24:00 结算，还差 1 件）
+source: APPROVAL_QUEUE 待批两包（`2026-09-01_august-scorecard` / `2026-09-03_noise-with-structure`）+ `Fluxus_Brand/voice/Fluxus_Own_Lines.md` #3
+gate: 🎮 0/5 · streak 0（W7 = 09-07→09-13 第 2 天；W6 收 4/5 未过关，连胜从 1 断回 0）
 ---
 ## C1
-bucket: QUOTE（金句 · 单独成条不挂链接） | entry: -
-It stays a mess. Then one day you do the exact same thing with the exact same system, and it just works.
-why: 关卡差 1 件就过关、连胜从 1 周变 2 周（那时目标和奖励由你自己定）——这是队列里为 09-06 排好的那条，成品已在库，发出去 10 秒。三条候选里只有它今天必须是今天。
+bucket: ARC（长推 · 架构机制） | entry: 2
+
+Every "performance by market condition" table has a hidden timestamp on it, and almost nobody checks which one.
+
+Mine stamps the condition on the day I entered. A trade I opened while my read sat in the bottom bracket, and closed two weeks later when the read was in the top one, is filed in the bottom bracket. All of it — every dollar, all the R.
+
+So my table can tell me what I was opening into. It cannot tell me what I was making money in. Two different tables, same rows, and I only have the first one.
+
+If you build one for yourself, pick the stamp on purpose.
+
+Stamped at entry, it grades the decision to put the trade on.
+Stamped at exit, it grades the tape you closed into.
+
+Neither is wrong. They answer different questions, and a table that doesn't say which stamp it used isn't evidence of anything yet. Ask that of any table you get shown. Mine included.
+
+why: 两个待批包里落地成本最低的一条——**零数字、零配图、零 CTA、完全常青**，不需要跑任何复算命令，也不用等 Mia 成稿或 Vera 配图。今天是劳动节后第一个交易日（ET 上一个完成交易日＝09-04），本周关卡 0/5 从零起步，这条粘上去就是 1/5。内容是你自己台账的读表规则（月报自印的归档口径），不是替你立新观点。
 ---
 ## C2
-bucket: ARC（长推 · 可复用物） | entry: 4
-Sort your trades by how the market looked the day you got in, chop them into four equal piles, and you have built a table that cannot surprise you. Same size, every pile. Heavy enough to trust, every pile. Nothing ever thin enough to make you stop.
+bucket: QUOTE（金句 · 单独成条不挂链接） | entry: -
 
-What would four piles built to come out equal ever tell you?
+It isn't unclear to me. It's unclear.
 
-So fix the cut points before a single trade goes into them. Take whatever number you already put on a day — a market read, a score you give the morning yourself — and set the four brackets off the history of that number, not off the trades you are about to file. One scale for every row, and no re-scoring a day once you know how the trade turned out.
-
-Then file each trade by its entry date and let it land where it lands. The brackets will come out lopsided. Leave them lopsided: a bracket you barely traded is telling you something, and equal piles hide it.
-
-Now the subtraction. Two shares per bracket, then take one away from the other.
-
-| Bracket | Share of trades | Share of total R | Difference |
-|---|---|---|---|
-| lowest | ___% | ___% | ___ |
-| | ___% | ___% | ___ |
-| | ___% | ___% | ___ |
-| highest | ___% | ___% | ___ |
-
-Difference above zero and that bracket is taxing you — you spend more of your book there than it sends back. Wider gap, steeper rate.
-
-Difference below zero and it is a rebate. It returns above the share you fed it.
-
-Difference near zero and it is square with you. Nothing owed in either direction.
-
-One line keeps the whole thing honest: a bracket holding fewer than ten trades gets an n written beside it, never a verdict. Not a hedged verdict. An n.
-
-The table stays silent on why any bracket charges what it charges. That is a different afternoon's work.
-why: 队列里等你签字最久的两包中，这是唯一「交易原生 + 读者今晚能对自己台账跑完」的一条；零读数、空表、完全常青，不需要 Mia 成稿也不需要 Vera 配图，是待批堆里落地成本最低的一条。
+why: 出自 `Fluxus_Own_Lines.md` #3（你 Discord 原话「现在看不清晰，因为市场本身就不清晰」），⭐⭐，**从未进过任何一批队列、也没发过**（已 grep 三批历史队列 + posts.csv）。休市三天后开盘的第一天，说"看不清"的人满屏，这条把责任从人身上挪回盘面——10 秒能发完的那一条。
 ---
 ## C3
-bucket: ARC（长推 · 架构机制） | entry: 2
-Before Python reuses a compiled copy of a source file, it has to decide whether
-the cached copy is stale. By default it decides by comparing two things: the
-source file's last-modified time, truncated to whole seconds, and the source
-file's size in bytes. That is the entire test. It has been the default since the
-hash-based alternative arrived in 3.7, and it is still the default today.
+bucket: BUILD（长推 · 票根） | entry: 3
 
-Translated out of the jargon: whether you get fresh output is not decided by what
-is in your file. It is decided by a rounded clock and a length.
+Sept 1, 07:55 — a commit that says: run our own test-checker four times against
+the same code on the same machine and it returns 43, 47, 49, 43. Six percentage
+points. Six of the forty-nine verdicts change sides between two of the runs.
+Written down at the time as: a thing you measure with is worth about what a guess
+is worth, until you have measured it.
 
-Now point that at a tool whose job is to edit one line at a time — 20 into 21,
-== into !=. Neither edit moves the byte count by one. Run fast enough and the
-second version can be handed the compiled bytes of the first one, while the
-report prints the second one's name.
+Sept 2, 04:55 — the next commit. Cause located, intervention run, dispersion
+gone, fix in main, and seven tests on a tool that had been running four nights
+with none of its own.
 
-Two fields, and neither of them is source code — which is also why reading the
-diff more carefully was never the fix. But the rule is the part worth keeping:
-freshness gets decided by a rounded timestamp and a length, and any edit that
-leaves both untouched is invisible to it.
+Twenty-one hours between those two timestamps. The gap is the claim here: the
+expensive part was not the fix. It was somebody asking a different question
+instead of running it a fifth time.
 
-docs.python.org/3/reference/import.html#cached-bytecode-invalidation
-why: 同一包里唯一自带外部权威链接（python.org 官方文档）、零跑分、不依赖本卡任何一个数字的一条——单读也成立，适合在 C2 之后隔一天上，两条入口号不撞（4 / 2）。
+why: 待批包 `2026-09-03_noise-with-structure` 的 V3，全包唯一带**可核验票根**的一条（两个自有 commit `a2e3132b` → `deb7a0f5`，间隔 21h00m01s，任何人都能自己去查）。数字全部已关账、不随仓库当前读数过期；建造过程当内容的正脸样本，与 C1（交易原生）、C2（金句）三条互不重叠。
 ---
 ## notes
-- ⚠️ 最新一张 campaign 卡 `2026-09-06_autumn-effect-decay` 状态 = **killed**（你 09-06 原话「olden September, silver October这个话题删除」，题目级否决，四条变体全废、零发布）→ 本班按任务书降 B 档，主菜从队列取。
-- ⚠️ 关卡 4/5：W6 已发 4 件（09-01 ×2、09-03 ×2）。ET 时钟下今晚 24:00 才结算，C1 发出去就是 5/5 过关、连胜 2 周；按 JST 算 W6 已在昨晚收线（4/5 未过），C1 就变成 W7 的第 1 件。**哪个时钟结算是你定，但两种算法下今天发 C1 都是对的动作。**
-- 陈旧闸：三条候选**全部不依赖盘面现读**——C1 是金句零数字；C2 是空表（`___%`），august-scorecard 队列行明写「V2 与 V3 不受影响、可照发」，那条 `_derive_05.py` 指纹复算只管 V1/V4，本班未跑（不适用）；C3 零跑分、只引 Python 官方文档。**无一条需要标 ⚠️ 读数已过期。**
-- 保质期原样转述：`2026-09-03_noise-with-structure` 队列行 —— 「窗口：常青，全部引用数字已关账，零处引用当前杀死率」。`2026-09-01_august-scorecard` 队列行 —— 「窗口：常青，全篇一个累计回报百分比都没用」。
-- 毛坯提醒（队列行原文）：C2/C3 两条**未经 Writer Mia 成稿 / Visual Vera 配图**，你看到的是毛坯不是成稿。两条都不需要配图即可独立发；需要配图的是各自包里的 V1（长文入口推），那两条今天不端。
-- bucket 只做到 2 种（QUOTE / ARC ×2）：待批两包里剩下的成品全是长推形态，QT 形态的两条（09-01 V1 / 09-03 V1）都卡在「长文 Article + 配图」上，今天端不出来——**不是没挑，是库里没有第三种形态的成品**。
-- 未取用但仍在队列等你签字：`2026-09-03_noise-with-structure` 还有 V3（票根 · 21 小时时差）/ V4（三步清单）/ V5（自拆钩）/ V6（能不能变红）+ Substack 骨架；`2026-09-01_august-scorecard` 的旗舰**仍缺你亲笔的收口段**（故意留的空槽，不写发不出去）。
-- 判决账现状：09-04「太ai slop了」（08-29 整包死绝）+ 09-06 题目级否决——**连续两包零发布**。今天端的三条里 C1 是你自己的原话库，AI 参与度最低。
+- **最新一张 campaign 卡 `2026-09-06_autumn-effect-decay` 已 killed**（你 09-06 原话「olden September, silver October这个话题删除」，题目级否决，整包零发布）——所以今天没有 A 档主菜，三条全部取自更早的两个**待批包**与金句库。
+- **本周（09-07→09-13）队列没灌。** 上一批 `Fluxus_Queue.md` 排的是 08-31→09-06，已过期；其中至少 09-06 那条（#24 "It stays a mess…"）从未发出。最省力的替代动作：周日 20 分钟从 `Fluxus_Own_Lines.md` 挑 7 条灌进本周队列——**只挑不写**。
+- **陈旧闸**：今天三条**全部零盘面读数**，都不需要跑复算命令。`2026-09-01` 包里另有 V1 与 V4 两条带月报读数（40.5% 与四档格），发它们之前必须在仓库根目录跑 `python3 Fluxus_Brand/ops/campaigns/2026-09-01_august-scorecard/_derive_05.py` 比对指纹 `2026-08-31 15:25 / 1,645,532 bytes`——今天没端上来就是为了避开这道闸。
+- **⚠️ 待你定的事仍卡在 APPROVAL_QUEUE**：`2026-09-01_august-scorecard` 的旗舰**收口是空槽等你亲笔**（故意留的，不由 AI 填），旗舰不写这段就发不出去；`2026-09-03_noise-with-structure` 的 V1 需要一张三行对照表配图（Vera 无 routine）。**今天端上来的三条都绕开了这两个卡点。**
+- W6 复盘的一句话：那周 4 件全是你自己临时发的，队列 0、产线 0——**不是断更，是产线和你各走各的**。C1 选零门槛那条就是冲这个来的。
