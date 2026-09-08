@@ -1,43 +1,80 @@
 {
   "ticker": "IOVA",
-  "fetched_at": "2026-09-08T06:30:16Z",
+  "fetched_at": "2026-09-08T22:41:14Z",
   "_schema": "v2",
-  "current_price": 8.789999961853027,
+  "current_price": 8.699999809265137,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "IOVA",
+    "longName": "Iovance Biotherapeutics, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "San Carlos",
+    "website": "https://www.iovance.com",
+    "fullTimeEmployees": 975,
+    "marketCap": 3940851200,
+    "enterpriseValue": 3729949952,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -30.282988,
+    "priceToSalesTrailing12Months": 12.126853,
+    "enterpriseToRevenue": 11.478,
+    "priceToBook": 5.353846,
+    "grossMargins": 0.48401,
+    "operatingMargins": -0.52264,
+    "profitMargins": -0.89091,
+    "returnOnEquity": -0.40363997,
+    "totalCash": 297673984,
+    "totalDebt": 46003000,
+    "totalRevenue": 324968992,
+    "freeCashflow": -187794752,
+    "debtToEquity": 6.25,
+    "currentRatio": 4.345,
+    "fiftyTwoWeekHigh": 9.36,
+    "fiftyTwoWeekLow": 1.76,
+    "averageVolume": 16260212,
+    "averageVolume10days": 10683780,
+    "beta": 0.833,
+    "sharesOutstanding": 452971432,
+    "sharesFloat": 394329750,
+    "companyOfficers": [
+      {
+        "name": "Dr. Frederick G. Vogt Esq., J.D., Ph.D.",
+        "title": "Interim CEO, President, General Counsel, Corporate Secretary & Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Ms. Corleen M. Roche",
+        "title": "Chief Financial Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Dr. Igor P. Bilinsky Ph.D.",
+        "title": "Chief Operating Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Raj K. Puri M.D., Ph.D.",
+        "title": "Chief Regulatory Officer",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Daniel G. Kirby",
+        "title": "Chief Commercial Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Sara  Pellegrino",
+        "title": "Senior Vice President of Investor Relations & Corporate Communications",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.028499998
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 101460000,
+    "revenue_high": 119000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05977011625290172,
   "technicals": {
-    "ma20": 7.7969999551773075,
-    "ma50": 5.898199987411499,
-    "ma200": 3.928400001525879,
-    "rsi14": 69.83682172389925,
+    "ma20": 7.911999940872192,
+    "ma50": 5.987199983596802,
+    "ma200": 3.9597000002861025,
+    "rsi14": 68.18636346343706,
     "high_20d": 9.359999656677246,
-    "low_5d": 7.659999847412109,
+    "low_5d": 7.96999979019165,
     "low_10d": 7.659999847412109,
     "high_52w": 9.359999656677246,
     "low_52w": 1.7599999904632568,
-    "atr14": 0.5714285373687744,
-    "atr14_pct": 6.500893513636729,
-    "position_in_52w_range_pct": 92.50000368607688
+    "atr14": 0.5749999795641217,
+    "atr14_pct": 6.609195312300706,
+    "position_in_52w_range_pct": 91.315791100016
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 10.49,
-      "high": 10.71,
-      "low": 10.34,
-      "close": 10.46,
-      "volume": 3462600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 10.49,
-      "high": 10.58,
-      "low": 9.68,
-      "close": 10.01,
-      "volume": 6728900.0
-    },
     {
       "date": "2024-09-09",
       "open": 10.15,
@@ -4300,17 +4325,17 @@
       "low": 8.64,
       "close": 8.79,
       "volume": 8068600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 8.73,
+      "high": 8.91,
+      "low": 8.48,
+      "close": 8.7,
+      "volume": 9531726.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 2.23,
-      "high": 2.5,
-      "low": 2.23,
-      "close": 2.49,
-      "volume": 15230100.0
-    },
     {
       "date": "2025-09-08",
       "open": 2.48,
@@ -6318,6 +6343,14 @@
       "low": 8.64,
       "close": 8.79,
       "volume": 8068600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 8.73,
+      "high": 8.91,
+      "low": 8.48,
+      "close": 8.7,
+      "volume": 9531726.0
     }
   ],
   "ai_synthesis": null,

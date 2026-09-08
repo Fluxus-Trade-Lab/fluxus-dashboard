@@ -1,43 +1,80 @@
 {
   "ticker": "NUTX",
-  "fetched_at": "2026-09-08T06:28:21Z",
+  "fetched_at": "2026-09-08T22:39:10Z",
   "_schema": "v2",
-  "current_price": 193.24000549316406,
+  "current_price": 190.66000366210938,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "NUTX",
+    "longName": "Nutex Health Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Care Facilities",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Houston",
+    "website": "https://www.nutexhealth.com",
+    "fullTimeEmployees": 1037,
+    "marketCap": 1305634560,
+    "enterpriseValue": 1578426240,
+    "trailingPE": 7.3841987,
+    "forwardPE": 9.378259,
+    "priceToSalesTrailing12Months": 1.5419909,
+    "enterpriseToRevenue": 1.864,
+    "priceToBook": 3.3090928,
+    "grossMargins": 0.54508,
+    "operatingMargins": 0.57754004,
+    "profitMargins": 0.21249,
+    "returnOnEquity": 0.64556,
+    "totalCash": 205208000,
+    "totalDebt": 347336000,
+    "totalRevenue": 846720000,
+    "freeCashflow": 130745376,
+    "debtToEquity": 68.466,
+    "currentRatio": 4.996,
+    "fiftyTwoWeekHigh": 204.0,
+    "fiftyTwoWeekLow": 80.53,
+    "averageVolume": 143248,
+    "averageVolume10days": 158790,
+    "beta": 2.024,
+    "sharesOutstanding": 6847973,
+    "sharesFloat": 4144873,
+    "companyOfficers": [
+      {
+        "name": "Dr. Thomas T. Vo M.B.A., M.D.",
+        "title": "Chairman of the Board & CEO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Warren  Hosseinion M.D.",
+        "title": "President & Director",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Jon C. Bates CPA, M.B.A.",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Wesley  Bamburg FACHE",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Michael  Chang M.D.",
+        "title": "Chief Medical Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Jennifer  Rodriguez",
+        "title": "Investor & Public Relations Manager",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 2.9795
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 211000000,
+    "revenue_high": 216900000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -271,36 +312,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 188.2749984741211,
-    "ma50": 174.99039886474608,
-    "ma200": 141.12144947052002,
-    "rsi14": 58.525066655737795,
+    "ma20": 187.93249893188477,
+    "ma50": 175.47559906005858,
+    "ma200": 141.57874950408936,
+    "rsi14": 56.25532072566148,
     "high_20d": 200.0,
     "low_5d": 182.66000366210938,
     "low_10d": 176.5500030517578,
     "high_52w": 204.0,
     "low_52w": 80.52999877929688,
-    "atr14": 8.844352722167969,
-    "atr14_pct": 4.576874596746397,
-    "position_in_52w_range_pct": 91.28533700457133
+    "atr14": 9.088639395577568,
+    "atr14_pct": 4.766935498272934,
+    "position_in_52w_range_pct": 89.19575912691106
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 23.5,
-      "high": 24.49,
-      "low": 21.75,
-      "close": 22.03,
-      "volume": 39600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 22.05,
-      "high": 23.0,
-      "low": 20.93,
-      "close": 21.38,
-      "volume": 32300.0
-    },
     {
       "date": "2024-09-09",
       "open": 21.57,
@@ -4300,17 +4325,17 @@
       "low": 190.0,
       "close": 193.24,
       "volume": 142300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 193.0,
+      "high": 196.27,
+      "low": 185.53,
+      "close": 190.66,
+      "volume": 201898.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 86.02,
-      "high": 86.86,
-      "low": 81.88,
-      "close": 83.38,
-      "volume": 112100.0
-    },
     {
       "date": "2025-09-08",
       "open": 84.0,
@@ -6318,6 +6343,14 @@
       "low": 190.0,
       "close": 193.24,
       "volume": 142300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 193.0,
+      "high": 196.27,
+      "low": 185.53,
+      "close": 190.66,
+      "volume": 201898.0
     }
   ],
   "ai_synthesis": null,

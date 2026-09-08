@@ -1,43 +1,80 @@
 {
   "ticker": "KNSA",
-  "fetched_at": "2026-09-08T06:30:23Z",
+  "fetched_at": "2026-09-08T22:41:20Z",
   "_schema": "v2",
-  "current_price": 77.91000366210938,
+  "current_price": 77.08999633789062,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "KNSA",
+    "longName": "Kiniksa Pharmaceuticals International, plc",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "exchange": "NMS",
+    "country": "United Kingdom",
+    "city": "London",
+    "website": "https://www.kiniksa.com",
+    "fullTimeEmployees": 366,
+    "marketCap": 6014871040,
+    "enterpriseValue": 5561819648,
+    "trailingPE": 77.86868,
+    "forwardPE": 47.65997,
+    "priceToSalesTrailing12Months": 7.1533394,
+    "enterpriseToRevenue": 6.615,
+    "priceToBook": 9.189414,
+    "grossMargins": 0.54504,
+    "operatingMargins": 0.11163,
+    "profitMargins": 0.09592,
+    "returnOnEquity": 0.14038,
+    "totalCash": 525928000,
+    "totalDebt": 8897000,
+    "totalRevenue": 840848000,
+    "freeCashflow": 126144248,
+    "debtToEquity": 1.36,
+    "currentRatio": 3.904,
+    "fiftyTwoWeekHigh": 82.94,
+    "fiftyTwoWeekLow": 35.2,
+    "averageVolume": 738354,
+    "averageVolume10days": 449350,
+    "beta": 0.087,
+    "sharesOutstanding": 48289273,
+    "sharesFloat": 39858567,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sanjiv K. Patel",
+        "title": "CEO & Chairman of the Board",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Mark A. Ragosa C.F.A.",
+        "title": "Executive VP & CFO",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Ross Michael Moat",
+        "title": "Executive VP, COO & Principal Operating Officer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Dr. John F. Paolini FACC, M.D., Ph.D.",
+        "title": "Executive VP & Chief Medical Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Eben  Tessari",
+        "title": "Consultant",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. Michael R. Megna CPA",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 54,
+        "yearBorn": 1971
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.3728
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 258000000,
+    "revenue_high": 263000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.10390453211194398,
   "technicals": {
-    "ma20": 78.81750030517578,
-    "ma50": 71.87159996032715,
-    "ma200": 52.88087495803833,
-    "rsi14": 53.61861318401862,
+    "ma20": 78.84550018310547,
+    "ma50": 72.22939987182617,
+    "ma200": 53.0599249458313,
+    "rsi14": 51.189910888473065,
     "high_20d": 81.56600189208984,
-    "low_5d": 76.6500015258789,
-    "low_10d": 76.6500015258789,
+    "low_5d": 75.0,
+    "low_10d": 75.0,
     "high_52w": 82.94000244140625,
-    "low_52w": 35.119998931884766,
-    "atr14": 2.2088584899902344,
-    "atr14_pct": 2.835141042439056,
-    "position_in_52w_range_pct": 89.48139186502705
+    "low_52w": 35.20000076293945,
+    "atr14": 2.3810010637555803,
+    "atr14_pct": 3.088599269507671,
+    "position_in_52w_range_pct": 87.7461124888182
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 25.74,
-      "high": 25.86,
-      "low": 25.03,
-      "close": 25.37,
-      "volume": 198500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 25.39,
-      "high": 25.815,
-      "low": 24.52,
-      "close": 24.93,
-      "volume": 161900.0
-    },
     {
       "date": "2024-09-09",
       "open": 24.58,
@@ -4300,17 +4325,17 @@
       "low": 77.9,
       "close": 77.91,
       "volume": 429600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 76.35,
+      "high": 78.5,
+      "low": 75.0,
+      "close": 77.09,
+      "volume": 668556.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 35.53,
-      "high": 35.84,
-      "low": 35.12,
-      "close": 35.71,
-      "volume": 328200.0
-    },
     {
       "date": "2025-09-08",
       "open": 35.57,
@@ -6318,6 +6343,14 @@
       "low": 77.9,
       "close": 77.91,
       "volume": 429600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 76.35,
+      "high": 78.5,
+      "low": 75.0,
+      "close": 77.09,
+      "volume": 668556.0
     }
   ],
   "ai_synthesis": null,

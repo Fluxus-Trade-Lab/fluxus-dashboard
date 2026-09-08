@@ -1,43 +1,80 @@
 {
   "ticker": "HUN",
-  "fetched_at": "2026-09-08T06:30:11Z",
+  "fetched_at": "2026-09-08T22:41:09Z",
   "_schema": "v2",
-  "current_price": 9.619999885559082,
+  "current_price": 9.800000190734863,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "HUN",
+    "longName": "Huntsman Corporation",
+    "sector": "Basic Materials",
+    "industry": "Chemicals",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "The Woodlands",
+    "website": "https://www.huntsman.com",
+    "fullTimeEmployees": 6000,
+    "marketCap": 1718710528,
+    "enterpriseValue": 4079142400,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 48.313942,
+    "priceToSalesTrailing12Months": 0.29140565,
+    "enterpriseToRevenue": 0.692,
+    "priceToBook": 0.6312806,
+    "grossMargins": 0.13496,
+    "operatingMargins": 0.017439999,
+    "profitMargins": -0.03052,
+    "returnOnEquity": -0.038399998,
+    "totalCash": 346000000,
+    "totalDebt": 2500999936,
+    "totalRevenue": 5897999872,
+    "freeCashflow": 154875008,
+    "debtToEquity": 85.388,
+    "currentRatio": 1.325,
+    "fiftyTwoWeekHigh": 16.09,
+    "fiftyTwoWeekLow": 7.3,
+    "averageVolume": 4893572,
+    "averageVolume10days": 2208250,
+    "beta": 0.711,
+    "sharesOutstanding": 175378616,
+    "sharesFloat": 164406930,
+    "companyOfficers": [
+      {
+        "name": "Mr. Peter R. Huntsman",
+        "title": "Chairman, President & CEO",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Philip M. Lister ACMA",
+        "title": "Executive VP & CFO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. R. Wade Rogers",
+        "title": "Senior VP of Global Human Resources & Chief Compliance Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Scott J. Wright",
+        "title": "Division President of Advanced Materials",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Twila M. Day",
+        "title": "VP & Chief Information Officer",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Ivan Mathew Marcuse C.F.A.",
+        "title": "Vice President of Investor Relations & Corporate Development",
+        "age": 48,
+        "yearBorn": 1977
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.796
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 1535169430,
+    "revenue_high": 1656040000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07959183518561859,
   "technicals": {
-    "ma20": 9.89099998474121,
-    "ma50": 10.746400012969971,
-    "ma200": 11.886083474159241,
-    "rsi14": 41.30836741800126,
+    "ma20": 9.863000011444091,
+    "ma50": 10.714200019836426,
+    "ma200": 11.894586045742034,
+    "rsi14": 44.65871933575989,
     "high_20d": 10.600000381469727,
     "low_5d": 9.279999732971191,
     "low_10d": 9.279999732971191,
     "high_52w": 16.09000015258789,
     "low_52w": 7.149485960989107,
-    "atr14": 0.3528571128845215,
-    "atr14_pct": 3.667953400022464,
-    "position_in_52w_range_pct": 27.63279462037503
+    "atr14": 0.34964282172066824,
+    "atr14_pct": 3.5677838256700065,
+    "position_in_52w_range_pct": 29.6461050555279
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 19.8072,
-      "high": 20.0413,
-      "low": 19.5821,
-      "close": 19.7262,
-      "volume": 2627600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 19.6722,
-      "high": 19.8162,
-      "low": 19.078,
-      "close": 19.3571,
-      "volume": 2754200.0
-    },
     {
       "date": "2024-09-09",
       "open": 19.312,
@@ -505,8 +530,8 @@
       "date": "2024-10-14",
       "open": 21.7512,
       "high": 21.7512,
-      "low": 21.4415,
-      "close": 21.5508,
+      "low": 21.4416,
+      "close": 21.5509,
       "volume": 1221500.0
     },
     {
@@ -562,7 +587,7 @@
       "open": 20.7493,
       "high": 20.8768,
       "low": 20.6582,
-      "close": 20.804,
+      "close": 20.8039,
       "volume": 755700.0
     },
     {
@@ -641,7 +666,7 @@
       "date": "2024-11-06",
       "open": 19.6016,
       "high": 19.7109,
-      "low": 18.9914,
+      "low": 18.9913,
       "close": 19.0187,
       "volume": 3725800.0
     },
@@ -872,7 +897,7 @@
     {
       "date": "2024-12-18",
       "open": 17.0717,
-      "high": 17.404,
+      "high": 17.4039,
       "low": 16.8318,
       "close": 16.8872,
       "volume": 2805200.0
@@ -935,7 +960,7 @@
     },
     {
       "date": "2024-12-31",
-      "open": 16.3151,
+      "open": 16.315,
       "high": 16.6565,
       "low": 16.2874,
       "close": 16.638,
@@ -1311,7 +1336,7 @@
     },
     {
       "date": "2025-03-12",
-      "open": 16.0843,
+      "open": 16.0844,
       "high": 16.1674,
       "low": 15.097,
       "close": 15.2446,
@@ -1976,7 +2001,7 @@
     {
       "date": "2025-07-11",
       "open": 11.0524,
-      "high": 11.196,
+      "high": 11.1959,
       "low": 10.9376,
       "close": 10.995,
       "volume": 2994500.0
@@ -2361,7 +2386,7 @@
       "date": "2025-09-18",
       "open": 10.3129,
       "high": 10.3325,
-      "low": 10.0583,
+      "low": 10.0582,
       "close": 10.0778,
       "volume": 3720100.0
     },
@@ -2391,7 +2416,7 @@
     },
     {
       "date": "2025-09-24",
-      "open": 9.2649,
+      "open": 9.265,
       "high": 9.4314,
       "low": 9.2062,
       "close": 9.2747,
@@ -2978,7 +3003,7 @@
       "open": 10.4781,
       "high": 11.3867,
       "low": 10.4189,
-      "close": 11.2089,
+      "close": 11.209,
       "volume": 6894500.0
     },
     {
@@ -3018,7 +3043,7 @@
       "open": 11.604,
       "high": 12.0385,
       "low": 11.446,
-      "close": 11.9003,
+      "close": 11.9002,
       "volume": 5667600.0
     },
     {
@@ -4300,17 +4325,17 @@
       "low": 9.28,
       "close": 9.62,
       "volume": 1642700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 9.76,
+      "high": 9.91,
+      "low": 9.545,
+      "close": 9.8,
+      "volume": 2145957.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 10.6314,
-      "high": 11.2247,
-      "low": 10.4783,
-      "close": 10.7462,
-      "volume": 4356300.0
-    },
     {
       "date": "2025-09-08",
       "open": 10.6888,
@@ -4379,7 +4404,7 @@
       "date": "2025-09-18",
       "open": 10.3129,
       "high": 10.3325,
-      "low": 10.0583,
+      "low": 10.0582,
       "close": 10.0778,
       "volume": 3720100.0
     },
@@ -4409,7 +4434,7 @@
     },
     {
       "date": "2025-09-24",
-      "open": 9.2649,
+      "open": 9.265,
       "high": 9.4314,
       "low": 9.2062,
       "close": 9.2747,
@@ -4996,7 +5021,7 @@
       "open": 10.4781,
       "high": 11.3867,
       "low": 10.4189,
-      "close": 11.2089,
+      "close": 11.209,
       "volume": 6894500.0
     },
     {
@@ -5036,7 +5061,7 @@
       "open": 11.604,
       "high": 12.0385,
       "low": 11.446,
-      "close": 11.9003,
+      "close": 11.9002,
       "volume": 5667600.0
     },
     {
@@ -6318,6 +6343,14 @@
       "low": 9.28,
       "close": 9.62,
       "volume": 1642700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 9.76,
+      "high": 9.91,
+      "low": 9.545,
+      "close": 9.8,
+      "volume": 2145957.0
     }
   ],
   "ai_synthesis": null,

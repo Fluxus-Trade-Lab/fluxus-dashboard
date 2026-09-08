@@ -1,54 +1,83 @@
 {
   "ticker": "BVC",
-  "fetched_at": "2026-09-08T06:29:15Z",
+  "fetched_at": "2026-09-08T22:39:32Z",
   "_schema": "v2",
-  "current_price": 15.520000457763672,
+  "current_price": 16.79010009765625,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
+    "symbol": "BVC",
+    "longName": "BitVentures Limited",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NCM",
+    "country": "Hong Kong",
+    "city": "Central",
+    "website": "https://ir.bitventures.io",
+    "fullTimeEmployees": 6,
+    "marketCap": 2820736768,
+    "enterpriseValue": 115741000,
+    "trailingPE": 11.421837,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "priceToSalesTrailing12Months": 8679.19,
+    "enterpriseToRevenue": 356.126,
+    "priceToBook": 9.638404,
+    "grossMargins": 0.91692,
+    "operatingMargins": -2.32923,
+    "profitMargins": 5.2123103,
+    "returnOnEquity": 0.22775,
+    "totalCash": 14627000,
+    "totalDebt": 0,
+    "totalRevenue": 325000,
     "freeCashflow": null,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "currentRatio": 610.625,
+    "fiftyTwoWeekHigh": 18.0,
+    "fiftyTwoWeekLow": 0.7,
+    "averageVolume": 44385,
+    "averageVolume10days": 56050,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 168000000,
+    "sharesFloat": 723156,
+    "companyOfficers": [
+      {
+        "name": "Mr. Wai  Lok",
+        "title": "Chairman & CEO",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Chun  Yu",
+        "title": "Head of Finance",
+        "age": 32,
+        "yearBorn": 1993
+      },
+      {
+        "name": "Mr. Hua  Zhu",
+        "title": "Chief Technology Officer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Zheng  Liu",
+        "title": "Chief Marketing Officer",
+        "age": 44,
+        "yearBorn": 1981
+      }
+    ]
   },
   "earnings_history": [],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "[]",
+    "revenue_low": null,
+    "revenue_high": null
+  },
   "quarterly_metrics": [],
   "analyst": {
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": null
+    "current_price": 16.7901
   },
-  "quarterly_asof": "2026-09-08T06:29:15Z",
+  "quarterly_asof": "2026-09-08T22:39:32Z",
   "news": [
     {
       "date": "2026-04-20T14:05:47Z",
@@ -77,36 +106,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 14.078999948501586,
-    "ma50": 11.959900016784667,
-    "ma200": 8.874490006864072,
-    "rsi14": 61.80053997334522,
-    "high_20d": 17.3700008392334,
-    "low_5d": 13.015000343322754,
+    "ma20": 14.277004957199097,
+    "ma50": 12.105702018737793,
+    "ma200": 8.954660507440567,
+    "rsi14": 66.51789231977281,
+    "high_20d": 18.0,
+    "low_5d": 13.289999961853027,
     "low_10d": 11.989999771118164,
-    "high_52w": 17.3700008392334,
+    "high_52w": 18.0,
     "low_52w": 0.5799999833106995,
-    "atr14": 1.7885001046316964,
-    "atr14_pct": 11.523840540462247,
-    "position_in_52w_range_pct": 88.98153491864096
+    "atr14": 1.8449286733354842,
+    "atr14_pct": 10.988193415196019,
+    "position_in_52w_range_pct": 93.05453558447417
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 0.683,
-      "high": 0.683,
-      "low": 0.58,
-      "close": 0.644,
-      "volume": 124900.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 0.61,
-      "high": 0.627,
-      "low": 0.597,
-      "close": 0.627,
-      "volume": 47100.0
-    },
     {
       "date": "2024-09-09",
       "open": 0.6,
@@ -4106,17 +4119,17 @@
       "low": 13.48,
       "close": 15.52,
       "volume": 60000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 16.05,
+      "high": 18.0,
+      "low": 16.05,
+      "close": 16.7901,
+      "volume": 21360.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 0.65,
-      "high": 0.65,
-      "low": 0.631,
-      "close": 0.631,
-      "volume": 9600.0
-    },
     {
       "date": "2025-09-08",
       "open": 0.58,
@@ -6124,6 +6137,14 @@
       "low": 13.48,
       "close": 15.52,
       "volume": 60000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 16.05,
+      "high": 18.0,
+      "low": 16.05,
+      "close": 16.7901,
+      "volume": 21360.0
     }
   ],
   "ai_synthesis": null,

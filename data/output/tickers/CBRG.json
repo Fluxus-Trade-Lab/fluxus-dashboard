@@ -1,14 +1,14 @@
 {
   "ticker": "CBRG",
-  "fetched_at": "2026-09-08T06:27:10Z",
+  "fetched_at": "2026-09-08T22:37:58Z",
   "_schema": "v2",
-  "current_price": 3.890000104904175,
+  "current_price": 3.5199999809265137,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "CBRG",
+    "longName": "Leverage Shares 2X Long CBRS Daily ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "BTS",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 17.15,
+    "fiftyTwoWeekLow": 2.56,
+    "averageVolume": 10606477,
+    "averageVolume10days": 12293820,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,21 +48,21 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:27:10Z",
+  "quarterly_asof": "2026-09-08T22:37:58Z",
   "news": [],
-  "options_implied_move": null,
+  "options_implied_move": 0.2556818195672567,
   "technicals": {
-    "ma20": 4.040500020980835,
-    "ma50": 4.29539999961853,
-    "rsi14": 50.187794785944384,
+    "ma20": 3.953500008583069,
+    "ma50": 4.284799995422364,
+    "rsi14": 47.34437896929572,
     "high_20d": 6.920000076293945,
     "low_5d": 2.559999942779541,
     "low_10d": 2.559999942779541,
     "high_52w": 17.149999618530273,
     "low_52w": 2.559999942779541,
-    "atr14": 0.5428571701049805,
-    "atr14_pct": 13.955196798596308,
-    "position_in_52w_range_pct": 9.11583407596065
+    "atr14": 0.47571429184504915,
+    "atr14_pct": 13.51461063701013,
+    "position_in_52w_range_pct": 6.579849619479691
   },
   "ohlc_2y": [
     {
@@ -688,6 +688,14 @@
       "low": 3.25,
       "close": 3.89,
       "volume": 28453500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 4.14,
+      "high": 4.35,
+      "low": 3.51,
+      "close": 3.52,
+      "volume": 15000678.0
     }
   ],
   "ohlc_1y": [
@@ -1314,6 +1322,14 @@
       "low": 3.25,
       "close": 3.89,
       "volume": 28453500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 4.14,
+      "high": 4.35,
+      "low": 3.51,
+      "close": 3.52,
+      "volume": 15000678.0
     }
   ],
   "ai_synthesis": null,

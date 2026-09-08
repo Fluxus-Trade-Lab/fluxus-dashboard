@@ -1,43 +1,80 @@
 {
   "ticker": "FSLY",
-  "fetched_at": "2026-09-08T06:29:56Z",
+  "fetched_at": "2026-09-08T22:40:54Z",
   "_schema": "v2",
-  "current_price": 20.59000015258789,
+  "current_price": 21.489999771118164,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FSLY",
+    "longName": "Fastly, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.fastly.com",
+    "fullTimeEmployees": 1140,
+    "marketCap": 3423356928,
+    "enterpriseValue": 3340781056,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 36.80803,
+    "priceToSalesTrailing12Months": 4.9817977,
+    "enterpriseToRevenue": 4.862,
+    "priceToBook": 3.449992,
+    "grossMargins": 0.61472,
+    "operatingMargins": -0.07873,
+    "profitMargins": -0.11802,
+    "returnOnEquity": -0.08389,
+    "totalCash": 337497984,
+    "totalDebt": 398292000,
+    "totalRevenue": 687172992,
+    "freeCashflow": 86973248,
+    "debtToEquity": 40.198,
+    "currentRatio": 3.361,
+    "fiftyTwoWeekHigh": 34.82,
+    "fiftyTwoWeekLow": 7.285,
+    "averageVolume": 5450785,
+    "averageVolume10days": 3520740,
+    "beta": 0.358,
+    "sharesOutstanding": 159300000,
+    "sharesFloat": 150855507,
+    "companyOfficers": [
+      {
+        "name": "Mr. Charles  Compton",
+        "title": "CEO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Artur  Bergman",
+        "title": "Founder, CTO & Director",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Richard H. Wong",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ronald W. Kisling",
+        "title": "Advisor",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Scott R. Lovett",
+        "title": "President of Go to Market",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Ms. Tara  Seracka",
+        "title": "Chief Legal & Administrative Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 410.76468
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 186010000,
+    "revenue_high": 189146380
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.055374593423650004,
   "technicals": {
-    "ma20": 24.728500366210938,
-    "ma50": 22.1984001159668,
-    "ma200": 18.64632499694824,
-    "rsi14": 41.288510085786385,
+    "ma20": 24.415500354766845,
+    "ma50": 22.28600009918213,
+    "ma200": 18.70132499694824,
+    "rsi14": 44.81679685906662,
     "high_20d": 30.690000534057617,
     "low_5d": 19.760000228881836,
     "low_10d": 19.760000228881836,
     "high_52w": 34.81999969482422,
     "low_52w": 7.284999847412109,
-    "atr14": 1.772571291242327,
-    "atr14_pct": 8.608894017028641,
-    "position_in_52w_range_pct": 48.32032096933626
+    "atr14": 1.6968570436750139,
+    "atr14_pct": 7.896030999290808,
+    "position_in_52w_range_pct": 51.58888688005974
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 5.98,
-      "high": 6.045,
-      "low": 5.89,
-      "close": 5.91,
-      "volume": 1435300.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 5.89,
-      "high": 6.02,
-      "low": 5.635,
-      "close": 5.65,
-      "volume": 2187000.0
-    },
     {
       "date": "2024-09-09",
       "open": 5.65,
@@ -4300,17 +4325,17 @@
       "low": 20.37,
       "close": 20.59,
       "volume": 2420300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 20.35,
+      "high": 22.73,
+      "low": 19.92,
+      "close": 21.49,
+      "volume": 5745345.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 7.4,
-      "high": 7.615,
-      "low": 7.303,
-      "close": 7.43,
-      "volume": 2162600.0
-    },
     {
       "date": "2025-09-08",
       "open": 7.47,
@@ -6318,6 +6343,14 @@
       "low": 20.37,
       "close": 20.59,
       "volume": 2420300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 20.35,
+      "high": 22.73,
+      "low": 19.92,
+      "close": 21.49,
+      "volume": 5745345.0
     }
   ],
   "ai_synthesis": null,

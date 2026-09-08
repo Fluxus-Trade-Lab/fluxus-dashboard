@@ -1,43 +1,80 @@
 {
   "ticker": "AVTR",
-  "fetched_at": "2026-09-08T06:29:07Z",
+  "fetched_at": "2026-09-08T22:40:03Z",
   "_schema": "v2",
-  "current_price": 14.970000267028809,
+  "current_price": 15.25,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AVTR",
+    "longName": "Avantor, Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Instruments & Supplies",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Radnor",
+    "website": "https://www.avantorsciences.com",
+    "fullTimeEmployees": 13500,
+    "marketCap": 10314472448,
+    "enterpriseValue": 13516091392,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 17.293974,
+    "priceToSalesTrailing12Months": 1.5720645,
+    "enterpriseToRevenue": 2.06,
+    "priceToBook": 1.832272,
+    "grossMargins": 0.31825,
+    "operatingMargins": 0.07162,
+    "profitMargins": -0.08809,
+    "returnOnEquity": -0.09701,
+    "totalCash": 306800000,
+    "totalDebt": 3697799936,
+    "totalRevenue": 6561099776,
+    "freeCashflow": 450337504,
+    "debtToEquity": 65.678,
+    "currentRatio": 1.782,
+    "fiftyTwoWeekHigh": 15.93,
+    "fiftyTwoWeekLow": 7.265,
+    "averageVolume": 9234951,
+    "averageVolume10days": 6491890,
+    "beta": 0.895,
+    "sharesOutstanding": 676358840,
+    "sharesFloat": 657806317,
+    "companyOfficers": [
+      {
+        "name": "Mr. Emmanuel  Ligner",
+        "title": "President, CEO & Director",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Claudius O. Sokenu",
+        "title": "Executive VP, Corporate Secretary and Chief Legal & Compliance Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Corey D. Walker",
+        "title": "President of Laboratory Solutions",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Benoit  Gourdier",
+        "title": "Executive Vice President of Bioscience Production",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Steven W. Eck",
+        "title": "Senior VP, Interim CFO, Corporate Controller & Chief Accounting Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Ms. Mary  Blenn",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.0228
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 1634000000,
+    "revenue_high": 1647000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.059016393442622946,
   "technicals": {
-    "ma20": 14.217999982833863,
-    "ma50": 12.611599979400635,
-    "ma200": 10.366750025749207,
-    "rsi14": 66.86637041004383,
-    "high_20d": 15.199999809265137,
+    "ma20": 14.294000005722046,
+    "ma50": 12.71099998474121,
+    "ma200": 10.387300024032593,
+    "rsi14": 69.43828305873868,
+    "high_20d": 15.460000038146973,
     "low_5d": 14.1899995803833,
     "low_10d": 14.050000190734863,
     "high_52w": 15.930000305175781,
     "low_52w": 7.264999866485596,
-    "atr14": 0.4470712797982352,
-    "atr14_pct": 2.9864480415735377,
-    "position_in_52w_range_pct": 88.92094645650026
+    "atr14": 0.47524268286568777,
+    "atr14_pct": 3.116345461414346,
+    "position_in_52w_range_pct": 92.15233386325632
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 25.06,
-      "high": 25.72,
-      "low": 24.79,
-      "close": 25.64,
-      "volume": 5755400.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 25.69,
-      "high": 26.2,
-      "low": 25.06,
-      "close": 25.54,
-      "volume": 5127900.0
-    },
     {
       "date": "2024-09-09",
       "open": 25.22,
@@ -4300,17 +4325,17 @@
       "low": 14.85,
       "close": 14.97,
       "volume": 7654000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 14.83,
+      "high": 15.46,
+      "low": 14.6666,
+      "close": 15.25,
+      "volume": 12503740.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 13.23,
-      "high": 13.59,
-      "low": 13.23,
-      "close": 13.31,
-      "volume": 7671900.0
-    },
     {
       "date": "2025-09-08",
       "open": 13.17,
@@ -6318,6 +6343,14 @@
       "low": 14.85,
       "close": 14.97,
       "volume": 7654000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 14.83,
+      "high": 15.46,
+      "low": 14.6666,
+      "close": 15.25,
+      "volume": 12503740.0
     }
   ],
   "ai_synthesis": null,

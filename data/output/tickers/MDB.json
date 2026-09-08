@@ -1,43 +1,80 @@
 {
   "ticker": "MDB",
-  "fetched_at": "2026-09-08T06:30:31Z",
+  "fetched_at": "2026-09-08T22:41:26Z",
   "_schema": "v2",
-  "current_price": 368.739990234375,
+  "current_price": 356.0,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "MDB",
+    "longName": "MongoDB, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "New York",
+    "website": "https://www.mongodb.com",
+    "fullTimeEmployees": 5783,
+    "marketCap": 28633765888,
+    "enterpriseValue": 27348103168,
+    "trailingPE": 508.57144,
+    "forwardPE": 45.842438,
+    "priceToSalesTrailing12Months": 10.289663,
+    "enterpriseToRevenue": 9.828,
+    "priceToBook": 9.764661,
+    "grossMargins": 0.72688,
+    "operatingMargins": 0.0368,
+    "profitMargins": 0.02116,
+    "returnOnEquity": 0.01989,
+    "totalCash": 2411254016,
+    "totalDebt": 55013000,
+    "totalRevenue": 2782769920,
+    "freeCashflow": 561356224,
+    "debtToEquity": 1.846,
+    "currentRatio": 4.866,
+    "fiftyTwoWeekHigh": 473.1,
+    "fiftyTwoWeekLow": 215.68,
+    "averageVolume": 1645096,
+    "averageVolume10days": 2405980,
+    "beta": 1.585,
+    "sharesOutstanding": 80431927,
+    "sharesFloat": 78452209,
+    "companyOfficers": [
+      {
+        "name": "Mr. Chirantan Jitendra Desai",
+        "title": "President, CEO & Director",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Dwight A. Merriman",
+        "title": "Co-Founder & Director",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Michael J. Berry",
+        "title": "CFO & Principal Financial Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Kong  Phan",
+        "title": "Chief Accounting Officer & Principal Accounting Officer",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Jim  Scharf",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Deepa  Gopinath",
+        "title": "Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -71,7 +108,11 @@
       "eps_surprise_pct": 0.5239
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-12-01",
+    "revenue_low": 730000000,
+    "revenue_high": 754803810
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -275,38 +316,22 @@
       "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.045028089887640455,
   "technicals": {
-    "ma20": 425.4209976196289,
-    "ma50": 373.44519897460935,
-    "ma200": 342.4480997467041,
-    "rsi14": 42.22703282197648,
+    "ma20": 422.3874969482422,
+    "ma50": 374.28499877929687,
+    "ma200": 342.5387998199463,
+    "rsi14": 39.78915007780333,
     "high_20d": 473.1000061035156,
-    "low_5d": 365.8999938964844,
-    "low_10d": 365.8999938964844,
+    "low_5d": 354.1199951171875,
+    "low_10d": 354.1199951171875,
     "high_52w": 473.1000061035156,
     "low_52w": 215.67999267578125,
-    "atr14": 24.093069893973215,
-    "atr14_pct": 6.533891232860153,
-    "position_in_52w_range_pct": 59.459245425594055
+    "atr14": 23.783785138811385,
+    "atr14_pct": 6.68083852213803,
+    "position_in_52w_range_pct": 54.5101390741753
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 291.5,
-      "high": 294.28,
-      "low": 286.61,
-      "close": 289.88,
-      "volume": 1531300.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 294.82,
-      "high": 294.82,
-      "low": 277.01,
-      "close": 281.88,
-      "volume": 1450600.0
-    },
     {
       "date": "2024-09-09",
       "open": 282.89,
@@ -4306,17 +4331,17 @@
       "low": 365.9,
       "close": 368.74,
       "volume": 2066700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 360.75,
+      "high": 363.98,
+      "low": 354.12,
+      "close": 356.0,
+      "volume": 2476065.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 325.05,
-      "high": 331.04,
-      "low": 322.79,
-      "close": 324.74,
-      "volume": 2339400.0
-    },
     {
       "date": "2025-09-08",
       "open": 326.25,
@@ -6324,6 +6349,14 @@
       "low": 365.9,
       "close": 368.74,
       "volume": 2066700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 360.75,
+      "high": 363.98,
+      "low": 354.12,
+      "close": 356.0,
+      "volume": 2476065.0
     }
   ],
   "ai_synthesis": null,

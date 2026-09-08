@@ -1,43 +1,80 @@
 {
   "ticker": "FLY",
-  "fetched_at": "2026-09-08T06:29:54Z",
+  "fetched_at": "2026-09-08T22:40:52Z",
   "_schema": "v2",
-  "current_price": 21.670000076293945,
+  "current_price": 22.899999618530273,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FLY",
+    "longName": "Firefly Aerospace Inc.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Leander",
+    "website": "https://www.fireflyspace.com",
+    "fullTimeEmployees": 1409,
+    "marketCap": 3833566208,
+    "enterpriseValue": 3045791744,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": -13.137363,
+    "priceToSalesTrailing12Months": 13.356769,
+    "enterpriseToRevenue": 10.612,
+    "priceToBook": 3.112259,
+    "grossMargins": 0.22920999,
+    "operatingMargins": -0.80893,
+    "profitMargins": -1.29058,
+    "returnOnEquity": -0.57954,
+    "totalCash": 635264000,
+    "totalDebt": 53397000,
+    "totalRevenue": 287012992,
+    "freeCashflow": -166670368,
+    "debtToEquity": 4.366,
+    "currentRatio": 2.727,
+    "fiftyTwoWeekHigh": 62.17,
+    "fiftyTwoWeekLow": 16.0,
+    "averageVolume": 4336554,
+    "averageVolume10days": 2190500,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 167404645,
+    "sharesFloat": 108091505,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jason  Kim",
+        "title": "CEO & Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Darren  Ma",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Ramon  Sanchez",
+        "title": "Chief Operating Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Remington  Wu",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Russel Shea Ferring",
+        "title": "Chief Technology Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Brad  Warezak",
+        "title": "Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.25190002
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 100000000,
+    "revenue_high": 117325000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:12:22Z",
   "news": [
     {
+      "date": "2026-09-08T15:04:30Z",
+      "title": "Is Honeywell Aerospace Stock Riskier Than Its Order Book Looks?",
+      "url": "https://www.trefis.com/articles/614532/is-honeywell-aerospace-stock-riskier-than-its-order-book-looks/2026-09-08",
+      "source": "Trefis"
+    },
+    {
       "date": "2026-09-04T03:18:52Z",
       "title": "RKLB And FLY Investors, Take Note: Planet Labs Flags SpaceX Rideshare Crunch As Smaller Operators Seek Alternatives",
       "url": "https://stocktwits.com/news-articles/markets/equity/rklb-fly-investors-planet-labs-spacex-rideshare-crunch-smaller-operators-alternatives/cZswqIGRJw2",
@@ -261,28 +308,22 @@
       "title": "NASA Taps Blue Origin, Firefly For Services. SpaceX Stock Hits Resistance.",
       "url": "https://www.investors.com/news/spacex-stock-falcon9-starlink-nasa-payload-services-blue-origin-firefly/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-18T12:51:00Z",
-      "title": "Can GHOST Strengthen Rocket Lab's Responsive Launch Capabilities?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ghost-strengthen-rocket-labs-responsive-125100326.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06331877834734485,
   "technicals": {
-    "ma20": 23.77150011062622,
-    "ma50": 23.331200065612794,
-    "ma200": 27.530149993896483,
-    "rsi14": 42.47463132442366,
+    "ma20": 23.628500080108644,
+    "ma50": 23.278400039672853,
+    "ma200": 27.545849990844726,
+    "rsi14": 49.23518612544274,
     "high_20d": 28.200000762939453,
     "low_5d": 20.35300064086914,
     "low_10d": 20.35300064086914,
     "high_52w": 62.16999816894531,
     "low_52w": 16.0,
-    "atr14": 1.252999986921038,
-    "atr14_pct": 5.782187275078815,
-    "position_in_52w_range_pct": 12.280702406671697
+    "atr14": 1.2768214089529855,
+    "atr14_pct": 5.575639433285423,
+    "position_in_52w_range_pct": 14.944769097199845
   },
   "ohlc_2y": [
     {
@@ -2460,17 +2501,17 @@
       "low": 21.08,
       "close": 21.67,
       "volume": 1798500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 22.15,
+      "high": 23.45,
+      "low": 21.4165,
+      "close": 22.9,
+      "volume": 3119461.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 42.96,
-      "high": 43.277,
-      "low": 41.57,
-      "close": 42.63,
-      "volume": 390400.0
-    },
     {
       "date": "2025-09-08",
       "open": 42.55,
@@ -4478,6 +4519,14 @@
       "low": 21.08,
       "close": 21.67,
       "volume": 1798500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 22.15,
+      "high": 23.45,
+      "low": 21.4165,
+      "close": 22.9,
+      "volume": 3119461.0
     }
   ],
   "ai_synthesis": null,

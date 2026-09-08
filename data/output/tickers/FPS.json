@@ -1,43 +1,80 @@
 {
   "ticker": "FPS",
-  "fetched_at": "2026-09-08T06:27:23Z",
+  "fetched_at": "2026-09-08T22:38:12Z",
   "_schema": "v2",
-  "current_price": 31.350000381469727,
+  "current_price": 32.310001373291016,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "symbol": "FPS",
+    "longName": "Forgent Power Solutions, Inc.",
+    "sector": "Industrials",
+    "industry": "Electrical Equipment & Parts",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Dayton",
+    "website": "https://www.forgentpower.com",
+    "fullTimeEmployees": 2000,
+    "marketCap": 9836097536,
+    "enterpriseValue": 8402969088,
+    "trailingPE": 1615.5001,
+    "forwardPE": 27.719868,
+    "priceToSalesTrailing12Months": 8.224162,
+    "enterpriseToRevenue": 7.026,
+    "priceToBook": 17.665392,
+    "grossMargins": 0.34332,
+    "operatingMargins": 0.103870004,
+    "profitMargins": 0.02173,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 93831000,
+    "totalDebt": 707558976,
+    "totalRevenue": 1196000000,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 121.449,
+    "currentRatio": 1.641,
+    "fiftyTwoWeekHigh": 66.0,
+    "fiftyTwoWeekLow": 25.95,
+    "averageVolume": 7593219,
+    "averageVolume10days": 5167110,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 259971169,
+    "sharesFloat": 140207220,
+    "companyOfficers": [
+      {
+        "name": "Mr. Gary John Niederpruem",
+        "title": "CEO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ryan S. Fiedler",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Tyson K. Hottinger",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Jose  Caballero",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Inez  Lund",
+        "title": "Chief Accounting Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Wyatt  Shallbetter",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -49,7 +86,11 @@
       "eps_estimate": 0.11502
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-09-15",
+    "revenue_low": 412800000,
+    "revenue_high": 435000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -253,19 +294,19 @@
       "source": "TipRanks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.164345396914452,
   "technicals": {
-    "ma20": 33.83050012588501,
-    "ma50": 38.44100025177002,
-    "rsi14": 38.84347965632883,
+    "ma20": 33.5660002708435,
+    "ma50": 37.98460025787354,
+    "rsi14": 42.87294075723492,
     "high_20d": 40.189998626708984,
     "low_5d": 28.239999771118164,
     "low_10d": 28.239999771118164,
     "high_52w": 66.0,
     "low_52w": 25.950000762939453,
-    "atr14": 1.8171430315290178,
-    "atr14_pct": 5.796309439929352,
-    "position_in_52w_range_pct": 13.483145371781546
+    "atr14": 1.7253430230276925,
+    "atr14_pct": 5.339965799116131,
+    "position_in_52w_range_pct": 15.880151639219736
   },
   "ohlc_2y": [
     {
@@ -1443,6 +1484,14 @@
       "low": 30.51,
       "close": 31.35,
       "volume": 4489800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 32.17,
+      "high": 32.935,
+      "low": 31.2802,
+      "close": 32.31,
+      "volume": 7707402.0
     }
   ],
   "ohlc_1y": [
@@ -2621,6 +2670,14 @@
       "low": 30.51,
       "close": 31.35,
       "volume": 4489800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 32.17,
+      "high": 32.935,
+      "low": 31.2802,
+      "close": 32.31,
+      "volume": 7707402.0
     }
   ],
   "ai_synthesis": null,

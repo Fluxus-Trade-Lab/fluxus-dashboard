@@ -1,14 +1,14 @@
 {
   "ticker": "AMDL",
-  "fetched_at": "2026-09-08T06:28:56Z",
+  "fetched_at": "2026-09-08T22:39:51Z",
   "_schema": "v2",
-  "current_price": 49.75,
+  "current_price": 55.560001373291016,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "AMDL",
+    "longName": "GraniteShares 2x Long AMD Daily ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "NGM",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 83.79,
+    "fiftyTwoWeekLow": 8.875,
+    "averageVolume": 3342683,
+    "averageVolume10days": 1529800,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:28:56Z",
+  "quarterly_asof": "2026-09-08T22:39:51Z",
   "news": [
     {
       "date": "2026-06-10T21:00:04Z",
@@ -69,38 +69,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07829373456587324,
   "technicals": {
-    "ma20": 49.940999794006345,
-    "ma50": 57.79299995422363,
-    "ma200": 34.853574934005735,
-    "rsi14": 47.69381014385152,
+    "ma20": 50.24499988555908,
+    "ma50": 57.56959991455078,
+    "ma200": 35.03807494163513,
+    "rsi14": 54.9082569920358,
     "high_20d": 59.4900016784668,
     "low_5d": 42.45000076293945,
     "low_10d": 42.45000076293945,
     "high_52w": 83.79000091552734,
     "low_52w": 8.875,
-    "atr14": 3.7945714678083147,
-    "atr14_pct": 7.62727933227802,
-    "position_in_52w_range_pct": 54.56183608152102
+    "atr14": 3.8052855900355746,
+    "atr14_pct": 6.848965975484774,
+    "position_in_52w_range_pct": 62.31729400354955
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 10.99,
-      "high": 11.545,
-      "low": 10.93,
-      "close": 11.18,
-      "volume": 900700.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 11.06,
-      "high": 11.1,
-      "low": 10.01,
-      "close": 10.37,
-      "volume": 1031300.0
-    },
     {
       "date": "2024-09-09",
       "open": 10.64,
@@ -4100,17 +4084,17 @@
       "low": 45.9,
       "close": 49.75,
       "volume": 2164100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 51.8,
+      "high": 56.96,
+      "low": 51.72,
+      "close": 55.56,
+      "volume": 3564056.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 9.885,
-      "high": 9.89,
-      "low": 9.0,
-      "close": 9.1,
-      "volume": 36028800.0
-    },
     {
       "date": "2025-09-08",
       "open": 9.18,
@@ -6118,6 +6102,14 @@
       "low": 45.9,
       "close": 49.75,
       "volume": 2164100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 51.8,
+      "high": 56.96,
+      "low": 51.72,
+      "close": 55.56,
+      "volume": 3564056.0
     }
   ],
   "ai_synthesis": null,

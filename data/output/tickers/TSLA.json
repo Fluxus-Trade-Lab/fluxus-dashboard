@@ -1,46 +1,112 @@
 {
   "ticker": "TSLA",
-  "fetched_at": "2026-09-08T06:28:01Z",
+  "fetched_at": "2026-09-08T22:38:52Z",
   "_schema": "v2",
-  "current_price": 354.0799865722656,
+  "current_price": 368.1600036621094,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "TSLA",
+    "longName": "Tesla, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Austin",
+    "website": "https://www.tesla.com",
+    "fullTimeEmployees": 134785,
+    "marketCap": 1454065451008,
+    "enterpriseValue": 1371672805376,
+    "trailingPE": 334.69092,
+    "forwardPE": 170.55656,
+    "priceToSalesTrailing12Months": 14.032807,
+    "enterpriseToRevenue": 13.238,
+    "priceToBook": 16.73835,
+    "grossMargins": 0.18852,
+    "operatingMargins": 0.014099999,
+    "profitMargins": 0.03671,
+    "returnOnEquity": 0.046669997,
+    "totalCash": 43524001792,
+    "totalDebt": 16080000000,
+    "totalRevenue": 103619002368,
+    "freeCashflow": 4835999744,
+    "debtToEquity": 18.373,
+    "currentRatio": 1.941,
+    "fiftyTwoWeekHigh": 498.83,
+    "fiftyTwoWeekLow": 297.38,
+    "averageVolume": 41690243,
+    "averageVolume10days": 42099670,
+    "beta": 1.845,
+    "sharesOutstanding": 3949547394,
+    "sharesFloat": 2819186930,
+    "companyOfficers": [
+      {
+        "name": "Mr. Elon R. Musk",
+        "title": "Co-Founder, Technoking of Tesla, CEO & Director",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Vaibhav  Taneja",
+        "title": "Chief Financial Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Xiaotong  Zhu",
+        "title": "Senior Vice President of APAC & Global Vehicle Manufacturing",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Travis  Axelrod",
+        "title": "Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Brandon  Ehrhart",
+        "title": "General Counsel & Corporate Secretary",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Franz  von Holzhausen",
+        "title": "Chief Designer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.54236,
+      "eps_surprise_pct": -0.39150003
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.41,
+      "eps_estimate": 0.34999,
+      "eps_surprise_pct": 0.1715
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.5,
+      "eps_estimate": 0.45061,
+      "eps_surprise_pct": 0.1096
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.5,
+      "eps_estimate": 0.55885,
+      "eps_surprise_pct": -0.105299994
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-21",
+    "revenue_low": 24286500000,
+    "revenue_high": 30566000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,106 +165,167 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 48,
+    "bullish": 23,
+    "neutral": 19,
+    "bearish": 6,
+    "avg_price_target": 390.09283,
+    "high_price_target": 600.0,
+    "low_price_target": 125.0,
+    "current_price": 368.16,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-04T14:18:22",
+        "firm": "GLJ Research",
+        "to_grade": "Sell",
+        "from_grade": "Sell",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-03T14:48:26",
+        "firm": "StoneX",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-18T13:43:00",
+        "firm": "GLJ Research",
+        "to_grade": "Sell",
+        "from_grade": "Sell",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-03T12:20:15",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T16:47:27",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T19:49:52",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T18:25:44",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T17:48:17",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T17:31:15",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T17:15:30",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
-  "quarterly_asof": "2026-09-08T06:28:01Z",
+  "quarterly_asof": "2026-09-08T22:38:52Z",
   "news": [
     {
-      "date": "2026-09-08T03:00:18Z",
-      "title": "New Study Reveals Strongest State Economies, Only 1 State Was Better Than Texas",
-      "url": "https://247wallst.com/investing/2026/07/13/new-study-reveals-strongest-state-economies-only-1-state-was-better-than-texas/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-08T13:51:58Z",
+      "title": "Bond yield worries persist as oil edges higher: AlphaCheck",
+      "url": "https://finance.yahoo.com/markets/article/bond-yield-worries-persist-as-oil-edges-higher-alphacheck-135158227.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-09-07T20:59:00Z",
-      "title": "Crypto Investors Rotate From Bitcoin Into Altcoins as Rate Risks Rise",
-      "url": "https://www.cryptoprowl.com/releases/crypto-investors-rotate-from-bitcoin-into-altcoins-as-rate-risks-rise-6956",
-      "source": "CryptoProwl"
-    },
-    {
-      "date": "2026-09-07T20:46:03Z",
-      "title": "Tesla Stock May Have A European Catalyst Investors Are Missing",
-      "url": "https://www.barchart.com/story/news/4477833/tesla-stock-may-have-a-european-catalyst-investors-are-missing",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-09-07T19:30:02Z",
-      "title": "How to Play Tesla Stock After Its Exclusive Cybercab Launch Event",
-      "url": "https://www.barchart.com/story/news/4477514/how-to-play-tesla-stock-after-its-exclusive-cybercab-launch-event",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-09-07T19:12:00Z",
-      "title": "Goldman Sachs Delivers Stark Message on Tesla Stock",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/goldman-sachs-delivers-stark-message-191200543.html",
+      "date": "2026-09-08T20:49:45Z",
+      "title": "Intel Leads Chip Stocks Rally as Qualcomm, AMD and Broadcom Stocks Jump",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/intel-leads-chip-stocks-rally-204945385.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-07T19:09:59Z",
-      "title": "Cybercab Could Transform Tesla, But Regulatory Risks Loom",
-      "url": "https://finance.yahoo.com/technology/articles/cybercab-could-transform-tesla-regulatory-190959675.html",
-      "source": "Insider Monkey"
+      "date": "2026-09-08T20:38:45Z",
+      "title": "Tesla Cybercab Could Beat Waymo on Cost by Up to 30 Cents A Mile, Goldman Says",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/09/61673636/tesla-cybercab-waymo-cost?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "source": "Benzinga Prediction Markets"
     },
     {
-      "date": "2026-09-07T18:30:02Z",
-      "title": "Howmet Aerospace Stock Is Sliding on SpaceX Fears. Here\u2019s Why That Could Be a Buying Opportunity.",
-      "url": "https://www.barchart.com/story/news/4477207/howmet-aerospace-stock-is-sliding-on-spacex-fears-heres-why-that-could-be-a-buying-opportunity",
-      "source": "Barchart"
+      "date": "2026-09-08T20:29:18Z",
+      "title": "Uber Stock Falls As Wall Street Sizes Up Tesla's Cybercab Rollout",
+      "url": "https://www.investors.com/news/technology/uber-stock-tesla-cybercab-austin-rollout/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-09-07T17:54:00Z",
-      "title": "Is Tesla Stock Under $360 a Share an Obvious Buy in September?",
-      "url": "https://www.fool.com/investing/2026/09/07/is-tesla-stock-under-360-a-share-an-obvious-buy-in/",
-      "source": "Motley Fool"
+      "date": "2026-09-08T20:29:00Z",
+      "title": "An Under the Radar Rare Earth Comment From Elon Musk Could Upend Another Industry",
+      "url": "https://www.barrons.com/articles/elon-musk-radar-rare-earth-cybercab-comment-b71c6c0b?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-09-07T17:35:03Z",
-      "title": "Billionaire has 5-word response to Elon Musk's Tesla chart",
-      "url": "https://www.thestreet.com/crypto/markets/billionaire-has-5-word-response-to-elon-musks-tesla-chart",
-      "source": "TheStreet"
+      "date": "2026-09-08T19:13:51Z",
+      "title": "Uber Falls 4% on Tesla Cybercab Threat as Slovenia Clears Full Self-Driving; TSLA Stock Rises 4%",
+      "url": "https://247wallst.com/investing/2026/09/08/uber-falls-4-on-tesla-cybercab-threat-as-slovenia-clears-full-self-driving-tsla-stock-rises-4/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-07T17:07:00Z",
-      "title": "Elon Musk Owns 28% of Tesla, a Stake Worth Nearly $350 Billion. Here's Why His Ownership Level Matters for Shareholders.",
-      "url": "https://www.fool.com/investing/2026/09/07/elon-musk-owns-tesla-stake-worth-billion-stock/",
-      "source": "Motley Fool"
+      "date": "2026-09-08T18:31:34Z",
+      "title": "Lucid Just Dropped 33% in a Month. Is It Time to Sell?",
+      "url": "https://247wallst.com/investing/2026/09/08/lucid-just-dropped-33-in-a-month-is-it-time-to-sell/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-08T17:26:36Z",
+      "title": "Intel Stock Jumps on Major Analyst Upgrade",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/intel-stock-jumps-major-analyst-172636720.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T17:24:27Z",
+      "title": "Tesla Stock Rises. Musk's Robotaxi Bet Gets a New Vehicle",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-rises-musks-robotaxi-172427426.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T17:08:31Z",
+      "title": "Intel Jumps 10% as Analyst Says Musk\u2019s Terafab Could Give Foundry Much-Needed Scale",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/09/61667076/intel-terafab-foundry-upgrade?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "source": "Benzinga Prediction Markets"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.019420903761621377,
   "technicals": {
-    "ma20": 348.4394989013672,
-    "ma50": 357.9477984619141,
-    "ma200": 399.55844970703123,
-    "rsi14": 50.92656334385323,
+    "ma20": 350.30349884033205,
+    "ma50": 357.7167987060547,
+    "ma200": 399.3929997253418,
+    "rsi14": 55.7109935141216,
     "high_20d": 384.0400085449219,
-    "low_5d": 347.1499938964844,
+    "low_5d": 349.9200134277344,
     "low_10d": 342.5299987792969,
     "high_52w": 498.8299865722656,
     "low_52w": 297.3800048828125,
-    "atr14": 15.337136404854911,
-    "atr14_pct": 4.331545692070538,
-    "position_in_52w_range_pct": 28.14593538998651
+    "atr14": 15.802137102399554,
+    "atr14_pct": 4.292192781729346,
+    "position_in_52w_range_pct": 35.13527188521087
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 223.49,
-      "high": 235.0,
-      "low": 222.25,
-      "close": 230.17,
-      "volume": 119355000.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 232.6,
-      "high": 233.6,
-      "low": 210.51,
-      "close": 210.73,
-      "volume": 112177000.0
-    },
     {
       "date": "2024-09-09",
       "open": 216.2,
@@ -4198,17 +4325,17 @@
       "low": 351.32,
       "close": 354.08,
       "volume": 64829000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 357.27,
+      "high": 370.0,
+      "low": 355.8,
+      "close": 368.16,
+      "volume": 50850639.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 348.0,
-      "high": 355.87,
-      "low": 344.68,
-      "close": 350.84,
-      "volume": 108989800.0
-    },
     {
       "date": "2025-09-08",
       "open": 354.64,
@@ -6216,6 +6343,14 @@
       "low": 351.32,
       "close": 354.08,
       "volume": 64829000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 357.27,
+      "high": 370.0,
+      "low": 355.8,
+      "close": 368.16,
+      "volume": 50850639.0
     }
   ],
   "ai_synthesis": null,

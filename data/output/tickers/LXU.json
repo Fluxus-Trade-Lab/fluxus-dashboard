@@ -1,43 +1,80 @@
 {
   "ticker": "LXU",
-  "fetched_at": "2026-09-08T06:30:30Z",
+  "fetched_at": "2026-09-08T22:41:25Z",
   "_schema": "v2",
-  "current_price": 11.300000190734863,
+  "current_price": 11.350000381469727,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "LXU",
+    "longName": "LSB Industries, Inc.",
+    "sector": "Basic Materials",
+    "industry": "Chemicals",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Oklahoma City",
+    "website": "https://www.lsbindustries.com",
+    "fullTimeEmployees": 513,
+    "marketCap": 817171712,
+    "enterpriseValue": 1085240832,
+    "trailingPE": 22.7,
+    "forwardPE": 11.124179,
+    "priceToSalesTrailing12Months": 1.2417909,
+    "enterpriseToRevenue": 1.649,
+    "priceToBook": 1.5155562,
+    "grossMargins": 0.17323999,
+    "operatingMargins": -0.01631,
+    "profitMargins": 0.05584,
+    "returnOnEquity": 0.071,
+    "totalCash": 217980000,
+    "totalDebt": 489648992,
+    "totalRevenue": 658059008,
+    "freeCashflow": 89847872,
+    "debtToEquity": 90.807,
+    "currentRatio": 2.426,
+    "fiftyTwoWeekHigh": 17.22,
+    "fiftyTwoWeekLow": 7.71,
+    "averageVolume": 802464,
+    "averageVolume10days": 625850,
+    "beta": 0.313,
+    "sharesOutstanding": 71997504,
+    "sharesFloat": 59050193,
+    "companyOfficers": [
+      {
+        "name": "Mr. Mark T. Behrman",
+        "title": "President, CEO & Chairman of the Board",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Cheryl A. Maguire CPA",
+        "title": "Executive VP & CFO",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Michael J. Foster J.D.",
+        "title": "Executive VP, General Counsel & Secretary",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Damien J. Renwick",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Scott D. Bemis",
+        "title": "Executive Vice President of Manufacturing",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Brian  Jensen",
+        "title": "Vice President of Strategy & Corporate Development",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0547
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 163030000,
+    "revenue_high": 167700300
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14096915825766815,
   "technicals": {
-    "ma20": 10.556499910354614,
-    "ma50": 10.788399963378906,
-    "ma200": 11.48159996509552,
-    "rsi14": 58.267795512428144,
+    "ma20": 10.619499921798706,
+    "ma50": 10.798199977874756,
+    "ma200": 11.492099967002869,
+    "rsi14": 58.90356056076052,
     "high_20d": 11.6899995803833,
-    "low_5d": 10.40999984741211,
+    "low_5d": 10.5600004196167,
     "low_10d": 10.09000015258789,
     "high_52w": 17.219999313354492,
     "low_52w": 7.710000038146973,
-    "atr14": 0.541428634098598,
-    "atr14_pct": 4.791403760705492,
-    "position_in_52w_range_pct": 37.749741600369916
+    "atr14": 0.5257143293108258,
+    "atr14_pct": 4.631844155433855,
+    "position_in_52w_range_pct": 38.27550600147995
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 7.56,
-      "high": 7.65,
-      "low": 7.32,
-      "close": 7.41,
-      "volume": 298800.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 7.4,
-      "high": 7.4,
-      "low": 7.07,
-      "close": 7.1,
-      "volume": 379000.0
-    },
     {
       "date": "2024-09-09",
       "open": 7.1,
@@ -4300,17 +4325,17 @@
       "low": 10.95,
       "close": 11.3,
       "volume": 642300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 11.35,
+      "high": 11.67,
+      "low": 11.33,
+      "close": 11.35,
+      "volume": 741556.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 8.22,
-      "high": 8.4,
-      "low": 8.11,
-      "close": 8.37,
-      "volume": 254200.0
-    },
     {
       "date": "2025-09-08",
       "open": 8.47,
@@ -6318,6 +6343,14 @@
       "low": 10.95,
       "close": 11.3,
       "volume": 642300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 11.35,
+      "high": 11.67,
+      "low": 11.33,
+      "close": 11.35,
+      "volume": 741556.0
     }
   ],
   "ai_synthesis": null,

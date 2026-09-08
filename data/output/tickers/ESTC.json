@@ -1,43 +1,80 @@
 {
   "ticker": "ESTC",
-  "fetched_at": "2026-09-08T06:28:16Z",
+  "fetched_at": "2026-09-08T22:39:05Z",
   "_schema": "v2",
-  "current_price": 91.80999755859375,
+  "current_price": 88.41999816894531,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ESTC",
+    "longName": "Elastic N.V.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "Netherlands",
+    "city": "Amsterdam",
+    "website": "https://www.elastic.co",
+    "fullTimeEmployees": 3834,
+    "marketCap": 9283329024,
+    "enterpriseValue": 8773982208,
+    "trailingPE": 25.262857,
+    "forwardPE": 22.485397,
+    "priceToSalesTrailing12Months": 5.151235,
+    "enterpriseToRevenue": 4.869,
+    "priceToBook": 7.1670585,
+    "grossMargins": 0.75586,
+    "operatingMargins": -0.00606,
+    "profitMargins": 0.20844,
+    "returnOnEquity": 0.33122003,
+    "totalCash": 1461042048,
+    "totalDebt": 595774976,
+    "totalRevenue": 1802156032,
+    "freeCashflow": 504316864,
+    "debtToEquity": 45.94,
+    "currentRatio": 1.81,
+    "fiftyTwoWeekHigh": 108.0,
+    "fiftyTwoWeekLow": 42.05,
+    "averageVolume": 2283616,
+    "averageVolume10days": 3837810,
+    "beta": 1.037,
+    "sharesOutstanding": 104991280,
+    "sharesFloat": 86259786,
+    "companyOfficers": [
+      {
+        "name": "Mr. Ashutosh  Kulkarni",
+        "title": "CEO & Executive Director",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Shay  Banon",
+        "title": "Co-Founder, CTO & Executive Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Navam  Welihinda",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Mark  Dodds",
+        "title": "Chief Revenue Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Uri  Boness",
+        "title": "Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Simon  Willnauer",
+        "title": "Founder",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.1108
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-19",
+    "revenue_low": 485900000,
+    "revenue_high": 489351530
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -209,10 +250,22 @@
   "quarterly_asof": "2026-09-06T05:09:39Z",
   "news": [
     {
+      "date": "2026-09-08T21:27:01Z",
+      "title": "Elastic's 2026 Outlook: AI Search Integration Fuels Enterprise Customer Retention",
+      "url": "https://www.fool.com/coverage/moneyball/2026/09/08/elastics-2026-outlook-ai-search-integration-fuels-enterprise-customer-retention/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-09-07T13:50:44Z",
       "title": "How Elastic Stock Bounced 48.3% Higher Last Month",
       "url": "https://www.fool.com/investing/2026/09/07/how-elastic-stock-bounced-483-higher-last-month/",
       "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-07T11:30:00Z",
+      "title": "3 Earnings Season Winners That Analysts Can't Stop Upgrading",
+      "url": "https://www.marketbeat.com/articles/3-earnings-season-winners-analysts-cant-stop-upgrading-estc-de-dt/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     },
     {
       "date": "2026-09-05T20:10:51Z",
@@ -255,52 +308,24 @@
       "title": "Okta, Datadog, JFrog, Zscaler, and Elastic Shares Are Falling, What You Need To Know",
       "url": "https://finance.yahoo.com/markets/stocks/articles/okta-datadog-jfrog-zscaler-elastic-205020337.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-09-01T13:40:03Z",
-      "title": "Is Elastic (ESTC) Stock Outpacing Its Computer and Technology Peers This Year?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-estc-stock-outpacing-computer-134003464.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-31T22:37:59Z",
-      "title": "Elastic (ESTC) Finally Delivered After Years of Head-Fakes \u2014 and Wall Street Still Can\u2019t Agree It Lasts",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-estc-finally-delivered-years-223759339.html",
-      "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0712508496998892,
   "technicals": {
-    "ma20": 86.208500289917,
-    "ma50": 71.83900039672852,
-    "ma200": 63.84375001907349,
-    "rsi14": 60.11963008881589,
+    "ma20": 86.81350021362304,
+    "ma50": 72.48260032653809,
+    "ma200": 63.84305002212525,
+    "rsi14": 55.908801527091924,
     "high_20d": 108.0,
-    "low_5d": 89.33999633789062,
+    "low_5d": 88.10099792480469,
     "low_10d": 78.79000091552734,
     "high_52w": 108.0,
     "low_52w": 42.04999923706055,
-    "atr14": 5.744285583496094,
-    "atr14_pct": 6.256710310693618,
-    "position_in_52w_range_pct": 75.45109589975289
+    "atr14": 5.784214564732143,
+    "atr14_pct": 6.541749247359364,
+    "position_in_52w_range_pct": 70.31083911365525
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 71.35,
-      "high": 73.42,
-      "low": 71.12,
-      "close": 72.52,
-      "volume": 3003500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 72.79,
-      "high": 72.8,
-      "low": 70.09,
-      "close": 70.14,
-      "volume": 2246900.0
-    },
     {
       "date": "2024-09-09",
       "open": 69.41,
@@ -4300,17 +4325,17 @@
       "low": 91.45,
       "close": 91.81,
       "volume": 1956500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 89.98,
+      "high": 90.59,
+      "low": 88.101,
+      "close": 88.42,
+      "volume": 2487605.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 85.3,
-      "high": 87.83,
-      "low": 85.3,
-      "close": 86.71,
-      "volume": 2260300.0
-    },
     {
       "date": "2025-09-08",
       "open": 87.79,
@@ -6318,6 +6343,14 @@
       "low": 91.45,
       "close": 91.81,
       "volume": 1956500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 89.98,
+      "high": 90.59,
+      "low": 88.101,
+      "close": 88.42,
+      "volume": 2487605.0
     }
   ],
   "ai_synthesis": null,

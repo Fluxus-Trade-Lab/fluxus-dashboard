@@ -1,43 +1,80 @@
 {
   "ticker": "ERO",
-  "fetched_at": "2026-09-08T06:29:46Z",
+  "fetched_at": "2026-09-08T22:40:45Z",
   "_schema": "v2",
-  "current_price": 34.900001525878906,
+  "current_price": 37.90999984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
+    "symbol": "ERO",
+    "longName": "Ero Copper Corp.",
+    "sector": "Basic Materials",
+    "industry": "Copper",
+    "exchange": "NYQ",
+    "country": "Canada",
+    "city": "Vancouver",
+    "website": "https://www.ero.com",
     "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "marketCap": 3954112768,
+    "enterpriseValue": 4116423936,
+    "trailingPE": 12.850847,
+    "forwardPE": 8.079469,
+    "priceToSalesTrailing12Months": 3.7848215,
+    "enterpriseToRevenue": 3.94,
+    "priceToBook": 3.2582724,
+    "grossMargins": 0.42992002,
+    "operatingMargins": 0.37643,
+    "profitMargins": 0.29794002,
+    "returnOnEquity": 0.30806,
+    "totalCash": 101742000,
+    "totalDebt": 573355008,
+    "totalRevenue": 1044729024,
+    "freeCashflow": 47039876,
+    "debtToEquity": 47.066,
+    "currentRatio": 1.371,
+    "fiftyTwoWeekHigh": 40.83,
+    "fiftyTwoWeekLow": 15.7,
+    "averageVolume": 1314958,
+    "averageVolume10days": 1568440,
+    "beta": 1.668,
+    "sharesOutstanding": 104302633,
+    "sharesFloat": 101975641,
+    "companyOfficers": [
+      {
+        "name": "Mr. David Maxwell Strang",
+        "title": "Co-Founder & Executive Chairman",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Makko  DeFilippo",
+        "title": "President, CEO & Director",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Mr. Wayne  Drier",
+        "title": "Executive VP & CFO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Gelson da Silva Batista",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Courtney R. B. Lynn",
+        "title": "Executive Vice President, External Affairs and Strategy",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Farooq  Hamed",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.1671
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 482573000,
+    "revenue_high": 519214000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -255,38 +296,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09100501223651446,
   "technicals": {
-    "ma20": 36.41250019073486,
-    "ma50": 30.488200111389162,
-    "ma200": 28.945300025939943,
-    "rsi14": 51.362524216426145,
+    "ma20": 36.481000137329104,
+    "ma50": 30.71500011444092,
+    "ma200": 29.02865002632141,
+    "rsi14": 59.55445170616164,
     "high_20d": 40.83000183105469,
     "low_5d": 34.189998626708984,
     "low_10d": 34.189998626708984,
     "high_52w": 40.83000183105469,
-    "low_52w": 14.890000343322754,
-    "atr14": 2.03107179914202,
-    "atr14_pct": 5.819689714442986,
-    "position_in_52w_range_pct": 77.13955294882958
+    "low_52w": 14.90999984741211,
+    "atr14": 2.2017860412597656,
+    "atr14_pct": 5.8079294384646865,
+    "position_in_52w_range_pct": 88.73456111043004
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 19.49,
-      "high": 19.49,
-      "low": 18.97,
-      "close": 19.09,
-      "volume": 212100.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 19.12,
-      "high": 19.12,
-      "low": 18.19,
-      "close": 18.28,
-      "volume": 264300.0
-    },
     {
       "date": "2024-09-09",
       "open": 18.51,
@@ -4286,17 +4311,17 @@
       "low": 34.21,
       "close": 34.9,
       "volume": 677600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 36.83,
+      "high": 39.36,
+      "low": 36.69,
+      "close": 37.91,
+      "volume": 2092635.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 14.89,
-      "high": 15.37,
-      "low": 14.89,
-      "close": 14.97,
-      "volume": 688700.0
-    },
     {
       "date": "2025-09-08",
       "open": 15.17,
@@ -6304,6 +6329,14 @@
       "low": 34.21,
       "close": 34.9,
       "volume": 677600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 36.83,
+      "high": 39.36,
+      "low": 36.69,
+      "close": 37.91,
+      "volume": 2092635.0
     }
   ],
   "ai_synthesis": null,

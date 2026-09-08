@@ -1,43 +1,80 @@
 {
   "ticker": "FRMI",
-  "fetched_at": "2026-09-08T06:29:55Z",
+  "fetched_at": "2026-09-08T22:40:53Z",
   "_schema": "v2",
-  "current_price": 5.119999885559082,
+  "current_price": 5.710000038146973,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FRMI",
+    "longName": "Fermi Inc.",
+    "sector": "Real Estate",
+    "industry": "REIT - Specialty",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Amarillo",
+    "website": "https://www.fermiamerica.com",
+    "fullTimeEmployees": 35,
+    "marketCap": 3657068544,
+    "enterpriseValue": 3793044736,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": 49.270863,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "priceToBook": 3.5312307,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "totalCash": 62536000,
+    "totalDebt": 576387968,
     "totalRevenue": null,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 55.87,
+    "currentRatio": 1.102,
+    "fiftyTwoWeekHigh": 36.99,
+    "fiftyTwoWeekLow": 4.47,
+    "averageVolume": 20040375,
+    "averageVolume10days": 14403930,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 640467348,
+    "sharesFloat": 462475067,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jacobo Ortiz Blanes",
+        "title": "Chief Operating Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Charles Lynn Hamilton",
+        "title": "Chief Site Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Lee Alan McIntire",
+        "title": "CEO & Director",
+        "age": 76,
+        "yearBorn": 1949
+      },
+      {
+        "name": "Mr. Robert L. Masson II",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Barry  Sievert",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Sezin  Uzman",
+        "title": "VP of Nuclear Supply Chain & Compliance",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -33.1741
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-09",
+    "revenue_low": 0,
+    "revenue_high": 11980000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,20 +310,20 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07705779283020639,
   "technicals": {
-    "ma20": 5.758499979972839,
-    "ma50": 6.475000019073486,
-    "ma200": 7.98905002117157,
-    "rsi14": 42.10569263373627,
+    "ma20": 5.749999976158142,
+    "ma50": 6.399400024414063,
+    "ma200": 7.925800018310547,
+    "rsi14": 49.58822742042651,
     "high_20d": 7.675000190734863,
     "low_5d": 4.5,
     "low_10d": 4.5,
     "high_52w": 36.9900016784668,
     "low_52w": 4.46999979019165,
-    "atr14": 0.3482856069292341,
-    "atr14_pct": 6.802453412383286,
-    "position_in_52w_range_pct": 1.9987701648989893
+    "atr14": 0.37542847224644255,
+    "atr14_pct": 6.574929417483467,
+    "position_in_52w_range_pct": 3.813038671447296
   },
   "ohlc_2y": [
     {
@@ -2156,6 +2197,14 @@
       "low": 4.8,
       "close": 5.12,
       "volume": 14178500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 5.29,
+      "high": 5.91,
+      "low": 5.24,
+      "close": 5.71,
+      "volume": 27597049.0
     }
   ],
   "ohlc_1y": [
@@ -4030,6 +4079,14 @@
       "low": 4.8,
       "close": 5.12,
       "volume": 14178500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 5.29,
+      "high": 5.91,
+      "low": 5.24,
+      "close": 5.71,
+      "volume": 27597049.0
     }
   ],
   "ai_synthesis": null,

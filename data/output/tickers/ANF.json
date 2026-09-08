@@ -1,43 +1,80 @@
 {
   "ticker": "ANF",
-  "fetched_at": "2026-09-08T06:28:14Z",
+  "fetched_at": "2026-09-08T22:39:04Z",
   "_schema": "v2",
-  "current_price": 149.6699981689453,
+  "current_price": 151.42999267578125,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ANF",
+    "longName": "Abercrombie & Fitch Co.",
+    "sector": "Consumer Cyclical",
+    "industry": "Apparel Retail",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "New Albany",
+    "website": "https://corporate.abercrombie.com",
+    "fullTimeEmployees": 6600,
+    "marketCap": 6425837056,
+    "enterpriseValue": 7015735296,
+    "trailingPE": 13.076856,
+    "forwardPE": 11.887724,
+    "priceToSalesTrailing12Months": 1.2031305,
+    "enterpriseToRevenue": 1.314,
+    "priceToBook": 4.8930464,
+    "grossMargins": 0.63675,
+    "operatingMargins": 0.19941,
+    "profitMargins": 0.10035,
+    "returnOnEquity": 0.40609002,
+    "totalCash": 637998976,
+    "totalDebt": 1287440000,
+    "totalRevenue": 5340931072,
+    "freeCashflow": 435861760,
+    "debtToEquity": 93.997,
+    "currentRatio": 1.407,
+    "fiftyTwoWeekHigh": 154.58,
+    "fiftyTwoWeekLow": 65.45,
+    "averageVolume": 1534259,
+    "averageVolume10days": 3655080,
+    "beta": 0.966,
+    "sharesOutstanding": 42434377,
+    "sharesFloat": 39053206,
+    "companyOfficers": [
+      {
+        "name": "Ms. Fran  Horowitz",
+        "title": "CEO & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Robert J. Ball",
+        "title": "CFO & Executive VP",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Scott D. Lipesky",
+        "title": "Executive VP & COO",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Samir  Desai",
+        "title": "Executive VP and Chief Digital & Technology Officer",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Gregory J. Henchel J.D.",
+        "title": "Executive VP, Chief Legal Officer & Corporate Secretary",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Joseph  Frericks",
+        "title": "Group VP of Finance, Corporate Controller & Principal Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.094
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-25",
+    "revenue_low": 1358000000,
+    "revenue_high": 1370320000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -209,6 +250,18 @@
   "quarterly_asof": "2026-09-06T05:09:36Z",
   "news": [
     {
+      "date": "2026-09-08T20:17:00Z",
+      "title": "Top Stock Picks for Week of September 7, 2026",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-stock-picks-week-september-201700610.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-08T13:35:01Z",
+      "title": "Insider Waves Goodbye to 800 Shares of Iconic Specialty Retailer",
+      "url": "https://www.fool.com/coverage/filings/2026/09/08/insider-waves-goodbye-to-800-shares-of-iconic-specialty-retailer/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-09-07T12:30:02Z",
       "title": "Here's How Much a $1000 Investment in Abercrombie & Fitch Made 10 Years Ago Would Be Worth Today",
       "url": "https://finance.yahoo.com/markets/stocks/articles/heres-much-1000-investment-abercrombie-123002763.html",
@@ -255,52 +308,24 @@
       "title": "Is Abercrombie (ANF) a Buy as Wall Street Analysts Look Optimistic?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/abercrombie-anf-buy-wall-street-133004681.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-01T03:05:01Z",
-      "title": "Jim Cramer Notes Abercrombie & Fitch (ANF) is a Buy on a Pullback After Earnings Surge",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-notes-abercrombie-fitch-030501350.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-31T16:20:02Z",
-      "title": "Surging Earnings Estimates Signal Upside for Abercrombie (ANF) Stock",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/surging-earnings-estimates-signal-upside-162002276.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03559400555172874,
   "technicals": {
-    "ma20": 123.52249946594239,
-    "ma50": 107.43879974365234,
-    "ma200": 97.06374992370606,
-    "rsi14": 71.17872242195979,
+    "ma20": 125.1674991607666,
+    "ma50": 108.63719955444336,
+    "ma200": 97.47329990386963,
+    "rsi14": 71.9497332001184,
     "high_20d": 154.5800018310547,
     "low_5d": 136.1699981689453,
     "low_10d": 106.91999816894531,
     "high_52w": 154.5800018310547,
     "low_52w": 65.44999694824219,
-    "atr14": 8.777856009347099,
-    "atr14_pct": 5.864806652458687,
-    "position_in_52w_range_pct": 94.4911888330254
+    "atr14": 8.620713370186943,
+    "atr14_pct": 5.6928704927327685,
+    "position_in_52w_range_pct": 96.46582634050671
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 138.0,
-      "high": 141.35,
-      "low": 135.9,
-      "close": 137.83,
-      "volume": 1523200.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 136.75,
-      "high": 137.8,
-      "low": 130.36,
-      "close": 130.93,
-      "volume": 2254300.0
-    },
     {
       "date": "2024-09-09",
       "open": 131.93,
@@ -4300,17 +4325,17 @@
       "low": 142.74,
       "close": 149.67,
       "volume": 1455100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 152.43,
+      "high": 153.2,
+      "low": 148.54,
+      "close": 151.43,
+      "volume": 1930763.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 92.91,
-      "high": 97.0,
-      "low": 92.8,
-      "close": 95.37,
-      "volume": 1661700.0
-    },
     {
       "date": "2025-09-08",
       "open": 96.28,
@@ -6318,6 +6343,14 @@
       "low": 142.74,
       "close": 149.67,
       "volume": 1455100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 152.43,
+      "high": 153.2,
+      "low": 148.54,
+      "close": 151.43,
+      "volume": 1930763.0
     }
   ],
   "ai_synthesis": null,

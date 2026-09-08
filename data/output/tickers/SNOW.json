@@ -1,43 +1,80 @@
 {
   "ticker": "SNOW",
-  "fetched_at": "2026-09-08T06:28:26Z",
+  "fetched_at": "2026-09-08T22:39:17Z",
   "_schema": "v2",
-  "current_price": 337.17999267578125,
+  "current_price": 335.5,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SNOW",
+    "longName": "Snowflake Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Menlo Park",
+    "website": "https://www.snowflake.com",
+    "fullTimeEmployees": 9394,
+    "marketCap": 118364397568,
+    "enterpriseValue": 119247757312,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 112.364815,
+    "priceToSalesTrailing12Months": 21.779593,
+    "enterpriseToRevenue": 21.942,
+    "priceToBook": 55.009018,
+    "grossMargins": 0.6703,
+    "operatingMargins": -0.17001,
+    "profitMargins": -0.20071,
+    "returnOnEquity": -0.48063,
+    "totalCash": 2344695040,
+    "totalDebt": 2763814912,
+    "totalRevenue": 5434647040,
+    "freeCashflow": 1739526656,
+    "debtToEquity": 128.57,
+    "currentRatio": 0.939,
+    "fiftyTwoWeekHigh": 384.56,
+    "fiftyTwoWeekLow": 118.3,
+    "averageVolume": 5704688,
+    "averageVolume10days": 6871250,
+    "beta": 1.328,
+    "sharesOutstanding": 352800000,
+    "sharesFloat": 342956550,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sridhar  Ramaswamy Ph.D.",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Benoit  Dageville Ph.D.",
+        "title": "Co-Founder, Strategic Advisor & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Brian G. Robins",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Christian  Kleinerman",
+        "title": "Executive Vice President of Product Management",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Vivek  Raghunathan",
+        "title": "Senior Vice President of Engineering",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Thierry  Cruanes",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0848
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-12-02",
+    "revenue_low": 1417200000,
+    "revenue_high": 1525068530
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -209,6 +250,48 @@
   "quarterly_asof": "2026-09-06T05:09:55Z",
   "news": [
     {
+      "date": "2026-09-08T21:19:40Z",
+      "title": "Snowflake CEO: AI is unleashing a flywheel effect on our business",
+      "url": "https://finance.yahoo.com/technology/article/snowflake-ceo-ai-is-unleashing-a-flywheel-effect-on-our-business-211940504.html",
+      "source": "Yahoo Finance"
+    },
+    {
+      "date": "2026-09-08T20:55:56Z",
+      "title": "Snowflake CEO explains how software companies can survive in the AI era",
+      "url": "https://finance.yahoo.com/video/snowflake-ceo-explains-software-companies-205556481.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-09-08T17:21:11Z",
+      "title": "Snowflake's Growth Is Accelerating. So Is the Valuation Risk",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/snowflakes-growth-accelerating-valuation-risk-172111929.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T16:30:15Z",
+      "title": "This Could Be the AI Stock That Keeps Surprising Wall Street",
+      "url": "https://247wallst.com/investing/2026/09/08/this-could-be-the-ai-stock-that-keeps-surprising-wall-street/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-08T15:26:00Z",
+      "title": "Snowflake Expands in Cloud Analytics: Can It Challenge DELL & ORCL?",
+      "url": "https://finance.yahoo.com/technology/articles/snowflake-expands-cloud-analytics-challenge-152600914.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-08T13:16:27Z",
+      "title": "Oracle Rallies 5% as Morgan Stanley Lifts Its Price Target, CoreWeave Advances 3%",
+      "url": "https://247wallst.com/investing/2026/09/08/oracle-rallies-5-as-morgan-stanley-lifts-its-price-target-coreweave-advances-3/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-08T11:34:56Z",
+      "title": "Oracle Stock Keeps Falling While Wall Street Holds Firm\u2014Who\u2019s Right?",
+      "url": "https://247wallst.com/investing/2026/09/08/oracle-stock-keeps-falling-while-wall-street-holds-firm-whos-right/",
+      "source": "24/7 Wall St."
+    },
+    {
       "date": "2026-09-07T15:33:00Z",
       "title": "Snowflake stock explodes 17% as AI fears suddenly flip",
       "url": "https://www.thestreet.com/investing/snowflake-stock-explodes-17-as-ai-fears-suddenly-flip",
@@ -225,82 +308,24 @@
       "title": "Wall Street Bulls Look Optimistic About Snowflake (SNOW): Should You Buy?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-bulls-look-optimistic-133004685.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-07T13:00:05Z",
-      "title": "Snowflake Inc. (SNOW) Is a Trending Stock: Facts to Know Before Betting on It",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/snowflake-inc-snow-trending-stock-130005945.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-07T03:34:10Z",
-      "title": "Snowflake and C3.ai Reported the Same Night. Only One AI Story Won",
-      "url": "https://finance.yahoo.com/technology/ai/articles/snowflake-c3-ai-reported-same-033410230.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-09-06T18:58:02Z",
-      "title": "Prediction: Snowflake's Product Revenue Passes $8 Billion in Fiscal 2028",
-      "url": "https://www.fool.com/investing/2026/09/06/prediction-snowflake-s-product-revenue-passes-usd8-billion-in-fiscal-2028/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-06T18:10:58Z",
-      "title": "Snowflake (SNOW) Puts CoCo At The Center Of Its AI Software Push",
-      "url": "https://finance.yahoo.com/technology/ai/articles/snowflake-snow-puts-coco-center-181058097.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-09-06T13:05:00Z",
-      "title": "Should You Buy Snowflake Stock After Its Recent Surge? The Answer Might Shock You.",
-      "url": "https://www.fool.com/investing/2026/09/06/should-buy-snowflake-stock-surge-answer-shock-you/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-06T07:55:00Z",
-      "title": "After a 17% Surge, Is Snowflake Stock Still a Buy as Revenue Growth Accelerates?",
-      "url": "https://www.fool.com/investing/2026/09/06/after-a-17-surge-is-snowflake-stock-still-a-buy-as/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-05T21:03:00Z",
-      "title": "Morgan Stanley resets Snowflake stock price target by $170",
-      "url": "https://www.thestreet.com/investing/stocks/morgan-stanley-resets-snowflake-snow-stock-price-target",
-      "source": "TheStreet"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03964232488822653,
   "technicals": {
-    "ma20": 328.2459991455078,
-    "ma50": 297.32159820556643,
-    "ma200": 218.94699974060057,
-    "rsi14": 57.31788550617717,
+    "ma20": 328.28599853515624,
+    "ma50": 299.0523980712891,
+    "ma200": 219.35194976806642,
+    "rsi14": 56.60744590590226,
     "high_20d": 384.55999755859375,
     "low_5d": 303.8900146484375,
     "low_10d": 303.8900146484375,
     "high_52w": 384.55999755859375,
     "low_52w": 118.30000305175781,
-    "atr14": 18.047496250697545,
-    "atr14_pct": 5.3524813579467905,
-    "position_in_52w_range_pct": 82.2053609778783
+    "atr14": 17.823804582868302,
+    "atr14_pct": 5.312609413671625,
+    "position_in_52w_range_pct": 81.57440149825655
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 110.04,
-      "high": 113.79,
-      "low": 110.0,
-      "close": 111.75,
-      "volume": 3891500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 112.28,
-      "high": 112.66,
-      "low": 107.13,
-      "close": 108.56,
-      "volume": 5651700.0
-    },
     {
       "date": "2024-09-09",
       "open": 109.32,
@@ -4300,17 +4325,17 @@
       "low": 337.11,
       "close": 337.18,
       "volume": 8439700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 333.59,
+      "high": 341.1383,
+      "low": 331.77,
+      "close": 335.5,
+      "volume": 5281236.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 223.92,
-      "high": 226.5,
-      "low": 221.19,
-      "close": 225.58,
-      "volume": 5889400.0
-    },
     {
       "date": "2025-09-08",
       "open": 226.84,
@@ -6318,6 +6343,14 @@
       "low": 337.11,
       "close": 337.18,
       "volume": 8439700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 333.59,
+      "high": 341.1383,
+      "low": 331.77,
+      "close": 335.5,
+      "volume": 5281236.0
     }
   ],
   "ai_synthesis": null,

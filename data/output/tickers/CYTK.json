@@ -1,43 +1,80 @@
 {
   "ticker": "CYTK",
-  "fetched_at": "2026-09-08T06:29:38Z",
+  "fetched_at": "2026-09-08T22:40:37Z",
   "_schema": "v2",
-  "current_price": 72.72000122070312,
+  "current_price": 75.3499984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "CYTK",
+    "longName": "Cytokinetics, Incorporated",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "South San Francisco",
+    "website": "https://www.cytokinetics.com",
+    "fullTimeEmployees": 673,
+    "marketCap": 10475414528,
+    "enterpriseValue": 10368551936,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -16.929998,
+    "priceToSalesTrailing12Months": 154.80145,
+    "enterpriseToRevenue": 153.222,
+    "priceToBook": -60.28,
+    "grossMargins": 0.0,
+    "operatingMargins": -6.2595,
+    "profitMargins": 0.0,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "totalCash": 1165686016,
+    "totalDebt": 1424455040,
+    "totalRevenue": 67670000,
+    "freeCashflow": -397408736,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 6.661,
+    "fiftyTwoWeekHigh": 88.31,
+    "fiftyTwoWeekLow": 47.22,
+    "averageVolume": 2064804,
+    "averageVolume10days": 1849370,
+    "beta": 0.36,
+    "sharesOutstanding": 139023418,
+    "sharesFloat": 138390861,
+    "companyOfficers": [
+      {
+        "name": "Mr. Robert I. Blum",
+        "title": "CEO, President & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Sung H. Lee",
+        "title": "EVP & CFO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Jeffrey J. Hessekiel J.D.",
+        "title": "Executive VP, Chief Legal & Administrative Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Dr. Fady Ibraham Malik FACC, M.D., Ph.D.",
+        "title": "Executive Vice President of Research & Development",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Andrew M. Callos",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Dr. James H. Sabry M.D., Ph.D.",
+        "title": "Co-Founder & Chairman of Scientific Advisory Board",
+        "age": 67,
+        "yearBorn": 1958
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.015700001
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 27623000,
+    "revenue_high": 51400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07246184619201065,
   "technicals": {
-    "ma20": 75.2769989013672,
-    "ma50": 79.18659957885743,
-    "ma200": 69.76290004730225,
-    "rsi14": 41.348448781922755,
+    "ma20": 75.16999893188476,
+    "ma50": 79.04979949951172,
+    "ma200": 69.8088500213623,
+    "rsi14": 48.78004386396547,
     "high_20d": 79.87999725341797,
-    "low_5d": 69.30999755859375,
+    "low_5d": 69.83000183105469,
     "low_10d": 69.30999755859375,
     "high_52w": 88.30999755859375,
     "low_52w": 47.220001220703125,
-    "atr14": 2.4635701860700334,
-    "atr14_pct": 3.3877477237564504,
-    "position_in_52w_range_pct": 62.05890063924269
+    "atr14": 2.6324991498674666,
+    "atr14_pct": 3.4936950274413037,
+    "position_in_52w_range_pct": 68.45947860909942
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 55.5,
-      "high": 56.87,
-      "low": 54.68,
-      "close": 55.93,
-      "volume": 1135100.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 56.19,
-      "high": 56.36,
-      "low": 53.21,
-      "close": 54.09,
-      "volume": 1396400.0
-    },
     {
       "date": "2024-09-09",
       "open": 54.31,
@@ -4300,17 +4325,17 @@
       "low": 72.26,
       "close": 72.72,
       "volume": 1140900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 72.39,
+      "high": 76.805,
+      "low": 72.39,
+      "close": 75.35,
+      "volume": 1919823.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 50.71,
-      "high": 54.0,
-      "low": 49.86,
-      "close": 53.01,
-      "volume": 3722800.0
-    },
     {
       "date": "2025-09-08",
       "open": 52.21,
@@ -6318,6 +6343,14 @@
       "low": 72.26,
       "close": 72.72,
       "volume": 1140900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 72.39,
+      "high": 76.805,
+      "low": 72.39,
+      "close": 75.35,
+      "volume": 1919823.0
     }
   ],
   "ai_synthesis": null,

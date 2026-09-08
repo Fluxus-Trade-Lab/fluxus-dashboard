@@ -1,43 +1,68 @@
 {
   "ticker": "KLIC",
-  "fetched_at": "2026-09-08T06:30:22Z",
+  "fetched_at": "2026-09-08T22:41:19Z",
   "_schema": "v2",
-  "current_price": 81.62000274658203,
+  "current_price": 83.06999969482422,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "KLIC",
+    "longName": "Kulicke and Soffa Industries, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NMS",
+    "country": "Singapore",
+    "city": "Singapore",
+    "website": "https://www.kns.com",
+    "fullTimeEmployees": 2551,
+    "marketCap": 4346979840,
+    "enterpriseValue": 3792385792,
+    "trailingPE": 37.931507,
+    "forwardPE": 14.071719,
+    "priceToSalesTrailing12Months": 4.574743,
+    "enterpriseToRevenue": 3.991,
+    "priceToBook": 4.7670145,
+    "grossMargins": 0.52641,
+    "operatingMargins": 0.20661,
+    "profitMargins": 0.121800005,
+    "returnOnEquity": 0.13231,
+    "totalCash": 516572992,
+    "totalDebt": 38118000,
+    "totalRevenue": 950212992,
+    "freeCashflow": 57164124,
+    "debtToEquity": 4.18,
+    "currentRatio": 3.444,
+    "fiftyTwoWeekHigh": 135.8,
+    "fiftyTwoWeekLow": 35.02,
+    "averageVolume": 1047661,
+    "averageVolume10days": 626020,
+    "beta": 1.622,
+    "sharesOutstanding": 52329115,
+    "sharesFloat": 50555158,
+    "companyOfficers": [
+      {
+        "name": "Mr. Lester A.  Wong J.D.",
+        "title": "Interim CEO, Executive VP of Finance & IT and CFO",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Robert Nestor  Chylak",
+        "title": "Senior VP of Central Engineering & CTO",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. Mun Pun  Wong",
+        "title": "Senior Vice President of Global Sales & Supply Chain",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Dr. Fusen Ernie  Chen Ph.D.",
+        "title": "Advisor",
+        "age": 66,
+        "yearBorn": 1959
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +90,11 @@
       "eps_surprise_pct": 0.2613
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-18",
+    "revenue_low": 375000000,
+    "revenue_high": 380400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +298,22 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09510051798510143,
   "technicals": {
-    "ma20": 86.7334991455078,
-    "ma50": 97.67239944458008,
-    "ma200": 78.83547218322754,
-    "rsi14": 40.17895981976863,
+    "ma20": 86.56199913024902,
+    "ma50": 96.8293994140625,
+    "ma200": 79.07468099594116,
+    "rsi14": 42.75722306204943,
     "high_20d": 103.38999938964844,
     "low_5d": 75.5999984741211,
     "low_10d": 75.5999984741211,
     "high_52w": 135.8000030517578,
-    "low_52w": 34.69322920304937,
-    "atr14": 4.085714067731585,
-    "atr14_pct": 5.005775459744983,
-    "position_in_52w_range_pct": 46.41308564918879
+    "low_52w": 34.69323295981807,
+    "atr14": 3.4040423801967075,
+    "atr14_pct": 4.097799918986638,
+    "position_in_52w_range_pct": 47.84720814542443
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 38.7959,
-      "high": 39.3076,
-      "low": 38.2069,
-      "close": 38.4,
-      "volume": 682500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 38.2165,
-      "high": 38.2165,
-      "low": 36.8841,
-      "close": 37.2413,
-      "volume": 535300.0
-    },
     {
       "date": "2024-09-09",
       "open": 37.4151,
@@ -312,14 +325,14 @@
     {
       "date": "2024-09-10",
       "open": 37.2993,
-      "high": 37.7144,
+      "high": 37.7145,
       "low": 36.9903,
       "close": 37.6758,
       "volume": 442600.0
     },
     {
       "date": "2024-09-11",
-      "open": 37.8014,
+      "open": 37.8013,
       "high": 38.3324,
       "low": 36.9999,
       "close": 38.2358,
@@ -328,7 +341,7 @@
     {
       "date": "2024-09-12",
       "open": 38.1972,
-      "high": 38.4965,
+      "high": 38.4966,
       "low": 37.4731,
       "close": 37.9655,
       "volume": 359400.0
@@ -480,7 +493,7 @@
     {
       "date": "2024-10-09",
       "open": 43.0229,
-      "high": 43.5372,
+      "high": 43.5371,
       "low": 42.7997,
       "close": 43.1296,
       "volume": 341000.0
@@ -561,7 +574,7 @@
       "date": "2024-10-23",
       "open": 41.5286,
       "high": 41.6936,
-      "low": 40.5874,
+      "low": 40.5875,
       "close": 41.1599,
       "volume": 376500.0
     },
@@ -666,7 +679,7 @@
       "open": 46.7003,
       "high": 47.3116,
       "low": 45.536,
-      "close": 47.166,
+      "close": 47.1661,
       "volume": 921400.0
     },
     {
@@ -704,7 +717,7 @@
     {
       "date": "2024-11-18",
       "open": 44.8082,
-      "high": 45.1867,
+      "high": 45.1866,
       "low": 44.1193,
       "close": 44.9538,
       "volume": 721300.0
@@ -720,7 +733,7 @@
     {
       "date": "2024-11-20",
       "open": 43.9447,
-      "high": 45.5068,
+      "high": 45.5069,
       "low": 43.9447,
       "close": 45.3128,
       "volume": 613500.0
@@ -746,7 +759,7 @@
       "open": 47.6415,
       "high": 49.5821,
       "low": 47.6415,
-      "close": 48.4662,
+      "close": 48.4663,
       "volume": 682500.0
     },
     {
@@ -856,7 +869,7 @@
     {
       "date": "2024-12-16",
       "open": 48.0587,
-      "high": 48.8058,
+      "high": 48.8059,
       "low": 46.9914,
       "close": 48.6215,
       "volume": 448900.0
@@ -951,7 +964,7 @@
     },
     {
       "date": "2025-01-03",
-      "open": 46.0888,
+      "open": 46.0889,
       "high": 46.313,
       "low": 45.6991,
       "close": 46.1083,
@@ -961,7 +974,7 @@
       "date": "2025-01-06",
       "open": 46.654,
       "high": 47.6381,
-      "low": 46.0206,
+      "low": 46.0207,
       "close": 46.2935,
       "volume": 778400.0
     },
@@ -1032,7 +1045,7 @@
     {
       "date": "2025-01-21",
       "open": 46.4786,
-      "high": 47.2191,
+      "high": 47.2192,
       "low": 46.2545,
       "close": 46.2935,
       "volume": 421600.0
@@ -1050,7 +1063,7 @@
       "open": 44.6273,
       "high": 44.8514,
       "low": 44.1206,
-      "close": 44.6468,
+      "close": 44.6467,
       "volume": 418000.0
     },
     {
@@ -1160,7 +1173,7 @@
     {
       "date": "2025-02-12",
       "open": 39.6286,
-      "high": 40.0574,
+      "high": 40.0573,
       "low": 39.0927,
       "close": 39.5409,
       "volume": 522900.0
@@ -1176,7 +1189,7 @@
     {
       "date": "2025-02-14",
       "open": 40.2133,
-      "high": 40.7881,
+      "high": 40.7882,
       "low": 39.8138,
       "close": 40.0184,
       "volume": 253700.0
@@ -1194,7 +1207,7 @@
       "open": 41.441,
       "high": 42.6103,
       "low": 41.2656,
-      "close": 42.318,
+      "close": 42.3179,
       "volume": 746100.0
     },
     {
@@ -1239,7 +1252,7 @@
     },
     {
       "date": "2025-02-27",
-      "open": 39.1707,
+      "open": 39.1706,
       "high": 39.346,
       "low": 36.8029,
       "close": 36.8808,
@@ -1570,7 +1583,7 @@
       "open": 31.2686,
       "high": 31.7389,
       "low": 30.8962,
-      "close": 31.6704,
+      "close": 31.6703,
       "volume": 499100.0
     },
     {
@@ -1680,8 +1693,8 @@
     {
       "date": "2025-05-16",
       "open": 33.2774,
-      "high": 33.591,
-      "low": 32.6503,
+      "high": 33.5909,
+      "low": 32.6502,
       "close": 33.1402,
       "volume": 418500.0
     },
@@ -1698,7 +1711,7 @@
       "open": 32.2485,
       "high": 32.6013,
       "low": 32.1211,
-      "close": 32.5914,
+      "close": 32.5915,
       "volume": 693600.0
     },
     {
@@ -1807,9 +1820,9 @@
     },
     {
       "date": "2025-06-10",
-      "open": 33.6399,
+      "open": 33.64,
       "high": 35.2176,
-      "low": 33.5909,
+      "low": 33.591,
       "close": 34.4925,
       "volume": 917700.0
     },
@@ -1871,7 +1884,7 @@
     },
     {
       "date": "2025-06-23",
-      "open": 32.9832,
+      "open": 32.9833,
       "high": 33.3973,
       "low": 32.6678,
       "close": 33.2888,
@@ -1952,9 +1965,9 @@
     {
       "date": "2025-07-08",
       "open": 35.3688,
-      "high": 36.7192,
+      "high": 36.7193,
       "low": 35.2406,
-      "close": 36.3249,
+      "close": 36.325,
       "volume": 467800.0
     },
     {
@@ -2000,7 +2013,7 @@
     {
       "date": "2025-07-16",
       "open": 34.521,
-      "high": 34.7477,
+      "high": 34.7478,
       "low": 33.8211,
       "close": 34.6787,
       "volume": 332100.0
@@ -2080,9 +2093,9 @@
     {
       "date": "2025-07-30",
       "open": 34.659,
-      "high": 34.8167,
+      "high": 34.8168,
       "low": 33.1903,
-      "close": 33.6338,
+      "close": 33.6339,
       "volume": 451000.0
     },
     {
@@ -2184,7 +2197,7 @@
     {
       "date": "2025-08-18",
       "open": 35.6448,
-      "high": 36.3249,
+      "high": 36.325,
       "low": 35.6448,
       "close": 36.0785,
       "volume": 378400.0
@@ -2433,7 +2446,7 @@
       "date": "2025-10-01",
       "open": 39.9735,
       "high": 41.0533,
-      "low": 39.7556,
+      "low": 39.7555,
       "close": 40.8651,
       "volume": 512300.0
     },
@@ -2553,7 +2566,7 @@
       "date": "2025-10-22",
       "open": 39.2998,
       "high": 39.6367,
-      "low": 37.5365,
+      "low": 37.5364,
       "close": 38.1507,
       "volume": 392200.0
     },
@@ -2585,7 +2598,7 @@
       "date": "2025-10-28",
       "open": 40.0032,
       "high": 41.0632,
-      "low": 39.7556,
+      "low": 39.7555,
       "close": 40.6075,
       "volume": 346200.0
     },
@@ -2712,7 +2725,7 @@
     {
       "date": "2025-11-19",
       "open": 35.3966,
-      "high": 36.0505,
+      "high": 36.0504,
       "low": 34.8616,
       "close": 34.9607,
       "volume": 676200.0
@@ -2785,8 +2798,8 @@
       "date": "2025-12-03",
       "open": 44.699,
       "high": 46.72,
-      "low": 44.491,
-      "close": 46.5615,
+      "low": 44.4909,
+      "close": 46.5614,
       "volume": 632300.0
     },
     {
@@ -2921,7 +2934,7 @@
       "date": "2025-12-29",
       "open": 46.2137,
       "high": 46.761,
-      "low": 45.7758,
+      "low": 45.7759,
       "close": 46.0644,
       "volume": 249400.0
     },
@@ -3191,7 +3204,7 @@
     },
     {
       "date": "2026-02-18",
-      "open": 71.6492,
+      "open": 71.6491,
       "high": 71.9576,
       "low": 68.2956,
       "close": 68.6439,
@@ -4300,17 +4313,17 @@
       "low": 79.93,
       "close": 81.62,
       "volume": 641500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 82.96,
+      "high": 83.9666,
+      "low": 81.51,
+      "close": 83.07,
+      "volume": 528978.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 37.7247,
-      "high": 38.3359,
-      "low": 37.2121,
-      "close": 37.6656,
-      "volume": 402300.0
-    },
     {
       "date": "2025-09-08",
       "open": 37.8824,
@@ -4451,7 +4464,7 @@
       "date": "2025-10-01",
       "open": 39.9735,
       "high": 41.0533,
-      "low": 39.7556,
+      "low": 39.7555,
       "close": 40.8651,
       "volume": 512300.0
     },
@@ -4571,7 +4584,7 @@
       "date": "2025-10-22",
       "open": 39.2998,
       "high": 39.6367,
-      "low": 37.5365,
+      "low": 37.5364,
       "close": 38.1507,
       "volume": 392200.0
     },
@@ -4603,7 +4616,7 @@
       "date": "2025-10-28",
       "open": 40.0032,
       "high": 41.0632,
-      "low": 39.7556,
+      "low": 39.7555,
       "close": 40.6075,
       "volume": 346200.0
     },
@@ -4730,7 +4743,7 @@
     {
       "date": "2025-11-19",
       "open": 35.3966,
-      "high": 36.0505,
+      "high": 36.0504,
       "low": 34.8616,
       "close": 34.9607,
       "volume": 676200.0
@@ -4803,8 +4816,8 @@
       "date": "2025-12-03",
       "open": 44.699,
       "high": 46.72,
-      "low": 44.491,
-      "close": 46.5615,
+      "low": 44.4909,
+      "close": 46.5614,
       "volume": 632300.0
     },
     {
@@ -4939,7 +4952,7 @@
       "date": "2025-12-29",
       "open": 46.2137,
       "high": 46.761,
-      "low": 45.7758,
+      "low": 45.7759,
       "close": 46.0644,
       "volume": 249400.0
     },
@@ -5209,7 +5222,7 @@
     },
     {
       "date": "2026-02-18",
-      "open": 71.6492,
+      "open": 71.6491,
       "high": 71.9576,
       "low": 68.2956,
       "close": 68.6439,
@@ -6318,6 +6331,14 @@
       "low": 79.93,
       "close": 81.62,
       "volume": 641500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 82.96,
+      "high": 83.9666,
+      "low": 81.51,
+      "close": 83.07,
+      "volume": 528978.0
     }
   ],
   "ai_synthesis": null,

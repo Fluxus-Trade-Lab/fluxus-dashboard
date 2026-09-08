@@ -1,43 +1,80 @@
 {
   "ticker": "NOW",
-  "fetched_at": "2026-09-08T06:27:40Z",
+  "fetched_at": "2026-09-08T22:38:30Z",
   "_schema": "v2",
-  "current_price": 141.25999450683594,
+  "current_price": 134.2100067138672,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "NOW",
+    "longName": "ServiceNow, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.servicenow.com",
+    "fullTimeEmployees": 29187,
+    "marketCap": 138754621440,
+    "enterpriseValue": 149832351744,
+    "trailingPE": 83.881256,
+    "forwardPE": 26.812454,
+    "priceToSalesTrailing12Months": 9.418587,
+    "enterpriseToRevenue": 10.171,
+    "priceToBook": 11.086239,
+    "grossMargins": 0.74768996,
+    "operatingMargins": 0.04063,
+    "profitMargins": 0.11336,
+    "returnOnEquity": 0.14244,
+    "totalCash": 4664000000,
+    "totalDebt": 8453000192,
+    "totalRevenue": 14732000256,
+    "freeCashflow": 5149374976,
+    "debtToEquity": 67.538,
+    "currentRatio": 0.701,
+    "fiftyTwoWeekHigh": 194.726,
+    "fiftyTwoWeekLow": 81.24,
+    "averageVolume": 22216211,
+    "averageVolume10days": 17972540,
+    "beta": 0.972,
+    "sharesOutstanding": 1033862000,
+    "sharesFloat": 1031318699,
+    "companyOfficers": [
+      {
+        "name": "Mr. William R. McDermott",
+        "title": "Chairman & CEO",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Ms. Gina M. Mastantuono",
+        "title": "President & CFO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Amit K. Zavery",
+        "title": "President, Chief Product Officer & COO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Frederic B. Luddy",
+        "title": "Founder & Director",
+        "age": 70,
+        "yearBorn": 1955
+      },
+      {
+        "name": "Ms. Jacqueline P. Canney",
+        "title": "Chief People & AI Enablement Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Paul  Fipps",
+        "title": "President of Global Customer Operations",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.13
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 4067400000,
+    "revenue_high": 4152000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,30 @@
   "quarterly_asof": "2026-09-06T05:08:44Z",
   "news": [
     {
+      "date": "2026-09-08T20:17:55Z",
+      "title": "S&P 500 falls as AI worries hit software makers",
+      "url": "https://finance.yahoo.com/markets/articles/wall-st-futures-slip-oil-091327897.html",
+      "source": "Reuters"
+    },
+    {
+      "date": "2026-09-08T18:37:00Z",
+      "title": "ServiceNow Jumps 25% in 3 Months: Buy, Sell or Hold the Stock?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-jumps-25-3-months-183700784.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-08T18:12:00Z",
+      "title": "Why ServiceNow Stock Popped 33% Last Month",
+      "url": "https://www.fool.com/investing/2026/09/08/why-servicenow-stock-popped-33-last-month/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-08T15:29:00Z",
+      "title": "UiPath Slides 24% After Q2 Earnings: Is PATH Stock a Buy?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/uipath-slides-24-q2-earnings-152900821.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-05T12:00:14Z",
       "title": "ServiceNow Leads Five Stocks To Watch Near Buy Points",
       "url": "https://www.investors.com/news/servicenow-stocks-to-watch-buy-points/?src=A00220&yptr=yahoo",
@@ -243,64 +308,24 @@
       "title": "Why Is Dynatrace (DT) Up 8% Since Last Earnings Report?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/why-dynatrace-dt-8-since-153021204.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-04T14:40:00Z",
-      "title": "Software Stocks Are Back. 2 Winners, 2 Losers\u2014and Salesforce.",
-      "url": "https://www.barrons.com/articles/salesforce-stock-software-ai-winners-losers-ed4679cb?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-04T12:13:23Z",
-      "title": "Dow Jones Futures Fall, Techs Rise After Market Rally; Tesla Cybercab, Jobs Report In Focus",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-fed-waller-tesla-cybercab-jobs-report/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-09-04T08:30:10Z",
-      "title": "2 Profitable Stocks for Long-Term Investors and 1 That Underwhelm",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/2-profitable-stocks-long-term-083010160.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-03T21:43:18Z",
-      "title": "Guidewire Software, HubSpot, CrowdStrike, ServiceNow, and Dynatrace Shares Are Soaring, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/guidewire-software-hubspot-crowdstrike-servicenow-214318240.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04567468663546845,
   "technicals": {
-    "ma20": 131.61199951171875,
-    "ma50": 117.0197998046875,
-    "ma200": 118.58316993713379,
-    "rsi14": 61.04021827144221,
+    "ma20": 131.95049972534179,
+    "ma50": 117.73720001220703,
+    "ma200": 118.43625,
+    "rsi14": 54.24137265775213,
     "high_20d": 149.60000610351562,
-    "low_5d": 136.3800048828125,
+    "low_5d": 132.4600067138672,
     "low_10d": 121.87999725341797,
     "high_52w": 194.7259979248047,
     "low_52w": 81.23999786376953,
-    "atr14": 6.719998495919364,
-    "atr14_pct": 4.7571844522436,
-    "position_in_52w_range_pct": 52.887577860517055
+    "atr14": 7.052854810442243,
+    "atr14_pct": 5.255088635438917,
+    "position_in_52w_range_pct": 46.67536861076192
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 165.33,
-      "high": 168.072,
-      "low": 165.01,
-      "close": 167.08,
-      "volume": 3944500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 167.802,
-      "high": 169.684,
-      "low": 163.796,
-      "close": 165.008,
-      "volume": 5354000.0
-    },
     {
       "date": "2024-09-09",
       "open": 166.698,
@@ -4300,17 +4325,17 @@
       "low": 138.8,
       "close": 141.26,
       "volume": 12493500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 136.72,
+      "high": 136.77,
+      "low": 132.46,
+      "close": 134.21,
+      "volume": 14530661.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 180.83,
-      "high": 183.24,
-      "low": 180.27,
-      "close": 182.76,
-      "volume": 6419500.0
-    },
     {
       "date": "2025-09-08",
       "open": 183.028,
@@ -6318,6 +6343,14 @@
       "low": 138.8,
       "close": 141.26,
       "volume": 12493500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 136.72,
+      "high": 136.77,
+      "low": 132.46,
+      "close": 134.21,
+      "volume": 14530661.0
     }
   ],
   "ai_synthesis": null,

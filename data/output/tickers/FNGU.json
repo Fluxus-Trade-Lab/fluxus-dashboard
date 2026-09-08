@@ -1,21 +1,21 @@
 {
   "ticker": "FNGU",
-  "fetched_at": "2026-09-08T06:27:21Z",
+  "fetched_at": "2026-09-08T22:38:11Z",
   "_schema": "v2",
-  "current_price": 33.02000045776367,
+  "current_price": 32.040000915527344,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "FNGU",
+    "longName": "MicroSectors FANG+ 3X Leveraged",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "PCX",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 2.3594234,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 36.78,
+    "fiftyTwoWeekLow": 13.485,
+    "averageVolume": 4690935,
+    "averageVolume10days": 4305750,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:27:21Z",
+  "quarterly_asof": "2026-09-08T22:38:11Z",
   "news": [
     {
       "date": "2026-06-06T21:15:16Z",
@@ -59,18 +59,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 32.36500015258789,
-    "ma50": 29.458200035095214,
-    "ma200": 25.435700016021727,
-    "rsi14": 56.5985069682719,
+    "ma20": 32.28200016021729,
+    "ma50": 29.619600067138673,
+    "ma200": 25.46025002479553,
+    "rsi14": 52.18358139770913,
     "high_20d": 34.560001373291016,
     "low_5d": 31.219999313354492,
-    "low_10d": 30.1200008392334,
+    "low_10d": 30.770000457763672,
     "high_52w": 36.779998779296875,
     "low_52w": 13.484999656677246,
-    "atr14": 1.3453577586582728,
-    "atr14_pct": 4.074372319828214,
-    "position_in_52w_range_pct": 83.85920384997047
+    "atr14": 1.3232149396623885,
+    "atr14_pct": 4.129884213021752,
+    "position_in_52w_range_pct": 79.65229430222662
   },
   "ohlc_2y": [
     {
@@ -3176,17 +3176,17 @@
       "low": 32.67,
       "close": 33.02,
       "volume": 4680700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 32.89,
+      "high": 33.04,
+      "low": 31.93,
+      "close": 32.04,
+      "volume": 2406102.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 28.05,
-      "high": 28.13,
-      "low": 26.54,
-      "close": 27.14,
-      "volume": 7865400.0
-    },
     {
       "date": "2025-09-08",
       "open": 27.695,
@@ -5194,6 +5194,14 @@
       "low": 32.67,
       "close": 33.02,
       "volume": 4680700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 32.89,
+      "high": 33.04,
+      "low": 31.93,
+      "close": 32.04,
+      "volume": 2406102.0
     }
   ],
   "ai_synthesis": null,

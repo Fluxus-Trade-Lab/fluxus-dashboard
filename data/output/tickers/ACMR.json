@@ -1,43 +1,80 @@
 {
   "ticker": "ACMR",
-  "fetched_at": "2026-09-08T06:26:55Z",
+  "fetched_at": "2026-09-08T22:37:42Z",
   "_schema": "v2",
-  "current_price": 74.44000244140625,
+  "current_price": 76.91000366210938,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ACMR",
+    "longName": "ACM Research, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Fremont",
+    "website": "https://www.acmr.com",
+    "fullTimeEmployees": 2513,
+    "marketCap": 5356720128,
+    "enterpriseValue": 4639599104,
+    "trailingPE": 36.278305,
+    "forwardPE": 26.587158,
+    "priceToSalesTrailing12Months": 5.1617503,
+    "enterpriseToRevenue": 4.471,
+    "priceToBook": 2.879446,
+    "grossMargins": 0.43835,
+    "operatingMargins": 0.16982001,
+    "profitMargins": 0.14476,
+    "returnOnEquity": 0.11627,
+    "totalCash": 1439374976,
+    "totalDebt": 349319008,
+    "totalRevenue": 1037772032,
+    "freeCashflow": -186610256,
+    "debtToEquity": 14.524,
+    "currentRatio": 3.656,
+    "fiftyTwoWeekHigh": 127.19,
+    "fiftyTwoWeekLow": 26.44,
+    "averageVolume": 1271458,
+    "averageVolume10days": 789370,
+    "beta": 1.953,
+    "sharesOutstanding": 64657388,
+    "sharesFloat": 61519742,
+    "companyOfficers": [
+      {
+        "name": "Dr. Hui  Wang Ph.D.",
+        "title": "Founder, Chairman, CEO & President",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Mark A. McKechnie",
+        "title": "CFO, Executive VP, Secretary & Treasurer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Yi Lu  Feng",
+        "title": "Chief Financial Officer of ACM Research (Shanghai), Inc.",
+        "age": 67,
+        "yearBorn": 1958
+      },
+      {
+        "name": "Mr. Jian  Wang",
+        "title": "Chief Executive Officer and President of ACM Research (Shanghai), Inc.",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Howard  Chen",
+        "title": "General Counsel & VP of Corporate Strategy",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jim  Straus",
+        "title": "Vice President of Sales - North America",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.32389998
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 295000000,
+    "revenue_high": 348446000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05278897161202721,
   "technicals": {
-    "ma20": 77.77425003051758,
-    "ma50": 85.84399993896484,
-    "ma200": 63.250174865722656,
-    "rsi14": 44.79883556748588,
-    "high_20d": 88.80999755859375,
+    "ma20": 77.64925003051758,
+    "ma50": 85.29220001220703,
+    "ma200": 63.480874881744384,
+    "rsi14": 48.24622251503574,
+    "high_20d": 85.94999694824219,
     "low_5d": 66.41999816894531,
     "low_10d": 66.41999816894531,
     "high_52w": 127.19000244140625,
     "low_52w": 26.440000534057617,
-    "atr14": 4.470428466796875,
-    "atr14_pct": 6.005411499436302,
-    "position_in_52w_range_pct": 47.64268089194701
+    "atr14": 4.229713984898159,
+    "atr14_pct": 5.499562844231117,
+    "position_in_52w_range_pct": 50.09429496037608
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 16.57,
-      "high": 16.86,
-      "low": 16.17,
-      "close": 16.53,
-      "volume": 871300.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 16.33,
-      "high": 16.42,
-      "low": 15.595,
-      "close": 15.65,
-      "volume": 1059800.0
-    },
     {
       "date": "2024-09-09",
       "open": 15.77,
@@ -4300,17 +4325,17 @@
       "low": 71.0,
       "close": 74.44,
       "volume": 643500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 76.99,
+      "high": 78.67,
+      "low": 75.46,
+      "close": 76.91,
+      "volume": 953500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 27.39,
-      "high": 27.57,
-      "low": 26.534,
-      "close": 27.41,
-      "volume": 1350600.0
-    },
     {
       "date": "2025-09-08",
       "open": 27.81,
@@ -6318,6 +6343,14 @@
       "low": 71.0,
       "close": 74.44,
       "volume": 643500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 76.99,
+      "high": 78.67,
+      "low": 75.46,
+      "close": 76.91,
+      "volume": 953500.0
     }
   ],
   "ai_synthesis": null,

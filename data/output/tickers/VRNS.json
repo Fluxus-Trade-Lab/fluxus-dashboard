@@ -1,43 +1,80 @@
 {
   "ticker": "VRNS",
-  "fetched_at": "2026-09-08T06:28:27Z",
+  "fetched_at": "2026-09-08T22:39:19Z",
   "_schema": "v2",
-  "current_price": 46.09000015258789,
+  "current_price": 45.459999084472656,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "VRNS",
+    "longName": "Varonis Systems, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Miami",
+    "website": "https://www.varonis.com",
+    "fullTimeEmployees": 2658,
+    "marketCap": 5221557760,
+    "enterpriseValue": 5124027904,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 110.13397,
+    "priceToSalesTrailing12Months": 7.588426,
+    "enterpriseToRevenue": 7.447,
+    "priceToBook": 11.74677,
+    "grossMargins": 0.77069,
+    "operatingMargins": -0.22564,
+    "profitMargins": -0.20547001,
+    "returnOnEquity": -0.35974997,
+    "totalCash": 698265984,
+    "totalDebt": 528374016,
+    "totalRevenue": 688094976,
+    "freeCashflow": 138683008,
+    "debtToEquity": 118.871,
+    "currentRatio": 1.645,
+    "fiftyTwoWeekHigh": 63.9,
+    "fiftyTwoWeekLow": 19.7,
+    "averageVolume": 2021712,
+    "averageVolume10days": 1978310,
+    "beta": 0.82,
+    "sharesOutstanding": 114860485,
+    "sharesFloat": 111380212,
+    "companyOfficers": [
+      {
+        "name": "Mr. Yakov  Faitelson",
+        "title": "Co-Founder, Chairman, CEO & President",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ohad  Korkus",
+        "title": "Co-Founder & Director",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Guy  Melamed CPA",
+        "title": "CFO & COO",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. David  Bass",
+        "title": "Executive VP of Engineering & CTO",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Dov  Gottlieb",
+        "title": "VP, General Counsel & Corporate Secretary",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Gregory  Pomeroy",
+        "title": "Senior Vice President of Worldwide Sales",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.1103
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 185800000,
+    "revenue_high": 189246000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.11658601202678578,
   "technicals": {
-    "ma20": 43.29949951171875,
-    "ma50": 43.815599822998045,
-    "ma200": 32.58602494239807,
-    "rsi14": 58.613746557619166,
+    "ma20": 43.450499534606934,
+    "ma50": 43.91879981994629,
+    "ma200": 32.64862494468689,
+    "rsi14": 56.314091943005025,
     "high_20d": 48.209999084472656,
     "low_5d": 40.88999938964844,
-    "low_10d": 39.97999954223633,
+    "low_10d": 39.9900016784668,
     "high_52w": 63.900001525878906,
     "low_52w": 19.700000762939453,
-    "atr14": 2.0925001416887556,
-    "atr14_pct": 4.54003066773968,
-    "position_in_52w_range_pct": 59.7058799414677
+    "atr14": 2.0921429225376675,
+    "atr14_pct": 4.60216226280625,
+    "position_in_52w_range_pct": 58.280538183004495
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 50.355,
-      "high": 52.99,
-      "low": 49.87,
-      "close": 52.18,
-      "volume": 4426200.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 53.4,
-      "high": 53.92,
-      "low": 50.24,
-      "close": 51.12,
-      "volume": 5706300.0
-    },
     {
       "date": "2024-09-09",
       "open": 51.23,
@@ -4300,17 +4325,17 @@
       "low": 45.87,
       "close": 46.09,
       "volume": 2038400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 45.76,
+      "high": 45.86,
+      "low": 44.66,
+      "close": 45.46,
+      "volume": 2032177.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 55.685,
-      "high": 56.54,
-      "low": 55.285,
-      "close": 56.03,
-      "volume": 952800.0
-    },
     {
       "date": "2025-09-08",
       "open": 56.03,
@@ -6318,6 +6343,14 @@
       "low": 45.87,
       "close": 46.09,
       "volume": 2038400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 45.76,
+      "high": 45.86,
+      "low": 44.66,
+      "close": 45.46,
+      "volume": 2032177.0
     }
   ],
   "ai_synthesis": null,

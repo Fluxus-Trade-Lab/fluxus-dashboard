@@ -1,43 +1,80 @@
 {
   "ticker": "AMBA",
-  "fetched_at": "2026-09-08T06:26:58Z",
+  "fetched_at": "2026-09-08T22:37:44Z",
   "_schema": "v2",
-  "current_price": 62.88999938964844,
+  "current_price": 63.47999954223633,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AMBA",
+    "longName": "Ambarella, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.ambarella.com",
+    "fullTimeEmployees": 959,
+    "marketCap": 2802068992,
+    "enterpriseValue": 2516335616,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 56.64924,
+    "priceToSalesTrailing12Months": 6.7067075,
+    "enterpriseToRevenue": 6.023,
+    "priceToBook": 4.503405,
+    "grossMargins": 0.58522,
+    "operatingMargins": -0.07531,
+    "profitMargins": -0.13481,
+    "returnOnEquity": -0.094119996,
+    "totalCash": 272332000,
+    "totalDebt": 12642000,
+    "totalRevenue": 417800992,
+    "freeCashflow": 32831624,
+    "debtToEquity": 2.038,
+    "currentRatio": 2.848,
+    "fiftyTwoWeekHigh": 96.69,
+    "fiftyTwoWeekLow": 48.3,
+    "averageVolume": 1688698,
+    "averageVolume10days": 1596350,
+    "beta": 2.087,
+    "sharesOutstanding": 44140971,
+    "sharesFloat": 42133881,
+    "companyOfficers": [
+      {
+        "name": "Dr. Feng-Ming  Wang Ph.D.",
+        "title": "Co-Founder, President, CEO & Executive Chairman",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Leslie D. Kohn",
+        "title": "Co-Founder & Chief Technology Advisor",
+        "age": 68,
+        "yearBorn": 1957
+      },
+      {
+        "name": "Mr. John A. Young",
+        "title": "Chief Financial Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Chan W. Lee",
+        "title": "Chief Operating Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Chi-Hong  Ju",
+        "title": "Senior VP of Systems & GM of Asia Design Centers",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Mr. Michael  Morehead J.D.",
+        "title": "General Counsel & Secretary",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.296
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-12-01",
+    "revenue_low": 118400000,
+    "revenue_high": 122893420
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06253938293365245,
   "technicals": {
-    "ma20": 73.4709997177124,
-    "ma50": 74.00660011291504,
-    "ma200": 69.13670021057129,
-    "rsi14": 32.19838090938559,
-    "high_20d": 87.16999816894531,
+    "ma20": 72.54299964904786,
+    "ma50": 74.03360008239746,
+    "ma200": 69.03865022659302,
+    "rsi14": 33.725163652021294,
+    "high_20d": 85.2699966430664,
     "low_5d": 58.119998931884766,
     "low_10d": 58.119998931884766,
     "high_52w": 96.69000244140625,
     "low_52w": 48.29999923706055,
-    "atr14": 3.5192857469831194,
-    "atr14_pct": 5.595938593000506,
-    "position_in_52w_range_pct": 30.150855933974448
+    "atr14": 3.5928140367780412,
+    "atr14_pct": 5.659757502656514,
+    "position_in_52w_range_pct": 31.37011634628809
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 54.6,
-      "high": 55.6,
-      "low": 53.82,
-      "close": 54.09,
-      "volume": 768100.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 53.51,
-      "high": 53.86,
-      "low": 51.8,
-      "close": 52.05,
-      "volume": 802900.0
-    },
     {
       "date": "2024-09-09",
       "open": 52.09,
@@ -4300,17 +4325,17 @@
       "low": 58.12,
       "close": 62.89,
       "volume": 5201800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 63.83,
+      "high": 66.659,
+      "low": 61.5896,
+      "close": 63.48,
+      "volume": 3318893.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 82.5,
-      "high": 83.42,
-      "low": 81.42,
-      "close": 82.84,
-      "volume": 790200.0
-    },
     {
       "date": "2025-09-08",
       "open": 84.08,
@@ -6318,6 +6343,14 @@
       "low": 58.12,
       "close": 62.89,
       "volume": 5201800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 63.83,
+      "high": 66.659,
+      "low": 61.5896,
+      "close": 63.48,
+      "volume": 3318893.0
     }
   ],
   "ai_synthesis": null,

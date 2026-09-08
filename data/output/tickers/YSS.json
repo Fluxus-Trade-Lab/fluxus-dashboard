@@ -1,43 +1,74 @@
 {
   "ticker": "YSS",
-  "fetched_at": "2026-09-08T06:31:38Z",
+  "fetched_at": "2026-09-08T22:42:44Z",
   "_schema": "v2",
-  "current_price": 8.960000038146973,
+  "current_price": 8.930000305175781,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "YSS",
+    "longName": "York Space Systems, Inc.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Greenwood Village",
+    "website": "https://www.yorkspacesystems.com",
+    "fullTimeEmployees": 710,
+    "marketCap": 1226603392,
+    "enterpriseValue": 874040128,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -22.325,
+    "priceToSalesTrailing12Months": 3.0286355,
+    "enterpriseToRevenue": 2.158,
+    "priceToBook": 0.6614325,
+    "grossMargins": 0.21150999,
+    "operatingMargins": -0.38147,
+    "profitMargins": -0.50064,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 534000000,
+    "totalDebt": 177316000,
+    "totalRevenue": 405001984,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 10.157,
+    "currentRatio": 5.335,
+    "fiftyTwoWeekHigh": 44.54,
+    "fiftyTwoWeekLow": 8.38,
+    "averageVolume": 2284903,
+    "averageVolume10days": 2513610,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 137357605,
+    "sharesFloat": 56628420,
+    "companyOfficers": [
+      {
+        "name": "Mr. Dirk  Wallinger",
+        "title": "Founder, CEO, President & Director",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Devjyoti  Rudra",
+        "title": "Chief Supply Chain Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Brian D. Frantz",
+        "title": "Interim CFO & Chief Accounting Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Monica  Palko",
+        "title": "Chief Legal & Administrative Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Christopher  Evenden",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -59,7 +90,11 @@
       "eps_surprise_pct": -0.4486
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 80000000,
+    "revenue_high": 102400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -263,19 +298,19 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.20156774227171406,
   "technicals": {
-    "ma20": 9.738000011444091,
-    "ma50": 15.157000026702882,
-    "rsi14": 31.821329520296914,
-    "high_20d": 11.930000305175781,
+    "ma20": 9.660500049591064,
+    "ma50": 14.81040002822876,
+    "rsi14": 31.676077442366136,
+    "high_20d": 11.890000343322754,
     "low_5d": 8.380000114440918,
     "low_10d": 8.380000114440918,
     "high_52w": 44.540000915527344,
     "low_52w": 8.380000114440918,
-    "atr14": 0.6535714013235909,
-    "atr14_pct": 7.294323644431108,
-    "position_in_52w_range_pct": 1.6039820543605425
+    "atr14": 0.5949999264308384,
+    "atr14_pct": 6.662932879027782,
+    "position_in_52w_range_pct": 1.521018192893233
   },
   "ohlc_2y": [
     {
@@ -1493,6 +1528,14 @@
       "low": 8.46,
       "close": 8.96,
       "volume": 2655300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 8.94,
+      "high": 9.23,
+      "low": 8.71,
+      "close": 8.93,
+      "volume": 2826427.0
     }
   ],
   "ohlc_1y": [
@@ -2711,6 +2754,14 @@
       "low": 8.46,
       "close": 8.96,
       "volume": 2655300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 8.94,
+      "high": 9.23,
+      "low": 8.71,
+      "close": 8.93,
+      "volume": 2826427.0
     }
   ],
   "ai_synthesis": null,

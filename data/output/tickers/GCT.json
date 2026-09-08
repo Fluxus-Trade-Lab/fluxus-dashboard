@@ -1,43 +1,80 @@
 {
   "ticker": "GCT",
-  "fetched_at": "2026-09-08T06:30:00Z",
+  "fetched_at": "2026-09-08T22:40:58Z",
   "_schema": "v2",
-  "current_price": 51.75,
+  "current_price": 52.20000076293945,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "GCT",
+    "longName": "GigaCloud Technology Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "El Monte",
+    "website": "https://www.gigacloudtech.com",
+    "fullTimeEmployees": 1644,
+    "marketCap": 1864074368,
+    "enterpriseValue": 1977066752,
+    "trailingPE": 12.428572,
+    "forwardPE": 10.807454,
+    "priceToSalesTrailing12Months": 1.2710904,
+    "enterpriseToRevenue": 1.348,
+    "priceToBook": 3.538743,
+    "grossMargins": 0.23961,
+    "operatingMargins": 0.115439996,
+    "profitMargins": 0.10647,
+    "returnOnEquity": 0.32344002,
+    "totalCash": 377831008,
+    "totalDebt": 506892992,
+    "totalRevenue": 1466515968,
+    "freeCashflow": 87657872,
+    "debtToEquity": 94.92,
+    "currentRatio": 2.091,
+    "fiftyTwoWeekHigh": 56.27,
+    "fiftyTwoWeekLow": 25.39,
+    "averageVolume": 659651,
+    "averageVolume10days": 525120,
+    "beta": 1.647,
+    "sharesOutstanding": 28839563,
+    "sharesFloat": 26810889,
+    "companyOfficers": [
+      {
+        "name": "Mr. Lei  Wu",
+        "title": "Founder, Chairman & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Ms. Xiaoyang  Wei",
+        "title": "Chief Financial Officer",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Mr. Xinyan  Hao",
+        "title": "Chief Operationg officer",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. Xin  Wan",
+        "title": "Chief Technology Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Marshall  Bernes",
+        "title": "Head of Brand Center & Director",
+        "age": 81,
+        "yearBorn": 1944
+      },
+      {
+        "name": "Mr. Iman  Schrock",
+        "title": "President",
+        "age": 40,
+        "yearBorn": 1985
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.5676
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 380500000,
+    "revenue_high": 387500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0919540216445335,
   "technicals": {
-    "ma20": 50.96100006103516,
-    "ma50": 43.461799964904785,
-    "ma200": 40.741150016784665,
-    "rsi14": 58.57467599218635,
+    "ma20": 50.98850002288818,
+    "ma50": 43.86520000457764,
+    "ma200": 40.84495001792908,
+    "rsi14": 59.5652459734627,
     "high_20d": 53.709999084472656,
     "low_5d": 46.0099983215332,
     "low_10d": 46.0099983215332,
     "high_52w": 56.27000045776367,
     "low_52w": 25.389999389648438,
-    "atr14": 2.451214381626674,
-    "atr14_pct": 4.736646148070868,
-    "position_in_52w_range_pct": 85.3626933244159
+    "atr14": 2.4020001547677174,
+    "atr14_pct": 4.601532796285073,
+    "position_in_52w_range_pct": 86.81994963067974
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 19.31,
-      "high": 19.67,
-      "low": 18.02,
-      "close": 18.46,
-      "volume": 1146900.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 18.46,
-      "high": 18.56,
-      "low": 17.075,
-      "close": 17.11,
-      "volume": 1427500.0
-    },
     {
       "date": "2024-09-09",
       "open": 17.29,
@@ -4300,17 +4325,17 @@
       "low": 49.8,
       "close": 51.75,
       "volume": 520300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 51.8,
+      "high": 52.6,
+      "low": 50.5,
+      "close": 52.2,
+      "volume": 470105.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 26.59,
-      "high": 27.129,
-      "low": 26.22,
-      "close": 27.06,
-      "volume": 1447500.0
-    },
     {
       "date": "2025-09-08",
       "open": 27.44,
@@ -6318,6 +6343,14 @@
       "low": 49.8,
       "close": 51.75,
       "volume": 520300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 51.8,
+      "high": 52.6,
+      "low": 50.5,
+      "close": 52.2,
+      "volume": 470105.0
     }
   ],
   "ai_synthesis": null,

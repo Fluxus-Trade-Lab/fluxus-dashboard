@@ -1,6 +1,34 @@
 {
-  "generated_at": "2026-09-08T06:31:46.736144+00:00",
+  "generated_at": "2026-09-08T22:42:53.273380+00:00",
   "trades": [
+    {
+      "trade_id": "SPCX_2026-09-07_000",
+      "ticker": "SPCX",
+      "direction": "long",
+      "entry_date": "2026-09-07",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 1.2676056338028125,
+      "capture_pct": null,
+      "setup_type": "Long in mixed structure",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "CRCL_2026-09-07_000",
+      "ticker": "CRCL",
+      "direction": "long",
+      "entry_date": "2026-09-07",
+      "exit_date": "2026-09-08",
+      "closed": true,
+      "realized_R": -1.0,
+      "optimal_R": 0.6883116883116933,
+      "capture_pct": -145.2830188679235,
+      "setup_type": "Long in mixed structure",
+      "lesson": "Failed setup",
+      "hold_days": 1
+    },
     {
       "trade_id": "XXRP_2026-09-02_000",
       "ticker": "XXRP",
@@ -163,7 +191,7 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.9124355065666054,
-      "optimal_R": 5.068292682926836,
+      "optimal_R": 5.15121951219513,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
@@ -233,7 +261,7 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.0,
-      "optimal_R": 7.569892473118281,
+      "optimal_R": 7.661290322580648,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
@@ -1089,7 +1117,7 @@
       "realized_R": -0.22340672074159906,
       "optimal_R": 1.754999999999999,
       "capture_pct": -12.729727677583998,
-      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 20
     },
@@ -1103,7 +1131,7 @@
       "realized_R": 0.9033075794369428,
       "optimal_R": 2.7849462365591418,
       "capture_pct": 32.4353686824848,
-      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "setup_type": "Long in mixed structure",
       "lesson": "Premature trim",
       "hold_days": 14
     },

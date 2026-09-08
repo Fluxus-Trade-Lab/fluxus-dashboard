@@ -1,43 +1,80 @@
 {
   "ticker": "ZETA",
-  "fetched_at": "2026-09-08T06:28:10Z",
+  "fetched_at": "2026-09-08T22:39:02Z",
   "_schema": "v2",
-  "current_price": 31.350000381469727,
+  "current_price": 30.790000915527344,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ZETA",
+    "longName": "Zeta Global Holdings Corp.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "New York",
+    "website": "https://www.zetaglobal.com",
+    "fullTimeEmployees": 3300,
+    "marketCap": 7674642432,
+    "enterpriseValue": 7779572736,
+    "trailingPE": "Infinity",
+    "forwardPE": 25.472385,
+    "priceToSalesTrailing12Months": 4.885578,
+    "enterpriseToRevenue": 4.952,
+    "priceToBook": 8.319373,
+    "grossMargins": 0.59478,
+    "operatingMargins": 0.03822,
+    "profitMargins": -0.0013799999,
+    "returnOnEquity": -0.00271,
+    "totalCash": 309952000,
+    "totalDebt": 220248000,
+    "totalRevenue": 1570877056,
+    "freeCashflow": 252155632,
+    "debtToEquity": 23.772,
+    "currentRatio": 2.382,
+    "fiftyTwoWeekHigh": 32.81,
+    "fiftyTwoWeekLow": 14.365,
+    "averageVolume": 8824140,
+    "averageVolume10days": 8172050,
+    "beta": 1.436,
+    "sharesOutstanding": 225619195,
+    "sharesFloat": 222380483,
+    "companyOfficers": [
+      {
+        "name": "Mr. David A. Steinberg",
+        "title": "Co-Founder, Chairman of the Board & CEO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Steven H. Gerber",
+        "title": "President",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Christopher E. Greiner",
+        "title": "Chief Financial Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Matthew  Mobley",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Satish  Ravella",
+        "title": "Chief Accounting Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Christian  Monberg",
+        "title": "CTO & Head of Product",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.4722
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 470009000,
+    "revenue_high": 472000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04871711449815361,
   "technicals": {
-    "ma20": 29.45099992752075,
-    "ma50": 24.851799964904785,
-    "ma200": 20.089649972915648,
-    "rsi14": 62.85212715600566,
+    "ma20": 29.613499927520753,
+    "ma50": 25.087999992370605,
+    "ma200": 20.156899976730347,
+    "rsi14": 60.12136404960205,
     "high_20d": 32.810001373291016,
-    "low_5d": 29.719999313354492,
+    "low_5d": 30.170000076293945,
     "low_10d": 27.200000762939453,
     "high_52w": 32.810001373291016,
     "low_52w": 14.364999771118164,
-    "atr14": 1.4533570153372628,
-    "atr14_pct": 4.635907488525293,
-    "position_in_52w_range_pct": 92.0845710761592
+    "atr14": 1.4726427623203822,
+    "atr14_pct": 4.782860404455951,
+    "position_in_52w_range_pct": 89.04852110435321
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 25.1,
-      "high": 27.39,
-      "low": 24.8,
-      "close": 26.85,
-      "volume": 12344600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 27.06,
-      "high": 27.24,
-      "low": 24.98,
-      "close": 25.06,
-      "volume": 5370700.0
-    },
     {
       "date": "2024-09-09",
       "open": 25.42,
@@ -4300,17 +4325,17 @@
       "low": 31.26,
       "close": 31.35,
       "volume": 4777100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 31.08,
+      "high": 31.5,
+      "low": 30.17,
+      "close": 30.79,
+      "volume": 5182953.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 19.06,
-      "high": 19.604,
-      "low": 18.51,
-      "close": 18.9,
-      "volume": 6638800.0
-    },
     {
       "date": "2025-09-08",
       "open": 18.99,
@@ -6318,6 +6343,14 @@
       "low": 31.26,
       "close": 31.35,
       "volume": 4777100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 31.08,
+      "high": 31.5,
+      "low": 30.17,
+      "close": 30.79,
+      "volume": 5182953.0
     }
   ],
   "ai_synthesis": null,

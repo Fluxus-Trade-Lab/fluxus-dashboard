@@ -1,43 +1,80 @@
 {
   "ticker": "CBIO",
-  "fetched_at": "2026-09-08T06:28:29Z",
+  "fetched_at": "2026-09-08T22:39:15Z",
   "_schema": "v2",
-  "current_price": 20.8799991607666,
+  "current_price": 20.459999084472656,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "CBIO",
+    "longName": "Crescent Biopharma, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Waltham",
+    "website": "https://crescentbiopharma.com",
+    "fullTimeEmployees": 69,
+    "marketCap": 760024128,
+    "enterpriseValue": 727530176,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -7.779467,
+    "priceToSalesTrailing12Months": 63.958942,
+    "enterpriseToRevenue": 61.224,
+    "priceToBook": 4.292908,
+    "grossMargins": 1.0,
+    "operatingMargins": -14.32635,
+    "profitMargins": 0.0,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 171592992,
+    "totalDebt": 1437000,
+    "totalRevenue": 11883000,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 0.88,
+    "currentRatio": 9.657,
+    "fiftyTwoWeekHigh": 27.41,
+    "fiftyTwoWeekLow": 8.72,
+    "averageVolume": 329951,
+    "averageVolume10days": 298360,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 37143940,
+    "sharesFloat": 26631248,
+    "companyOfficers": [
+      {
+        "name": "Mr. Joshua T. Brumm",
+        "title": "CEO & Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Dr. Jonathan  McNeill M.D.",
+        "title": "President & COO",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Dr. Ellie  Im M.D.",
+        "title": "Chief Medical Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Richard William Scalzo M.B.A.",
+        "title": "Chief Financial Officer",
+        "age": 39,
+        "yearBorn": 1986
+      },
+      {
+        "name": "Mr. Ryan  Lynch",
+        "title": "Senior VP of Finance, Treasurer & Chief Accounting Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Dr. Wenjie  Cheng Ph.D.",
+        "title": "Senior Vice President of Technical Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0126
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "[]",
+    "revenue_low": 0,
+    "revenue_high": 2500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -252,36 +293,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 17.54699993133545,
-    "ma50": 16.797399978637696,
-    "ma200": 15.458049983978272,
-    "rsi14": 68.10916487847439,
+    "ma20": 17.70349988937378,
+    "ma50": 16.8353999710083,
+    "ma200": 15.495349979400634,
+    "rsi14": 65.12870755767747,
     "high_20d": 22.329999923706055,
-    "low_5d": 16.139999389648438,
+    "low_5d": 16.290000915527344,
     "low_10d": 16.139999389648438,
     "high_52w": 27.40999984741211,
     "low_52w": 8.720000267028809,
-    "atr14": 1.3764281954084123,
-    "atr14_pct": 6.592089323426377,
-    "position_in_52w_range_pct": 65.0615257717861
+    "atr14": 1.3664211545671736,
+    "atr14_pct": 6.678500565545809,
+    "position_in_52w_range_pct": 62.81433430189023
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 17.0,
-      "high": 17.0,
-      "low": 16.0,
-      "close": 16.0,
-      "volume": 3999.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 16.0,
-      "high": 17.0,
-      "low": 16.0,
-      "close": 16.0,
-      "volume": 4046.0
-    },
     {
       "date": "2024-09-09",
       "open": 16.0,
@@ -4281,17 +4306,17 @@
       "low": 20.09,
       "close": 20.88,
       "volume": 239700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 20.58,
+      "high": 21.1699,
+      "low": 19.91,
+      "close": 20.46,
+      "volume": 646527.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 13.88,
-      "high": 14.5,
-      "low": 13.71,
-      "close": 14.24,
-      "volume": 137900.0
-    },
     {
       "date": "2025-09-08",
       "open": 13.85,
@@ -6299,6 +6324,14 @@
       "low": 20.09,
       "close": 20.88,
       "volume": 239700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 20.58,
+      "high": 21.1699,
+      "low": 19.91,
+      "close": 20.46,
+      "volume": 646527.0
     }
   ],
   "ai_synthesis": null,

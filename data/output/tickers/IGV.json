@@ -1,25 +1,25 @@
 {
   "ticker": "IGV",
-  "fetched_at": "2026-09-08T06:27:28Z",
+  "fetched_at": "2026-09-08T22:38:18Z",
   "_schema": "v2",
-  "current_price": 104.56999969482422,
+  "current_price": 102.66000366210938,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "IGV",
+    "longName": "iShares Expanded Tech-Software Sector ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "BTS",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 31.923477,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
+    "priceToBook": 0.25730678,
     "grossMargins": null,
     "operatingMargins": null,
     "profitMargins": null,
@@ -30,12 +30,12 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 117.99,
+    "fiftyTwoWeekLow": 73.93,
+    "averageVolume": 14379396,
+    "averageVolume10days": 11801340,
     "beta": null,
-    "sharesOutstanding": null,
+    "sharesOutstanding": 12500000,
     "sharesFloat": null,
     "companyOfficers": []
   },
@@ -48,8 +48,14 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:27:28Z",
+  "quarterly_asof": "2026-09-08T22:38:18Z",
   "news": [
+    {
+      "date": "2026-09-08T17:15:50Z",
+      "title": "UiPath and Pegasystems Sink 7% as Price Target Hikes Arrive Without a Single Buy Rating",
+      "url": "https://247wallst.com/investing/2026/09/08/uipath-and-pegasystems-sink-7-as-price-target-hikes-arrive-without-a-single-buy-rating/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-09-07T13:37:45Z",
       "title": "Investors Pulled $700 Million From IGV Hours Before Snowflake Reignited Software",
@@ -103,46 +109,24 @@
       "title": "Cramer Says This Software Giant Is Fighting a Takeover With a $4 Billion Buyback",
       "url": "https://247wallst.com/investing/2026/09/02/cramer-says-this-software-giant-is-fighting-a-takeover-with-a-4-billion-buyback/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-02T16:41:11Z",
-      "title": "Snowflake Drops 4% Before Its Earnings Report, Datadog Falls 6%: Is the Software Selloff the Real Story?",
-      "url": "https://247wallst.com/investing/2026/09/02/snowflake-drops-4-before-its-earnings-report-datadog-falls-6-is-the-software-selloff-the-real-story/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02600818142173383,
   "technicals": {
-    "ma20": 104.60099983215332,
-    "ma50": 97.93539978027344,
-    "ma200": 93.622600440979,
-    "rsi14": 53.56921374450118,
+    "ma20": 104.48349990844727,
+    "ma50": 98.22459991455078,
+    "ma200": 93.61394828796386,
+    "rsi14": 49.972601578030236,
     "high_20d": 110.56999969482422,
-    "low_5d": 102.5999984741211,
+    "low_5d": 102.08000183105469,
     "low_10d": 99.72000122070312,
     "high_52w": 117.96787973846575,
     "low_52w": 73.91613910901502,
-    "atr14": 2.8899999346051897,
-    "atr14_pct": 2.763698903164703,
-    "position_in_52w_range_pct": 69.5860371186232
+    "atr14": 2.9621429443359375,
+    "atr14_pct": 2.8853914267190217,
+    "position_in_52w_range_pct": 65.25023561470277
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 84.1842,
-      "high": 84.8741,
-      "low": 83.7143,
-      "close": 84.3742,
-      "volume": 1893400.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 84.7441,
-      "high": 85.104,
-      "low": 82.8145,
-      "close": 83.3444,
-      "volume": 10428700.0
-    },
     {
       "date": "2024-09-09",
       "open": 83.9443,
@@ -4142,17 +4126,17 @@
       "low": 104.36,
       "close": 104.57,
       "volume": 12209900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 103.75,
+      "high": 103.75,
+      "low": 102.08,
+      "close": 102.66,
+      "volume": 12832585.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 108.0797,
-      "high": 108.6596,
-      "low": 106.44,
-      "close": 108.1197,
-      "volume": 5579100.0
-    },
     {
       "date": "2025-09-08",
       "open": 109.0695,
@@ -6160,6 +6144,14 @@
       "low": 104.36,
       "close": 104.57,
       "volume": 12209900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 103.75,
+      "high": 103.75,
+      "low": 102.08,
+      "close": 102.66,
+      "volume": 12832585.0
     }
   ],
   "ai_synthesis": null,

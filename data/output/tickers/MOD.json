@@ -1,43 +1,80 @@
 {
   "ticker": "MOD",
-  "fetched_at": "2026-09-08T06:30:37Z",
+  "fetched_at": "2026-09-08T22:41:33Z",
   "_schema": "v2",
-  "current_price": 194.66000366210938,
+  "current_price": 192.35000610351562,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "MOD",
+    "longName": "Modine Manufacturing Company",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Parts",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Racine",
+    "website": "https://www.modine.com",
+    "fullTimeEmployees": 13000,
+    "marketCap": 10216229888,
+    "enterpriseValue": 10923319296,
+    "trailingPE": 71.50558,
+    "forwardPE": 17.595005,
+    "priceToSalesTrailing12Months": 3.0293646,
+    "enterpriseToRevenue": 3.239,
+    "priceToBook": 8.500906,
+    "grossMargins": 0.22209999,
+    "operatingMargins": 0.09004,
+    "profitMargins": 0.04276,
+    "returnOnEquity": 0.13094,
+    "totalCash": 95300000,
+    "totalDebt": 671400000,
+    "totalRevenue": 3372400128,
+    "freeCashflow": -73737504,
+    "debtToEquity": 55.497,
+    "currentRatio": 2.036,
+    "fiftyTwoWeekHigh": 323.25,
+    "fiftyTwoWeekLow": 111.18,
+    "averageVolume": 1550670,
+    "averageVolume10days": 1279630,
+    "beta": 1.733,
+    "sharesOutstanding": 53112708,
+    "sharesFloat": 52039300,
+    "companyOfficers": [
+      {
+        "name": "Mr. Neil D. Brinker",
+        "title": "President, CEO & Director",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Michael B. Lucareli C.F.A.",
+        "title": "Executive VP & CFO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Ms. Erin Jennifer Roth J.D.",
+        "title": "VP, General Counsel, Corporate Secretary & Chief Compliance Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Jeremy M. Patten",
+        "title": "President of the Performance Technologies",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Dan  Hedstrom",
+        "title": "VP & Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Kathleen T. Powers",
+        "title": "VP of Investor Relations & Tax and Treasurer",
+        "age": 56,
+        "yearBorn": 1969
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0495
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 924600000,
+    "revenue_high": 987718000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:13:27Z",
   "news": [
     {
+      "date": "2026-09-08T21:45:02Z",
+      "title": "Modine (MOD) Sees a More Significant Dip Than Broader Market: Some Facts to Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/modine-mod-sees-more-significant-214502494.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-03T13:30:02Z",
       "title": "Wall Street Analysts Think Modine (MOD) Is a Good Investment: Is It?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-think-modine-133002521.html",
@@ -261,46 +308,24 @@
       "title": "CYD vs. MOD: Which Stock Is the Better Value Option?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/cyd-vs-mod-stock-better-154003386.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T15:22:00Z",
-      "title": "Watts Raises 2026 Outlook as Data Center Demand Reshapes Its Growth",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/watts-raises-2026-outlook-data-152200802.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09654275752924238,
   "technicals": {
-    "ma20": 192.52999954223634,
-    "ma50": 213.10539978027344,
-    "ma200": 210.4566501235962,
-    "rsi14": 48.35614905324592,
+    "ma20": 192.5970001220703,
+    "ma50": 211.83259979248047,
+    "ma200": 210.76555011749267,
+    "rsi14": 46.9039979830056,
     "high_20d": 219.97999572753906,
     "low_5d": 172.83999633789062,
     "low_10d": 172.83999633789062,
     "high_52w": 323.25,
     "low_52w": 111.18000030517578,
-    "atr14": 10.790713718959264,
-    "atr14_pct": 5.543364592600015,
-    "position_in_52w_range_pct": 39.36436246383934
+    "atr14": 9.913534981863839,
+    "atr14_pct": 5.153904168076159,
+    "position_in_52w_range_pct": 38.27510063429348
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 105.81,
-      "high": 106.97,
-      "low": 103.62,
-      "close": 103.93,
-      "volume": 391300.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 103.93,
-      "high": 105.82,
-      "low": 97.22,
-      "close": 97.39,
-      "volume": 690900.0
-    },
     {
       "date": "2024-09-09",
       "open": 100.31,
@@ -4300,17 +4325,17 @@
       "low": 186.1,
       "close": 194.66,
       "volume": 1278800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 194.64,
+      "high": 198.06,
+      "low": 192.2105,
+      "close": 192.35,
+      "volume": 1474621.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 136.45,
-      "high": 138.29,
-      "low": 129.0,
-      "close": 135.19,
-      "volume": 839100.0
-    },
     {
       "date": "2025-09-08",
       "open": 136.69,
@@ -6318,6 +6343,14 @@
       "low": 186.1,
       "close": 194.66,
       "volume": 1278800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 194.64,
+      "high": 198.06,
+      "low": 192.2105,
+      "close": 192.35,
+      "volume": 1474621.0
     }
   ],
   "ai_synthesis": null,

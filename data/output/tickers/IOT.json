@@ -1,43 +1,80 @@
 {
   "ticker": "IOT",
-  "fetched_at": "2026-09-08T06:27:31Z",
+  "fetched_at": "2026-09-08T22:38:20Z",
   "_schema": "v2",
-  "current_price": 40.20000076293945,
+  "current_price": 40.150001525878906,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "IOT",
+    "longName": "Samsara Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.samsara.com",
+    "fullTimeEmployees": 4100,
+    "marketCap": 23395811328,
+    "enterpriseValue": 22722820096,
+    "trailingPE": 267.66666,
+    "forwardPE": 42.55928,
+    "priceToSalesTrailing12Months": 12.663141,
+    "enterpriseToRevenue": 12.299,
+    "priceToBook": 15.519909,
+    "grossMargins": 0.76432,
+    "operatingMargins": 0.00959,
+    "profitMargins": 0.04901,
+    "returnOnEquity": 0.0643,
+    "totalCash": 828928000,
+    "totalDebt": 69492000,
+    "totalRevenue": 1847552000,
+    "freeCashflow": 261692992,
+    "debtToEquity": 4.338,
+    "currentRatio": 1.625,
+    "fiftyTwoWeekHigh": 47.47,
+    "fiftyTwoWeekLow": 23.38,
+    "averageVolume": 6014854,
+    "averageVolume10days": 8381490,
+    "beta": 1.344,
+    "sharesOutstanding": 372784485,
+    "sharesFloat": 360137185,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sanjit  Biswas",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. John  Bicket",
+        "title": "Co-Founder, Executive VP, CTO & Director",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Dominic  Phillips",
+        "title": "Executive VP & CFO",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Adam  Eltoukhy J.D.",
+        "title": "Executive VP, CAO & Corporate Secretary",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Robert  Stobaugh",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ben  Kirchhoff",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.264
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-12-03",
+    "revenue_low": 514560000,
+    "revenue_high": 626300000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:08:30Z",
   "news": [
     {
+      "date": "2026-09-08T21:59:18Z",
+      "title": "1 Unpopular Stock That Deserves a Second Chance and 2 We Ignore",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-unpopular-stock-deserves-second-215918379.html",
+      "source": "StockStory"
+    },
+    {
       "date": "2026-09-05T20:10:12Z",
       "title": "Samsara (IOT) Reaches $2.1 Billion ARR As AI Adoption Expands",
       "url": "https://finance.yahoo.com/technology/ai/articles/samsara-iot-reaches-2-1-201012583.html",
@@ -261,46 +308,24 @@
       "title": "2 of Wall Street\u2019s Favorite Stocks with Exciting Potential and 1 We Question",
       "url": "https://finance.yahoo.com/markets/stocks/articles/2-wall-street-favorite-stocks-111010539.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-09-03T23:49:40Z",
-      "title": "Samsara Q2 revenue jumps 30% as transportation, Mexico fuel growth",
-      "url": "https://finance.yahoo.com/technology/articles/samsara-q2-revenue-jumps-30-234940982.html",
-      "source": "FreightWaves"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.055292650451559434,
   "technicals": {
-    "ma20": 39.75700016021729,
-    "ma50": 37.63260013580322,
-    "ma200": 33.65089995384216,
-    "rsi14": 53.99223848352326,
+    "ma20": 39.771500205993654,
+    "ma50": 37.81280017852783,
+    "ma200": 33.670199956893924,
+    "rsi14": 53.82075568233373,
     "high_20d": 45.119998931884766,
     "low_5d": 36.665000915527344,
     "low_10d": 36.665000915527344,
     "high_52w": 47.470001220703125,
     "low_52w": 23.3799991607666,
-    "atr14": 2.2870001111711775,
-    "atr14_pct": 5.6890548949431174,
-    "position_in_52w_range_pct": 69.82150337855626
+    "atr14": 2.304856981549944,
+    "atr14_pct": 5.740614928904388,
+    "position_in_52w_range_pct": 69.61395156126646
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 37.85,
-      "high": 39.35,
-      "low": 37.85,
-      "close": 38.75,
-      "volume": 4535200.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 43.15,
-      "high": 45.43,
-      "low": 42.37,
-      "close": 44.02,
-      "volume": 12523400.0
-    },
     {
       "date": "2024-09-09",
       "open": 43.63,
@@ -4300,17 +4325,17 @@
       "low": 39.32,
       "close": 40.2,
       "volume": 25506100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 39.56,
+      "high": 40.78,
+      "low": 38.74,
+      "close": 40.15,
+      "volume": 10686940.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 40.39,
-      "high": 42.872,
-      "low": 38.39,
-      "close": 42.09,
-      "volume": 23981800.0
-    },
     {
       "date": "2025-09-08",
       "open": 42.22,
@@ -6318,6 +6343,14 @@
       "low": 39.32,
       "close": 40.2,
       "volume": 25506100.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 39.56,
+      "high": 40.78,
+      "low": 38.74,
+      "close": 40.15,
+      "volume": 10686940.0
     }
   ],
   "ai_synthesis": null,

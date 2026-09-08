@@ -1,43 +1,80 @@
 {
   "ticker": "AUR",
-  "fetched_at": "2026-09-08T06:27:03Z",
+  "fetched_at": "2026-09-08T22:37:50Z",
   "_schema": "v2",
-  "current_price": 6.340000152587891,
+  "current_price": 6.510000228881836,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AUR",
+    "longName": "Aurora Innovation, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Parts",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Pittsburgh",
+    "website": "https://aurora.tech",
+    "fullTimeEmployees": 1900,
+    "marketCap": 13047051264,
+    "enterpriseValue": 11571344384,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -14.466667,
+    "priceToSalesTrailing12Months": 2609.4102,
+    "enterpriseToRevenue": 2314.269,
+    "priceToBook": 6.663255,
+    "grossMargins": 0.0,
+    "operatingMargins": -133.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.45639,
+    "totalCash": 1216999936,
+    "totalDebt": 82000000,
+    "totalRevenue": 5000000,
+    "freeCashflow": -414249984,
+    "debtToEquity": 4.199,
+    "currentRatio": 11.382,
+    "fiftyTwoWeekHigh": 8.565,
+    "fiftyTwoWeekLow": 3.6,
+    "averageVolume": 28269054,
+    "averageVolume10days": 30528610,
+    "beta": 2.634,
+    "sharesOutstanding": 1708146085,
+    "sharesFloat": 1493055592,
+    "companyOfficers": [
+      {
+        "name": "Mr. Christopher  Urmson Ph.D.",
+        "title": "Co-Founder, CEO & Non-Independent Executive Chairman",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Ossa  Fisher",
+        "title": "President",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. David  Maday",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Shelley  Webb",
+        "title": "Secretary & Chief Legal Officer",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. James Andrew Bagnell",
+        "title": "Chief Scientist",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Stacy  Feit C.F.A.",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.3392
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 2200000,
+    "revenue_high": 4000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.053763438969973175,
   "technicals": {
-    "ma20": 6.232249999046326,
-    "ma50": 6.337100009918213,
-    "ma200": 5.351775002479553,
-    "rsi14": 53.01641572521676,
+    "ma20": 6.208750009536743,
+    "ma50": 6.3401000118255615,
+    "ma200": 5.365275003910065,
+    "rsi14": 55.84180830691393,
     "high_20d": 7.159999847412109,
     "low_5d": 5.400000095367432,
     "low_10d": 5.400000095367432,
     "high_52w": 8.5649995803833,
     "low_52w": 3.5999999046325684,
-    "atr14": 0.385357175554548,
-    "atr14_pct": 6.078188742586247,
-    "position_in_52w_range_pct": 55.18631272701988
+    "atr14": 0.3292857919420515,
+    "atr14_pct": 5.0581533082159345,
+    "position_in_52w_range_pct": 58.61028226168536
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 4.2,
-      "high": 4.31,
-      "low": 4.05,
-      "close": 4.05,
-      "volume": 5942000.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 4.04,
-      "high": 4.15,
-      "low": 3.88,
-      "close": 3.9,
-      "volume": 5534600.0
-    },
     {
       "date": "2024-09-09",
       "open": 3.93,
@@ -4300,17 +4325,17 @@
       "low": 6.16,
       "close": 6.34,
       "volume": 21667600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 6.34,
+      "high": 6.59,
+      "low": 6.325,
+      "close": 6.51,
+      "volume": 25195578.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 5.75,
-      "high": 5.82,
-      "low": 5.572,
-      "close": 5.73,
-      "volume": 14602800.0
-    },
     {
       "date": "2025-09-08",
       "open": 5.76,
@@ -6318,6 +6343,14 @@
       "low": 6.16,
       "close": 6.34,
       "volume": 21667600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 6.34,
+      "high": 6.59,
+      "low": 6.325,
+      "close": 6.51,
+      "volume": 25195578.0
     }
   ],
   "ai_synthesis": null,

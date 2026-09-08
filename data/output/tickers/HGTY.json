@@ -1,43 +1,80 @@
 {
   "ticker": "HGTY",
-  "fetched_at": "2026-09-08T06:30:09Z",
+  "fetched_at": "2026-09-08T22:41:07Z",
   "_schema": "v2",
-  "current_price": 13.550000190734863,
+  "current_price": 13.369999885559082,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "HGTY",
+    "longName": "Hagerty, Inc.",
+    "sector": "Financial Services",
+    "industry": "Insurance - Property & Casualty",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Traverse City",
+    "website": "https://www.hagerty.com",
+    "fullTimeEmployees": 1891,
+    "marketCap": 4590648320,
+    "enterpriseValue": 1105905536,
+    "trailingPE": 102.84615,
+    "forwardPE": 22.789644,
+    "priceToSalesTrailing12Months": 3.2433667,
+    "enterpriseToRevenue": 0.781,
+    "priceToBook": 6.318526,
+    "grossMargins": 0.56813,
+    "operatingMargins": 0.18377,
+    "profitMargins": 0.01249,
+    "returnOnEquity": 0.0892,
+    "totalCash": 1054808000,
+    "totalDebt": 258311008,
+    "totalRevenue": 1415395968,
+    "freeCashflow": 520645120,
+    "debtToEquity": 35.154,
+    "currentRatio": 1.436,
+    "fiftyTwoWeekHigh": 14.0,
+    "fiftyTwoWeekLow": 9.36,
+    "averageVolume": 148346,
+    "averageVolume10days": 121990,
+    "beta": 0.81,
+    "sharesOutstanding": 101802246,
+    "sharesFloat": 47565884,
+    "companyOfficers": [
+      {
+        "name": "Mr. McKeel O. Hagerty",
+        "title": "Chairman & CEO",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Patrick Scott McClymont",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Russell  Page",
+        "title": "Chief Information Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Kenneth H. Ahn",
+        "title": "President of Marketplace & Radius",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Jeffrey Edward Briglia",
+        "title": "President of Insurance",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Kevin Michael Delaney",
+        "title": "Chief Accounting Officer & Corporate Controller",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.6222
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 333027000,
+    "revenue_high": 345381000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.044876589763329706,
   "technicals": {
-    "ma20": 13.13149995803833,
-    "ma50": 12.500200004577637,
-    "ma200": 11.793899989128112,
-    "rsi14": 63.72089188466584,
+    "ma20": 13.14399995803833,
+    "ma50": 12.532399997711181,
+    "ma200": 11.793349990844726,
+    "rsi14": 58.875482333966126,
     "high_20d": 13.930000305175781,
     "low_5d": 13.012999534606934,
-    "low_10d": 13.010000228881836,
+    "low_10d": 13.012999534606934,
     "high_52w": 14.0,
     "low_52w": 9.359999656677246,
-    "atr14": 0.4493571008954729,
-    "atr14_pct": 3.316288520812949,
-    "position_in_52w_range_pct": 90.3017289661904
+    "atr14": 0.46971430097307476,
+    "atr14_pct": 3.513195998456309,
+    "position_in_52w_range_pct": 86.42241233133686
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 11.9,
-      "high": 11.9,
-      "low": 11.68,
-      "close": 11.74,
-      "volume": 74600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 11.735,
-      "high": 11.89,
-      "low": 11.43,
-      "close": 11.46,
-      "volume": 66700.0
-    },
     {
       "date": "2024-09-09",
       "open": 11.41,
@@ -4300,17 +4325,17 @@
       "low": 13.19,
       "close": 13.55,
       "volume": 106600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 13.49,
+      "high": 13.84,
+      "low": 13.28,
+      "close": 13.37,
+      "volume": 169055.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 11.58,
-      "high": 11.83,
-      "low": 11.47,
-      "close": 11.78,
-      "volume": 219700.0
-    },
     {
       "date": "2025-09-08",
       "open": 11.9,
@@ -6318,6 +6343,14 @@
       "low": 13.19,
       "close": 13.55,
       "volume": 106600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 13.49,
+      "high": 13.84,
+      "low": 13.28,
+      "close": 13.37,
+      "volume": 169055.0
     }
   ],
   "ai_synthesis": null,

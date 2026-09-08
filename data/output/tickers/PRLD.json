@@ -1,43 +1,80 @@
 {
   "ticker": "PRLD",
-  "fetched_at": "2026-09-08T06:28:18Z",
+  "fetched_at": "2026-09-08T22:39:09Z",
   "_schema": "v2",
-  "current_price": 5.460000038146973,
+  "current_price": 5.300000190734863,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "PRLD",
+    "longName": "Prelude Therapeutics Incorporated",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Wilmington",
+    "website": "https://preludetx.com",
+    "fullTimeEmployees": 79,
+    "marketCap": 422958496,
+    "enterpriseValue": 428245280,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -7.066667,
+    "priceToSalesTrailing12Months": 18.861866,
+    "enterpriseToRevenue": 19.098,
+    "priceToBook": 4.0800614,
+    "grossMargins": 1.0,
+    "operatingMargins": -2.70933,
+    "profitMargins": -2.6974702,
+    "returnOnEquity": -0.57726,
+    "totalCash": 151756992,
+    "totalDebt": 17650000,
+    "totalRevenue": 22424000,
+    "freeCashflow": -13844625,
+    "debtToEquity": 13.198,
+    "currentRatio": 4.072,
+    "fiftyTwoWeekHigh": 6.83,
+    "fiftyTwoWeekLow": 0.981,
+    "averageVolume": 495550,
+    "averageVolume10days": 509320,
+    "beta": 0.963,
+    "sharesOutstanding": 65075350,
+    "sharesFloat": 22068723,
+    "companyOfficers": [
+      {
+        "name": "Dr. Krishna  Vaddi D.V.M., Ph.D.",
+        "title": "Founder, CEO & Director",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Bryant David Lim J.D.",
+        "title": "CFO, Chief Legal Officer & Corporate Secretary",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Peggy A. Scherle Ph.D.",
+        "title": "Chief Scientific Officer",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Ms. Aimee  Crombie Ph.D.",
+        "title": "Senior VP and Head of Strategic Planning & Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Madhu  Pudipeddi Ph.D.",
+        "title": "Senior Vice President of Technical Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Robert A. Doody Jr.",
+        "title": "Senior Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.2676
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 5989000,
+    "revenue_high": 100000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.2207547090366756,
   "technicals": {
-    "ma20": 5.787000012397766,
-    "ma50": 5.04739996433258,
-    "ma200": 3.6182999849319457,
-    "rsi14": 49.5311384097336,
+    "ma20": 5.8105000257492065,
+    "ma50": 5.065799965858459,
+    "ma200": 3.6363999861478806,
+    "rsi14": 46.848703954186234,
     "high_20d": 6.829999923706055,
     "low_5d": 5.110000133514404,
     "low_10d": 5.110000133514404,
     "high_52w": 6.829999923706055,
     "low_52w": 0.9810000061988831,
-    "atr14": 0.4866429397038051,
-    "atr14_pct": 8.912874291278634,
-    "position_in_52w_range_pct": 76.57719430874992
+    "atr14": 0.4848572186061314,
+    "atr14_pct": 9.14824907843832,
+    "position_in_52w_range_pct": 73.84168653530648
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 5.23,
-      "high": 5.23,
-      "low": 4.5,
-      "close": 4.81,
-      "volume": 852700.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 4.8,
-      "high": 4.91,
-      "low": 4.65,
-      "close": 4.85,
-      "volume": 215600.0
-    },
     {
       "date": "2024-09-09",
       "open": 4.9,
@@ -4300,17 +4325,17 @@
       "low": 5.19,
       "close": 5.46,
       "volume": 400300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 5.38,
+      "high": 5.46,
+      "low": 5.19,
+      "close": 5.3,
+      "volume": 257583.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 1.16,
-      "high": 1.23,
-      "low": 1.136,
-      "close": 1.23,
-      "volume": 90700.0
-    },
     {
       "date": "2025-09-08",
       "open": 1.23,
@@ -6318,6 +6343,14 @@
       "low": 5.19,
       "close": 5.46,
       "volume": 400300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 5.38,
+      "high": 5.46,
+      "low": 5.19,
+      "close": 5.3,
+      "volume": 257583.0
     }
   ],
   "ai_synthesis": null,

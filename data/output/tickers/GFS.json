@@ -1,43 +1,80 @@
 {
   "ticker": "GFS",
-  "fetched_at": "2026-09-08T06:30:03Z",
+  "fetched_at": "2026-09-08T22:41:01Z",
   "_schema": "v2",
-  "current_price": 45.209999084472656,
+  "current_price": 45.09000015258789,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "GFS",
+    "longName": "GLOBALFOUNDRIES Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Malta",
+    "website": "https://gf.com",
+    "fullTimeEmployees": 14000,
+    "marketCap": 24740921344,
+    "enterpriseValue": 24186036224,
+    "trailingPE": 35.226562,
+    "forwardPE": 17.236174,
+    "priceToSalesTrailing12Months": 3.566002,
+    "enterpriseToRevenue": 3.486,
+    "priceToBook": 2.0937037,
+    "grossMargins": 0.2714,
+    "operatingMargins": 0.09742,
+    "profitMargins": 0.103199996,
+    "returnOnEquity": 0.061690003,
+    "totalCash": 2356999936,
+    "totalDebt": 1678000000,
+    "totalRevenue": 6937999872,
+    "freeCashflow": 758249984,
+    "debtToEquity": 14.132,
+    "currentRatio": 2.475,
+    "fiftyTwoWeekHigh": 92.55,
+    "fiftyTwoWeekLow": 31.59,
+    "averageVolume": 3741798,
+    "averageVolume10days": 3822890,
+    "beta": 1.774,
+    "sharesOutstanding": 548700833,
+    "sharesFloat": 148426193,
+    "companyOfficers": [
+      {
+        "name": "Dr. Thomas H. Caulfield DES, Ph.D.",
+        "title": "Executive Chairman",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. Timothy Graham Breen",
+        "title": "CEO & Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Sam  Franklin",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Greg  Pedersen",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Gregg  Bartlett",
+        "title": "Chief Technology Officer",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Vishal  Mehra",
+        "title": "Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0543
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-10",
+    "revenue_low": 1884516000,
+    "revenue_high": 1908670000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:12:37Z",
   "news": [
     {
+      "date": "2026-09-08T15:00:28Z",
+      "title": "Why Rigetti Computing Popped Today",
+      "url": "https://www.fool.com/investing/2026/09/08/why-rigetti-computing-popped-today/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-09-04T15:04:57Z",
       "title": "GLOBALFOUNDRIES (GFS) Surged on Robust CID Growth and Dividend Announcement",
       "url": "https://finance.yahoo.com/markets/stocks/articles/globalfoundries-gfs-surged-robust-cid-150457982.html",
@@ -261,46 +308,24 @@
       "title": "How the U.S. Is Trying to Copy China\u2019s Supply Chain Playbook",
       "url": "https://www.barrons.com/articles/us-struggles-to-copy-china-supply-chain-playbook-f1aed955?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-12T14:32:39Z",
-      "title": "GlobalFoundries (GFS) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/12/globalfoundries-gfs-q2-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06986027920470542,
   "technicals": {
-    "ma20": 47.97949981689453,
-    "ma50": 55.715400009155275,
-    "ma200": 53.23353145599365,
-    "rsi14": 36.95912522392012,
+    "ma20": 47.7314998626709,
+    "ma50": 55.021600036621095,
+    "ma200": 53.294967823028564,
+    "rsi14": 36.68449056124555,
     "high_20d": 55.58000183105469,
     "low_5d": 42.70000076293945,
     "low_10d": 42.70000076293945,
     "high_52w": 92.41682037959355,
     "low_52w": 31.544542878870402,
-    "atr14": 1.7743571145193917,
-    "atr14_pct": 3.924700620329792,
-    "position_in_52w_range_pct": 22.449392016653086
+    "atr14": 1.6229288918631417,
+    "atr14_pct": 3.599310016347373,
+    "position_in_52w_range_pct": 22.252259698278205
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 41.6899,
-      "high": 42.359,
-      "low": 41.0109,
-      "close": 41.2306,
-      "volume": 1364400.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 41.1207,
-      "high": 41.1207,
-      "low": 39.8326,
-      "close": 40.0623,
-      "volume": 1188100.0
-    },
     {
       "date": "2024-09-09",
       "open": 40.8611,
@@ -4300,17 +4325,17 @@
       "low": 44.53,
       "close": 45.21,
       "volume": 2631300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 46.5243,
+      "high": 46.68,
+      "low": 44.92,
+      "close": 45.09,
+      "volume": 5417460.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 33.332,
-      "high": 34.1807,
-      "low": 32.9365,
-      "close": 33.2421,
-      "volume": 2241900.0
-    },
     {
       "date": "2025-09-08",
       "open": 33.3919,
@@ -6318,6 +6343,14 @@
       "low": 44.53,
       "close": 45.21,
       "volume": 2631300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 46.5243,
+      "high": 46.68,
+      "low": 44.92,
+      "close": 45.09,
+      "volume": 5417460.0
     }
   ],
   "ai_synthesis": null,

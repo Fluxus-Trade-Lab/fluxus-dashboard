@@ -1,43 +1,80 @@
 {
   "ticker": "PL",
-  "fetched_at": "2026-09-08T06:30:59Z",
+  "fetched_at": "2026-09-08T22:42:00Z",
   "_schema": "v2",
-  "current_price": 18.1200008392334,
+  "current_price": 17.809999465942383,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "PL",
+    "longName": "Planet Labs PBC",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.planet.com",
+    "fullTimeEmployees": 945,
+    "marketCap": 6480132608,
+    "enterpriseValue": 6226130432,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 12454.546,
+    "priceToSalesTrailing12Months": 17.130608,
+    "enterpriseToRevenue": 16.459,
+    "priceToBook": 14.305221,
+    "grossMargins": 0.55486,
+    "operatingMargins": -0.11995,
+    "profitMargins": -0.95132005,
+    "returnOnEquity": -0.71970004,
+    "totalCash": 865417984,
+    "totalDebt": 498623008,
+    "totalRevenue": 378278016,
+    "freeCashflow": 51749876,
+    "debtToEquity": 88.353,
+    "currentRatio": 2.843,
+    "fiftyTwoWeekHigh": 51.76,
+    "fiftyTwoWeekLow": 8.51,
+    "averageVolume": 10157198,
+    "averageVolume10days": 11026110,
+    "beta": 2.108,
+    "sharesOutstanding": 340354193,
+    "sharesFloat": 302226694,
+    "companyOfficers": [
+      {
+        "name": "Dr. William Spencer Marshall",
+        "title": "Co-Founder, CEO & Chairman of the Board",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Ms. Ashley Whitfield Fieglein Johnson",
+        "title": "President & CFO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Robert Henry Schingler Jr.",
+        "title": "Co-Founder, Chief Strategy Officer & Inside Director",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Kevin  Kirn",
+        "title": "Chief Product & Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Christopher  Genualdi",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Thomas  Murphy",
+        "title": "General Counsel & Corporate Secretary",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 1.0
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-09-03",
+    "revenue_low": 102126000,
+    "revenue_high": 117693000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -209,6 +250,18 @@
   "quarterly_asof": "2026-09-06T05:13:58Z",
   "news": [
     {
+      "date": "2026-09-08T16:43:25Z",
+      "title": "How Far Could RKLB Stock Fall In The Next Shock?",
+      "url": "https://www.trefis.com/articles/614529/how-far-could-rklb-stock-fall-in-the-next-shock/2026-09-08",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-08T13:29:59Z",
+      "title": "Grounded and Falling: Why One Wall Street Pro Says Rocket Lab Will More Than Double Soon",
+      "url": "https://247wallst.com/investing/2026/09/08/grounded-and-falling-why-one-wall-street-pro-says-rocket-lab-will-more-than-double-soon/",
+      "source": "24/7 Wall St."
+    },
+    {
       "date": "2026-09-06T17:05:55Z",
       "title": "Planet Labs (PL) Lands 7 Figure European Defense Deal With A 1 Year Term",
       "url": "https://finance.yahoo.com/markets/stocks/articles/planet-labs-pl-lands-7-170555179.html",
@@ -255,52 +308,24 @@
       "title": "Planet Labs Is \u2018On A Roll\u2019 In Defense And Intelligence, Says Craig-Hallum \u2014 Why Did The Firm Shave Its Target By Over 28%?",
       "url": "https://stocktwits.com/news-articles/markets/equity/planet-labs-is-on-a-roll-in-defense-and-intelligence-says-craig-hallum-why-did-the-firm-shave-its-target-by-over-28/cZsD38LRJwC",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-04T13:16:30Z",
-      "title": "Planet Labs Rallies 10% as Record Revenue Overrides Soft Q3 Guidance",
-      "url": "https://247wallst.com/investing/2026/09/04/planet-labs-rallies-10-as-record-revenue-overrides-soft-q3-guidance/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-04T13:10:00Z",
-      "title": "Defying Gravity: Space Stocks Reach Escape Velocity",
-      "url": "https://www.marketbeat.com/articles/defying-gravity-space-stocks-reach-escape-velocity/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0634475033062674,
   "technicals": {
-    "ma20": 21.82750015258789,
-    "ma50": 23.56300003051758,
-    "ma200": 26.977649993896485,
-    "rsi14": 28.60594554108269,
+    "ma20": 21.563000106811522,
+    "ma50": 23.37780002593994,
+    "ma200": 27.00944999217987,
+    "rsi14": 27.5960224990762,
     "high_20d": 25.530000686645508,
-    "low_5d": 17.725000381469727,
-    "low_10d": 17.725000381469727,
+    "low_5d": 17.049999237060547,
+    "low_10d": 17.049999237060547,
     "high_52w": 51.7599983215332,
-    "low_52w": 6.255000114440918,
-    "atr14": 1.2088571275983537,
-    "atr14_pct": 6.671396642437996,
-    "position_in_52w_range_pct": 26.074060415946203
+    "low_52w": 7.289999961853027,
+    "atr14": 1.1829286302839006,
+    "atr14_pct": 6.641935237258066,
+    "position_in_52w_range_pct": 23.65639732882827
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 2.48,
-      "high": 2.526,
-      "low": 2.43,
-      "close": 2.48,
-      "volume": 1920900.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 2.23,
-      "high": 2.32,
-      "low": 1.76,
-      "close": 1.78,
-      "volume": 11855100.0
-    },
     {
       "date": "2024-09-09",
       "open": 1.87,
@@ -4300,17 +4325,17 @@
       "low": 17.725,
       "close": 18.12,
       "volume": 32100800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.85,
+      "high": 18.227,
+      "low": 17.05,
+      "close": 17.81,
+      "volume": 25786811.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 6.61,
-      "high": 6.65,
-      "low": 6.255,
-      "close": 6.53,
-      "volume": 8951300.0
-    },
     {
       "date": "2025-09-08",
       "open": 7.705,
@@ -6318,6 +6343,14 @@
       "low": 17.725,
       "close": 18.12,
       "volume": 32100800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.85,
+      "high": 18.227,
+      "low": 17.05,
+      "close": 17.81,
+      "volume": 25786811.0
     }
   ],
   "ai_synthesis": null,

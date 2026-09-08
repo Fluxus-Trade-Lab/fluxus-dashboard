@@ -1,43 +1,80 @@
 {
   "ticker": "BB",
-  "fetched_at": "2026-09-08T06:29:10Z",
+  "fetched_at": "2026-09-08T22:40:06Z",
   "_schema": "v2",
-  "current_price": 7.699999809265137,
+  "current_price": 7.869999885559082,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "BB",
+    "longName": "BlackBerry Limited",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "Canada",
+    "city": "Waterloo",
+    "website": "https://www.blackberry.com",
+    "fullTimeEmployees": 1749,
+    "marketCap": 4612610048,
+    "enterpriseValue": 4383173120,
+    "trailingPE": 78.7,
+    "forwardPE": 34.431465,
+    "priceToSalesTrailing12Months": 7.948664,
+    "enterpriseToRevenue": 7.553,
+    "priceToBook": 6.1436377,
+    "grossMargins": 0.77133006,
+    "operatingMargins": 0.10268,
+    "profitMargins": 0.10305,
+    "returnOnEquity": 0.08104,
+    "totalCash": 350900000,
+    "totalDebt": 221100000,
+    "totalRevenue": 580300032,
+    "freeCashflow": 105150000,
+    "debtToEquity": 29.453,
+    "currentRatio": 2.197,
+    "fiftyTwoWeekHigh": 13.59,
+    "fiftyTwoWeekLow": 3.12,
+    "averageVolume": 20785143,
+    "averageVolume10days": 9412690,
+    "beta": 1.437,
+    "sharesOutstanding": 586100431,
+    "sharesFloat": 584641041,
+    "companyOfficers": [
+      {
+        "name": "Mr. John Joseph Giamatteo",
+        "title": "CEO; President of Secure Communications & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Tim  Foote",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Philip  Kurtz CFA",
+        "title": "Chief Legal Officer & Head of Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Jennifer  Armstrong-Owen",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jesse  Harold",
+        "title": "Senior VP & Chief Information and Information Security Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Suzanne M. Spera",
+        "title": "Senior Director of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 1.8571
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-09-24",
+    "revenue_low": 141565000,
+    "revenue_high": 152000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:11:12Z",
   "news": [
     {
+      "date": "2026-09-08T21:45:04Z",
+      "title": "BlackBerry (BB) Increases Despite Market Slip: Here's What You Need to Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-bb-increases-despite-market-214504172.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-04T14:38:06Z",
       "title": "The Comeback Story: BlackBerry Limited\u2019s (BB) QNX and Growth Potential",
       "url": "https://finance.yahoo.com/markets/stocks/articles/comeback-story-blackberry-limited-bb-143806917.html",
@@ -261,46 +308,24 @@
       "title": "BlackBerry Is Done With Smartphones And Cars \u2014 Now It Wants To Own The Software Inside Your AI Robot",
       "url": "https://stocktwits.com/news-articles/markets/equity/black-berry-is-done-with-smartphones-and-cars-now-it-wants-to-own-the-software-inside-your-ai-robot/cZYNFqTRJYP",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-25T19:29:53Z",
-      "title": "BB Stock Alert: What to Know as Blackberry Doubles Down on Robotics",
-      "url": "https://www.barchart.com/story/news/4029419/bb-stock-alert-what-to-know-as-blackberry-doubles-down-on-robotics",
-      "source": "Barchart"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0559085141547931,
   "technicals": {
-    "ma20": 8.266499900817871,
-    "ma50": 9.235399942398072,
-    "ma200": 5.98954998254776,
-    "rsi14": 39.28483874650298,
+    "ma20": 8.218499898910522,
+    "ma50": 9.164799947738647,
+    "ma200": 6.007399981021881,
+    "rsi14": 42.59276724478664,
     "high_20d": 9.260000228881836,
-    "low_5d": 7.579999923706055,
-    "low_10d": 7.579999923706055,
+    "low_5d": 7.53000020980835,
+    "low_10d": 7.53000020980835,
     "high_52w": 13.59000015258789,
     "low_52w": 3.119999885559082,
-    "atr14": 0.36999991961887907,
-    "atr14_pct": 4.805193880312455,
-    "position_in_52w_range_pct": 43.74402871916806
+    "atr14": 0.3767856870378767,
+    "atr14_pct": 4.787619981154675,
+    "position_in_52w_range_pct": 45.36771613042147
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 2.28,
-      "high": 2.31,
-      "low": 2.25,
-      "close": 2.3,
-      "volume": 2034000.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 2.29,
-      "high": 2.32,
-      "low": 2.22,
-      "close": 2.25,
-      "volume": 3989300.0
-    },
     {
       "date": "2024-09-09",
       "open": 2.27,
@@ -4300,17 +4325,17 @@
       "low": 7.64,
       "close": 7.7,
       "volume": 7867700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 7.71,
+      "high": 8.005,
+      "low": 7.53,
+      "close": 7.87,
+      "volume": 13055092.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 3.82,
-      "high": 3.88,
-      "low": 3.76,
-      "close": 3.88,
-      "volume": 10547900.0
-    },
     {
       "date": "2025-09-08",
       "open": 3.88,
@@ -6318,6 +6343,14 @@
       "low": 7.64,
       "close": 7.7,
       "volume": 7867700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 7.71,
+      "high": 8.005,
+      "low": 7.53,
+      "close": 7.87,
+      "volume": 13055092.0
     }
   ],
   "ai_synthesis": null,

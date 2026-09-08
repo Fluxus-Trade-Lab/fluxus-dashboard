@@ -1,43 +1,68 @@
 {
   "ticker": "USAR",
-  "fetched_at": "2026-09-08T06:31:28Z",
+  "fetched_at": "2026-09-08T22:42:33Z",
   "_schema": "v2",
-  "current_price": 17.610000610351562,
+  "current_price": 17.65999984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "USAR",
+    "longName": "USA Rare Earth, Inc.",
+    "sector": "Basic Materials",
+    "industry": "Other Industrial Metals & Mining",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Stillwater",
+    "website": "https://www.usare.com",
+    "fullTimeEmployees": 132,
+    "marketCap": 4321756672,
+    "enterpriseValue": 2791860992,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 588.6667,
+    "priceToSalesTrailing12Months": 328.35107,
+    "enterpriseToRevenue": 212.115,
+    "priceToBook": 2.0494373,
+    "grossMargins": -0.097399995,
+    "operatingMargins": -7.95636,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.23561001,
+    "totalCash": 1530146944,
+    "totalDebt": 3196000,
+    "totalRevenue": 13162000,
+    "freeCashflow": -283956512,
+    "debtToEquity": 0.125,
+    "currentRatio": 32.787,
+    "fiftyTwoWeekHigh": 43.98,
+    "fiftyTwoWeekLow": 11.45,
+    "averageVolume": 12528917,
+    "averageVolume10days": 12557790,
+    "beta": 2.61,
+    "sharesOutstanding": 244720099,
+    "sharesFloat": 227283792,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael  Blitzer",
+        "title": "Executive Chairman",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Ms. Barbara W. Humpton",
+        "title": "CEO & Director",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. William Robert Steele Jr.",
+        "title": "Chief Financial Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. David Thomas Kronenfeld J.D.",
+        "title": "Consultant",
+        "age": 39,
+        "yearBorn": 1986
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +90,11 @@
       "eps_surprise_pct": -2.7498002
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 6000000,
+    "revenue_high": 31050000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +238,12 @@
   "quarterly_asof": "2026-09-06T05:14:36Z",
   "news": [
     {
+      "date": "2026-09-08T11:36:13Z",
+      "title": "Why USA Rare Earth Stock Surged 19.2% Last Month",
+      "url": "https://www.fool.com/investing/2026/09/08/why-usa-rare-earth-stock-surged-192-last-month/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-09-07T15:35:00Z",
       "title": "Is USAR's Stillwater Facility Positioned to Power Future Growth?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/usars-stillwater-facility-positioned-power-153500387.html",
@@ -261,46 +296,24 @@
       "title": "USA Rare Earth Stock Stays Perfect With New Call to Buy",
       "url": "https://www.barrons.com/articles/usa-rare-earth-stock-price-buy-4174f3f4?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-01T10:57:00Z",
-      "title": "USA Rare Earth Sits on $1.5 Billion in Cash and Almost No Revenue. Here's How to Value That",
-      "url": "https://www.fool.com/investing/2026/09/01/usa-rare-earth-sits-on-15-billion-in-cash-and-almo/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0662514162009719,
   "technicals": {
-    "ma20": 18.466000270843505,
-    "ma50": 17.671500072479247,
-    "ma200": 19.238550033569336,
-    "rsi14": 47.48370885508689,
+    "ma20": 18.397000217437743,
+    "ma50": 17.6153000831604,
+    "ma200": 19.250550031661987,
+    "rsi14": 47.77815435652818,
     "high_20d": 20.520000457763672,
     "low_5d": 16.959999084472656,
     "low_10d": 16.959999084472656,
     "high_52w": 43.97999954223633,
     "low_52w": 11.449999809265137,
-    "atr14": 1.3160717827933175,
-    "atr14_pct": 7.473434055531493,
-    "position_in_52w_range_pct": 18.93636904903777
+    "atr14": 1.2897145407540458,
+    "atr14_pct": 7.303026907687318,
+    "position_in_52w_range_pct": 19.09007097793717
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 10.76,
-      "high": 10.76,
-      "low": 10.7,
-      "close": 10.71,
-      "volume": 4500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 10.75,
-      "high": 10.75,
-      "low": 10.7,
-      "close": 10.705,
-      "volume": 5500.0
-    },
     {
       "date": "2024-09-09",
       "open": 10.71,
@@ -4300,17 +4313,17 @@
       "low": 17.255,
       "close": 17.61,
       "volume": 22026800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.49,
+      "high": 18.321,
+      "low": 17.41,
+      "close": 17.66,
+      "volume": 16948790.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 13.98,
-      "high": 14.339,
-      "low": 13.37,
-      "close": 13.86,
-      "volume": 2853500.0
-    },
     {
       "date": "2025-09-08",
       "open": 13.68,
@@ -6318,6 +6331,14 @@
       "low": 17.255,
       "close": 17.61,
       "volume": 22026800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.49,
+      "high": 18.321,
+      "low": 17.41,
+      "close": 17.66,
+      "volume": 16948790.0
     }
   ],
   "ai_synthesis": null,

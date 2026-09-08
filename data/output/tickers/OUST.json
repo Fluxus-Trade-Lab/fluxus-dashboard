@@ -1,43 +1,80 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-09-08T06:27:42Z",
+  "fetched_at": "2026-09-08T22:38:31Z",
   "_schema": "v2",
-  "current_price": 36.43000030517578,
+  "current_price": 37.4900016784668,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "OUST",
+    "longName": "Ouster, Inc.",
+    "sector": "Technology",
+    "industry": "Electronic Components",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://ouster.com",
+    "fullTimeEmployees": 320,
+    "marketCap": 2703491584,
+    "enterpriseValue": 2382368256,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -299.92,
+    "priceToSalesTrailing12Months": 13.193748,
+    "enterpriseToRevenue": 11.627,
+    "priceToBook": 6.9156985,
+    "grossMargins": 0.46623,
+    "operatingMargins": -0.46580002,
+    "profitMargins": -0.26025,
+    "returnOnEquity": -0.18006,
+    "totalCash": 261080992,
+    "totalDebt": 16397000,
+    "totalRevenue": 204907008,
+    "freeCashflow": -57373000,
+    "debtToEquity": 4.416,
+    "currentRatio": 4.164,
+    "fiftyTwoWeekHigh": 63.79,
+    "fiftyTwoWeekLow": 16.4,
+    "averageVolume": 3830209,
+    "averageVolume10days": 1948440,
+    "beta": 3.246,
+    "sharesOutstanding": 72112333,
+    "sharesFloat": 69838631,
+    "companyOfficers": [
+      {
+        "name": "Mr. Charles Angus Pacala",
+        "title": "Co-Founder, CEO & Director",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Mark  Frichtl",
+        "title": "Co-Founder & CTO",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Kenneth P. Gianella",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Darien  Spencer",
+        "title": "Chief Operating Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Megan  Chung",
+        "title": "General Counsel & Corporate Secretary",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Shaluinn  Fullove",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.1079
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 56000000,
+    "revenue_high": 56600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06935182404895349,
   "technicals": {
-    "ma20": 39.428500175476074,
-    "ma50": 41.25260009765625,
-    "ma200": 29.988774995803833,
-    "rsi14": 45.35554521013853,
+    "ma20": 39.19650020599365,
+    "ma50": 41.16200012207031,
+    "ma200": 30.071325006484987,
+    "rsi14": 47.80853950473973,
     "high_20d": 51.8489990234375,
     "low_5d": 32.970001220703125,
     "low_10d": 32.970001220703125,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 2.359285354614258,
-    "atr14_pct": 6.476215577409872,
-    "position_in_52w_range_pct": 42.26630119952062
+    "atr14": 2.1222496032714844,
+    "atr14_pct": 5.660841579770973,
+    "position_in_52w_range_pct": 44.50306284602891
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 6.42,
-      "high": 6.5,
-      "low": 6.23,
-      "close": 6.25,
-      "volume": 881900.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 6.2,
-      "high": 6.24,
-      "low": 5.84,
-      "close": 5.9,
-      "volume": 1150000.0
-    },
     {
       "date": "2024-09-09",
       "open": 6.02,
@@ -4300,17 +4325,17 @@
       "low": 35.275,
       "close": 36.43,
       "volume": 1853400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 37.285,
+      "high": 38.3615,
+      "low": 36.6311,
+      "close": 37.49,
+      "volume": 1977258.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 29.04,
-      "high": 29.3,
-      "low": 26.75,
-      "close": 27.47,
-      "volume": 1773900.0
-    },
     {
       "date": "2025-09-08",
       "open": 27.98,
@@ -6318,6 +6343,14 @@
       "low": 35.275,
       "close": 36.43,
       "volume": 1853400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 37.285,
+      "high": 38.3615,
+      "low": 36.6311,
+      "close": 37.49,
+      "volume": 1977258.0
     }
   ],
   "ai_synthesis": null,

@@ -1,43 +1,80 @@
 {
   "ticker": "SOFI",
-  "fetched_at": "2026-09-08T06:27:52Z",
+  "fetched_at": "2026-09-08T22:38:41Z",
   "_schema": "v2",
-  "current_price": 18.219999313354492,
+  "current_price": 18.010000228881836,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "symbol": "SOFI",
+    "longName": "SoFi Technologies, Inc.",
+    "sector": "Financial Services",
+    "industry": "Credit Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.sofi.com",
+    "fullTimeEmployees": 6100,
+    "marketCap": 23261181952,
+    "enterpriseValue": 23581286400,
+    "trailingPE": 36.7551,
+    "forwardPE": 21.904112,
+    "priceToSalesTrailing12Months": 5.449576,
+    "enterpriseToRevenue": 5.525,
+    "priceToBook": 2.0980897,
+    "grossMargins": 0.83734,
+    "operatingMargins": 0.16956,
+    "profitMargins": 0.14906,
+    "returnOnEquity": 0.07095,
+    "totalCash": 3366502912,
+    "totalDebt": 3415378944,
+    "totalRevenue": 4268439040,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "debtToEquity": 30.835,
+    "currentRatio": 1.105,
+    "fiftyTwoWeekHigh": 32.73,
+    "fiftyTwoWeekLow": 14.88,
+    "averageVolume": 69952341,
+    "averageVolume10days": 38536580,
+    "beta": 2.208,
+    "sharesOutstanding": 1291570324,
+    "sharesFloat": 1271809298,
+    "companyOfficers": [
+      {
+        "name": "Mr. George Thompson Hutton",
+        "title": "Independent Non Executive Chairman",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Anthony J. Noto",
+        "title": "CEO & Director",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Christopher  Lapointe",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Jeremy  Rishel",
+        "title": "Chief Technology Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Kelli A. Keough",
+        "title": "Executive VP and Group Business Unit Leader for Spend, Invest, Protect & Save",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Arun  Pinto",
+        "title": "Chief Risk Officer",
+        "age": 46,
+        "yearBorn": 1979
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.2301
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 1213300000,
+    "revenue_high": 1393310000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:09:02Z",
   "news": [
     {
+      "date": "2026-09-08T22:02:01Z",
+      "title": "SoFi Technologies Highlights 40% Growth, 70 Rule of 40 Score at Investor Conference",
+      "url": "https://www.marketbeat.com/instant-alerts/event-sofi-technologies-highlights-40-growth-70-rule-of-40-score-at-investor-conference-2026-09-08/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
       "date": "2026-09-07T21:30:08Z",
       "title": "SoFi, Payward Team up to Connect Banking and Crypto Markets \u2014 Stock Trending",
       "url": "https://finance.yahoo.com/markets/crypto/articles/sofi-payward-team-connect-banking-213008513.html",
@@ -261,46 +308,24 @@
       "title": "SoFi, WisdomTree, Ridgepost Capital, Ares, and S&P Global Shares Are Soaring, What You Need To Know",
       "url": "https://finance.yahoo.com/markets/stocks/articles/sofi-wisdomtree-ridgepost-capital-ares-023118737.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-09-04T02:08:32Z",
-      "title": "SoFi's Kraken Deal Grows Its Stablecoin Reach \u2014 Analyst Calls It 'Another Positive Development' But Still Sees 13% Downside",
-      "url": "https://stocktwits.com/news-articles/markets/equity/so-fi-s-kraken-deal-grows-its-stablecoin-reach-analyst-calls-it-another-positive-development-but-still-sees-13-downside/cZswofBRJv6",
-      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03831204837485108,
   "technicals": {
-    "ma20": 18.239999961853027,
-    "ma50": 17.881199951171876,
-    "ma200": 19.970224986076357,
-    "rsi14": 51.179915982210616,
+    "ma20": 18.23449993133545,
+    "ma50": 17.88379997253418,
+    "ma200": 19.929074988365173,
+    "rsi14": 49.68620468449678,
     "high_20d": 19.4950008392334,
     "low_5d": 16.920000076293945,
     "low_10d": 16.920000076293945,
     "high_52w": 32.72999954223633,
     "low_52w": 14.880000114440918,
-    "atr14": 0.9078572137015206,
-    "atr14_pct": 4.982751086253332,
-    "position_in_52w_range_pct": 18.711480705778854
+    "atr14": 0.892857279096331,
+    "atr14_pct": 4.957563951967615,
+    "position_in_52w_range_pct": 17.53501520883518
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 7.55,
-      "high": 7.64,
-      "low": 7.24,
-      "close": 7.26,
-      "volume": 37429500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 7.29,
-      "high": 7.4,
-      "low": 6.92,
-      "close": 7.01,
-      "volume": 46372000.0
-    },
     {
       "date": "2024-09-09",
       "open": 7.04,
@@ -4300,17 +4325,17 @@
       "low": 17.96,
       "close": 18.22,
       "volume": 28920700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 18.22,
+      "high": 18.35,
+      "low": 17.89,
+      "close": 18.01,
+      "volume": 30260714.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 25.77,
-      "high": 25.97,
-      "low": 24.18,
-      "close": 25.6,
-      "volume": 71312300.0
-    },
     {
       "date": "2025-09-08",
       "open": 25.81,
@@ -6318,6 +6343,14 @@
       "low": 17.96,
       "close": 18.22,
       "volume": 28920700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 18.22,
+      "high": 18.35,
+      "low": 17.89,
+      "close": 18.01,
+      "volume": 30260714.0
     }
   ],
   "ai_synthesis": null,

@@ -1,14 +1,14 @@
 {
   "ticker": "XXRP",
-  "fetched_at": "2026-09-08T06:28:09Z",
+  "fetched_at": "2026-09-08T22:39:01Z",
   "_schema": "v2",
-  "current_price": 33.22999954223633,
+  "current_price": 34.349998474121094,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "XXRP",
+    "longName": "Teucrium 2x Long Daily XRP ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "PCX",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 400.29,
+    "fiftyTwoWeekLow": 17.91,
+    "averageVolume": 342724,
+    "averageVolume10days": 634940,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:28:09Z",
+  "quarterly_asof": "2026-09-08T22:39:01Z",
   "news": [
     {
       "date": "2026-06-08T13:24:59Z",
@@ -63,20 +63,20 @@
       "source": "etf.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.2183406210527321,
   "technicals": {
-    "ma20": 27.706500148773195,
-    "ma50": 24.261400032043458,
-    "ma200": 55.06724155426026,
-    "rsi14": 58.17116105572921,
+    "ma20": 28.479000091552734,
+    "ma50": 24.536399993896485,
+    "ma200": 54.458440933227536,
+    "rsi14": 59.69131080171578,
     "high_20d": 40.7400016784668,
     "low_5d": 29.940000534057617,
     "low_10d": 29.940000534057617,
     "high_52w": 376.66862238907606,
     "low_52w": 17.90999984741211,
-    "atr14": 4.514571734837124,
-    "atr14_pct": 13.58583146863715,
-    "position_in_52w_range_pct": 4.270280554175406
+    "atr14": 4.722379003252302,
+    "atr14_pct": 13.747828858886527,
+    "position_in_52w_range_pct": 4.582467874984593
   },
   "ohlc_2y": [
     {
@@ -2918,17 +2918,17 @@
       "low": 32.15,
       "close": 33.23,
       "volume": 834300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 33.02,
+      "high": 35.49,
+      "low": 32.2207,
+      "close": 34.35,
+      "volume": 744149.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 321.1596,
-      "high": 325.3941,
-      "low": 306.292,
-      "close": 320.1246,
-      "volume": 81200.0
-    },
     {
       "date": "2025-09-08",
       "open": 345.249,
@@ -4936,6 +4936,14 @@
       "low": 32.15,
       "close": 33.23,
       "volume": 834300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 33.02,
+      "high": 35.49,
+      "low": 32.2207,
+      "close": 34.35,
+      "volume": 744149.0
     }
   ],
   "ai_synthesis": null,

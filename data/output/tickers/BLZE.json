@@ -1,43 +1,80 @@
 {
   "ticker": "BLZE",
-  "fetched_at": "2026-09-08T06:27:06Z",
+  "fetched_at": "2026-09-08T22:37:53Z",
   "_schema": "v2",
-  "current_price": 13.454999923706055,
+  "current_price": 13.890000343322754,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "BLZE",
+    "longName": "Backblaze, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.backblaze.com",
+    "fullTimeEmployees": 320,
+    "marketCap": 859791040,
+    "enterpriseValue": 865419520,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 49.255318,
+    "priceToSalesTrailing12Months": 5.5007963,
+    "enterpriseToRevenue": 5.537,
+    "priceToBook": 9.692952,
+    "grossMargins": 0.62289,
+    "operatingMargins": -0.06679,
+    "profitMargins": -0.13069001,
+    "returnOnEquity": -0.24292,
+    "totalCash": 49882000,
+    "totalDebt": 82437000,
+    "totalRevenue": 156303008,
+    "freeCashflow": 33515500,
+    "debtToEquity": 93.109,
+    "currentRatio": 0.999,
+    "fiftyTwoWeekHigh": 23.99,
+    "fiftyTwoWeekLow": 3.261,
+    "averageVolume": 3568477,
+    "averageVolume10days": 1853090,
+    "beta": 1.565,
+    "sharesOutstanding": 61900000,
+    "sharesFloat": 59379432,
+    "companyOfficers": [
+      {
+        "name": "Mr. Gleb  Budman",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Marc  Suidan CPA",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Tim  Nufire",
+        "title": "Co-Founder",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Brian  Wilson",
+        "title": "Co-Founder",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Casey  Jones",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Hang Ng  Kwok",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 3.1818
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 44400000,
+    "revenue_high": 44712000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14758818929658868,
   "technicals": {
-    "ma20": 16.36424994468689,
-    "ma50": 15.595700035095215,
-    "ma200": 7.805175002813339,
-    "rsi14": 38.585562165163736,
+    "ma20": 16.095249938964844,
+    "ma50": 15.582300033569336,
+    "ma200": 7.8518750035762785,
+    "rsi14": 41.822127866626865,
     "high_20d": 20.90999984741211,
     "low_5d": 12.930000305175781,
     "low_10d": 12.930000305175781,
     "high_52w": 23.989999771118164,
     "low_52w": 3.260999917984009,
-    "atr14": 0.96257141658238,
-    "atr14_pct": 7.154005366335585,
-    "position_in_52w_range_pct": 49.17748119999503
+    "atr14": 0.949357100895473,
+    "atr14_pct": 6.834824171562033,
+    "position_in_52w_range_pct": 51.27599257390932
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 5.87,
-      "high": 5.93,
-      "low": 5.78,
-      "close": 5.86,
-      "volume": 210400.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 5.88,
-      "high": 5.91,
-      "low": 5.54,
-      "close": 5.75,
-      "volume": 262500.0
-    },
     {
       "date": "2024-09-09",
       "open": 5.74,
@@ -4300,17 +4325,17 @@
       "low": 13.1,
       "close": 13.455,
       "volume": 1227600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 13.5,
+      "high": 14.095,
+      "low": 13.15,
+      "close": 13.89,
+      "volume": 2205599.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 8.73,
-      "high": 8.85,
-      "low": 8.575,
-      "close": 8.7,
-      "volume": 529200.0
-    },
     {
       "date": "2025-09-08",
       "open": 8.78,
@@ -6318,6 +6343,14 @@
       "low": 13.1,
       "close": 13.455,
       "volume": 1227600.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 13.5,
+      "high": 14.095,
+      "low": 13.15,
+      "close": 13.89,
+      "volume": 2205599.0
     }
   ],
   "ai_synthesis": null,

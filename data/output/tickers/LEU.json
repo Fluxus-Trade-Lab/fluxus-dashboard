@@ -1,43 +1,80 @@
 {
   "ticker": "LEU",
-  "fetched_at": "2026-09-08T06:30:26Z",
+  "fetched_at": "2026-09-08T22:41:22Z",
   "_schema": "v2",
-  "current_price": 173.88999938964844,
+  "current_price": 185.52999877929688,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "LEU",
+    "longName": "Centrus Energy Corp.",
+    "sector": "Energy",
+    "industry": "Uranium",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Bethesda",
+    "website": "https://www.centrusenergy.com",
+    "fullTimeEmployees": 467,
+    "marketCap": 3701853696,
+    "enterpriseValue": 2778602496,
+    "trailingPE": 97.64737,
+    "forwardPE": 48.535408,
+    "priceToSalesTrailing12Months": 7.8114657,
+    "enterpriseToRevenue": 5.863,
+    "priceToBook": 4.3788056,
+    "grossMargins": 0.23655,
+    "operatingMargins": 0.053379998,
+    "profitMargins": 0.102340005,
+    "returnOnEquity": 0.08053,
+    "totalCash": 1868499968,
+    "totalDebt": 1177500032,
+    "totalRevenue": 473900000,
+    "freeCashflow": -127300000,
+    "debtToEquity": 139.283,
+    "currentRatio": 5.395,
+    "fiftyTwoWeekHigh": 464.25,
+    "fiftyTwoWeekLow": 142.13,
+    "averageVolume": 758438,
+    "averageVolume10days": 670410,
+    "beta": 1.334,
+    "sharesOutstanding": 19233658,
+    "sharesFloat": 19189063,
+    "companyOfficers": [
+      {
+        "name": "Mr. Amir V. Vexler",
+        "title": "President, CEO & Director",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Todd M. Tinelli",
+        "title": "CFO, Senior VP & Treasurer",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Neal K. Nagarajan",
+        "title": "Senior VP & Head of Investor Relations",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. John M. A. Donelson",
+        "title": "Senior VP & Chief Marketing Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Patrick S. Brown",
+        "title": "Senior Vice President of Field Operations",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Yanhong  Dai",
+        "title": "Principal Accounting Officer",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.4675
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 40600000,
+    "revenue_high": 84409720
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.11265024598454432,
   "technicals": {
-    "ma20": 181.7859992980957,
-    "ma50": 174.209599609375,
-    "ma200": 210.59980010986328,
-    "rsi14": 47.4481380486077,
+    "ma20": 181.59549942016602,
+    "ma50": 174.60979949951172,
+    "ma200": 210.2970500946045,
+    "rsi14": 53.72055073620014,
     "high_20d": 208.57000732421875,
     "low_5d": 163.02999877929688,
     "low_10d": 163.02999877929688,
     "high_52w": 464.25,
     "low_52w": 142.1300048828125,
-    "atr14": 12.201426914760045,
-    "atr14_pct": 7.016750220016614,
-    "position_in_52w_range_pct": 9.859678066641479
+    "atr14": 12.726784842354911,
+    "atr14_pct": 6.859691115232779,
+    "position_in_52w_range_pct": 13.473238095851647
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 37.05,
-      "high": 37.83,
-      "low": 36.8,
-      "close": 37.23,
-      "volume": 179800.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 37.12,
-      "high": 37.19,
-      "low": 34.91,
-      "close": 35.36,
-      "volume": 207400.0
-    },
     {
       "date": "2024-09-09",
       "open": 36.0,
@@ -4300,17 +4325,17 @@
       "low": 168.8,
       "close": 173.89,
       "volume": 1000900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 176.49,
+      "high": 191.205,
+      "low": 175.0058,
+      "close": 185.53,
+      "volume": 733572.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 201.0,
-      "high": 205.4,
-      "low": 191.68,
-      "close": 205.39,
-      "volume": 928400.0
-    },
     {
       "date": "2025-09-08",
       "open": 205.5,
@@ -6318,6 +6343,14 @@
       "low": 168.8,
       "close": 173.89,
       "volume": 1000900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 176.49,
+      "high": 191.205,
+      "low": 175.0058,
+      "close": 185.53,
+      "volume": 733572.0
     }
   ],
   "ai_synthesis": null,

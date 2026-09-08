@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-19_000",
-  "generated_at": "2026-09-08T06:31:46+00:00",
+  "generated_at": "2026-09-08T22:42:53+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -29,7 +29,7 @@
     "ma20": 93.542,
     "ma50": 99.6476,
     "ma200": 96.534775,
-    "rsi14": 49.60136569147704,
+    "rsi14": 49.601360040344865,
     "atr14": 4.582714285714286,
     "atr14_pct": 4.785125076448039,
     "high_52w": 153.86,
@@ -41,14 +41,14 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 7.569892473118281,
-    "mfe_date": "2026-09-03",
+    "mfe_R": 7.661290322580648,
+    "mfe_date": "2026-09-08",
     "mae_R": 1.2177419354838717,
     "mae_date": "2026-08-19",
-    "optimal_exit_price": 124.88,
-    "optimal_exit_date": "2026-09-03",
-    "optimal_R": 7.569892473118281,
-    "days_to_optimal": 15,
+    "optimal_exit_price": 125.22,
+    "optimal_exit_date": "2026-09-08",
+    "optimal_R": 7.661290322580648,
+    "days_to_optimal": 20,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
@@ -56,7 +56,7 @@
     "hold_calendar_days": 20
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-19 at $96.72 (qty 621) with stop $93.00 (currently trailed to $104.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.54), MA stack mixed, RSI 50, 36% through 52W range, ATR 4.8% of price. **In progress.** Peak so far +7.57R; worst drawdown -1.22R.",
+  "narrative": "Entered **HOOD** long on 2026-08-19 at $96.72 (qty 621) with stop $93.00 (currently trailed to $104.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.54), MA stack mixed, RSI 50, 36% through 52W range, ATR 4.8% of price. **In progress.** Peak so far +7.66R; worst drawdown -1.22R.",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -337,6 +337,14 @@
       "low": 119.82,
       "close": 122.11,
       "volume": 23675800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 125.065,
+      "high": 125.22,
+      "low": 117.08,
+      "close": 117.34,
+      "volume": 25842832.0
     }
   ]
 }

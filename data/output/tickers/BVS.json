@@ -1,43 +1,80 @@
 {
   "ticker": "BVS",
-  "fetched_at": "2026-09-08T06:29:16Z",
+  "fetched_at": "2026-09-08T22:40:10Z",
   "_schema": "v2",
-  "current_price": 14.069999694824219,
+  "current_price": 13.829999923706055,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "BVS",
+    "longName": "Bioventus Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Devices",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Durham",
+    "website": "https://www.bioventus.com",
+    "fullTimeEmployees": 950,
+    "marketCap": 944660160,
+    "enterpriseValue": 1243514368,
+    "trailingPE": 17.73077,
+    "forwardPE": 15.032608,
+    "priceToSalesTrailing12Months": 1.6235515,
+    "enterpriseToRevenue": 2.137,
+    "priceToBook": 4.1320586,
+    "grossMargins": 0.68651,
+    "operatingMargins": 0.122279994,
+    "profitMargins": 0.09361,
+    "returnOnEquity": 0.25684,
+    "totalCash": 30394000,
+    "totalDebt": 263748992,
+    "totalRevenue": 581848000,
+    "freeCashflow": 67764128,
+    "debtToEquity": 95.075,
+    "currentRatio": 1.689,
+    "fiftyTwoWeekHigh": 15.893,
+    "fiftyTwoWeekLow": 6.255,
+    "averageVolume": 710687,
+    "averageVolume10days": 562060,
+    "beta": 0.651,
+    "sharesOutstanding": 68305143,
+    "sharesFloat": 34297378,
+    "companyOfficers": [
+      {
+        "name": "Mr. Robert E. Claypoole",
+        "title": "President, CEO & Director",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Mark L. Singleton",
+        "title": "Senior VP & CFO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Anthony  D'Adamio J.D.",
+        "title": "Senior VP, General Counsel & Corporate Secretary",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Mike  Crowe B.S., M.B.A.",
+        "title": "Senior Vice President of Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. David  Crawford",
+        "title": "Vice President of Investor Relations & Treasurer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Katrina J. Church J.D.",
+        "title": "Senior VP & Chief Compliance Officer",
+        "age": 63,
+        "yearBorn": 1962
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.3043
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 148359000,
+    "revenue_high": 150700000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.11569052847624635,
   "technicals": {
-    "ma20": 14.063250064849854,
-    "ma50": 12.878400020599365,
-    "ma200": 9.704575011730194,
-    "rsi14": 55.52882916585386,
+    "ma20": 14.056750059127808,
+    "ma50": 12.959400024414062,
+    "ma200": 9.738775012493134,
+    "rsi14": 51.95980269086329,
     "high_20d": 14.920000076293945,
-    "low_5d": 13.4399995803833,
+    "low_5d": 13.5,
     "low_10d": 13.4399995803833,
     "high_52w": 15.892999649047852,
     "low_52w": 6.255000114440918,
-    "atr14": 0.4889284542628697,
-    "atr14_pct": 3.4749713210208997,
-    "position_in_52w_range_pct": 81.08528696564228
+    "atr14": 0.4732856069292341,
+    "atr14_pct": 3.4221663741152555,
+    "position_in_52w_range_pct": 78.59514603695266
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 9.71,
-      "high": 9.738,
-      "low": 9.4,
-      "close": 9.66,
-      "volume": 400800.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 9.72,
-      "high": 9.73,
-      "low": 9.12,
-      "close": 9.53,
-      "volume": 411700.0
-    },
     {
       "date": "2024-09-09",
       "open": 9.7,
@@ -4300,17 +4325,17 @@
       "low": 13.91,
       "close": 14.07,
       "volume": 502300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 14.04,
+      "high": 14.08,
+      "low": 13.6,
+      "close": 13.83,
+      "volume": 478616.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 7.14,
-      "high": 7.3,
-      "low": 7.09,
-      "close": 7.19,
-      "volume": 197300.0
-    },
     {
       "date": "2025-09-08",
       "open": 7.24,
@@ -6318,6 +6343,14 @@
       "low": 13.91,
       "close": 14.07,
       "volume": 502300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 14.04,
+      "high": 14.08,
+      "low": 13.6,
+      "close": 13.83,
+      "volume": 478616.0
     }
   ],
   "ai_synthesis": null,

@@ -1,43 +1,74 @@
 {
   "ticker": "MLSS",
-  "fetched_at": "2026-09-08T06:30:36Z",
+  "fetched_at": "2026-09-08T22:41:32Z",
   "_schema": "v2",
-  "current_price": 0.4699999988079071,
+  "current_price": 0.4399999976158142,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "MLSS",
+    "longName": "Milestone Scientific Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Instruments & Supplies",
+    "exchange": "ASE",
+    "country": "United States",
+    "city": "Roseland",
+    "website": "https://www.milestonescientific.com",
+    "fullTimeEmployees": 15,
+    "marketCap": 39045240,
+    "enterpriseValue": 40185360,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -12.571428,
+    "priceToSalesTrailing12Months": 4.1444163,
+    "enterpriseToRevenue": 4.265,
+    "priceToBook": 11.282051,
+    "grossMargins": 0.70233,
+    "operatingMargins": -0.37365,
+    "profitMargins": -0.43983,
+    "returnOnEquity": -1.21674,
+    "totalCash": 2066770,
+    "totalDebt": 615703,
+    "totalRevenue": 9421167,
+    "freeCashflow": 981640,
+    "debtToEquity": 17.739,
+    "currentRatio": 1.846,
+    "fiftyTwoWeekHigh": 0.64,
+    "fiftyTwoWeekLow": 0.22,
+    "averageVolume": 166948,
+    "averageVolume10days": 84250,
+    "beta": 1.075,
+    "sharesOutstanding": 88739185,
+    "sharesFloat": 71285962,
+    "companyOfficers": [
+      {
+        "name": "Ms. Benedetta I. Casamento",
+        "title": "Executive Chairman",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Eric C. Hines",
+        "title": "CEO, President & Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Leonard A. Osser",
+        "title": "Founder",
+        "age": 78,
+        "yearBorn": 1947
+      },
+      {
+        "name": "Ms. Keisha  Harcum M.B.A., M.S.",
+        "title": "Vice President of Finance",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jason  Papes",
+        "title": "Senior VP and Global Head of Sales & Marketing",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +96,11 @@
       "eps_surprise_pct": 0.0
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 2315000,
+    "revenue_high": 2500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -202,38 +237,22 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.6818181855126847,
   "technicals": {
-    "ma20": 0.4900000005960464,
-    "ma50": 0.43339999914169314,
-    "ma200": 0.3436999996006489,
-    "rsi14": 50.29494668676991,
+    "ma20": 0.48800000101327895,
+    "ma50": 0.43579999923706053,
+    "ma200": 0.344349999576807,
+    "rsi14": 43.77441589444481,
     "high_20d": 0.5799999833106995,
-    "low_5d": 0.44999998807907104,
-    "low_10d": 0.44999998807907104,
+    "low_5d": 0.43799999356269836,
+    "low_10d": 0.43799999356269836,
     "high_52w": 0.6399999856948853,
     "low_52w": 0.2199999988079071,
-    "atr14": 0.032857147710663934,
-    "atr14_pct": 6.990882509362074,
-    "position_in_52w_range_pct": 59.52381138223105
+    "atr14": 0.032285720109939575,
+    "atr14_pct": 7.337663701109798,
+    "position_in_52w_range_pct": 52.380953732531665
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 0.99,
-      "high": 1.06,
-      "low": 0.98,
-      "close": 1.02,
-      "volume": 84600.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 1.05,
-      "high": 1.05,
-      "low": 1.0,
-      "close": 1.03,
-      "volume": 52900.0
-    },
     {
       "date": "2024-09-09",
       "open": 1.01,
@@ -4233,17 +4252,17 @@
       "low": 0.45,
       "close": 0.47,
       "volume": 37800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 0.465,
+      "high": 0.465,
+      "low": 0.438,
+      "close": 0.44,
+      "volume": 81409.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 0.62,
-      "high": 0.62,
-      "low": 0.58,
-      "close": 0.62,
-      "volume": 49800.0
-    },
     {
       "date": "2025-09-08",
       "open": 0.59,
@@ -6251,6 +6270,14 @@
       "low": 0.45,
       "close": 0.47,
       "volume": 37800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 0.465,
+      "high": 0.465,
+      "low": 0.438,
+      "close": 0.44,
+      "volume": 81409.0
     }
   ],
   "ai_synthesis": null,

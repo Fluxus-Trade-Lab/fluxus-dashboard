@@ -1,43 +1,62 @@
 {
   "ticker": "PURR",
-  "fetched_at": "2026-09-08T06:27:44Z",
+  "fetched_at": "2026-09-08T22:38:34Z",
   "_schema": "v2",
-  "current_price": 12.180000305175781,
+  "current_price": 11.930000305175781,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "symbol": "PURR",
+    "longName": "Hyperliquid Strategies Inc.",
+    "sector": "Financial Services",
+    "industry": "Capital Markets",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "New York",
+    "website": "https://www.hypestrat.xyz",
+    "fullTimeEmployees": 5,
+    "marketCap": 2360202752,
+    "enterpriseValue": 2271746816,
+    "trailingPE": 3.716511,
+    "forwardPE": 40.44068,
+    "priceToSalesTrailing12Months": 249.49289,
+    "enterpriseToRevenue": 240.142,
+    "priceToBook": 1.9933167,
+    "grossMargins": 1.0,
+    "operatingMargins": 95.9509,
+    "profitMargins": 32.29831,
+    "returnOnEquity": 0.32639,
+    "totalCash": 137916992,
+    "totalDebt": 0,
+    "totalRevenue": 9460000,
     "freeCashflow": null,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "currentRatio": 41.618,
+    "fiftyTwoWeekHigh": 14.14,
+    "fiftyTwoWeekLow": 3.01,
+    "averageVolume": 15825520,
+    "averageVolume10days": 30573660,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 197837597,
+    "sharesFloat": 197554689,
+    "companyOfficers": [
+      {
+        "name": "Mr. David Ira Schamis",
+        "title": "President, CEO & Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Brett  Beldner",
+        "title": "CFO, Secretary & Treasurer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Jeroen  Nieuwkoop",
+        "title": "Chief Operating Officer",
+        "age": 53,
+        "yearBorn": 1972
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +84,11 @@
       "eps_surprise_pct": null
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-16",
+    "revenue_low": 8600000,
+    "revenue_high": 10600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -258,19 +281,19 @@
       "source": "Coinage Coop"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08717518637017975,
   "technicals": {
-    "ma20": 9.81025002002716,
-    "ma50": 8.227300024032592,
-    "rsi14": 65.13839392680813,
+    "ma20": 10.076750040054321,
+    "ma50": 8.291100034713745,
+    "rsi14": 63.107737156771314,
     "high_20d": 14.140000343322754,
     "low_5d": 10.930000305175781,
-    "low_10d": 10.420000076293945,
+    "low_10d": 10.430000305175781,
     "high_52w": 14.140000343322754,
     "low_52w": 3.009999990463257,
-    "atr14": 1.448857205254691,
-    "atr14_pct": 11.895379055442325,
-    "position_in_52w_range_pct": 82.38993732247805
+    "atr14": 1.4860000269753593,
+    "atr14_pct": 12.455993201698949,
+    "position_in_52w_range_pct": 80.14375590222525
   },
   "ohlc_2y": [
     {
@@ -1792,6 +1815,14 @@
       "low": 11.4,
       "close": 12.18,
       "volume": 27274000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 11.77,
+      "high": 12.41,
+      "low": 11.43,
+      "close": 11.93,
+      "volume": 17398389.0
     }
   ],
   "ohlc_1y": [
@@ -3314,6 +3345,14 @@
       "low": 11.4,
       "close": 12.18,
       "volume": 27274000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 11.77,
+      "high": 12.41,
+      "low": 11.43,
+      "close": 11.93,
+      "volume": 17398389.0
     }
   ],
   "ai_synthesis": null,

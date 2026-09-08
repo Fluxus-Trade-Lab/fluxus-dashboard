@@ -1,14 +1,14 @@
 {
   "ticker": "SNXX",
-  "fetched_at": "2026-09-08T06:31:15Z",
+  "fetched_at": "2026-09-08T22:42:17Z",
   "_schema": "v2",
-  "current_price": 17.360000610351562,
+  "current_price": 17.3700008392334,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "SNXX",
+    "longName": "Tradr 2X Long Sndk Daily ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "BTS",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 49.34,
+    "fiftyTwoWeekLow": 3.13875,
+    "averageVolume": 84359409,
+    "averageVolume10days": 68606200,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:31:15Z",
+  "quarterly_asof": "2026-09-08T22:42:17Z",
   "news": [
     {
       "date": "2026-03-17T12:00:00Z",
@@ -57,19 +57,19 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.12320091517591693,
   "technicals": {
-    "ma20": 13.926000070571899,
-    "ma50": 16.87239998817444,
-    "rsi14": 57.34985916938062,
+    "ma20": 14.32300009727478,
+    "ma50": 16.489800004959108,
+    "rsi14": 57.37276435296145,
     "high_20d": 19.8799991607666,
-    "low_5d": 12.260000228881836,
-    "low_10d": 11.619999885559082,
+    "low_5d": 13.239999771118164,
+    "low_10d": 12.029999732971191,
     "high_52w": 49.34000015258789,
     "low_52w": 3.1387500762939453,
-    "atr14": 2.025928633553641,
-    "atr14_pct": 11.670095405098108,
-    "position_in_52w_range_pct": 30.781094690237833
+    "atr14": 1.8458429745265417,
+    "atr14_pct": 10.626614193117135,
+    "position_in_52w_range_pct": 30.802739621631076
   },
   "ohlc_2y": [
     {
@@ -1303,6 +1303,14 @@
       "low": 14.5,
       "close": 17.36,
       "volume": 95890000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.945,
+      "high": 18.71,
+      "low": 17.2312,
+      "close": 17.37,
+      "volume": 64520705.0
     }
   ],
   "ohlc_1y": [
@@ -2537,6 +2545,14 @@
       "low": 14.5,
       "close": 17.36,
       "volume": 95890000.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 17.945,
+      "high": 18.71,
+      "low": 17.2312,
+      "close": 17.37,
+      "volume": 64520705.0
     }
   ],
   "ai_synthesis": null,

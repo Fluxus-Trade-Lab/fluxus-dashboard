@@ -1,43 +1,80 @@
 {
   "ticker": "AMD",
-  "fetched_at": "2026-09-08T06:28:54Z",
+  "fetched_at": "2026-09-08T22:39:48Z",
   "_schema": "v2",
-  "current_price": 477.57000732421875,
+  "current_price": 505.739990234375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "AMD",
+    "longName": "Advanced Micro Devices, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.amd.com",
+    "fullTimeEmployees": 31000,
+    "marketCap": 825607913472,
+    "enterpriseValue": 770786131968,
+    "trailingPE": 129.0153,
+    "forwardPE": 32.600895,
+    "priceToSalesTrailing12Months": 19.988085,
+    "enterpriseToRevenue": 18.661,
+    "priceToBook": 12.277924,
+    "grossMargins": 0.55724,
+    "operatingMargins": 0.1725,
+    "profitMargins": 0.15577,
+    "returnOnEquity": 0.10196,
+    "totalCash": 13111000064,
+    "totalDebt": 4276000000,
+    "totalRevenue": 41305001984,
+    "freeCashflow": 8841499648,
+    "debtToEquity": 6.361,
+    "currentRatio": 2.609,
+    "fiftyTwoWeekHigh": 584.73,
+    "fiftyTwoWeekLow": 149.85,
+    "averageVolume": 26167150,
+    "averageVolume10days": 15690200,
+    "beta": 2.476,
+    "sharesOutstanding": 1632475042,
+    "sharesFloat": 1623447455,
+    "companyOfficers": [
+      {
+        "name": "Dr. Lisa T. Su Ph.D.",
+        "title": "Chair, President & CEO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Jean X. Hu Ph.D.",
+        "title": "Executive VP, CFO & Treasurer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Mark D. Papermaster",
+        "title": "CTO and Executive VP of Technology & Engineering",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Paul Darren Grasby",
+        "title": "Executive VP, Chief Sales Officer & President of EMEA",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Forrest E. Norrod",
+        "title": "Executive VP & GM of the Data Center Solutions Business Group",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Keivan  Keshvari",
+        "title": "Senior Vice President of Global Operations & Quality",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0248
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 12100000000,
+    "revenue_high": 14019000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,98 +250,82 @@
   "quarterly_asof": "2026-09-06T05:10:46Z",
   "news": [
     {
-      "date": "2026-09-07T21:36:21Z",
-      "title": "AMD Stock Jumps After Unveiling $100,000-Plus AI Workstation for 2027",
-      "url": "https://finance.yahoo.com/technology/ai/articles/amd-stock-jumps-unveiling-100-213621532.html",
-      "source": "GuruFocus.com"
+      "date": "2026-09-08T22:26:10Z",
+      "title": "Dow Jones Futures: Dow Skids But AMD, HPE Are New Buys; Apple iPhone Event Due",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-oil-prices-amd-hpe-new-buys-apple-iphone-event/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-09-07T19:26:52Z",
-      "title": "Nvidia, Microsoft at Center of $7 Trillion AI Boom",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-microsoft-center-7-trillion-192652924.html",
-      "source": "GuruFocus.com"
+      "date": "2026-09-08T22:08:48Z",
+      "title": "Marvell Is Growing Faster And Its Margin Guide Is Standing Still",
+      "url": "https://www.trefis.com/articles/614565/marvell-is-growing-faster-and-its-margin-guide-is-standing-still/2026-09-08",
+      "source": "Trefis"
     },
     {
-      "date": "2026-09-07T19:21:33Z",
-      "title": "Cathie Wood Is Moving Money From Palantir Into Rocket Lab and Fintech",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cathie-wood-moving-money-palantir-192133259.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-09-07T17:30:18Z",
-      "title": "Wall Street Is Worried About AMD. Here\u2019s Why Long-Term Investors Shouldn\u2019t Be",
-      "url": "https://247wallst.com/investing/2026/09/07/wall-street-is-worried-about-amd-heres-why-long-term-investors-shouldnt-be/",
+      "date": "2026-09-08T21:45:32Z",
+      "title": "QQQ vs QQQM: Same Index, Same Stocks, Different Fee \u2013 and the Math Says One Leaves You Thousands Richer",
+      "url": "https://247wallst.com/investing/etf/2026/09/08/qqq-vs-qqqm-same-index-same-stocks-different-fee-and-the-math-says-one-leaves-you-thousands-richer/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-07T17:24:03Z",
-      "title": "Cathie Wood Dumps $25 Million of Palantir Shares. Should PLTR Investors Worry?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cathie-wood-dumps-25-million-172403799.html",
+      "date": "2026-09-08T21:28:44Z",
+      "title": "AMD Just Put a $70 Billion Number on Its AI Ambitions",
+      "url": "https://finance.yahoo.com/technology/ai/articles/amd-just-put-70-billion-212844853.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-07T16:50:14Z",
-      "title": "Nvidia Is No Longer Just a Chip Company. It\u2019s the Infrastructure Platform for All of AI",
-      "url": "https://247wallst.com/investing/2026/09/07/nvidia-is-no-longer-just-a-chip-company-its-the-infrastructure-platform-for-all-of-ai/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-07T14:40:57Z",
-      "title": "AMD Is Behind The AI Chip Shift Nobody Is Talking About",
-      "url": "https://247wallst.com/investing/2026/09/07/amd-is-behind-the-ai-chip-shift-nobody-is-talking-about/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-07T13:02:00Z",
-      "title": "NVIDIA's Hugging Face Buyout: Can It Further Strengthen AI Dominance?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nvidias-hugging-face-buyout-further-130200882.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-07T12:47:28Z",
-      "title": "AMD\u2019s Whole AI Story Has One Threat It Cannot Ignore: Broadcom",
-      "url": "https://247wallst.com/investing/2026/09/07/amds-whole-ai-story-has-one-threat-it-cannot-ignore-broadcom/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-07T12:09:48Z",
-      "title": "Micron Jumps 6% as AI Memory Trade Keeps Running",
-      "url": "https://finance.yahoo.com/technology/ai/articles/micron-jumps-6-ai-memory-120948403.html",
+      "date": "2026-09-08T21:20:23Z",
+      "title": "Why AMD Stock Popped Today?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-amd-stock-popped-today-212023035.html",
       "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T21:13:14Z",
+      "title": "AMD Jumps 6.7% While Amazon Opens a $60 Billion AI-Chip Door",
+      "url": "https://finance.yahoo.com/technology/ai/articles/amd-jumps-6-7-while-211314437.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T21:11:35Z",
+      "title": "AMD Guides to $70 Billion of 2027 Data Center Revenue",
+      "url": "https://finance.yahoo.com/technology/ai/articles/amd-guides-70-billion-2027-211135048.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T20:49:45Z",
+      "title": "Intel Leads Chip Stocks Rally as Qualcomm, AMD and Broadcom Stocks Jump",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/intel-leads-chip-stocks-rally-204945385.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T20:48:36Z",
+      "title": "AMD Reveals AI Numbers That Sent Its Stock Soaring",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/amd-reveals-ai-numbers-sent-204836239.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-08T20:29:45Z",
+      "title": "TSMC, IBD Stock Of The Day, Rises Above Early Buy Point As Chip Stocks Rally",
+      "url": "https://www.investors.com/research/ibd-stock-of-the-day/tsm-stock-buy-point-chip-stocks/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.023727607528996948,
   "technicals": {
-    "ma20": 475.1980010986328,
-    "ma50": 499.2746008300781,
-    "ma200": 340.99790031433105,
-    "rsi14": 49.673237225866146,
+    "ma20": 477.0070007324219,
+    "ma50": 498.9578002929687,
+    "ma200": 342.3751502990723,
+    "rsi14": 57.035011568863524,
     "high_20d": 517.3499755859375,
     "low_5d": 440.5,
     "low_10d": 440.5,
     "high_52w": 584.72998046875,
     "low_52w": 149.22000122070312,
-    "atr14": 18.478572300502233,
-    "atr14_pct": 3.8692907881790966,
-    "position_in_52w_range_pct": 75.39437022096392
+    "atr14": 18.747634887695312,
+    "atr14_pct": 3.706971022601376,
+    "position_in_52w_range_pct": 81.86264517502919
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 138.2,
-      "high": 141.71,
-      "low": 137.83,
-      "close": 139.44,
-      "volume": 25023000.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 138.7,
-      "high": 139.13,
-      "low": 132.11,
-      "close": 134.35,
-      "volume": 39993500.0
-    },
     {
       "date": "2024-09-09",
       "open": 136.1,
@@ -4300,17 +4325,17 @@
       "low": 458.0,
       "close": 477.57,
       "volume": 19651900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 488.88,
+      "high": 512.3569,
+      "low": 486.5706,
+      "close": 505.74,
+      "volume": 27979240.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 157.12,
-      "high": 157.14,
-      "low": 150.18,
-      "close": 151.14,
-      "volume": 78256000.0
-    },
     {
       "date": "2025-09-08",
       "open": 151.8,
@@ -6318,6 +6343,14 @@
       "low": 458.0,
       "close": 477.57,
       "volume": 19651900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 488.88,
+      "high": 512.3569,
+      "low": 486.5706,
+      "close": 505.74,
+      "volume": 27979240.0
     }
   ],
   "ai_synthesis": null,

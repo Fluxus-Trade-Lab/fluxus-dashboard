@@ -1,43 +1,80 @@
 {
   "ticker": "BLMN",
-  "fetched_at": "2026-09-08T06:29:13Z",
+  "fetched_at": "2026-09-08T22:40:09Z",
   "_schema": "v2",
-  "current_price": 9.789999961853027,
+  "current_price": 9.579999923706055,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "BLMN",
+    "longName": "Bloomin' Brands, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Restaurants",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Tampa",
+    "website": "https://www.bloominbrands.com",
+    "fullTimeEmployees": 64000,
+    "marketCap": 820248384,
+    "enterpriseValue": 2697291776,
+    "trailingPE": 29.9375,
+    "forwardPE": 9.228754,
+    "priceToSalesTrailing12Months": 0.20611753,
+    "enterpriseToRevenue": 0.678,
+    "priceToBook": 1.8992862,
+    "grossMargins": 0.13574,
+    "operatingMargins": 0.0444,
+    "profitMargins": 0.00695,
+    "returnOnEquity": 0.08071999,
+    "totalCash": 66613000,
+    "totalDebt": 1922440960,
+    "totalRevenue": 3979517952,
+    "freeCashflow": 276187872,
+    "debtToEquity": 441.871,
+    "currentRatio": 0.254,
+    "fiftyTwoWeekHigh": 12.63,
+    "fiftyTwoWeekLow": 5.19,
+    "averageVolume": 2105822,
+    "averageVolume10days": 1869970,
+    "beta": 1.224,
+    "sharesOutstanding": 85620917,
+    "sharesFloat": 83186714,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael  Spanos",
+        "title": "CEO & Director",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Eric  Christel",
+        "title": "Executive VP & CFO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Ms. Kelly M. Lefferts",
+        "title": "Executive VP, Chief Legal Officer & Secretary",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Patrick  Hafner",
+        "title": "Executive Vice President, & President of Outback Steakhouse",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Philip  Pace",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Rafael A. Sanchez",
+        "title": "Senior VP & Chief Information Officer",
+        "age": 63,
+        "yearBorn": 1962
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.7603
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 908211060,
+    "revenue_high": 936000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09394572099869411,
   "technicals": {
-    "ma20": 10.65399990081787,
-    "ma50": 9.537399969100953,
-    "ma200": 7.4638499879837035,
-    "rsi14": 45.54799328739055,
+    "ma20": 10.58199987411499,
+    "ma50": 9.549599962234497,
+    "ma200": 7.480149986743927,
+    "rsi14": 43.312768169185624,
     "high_20d": 11.75,
-    "low_5d": 9.600000381469727,
-    "low_10d": 9.600000381469727,
+    "low_5d": 9.520000457763672,
+    "low_10d": 9.520000457763672,
     "high_52w": 12.630000114440918,
     "low_52w": 5.190000057220459,
-    "atr14": 0.5614288193838937,
-    "atr14_pct": 5.734717278565013,
-    "position_in_52w_range_pct": 61.82795523191302
+    "atr14": 0.5549359321594238,
+    "atr14_pct": 5.792650694977721,
+    "position_in_52w_range_pct": 59.00537409573185
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 16.2395,
-      "high": 16.2395,
-      "low": 15.6728,
-      "close": 15.7379,
-      "volume": 1094900.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 15.7936,
-      "high": 15.9701,
-      "low": 15.5428,
-      "close": 15.645,
-      "volume": 1049800.0
-    },
     {
       "date": "2024-09-09",
       "open": 15.5892,
@@ -392,7 +417,7 @@
     {
       "date": "2024-09-24",
       "open": 15.5892,
-      "high": 16.0445,
+      "high": 16.0444,
       "low": 15.4406,
       "close": 15.4499,
       "volume": 897900.0
@@ -416,7 +441,7 @@
     {
       "date": "2024-09-27",
       "open": 15.9515,
-      "high": 16.0445,
+      "high": 16.0444,
       "low": 15.487,
       "close": 15.6078,
       "volume": 1000800.0
@@ -746,7 +771,7 @@
       "open": 12.4054,
       "high": 13.522,
       "low": 12.377,
-      "close": 13.399,
+      "close": 13.3989,
       "volume": 2725500.0
     },
     {
@@ -767,8 +792,8 @@
     },
     {
       "date": "2024-11-29",
-      "open": 13.5503,
-      "high": 13.7017,
+      "open": 13.5504,
+      "high": 13.7018,
       "low": 13.0678,
       "close": 13.1908,
       "volume": 1153300.0
@@ -4300,17 +4325,17 @@
       "low": 9.63,
       "close": 9.79,
       "volume": 1386400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 9.74,
+      "high": 9.8591,
+      "low": 9.52,
+      "close": 9.58,
+      "volume": 1422071.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 7.27,
-      "high": 7.47,
-      "low": 7.06,
-      "close": 7.11,
-      "volume": 1874200.0
-    },
     {
       "date": "2025-09-08",
       "open": 7.09,
@@ -6318,6 +6343,14 @@
       "low": 9.63,
       "close": 9.79,
       "volume": 1386400.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 9.74,
+      "high": 9.8591,
+      "low": 9.52,
+      "close": 9.58,
+      "volume": 1422071.0
     }
   ],
   "ai_synthesis": null,

@@ -1,43 +1,80 @@
 {
   "ticker": "RBRK",
-  "fetched_at": "2026-09-08T06:27:45Z",
+  "fetched_at": "2026-09-08T22:38:35Z",
   "_schema": "v2",
-  "current_price": 93.66999816894531,
+  "current_price": 91.62999725341797,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "RBRK",
+    "longName": "Rubrik, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Palo Alto",
+    "website": "https://www.rubrik.com",
+    "fullTimeEmployees": 3797,
+    "marketCap": 18860070912,
+    "enterpriseValue": 18820143104,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": 119.76838,
+    "priceToSalesTrailing12Months": 12.229503,
+    "enterpriseToRevenue": 12.204,
+    "priceToBook": -38.020744,
+    "grossMargins": 0.80206,
+    "operatingMargins": -0.16829,
+    "profitMargins": -0.16498,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "totalCash": 1747649024,
+    "totalDebt": 1149586048,
+    "totalRevenue": 1542178048,
+    "freeCashflow": 479817376,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 1.642,
+    "fiftyTwoWeekHigh": 107.91,
+    "fiftyTwoWeekLow": 42.25,
+    "averageVolume": 3423675,
+    "averageVolume10days": 4383110,
+    "beta": 1.243,
+    "sharesOutstanding": 160956763,
+    "sharesFloat": 163832693,
+    "companyOfficers": [
+      {
+        "name": "Mr. Bipul  Sinha",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Arvind  Nithrakashyap",
+        "title": "Co-Founder, CTO & Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Kiran Kumar Choudary",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Arvind  Jain",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ajay  Sabhlok",
+        "title": "Chief Information Officer & Chief Data Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Melissa A. Franchi",
+        "title": "VP & Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 1.5799
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-08-27",
+    "revenue_low": 428862190,
+    "revenue_high": 430942410
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04681872889437389,
   "technicals": {
-    "ma20": 96.95849990844727,
-    "ma50": 86.55619979858399,
-    "ma200": 68.92004997253417,
-    "rsi14": 52.158389717786704,
+    "ma20": 96.64449958801269,
+    "ma50": 86.94219970703125,
+    "ma200": 69.03419994354248,
+    "rsi14": 49.97121081866786,
     "high_20d": 107.91000366210938,
     "low_5d": 86.0199966430664,
     "low_10d": 86.0199966430664,
     "high_52w": 107.91000366210938,
     "low_52w": 42.25,
-    "atr14": 6.298786163330078,
-    "atr14_pct": 6.72444356406354,
-    "position_in_52w_range_pct": 78.31251188098611
+    "atr14": 6.166643415178571,
+    "atr14_pct": 6.729939539476025,
+    "position_in_52w_range_pct": 75.20559625237097
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 32.61,
-      "high": 32.97,
-      "low": 32.01,
-      "close": 32.14,
-      "volume": 636200.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 32.18,
-      "high": 32.62,
-      "low": 30.64,
-      "close": 30.72,
-      "volume": 1042300.0
-    },
     {
       "date": "2024-09-09",
       "open": 31.0,
@@ -4300,17 +4325,17 @@
       "low": 91.77,
       "close": 93.67,
       "volume": 2111300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 93.27,
+      "high": 93.2,
+      "low": 89.82,
+      "close": 91.63,
+      "volume": 2103351.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 88.7,
-      "high": 91.74,
-      "low": 85.82,
-      "close": 90.93,
-      "volume": 2920200.0
-    },
     {
       "date": "2025-09-08",
       "open": 94.0,
@@ -6318,6 +6343,14 @@
       "low": 91.77,
       "close": 93.67,
       "volume": 2111300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 93.27,
+      "high": 93.2,
+      "low": 89.82,
+      "close": 91.63,
+      "volume": 2103351.0
     }
   ],
   "ai_synthesis": null,

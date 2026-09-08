@@ -1,43 +1,80 @@
 {
   "ticker": "OKTA",
-  "fetched_at": "2026-09-08T06:28:17Z",
+  "fetched_at": "2026-09-08T22:39:08Z",
   "_schema": "v2",
-  "current_price": 170.60000610351562,
+  "current_price": 167.59500122070312,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "OKTA",
+    "longName": "Okta, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.okta.com",
+    "fullTimeEmployees": 6366,
+    "marketCap": 29299113984,
+    "enterpriseValue": 27578449920,
+    "trailingPE": 101.57273,
+    "forwardPE": 38.27698,
+    "priceToSalesTrailing12Months": 9.5343685,
+    "enterpriseToRevenue": 8.974,
+    "priceToBook": 4.201745,
+    "grossMargins": 0.78132004,
+    "operatingMargins": 0.13292,
+    "profitMargins": 0.09632,
+    "returnOnEquity": 0.043130003,
+    "totalCash": 2299000064,
+    "totalDebt": 53000000,
+    "totalRevenue": 3072999936,
+    "freeCashflow": 1037625024,
+    "debtToEquity": 0.76,
+    "currentRatio": 1.525,
+    "fiftyTwoWeekHigh": 174.85,
+    "fiftyTwoWeekLow": 62.66,
+    "averageVolume": 3339240,
+    "averageVolume10days": 5115340,
+    "beta": 0.789,
+    "sharesOutstanding": 167139757,
+    "sharesFloat": 166703992,
+    "companyOfficers": [
+      {
+        "name": "Mr. Todd  McKinnon",
+        "title": "Co-Founder, Chairman & CEO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Jacques Frederic Kerrest",
+        "title": "Co-Founder & Executive Vice Chairman",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Eric  Kelleher",
+        "title": "President & COO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Brett  Tighe",
+        "title": "Chief Financial Officer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Jon  Addison",
+        "title": "Chief Revenue Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Larissa  Schwartz",
+        "title": "Senior Advisor",
+        "age": 53,
+        "yearBorn": 1972
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0805
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-12-01",
+    "revenue_low": 814620000,
+    "revenue_high": 828059000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:09:41Z",
   "news": [
     {
+      "date": "2026-09-08T21:52:26Z",
+      "title": "CrowdStrike vs. OKTA: What Revenue Trends Between These Cybersecurity Giants Tell Investors",
+      "url": "https://www.fool.com/coverage/charts/2026/09/08/crowdstrike-vs-okta-what-revenue-trends-between-these-cybersecurity-giants-tell-investors/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-09-07T04:13:49Z",
       "title": "Okta CFO Dumps 80,000 Company Shares Worth $12.9 Million After the Stock Hit a 52-Week High",
       "url": "https://www.fool.com/coverage/filings/2026/09/06/okta-cfo-dumps-80-000-company-shares-worth-usd12-9-million-after-the-stock-hit-a-52-week-high/",
@@ -261,46 +308,24 @@
       "title": "Okta Stock Has More Than Doubled in 2026. AI Agents Could Drive the Next Leg Higher.",
       "url": "https://www.barchart.com/story/news/4396475/okta-stock-has-more-than-doubled-in-2026-ai-agents-could-drive-the-next-leg-higher",
       "source": "Barchart"
-    },
-    {
-      "date": "2026-09-01T20:50:20Z",
-      "title": "Okta, Datadog, JFrog, Zscaler, and Elastic Shares Are Falling, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/okta-datadog-jfrog-zscaler-elastic-205020337.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0432590467925269,
   "technicals": {
-    "ma20": 151.36149978637695,
-    "ma50": 145.9426007080078,
-    "ma200": 101.85125019073486,
-    "rsi14": 63.35715660361538,
+    "ma20": 152.20274963378907,
+    "ma50": 146.80890075683592,
+    "ma200": 102.28407520294189,
+    "rsi14": 60.79894395009845,
     "high_20d": 174.85000610351562,
     "low_5d": 157.72999572753906,
     "low_10d": 127.5999984741211,
     "high_52w": 174.85000610351562,
     "low_52w": 62.65999984741211,
-    "atr14": 9.824285779680524,
-    "atr14_pct": 5.758666722273976,
-    "position_in_52w_range_pct": 96.21178379266844
+    "atr14": 9.851428985595703,
+    "atr14_pct": 5.878116240843315,
+    "position_in_52w_range_pct": 93.53328774556708
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 74.92,
-      "high": 75.69,
-      "low": 74.115,
-      "close": 74.71,
-      "volume": 2228700.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 74.99,
-      "high": 75.34,
-      "low": 72.12,
-      "close": 72.45,
-      "volume": 2462900.0
-    },
     {
       "date": "2024-09-09",
       "open": 72.69,
@@ -4300,17 +4325,17 @@
       "low": 167.47,
       "close": 170.6,
       "volume": 2339800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 168.85,
+      "high": 169.8796,
+      "low": 165.74,
+      "close": 167.595,
+      "volume": 2550053.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 90.29,
-      "high": 91.95,
-      "low": 90.03,
-      "close": 91.48,
-      "volume": 3279800.0
-    },
     {
       "date": "2025-09-08",
       "open": 91.17,
@@ -6318,6 +6343,14 @@
       "low": 167.47,
       "close": 170.6,
       "volume": 2339800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 168.85,
+      "high": 169.8796,
+      "low": 165.74,
+      "close": 167.595,
+      "volume": 2550053.0
     }
   ],
   "ai_synthesis": null,

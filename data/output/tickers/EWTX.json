@@ -1,43 +1,80 @@
 {
   "ticker": "EWTX",
-  "fetched_at": "2026-09-08T06:29:48Z",
+  "fetched_at": "2026-09-08T22:40:46Z",
   "_schema": "v2",
-  "current_price": 43.06999969482422,
+  "current_price": 43.81999969482422,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "EWTX",
+    "longName": "Edgewise Therapeutics, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Boulder",
+    "website": "https://edgewisetx.com",
+    "fullTimeEmployees": 127,
+    "marketCap": 4759032832,
+    "enterpriseValue": 4220460800,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -24.128096,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 10.541256,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.38032,
+    "totalCash": 460708992,
+    "totalDebt": 3590000,
     "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "freeCashflow": -92311376,
+    "debtToEquity": 0.801,
+    "currentRatio": 16.236,
+    "fiftyTwoWeekHigh": 48.4,
+    "fiftyTwoWeekLow": 13.685,
+    "averageVolume": 1317570,
+    "averageVolume10days": 967400,
+    "beta": 0.331,
+    "sharesOutstanding": 108604129,
+    "sharesFloat": 74261331,
+    "companyOfficers": [
+      {
+        "name": "Dr. Peter A. Thompson FACP, M.D.",
+        "title": "Co-Founder & Independent Chairman",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Dr. Kevin  Koch Ph.D.",
+        "title": "President, CEO & Director",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Dr. Badreddin  Edris Ph.D.",
+        "title": "Co-Founder & Independent Director",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Dr. Alan J. Russell Ph.D.",
+        "title": "Co-Founder, Chief Scientific Officer & Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Michael P. Nofi",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Behrad  Derakhshan Ph.D.",
+        "title": "Chief Operating Officer",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.0277
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 0,
+    "revenue_high": 1550000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.12437243354530933,
   "technicals": {
-    "ma20": 43.65700016021729,
-    "ma50": 42.240900115966795,
-    "ma200": 32.983075056076046,
-    "rsi14": 51.13088986798514,
+    "ma20": 43.61900005340576,
+    "ma50": 42.28810012817383,
+    "ma200": 33.09137505531311,
+    "rsi14": 54.0137657294617,
     "high_20d": 46.59000015258789,
-    "low_5d": 40.63999938964844,
+    "low_5d": 40.7599983215332,
     "low_10d": 40.63999938964844,
     "high_52w": 48.400001525878906,
     "low_52w": 13.6850004196167,
-    "atr14": 2.182927812848772,
-    "atr14_pct": 5.068325582345192,
-    "position_in_52w_range_pct": 84.64640166728033
+    "atr14": 2.1857847486223494,
+    "atr14_pct": 4.988098502612546,
+    "position_in_52w_range_pct": 86.80685097190303
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 17.95,
-      "high": 18.16,
-      "low": 17.38,
-      "close": 17.47,
-      "volume": 600200.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 17.44,
-      "high": 17.585,
-      "low": 17.02,
-      "close": 17.52,
-      "volume": 733600.0
-    },
     {
       "date": "2024-09-09",
       "open": 17.59,
@@ -4300,17 +4325,17 @@
       "low": 41.603,
       "close": 43.07,
       "volume": 826700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 42.58,
+      "high": 44.92,
+      "low": 42.21,
+      "close": 43.82,
+      "volume": 1260835.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 14.68,
-      "high": 15.79,
-      "low": 14.08,
-      "close": 15.57,
-      "volume": 847100.0
-    },
     {
       "date": "2025-09-08",
       "open": 15.52,
@@ -6318,6 +6343,14 @@
       "low": 41.603,
       "close": 43.07,
       "volume": 826700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 42.58,
+      "high": 44.92,
+      "low": 42.21,
+      "close": 43.82,
+      "volume": 1260835.0
     }
   ],
   "ai_synthesis": null,

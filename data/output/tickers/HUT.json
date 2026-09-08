@@ -1,43 +1,80 @@
 {
   "ticker": "HUT",
-  "fetched_at": "2026-09-08T06:30:13Z",
+  "fetched_at": "2026-09-08T22:41:10Z",
   "_schema": "v2",
-  "current_price": 93.54499816894531,
+  "current_price": 99.48999786376953,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "HUT",
+    "longName": "Hut 8 Corp.",
+    "sector": "Financial Services",
+    "industry": "Capital Markets",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Miami",
+    "website": "https://www.hut8.com",
+    "fullTimeEmployees": 248,
+    "marketCap": 12263085056,
+    "enterpriseValue": 19276980224,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -19.160326,
+    "priceToSalesTrailing12Months": 38.568863,
+    "enterpriseToRevenue": 60.628,
+    "priceToBook": 8.496157,
+    "grossMargins": 0.62328,
+    "operatingMargins": -2.754,
+    "profitMargins": -1.8858501,
+    "returnOnEquity": -0.43370998,
+    "totalCash": 233579008,
+    "totalDebt": 7668843008,
+    "totalRevenue": 317952992,
+    "freeCashflow": -7739337728,
+    "debtToEquity": 437.212,
+    "currentRatio": 19.347,
+    "fiftyTwoWeekHigh": 140.8,
+    "fiftyTwoWeekLow": 26.187,
+    "averageVolume": 4584150,
+    "averageVolume10days": 4416330,
+    "beta": 5.976,
+    "sharesOutstanding": 123259468,
+    "sharesFloat": 103016566,
+    "companyOfficers": [
+      {
+        "name": "Mr. Asher Kevin Genoot",
+        "title": "Co-Founder, CEO & Non-Independent Director",
+        "age": 29,
+        "yearBorn": 1996
+      },
+      {
+        "name": "Mr. Michael  Ho",
+        "title": "Co-Founder, Chief Strategy Officer & Non-Independent Director",
+        "age": 31,
+        "yearBorn": 1994
+      },
+      {
+        "name": "Mr. Sean  Glennan",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Victor  Semah J.D.",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Mark  Eidelman",
+        "title": "Head of Investor Relations & Senior Vice President of Strategic Finance",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Matthew  Saxon",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.5991
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 58743000,
+    "revenue_high": 90000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Blockspace"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07437933620355215,
   "technicals": {
-    "ma20": 84.45774955749512,
-    "ma50": 95.80519958496093,
-    "ma200": 75.12112489700317,
-    "rsi14": 54.3680482588888,
-    "high_20d": 96.75,
+    "ma20": 85.14924926757813,
+    "ma50": 95.334599609375,
+    "ma200": 75.4252248954773,
+    "rsi14": 58.59143733848211,
+    "high_20d": 100.44999694824219,
     "low_5d": 75.30999755859375,
     "low_10d": 75.30999755859375,
     "high_52w": 140.8000030517578,
-    "low_52w": 24.20199966430664,
-    "atr14": 7.214714050292969,
-    "atr14_pct": 7.712559935340381,
-    "position_in_52w_range_pct": 59.47185757050596
+    "low_52w": 25.454999923706055,
+    "atr14": 7.2139996119907925,
+    "atr14_pct": 7.250979763683215,
+    "position_in_52w_range_pct": 64.18570023174091
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 9.18,
-      "high": 9.55,
-      "low": 9.07,
-      "close": 9.5,
-      "volume": 4311100.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 9.6,
-      "high": 9.77,
-      "low": 8.731,
-      "close": 9.0,
-      "volume": 3936000.0
-    },
     {
       "date": "2024-09-09",
       "open": 9.27,
@@ -4300,17 +4325,17 @@
       "low": 86.75,
       "close": 93.545,
       "volume": 5728200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 95.85,
+      "high": 100.45,
+      "low": 92.67,
+      "close": 99.49,
+      "volume": 5632734.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 26.39,
-      "high": 27.16,
-      "low": 24.202,
-      "close": 25.38,
-      "volume": 5256800.0
-    },
     {
       "date": "2025-09-08",
       "open": 25.49,
@@ -6318,6 +6343,14 @@
       "low": 86.75,
       "close": 93.545,
       "volume": 5728200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 95.85,
+      "high": 100.45,
+      "low": 92.67,
+      "close": 99.49,
+      "volume": 5632734.0
     }
   ],
   "ai_synthesis": null,

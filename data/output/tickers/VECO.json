@@ -1,43 +1,80 @@
 {
   "ticker": "VECO",
-  "fetched_at": "2026-09-08T06:28:05Z",
+  "fetched_at": "2026-09-08T22:38:56Z",
   "_schema": "v2",
-  "current_price": 44.66999816894531,
+  "current_price": 45.59000015258789,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "VECO",
+    "longName": "Veeco Instruments Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Plainview",
+    "website": "https://www.veeco.com",
+    "fullTimeEmployees": 1265,
+    "marketCap": 2782516480,
+    "enterpriseValue": 2562449920,
+    "trailingPE": 119.97369,
+    "forwardPE": 15.68931,
+    "priceToSalesTrailing12Months": 4.0756335,
+    "enterpriseToRevenue": 3.753,
+    "priceToBook": 3.0870802,
+    "grossMargins": 0.3786,
+    "operatingMargins": 0.06676,
+    "profitMargins": 0.03404,
+    "returnOnEquity": 0.02643,
+    "totalCash": 429398016,
+    "totalDebt": 261187008,
+    "totalRevenue": 682720000,
+    "freeCashflow": 71797000,
+    "debtToEquity": 28.931,
+    "currentRatio": 3.926,
+    "fiftyTwoWeekHigh": 86.63,
+    "fiftyTwoWeekLow": 24.52,
+    "averageVolume": 1195214,
+    "averageVolume10days": 480690,
+    "beta": 1.364,
+    "sharesOutstanding": 61033485,
+    "sharesFloat": 60133227,
+    "companyOfficers": [
+      {
+        "name": "Dr. William John Miller Ph.D.",
+        "title": "CEO & Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. John P. Kiernan CPA",
+        "title": "Senior VP & CFO",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Dr. Peter  Porshnev Ph.D.",
+        "title": "Senior VP of Digital Solutions & CTO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Susan  Wilkerson",
+        "title": "Senior Vice President of Global Sales & Services",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Dr. Adrian  Devasahayam Ph.D.",
+        "title": "Senior VP & GM of Ion Beam Technologies",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Jean-Charles  Bossert",
+        "title": "Senior Vice President of Global Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.28530002
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 209980000,
+    "revenue_high": 220000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08839657790111324,
   "technicals": {
-    "ma20": 47.74449977874756,
-    "ma50": 52.358799896240235,
-    "ma200": 43.85549996376037,
-    "rsi14": 41.74973918512999,
+    "ma20": 47.55699977874756,
+    "ma50": 51.85159996032715,
+    "ma200": 43.94649996757507,
+    "rsi14": 44.13529428483428,
     "high_20d": 54.97999954223633,
     "low_5d": 41.18000030517578,
     "low_10d": 41.18000030517578,
     "high_52w": 86.62999725341797,
-    "low_52w": 24.0,
-    "atr14": 2.4342858450753346,
-    "atr14_pct": 5.4494872282481,
-    "position_in_52w_range_pct": 33.00335154943228
+    "low_52w": 24.290000915527344,
+    "atr14": 2.260000228881836,
+    "atr14_pct": 4.957227947615061,
+    "position_in_52w_range_pct": 34.1674695032253
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 31.52,
-      "high": 32.16,
-      "low": 31.23,
-      "close": 31.4,
-      "volume": 627400.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 31.35,
-      "high": 31.41,
-      "low": 29.67,
-      "close": 29.67,
-      "volume": 1013200.0
-    },
     {
       "date": "2024-09-09",
       "open": 29.92,
@@ -4300,17 +4325,17 @@
       "low": 42.33,
       "close": 44.67,
       "volume": 401700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 45.33,
+      "high": 46.8,
+      "low": 45.32,
+      "close": 45.59,
+      "volume": 554665.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 24.36,
-      "high": 24.56,
-      "low": 24.0,
-      "close": 24.51,
-      "volume": 442400.0
-    },
     {
       "date": "2025-09-08",
       "open": 24.6,
@@ -6318,6 +6343,14 @@
       "low": 42.33,
       "close": 44.67,
       "volume": 401700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 45.33,
+      "high": 46.8,
+      "low": 45.32,
+      "close": 45.59,
+      "volume": 554665.0
     }
   ],
   "ai_synthesis": null,

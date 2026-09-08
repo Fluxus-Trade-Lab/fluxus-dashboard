@@ -1,43 +1,80 @@
 {
   "ticker": "CARL",
-  "fetched_at": "2026-09-08T06:28:20Z",
+  "fetched_at": "2026-09-08T22:39:07Z",
   "_schema": "v2",
-  "current_price": 15.600000381469727,
+  "current_price": 15.229999542236328,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "CARL",
+    "longName": "Carlsmed, Inc.",
+    "sector": "Healthcare",
+    "industry": "Health Information Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Carlsbad",
+    "website": "https://carlsmed.com",
+    "fullTimeEmployees": 127,
+    "marketCap": 415820768,
+    "enterpriseValue": 358615776,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": -11.036232,
+    "priceToSalesTrailing12Months": 6.569567,
+    "enterpriseToRevenue": 5.666,
+    "priceToBook": 4.92243,
+    "grossMargins": 0.76628,
+    "operatingMargins": -0.58268,
+    "profitMargins": -0.57422,
+    "returnOnEquity": -0.66141,
+    "totalCash": 89224000,
+    "totalDebt": 21917000,
+    "totalRevenue": 63295000,
+    "freeCashflow": -26408376,
+    "debtToEquity": 26.015,
+    "currentRatio": 8.841,
+    "fiftyTwoWeekHigh": 17.23,
+    "fiftyTwoWeekLow": 8.5,
+    "averageVolume": 148135,
+    "averageVolume10days": 111290,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 27302743,
+    "sharesFloat": 15669044,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael John Cordonnier",
+        "title": "Co-Founder, Chairman, CEO & President",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Niall Patrick Casey J.D.",
+        "title": "Co-Founder, Chief Intellectual Property Officer & Director",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Leonard M. Greenstein J.D.",
+        "title": "CFO & Treasurer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. William  Durall",
+        "title": "Chief Commercial Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Shariq  Hussain",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Stephanie  Zhadkevich",
+        "title": "VP & Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.2451
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 18401000,
+    "revenue_high": 19584000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -271,18 +312,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 15.401000022888184,
-    "ma50": 13.355200004577636,
-    "ma200": 12.13987497806549,
-    "rsi14": 57.2541747191827,
+    "ma20": 15.476000022888183,
+    "ma50": 13.424599990844726,
+    "ma200": 12.154774975776672,
+    "rsi14": 53.038822771373574,
     "high_20d": 17.229999542236328,
-    "low_5d": 15.380000114440918,
-    "low_10d": 15.380000114440918,
+    "low_5d": 15.010000228881836,
+    "low_10d": 15.010000228881836,
     "high_52w": 17.229999542236328,
     "low_52w": 8.5,
-    "atr14": 0.8839999607631138,
-    "atr14_pct": 5.666666276580113,
-    "position_in_52w_range_pct": 81.32876006601654
+    "atr14": 0.8425713947841099,
+    "atr14_pct": 5.532313986270739,
+    "position_in_52w_range_pct": 77.09049135313393
   },
   "ohlc_2y": [
     {
@@ -2548,17 +2589,17 @@
       "low": 15.38,
       "close": 15.6,
       "volume": 46700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 15.37,
+      "high": 15.37,
+      "low": 15.01,
+      "close": 15.23,
+      "volume": 63788.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 13.13,
-      "high": 13.16,
-      "low": 12.555,
-      "close": 12.74,
-      "volume": 34500.0
-    },
     {
       "date": "2025-09-08",
       "open": 12.89,
@@ -4566,6 +4607,14 @@
       "low": 15.38,
       "close": 15.6,
       "volume": 46700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 15.37,
+      "high": 15.37,
+      "low": 15.01,
+      "close": 15.23,
+      "volume": 63788.0
     }
   ],
   "ai_synthesis": null,

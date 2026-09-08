@@ -1,21 +1,21 @@
 {
   "ticker": "BUG",
-  "fetched_at": "2026-09-08T06:27:08Z",
+  "fetched_at": "2026-09-08T22:37:55Z",
   "_schema": "v2",
-  "current_price": 41.369998931884766,
+  "current_price": 40.84000015258789,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "BUG",
+    "longName": "Global X Cybersecurity ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "NGM",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 34.40306,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 44.55,
+    "fiftyTwoWeekLow": 23.145,
+    "averageVolume": 1258679,
+    "averageVolume10days": 1688950,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-08T06:27:08Z",
+  "quarterly_asof": "2026-09-08T22:37:55Z",
   "news": [
     {
       "date": "2026-08-27T15:29:00Z",
@@ -111,38 +111,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06366307517839828,
   "technicals": {
-    "ma20": 41.86900005340576,
-    "ma50": 40.33339996337891,
-    "ma200": 32.178438444137576,
-    "rsi14": 51.119781979334405,
+    "ma20": 41.761000061035155,
+    "ma50": 40.43979995727539,
+    "ma200": 32.223800067901614,
+    "rsi14": 49.1792475718432,
     "high_20d": 44.54999923706055,
     "low_5d": 39.755001068115234,
     "low_10d": 38.52000045776367,
     "high_52w": 44.54999923706055,
     "low_52w": 23.145000457763672,
-    "atr14": 1.605142593383789,
-    "atr14_pct": 3.8799676935613125,
-    "position_in_52w_range_pct": 85.14365575086363
+    "atr14": 1.6277852739606584,
+    "atr14_pct": 3.9857621642479626,
+    "position_in_52w_range_pct": 82.66760431651599
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 29.6511,
-      "high": 29.701,
-      "low": 29.3315,
-      "close": 29.5712,
-      "volume": 93800.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 29.5612,
-      "high": 29.701,
-      "low": 28.8222,
-      "close": 28.9021,
-      "volume": 98300.0
-    },
     {
       "date": "2024-09-09",
       "open": 29.1617,
@@ -4142,17 +4126,17 @@
       "low": 41.2,
       "close": 41.37,
       "volume": 700200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 40.8005,
+      "high": 41.11,
+      "low": 40.08,
+      "close": 40.84,
+      "volume": 500571.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 33.8869,
-      "high": 34.2657,
-      "low": 33.577,
-      "close": 34.1268,
-      "volume": 445300.0
-    },
     {
       "date": "2025-09-08",
       "open": 34.3167,
@@ -6160,6 +6144,14 @@
       "low": 41.2,
       "close": 41.37,
       "volume": 700200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 40.8005,
+      "high": 41.11,
+      "low": 40.08,
+      "close": 40.84,
+      "volume": 500571.0
     }
   ],
   "ai_synthesis": null,

@@ -1,43 +1,80 @@
 {
   "ticker": "SAIL",
-  "fetched_at": "2026-09-08T06:27:46Z",
+  "fetched_at": "2026-09-08T22:38:36Z",
   "_schema": "v2",
-  "current_price": 18.81999969482422,
+  "current_price": 17.790000915527344,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SAIL",
+    "longName": "SailPoint, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Austin",
+    "website": "https://www.sailpoint.com",
+    "fullTimeEmployees": 3229,
+    "marketCap": 10090185728,
+    "enterpriseValue": 10302556160,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": 44.491684,
+    "priceToSalesTrailing12Months": 9.000335,
+    "enterpriseToRevenue": 9.19,
+    "priceToBook": 1.4747577,
+    "grossMargins": 0.66350996,
+    "operatingMargins": -0.28495002,
+    "profitMargins": -0.14041,
+    "returnOnEquity": -0.023120001,
+    "totalCash": 390806016,
+    "totalDebt": 18978000,
+    "totalRevenue": 1121090048,
+    "freeCashflow": 322153376,
+    "debtToEquity": 0.277,
+    "currentRatio": 1.395,
+    "fiftyTwoWeekHigh": 24.0,
+    "fiftyTwoWeekLow": 10.3,
+    "averageVolume": 4104417,
+    "averageVolume10days": 3312760,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 567182997,
+    "sharesFloat": 70977280,
+    "companyOfficers": [
+      {
+        "name": "Mr. Mark D. McClain TTEE",
+        "title": "Founder, CEO & Director",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Matthew  Mills",
+        "title": "President",
+        "age": 67,
+        "yearBorn": 1958
+      },
+      {
+        "name": "Mr. Brian  Carolan CPA",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Christopher G. Schmitt",
+        "title": "Executive VP, General Counsel & Secretary",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Ms. Abby  Payne",
+        "title": "Chief People Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Mitra  Rezvan",
+        "title": "Chief Accounting Officer",
+        "age": 46,
+        "yearBorn": 1979
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.592
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-09-09",
+    "revenue_low": 309500000,
+    "revenue_high": 311000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -269,20 +310,20 @@
       "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.15458121745231415,
   "technicals": {
-    "ma20": 19.082999897003173,
-    "ma50": 16.96270004272461,
-    "ma200": 16.012524981498718,
-    "rsi14": 52.36222503532598,
+    "ma20": 19.001999950408937,
+    "ma50": 17.05490005493164,
+    "ma200": 16.007824988365172,
+    "rsi14": 47.01136683722687,
     "high_20d": 21.364999771118164,
-    "low_5d": 17.989999771118164,
+    "low_5d": 17.559999465942383,
     "low_10d": 17.299999237060547,
     "high_52w": 24.0,
     "low_52w": 10.300000190734863,
-    "atr14": 1.1055002212524414,
-    "atr14_pct": 5.874071409025955,
-    "position_in_52w_range_pct": 62.189778267933896
+    "atr14": 1.135500226702009,
+    "atr14_pct": 6.382800271308191,
+    "position_in_52w_range_pct": 54.67153889832238
   },
   "ohlc_2y": [
     {
@@ -3420,17 +3461,17 @@
       "low": 18.8,
       "close": 18.82,
       "volume": 1900700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 18.53,
+      "high": 18.61,
+      "low": 17.56,
+      "close": 17.79,
+      "volume": 5523765.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 21.34,
-      "high": 22.34,
-      "low": 21.264,
-      "close": 21.98,
-      "volume": 3979200.0
-    },
     {
       "date": "2025-09-08",
       "open": 22.33,
@@ -5438,6 +5479,14 @@
       "low": 18.8,
       "close": 18.82,
       "volume": 1900700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 18.53,
+      "high": 18.61,
+      "low": 17.56,
+      "close": 17.79,
+      "volume": 5523765.0
     }
   ],
   "ai_synthesis": null,

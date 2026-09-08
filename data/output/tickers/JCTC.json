@@ -1,46 +1,63 @@
 {
   "ticker": "JCTC",
-  "fetched_at": "2026-09-08T06:30:20Z",
+  "fetched_at": "2026-09-08T22:41:16Z",
   "_schema": "v2",
-  "current_price": 2.930000066757202,
+  "current_price": 2.924999952316284,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "JCTC",
+    "longName": "Jewett-Cameron Trading Company Ltd.",
+    "sector": "Basic Materials",
+    "industry": "Lumber & Wood Production",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "North Plains",
+    "website": "https://www.jewettcameron.com",
+    "fullTimeEmployees": 45,
+    "marketCap": 10296330,
+    "enterpriseValue": 10543199,
     "trailingPE": null,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "priceToSalesTrailing12Months": 0.26123628,
+    "enterpriseToRevenue": 0.267,
+    "priceToBook": 0.69692636,
+    "grossMargins": 0.081140004,
+    "operatingMargins": -0.07798,
+    "profitMargins": -0.20947,
+    "returnOnEquity": -0.43678,
+    "totalCash": 1063801,
+    "totalDebt": 1328270,
+    "totalRevenue": 39413860,
+    "freeCashflow": 3122130,
+    "debtToEquity": 8.99,
+    "currentRatio": 4.221,
+    "fiftyTwoWeekHigh": 3.82,
+    "fiftyTwoWeekLow": 1.54,
+    "averageVolume": 23562,
+    "averageVolume10days": 9750,
+    "beta": 0.358,
+    "sharesOutstanding": 3520113,
+    "sharesFloat": 2257800,
+    "companyOfficers": [
+      {
+        "name": "Mr. Chad  Summers",
+        "title": "CEO, President & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Mitch  Van Domelen CPA",
+        "title": "Corporate Secretary & CFO",
+        "age": 43,
+        "yearBorn": 1982
+      }
+    ]
   },
   "earnings_history": [],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "[]",
+    "revenue_low": null,
+    "revenue_high": null
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -102,9 +119,9 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": null
+    "current_price": 2.925
   },
-  "quarterly_asof": "2026-09-08T06:30:20Z",
+  "quarterly_asof": "2026-09-08T22:41:16Z",
   "news": [
     {
       "date": "2026-07-15T05:00:31Z",
@@ -157,36 +174,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 2.974000036716461,
-    "ma50": 2.749000015258789,
-    "ma200": 2.2043500012159347,
-    "rsi14": 53.01069861571933,
+    "ma20": 2.96575003862381,
+    "ma50": 2.7635000133514405,
+    "ma200": 2.206225001215935,
+    "rsi14": 52.675704501962365,
     "high_20d": 3.319999933242798,
     "low_5d": 2.9100000858306885,
     "low_10d": 2.869999885559082,
     "high_52w": 3.819999933242798,
     "low_52w": 1.5399999618530273,
-    "atr14": 0.1214285237448556,
-    "atr14_pct": 4.144318122123713,
-    "position_in_52w_range_pct": 60.96491764677094
+    "atr14": 0.09857138565608434,
+    "atr14_pct": 3.369961957709655,
+    "position_in_52w_range_pct": 60.74561437906652
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 4.58,
-      "high": 4.6,
-      "low": 4.58,
-      "close": 4.6,
-      "volume": 1100.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 4.6,
-      "high": 4.6,
-      "low": 4.51,
-      "close": 4.51,
-      "volume": 1000.0
-    },
     {
       "date": "2024-09-09",
       "open": 4.29,
@@ -4186,17 +4187,17 @@
       "low": 2.91,
       "close": 2.93,
       "volume": 31200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 2.91,
+      "high": 2.925,
+      "low": 2.91,
+      "close": 2.925,
+      "volume": 1736.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 3.59,
-      "high": 3.63,
-      "low": 3.59,
-      "close": 3.63,
-      "volume": 2600.0
-    },
     {
       "date": "2025-09-08",
       "open": 3.67,
@@ -6204,6 +6205,14 @@
       "low": 2.91,
       "close": 2.93,
       "volume": 31200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 2.91,
+      "high": 2.925,
+      "low": 2.91,
+      "close": 2.925,
+      "volume": 1736.0
     }
   ],
   "ai_synthesis": null,

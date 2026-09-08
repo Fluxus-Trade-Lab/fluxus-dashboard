@@ -1,43 +1,80 @@
 {
   "ticker": "FIGR",
-  "fetched_at": "2026-09-08T06:29:51Z",
+  "fetched_at": "2026-09-08T22:40:50Z",
   "_schema": "v2",
-  "current_price": 35.959999084472656,
+  "current_price": 38.26499938964844,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "symbol": "FIGR",
+    "longName": "Figure Technology Solutions, Inc.",
+    "sector": "Financial Services",
+    "industry": "Capital Markets",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Reno",
+    "website": "https://www.figure.com",
+    "fullTimeEmployees": 602,
+    "marketCap": 8585819136,
+    "enterpriseValue": 8105547264,
+    "trailingPE": 39.859375,
+    "forwardPE": 25.738731,
+    "priceToSalesTrailing12Months": 13.867867,
+    "enterpriseToRevenue": 13.092,
+    "priceToBook": 6.0555468,
+    "grossMargins": 1.0,
+    "operatingMargins": 0.35525,
+    "profitMargins": 0.38301,
+    "returnOnEquity": 0.26121,
+    "totalCash": 1437511040,
+    "totalDebt": 1474456960,
+    "totalRevenue": 619116032,
+    "freeCashflow": -254025504,
+    "debtToEquity": 104.341,
+    "currentRatio": 1.861,
+    "fiftyTwoWeekHigh": 78.0,
+    "fiftyTwoWeekLow": 24.11,
+    "averageVolume": 4078604,
+    "averageVolume10days": 3893360,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 185672153,
+    "sharesFloat": 139228713,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael Scott Cagney",
+        "title": "Co-Founder & Executive Chairman",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Michael Benjamin Tannenbaum",
+        "title": "CEO & Director",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Ms. June  Ou",
+        "title": "Co-Founder, Advisor & Director",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Ms. Minchung  Kgil CPA",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. David Todd Stevens",
+        "title": "Chief Capital Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Ms. Clare  Hove",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 3.6241
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 248100000,
+    "revenue_high": 259694920
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-06T05:12:19Z",
   "news": [
     {
+      "date": "2026-09-08T12:09:00Z",
+      "title": "3 Crypto-Exposed Stocks Riding the Institutional Crypto Wave",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/3-crypto-exposed-stocks-riding-120900090.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-05T08:12:35Z",
       "title": "Why Is Figure Technology Solutions (FIGR) Expanding Its Blockchain Real Estate Credit Platform?",
       "url": "https://finance.yahoo.com/real-estate/articles/why-figure-technology-solutions-figr-081235053.html",
@@ -261,28 +308,22 @@
       "title": "Figure Technologies (FIGR) Leverages Blockchain Infrastructure for Accelerated Growth",
       "url": "https://finance.yahoo.com/markets/stocks/articles/figure-technologies-figr-leverages-blockchain-164103050.html",
       "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T13:53:24Z",
-      "title": "Figure Technologies (FIGR) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/20/figure-technologies-figr-q2-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07709395131463254,
   "technicals": {
-    "ma20": 35.030749797821045,
-    "ma50": 31.68639980316162,
-    "ma200": 36.88902502059936,
-    "rsi14": 54.717017067746255,
+    "ma20": 35.502999782562256,
+    "ma50": 31.914499778747558,
+    "ma200": 36.88440002441406,
+    "rsi14": 59.41941144714066,
     "high_20d": 41.5,
     "low_5d": 32.20000076293945,
     "low_10d": 32.20000076293945,
     "high_52w": 78.0,
     "low_52w": 24.110000610351562,
-    "atr14": 2.629713875906808,
-    "atr14_pct": 7.312886381697115,
-    "position_in_52w_range_pct": 21.989234752890578
+    "atr14": 2.698285239083426,
+    "atr14_pct": 7.051575283216585,
+    "position_in_52w_range_pct": 26.26646676491866
   },
   "ohlc_2y": [
     {
@@ -2268,6 +2309,14 @@
       "low": 34.7,
       "close": 35.96,
       "volume": 2754800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 36.12,
+      "high": 38.425,
+      "low": 35.45,
+      "close": 38.265,
+      "volume": 4633125.0
     }
   ],
   "ohlc_1y": [
@@ -4254,6 +4303,14 @@
       "low": 34.7,
       "close": 35.96,
       "volume": 2754800.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 36.12,
+      "high": 38.425,
+      "low": 35.45,
+      "close": 38.265,
+      "volume": 4633125.0
     }
   ],
   "ai_synthesis": null,

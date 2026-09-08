@@ -1,43 +1,80 @@
 {
   "ticker": "AMLX",
-  "fetched_at": "2026-09-08T06:28:23Z",
+  "fetched_at": "2026-09-08T22:39:14Z",
   "_schema": "v2",
-  "current_price": 34.099998474121094,
+  "current_price": 33.880001068115234,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AMLX",
+    "longName": "Amylyx Pharmaceuticals, Inc.",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Cambridge",
+    "website": "https://amylyx.com",
+    "fullTimeEmployees": 136,
+    "marketCap": 3775012864,
+    "enterpriseValue": 3554020864,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -29.34121,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 15.772813,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.7473,
+    "totalCash": 250760000,
+    "totalDebt": 5255000,
     "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "freeCashflow": -77316376,
+    "debtToEquity": 2.197,
+    "currentRatio": 12.12,
+    "fiftyTwoWeekHigh": 41.14,
+    "fiftyTwoWeekLow": 10.37,
+    "averageVolume": 2474669,
+    "averageVolume10days": 2095720,
+    "beta": -0.119,
+    "sharesOutstanding": 111423048,
+    "sharesFloat": 97169812,
+    "companyOfficers": [
+      {
+        "name": "Mr. Joshua B. Cohen",
+        "title": "Co-Founder, Co-CEO & Director",
+        "age": 33,
+        "yearBorn": 1992
+      },
+      {
+        "name": "Mr. Justin B. Klee",
+        "title": "Co-CEO & Director",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Mr. James M. Frates M.B.A.",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Camille L. Bedrosian M.D.",
+        "title": "Chief Medical Officer",
+        "age": 72,
+        "yearBorn": 1953
+      },
+      {
+        "name": "Mr. Tom  Holmes",
+        "title": "Chief Technical Operations Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Lindsey  Allen",
+        "title": "Head of Investor Relations & Communications",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.1393
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 0,
+    "revenue_high": 416000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,38 +310,22 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09710743495507879,
   "technicals": {
-    "ma20": 32.09700012207031,
-    "ma50": 24.2264001083374,
-    "ma200": 16.86850004196167,
-    "rsi14": 63.08215348277607,
+    "ma20": 32.657500171661376,
+    "ma50": 24.54820011138916,
+    "ma200": 16.96815004825592,
+    "rsi14": 62.13353565858463,
     "high_20d": 41.13999938964844,
-    "low_5d": 32.97999954223633,
+    "low_5d": 32.9900016784668,
     "low_10d": 32.97999954223633,
     "high_52w": 41.13999938964844,
-    "low_52w": 9.75,
-    "atr14": 2.9990711212158203,
-    "atr14_pct": 8.794930367788293,
-    "position_in_52w_range_pct": 77.57247195790343
+    "low_52w": 10.069999694824219,
+    "atr14": 2.11764281136649,
+    "atr14_pct": 6.250421324099137,
+    "position_in_52w_range_pct": 76.63341360527079
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 2.11,
-      "high": 2.22,
-      "low": 2.09,
-      "close": 2.2,
-      "volume": 511500.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 2.3,
-      "high": 2.48,
-      "low": 2.3,
-      "close": 2.37,
-      "volume": 1553700.0
-    },
     {
       "date": "2024-09-09",
       "open": 2.34,
@@ -4300,17 +4325,17 @@
       "low": 33.38,
       "close": 34.1,
       "volume": 885500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 33.49,
+      "high": 34.72,
+      "low": 33.1,
+      "close": 33.88,
+      "volume": 1144878.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 10.05,
-      "high": 10.238,
-      "low": 9.75,
-      "close": 10.2,
-      "volume": 1752300.0
-    },
     {
       "date": "2025-09-08",
       "open": 10.19,
@@ -6318,6 +6343,14 @@
       "low": 33.38,
       "close": 34.1,
       "volume": 885500.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 33.49,
+      "high": 34.72,
+      "low": 33.1,
+      "close": 33.88,
+      "volume": 1144878.0
     }
   ],
   "ai_synthesis": null,

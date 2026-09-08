@@ -1,43 +1,80 @@
 {
   "ticker": "FCEL",
-  "fetched_at": "2026-09-08T06:29:50Z",
+  "fetched_at": "2026-09-08T22:40:48Z",
   "_schema": "v2",
-  "current_price": 14.949999809265137,
+  "current_price": 17.760000228881836,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FCEL",
+    "longName": "FuelCell Energy, Inc.",
+    "sector": "Industrials",
+    "industry": "Electrical Equipment & Parts",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Danbury",
+    "website": "https://www.fuelcellenergy.com",
+    "fullTimeEmployees": 424,
+    "marketCap": 1419986432,
+    "enterpriseValue": 771104256,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -18.05502,
+    "priceToSalesTrailing12Months": 9.212496,
+    "enterpriseToRevenue": 5.003,
+    "priceToBook": 1.568766,
+    "grossMargins": -0.32387,
+    "operatingMargins": -1.4139,
+    "profitMargins": -1.13602,
+    "returnOnEquity": -0.21382,
+    "totalCash": 658081984,
+    "totalDebt": 166226000,
+    "totalRevenue": 154136992,
+    "freeCashflow": -12161500,
+    "debtToEquity": 15.941,
+    "currentRatio": 8.673,
+    "fiftyTwoWeekHigh": 37.88,
+    "fiftyTwoWeekLow": 4.16,
+    "averageVolume": 10985659,
+    "averageVolume10days": 7193120,
+    "beta": 2.355,
+    "sharesOutstanding": 79954196,
+    "sharesFloat": 76136383,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jason B. Few",
+        "title": "President, CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Michael S. Bishop CPA",
+        "title": "Executive VP, CFO & Treasurer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Shankar  Achanta",
+        "title": "Executive VP, Chief Product & Technology Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Ms. Amanda  Schreiber J.D.",
+        "title": "Executive VP, General Counsel & Corporate Secretary",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Ms. Betsy  Schaefer",
+        "title": "Senior VP, Chief Marketing & Sustainability Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Eric  Strayer",
+        "title": "Senior VP & Global Head of Sales",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -59,7 +96,11 @@
       "eps_surprise_pct": 0.3748
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-09-02",
+    "revenue_low": 41000000,
+    "revenue_high": 51848000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
@@ -203,6 +244,18 @@
   "quarterly_asof": "2026-09-06T05:12:17Z",
   "news": [
     {
+      "date": "2026-09-08T15:19:00Z",
+      "title": "Plug Power Surges 10.1% YTD: Should Investors Ride the Rally?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/plug-power-surges-10-1-151900459.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-08T14:32:34Z",
+      "title": "Bloom Energy Surges 8% as S&P 500 Swaps It In for Trade Desk; TTD Stock Slips 2%",
+      "url": "https://247wallst.com/investing/2026/09/08/bloom-energy-surges-8-as-sp-500-swaps-it-in-for-trade-desk-ttd-stock-slips-2/",
+      "source": "24/7 Wall St."
+    },
+    {
       "date": "2026-09-03T18:39:18Z",
       "title": "Stocks making big moves yesterday: Limbach, FuelCell Energy, Ollie's, Fortrea, and G-III",
       "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-yesterday-183918650.html",
@@ -249,52 +302,24 @@
       "title": "FuelCell Energy Stock Sinks 17% on Earnings. Has the AI Luster Worn Off?",
       "url": "https://www.barrons.com/articles/fuelcell-energy-earnings-stock-price-13c74405?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-02T16:02:41Z",
-      "title": "FuelCell Energy Q3 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/transcript-fuelcell-energy-q3-earnings-call-highlights-2026-09-02/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-02T13:59:00Z",
-      "title": "FuelCell Energy posts wider quarterly loss as costs outpace new data center contract pricing",
-      "url": "https://www.proactiveinvestors.com/companies/news/1097995/fuelcell-energy-posts-wider-quarterly-loss-as-costs-outpace-new-data-center-contract-pricing-1097995.html",
-      "source": "Proactive"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09177927809647468,
   "technicals": {
-    "ma20": 18.90950016975403,
-    "ma50": 21.308000011444094,
-    "ma200": 13.423250002861023,
-    "rsi14": 36.191270796558996,
+    "ma20": 18.806000185012817,
+    "ma50": 21.18320001602173,
+    "ma200": 13.477850003242493,
+    "rsi14": 46.82967275384751,
     "high_20d": 24.3799991607666,
     "low_5d": 13.829999923706055,
     "low_10d": 13.829999923706055,
     "high_52w": 37.880001068115234,
-    "low_52w": 3.809999942779541,
-    "atr14": 1.737142699105399,
-    "atr14_pct": 11.619683754302255,
-    "position_in_52w_range_pct": 32.69738625926104
+    "low_52w": 4.03000020980835,
+    "atr14": 1.6985712732587541,
+    "atr14_pct": 9.564027316263699,
+    "position_in_52w_range_pct": 40.56129888015676
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-05",
-      "open": 12.6,
-      "high": 14.1,
-      "low": 12.3,
-      "close": 12.6,
-      "volume": 1945160.0
-    },
-    {
-      "date": "2024-09-06",
-      "open": 12.9,
-      "high": 14.1,
-      "low": 12.6,
-      "close": 13.2,
-      "volume": 532537.0
-    },
     {
       "date": "2024-09-09",
       "open": 13.2,
@@ -4294,17 +4319,17 @@
       "low": 14.5,
       "close": 14.95,
       "volume": 5844200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 15.15,
+      "high": 18.08,
+      "low": 15.12,
+      "close": 17.76,
+      "volume": 13883056.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-05",
-      "open": 3.97,
-      "high": 4.05,
-      "low": 3.81,
-      "close": 4.05,
-      "volume": 949100.0
-    },
     {
       "date": "2025-09-08",
       "open": 4.15,
@@ -6312,6 +6337,14 @@
       "low": 14.5,
       "close": 14.95,
       "volume": 5844200.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 15.15,
+      "high": 18.08,
+      "low": 15.12,
+      "close": 17.76,
+      "volume": 13883056.0
     }
   ],
   "ai_synthesis": null,
