@@ -1,6 +1,6 @@
 {
   "trade_id": "SPCX_2026-09-07_000",
-  "generated_at": "2026-09-08T22:42:53+00:00",
+  "generated_at": "2026-09-09T22:37:50+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SPCX",
@@ -9,23 +9,36 @@
     "entry_date": "2026-09-07",
     "entry_price": 149.46,
     "original_qty": 1196,
-    "current_qty": 1196,
+    "current_qty": 0,
     "stop_price": 145.2,
     "initial_stop": 145.2,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-09",
+    "hold_business_days": 2,
     "r_dollars": 5094.960000000023,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": -2093.0,
+    "realized_R": -0.41079812206572586,
+    "trims": [
+      {
+        "date": "2026-09-09",
+        "price": 148.21,
+        "qty": 598,
+        "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-09",
+        "price": 147.21,
+        "qty": 598,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 147.95,
     "open": 148.59,
     "high": 150.85,
     "low": 147.32,
-    "volume": 48925700.0,
+    "volume": 49122400.0,
     "ma20": 140.94650000000001,
     "ma50": 135.9828,
     "ma200": null,
@@ -41,22 +54,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 1.2676056338028125,
+    "mfe_R": 1.3004694835680672,
     "mfe_date": "2026-09-08",
     "mae_R": 1.014084507042254,
     "mae_date": "2026-09-08",
-    "optimal_exit_price": 154.86,
+    "optimal_exit_price": 155.0,
     "optimal_exit_date": "2026-09-08",
-    "optimal_R": 1.2676056338028125,
+    "optimal_R": 1.3004694835680672,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.41079812206572586,
+    "capture_pct": -31.588447653429654,
+    "missed_R": 1.7112676056337932,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **SPCX** long on 2026-09-07 at $149.46 (qty 1196) with stop $145.20 (1R = $4.26/sh = $5,095). Setup: **Long in mixed structure** \u2014 price above MA20 ($140.95), RSI 63, 36% through 52W range, ATR 4.0% of price. **In progress.** Peak so far +1.27R; worst drawdown -1.01R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **SPCX** long on 2026-09-07 at $149.46 (qty 1196) with stop $145.20 (1R = $4.26/sh = $5,095). Setup: **Long in mixed structure** \u2014 price above MA20 ($140.95), RSI 63, 36% through 52W range, ATR 4.0% of price. Realized **-0.41R**, peak was **+1.30R** on 2026-09-08 (day +1) \u2014 captured **-32%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -216,15 +229,23 @@
       "high": 150.85,
       "low": 147.32,
       "close": 147.95,
-      "volume": 48925700.0
+      "volume": 49122400.0
     },
     {
       "date": "2026-09-08",
-      "open": 148.995,
-      "high": 154.86,
+      "open": 149.05,
+      "high": 155.0,
       "low": 145.14,
       "close": 153.47,
-      "volume": 85369403.0
+      "volume": 85840700.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 151.98,
+      "high": 153.0,
+      "low": 145.55,
+      "close": 147.55,
+      "volume": 120147894.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "AMWL",
-  "fetched_at": "2026-09-08T22:39:52Z",
+  "fetched_at": "2026-09-09T22:35:11Z",
   "_schema": "v2",
-  "current_price": 13.34000015258789,
+  "current_price": 12.300000190734863,
   "info": {
     "symbol": "AMWL",
     "longName": "American Well Corporation",
@@ -13,13 +13,13 @@
     "city": "Boston",
     "website": "https://business.amwell.com",
     "fullTimeEmployees": 562,
-    "marketCap": 226896832,
-    "enterpriseValue": 41067768,
+    "marketCap": 209207728,
+    "enterpriseValue": 47020832,
     "trailingPE": null,
-    "forwardPE": -8.443038,
-    "priceToSalesTrailing12Months": 1.0383106,
-    "enterpriseToRevenue": 0.188,
-    "priceToBook": 1.020658,
+    "forwardPE": -7.78481,
+    "priceToSalesTrailing12Months": 0.95736295,
+    "enterpriseToRevenue": 0.215,
+    "priceToBook": 0.9410865,
     "grossMargins": 0.52584,
     "operatingMargins": -0.19594999,
     "profitMargins": -0.35746,
@@ -32,8 +32,8 @@
     "currentRatio": 2.9,
     "fiftyTwoWeekHigh": 14.19,
     "fiftyTwoWeekLow": 3.71,
-    "averageVolume": 118261,
-    "averageVolume10days": 94590,
+    "averageVolume": 118438,
+    "averageVolume10days": 98910,
     "beta": 1.712,
     "sharesOutstanding": 15361463,
     "sharesFloat": 11930963,
@@ -310,30 +310,22 @@
       "source": "Barchart"
     }
   ],
-  "options_implied_move": 0.1424287839780429,
+  "options_implied_move": 0.15447154232007249,
   "technicals": {
-    "ma20": 12.36449990272522,
-    "ma50": 11.488600006103516,
-    "ma200": 7.287000000476837,
-    "rsi14": 64.25816669580351,
+    "ma20": 12.329999923706055,
+    "ma50": 11.548600006103516,
+    "ma200": 7.3288500010967255,
+    "rsi14": 51.497220176620814,
     "high_20d": 13.59000015258789,
-    "low_5d": 11.5,
-    "low_10d": 11.229999542236328,
+    "low_5d": 12.050000190734863,
+    "low_10d": 11.475000381469727,
     "high_52w": 14.1899995803833,
     "low_52w": 3.7100000381469727,
-    "atr14": 0.6928642817905971,
-    "atr14_pct": 5.193885111434463,
-    "position_in_52w_range_pct": 91.88931808279422
+    "atr14": 0.7175000054495675,
+    "atr14_pct": 5.833333287181848,
+    "position_in_52w_range_pct": 81.96565389119158
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-09",
-      "open": 7.93,
-      "high": 7.98,
-      "low": 7.8,
-      "close": 7.93,
-      "volume": 52200.0
-    },
     {
       "date": "2024-09-10",
       "open": 7.96,
@@ -4330,20 +4322,20 @@
       "date": "2026-09-08",
       "open": 12.99,
       "high": 13.518,
-      "low": 12.9899,
+      "low": 12.99,
       "close": 13.34,
-      "volume": 134234.0
+      "volume": 134200.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 13.31,
+      "high": 13.31,
+      "low": 12.23,
+      "close": 12.3,
+      "volume": 75981.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-08",
-      "open": 7.01,
-      "high": 7.01,
-      "low": 6.8,
-      "close": 6.91,
-      "volume": 38200.0
-    },
     {
       "date": "2025-09-09",
       "open": 6.85,
@@ -6348,9 +6340,17 @@
       "date": "2026-09-08",
       "open": 12.99,
       "high": 13.518,
-      "low": 12.9899,
+      "low": 12.99,
       "close": 13.34,
-      "volume": 134234.0
+      "volume": 134200.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 13.31,
+      "high": 13.31,
+      "low": 12.23,
+      "close": 12.3,
+      "volume": 75981.0
     }
   ],
   "ai_synthesis": null,

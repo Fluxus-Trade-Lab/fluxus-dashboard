@@ -1,8 +1,8 @@
 {
   "ticker": "RMBS",
-  "fetched_at": "2026-09-08T22:42:08Z",
+  "fetched_at": "2026-09-09T22:37:06Z",
   "_schema": "v2",
-  "current_price": 86.88999938964844,
+  "current_price": 87.6500015258789,
   "info": {
     "symbol": "RMBS",
     "longName": "Rambus Inc.",
@@ -13,13 +13,13 @@
     "city": "San Jose",
     "website": "https://www.rambus.com",
     "fullTimeEmployees": 791,
-    "marketCap": 9424228352,
-    "enterpriseValue": 8465983488,
-    "trailingPE": 39.857796,
-    "forwardPE": 23.34968,
-    "priceToSalesTrailing12Months": 12.460455,
-    "enterpriseToRevenue": 11.193,
-    "priceToBook": 6.425824,
+    "marketCap": 9506659328,
+    "enterpriseValue": 8621083648,
+    "trailingPE": 40.20642,
+    "forwardPE": 23.553913,
+    "priceToSalesTrailing12Months": 12.569443,
+    "enterpriseToRevenue": 11.399,
+    "priceToBook": 6.4820294,
     "grossMargins": 0.80357003,
     "operatingMargins": 0.36671,
     "profitMargins": 0.3169,
@@ -31,9 +31,9 @@
     "debtToEquity": 1.487,
     "currentRatio": 9.754,
     "fiftyTwoWeekHigh": 174.1,
-    "fiftyTwoWeekLow": 72.5,
-    "averageVolume": 2850640,
-    "averageVolume10days": 1905540,
+    "fiftyTwoWeekLow": 75.02,
+    "averageVolume": 2840230,
+    "averageVolume10days": 1931670,
     "beta": 1.872,
     "sharesOutstanding": 108461603,
     "sharesFloat": 107614518,
@@ -63,14 +63,14 @@
         "yearBorn": 1970
       },
       {
-        "name": "Mr. John K. Allen",
-        "title": "VP of Accounting & Chief Accounting Officer",
-        "age": 61,
-        "yearBorn": 1964
-      },
-      {
         "name": "Mr. Shyam  Ramachandran",
         "title": "Senior VP & Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Kit  Rodgers",
+        "title": "Senior Vice President of Technology Partnerships & Corporate Development",
         "age": null,
         "yearBorn": null
       }
@@ -310,30 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.08113707042838231,
+  "options_implied_move": 0.09366799608755255,
   "technicals": {
-    "ma20": 91.125,
-    "ma50": 98.5518000793457,
-    "ma200": 107.96759998321534,
-    "rsi14": 41.25858533922197,
+    "ma20": 90.68650016784667,
+    "ma50": 97.8268000793457,
+    "ma200": 107.95474998474121,
+    "rsi14": 42.67009358939909,
     "high_20d": 104.11000061035156,
     "low_5d": 81.4800033569336,
     "low_10d": 81.4800033569336,
     "high_52w": 174.10000610351562,
-    "low_52w": 72.44999694824219,
-    "atr14": 3.6096420288085938,
-    "atr14_pct": 4.154266376066548,
-    "position_in_52w_range_pct": 14.205608598961081
+    "low_52w": 72.5,
+    "atr14": 3.320714678083147,
+    "atr14_pct": 3.7886076671689466,
+    "position_in_52w_range_pct": 14.911417928895847
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-09",
-      "open": 38.59,
-      "high": 39.33,
-      "low": 38.16,
-      "close": 38.76,
-      "volume": 2556200.0
-    },
     {
       "date": "2024-09-10",
       "open": 38.69,
@@ -4329,21 +4321,21 @@
     {
       "date": "2026-09-08",
       "open": 87.3,
-      "high": 88.575,
+      "high": 88.58,
       "low": 86.0,
       "close": 86.89,
-      "volume": 2035058.0
+      "volume": 2056400.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 86.22,
+      "high": 89.41,
+      "low": 86.2,
+      "close": 87.65,
+      "volume": 1612207.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-08",
-      "open": 75.96,
-      "high": 76.96,
-      "low": 72.45,
-      "close": 73.28,
-      "volume": 1803900.0
-    },
     {
       "date": "2025-09-09",
       "open": 73.13,
@@ -6347,10 +6339,18 @@
     {
       "date": "2026-09-08",
       "open": 87.3,
-      "high": 88.575,
+      "high": 88.58,
       "low": 86.0,
       "close": 86.89,
-      "volume": 2035058.0
+      "volume": 2056400.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 86.22,
+      "high": 89.41,
+      "low": 86.2,
+      "close": 87.65,
+      "volume": 1612207.0
     }
   ],
   "ai_synthesis": null,
