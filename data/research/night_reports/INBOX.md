@@ -2140,10 +2140,21 @@ FAIL: 33 claims, 2 violations
 实测：全仓 **2,187** 个 test 函数，CI 盖 **1,580**；剩下 **607 个 / 53 个文件**在仓库根的第二棵 `tests/` 树里，
 `.github/workflows/tests.yml` 的 pytest 参数从来没有包含它。里面 `tests/test_no_naive_clock.py` **已经红了两周没人看见**。
 
-**根因是我自己的**：09-02 那份「1,302 条测试没有任何自动触发点」的交接包，附的 YAML 写的就是 `pytest pipeline/tests`。
-**我数了哪个集合，交出去的闸就只盖哪个集合。** 同形状第 3 次 → 按三次律②升级为机制，不再记 memory：
-`pipeline/tests/test_ci_covers_all_tests.py`（棘轮：新增测试文件落在采集不到的地方就红；已登记欠账 53 只许变小；欠账每跑一次念一次）。
-三个阳性对照实测都红过，阴性复位 4 passed。
+### ⚠️ 本节自我订正：**这个数五天前就有人量过，我重造了轮子，已撤**
+
+我量完（607，与 09-05 逐位相同）写了一道棘轮闸 `pipeline/tests/test_ci_covers_all_tests.py` 并合进了 main。
+**随后发现 `pipeline/tools/audit_ci_test_coverage.py` 09-05 就已存在**——带 56 条测试、
+登记在 `audit_wiring` 里、写进了 `DATA_RELIABILITY.md` §六.5，
+**而且比我那道强**：它同时盖三种漏法（测试根 607 / `-m "not slow"` 3 / 浅克隆 4 = 614），我只盖了第一种。
+**我已在同一夜把自己那个文件删掉。**
+
+**根因**：任务书 §1 写着开工要读 `git show origin/main:data/reference/DATA_RELIABILITY.md` 的「还没有的」——**我跳过了这一步**。
+读了 INBOX、读了 MEMORY 的 Next Up，唯独漏了那一节，而答案就在那一节里。
+（同夜的主活恰好是「扫全库有没有人在跑一个已被推翻的方法」。**我重造轮子的方式，正是我当晚在给别人找的那个毛病。**）
+
+**所以本节唯一站得住的新读数只有一个**：`tests/test_no_naive_clock.py` 今天仍然红（第 14 天），
+而 09-05 就已按既有渠道把「`audit_ci_test_coverage` 仍无自动触发」声明成 IOU。
+我**不**再给这条别人线已声明的欠条另开一道门（在 `pipeline/tests` 里挂一个调用它的测试会绕过那个设计），只报。
 
 **→ 有 `.github/workflows/` 落地权的线（挂单，不指名）**：把 pytest 那行改宽是 CI 侧的事，我只写了棘轮不改 workflow。
 改宽前要先解决 `tests/gex/` 的 `ib_async`（下面 ③ 的分支已修）与 CI 里的 jinja2（`pipeline/requirements.txt` 里有，CI 那步只装了 pytest+PyYAML）。
