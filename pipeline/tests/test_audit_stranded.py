@@ -83,6 +83,16 @@ def advance_main(wc, files, msg="main moves"):
     git(wc, "push", "-q", "origin", "main"); git(wc, "fetch", "-q", "origin")
 
 
+def local_branch_with(wc, name, files, msg="work"):
+    """Same as branch_with but NEVER pushed -- the fbclock shape."""
+    git(wc, "checkout", "-q", "-b", name, "origin/main")
+    for p, t in files.items():
+        write(wc, p, t)
+    commit(wc, msg)
+    git(wc, "checkout", "-q", "main")
+    return name
+
+
 def codes(res):
     return sorted({c for c, _ in res["violations"]})
 
@@ -190,13 +200,97 @@ def test_whitelist_matches_the_constitution():
 # ---------------------------------------------------------------- the real repo
 
 def test_real_repo_reports_a_denominator_and_never_silently_empty():
-    """Structural only -- the branch list changes nightly, so pin nothing else."""
+    """Structural only -- the branch list changes nightly, so pin nothing else.
+
+    ⚠️ Bounded on purpose. Since 2026-09-09 the scan includes local branches,
+    and this checkout carries one (`worktree-fluxus-data-art`) with ~96k lines
+    across a whole subproject; a full `check()` here costs minutes and would
+    put that on every `pytest pipeline/tests` run. Enumeration is the part that
+    must hold on the real repo -- the per-line verdicts are covered by the
+    fixture tests above, where the answers are known.
+    """
     root = Path(__file__).resolve().parents[2]
     if not (root / ".git").exists():
         pytest.skip("not a git checkout")
-    res = S.check(root)
-    assert res["refs_seen"] > 0, "一个 ref 都没看到 = 我们在对空气打分"
-    for r in res["branches"]:
+    pairs = S.enumerate_branches(root)
+    assert isinstance(pairs, list)
+    names = [b for b, _ in pairs]
+    assert len(names) == len(set(names)), f"同一条分支被数了两次: {names}"
+    for b, local_only in pairs:
+        assert S._git(root, "rev-list", "--count", f"{S.MAIN}..{b}").strip() != "0"
+        on_origin = S._git_ok(root, "rev-parse", "--verify", "-q",
+                              f"refs/remotes/origin/{b}") is not None
+        if local_only:
+            assert not b.startswith("origin/") and not on_origin, b
+    smallest = sorted(names, key=lambda b: len(S._git(
+        root, "log", f"{S.MAIN}..{b}", "--name-only", "--format=").splitlines()))[:3]
+    for b in smallest:
+        r = S.branch_report(root, b)
         assert r["lines_stranded"] <= r["lines_missing"]
         assert 0.0 <= r["missing_share"] <= 1.0
         assert r["delivered"] == (r["lines_missing"] == 0)
+        assert isinstance(r["fast_forwardable"], bool)
+        assert r["commits_behind"] >= 0
+
+
+# ------------------------------------------------- 2026-09-09: the set, and the direction
+
+def test_S5_a_branch_that_was_never_pushed_is_seen_at_all(repo):
+    """POSITIVE CONTROL for the hole this check had until 2026-09-09.
+
+    `fix/joe-fbclock-rebased-2026-09-08` sat five nights local-only. The scan
+    enumerated `refs/remotes/origin` only, so the auditor written to stop
+    exactly that loss reported zero violations about it.
+    """
+    local_branch_with(repo, "joe-local-x",
+                      {"pipeline/tests/test_local.py": "def test_a():\n    pass\n"})
+    res = S.check(repo)
+    names = [b["branch"] for b in res["branches"]]
+    assert "joe-local-x" in names, f"从未推送的分支必须被看见: {names}"
+    assert "S5" in codes(res), res["violations"]
+    r = [b for b in res["branches"] if b["branch"] == "joe-local-x"][0]
+    assert r["local_only"] and r["lines_stranded"] > 0
+
+
+def test_S5_negative_control_a_pushed_branch_is_not_flagged_unpushed(repo):
+    """The other half: pushing it must actually clear S5, not just look tidier."""
+    branch_with(repo, "pushed-x", {"pipeline/tests/test_p.py": "def test_a():\n    pass\n"})
+    res = S.check(repo)
+    r = [b for b in res["branches"] if b["branch"].endswith("pushed-x")][0]
+    assert r["local_only"] is False
+    assert "S5" not in codes(res), res["violations"]
+
+
+def test_a_local_branch_with_an_origin_twin_is_not_double_counted(repo):
+    """origin/<name> already covers it; counting both inflates every total."""
+    branch_with(repo, "twin-x", {"pipeline/tests/test_t.py": "t\n"})
+    res = S.check(repo)
+    hits = [b for b in res["branches"] if b["branch"].endswith("twin-x")]
+    assert len(hits) == 1, [b["branch"] for b in res["branches"]]
+    assert hits[0]["branch"] == "origin/twin-x"
+
+
+def test_fast_forwardable_says_whether_it_can_actually_land(repo):
+    """「不在 main 上」和「能合进 main」是两件事,中间隔着一个方向。
+
+    Both branches below are stranded by the same measure. Only one of them can
+    be landed with a push, and three mornings of "建议合 y" could not say which.
+    """
+    branch_with(repo, "ff-x", {"pipeline/tests/test_ff.py": "def test_a():\n    pass\n"})
+    ff = [b for b in S.check(repo)["branches"] if b["branch"].endswith("ff-x")][0]
+    assert ff["fast_forwardable"] and ff["commits_behind"] == 0
+
+    advance_main(repo, {"README.md": "base\nmain moved\n"}, "main moves on")
+    ff2 = [b for b in S.check(repo)["branches"] if b["branch"].endswith("ff-x")][0]
+    assert ff2["lines_stranded"] > 0, "还是滞留的 —— 变的只是能不能快进"
+    assert not ff2["fast_forwardable"], "main 前进后必须报「需 rebase」"
+    assert ff2["commits_behind"] == 1
+
+
+def test_render_prints_the_landing_verdict(repo):
+    branch_with(repo, "r-x", {"pipeline/tests/test_r.py": "def test_a():\n    pass\n"})
+    out = S.render(S.check(repo))
+    assert "落地：" in out and "可快进" in out, out
+    advance_main(repo, {"README.md": "base\nmoved\n"}, "move")
+    out2 = S.render(S.check(repo))
+    assert "需 rebase" in out2, out2

@@ -84,6 +84,16 @@ Violations:
   S4  a branch's missing lines sit only in files main has MOVED ON since the
       fork -- stale, not stranded. Reported so nobody writes "建议合 y" about
       it, which is the mistake this module was built after making.
+  S5  a branch with undelivered lines was NEVER PUSHED. Added 2026-09-09 after
+      `fix/joe-fbclock-rebased-2026-09-08` -- the branch this module exists to
+      stop losing -- spent five nights local-only while this check scanned
+      `refs/remotes/origin` only and therefore reported it as nothing at all.
+      有备份/有推送 is a bool; the gap lived in the set the scan enumerated.
+
+Every non-delivered branch also carries a LANDING verdict, separate from the
+delivery one: `fast_forwardable` asks whether main is still the branch's
+ancestor, i.e. whether `push origin <branch>:main` would succeed. 「不在 main
+上」（这个模块答的）和「能合进 main」（这一行答的）之间隔着一个方向。
 
     python -m pipeline.tools.audit_stranded
     python -m pipeline.tools.audit_stranded --json out.json
@@ -176,6 +186,28 @@ def main_moved_on(repo: Path, main: str, base: str, path: str) -> int:
     return len([l for l in (out or "").splitlines() if l.strip()])
 
 
+def fast_forwardable(repo: Path, main: str, branch: str) -> bool:
+    """Can `branch` be pushed to main as a fast-forward, i.e. is main its ancestor?
+
+    ⚠️ This is a DIFFERENT question from "are the branch's lines on main", and
+    the morning report needs both. On 2026-09-08 `audit_stranded` correctly said
+    fbclock's 55 lines were absent from main -- and said nothing about whether
+    the branch could actually land. 「不在 main 上」和「能合进 main」之间隔着一个
+    方向：a branch forked a week ago is stranded AND unmergeable, and the human
+    reading "建议合 y" has to discover the rebase themselves.
+
+    `merge-base --is-ancestor main branch` answers it directly: true means main
+    has not moved since the fork, so `push origin branch:main` succeeds.
+    """
+    return _git_ok(repo, "merge-base", "--is-ancestor", main, branch) is not None
+
+
+def commits_behind(repo: Path, main: str, branch: str) -> int:
+    """How many commits main has that the branch does not -- the rebase's size."""
+    out = _git_ok(repo, "rev-list", "--count", f"{branch}..{main}")
+    return int((out or "0").strip() or 0)
+
+
 def undelivered(repo: Path, main: str, branch: str,
                 path: str) -> Tuple[int, int, int]:
     """(added_by_branch, missing_from_main, commits_main_made_since_fork)."""
@@ -236,6 +268,8 @@ def branch_report(repo: Path, branch: str, main: str = MAIN) -> Dict[str, Any]:
         "newest_commit": newest,
         "delivered": not missing_files,
         "stale_only": bool(superseded) and not stranded,
+        "fast_forwardable": fast_forwardable(repo, main, branch),
+        "commits_behind": commits_behind(repo, main, branch),
     }
 
 
@@ -244,21 +278,77 @@ def _age_days(iso: str, now: Optional[datetime] = None) -> float:
     return (now - datetime.fromisoformat(iso)).total_seconds() / 86400.0
 
 
+def _has_unmerged(repo: Path, main: str, ref: str) -> bool:
+    return _git(repo, "rev-list", "--count", f"{main}..{ref}").strip() != "0"
+
+
+def _ignored(name: str) -> bool:
+    return any(name.startswith(p) for p in IGNORED_PREFIXES)
+
+
+def enumerate_branches(repo: Path, main: str = MAIN) -> List[Tuple[str, bool]]:
+    """Every branch with unmerged commits, as (ref, local_only).
+
+    ⚠️ Until 2026-09-09 this scanned `refs/remotes/origin` only, and that hole
+    was the exact shape of 「缺口住在集合里」: `fix/joe-fbclock-rebased-2026-09-08`
+    -- the branch this module was written to stop losing -- sat five nights
+    LOCAL-ONLY, so the auditor built to report it could not see it, and reported
+    zero violations while the work rotted. A branch that was never pushed is
+    strictly worse than a stranded one: 铁律一 says the disk dying takes it.
+
+    Local branches that DO have an `origin/<name>` counterpart are skipped here;
+    the origin ref already covers their delivered/stranded state, and "local is
+    ahead of its own remote" is `audit_unpushed`'s measure, not this one.
+    """
+    remote = [r.strip() for r in _git(
+        repo, "for-each-ref", "--format=%(refname:short)",
+        "refs/remotes/origin").splitlines() if r.strip()]
+    out: List[Tuple[str, bool]] = [
+        (r, False) for r in remote
+        if r not in (main, "origin/HEAD")
+        and not _ignored(r[len("origin/"):])
+        and _has_unmerged(repo, main, r)
+    ]
+    seen = {r[len("origin/"):] for r, _ in out}
+    local = [r.strip() for r in _git(
+        repo, "for-each-ref", "--format=%(refname:short)",
+        "refs/heads").splitlines() if r.strip()]
+    for b in local:
+        if b in seen or _ignored(b):
+            continue
+        if _git_ok(repo, "rev-parse", "--verify", "-q",
+                   f"refs/remotes/origin/{b}") is not None:
+            continue                      # pushed; its origin ref was scanned
+        if _has_unmerged(repo, main, b):
+            out.append((b, True))
+    return out
+
+
 def check(repo: Path, main: str = MAIN, max_age: float = 2.0,
           now: Optional[datetime] = None) -> Dict[str, Any]:
     refs = [r.strip() for r in _git(
         repo, "for-each-ref", "--format=%(refname:short)",
         "refs/remotes/origin").splitlines() if r.strip()]
-    branches = [r for r in refs
-                if r not in (main, "origin/HEAD")
-                and not any(r[len("origin/"):].startswith(p)
-                            for p in IGNORED_PREFIXES)
-                and _git(repo, "rev-list", "--count", f"{main}..{r}").strip() != "0"]
-    reports = [branch_report(repo, b, main) for b in branches]
+    pairs = enumerate_branches(repo, main)
+    branches = [b for b, _ in pairs]
+    local_only = {b for b, lo in pairs if lo}
+    reports = []
+    for b in branches:
+        r = branch_report(repo, b, main)
+        r["local_only"] = b in local_only
+        reports.append(r)
     v: List[Tuple[str, str]] = []
     for r in reports:
         age = _age_days(r["oldest_unmerged"], now)
         r["age_days"] = round(age, 2)
+        if r.get("local_only") and not r["delivered"]:
+            # 报 lines_missing 而不是 lines_stranded：S5 问的是「这活还在不在」,
+            # 不是「该不该合」。一条全是过期行的分支同样会随磁盘一起消失,而按
+            # lines_stranded 计数它会印出「0 行未送到」——一个把风险读成零的数。
+            v.append(("S5", f"{r['branch']}: 从未推送到 origin —— 磁盘死了这活就没了"
+                            f"（铁律一），{r['lines_missing']} 行不在 main"
+                            f"（其中真未送到 {r['lines_stranded']} 行），"
+                            f"已放 {age:.1f} 天。先 push 再谈合。"))
         if r["delivered"]:
             v.append(("S2", f"{r['branch']}: 内容已全在 main，分支是垃圾，可删"))
         elif r["stale_only"]:
@@ -293,6 +383,12 @@ def render(res: Dict[str, Any]) -> str:
                  f"加 {r['lines_added']} 行 · {r['lines_missing']} 行不在 main "
                  f"({100 * r['missing_share']:.1f}%) · 其中真未送到 {r['lines_stranded']} 行 · "
                  f"最老未合 commit {r.get('age_days', '?')} 天前")
+        if not r["delivered"]:
+            # 「不在 main 上」和「能合进 main」是两件事,中间隔着一个方向。
+            ff = ("可快进（push origin <分支>:main 即可）" if r.get("fast_forwardable")
+                  else f"需 rebase（main 已前进 {r.get('commits_behind', '?')} commit）")
+            push = "⚠️ 从未推送" if r.get("local_only") else "已推送"
+            L.append(f"      落地：{ff} · {push}")
         for x in r["stranded_files"][:4]:
             mark = "白名单内" if x["safe"] else "⚠️ 白名单外"
             L.append(f"        🔴 {x['missing']:>4}/{x['added']:<5} 行缺  {x['path']}  "
