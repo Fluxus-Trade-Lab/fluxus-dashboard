@@ -58,8 +58,25 @@ class Ledger:
         except Exception:  # noqa: BLE001
             pass
 
-    def wrote(self, name: str) -> None:
-        self.row["wrote"].append(name)
+    def wrote(self, path: Any) -> None:
+        """Record one output file this run actually put on disk.
+
+        Verified, not asserted: the name is appended only if the file is
+        there when we look, and never twice. From 2026-08 to 2026-09-10 this
+        method had exactly one caller -- its own unit test -- so every row in
+        the ledger carried `"wrote": []` while the run was committing a dozen
+        changed files. An always-empty evidence field is indistinguishable
+        from "nothing happened", which is the failure it was built to rule
+        out; a field that lists files it did not write would be worse still.
+        """
+        try:
+            p = Path(path)
+            if not p.exists():
+                return
+            if p.name not in self.row["wrote"]:
+                self.row["wrote"].append(p.name)
+        except Exception:  # noqa: BLE001 -- the ledger must never cost a run
+            pass
 
     def error(self, where: str, msg: str) -> None:
         self.row["errors"].append({"where": where, "msg": str(msg)[:300]})

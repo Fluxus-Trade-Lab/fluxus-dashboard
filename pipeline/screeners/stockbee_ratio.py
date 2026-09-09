@@ -117,7 +117,19 @@ def run(universe: pd.DataFrame, history_path: str,
     -------
     dict
         ``{'ratio_5d': float, 'gainers_today': int, 'losers_today': int,
-        'gainers_5d': int, 'losers_5d': int, 'signal': str}``
+        'gainers_5d': int, 'losers_5d': int, 'signal': str, 'count': int}``
+
+        ``count`` is an alias of ``gainers_today`` -- the number of universe
+        rows this screener selected today. It exists so that every screener
+        payload answers ``count`` the same way: run_all derives the run
+        ledger's ``screeners.counts`` by reading that one key off every
+        payload, and this was the only payload without it, so eight nights
+        of ledger rows read ``"stockbee_ratio": null`` while
+        data/output/stockbee_ratio.json was perfectly healthy (2026-09-09:
+        ratio_5d 0.6335, 200 gainers). Owning the key here rather than
+        special-casing this screener inside run_all keeps that derivation
+        generic -- the next screener to arrive without a ``count`` is caught
+        by a test instead of quietly printing null.
     """
     if universe.empty:
         logger.warning("Empty universe passed to stockbee_ratio screener")
@@ -128,6 +140,7 @@ def run(universe: pd.DataFrame, history_path: str,
             "gainers_5d": 0,
             "losers_5d": 0,
             "signal": "NEUTRAL",
+            "count": 0,
         }
 
     # --- Count today's gainers and losers ---
@@ -186,4 +199,9 @@ def run(universe: pd.DataFrame, history_path: str,
         "gainers_5d": gainers_5d,
         "losers_5d": losers_5d,
         "signal": signal,
+        # Alias, not a new measurement -- see the docstring. Nothing reads
+        # `count` off this payload except the run ledger's generic
+        # derivation; the ratio, the signal and every published number are
+        # unchanged.
+        "count": gainers_today,
     }
