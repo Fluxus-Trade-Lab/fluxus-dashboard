@@ -267,6 +267,33 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     assert sorted(note["enriched"]) == ["conditions", "regime", "state_board", "verdict"]
     assert lines[-1]["session"] == LAST_SESSION.isoformat()
 
+    # 3b. THE OTHER always-empty evidence field. `wrote` was `[]` on every row
+    # the ledger ever held, because `Ledger.wrote` had no caller outside its
+    # own unit test -- so a run that wrote nineteen files and a run that wrote
+    # none produced identical rows. Walked here rather than asserted on the
+    # source, because the failure was never in `wrote`: it was in nobody
+    # calling it, and only the real orchestrator can show that they do.
+    wrote = lines[-1]["wrote"]
+    assert wrote, 'run ledger "wrote" is empty after a run that wrote outputs'
+    for name in ("universe.json", "breadth.json", "signals.json",
+                 "etf_data.json", "watchlist.json", "shortlist.json",
+                 "market_health.json", "quality.json", "stockbee_ratio.json"):
+        assert (out / name).exists(), f"{name} was not written at all"
+        assert name in wrote, f"{name} is on disk but missing from the ledger"
+    assert len(wrote) == len(set(wrote)), f"duplicate names in wrote: {wrote}"
+    # ...and nothing claimed that is not there. Over-reporting would be worse
+    # than the empty list: an empty list at least looks empty.
+    on_disk = {f.name for f in out.rglob("*.json")}
+    assert set(wrote) <= on_disk, f"ledger claims files nothing wrote: {set(wrote) - on_disk}"
+
+    # 3c. Every screener answers with a number. `stockbee_ratio` read `null`
+    # for eight nights while its output file was healthy, because the payload
+    # had no `count` key -- indistinguishable from a screener that died.
+    counts = lines[-1]["guards"]["screeners"]["counts"]
+    assert None not in counts.values(), counts
+    assert all(isinstance(v, int) for v in counts.values()), counts
+    assert isinstance(counts["stockbee_ratio"], int)
+
     # 4. watchlist + shortlist + assets all present with required blocks
     from pipeline.quality import check_required_blocks
     missing = check_required_blocks(out)

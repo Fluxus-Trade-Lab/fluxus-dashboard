@@ -16,6 +16,7 @@ import sys
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -177,6 +178,74 @@ def _json_serializer(obj):
     if pd.isna(obj):
         return None
     return str(obj)
+
+
+# ---------------------------------------------------------------------------
+# Run-ledger evidence: every data/output write in this module goes through one
+# of the two helpers below, so `run_ledger.jsonl`'s `wrote` list is the set of
+# files the run really touched. Before 2026-09-10 nothing called
+# `Ledger.wrote`, so every row said `"wrote": []` -- a night that wrote
+# nineteen files and a night that wrote none looked identical in the ledger.
+# ---------------------------------------------------------------------------
+
+def _mtime_ns(path: Path):
+    try:
+        return path.stat().st_mtime_ns
+    except OSError:
+        return None
+
+
+def _emit(ledger, path: Path, text: str, **kwargs) -> Path:
+    """Write one output file, then record it in the run ledger.
+
+    The single door for this module's own writes: `ledger.wrote` runs only
+    after `write_text` returned, and re-checks the file on disk, so the
+    ledger records what happened rather than what was intended.
+    """
+    path.write_text(text, **kwargs)
+    ledger.wrote(path)
+    return path
+
+
+def _record_external(ledger, path: Path, before_ns) -> None:
+    """Record a file another module wrote, only if this run changed it.
+
+    `_emit` cannot cover groups_history.json / correction_risk.json /
+    tick_cycle.json -- the writes live inside the module we call, and unlike
+    build_groups.save() those three do not hand back the path they wrote.
+    Yesterday's copy of each of them is on disk too, so
+    "the file exists" proves nothing; the honest evidence is that its mtime
+    moved while we were here. A `wrote` entry for a file this run did not
+    write would be worse than the empty list this replaces, because an
+    empty list at least looks empty.
+    """
+    if _mtime_ns(path) != before_ns:
+        ledger.wrote(path)
+
+
+def _screener_count(payload) -> Any:
+    """The row count run_all files in the ledger for one screener.
+
+    Returns an int, or a short string saying why there is none -- never
+    None. `None` was the old behaviour and it is unreadable: a screener
+    that returned nothing and a screener whose payload simply has no
+    `count` key produced the same `null` (stockbee_ratio, eight nights).
+    """
+    if not isinstance(payload, dict):
+        return f'not-a-dict:{type(payload).__name__}'
+    if 'count' not in payload:
+        return 'no-count-key'
+    n = payload['count']
+    return n if isinstance(n, int) else f'count-not-int:{type(n).__name__}'
+
+
+def _screener_counts(results: dict) -> dict:
+    """The `screeners.counts` block main files in the run ledger.
+
+    A named function so the test can exercise the derivation main actually
+    uses instead of a copy of it.
+    """
+    return {k: _screener_count(d) for k, d in results.items()}
 
 
 def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
@@ -844,13 +913,12 @@ def main():
     # 8. Save outputs
     for name, data in results.items():
         output = {'timestamp': timestamp, **data}
-        (OUTPUT_DIR / f'{name}.json').write_text(
-            json.dumps(output, indent=2, default=_json_serializer)
-        )
+        _emit(ledger, OUTPUT_DIR / f'{name}.json',
+              json.dumps(output, indent=2, default=_json_serializer))
         logger.info(f"Saved {name}.json")
 
     # Save signals
-    (OUTPUT_DIR / 'signals.json').write_text(json.dumps(
+    _emit(ledger, OUTPUT_DIR / 'signals.json', json.dumps(
         {'timestamp': timestamp, **signals}, indent=2, default=_json_serializer
     ))
     logger.info("Saved signals.json")
@@ -858,7 +926,7 @@ def main():
     # Save breadth metrics (skipped when the breadth step failed — the previous
     # breadth.json stays in place rather than being replaced by a partial one)
     if breadth_result is not None:
-        (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
+        _emit(ledger, OUTPUT_DIR / 'breadth.json', json.dumps(
             {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
         ))
         logger.info("Saved breadth.json")
@@ -868,7 +936,7 @@ def main():
     # Save market health (stale-mark the previous file when unavailable)
     mh_path = OUTPUT_DIR / 'market_health.json'
     if market_health_payload is not None:
-        mh_path.write_text(json.dumps(
+        _emit(ledger, mh_path, json.dumps(
             {'timestamp': timestamp, 'stale': False, **market_health_payload},
             indent=2, default=_json_serializer
         ), encoding='utf-8')
@@ -877,7 +945,7 @@ def main():
         try:
             prev = json.loads(mh_path.read_text(encoding='utf-8'))
             prev['stale'] = True
-            mh_path.write_text(json.dumps(
+            _emit(ledger, mh_path, json.dumps(
                 prev, indent=2, default=_json_serializer
             ), encoding='utf-8')
             logger.warning("market_health unavailable — marked previous file stale")
@@ -889,30 +957,29 @@ def main():
         # Compact separators (no indent) for this file only: it is a ~1MB
         # machine-read book fetched by the browser, and indent=2 inflates it
         # by ~60% for no human benefit. Every other output keeps indent=2.
-        (OUTPUT_DIR / 'breadth_replay.json').write_text(
-            json.dumps({'timestamp': timestamp, **replay_payload},
-                       separators=(',', ':'), default=_json_serializer),
-            encoding='utf-8')
+        _emit(ledger, OUTPUT_DIR / 'breadth_replay.json',
+              json.dumps({'timestamp': timestamp, **replay_payload},
+                         separators=(',', ':'), default=_json_serializer),
+              encoding='utf-8')
         logger.info("Saved breadth_replay.json")
 
     if heating_up_payload is not None:
-        (OUTPUT_DIR / 'heating_up.json').write_text(
-            json.dumps({'timestamp': timestamp, **heating_up_payload},
-                       indent=2, default=_json_serializer),
-            encoding='utf-8')
+        _emit(ledger, OUTPUT_DIR / 'heating_up.json',
+              json.dumps({'timestamp': timestamp, **heating_up_payload},
+                         indent=2, default=_json_serializer),
+              encoding='utf-8')
         logger.info("Saved heating_up.json")
 
     if ticker_events_payload is not None:
-        (OUTPUT_DIR / 'ticker_events.json').write_text(
-            json.dumps({'timestamp': timestamp, **ticker_events_payload},
-                       separators=(',', ':'), default=_json_serializer),
-            encoding='utf-8')
+        _emit(ledger, OUTPUT_DIR / 'ticker_events.json',
+              json.dumps({'timestamp': timestamp, **ticker_events_payload},
+                         separators=(',', ':'), default=_json_serializer),
+              encoding='utf-8')
         logger.info("Saved ticker_events.json")
 
     # Save ETF data
-    (OUTPUT_DIR / 'etf_data.json').write_text(
-        etf_data.to_json(orient='records', indent=2)
-    )
+    _emit(ledger, OUTPUT_DIR / 'etf_data.json',
+          etf_data.to_json(orient='records', indent=2))
     logger.info("Saved etf_data.json")
 
     # Asset-layer signals: the same knives (RS line, MA reclaim, ATR
@@ -921,8 +988,8 @@ def main():
     try:
         from pipeline.screeners.asset_signals import archive as archive_assets, build as build_assets, fetch as fetch_assets
         asset_payload = build_assets(fetch_assets(), last_completed_session().isoformat())
-        (OUTPUT_DIR / 'asset_signals.json').write_text(
-            json.dumps({'timestamp': timestamp, **asset_payload}, indent=2, default=_json_serializer))
+        _emit(ledger, OUTPUT_DIR / 'asset_signals.json',
+              json.dumps({'timestamp': timestamp, **asset_payload}, indent=2, default=_json_serializer))
         n_assets = archive_assets(asset_payload)
         ledger.note('asset_signals', 'ok' if asset_payload['count'] >= 20 else 'thin',
                     count=asset_payload['count'])
@@ -1038,9 +1105,8 @@ def main():
     else:
         if nd['status'] not in ('ok', 'no-baseline'):
             logger.warning("no_downgrade: %s", nd['reason'])
-        (OUTPUT_DIR / 'universe.json').write_text(
-            json.dumps(universe_export, indent=None, default=_json_serializer)
-        )
+        _emit(ledger, OUTPUT_DIR / 'universe.json',
+              json.dumps(universe_export, indent=None, default=_json_serializer))
         logger.info("Saved universe.json")
 
     # Severe means a feed is broken, not noisy. Stopping here leaves yesterday's
@@ -1080,7 +1146,10 @@ def main():
         # silently never grew.
         from pipeline.themes.build_groups import run as run_groups, save as save_groups
         groups_payload = run_groups()
-        save_groups(groups_payload, OUTPUT_DIR)
+        # save() hands back the path it wrote, which is better evidence than a
+        # path literal here would be -- and keeps this module free of one, as
+        # test_group_history's guard requires.
+        ledger.wrote(save_groups(groups_payload, OUTPUT_DIR))
         gs = groups_payload['summary']
         logger.info(
             "Saved groups.json - %d industries, %d themes "
@@ -1096,7 +1165,9 @@ def main():
     # domain -- a projection crash must not read as a group-layer failure.
     try:
         from pipeline.themes.group_history import project as project_groups_history
+        _gh_before = _mtime_ns(OUTPUT_DIR / 'groups_history.json')
         ph = project_groups_history()
+        _record_external(ledger, OUTPUT_DIR / 'groups_history.json', _gh_before)
         logger.info("Saved groups_history.json - %d groups x %d sessions",
                     ph.get("groups", 0), ph.get("sessions", 0))
     except Exception:
@@ -1116,7 +1187,7 @@ def main():
         _names = sorted({x for v in _themes.values() for x in v} | {'SPY'})
         _bars = _SW.fetch_bars(_names)
         _payload = _SW.build(_themes, _bars)
-        (OUTPUT_DIR / 'theme_ladder.json').write_text(json.dumps(_payload, separators=(',', ':')))
+        _emit(ledger, OUTPUT_DIR / 'theme_ladder.json', json.dumps(_payload, separators=(',', ':')))
         _n = _SW.archive_ladder(_payload)
         logger.info("Saved theme_ladder.json - %d rungs, %d themes; ledger %d rows",
                     len(_payload.get('rungs', {})), len(_payload.get('themes', {})), _n)
@@ -1152,7 +1223,7 @@ def main():
             logger.info("momentum97_shadow: +%d rows for %s", n_sh, wl_date)
         except Exception:
             logger.exception("momentum97 shadow log failed - watchlist.json unaffected")
-        (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
+        _emit(ledger, OUTPUT_DIR / 'watchlist.json', json.dumps(wl, indent=2, default=_json_serializer))
         ledger.note('watchlist', 'ok', gated=wl['universe_gated'],
                     panels={p['key']: p['count'] for z in wl['zones'] for p in z['panels']})
         logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
@@ -1212,7 +1283,7 @@ def main():
         sl = {'date': wl_date, 'seats': seats, 'manual': manual, 'cards': cards,
               'legend': {'EP': '≥10%×量≥3×', '4%': '≥4%×量≥1', 'NH+RS': '20日新高+RS线新高同日',
                          'x21': '上穿21EMA', 'x50': '上穿50SMA'}}
-        (OUTPUT_DIR / 'shortlist.json').write_text(json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
+        _emit(ledger, OUTPUT_DIR / 'shortlist.json', json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
         n_sl = NC.archive(sl)
         NC.archive_seats(sl)
         ledger.note('shortlist', 'ok', cards=len(cards), manual=len(manual),
@@ -1243,7 +1314,7 @@ def main():
         lib = defaultdict(list)
         for f in sorted((OUTPUT_DIR / 'library').glob('*.md')):
             lib[f.name.split('_', 1)[0]].append(f.name)
-        (OUTPUT_DIR / 'library' / 'index.json').write_text(json.dumps(dict(lib), indent=1))
+        _emit(ledger, OUTPUT_DIR / 'library' / 'index.json', json.dumps(dict(lib), indent=1))
     except Exception:  # noqa: BLE001
         logger.exception("library index failed")
 
@@ -1251,8 +1322,8 @@ def main():
     try:
         from pipeline.rotation.build_rotation import build as build_rotation
         rotation_payload = build_rotation()
-        (OUTPUT_DIR / 'rotation.json').write_text(
-            json.dumps(rotation_payload, indent=2, default=_json_serializer))
+        _emit(ledger, OUTPUT_DIR / 'rotation.json',
+              json.dumps(rotation_payload, indent=2, default=_json_serializer))
         rv = rotation_payload['verdict']
         logger.info("Saved rotation.json - %s", rv['sentence'])
     except Exception:
@@ -1263,7 +1334,9 @@ def main():
     # domain; the appendix (VIX3M/HYG/IEF logistic NULL) is not re-run nightly.
     try:
         from pipeline.risk.correction_risk import fetch_inputs, _main_from
+        _cr_before = _mtime_ns(OUTPUT_DIR / 'correction_risk.json')
         cr = _main_from(fetch_inputs(with_appendix=False), with_appendix=False)
+        _record_external(ledger, OUTPUT_DIR / 'correction_risk.json', _cr_before)
         logger.info("Saved correction_risk.json - P(5%% dd/21d) %.3f vs base %.3f (VIX Q%d, %s 200dma)",
                     cr['prob'], cr['base_rate'], cr['today']['vix_quintile'],
                     'above' if cr['today']['above_200dma'] else 'below')
@@ -1292,7 +1365,9 @@ def main():
     # Reads the CSV the ledger just refreshed; own failure domain.
     try:
         from pipeline.risk.regime_ledger import write_tick_cycle_json
+        _tc_before = _mtime_ns(OUTPUT_DIR / 'tick_cycle.json')
         tc = write_tick_cycle_json(lrow["date"] if lrow else last_completed_session().isoformat())
+        _record_external(ledger, OUTPUT_DIR / 'tick_cycle.json', _tc_before)
         if tc:
             logger.info("Saved tick_cycle.json - band=%s rank=%.3f since %s",
                         tc["band"], tc["spread_rank252"], tc["band_since"])
@@ -1305,8 +1380,8 @@ def main():
     try:
         from pipeline.quality import check_site
         site_report = check_site(OUTPUT_DIR, last_completed_session().isoformat())
-        (OUTPUT_DIR / 'quality.json').write_text(
-            json.dumps(site_report, indent=2, default=_json_serializer))
+        _emit(ledger, OUTPUT_DIR / 'quality.json',
+              json.dumps(site_report, indent=2, default=_json_serializer))
         logger.info("Site quality: %s (%s)", site_report['status'],
                     {k: v['status'] for k, v in site_report['sources'].items()})
     except Exception:  # noqa: BLE001
@@ -1322,7 +1397,7 @@ def main():
                     sources={k: v['status'] for k, v in site_report['sources'].items()})
     except Exception:  # noqa: BLE001
         pass
-    ledger.note('screeners', 'ok', counts={k: (d.get('count') if isinstance(d, dict) else None) for k, d in results.items()})
+    ledger.note('screeners', 'ok', counts=_screener_counts(results))
     ledger.write()
 
 
