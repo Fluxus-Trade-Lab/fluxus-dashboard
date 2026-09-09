@@ -1,0 +1,64 @@
+log: 837 rows | 17 sessions 2026-08-13..2026-09-04 | 106 tickers
+marketcal grid 2026-08-13..2026-09-08 = 18 sessions | last completed session = 2026-09-08
+
+=== FEED GAPS: sessions marketcal says exist that the feed omits ===
+  benchmark SPY is missing: none
+
+=== JOIN CHECK: ledger's stored close vs the bar we pull today ===
+  resolvable 834 rows | UNRESOLVABLE 3 (ticker delisted, or its as-of session vanished from the feed)
+  within 0.5%: 96.3%   within 2%: 98.1%   max gap 19.9%
+
+=== ALL ROWS ===
+
+  --- +3 sessions   (88 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -0.5%  CI     [-1.2,-0.1]  n=749  dates=15  >0: 44%
+           breaking excess  med  -2.4%  CI     [-4.6,-0.3]  n=29   dates=8   >0: 28%
+             basing excess  med  -0.3%  CI     [-1.4,+0.6]  n=326  dates=15  >0: 46%
+           drifting excess  med  -0.0%  CI     [-0.8,+1.1]  n=53   dates=15  >0: 49%
+             failed excess  med  -0.9%  CI     [-1.2,-0.4]  n=341  dates=15  >0: 42%
+
+  --- +5 sessions   (160 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -0.7%  CI     [-1.8,+0.4]  n=677  dates=13  >0: 46%
+           breaking excess  med  -3.7%  CI     [-4.8,+1.4]  n=29   dates=8   >0: 34%
+             basing excess  med  +0.0%  CI     [-1.6,+0.9]  n=292  dates=13  >0: 50%
+           drifting excess  med  +0.1%  CI     [-0.9,+0.8]  n=47   dates=13  >0: 53%
+             failed excess  med  -1.5%  CI     [-2.3,-0.6]  n=309  dates=13  >0: 43%
+
+  --- +10 sessions   (374 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -1.0%  CI     [-1.5,-0.6]  n=463  dates=8   >0: 42%
+           breaking excess  med  -3.1%  CI     [-6.9,+5.0]  n=14   dates=5   >0: 36%
+             basing excess  med  -0.8%  CI     [-1.2,+0.2]  n=202  dates=8   >0: 44%
+           drifting excess  med  -0.0%  CI     [-1.2,+0.7]  n=24   dates=8   >0: 46%
+             failed excess  med  -2.1%  CI     [-2.9,-0.4]  n=223  dates=8   >0: 41%
+
+=== FIRST DAY IN STAGE (what --review prints) ===
+
+  --- +3 sessions   (10 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -0.7%  CI     [-2.3,+0.6]  n=136  dates=14  >0: 44%
+           breaking excess  med  -1.1%  CI     [-2.5,+2.6]  n=18   dates=8   >0: 39%
+             basing excess  med  -1.2%  CI     [-3.5,+0.3]  n=55   dates=12  >0: 40%
+           drifting excess  med  +0.2%  CI     [-1.5,+1.4]  n=15   dates=8   >0: 53%
+             failed excess  med  -0.4%  CI     [-2.3,+2.7]  n=48   dates=10  >0: 48%
+
+  --- +5 sessions   (18 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -1.0%  CI     [-3.5,+0.7]  n=128  dates=13  >0: 45%
+           breaking excess  med  -2.9%  CI     [-4.0,+4.2]  n=18   dates=8   >0: 39%
+             basing excess  med  -1.5%  CI     [-4.2,+0.6]  n=52   dates=11  >0: 44%
+           drifting excess  med  -1.0%  CI     [-4.1,+0.9]  n=14   dates=7   >0: 43%
+             failed excess  med  -0.2%  CI     [-2.5,+3.8]  n=44   dates=9   >0: 48%
+
+  --- +10 sessions   (50 observations dropped: endpoint missing or beyond 2026-09-08) ---
+             POOLED excess  med  -0.9%  CI     [-2.9,+0.2]  n=96   dates=8   >0: 46%
+           breaking excess  med  -2.7%  CI     [-3.5,+9.1]  n=11   dates=5   >0: 36%
+             basing excess  med  +0.5%  CI    [-10.1,+8.4]  n=38   dates=7   >0: 58%
+           drifting excess  med  -1.9%  CI     [-4.7,+1.1]  n=10   dates=4   >0: 30%
+             failed excess  med  -2.4%  CI     [-9.5,+9.5]  n=37   dates=7   >0: 41%
+
+=== WHEN CAN THIS LEDGER ANSWER ITS OWN QUESTION? ===
+  'breaking' -- the second entry, the whole premise of the scan --
+    rows in ledger: 30 over 17 sessions
+    distinct names first seen breaking: 18 (1.1/session)
+    to reach 30 distinct names: ~11 more sessions
+    to reach 50 distinct names: ~30 more sessions
+  NOTE: distinct names is the easy bar. The binding constraint is
+  distinct AS-OF DATES -- see dates= above; +10d currently has 1-2.

@@ -1,0 +1,46 @@
+=== join check, per session: ledger close vs the vendor bar for THAT day ===
+  as_of        rows resolv   med|d|  >0.5%   >2%   max|d|
+  2026-08-13     62     61    0.00%      0     0     0.0%
+  2026-08-14     62     61    0.00%      0     0     0.0%
+  2026-08-17     59     58    0.00%      0     0     0.0%
+  2026-08-18     61     61    0.00%      0     0     0.0%
+  2026-08-19     57     57    0.00%      0     0     0.0%
+  2026-08-20     57     57    0.00%      0     0     0.1%
+  2026-08-21     52     52    0.00%      0     0     0.1%
+  2026-08-24     56     56    0.00%      0     0     0.0%
+  2026-08-25     57     57    0.00%      0     0     0.0%
+  2026-08-26     55     55    0.00%      0     0     0.0%
+  2026-08-27     42     42    0.00%      0     0     0.0%
+  2026-08-28     28     28    0.00%      0     0     0.0%
+  2026-08-31     32     32    0.00%      0     0     0.0%
+  2026-09-01     36     36    0.00%      0     0     0.0%
+  2026-09-02     36     36    1.90%     31    16    19.9%
+  2026-09-03     41     41    0.00%      0     0     0.0%
+  2026-09-04     44     44    0.00%      0     0     0.0%
+
+  rows off by >0.5%: 31 total, 31 of them on 2026-09-02 (100%)
+
+=== the specific prediction: is 2026-09-02 the vendor's 2026-09-01 bar? ===
+  for every session in the ledger, how many rows match the vendor bar of
+  (a) that same day, vs (b) the PREVIOUS session -- within 0.1%
+  as_of           n  same-day  prev-day   verdict
+  2026-08-13     61        61         5
+  2026-08-14     61        61         6
+  2026-08-17     58        58         2
+  2026-08-18     61        61         4
+  2026-08-19     57        57         1
+  2026-08-20     57        57         3
+  2026-08-21     52        52         3
+  2026-08-24     56        56         2
+  2026-08-25     57        57         2
+  2026-08-26     55        55         1
+  2026-08-27     42        42         1
+  2026-08-28     28        28         0
+  2026-08-31     32        32         3
+  2026-09-01     36        36         2
+  2026-09-02     36         0        36  <-- REPLAY of 2026-09-01
+  2026-09-03     41        41         0
+  2026-09-04     44        44         3
+
+  (a session whose rows match the previous day better than their own day is
+   a replay; every other session is a negative control for this test)
