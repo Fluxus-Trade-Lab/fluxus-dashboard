@@ -1,0 +1,29 @@
+阳性对照 —— 在每个归档里伪造一场重放,看扫描报不报得出来
+
+  归档                              基线中位       伪造场     报出?
+  asset_signals.csv              29.0%    100.0%  ✅ 报出
+  delayed_ep_log.csv             60.2%    100.0%  ✅ 报出
+  leaders_log.csv                44.7%    100.0%  ✅ 报出
+  momentum97_shadow.csv          40.6%    100.0%  ✅ 报出
+  shortlist_log.csv              59.4%    100.0%  ✅ 报出
+  ticker_events.csv              68.2%    100.0%  ✅ 报出
+  watchlist_hits.csv             29.3%    100.0%  ✅ 报出
+
+  7 个归档上报得出,0 个漏报。
+  漏报的那些,`scan_replays.py` 对它们的「干净」不构成证据 —— 它在那里是瞎的。
+
+完美重放太容易了。真实的 09-02 是 90.5%,不是 100% —— 它有一列全变了
+(`today_relvol` 36/36 都变),而那正是它躲过所有新鲜度检查的原因。
+所以真正要问的是:一场重放里可以有几列是新的,这个扫描还看得见?
+
+  归档                            数据列            还能看见的最多新列数
+  asset_signals.csv              14                     2
+  delayed_ep_log.csv             16                     1
+  leaders_log.csv                10                     2
+  momentum97_shadow.csv           8                     1
+  shortlist_log.csv              12                     1
+  ticker_events.csv               9                     0
+  watchlist_hits.csv             16                     3
+
+  「最多新列数」是这个扫描的分辨率地板:超过它,一场重放就变成看不见的。
+  delayed_ep 的 09-02 只有 1~2 列是新的,所以它在带宽之内 —— 这是运气不是设计。
