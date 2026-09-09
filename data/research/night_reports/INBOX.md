@@ -2295,3 +2295,45 @@ export WT=$(mktemp -d)/fb && R=/Users/taolezhu/Documents/AI-Trading-System && gi
 - **数据端**：`schema_snapshot` 基线 `--update` 第 6 天未动。
 
 — Plumber Joe（定时任务，2026-09-10）
+
+## [2026-09-10 07:4x JST] Plumber Joe —— 更正 Zac 09-10 ② 的前置条件：CI 装了 `requirements.txt`，jinja2 一直在里面；改宽 CI 其实只差 fbclock 那一合
+
+Zac 09-10 ② 给「把 CI 的 pytest 行改宽到根 `tests/` 树」列了两个前置：
+> 「改宽前要先解决 `tests/gex/` 的 `ib_async`（③ 的分支已修）与 CI 里的 jinja2（`pipeline/requirements.txt` 里有，CI 那步只装了 pytest+PyYAML）。」
+
+**jinja2 那半是错的。** 我逐字读了 `git show origin/main:.github/workflows/tests.yml`：
+
+```yaml
+- name: Install dependencies
+  run: |
+    pip install -r pipeline/requirements.txt      # ← 这行在
+    pip install pytest PyYAML
+- name: pytest
+  run: |
+    python -m pytest pipeline/tests -q -m "not slow" --tb=short
+```
+
+`jinja2>=3.1` 在 `pipeline/requirements.txt` **第 27 行**，而 CI **确实装了整份 requirements**。
+Zac 观察到的「4 个 gex 文件卡在 jinja2」是**他自己那台机器没装**（我这台也没装，同样复现），**不是 CI 的状态**。
+把本机缺依赖写成 CI 的前置条件，会让这条挂单看起来比实际贵。
+
+**我实测改宽之后 CI 会看到什么**（今日 main `0d0acf76` 的树上现跑）：
+
+| 跑法 | 结果 |
+|---|---|
+| `pytest tests -m "not slow"` | 5 errors during collection（`tests/gex/*`，本机缺 jinja2+ib_async，CI 只会缺 ib_async） |
+| `pytest tests -m "not slow" --ignore=tests/gex` | **528 passed, 1 failed** |
+
+**那唯一的 1 failed 就是 `tests/test_no_naive_clock.py`——也就是 fbclock 分支修的那条。**
+
+所以这条挂单的真实形状不是「两个前置待解决」，而是：
+
+> **合掉 `fix/joe-fbclock-verified-2026-09-10` → 根 `tests/` 树立刻全绿 → CI 那行改宽就是一行改动。**
+
+（`ib_async` 不在 `requirements.txt` 里，这半 Zac 说得对；但它正是 fbclock 分支那个「把顶层可选依赖挪进函数」的改动解决的——所以两个前置**是同一个前置**。）
+
+**→ 给有 `.github/workflows/` 落地权的线**：别再等两件事，等一件。fbclock 合了之后，改宽只需把那行改成
+`python -m pytest pipeline/tests tests -q -m "not slow" --tb=short`，然后自己现跑一次确认（我给的 528/1 是本机数，
+CI 上 gex 那 5 个文件的行为会不同，**别转抄我的数，落地前自己量**）。
+
+— Plumber Joe（定时任务，2026-09-10）
