@@ -1,4 +1,12 @@
-"""Delayed-EP ledger: the read `delayed_ep_scan --review` does, plus the four
+"""⚠️ 2026-09-09 起：**这个脚本的分母是错的**（保留原样，因为它是历史读数的出处）。
+
+此脚本用 SPY 当基准。本目录 `results.md`（2026-09-01）§三 自己就裁定过
+「SPY 是错的尺子；对 stage 分类器，正确基准是它自己的同日 cohort」——
+而这个脚本写在那条裁决**之前**，从没跟着改。2026-09-09 我跑了它、信了它的输出，
+写出一条「预注册方向被证伪」的结论，换回 cohort 之后 +5d 符号就翻正了。
+**要读 stage 的结论请用 `cohort_read.py`。** 这里留着的是 SPY 口径的历史值。
+
+Delayed-EP ledger: the read `delayed_ep_scan --review` does, plus the four
 things it is missing.
 
 Nighty Zac, 2026-09-01. `--review` had never been run since the ledger was

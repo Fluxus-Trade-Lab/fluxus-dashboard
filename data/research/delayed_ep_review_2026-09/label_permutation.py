@@ -19,8 +19,14 @@ bucket, so `p_high` (how often a shuffle beats what we saw) is the number that
 would have supported it, and `p_low` is the number that condemns it. Both are
 printed; neither is chosen after the fact.
 
-Resolution floor, computed before the test and not after: the smallest p this
-design can return is 1/(n_perm+1) = 1/10001. Nothing here is near it.
+Resolution floor, computed before the test and not after: with the (k+1)/(N+1)
+convention the smallest p this design can return is 1/(n_perm+1) = 1/10001.
+
+⚠️ 2026-09-09: the code below computes `(null<=obs).mean()`, whose floor is 0,
+not 1/10001 -- the docstring described the convention I meant to use and the
+code used another. `cohort_read.py` uses (k+1)/(N+1). Kept here unchanged
+because the printed numbers in run_2026-09-09_perm.txt came from it, and none
+of them are anywhere near either floor.
 
   PYTHONPATH=. python3 data/research/delayed_ep_review_2026-09/label_permutation.py
 """
