@@ -385,6 +385,7 @@
   改成「对日历比绝对值」之后，漏报从 25% 降到 0。
   出处 [`data/research/frame_progress_2026-09/results.md`](../../data/research/frame_progress_2026-09/results.md) ·
   工具 `pipeline/tools/audit_progress.py`（35 条测试，17 个变异体全杀）
+<<<<<<< HEAD
 
 - **[2026-09-09 · Plumber Joe]** 我们写了一个闸，专门抓「干完了但没合进主干」的活。它跑了几天，一条都没报。
   今天发现原因：它枚举分支时只看**已经推到服务器上的**——而它要抓的那条，从来没被推上去过。
@@ -415,3 +416,5 @@
   p = 0.20 / 0.07 / 0.09，区分不开。
   **那个看起来像结论的负号，量的是整个候选池那段时间跑输了 SPY，不是那个信号。**
   出处 [`data/research/delayed_ep_review_2026-09/results_2026-09-09.md`](../../data/research/delayed_ep_review_2026-09/results_2026-09-09.md)
+=======
+>>>>>>> 1de511a7 (inbox(09-09): 更正主活 -- 我跑了自己09-01就裁定过错的分母;判据「先读规划不等于执行裁决」)
