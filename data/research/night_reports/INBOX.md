@@ -2106,3 +2106,74 @@ FAIL: 33 claims, 2 violations
 - **→ DATA ALEX**：§六.7 欠账第 3 天 + `days_since` 的 07-30 边界新线索（见上）。
 
 — 夜间组（定时任务，2026-09-09）
+
+## [2026-09-10 04:32–09:2x JST] 夜间组 —— 横幅是按文件记的，裁决是按条记的；以及 CI 从没跑过第二棵测试树
+
+> ET 2026-09-09 15:32（交易日未收盘）· last completed session **2026-09-04** ·
+> 分支 `auto/night-20260910-f5790c` · 晨报 [`night_reports/2026-09-10.md`](2026-09-10.md)
+
+### ① 主活：全库扫「裁决写在 .md 里，工具还是旧的」（认领自我 09-09 的收工三问③）
+
+[`data/research/verdict_drift_2026-09-10/results.md`](../verdict_drift_2026-09-10/results.md) ·
+21 个研究目录 / **51 个脚本 / 48 份文档全读无抽样**（fan-out 39 个 agent，每条候选两个不同视角复核）
+
+**29 个脚本被某条裁决点到，27 个已经正确标死——做对是常态。** 漏网 **4 条**，今夜已全部加横幅并自合。
+
+> **头条：4 条漏网里 3 条住在「已经有横幅」的文件里。**
+> 一个写着「⚠️ 这里第一版错了」的脚本读起来像已经处理过；对同一文件的**第二条**裁决，正是没人再去标的那一条。
+> 与 [[pitfall_has_x_is_a_bool_the_gap_is_a_set]] 同族：`banner_present` 是个 bool，缺口住在集合里。
+
+**两把便宜的尺子先失败了，失败方式不同，这一节比结果重要**：
+①「脚本比裁决旧」——对**已知阳性一次都报不出来**：09-09 那颗炸弹里，裁决句和被裁的脚本是
+**同一个 commit**（`1e9090e8` 09-01 05:10）进仓的。裁决和它推翻的工具是一起出生的。
+② 关键词段落扫 **8 条命中、真裁决 2 条**——就此收工会写出「扫完了，只有 1 个」。
+
+**两条 PLAUSIBLE 归对应线判**（我不改别人那轮的结论）：`gate_role_2026-08/measure.py`（`|超额|÷ADR` 归一已判伪影，脚本仍在算）·
+`gold_seasonality_2026-08/build_tables.py`（v1 对照组已作废、沪深 300 已剔除，TABLES.md 仍以干净结果渲染）。
+
+**复核比扫描更对的两条**（记给下次设计复核用）：`label_permutation.py` 的 `BENCH="SPY"` 在**场内置换里直接抵消**，
+不构成同一场事故的第三个漏网——**同一个 token 出现在两个脚本里，不代表它担同一个角色**；
+`pipeline/screeners/watchlist.py` 的标记在 `:50` 那行指向 `claims.jsonl`，**本仓已有的绑定机制**，我差点报成缺失。
+
+### ② CI 只跑 `pipeline/tests`——根 `tests/` 的 607 个 test 函数一次没跑过
+
+实测：全仓 **2,187** 个 test 函数，CI 盖 **1,580**；剩下 **607 个 / 53 个文件**在仓库根的第二棵 `tests/` 树里，
+`.github/workflows/tests.yml` 的 pytest 参数从来没有包含它。里面 `tests/test_no_naive_clock.py` **已经红了两周没人看见**。
+
+**根因是我自己的**：09-02 那份「1,302 条测试没有任何自动触发点」的交接包，附的 YAML 写的就是 `pytest pipeline/tests`。
+**我数了哪个集合，交出去的闸就只盖哪个集合。** 同形状第 3 次 → 按三次律②升级为机制，不再记 memory：
+`pipeline/tests/test_ci_covers_all_tests.py`（棘轮：新增测试文件落在采集不到的地方就红；已登记欠账 53 只许变小；欠账每跑一次念一次）。
+三个阳性对照实测都红过，阴性复位 4 passed。
+
+**→ 有 `.github/workflows/` 落地权的线（挂单，不指名）**：把 pytest 那行改宽是 CI 侧的事，我只写了棘轮不改 workflow。
+改宽前要先解决 `tests/gex/` 的 `ib_async`（下面 ③ 的分支已修）与 CI 里的 jinja2（`pipeline/requirements.txt` 里有，CI 那步只装了 pytest+PyYAML）。
+
+### ③ fbclock：**门铃里那行 push 命令已经过期，别再传了**
+
+Joe 09-09 早核给的 `git push origin fix/joe-fbclock-rebased-2026-09-08:main`，**今晨实测会被拒**：
+该分支现在**落后 main 33 个 commit、领先 3 个**，`git merge-base --is-ancestor origin/main <分支>` → **NO**，已经不可快进。
+（同一形状第 2 次：09-08 Joe 查出我给的那行会把 main 回退 192 个 commit。**push 命令这种东西天生会过期。**）
+
+我在独立树里 rebase 到今天的 main（**零冲突**），并推了一条新分支：**`fix/fbclock-rebased-2026-09-10`**，此刻 `is-ancestor` → **YES**。
+三点 diff 只碰 2 个文件（`pipeline/tools/federation_board.py` + `scripts/gex_levels.py`，白名单外，**我不自合**）。
+
+**我实测的验收数（不转抄）**：
+| | main | rebase 后的分支 |
+|---|---|---|
+| `tests/test_no_naive_clock.py` | **FAILED** | 1 passed |
+| `tests/gex/test_resting.py` | **collection ERROR（0 个跑到）** | **7 passed** |
+| `pipeline/tests` 全套 | — | **1713 passed / 5 skipped** |
+
+⚠️ 更正一个转抄数：分支 commit message 写「挡住了 96 条测试的收集」，**我这台机器上量到的是 7 条**
+（另外 4 个 gex 文件卡在 jinja2，本机没装）。96 那个数我复现不了，别再传。
+
+**→ 有 `pipeline/tools/` 与 `scripts/` 落地权的线（OPS Fable / Andy）**：
+`git push origin fix/fbclock-rebased-2026-09-10:main` —— **今天是可快进的，明天可能又不是**。
+
+### ④ 回执
+
+- **Joe 09-09 挂单的四条从未推送的分支**：我在自己的临时树里看不到主机本地分支（`git worktree` 只共享仓库，`refs/heads` 能看见但那四条是别的 worktree 的活）——**本条我做不了，复列门铃**。
+- **DATA ALEX §六.7 欠账 ⓪①②③**：**第 4 天**。09-06 以来碰过 `data/history/` 的仍只有 cron 的两条 `chore: market data` 与一条 `chore(ledger)`。
+- **收藏夹 🔗 节**：7 条全部已 ✅ 处理，**无新条目**，本夜不开新判定。
+
+— 夜间组（定时任务，2026-09-10）
