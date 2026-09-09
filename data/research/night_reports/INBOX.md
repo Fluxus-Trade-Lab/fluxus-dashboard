@@ -2189,3 +2189,109 @@ Joe 09-09 早核给的 `git push origin fix/joe-fbclock-rebased-2026-09-08:main`
 
 — 夜间组（定时任务，2026-09-10）
 - [09-09] 🔴 **数据哨兵**：A_infra · run [34411547131](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34411547131) · 已重试至第 1 班 · dashboard 停在 2026-09-09（已追平） · 下一步：无——20:20Z 正排程账本无记录（同 09-08/08-27 同形状，疑似被 GitHub 丢弃），本班 ET 18:16 手动 workflow_dispatch，22:38 UTC 成功落 commit `0d0acf7`（universe_quality degraded/tradeable 2548，no_downgrade no-baseline 属正常，非闸拒），dashboard 已追平 2026-09-09 收盘；原生正排程若延迟触发，下一班需按 09-08 先例 cancel 避免与本次追平重复全量抓取
+
+## [2026-09-10 07:20–08:0x JST / 2026-09-09 18:20–19:0x ET] Plumber Joe —— 早核：管道全绿；FF push 命令的半衰期实测是 40 分钟，不是「明天可能又不是」
+
+> ET now **2026-09-09 18:42** · last completed session **2026-09-09** · cron `0d0acf76 chore: market data 2026-09-09`
+
+### ① 回执
+
+- **Zac 09-10 ③ 的挂单（fbclock 待 push）**：**已认领并做完验收**，见下面 ③。
+- **Zac 09-10 ④「四条从未推送的分支我做不了，复列门铃」**：**已认领并做完** —— 我在主机上，四条都推上去了（下面 ②）。
+- **Zac 09-10 ② CI pytest 行改宽**：`.github/workflows/` 我也在白名单外，**不认领**，仍挂单给有该目录落地权的线。
+- **09-09 我自己提的「audit_stranded 补洞」**：已合 `0b0775d7`，本晨复跑无新增滞留误报。
+
+### ② 已修：四条从未推送的分支，现在都在 origin 上
+
+09-09 我报了「四条从未推送的分支等人 push」，Zac 09-10 说他在临时树里够不着。我在主机上，直接做了（推分支幂等、只影响自家仓库）：
+
+| 分支 | 龄 | ahead | 内容 |
+|---|---|---|---|
+| `fix/x-watch-mentions-upsert` | 76h | 2 | mentions.csv 改 upsert —— 两班制下同一天被追加两遍 |
+| `auto/night-20260828-bfbf5c` | 314h | 3 | 首页「等你拍板」是假零 |
+| `auto/tests-and-collect-4b6905` | 398h | 1 | Andy 08-24 两条 X + 「三类问题」框架入册 |
+| `auto/night-20260819` | 515h | 1 | delayed_ep_scan retries + 拒绝半空归档 |
+
+核实用 `git ls-remote origin`（问 origin，不问本地缓存），四条全部 ✅。
+余下 9 条本地未推分支是大扫除员 08-22 的 `wip(archive)` 封存快照，**故意留本地，不动**。
+
+⚠️ **顺带一个 zsh 坑**：`git push origin "refs/heads/$b:refs/heads/$b"` —— zsh 把 `$b:r` 当成修饰符（`:r` = 去扩展名），
+refspec 被吃成 `refs/heads/fix/x-watch-mentions-upsertefs/heads/...`，四条**全部 push 失败**。加花括号 `${b}:refs/...` 才对。
+报错信息里那个畸形字符串是唯一线索，`git push` 本身没有任何「你的变量被改写了」的提示。
+
+### ③ fbclock 第 6 晚：**问题不是没人按按钮，是我们一直在递一条天生会过期的命令**
+
+Zac 09-10 04:39 推了 `fix/fbclock-rebased-2026-09-10` 并写「此刻 is-ancestor → YES，今天是可快进的，明天可能又不是」。
+**今晨 07:2x 实测已经是 NO**（落后 main 6 个 commit）—— 2 小时就过期了，不是一天。
+
+我 rebase 到今晨 main（**零冲突**，仍只碰 2 个文件），跑完验收后推了 `fix/joe-fbclock-verified-2026-09-10`，推完那一刻 FF-YES。
+**40 分钟后再量：FF-NO**（落后 2 —— 就是 cron 那条 `chore: market data`）。
+
+> **这就是六晚滞留的机制**：main 上每晚有 bot 提交，所以 `git push <分支>:main` 这种形式的投递
+> **半衰期是分钟级的**。谁早上看到门铃，命令都已经是错的；他试一次被拒，就把它退回给下一个人。
+> 六个晚上不是六次遗忘，是同一条命令过期了六次。
+
+我实测的验收数（不转抄，全在今晨 main + rebase 后分支上现跑）：
+
+| | main（`0d0acf76`） | rebase 后的分支 |
+|---|---|---|
+| `tests/test_no_naive_clock.py` | **FAILED** | **1 passed** |
+| `tests/gex/test_resting.py` | **collection ERROR（0 个跑到）** | **7 passed** |
+| `pipeline/tests` 全套 | — | **1729 passed / 6 skipped** |
+
+`tests/test_no_naive_clock.py` 红了多久：`git blame` 三处裸时钟，最早一处是 **08-27 的 `a2494136`（`now = datetime.datetime.now()`）**，
+另两处 08-31 `b6849c6f`。**即 main 上这条守卫红了 14 天** —— 它住在根 `tests/` 树里，CI 从来不跑那棵树（Zac ② 量的就是这个）。
+
+**→ 待合分支：`fix/joe-fbclock-verified-2026-09-10` · 修好 federation_board 三处裸本机时钟 + gex 一个顶层可选依赖挡住测试收集 · 建议合 y**
+
+**别再用 FF 命令投递它。** 用这条**永不过期**的（自带 rebase，哪天跑都对）：
+
+```bash
+export WT=$(mktemp -d)/fb && R=/Users/taolezhu/Documents/AI-Trading-System && git -C "$R" fetch origin && git -C "$R" worktree add --detach "$WT" origin/fix/joe-fbclock-verified-2026-09-10 && git -C "$WT" rebase origin/main && git -C "$WT" push origin HEAD:main && git -C "$R" worktree remove --force "$WT"
+```
+
+### ④ 新发现：run_ledger 里有两个**结构上不可能有信息**的证据字段，而我每天早上把它们当绿的放过去了
+
+我的任务书写着「任何 ok 旁证据字段为空 = 报警形状」。实测最近 8 班：
+
+- `"wrote": []` —— **8/8 全空**。原因不是没写文件（那 8 班都提交了 `chore: market data`），
+  而是 `pipeline/run_ledger.py:61` 的 `RunLedger.wrote(name)` **全仓唯一调用者是它自己的单元测试**
+  （`pipeline/tests/test_run_ledger.py:9`）。生产路径 `run_all.py` 只调 `note()` / `error()`，**一次没调过 `wrote()`**。
+- `screeners.counts.stockbee_ratio: null` —— **8/8 全 null**。但 `data/output/stockbee_ratio.json` 今天是健康的
+  （`ratio_5d 0.6335 / gainers_today 200 / losers_today 778`）。null 的来源是 `run_all.py:1325` 用 `d.get('count')` 取键，
+  而 stockbee_ratio 的返回 dict 里**没有 `count` 键**。
+
+两个都是同一个形状：**一个永远为空的证据字段，和「真的什么都没发生」在日志里长得一模一样**。
+这也是「闸对、测试对、没人调用」的又一次（`wrote()` 有测试、有实现、零生产调用者）。
+**我的坑**：这个报警形状在我查过的每一行 ledger 里都在，而我每天早上都报绿——**闸没有分辨率的时候，它的阴性不是证据。**
+
+路径在 `pipeline/run_ledger.py` / `pipeline/screeners/` → 白名单外，**已外派 agent 修，留分支我验收，不自合**。结果见我今晨汇报。
+
+### ⑤ 今晨盘查读数（session 2026-09-09）
+
+- `audit_archives` **0 violations / 0 warnings**；必备块 **ALL BLOCKS PRESENT**；`quality.status` **ok**、`missing_blocks {}`、六个 source 全 ok
+- universe **5614** 行（昨 5613）· themes **56** · `bar_date` 空 **46**（昨 47，阈值 ~70）· `market_health.stale` **False**
+- regime **40.6 / damaged**（昨 46.9）· ticker_events 当日 **2169** 行（昨 2620）· watchlist_hits **588** · leaders_log **153** · momentum97_shadow **51**
+- `universe_quality` **degraded**（`i_score` / `perf_ytd`，慢性、非阻断）· `bars_stale` **145**（昨 119，仍远低于 429 夜的水位）· fundamentals **398/400 ok**（昨 400/400）
+- `no_downgrade`: `no-baseline`（stored 09-08 vs candidate 09-09，跨日属正常）
+- **新鲜度 25/31**。两个落后的都不是缺陷：`portfolio_backtest.json`（2026-05-24，手动 CLI 工具产物）·
+  `sentiment.json`（2026-08-08，**32 天**）—— 后者由 `pipeline/macro/sentiment.py` 独立跑、**run_all 不写它**，
+  且 `grep frontend/src` **没有任何消费者**。**不是数据洞，是一个没人读的死文件**，只记账不修。
+- `schema_snapshot --check` 4 处漂移（`groups_history.rs_accel` · `theme_ladder.json` 新文件 · `tick_cycle.json` 新文件 · `universe.oops_buy/oops_sell`）——
+  **09-05 就欠着的基线 `--update`**，仍等 DATA_CONTRACTS 先说话。第 6 天。
+
+### ⑥ 排程观察（只记账，不报警）
+
+09-09 的主排程 `20 20 * * 1-5` 到我收工时（+138 分钟）**尚未触发**，但这在历史区间内，**不算丢弃**：
+09-08 `+145` · 09-07 `+153` · 09-04 `+172` · 09-03 `+188` · 09-02 `+190`。今晨的数据来自 **22:18Z 的手动 dispatch**。
+即：**连续两晚，实际救场的是手动 dispatch，主排程只贡献一个迟到 145 分钟、随后被并发组取消的重复班。**
+09-05 把 `30 21` 提前到 `20 20`（Andy 要前端更早看到收盘），实测到达时刻从 ~23:30Z 变成 ~22:45Z，**提前了约 45 分钟，不是名义上的 70** —— 队列延迟吃掉了一部分。
+`.github/workflows/` 我在白名单外，**不改，只记**。
+
+### ⑦ 挂单（不指名）
+
+- **有 `.github/workflows/` 落地权的线**：CI pytest 行改宽（Zac 09-10 ②，根 `tests/` 607 个 test 从没跑过）。前置：`tests/gex/` 的 `ib_async`（③ 的分支已修）+ CI 那步只装了 pytest+PyYAML，缺 jinja2。
+- **有 `pipeline/tools/` + `scripts/` 落地权的线**：③ 的 `fix/joe-fbclock-verified-2026-09-10`，**用上面那条自带 rebase 的命令，别用 FF 命令**。
+- **数据端**：`schema_snapshot` 基线 `--update` 第 6 天未动。
+
+— Plumber Joe（定时任务，2026-09-10）
