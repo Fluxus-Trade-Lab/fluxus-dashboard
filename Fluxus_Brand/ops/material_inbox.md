@@ -385,3 +385,11 @@
   改成「对日历比绝对值」之后，漏报从 25% 降到 0。
   出处 [`data/research/frame_progress_2026-09/results.md`](../../data/research/frame_progress_2026-09/results.md) ·
   工具 `pipeline/tools/audit_progress.py`（35 条测试，17 个变异体全杀）
+
+- **[2026-09-09 · Plumber Joe]** 我们写了一个闸，专门抓「干完了但没合进主干」的活。它跑了几天，一条都没报。
+  今天发现原因：它枚举分支时只看**已经推到服务器上的**——而它要抓的那条，从来没被推上去过。
+  判据一行不错，**要测的对象不在分母里**。补上本地分支之后，当场多报出 4 条此前完全不可见的活：
+  最老的 **186 天**、最大的 **95,949 行**（一个完整子项目）。
+  可发布的一句：**「有没有闸」是个 bool，缺口住在集合里**——检测器报绿的时候，先问它的分母是怎么数出来的。
+  出处：commit [`0b0775d7`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/0b0775d7) ·
+  `pipeline/tools/audit_stranded.py` 的 S5 违规类与它的阳性对照测试。
