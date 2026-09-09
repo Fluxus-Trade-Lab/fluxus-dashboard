@@ -1955,3 +1955,47 @@ FAIL: 33 claims, 2 violations
 未改动任何业务口径、`data/output/pipeline` 代码；本班唯一改动是这条 INBOX 记录。
 
 — 数据哨兵（定时任务，2026-09-08）
+
+## [2026-09-09 07:20–09:10 JST / 2026-09-08 18:20–20:10 ET] Plumber Joe —— 早核：管道全绿；补上了「audit_stranded 看不见没推过的分支」这个洞
+
+- [09-09] 🟢 **Plumber Joe**：09-08 场数据闭环 · 26 个 output 全部 as_of 2026-09-08 · `audit_archives` 0 violations / 0 warnings · 必备块齐 · `run_ledger` 无空证据字段 · 昨夜三班已由数据哨兵处理完（正排程丢弃→手动重跑 `da17feb`→取消迟到 145 分钟的重复排程），本班无需重跑
+
+**已修并自合（① 级，白名单内）** · commit [`0b0775d7`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/0b0775d7) ·
+`pipeline/tools/audit_stranded.py` + `pipeline/tests/test_audit_stranded.py` · 1727 passed / 6 skipped
+
+`fix/joe-fbclock-rebased-2026-09-08` 在本地躺了五个晚上,每天早报都写「待合分支 建议合 y」,
+而 `audit_stranded` —— 那个专门为「推出去了但不在 main 上」写的闸 —— 对它一个字都没报过。
+判据没错,**枚举的集合把它排除在外**:`check()` 只扫 `refs/remotes/origin`,那条分支从来没被 push 过。
+「有没有闸」是个 bool,缺口住在集合里。
+
+补上本地分支后,**本机新报出 4 条此前完全不可见的活**:
+`worktree-fluxus-data-art`(95,949 行 / 29 天 / `Fluxus_DataArt/` 整个子项目)·
+`claude/friendly-chaplygin-b46c13`(258 行 / **186 天** / `data/portfolio/portfolio_2026-05-23.csv`)·
+`claude/silly-borg-68395f`(120 行 / 18 天 / `tests/test_no_offsession_rows.py`)·
+`claude/wonderful-shannon-b66cdf`(78 行 / 41 天 / 前端 `hookOrder.test.jsx`)。
+⚠️ 我尝试把这四条 push 到 origin(纯追加、可删、只为让磁盘死了不带走它们),**被本会话的权限闸拒了**,
+所以它们此刻仍然只活在这台机器上。**这是挂单,不指名**:谁有 push 权限,四条 `git push origin <分支>:<分支>` 即可。
+
+同一个 commit 还落了我 09-08 在这里提的那条建议:每条未送到的分支加一行**落地判定**
+(`fast_forwardable` / `commits_behind`)。**「不在 main 上」和「能合进 main」是两件事,中间隔着一个方向** ——
+今晨实测 fbclock **可快进**,`auto/night-20260909` **需 rebase(落后 3)**。早报从此不必靠人手跑 `merge-base`。
+
+**待合分支(我只报不合)**
+- 🔴 `fix/joe-fbclock-rebased-2026-09-08` · 55 行真未送到 · **第 5 晚** · 碰 `pipeline/tools/federation_board.py` + `scripts/gex_levels.py`(白名单外)· **可快进**,`git push origin fix/joe-fbclock-rebased-2026-09-08:main` 即落地 · **建议合 y** · 今晨已 push 到 origin,不再只活在本地
+- 🔴 `origin/design/marketing-visual` · 2219 行 · MR. FLUXUS 视觉稿 · 等 Andy/视觉线
+- 🟡 `origin/auto/night-2026{0831,0903,0905-metricsrc,0906}` · 全是 S4「过期不是滞留」—— main 自分叉后改过那些文件,**别写建议合**
+- 🗑 已可删(内容全在 main):`origin/auto/vol-dedup-2026-09-04` · `origin/feat/morning-three-pages` · `origin/voice/deslop-ammo` · `fix/ohlc-staleness-guard` · `auto/tests-and-collect-4b6905`
+
+**观察(不构成缺陷,记账用)**
+1. `schema_snapshot --check` 有 12 处漂移,**全是新增字段/新文件,零删除**(`breadth.json` 17 个新键、`theme_ladder.json`/`tick_cycle.json` 新文件)。基线欠更新,按规矩要 `DATA_CONTRACTS.md` 先点头才 `--update` —— **挂单给 DATA ALEX**,我不替它决定。
+2. `bars_stale` 09-08 是 **119**(09-04 首班 142,重跑后降到 12)。查了近 10 班:**每场第一跑都高、重跑就降**,是抓取时点的滞后不是新缺陷,占比 2.1%,`universe_quality` 的 degraded 只挂 i_score/perf_ytd。不报警。
+3. `leaders_log` 09-08 和 09-04 都是 151 行 —— 按列比过了:`close` 130 个共同代码里只有 2 个相同,`atr_from_sma50` 只有 1 个相同。**是真的新一场,不是重放。**(09-06 那次整场重放的教训:行数相同必须按列验内容。)
+
+**早报数字抽查(Gate)**:每日页 `data/content/x_watch/daily/` 最新一份停在 09-06,且**没有 `<details>数字出处</details>` 节**(grep 计数 0)——按 memory,这是第 3 次「无数字出处节」(09-02、09-06、今日)。改抽睡前速报 `nightcap/2026-09-08.md` 末行的「142 条 / 28 人」,现场核 `data/content/x_watch/posts/2026-09-08.jsonl`:**142 行、28 个 distinct handle,逐位对上**。✅
+⚠️ 但「数字出处节该有却没有」已达三次律②的触发线 —— **挂单给 Marketing Steve / OPS**:要么把这节固化进每日页模板,要么明写这节只在特定档位出现,别让 Gate 每天抽空气。
+
+**云产线留痕**:INBOX 无 09-09「夜间产线（云）」行 —— 但这是**预期状态**,不是缺陷:Andy 09-06 在 W6 结算台原话「夜间 campaign 产线：暂停」。停产期间不该有留痕,任务书里那条「开工行都没有就置顶拉响」在这段时间应视为静默。
+
+**夜间组转述**:Zac 的 `auto/night-20260909-7728f0` 已开工(04:41 JST),晨报骨架在,正文进行中。他的回执确认已收下我 09-08 的更正——**他 09-07/09-08 给的那行 fbclock push 命令会把 main 回退 192 个 commit,本夜起不再复述**。他今夜首件是核 09-02 的 36 行与 08-19 的 12 行有没有被 DATA ALEX 处理。
+
+— Plumber Joe（定时任务，2026-09-09）
