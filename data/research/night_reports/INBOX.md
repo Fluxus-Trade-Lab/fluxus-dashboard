@@ -2403,3 +2403,31 @@ audit 判「真未送到 **0** 行」，**这 5 条我当初那句话是对的**
 白名单外、`audit_stranded` 标 S3「需人合」。**它现在至少在 origin 上了，不会随磁盘消失**，但要不要进 main 归品牌/视觉线判。
 
 — Plumber Joe（定时任务，2026-09-10）
+
+## [2026-09-10 08:1x JST] Plumber Joe —— 验收：ledger 两个死证据字段已修，待合分支 `fix/joe-ledger-evidence-2026-09-10` 建议合 y
+
+外派 agent 的产出，**我亲自复验过，不是转抄它的自述**：
+
+| 验收项 | 我实测的结果 |
+|---|---|
+| 文件边界 | **5 个文件，全在授权内**（`run_ledger.py` · `run_all.py` · `stockbee_ratio.py` + 2 个测试）。⚠️ `git diff --stat origin/main <分支>` 会多显示 `INBOX.md \| 33 ----`——那是**我自己的 commit 在它分叉之后落 main** 造成的方向错觉，不是它删了东西；查 `git show --stat <commit>` 才是它真碰过的 |
+| 全套测试 | **1744 passed / 6 skipped**（main 基线 1729，+15 条） |
+| **阳性对照（我自己注射，不听它说）** | 把 `run_all.py` 三处 `ledger.wrote(...)` 全拆掉 → **7 条红**，含端到端 `test_run_all_smoke::test_run_all_end_to_end`：`AssertionError: universe.json is on disk but missing from the ledger`。恢复后复跑绿 |
+| 「读自己那个常量」的病 | **没有**。`test_stockbee_ratio_payload_reports_an_int_count` 自己造五行数据、手算期望值，不从被测模块取 |
+| 口径 | **零改动**。`count` 是 `gainers_today` 的别名（docstring 与行内注释都写明是别名不是新度量），`ratio_5d`/`signal`/`gainers_*`/`losers_*` 一字节没动 |
+
+端到端实测：跑完一班后 `wrote` 记下 **26 个文件**，`counts.stockbee_ratio` = **int**，不再是 null。
+它对「记什么」是保守的——别的模块落盘的三个（groups_history / correction_risk / tick_cycle）**只有 mtime 在这一班真的动过才记**，
+「文件存在」不算证据（昨天那份也躺在磁盘上）。**宁可少记不虚报**，这是对的方向。
+
+**→ 待合分支：`fix/joe-ledger-evidence-2026-09-10`（`6916e8ef`）· 建议合 y**（`pipeline/run_ledger.py` + `pipeline/screeners/` 在白名单外，我按 §五② 不自合）。
+
+### 顺带记两笔它交回的遗留（我没让它碰，超它边界）
+
+1. ⚠️ **一个既有 bug，值得有 `pipeline/screeners/` 落地权的线看一眼**：`run_all.py` 里 regime_ledger 失败时 `lrow` 未绑定，
+   下一段 `tick_cycle` 立刻 `UnboundLocalError`。生产环境 regime_ledger 正常时不触发，
+   但这是 **`else` 静默重绑那一族的近亲**（见 `incidents/` 里那个 case study）——**失败路径上的第二次伤害**。
+2. `wrote` 只覆盖 `data/output/**`；这一班同时写的 `data/history/**` 归档（`write_events` / `NC.archive` / `regime_ledger.csv`）
+   仍没有统一证据。**同形状的洞，规模更小**，记账不动工。
+
+— Plumber Joe（定时任务，2026-09-10）
