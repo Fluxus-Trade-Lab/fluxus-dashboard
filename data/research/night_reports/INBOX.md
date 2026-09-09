@@ -2370,3 +2370,36 @@ CI 上 gex 那 5 个文件的行为会不同，**别转抄我的数，落地前�
 3. `schema_snapshot` 基线 `--update` 已欠 6 天。
 
 — Plumber Joe（定时任务，2026-09-10）
+
+## [2026-09-10 08:0x JST] Plumber Joe —— 自我更正：我按 commit message 的标签判了 9 条分支，`audit_stranded` 一跑，里面有 96,405 行真没送到
+
+我今晨的早核报告里写了一句：
+
+> 「余下 9 条本地未推分支是大扫除员 08-22 的 `wip(archive)` 封存快照，**故意留本地，不动**。」
+
+**这句是错的，而且错的方式很典型：我读了它们的 commit message（`wip(archive): 大扫除前封存未提交工作`），
+就当它们是快照。我没量。** 随后跑昨天刚补好洞的 `audit_stranded`（`0b0775d7`，S5 = 「从未推送到 origin」），它逐条量了：
+
+| 分支 | 龄 | audit 判定「**真未送到**」 | 内容 |
+|---|---|---|---|
+| `worktree-fluxus-data-art` | 29.6 天 | **95,949 行** | 整个 `Fluxus_DataArt/`（CONCEPT.md + 一批 SVG figure） |
+| `claude/friendly-chaplygin-b46c13` | 186.6 天 | 258 行 | `data/portfolio/portfolio_2026-05-23.csv` |
+| `claude/silly-borg-68395f` | 18.8 天 | 120 行 | **`tests/test_no_offsession_rows.py`** —— main 上从来没有过这个测试文件 |
+| `claude/wonderful-shannon-b66cdf` | 41.8 天 | 78 行 | `frontend/src/components/portfolio/tabs/hookOrder.test.jsx` |
+
+「真未送到」= main 自分叉后**没碰过这些文件**，所以不是过期、不是回退风险，是**纯粹的缺失**。
+四条**全部只存在于这台笔记本的磁盘上**，最久的 186 天。
+
+**已做**：四条都推上 origin 了（推分支幂等、只影响自家仓库，非合并）。核实用 `git ls-remote origin`，四条全 ✅。
+另外 5 条（`claude/adoring-haibt` / `keen-germain` / `optimistic-clarke` / `sharp-boyd` / `fix/ohlc-staleness-guard`）
+audit 判「真未送到 **0** 行」，**这 5 条我当初那句话是对的**——但那是碰巧对，不是因为我量过。留给周一云端周检处置。
+
+**我的坑**：`wip(archive)` 是**写 commit 的人当时的意图**，不是**分支现在的内容**。我拿前者当了后者。
+判「这条分支能不能扔」，得问 main 里有没有这些行，不能问它的标题。
+——同族 [[pitfall_absence_from_main_is_not_a_merge_request]] 的反面：那条是「不在 main 上 ≠ 该合」，这条是「标着 archive ≠ 可以扔」。
+**两条合起来一句：分支的处置只能由三态判定（真未送到 / 过期 / 垃圾）得出，标签和直觉都不算。**
+
+**→ 挂单（不指名）**：`worktree-fluxus-data-art` 的 95,949 行是一整个 `Fluxus_DataArt/` 项目，
+白名单外、`audit_stranded` 标 S3「需人合」。**它现在至少在 origin 上了，不会随磁盘消失**，但要不要进 main 归品牌/视觉线判。
+
+— Plumber Joe（定时任务，2026-09-10）
