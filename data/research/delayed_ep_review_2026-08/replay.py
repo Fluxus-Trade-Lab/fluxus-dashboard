@@ -1,4 +1,19 @@
-"""Delayed-EP stage review, but market-relative.
+"""⚠️ 2026-09-10 起：**这个脚本的分母是错的**（保留原样，它是 08-24 那轮读数的出处）。
+
+本目录 `results.md` §二/§三 的 EXCESS 中位与秩检验都由它产出，用的是 SPY。
+而 `delayed_ep_review_2026-09/results.md`（2026-09-01）§三 裁定
+「SPY 是错的尺子；对 stage 分类器，正确基准是它自己的同日 cohort」，
+2026-09-09 实测换回 cohort 后 +5d 从 −3.67% 翻正为 +0.30%。
+09-09 那轮给两个 SPY 口径脚本加了横幅，**漏了这一个**（本目录不在那次的视线里）。
+
+⚠️ 下面这段 docstring 自己就说出了正确答案又选错了对照：它说「各 stage 的 cohort
+起始日不同，所以差异可能只是两组坐在了不同的星期」——**那正是要用同日 cohort 的理由**，
+减 SPY 消不掉它（failed 组日波动 6.28% vs SPY 约 0.5%）。
+
+**要读 stage 的结论请用 `../delayed_ep_review_2026-09/cohort_read.py`。**
+本目录 README §五「复现」教的那条命令跑出来的是 SPY 口径的历史值。
+
+Delayed-EP stage review, but market-relative.
 
 `delayed_ep_scan.py --review` prints raw forward returns per stage. Raw
 returns are not a claim about the stages: each stage's cohort starts on a

@@ -126,7 +126,14 @@ print(f'  p<0.05 的比例 {np.mean(ps < 0.05):.3f}（该为 ~0.05）· p 中位
 print(f'  重排后中位差的 2.5/97.5 分位 {pct(np.quantile(eff,.025))} .. {pct(np.quantile(eff,.975))}'
       f'  · 真实读数 {pct(真["med_diff"])}')
 
-print(f'\n=== 阳性对照 / 分辨率地板（N={N0}，往 Leading 行注射已知效应，票级 bootstrap 500 次）===')
+# ⚠️ 2026-09-10：**下面这一段是被本目录 results.md:98-100 判过错的那一版**，
+# 保留原样是因为它是当时打印出来的读数的出处，但它**仍会在每次运行时先打印**，
+# 而且标题写着「阳性对照 / 分辨率地板」，看上去很权威。
+# 错在哪：它直接往**含真效应**的 recs 上注射（byt 由 recs 建），得到的是
+# 「注射把真效应抵消到 0 再拉回来」的 U 形，不是功效曲线。
+# **正确版本是同一文件下面的 power_curve()（先减 shift 置零再注射，并打印置零校验 p）。**
+# 读分辨率地板只认 power_curve() 的输出。
+print(f'\n=== ⚠️ 已作废的功效曲线（未置零，见文件内 power_curve()）· N={N0} ===')
 tickers = sorted(set(r[0] for r in recs))
 byt = defaultdict(list)
 for r in recs: byt[r[0]].append(r)

@@ -122,6 +122,15 @@ for split in ("train", "holdout"):
             raw["B"][s] = rB["p"]
     for key, tag in (("A", "A_curve_divide"), ("B", "B_decile_matched")):
         for rank, (s, p) in enumerate(sorted(raw[key].items(), key=lambda x: x[1])):
+            # ⚠️ 2026-09-10：**这一行的 Holm 少了 step-down 单调化**，与本目录
+            # results.md §七 第 1 条宣布的「已修」不符 —— 那次修了 measure.py
+            # (:154-157 `run = max(...)`) 与 measure_robust.py，唯独漏了这个文件，
+            # 而它正是新写进那同一个 commit 的。少了运行最大值，调整后 p 可能随原始 p
+            # 上升而下降（反保守）。实测 results_adr_matched.json 里 train A 5 对 /
+            # train B 3 对 / holdout 各 2 对非单调（例：preset:pocket_pivot
+            # p_holm=0.008563 排在 p 更小的 preset:weekly_20_gainers p_holm=0.008749
+            # 之后）。**本轮没有任何一格因此翻转判定**（单调化后仍是同一批 ✅），
+            # 所以表 1 的结论不变；但复用这段代码的人会拿到反保守的 p。
             out["screeners"][s][split][tag]["p_holm"] = min(1.0, p * (len(raw[key]) - rank))
 
 json.dump(out, open(HERE / "results_adr_matched.json", "w"), indent=1)
