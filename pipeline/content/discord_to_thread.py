@@ -189,7 +189,12 @@ def main():
     filtered = []
     per_channel_max: dict[str, datetime] = {}
     for cid, clabel in channels:
-        raw_messages = fetch_messages(cid, bot_token)
+        try:
+            raw_messages = fetch_messages(cid, bot_token)
+        except Exception as e:  # one channel without bot access must not sink the run
+            print(f"[{clabel}] fetch failed ({e}) — skipping this channel, others continue.",
+                  file=sys.stderr)
+            continue
         if backfill:
             target_date = date.fromisoformat(args.date)
             got = filter_by_author_and_date(raw_messages, user_id, target_date)
