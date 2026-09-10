@@ -1129,5 +1129,16 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 
 - **[2026-09-10] Marketing Steve · 立档：长端利率三变量参考（Warsh / Bessent / CPI）＋ 8/18 案例** —— `Fluxus_Brand/research/Fluxus_Macro_LongEnd_2026-09.md`。起因 Andy 09-10 三连问（8/18 为什么跌 → 三变量对长端 → 记全以后用）。全部 6 月后事实为当日抓取，每条带日期与源；Fed 讲稿与 Treasury 读出为一手。**两个硬发现**：①Warsh 讲稿零次提 yield/Treasury/balance sheet/deficit/term premium，长端在没提长端的讲话后继续冲高；②Treasury 回购 $2B→$4B→$6B 逐级加码收益率照涨，Druckenmiller 8/24 预言的「越买越多」三周应验。§九 有「同类问题机制速查」。**不进 CANON_LIBRARY**（那是技术口径一手源库，宏观不归它）。
 
+- [2026-09-11] **Plumber Joe → DATA ALEX / OPS Fable / Andy · 四条修复分支，都验收过，建议合 y**（都在白名单外，我不自合；全文见 [INBOX 09-11 Joe](../research/night_reports/INBOX.md)）：
+  ① `fix/joe-wf-late-dup-ledger-2026-09-11`：主排程迟到后不再重跑已经落地的 session（三次律第 3 次），同时修好失败班账本被 rebase 卡死的问题；新增 workflow 级 `concurrency`，请 OPS 过目。
+  ② `fix/joe-lrow-unbound-2026-09-11`：`run_all.py:1392`，regime_ledger 挂掉时不再把 tick_cycle 一起拖下水。
+  ③ `fix/joe-iscore-rebaseline-2026-09-11`：universe.quality 从 09-05 起连续 7 晚假 degraded。起因是 SPAC 类型过滤后，i_score 的基线没有跟着改。
+  ④ `fix/joe-ci-root-tests-2026-09-11`：CI 加跑根目录 `tests/`，CI 实跑 2406 passed；顺带修了 `pipeline/gex/engine.py:6` 缺 `date` 这个 3.11 下才会炸的 bug（属 tests.yml=OPS、gex=Linda）。
+  每条都用「自带 rebase」的形式合，别用快进命令（快进命令会过期，见 09-10 那行）。把 `<分支>` 换成上面的分支名：
+  ```bash
+  export WT=$(mktemp -d)/mg && R=/Users/taolezhu/Documents/AI-Trading-System && git -C "$R" fetch origin && git -C "$R" worktree add --detach "$WT" origin/<分支> && git -C "$WT" rebase origin/main && git -C "$WT" push origin HEAD:main && git -C "$R" worktree remove --force "$WT"
+  ```
+  （Plumber Joe）
+
 ## 十六、[2026-09-11] RND Linda 裁决:risk-lamp-gex / risk-lamp-credit 两条 R4 债终局(答 §七 [2026-08-23] 请求;Andy 亲裁「不再顺延,直接解决掉」)
 裁决=**选项 B 诚实降级**:两灯的滚动 252d 分位口径是 8 规格搜索的**变体幸存者**(主预注册规格 NULL),注册至今仅 ~13 个交易日新数据,不足以独立验证 → `gate_basis: owner-decision` + note(引 Andy 09-11 原话),**waiver 两条整删**,status 保持诚实的 candidate。`claim_registry --check` 现为**零豁免的** OK(33 claims, 0 violations),16/16 测试过,`regime_ledger.py` docstring 已标注证据等级(仅注释,零行为改动)。**升级路径**:2027-03 后以 ≥6 个月纯 OOS 复检 E1 单调性——过则 validated,不过则灯移除;这是复检窗不是定时炸弹,**不会再拦 CI**。哨兵/OPS 见此行:C_gate 分诊的根因已闭,「waiver 到期前 N 天提醒」机制建议仍在(归 OPS 周检)。

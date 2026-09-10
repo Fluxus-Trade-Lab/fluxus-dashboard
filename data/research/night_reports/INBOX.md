@@ -2680,3 +2680,29 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 — OPS Fable（2026-09-11）
 
 - [2026-09-09] Discord→X 云生成端：2026-09-09 草稿已出（27 条消息 → 7 条推文，commit 58095b0）
+
+## [2026-09-11 08:2x JST] Plumber Joe —— 09-10 场闭环；哨兵手术单两件已修成分支；universe.quality 连 7 晚假红（我也读错了三天）
+
+**时钟**：ET 2026-09-10 18:26 · last completed session 2026-09-10。
+**cron**：主排程 `20 20` 迟 **140 分钟**（22:40Z）才起跑，run 34538593920 success，`96f8bfd8` 落 main。本班无人手动 dispatch，没有重复班。
+**盘查**：`audit_archives` 0/0 · 必备块齐 · 27 个带日期 output 只有两个已知死文件落后（`portfolio_backtest` 05-24、`sentiment` 08-08）· universe 5616 · bar_date 空 46 · themes 56 · regime **28.1** damaged（昨 40.6）· market_health.stale False。
+**run_ledger**：`wrote` 27、`stockbee_ratio` 223——前八班一个是 0、一个是 null。`edb4cb75` 第一次上实战，两个证据字段都有数了。
+
+### ⚠️ universe.json 的 quality 从 09-05 起连续 7 晚是 degraded，一直是假警报
+- 数字：`i_score` 缺失率 6.0%，基线 0.2%。缺 i_score 的 329 行**全是** `Shell Companies`（SPAC）。
+- 原因：`b264b47b`（09-05）给 is_tradeable 加了证券类型过滤后，这个行业一支 tradeable 都不剩，算不出中位数，所以不给 i_score。这是**对的新行为**：之前 336 支 SPAC 是拿同一支 SPAC 的中位数在打分。
+- 为什么一直红：`quality.baseline()` 取的是全部历史的中位数。23 行历史里有 16 行是 0.2%，要再过 10 多个晚上才会自己转回来。在那之前 universe 的 status 一直亮着，真出退化也看不出来。
+- 同形：和 `bd4d5f46` 的 RETIRED_FIELDS 是一类问题，而且是同一天漏掉的。
+- **我自己的错**：09-08 到 09-10 我三天都报了「quality.status ok」。我读的是 `data/output/quality.json`（站点级，确实是 ok），不是 universe.json 里的 quality 块（degraded）。**两个文件里都叫 quality.status，量的东西不同，结论也相反。**
+
+### 修复（四条分支，都做过验收，都不在白名单里，所以我不合）
+| 分支 | 修什么 | 验收 | 等谁 |
+|---|---|---|---|
+| `fix/joe-wf-late-dup-ledger-2026-09-11` `adb72616` | 哨兵手术单两件：①主排程晚到时，把已经落地的 session 又重算一遍（08-27/09-08/09-09 共三次）；②失败那班的账本被未跟踪文件卡在 rebase，origin 上什么都没留下 | 全套 1786→**1805** · 新测试在旧 yml 上 **12 红**，逐字复现了 09-09 的日志 | DATA ALEX / Andy（改的是 daily-data-update 的业务逻辑；新增的 `concurrency` 请 OPS 过目） |
+| `fix/joe-lrow-unbound-2026-09-11` `723f6aed` | `run_all.py:1392` `lrow = None`：regime_ledger 挂掉时不再把 tick_cycle 一起拖下水 | 1786→**1789** · 旧代码 2 红 → 3 绿 | DATA ALEX / Andy |
+| `fix/joe-ci-root-tests-2026-09-11` `3e465555` | CI 也跑根目录的 `tests/`。顺带挖出一个真 bug：`pipeline/gex/engine.py:6`，`c625b93e` 删掉了 `date` 的 import，3.11 下是 NameError，本机 3.14 看不出来 | **CI 实跑** run 34540547864：**2406 passed / 0 failed**（main 只跑 pipeline/tests 是 1781）· 阳性对照：没补 import 时 CI 报 3 个 error | OPS Fable（tests.yml）+ RND Linda（gex）/ Andy |
+| `fix/joe-iscore-rebaseline-2026-09-11` `391638bc` | 上面那个假红：`pipeline/quality.py` 新增 `REBASED_FIELDS = {"i_score": "2026-09-04"}`（与 RETIRED_FIELDS 同风格），基线只读登记日及之后的历史 | 1786→**1794** · 真实数据重放 09-10：旧码 degraded、新码 ok · 注入 30%/50% 仍分别报 degraded/severe（守卫没被关掉）· 新测试在旧码上 6 红，红在断言上而不是 import 上 | DATA ALEX / Andy |
+
+**另**：72 小时内真正还没合的只有 `feat/pages-v4`（前端，等 UI Claire / Andy）和 Zac 今晚正在做的那条。fbclock ×4、ledger-evidence、x-watch-members-param、night-0909 这几条 `git cherry` 全是 `-`，已经等价合进去了，可以删。云产线按 Andy 09-06 的指示暂停，没有留痕是预期状态。早报数字抽查 ✅；`数字出处` 节还是没有。
+
+— Plumber Joe（定时任务，2026-09-11）
