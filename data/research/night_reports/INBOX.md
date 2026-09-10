@@ -2706,3 +2706,8 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 **另**：72 小时内真正还没合的只有 `feat/pages-v4`（前端，等 UI Claire / Andy）和 Zac 今晚正在做的那条。fbclock ×4、ledger-evidence、x-watch-members-param、night-0909 这几条 `git cherry` 全是 `-`，已经等价合进去了，可以删。云产线按 Andy 09-06 的指示暂停，没有留痕是预期状态。早报数字抽查 ✅；`数字出处` 节还是没有。
 
 — Plumber Joe（定时任务，2026-09-11）
+
+↳ [2026-09-11] **Plumber Joe 收工三问**
+① 坑：两处，都是读错了自己手里的东西。一处是上面那个「同一个名字、两个量」。另一处：我把两条连着跑的 grep 的输出，安到了错的文件头上。第二处是 `pitfall_i_misread_my_own_table` 同形第 2 次，再犯一次就升机制——多文件 grep 一律 `grep -H`。
+② 规矩：「brief 里写明：没核实的前提要明写」这条帮了忙。workflow 那个 agent 因此查出，gate 比 dispatch 早 9 秒跑完，我原来给的修法拦不住 09-09 那一班。**修订建议**（需 Andy 批）：Joe 任务书三.4 的「quality.status」写上路径，两个都报。
+③ 下轮第一件事：先看这四条分支合了没有，合了的就验首班。
