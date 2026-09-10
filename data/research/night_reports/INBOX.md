@@ -2458,3 +2458,41 @@ audit 判「真未送到 **0** 行」，**这 5 条我当初那句话是对的**
 - [09-09] 🔴 **数据哨兵**：数据健康（dashboard 追平 2026-09-09，commit `0d0acf76`）。**新发现**：延迟排程第 3 次现身（08-27/09-08/09-09），本次真的空跑一遍并因 GAS 30 秒超时被闸判退步，main 未受影响；顺带发现 ledger 失败记账的 git rebase 重试会被并发遗留的未跟踪文件卡死，导致失败班在账本里"查无此班"。已按三次律②建议 OPS 周检评估机制（起跑前先比对 main 是否已追平），workflow 文件不在本线白名单，只报不改。
 
 — 数据哨兵（定时任务，2026-09-10）
+
+## [2026-09-10 08:3x JST] Plumber Joe —— Andy 批了，两条都合进 main 了；fbclock 的第六晚到此结束
+
+Andy 原话：**「都合。Y」**。照办，两条都走「自带 rebase」的形式合（不是快进命令）：
+
+| 分支 | 落 main 的 commit | 验收 |
+|---|---|---|
+| `fix/joe-fbclock-verified-2026-09-10` | **`d7c506b3` + `82357404` + `868cefc0`** | rebase 零冲突 · 阳性对照 **8 passed** · `pipeline/tests` **1729 / 6 skipped** |
+| `fix/joe-ledger-evidence-2026-09-10` | **`edb4cb75`** | rebase 零冲突 · `pipeline/tests` **1744 / 6 skipped** |
+
+### ✅ 早上那个预测兑现了：根 `tests/` 树现在全绿
+
+今晨我写过「合掉 fbclock → 根 `tests/` 树立刻全绿 → CI 那行改宽就是一行改动」，当时量的是 **528 passed / 1 failed**。
+合完之后我在新 main 上复跑：
+
+```
+python3 -m pytest tests -q -m "not slow" --ignore=tests/gex
+→ 529 passed
+```
+
+**0 failed。** 那条红了 14 天的 `tests/test_no_naive_clock.py` 现在是绿的。
+`tests/gex/` 在我这台机器上仍因缺 jinja2 + 本机没装的依赖收集失败，**但 CI 装 `requirements.txt`，jinja2 在第 27 行，`ib_async` 那半正是刚合进去的 `868cefc0` 解决的**。
+
+**→ 给有 `.github/workflows/` 落地权的线：前置已清零，现在真的只剩一行。**
+把 `.github/workflows/tests.yml` 的
+`python -m pytest pipeline/tests -q -m "not slow" --tb=short`
+改成
+`python -m pytest pipeline/tests tests -q -m "not slow" --tb=short`
+然后**自己在 CI 上现跑一次确认**（我给的 529 是本机数，gex 那 5 个文件在 CI 上的行为和我这里不同，**别转抄我的数**）。
+这就是 Zac 09-10 ② 那张挂单的全部剩余工作量。
+
+### 顺带：投递形式这件事，今天是有效的
+
+六个晚上的快进命令投递都失败了；今天改成「自带 rebase 的一条命令」，**两条分支一次成功、零冲突**。
+两次 rebase 都是 `behind=0`，而我今早量到的两次过期（2 小时 / 40 分钟）说明若照旧用快进命令，今天同样会被拒。
+记进坑账：`pitfall_a_push_command_encodes_a_moving_target`。
+
+— Plumber Joe（定时任务，2026-09-10）
