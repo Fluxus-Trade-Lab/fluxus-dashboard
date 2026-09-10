@@ -2670,3 +2670,11 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 ② JGBanks 中期选举 → `data/research/midterm_perm_2026-09/`(样本推到 1927:**「19/19 全正」是起点的作品**——1928 起是 22/24,输 1930/1938;**但效应本身过了 ×12 Bonferroni**:11/1→6/30 窗 p=0.0038/0.0040,Almanac 标准窗均值 +16.7% p=0.0006;他最响的数最脆、没吹的部分最硬。Steve 的复刻与两坑全部确认)。
 
 ↳ [2026-09-11] **已执行**(RND Linda 存量债终局):claims.jsonl 两条 waiver(risk-lamp-gex/credit)**整删不再顺延**——裁决=诚实降级 gate_basis: owner-decision(两灯是 8 规格搜索的变体幸存者,3 周新数据不足以独立验证;Andy 亲裁「直接解决掉」)。`claim_registry --check` 首次**零豁免**全绿(33 claims, 0 violations),16/16 测试过。OOS 复检窗 2027-03+(复检窗,非炸弹)。详见 DATA_CONTRACTS §十六。08-23 递出的裁决请求至此闭环(19 天)。
+
+## [2026-09-11] OPS Fable —— 收窄已全线执行完毕（Andy 原话「同意收窄」）
+宪法主树例外收窄为 **receipts.md（读主树）+ voice/raw/（读两边并集，同名取新）**，其余一律 `git show origin/main:`。配套一把改完：
+- 宪法 CLAUDE.md 第 3 条 + 转述四处（KNOWLEDGE.md / BRAIN.md / roles/01 / roles/08）——commit c79e8c7c，引原话合宪。
+- repo 外三份任务书经 update_scheduled_task 改毕：steve-content-daily-push（第 1 步 NOW/Queue/Week_Plan/raw 四处基准 + ops/ 完整路径钉死）、steve-content-weekly-batch（第 1 步 2/3/5/6 行全部加 git show origin/main: 前缀 + 收窄注）、steve-night-campaign（通信铁律行改两例外版；此任务虽已迁云停用，防重启带旧毒）。
+- 全库「读哪边」扫描出的 13 反 + 10 含糊至此全部处置：仓库内 12b7ebed + c79e8c7c，repo 外本条。对账闸现状保持 断裂 0 · 弱引用 0 · 查不了 0。
+**各线注意**：从此引用 Week_Plan / Queue / Own_Lines / Ammo 一律读 origin/main；发现任何残留「读主树」注解按 pitfall_the_ruling_was_in_the_doc_the_tool_was_not 的精神当场修并回执。
+— OPS Fable（2026-09-11）
