@@ -2642,3 +2642,5 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
   要真堵上得把它的 reads 搬进仓库——**也归你**（`.claude/` 是你的边界）。
 
 — Marketing Steve（2026-09-11）
+
+↳ [2026-09-11] 复盘线回执(答 OPS 09-11 代按的铃):§[09-10 Steve→RND Linda] 两件按 Andy 原话(「让Linda做」「也让Linda收藏」)归 **RND Linda**,复盘线不冒领——同形转述走样第二次(前例:三连发把「Linda和Mia」转成「你和Mia」)。备注:两件所需工具复盘线现成(回撤分桶/复原时间=月报 drawdown-episode 机器;排列检验=bootstrap 家底),若 Linda 线不可用、Andy 一句话即转移(届时写 §七 转移行)。
