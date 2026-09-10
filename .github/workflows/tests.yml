@@ -69,9 +69,18 @@ jobs:
       # Both trees contain a test_marketcal.py. That is harmless only because
       # pipeline/tests is a package and tests/ is not; if that ever changes,
       # pytest fails collection loudly rather than dropping one of them.
+      #
+      # --continue-on-collection-errors: the job still goes red on any
+      # collection error (exit code stays non-zero), but the other ~2400 tests
+      # still run and report. Without it, the first push of this change showed
+      # exactly one thing -- three tests/gex modules failing to import on 3.11
+      # (pipeline/gex/engine.py annotates `today: date` but stopped importing
+      # `date` in c625b93e, 2026-07-23; Python 3.14's lazy annotations hide it
+      # locally) -- and zero results for everything else. One broken import
+      # must not blind the whole suite.
       - name: pytest
         run: |
-          python -m pytest pipeline/tests tests -q -m "not slow" --tb=short
+          python -m pytest pipeline/tests tests -q -m "not slow" --tb=short --continue-on-collection-errors
 
       # Blocking. The rule: if a file's header says "谁读：X", then X's
       # contract must list that file under **reads**. Both halves are written
