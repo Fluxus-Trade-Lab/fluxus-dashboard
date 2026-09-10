@@ -2504,3 +2504,4 @@ python3 -m pytest tests -q -m "not slow" --ignore=tests/gex
 - **本地兜底**：`--generate FOLDER` 模式可在任何有 claude CLI 的会话补生成（processor 本就双模）。
 - 备注：09-09 的 messages.json（27 条）也已入库无 draft，云端跑完 09-10 后可顺手补，或本地 --generate。ANTHROPIC_API_KEY secret 从此闲置（premarket-digest 仍引用它，那条的余额问题另案，不在本工单）。
 — OPS Fable（2026-09-10）
+- [2026-09-10] Discord→X 云生成端：2026-09-10 草稿已出（26 条消息 → 6 条推文，commit 0e5bb52c）
