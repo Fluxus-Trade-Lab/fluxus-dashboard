@@ -98,6 +98,22 @@ EXEMPT: dict[str, str] = {
 
 # Known-unwired baseline. (owner, found_on, why_it_matters)
 KNOWN_UNWIRED: dict[str, tuple[str, str, str]] = {
+    # 又一张「作者当晚给自己的工具打的欠条」（同上，说在明处）。
+    # 它同样**在跑** —— `pipeline/tests/test_audit_events_vs_bars.py` 的四条真归档测试
+    # 拿真数据跑它，而 tests.yml 每次 push 都跑 `pytest pipeline/tests`。
+    # 这张表数的是**生产调用**，而它没有：唯一称得上生产接线的位置，
+    # 是夜间产线抓完 K 线、写完 ticker_events 之后自查一次 ——
+    # 那两处都在 `pipeline/screeners/` 与 `.github/workflows/`，夜间组两边都合不了。
+    "audit_events_vs_bars": (
+        "DATA ALEX", "2026-09-11",
+        "the only guard that checks ticker_events against a DIFFERENT vendor: "
+        "Finviz's change_pct against yfinance bars we already store locally. "
+        "Every other archive guard reads the archive against itself, and a "
+        "whole session written from the wrong day's frame is internally "
+        "consistent -- 2026-08-07 sat there for 35 days with 0/72 of its "
+        "change_pct matching its own bars and 72/72 matching 2026-08-06's, "
+        "while three archive guards read green",
+    ),
     "audit_calendar_gaps": (
         "DATA ALEX", "2026-09-03",
         "its docstring was written FOR the 2026-08-28 miss and it has never "
