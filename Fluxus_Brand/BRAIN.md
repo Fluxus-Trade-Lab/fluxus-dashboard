@@ -114,7 +114,7 @@
 
 ## 七、基准与写权限矩阵（谁写什么、何时写、谁批——冲突时以本表仲裁）
 
-**读的基准**：规矩/契约/playbook 一律读 `git show origin/main:<path>` 权威版；**唯一例外**＝内容台五件套（Week_Plan / Queue / Own_Lines / Ammo / receipts）与 `voice/raw/` 读主树工作区（Andy 手改不总 commit）。⚠️ NOW.md **不在例外里**（09-11 实测更正：它由 `now:` 班次直推 main，主树落后——读 `git show origin/main:`）。数字引用前现场读 KNOWLEDGE.md 权威表指定的源。
+**读的基准**：规矩/契约/playbook 一律读 `git show origin/main:<path>` 权威版；**唯一例外**＝`Fluxus_Receipts/receipts.md`（Andy 手记读主树）与 `voice/raw/`（读两边并集，同名取新——Andy 09-11 批「同意收窄」；Week_Plan/Queue/Own_Lines/Ammo 已移出，实测写者是机器、main 更新，读 `git show origin/main:`）。⚠️ NOW.md **不在例外里**（09-11 实测更正：它由 `now:` 班次直推 main，主树落后——读 `git show origin/main:`）。数字引用前现场读 KNOWLEDGE.md 权威表指定的源。
 
 | 文件 / 区域 | 谁写 | 何时写 | 批准 |
 |---|---|---|---|

@@ -5,10 +5,10 @@
 **reads**：
 - `Fluxus_Brand/BRAIN.md`（先读）
 - `Fluxus_Brand/ops/material_inbox.md`（素材箱）⚠️ 读 `git show origin/main:` 权威版（八条线直推 main；09-11 实测主树 212 行 / main 443 行）
-- `Fluxus_Brand/voice/raw/`（Andy 口述）⚠️ 读主树工作区，不读 origin/main（BRAIN《基准与写权限矩阵》节的读基准例外）
+- `Fluxus_Brand/voice/raw/`（Andy 口述）⚠️ 读**两边并集**（他手录在主树、会话代录直推 main；09-11 实测各有对方缺的文件，同名取新）
 - `data/content/posts.csv`（近期表现——什么形状的帖在涨）
 - `data/research/night_reports/INBOX.md` 🔗 收藏夹（Andy 扔的链接）
-- `Fluxus_Receipts/receipts.md` ⏳ 待兑现项（判断到期=天然选题）⚠️ 读主树工作区（五件套例外）
+- `Fluxus_Receipts/receipts.md` ⏳ 待兑现项（判断到期=天然选题）⚠️ 读主树工作区（收窄后仅存的两例外之一，Andy 手记）
 - `data/research/claims/claims.jsonl`（Linda 的研究结论与 NULL，带 evidence_grade）
 - `data/reference/incidents/`（Joe/Zac 的事故档——踩坑故事是 BUILD 帖矿脉）
 - `data/growth/metrics.csv`（Gary 的漏斗读数——CASH 帖素材）
@@ -32,7 +32,7 @@
 
 > ⛔ **读基准的通则（2026-09-11 立，别再一条条猜）**：本清单里凡是**跑完直接 push** 的产出（x_watch 全部 · night_reports · growth · ops/weekly · DATA_RELIABILITY · threads），
 > 一律读 `git show origin/main:` —— 主树是一张旧快照，落后从几天到 44 天不等，**而读错一边永远不报错**。
-> **只有两类读主树工作区**：Andy 手改且不总 commit 的（内容台五件套 · `voice/raw/`）。⚠️ NOW.md 已移出（09-11 实测：`now:` 班次写、直推 main，主树 121 行 / main 161 行——读 `git show origin/main:`）。判据是**谁写它**，不是它在哪个目录。
+> **只有两类特殊基准（Andy 09-11 批「同意收窄」）**：`Fluxus_Receipts/receipts.md` 读主树；`voice/raw/` 读两边并集（同名取新）。其余一律 `git show origin/main:`——原五件套的 Week_Plan/Queue/Own_Lines/Ammo 已移出。⚠️ NOW.md 已移出（09-11 实测：`now:` 班次写、直推 main，主树 121 行 / main 161 行——读 `git show origin/main:`）。判据是**谁写它**，不是它在哪个目录。
 
 **returns**：**1 个取用信号**（＋可选 ≤2 个备选留箱，各一句为何今晚不做——一晚只跑一个 campaign），取用的带**七件**：发生了什么 / 受众为何在意 / 出处 / 衰减速度（这周不做就死吗）/ 成品能回答的问题 / 弃选理由清单 / ⭐ **现场读数**（今天外面谁在说这个、屋子多满——引 x_watch 具体行：handle·日期·曝光；查过确实没人聊也合法，但必须明写「查过，外面没人聊」＋为什么仍然取。答不上第七件＝没查，退回重做，不是降级放行）。**弃的必须多于取的**——这站的价值是保护下游不给没人要的题抛光。
 

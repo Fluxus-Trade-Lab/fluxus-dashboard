@@ -175,7 +175,7 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
    ```
    已经提错了：`git reset --soft HEAD~1` → `git restore --staged .` → 重新 add 指名文件 → 重提交。**没推 main 就还来得及**，所以这一步要在 push 之前做完。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
-3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**与 `Fluxus_Brand/voice/raw/`（Andy 口述原料，08-31 补）以主树工作区为准**——Andy 会直接手改/直接录进去且不总 commit，权威版反而旧。
+3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外（Andy 2026-09-11 批「同意收窄」）：`Fluxus_Receipts/receipts.md` 与 `Fluxus_Brand/voice/raw/`**——receipts 是他手记读主树；voice/raw 他手录在主树、会话代录直推 main，**两边可能互有对方缺的文件，读者取两边并集、同名以更新者为准**。原五件套的 Week_Plan / Queue / Own_Lines / Ammo 已移出：09-11 实测其写者均为机器班次（Steve 周检、会话清洗）且 main 更新——一律读 `git show origin/main:`。
 4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
 5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
 6. **写公箱一律基于 `origin/main`，永不拷贝主树副本**（Andy 08-25 定；同一个陋习两天内咬了两次）——第 3 条管**读**，这条管**写**。三个 append-only 公箱（`material_inbox` / `night_reports/INBOX.md` / `DATA_CONTRACTS §七`）在主树里的那份，可能停在别人几次追加之前；把它 `cp` 进临时树整份提交 = **删掉别人的行**，而你的 diff 看起来只是「我加了一行」。做法：在临时树里直接改（那棵树本来就是 origin/main），或取 `git show origin/main:<path>`，**不要拷主树那份**。提交前自检一行，必须为空：
