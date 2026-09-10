@@ -57,6 +57,16 @@ jobs:
         run: |
           python -m pytest pipeline/tests -q -m "not slow" --tb=short
 
+      # Blocking. The rule: if a file's header says "谁读：X", then X's
+      # contract must list that file under **reads**. Both halves are written
+      # by hand and neither one fails when they disagree -- the lists just look
+      # full. Found six real breaks on 2026-09-10; all fixed, so this is a
+      # ratchet at zero, not an alarm. WORKTREE (not origin/main) because the
+      # checkout is shallow and we want THIS commit's state.
+      - name: audit_reads_declarations
+        run: |
+          python pipeline/tools/audit_reads_declarations.py --rev WORKTREE
+
       # Reported, never blocking: this one prints which guards nobody calls.
       # It is allowed to be red without failing the job, because its verdict
       # is a to-do list, not a defect in this commit.

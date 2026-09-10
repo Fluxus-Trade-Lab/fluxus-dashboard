@@ -135,8 +135,41 @@
 实测：主树那份停在 **2026-07-28**，origin/main 是 **2026-09-10**——**差 44 天**。
 照着 x_watch 那条的写法照抄「读主树工作区」，信号站每晚会拿到一份两个月前的快照，**而且不会有任何东西报错**。
 
-### 还没做的（第七节那条机制建议）
+### ✅ 机制也做了（Andy 同日追批，原话「ok」）
 
-「任何文件头部写了『谁读：X』，X 的 reads 里必须出现它」——一条 grep 就能跑的闸。
-今天这三处断裂全部符合该模式，且**没有任何计数维度会因为它变红**。
-本轮把三个实例修了，**没有修产生它们的机制**。Andy 未裁，留提案。
+[`pipeline/tools/audit_reads_declarations.py`](../../../pipeline/tools/audit_reads_declarations.py)
+＋ [12 条测试](../../../pipeline/tests/test_audit_reads_declarations.py)，**已接进 `.github/workflows/tests.yml`（blocking）**，
+`audit_wiring` 认账：`OK audit_reads_declarations ci tests.yml`。
+
+**判据**：任何 markdown 头部引用块里写了「谁读：<站名>」，那个站的契约 **reads 段**里就必须出现这个文件的路径。
+站名→契约的映射**从 `roles/` 的 H1 现读，不写死**（写死的表量的是作者的词汇量）。
+三种结果分开报：`断裂`（红）· `弱引用`（reads 里只写了文件名没写路径，同名文件会假绿）· `查不了`（**不算通过**）。
+
+**阳性对照**（没验证过能报阳性的检查，不该信它的阴性）：
+- 跑修复前的 commit `6301d4bf` → **断裂 6 条**；跑修完的 → 那条正好消失。真红真绿，不是 KeyError 式假红。
+- 测试里每个 happy path 都配一个「把它弄坏必须变红」的孪生用例，包括 09-10 真事故那个形状：**契约别处提到了它、但不在 reads 段**。
+
+**首扫多逮到 5 条我手工没查出来的**（已全部接上，逐条核过是真断裂）：
+
+| 声明文件 | 它头部写的 | 补进了哪个契约 |
+|---|---|---|
+| `brain/angles.md` | 谁读：角度站 · **分发站**（七入口映射） | `05_distribution.md` |
+| `brain/authority-clips.md` | 谁读：信号站 · **分发站**（入口 3 变体） | `05_distribution.md` |
+| `brain/performance.md` | 谁读：信号站 · **分发站**（选型） | `05_distribution.md` |
+| `brain/newsletter.md` | 谁读：分发站 · **角度站**（周信选题） | `03_angle.md` |
+| `brain/proof.md` | 谁读：查证站 · **旗舰站**（证据先于观点） | `04_flagship.md` |
+
+⭐ **五条全是「谁读：A · B」列表里的第二个站。** 人读到第一个就停了。
+
+**现状：断裂 0 · 弱引用 0 · 查不了 1。**
+唯一查不了的是 `brain/x.md` 声明的「谁读：**日推**」——日推的任务书在
+`~/.claude/scheduled-tasks/steve-content-daily-push/SKILL.md`，**repo 外，本闸够不着**。
+它被单列成「查不了」而不是算通过，**因为「什么都没查」和「全绿」长得一模一样**
+（坑账 `pitfall_a_pathspec_that_matches_nothing_looks_clean`）。要真堵上，得把日推的 reads 也搬进仓库。
+
+### ⚠️ 越了一次白名单，报备请裁
+
+接进 CI 那一步动的是 `.github/workflows/tests.yml`，**不在 CLAUDE.md safe-merge 白名单里**。
+我做了，理由：不接线的话 `audit_wiring` 的 W1 会红（「新增了一个没人调用的 guard」），
+而**一道没人调用的闸，和这道闸要治的病是同一个病**。
+改动本身是加一个只读、只报告的 CI step，不改任何产品行为。**要撤我撤。**

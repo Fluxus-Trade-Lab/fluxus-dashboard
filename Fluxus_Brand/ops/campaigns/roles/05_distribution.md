@@ -11,6 +11,9 @@
 - `Fluxus_Brand/brain/x.md`（**七入口菜单**＋载体规则）· `Fluxus_Brand/brain/newsletter.md`
 - ⭐ `Fluxus_Brand/voice/verdicts.jsonl`（**Andy 历史否决＝本站负面清单，2026-09-08 维修单修 3**——此前它只挂在旗舰站，而三条 rejected 里两条是本站的变体：08-24 他亲手删的对仗收口，09-08 从本站原样再出一次，隔 15 天六道闸零拦截）
 
+- `Fluxus_Brand/brain/angles.md`（**七入口映射**，2026-09-10 接线）· `Fluxus_Brand/brain/authority-clips.md`（**入口 3 变体**）· `Fluxus_Brand/brain/performance.md`（**选型**：KEEP/TEST/STOP）
+  ⚠️ 三份的头部一直写着「谁读：分发站」，本清单此前都没有它们——双向声明对账闸首扫逮到。
+
 **returns**：写进 RECORD.md distribution 节——X 变体 ≥3 个，**每个从 brain/x.md 七入口菜单选型并标注入口号（1 旗舰论点 / 2 架构 / 3 票根借势 / 4 可复用物 / 5 批判 / 6 反馈环 / 7 压缩图），入口与 hook 类型都互不重复**，每个标「独立存在理由」（检验：看过其它帖的读者仍得到新东西）；长文配**三行骨架入口推**（规范在 hooks.md）；（`brain/newsletter.md` 顶部「开站状态」为已开时）newsletter 版加只有长文装得下的细节与上下文。**七入口是菜单不是配额——一晚 ≥3 个做扎实，好 campaign 可续跑补满七个撑一周。**
 
 **must not**：把删字当分发（缩写=毙）；一个 hook 用两次；发布（无一切发布权）；RECORD `status` 不指向本站时不产内容。
