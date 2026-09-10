@@ -90,12 +90,14 @@ def write_watermark(dt_utc: datetime, channel_id: str | None = None) -> None:
     STATE_PATH.write_text(json.dumps(state, indent=2))
 
 
-def parse_channel_specs() -> list[tuple[str, str]]:
-    """[(channel_id, label), ...] from env.
+def parse_channel_specs() -> list[tuple[str, str, str]]:
+    """[(channel_id, label, mode), ...] from env.
 
-    DISCORD_CHANNEL_IDS takes precedence: comma-separated entries, each either
-    "id" or "id:label". Falls back to the single DISCORD_CHANNEL_ID (labelled
-    "live-commentary" — the original channel).
+    DISCORD_CHANNEL_IDS takes precedence: comma-separated "id[:label[:mode]]".
+    mode: "own" (default) = Andy's messages only; "qa" (Andy 2026-09-10:
+    互帮互助「需要」问答对) = Andy's messages, and when one is a reply, the
+    replied-to member question rides along anonymously. Falls back to the
+    single DISCORD_CHANNEL_ID (labelled "live-commentary").
     """
     multi = os.environ.get("DISCORD_CHANNEL_IDS", "").strip()
     if multi:
@@ -104,11 +106,14 @@ def parse_channel_specs() -> list[tuple[str, str]]:
             entry = entry.strip()
             if not entry:
                 continue
-            cid, _, label = entry.partition(":")
-            out.append((cid.strip(), label.strip() or cid.strip()))
+            parts = [x.strip() for x in entry.split(":")]
+            cid = parts[0]
+            label = parts[1] if len(parts) > 1 and parts[1] else cid
+            mode = parts[2] if len(parts) > 2 and parts[2] else "own"
+            out.append((cid, label, mode))
         return out
     single = os.environ.get("DISCORD_CHANNEL_ID", "").strip()
-    return [(single, "live-commentary")] if single else []
+    return [(single, "live-commentary", "own")] if single else []
 
 
 def filter_since(messages: list[dict], user_id: str, since_utc: datetime) -> list[dict]:
@@ -188,7 +193,7 @@ def main():
     # channel's newest consumed timestamp outruns another channel's fresh posts).
     filtered = []
     per_channel_max: dict[str, datetime] = {}
-    for cid, clabel in channels:
+    for cid, clabel, cmode in channels:
         try:
             raw_messages = fetch_messages(cid, bot_token)
         except Exception as e:  # one channel without bot access must not sink the run
@@ -207,6 +212,12 @@ def main():
         print(f"[{clabel}] {len(got)} messages")
         for m in got:
             m["channel"] = clabel
+            if cmode == "qa":
+                ref = (m.get("referenced_message") or {}).get("content", "").strip()
+                if ref and (m.get("referenced_message") or {}).get("author", {}).get("id") \
+                        != user_id:
+                    # Member question, anonymised — never store the member's name.
+                    m["question"] = ref
         if got:
             per_channel_max[cid] = max(_msg_timestamp(m) for m in got)
         filtered.extend(got)
@@ -232,8 +243,11 @@ def main():
     if args.fetch_only:
         msg_path = out_dir / "messages.json"
         msg_path.write_text(json.dumps(
-            [{"content": m["content"], "timestamp": m["timestamp"],
-              "channel": m.get("channel", "live-commentary")} for m in filtered],
+            [{k: v for k, v in (
+                ("content", m["content"]), ("timestamp", m["timestamp"]),
+                ("channel", m.get("channel", "live-commentary")),
+                ("question", m.get("question")),
+             ) if v is not None} for m in filtered],
             ensure_ascii=False, indent=1))
         if not backfill:
             for cid, ts in per_channel_max.items():

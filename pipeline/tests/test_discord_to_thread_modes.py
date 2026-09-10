@@ -97,3 +97,36 @@ def test_generate_missing_folder_exits_nonzero(threads_dir, monkeypatch):
     with pytest.raises(SystemExit) as e:
         _run(["--generate", "2026-01-01"], monkeypatch)
     assert e.value.code == 1
+
+
+def test_qa_mode_attaches_member_question_anonymously(threads_dir, monkeypatch):
+    """qa 模式:Andy 的 reply 带上被回复的会员提问,匿名;own 模式不带。"""
+    monkeypatch.setenv("DISCORD_CHANNEL_IDS", "111:live:own, 222:互帮互助:qa")
+    reply = {"content": "Size down and wait for the retest.",
+             "timestamp": "2026-09-09T17:00:00.000000+00:00",
+             "referenced_message": {"content": "How do I size this breakout?",
+                                    "author": {"id": "member42", "username": "SECRET"}}}
+    by_chan = {"111": [dict(reply)], "222": [dict(reply)]}
+    with mock.patch.object(d2t, "fetch_messages", side_effect=lambda cid, tok: by_chan[cid]), \
+         mock.patch.object(d2t, "filter_since", side_effect=lambda msgs, uid, since: list(msgs)):
+        _run(["--fetch-only"], monkeypatch)
+    out = json.loads(next(threads_dir.glob("*/messages.json")).read_text())
+    qa = [m for m in out if m["channel"] == "互帮互助"][0]
+    own = [m for m in out if m["channel"] == "live"][0]
+    assert qa["question"] == "How do I size this breakout?"
+    assert "question" not in own
+    assert "SECRET" not in json.dumps(out)  # 会员名永不入库
+
+
+def test_qa_mode_ignores_self_reply(threads_dir, monkeypatch):
+    monkeypatch.setenv("DISCORD_CHANNEL_IDS", "222:互帮互助:qa")
+    monkeypatch.setenv("DISCORD_USER_ID", "u")
+    self_reply = {"content": "adding to my earlier point",
+                  "timestamp": "2026-09-09T17:00:00.000000+00:00",
+                  "referenced_message": {"content": "my own earlier msg",
+                                         "author": {"id": "u"}}}
+    with mock.patch.object(d2t, "fetch_messages", return_value=[self_reply]), \
+         mock.patch.object(d2t, "filter_since", side_effect=lambda msgs, uid, since: list(msgs)):
+        _run(["--fetch-only"], monkeypatch)
+    out = json.loads(next(threads_dir.glob("*/messages.json")).read_text())
+    assert "question" not in out[0]
