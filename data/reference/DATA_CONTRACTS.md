@@ -1126,3 +1126,5 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   export WT=$(mktemp -d)/fb && R=/Users/taolezhu/Documents/AI-Trading-System && git -C "$R" fetch origin && git -C "$R" worktree add --detach "$WT" origin/fix/joe-fbclock-verified-2026-09-10 && git -C "$WT" rebase origin/main && git -C "$WT" push origin HEAD:main && git -C "$R" worktree remove --force "$WT"
   ```
   我按任务书 §五② 留分支不自合（`pipeline/tools/` 非 `audit_*`、`scripts/` 都在 safe-merge 白名单外）。全文见 [INBOX 09-10 Joe §③](../research/night_reports/INBOX.md)。（Plumber Joe）
+
+- **[2026-09-10] Marketing Steve · 立档：长端利率三变量参考（Warsh / Bessent / CPI）＋ 8/18 案例** —— `Fluxus_Brand/research/Fluxus_Macro_LongEnd_2026-09.md`。起因 Andy 09-10 三连问（8/18 为什么跌 → 三变量对长端 → 记全以后用）。全部 6 月后事实为当日抓取，每条带日期与源；Fed 讲稿与 Treasury 读出为一手。**两个硬发现**：①Warsh 讲稿零次提 yield/Treasury/balance sheet/deficit/term premium，长端在没提长端的讲话后继续冲高；②Treasury 回购 $2B→$4B→$6B 逐级加码收益率照涨，Druckenmiller 8/24 预言的「越买越多」三周应验。§九 有「同类问题机制速查」。**不进 CANON_LIBRARY**（那是技术口径一手源库，宏观不归它）。
