@@ -248,6 +248,40 @@ def _screener_counts(results: dict) -> dict:
     return {k: _screener_count(d) for k, d in results.items()}
 
 
+def attach_index_membership(universe: pd.DataFrame) -> None:
+    """Tag S&P 500 membership on the universe frame, IN PLACE.
+
+    Own failure domain: a membership fetch that fails leaves the column absent
+    and every index-scoped reading ships NULL rather than silently falling back
+    to the whole universe.
+
+    ⚠️ Why this lives in `main()` and not in `compute_universe_scores`:
+    it used to be set on that function's `df = universe.copy()`, so the column
+    reached `universe.json` (503 of 5614 rows True, correct) but **never
+    reached breadth** -- `run_breadth_metrics` is handed the un-scored
+    `universe`, a different object. From the 2026-09-04 ship to 2026-09-09,
+    all five index-scoped columns wrote NULL every single night while the
+    membership fetch was working fine. The archive showed 0 values in 581 rows
+    and nothing was red: a column that is *allowed* to be NULL cannot tell you
+    whether it is NULL because the data is missing or because nobody handed it
+    the data. Setting it on `universe` feeds both readers -- breadth directly,
+    and `universe.json` through the copy.
+    """
+    logger = logging.getLogger(__name__)   # 本文件的惯例:每个函数各建各的
+    try:
+        from pipeline.adapters.finviz_adapter import FinvizAdapter as _FA  # noqa: PLC0415
+        members = _FA().fetch_index_members('sp500')
+    except Exception:  # noqa: BLE001 — own failure domain; never abort the run
+        logger.exception("S&P 500 membership fetch failed - index-scoped readings will be NULL")
+        return
+    if not members:
+        logger.warning("S&P 500 membership empty - index-scoped readings will be NULL")
+        return
+    universe['in_sp500'] = universe['ticker'].astype(str).str.upper().isin(members)
+    logger.info("S&P 500 membership: %d of %d universe rows",
+                int(universe['in_sp500'].sum()), len(universe))
+
+
 def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     """Compute RS scores, composite metrics, and derived columns for the screener."""
     logger = logging.getLogger(__name__)
@@ -277,22 +311,6 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # the lowest rank to keep everyone else's denominator; outside it there is
     # no denominator to protect).
     from pipeline.themes import is_tradeable  # noqa: PLC0415
-    # Index membership for the index-scoped breadth family (2026-09-04).
-    # StockCharts' percent-above-MA is always attached to a named index; ours
-    # was computed on the whole screener universe and so matched no published
-    # reading. Own failure domain: a membership fetch that fails leaves the
-    # column absent and breadth ships those readings NULL.
-    try:
-        from pipeline.adapters.finviz_adapter import FinvizAdapter as _FA
-        _members = _FA().fetch_index_members('sp500')
-        if _members:
-            df['in_sp500'] = df['ticker'].astype(str).str.upper().isin(_members)
-            logger.info("S&P 500 membership: %d of %d universe rows",
-                        int(df['in_sp500'].sum()), len(df))
-        else:
-            logger.warning("S&P 500 membership empty - index-scoped breadth will be NULL")
-    except Exception:
-        logger.exception("S&P 500 membership fetch failed - index-scoped breadth will be NULL")
 
     tradeable = df.apply(is_tradeable, axis=1)
     # S&P's FALR beside our own floor -- reported, never gating. See
@@ -682,6 +700,10 @@ def main():
                     stats, cov * 100, universe['fund_source'].value_counts(dropna=False).to_dict())
     except Exception:
         logger.exception("fundamentals store failed - F score falls back to Finviz columns only")
+
+    # Index membership BEFORE scoring, so the column rides the copy into
+    # universe.json *and* is present on `universe` when breadth reads it.
+    attach_index_membership(universe)
 
     # Compute universe scores for screener page
     scored_universe = compute_universe_scores(universe)
