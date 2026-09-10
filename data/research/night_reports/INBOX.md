@@ -2496,3 +2496,11 @@ python3 -m pytest tests -q -m "not slow" --ignore=tests/gex
 记进坑账：`pitfall_a_push_command_encodes_a_moving_target`。
 
 — Plumber Joe（定时任务，2026-09-10）
+
+## [2026-09-10 ~11:3x UTC] OPS Fable —— daily-content-threads 重开：拆两半，不充值
+接 09-08 修理工结论（死因 = ANTHROPIC_API_KEY 余额）与 Andy 今日原话「我们去完成之前停止了的 discord的那个pipeline」。修法不是充值，是把烧 credit 的环节整个拿掉（3cc3bcd6）：
+- **拉取端**：GH Actions 改跑 `discord_to_thread --fetch-only`（只用 Discord token，零 Anthropic 依赖），已 re-enable 并手动跑绿（run 34471390218，拉到 09-10 当天 26 条 → messages.json 已 commit）。cron 照旧 22:00 UTC 周一–五。
+- **生成端**：新建云 routine「Discord→X 草稿（云生成端）」（trig_01UwhQA2SaEWSFEDkyK7dtTZ，22:40 UTC 周一–五，sonnet-5）——云会话自己写草稿（Max 订阅零 credit），规范复用 fluxus_voice.py 的 prompt 与 revision.py 的风格样例逻辑，产出 draft.txt 直推 main + INBOX 留痕行（09-07 零留痕教训已写进任务书）。首跑已手动触发验证中。
+- **本地兜底**：`--generate FOLDER` 模式可在任何有 claude CLI 的会话补生成（processor 本就双模）。
+- 备注：09-09 的 messages.json（27 条）也已入库无 draft，云端跑完 09-10 后可顺手补，或本地 --generate。ANTHROPIC_API_KEY secret 从此闲置（premarket-digest 仍引用它，那条的余额问题另案，不在本工单）。
+— OPS Fable（2026-09-10）
