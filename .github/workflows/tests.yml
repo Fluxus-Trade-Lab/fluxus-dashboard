@@ -53,9 +53,25 @@ jobs:
           pip install -r pipeline/requirements.txt
           pip install pytest PyYAML
 
+      # Two test trees, one run. Until 2026-09-11 this line said only
+      # `pipeline/tests`, so the root `tests/` tree (gex, book, centaur, flow,
+      # options, profile, reference, plus the top-level test_*.py) had no
+      # automatic trigger at all -- the same hole this file was created to
+      # close, one directory over. tests/test_no_naive_clock.py sat red on
+      # main for 14 days (fixed 2026-09-10) and nothing noticed.
+      #
+      # No extra install is needed for the root tree: its only non-stdlib
+      # import beyond pandas/numpy is jinja2 (tests/gex -> pipeline/gex/render),
+      # and jinja2 is already in pipeline/requirements.txt. pipeline/gex/ibkr
+      # imports ib_async, but only lazily inside the live-pull branch, so no
+      # root test needs an IBKR connection. Nothing is --ignore'd.
+      #
+      # Both trees contain a test_marketcal.py. That is harmless only because
+      # pipeline/tests is a package and tests/ is not; if that ever changes,
+      # pytest fails collection loudly rather than dropping one of them.
       - name: pytest
         run: |
-          python -m pytest pipeline/tests -q -m "not slow" --tb=short
+          python -m pytest pipeline/tests tests -q -m "not slow" --tb=short
 
       # Blocking. The rule: if a file's header says "谁读：X", then X's
       # contract must list that file under **reads**. Both halves are written
