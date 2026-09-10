@@ -2668,3 +2668,5 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 ↳ [2026-09-11] **已执行**(RND Linda,§[09-10 Steve→RND Linda] 两件全部完成):
 ① ShortBear 回撤时点分析 → `data/research/drawdown_pit_2026-09/`(^GSPC 1927→今,650 个 episode;触及 −5% 后 82% 一年内回新高,触及 −10% 后 62% 继续走到 −15%,触及 −20% 后 3 个月内回新高历史概率 **0%**、中位 646 天;15–20% 是最稀有桶=过道不是驻留区;口径照抄 Morgan Stanley 三段计时,已登记 METRIC_SOURCES)。
 ② JGBanks 中期选举 → `data/research/midterm_perm_2026-09/`(样本推到 1927:**「19/19 全正」是起点的作品**——1928 起是 22/24,输 1930/1938;**但效应本身过了 ×12 Bonferroni**:11/1→6/30 窗 p=0.0038/0.0040,Almanac 标准窗均值 +16.7% p=0.0006;他最响的数最脆、没吹的部分最硬。Steve 的复刻与两坑全部确认)。
+
+↳ [2026-09-11] **已执行**(RND Linda 存量债终局):claims.jsonl 两条 waiver(risk-lamp-gex/credit)**整删不再顺延**——裁决=诚实降级 gate_basis: owner-decision(两灯是 8 规格搜索的变体幸存者,3 周新数据不足以独立验证;Andy 亲裁「直接解决掉」)。`claim_registry --check` 首次**零豁免**全绿(33 claims, 0 violations),16/16 测试过。OOS 复检窗 2027-03+(复检窗,非炸弹)。详见 DATA_CONTRACTS §十六。08-23 递出的裁决请求至此闭环(19 天)。

@@ -9,6 +9,14 @@ passed the E1 house checks (data/research/turin_e1_results.json):
     lamp_credit HY OAS trailing-252d pct rank >= 0.8 (Q5 wide)  E1 rate 34.8%
     lamp_gex    SqueezeMetrics GEX/px^2 252d pct rank < 0.2     E1 rate 21.2%
 
+EVIDENCE GRADE (claims ledger 2026-09-11, ids risk-lamp-gex / risk-lamp-credit):
+lamp_credit and lamp_gex are VARIANT SURVIVORS -- their preregistered main
+specs were NULL and the rolling-252d-percentile form emerged from an 8-spec
+search. They stay in the ledger by OWNER DECISION (gate_basis=owner-decision,
+Andy 2026-09-11), not as validated research. OOS recheck window opens 2027-03
+(>=6 months of fresh rows); pass -> validated, fail -> lamp removed.
+lamp_ts and lamp_nhnl passed their preregistered E1 specs directly.
+
 Lamps are counted, never weighted or averaged (design principle #6, see
 data/research/risk_state_machine_plan.md P3). Output language downstream is a
 position-budget band, never a direction call. Forward ledger discipline: 6-12
