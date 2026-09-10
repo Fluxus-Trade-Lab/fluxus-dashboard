@@ -15,41 +15,49 @@ import { useState } from 'react'
  * So the label must be specific. «Show more» hides the fact that something was
  * hidden; «Historical breadth series — 6 charts» is a reader deciding, and a
  * reader who never opens it has still been told it exists.
+ *
+ * Redesigned 2026-09-11 (Andy: "折叠区也需要改设计"). The row itself did not
+ * change what it promises — still label + count + what it holds, closed by
+ * default — only how it looks: a dot instead of a bare +/−, and the note is
+ * always on rather than appearing on hover. Hover-only was a scan-ability
+ * problem the moment there were eight of these stacked: reading what a row
+ * holds meant sweeping the mouse down eight times. The one thing a demoted
+ * section cannot also demote is its own label.
  */
 export default function Reference({ label, note, count, children }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <section className="border-t border-[var(--color-border)] pt-2">
+    <section className="border-t border-[var(--color-border-light)] first:border-t-0 py-1">
       <button type="button" onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
-              className="w-full flex items-baseline gap-3 text-left bg-transparent
-                         border-0 p-0 cursor-pointer group">
-        <span className="text-[11px] font-mono text-[var(--color-text-muted)]
-                         group-hover:text-[var(--color-text)] w-3">
-          {open ? '−' : '+'}
-        </span>
-        <span className="text-[11px] font-mono uppercase tracking-[.2em]
-                         text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]">
+              className="w-full flex items-center gap-3 text-left bg-transparent
+                         border-0 py-2 px-1 -mx-1 cursor-pointer group rounded-lg
+                         hover:bg-[var(--color-hover-bg)]">
+        <i aria-hidden="true" className="block w-[7px] h-[7px] rounded-full shrink-0"
+           style={{ background: open ? 'var(--color-accent)' : 'var(--color-untested)' }} />
+        <span className="text-[13px] font-medium text-[var(--color-text)] shrink-0">
           {label}
         </span>
         {count != null && (
-          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-            {count} {count === 1 ? 'object' : 'objects'}
+          <span className="text-[11px] font-mono text-[var(--color-text-muted)] shrink-0">
+            {count}
           </span>
         )}
         {note && (
-          /* the note earns its ink on approach: label and count are the
-             always-on promise, the description appears when the reader is
-             already looking at the line */
-          <span className="text-[11px] text-[var(--color-text-muted)] truncate
-                           opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="text-[11px] text-[var(--color-text-muted)] truncate flex-1 min-w-0">
             {note}
           </span>
         )}
+        <span className="text-[13px] font-mono text-[var(--color-text-muted)]
+                         group-hover:text-[var(--color-text)] shrink-0">
+          {open ? '−' : '+'}
+        </span>
       </button>
 
-      {open && <div className="mt-3 space-y-3">{children}</div>}
+      {open && (
+        <div className="mt-2 mb-2 pl-[19px] space-y-3">{children}</div>
+      )}
     </section>
   )
 }
