@@ -773,10 +773,12 @@ p_agents = '<div class="agrid">%s</div>' % ag
 days = [(now - datetime.timedelta(days=i)).strftime("%m-%d") for i in range(13, -1, -1)]
 mx = max([by_day.get(d, 0) for d in days] + [1])
 bars = "".join('<div class="bar" title="%s · %d"><i style="height:%d%%"></i><s>%s</s></div>' % (d, by_day.get(d, 0), round(by_day.get(d, 0) / mx * 100), d[3:]) for d in days)
-rank = sorted(lane_7d.items(), key=lambda kv: -kv[1])
-rank_h = "".join('<tr><td class="num">%d</td><td>%s</td><td class="num">%d</td></tr>' % (i + 1, n, v) for i, (n, v) in enumerate(rank[:9]))
-p_ops = (section("14 天吞吐（commit 到 main）", '<div class="chart">%s</div>' % bars) +
-         section("7 天完成排行（按提交者，不是按收件人）", '<table><thead><tr><th>#</th><th>线 · 谁做的</th><th>commit</th></tr></thead><tbody>%s</tbody></table>' % rank_h) +
+# 「7 天完成排行」已撤（OPS 2026-09-11 审计：零消费者，且分线归属实测 38.5% 准确率
+# ——印出来每三个数错两个，比没有更糟；repo_health/2026-09-11_board_consumers.md 提案 A）。
+# 14 天吞吐保留：不分线、无归属问题。lane_7d 仍在算，恢复排行只需把 section 加回来。
+total_7d = sum(lane_7d.values())
+p_ops = (section("14 天吞吐（commit 到 main）",
+                 '<div class="chart">%s</div><div class="mut">近 7 日 %d commit（不分线——分线归属 38.5%% 准确率，排行已撤，见 repo_health/2026-09-11_board_consumers.md）</div>' % (bars, total_7d)) +
          section("🎮 发布关卡",
                  ('<div class="gatebar"><div style="width:%d%%"></div></div><div class="mut">本周 %d / 5</div>'
                   % (min(gate_n, 5) * 20, gate_n)) if gate_n is not None
