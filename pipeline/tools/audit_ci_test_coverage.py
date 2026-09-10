@@ -132,14 +132,6 @@ TEST_ROOTS = ("pipeline/tests", "tests")
 # path/marker -> (owner, reason, date found). Delete an entry when it is fixed;
 # T2 makes that mandatory rather than polite.
 DECLARED: dict[str, tuple[str, str, str]] = {
-    "tests": (
-        "DATA ALEX / whoever owns .github/workflows",
-        "tests.yml runs `pytest pipeline/tests` only; this root has no "
-        "automatic trigger at all and one of its tests is red since "
-        "2026-08-27 (counts here are ast test functions; pytest collects "
-        "608 in this root and cannot collect tests/gex at all)",
-        "2026-09-05",
-    ),
     "marker:slow": (
         "DATA ALEX / whoever owns .github/workflows",
         "`-m \"not slow\"` drops 3, including test_run_all_end_to_end -- the "
