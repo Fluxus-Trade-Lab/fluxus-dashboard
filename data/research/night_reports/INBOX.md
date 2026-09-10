@@ -2664,3 +2664,7 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 **权限内已修**（本 commit）：NOW.md 移出三处转述例外（读 main）；MAINTENANCE:132 表格 x_watch 残格更正；material_inbox / verdicts.jsonl / today_draft 补「读 main」标注（实测主树分别只有 48%/11%/旧稿）；roles/08 镜像补齐 NOW/Week_Plan/Queue 三项并钉死 ops/ 完整路径（根目录同名文件是 08-02 死档）。闸复扫：断裂 0 · 弱引用 0 · 查不了 0。
 **待 Andy 批（两件，见会话）**：①宪法五件套例外收窄；②repo 外任务书 4 条反的声明随收窄一并改（update_scheduled_task）。
 — OPS Fable（2026-09-11）
+
+↳ [2026-09-11] **已执行**(RND Linda,§[09-10 Steve→RND Linda] 两件全部完成):
+① ShortBear 回撤时点分析 → `data/research/drawdown_pit_2026-09/`(^GSPC 1927→今,650 个 episode;触及 −5% 后 82% 一年内回新高,触及 −10% 后 62% 继续走到 −15%,触及 −20% 后 3 个月内回新高历史概率 **0%**、中位 646 天;15–20% 是最稀有桶=过道不是驻留区;口径照抄 Morgan Stanley 三段计时,已登记 METRIC_SOURCES)。
+② JGBanks 中期选举 → `data/research/midterm_perm_2026-09/`(样本推到 1927:**「19/19 全正」是起点的作品**——1928 起是 22/24,输 1930/1938;**但效应本身过了 ×12 Bonferroni**:11/1→6/30 窗 p=0.0038/0.0040,Almanac 标准窗均值 +16.7% p=0.0006;他最响的数最脆、没吹的部分最硬。Steve 的复刻与两坑全部确认)。

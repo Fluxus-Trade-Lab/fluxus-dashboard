@@ -45,6 +45,8 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 
 | 我们发的 | 标准名 | 标准口径 | 状态 |
 |---|---|---|---|
+| 回撤三段计时(`drawdown_pit` 研究) | Drawdown / Underwater curve | close 基准 running-ATH;峰→谷 / 谷→复原 / 总水下(Morgan Stanley Counterpoint Global, *Drawdowns and Recoveries*) | ✅ 照抄(`data/research/drawdown_pit_2026-09/`,2026-09-11) |
+| 中期选举季节窗(`midterm_perm` 研究) | Stock Trader's Almanac "Sweet Spot" | 中期年 Q4(10/1)→次年 Q2(6/30);原帖两窗(选举日→+12m、11/1→6/30)作为**变体**并列复刻,已明标非标准 | ✅ 标准窗照抄(`data/research/midterm_perm_2026-09/`,2026-09-11) |
 | `mcclellan_osc` | McClellan Oscillator | RANA = net/(adv+dec)×1000，19 与 39 日 EMA 之差 | ✅ **一致**（`breadth_store.py:84-91`） |
 | `ad_line` | Advance-Decline Line | 净涨跌家数累加 | ✅ 一致 |
 | `t2108` | Worden T2108 | 40 日均线上方占比 | ✅ 一致 |
