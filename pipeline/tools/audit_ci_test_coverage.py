@@ -151,6 +151,10 @@ _MODELLED = {
     "-q", "--quiet", "-v", "--tb", "--tb=short", "--tb=line", "--tb=long",
     "--tb=no", "-m", "-p", "--color", "-rs", "-ra", "--maxfail",
     "--durations", "--strict-markers", "-x",
+    # Selects nothing: a module that fails to import is still reported as an
+    # error and still fails the run; the flag only stops that one error from
+    # aborting collection of every OTHER module. No test is excluded by it.
+    "--continue-on-collection-errors",
 }
 
 # Trigger keys that narrow WHEN a workflow fires. `_triggers` reads key names
