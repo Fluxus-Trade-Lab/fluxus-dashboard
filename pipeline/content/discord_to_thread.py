@@ -36,7 +36,7 @@ from dotenv import load_dotenv
 
 from pipeline.marketcal import market_today
 from pipeline.content.discord_fetch import fetch_messages, filter_by_author_and_date
-from pipeline.content.processor import process_to_thread
+from pipeline.content.processor import process_to_thread  # noqa: E402 (dual-mode: CLI locally, API in CI)
 from pipeline.content.revision import load_style_examples
 
 # Base output directory
@@ -98,11 +98,37 @@ def main():
     # Deprecated: the AM/PM split is now a rolling 'since last run' window, so this
     # flag no longer does anything. Accepted (ignored) so older task files don't break.
     parser.add_argument("--after-noon", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--fetch-only", action="store_true",
+        help="Fetch + filter messages and write messages.json only; no Claude call. "
+             "The generation step runs later (cloud session or --generate).",
+    )
+    parser.add_argument(
+        "--generate", type=str, default=None, metavar="FOLDER",
+        help="Generate draft.txt from an existing threads/{FOLDER}/messages.json "
+             "(written by a --fetch-only run). Skips Discord entirely.",
+    )
     args = parser.parse_args()
 
     if args.after_noon:
         print("Note: --after-noon is deprecated and ignored (windowing is now 'since last run').",
               file=sys.stderr)
+
+    if args.generate:
+        out_dir = THREADS_DIR / args.generate
+        msg_path = out_dir / "messages.json"
+        if not msg_path.exists():
+            print(f"Error: {msg_path} not found (run --fetch-only first).", file=sys.stderr)
+            sys.exit(1)
+        message_texts = [m["content"] for m in json.loads(msg_path.read_text())
+                         if m["content"].strip()]
+        style_examples = load_style_examples(THREADS_DIR)
+        print(f"Generating thread from {len(message_texts)} stored messages...")
+        tweets = process_to_thread(message_texts, style_examples=style_examples)
+        draft_path = out_dir / "draft.txt"
+        draft_path.write_text("\n\n".join(tweets))
+        print(f"Draft saved to {draft_path} ({len(tweets)} tweets)")
+        return
 
     bot_token = os.environ.get("DISCORD_BOT_TOKEN")
     channel_id = os.environ.get("DISCORD_CHANNEL_ID")
@@ -143,6 +169,17 @@ def main():
     # Setup output directory
     out_dir = THREADS_DIR / out_folder
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.fetch_only:
+        msg_path = out_dir / "messages.json"
+        msg_path.write_text(json.dumps(
+            [{"content": m["content"], "timestamp": m["timestamp"]} for m in filtered],
+            ensure_ascii=False, indent=1))
+        if not backfill:
+            write_watermark(max(_msg_timestamp(m) for m in filtered))
+        print(f"Fetched {len(filtered)} messages -> {msg_path}. "
+              "Generation happens in the cloud session (or --generate).")
+        return
 
     # Load style examples from previous revisions
     style_examples = load_style_examples(THREADS_DIR)

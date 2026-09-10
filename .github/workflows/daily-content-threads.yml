@@ -1,6 +1,9 @@
-# Daily Content Thread Generation — Fluxus Trading Community
-# Fetches Discord messages from today, generates Twitter thread drafts
-# via Claude API, commits drafts to data/output/threads/{date}/draft.txt
+# Daily Content Thread Fetch — Fluxus Trading Community
+# Fetches Andy's Discord messages and commits them as
+# data/output/threads/{folder}/messages.json. Generation happens in the
+# cloud routine "Discord→X 草稿（云）" (Max subscription, no API credits) —
+# 2026-09-10 redesign: the old in-CI Claude API call died on credit balance
+# and is gone; this workflow no longer needs ANTHROPIC_API_KEY.
 name: Daily Content Threads
 
 on:
@@ -42,9 +45,9 @@ jobs:
       - name: Generate thread drafts
         run: |
           if [ -n "$INPUT_DATE" ]; then
-            python -m pipeline.content.discord_to_thread --date "$INPUT_DATE"
+            python -m pipeline.content.discord_to_thread --fetch-only --date "$INPUT_DATE"
           else
-            python -m pipeline.content.discord_to_thread
+            python -m pipeline.content.discord_to_thread --fetch-only
           fi
         env:
           INPUT_DATE: ${{ github.event.inputs.date }}
@@ -52,14 +55,13 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
           DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/output/threads/
-          git diff --staged --quiet || (git commit -m "content: thread drafts $(date +%Y-%m-%d)" && git push)
+          git diff --staged --quiet || (git commit -m "content: discord messages fetched $(date +%Y-%m-%d)" && git push)
 
       - name: Discord notification (success)
         if: success() && env.DISCORD_WEBHOOK_URL != ''
@@ -67,7 +69,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           curl -s -H "Content-Type: application/json" \
-            -d "{\"content\":\"Thread drafts ready for review\"}" \
+            -d "{\"content\":\"Discord messages fetched — draft generation queued (cloud)\"}" \
             "$DISCORD_WEBHOOK_URL"
 
       - name: Discord notification (failure)
