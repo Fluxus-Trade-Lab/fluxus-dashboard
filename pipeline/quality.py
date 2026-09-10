@@ -89,6 +89,55 @@ RETIRED_FIELDS: frozenset = frozenset({
 def is_retired(field: str) -> bool:
     return field in RETIRED_FIELDS
 
+
+# Rebased 2026-09-11: columns whose coverage was DELIBERATELY changed, mapped
+# to the first ledger date (trading date, as written by check()) that carries
+# the new coverage. RETIRED_FIELDS covers "we stopped producing it"; this
+# covers the case it missed -- "we still produce it, on purpose for fewer
+# rows". Only the history from that date on is a fair baseline: comparing the
+# new coverage against the old one grades our own decision as a feed failure.
+#
+# i_score: b264b47b (2026-09-05 JST) added the security-type filter to
+# is_tradeable (the official new-high/new-low convention already excludes
+# SPACs/CEFs/ETFs/preferreds). industry=Shell Companies -- the SPACs -- went
+# from 1 tradeable member of 336 (the 09-03 ledger row) to 0 of 329 (09-10),
+# and run_all.py's I-score block computes the industry median over tradeable
+# members only, so an industry with none has no median and its rows get no
+# i_score (see the comment above `industry_rs` in pipeline/screeners/run_all.py).
+# That is correct: 336 SPACs scored against one SPAC's median was noise.
+# Ledger: 0.1954% missing through 2026-09-03, 6.16% on the first run to carry
+# it (2e75f20d, row dated 2026-09-04; later rewritten to 5.92% by a same-date
+# rerun), 5.97% on 2026-09-10 -- 329 of the 335 missing rows are Shell
+# Companies. Not a feed regression: no vendor column moved, only our own
+# membership rule. But baseline() is the median of ALL history (16 rows at
+# ~0.2% vs 4 at ~6% on 2026-09-10), so without this entry i_score reads
+# "6.0% missing against a 0.2% baseline" every night until the new rows
+# outnumber the old ones -- a permanently lit "degraded" that leaves the
+# universe status no resolution to show a real one.
+#
+# Admission rule: an entry here must cite a commit that made the change on
+# purpose. A coverage shift nobody can point to a commit for is exactly what
+# this guard exists to report, and must not be rebased away. The entry is safe
+# to keep forever -- it only narrows which history the field is compared to;
+# check() still records every day, bad ones included.
+REBASED_FIELDS: Dict[str, str] = {
+    "i_score": "2026-09-04",
+}
+
+
+def history_since_rebase(history: Sequence[Mapping[str, str]],
+                         field: str) -> Sequence[Mapping[str, str]]:
+    """The slice of history `field` may be compared against.
+
+    All of it, unless the field's coverage was deliberately changed
+    (REBASED_FIELDS); then only rows dated on or after the change. A row
+    without a date cannot be placed after the change and is dropped.
+    """
+    since = REBASED_FIELDS.get(field)
+    if since is None:
+        return history
+    return [r for r in history if str(r.get("date") or "") >= since]
+
 # Sparse-by-design columns: null on most rows BY DEFINITION, so a high null
 # rate is not a symptom. `sp_signal` is set only on the day a structure crosses
 # a level (~12% of rows on a normal day); `sp_1st`, `sp_2nd`, `sp_phase`... only
@@ -192,9 +241,13 @@ def read_history(path: Path = HISTORY) -> List[Dict[str, str]]:
 
 
 def baseline(history: Sequence[Mapping[str, str]], field: str) -> Optional[float]:
-    """Trailing median null rate for `field`, or None if too little history."""
+    """Trailing median null rate for `field`, or None if too little history.
+
+    For a REBASED_FIELDS entry only the history since the rebase counts, so
+    "too little history" can recur for that field after a deliberate change.
+    """
     vals = []
-    for row in history:
+    for row in history_since_rebase(history, field):
         raw = row.get(field)
         if raw in (None, ""):
             continue
@@ -217,9 +270,10 @@ def min_reference(history: Sequence[Mapping[str, str]], field: str) -> Optional[
     stored value is enough for that, which is what lets the guard grade a
     brand-new column the day after it first appears instead of five runs
     later, and lets it tell a dead feed from a column that never lived.
+    Rebased fields read only the history since the rebase, like baseline().
     """
     vals = []
-    for row in history:
+    for row in history_since_rebase(history, field):
         raw = row.get(field)
         if raw in (None, ""):
             continue
@@ -249,6 +303,13 @@ def assess(rates: Mapping[str, float],
     for field, rate in rates.items():
         base = baseline(history, field)
         ref = min_reference(history, field)
+        # runs this field is actually compared against (fewer than the ledger
+        # holds for a REBASED_FIELDS entry), so the evidence counts honestly
+        stored = len(history_since_rebase(history, field))
+        if field in REBASED_FIELDS:
+            stored_note = f"{stored} runs stored since the {REBASED_FIELDS[field]} rebase"
+        else:
+            stored_note = f"{stored} runs stored"
         if is_sparse_by_design(field):
             # Only "did it die": everything non-null yesterday-ish and 100%
             # null today. A quiet day on a signal column is not a failure, and
@@ -282,9 +343,9 @@ def assess(rates: Mapping[str, float],
             status, why = "degraded", (
                 f"{rate*100:.1f}% missing, above the {BOOTSTRAP_DEGRADED*100:.0f}% "
                 f"bootstrap limit used while no baseline exists "
-                f"({len(history)} of {MIN_HISTORY} runs stored)")
+                f"({stored_note}, {MIN_HISTORY} needed)")
         elif base is None:
-            status, why = "ok", f"{rate*100:.1f}% missing, no baseline yet ({len(history)} runs stored)"
+            status, why = "ok", f"{rate*100:.1f}% missing, no baseline yet ({stored_note})"
         elif rate > base * DEGRADED_RATIO and rate - base > DEGRADED_ABSOLUTE:
             status, why = "degraded", (f"{rate*100:.1f}% missing against a "
                                        f"{base*100:.1f}% baseline")
