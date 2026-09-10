@@ -53,8 +53,32 @@ def test_fetch_only_rolling_advances_watermark(threads_dir, monkeypatch):
     with mock.patch.object(d2t, "fetch_messages", return_value=FAKE_MSGS), \
          mock.patch.object(d2t, "filter_since", return_value=FAKE_MSGS):
         _run(["--fetch-only"], monkeypatch)
-    wm = d2t.read_watermark()
+    wm = d2t.read_watermark("c")  # per-channel since 2026-09-10
     assert wm is not None and wm.isoformat().startswith("2026-09-09T16:00")
+
+
+def test_multi_channel_fetch_tags_and_separate_watermarks(threads_dir, monkeypatch):
+    """DISCORD_CHANNEL_IDS: 每频道独立水位线,消息带 channel 标签,时间序合并。"""
+    monkeypatch.setenv("DISCORD_CHANNEL_IDS", "111:live-commentary, 222:互帮互助")
+    by_chan = {
+        "111": [dict(FAKE_MSGS[0])],                       # 15:00
+        "222": [dict(FAKE_MSGS[2]), {"content": "early Q", # 16:00 + 14:00
+                 "timestamp": "2026-09-09T14:00:00.000000+00:00"}],
+    }
+    with mock.patch.object(d2t, "fetch_messages", side_effect=lambda cid, tok: by_chan[cid]), \
+         mock.patch.object(d2t, "filter_since", side_effect=lambda msgs, uid, since: list(msgs)):
+        _run(["--fetch-only"], monkeypatch)
+    out = json.loads(next(threads_dir.glob("*/messages.json")).read_text())
+    assert [m["channel"] for m in out] == ["互帮互助", "live-commentary", "互帮互助"]  # 14:00,15:00,16:00
+    assert d2t.read_watermark("111").isoformat().startswith("2026-09-09T15:00")
+    assert d2t.read_watermark("222").isoformat().startswith("2026-09-09T16:00")
+
+
+def test_legacy_single_watermark_file_still_read(threads_dir, monkeypatch):
+    (threads_dir / ".run_state.json").write_text(
+        json.dumps({"last_message_utc": "2026-09-08T12:00:00+00:00"}))
+    wm = d2t.read_watermark("anychan")
+    assert wm is not None and wm.isoformat().startswith("2026-09-08T12:00")
 
 
 def test_generate_reads_messages_json_and_writes_draft(threads_dir, monkeypatch):

@@ -54,6 +54,9 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          # Multi-channel (2026-09-10): repo variable DISCORD_CHANNEL_IDS
+          # ("id:label,id:label") wins over the single-channel secret when set.
+          DISCORD_CHANNEL_IDS: ${{ vars.DISCORD_CHANNEL_IDS }}
           DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
 
       - name: Commit and push

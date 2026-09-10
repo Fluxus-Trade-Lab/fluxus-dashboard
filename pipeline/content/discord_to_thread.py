@@ -55,20 +55,60 @@ def _msg_timestamp(msg: dict) -> datetime:
     return datetime.fromisoformat(msg["timestamp"])
 
 
-def read_watermark() -> datetime | None:
-    """Return the last consumed message timestamp, or None if there is none."""
+def _read_state() -> dict:
     if not STATE_PATH.exists():
-        return None
+        return {}
     try:
-        ts = json.loads(STATE_PATH.read_text()).get("last_message_utc")
+        return json.loads(STATE_PATH.read_text())
     except (json.JSONDecodeError, OSError):
-        return None
+        return {}
+
+
+def read_watermark(channel_id: str | None = None) -> datetime | None:
+    """Last consumed message timestamp for one channel (None = no prior run).
+
+    Multi-channel (2026-09-10): each channel keeps its own watermark under
+    "channels"; the legacy top-level "last_message_utc" (single-channel era)
+    is honoured as a fallback so an existing state file keeps working.
+    """
+    state = _read_state()
+    ts = None
+    if channel_id:
+        ts = state.get("channels", {}).get(channel_id)
+    if ts is None:
+        ts = state.get("last_message_utc")
     return datetime.fromisoformat(ts) if ts else None
 
 
-def write_watermark(dt_utc: datetime) -> None:
+def write_watermark(dt_utc: datetime, channel_id: str | None = None) -> None:
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps({"last_message_utc": dt_utc.isoformat()}, indent=2))
+    state = _read_state()
+    if channel_id:
+        state.setdefault("channels", {})[channel_id] = dt_utc.isoformat()
+    else:
+        state["last_message_utc"] = dt_utc.isoformat()
+    STATE_PATH.write_text(json.dumps(state, indent=2))
+
+
+def parse_channel_specs() -> list[tuple[str, str]]:
+    """[(channel_id, label), ...] from env.
+
+    DISCORD_CHANNEL_IDS takes precedence: comma-separated entries, each either
+    "id" or "id:label". Falls back to the single DISCORD_CHANNEL_ID (labelled
+    "live-commentary" — the original channel).
+    """
+    multi = os.environ.get("DISCORD_CHANNEL_IDS", "").strip()
+    if multi:
+        out = []
+        for entry in multi.split(","):
+            entry = entry.strip()
+            if not entry:
+                continue
+            cid, _, label = entry.partition(":")
+            out.append((cid.strip(), label.strip() or cid.strip()))
+        return out
+    single = os.environ.get("DISCORD_CHANNEL_ID", "").strip()
+    return [(single, "live-commentary")] if single else []
 
 
 def filter_since(messages: list[dict], user_id: str, since_utc: datetime) -> list[dict]:
@@ -131,38 +171,52 @@ def main():
         return
 
     bot_token = os.environ.get("DISCORD_BOT_TOKEN")
-    channel_id = os.environ.get("DISCORD_CHANNEL_ID")
     user_id = os.environ.get("DISCORD_USER_ID")
+    channels = parse_channel_specs()
 
-    if not all([bot_token, channel_id, user_id]):
+    if not all([bot_token, user_id]) or not channels:
         print("Error: Missing required environment variables.", file=sys.stderr)
-        print("Set: DISCORD_BOT_TOKEN, DISCORD_CHANNEL_ID, DISCORD_USER_ID", file=sys.stderr)
+        print("Set: DISCORD_BOT_TOKEN, DISCORD_USER_ID, and DISCORD_CHANNEL_ID "
+              "or DISCORD_CHANNEL_IDS (comma-separated id[:label]).", file=sys.stderr)
         sys.exit(1)
 
     backfill = args.date is not None
     label_suffix = f"-{args.label}" if args.label else ""
 
-    raw_messages = fetch_messages(channel_id, bot_token)
+    # Fetch each channel independently; tag every message with its channel label.
+    # Watermarks are per-channel (a shared one would drop messages whenever one
+    # channel's newest consumed timestamp outruns another channel's fresh posts).
+    filtered = []
+    per_channel_max: dict[str, datetime] = {}
+    for cid, clabel in channels:
+        raw_messages = fetch_messages(cid, bot_token)
+        if backfill:
+            target_date = date.fromisoformat(args.date)
+            got = filter_by_author_and_date(raw_messages, user_id, target_date)
+        else:
+            watermark = read_watermark(cid)
+            if watermark is None:
+                watermark = datetime.now(timezone.utc) - timedelta(hours=COLD_START_HOURS)
+                print(f"[{clabel}] no prior run — cold start, looking back {COLD_START_HOURS}h.")
+            got = filter_since(raw_messages, user_id, watermark)
+        print(f"[{clabel}] {len(got)} messages")
+        for m in got:
+            m["channel"] = clabel
+        if got:
+            per_channel_max[cid] = max(_msg_timestamp(m) for m in got)
+        filtered.extend(got)
+
+    filtered.sort(key=_msg_timestamp)
 
     if backfill:
-        target_date = date.fromisoformat(args.date)
-        print(f"Fetching messages from Discord for {target_date} (backfill)...")
-        filtered = filter_by_author_and_date(raw_messages, user_id, target_date)
-        out_folder = f"{target_date}{label_suffix}"
-        empty_msg = f"No messages found for {target_date}. Nothing to process."
+        out_folder = f"{args.date}{label_suffix}"
+        empty_msg = f"No messages found for {args.date}. Nothing to process."
     else:
-        watermark = read_watermark()
-        if watermark is None:
-            watermark = datetime.now(timezone.utc) - timedelta(hours=COLD_START_HOURS)
-            print(f"No prior run recorded — cold start, looking back {COLD_START_HOURS}h.")
-        label_desc = f" [{args.label}]" if args.label else ""
-        print(f"Fetching messages since {watermark:%Y-%m-%d %H:%M UTC}{label_desc}...")
-        filtered = filter_since(raw_messages, user_id, watermark)
         out_folder = f"{market_today()}{label_suffix}"
         empty_msg = "No new messages since the last run. Nothing to process."
 
     if not filtered:
-        # Do NOT advance the watermark on an empty run, so nothing is skipped next time.
+        # Do NOT advance any watermark on an empty run, so nothing is skipped next time.
         print(empty_msg)
         sys.exit(0)
 
@@ -173,10 +227,12 @@ def main():
     if args.fetch_only:
         msg_path = out_dir / "messages.json"
         msg_path.write_text(json.dumps(
-            [{"content": m["content"], "timestamp": m["timestamp"]} for m in filtered],
+            [{"content": m["content"], "timestamp": m["timestamp"],
+              "channel": m.get("channel", "live-commentary")} for m in filtered],
             ensure_ascii=False, indent=1))
         if not backfill:
-            write_watermark(max(_msg_timestamp(m) for m in filtered))
+            for cid, ts in per_channel_max.items():
+                write_watermark(ts, cid)
         print(f"Fetched {len(filtered)} messages -> {msg_path}. "
               "Generation happens in the cloud session (or --generate).")
         return
@@ -193,10 +249,11 @@ def main():
     draft_path = out_dir / "draft.txt"
     draft_path.write_text(thread_text)
 
-    # Advance the rolling watermark only after a draft is successfully written,
+    # Advance the rolling watermarks only after a draft is successfully written,
     # and only in rolling mode (backfill must not disturb the live window).
     if not backfill:
-        write_watermark(max(_msg_timestamp(m) for m in filtered))
+        for cid, ts in per_channel_max.items():
+            write_watermark(ts, cid)
 
     print(f"\nDraft saved to {draft_path}")
     print("\n" + "=" * 60)
