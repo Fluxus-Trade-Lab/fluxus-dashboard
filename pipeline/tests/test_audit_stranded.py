@@ -212,6 +212,14 @@ def test_real_repo_reports_a_denominator_and_never_silently_empty():
     root = Path(__file__).resolve().parents[2]
     if not (root / ".git").exists():
         pytest.skip("not a git checkout")
+    # CI (actions/checkout default) is shallow + single-branch: ref names can
+    # exist without their object history, so rev-list explodes on branches the
+    # real repo has. Same family as pitfall_shallow_clone_grafted_root — an
+    # incomplete clone must not be asked questions about refs outside its
+    # window. Green here means "the real repo holds", so require a real repo.
+    if (S._git_ok(root, "rev-parse", "--is-shallow-repository") or "").strip() == "true" or \
+            len(S._git(root, "for-each-ref", "refs/remotes/origin").splitlines()) <= 2:
+        pytest.skip("shallow/single-branch checkout — repo shape is not the real one")
     pairs = S.enumerate_branches(root)
     assert isinstance(pairs, list)
     names = [b for b, _ in pairs]
