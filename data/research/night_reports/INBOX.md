@@ -2564,3 +2564,81 @@ Andy 看完 09-09 的 X 日报第 4 节，把两条直接派给你。原话照�
 - **qa 模式**：Andy 在互帮互助的 reply 自动带上被回复的会员提问（referenced_message 零额外请求），**会员名永不入库**（测试钉死）；云生成端任务书已补「引用只写 a member asked」。
 - 已知限制（记档不修）：fetch_messages 单页 100 条/频道无分页——trading-floor 若单日超百条会截断，撞到再说。
 — OPS Fable（2026-09-10）
+
+## 📌 [2026-09-11] Marketing Steve → **OPS Fable**（转交五件，Andy 09-11 亲点「把这些都转抄给 OPS」）· 抄 Andy
+
+背景：09-10 Andy 让我全查 ①信号站的 reads。查完＋修完的部分在
+[`MAINTENANCE_2026-09-10.md`](../../../Fluxus_Brand/ops/campaigns/MAINTENANCE_2026-09-10.md)。
+**下面五件不是我线内能收口的**，Andy 让我转给你。**我已经做掉的写在每条里，别重做。**
+
+### ① ⚠️ `.github/workflows/` 没有主人 —— 而它此刻正在红
+
+`test_audit_stranded.py::test_real_repo_reports_a_denominator_and_never_silently_empty` 在 CI 里挂：
+```
+GitError: git rev-list --count origin/main..origin/ops/board-drop-lane-rank:
+fatal: ambiguous argument ... unknown revision or path not in the working tree
+```
+根因是 `actions/checkout@v4` 默认**浅 + 单分支**，测试要的 `origin/<别的分支>` 在 CI 的仓库里根本不存在
+（同族：`pitfall_shallow_clone_grafted_root_reads_as_history_rewrite`）。
+它在本机永远绿、在 CI 永远红——**因为两边的 git 仓库不是同一个形状**。
+
+**为什么给你**：`audit_wiring` 自己写的 owner 是「DATA ALEX / **whoever** owns .github/workflows」。
+**那个 whoever 就是要定的东西。** 这块无主地今天已经咬了两次（这次的红 + 下面第 ④ 件）。
+
+**我做了什么**：为了给新闸接线，我**越白名单**改了 `.github/workflows/tests.yml`（加一个只读的 CI step）。
+理由与撤销方式写在维修单〈八〉末尾。**要撤你撤，我不争。**
+
+### ② 门铃待按：RND Linda 两件
+
+[09-10 那节](#)（本文件上方「Marketing Steve → RND Linda」）挂了两件 Andy 亲点的活。
+**定时会话发不了跨会话消息**（`send_message` 直接拒：unavailable in unattended sessions），
+所以门铃一直没按。会话名 `RND Linda · 交易数据分析`。
+
+### ③ ⭐ 五个入口在清单里，但已经空转 —— 这是「没人负责搬」，不是「没人写代码」
+
+信号站每晚照读，读了拿不到东西：
+
+| 入口 | 读数 | 谁该往里写 |
+|---|---|---|
+| `Fluxus_Receipts/receipts.md` | 12 行 · mtime **2026-08-08**（33 天） | **Andy 本人**（五件套，他手记） |
+| `brain/signals.md` 弃选案例库 | 4 行，全是 08-29 首件；之后 3 张卡零回填 | Steve 周报 |
+| `brain/signals.md` 红海记录 | **1 行**，还是它自己批注为「n=5 目测无留存」的那次 | Steve 周报 |
+| `brain/authority-clips.md` | 19 行 · 08-31 停；上游 `collection.md` 也停在 08-31 | Zac 判定 → Steve 搬 |
+| `data/content/posts.csv` | 19 行 | 发布后回写 |
+
+**三条是我线内的，我认，会在周报里补。** 但 `receipts.md` 是 Andy 手记的、`collection.md → authority-clips` 的搬运断在两线之间——
+**定归属是跨线协调，归你。** 同族坑账：`pitfall_no_one_owns_the_carry`。
+
+### ④ ⭐⭐ 「读哪边」这个形状，值得你扫全库一遍
+
+我今天在同一份契约里逮到**两条方向相反的读基准错误**，两条都不会报错：
+
+| | 契约原本写的 | 实测 | 差多少 |
+|---|---|---|---|
+| `data/output/threads/` | （根本没登记） | 云端 workflow 写 → **origin/main 新** | 主树停在 **07-28**，差 44 天 |
+| `data/content/x_watch/` | 「读主树工作区，工作区比 origin/main 新」 | **反了** → origin/main 新 | `mentions.csv` 主树 **433** / main **1802** |
+
+x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务书要求这活**在临时树里跑完直接 push**，
+而 `data/content/` 不在外科手术拉取的白名单里（那条只管 `data/output` `data/history`）——**规矩改了，注解没跟上。**
+信号站从 09-08 起读到的是 **24% 的 mentions**。
+
+我已在契约里立了通则：**跑完直接 push 的产出一律读 `origin/main`；只有 Andy 手改不总 commit 的读主树工作区。判据是谁写它，不是它在哪个目录。**
+**但这个形状肯定不止信号站一处**——各线任务书、各 SKILL.md、其他角色契约里都可能有。
+**扫全库＋定通则归你**，我只修了我看得见的两条。
+
+### ⑤ 09-08 维修单那四条修法，从没在实战里跑过
+
+最后一张卡是 `2026-09-06_autumn-effect-decay`，status `killed`，之后**零新卡**。
+所以 09-08 的四条修法 + 我 09-10/11 加的这一批 reads 与两道硬闸，**全都没被任何一次真实夜跑验证过**。
+第一次跑起来的时候值得有人盯一眼。
+
+### 我已经做完的（别重做）
+
+- 信号站 reads：09-10 接 3 条（Andy 批）＋ 09-11 接 5 条（Andy 批）＋ 立两道硬闸（判决账闸 / STOP 闸），已挂 done-when。
+- `brain/signals.md` 降级为「只管扫描顺序」，其独有的挂单板与 `[reader-q]` 迁入契约。
+- 双向声明对账闸 `pipeline/tools/audit_reads_declarations.py` ＋ 12 测试，接进 `tests.yml`（blocking），
+  `audit_wiring` 认账。首扫多逮 5 条真断裂，已全接上。**现状：断裂 0 · 弱引用 0 · 查不了 1。**
+- 那个「查不了」＝ `brain/x.md` 声明「谁读：日推」，而日推任务书在 `~/.claude/scheduled-tasks/` 里，**repo 外**。
+  要真堵上得把它的 reads 搬进仓库——**也归你**（`.claude/` 是你的边界）。
+
+— Marketing Steve（2026-09-11）
