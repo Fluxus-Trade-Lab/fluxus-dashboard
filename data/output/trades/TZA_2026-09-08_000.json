@@ -1,24 +1,37 @@
 {
   "trade_id": "TZA_2026-09-08_000",
-  "generated_at": "2026-09-09T22:37:50+00:00",
+  "generated_at": "2026-09-10T23:00:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-09-08",
-    "entry_price": 42.56,
-    "original_qty": 9958,
-    "current_qty": 9958,
-    "stop_price": 40.6,
-    "initial_stop": 40.6,
+    "entry_price": 41.63,
+    "original_qty": 9094,
+    "current_qty": 4245,
+    "stop_price": 41.0,
+    "initial_stop": 41.0,
     "closed": false,
     "exit_date": null,
     "hold_business_days": null,
-    "r_dollars": 19517.680000000008,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "r_dollars": 5729.220000000023,
+    "realized_pl": 7691.819999999998,
+    "realized_R": 1.3425597201713264,
+    "trims": [
+      {
+        "date": "2026-09-10",
+        "price": 43.31,
+        "qty": 3031,
+        "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-10",
+        "price": 43.06,
+        "qty": 1818,
+        "type": "trim_1_5"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 40.41,
@@ -41,22 +54,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": -0.16341836734694032,
+    "mfe_R": 0.9677777777777684,
     "mfe_date": "2026-09-09",
-    "mae_R": 1.3724489795918386,
+    "mae_R": 2.7936507936507904,
     "mae_date": "2026-09-08",
     "optimal_exit_price": 42.2397,
     "optimal_exit_date": "2026-09-09",
-    "optimal_R": -0.16341836734694032,
+    "optimal_R": 0.9677777777777684,
     "days_to_optimal": 1,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 2
   },
   "lesson": "In progress",
-  "narrative": "Entered **TZA** long on 2026-09-08 at $42.56 (qty 9958) with stop $40.60 (1R = $1.96/sh = $19,518). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. **In progress.** Peak so far +-0.16R; worst drawdown -1.37R.",
+  "narrative": "Entered **TZA** long on 2026-09-08 at $41.63 (qty 9094) with stop $41.00 (1R = $0.63/sh = $5,729). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. **In progress.** Peak so far +0.97R; worst drawdown -2.79R.",
   "ohlc_window": [
     {
       "date": "2026-08-10",

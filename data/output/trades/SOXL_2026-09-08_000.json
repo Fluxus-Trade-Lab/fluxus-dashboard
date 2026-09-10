@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXL_2026-09-08_000",
-  "generated_at": "2026-09-09T22:37:50+00:00",
+  "generated_at": "2026-09-10T23:00:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXL",
@@ -9,21 +9,27 @@
     "entry_date": "2026-09-08",
     "entry_price": 126.21,
     "original_qty": 1237,
-    "current_qty": 619,
+    "current_qty": 0,
     "stop_price": 121.0,
     "initial_stop": 121.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-10",
+    "hold_business_days": 2,
     "r_dollars": 6444.769999999992,
-    "realized_pl": -1297.7999999999965,
-    "realized_R": -0.20137258583316364,
+    "realized_pl": -6868.7999999999965,
+    "realized_R": -1.0657944348673427,
     "trims": [
       {
         "date": "2026-09-09",
         "price": 124.11,
         "qty": 618,
         "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-10",
+        "price": 117.21,
+        "qty": 619,
+        "type": "sell_rest"
       }
     ]
   },
@@ -56,14 +62,14 @@
     "optimal_exit_date": "2026-09-09",
     "optimal_R": 0.43570057581573873,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -1.0657944348673427,
+    "capture_pct": -244.61625575589684,
+    "missed_R": 1.5014950106830813,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **SOXL** long on 2026-09-08 at $126.21 (qty 1237) with stop $121.00 (1R = $5.21/sh = $6,445). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($122.99), MA stack mixed, RSI 49, 35% through 52W range, ATR 7.9% of price. **In progress.** Peak so far +0.44R; worst drawdown -0.94R.",
+  "lesson": "Failed setup",
+  "narrative": "Entered **SOXL** long on 2026-09-08 at $126.21 (qty 1237) with stop $121.00 (1R = $5.21/sh = $6,445). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($122.99), MA stack mixed, RSI 49, 35% through 52W range, ATR 7.9% of price. Realized **-1.07R**, peak was **+0.44R** on 2026-09-09 (day +1) \u2014 captured **-245%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-08-10",

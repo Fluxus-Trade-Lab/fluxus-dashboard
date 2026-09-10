@@ -1,37 +1,37 @@
 {
-  "date": "2026-09-09",
+  "date": "2026-09-10",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
-  "prob": 0.1243,
-  "base_rate": 0.1661,
+  "prob": 0.1242,
+  "base_rate": 0.166,
   "today": {
-    "date": "2026-09-09",
-    "spx_close": 7636.36,
-    "vix": 16.46,
+    "date": "2026-09-10",
+    "spx_close": 7591.7,
+    "vix": 17.84,
     "vix_quintile": 3,
     "above_200dma": true,
-    "d200": 0.0677,
-    "prob": 0.1243,
-    "n_cell": 1649,
-    "prob_vix_only": 0.1376,
-    "n_vix_only": 1846,
-    "base_rate": 0.1661
+    "d200": 0.0607,
+    "prob": 0.1242,
+    "n_cell": 1650,
+    "prob_vix_only": 0.1375,
+    "n_vix_only": 1847,
+    "base_rate": 0.166
   },
   "table": {
     "sample": {
       "from": "1990-01-02",
-      "to": "2026-09-08",
-      "sessions": 9238,
+      "to": "2026-09-09",
+      "sessions": 9239,
       "episodes": 199,
       "half_split": "2008-04-29"
     },
-    "base_rate": 0.1661,
+    "base_rate": 0.166,
     "vix_edges": [
       8.14,
       13.34,
       16.14,
       19.44,
-      24.18,
+      24.17,
       83.69
     ],
     "by_vix_quintile": {
@@ -45,8 +45,8 @@
           "n": 1848
         },
         "3": {
-          "rate": 0.1376,
-          "n": 1846
+          "rate": 0.1375,
+          "n": 1847
         },
         "4": {
           "rate": 0.2587,
@@ -89,8 +89,8 @@
           "n": 1042
         },
         "3": {
-          "rate": 0.1522,
-          "n": 1025
+          "rate": 0.152,
+          "n": 1026
         },
         "4": {
           "rate": 0.2338,
@@ -129,8 +129,8 @@
         "n": 197
       },
       "Q3_above200": {
-        "rate": 0.1243,
-        "n": 1649
+        "rate": 0.1242,
+        "n": 1650
       },
       "Q4_below200": {
         "rate": 0.392,
@@ -171,10 +171,10 @@
     "table": {
       "sample": {
         "from": "2006-07-17",
-        "to": "2026-09-08",
-        "sessions": 5068,
+        "to": "2026-09-09",
+        "sessions": 5069,
         "episodes": 115,
-        "base_rate": 0.18
+        "base_rate": 0.1799
       },
       "vix_edges_this_sample": [
         8.14,
@@ -197,7 +197,7 @@
           },
           "2": {
             "rate": 0.17,
-            "n": 4346
+            "n": 4347
           },
           "3": {
             "rate": 0.3213,
@@ -225,7 +225,7 @@
           },
           "2": {
             "rate": 0.1565,
-            "n": 2185
+            "n": 2186
           },
           "3": {
             "rate": 0.256,
@@ -261,15 +261,15 @@
         },
         "Q2_above200_ts1": {
           "rate": 0.0,
-          "n": 41
+          "n": 42
         },
         "Q2_above200_ts2": {
-          "rate": 0.1088,
-          "n": 947
+          "rate": 0.1082,
+          "n": 952
         },
         "Q2_above200_ts3": {
           "rate": 0.0,
-          "n": 9
+          "n": 11
         },
         "Q3_below200_ts2": {
           "rate": 0.3117,
@@ -280,16 +280,16 @@
           "n": 5
         },
         "Q3_above200_ts1": {
-          "rate": 0.3333,
-          "n": 24
+          "rate": 0.3478,
+          "n": 23
         },
         "Q3_above200_ts2": {
-          "rate": 0.1362,
-          "n": 896
+          "rate": 0.1368,
+          "n": 892
         },
         "Q3_above200_ts3": {
-          "rate": 0.0714,
-          "n": 14
+          "rate": 0.0833,
+          "n": 12
         },
         "Q4_below200_ts2": {
           "rate": 0.4377,
@@ -330,12 +330,12 @@
       }
     },
     "today": {
-      "date": "2026-09-09",
-      "ts_ema": 0.858,
+      "date": "2026-09-10",
+      "ts_ema": 0.881,
       "ts_state": 2,
       "ts_label": "neutral(0.8-1.0)",
-      "prob_3d": 0.1362,
-      "n_cell_3d": 896,
+      "prob_3d": 0.1368,
+      "n_cell_3d": 892,
       "prob_ts_only": 0.17,
       "input_staleness_days": 0,
       "stale_warning": false
@@ -345,16 +345,16 @@
   "side_readings": {
     "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
     "nhnl": {
-      "date": "2026-09-08",
-      "ratio_10ema": 0.631,
+      "date": "2026-09-09",
+      "ratio_10ema": 0.564,
       "state": "mid",
       "hist_rate_e1": 0.194
     },
     "gex": {
-      "date": "2026-09-04",
-      "pct_rank_252d": 0.675,
-      "quintile": 4,
-      "hist_rate_e1": 0.105
+      "date": "2026-09-09",
+      "pct_rank_252d": 0.278,
+      "quintile": 2,
+      "hist_rate_e1": 0.158
     }
   }
 }

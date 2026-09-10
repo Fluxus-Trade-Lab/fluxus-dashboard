@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T22:37:50.476962+00:00",
+  "generated_at": "2026-09-10T23:00:15.045656+00:00",
   "trades": [
     {
       "trade_id": "TZA_2026-09-08_000",
@@ -8,26 +8,26 @@
       "entry_date": "2026-09-08",
       "exit_date": null,
       "closed": false,
-      "realized_R": 0.0,
-      "optimal_R": -0.16341836734694032,
+      "realized_R": 1.3425597201713264,
+      "optimal_R": 0.9677777777777684,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 1
+      "hold_days": 2
     },
     {
       "trade_id": "SOXL_2026-09-08_000",
       "ticker": "SOXL",
       "direction": "long",
       "entry_date": "2026-09-08",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": -0.20137258583316364,
+      "exit_date": "2026-09-10",
+      "closed": true,
+      "realized_R": -1.0657944348673427,
       "optimal_R": 0.43570057581573873,
-      "capture_pct": null,
+      "capture_pct": -244.61625575589684,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-      "lesson": "In progress",
-      "hold_days": 1
+      "lesson": "Failed setup",
+      "hold_days": 2
     },
     {
       "trade_id": "SPCX_2026-09-07_000",
@@ -106,12 +106,12 @@
       "entry_date": "2026-09-02",
       "exit_date": null,
       "closed": false,
-      "realized_R": 0.0,
+      "realized_R": -0.2857142857142869,
       "optimal_R": 3.3095238095237973,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 7
+      "hold_days": 8
     },
     {
       "trade_id": "SAIL_2026-08-26_000",
@@ -223,7 +223,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 20
+      "hold_days": 21
     },
     {
       "trade_id": "SOXL_2026-08-19_000",
@@ -293,7 +293,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 21
+      "hold_days": 22
     },
     {
       "trade_id": "SOXL_2026-08-18_000",
@@ -580,14 +580,14 @@
       "ticker": "ZETA",
       "direction": "long",
       "entry_date": "2026-08-09",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 2.8243395952375034,
+      "exit_date": "2026-09-10",
+      "closed": true,
+      "realized_R": 3.3043476720665685,
       "optimal_R": 5.744897959183674,
-      "capture_pct": null,
+      "capture_pct": 57.51795237345003,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 31
+      "lesson": "Good execution",
+      "hold_days": 32
     },
     {
       "trade_id": "IOT_2026-08-09_000",
