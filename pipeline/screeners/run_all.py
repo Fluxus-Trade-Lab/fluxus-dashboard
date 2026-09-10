@@ -277,6 +277,25 @@ def attach_index_membership(universe: pd.DataFrame) -> None:
     if not members:
         logger.warning("S&P 500 membership empty - index-scoped readings will be NULL")
         return
+
+    # 记账:存名单 + 记变动流水。抓漏(翻页翻一半)会被 vet 拒掉,那时**沿用上一版
+    # 名单**继续算读数 —— 停在昨天的成分股,好过用一个残缺名单算今天的宽度。
+    from pipeline.adapters import index_members_store as _ims  # noqa: PLC0415
+    try:
+        summary = _ims.update(set(members), _ims.today())
+        if summary['added'] or summary['dropped']:
+            logger.info("S&P 500 membership changed: +%s -%s",
+                        summary['added'], summary['dropped'])
+    except _ims.MembershipRejected as e:
+        logger.warning("S&P 500 membership rejected (%s) - falling back to stored roster", e)
+        stored = set(_ims.load_roster())
+        if not stored:
+            logger.warning("no stored roster either - index-scoped readings will be NULL")
+            return
+        members = stored
+    except Exception:  # noqa: BLE001 — 记账失败不许拖垮读数
+        logger.exception("S&P 500 roster bookkeeping failed - readings continue on the fetched list")
+
     universe['in_sp500'] = universe['ticker'].astype(str).str.upper().isin(members)
     logger.info("S&P 500 membership: %d of %d universe rows",
                 int(universe['in_sp500'].sum()), len(universe))
