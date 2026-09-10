@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioContext'
 import { computeStopSim } from './lib/stopSim'
 import StatCard from '../portfolio/ui/StatCard'
+import { DivergingBars } from './lib/MiniBars'
 import { fmtCur, fmtPct, fmt, clr } from '../portfolio/lib/portfolioFormat'
 
 export default function RiskTab() {
@@ -26,6 +27,17 @@ function RiskTabInner() {
   )
 
   const simData = mode === 2 ? simData2 : simData3
+
+  /* One chart: which trades this system would have helped or hurt, and by
+     how much — the question the six stat cards below only answer in
+     aggregate. Sorted by |diff| so the trades worth looking at are on top;
+     capped at 24 rows so the chart stays a shape you can read in one look,
+     not a second table (the real table is still below it). Computed above
+     the early return — a hook cannot sit after one. */
+  const diffRows = useMemo(() => (simData?.rows ?? []).length === 0 ? [] : [...simData.rows]
+    .sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))
+    .slice(0, 24)
+    .map((r) => ({ key: r.ticker, value: r.diff })), [simData])
 
   if (!simData || simData.rows.length === 0) {
     return (
@@ -92,6 +104,24 @@ function RiskTabInner() {
           <StatCard key={i} label={c.label} value={c.value} colorClass={c.color} sub={c.sub} />
         ))}
       </div>
+
+      {diffRows.length > 0 && (
+        <div className="bg-[var(--color-surface)] rounded-3xl p-4 mb-6">
+          <div className="flex items-baseline justify-between mb-2">
+            <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+              Which trades this would have changed
+            </h4>
+            <span className="text-[11px] text-[var(--color-text-muted)]">
+              {diffRows.length} of {rows.length}, sorted by size of the swing
+            </span>
+          </div>
+          <DivergingBars rows={diffRows} formatValue={(v) => fmtCur(v)} />
+          <p className="text-[11px] text-[var(--color-text-muted)] mt-2 mb-0">
+            right of the line = the {mode}-stop system beats what you actually did &middot;
+            left = it would have cost you
+          </p>
+        </div>
+      )}
 
       <div className="overflow-x-auto">
         <table className="w-full text-[13px] font-mono">

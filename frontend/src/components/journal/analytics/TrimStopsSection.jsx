@@ -1,6 +1,7 @@
 import { useState, useMemo, Fragment } from 'react'
 import Empty from '../Empty'
 import StatCard from '../../portfolio/ui/StatCard'
+import { RankedBars } from '../lib/MiniBars'
 import { fmtCur, fmtPct, fmt } from '../../portfolio/lib/portfolioFormat'
 
 const INITIAL_ROWS = 8
@@ -43,6 +44,12 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
   const visibleTrimGroups = showAllTrims ? trimGroups : trimGroups.slice(0, INITIAL_ROWS)
 
+  // Same ranking the table already sorts by (worst left-on-table first), as
+  // a chart instead of the first eight rows of a table — captured% read
+  // against 100% is the one number this whole section is about.
+  const trimChartRows = useMemo(() => trimGroups.slice(0, 12)
+    .map((g) => ({ key: g.ticker, value: g.avgCaptured })), [trimGroups])
+
   // Stop summary stats
   const stopStats = {
     total: stopAnalysis.length,
@@ -53,6 +60,12 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
   }
 
   const visibleStops = showAllStops ? stopAnalysis : stopAnalysis.slice(0, INITIAL_ROWS)
+
+  // Worst recoveries first — the trades most worth asking "was this stop
+  // too tight". Same colour rule the table below already used per-row.
+  const stopChartRows = useMemo(() => [...stopAnalysis]
+    .sort((a, b) => b.recoveryPct - a.recoveryPct).slice(0, 12)
+    .map((s) => ({ key: s.ticker, value: s.recoveryPct, tight: s.stopTooTight })), [stopAnalysis])
 
   // Actionable callouts
   const callouts = []
@@ -108,6 +121,17 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
           <StatCard label="Avg Captured" value={fmtPct(trimStats.avgCaptured)}
             colorClass={trimStats.avgCaptured > 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'} />
         </div>
+
+        {trimChartRows.length > 0 && (
+          <div className="mb-4">
+            <div className="text-[11px] text-[var(--color-text-muted)] mb-1">
+              % of the move captured, per name — worst-left-on-table first
+            </div>
+            <RankedBars rows={trimChartRows} max={100}
+                        colorOf={(r) => (r.value > 70 ? 'var(--color-profit)' : 'var(--color-signal-caution)')}
+                        formatValue={(v) => `${v.toFixed(0)}%`} />
+          </div>
+        )}
 
         {trimGroups.length > 0 && (
           <div className="overflow-x-auto">
@@ -198,6 +222,17 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
             colorClass={stopStats.tooTightPct > 30 ? 'text-[var(--color-loss)]' : stopStats.tooTightPct > 15 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'} />
           <StatCard label="Avg Stop Distance" value={stopStats.total > 0 ? fmtPct(stopStats.avgStopDist) : '—'} />
         </div>
+
+        {stopChartRows.length > 0 && (
+          <div className="mb-4">
+            <div className="text-[11px] text-[var(--color-text-muted)] mb-1">
+              recovery after the stop, per name — worst recoveries first
+            </div>
+            <RankedBars rows={stopChartRows} max={Math.max(20, ...stopChartRows.map((r) => r.value))}
+                        colorOf={(r) => (r.tight ? 'var(--color-loss)' : 'var(--color-profit)')}
+                        formatValue={(v) => `${v.toFixed(0)}%`} />
+          </div>
+        )}
 
         {stopAnalysis.length > 0 && (
           <div className="overflow-x-auto">

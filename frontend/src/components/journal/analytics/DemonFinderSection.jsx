@@ -3,6 +3,7 @@ import Empty from '../Empty'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
 import { analyzeTrades, computeDemonStats, getActiveCircuitBreakers, computeTacticalStats, DEMONS, DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
+import { Bar } from '../lib/MiniBars'
 import DemonRulesConfig from './DemonRulesConfig'
 
 const RULES_KEY = 'fluxus-demon-rules'
@@ -233,50 +234,23 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
           <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Tactical Discipline (First Trim)
           </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <div>
-              <div className="text-[11px] text-[var(--color-text-muted)] mb-0.5">Avg Trim Size</div>
-              <div className={`font-mono text-[13px] font-semibold ${
-                tacticalStats.avgTrimRatio >= 0.25 && tacticalStats.avgTrimRatio <= 0.40
-                  ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
-              }`}>
-                {(tacticalStats.avgTrimRatio * 100).toFixed(0)}%
-              </div>
-              <div className="text-[11px] text-[var(--color-text-muted)]">target: ~33%</div>
-            </div>
-            <div>
-              <div className="text-[11px] text-[var(--color-text-muted)] mb-0.5">Avg Trim R</div>
-              <div className={`font-mono text-[13px] font-semibold ${
-                tacticalStats.avgTrimRR >= 2.0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
-              }`}>
-                {tacticalStats.avgTrimRR.toFixed(1)}R
-              </div>
-              <div className="text-[11px] text-[var(--color-text-muted)]">target: 3R</div>
-            </div>
-            <div>
-              <div className="text-[11px] text-[var(--color-text-muted)] mb-0.5">Avg Days to Trim</div>
-              <div className="font-mono text-[13px] font-semibold text-[var(--color-text-bold)]">
-                {tacticalStats.avgDaysToTrim.toFixed(1)}d
-              </div>
-            </div>
-            <div>
-              <div className="text-[11px] text-[var(--color-text-muted)] mb-0.5">Good Size Rate</div>
-              <div className={`font-mono text-[13px] font-semibold ${
-                tacticalStats.goodSizeRate >= 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
-              }`}>
-                {tacticalStats.goodSizeRate.toFixed(0)}%
-              </div>
-              <div className="text-[11px] text-[var(--color-text-muted)]">25-40% trims</div>
-            </div>
-            <div>
-              <div className="text-[11px] text-[var(--color-text-muted)] mb-0.5">Good R/R Rate</div>
-              <div className={`font-mono text-[13px] font-semibold ${
-                tacticalStats.goodRRRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
-              }`}>
-                {tacticalStats.goodRRRate.toFixed(0)}%
-              </div>
-              <div className="text-[11px] text-[var(--color-text-muted)]">trimmed at 2R+</div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
+            <Bar label="Avg Trim Size" value={tacticalStats.avgTrimRatio * 100} max={60} target={33}
+                 color={tacticalStats.avgTrimRatio >= 0.25 && tacticalStats.avgTrimRatio <= 0.40
+                   ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
+                 sub="target ~33% — the tick" />
+            <Bar label="Avg Trim R" value={tacticalStats.avgTrimRR} max={5} target={3} unit="R"
+                 color={tacticalStats.avgTrimRR >= 2.0 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
+                 sub="target 3R" />
+            <Bar label="Good Size Rate" value={tacticalStats.goodSizeRate} max={100} target={70}
+                 color={tacticalStats.goodSizeRate >= 70 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
+                 sub="share of trims in the 25–40% band" />
+            <Bar label="Good R/R Rate" value={tacticalStats.goodRRRate} max={100} target={50}
+                 color={tacticalStats.goodRRRate >= 50 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
+                 sub="share trimmed at 2R+" />
+            <Bar label="Avg Days to Trim" value={tacticalStats.avgDaysToTrim}
+                 max={Math.max(10, tacticalStats.avgDaysToTrim * 1.5)} unit="d"
+                 sub="no target — context, not a rule" />
           </div>
         </div>
       )}

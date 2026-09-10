@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import Empty from '../Empty'
 import { rMultiple, rRisk } from '../../portfolio/lib/diagnosticsR'
+import { DivergingBars } from '../lib/MiniBars'
 import TradeCaseStudies from './TradeCaseStudies'
 
 const mean = a => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0)
@@ -125,7 +126,11 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
 
       <Card n="1" title="Largest losses — where the holes come from"
         verdict="The leak isn't bottom-fishing or bag-holding — the first entry is small; the hole is dug by everything added after it goes red. Two modes: averaging into a rolling name (A) and chasing an extended one (B).">
-        Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The damage is in the <b>re-adds</b>, not the first entry:
+        Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The damage is in the <b>re-adds</b>, not the first entry — same five names the table below breaks down, net P&amp;L first:
+        <div className="mt-2 mb-1">
+          <DivergingBars rows={d.reattack.map((r) => ({ key: r.tk, value: r.net }))}
+                         formatValue={money} />
+        </div>
         <table className="w-full text-[13px] mt-2 mb-2">
           <thead><tr className="text-[var(--color-text-muted)]"><td>Name</td><td>Entries</td><td className="text-right">1st entry</td><td className="text-right">Re-adds after #1</td><td className="text-right">Net</td></tr></thead>
           <tbody>{d.reattack.map(r => (
