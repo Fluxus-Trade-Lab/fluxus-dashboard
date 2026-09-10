@@ -353,6 +353,109 @@ class TestRetiredFields:
         assert v["status"] == "severe"
 
 
+class TestRebasedFields:
+    """2026-09-11: universe quality read "degraded" seven nights running from
+    one field -- i_score, "6.0% missing against a 0.2% baseline". The rise was
+    b264b47b's security-type filter on is_tradeable: Shell Companies (SPACs)
+    went to zero tradeable members, so the industry has no median and its
+    rows get no i_score, on purpose. baseline() is the median of ALL history,
+    so the old 0.2% rows would keep the alarm lit until the new rows
+    outnumbered them. RETIRED_FIELDS handled deliberate deletions; this is the
+    deliberate-coverage-change case it missed."""
+
+    SINCE = "2026-09-04"
+
+    @staticmethod
+    def ledger(before=16, after=7, old="0.00195", new="0.06", field="i_score",
+               extra=None):
+        """`before` ledger rows at `old` (dated before SINCE), `after` at `new`
+        (dated SINCE onward). `extra` adds constant columns to every row."""
+        rows_ = [{"date": f"2026-08-{i+1:02d}", field: old} for i in range(before)]
+        rows_ += [{"date": f"2026-09-{i+4:02d}", field: new} for i in range(after)]
+        for r in rows_:
+            r.update(extra or {})
+        return rows_
+
+    def test_the_registered_date_is_the_first_ledger_row_with_the_new_coverage(self):
+        """Pinned literal on purpose: the date is a fact about the ledger
+        (first 6.x% row = 2026-09-04, written by 2e75f20d), not a knob."""
+        assert Q.REBASED_FIELDS == {"i_score": "2026-09-04"}
+
+    def test_new_coverage_with_its_own_baseline_is_ok(self):
+        """(1) 16 runs at 0.2% before the rebase, 7 at 6% after: tonight's
+        6.0% is graded against the 6% it has been since the change."""
+        v = Q.assess({"i_score": 0.060}, self.ledger())
+        f = v["fields"]["i_score"]
+        assert f["status"] == "ok", f["evidence"]
+        assert f["baseline"] == pytest.approx(0.06)
+
+    def test_a_real_jump_after_the_rebase_still_trips(self):
+        """(2) Same ledger, tonight 30%: the guard is narrowed, not switched
+        off. 30% sits under the severe ceiling, so degraded is the right
+        grade; anything past the ceiling is still a dead feed."""
+        v = Q.assess({"i_score": 0.30}, self.ledger())
+        assert v["fields"]["i_score"]["status"] == "degraded"
+        assert v["status"] == "degraded"
+        v = Q.assess({"i_score": 0.60}, self.ledger())
+        assert v["fields"]["i_score"]["status"] == "severe"
+
+    def test_a_real_jump_trips_even_before_the_new_baseline_exists(self):
+        """Fewer than MIN_HISTORY runs since the rebase (the live situation on
+        2026-09-11: four) falls to the bootstrap path, which still catches a
+        real departure from the post-rebase best."""
+        h = self.ledger(after=3)
+        assert Q.baseline(h, "i_score") is None
+        ok = Q.assess({"i_score": 0.060}, h)["fields"]["i_score"]
+        assert ok["status"] == "ok" and "no baseline yet" in ok["evidence"]
+        assert "3 runs stored since the 2026-09-04 rebase" in ok["evidence"]
+        bad = Q.assess({"i_score": 0.30}, h)["fields"]["i_score"]
+        assert bad["status"] == "degraded" and "bootstrap" in bad["evidence"]
+
+    def test_without_the_rebase_the_same_ledger_is_degraded(self, monkeypatch):
+        """Negative control on the mechanism: empty the registry and the exact
+        shape in (1) goes back to the false alarm -- proof the entry is what
+        turns it green, not something else in the ledger."""
+        monkeypatch.setattr(Q, "REBASED_FIELDS", {})
+        v = Q.assess({"i_score": 0.060}, self.ledger())
+        assert v["fields"]["i_score"]["status"] == "degraded"
+        assert "0.2% baseline" in v["fields"]["i_score"]["evidence"]
+
+    def test_other_fields_still_read_the_whole_ledger(self):
+        """(3) Only the registered field is rebased. avg_volume in the same
+        ledger, with the same before/after shape, still trips against its
+        full-history median."""
+        h = self.ledger(extra=None)
+        for r in h:
+            r["avg_volume"] = r["i_score"]
+        v = Q.assess({"i_score": 0.060, "avg_volume": 0.060}, h)
+        assert v["fields"]["i_score"]["status"] == "ok"
+        assert v["fields"]["avg_volume"]["status"] == "degraded"
+        assert Q.baseline(h, "avg_volume") == pytest.approx(0.00195)
+        assert Q.history_since_rebase(h, "avg_volume") is h
+
+    def test_min_reference_ignores_the_pre_rebase_best(self):
+        """If the old 0.2% stayed the reference, the bootstrap gate
+        (rate > ref*3 + 3%) would still fire at 6%."""
+        h = self.ledger(after=3)
+        assert Q.min_reference(h, "i_score") == pytest.approx(0.06)
+
+    def test_check_still_records_the_rebased_field_every_day(self, tmp_path):
+        """Rebasing changes what the field is COMPARED to, never what is
+        recorded: the ledger keeps the old rows and gains tonight's."""
+        p = tmp_path / "q.csv"
+        for r in self.ledger(before=2, after=0):
+            Q.append_history(r["date"], {"i_score": float(r["i_score"])}, p)
+        data = rows(100)
+        for r in data[:6]:
+            r["i_score"] = None
+        for r in data[6:]:
+            r["i_score"] = 50.0
+        Q.check(data, "2026-09-10", p)
+        dates = [r["date"] for r in Q.read_history(p)]
+        assert dates == ["2026-08-01", "2026-08-02", "2026-09-10"]
+        assert Q.read_history(p)[-1]["i_score"] == "0.06"
+
+
 class TestRequiredBlocks:
     """2026-08-19: breadth.json shipped without regime/state_board/verdict/
     conditions and check_site said ok -- block-level presence now graded."""
