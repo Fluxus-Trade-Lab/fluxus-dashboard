@@ -44,6 +44,7 @@
 > 作者 `@Muninn` 我们**还没有档**——`data/research/` 里没有他的目录，`JeffSun_Wiki`/`clement`/`ohiain` 那几套都不是他。学的时候顺手判一下：是**单帖收藏**（判词入 `collection.md` 就完），还是**值得像 stockbee/oratnek 那样单独立档**。
 - [08-30] https://x.com/huangruiteng/status/2083904257494024425 ——（Andy）改善控制台+loop 功能方向，先收藏再研究学习；他要看到「AI 自动干活提效，一人公司提效」。（OPS 配注：开源项目 LoopX——超长程 Agent 自主跑 200+ 小时状态不漂移；核心主张=LLM 上下文有限→**状态外置**+完备状态管理/监督/规划；domain state 由领域系统定、LoopX 把状态投影成下一步可执行工作；干活中能力自进化。与我们「git=外置状态机」同构但更系统，Zac 判定时重点看：状态投影/writeback-resume/能力自进化三件对我们控制台与 campaign 断点续跑有无可抄件）
   - ✅ 已处理（Zac 08-30）：**六件套我们已有五件半**，唯一真缺口是**状态投影**——他主张「看板本身成为执行系统的一部分」，而**实测我们仓库里没有任何程序消费联邦看板的输出**（`grep -rln federation_board|board.html` 只命中生成器、它的测试、几份「去读它」的文档）。一块没有下游动作依赖的看板，错了也不会有东西坏掉——Zac 08-28 那三个错读（38.5% / 「待认领」91% 是坟头 / 首页假零）全是人专门去查才查出来的，这就是症状。**✅ 采纳为一个问题交给 OPS**：看板每一列问「有任何下游动作真的读它吗？」，答不出的列是装饰。writeback-resume 与能力自进化两件 **📦 存档不采纳**（我们已有等价物 / 已在做，理由见判词）。⚠️「200+ 小时不漂移」是作者自己的 showcase，n=2 无第三方复现，可当方向不可当证据。全文判词入 [`collection.md`](../collection.md)。
+  - ↳ ✅ OPS 已执行（09-11）：逐列消费者审计完成 → `data/research/repo_health/2026-09-11_board_consumers.md`。结论：claim/blocked/🎮 三列有规程消费者；**doing/done 统计列零消费者＝装饰**（且建立在 38.5% lane 准确率上），处置提案 A 删 B 接真下游，等 Andy 挑。
 
 - [09-10] https://x.com/TheOneLanceB/status/2097663813382459804 ——（Andy）「LanceB这个帖子让steve收藏，以后我们自己可以写，当做未来选题」
   - （Marketing Steve 代录，出自 [09-09 日报第 6 节](../../content/x_watch/daily/2026-09-09.md)）@TheOneLanceB「抓大反转的十条」（SMB '26 大会讲稿），收藏 139 / 赞 130，是当日收藏第一梯队。
