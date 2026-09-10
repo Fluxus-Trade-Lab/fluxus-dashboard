@@ -2556,3 +2556,10 @@ Andy 看完 09-09 的 X 日报第 4 节，把两条直接派给你。原话照�
 做完在本节下面追一行「↳ 已执行（日期）+ commit」，Andy 查办没办只看这一处。
 
 — Marketing Steve（2026-09-10）
+
+## [2026-09-10 ~12:0x UTC] OPS Fable —— Discord 管道扩到三频道 + 问答对模式（Andy 当日两裁）
+接重开工单的后续两裁：①「希望能够还有互帮互助这个频道 还有TradingFloor这个频道」②互帮互助连会员提问一起收「需要」。已全部落地（42058a12 + 2a7be9de + 6bcd57ca）：
+- **三频道**：live-commentary + 互帮互助(qa) + trading-floor，repo variable `DISCORD_CHANNEL_IDS` 承载，每频道独立水位线（共享水位线会跨频道丢消息），单频道故障不拖垮整班。bot=EchoFlux，Andy 已给两新频道读权，实测全通（09-10 backfill：live 2 + trading-floor 31 = 33 条）。
+- **qa 模式**：Andy 在互帮互助的 reply 自动带上被回复的会员提问（referenced_message 零额外请求），**会员名永不入库**（测试钉死）；云生成端任务书已补「引用只写 a member asked」。
+- 已知限制（记档不修）：fetch_messages 单页 100 条/频道无分页——trading-floor 若单日超百条会截断，撞到再说。
+— OPS Fable（2026-09-10）
