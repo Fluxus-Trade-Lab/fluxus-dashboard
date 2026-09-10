@@ -44,7 +44,17 @@ function read() {
   try {
     const raw = JSON.parse(localStorage.getItem(KEY) ?? 'null')
     if (!raw || !Array.isArray(raw.names)) return null
-    return { date: raw.date ?? null, names: raw.names.filter((n) => n && n.ticker) }
+    return {
+      date: raw.date ?? null,
+      names: raw.names.filter((n) => n && n.ticker),
+      // tickers "移出" was pressed on. A tray name is deleted outright by
+      // `remove`; a name the Sheet pushed in (manual list, starred/noted
+      // there) cannot be — the Sheet owns that membership and the nightly
+      // pull hands it straight back — so it goes here instead, a local
+      // suppression the page checks wherever the two halves are merged
+      // (ShortListPage). `add` clears a ticker out of it on re-add.
+      dropped: Array.isArray(raw.dropped) ? raw.dropped.filter(Boolean) : [],
+    }
   } catch {
     return null
   }
@@ -56,7 +66,7 @@ const subs = new Set()
 function commit(next) {
   snapshot = next
   try {
-    if (next?.names?.length) localStorage.setItem(KEY, JSON.stringify(next))
+    if (next?.names?.length || next?.dropped?.length) localStorage.setItem(KEY, JSON.stringify(next))
     else localStorage.removeItem(KEY)
   } catch { /* private mode — the list just does not survive the reload */ }
   subs.forEach((fn) => fn())
@@ -73,6 +83,7 @@ export function useShortlist() {
   const store = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   const names = store?.names ?? []
+  const dropped = store?.dropped ?? []
   const madeOn = store?.date ?? null
   /** made against an older close than the one on screen */
   const stale = Boolean(madeOn && fileDate && madeOn !== fileDate && names.length)
@@ -88,6 +99,7 @@ export function useShortlist() {
   const add = useCallback((ticker, row = {}, from = null) => {
     if (!ticker) return
     const prev = snapshot?.names ?? []
+    const droppedPrev = snapshot?.dropped ?? []
     if (prev.some((n) => n.ticker === ticker)) return
     commit({
       date: fileDate ?? snapshot?.date ?? null,
@@ -98,12 +110,23 @@ export function useShortlist() {
         group_state: row.group_state ?? null,
         rs_1m: row.rs_1m ?? null,
       }],
+      // re-adding a name is the un-drop — otherwise it would render then
+      // vanish again the moment ShortListPage applies the suppression list
+      dropped: droppedPrev.filter((t) => t !== ticker),
     })
   }, [fileDate])
 
+  /**
+   * Takes a name off "my list", whichever half it came from. A tray name is
+   * deleted outright. A name that only exists because the Sheet marked it
+   * starred/noted has nothing here to delete — `manualCards` will rebuild it
+   * from `shortlist.json` on the next render regardless — so it is added to
+   * `dropped` instead, which `ShortListPage` filters the merged list through.
+   */
   const remove = useCallback((ticker) => {
     const kept = (snapshot?.names ?? []).filter((n) => n.ticker !== ticker)
-    commit(kept.length ? { ...snapshot, names: kept } : null)
+    const dropped = [...new Set([...(snapshot?.dropped ?? []), ticker])]
+    commit((kept.length || dropped.length) ? { ...snapshot, names: kept, dropped } : null)
   }, [])
 
   const clear = useCallback(() => commit(null), [])
@@ -122,5 +145,5 @@ export function useShortlist() {
     return [...out.values()]
   }, [data])
 
-  return { names, madeOn, fileDate, stale, has, add, remove, clear, universe }
+  return { names, dropped, madeOn, fileDate, stale, has, add, remove, clear, universe }
 }

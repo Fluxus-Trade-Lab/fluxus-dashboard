@@ -310,7 +310,7 @@ export default function ShortListPage() {
 }
 
 function Body({ data }) {
-  const { names: trayNames, add, remove, madeOn, fileDate, stale } = useShortlist()
+  const { names: trayNames, dropped, add, remove, madeOn, fileDate, stale } = useShortlist()
   const { all: universeRows } = useUniverse()
   const all = useMarks()
 
@@ -321,8 +321,14 @@ function Body({ data }) {
   /* The two halves of this page, joined: the six the engine pushed, and the
      names Andy took off the morning pages himself. They were separate stores
      until he said it out loud — this page is the pushed cards plus his own. */
-  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker),
-    [trayNames, data, uniByTicker])
+  /* Filtered here, before docWithMine/rows/tally see it — a dropped name is
+     off the ledger too, not just off the render. A card in `mine` that came
+     from the Sheet's manual list (not the tray) has nothing in `trayNames`
+     for `remove` to delete, which is exactly why `dropped` exists: it is the
+     local suppression for a membership the Sheet still owns (§七, 09-11). */
+  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker)
+    .filter((c) => !dropped.includes(c.ticker)),
+    [trayNames, data, uniByTicker, dropped])
   const docWithMine = useMemo(() => ({ ...data, cards: [...(data.cards ?? []), ...mine] }),
     [data, mine])
 
@@ -353,6 +359,20 @@ function Body({ data }) {
     if (!data?.date) return
     flush(data.date, (tk) => byRow[tk]?.seat ?? null, (tk) => byRow[tk]?.readings ?? null)
   }, [data?.date, byRow, sync.unsent])
+
+  /**
+   * "移出" — the local half is `remove()` (see useShortlist for why it also
+   * has to drop a Sheet-origin name rather than delete it). The push alongside
+   * it is best-effort and asks nothing of the caller: `status: 'removed'` has
+   * no handler on the GAS side yet, so it lands as the same "action not
+   * implemented" no-op every other mark does today — it is sent anyway so the
+   * day shortlist_upsert grows a removed case (§七), this button is already
+   * speaking its wire shape. The local drop does not wait on it.
+   */
+  const dropName = (ticker) => {
+    remove(ticker)
+    pushOne(record(data.date, ticker, { mark: 'removed' }, null, null))
+  }
 
   return (
     <div className="mt-1">
@@ -419,7 +439,7 @@ function Body({ data }) {
           {mine.map((c) => (
             <NameCard key={c.ticker} card={c} verdictOf={c.verdict}
                       entry={entryOf(c.ticker)}
-                      onRemove={() => remove(c.ticker)}
+                      onRemove={() => dropName(c.ticker)}
                       onMark={(v) => setMark(data.date, c.ticker, v)}
                       onNote={(v) => setNote(data.date, c.ticker, v)} />
           ))}
