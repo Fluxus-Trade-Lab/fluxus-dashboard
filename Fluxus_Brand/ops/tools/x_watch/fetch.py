@@ -127,7 +127,7 @@ def main() -> None:
                 print(f"  {f:14} = {t.get(f, '❌ 缺')}")
             au = t.get("author") or {}
             print(f"  author.userName = {au.get('userName')}")
-        m = get("/twitter/list/members", {"listId": a.list_id}, k)
+        m = get("/twitter/list/members", {"list_id": a.list_id}, k)
         mem = m.get("members") or m.get("data") or []
         print("=== 成员本页 ===", len(mem),
               "· has_next:", m.get("has_next_page"))
@@ -143,11 +143,13 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "posts").mkdir(exist_ok=True)
 
-    # 私密 List 的成员读不到（09-06 起 HTTP 400 list_id is required；此前是 200 + 空数组）。
+    # 私密 List 的成员读不到。09-06 起报 HTTP 400 `list_id is required` —— 09-10 探针定案：
+    # 这个端点收 snake 的 list_id，帖子端点收 camel 的 listId，我们两处都发了 listId。
+    # 改对之后回 200 但成员数仍是 0（私密 List 的天花板），所以下面的兜底照旧要留。
     # 两种失败都不该让整轮抓取死掉，更不该把 members.json 覆盖成 []：
     # 名册是 Andy 手写的，空结果是 API 的性质，不是花名册的事实。
     try:
-        mem, _ = paged("/twitter/list/members", {"listId": a.list_id}, k, 10, "members")
+        mem, _ = paged("/twitter/list/members", {"list_id": a.list_id}, k, 10, "members")
     except SystemExit as e:
         print(f"members 读不到（{e}），跳过；members.json 保持原样", file=sys.stderr)
         mem = []
