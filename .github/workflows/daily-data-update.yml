@@ -30,21 +30,56 @@ on:
 permissions:
   contents: write  # Required for git push to work
 
+# One run of this workflow at a time; a second one WAITS, it is never
+# cancelled mid-flight (cancel-in-progress: false). 2026-09-09 is why: the
+# sentinel dispatched run 34411547131 at 22:18Z because the 20:20Z schedule
+# had not fired; the schedule finally fired at 22:37:32Z (137 min late) as run
+# 34413142036, whose gate finished at 22:37:48Z -- NINE SECONDS BEFORE the
+# dispatch committed 0d0acf76 (22:37:57Z). No test of breadth.json, however
+# fresh, can see a session that is still being written. Serialised, the late
+# run's gate starts after the dispatch has pushed, and the check below finds
+# the landed session. (A third arrival while one run is pending replaces the
+# pending one -- GitHub keeps one pending run per group. Only the run that
+# would have been the duplicate can be dropped that way.)
+concurrency:
+  group: daily-data-update
+  cancel-in-progress: false
+
 
 jobs:
-  # Does the backstop have anything to do?
+  # Does this run have anything to do?
   #
-  # It runs on the SECOND schedule only. On the main schedule and on a manual
-  # dispatch this always says yes, so the normal path is untouched — a gate
-  # that can silently skip the main run would be worse than the problem it
-  # fixes.
+  # A manual dispatch always runs: a human pressed the button, and the gate
+  # does not second-guess them.
   #
-  # The test is deliberately dependency-free (`date`, not marketcal): this job
-  # must not be able to fail for a reason of its own. At 01:30 UTC it is 21:30
-  # ET the same weekday whose close we want, so today's ET date IS the session
-  # to look for. On a US holiday the file will not carry that date and the
-  # backstop will run — the pipeline itself refuses a non-session, which is the
-  # right place for that decision, not here.
+  # BOTH schedules ask the same question -- is the session we are after
+  # already on main? -- and skip only if it is. The main schedule used to be
+  # exempt ("a gate that can silently skip the main run would be worse than
+  # the problem it fixes"). That was the right call while nothing else could
+  # land a session, and it stopped being right once the sentinel started
+  # dispatching when the main schedule was late: GitHub fires `20 20` up to
+  # 2+ hours late, the sentinel has already caught the night up by then, and
+  # the late schedule recomputed it anyway (2026-08-27, 09-08, 09-09). The 09-09
+  # rerun hit the GAS 30 s timeout in shortlist_feedback.py:44, audit_ledger
+  # called it a regression on the previous session, and the night went red for
+  # a duplicate -- 20 runner-minutes and a full Finviz/Yahoo pass spent on
+  # data main already had, from an IP Yahoo has 401'd before.
+  #
+  # Opening the gate on the main schedule is safe because:
+  #   - it can only skip when breadth.json's newest session EQUALS the one it
+  #     wants -- i.e. the close is already on main. The pipeline refuses to run
+  #     between 04:00 and 16:15 ET on a session day (run_all.py main()), so a
+  #     session that has landed is a post-close session; there is nothing
+  #     better for a rerun to fetch;
+  #   - it is not silent: a skip prints a ::notice:: naming the session;
+  #   - it FAILS OPEN exactly like the backstop: any doubt (missing or broken
+  #     file, unreachable origin) leaves LAST empty or older, which runs.
+  #
+  # The test is deliberately dependency-free (`date` + `git`, not marketcal):
+  # this job must not be able to fail for a reason of its own. On a US holiday
+  # the file will not carry the wanted date and the run proceeds -- the
+  # pipeline itself refuses a non-session, which is the right place for that
+  # decision, not here.
   gate:
     runs-on: ubuntu-latest
     outputs:
@@ -53,11 +88,17 @@ jobs:
       - uses: actions/checkout@v6
       - id: decide
         run: |
-          if [ "${{ github.event.schedule }}" != '30 1 * * 2-6' ]; then
+          EVENT='${{ github.event_name }}'
+          SCHEDULE='${{ github.event.schedule }}'
+          if [ "$EVENT" != 'schedule' ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "main schedule or manual dispatch — always run"
+            echo "manual dispatch ($EVENT) — always run"
             exit 0
           fi
+          # Keyed on the backstop's cron, not the main one's: if someone moves
+          # the main schedule and forgets this line, the main run still gets
+          # the (fail-open) landed check below, instead of losing it silently.
+          if [ "$SCHEDULE" = '30 1 * * 2-6' ]; then MODE=backstop; else MODE=main; fi
           # 触发时刻不可信：scheduled run 中位迟到 63 分钟、最差 213 分钟（本仓库
           # 08-27 主排程那班更是迟了 485 分钟），而 01:30 UTC 距 ET 午夜只有 150
           # 分钟。用执行时刻的 ET 日期，一旦迟到超过 150 分钟 WANT 就翻成下一个
@@ -67,22 +108,48 @@ jobs:
           # 到 10:00 UTC 才会再次翻日,而那时这一晚本来也已经报废了。GitHub 的
           # cron 只会迟不会早,所以下界不用管。GATE_NOW_EPOCH 是测试用的注入口
           # (pipeline/tests/test_backstop_gate.py),正常运行时未设置。
+          # 主排程 20:20 UTC 同一算式:now-6h 的 ET 日期在次日 10:00 UTC(EST
+          # 11:00)之前都是当天 session,容差 13 小时以上;下界同样不用管。
           NOW_EPOCH="${GATE_NOW_EPOCH:-$(date -u +%s)}"
           WANT=$(TZ=America/New_York date -d "@$((NOW_EPOCH - 21600))" +%F)
+          # Read breadth.json from origin/main AS IT IS NOW, not from the
+          # checkout. The checkout is `github.sha`, frozen when the event was
+          # created: run 34413142036 (09-09) checked out 5f501dd1, the commit
+          # BEFORE the dispatch's data -- so a checkout-only read could never
+          # have seen the landed session even after the dispatch had pushed.
+          # The checkout copy stays as the fallback for an unreachable origin;
+          # it is older than main, so it can only err towards running.
           # python3, not python: the runner is guaranteed the former. And it
           # FAILS OPEN — a missing or malformed breadth.json leaves LAST empty,
-          # which is a mismatch, which fires the backstop. Under `bash -e` a
-          # bare command substitution would have failed this job instead, and a
-          # failed gate skips update-data: the file being broken is exactly
-          # when the backstop must not sit out.
-          LAST=$(python3 -c "import json;print(json.load(open('data/output/breadth.json'))['conditions']['history'][-1]['date'])" 2>/dev/null || echo "")
-          echo "backstop: newest session in breadth.json = $LAST, looking for $WANT"
+          # which is a mismatch, which runs. Under `bash -e` a bare command
+          # substitution would have failed this job instead, and a failed gate
+          # skips update-data: the file being broken is exactly when the run
+          # must not sit out.
+          NEWEST="import json,sys;print(json.load(sys.stdin)['conditions']['history'][-1]['date'])"
+          LAST=""
+          if git fetch --quiet --depth=1 origin main 2>/dev/null; then
+            LAST=$(git show FETCH_HEAD:data/output/breadth.json 2>/dev/null | python3 -c "$NEWEST" 2>/dev/null || echo "")
+            SRC="origin/main"
+          fi
+          if [ -z "$LAST" ]; then
+            LAST=$(python3 -c "$NEWEST" 2>/dev/null < data/output/breadth.json || echo "")
+            SRC="checkout (origin/main unreadable)"
+          fi
+          echo "$MODE: newest session in breadth.json [$SRC] = $LAST, looking for $WANT"
           if [ "$LAST" = "$WANT" ]; then
             echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Backstop skipped — $WANT already landed."
+            if [ "$MODE" = backstop ]; then
+              echo "::notice::Backstop skipped — $WANT already landed."
+            else
+              echo "::notice::Main schedule skipped — $WANT already landed (fired late after a manual dispatch)."
+            fi
           else
             echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::Backstop firing — $WANT missing (newest is $LAST). The 21:30 UTC run was dropped or failed."
+            if [ "$MODE" = backstop ]; then
+              echo "::warning::Backstop firing — $WANT missing (newest is $LAST). The 20:20 UTC main run was dropped or failed."
+            else
+              echo "main schedule: $WANT not on main yet (newest is $LAST) — running"
+            fi
           fi
 
   update-data:
@@ -364,21 +431,80 @@ jobs:
       # This is NOT the plan-B exception: plan B refuses to publish bad MARKET
       # DATA. The ledger is not market data, it is the record. Only the three
       # bookkeeping files are staged here, never data/output.
+      # HOW it is recorded: discard and replay, never rebase. The failed run's
+      # working tree is full of files the run produced -- untracked here, but
+      # possibly TRACKED on main by then, because whichever run landed the
+      # session first committed the same names (09-09: a dispatch had pushed
+      # data/output/trades/SOXL_2026-09-08_000.json, and this run had its own
+      # untracked copy). `rebase --autostash` only stashes tracked changes, so
+      # all three attempts died on "untracked working tree files would be
+      # overwritten ... could not detach HEAD", and the failure left no trace
+      # on origin but a ::warning:: in a log that expires in 90 days. A second
+      # trap sat behind the first: run_ledger.jsonl is append-only, so if main
+      # appended a line while we ran, a rebase collides on the file's last
+      # line (no .gitattributes, no union merge).
+      #
+      # So: take out exactly what this run added -- the ledger lines past the
+      # checkout commit's line count (pipeline/run_ledger.py only ever opens
+      # the file with "a"), plus any audit JSON this run changed -- park them
+      # in $RUNNER_TEMP, reset hard onto origin/main, append/copy them back,
+      # stage those three paths and nothing else. BASE_SHA is github.sha, the
+      # commit actions/checkout checked out, NOT `git rev-parse HEAD`: if
+      # `Commit and push` got as far as its commit and then lost the push
+      # race, HEAD already contains tonight's line and would count it as old.
+      # An audit JSON this run did not touch is NOT copied back -- that would
+      # roll main's newer copy back to our checkout's.
+      # Tested by pipeline/tests/test_failed_run_ledger_commit.py.
       - name: Commit the ledger even when a gate failed
         if: failure()
         continue-on-error: true
+        env:
+          BASE_SHA: ${{ github.sha }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -- data/history/run_ledger.jsonl \
-                     data/history/audit_last.json \
-                     data/history/audit_ledger_last.json 2>/dev/null || true
-          git diff --staged --quiet && { echo "no ledger changes to record"; exit 0; }
-          git commit -m "chore(ledger): record the run that failed $(date +%Y-%m-%d)"
+          LEDGER=data/history/run_ledger.jsonl
+          AUDITS="data/history/audit_last.json data/history/audit_ledger_last.json"
+          KEEP="${RUNNER_TEMP:-/tmp}/failed-run-ledger"
+          rm -rf "$KEEP"; mkdir -p "$KEEP"
+          BASE="${BASE_SHA:-}"
+          git cat-file -e "$BASE^{commit}" 2>/dev/null || BASE=$(git rev-parse HEAD)
+          if git cat-file -e "$BASE:$LEDGER" 2>/dev/null; then
+            N=$(git show "$BASE:$LEDGER" | wc -l)
+          else
+            N=0
+          fi
+          if [ -f "$LEDGER" ]; then tail -n +$((N + 1)) "$LEDGER" > "$KEEP/lines"; else : > "$KEEP/lines"; fi
+          CHANGED=""
+          for a in $AUDITS; do
+            [ -f "$a" ] || continue
+            if git cat-file -e "$BASE:$a" 2>/dev/null && git show "$BASE:$a" | cmp -s - "$a"; then
+              continue
+            fi
+            cp "$a" "$KEEP/$(basename "$a")"
+            CHANGED="$CHANGED $a"
+          done
+          echo "this run added $(wc -l < "$KEEP/lines" | tr -d ' ') ledger line(s) past $BASE ($N); changed audits:${CHANGED:- none}"
+          if [ ! -s "$KEEP/lines" ] && [ -z "$CHANGED" ]; then
+            echo "no ledger changes to record"; exit 0
+          fi
           for i in 1 2 3; do
-            git fetch origin main
-            git rebase --autostash origin/main && git push && exit 0
-            git rebase --abort || true
+            if git fetch origin main && git reset --hard origin/main && git clean -fdq -- data/; then
+              if [ -s "$KEEP/lines" ]; then
+                mkdir -p "$(dirname "$LEDGER")"; touch "$LEDGER"
+                # a line main already has (e.g. HEAD had been rebased onto it)
+                # is not appended twice; every line carries its own timestamps
+                if [ -s "$LEDGER" ] && [ -n "$(tail -c 1 "$LEDGER")" ]; then echo >> "$LEDGER"; fi
+                grep -vxF -f "$LEDGER" "$KEEP/lines" >> "$LEDGER" || true
+              fi
+              for a in $CHANGED; do cp "$KEEP/$(basename "$a")" "$a"; done
+              git add -- "$LEDGER" $CHANGED 2>/dev/null || true
+              if git diff --staged --quiet; then
+                echo "origin/main already carries this run's ledger lines — nothing to record"; exit 0
+              fi
+              git commit -q -m "chore(ledger): record the run that failed $(date +%Y-%m-%d)" \
+                && git push origin HEAD:main && exit 0
+            fi
             sleep 15
           done
           echo "::warning title=Ledger not recorded::the failed run's evidence could not be pushed"
