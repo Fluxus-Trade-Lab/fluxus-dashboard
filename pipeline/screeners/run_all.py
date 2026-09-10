@@ -1416,6 +1416,7 @@ def main():
     # TV/SqueezeMetrics refreshes inside degrade gracefully. Own failure
     # domain -- a ledger crash must not cost the outputs above. Internal
     # record only (project parked; frontend not wired).
+    lrow = None   # bound before the try: tick_cycle below falls back on it if the ledger dies
     try:
         from pipeline.risk.regime_ledger import append as ledger_append, build_row, report_problems
         lrow, lerrs = build_row(refresh=True)
