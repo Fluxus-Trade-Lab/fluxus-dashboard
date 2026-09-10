@@ -38,9 +38,8 @@ SPLIT_RE = re.compile(r"[·、/＋+]")
 READS_RE = re.compile(r"\*\*reads\*\*[：:]?(.*?)(?=\n\*\*[^*]+\*\*[：:])", re.S)
 
 # 不在 roles/ 里、因而本闸查不了的读者（留痕，不当成通过）
-OUT_OF_REPO = {
-    "日推": "~/.claude/scheduled-tasks/steve-content-daily-push/SKILL.md（repo 外）",
-}
+# 2026-09-11：「日推」已立 reads 镜像契约 roles/08_daily_push.md，从此表销账。
+OUT_OF_REPO: dict = {}
 # H1 里取不到的别名 → 站名
 ALIASES = {"Gate": "审查站", "审查站（Gate）": "审查站"}
 
@@ -104,8 +103,10 @@ def station_contracts(root: Path, rev: str) -> dict[str, str]:
         if not text:
             continue
         first = next((ln for ln in text.splitlines() if ln.startswith("# ")), "")
-        # 去掉编号圈字与英文别名，取第一个中文站名
-        m = re.search(r"([一-鿿]+站)", first)
+        # 去掉编号圈字与英文别名，取第一个中文站名；
+        # 站名不必以「站」结尾（2026-09-11「日推」入 roles/）——先认「X站」，
+        # 认不出就取 H1 的第一个中文词。
+        m = re.search(r"([一-鿿]+站)", first) or re.search(r"#\s*[①-⑳]?\s*([一-鿿]+)", first)
         if m:
             table[m.group(1)] = path
     for alias, real in ALIASES.items():

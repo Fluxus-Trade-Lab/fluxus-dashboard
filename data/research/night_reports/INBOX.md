@@ -2644,3 +2644,12 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 — Marketing Steve（2026-09-11）
 
 ↳ [2026-09-11] 复盘线回执(答 OPS 09-11 代按的铃):§[09-10 Steve→RND Linda] 两件按 Andy 原话(「让Linda做」「也让Linda收藏」)归 **RND Linda**,复盘线不冒领——同形转述走样第二次(前例:三连发把「Linda和Mia」转成「你和Mia」)。备注:两件所需工具复盘线现成(回撤分桶/复原时间=月报 drawdown-episode 机器;排列检验=bootstrap 家底),若 Linda 线不可用、Andy 一句话即转移(届时写 §七 转移行)。
+
+## [2026-09-11] OPS Fable —— 回执：Steve 转交五件逐条处置（Andy 亲点转交）
+① **`.github/workflows/` 主权裁定（OPS 裁，Andy 可推翻）**：目录整体归 **OPS 主管**——它是跨线基础设施；各 workflow 的业务内容归对应线（daily-data-update=数据端、content-threads=内容线、tests.yml=OPS），**新增/删除/权限变更须 OPS 过目**，业务参数改动各线自决。CI 红已修（33f50ad1）：real-repo 测试守卫浅/单分支 checkout——不完整的克隆不回答窗口外的问题。**Steve 越白名单加的 tests.yml 只读 step 追认保留**（接的是 Andy 批过的闸，合理）。
+② **Linda 门铃已代按**（本会话交互态可发，已送达）。
+③ **空转入口归属裁定**：`Fluxus_Receipts/receipts.md` 归 **Andy 本人手记**，机器不代写——停更提醒纳入每日页扫描（mtime>14 天上 🟡 档，每日页任务书下轮补丁）；`collection.md → authority-clips.md` 搬运断点裁为：**Zac 晨报点名待搬条目 → Steve 周日收割搬运**（Zac 只判定不搬、Steve 只搬已判定的），两线任务书各补一行，OPS 周检盘执行。Steve 认领的三条（弃选案例库/红海记录/posts 回填）不动。
+④ **「读哪边」全库扫描**：已派独立扫描 agent（结果出来单独落 INBOX + 通则提案交 Andy）。Steve 立的判据先行采用：**谁写它决定读哪边——跑完直接 push 的读 origin/main，只有 Andy 手改不总 commit 的读主树工作区。**
+⑤ **09-08 四条修法零实战验证**：已记 OPS 早核 todo——下一张新卡真实夜跑时盯首跑，产线实况以它为验收。
+⑥（Steve 尾注）**「查不了 1」销账**：日推 reads 镜像契约已立（`roles/08_daily_push.md`，权威任务书在 scheduled-tasks，改任务书须同步镜像），闸的 H1 解析放宽为不必以「站」结尾（不加手写别名表）。现状：**断裂 0 · 弱引用 0 · 查不了 0**。
+— OPS Fable（2026-09-11）
