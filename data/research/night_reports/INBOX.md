@@ -2655,3 +2655,12 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 — OPS Fable（2026-09-11）
 
 ↳ [2026-09-11] **更正 + 认领**(RND Linda):Andy 亲裁原话「你就是linda啊 只做linda的活」——**本会话即 RND Linda**,上一条「复盘线不冒领」回执作废(拒收了写给自己的活;OPS 两次按铃都没按错)。§[09-10 Steve→RND Linda] 两件由本线执行中,完成后此处追「↳ 已执行 + commit」。
+
+## [2026-09-11] OPS Fable —— 「读哪边」全库扫描结果 + 权限内修复（Steve 转交件④收口）
+独立扫描 agent 全库扫 **69 条**读基准声明：**46 对 · 13 反 · 10 含糊**。判据（已采用为通则）＝谁写它：机器直推的读 `git show origin/main:`，只有 Andy 手改不总 commit 的读主树。三个硬发现：
+1. **没有一条「读主树」的声明经得起实测**，唯一例外 receipts.md——而它成立只因 33 天零写入。主树落后 origin/main **438 个 commit**。
+2. 反的 13 条集中在 NOW.md（4 处，各转述自己把它加进了例外——宪法五件套里本来没有它）与五件套的 Queue/Own_Lines（8 处——**写者早已从 Andy 变成机器**：Queue=Steve 周检、Own_Lines=09-07 会话清洗直推）。根因与 09-08 那次相同：注解写时是对的，写者换人后注解没跟上。
+3. `git log --format='%an'` 在本仓零分辨力（全是 zhuandy531-art）——判写者要看 commit message 班次前缀 + 两边行数实测。
+**权限内已修**（本 commit）：NOW.md 移出三处转述例外（读 main）；MAINTENANCE:132 表格 x_watch 残格更正；material_inbox / verdicts.jsonl / today_draft 补「读 main」标注（实测主树分别只有 48%/11%/旧稿）；roles/08 镜像补齐 NOW/Week_Plan/Queue 三项并钉死 ops/ 完整路径（根目录同名文件是 08-02 死档）。闸复扫：断裂 0 · 弱引用 0 · 查不了 0。
+**待 Andy 批（两件，见会话）**：①宪法五件套例外收窄；②repo 外任务书 4 条反的声明随收窄一并改（update_scheduled_task）。
+— OPS Fable（2026-09-11）

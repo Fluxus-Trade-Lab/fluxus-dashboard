@@ -129,7 +129,7 @@
 
 | | 谁写 | 哪边新 |
 |---|---|---|
-| `data/content/x_watch/` | 本机每日跑 | **主树工作区**（契约已注明） |
+| `data/content/x_watch/` | 临时树跑完直推 main（09-11 更正：本表旧格写反，§187 已自证） | **origin/main** |
 | `data/output/threads/` | 云端 workflow `daily-content-threads.yml`（22:00 UTC cron，直接 commit） | **origin/main** |
 
 实测：主树那份停在 **2026-07-28**，origin/main 是 **2026-09-10**——**差 44 天**。
@@ -199,7 +199,8 @@
 两条加起来说明「哪边新」不能一条条猜，所以立了通则并写进契约：
 
 > **跑完直接 push 的产出一律读 `git show origin/main:`；只有 Andy 手改且不总 commit 的读主树工作区
-> （内容台五件套 · `voice/raw/` · NOW.md）。判据是谁写它，不是它在哪个目录。**
+> （内容台五件套 · `voice/raw/`）。判据是谁写它，不是它在哪个目录。**
+> ⚠️ 09-11 更正：NOW.md 从例外中移出——它由 `now:` 班次直推 main，照原文读＝拿旧优先级。
 
 ⚠️ **这个形状肯定不止信号站一处**（各线任务书 / SKILL.md / 其他角色契约）。全库扫一遍已转交 OPS，
 见 `night_reports/INBOX.md` 的 [2026-09-11] Marketing Steve → OPS Fable 第 ④ 件。
