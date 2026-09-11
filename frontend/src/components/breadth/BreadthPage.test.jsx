@@ -5,6 +5,7 @@ import { resolve } from 'node:path'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { LanguageProvider } from '../../i18n/LanguageContext'
 import BreadthPage from './BreadthPage'
+import { resetMarketLightCache } from '../../hooks/useMarketLight'
 
 /**
  * A mount test, not a unit test — the 2026-09-11 rewrite touched nine files
@@ -47,10 +48,10 @@ const ML = {
   },
   brightness: { setups: { count: 43 }, leaders: [{ ticker: 'MRNA', status: 'holding' }, { ticker: 'BVS', status: 'broken' }] },
 }
-const withFetch = (payloads) => vi.stubGlobal('fetch', (url) => {
+const withFetch = (payloads) => { resetMarketLightCache(); return vi.stubGlobal('fetch', (url) => {
   const hit = Object.entries(payloads).find(([k]) => String(url).includes(k))
   return Promise.resolve({ ok: !!hit, json: () => Promise.resolve(hit ? hit[1] : null) })
-})
+}) }
 
 describe('BreadthPage — in the course\'s order (09-11)', () => {
   it('mounts on the real file without throwing', () => {
@@ -234,5 +235,25 @@ describe('deleted content is back, in the folds', () => {
     renderPage()
     fireEvent.click(screen.getByText('Votes').closest('button'))
     expect(screen.getByText(readMarketState(breadth.verdict))).toBeInTheDocument()
+  })
+})
+
+/* DATA ALEX's real output (pipeline/screeners/market_light.py @ 640643c4, run
+   on the 2026-09-10 session), not a hand-written shape — so a renamed key on
+   either side turns this red. */
+describe('the course read on DATA ALEX\'s real market_light.json', () => {
+  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.2026-09-10.json'), 'utf8'))
+
+  it('draws the light, the count, the gear and the call from the real file', async () => {
+    withFetch({ market_light: real })
+    renderPage()
+    expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
+    expect(screen.getByText(`${real.spy.plus_n}`)).toBeInTheDocument()
+    expect(screen.getByText(`${real.spy.gear.n} / 7`)).toBeInTheDocument()
+    const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
+    expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
+    expect(screen.getAllByText('provisional').length).toBe(2)
+    expect(screen.getByText(/no scan yet for BO \/ HTF/)).toBeInTheDocument()
+    vi.unstubAllGlobals()
   })
 })
