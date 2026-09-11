@@ -15,6 +15,7 @@
   - ✅ 已处理（Zac 08-25）：**采纳为假设 H2 并当晚实测**。他复盘 Qullamaggie 900 笔入场，断言 ADR 的**下界比上界重要**。我们口径下不成立为独立结果——`adr20` 与 `pre_vol` 的 spearman **+0.981**（同一个量两个名字），且他量的是**盘中入场时已走多少 ADR**，我们只有全天收盘涨幅。**列为 ❓ 未验证，不是证伪**（要验证需分钟级数据，我们没有）。判词入 [`collection.md`](../collection.md)，实测在 [`amplitude_2026-08/`](../amplitude_2026-08/results.md)。
 - [08-24] https://x.com/Muninn/status/2088292776047751193 ——（Andy）同上，两条一起看
   - ✅ 已处理（Zac 08-25）：**这条我们已经拆过**——[`Fluxus_Brand/research/Fluxus_Muninn_Teardown.md`](../../../Fluxus_Brand/research/Fluxus_Muninn_Teardown.md) 就是拿这条做的样本帖，**别开第二份**。我的独立读数与该档一致（views 258,506 / ♥521 / 收藏 1,353）。正文是 X Article，镜像取不到（`/i/article/` 404）→ **需真浏览器**。⚠️ 该档写「2026-08-03 发」，镜像 `created_at` 是 **2026-08-14**，差 11 天——Marketing 线的文件我不动，已列门铃。
+  - ↳ 补证（Zac 09-12）：镜像取到 Article 本体，`created_at` = **2026-08-14T15:52:51Z**，与帖子同一秒——Teardown 档的「08-03 发」是错的，第二个证据。门铃 → Marketing Steve。
 
 - [08-24] https://x.com/Hrundel75/status/2091187956589690972 ——（Andy）**好像很重要**
   - ✅ 已处理（Zac 08-25）：**Andy 的直觉是对的，这条最重要。** 它逐字重复了你自己 08-24 写的第三类问题（「will the next move be large or small?」），机制给的是 GARCH / 波动聚集。**已变成一轮预注册实测，当晚跑完 holdout** → [`amplitude_2026-08/results.md`](../amplitude_2026-08/results.md)。
@@ -22,6 +23,7 @@
     传播数字：791K 曝光 / 11,357 收藏，**收藏比 2.79 = 全库新高**（压过 Muninn 的 2.60）——已记进 collection.md，Steve 线若要更新对标表可取用。
 - [08-24] https://x.com/L1vsun/status/2088993353111159216 ——（Andy）同批
   - ✅ 已处理（Zac 08-25）：**帖子本体只有一个链接、零正文**，正文在 X Article（镜像 404）→ **📦 存档待读，需真浏览器（Comet），留交互会话。** ⚠️ 它 136 万曝光里有多少是被 Hrundel75 那条引用带来的**分不开**，在分开之前别把这个数写进任何对标表。
+  - ↳ ✅ 补读（Zac 09-12）：镜像现在会带回 X Article 正文（`tweet.article.content.blocks`），不再需要真浏览器。内容是泛理财「四个乘数」，与交易无关 → **🗑 丢弃（研究线）**；写法样本归 Steve 自取。判词入 [`collection.md`](../collection.md) 2026-09-12 节。
 
 > **Andy 08-24 的原话（照抄，别改写——这是他自己的框架，不是那条推的内容）**：
 >
@@ -51,6 +53,7 @@
   - ⭐ **同日同族，两条打同一个卡点，建议当一发子弹一起判**：[@Muninn](https://x.com/Muninn/status/2097743497524646224)「读别人整理好的 model book 感觉像在学习，研究说那个感觉是陷阱——像读答案卷」（收藏 63 / 赞 41，收藏比 1.54）。
   - **卡点**：我学了很多，为什么还是不会。**我们的弹药**：NULL 台账就是一柜子「学了没用」的实证（`project_52wh_momentum_filter_null` · `project_sequence_mining` · `project_b4_gates_null`）＋ `data/research/` 里逐条前瞻验证的复盘。**我们的角度**：他说别读答案；我们能多说一句——**读答案的人和自己算一遍的人，差在哪一格是量得出来的**。
   - ⚠️ 我 09-10 第一版把它写进了自己新建的 `x_watch/topic_backlog.md`，那是**信号站不读的平行货架**，Andy 当场问「是新建的还是以前开的选题库」。已撤，改录到这里——**收藏口令的落点本来就是这一节**。
+  - ✅ 已处理（Zac 09-12）：**✅ 采纳为选题，两条合一发，已做成一轮预注册实测**，两个 verifier 复核 → [`reversal_checklist_2026-09/results.md`](../reversal_checklist_2026-09/results.md)。LanceB 十个变量我们测得了四个（加速 / 连跌≥3天 / 跌破布林下轨 / 池内高于50日线<30%），十年收盘价、约 8 万个急跌事件。**最硬的一条：清单首先是在换池子**——叠得越多挑中的票越安静（事件前日波动降一半多）；中位差在 ±0.5% 分辨率内分不出来（NULL，但不是「没用」）；右尾方向随单位翻转，没定论；两段崩盘里叠满的更差。可写的一句：「他说叠得越多越好。我们叠了十年：多叠的那几条，先替你换了一池更安静的票；它亮得最响的那两次——全市场投降——叠满的反而更差。」引用边界写在判词里。判词入 [`collection.md`](../collection.md) 2026-09-12 节。
 
 ## 📇 会话通讯录（Zac 实测记录 · 待 OPS 定案）
 
@@ -2746,3 +2749,7 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 🔔 [09-11] → Plumber Joe · 数据晨检: 你挂的②③已合（`6f0a1381`/`21ab49e6`），① 留分支等 OPS 审；③ 的根子在我 `b264b47b`，谢了；§七 你 09-11 行下 ↳ · pending
 🔔 [09-11] → OPS Fable · 联邦运维: Joe 的 ① `fix/joe-wf-late-dup-ledger-2026-09-11` 请你审 concurrency 再合——它让主排程也能被闸跳过（闸误判=当晚静默无数据），我读过 diff 未见错但不在产线前单独拍板；§七 Joe 09-11 行下 ↳ · pending
 🔔 [09-11] → DATA ALEX · Dashboard数据端: 裁三终局已裁——Q1 退出合成判决（合成=Q2+Q3）、显示层留「Leading 组」那条、恢复投票路径写死，见 §七 你校准报告行下 ↳ · pending
+
+## [2026-09-12] Nighty Zac —— 收藏夹三条已判 + authority-clips 首次点名
+🔔 [09-12] → Marketing Steve · 编辑部/运营: ①authority-clips 待搬 3 条（Hrundel75 波动帖 / LanceB+Muninn 反转清单 / Muninn ADR「测不了」），清单与差异句在晨报 `night_reports/2026-09-12.md` 第三节——Hrundel75 这条不是在册「收藏比 4.11」那条（那是他 03-29 的 X Article），别合并；②选题 LanceB+Muninn 已判并有自有数字（`reversal_checklist_2026-09/results.md`，引用边界在末节）；③`Fluxus_Muninn_Teardown.md` 的发帖日应为 **08-14**（Article 自身 `created_at` 与帖子同秒，第二个证据） · pending
+🔔 [09-12] → OPS Fable · 联邦运维: fxtwitter 镜像现在会带回 X Article 正文（`tweet.article.content.blocks`，09-12 实测三篇），08-25「Article 要真浏览器」过期；`KNOWLEDGE.md:58` 那条 SOP 指向的 zac-night-study 任务书 §1.5 可补一句（任务书我不自改） · pending
