@@ -84,18 +84,49 @@ def test_gears_reproduce_the_ma_2025_chart(ma_ohlc):
 
 
 def test_light_share_is_pinned_and_the_book_number_is_not_ours(spy_close):
-    """Regression pin, AND a record of a disagreement with the book.
+    """Regression pin for the definition the PAGE uses (EMA, 1-day rising).
 
-    Lesson 6 prints 54.5 green / 20.7 red for SPY 2015-2026. On the adjusted
-    basis the course's own scripts use, the definition reads 56.55 / 19.30. The
-    54.5 reproduces only on unadjusted prices. This test pins OUR number so a
-    silent change of basis or rising-rule shows up; it deliberately does not
-    assert the book's.
+    The book's printed 54.5 / 20.7 belong to the other definition in the same
+    lesson -- see test_book_numbers_are_sma_three_day. This test pins ours so a
+    silent change of basis or rising-rule shows up.
     """
     n = ml.light_frame(spy_close).loc['2015-01-01':'2026-08-31', 'checks_passed'].dropna()
     assert len(n) == 2932
     assert round((n == 3).mean() * 100, 2) == 56.55
     assert round((n == 0).mean() * 100, 2) == 19.30
+
+
+def test_book_numbers_are_sma_three_day(spy_close):
+    """The book's own light statistics, reproduced -- on the OTHER definition.
+
+    Lesson 6: 54.5% green, and the longest all-yes / all-no runs 2024-01-18 ->
+    04-04 and 2022-08-30 -> 10-14. SMA 10/20 with "rising" = above 3 sessions
+    ago gives 54.5 and both dates to the day (Studio Q, 2026-09-11). Kept here so
+    that if Andy rules this definition for the page, the switch is already
+    verified against the book.
+
+    The first version of this file claimed these dates reproduce under no
+    definition; the grid it searched never contained this cell.
+    """
+    f, s = spy_close.rolling(10).mean(), spy_close.rolling(20).mean()
+    n = ((f > s).astype(int) + (f > f.shift(3)).astype(int) + (s > s.shift(3)).astype(int))
+    w = n.loc['2015-01-01':'2026-08-31'].dropna()
+
+    def longest(mask):
+        best, cur, st, span = 0, 0, None, None
+        for d, v in mask.items():
+            if v:
+                st = d if cur == 0 else st
+                cur += 1
+                if cur > best:
+                    best, span = cur, (st.strftime('%Y-%m-%d'), d.strftime('%Y-%m-%d'))
+            else:
+                cur = 0
+        return span
+
+    assert round((w == 3).mean() * 100, 1) == 54.5
+    assert longest(w == 3) == ('2024-01-18', '2024-04-04')
+    assert longest(w == 0) == ('2022-08-30', '2022-10-14')
 
 
 # ───────────────────────────────────────────────────────────── the light itself

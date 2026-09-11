@@ -32,18 +32,25 @@ against a number the course prints before this file was written (2026-09-11):
 Studio Q ruled this minimum-assumption reading (plan L106) and forbade an
 "N days ago" parameter -- the 08-31 invented-window trap.
 
-⚠️ And one course number this does NOT reproduce, reported, not tuned away:
-Lesson 6 prints 54.5% green / 20.7% red / 24.8% mixed for SPY 2015-2026. On the
-auto-adjusted prices the course's own chart scripts use, this reads 56.5 / 19.3
-/ 24.1. The 54.5 matches only on UNadjusted prices (54.7 / 20.5 / 24.8), and
-the two "longest run" dates in the same paragraph (2024-01-18 -> 04-04 all yes,
-2022-08-30 -> 10-14 all no) reproduce under NO definition tried -- EMA or SMA,
-10/20 or 10/21, adjusted or not, "rising" over 1, 2, 3, 5 or 10 days. Under
-the 1-day rule the green run is broken on 7 days, every one a single-day dip in
-the 10 EMA. That is a course-content issue for Studio Q, the same family as
-cycle_bench.json's finding that two hand-typed means had drifted. This file
-follows the course's canonical data (auto-adjusted, as `ohlc()` fetches) rather
-than switching price basis per metric to make each printed number match.
+⚠️ The book's printed light statistics come from a DIFFERENT definition than
+the one this file implements, and that is a choice, not an error. Lesson 6
+prints 54.5% green / 20.7% red for SPY 2015-2026 and two "longest run" dates
+(2024-01-18 -> 04-04 all yes, 2022-08-30 -> 10-14 all no). Those reproduce
+EXACTLY -- 54.5 green and both dates to the day -- on SMA 10/20 with
+"rising" = today above 3 sessions ago, auto-adjusted (Studio Q found it,
+2026-09-11). This file uses EMA with "rising" = today above yesterday, which is
+Studio Q's ruling for the page (plan L106) and the lesson's drill text; on it
+the same window reads 56.55 / 19.30. Same lesson, two definitions: that is
+NEEDS_ANDY gap 1, now a single-choice question in the course repo. When Andy
+rules, change LIGHT_MA and the rising lag -- the replication test for the
+book's numbers is written and waiting (test_book_numbers_are_sma_three_day).
+
+⚠️ Correction on the record: the first version of this docstring said the two
+dates "reproduce under NO definition tried". That was false. The grid searched
+was two edges of a two-dimensional one -- the rising lag was varied only for
+EMA, the MA type only at a 1-day lag -- and the one cell that reproduces
+(SMA x 3 days) was never tried. "Tried everything" was a claim about the
+edges I walked, written as a claim about the whole grid.
 
 The brightness block (Q1 setups, Q2 leaders) is our mapping onto the course's
 semantics and is shipped `provisional: true` until Studio Q signs off under the
