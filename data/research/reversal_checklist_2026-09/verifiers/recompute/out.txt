@@ -1,0 +1,29 @@
+/private/tmp/claude-501/-Users-taolezhu-Documents-AI-Trading-System/bb656516-2546-4c8a-a682-52545aa25f71/scratchpad/verify_recompute/recompute.py:58: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  ev['k'] = ev[['V1', 'V2', 'V3', 'V8']].sum(1)
+base after dedup (before outcome filter): 81148
+total events: 80996 discovery: 56512 holdout: 24484
+discovery tickers: 2076 holdout tickers: 927
+
+k   n   median  P>=+10  P<=-10  mean  vol20med(t-5)  vol_ddof1
+0 7652 -0.7492% 0.1261 0.1358 0.1460% 0.0489
+1 13655 -0.0925% 0.1199 0.1066 0.4492% 0.0407
+2 17876 -0.0696% 0.0987 0.0868 0.2787% 0.0307
+3 13030 -0.0102% 0.0803 0.0809 -0.0005% 0.0253
+4 4299 -0.3796% 0.0665 0.0779 -0.3278% 0.0225
+V prevalence: {'V1': 0.6468, 'V2': 0.4955, 'V3': 0.4443, 'V8': 0.2837}
+k by strat:
+ k         0      1      2      3     4
+strat                                 
+0      6292  11248  13985  10385  3375
+1      1187   2162   3290   2234   780
+2       173    245    601    411   144
+
+H-L (lower median): 0.002526785758725144
+H-L (numpy median): 0.0025349921730229296
+H-M tail: -0.04813537343599331
+ strat 0 nhi 13760 nlo 17540 dmed 0.0011923896220732422 dtail -0.05190909151176049
+ strat 1 nhi 3014 nlo 3349 dmed 0.010653925641518569 dtail -0.030021044422336468
+ strat 2 nhi 555 nlo 418 dmed -0.007695610949404408 dtail -0.04520022414759256
+weeks: 520
+H-L CI95: [-0.00215921  0.008064  ]
+H-M CI95: [-0.06027318 -0.03559927]

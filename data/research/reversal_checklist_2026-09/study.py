@@ -132,7 +132,7 @@ def stratified(ev: pd.DataFrame, col: str, week_counts=None, week_ix=None):
     of P(x>=+10%).  With week_counts (B, W) it is evaluated per bootstrap draw."""
     lo, hi = ev["k"] <= 1, ev["k"] >= 3
     med_parts, tail_parts, weights = [], [], []
-    for s in (0, 1, 2):
+    for s in sorted(ev["stratum"].unique()):   # 0/1/2 in the pre-registered run
         cell = ev["stratum"] == s
         a, b = ev[cell & lo], ev[cell & hi]
         a, b = a[a[col].notna()], b[b[col].notna()]
@@ -271,6 +271,8 @@ def main():
             m |= (ev["date"] >= s) & (ev["date"] <= e)
         rep["crash_excluded_n"] = int(m.sum())
         ev = ev[~m]
+        rep["n_events"] = int(len(ev))   # header must show what was tested
+        rep["n_tickers"] = int(ev["ticker"].nunique())
     for col in cols:
         dm, dt = stratified(ev, col)
         cm, ct, nw = bootstrap(ev, col, B=a.B)

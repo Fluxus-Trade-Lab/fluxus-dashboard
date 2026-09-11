@@ -1,0 +1,26 @@
+pre-event vol (median daily std) by k:
+k
+0    4.75%
+1    3.96%
+2    2.91%
+3    2.46%
+4    2.15%
+
+H-M tail diff (k>=3 minus k<=1) and H-L median diff within vol tercile (depth-stratified, point only):
+  calm  x5    n=  8094  median diff -0.05%  tail diff +0.03%
+  calm  x5_v  n=  8094  median diff +0.10%  tail diff -0.80%
+  mid   x5    n=  8094  median diff +0.31%  tail diff -0.87%
+  mid   x5_v  n=  8094  median diff +0.16%  tail diff -1.96%
+  wild  x5    n=  8094  median diff +0.80%  tail diff -0.90%
+  wild  x5_v  n=  8094  median diff +1.25%  tail diff -1.62%
+
+k share by vol tercile:
+k       0    1    2    3    4
+vt                           
+calm   4%  12%  35%  35%  15%
+mid   10%  24%  35%  24%   7%
+wild  26%  35%  26%  10%   2%
+
+POST HOC matched on depth stratum x pre-event vol decile (30 cells), week-cluster 95% CI:
+  x5    median diff +0.88% [+0.02%, +1.40%]   tail diff +0.79% [-1.00%, +2.50%]
+  x5_v  median diff +0.53% [-0.11%, +1.21%]   tail diff -0.60% [-2.35%, +1.31%]

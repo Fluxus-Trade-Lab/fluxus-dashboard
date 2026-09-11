@@ -29,3 +29,15 @@ for t, g in ev.groupby("vt", observed=True):
         print(f"  {t:5s} {c:5s} n={len(g):6d}  median diff {dm[0]:+.2%}  tail diff {dt[0]:+.2%}")
 print("\nk share by vol tercile:")
 print(pd.crosstab(ev["vt"], ev["k"], normalize="index").map(lambda v: f"{v:.0%}").to_string())
+
+# Matching, not normalising: dividing by vol favours calm names (gate_role
+# 2026-08 section 2 measured log|x| ~ 0.823 log ADR), and high k IS the calm
+# names.  So compare k>=3 vs k<=1 inside depth x vol-decile cells instead.
+ev["vd"] = pd.qcut(ev["prevol"], 10, labels=False)
+m = ev.copy()
+m["stratum"] = m["stratum"] * 10 + m["vd"]
+print("\nPOST HOC matched on depth stratum x pre-event vol decile (30 cells), week-cluster 95% CI:")
+for c in ("x5", "x5_v"):
+    dm, dt = S.stratified(m, c)
+    cm, ct, nw = S.bootstrap(m, c, B=2000)
+    print(f"  {c:5s} median diff {dm[0]:+.2%} [{cm[0]:+.2%}, {cm[1]:+.2%}]   tail diff {dt[0]:+.2%} [{ct[0]:+.2%}, {ct[1]:+.2%}]")
