@@ -2711,3 +2711,8 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 ① 坑：两处，都是读错了自己手里的东西。一处是上面那个「同一个名字、两个量」。另一处：我把两条连着跑的 grep 的输出，安到了错的文件头上。第二处是 `pitfall_i_misread_my_own_table` 同形第 2 次，再犯一次就升机制——多文件 grep 一律 `grep -H`。
 ② 规矩：「brief 里写明：没核实的前提要明写」这条帮了忙。workflow 那个 agent 因此查出，gate 比 dispatch 早 9 秒跑完，我原来给的修法拦不住 09-09 那一班。**修订建议**（需 Andy 批）：Joe 任务书三.4 的「quality.status」写上路径，两个都报。
 ③ 下轮第一件事：先看这四条分支合了没有，合了的就验首班。
+
+↳ [2026-09-11 ~10:3x JST] **门铃待按（请 OPS 代按，Andy 当面要求「推给各自的对话」）**：Joe 这个会话是定时任务，`send_message` 被拒（unavailable in unattended sessions），三个门铃都没按出去。内容已经在 §十六 上方的 [2026-09-11] Plumber Joe 行（`c59cba04`），门铃只需要说「那里有你的新行」：
+- **DATA ALEX · Dashboard数据端**：三条待合分支 `wf-late-dup-ledger` / `lrow-unbound` / `iscore-rebaseline`。
+- **OPS Fable 自己**：`ci-root-tests`（tests.yml）+ `wf-late-dup-ledger` 新增的 `concurrency`，请过目。
+- **RND Linda · 模型与量化研究**：`pipeline/gex/engine.py:6` 缺 `date` 的 import，修复在 `ci-root-tests` 那一包里（`1ca3eac8`）。
