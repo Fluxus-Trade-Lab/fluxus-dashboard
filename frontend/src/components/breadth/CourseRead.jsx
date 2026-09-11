@@ -194,8 +194,8 @@ export function LightStep({ ml }) {
             <div className="mt-4"><LightChart history={spy.history} /></div>
             <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
               <b className="font-semibold text-[var(--color-text-secondary)]">Method:</b> 10 / 20 {ma}, &ldquo;rising&rdquo; = today above
-              yesterday. The lesson&rsquo;s own chart uses SMA 10 / 20 with &ldquo;rising&rdquo; = above three days
-              ago; the two methods differ slightly and Andy will pick one (course NEEDS_ANDY gap 1).
+              yesterday — the course&rsquo;s method since Andy ruled EMA on 09-11. The count beside the light reads the
+              21-day SMA, as the lesson&rsquo;s own tally does; whether that line should be EMA too is still open.
             </p>
             <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
               SPY close (thin grey) with the 10 {ma} (ink) and 20 {ma} (dashed). Strip: each session&rsquo;s light —

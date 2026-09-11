@@ -263,10 +263,10 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
 describe('Studio Q rulings on the page', () => {
   const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.2026-09-10.json'), 'utf8'))
 
-  it('names the light\'s method and the lesson chart\'s other method', async () => {
+  it('names the light\'s method — EMA, as Andy ruled on 09-11', async () => {
     withFetch({ market_light: real })
     renderPage()
-    expect(await screen.findByText(/The lesson’s own chart uses SMA 10 \/ 20/)).toBeInTheDocument()
+    expect(await screen.findByText(/the course’s method since Andy ruled EMA on 09-11/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 
