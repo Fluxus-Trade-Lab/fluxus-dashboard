@@ -253,7 +253,11 @@ def test_injecting_a_replay_into_the_real_archive_turns_it_red(tmp_path):
     with open(REAL_ARCHIVE, newline="") as fh:
         rows = list(csv.DictReader(fh))
         head = list(rows[0].keys())
-    days = sorted({r["date"] for r in rows})
+    # 注入到**K 线库覆盖得到的**最新一场，而不是归档的最后一场：
+    # cron 写完归档时，K 线库常常还停在上一场（2026-09-11 实测：归档到 09-10、库到 09-09），
+    # 那一场本来就是「查不了」—— 往查不了的日子里注入，闸不红是对的，不能算它瞎。
+    covered = set(A.calendar(A.load_store(REAL_STORE)))
+    days = sorted({r["date"] for r in rows} & covered)
     last, prev = days[-1], days[-2]
     prev_pct = {r["ticker"]: r["change_pct"] for r in rows if r["date"] == prev}
     hit = 0
