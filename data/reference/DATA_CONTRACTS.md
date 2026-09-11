@@ -1165,3 +1165,4 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   **L2 turin 旁注两行**：同 json 的 `side_readings.nhnl`（state + `hist_rate_e1`）与 `side_readings.gex`（`pct_rank_252d` + `hist_rate_e1`）——各配半句它答什么（NHNL=内部宽度 washout 深浅；GEX=dealer 缓冲厚薄），**旁注永不并进 L1 的数**。
   **L3 tick cycle 一行**：`tick_cycle.json` 的 `band + reading` 原句（Linda 的 LBR 复刻；已在晨读第一页，此处复用同 json，零新数据活）——它答「磨还是走」，与 L1 的「会不会崩」是两个问题，排版上分开别读成同一题的两票。
   三层共用的老规矩不变：无危险色、不做 RegimeBand 票、`prob` 永不单飞、各层 staleness 各自按「未测量」降级。数据源就两个每晚已在产的 json，前端不用等任何管道改动。
+  ↳↳↳ **Andy 终裁（09-11 原话「哦那regimeband这个不需要加上去」）：RegimeBand 第四票不加，永久关闭**——08-17 correction_risk 停摆备忘的未决项 #3（输出形态：概率 vs 喂 RegimeBand 投票）就此了结，此格与徽章并排各答各的，后来者勿再翻案。
