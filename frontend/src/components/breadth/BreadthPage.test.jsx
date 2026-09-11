@@ -128,13 +128,16 @@ describe('Correction risk charts', () => {
     expect(title).toContain(cr.ts_dimension.today.n_cell_3d.toLocaleString())
   })
 
-  it('draws a reading\'s state bars only when its table is in the payload', () => {
-    expect(render(<StateBars reading={cr.side_readings.nhnl} />).container.firstChild).toBeNull()
-    const withTable = { ...cr.side_readings.nhnl, today_state: '2', base_rate: 0.1755,
-      table: { 1: { rate: 0.3718, n: 503 }, 2: { rate: 0.1943, n: 3787 }, 3: { rate: 0.0914, n: 2024 } } }
-    const { container } = render(<StateBars reading={withTable} />)
-    expect(container.querySelectorAll('rect').length).toBe(3)
-    expect(container.querySelector('rect[opacity="1"]').parentElement.textContent).toContain('19%')
+  it('draws a reading\'s state bars from its own table, and nothing without one', () => {
+    const { table: _drop, ...bare } = cr.side_readings.nhnl
+    expect(render(<StateBars reading={bare} />).container.firstChild).toBeNull()
+    for (const k of ['nhnl', 'gex']) {
+      const rd = cr.side_readings[k]
+      const { container } = render(<StateBars reading={rd} />)
+      expect(container.querySelectorAll('rect').length).toBe(Object.keys(rd.table).length)
+      const on = container.querySelector('rect[opacity="1"]').parentElement.textContent
+      expect(on).toContain(`${(rd.table[rd.today_state].rate * 100).toFixed(0)}%`)
+    }
   })
 
   it('draws the TICK comparison from the evidence block', () => {

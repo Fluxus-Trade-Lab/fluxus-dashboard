@@ -212,7 +212,7 @@ export function StateBars({ reading }) {
   if (!table || reading.base_rate == null) return null
   const keys = Object.keys(table).sort()
   const max = Math.max(0.3, ...keys.map((k) => table[k]?.rate ?? 0))
-  const W = 300, H = 74, B = 18, bw = Math.min(48, (W - 8) / keys.length - 10)
+  const W = 320, H = 92, B = 32, bw = Math.min(48, (W - 8) / keys.length - 10)
   const step = (W - 8) / keys.length
   const y = (r) => (H - B) - (r / max) * (H - B - 4)
   return (
@@ -223,11 +223,16 @@ export function StateBars({ reading }) {
         const x = 4 + i * step + (step - bw) / 2
         const on = String(reading.today_state) === k
         const lab = reading.labels?.[k] ?? k
+        // short name under the bar: "Q2" out of "low dealer gamma (Q1)"-style
+        // labels, the plain word out of "oversold (<0.30)"-style ones
+        const short = (lab.match(/\((Q\d)\)/)?.[1]) ?? lab.replace(/\s*\(.*\)\s*$/, '')
         return (
           <g key={k}>
             <title>{`${lab}: ${pct(r)} of ${table[k]?.n?.toLocaleString()} days`}</title>
             <rect x={x} y={y(r)} width={bw} height={(H - B) - y(r)} rx="3"
                   fill={on ? 'var(--color-text)' : 'var(--color-untested)'} opacity={on ? 1 : 0.55} />
+            <text x={x + bw / 2} y={H - 18} fontSize="11" textAnchor="middle" fontWeight={on ? 600 : 400}
+                  style={{ fill: on ? 'var(--color-text)' : 'var(--color-text-muted)' }}>{short}</text>
             <text x={x + bw / 2} y={H - 4} fontSize="11" textAnchor="middle" fontWeight={on ? 600 : 400}
                   style={{ fill: on ? 'var(--color-text)' : 'var(--color-text-muted)' }}>{pct(r, 0)}</text>
           </g>
@@ -269,7 +274,15 @@ function SideNotes({ side, session, base }) {
                 <span className="text-[var(--color-text-secondary)] tabular-nums">
                   {r.state} — a 5% drawdown followed {pct(r.rate)} of days in this state
                 </span>
-                <div className="mt-1.5"><StateBars reading={r.reading} /></div>
+                {r.reading?.table && r.reading.base_rate != null && (
+                  <div className="mt-1.5">
+                    <StateBars reading={r.reading} />
+                    <p className="m-0 text-[11px] text-[var(--color-text-muted)]">
+                      since {r.reading.sample?.from?.slice(0, 4) ?? '—'} · dashed = {pct(r.reading.base_rate)} across all days of this history
+                      {r.key === 'gex' && ' · Q1 = least dealer gamma, Q5 = most'}
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
               <span className="text-[var(--color-text-muted)] italic">not measured (last {r.date})</span>
