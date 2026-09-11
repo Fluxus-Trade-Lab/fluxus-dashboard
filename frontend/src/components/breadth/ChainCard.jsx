@@ -54,6 +54,7 @@ function LinkRow({ l }) {
              style={{ width: `${pct ?? 0}%`, background: colour,
                        backgroundImage: l.state === 'unlit' ? HATCH : undefined }} />
       </div>
+      <div className="text-[11px] leading-snug mt-1 text-[var(--color-text-secondary)]">{l.evidence}</div>
       {l.fed === false && (
         <div className="text-[11px] font-mono tracking-wider mt-1 text-[var(--color-text-muted)]">
           measured, not fed
