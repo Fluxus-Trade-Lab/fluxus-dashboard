@@ -45,6 +45,15 @@ function Card({ title, aside, children, faded }) {
   )
 }
 
+/** Q1/Q2's mappings are DATA ALEX's, pending Studio Q's check (§七 c768bb94). */
+function Provisional() {
+  return (
+    <span className="inline-block mt-1.5 text-[11px] font-mono tracking-[.1em] px-1.5 py-0.5 rounded bg-[var(--color-v2-off)] text-[var(--color-text-muted)]">
+      provisional
+    </span>
+  )
+}
+
 function NotMeasured({ what }) {
   return <p className="m-0 text-[13px] italic text-[var(--color-text-muted)]">{what} — not measured.</p>
 }
@@ -66,7 +75,13 @@ export function VerdictCard({ ml }) {
   const spy = ml?.spy
   return (
     <Card title="Today" aside={ml?.date ? `SPY daily · ${ml.date}` : undefined}>
-      {!v ? <NotMeasured what="Today's aggression" /> : (
+      {!v && ml?.spy?.light === 'green' && ml?.verdict_pending ? (
+        <p className="m-0 text-[17px] text-[var(--color-text-secondary)]">
+          <b className="font-semibold text-[var(--color-text)]">The light is green.</b>{' '}
+          How bright is Step 2&rsquo;s call — the rule that turns its three answers into one word is still being set
+          with the course, so the page does not make one up.
+        </p>
+      ) : !v ? <NotMeasured what="Today's aggression" /> : (
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
           <div>
             <div className="text-[46px] leading-none font-bold tracking-[.02em] text-[var(--color-text)]"
@@ -193,7 +208,7 @@ export function LightStep({ ml }) {
                    style={{ fontFamily: 'var(--font-cond)' }}>
                 {spy.gear?.n == null ? '—' : `${spy.gear.n} / 7`}
               </div>
-              <div className="text-[13px] text-[var(--color-text-secondary)]">{spy.gear?.label ?? 'not measured'}</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)] first-letter:uppercase">{spy.gear?.label ?? 'not measured'}</div>
             </div>
             {ml?.qqq?.light && (
               <p className="m-0 text-[11px] text-[var(--color-text-muted)]">
@@ -255,6 +270,12 @@ export function BrightnessStep({ ml, breadthRows }) {
             <>
               <div className="text-[38px] leading-none font-bold mt-1 tabular-nums" style={{ fontFamily: 'var(--font-cond)' }}>{b.setups.count}</div>
               <div className="text-[13px] text-[var(--color-text-secondary)]">10+ bright · 1–3 dim · 0 avoid</div>
+              {b.setups.setups_without_panel?.length > 0 && (
+                <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
+                  no scan yet for {b.setups.setups_without_panel.join(' / ')} — reads low for those
+                </div>
+              )}
+              {b.setups.provisional !== false && <Provisional />}
             </>
           )}
         </div>
@@ -271,8 +292,9 @@ export function BrightnessStep({ ml, breadthRows }) {
                 ))}
               </div>
               <div className="text-[13px] text-[var(--color-text-secondary)] mt-2">
-                {leaders.length - count('broken')} of {leaders.length} holding up · {count('broken')} broken
+                {leaders.length - count('broken')} of {leaders.length} above the 50-day · {count('broken')} below it
               </div>
+              {b.leaders_meta?.provisional !== false && <Provisional />}
             </>
           )}
         </div>

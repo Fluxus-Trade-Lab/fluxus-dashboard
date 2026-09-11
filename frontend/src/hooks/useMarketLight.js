@@ -44,3 +44,7 @@ export function useMarketLight() {
 
   return state
 }
+
+/** Tests only: the module cache outlives one render, so two tests feeding two
+ *  different files would otherwise see the first one's. */
+export function resetMarketLightCache() { cache = null; inflight = null }
