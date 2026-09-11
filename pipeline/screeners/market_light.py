@@ -6,17 +6,9 @@ The shape is fixed by the consumer, frontend/src/hooks/useMarketLight.js.
 
 WHAT IS STANDARD HERE AND WHAT IS OURS -- read this before changing a constant.
 
-Three blocks are the course's own definitions, and each one was replicated
-against a number the course prints before this file was written (2026-09-11):
+Two blocks are the course's own definitions, each replicated against a number
+the course prints before this file was written (2026-09-11):
 
-  +N / -N      Close vs the 21-day SMA, same-sign runs, runs of <=4 days
-               DROPPED (not merged -- merging welds two long runs into one and
-               the longest up-run jumps from 68 to 141). Source:
-               SwingMasterclass/_pdf/cycle_bench.json. Replicated on
-               auto-adjusted SPY and QQQ, 2010-01-01 -> 2026-08-31: all seven
-               numbers per ticker match exactly (up_mean 21.4, dn_mean 12.7,
-               n_up 125, n_dn 82, longest up 68 from 2025-04-24, longest down
-               32 from 2022-04-11 for SPY; QQQ likewise).
   Seven gears  SwingMasterclass/_pdf/charts.py::throttle_gears, copied line for
                line: 21 EMA, each rule overwrites the one before so the highest
                applicable number wins, "slam" = close below today, close above
@@ -35,10 +27,10 @@ Studio Q ruled this minimum-assumption reading (plan L106) and forbade an
 RULED 2026-09-11 (Andy, both gaps): "用EMA" for the 10/20 light, "同样的用ema"
 for the 21-day line. The light's EMA is final; `ma_type` stays a parameter but
 nothing is pending on it. The gears already read the 21 EMA (course verbatim).
-The +N count is scheduled for deletion course-side (L6B.4/L6B.5 carry a
-"to delete" tag): the field is KEPT but flagged `plus_n_deprecated: true`, and
-still computed on the 21 SMA it was replicated on -- it goes when the course
-deletes it, not migrated in the meantime.
+The +N / trend-day count was DELETED from the course (Andy 2026-09-11 "ok删除",
+course repo 850690a8) and from the page; this file dropped it the same day.
+While it lived it reproduced all seven SPY and QQQ numbers of the course's
+cycle_bench.json exactly -- that ledger is gone from the course repo too.
 
 The course reprinted Lesson 6 on the EMA spec (SwingMasterclass
 _bench/l6_light.json, `coverage_ema_spec`: EMA10/20 adjust=False, rising day
@@ -75,12 +67,6 @@ logger = logging.getLogger(__name__)
 # (the drill text says "MA"; the only measured passage says EMA, L6:135-137).
 LIGHT_MA = 'EMA'
 FAST, SLOW = 10, 20
-
-# +N count. cycle_bench.json's line is the 21-day SMA; NEEDS_ANDY gap 2 is that
-# Lesson 6B also calls the same line an EMA. Parameter, not a literal.
-PLUS_N_MA = 'SMA'
-PLUS_N_LEN = 21
-NOISE_MAX = 4          # runs of this many days or fewer are noise (cycle_bench)
 
 GEAR_LEN = 21          # throttle_gears uses the 21 EMA
 HISTORY_DAYS = 60      # the consumer's light strip; Claire asked for >= 60
@@ -147,29 +133,6 @@ def light_frame(close: pd.Series, ma_type: str = LIGHT_MA,
     return out
 
 
-def plus_n(close: pd.Series, ma_type: str = PLUS_N_MA,
-           length: int = PLUS_N_LEN) -> Optional[int]:
-    """Signed length of the CURRENT run of closes on one side of the line.
-
-    The live count is the raw run -- Lesson 6B's ladder starts at +1, so day one
-    of a run is +1, not "noise". Whether the run has cleared the <=4-day noise
-    band is a separate flag (`plus_n_noise`); the band is what cycle_bench
-    drops when it computes cycle statistics, not a reason to hide today's count.
-    """
-    line = _ma(close, length, ma_type)
-    valid = line.notna()
-    if not valid.any():
-        return None
-    above = (close > line)[valid]
-    last = bool(above.iloc[-1])
-    run = 0
-    for v in reversed(above.tolist()):
-        if bool(v) != last:
-            break
-        run += 1
-    return run if last else -run
-
-
 def gear_series(df: pd.DataFrame, length: int = GEAR_LEN) -> pd.Series:
     """Lesson 6B.2's seven gears, verbatim from the course's throttle_gears.
 
@@ -191,9 +154,8 @@ def gear_series(df: pd.DataFrame, length: int = GEAR_LEN) -> pd.Series:
     return g
 
 
-def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA,
-                     plus_n_ma: str = PLUS_N_MA) -> Optional[Dict[str, Any]]:
-    """One ticker's light + count + gear + 60-day strip. None if unusable."""
+def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dict[str, Any]]:
+    """One ticker's light + gear + 60-day strip. None if unusable."""
     if df is None or len(df) < SLOW + 2 or 'Close' not in df:
         return None
     lf = light_frame(df['Close'].astype(float), light_ma)
@@ -210,7 +172,6 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA,
          'a': round(float(today['slow']), 4), 'b': round(float(prev['slow']), 4)},
     ]
     passed = int(today['checks_passed'])
-    pn = plus_n(df['Close'].astype(float), plus_n_ma)
     gear = None
     if {'Open', 'High', 'Low'} <= set(df.columns):
         gn = int(gear_series(df).iloc[-1])
@@ -221,11 +182,6 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA,
         'checks': checks,
         'checks_passed': passed,
         'light': 'green' if passed == 3 else 'red',
-        'plus_n': pn,
-        'plus_n_noise': (abs(pn) <= NOISE_MAX) if pn is not None else None,
-        # Course-side "to delete" (Andy 2026-09-11). Kept, not dismantled, so it
-        # can leave together with the lesson text.
-        'plus_n_deprecated': True,
         'gear': gear,
         'history': [
             {'date': d.strftime('%Y-%m-%d'), 'close': round(float(r['close']), 4),
@@ -430,9 +386,9 @@ def build(histories: Mapping[str, pd.DataFrame],
           ladder: Optional[Mapping[str, Any]] = None,
           universe_rows: Optional[Iterable[Mapping[str, Any]]] = None,
           breadth: Optional[Mapping[str, Any]] = None,
-          light_ma: str = LIGHT_MA, plus_n_ma: str = PLUS_N_MA) -> Dict[str, Any]:
-    spy = instrument_block(histories.get('SPY'), light_ma, plus_n_ma)
-    qqq = instrument_block(histories.get('QQQ'), light_ma, plus_n_ma)
+          light_ma: str = LIGHT_MA) -> Dict[str, Any]:
+    spy = instrument_block(histories.get('SPY'), light_ma)
+    qqq = instrument_block(histories.get('QQQ'), light_ma)
     # ⚠️ The consumer reads `brightness.leaders` as an ARRAY of
     # {ticker, theme, status} (useMarketLight.js). The first version nested the
     # list inside an object with its metadata, so the page would have received
@@ -451,7 +407,6 @@ def build(histories: Mapping[str, pd.DataFrame],
     return {
         'date': date,
         'ma_type': light_ma,
-        'plus_n_ma': plus_n_ma,
         'rising_rule': 'MA today > MA yesterday (self-invented operationalization, plan L106)',
         'spy': spy,
         'qqq': qqq,            # side note only -- never enters the verdict (plan L111)

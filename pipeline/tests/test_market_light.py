@@ -1,8 +1,9 @@
 """market_light.json -- replicated against the course, then unit-tested.
 
-The first three tests are the reason to trust anything below them: each one
+The replication tests are the reason to trust anything below them: each one
 replays a number the course PRINTS against a frozen copy of the prices it was
-computed on. If a refactor moves one of them, the file is no longer computing
+computed on. (The +N count and its seven-number replication were removed with
+the course's deletion of the trend-day count, 2026-09-11.) If a refactor moves one of them, the file is no longer computing
 the course's quantity, whatever the unit tests say.
 
 Fixtures (pipeline/tests/fixtures/market_light/) were downloaded once on
@@ -34,44 +35,6 @@ def ma_ohlc() -> pd.DataFrame:
 
 
 # ─────────────────────────────────────────────── replication against the course
-
-def _cycle_stats(px: pd.Series) -> dict:
-    """cycle_bench.json's definition, with ml's own line and noise constants."""
-    line = ml._ma(px, ml.PLUS_N_LEN, ml.PLUS_N_MA)
-    sign = (px > line).map({True: 1, False: -1}).where(line.notna())
-    sign = sign.loc['2010-01-01':'2026-08-31'].dropna()
-    grp = (sign != sign.shift()).cumsum()
-    segs = [(g.iloc[0], len(g), str(g.index[0].date()))
-            for _, g in sign.groupby(grp) if len(g) > ml.NOISE_MAX]
-    up = [s for s in segs if s[0] == 1]
-    dn = [s for s in segs if s[0] == -1]
-    return {
-        'up_mean': round(sum(s[1] for s in up) / len(up), 1),
-        'dn_mean': round(sum(s[1] for s in dn) / len(dn), 1),
-        'n_up': len(up), 'n_dn': len(dn),
-        'longest_up': list(max(up, key=lambda s: s[1])[1:]),
-        'longest_down': list(max(dn, key=lambda s: s[1])[1:]),
-    }
-
-
-def test_plus_n_reproduces_cycle_bench_exactly(spy_close):
-    """All seven SPY numbers in SwingMasterclass/_pdf/cycle_bench.json.
-
-    Dropping (not merging) the <=4-day runs is load-bearing: merge them into
-    their neighbours and the longest up-run becomes 141, not 68.
-    """
-    assert _cycle_stats(spy_close) == {
-        'up_mean': 21.4, 'dn_mean': 12.7, 'n_up': 125, 'n_dn': 82,
-        'longest_up': [68, '2025-04-24'], 'longest_down': [32, '2022-04-11'],
-    }
-
-
-def test_live_plus_n_lands_on_the_book_extremes(spy_close):
-    """The live counter, stopped on the last day of each record run, reads the
-    run's length -- the same 68 and 32 the book prints."""
-    assert ml.plus_n(spy_close.loc[:'2025-07-31']) == 68
-    assert ml.plus_n(spy_close.loc[:'2022-05-25']) == -32
-
 
 def test_gears_reproduce_the_ma_2025_chart(ma_ohlc):
     """Lesson 6B.2 says three things about this chart; all three must hold."""
@@ -194,14 +157,7 @@ def test_history_is_sixty_days_and_ends_today():
     assert b['history'][-1]['checks_passed'] == b['checks_passed']
 
 
-# ──────────────────────────────────────────────────────────────────── +N / gear
-
-def test_plus_n_sign_and_noise_flag():
-    px = pd.Series([100.0] * 30 + [110.0] * 3)          # three closes above the line
-    assert ml.plus_n(px) == 3
-    b = ml.instrument_block(_df(list(np.linspace(90, 100, 40)) + [80.0, 79.0]))
-    assert b['plus_n'] < 0 and b['plus_n_noise'] is True
-
+# ──────────────────────────────────────────────────────────────────────── gear
 
 def test_gear_precedence_highest_wins():
     """A day whose HIGH is under the line is maximum defense even though it also
@@ -366,12 +322,6 @@ def test_breadth_absent_is_none():
     assert ml.breadth_block({'verdict': {'env': None}}) is None
 
 
-def test_plus_n_is_kept_and_flagged_deprecated():
-    """Course-side 'to delete' (Andy 2026-09-11): keep the field, flag it."""
-    b = ml.instrument_block(_df(np.linspace(100, 160, 80)))
-    assert b['plus_n'] is not None and b['plus_n_deprecated'] is True
-
-
 def test_build_composes_the_green_day_verdict_end_to_end():
     """All three grades good on a green day -> 'full', marked synthetic."""
     hist = {'SPY': _df(np.linspace(100, 160, 90))}
@@ -437,3 +387,12 @@ def test_run_all_actually_calls_it():
     assert "OUTPUT_DIR / 'market_light.json'" in src, "and emit the file"
     assert "ledger.error('market_light'" in src, "inside its own failure domain"
     assert "breadth=_read_out('breadth.json')" in src, "Q3 needs the vote card"
+
+
+def test_the_deleted_trend_day_count_does_not_come_back():
+    """The course deleted the trend-day (+N) count and Andy said 'ok删除'
+    (2026-09-11). Nothing in the payload may carry it -- a stray field would
+    put a number back on a page that was told to stop showing it."""
+    p = ml.build({'SPY': _df(np.linspace(100, 160, 90))})
+    flat = str(p)
+    assert 'plus_n' not in flat and 'plus_n' not in str(p['spy'].keys())

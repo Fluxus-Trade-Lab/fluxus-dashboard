@@ -1292,9 +1292,9 @@ def main():
         _spy = _ml.get('spy') or {}
         ledger.note('market_light', 'ok' if _ml.get('spy') else 'degraded',
                     light=_spy.get('light'), checks=_spy.get('checks_passed'),
-                    plus_n=_spy.get('plus_n'), verdict=_ml.get('verdict'))
-        logger.info("Saved market_light.json - SPY %s %s/3 +N %s gear %s verdict %s",
-                    _spy.get('light'), _spy.get('checks_passed'), _spy.get('plus_n'),
+                    gear=(_spy.get('gear') or {}).get('n'), verdict=_ml.get('verdict'))
+        logger.info("Saved market_light.json - SPY %s %s/3 gear %s verdict %s",
+                    _spy.get('light'), _spy.get('checks_passed'),
                     (_spy.get('gear') or {}).get('n'), _ml.get('verdict'))
     except Exception:
         logger.exception("market_light failed - market_light.json not updated")
