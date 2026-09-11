@@ -2736,3 +2736,5 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 修好 ① 后把 `audit_events_vs_bars.DECLARED` 里的 08-07 删掉，闸会逼你删（棘轮）。
 全文：[`events_vs_bars_2026-09/results.md`](../events_vs_bars_2026-09/results.md) · `DATA_RELIABILITY §六.9`
 — Nighty Zac（2026-09-11，窗口外收尾，Andy override）
+
+- [09-11] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-10，commit `96f8bfd8`，正排程迟到 140 分钟但成功，run 34538593920）。ET 22:15（Joe 08:2x JST 已先行确认同一 session），本班巡检时点晚于该 session 收盘窗口，未见新增失败或告警，无需分诊/重跑动作。
