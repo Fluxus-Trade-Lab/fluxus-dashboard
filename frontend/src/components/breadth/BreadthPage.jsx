@@ -6,19 +6,15 @@ import BoardCard from './BoardCard'
 import ChainCard from './ChainCard'
 import VoteCard from './VoteCard'
 import RotationPanel from './RotationPanel'
-import HealthChart from './HealthChart'
+import BenchmarkPanel from './BenchmarkPanel'
 import RatioChart from './RatioChart'
 import SpreadChart from './SpreadChart'
-import DangerPanel from './DangerPanel'
-import MarketMonitor from './MarketMonitor'
-import ClassicBreadth from './ClassicBreadth'
 import BreadthCharts from './BreadthCharts'
 import BreadthTable from './BreadthTable'
 import TimeMachineBar from './TimeMachineBar'
 import { useTimeMachine } from './useTimeMachine'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
-import TrendStatus from '../macro/TrendStatus'
 
 export default function BreadthPage({ data }) {
   const tm = useTimeMachine()
@@ -135,18 +131,13 @@ export default function BreadthPage({ data }) {
           <RotationPanel />
         </Reference>
 
+        {/* One fold per benchmark question, not per widget: the chart, the five
+            warnings and the MA distances were three objects about the same two
+            names spread over two folds (09-11). */}
         {mh && !mh.stale && (
-          <Reference label="Benchmark health" count={3}
-                     note="SPY and QQQ price structure, the T2108 overlay, and the MA-distance table">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <HealthChart title="SPY Market Health" block={mh.spy} state={verdict?.spy_state} t2108={t2108Overlay} />
-              <HealthChart title="QQQ Market Health" block={mh.qqq} state={verdict?.qqq_state} t2108={t2108Overlay} />
-            </div>
-            {/* moved off the Dashboard 2026-08-11 (Andy) — the benchmarks' MA
-                distances are state evidence, and this is the state page. Sits
-                here rather than as its own row because it is the same two
-                benchmarks HealthChart already draws, just as a table. */}
-            <TrendStatus signals={data?.signals} />
+          <Reference label="Benchmarks" count={3}
+                     note="SPY and QQQ with their five warnings, and how far four indexes sit from each average">
+            <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />
           </Reference>
         )}
 
@@ -158,30 +149,17 @@ export default function BreadthPage({ data }) {
           </div>
         </Reference>
 
-        {mh && !mh.stale && (
-          <Reference label="Danger signals" count={2}
-                     note="the individual warnings behind the risk level above">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <DangerPanel title="SPY danger signals" danger={mh.spy?.danger} />
-              <DangerPanel title="QQQ danger signals" danger={mh.qqq?.danger} />
-            </div>
-          </Reference>
-        )}
-
-        <Reference label="Market monitor" count={1}
-                   note="the raw ±4% and advance/decline counts, session by session">
-          <MarketMonitor data={breadth} />
-        </Reference>
-
-        <Reference label="Classic breadth" count={1}
-                   note="T2108, new highs and new lows, on their conventional definitions">
-          <ClassicBreadth data={breadth} />
-        </Reference>
-
-        <Reference label="Historical series" count={2}
-                   note="the full archive as charts and as a table — every row that produced the votes">
-          <BreadthCharts data={breadth} />
+        {/* Market monitor (15 tiles) and Classic breadth (9 tiles) were this
+            table's first row printed twice more. Andy 09-11: 「并成一张表：今天钉在
+            第一行、加粗；不上色，仍然按照原有的上色方式」. */}
+        <Reference label="Archive" count={1}
+                   note="every session's raw counts — today pinned on top">
           <BreadthTable data={breadth} />
+        </Reference>
+
+        <Reference label="Series" count={2}
+                   note="% above the averages and McClellan, the full archive as lines">
+          <BreadthCharts data={breadth} />
         </Reference>
       </div>
     </div>

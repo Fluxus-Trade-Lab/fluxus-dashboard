@@ -1,3 +1,4 @@
+/* global process */
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -63,5 +64,29 @@ describe('BreadthPage — 09-11 three-card rebuild', () => {
     fireEvent.click(btn)
     expect(btn).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText(/Will hold:/)).toBeInTheDocument()
+  })
+
+  it('has six folds — the three duplicates are merged, Correction risk stays', () => {
+    renderPage()
+    for (const l of ['Correction risk', 'Style rotation', 'Benchmarks', 'Ratio and spread', 'Archive', 'Series']) {
+      expect(screen.getByText(l)).toBeInTheDocument()
+    }
+    for (const gone of ['Market monitor', 'Classic breadth', 'Danger signals', 'Benchmark health', 'Historical series']) {
+      expect(screen.queryByText(gone)).not.toBeInTheDocument()
+    }
+  })
+
+  it('pins today as the archive\'s first row, bold, with the A/D line the tiles used to carry', () => {
+    renderPage()
+    fireEvent.click(screen.getByText('Archive').closest('button'))
+    const today = document.querySelector('tbody tr')
+    expect(today.className).toMatch(/\btoday\b/)
+    expect(today.className).toMatch(/sticky/)
+    expect(today.className).toMatch(/font-semibold/)
+    const last = breadth.history.rows.at(-1)
+    const [, m, d] = last.date.split('-')
+    expect(today.textContent).toContain(`${parseInt(m)}/${parseInt(d)}`)
+    expect(screen.getByText('A/D line')).toBeInTheDocument()
+    expect(today.textContent).toContain(last.ad_line.toLocaleString())
   })
 })

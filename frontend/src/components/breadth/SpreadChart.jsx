@@ -31,10 +31,10 @@ export default function SpreadChart({ rows }) {
   const last = rows[rows.length - 1]
   const spread = (last?.up_25pct_qtr ?? 0) - (last?.down_25pct_qtr ?? 0)
   return (
-    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
+    <div className="bg-[var(--color-bg)] rounded-2xl px-3 py-3">
       <div className="flex items-baseline justify-between mb-2">
-        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Quarterly Breadth (stocks moving 25%+ over the quarter)
+        <h3 className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)]">
+          Quarterly ±25% spread
         </h3>
         <span className={`text-[11px] font-mono ${spread > 0 ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>
           {spread > 0 ? '+' : ''}{spread} spread

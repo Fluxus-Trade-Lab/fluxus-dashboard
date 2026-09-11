@@ -1,5 +1,4 @@
 import { useRotation } from '../../hooks/useRotation'
-import StateRibbon from '../shared/StateRibbon'
 
 /**
  * Style rotation, sitting under the verdict and above the board.
@@ -16,8 +15,14 @@ import StateRibbon from '../shared/StateRibbon'
  * a reader believes whichever they saw; together, "not yet a regime" has
  * something to contradict.
  *
- * The sentence is the product. The table underneath is there so the sentence
+ * The sentence is the product. The chart underneath is there so the sentence
  * can be checked, not so it can be skimmed instead.
+ *
+ * 2026-09-11: the three-cut table became one chart (fortnight solid, month
+ * outline, both against a zero line — "do the horizons agree" is now a shape,
+ * not two columns to compare), and the eleven baskets with their ten-week
+ * ribbons were removed. Andy: 「11个主题百分比可以删除」 — Themes already
+ * carries that board, and here it read as a stock screen.
  */
 
 const pp = (v) => (v == null ? '—' : `${(v * 100 >= 0 ? '+' : '')}${(v * 100).toFixed(1)}pp`)
@@ -37,9 +42,9 @@ export default function RotationPanel() {
   if (loading) return null
   if (error || !rotation?.verdict) {
     return (
-      <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] m-0">
-          Style Rotation
+      <div className="bg-[var(--color-bg)] rounded-2xl p-4">
+        <h3 className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] m-0">
+          Risk on / risk off
         </h3>
         <p className="mt-2 mb-0 text-[13px] text-[var(--color-text-muted)]">
           Rotation data unavailable — the verdict above is unaffected.
@@ -48,16 +53,17 @@ export default function RotationPanel() {
     )
   }
 
-  const { verdict: v, cuts, baskets, bucket_labels: labels, state_windows: win } = rotation
-  const windowNote =
-    `State computed on ${win?.level_sessions ?? 63}-session level and ` +
-    `${win?.near_sessions ?? 21}-session near windows, not on the fortnight grid.`
+  const { verdict: v, cuts } = rotation
+  // Was a paragraph under the panel; now the chart's hover note — Andy 09-06:
+  // no explanatory text on the card, method goes where the curious look.
+  const caveat = 'The cuts share large-cap names, so agreement between them means more ' +
+    'instruments moved the same way — not three independent samples.'
 
   return (
-    <div className="bg-[var(--color-surface)] rounded-3xl p-5">
+    <div className="bg-[var(--color-bg)] rounded-2xl p-4">
       <div className="flex items-baseline justify-between gap-3 mb-3">
-        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] m-0">
-          Style Rotation · Risk On / Risk Off
+        <h3 className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] m-0">
+          Risk on / risk off
         </h3>
         <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
           vs {rotation.benchmark} · {rotation.date}
@@ -76,84 +82,69 @@ export default function RotationPanel() {
         </p>
       )}
 
-      <div className="mt-4 overflow-x-auto">
-        <table className="w-full text-[13px] border-collapse">
-          <thead>
-            <tr className="text-[var(--color-text-muted)] text-[11px] uppercase tracking-[.14em]">
-              <th className="text-left font-medium py-1 pr-2">Cut</th>
-              <th className="text-right font-medium py-1 px-2">Fortnight</th>
-              <th className="text-right font-medium py-1 px-2">Month</th>
-              <th className="text-right font-medium py-1 pl-2" title="This fortnight's spread against the previous one — the speed of the turn">
-                Speed
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {cuts.map((c) => (
-              <tr key={c.key} className="border-t border-[var(--color-border)]">
-                <td className="py-1.5 pr-2">
-                  <span className="font-medium">{c.label}</span>
-                  <span className="ml-2 text-[11px] font-mono text-[var(--color-text-muted)]">
-                    {c.long.join('/')} − {c.short.join('/')}
-                  </span>
-                </td>
-                {/* neutral, like the delta column beside them — a signed pp
-                    figure says its own direction, and this table has no mark
-                    for the colour to belong to */}
-                <td className="py-1.5 px-2 text-right tabular-nums text-[var(--color-text-secondary)]">
-                  {pp(c.spread)}
-                </td>
-                <td className="py-1.5 px-2 text-right tabular-nums text-[var(--color-text-secondary)]">
-                  {pp(c.month_spread)}
-                </td>
-                <td className="py-1.5 pl-2 text-right tabular-nums text-[var(--color-text-secondary)]">
-                  {pp(c.delta)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <CutsChart cuts={cuts} caveat={caveat} />
+    </div>
+  )
+}
+
+/* ── the three cuts, one chart ─────────────────────────────────────────── */
+
+const CW = 760, CROW = 44, CL = 230, CR = 60, CTOP = 24
+
+function CutsChart({ cuts, caveat }) {
+  if (!cuts?.length) return null
+  const vals = cuts.flatMap((c) => [c.spread, c.month_spread]).filter(Number.isFinite).map((v) => v * 100)
+  const lo = Math.min(-1, Math.floor(Math.min(...vals)))
+  const hi = Math.max(1, Math.ceil(Math.max(...vals)))
+  const x = (v) => CL + ((v - lo) / (hi - lo)) * (CW - CL - CR)
+  const H = CTOP + cuts.length * CROW + 20
+  const ticks = []
+  for (let v = lo; v <= hi; v += 1) ticks.push(v)
+  const bar = (v, y, solid, key) => {
+    if (!Number.isFinite(v)) return null
+    const a = x(Math.min(0, v)), b = x(Math.max(0, v))
+    return (
+      <g key={key}>
+        <rect x={a} y={y} width={Math.max(1, b - a)} height="9" rx="2"
+              fill={solid ? 'var(--color-took)' : 'none'} stroke="var(--color-took)" strokeWidth="1.2" />
+        <text x={v >= 0 ? b + 6 : a - 6} y={y + 8} fontSize="11" textAnchor={v >= 0 ? 'start' : 'end'}
+              style={{ fill: 'var(--color-text-secondary)' }}>{v > 0 ? '+' : ''}{v.toFixed(1)}</text>
+      </g>
+    )
+  }
+  return (
+    <div className="mt-4" title={caveat}>
+      <svg viewBox={`0 0 ${CW} ${H}`} className="w-full h-auto block" role="img"
+           aria-label="risk-on minus risk-off spread for three cuts, fortnight and month">
+        {ticks.map((v) => (
+          <g key={v}>
+            <line x1={x(v)} x2={x(v)} y1={CTOP - 8} y2={H - 18}
+                  stroke={v === 0 ? 'var(--color-text)' : 'var(--color-border-light)'} strokeWidth={v === 0 ? 1.2 : 1} />
+            <text x={x(v)} y={H - 4} fontSize="11" textAnchor="middle"
+                  style={{ fill: 'var(--color-text-muted)' }}>{v > 0 ? `+${v}` : v}pp</text>
+          </g>
+        ))}
+        <text x={x(lo)} y={CTOP - 12} fontSize="11" style={{ fill: 'var(--color-text-muted)' }}>← risk off</text>
+        <text x={x(hi)} y={CTOP - 12} fontSize="11" textAnchor="end" style={{ fill: 'var(--color-text-muted)' }}>risk on →</text>
+        {cuts.map((c, i) => {
+          const y = CTOP + i * CROW
+          return (
+            <g key={c.key}>
+              <title>{`${c.label}: fortnight ${pp(c.spread)}, month ${pp(c.month_spread)}, speed ${pp(c.delta)}`}</title>
+              <text x="0" y={y + 12} fontSize="13" fontWeight="600" style={{ fill: 'var(--color-text)' }}>{c.label}</text>
+              <text x="0" y={y + 28} fontSize="11" style={{ fill: 'var(--color-text-muted)' }}>
+                {c.long.join('/')} − {c.short.join('/')}
+              </text>
+              {bar(c.spread * 100, y + 2, true, 'f')}
+              {bar(c.month_spread * 100, y + 15, false, 'm')}
+            </g>
+          )
+        })}
+      </svg>
+      <div className="flex gap-4 mt-1 text-[11px] text-[var(--color-text-muted)]">
+        <span><i className="inline-block w-3 h-[8px] mr-1.5 align-[0px] rounded-sm bg-[var(--color-took)]" />fortnight</span>
+        <span><i className="inline-block w-3 h-[8px] mr-1.5 align-[0px] rounded-sm border border-[var(--color-took)]" />month</span>
       </div>
-
-      {/* Ten weeks of state per basket. The bucket labels are printed once,
-          under the ribbons, because five repeats of the same axis is noise. */}
-      <div className="mt-5">
-        <div className="grid grid-cols-[minmax(96px,auto)_1fr_auto] gap-x-3 gap-y-[6px] items-center">
-          {baskets.map((b) => (
-            <div key={b.ticker} className="contents">
-              <span className="text-[11px] truncate" title={`${b.name} (${b.ticker})`}>
-                {b.name}
-              </span>
-              <StateRibbon steps={b.ribbon} labels={labels} windowNote={windowNote} />
-              <span className={`text-[11px] font-mono tabular-nums w-[52px] text-right ${
-                b.side === 'risk_on' ? 'text-[var(--color-text-secondary)]'
-                                     : 'text-[var(--color-text-muted)]'}`}>
-                {b.level == null ? '—' : `${(b.level * 100).toFixed(1)}%`}
-              </span>
-            </div>
-          ))}
-
-          {/* The axis lives inside the same grid rather than being pushed into
-              place with calculated padding. Structural alignment cannot drift
-              when a column width changes; arithmetic alignment silently can.
-              Five equal columns so each label centres under its own segment —
-              justify-between would pin the ends and let the middle three wander. */}
-          <span />
-          <span className="grid mt-1 text-[11px] font-mono text-[var(--color-text-muted)]"
-                style={{ gridTemplateColumns: `repeat(${labels?.length ?? 5}, minmax(0, 1fr))`,
-                         gap: '2px' }}>
-            {labels?.map((l) => <span key={l} className="text-center">{l}</span>)}
-          </span>
-          <span />
-        </div>
-      </div>
-
-      <p className="mt-4 pt-3 border-t border-[var(--color-border)] m-0
-                    text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-        The cuts share large-cap names, so agreement between them means more
-        instruments moved the same way — not three independent samples. Ribbon
-        blocks are fortnights of drawing; {windowNote.charAt(0).toLowerCase() + windowNote.slice(1)}
-      </p>
     </div>
   )
 }

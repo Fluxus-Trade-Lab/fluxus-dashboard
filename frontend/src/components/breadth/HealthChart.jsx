@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { CandlestickSeries, LineSeries } from 'lightweight-charts'
 import { useBreadthChart, chartTokens } from './useBreadthChart'
 
-export default function HealthChart({ title, block, state, t2108 }) {
+export default function HealthChart({ title, block, state, t2108, warnCount }) {
   const containerRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -28,7 +28,9 @@ export default function HealthChart({ title, block, state, t2108 }) {
 
     if (t2108?.dates?.length) {
       const overlay = chart.addSeries(LineSeries, {
-        color: chartTokens().muted, lineWidth: 1, priceScaleId: 't2108',
+        // dotted: the 20 SMA is the same grey at the same width, and two lines
+        // told apart by nothing is two lines nobody can tell apart
+        color: chartTokens().muted, lineWidth: 1, lineStyle: 1, priceScaleId: 't2108',
         priceLineVisible: false,
       })
       overlay.setData(t2108.dates.map((d, i) => ({ time: d, value: t2108.values[i] ?? 0 })))
@@ -46,18 +48,22 @@ export default function HealthChart({ title, block, state, t2108 }) {
   const dayPct = prev ? ((last.c / prev.c - 1) * 100).toFixed(2) : null
 
   return (
-    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
+    // frameless since 2026-09-11 — BenchmarkPanel's card is the frame, and the
+    // five warning cells sit under this chart inside it
+    <div>
       <div className="flex items-baseline justify-between mb-2">
-        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          {title} {state ? `· ${state}` : ''}
+        <h3 className="text-[13px] font-semibold text-[var(--color-text)]">
+          {title}
+          {state && <span className="ml-2 text-[11px] font-normal text-[var(--color-text-muted)]">{state}</span>}
         </h3>
         <span className="text-[11px] font-mono text-[var(--color-text-secondary)]">
           {last.c.toLocaleString()} {dayPct != null ? `(${dayPct}%)` : ''}
+          {warnCount != null && <span className="ml-2 text-[var(--color-text-muted)]">{warnCount}/5</span>}
         </span>
       </div>
       <div ref={containerRef} />
       <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-        20 SMA (blue) · 50 SMA (amber) · T2108 overlay (grey, 20/80 dashed)
+        20 SMA thin · 50 SMA dark · T2108 dotted, 20/80 dashed
       </div>
     </div>
   )
