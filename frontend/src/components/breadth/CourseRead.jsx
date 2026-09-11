@@ -99,6 +99,12 @@ export function VerdictCard({ ml }) {
               )}
               {VERDICT[v].line}
             </p>
+            {spy?.light === 'green' && (
+              <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
+                synthetic — the rule that combines Step 2&rsquo;s three answers (any bad → avoid, all good → full,
+                otherwise dim) was set with the course on 09-11; it is not in the lesson text.
+              </p>
+            )}
             <div className="flex gap-1.5 mt-3" aria-hidden="true">
               {['full', 'dim', 'avoid'].map((k) => (
                 <span key={k} className={`text-[11px] font-mono font-semibold tracking-[.1em] px-2.5 py-1.5 rounded-lg ${k === v
@@ -186,6 +192,11 @@ export function LightStep({ ml }) {
               </div>
             </div>
             <div className="mt-4"><LightChart history={spy.history} /></div>
+            <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+              <b className="font-semibold text-[var(--color-text-secondary)]">Method:</b> 10 / 20 {ma}, &ldquo;rising&rdquo; = today above
+              yesterday. The lesson&rsquo;s own chart uses SMA 10 / 20 with &ldquo;rising&rdquo; = above three days
+              ago; the two methods differ slightly and Andy will pick one (course NEEDS_ANDY gap 1).
+            </p>
             <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
               SPY close (thin grey) with the 10 {ma} (ink) and 20 {ma} (dashed). Strip: each session&rsquo;s light —
               blue = all three checks yes, red = all three no, hatched = the in-between days, which the course counts as red.
@@ -268,7 +279,8 @@ export function BrightnessStep({ ml, breadthRows }) {
           <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Q1 · Quality setups</div>
           {b?.setups?.count == null ? <NotMeasured what="Setup count" /> : (
             <>
-              <div className="text-[38px] leading-none font-bold mt-1 tabular-nums" style={{ fontFamily: 'var(--font-cond)' }}>{b.setups.count}</div>
+              <div className={`text-[38px] leading-none font-bold mt-1 tabular-nums ${b.setups.provisional !== false
+                ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text)]'}`} style={{ fontFamily: 'var(--font-cond)' }}>{b.setups.count}</div>
               <div className="text-[13px] text-[var(--color-text-secondary)]">10+ bright · 1–3 dim · 0 avoid</div>
               {b.setups.setups_without_panel?.length > 0 && (
                 <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
@@ -300,6 +312,11 @@ export function BrightnessStep({ ml, breadthRows }) {
         </div>
         <div>
           <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Q3 · Is breadth confirming?</div>
+          {b?.breadth?.state && (
+            <div className="text-[17px] font-semibold mt-1 text-[var(--color-text)]">
+              {{ confirm: 'Confirming', mixed: 'Mixed', negate: 'Not confirming' }[b.breadth.state] ?? b.breadth.state}
+            </div>
+          )}
           <div className="mt-2"><Breadth rows={breadthRows} /></div>
         </div>
       </div>
