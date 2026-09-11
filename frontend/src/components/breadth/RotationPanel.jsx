@@ -133,7 +133,7 @@ function CutsChart({ cuts, caveat }) {
               <title>{`${c.label}: fortnight ${pp(c.spread)}, month ${pp(c.month_spread)}, speed ${pp(c.delta)}`}</title>
               <text x="0" y={y + 12} fontSize="13" fontWeight="600" style={{ fill: 'var(--color-text)' }}>{c.label}</text>
               <text x="0" y={y + 28} fontSize="11" style={{ fill: 'var(--color-text-muted)' }}>
-                {c.long.join('/')} − {c.short.join('/')}
+                {c.long.join('/')} − {c.short.join('/')} · speed {pp(c.delta)}
               </text>
               {bar(c.spread * 100, y + 2, true, 'f')}
               {bar(c.month_spread * 100, y + 15, false, 'm')}

@@ -70,7 +70,35 @@ function Falsification({ votes, score, env }) {
   )
 }
 
-export default function VoteCard({ verdict, session }) {
+/** The breadth engine's context fields — the seven columns the old
+ *  VerdictBanner printed. Folding that banner into this card on 2026-09-11
+ *  dropped five of them (warnings, alignment, confirmation, playbook, notes)
+ *  and the stale-data badge; Andy caught it the same day: 「原有的数据它可能
+ *  只是以不同的前端形式而呈现了。是不是这样子」. They are back, every one. */
+function EngineFields({ v }) {
+  const cols = [
+    ['Risk level', v.risk, v.warn_total != null ? `${v.warn_total} total warnings` : null],
+    ['Exposure', v.exposure],
+    ['SPY', v.spy_state],
+    ['QQQ', v.qqq_state],
+    ['Alignment', v.alignment],
+    ['Breadth confirmation', v.confirmation],
+    ['Playbook', v.playbook],
+  ]
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 mt-3 pt-3 border-t border-[var(--color-border-light)]">
+      {cols.map(([label, value, sub]) => (
+        <div key={label}>
+          <div className="text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">{label}</div>
+          <div className="text-[13px] leading-snug text-[var(--color-text)]">{value ?? '—'}</div>
+          {sub && <div className="text-[11px] text-[var(--color-text-secondary)]">{sub}</div>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default function VoteCard({ verdict, session, dataQuality }) {
   if (!verdict) return null
   const v = verdict
   const offSession = isWeekend(session)
@@ -83,6 +111,11 @@ export default function VoteCard({ verdict, session }) {
         <h2 className="text-[11px] font-mono uppercase tracking-[.24em]
                        text-[var(--color-text-muted)]">Votes</h2>
         <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
+          {dataQuality?.stale && (
+            <span className="mr-2 px-1.5 py-0.5 rounded text-[var(--color-signal-caution)] bg-[color-mix(in_srgb,var(--color-signal-caution)_18%,transparent)] uppercase tracking-wide">
+              Stale data · as of {dataQuality.as_of ?? '—'}
+            </span>
+          )}
           score {v.score >= 0 ? `+${v.score}` : v.score} / 12
         </span>
       </div>
@@ -91,7 +124,6 @@ export default function VoteCard({ verdict, session }) {
         <span className="text-[17px] font-semibold text-[var(--color-text)]">
           {ENV_LABEL[v.env] ?? v.env}
         </span>
-        <span className="text-[13px] text-[var(--color-text-secondary)]">{v.risk} risk · {v.exposure} exposure</span>
       </div>
 
       {offSession && (
@@ -111,6 +143,13 @@ export default function VoteCard({ verdict, session }) {
                     pt-2.5 mt-2.5 mb-0">
         {v.guidance}
       </p>
+
+      <EngineFields v={v} />
+      {v.notes?.length > 0 && (
+        <ul className="mt-2 mb-0 pl-0 list-none space-y-0.5">
+          {v.notes.map((n) => <li key={n} className="text-[11px] text-[var(--color-text-secondary)]">· {n}</li>)}
+        </ul>
+      )}
 
       {ctx.length > 0 && (
         <p className="text-[11px] font-mono text-[var(--color-text-muted)] mt-2 mb-0">

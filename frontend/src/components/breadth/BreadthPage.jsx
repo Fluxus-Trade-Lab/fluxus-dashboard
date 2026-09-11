@@ -71,7 +71,7 @@ export default function BreadthPage({ data }) {
       <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-3
                       items-stretch">
         <ChainCard chain={breadth.state_board?.chain} />
-        <VoteCard verdict={verdict} session={session} />
+        <VoteCard verdict={verdict} session={session} dataQuality={breadth.data_quality} />
       </div>
 
       {/* Teaching sits with the objects it explains. */}

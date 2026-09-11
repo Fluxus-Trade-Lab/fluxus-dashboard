@@ -146,3 +146,20 @@ describe('Correction risk charts', () => {
     expect(container.textContent).toContain(`${(tc.evidence.sell_p_dd5 * 100).toFixed(1)}%`)
   })
 })
+
+/* Andy 09-11: 「原有的数据它可能只是以不同的前端形式而呈现了。是不是这样子」 — every
+   field the old VerdictBanner printed has to reach the page. The 09-11 rebuild
+   dropped five; this pins all seven columns so it cannot happen quietly again. */
+describe('nothing the old verdict banner printed is lost', () => {
+  it('prints all seven engine fields and the warning total', () => {
+    renderPage()
+    const v = breadth.verdict
+    for (const label of ['Risk level', 'Exposure', 'SPY', 'QQQ', 'Alignment', 'Breadth confirmation', 'Playbook']) {
+      expect(screen.getAllByText(label).length).toBeGreaterThan(0)
+    }
+    for (const val of [v.risk, v.exposure, v.alignment, v.confirmation, v.playbook]) {
+      expect(screen.getAllByText(val).length).toBeGreaterThan(0)
+    }
+    expect(screen.getByText(`${v.warn_total} total warnings`)).toBeInTheDocument()
+  })
+})

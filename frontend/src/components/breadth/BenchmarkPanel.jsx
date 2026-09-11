@@ -37,6 +37,9 @@ function Warnings({ danger }) {
           </div>
         )
       })}
+      {danger.date && (
+        <div className="col-span-5 text-[11px] text-[var(--color-text-muted)]">warnings as of {danger.date}</div>
+      )}
     </div>
   )
 }
