@@ -15,7 +15,7 @@ import BreadthTable from './BreadthTable'
 import TimeMachineBar from './TimeMachineBar'
 import { useTimeMachine } from './useTimeMachine'
 import { useMarketLight } from '../../hooks/useMarketLight'
-import { VerdictCard, LightStep, BrightnessStep } from './CourseRead'
+import { VerdictCard, LightStep, BrightnessStep, TrendDayCount } from './CourseRead'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
@@ -87,8 +87,7 @@ export default function BreadthPage({ data }) {
         <p>
           Read top to bottom, the way Lesson 16 reads the morning. <b>Step 1</b> is Lesson 6&rsquo;s traffic
           light: three checks on SPY&rsquo;s 10- and 20-day lines — all three yes is green, anything else is red.
-          Beside it, Lesson 6B: how many sessions in a row SPY has closed on one side of its 21-day line, and
-          which of the seven gears it is in.
+          Beside it, Lesson 6B&rsquo;s gear: which of the seven throttle positions SPY is in against its 21 EMA.
         </p>
         <p>
           <b>Step 2</b> is Lesson 7&rsquo;s brightness — only read when the light is green: how many quality
@@ -168,6 +167,12 @@ export default function BreadthPage({ data }) {
             <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />
           </Reference>
         )}
+
+        {/* Off the main screen 09-11: the course marked it for deletion. */}
+        <Reference label="Trend-day count" count={1}
+                   note="deprecated — the course marks this count for removal">
+          <TrendDayCount ml={ml} />
+        </Reference>
 
         {/* Market monitor (15 tiles) and Classic breadth (9 tiles) were this
             table's first row printed twice more. Andy 09-11: 「并成一张表：今天钉在

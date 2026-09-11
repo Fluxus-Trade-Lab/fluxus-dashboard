@@ -194,8 +194,7 @@ export function LightStep({ ml }) {
             <div className="mt-4"><LightChart history={spy.history} /></div>
             <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
               <b className="font-semibold text-[var(--color-text-secondary)]">Method:</b> 10 / 20 {ma}, &ldquo;rising&rdquo; = today above
-              yesterday — the course&rsquo;s method since Andy ruled EMA on 09-11. The count beside the light reads the
-              21-day SMA, as the lesson&rsquo;s own tally does; whether that line should be EMA too is still open.
+              yesterday — the course&rsquo;s method since Andy ruled EMA on 09-11. The gear reads the 21 EMA.
             </p>
             <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
               SPY close (thin grey) with the 10 {ma} (ink) and 20 {ma} (dashed). Strip: each session&rsquo;s light —
@@ -203,16 +202,6 @@ export function LightStep({ ml }) {
             </p>
           </div>
           <div className="lg:border-l lg:border-[var(--color-border-light)] lg:pl-5 space-y-4">
-            <div>
-              <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Sessions vs 21-day line</div>
-              <div className="text-[38px] leading-none font-bold mt-1 tabular-nums text-[var(--color-text)]"
-                   style={{ fontFamily: 'var(--font-cond)' }}>
-                {spy.plus_n == null ? '—' : `${spy.plus_n > 0 ? '+' : ''}${spy.plus_n}`}
-              </div>
-              <div className="text-[13px] text-[var(--color-text-secondary)]">
-                {spy.plus_n == null ? 'not measured' : `closes ${spy.plus_n > 0 ? 'above' : 'below'} the 21-day, in a row`}
-              </div>
-            </div>
             <div>
               <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Gear · Lesson 6B</div>
               <div className="text-[38px] leading-none font-bold mt-1 tabular-nums text-[var(--color-text)]"
@@ -321,5 +310,29 @@ export function BrightnessStep({ ml, breadthRows }) {
         </div>
       </div>
     </Card>
+  )
+}
+
+/** The trend-day count (+N/−N) — off the main screen on 2026-09-11. The course
+ *  marked the whole count family for deletion (Andy: 「可以暂时把这个小段落标上标注，
+ *  等待删除」, Studio Q §七 ↳↳↳), and a page that shows it beside the light teaches
+ *  a daily habit the course is removing. Andy's standing rule for anything taken
+ *  off the page — it goes into a fold first — so it lives here, labelled. */
+export function TrendDayCount({ ml }) {
+  const n = ml?.spy?.plus_n
+  return (
+    <div className="bg-[var(--color-bg)] rounded-2xl p-4">
+      <p className="m-0 mb-2 text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-refused)]">
+        Deprecated — the course marks this count for removal
+      </p>
+      {n == null ? <NotMeasured what="Trend-day count" /> : (
+        <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
+          <b className="text-[26px] font-bold tabular-nums text-[var(--color-text)] mr-2" style={{ fontFamily: 'var(--font-cond)' }}>
+            {n > 0 ? '+' : ''}{n}
+          </b>
+          sessions in a row SPY has closed {n > 0 ? 'above' : 'below'} its 21-day line (runs of four or fewer dropped as noise).
+        </p>
+      )}
+    </div>
   )
 }
