@@ -1,4 +1,5 @@
 import { useRotation } from '../../hooks/useRotation'
+import StateRibbon from '../shared/StateRibbon'
 
 /**
  * Style rotation, sitting under the verdict and above the board.
@@ -53,7 +54,10 @@ export default function RotationPanel() {
     )
   }
 
-  const { verdict: v, cuts } = rotation
+  const { verdict: v, cuts, baskets, bucket_labels: labels, state_windows: win } = rotation
+  const windowNote =
+    `State computed on ${win?.level_sessions ?? 63}-session level and ` +
+    `${win?.near_sessions ?? 21}-session near windows, not on the fortnight grid.`
   // Was a paragraph under the panel; now the chart's hover note — Andy 09-06:
   // no explanatory text on the card, method goes where the curious look.
   const caveat = 'The cuts share large-cap names, so agreement between them means more ' +
@@ -83,6 +87,40 @@ export default function RotationPanel() {
       )}
 
       <CutsChart cuts={cuts} caveat={caveat} />
+
+      {/* Back in, 09-11 (Andy: 「如果是有内容被删除了, 那我希望被删除的内容先放在折叠页里面」)
+          — this whole panel already lives in a fold, so the eleven baskets and
+          their ten-week ribbons return under the chart, unchanged. */}
+      {baskets?.length > 0 && (
+        <div className="mt-5">
+          <div className="grid grid-cols-[minmax(96px,auto)_1fr_auto] gap-x-3 gap-y-[6px] items-center">
+            {baskets.map((b) => (
+              <div key={b.ticker} className="contents">
+                <span className="text-[11px] truncate" title={`${b.name} (${b.ticker})`}>
+                  {b.name}
+                </span>
+                <StateRibbon steps={b.ribbon} labels={labels} windowNote={windowNote} />
+                <span className={`text-[11px] font-mono tabular-nums w-[52px] text-right ${
+                  b.side === 'risk_on' ? 'text-[var(--color-text-secondary)]'
+                                       : 'text-[var(--color-text-muted)]'}`}>
+                  {b.level == null ? '—' : `${(b.level * 100).toFixed(1)}%`}
+                </span>
+              </div>
+            ))}
+            <span />
+            <span className="grid mt-1 text-[11px] font-mono text-[var(--color-text-muted)]"
+                  style={{ gridTemplateColumns: `repeat(${labels?.length ?? 5}, minmax(0, 1fr))`, gap: '2px' }}>
+              {labels?.map((l) => <span key={l} className="text-center">{l}</span>)}
+            </span>
+            <span />
+          </div>
+        </div>
+      )}
+
+      <p className="mt-4 pt-3 border-t border-[var(--color-border)] m-0
+                    text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+        {caveat} Ribbon blocks are fortnights of drawing; {windowNote.charAt(0).toLowerCase() + windowNote.slice(1)}
+      </p>
     </div>
   )
 }

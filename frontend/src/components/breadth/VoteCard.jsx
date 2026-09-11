@@ -1,5 +1,6 @@
 import { isWeekend } from './session'
 import VoteGlyphs from './VoteGlyphs'
+import { readMarketState } from '../Reading'
 
 /**
  * Votes — the twelve-way ballot that produces the score, one card.
@@ -98,7 +99,15 @@ function EngineFields({ v }) {
   )
 }
 
-export default function VoteCard({ verdict, session, dataQuality }) {
+/**
+ * `evidence` (2026-09-11, Studio Q's ruling §五.2): on the course-ordered page
+ * the ballot is Lesson 7-Q3's evidence — "is breadth confirming?" — not a
+ * market call: the header says so and the tally comes first. The engine's own
+ * word, score, falsification and guidance are NOT dropped — Andy 09-11, "the
+ * old data, only presented differently" — they sit under a label that says
+ * they are the engine's reading for reference, not the page's verdict.
+ */
+export default function VoteCard({ verdict, session, dataQuality, evidence = false }) {
   if (!verdict) return null
   const v = verdict
   const offSession = isWeekend(session)
@@ -116,15 +125,26 @@ export default function VoteCard({ verdict, session, dataQuality }) {
               Stale data · as of {dataQuality.as_of ?? '—'}
             </span>
           )}
-          score {v.score >= 0 ? `+${v.score}` : v.score} / 12
+          {evidence ? 'twelve votes — evidence for Q3, not a call' : `score ${v.score >= 0 ? `+${v.score}` : v.score} / 12`}
         </span>
       </div>
 
-      <div className="flex items-baseline gap-3 mb-1">
+      {evidence && (() => {
+        const tally = Object.values(v.votes ?? {}).reduce((a, s) => ({ ...a, [s]: (a[s] ?? 0) + 1 }), {})
+        return (
+          <p className="m-0 mb-1 text-[13px] text-[var(--color-text-secondary)]">
+            <b className="font-semibold text-[var(--color-text)]">{tally.bull ?? 0}</b> confirming ·{' '}
+            <b className="font-semibold text-[var(--color-text)]">{tally.bear ?? 0}</b> not confirming ·{' '}
+            <b className="font-semibold text-[var(--color-text)]">{tally.neutral ?? 0}</b> undecided
+          </p>
+        )
+      })()}
+
+      {!evidence && <div className="flex items-baseline gap-3 mb-1">
         <span className="text-[17px] font-semibold text-[var(--color-text)]">
           {ENV_LABEL[v.env] ?? v.env}
         </span>
-      </div>
+      </div>}
 
       {offSession && (
         <p className="text-[11px] leading-relaxed text-[var(--color-signal-caution)] mt-1 mb-0">
@@ -136,6 +156,23 @@ export default function VoteCard({ verdict, session, dataQuality }) {
       <div className="my-3">
         <VoteGlyphs detail={v.vote_detail} perRow={6} />
       </div>
+
+      {/* Evidence mode moves the engine's own call into a labelled block rather
+          than dropping it — Andy 09-11: the page may re-present the old data,
+          not lose it. It is kept, and it is not the page's verdict. */}
+      {evidence && (
+        <div className="mt-1 pt-3 border-t border-[var(--color-border-light)]">
+          <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] mb-1.5">
+            The breadth engine&rsquo;s own reading — for reference, not today&rsquo;s call
+          </div>
+          <p className="m-0 mb-1.5 text-[13px] text-[var(--color-text-secondary)]">
+            <b className="font-semibold text-[var(--color-text)]">{ENV_LABEL[v.env] ?? v.env}</b>
+            {' '}· score {v.score >= 0 ? `+${v.score}` : v.score} / 12
+          </p>
+          {/* the sentence that used to head the whole page, 09-11 */}
+          <p className="m-0 mb-1.5 text-[13px] text-[var(--color-text)]">{readMarketState(v)}</p>
+        </div>
+      )}
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />
 

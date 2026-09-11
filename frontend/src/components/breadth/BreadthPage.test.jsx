@@ -26,32 +26,79 @@ function renderPage() {
   )
 }
 
-describe('BreadthPage — 09-11 three-card rebuild', () => {
+/* market_light.json as DATA_CONTRACTS §七 e5546418 asks for it — the 09-10
+   session: 10 EMA a hair above the 20, both falling, so 1 of 3 and red. */
+const ML = {
+  date: '2026-09-10', ma_type: 'EMA',
+  spy: {
+    checks: [
+      { key: 'fast_above_slow', pass: true, a: 765.087, b: 765.086 },
+      { key: 'fast_rising', pass: false, a: 765.087, b: 766.700 },
+      { key: 'slow_rising', pass: false, a: 765.086, b: 765.850 },
+    ],
+    checks_passed: 1, light: 'red', plus_n: -3,
+    gear: { n: 7, label: 'High below the line — maximum defense' },
+    history: [
+      { date: '2026-09-04', close: 771.2, fast: 767.0, slow: 764.1, checks_passed: 3 },
+      { date: '2026-09-08', close: 768.1, fast: 767.3, slow: 764.5, checks_passed: 2 },
+      { date: '2026-09-09', close: 762.4, fast: 766.7, slow: 765.9, checks_passed: 1 },
+      { date: '2026-09-10', close: 757.8, fast: 765.1, slow: 765.1, checks_passed: 1 },
+    ],
+  },
+  brightness: { setups: { count: 43 }, leaders: [{ ticker: 'MRNA', status: 'holding' }, { ticker: 'BVS', status: 'broken' }] },
+}
+const withFetch = (payloads) => vi.stubGlobal('fetch', (url) => {
+  const hit = Object.entries(payloads).find(([k]) => String(url).includes(k))
+  return Promise.resolve({ ok: !!hit, json: () => Promise.resolve(hit ? hit[1] : null) })
+})
+
+describe('BreadthPage — in the course\'s order (09-11)', () => {
   it('mounts on the real file without throwing', () => {
     expect(() => renderPage()).not.toThrow()
   })
 
-  it('renders the three subject cards', () => {
+  it('leads with the course\'s Core: verdict, the light, brightness', () => {
     renderPage()
-    expect(screen.getByText('Board')).toBeInTheDocument()
-    expect(screen.getByText('Chain')).toBeInTheDocument()
-    expect(screen.getByText('Votes')).toBeInTheDocument()
+    expect(screen.getByText('Today')).toBeInTheDocument()
+    expect(screen.getByText('Step 1 · The light')).toBeInTheDocument()
+    expect(screen.getByText('Step 2 · Brightness')).toBeInTheDocument()
+    // the old second verdict is gone from the page
+    expect(screen.queryByText(/signals say no/)).not.toBeInTheDocument()
   })
 
-  it('prints every board row and no more or fewer than the file has', () => {
+  it('says "not measured" — never a zero — until market_light.json exists', () => {
     renderPage()
+    expect(screen.getByText(/Today's aggression — not measured/)).toBeInTheDocument()
+    expect(screen.getByText(/The light — not measured/)).toBeInTheDocument()
+  })
+
+  it('reads a red light as AVOID and fades step 2, from a contract-shaped file', async () => {
+    withFetch({ market_light: ML })
+    renderPage()
+    expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
+    expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
+    expect(screen.getByText('in-between: counts as red')).toBeInTheDocument()
+    expect(screen.getByText(/the course says skip this step today/)).toBeInTheDocument()
+    expect(screen.getByText('-3')).toBeInTheDocument()
+    expect(screen.getByText('7 / 7')).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+
+  it('keeps the board rows, now inside the Board & chain fold', () => {
+    renderPage()
+    fireEvent.click(screen.getByText('Board & chain').closest('button'))
     for (const row of breadth.state_board.rows) {
-      // row keys are lowercase in the payload, capitalize() only in CSS
       expect(screen.getAllByText(new RegExp(`^${row.key}$`, 'i')).length).toBeGreaterThan(0)
     }
   })
 
-  it('keeps the score, since it is the one number the falsification text depends on', () => {
+  it('shows the votes as evidence first, with the engine\'s own call kept and labelled', () => {
     renderPage()
-    const s = breadth.verdict.score
-    const printed = s >= 0 ? `+${s}` : String(s)
-    expect(screen.getAllByText(new RegExp(`score ${printed.replace('+', '\\+')} / 12`)).length)
-      .toBeGreaterThan(0)
+    fireEvent.click(screen.getByText('Votes').closest('button'))
+    expect(screen.getByText(/evidence for Q3, not a call/)).toBeInTheDocument()
+    expect(screen.getByText(/confirming ·/)).toBeInTheDocument()
+    expect(screen.getByText(/engine’s own reading — for reference, not today’s call/)).toBeInTheDocument()
+    expect(screen.getByText(breadth.verdict.guidance)).toBeInTheDocument()
   })
 
   it('folds the reference rows closed by default and opens one on click', () => {
@@ -62,8 +109,6 @@ describe('BreadthPage — 09-11 three-card rebuild', () => {
     expect(btn).toHaveAttribute('aria-expanded', 'true')
   })
 
-  /* Linda's three standing rules (DATA_CONTRACTS §七 09-11): prob never alone,
-     the character line and caveats[0] printed, TICK set apart. */
   it('Correction risk prints prob, n and base rate together, from the real file', async () => {
     const cr = read('data/output/correction_risk.json')
     const tc = read('data/output/tick_cycle.json')
@@ -86,12 +131,12 @@ describe('BreadthPage — 09-11 three-card rebuild', () => {
     vi.unstubAllGlobals()
   })
 
-  it('has six folds — the three duplicates are merged, Correction risk stays', () => {
+  it('keeps the Mastery folds and drops the merged ones', () => {
     renderPage()
-    for (const l of ['Correction risk', 'Style rotation', 'Benchmarks', 'Ratio and spread', 'Archive', 'Series']) {
+    for (const l of ['Breadth, advanced', 'Votes', 'Board & chain', 'Correction risk', 'Style rotation', 'Benchmarks', 'Archive']) {
       expect(screen.getByText(l)).toBeInTheDocument()
     }
-    for (const gone of ['Market monitor', 'Classic breadth', 'Danger signals', 'Benchmark health', 'Historical series']) {
+    for (const gone of ['Series', 'Ratio and spread', 'Market monitor', 'Classic breadth', 'Danger signals']) {
       expect(screen.queryByText(gone)).not.toBeInTheDocument()
     }
   })
@@ -153,6 +198,7 @@ describe('Correction risk charts', () => {
 describe('nothing the old verdict banner printed is lost', () => {
   it('prints all seven engine fields and the warning total', () => {
     renderPage()
+    fireEvent.click(screen.getByText('Votes').closest('button'))
     const v = breadth.verdict
     for (const label of ['Risk level', 'Exposure', 'SPY', 'QQQ', 'Alignment', 'Breadth confirmation', 'Playbook']) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0)
@@ -161,5 +207,32 @@ describe('nothing the old verdict banner printed is lost', () => {
       expect(screen.getAllByText(val).length).toBeGreaterThan(0)
     }
     expect(screen.getByText(`${v.warn_total} total warnings`)).toBeInTheDocument()
+  })
+})
+
+/* Andy 09-11: 「如果是有内容被删除了, 那我希望被删除的内容先放在折叠页里面」 — every
+   item the rebuild had deleted is back, in a fold. One assertion per item. */
+describe('deleted content is back, in the folds', () => {
+  it('summary tiles: the four readings in words, with percentiles', () => {
+    renderPage()
+    fireEvent.click(screen.getByText('Summary tiles').closest('button'))
+    for (const l of ['Up 4% / Down 4%', '5-day / 10-day ratio', 'Quarterly breadth (25%+)', 'T2108']) {
+      expect(screen.getAllByText(l).length).toBeGreaterThan(0)
+    }
+  })
+
+  it('chain: each link\'s evidence sentence is printed again', () => {
+    renderPage()
+    fireEvent.click(screen.getByText('Board & chain').closest('button'))
+    for (const l of breadth.state_board.chain) {
+      if (l.evidence) expect(screen.getAllByText(l.evidence).length).toBeGreaterThan(0)
+    }
+  })
+
+  it('votes: the sentence that used to head the page sits in the engine block', async () => {
+    const { readMarketState } = await import('../Reading')
+    renderPage()
+    fireEvent.click(screen.getByText('Votes').closest('button'))
+    expect(screen.getByText(readMarketState(breadth.verdict))).toBeInTheDocument()
   })
 })
