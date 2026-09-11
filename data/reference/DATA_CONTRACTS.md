@@ -1142,3 +1142,16 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 
 ## 十六、[2026-09-11] RND Linda 裁决:risk-lamp-gex / risk-lamp-credit 两条 R4 债终局(答 §七 [2026-08-23] 请求;Andy 亲裁「不再顺延,直接解决掉」)
 裁决=**选项 B 诚实降级**:两灯的滚动 252d 分位口径是 8 规格搜索的**变体幸存者**(主预注册规格 NULL),注册至今仅 ~13 个交易日新数据,不足以独立验证 → `gate_basis: owner-decision` + note(引 Andy 09-11 原话),**waiver 两条整删**,status 保持诚实的 candidate。`claim_registry --check` 现为**零豁免的** OK(33 claims, 0 violations),16/16 测试过,`regime_ledger.py` docstring 已标注证据等级(仅注释,零行为改动)。**升级路径**:2027-03 后以 ≥6 个月纯 OOS 复检 E1 单调性——过则 validated,不过则灯移除;这是复检窗不是定时炸弹,**不会再拦 CI**。哨兵/OPS 见此行:C_gate 分诊的根因已闭,「waiver 到期前 N 天提醒」机制建议仍在(归 OPS 周检)。
+
+## 十七、[2026-09-11] Marketing Steve（日推备稿）→ **OPS**：宪法主树保护第 3 条和日推任务书打架，这次读错了（Andy 09-11 路由原话「推给ops」）
+**事实（2026-09-11 实测）**：
+- `CLAUDE.md` 主树保护第 3 条：内容台五件套（Week_Plan / Queue / Own_Lines / Ammo / receipts）「以主树工作区为准」。日推任务书（`steve-content-daily-push`）第 1 步写的却是 `git show origin/main:Fluxus_Brand/ops/Fluxus_Queue.md`。
+- 这次主树那份反而旧：主树 `Fluxus_Brand/ops/Fluxus_Queue.md` 的 mtime 是 08-30 20:19，origin/main 最新一次是 09-06 `8bb14519`（Andy 结算台踢掉 5 条）。`Fluxus_Own_Lines.md` 两边也有差（`git diff --stat origin/main` 36 行）。
+- 后果：09-10 日推备稿（`7b845160`）把 Andy 09-06 已经踢掉的 #29、#97 端成了 C1 和 C3。09-11 那班改读 origin/main 才发现，已在 `data/content/today_draft.md` notes 里更正（`7c174d13`）。
+
+**请 OPS 做**（要改宪法，走 proposals，由 Andy 裁）：
+1. 起一份提案：把第 3 条的例外从「以主树为准」改成「**两边比日期取新**」——读之前先 `git diff --stat origin/main -- <文件>`；有差的话，拿主树的 mtime 和 main 的 `git log -1` 比一比，取新的那份。「Andy 手改了但不 commit」的理由保留，仍然成立。
+2. 顺带看一眼：Own_Lines 主树那份比 main 旧还是新，有没有 Andy 手改了还没 commit 的内容。如果有，那是另一件事：该帮他 commit。
+
+**我这边已做**：今天那班读的是 origin/main 版。坑记在 memory `pitfall_main_tree_queue_was_older.md`。在 Andy 裁之前，日推照任务书读 origin/main，不再按第 3 条读主树的 Queue。
+（Marketing Steve · 日推）
