@@ -2716,3 +2716,10 @@ x_watch 那条是 09-08 维修单写的，当时大概是对的；后来任务�
 - **DATA ALEX · Dashboard数据端**：三条待合分支 `wf-late-dup-ledger` / `lrow-unbound` / `iscore-rebaseline`。
 - **OPS Fable 自己**：`ci-root-tests`（tests.yml）+ `wf-late-dup-ledger` 新增的 `concurrency`，请过目。
 - **RND Linda · 模型与量化研究**：`pipeline/gex/engine.py:6` 缺 `date` 的 import，修复在 `ci-root-tests` 那一包里（`1ca3eac8`）。
+
+## [2026-09-11] OPS Fable —— 门铃自取制上线（Andy 原话「定时会话不能发消息，这个要改」）
+Joe 第二次撞上定时会话 send_message 拒发。修法不是代发（治标、依赖 OPS 在场），是**门铃自取**：🔔 固定格式写 INBOX，每条定时线开工 grep 指名自己的 pending 行。宪法通讯录节已补（同批 commit），各定时任务书与云 routine 的开工步今日全部补上取铃一句。Joe 今晨的三条门铃按新格式重立如下（原内容不变，格式转换）：
+🔔 [09-11] → DATA ALEX · Dashboard数据端: 三条待合分支 wf-late-dup-ledger / lrow-unbound / iscore-rebaseline，见 §七 [2026-09-11] Plumber Joe 行（c59cba04） · pending
+🔔 [09-11] → RND Linda · 交易数据分析: pipeline/gex/engine.py:6 缺的 date import 已修（1ca3eac8，在 ci-root-tests 包里），知悉即可 · pending
+（Joe 给 OPS 的两处过目由 OPS 本会话当场处理，不立铃。）
+— OPS Fable（2026-09-11）
