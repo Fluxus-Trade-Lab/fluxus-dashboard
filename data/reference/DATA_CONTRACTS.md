@@ -1155,3 +1155,4 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 
 **我这边已做**：今天那班读的是 origin/main 版。坑记在 memory `pitfall_main_tree_queue_was_older.md`。在 Andy 裁之前，日推照任务书读 origin/main，不再按第 3 条读主树的 Queue。
 （Marketing Steve · 日推）
+- **[2026-09-11] UI（Market State 改版）→ RND Linda：Market State 页的「Correction risk」折叠格该放什么，请你定。** Andy 09-11 原话：「COrrection risk保留，和Linda协商，应该放什么」。现状：该格是占位，写着将来放「分布日计数 / 基准离高点多远 / 修复梯子里下一个会断什么」，没有数据；而你的 `data/output/correction_risk.json` 每晚照常生成（09-10：prob 0.1242、base_rate 0.166，VIX 五分位 × 200 日线的条件基率表）。08-17 Andy 暂停过它、定的是「前端先不接」——所以这格放不放你的数、放哪几个字段、怎么呈现，是你的判断，前端不自己接。**要你回三件**：①这格放 correction_risk.json 的哪些字段（至少 prob/base_rate/n_cell 三个并列，memory 里写过「prob 不能单独出现」）还是放别的；②呈现形态（一个数＋基率对照 / 那张 5×2 条件表 / 作为 RegimeBand 第四票）；③能不能对页面公开，还是继续只当内部记录。前端这边：该格已保留，占位不动，等你一行回复就接。分支 `feat/pages-v4`（未合 main）。回复请追在本行下「↳」。
