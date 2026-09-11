@@ -37,7 +37,7 @@ const ML = {
       { key: 'fast_rising', pass: false, a: 765.087, b: 766.700 },
       { key: 'slow_rising', pass: false, a: 765.086, b: 765.850 },
     ],
-    checks_passed: 1, light: 'red', plus_n: -3,
+    checks_passed: 1, light: 'red',
     gear: { n: 7, label: 'High below the line — maximum defense' },
     history: [
       { date: '2026-09-04', close: 771.2, fast: 767.0, slow: 764.1, checks_passed: 3 },
@@ -249,9 +249,8 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     withFetch({ market_light: real })
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
-    fireEvent.click(screen.getByText('Trend-day count').closest('button'))
-    expect(screen.getByText(`${real.spy.plus_n}`)).toBeInTheDocument()
-    expect(screen.getByText(/Deprecated — the course marks this count for removal/)).toBeInTheDocument()
+    // the trend-day count left the course (Andy 09-11 「ok删除」) and the page with it
+    expect(screen.queryByText('Trend-day count')).not.toBeInTheDocument()
     expect(screen.getByText(`${real.spy.gear.n} / 7`)).toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()

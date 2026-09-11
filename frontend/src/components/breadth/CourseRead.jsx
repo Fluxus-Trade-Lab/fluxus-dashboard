@@ -5,8 +5,9 @@
  *
  *   Verdict   one word — FULL / DIM / AVOID. Aggression, never direction:
  *             "the course never outputs a direction call" (§五.2).
- *   Step 1    Lesson 6's light: SPY daily, three checks, and beside it the
- *             Lesson 6B count and gear.
+ *   Step 1    Lesson 6's light: SPY daily, three checks, and beside it
+ *             Lesson 6B's gear. (The trend-day count that once sat here was
+ *             removed from the course on 09-11 — Andy: 「ok删除」 — and from the page.)
  *   Step 2    Lesson 7's brightness: setups, leaders, breadth. On a red light
  *             the course says skip it (L7.2 step 1); Andy chose to keep it
  *             visible but faded, so the reader can see WHY not — e.g. leaders
@@ -310,29 +311,5 @@ export function BrightnessStep({ ml, breadthRows }) {
         </div>
       </div>
     </Card>
-  )
-}
-
-/** The trend-day count (+N/−N) — off the main screen on 2026-09-11. The course
- *  marked the whole count family for deletion (Andy: 「可以暂时把这个小段落标上标注，
- *  等待删除」, Studio Q §七 ↳↳↳), and a page that shows it beside the light teaches
- *  a daily habit the course is removing. Andy's standing rule for anything taken
- *  off the page — it goes into a fold first — so it lives here, labelled. */
-export function TrendDayCount({ ml }) {
-  const n = ml?.spy?.plus_n
-  return (
-    <div className="bg-[var(--color-bg)] rounded-2xl p-4">
-      <p className="m-0 mb-2 text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-refused)]">
-        Deprecated — the course marks this count for removal
-      </p>
-      {n == null ? <NotMeasured what="Trend-day count" /> : (
-        <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
-          <b className="text-[26px] font-bold tabular-nums text-[var(--color-text)] mr-2" style={{ fontFamily: 'var(--font-cond)' }}>
-            {n > 0 ? '+' : ''}{n}
-          </b>
-          sessions in a row SPY has closed {n > 0 ? 'above' : 'below'} its 21-day line (runs of four or fewer dropped as noise).
-        </p>
-      )}
-    </div>
   )
 }
