@@ -1363,7 +1363,17 @@ def main():
         ledger.error('shortlist', 'exception')
 
     # Shortlist feedback pull (button half of the loop): quiet no-op
-    # without the GAS env pair. Own failure domain.
+    # without the GAS env pair. Own failure domain -- a vendor hiccup here
+    # must not cost the whole night's publish (same shape as `walled` and
+    # `no-baseline` below: a guard's own non-fatal word getting read by
+    # audit_ledger's L4 as fatal). 2026-09-11 22:56 UTC: this used to call
+    # `ledger.error(...)`, which lands in the run's errors[] and is the one
+    # thing L4 checks -- so a Google Apps Script redirect-to-HTML 404 (the
+    # same vendor hiccup `Refresh ticker OHLC store` hit minutes earlier in
+    # the same run, there `continue-on-error: true` and harmless) failed
+    # "Audit run ledger" and skipped "Commit and push" on an otherwise-good
+    # night (universe_quality ok, tradeable 2543). `ledger.note(..., 'skipped')`
+    # uses an existing WARN_WORD so L2 reports it as a warning, not L4 fatal.
     try:
         from pipeline.screeners.shortlist_feedback import apply as fb_apply, fetch_rows
         fb_rows = fetch_rows()
@@ -1371,9 +1381,9 @@ def main():
             stats = fb_apply(fb_rows, last_completed_session().isoformat())
             ledger.note('shortlist_feedback', 'ok', **stats)
             logger.info("shortlist feedback: %s", stats)
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
         logger.exception("shortlist feedback pull failed - loop has no button half tonight")
-        ledger.error('shortlist_feedback', 'exception')
+        ledger.note('shortlist_feedback', 'skipped', reason=str(e)[:200])
 
     # Library index: the browser cannot enumerate a naming convention
     # (contracts §七 [08-20]); one JSON catalog, regenerated from the dir.
