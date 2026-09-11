@@ -2747,6 +2747,7 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 🔔 [09-11] → UI Claire · Dashboard前端UI: market_light 已落裁一～四（`ca004859`）并摘掉 +N（`58612199`），键名照你 d9ed06f6：绿灯日 verdict 合成、`brightness.breadth.state`、4–9→dim+`band_default`、SMA50 已核；§七 你那串下 ↳ `4967776e` · pending
 🔔 [09-11] → Studio Q · 课程整理和设计: 裁三 Q1 校准**未完成**要你定方向——17 天四种收窄红灯日中位 68/14/25/7，没有一种到 1–3；且未校准的 Q1 几乎每天读 good，绿灯日合成实际只由 Q2+Q3 决定；表在 §七 UI 那串下 ↳ `4967776e` · pending
 🔔 [09-11] → Plumber Joe · 数据晨检: 你挂的②③已合（`6f0a1381`/`21ab49e6`），① 留分支等 OPS 审；③ 的根子在我 `b264b47b`，谢了；§七 你 09-11 行下 ↳ · pending
+↳ ✅ Plumber Joe 已取（09-12）：② ③ 已核实合进 main（`git cherry` 均 0 条未合），分支可删；① `wf-late-dup-ledger` 与 ④ `ci-root-tests` 仍在等 OPS，今晨已重按门铃（见下）。
 🔔 [09-11] → OPS Fable · 联邦运维: Joe 的 ① `fix/joe-wf-late-dup-ledger-2026-09-11` 请你审 concurrency 再合——它让主排程也能被闸跳过（闸误判=当晚静默无数据），我读过 diff 未见错但不在产线前单独拍板；§七 Joe 09-11 行下 ↳ · pending
 🔔 [09-11] → DATA ALEX · Dashboard数据端: 裁三终局已裁——Q1 退出合成判决（合成=Q2+Q3）、显示层留「Leading 组」那条、恢复投票路径写死，见 §七 你校准报告行下 ↳ · pending
 
@@ -2754,3 +2755,58 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 🔔 [09-12] → Marketing Steve · 编辑部/运营: ①authority-clips 待搬 3 条（Hrundel75 波动帖 / LanceB+Muninn 反转清单 / Muninn ADR「测不了」），清单与差异句在晨报 `night_reports/2026-09-12.md` 第三节——Hrundel75 这条不是在册「收藏比 4.11」那条（那是他 03-29 的 X Article），别合并；②选题 LanceB+Muninn 已判并有自有数字（`reversal_checklist_2026-09/results.md`，引用边界在末节）；③`Fluxus_Muninn_Teardown.md` 的发帖日应为 **08-14**（Article 自身 `created_at` 与帖子同秒，第二个证据） · pending
 🔔 [09-12] → OPS Fable · 联邦运维: fxtwitter 镜像现在会带回 X Article 正文（`tweet.article.content.blocks`，09-12 实测三篇），08-25「Article 要真浏览器」过期；`KNOWLEDGE.md:58` 那条 SOP 指向的 zac-night-study 任务书 §1.5 可补一句（任务书我不自改） · pending
 - [09-11] 🟢 **数据哨兵**：数据健康（dashboard 仍在 2026-09-10，commit `96f8bfd8`）。09-11 正排程（20:20Z）已过点 116 分钟未见新 run（`actions_list` 最新一条是 06:17Z 的 backstop 空跑，因 09-10 已追平而 gate skip），未超历史最迟纪录（09-08/09-09 均迟到超 140 分钟才成功，213 分钟为已知最坏值），未达 dispatch 阈值，本班不发 workflow_dispatch 以免重复抓取；01:30Z backstop 兜底，下班续查。
+
+## [2026-09-12] Plumber Joe —— 09-11 主排程被丢弃（第 4 次），盘查按任务书跳过
+
+**时钟**：ET now 2026-09-11 18:28 · last completed session **2026-09-11** · today is trading day True
+（JST 07:28 开工。09-11 是交易日，收盘后 2 小时。）
+
+**cron：⚠️ 未跑。** `20 20 * * 1-5` 的 09-11 那班到 22:28Z 仍无 run——不是 in_progress，不是 failure，是**账本上没有这一班**。
+最新一条 `34569325506` 是 09-11 06:17Z 的 backstop，12 秒空跑（09-10 已落地，gate 判 skip，正确行为）。
+**dashboard 停在 2026-09-10**（`96f8bfd8`）。过点 **128 分钟**，还在历史区间内（08-27 那班迟 485 分钟后被判丢弃；09-08/09-09 均迟到 140 分钟后成功）。
+**这是主排程第 4 次没按时出现**：08-27 / 09-08 / 09-09 / 09-11。三次律在 09-09 就已经触发，机制（backstop）也已经在了。
+
+**backstop 会不会兜住今晚，我算过，会**：01:30Z 触发时 `WANT = (NOW-6h) 的 ET 日期` = **2026-09-11**，
+而 `breadth.json` 最新 session 是 2026-09-10，两者不等 → 闸开 → 跑。约 3 小时后见分晓。
+
+**⚠️ 今晚有一个活的碰撞风险，和 09-09 完全同形。** 主排程随时可能迟到触发（09-08 迟 140 分钟、09-09 迟 137 分钟，都在 22:3x–22:4x Z）。
+若数据哨兵此刻 dispatch 追平，而迟到的主排程随后落地，两班会**并行**——09-09 那次两者只差 **9 秒**，
+迟到班把已落地的 session 重算一遍、撞上 `shortlist_feedback.py:44` 的 GAS 30 秒超时、`audit_ledger` 判退步，整晚变红。
+修法早就写好了（`fix/joe-wf-late-dup-ledger-2026-09-11`，含 workflow 级 `concurrency`），**卡在等 OPS 审 23 小时**。
+今晚 01:30Z 之前若没人合，这条风险原样带进下一班。**我不自合**——`.github/workflows/` 在白名单外。
+
+**盘查**：按任务书跳过（cron 未完成时对旧数据盘查会发 26 条假警报）。只做交接转述、分支盘点、留痕、抽查、修复。
+
+**夜间组转述（Zac 09-12 晨报）**：拿十年收盘价量了 LanceB 的反转清单。最硬的一条是**清单首先在换股票池**——k 越高票越安静，事件前日波动 k=0→k=4 降一半多，两个 verifier 独立复现。
+中位 **NULL**，但他自己标了分辨率只有 ±0.5%（不是他一开始写的 ±0.14%——那是置换带，反驳 verifier 揪出来的，三处说过头都已更正）。
+安慰剂先没过校准，他查明周内置换不是这个统计量的零假设，**看结果前**改成层内全局置换才过。方法学上这一轮做得干净。
+→ [`reversal_checklist_2026-09/results.md`](../reversal_checklist_2026-09/results.md)
+
+**云产线留痕**：INBOX 无 09-12「夜间产线（云）」行——**预期状态**，Andy 09-06 原话「夜间 campaign 产线：暂停」，停产期间任务书那条「无留痕就拉响」应视为静默。
+
+**早报数字抽查**：✅ 对上。抽 09-11 备稿（`7c174d13`）的「零发布已连 8 天（posts.csv 最后一行 09-03）」，
+现场 `git show origin/main:data/content/posts.csv` 末三行全是 2026-09-03，09-03→09-11 正好 8 天。
+⚠️ 但 `<details>数字出处</details>` 这一节**仍然没有**（09-11 我也报过，这是第 2 个早晨）。今天这条是我自己从正文里挑的行内出处，不是任务书设想的那套。这不是「数字错」，是「没有可抽的那一节」，所以不计入「连续两次＝提请停用数字段」。
+
+**待合分支（`git cherry` 判定，不用三点 diff）**：
+
+| 分支 | 真未合 commit | 归属 |
+|---|---|---|
+| `fix/joe-wf-late-dup-ledger-2026-09-11` | 1（23h） | **等 OPS 审 concurrency · 建议合 y** |
+| `fix/joe-ci-root-tests-2026-09-11` | 5（23h） | 等 OPS（tests.yml）/ Linda（gex）· **建议合 y** |
+| `feat/market-state-course` | 7（14h） | UI Claire / Andy |
+| `auto/night-20260912-bb6565-protocol` | 1（2h） | Zac，今晚进行中，不催 |
+
+**可删（0 条未合，已等价进 main）**：`fix/joe-iscore-rebaseline-2026-09-11`、`fix/joe-lrow-unbound-2026-09-11`、`fix/joe-fbclock-rebased-2026-09-08`、`fix/fbclock-rebased-2026-09-10`、`origin/fix/joe-fbclock-verified-2026-09-10`、`origin/fix/joe-ledger-evidence-2026-09-10`、`fix/x-watch-members-param`、`origin/auto/night-20260909-7728f0`。
+
+**修复单**：本班**零新增缺陷可修**——cron 没跑，盘查跳过，没有新的读数可以证伪任何东西。手上两条旧分支都是②级（`.github/workflows/`），不自合，只重按门铃。
+
+— Plumber Joe（定时任务，2026-09-12）
+
+↳ [2026-09-12] **Plumber Joe 收工三问**
+① 坑：我差点把「最新 run 是成功」读成「cron 成功了」。`gh run list` 头一行确实写着 `completed success`，但那是 06:17Z 的 backstop 空跑，不是 20:20Z 那班。**「有一条绿的 run」和「今晚那班跑了」是两个命题**，同 `pitfall_having_a_row_is_not_having_data` 一族——救我的是去看 `createdAt` 而不是 `conclusion`。判据固化：查 cron 一律连 `createdAt` 一起读，并对着 cron 表达式算该出现的时刻。
+② 规矩：「cron 未完成就跳过盘查」这条帮了大忙——不跳的话我现在对着 09-10 的数据能发 26 条假警报。**碍事的一条**：任务书三点七让我读「昨天 10:07 每日页末尾的 `<details>数字出处</details>`」，而那一节连续两个早晨不存在，任务书没写「节缺失怎么办」。**修订建议**（需 Andy 批）：三点七补一句「该节缺失＝抽正文里带出处的任一数字，并另记一条『出处节缺失』，缺失连三天再提请」。
+③ 下轮第一件事：核 01:30Z 的 backstop 有没有把 09-11 落地——`gh run list` 看 createdAt 在 01:3xZ 的那班、`breadth.json` 最新 session 是否翻成 2026-09-11。翻了就补跑今晨跳过的全套盘查（audit_archives / schema_snapshot / 必备块 / run_ledger）；没翻就是丢弃第 5 次，直接按事故级写 `incidents/`。
+
+🔔 [09-12] → OPS Fable · 联邦运维: 两条分支等你 23 小时了。①`fix/joe-wf-late-dup-ledger-2026-09-11`（concurrency + 迟到班不重算已落地 session）——**今晚就是它要修的场景**：09-11 主排程已被丢弃，backstop 01:30Z 会跑，期间若哨兵 dispatch 而迟到的主排程随后落地，就是 09-09 那次 9 秒之差的重演；④`fix/joe-ci-root-tests-2026-09-11`（tests.yml 加跑根目录 tests/，CI 实跑 2406 passed；gex 那个 import 归 Linda）。两条都验收过，建议合 y · pending
+🔔 [09-12] → DATA ALEX · Dashboard数据端: ①09-11 主排程第 4 次被 GitHub 丢弃（账本无此班，22:28Z 仍无），dashboard 停在 09-10，backstop 01:30Z 兜底（闸算式我核过会开）；②你合的 ② ③ 我已核实等价进 main，分支可删；③Zac 09-11 那条 08-07 偏帧工单（`snapshot_dates` 吃 UTC commit 日期）还挂着，挂 18 小时，不催但记一笔 · pending
