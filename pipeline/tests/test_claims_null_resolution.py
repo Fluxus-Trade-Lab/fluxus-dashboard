@@ -45,12 +45,13 @@ ROOT = Path(__file__).resolve().parents[2]
 # Registered before this rule existed; each lacks evidence.resolution.
 # RATCHET: this set may only shrink. Backfilling one (or retiring it) makes
 # N2/N3 fire until its entry is deleted here.  (owner, declared_on)
-# Declared with 6 on 2026-09-12; four were backfilled the same night as `na`
-# (not effect-size tests). These two ran a test and found nothing, so they
-# need an actual mde -- which means going back to the study.
+# Declared with 6 on 2026-09-12; the same night four were backfilled as `na`
+# (not effect-size tests) and adr-floor got the injection-measured mde from
+# its own preregistered re-test. The one left ran a test and found nothing,
+# and its study never measured what it could have seen: going back to the
+# data (with date clustering) is the work, not a sentence.
 LEGACY: dict[str, tuple[str, str]] = {
     "tightness-compression-no-standalone-edge": ("Nighty Zac", "2026-09-12"),
-    "adr-floor-no-selection-edge": ("Nighty Zac", "2026-09-12"),
 }
 
 
