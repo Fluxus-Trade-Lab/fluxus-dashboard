@@ -45,13 +45,12 @@ ROOT = Path(__file__).resolve().parents[2]
 # Registered before this rule existed; each lacks evidence.resolution.
 # RATCHET: this set may only shrink. Backfilling one (or retiring it) makes
 # N2/N3 fire until its entry is deleted here.  (owner, declared_on)
+# Declared with 6 on 2026-09-12; four were backfilled the same night as `na`
+# (not effect-size tests). These two ran a test and found nothing, so they
+# need an actual mde -- which means going back to the study.
 LEGACY: dict[str, tuple[str, str]] = {
     "tightness-compression-no-standalone-edge": ("Nighty Zac", "2026-09-12"),
-    "tightness-rmv-below-baseline": ("Nighty Zac", "2026-09-12"),
-    "ma-reclaim-no-volume": ("Nighty Zac", "2026-09-12"),
-    "oratnek-width-not-universe": ("Nighty Zac", "2026-09-12"),
     "adr-floor-no-selection-edge": ("Nighty Zac", "2026-09-12"),
-    "theme-ladder-window-mismatch": ("Nighty Zac", "2026-09-12"),
 }
 
 
