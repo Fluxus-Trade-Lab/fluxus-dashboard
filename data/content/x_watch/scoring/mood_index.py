@@ -141,11 +141,15 @@ def day_alpha(proxy: str, date: str):
         return None
 
 
-def upsert(path: Path, cols: list[str], key: str, row: dict) -> None:
+def upsert(path: Path, cols: list[str], key: str | tuple[str, ...], row: dict) -> None:
+    # key 可以是多列。theme_events 一天能过闸两个主题，只按 date 做键会让后一个
+    # 盖掉前一个 —— 09-09、09-10 的 energy 行就是这么被吞的（两天都是 energy+fx_rates 同日过闸）。
+    ks = (key,) if isinstance(key, str) else key
+    kf = lambda r: tuple(r.get(k) for k in ks)
     rows = list(csv.DictReader(path.open())) if path.exists() else []
-    rows = [r for r in rows if r.get(key) != row[key]]
+    rows = [r for r in rows if kf(r) != kf(row)]
     rows.append({c: row.get(c, "") for c in cols})
-    rows.sort(key=lambda r: r[key])
+    rows.sort(key=kf)
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader(); w.writerows(rows)
@@ -194,7 +198,7 @@ def main() -> None:
         fired.append((g, who, proxy, da))
         upsert(OUT / "scoring" / "theme_events.csv",
                ["date","theme","n_people","handles","proxy","day_alpha",
-                "fwd5_alpha","fwd21_alpha","note"], "date",
+                "fwd5_alpha","fwd21_alpha","note"], ("date", "theme"),
                {"date": a.date, "theme": g, "n_people": len(who),
                 "handles": "|".join(sorted(who)), "proxy": proxy,
                 "day_alpha": "" if da is None else f"{da:.4f}",
