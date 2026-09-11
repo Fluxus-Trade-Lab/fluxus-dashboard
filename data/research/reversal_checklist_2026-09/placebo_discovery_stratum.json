@@ -1,0 +1,32 @@
+{
+ "arm": "discovery",
+ "panel": "/Users/taolezhu/Documents/AI-Trading-System/.cache/stock_panel.pkl",
+ "n_events_all": 80996,
+ "n_events": 56512,
+ "n_tickers": 2076,
+ "k_counts": {
+  "0": 7652,
+  "1": 13655,
+  "2": 17876,
+  "3": 13030,
+  "4": 4299
+ },
+ "strata_counts": {
+  "0": 45285,
+  "1": 9653,
+  "2": 1574
+ },
+ "placebo": {
+  "scope": "stratum",
+  "n": 100,
+  "B": 300,
+  "frac_ci_excludes0_median": 0.02,
+  "frac_ci_excludes0_tail": 0.03,
+  "point_q025": -0.0014710169090292138,
+  "point_q975": 0.0013194182376070282,
+  "point_mean": -6.400724274770474e-05,
+  "tail_point_q025": -0.004736812389922666,
+  "tail_point_q975": 0.004830986415991531,
+  "tail_point_mean": -0.00036542515191739664
+ }
+}
