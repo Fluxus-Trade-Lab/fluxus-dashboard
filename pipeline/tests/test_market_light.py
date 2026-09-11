@@ -96,37 +96,35 @@ def test_light_share_is_pinned_and_the_book_number_is_not_ours(spy_close):
     assert round((n == 0).mean() * 100, 2) == 19.30
 
 
-def test_book_numbers_are_sma_three_day(spy_close):
-    """The book's own light statistics, reproduced -- on the OTHER definition.
+def _longest(mask):
+    best, cur, st, span = 0, 0, None, None
+    for d, v in mask.items():
+        if v:
+            st = d if cur == 0 else st
+            cur += 1
+            if cur > best:
+                best, span = cur, (st.strftime('%Y-%m-%d'), d.strftime('%Y-%m-%d'))
+        else:
+            cur = 0
+    return span
 
-    Lesson 6: 54.5% green, and the longest all-yes / all-no runs 2024-01-18 ->
-    04-04 and 2022-08-30 -> 10-14. SMA 10/20 with "rising" = above 3 sessions
-    ago gives 54.5 and both dates to the day (Studio Q, 2026-09-11). Kept here so
-    that if Andy rules this definition for the page, the switch is already
-    verified against the book.
 
-    The first version of this file claimed these dates reproduce under no
-    definition; the grid it searched never contained this cell.
+def test_book_now_prints_the_numbers_this_file_computes(spy_close):
+    """After Andy's EMA ruling the course reprinted Lesson 6 on the EMA spec
+    (_bench/l6_light.json `coverage_ema_spec`): 56.5 green, longest green
+    2017-11-16 -> 2018-01-29, longest red 2026-02-27 -> 2026-03-30. Both dates
+    reproduce to the day on the page's own light_frame.
+
+    Red is the book's 19.4 vs our 19.30: an auto-adjusted series drifts with the
+    download date (Studio Q), so the last digit is not asserted. The superseded
+    SMA/3-day spec lives on as `coverage_chart_spec` in the course ledger -- this
+    file's first version wrongly called those numbers irreproducible.
     """
-    f, s = spy_close.rolling(10).mean(), spy_close.rolling(20).mean()
-    n = ((f > s).astype(int) + (f > f.shift(3)).astype(int) + (s > s.shift(3)).astype(int))
-    w = n.loc['2015-01-01':'2026-08-31'].dropna()
-
-    def longest(mask):
-        best, cur, st, span = 0, 0, None, None
-        for d, v in mask.items():
-            if v:
-                st = d if cur == 0 else st
-                cur += 1
-                if cur > best:
-                    best, span = cur, (st.strftime('%Y-%m-%d'), d.strftime('%Y-%m-%d'))
-            else:
-                cur = 0
-        return span
-
-    assert round((w == 3).mean() * 100, 1) == 54.5
-    assert longest(w == 3) == ('2024-01-18', '2024-04-04')
-    assert longest(w == 0) == ('2022-08-30', '2022-10-14')
+    n = ml.light_frame(spy_close).loc['2015-01-01':'2026-08-31', 'checks_passed'].dropna()
+    assert abs((n == 3).mean() * 100 - 56.5) < 0.1
+    assert abs((n == 0).mean() * 100 - 19.4) < 0.2
+    assert _longest(n == 3) == ('2017-11-16', '2018-01-29')
+    assert _longest(n == 0) == ('2026-02-27', '2026-03-30')
 
 
 # ───────────────────────────────────────────────────────────── the light itself
@@ -254,13 +252,17 @@ def test_ma_reclaim_is_not_a_pullback_setup():
     assert s['count'] == 1 and 'ma_reclaim' not in s['by_panel']
 
 
-@pytest.mark.parametrize('n,band', [(0, 'none'), (1, 'dim'), (3, 'dim'),
-                                    (4, 'unspecified'), (9, 'unspecified'), (10, 'bright')])
-def test_setup_bands_leave_the_courses_gap_open(n, band):
-    """L7:49-50 names 10+ and 1-3. It says nothing about 4-9; that gap is
-    reported as 'unspecified' for Studio Q, not filled in here."""
+@pytest.mark.parametrize('n,band,default', [(0, 'none', False), (1, 'dim', False),
+                                            (3, 'dim', False), (4, 'dim', True),
+                                            (9, 'dim', True), (10, 'bright', False)])
+def test_setup_bands_with_four_to_nine_as_the_default_dim(n, band, default):
+    """L7:49-50 lights only 10+ and 1-3. Studio Q ruling 2 puts 4-9 in 'dim',
+    the course's default state, and flags it so it reads apart from the
+    lesson-stated 1-3."""
     wl = {'zones': [{'panels': [_panel('ll_hl_1st', [f'T{i}' for i in range(n)])]}]}
-    assert ml.setups_block(wl)['band'] == band
+    got = ml.setups_block(wl)
+    assert got['band'] == band and got['band_default'] is default
+    assert got['calibrated'] is False, "ruling 3: provisional until calibrated"
 
 
 def _uni(**rows):
@@ -307,10 +309,81 @@ def test_rs_ties_break_stably():
     assert order == ['AA', 'MM', 'ZZ'], "same rs -> stronger 3M performance first"
 
 
-def test_red_decides_the_verdict_alone_green_waits_for_studio_q():
-    assert ml.verdict({'light': 'red'}) == 'avoid'
-    assert ml.verdict({'light': 'green'}) is None
-    assert ml.verdict(None) is None
+def test_red_decides_the_verdict_alone():
+    """L6:183 -- on red nothing else is consulted, not even three good grades."""
+    good = {'setups': 'good', 'leaders': 'good', 'breadth': 'good'}
+    assert ml.verdict({'light': 'red'}, good) == 'avoid'
+    assert ml.verdict(None, good) is None
+
+
+@pytest.mark.parametrize('grades,want', [
+    ({'setups': 'good', 'leaders': 'good', 'breadth': 'good'}, 'full'),
+    ({'setups': 'good', 'leaders': 'mid', 'breadth': 'good'}, 'dim'),
+    ({'setups': 'mid', 'leaders': 'mid', 'breadth': 'mid'}, 'dim'),
+    ({'setups': 'good', 'leaders': 'good', 'breadth': 'bad'}, 'avoid'),
+    ({'setups': 'bad', 'leaders': 'good', 'breadth': 'good'}, 'avoid'),
+])
+def test_green_day_combination_is_studio_qs_table(grades, want):
+    """Ruling 1: any bad -> avoid; all good -> full; otherwise dim."""
+    assert ml.verdict({'light': 'green'}, grades) == want
+
+
+def test_green_day_with_an_ungradable_question_is_not_dim():
+    """'Not measured' is not 'mid'. Folding a missing grade into dim would print
+    a verdict the three questions never produced."""
+    assert ml.verdict({'light': 'green'},
+                      {'setups': 'good', 'leaders': 'good', 'breadth': None}) is None
+
+
+def test_leader_grade_is_a_share_of_the_known_statuses():
+    """'broken <=2/10 good, >=5/10 bad' read as a share, so a list shorter than
+    ten grades the same way; unknown statuses count as neither."""
+    L = lambda b, h, u=0: ([{'status': 'broken'}] * b + [{'status': 'holding'}] * h
+                           + [{'status': None}] * u)
+    assert ml.grade_leaders(L(2, 8)) == 'good'
+    assert ml.grade_leaders(L(3, 7)) == 'mid'
+    assert ml.grade_leaders(L(5, 5)) == 'bad'
+    assert ml.grade_leaders(L(1, 4, u=5)) == 'good', "1 of 5 known = 20%"
+    # ⚠️ The cases above all sit where a COUNT rule (<=2 / >=5) and a SHARE
+    # rule agree, so a mutation from share to count survived them. These two
+    # are where the rules part: 2 of 4 is 'good' by count but 50% by share.
+    assert ml.grade_leaders(L(2, 2)) == 'bad', "2 of 4 known = 50%, not 'only 2 broken'"
+    assert ml.grade_leaders(L(3, 2)) == 'bad', "3 of 5 = 60%; a count rule says mid"
+    assert ml.grade_leaders([]) is None
+
+
+@pytest.mark.parametrize('env,state,grade', [('BULLISH', 'confirm', 'good'),
+                                             ('MIXED', 'mixed', 'mid'),
+                                             ('BEARISH', 'negate', 'bad')])
+def test_breadth_q3_is_the_vote_card_read_as_confirmation(env, state, grade):
+    """Studio Q: the vote card is demoted from a direction call to Q3 evidence."""
+    b = ml.breadth_block({'verdict': {'env': env, 'score': -7}})
+    assert b['state'] == state and ml.grade_breadth(b) == grade
+
+
+def test_breadth_absent_is_none():
+    assert ml.breadth_block(None) is None
+    assert ml.breadth_block({'verdict': {'env': None}}) is None
+
+
+def test_plus_n_is_kept_and_flagged_deprecated():
+    """Course-side 'to delete' (Andy 2026-09-11): keep the field, flag it."""
+    b = ml.instrument_block(_df(np.linspace(100, 160, 80)))
+    assert b['plus_n'] is not None and b['plus_n_deprecated'] is True
+
+
+def test_build_composes_the_green_day_verdict_end_to_end():
+    """All three grades good on a green day -> 'full', marked synthetic."""
+    hist = {'SPY': _df(np.linspace(100, 160, 90))}
+    wl = {'zones': [{'panels': [_panel('ll_hl_1st', [f'T{i}' for i in range(12)])]}]}
+    groups = {'themes': [{'group': 'S', 'kind': 'theme', 'tickers': ['X']}]}
+    ladder = {'themes': {'S': {'2w': 'Leading'}}}
+    p = ml.build(hist, wl, groups, ladder, _uni(X=dict(rs_rating=99, sma50_dist=3)),
+                 breadth={'verdict': {'env': 'BULLISH'}})
+    assert p['spy']['light'] == 'green'
+    assert p['verdict'] == 'full' and p['verdict_synthetic'] is True
+    assert p['verdict_basis'] == {'setups': 'good', 'leaders': 'good', 'breadth': 'good'}
+    assert p['verdict_pending'] is None
 
 
 # ─────────────────────────────────────────────────────────────── contract shape
@@ -346,7 +419,7 @@ def test_brightness_leaders_is_the_array_the_page_maps_over():
 def test_missing_inputs_are_none_not_zero():
     p = ml.build({})
     assert p['spy'] is None and p['verdict'] is None
-    assert p['brightness'] == {'setups': None, 'leaders': None, 'leaders_meta': None}
+    assert p['brightness'] == {'setups': None, 'leaders': None, 'leaders_meta': None, 'breadth': None}
 
 
 def test_run_all_actually_calls_it():
@@ -363,3 +436,4 @@ def test_run_all_actually_calls_it():
     assert 'ML.build(ma_histories' in src, "run_all must call market_light.build"
     assert "OUTPUT_DIR / 'market_light.json'" in src, "and emit the file"
     assert "ledger.error('market_light'" in src, "inside its own failure domain"
+    assert "breadth=_read_out('breadth.json')" in src, "Q3 needs the vote card"

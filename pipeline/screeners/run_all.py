@@ -1286,7 +1286,8 @@ def main():
 
         _ml = ML.build(ma_histories or {}, _read_out('watchlist.json'),
                        _read_out('groups.json'), _read_out('theme_ladder.json'),
-                       (_read_out('universe.json') or {}).get('rows'))
+                       (_read_out('universe.json') or {}).get('rows'),
+                       breadth=_read_out('breadth.json'))
         _emit(ledger, OUTPUT_DIR / 'market_light.json', json.dumps(_ml, indent=1))
         _spy = _ml.get('spy') or {}
         ledger.note('market_light', 'ok' if _ml.get('spy') else 'degraded',

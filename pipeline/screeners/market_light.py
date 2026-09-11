@@ -32,25 +32,27 @@ against a number the course prints before this file was written (2026-09-11):
 Studio Q ruled this minimum-assumption reading (plan L106) and forbade an
 "N days ago" parameter -- the 08-31 invented-window trap.
 
-⚠️ The book's printed light statistics come from a DIFFERENT definition than
-the one this file implements, and that is a choice, not an error. Lesson 6
-prints 54.5% green / 20.7% red for SPY 2015-2026 and two "longest run" dates
-(2024-01-18 -> 04-04 all yes, 2022-08-30 -> 10-14 all no). Those reproduce
-EXACTLY -- 54.5 green and both dates to the day -- on SMA 10/20 with
-"rising" = today above 3 sessions ago, auto-adjusted (Studio Q found it,
-2026-09-11). This file uses EMA with "rising" = today above yesterday, which is
-Studio Q's ruling for the page (plan L106) and the lesson's drill text; on it
-the same window reads 56.55 / 19.30. Same lesson, two definitions: that is
-NEEDS_ANDY gap 1, now a single-choice question in the course repo. When Andy
-rules, change LIGHT_MA and the rising lag -- the replication test for the
-book's numbers is written and waiting (test_book_numbers_are_sma_three_day).
+RULED 2026-09-11 (Andy, both gaps): "用EMA" for the 10/20 light, "同样的用ema"
+for the 21-day line. The light's EMA is final; `ma_type` stays a parameter but
+nothing is pending on it. The gears already read the 21 EMA (course verbatim).
+The +N count is scheduled for deletion course-side (L6B.4/L6B.5 carry a
+"to delete" tag): the field is KEPT but flagged `plus_n_deprecated: true`, and
+still computed on the 21 SMA it was replicated on -- it goes when the course
+deletes it, not migrated in the meantime.
 
-⚠️ Correction on the record: the first version of this docstring said the two
-dates "reproduce under NO definition tried". That was false. The grid searched
-was two edges of a two-dimensional one -- the rising lag was varied only for
-EMA, the MA type only at a 1-day lag -- and the one cell that reproduces
-(SMA x 3 days) was never tried. "Tried everything" was a claim about the
-edges I walked, written as a claim about the whole grid.
+The course reprinted Lesson 6 on the EMA spec (SwingMasterclass
+_bench/l6_light.json, `coverage_ema_spec`: EMA10/20 adjust=False, rising day
+over day): 56.5 green / 19.4 red / 24.0 mixed, longest green 2017-11-16 ->
+2018-01-29, longest red 2026-02-27 -> 2026-03-30. This file reproduces both
+dates to the day and 56.5 green; red reads 19.30 on our frozen fixture --
+Studio Q's note that an auto-adjusted series drifts with the download date
+(the book's last digit needs its own .chartcache) covers the 0.1.
+
+History, kept because it cost something: the first version of this docstring
+said the book's (then SMA) numbers "reproduce under NO definition tried". False
+-- the search walked two edges of a two-dimensional grid and never visited the
+one cell that reproduces (SMA x rising-vs-3-days). The superseded spec is kept
+in the course ledger as `coverage_chart_spec`.
 
 The brightness block (Q1 setups, Q2 leaders) is our mapping onto the course's
 semantics and is shipped `provisional: true` until Studio Q signs off under the
@@ -116,8 +118,11 @@ Q1_SETUPS_WITHOUT_PANEL = ('BO', 'HTF')
 
 
 def _ma(s: pd.Series, n: int, kind: str) -> pd.Series:
+    # adjust=False is the course's light spec (_bench/l6_light.json). On any
+    # history longer than a few spans it is indistinguishable from adjust=True
+    # -- checked on the 2009-2026 SPY fixture, identical to the hundredth.
     if kind == 'EMA':
-        return s.ewm(span=n).mean()
+        return s.ewm(span=n, adjust=False).mean()
     if kind == 'SMA':
         return s.rolling(n).mean()
     raise ValueError(f"ma type must be EMA or SMA, got {kind!r}")
@@ -218,6 +223,9 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA,
         'light': 'green' if passed == 3 else 'red',
         'plus_n': pn,
         'plus_n_noise': (abs(pn) <= NOISE_MAX) if pn is not None else None,
+        # Course-side "to delete" (Andy 2026-09-11). Kept, not dismantled, so it
+        # can leave together with the lesson text.
+        'plus_n_deprecated': True,
         'gear': gear,
         'history': [
             {'date': d.strftime('%Y-%m-%d'), 'close': round(float(r['close']), 4),
@@ -259,11 +267,16 @@ def setups_block(watchlist: Optional[Mapping[str, Any]]) -> Optional[Dict[str, A
     if not seen_panel:
         return None
     count = len(names)
+    # Studio Q ruling 2: 4-9 is 'dim' -- the course's default state ("be picky,
+    # size smaller, or pass"); the lesson lit only the two ends. Flagged so a
+    # reader can tell a lesson-stated 'dim' (1-3) from the default one.
+    band = 'bright' if count >= 10 else ('none' if count == 0 else 'dim')
     return {
         'count': count,
         'count_is_floor': bool(capped),
-        'band': 'bright' if count >= 10 else ('none' if count == 0 else
-                                             ('dim' if count <= 3 else 'unspecified')),
+        'band': band,
+        'band_default': 4 <= count <= 9,
+        'calibrated': False,          # Studio Q ruling 3 -- see Q1_CALIBRATION
         'by_panel': by_panel,
         'capped_panels': capped,
         'setups_without_panel': list(Q1_SETUPS_WITHOUT_PANEL),
@@ -335,13 +348,80 @@ def _status(r: Mapping[str, Any]) -> Optional[str]:
     return 'broken' if sma50 < 0 else 'holding'
 
 
-def verdict(spy: Optional[Mapping[str, Any]]) -> Optional[str]:
-    """Red decides it alone -- 'avoid' (L6:183, "sit still"). Green needs a rule
-    for combining the three brightness questions that the course does not give;
-    until Studio Q and DATA agree it under the §七 row, green returns None."""
+Q1_CALIBRATION = (
+    "Not calibrated. Studio Q ruling 3 anchors: red-day median in 1-3, strongest "
+    "green stretch reaching 10+. Over the 17 sessions in watchlist_hits.csv "
+    "(2026-08-18 -> 09-10, 13 red / 4 green) the current mapping reads a red-day "
+    "median of 68. Narrowed to leading-theme names 14, to RS-line 21-day pctl>=90 "
+    "25, to both 7 -- none reaches 1-3. Threshold is held at 10 per the ruling; "
+    "the pool choice is Studio Q's.")
+
+# Studio Q ruling 1: each question graded good/mid/bad, then combined. The
+# grades and the combination are SYNTHETIC -- ours and Studio Q's, not the
+# course's; the course gives the three questions and the words only.
+def grade_setups(s: Optional[Mapping[str, Any]]) -> Optional[str]:
+    if not s:
+        return None
+    n = s.get('count')
+    if n is None:
+        return None
+    return 'good' if n >= 10 else ('bad' if n == 0 else 'mid')
+
+
+def grade_leaders(leaders: Optional[List[Mapping[str, Any]]]) -> Optional[str]:
+    """'broken <=2/10 good, >=5/10 bad' -- read as a share, which is what the
+    ruling's /10 notation says when the list is shorter than ten. Names whose
+    status is unknown do not count as either."""
+    if not leaders:
+        return None
+    known = [x for x in leaders if x.get('status') in ('holding', 'broken')]
+    if not known:
+        return None
+    share = sum(1 for x in known if x['status'] == 'broken') / len(known)
+    return 'good' if share <= 0.2 else ('bad' if share >= 0.5 else 'mid')
+
+
+BREADTH_STATE = {'BULLISH': 'confirm', 'MIXED': 'mixed', 'BEARISH': 'negate'}
+
+
+def breadth_block(breadth: Optional[Mapping[str, Any]]) -> Optional[Dict[str, Any]]:
+    """Q3 -- 'is breadth confirming?'. Studio Q: the vote card, demoted from a
+    market direction call to Q3 evidence, answers it in three values."""
+    env = ((breadth or {}).get('verdict') or {}).get('env')
+    state = BREADTH_STATE.get(str(env).upper()) if env else None
+    if state is None:
+        return None
+    return {'state': state, 'source': 'breadth.json verdict.env', 'env': env,
+            'score': ((breadth or {}).get('verdict') or {}).get('score')}
+
+
+def grade_breadth(b: Optional[Mapping[str, Any]]) -> Optional[str]:
+    if not b:
+        return None
+    return {'confirm': 'good', 'mixed': 'mid', 'negate': 'bad'}.get(b.get('state'))
+
+
+def verdict(spy: Optional[Mapping[str, Any]],
+            grades: Optional[Mapping[str, Optional[str]]] = None) -> Optional[str]:
+    """Red decides it alone -- 'avoid' (L6:183 "sit still"). Green combines the
+    three grades: any bad -> avoid; all good -> full; otherwise dim (ruling 1,
+    conservative side wins, same shape as L6's "anything else = red").
+
+    A green day with a question that cannot be graded returns None: "not
+    measured" is not "mid", and folding it into dim would hide the gap."""
     if not spy:
         return None
-    return 'avoid' if spy.get('light') == 'red' else None
+    if spy.get('light') == 'red':
+        return 'avoid'
+    g = dict(grades or {})
+    if not g or any(v is None for v in g.values()):
+        return None
+    vals = list(g.values())
+    if 'bad' in vals:
+        return 'avoid'
+    if all(v == 'good' for v in vals):
+        return 'full'
+    return 'dim'
 
 
 def build(histories: Mapping[str, pd.DataFrame],
@@ -349,6 +429,7 @@ def build(histories: Mapping[str, pd.DataFrame],
           groups: Optional[Mapping[str, Any]] = None,
           ladder: Optional[Mapping[str, Any]] = None,
           universe_rows: Optional[Iterable[Mapping[str, Any]]] = None,
+          breadth: Optional[Mapping[str, Any]] = None,
           light_ma: str = LIGHT_MA, plus_n_ma: str = PLUS_N_MA) -> Dict[str, Any]:
     spy = instrument_block(histories.get('SPY'), light_ma, plus_n_ma)
     qqq = instrument_block(histories.get('QQQ'), light_ma, plus_n_ma)
@@ -358,6 +439,14 @@ def build(histories: Mapping[str, pd.DataFrame],
     # a dict where it maps over a list and drawn nothing. The list goes where
     # the contract says; the metadata sits beside it under `leaders_meta`.
     lb = leaders_block(groups, ladder, universe_rows)
+    setups = setups_block(watchlist)
+    leaders = lb['leaders'] if lb else None
+    br = breadth_block(breadth)
+    grades = {'setups': grade_setups(setups), 'leaders': grade_leaders(leaders),
+              'breadth': grade_breadth(br)}
+    v = verdict(spy, grades)
+    green = bool(spy and spy.get('light') == 'green')
+    missing = [k for k, g in grades.items() if g is None]
     date = spy['history'][-1]['date'] if spy and spy['history'] else None
     return {
         'date': date,
@@ -367,11 +456,13 @@ def build(histories: Mapping[str, pd.DataFrame],
         'spy': spy,
         'qqq': qqq,            # side note only -- never enters the verdict (plan L111)
         'brightness': {
-            'setups': setups_block(watchlist),
-            'leaders': lb['leaders'] if lb else None,
-            'leaders_meta': ({k: v for k, v in lb.items() if k != 'leaders'} if lb else None),
+            'setups': setups,
+            'leaders': leaders,
+            'leaders_meta': ({k: val for k, val in lb.items() if k != 'leaders'} if lb else None),
+            'breadth': br,
         },
-        'verdict': verdict(spy),
-        'verdict_pending': (None if (spy and spy.get('light') == 'red') else
-                            'green-day combination rule not yet agreed with Studio Q'),
+        'verdict': v,
+        'verdict_synthetic': green,
+        'verdict_basis': grades if green else None,
+        'verdict_pending': (f"green day, ungradable: {', '.join(missing)}" if green and v is None else None),
     }
