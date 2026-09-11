@@ -1273,6 +1273,32 @@ def main():
     except Exception:
         logger.exception("Watchlist failed - watchlist.json not updated")
 
+    # Market light (Lessons 6 / 6B / 7): the course's morning read for the
+    # Market State page -- UI Claire's §七 row 2026-09-11 (e5546418). Reads the
+    # four files written above plus the SPY/QQQ history fetched in step 3, so it
+    # costs no extra vendor request. Own failure domain.
+    try:
+        from pipeline.screeners import market_light as ML
+
+        def _read_out(name):
+            p = OUTPUT_DIR / name
+            return json.loads(p.read_text()) if p.exists() else None
+
+        _ml = ML.build(ma_histories or {}, _read_out('watchlist.json'),
+                       _read_out('groups.json'), _read_out('theme_ladder.json'),
+                       (_read_out('universe.json') or {}).get('rows'))
+        _emit(ledger, OUTPUT_DIR / 'market_light.json', json.dumps(_ml, indent=1))
+        _spy = _ml.get('spy') or {}
+        ledger.note('market_light', 'ok' if _ml.get('spy') else 'degraded',
+                    light=_spy.get('light'), checks=_spy.get('checks_passed'),
+                    plus_n=_spy.get('plus_n'), verdict=_ml.get('verdict'))
+        logger.info("Saved market_light.json - SPY %s %s/3 +N %s gear %s verdict %s",
+                    _spy.get('light'), _spy.get('checks_passed'), _spy.get('plus_n'),
+                    (_spy.get('gear') or {}).get('n'), _ml.get('verdict'))
+    except Exception:
+        logger.exception("market_light failed - market_light.json not updated")
+        ledger.error('market_light', 'exception')
+
     # Short List: manual names + six deterministic seats, full card data so
     # the page renders instead of computing (2026-08-20 design). Own domain.
     try:
