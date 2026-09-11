@@ -255,6 +255,9 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
     expect(screen.getAllByText('provisional').length).toBe(2)
+    // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
+    expect(screen.queryByText(/synthetic — the rule that combines/)).not.toBeInTheDocument()
+    expect(screen.getByText('Not confirming')).toBeInTheDocument()
     expect(screen.getByText(/no scan yet for BO \/ HTF/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
@@ -273,7 +276,7 @@ describe('Studio Q rulings on the page', () => {
   })
 
   it('tags a green-day verdict as synthetic, and shows breadth\'s three-valued answer', async () => {
-    const green = { ...real, verdict: 'dim', verdict_pending: null,
+    const green = { ...real, verdict: 'dim', verdict_pending: null, verdict_synthetic: true,
       spy: { ...real.spy, light: 'green', checks_passed: 3 },
       brightness: { ...real.brightness, breadth: { state: 'mixed' } } }
     withFetch({ market_light: green })
