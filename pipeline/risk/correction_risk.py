@@ -222,6 +222,26 @@ def ts_today(f: pd.DataFrame, t3: Dict) -> Optional[Dict]:
 
 # ------------------------------------------------- side readings (旁注) --
 
+# E1 tables frozen from data/research/turin_e1_results.json (run 2026-08-21).
+# The single hist_rate_e1 each reading reports is just today's cell of these
+# tables; the full table + each reading's OWN base_rate/sample let the page
+# draw the annotation against its own baseline (nhnl 2001+/17.6%,
+# gex 2012+/13.9%), never L1's 16.6%. today_state = which key today falls in.
+_NHNL_E1 = {
+    "table": {"1": {"rate": 0.3718, "n": 503}, "2": {"rate": 0.1943, "n": 3787},
+              "3": {"rate": 0.0914, "n": 2024}},
+    "base_rate": 0.1755, "sample": {"from": "2001-06-05", "to": "2026-08-19"},
+    "labels": {"1": "oversold (<0.30)", "2": "mid", "3": "overbought (>0.85)"}}
+_NHNL_STATE_KEY = {"oversold(<0.30)": "1", "mid": "2", "overbought(>0.85)": "3"}
+_GEX_E1 = {
+    "table": {"1": {"rate": 0.2118, "n": 779}, "2": {"rate": 0.1582, "n": 784},
+              "3": {"rate": 0.1138, "n": 773}, "4": {"rate": 0.1053, "n": 646},
+              "5": {"rate": 0.0894, "n": 615}},
+    "base_rate": 0.139, "sample": {"from": "2012-04-30", "to": "2026-08-19"},
+    "labels": {"1": "low dealer gamma (Q1)", "2": "Q2", "3": "Q3", "4": "Q4",
+               "5": "high dealer gamma (Q5)"}}
+
+
 def side_readings(root: Path) -> Dict:
     """NHNL and GEX states beside the table -- never averaged into `prob`.
     E1 2026-08-21: nhnl3 (KY thresholds) beat the VIX spread; GEX rolling-252
@@ -238,8 +258,12 @@ def side_readings(root: Path) -> Dict:
         v = float(r.iloc[-1])
         state = "oversold(<0.30)" if v < 0.30 else ("overbought(>0.85)" if v > 0.85 else "mid")
         hist = {"oversold(<0.30)": 0.372, "mid": 0.194, "overbought(>0.85)": 0.091}
+        key = _NHNL_STATE_KEY[state]
         out["nhnl"] = {"date": str(r.index[-1].date()), "ratio_10ema": round(v, 3),
-                       "state": state, "hist_rate_e1": hist[state]}
+                       "state": state, "hist_rate_e1": hist[state],
+                       "today_state": key, "table": _NHNL_E1["table"],
+                       "base_rate": _NHNL_E1["base_rate"], "sample": _NHNL_E1["sample"],
+                       "labels": _NHNL_E1["labels"]}
     except Exception as e:
         out["nhnl"] = {"unavailable": str(e)[:80]}
     try:  # GEX (SqueezeMetrics DIX.csv, refresh via curl -- see reference memory)
@@ -250,7 +274,10 @@ def side_readings(root: Path) -> Dict:
         quint = min(int(pr * 5) + 1, 5)
         hist = {1: 0.212, 2: 0.158, 3: 0.114, 4: 0.105, 5: 0.089}
         out["gex"] = {"date": str(sm.index[-1].date()), "pct_rank_252d": round(pr, 3),
-                      "quintile": quint, "hist_rate_e1": hist[quint]}
+                      "quintile": quint, "hist_rate_e1": hist[quint],
+                      "today_state": str(quint), "table": _GEX_E1["table"],
+                      "base_rate": _GEX_E1["base_rate"], "sample": _GEX_E1["sample"],
+                      "labels": _GEX_E1["labels"]}
     except Exception as e:
         out["gex"] = {"unavailable": str(e)[:80]}
     return out
