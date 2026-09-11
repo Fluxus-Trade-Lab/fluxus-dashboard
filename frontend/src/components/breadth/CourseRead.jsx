@@ -100,7 +100,7 @@ export function VerdictCard({ ml }) {
               )}
               {VERDICT[v].line}
             </p>
-            {spy?.light === 'green' && (
+            {(ml?.verdict_synthetic ?? spy?.light === 'green') && (
               <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
                 synthetic — the rule that combines Step 2&rsquo;s three answers (any bad → avoid, all good → full,
                 otherwise dim) was set with the course on 09-11; it is not in the lesson text.
