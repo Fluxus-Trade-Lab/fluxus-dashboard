@@ -82,6 +82,13 @@ preregistered → candidate → validated → live
   - 正向结论缺 `spec_search_n`
   - `validated`/`live` 缺 holdout 证据块
   - `gates` 非空（= 这条结论在代码里当了规则）但状态不是 `validated`/`live`/`null`
+- **NULL 必须带分辨率**（2026-09-12 起，同形第 3 次后升机制）：`status: null` 的结论在
+  `evidence.resolution` 里写 `{mde, method}`——它**能看见**多大的效应、这个数怎么量的（注射实验 /
+  2.8×真实聚类下的 bootstrap 标准误）；确实不是效应量检验的写 `{na: 理由}`。
+  ⚠️ `method` 必填，因为第 3 次那回**有数，是错的那种数**：把置换零分布里点估计的散布（±0.14%）
+  当成了分辨率，真实周簇区间是 ±0.5%。闸在 `pipeline/tests/test_claims_null_resolution.py`
+  （跑在 tests.yml，**故意不进** `claim_registry --check`——那一步挡在夜间数据 commit 之前）；
+  规则之前登记、还没补的，在该测试的 `LEGACY` 里具名，只许减不许增。
 - **回填**：08-23 起两个盘点 agent 的产出逐条入台账；在此之前的正向结论一律先记
   `candidate`，除非能指出它的外部对照或 holdout。
 
