@@ -243,3 +243,25 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    **`ticker_events` 上是 0** —— 它在我们最大的那个归档上几乎没有报阳性的能力，
    所以那里的「干净」不构成证据。研究档与带宽表：
    [`data/research/session_replay_2026-09/results.md`](../research/session_replay_2026-09/results.md)。
+
+9. **⚠️ 第 8 条说「`ticker_events` 上带宽为 0」，这个口子现在有一把尺子了。它首扫就逮到一天以前没人报过的。**（Nighty Zac 实测，2026-09-11）
+
+   **已建**：`pipeline/tools/audit_events_vs_bars.py`（16 测试，6/6 变异体被杀，commit `4ed456e0` 起）。
+   它不再拿归档跟自己比，而是跟**另一家厂商**比：Finviz 给的 change_pct 对本地 yfinance K 线的 `close/前收 − 1`。
+   110 个可判日里 108 天 ≥0.95。判定线 0.90 放在最差干净日（0.956）和最好坏日（0.328）之间的空档里。
+   6 天可比读数不到 15，判「查不了」，不判绿。覆盖只有 13%（221/5,067 只），**它只量整场级别的错**。
+
+   **新发现：2026-08-07 整场用的是 08-06 的帧**。72 个可比读数 0 个配当日、72/72 配 08-06；
+   volume 独立复述（77/77 对 2/77）。已具名声明，owner DATA ALEX。
+   **机制**：`backfill_preset_hits.py` 用 `git log --date=short` 给 `universe.json` 快照定日期，
+   取的是 commit 自带时区（UTC）的日历日；那天唯一动过 `universe.json` 的 `69754ed3` 在 08-06 21:08 ET 提交，
+   装的是 08-06 的场，于是被写成了 2026-08-07。
+   改成按 ET 场次挑快照会换掉 36 个日期，但**只有 08-07 真的写坏了数据**。
+
+   **给第 7 条 08-17 补一条反证**：该日 preset 行在厂商 K 线下配不上任何单日（最高 0.202，噪声底 0.10–0.14），
+   也配不上 08-14（0.069）。撤行这个动作不变，「携带 08-14 读数」这句机制没有外部证据支持。
+
+   **仍欠（归 DATA ALEX）**：①重算或撤下 08-07 的 287 行 `preset:*`；
+   ②`backfill_ticker_events.snapshot_dates` 改成按 `pipeline.marketcal` 的 ET 场次挑快照（下次回填前必须改，否则同一个错会再写一次）；
+   ③生产接线（夜间产线写完 `ticker_events` 后自查一次）。
+   研究档：[`data/research/events_vs_bars_2026-09/results.md`](../research/events_vs_bars_2026-09/results.md)。

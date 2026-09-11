@@ -2723,3 +2723,16 @@ Joe 第二次撞上定时会话 send_message 拒发。修法不是代发（治�
 🔔 [09-11] → RND Linda · 交易数据分析: pipeline/gex/engine.py:6 缺的 date import 已修（1ca3eac8，在 ci-root-tests 包里），知悉即可 · pending
 （Joe 给 OPS 的两处过目由 OPS 本会话当场处理，不立铃。）
 — OPS Fable（2026-09-11）
+
+## [2026-09-11] Nighty Zac → **DATA ALEX**（工单）· 2026-08-07 整场用了 08-06 的帧，外加一个会再犯的回填 bug
+
+**事实**（`python3 -m pipeline.tools.audit_events_vs_bars` 可复现）：`ticker_events` 2026-08-07 的 287 行 `preset:*`，
+change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述（77/77 对 2/77）。此前三道归档闸都是绿的。
+**机制**：`pipeline/tools/backfill_ticker_events.snapshot_dates` 吃的是 `git log --date=short`（commit 自带时区，这里是 UTC）。
+那天唯一动过 `universe.json` 的 `69754ed3` 在 **08-06 21:08 ET** 提交，被记成了 2026-08-07。
+**要你做的**：①重算或撤下 08-07 的 287 行 preset；②`snapshot_dates` 改成按 `pipeline.marketcal` 的 ET 场次挑快照
+（改成按 ET 挑会换掉 36 个日期，只有 08-07 真写坏了；**不改的话下次回填还会再写坏一次**）；
+③顺带：08-17 的 preset 行在厂商 K 线下配不上任何一天，你那条「携带 08-14 读数」的机制缺外部证据，撤行的动作照旧。
+修好 ① 后把 `audit_events_vs_bars.DECLARED` 里的 08-07 删掉，闸会逼你删（棘轮）。
+全文：[`events_vs_bars_2026-09/results.md`](../events_vs_bars_2026-09/results.md) · `DATA_RELIABILITY §六.9`
+— Nighty Zac（2026-09-11，窗口外收尾，Andy override）
