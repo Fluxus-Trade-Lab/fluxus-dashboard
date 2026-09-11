@@ -80,8 +80,9 @@ describe('BreadthPage — in the course\'s order (09-11)', () => {
     expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
     expect(screen.getByText('in-between: counts as red')).toBeInTheDocument()
     expect(screen.getByText(/the course says skip this step today/)).toBeInTheDocument()
-    expect(screen.getByText('-3')).toBeInTheDocument()
     expect(screen.getByText('7 / 7')).toBeInTheDocument()
+    // the trend-day count is off the main screen (course marks it for deletion)
+    expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 
@@ -248,7 +249,9 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     withFetch({ market_light: real })
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
+    fireEvent.click(screen.getByText('Trend-day count').closest('button'))
     expect(screen.getByText(`${real.spy.plus_n}`)).toBeInTheDocument()
+    expect(screen.getByText(/Deprecated — the course marks this count for removal/)).toBeInTheDocument()
     expect(screen.getByText(`${real.spy.gear.n} / 7`)).toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
