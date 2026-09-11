@@ -88,10 +88,10 @@ export default function VoteCard({ verdict, session }) {
       </div>
 
       <div className="flex items-baseline gap-3 mb-1">
-        <span className="text-[17px] font-semibold text-[var(--color-text-bold)]">
+        <span className="text-[17px] font-semibold text-[var(--color-text)]">
           {ENV_LABEL[v.env] ?? v.env}
         </span>
-        <span className="text-[11px] text-[var(--color-text-secondary)]">{v.risk} · {v.exposure}</span>
+        <span className="text-[13px] text-[var(--color-text-secondary)]">{v.risk} risk · {v.exposure} exposure</span>
       </div>
 
       {offSession && (
@@ -102,7 +102,7 @@ export default function VoteCard({ verdict, session }) {
       )}
 
       <div className="my-3">
-        <VoteGlyphs detail={v.vote_detail} stretch />
+        <VoteGlyphs detail={v.vote_detail} perRow={6} />
       </div>
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />

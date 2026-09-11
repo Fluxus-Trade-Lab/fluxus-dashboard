@@ -36,7 +36,7 @@ export default function Reference({ label, note, count, children }) {
                          hover:bg-[var(--color-hover-bg)]">
         <i aria-hidden="true" className="block w-[7px] h-[7px] rounded-full shrink-0"
            style={{ background: open ? 'var(--color-accent)' : 'var(--color-untested)' }} />
-        <span className="text-[13px] font-medium text-[var(--color-text)] shrink-0">
+        <span className="text-[13px] font-semibold text-[var(--color-text)] shrink-0">
           {label}
         </span>
         {count != null && (
@@ -45,7 +45,7 @@ export default function Reference({ label, note, count, children }) {
           </span>
         )}
         {note && (
-          <span className="text-[11px] text-[var(--color-text-muted)] truncate flex-1 min-w-0">
+          <span className="text-[13px] text-[var(--color-text-muted)] truncate flex-1 min-w-0">
             {note}
           </span>
         )}

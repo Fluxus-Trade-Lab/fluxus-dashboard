@@ -46,14 +46,26 @@ const RANGE = {
  * left the most important graphic on the page occupying half its own card.
  * Off by default so the Market State page keeps the density it was drawn at.
  */
-export default function VoteGlyphs({ detail, stretch = false }) {
+export default function VoteGlyphs({ detail, stretch = false, perRow }) {
   if (!detail?.length) return null
 
   return (
     <div>
-      <div className="flex gap-2 items-end overflow-x-auto pb-1">
-        {detail.map((d) => <Glyph key={d.key} d={d} stretch={stretch} />)}
-      </div>
+      {/* `perRow` (Market State, 2026-09-11): twelve glyphs in a half-page card
+          broke their labels mid-word ("Quarterl/y"). Two rows of six gives each
+          glyph the width its label needs, and splits the ballot the way it is
+          read — breadth rules on top, benchmark ones underneath. Without the
+          prop (Dashboard) the single scrolling row is unchanged. */}
+      {perRow ? (
+        <div className="grid gap-x-2 gap-y-3 items-end pb-1"
+             style={{ gridTemplateColumns: `repeat(${perRow}, minmax(0, 1fr))` }}>
+          {detail.map((d) => <Glyph key={d.key} d={d} stretch />)}
+        </div>
+      ) : (
+        <div className="flex gap-2 items-end overflow-x-auto pb-1">
+          {detail.map((d) => <Glyph key={d.key} d={d} stretch={stretch} />)}
+        </div>
+      )}
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
           <i className="block w-4 h-px bg-[var(--color-text)]" />the line it flips at

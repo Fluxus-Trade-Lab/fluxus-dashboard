@@ -1,5 +1,6 @@
 import { isWeekend } from './session'
 import Spark from './Spark'
+import Figures from './Figures'
 
 /**
  * Board — the nine-condition ladder, one card.
@@ -77,15 +78,14 @@ function Rungs({ level, count }) {
 function Row({ row, levelCount, spark }) {
   const { key, level, evidence } = row
   return (
-    <div className="grid grid-cols-[104px_74px_1fr] sm:grid-cols-[104px_74px_1fr_140px]
-                    gap-3 items-center py-[9px] border-b border-[var(--color-border-light)]
+    <div className="grid grid-cols-[120px_74px_1fr] sm:grid-cols-[120px_74px_1fr_140px]
+                    gap-3 items-center py-[10px] border-b border-[var(--color-border-light)]
                     last:border-b-0">
-      <div className="text-[13px] font-semibold capitalize truncate"
+      <div className="text-[13px] font-semibold capitalize truncate text-[var(--color-text)]"
            style={{ fontFamily: 'var(--font-cond)' }}>{key}</div>
       <Rungs level={level} count={levelCount} />
-      <div className="text-[11px] leading-snug text-[var(--color-text-secondary)] truncate"
-           title={evidence}>
-        {evidence}
+      <div className="text-[13px] leading-snug text-[var(--color-text-secondary)]">
+        <Figures text={evidence} />
       </div>
       <div className="hidden sm:block justify-self-end">
         <Spark values={spark} title={`${key}: ${evidence}`} />

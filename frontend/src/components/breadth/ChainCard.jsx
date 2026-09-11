@@ -44,7 +44,8 @@ function LinkRow({ l }) {
         <span className="text-[13px] font-semibold truncate" style={{ fontFamily: 'var(--font-cond)' }}>
           {l.label}
         </span>
-        <span className="text-[11px] font-mono shrink-0" style={{ color: colour }}>
+        <span className="text-[13px] font-mono font-semibold shrink-0"
+              style={{ color: lit ? 'var(--color-text)' : colour }}>
           {l.state === 'unmeasured' ? 'not measured' : `${pct}%`}
         </span>
       </div>
