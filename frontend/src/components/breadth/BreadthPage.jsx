@@ -7,6 +7,7 @@ import ChainCard from './ChainCard'
 import VoteCard from './VoteCard'
 import RotationPanel from './RotationPanel'
 import BenchmarkPanel from './BenchmarkPanel'
+import CorrectionRiskPanel from './CorrectionRiskPanel'
 import RatioChart from './RatioChart'
 import SpreadChart from './SpreadChart'
 import BreadthCharts from './BreadthCharts'
@@ -106,24 +107,13 @@ export default function BreadthPage({ data }) {
           read as unfinished; one surface with thin rules between rows reads
           as a place, the same idiom the three cards above already use. */}
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
-        {/* Its own rail entry until now, which promised a page and delivered an
-            empty one. Held here instead: named, reachable, and honest about
-            being unbuilt. The rung is not published before it is earned. */}
-        <Reference label="Correction risk" count={1}
-                   note="not built yet — the slot is reserved, not missing">
-          <div className="border border-dashed border-[var(--color-untested)]
-                          px-4 py-4 text-[13px] leading-relaxed
-                          text-[var(--color-text-muted)]">
-            <p className="m-0 mb-2">Will hold:</p>
-            <ul className="m-0 pl-4 space-y-1">
-              <li>Distribution-day count against its own threshold, with the sessions named</li>
-              <li>How far each benchmark sits below its own high, and for how many sessions</li>
-              <li>What would have to break next, in the repair ladder&rsquo;s order</li>
-            </ul>
-            <p className="m-0 mt-2 text-[11px]">
-              Reads breadth.json and market_health.json — both already on disk.
-            </p>
-          </div>
+        {/* RND Linda's ruling, DATA_CONTRACTS §七 2026-09-11 (v1 + v2): the
+            three-way conditional base rate with its n and the all-days rate in
+            one box, turin's two side readings, and the TICK cycle set apart as
+            a different question. What goes in here is hers to change. */}
+        <Reference label="Correction risk" count={3}
+                   note="how often a 5% drawdown followed a day like today — a tail reading, not a direction call">
+          <CorrectionRiskPanel session={session} />
         </Reference>
 
         <Reference label="Style rotation" count={1}

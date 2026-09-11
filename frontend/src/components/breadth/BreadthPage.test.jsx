@@ -1,5 +1,5 @@
 /* global process */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { render, screen, fireEvent } from '@testing-library/react'
@@ -56,14 +56,34 @@ describe('BreadthPage — 09-11 three-card rebuild', () => {
 
   it('folds the reference rows closed by default and opens one on click', () => {
     renderPage()
-    // "Correction risk" is a static placeholder — no chart library underneath
-    // it, so this stays a test of Reference's toggle, not of lightweight-charts
-    // in jsdom (that gap is real but pre-existing and unrelated to this diff).
-    const btn = screen.getByText('Correction risk').closest('button')
+    const btn = screen.getByText('Archive').closest('button')
     expect(btn).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(btn)
     expect(btn).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByText(/Will hold:/)).toBeInTheDocument()
+  })
+
+  /* Linda's three standing rules (DATA_CONTRACTS §七 09-11): prob never alone,
+     the character line and caveats[0] printed, TICK set apart. */
+  it('Correction risk prints prob, n and base rate together, from the real file', async () => {
+    const cr = read('data/output/correction_risk.json')
+    const tc = read('data/output/tick_cycle.json')
+    vi.stubGlobal('fetch', (url) => Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(String(url).includes('correction_risk') ? cr : String(url).includes('tick_cycle') ? tc : null),
+    }))
+    renderPage()
+    fireEvent.click(screen.getByText('Correction risk').closest('button'))
+    const ts = cr.ts_dimension.today
+    const prob = `${(ts.prob_3d * 100).toFixed(1)}%`
+    const probEl = await screen.findByText(prob)
+    const line = probEl.parentElement.textContent
+    expect(line).toContain(ts.n_cell_3d.toLocaleString())
+    expect(line).toContain(`${(cr.base_rate * 100).toFixed(1)}%`)
+    expect(screen.getByText(/no fitted parameters/)).toBeInTheDocument()
+    expect(screen.getByText(cr.caveats[0])).toBeInTheDocument()
+    expect(screen.getByText('Side readings')).toBeInTheDocument()
+    expect(screen.getByText('TICK cycle')).toBeInTheDocument()
+    vi.unstubAllGlobals()
   })
 
   it('has six folds — the three duplicates are merged, Correction risk stays', () => {
