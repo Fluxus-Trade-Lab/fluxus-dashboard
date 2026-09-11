@@ -15,7 +15,7 @@ import BreadthTable from './BreadthTable'
 import TimeMachineBar from './TimeMachineBar'
 import { useTimeMachine } from './useTimeMachine'
 import { useMarketLight } from '../../hooks/useMarketLight'
-import { VerdictCard, LightStep, BrightnessStep, TrendDayCount } from './CourseRead'
+import { VerdictCard, LightStep, BrightnessStep } from './CourseRead'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
@@ -167,12 +167,6 @@ export default function BreadthPage({ data }) {
             <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />
           </Reference>
         )}
-
-        {/* Off the main screen 09-11: the course marked it for deletion. */}
-        <Reference label="Trend-day count" count={1}
-                   note="deprecated — the course marks this count for removal">
-          <TrendDayCount ml={ml} />
-        </Reference>
 
         {/* Market monitor (15 tiles) and Classic breadth (9 tiles) were this
             table's first row printed twice more. Andy 09-11: 「并成一张表：今天钉在

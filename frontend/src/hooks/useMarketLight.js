@@ -17,7 +17,6 @@ let inflight = null
  *     checks: [{ key: 'fast_above_slow'|'fast_rising'|'slow_rising', pass, a, b }]
  *     checks_passed         0–3
  *     light                 'green' | 'red'   (anything short of 3/3 is red — L6:183)
- *     plus_n                consecutive closes vs the 21-day, ≤4-day noise runs dropped
  *     gear: { n, label }    Lesson 6B.2's seven gears
  *     history: [{ date, close, fast, slow, checks_passed }]
  *   brightness:
