@@ -25,16 +25,16 @@ function renderPage() {
   )
 }
 
-describe('BreadthPage — 09-11 三卡改版', () => {
+describe('BreadthPage — 09-11 three-card rebuild', () => {
   it('mounts on the real file without throwing', () => {
     expect(() => renderPage()).not.toThrow()
   })
 
   it('renders the three subject cards', () => {
     renderPage()
-    expect(screen.getByText(/盘面 · Board/)).toBeInTheDocument()
-    expect(screen.getByText(/传导 · Chain/)).toBeInTheDocument()
-    expect(screen.getByText(/投票 · Votes/)).toBeInTheDocument()
+    expect(screen.getByText('Board')).toBeInTheDocument()
+    expect(screen.getByText('Chain')).toBeInTheDocument()
+    expect(screen.getByText('Votes')).toBeInTheDocument()
   })
 
   it('prints every board row and no more or fewer than the file has', () => {

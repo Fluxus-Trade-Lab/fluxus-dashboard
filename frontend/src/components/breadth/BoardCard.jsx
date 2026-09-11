@@ -2,7 +2,7 @@ import { isWeekend } from './session'
 import Spark from './Spark'
 
 /**
- * 盘面 · Board — the nine-condition ladder, one card.
+ * Board — the nine-condition ladder, one card.
  *
  * Design: Fluxus_Brand/visual/Fluxus_Operator_Model.md
  * Data:   breadth.json → state_board (pipeline/screeners/state_board.py)
@@ -105,7 +105,7 @@ export default function BoardCard({ board, history, session }) {
       <div className="flex items-baseline justify-between pb-3 mb-1
                       border-b border-[var(--color-v2-ink)]">
         <h2 className="text-[11px] font-mono uppercase tracking-[.24em]
-                       text-[var(--color-text-muted)]">盘面 · Board</h2>
+                       text-[var(--color-text-muted)]">Board</h2>
         <span className="text-[11px] text-[var(--color-text-secondary)] font-mono">
           {session && <span className="mr-3">{session}</span>}
           {measured}/{total}
@@ -115,8 +115,9 @@ export default function BoardCard({ board, history, session }) {
       {offSession && (
         <div className="border border-dashed border-[var(--color-untested)] px-3 py-2 mb-2">
           <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] m-0">
-            <b className="text-[var(--color-signal-caution)]">{session} 是周末</b> ——
-            当天 ±4% 和涨跌家数是零因为没有交易，不是因为没有波动；下面的读数在等一个真实交易日。
+            <b className="text-[var(--color-signal-caution)]">{session} is a weekend.</b>{' '}
+            Its ±4% and advance/decline counts are zero because nothing was counted, not because
+            nothing moved — wait for a real session before reading this board.
           </p>
         </div>
       )}
@@ -131,13 +132,13 @@ export default function BoardCard({ board, history, session }) {
       <div className="flex flex-wrap gap-x-5 gap-y-1.5 pt-3 mt-1 text-[11px]
                       text-[var(--color-text-secondary)]">
         <span><i className="inline-block w-5 h-[12px] align-[-2px] mr-1.5"
-                 style={{ background: 'var(--color-took)' }} />接住了</span>
+                 style={{ background: 'var(--color-took)' }} />took the chance</span>
         <span><i className="inline-block w-5 h-[12px] align-[-2px] mr-1.5"
                  style={{ background: 'var(--color-refused)', backgroundImage: HATCH }} />
-          给了没接住</span>
+          refused it</span>
         <span><i className="inline-block w-5 h-[12px] align-[-2px] mr-1.5 border border-dashed"
-                 style={{ borderColor: 'var(--color-untested)' }} />没测到</span>
-        <span className="text-[var(--color-text-muted)]">档位＝填格数，不看颜色深浅</span>
+                 style={{ borderColor: 'var(--color-untested)' }} />not measured</span>
+        <span className="text-[var(--color-text-muted)]">rank = cells filled, never hue · line = the same reading, last 60 sessions</span>
       </div>
     </div>
   )

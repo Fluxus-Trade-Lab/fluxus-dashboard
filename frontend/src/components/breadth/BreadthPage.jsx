@@ -68,9 +68,10 @@ export default function BreadthPage({ data }) {
 
       {/* EVIDENCE — how far the board's repair carried (Chain), and the vote
           that turns it into a call (Votes). Unequal widths on purpose: the
-          chain is five short rows, the ballot is twelve dense ones — each
-          card gets the room its own content needs, not an even split. */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-3
+          chain is five short rows, the ballot is twelve glyphs that need
+          ~720px to sit without scrolling or breaking a label mid-word — so the
+          chain is fixed narrow and the ballot takes everything else. */}
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-3
                       items-stretch">
         <ChainCard chain={breadth.state_board?.chain} />
         <VoteCard verdict={verdict} session={session} />
@@ -80,21 +81,26 @@ export default function BreadthPage({ data }) {
       {breadth.state_board?.rows?.length > 0 && (
         <HowToRead>
           <p>
-            盘面每行是一个条件，右边的格子是它走到了第几档——<b>数格子，不看颜色深浅</b>，
-            因为深浅在四成人眼里读不出来。旁边的小走势线是这个条件过去 60 天的同一个数，
-            读法是「在变好还是在变坏」，不是新数字。
+            Each row is one condition, and the cells to its right are how far along
+            it is. <b>Rank is how many cells are filled</b> — count them rather than
+            judging the colour. The line at the end of the row is the same reading over
+            the last 60 sessions: it answers <i>getting better or worse</i>, not a new number.
           </p>
           <p>
-            虚线格＝这一档<b>没测到</b>，跟「测到是零」是两回事——一个是没证据，
-            一个是证据说什么都没发生。表头印着 {breadth.state_board.total} 项里实测了几项。
+            A row drawn as a <b>dashed outline</b> was not measured this session. That is
+            different from a row measured at zero: one is missing evidence, the other is
+            evidence of nothing happening. The board's header prints how many of the{' '}
+            {breadth.state_board.total} were actually measured.
           </p>
           <p>
-            盘面的顺序是一条<b>修复梯子</b>：越靠前的条件坏得越早、好得越晚。传导卡显示这股
-            修复走到了第几步——宽度是个计数，断了不会自己接回来。
+            The order is a <b>repair ladder</b>. Conditions near the top break first and
+            mend last. The chain shows how far the repair carried — a current that stops
+            does not resume later in the same chain.
           </p>
           <p>
-            这条线以下都是参考。答的是<i>在哪</i>，不是<i>所以呢</i>——折起来是因为它不是主体，
-            留着是因为分母都在那儿。
+            Everything below this line is reference. It answers <i>where</i>, never{' '}
+            <i>so what</i> — folded because it is not the subject, kept because the
+            denominators live there.
           </p>
         </HowToRead>
       )}

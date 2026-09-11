@@ -2,7 +2,7 @@ import { isWeekend } from './session'
 import VoteGlyphs from './VoteGlyphs'
 
 /**
- * 投票 · Votes — the twelve-way ballot that produces the score, one card.
+ * Votes — the twelve-way ballot that produces the score, one card.
  *
  * Folds what used to be three separate blocks (VerdictBanner, its own
  * Falsification note, and MarketStateSummary's four duplicate tiles) into
@@ -14,20 +14,20 @@ import VoteGlyphs from './VoteGlyphs'
  */
 
 const ENV_LABEL = {
-  BULLISH: '偏多', BEARISH: '偏空', MIXED: '混合',
-  OVERSOLD: '超卖 — 等反弹', OVERBOUGHT: '超买 — 追涨有风险',
+  BULLISH: 'Bullish', BEARISH: 'Bearish', MIXED: 'Mixed',
+  OVERSOLD: 'Oversold — reversal watch', OVERBOUGHT: 'Overbought — chase risk',
 }
 
 const VOTE_LABEL = {
-  ratio_5d: '5日比率', ratio_10d: '10日比率', thrust: '推力',
-  qtr_spread: '季度价差', spread_13_34: '13/34天价差', nh_nl: '新高新低',
-  mcclellan: 'McClellan', pct200: '200日以上占比', t2108_zone: 'T2108',
-  spy_danger: 'SPY 警报', qqq_danger: 'QQQ 警报', bench_trend: '基准趋势',
+  ratio_5d: '5-day ratio', ratio_10d: '10-day ratio', thrust: 'Thrust',
+  qtr_spread: 'Quarterly spread', spread_13_34: '13%/34d spread', nh_nl: 'New highs vs lows',
+  mcclellan: 'McClellan', pct200: '% above 200-day', t2108_zone: 'T2108 zone',
+  spy_danger: 'SPY warnings', qqq_danger: 'QQQ warnings', bench_trend: 'Benchmark trend',
 }
 
 const CTX_LABEL = {
-  up_4pct: '涨4%', down_4pct: '跌4%', ratio_5d: '5日比率',
-  qtr_spread: '季度价差', t2108: 'T2108', mcclellan_osc: 'McClellan', nh_nl_net: '新高新低净额',
+  up_4pct: 'up 4%', down_4pct: 'down 4%', ratio_5d: '5-day ratio',
+  qtr_spread: 'qtr spread', t2108: 'T2108', mcclellan_osc: 'McClellan', nh_nl_net: 'NH−NL',
 }
 
 function Falsification({ votes, score, env }) {
@@ -50,22 +50,22 @@ function Falsification({ votes, score, env }) {
   return (
     <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)] m-0">
       {env === 'MIXED' ? (
-        <>score <b className="text-[var(--color-text)] font-mono">{score >= 0 ? `+${score}` : score}</b>，
-          变成{target > 0 ? '偏多' : '偏空'}需要到 <b className="text-[var(--color-text)] font-mono">
-          {target > 0 ? '+4' : '−4'}</b> —— 还差 {need}。</>
+        <>Score <b className="text-[var(--color-text)] font-mono">{score >= 0 ? `+${score}` : score}</b>.
+          It turns {target > 0 ? 'bullish' : 'bearish'} at <b className="text-[var(--color-text)] font-mono">
+          {target > 0 ? '+4' : '−4'}</b> — {need} away.</>
       ) : (
-        <>score <b className="text-[var(--color-text)] font-mono">{score >= 0 ? `+${score}` : score}</b>，
-          守住 {target > 0 ? '≥+4' : '≤−4'} 才成立，差 <b className="text-[var(--color-text)]">{need}</b> 分会破 ——
-          {' '}{side.length} 票{env === 'BEARISH' ? '偏空' : '偏多'}里翻 <b className="text-[var(--color-text)]">{flips}</b> 票
-          到对面，或 {need} 票变中立就破。</>
+        <>Score <b className="text-[var(--color-text)] font-mono">{score >= 0 ? `+${score}` : score}</b>.
+          It holds while {target > 0 ? '≥ +4' : '≤ −4'}; <b className="text-[var(--color-text)]">{need}</b> points
+          break it — <b className="text-[var(--color-text)]">{flips}</b> of the {side.length}{' '}
+          {env === 'BEARISH' ? 'bear' : 'bull'} votes crossing over, or {need} going undecided.</>
       )}
       {' '}
       {against.length > 0 ? (
-        <>已经反对：{against.map(([k]) => VOTE_LABEL[k] ?? k).join('、')}。</>
+        <>Against: {against.map(([k]) => VOTE_LABEL[k] ?? k).join(', ')}.</>
       ) : (
-        <>目前没有票反对。</>
+        <>Nothing is voting against it yet.</>
       )}
-      {neutral.length > 0 && <> 中立：{neutral.map(([k]) => VOTE_LABEL[k] ?? k).join('、')}。</>}
+      {neutral.length > 0 && <> Undecided: {neutral.map(([k]) => VOTE_LABEL[k] ?? k).join(', ')}.</>}
     </p>
   )
 }
@@ -81,7 +81,7 @@ export default function VoteCard({ verdict, session }) {
       <div className="flex items-baseline justify-between pb-3 mb-3
                       border-b border-[var(--color-v2-ink)]">
         <h2 className="text-[11px] font-mono uppercase tracking-[.24em]
-                       text-[var(--color-text-muted)]">投票 · Votes</h2>
+                       text-[var(--color-text-muted)]">Votes</h2>
         <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
           score {v.score >= 0 ? `+${v.score}` : v.score} / 12
         </span>
@@ -96,12 +96,13 @@ export default function VoteCard({ verdict, session }) {
 
       {offSession && (
         <p className="text-[11px] leading-relaxed text-[var(--color-signal-caution)] mt-1 mb-0">
-          算的是 <b>{session}</b>，周末 —— 背后 ±4% 和涨跌家数是零因为没交易，不是没波动。
+          Computed from <b>{session}</b>, a weekend — the ±4% and advance/decline counts behind
+          these votes are zero because nothing was counted, not because nothing moved.
         </p>
       )}
 
       <div className="my-3">
-        <VoteGlyphs detail={v.vote_detail} />
+        <VoteGlyphs detail={v.vote_detail} stretch />
       </div>
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />
@@ -113,7 +114,7 @@ export default function VoteCard({ verdict, session }) {
 
       {ctx.length > 0 && (
         <p className="text-[11px] font-mono text-[var(--color-text-muted)] mt-2 mb-0">
-          分位：{ctx.map(([k, p]) => `${CTX_LABEL[k] ?? k} ${p}th`).join(' · ')}
+          percentile · {ctx.map(([k, p]) => `${CTX_LABEL[k] ?? k} ${p}th`).join(' · ')}
         </p>
       )}
     </div>
