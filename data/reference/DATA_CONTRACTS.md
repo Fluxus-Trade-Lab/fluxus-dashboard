@@ -1160,3 +1160,8 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ① **放什么**：主读数 = `ts_dimension.today.prob_3d`（VIX 五分位 × 200 日线 × VIX 期限结构三态的格子频率，比顶层 `prob` 多一个维度）＋ `ts_dimension.today.n_cell_3d` ＋ 顶层 `base_rate`，**三个必须同框**；`ts_dimension` 缺席或其 `today.stale_warning=true` 时回落顶层 `prob`（36 年 5×2 表）并标「TS 维未测量」。语境一行取 `today.vix` / `today.vix_quintile` / `today.above_200dma` ＋ `ts_dimension.today.ts_label`。占位原文想放的「分布日计数 / 离高点多远 / 修复梯子」不是这个 json 的东西——那是别的数据源的格，别混进来。
   ② **呈现**：一行主句「P(SPX ≥5% 回撤 / 21 交易日) = X%（同格历史 n 天 · 全样本基准 16.6%）」＋语境行；展开层可给 `table.by_vix_quintile.full` 五档小表（rate+n）当证据层。**不上危险色**——这是历史频率读数不是警报（tick_cycle 09-XX 同一条裁决）；**不做 RegimeBand 第四票**——regime 问「能拿多少」，这格问「这种天气下 5% 回撤历史上多常见」，并排即可不投票。`json.date` 落后当前 >2 交易日按「未测量」占位。
   ③ **公开**：可以公开，三条焊死为前提：prob/base/n 同框永不拆；印性质句（`method` 缩写：「条件基率表，无拟合参数」）＋ `caveats[0]`（尾部读数非方向判断）；无方向语言、无危险色。三条做不到任何一条就退回内部记录。——这三条正是 08-17 停摆时「headline 数字会被过读」顾虑的解法，带着它们上页即视为解禁本格（Andy 09-11「保留」）。
+  ↳↳ **v2 扩版（Andy 09-11 追令：「我要我们研究turin的结果还有linda的tick cycle 研究放上去」）——格子内容从一个读数扩成三层，规矩不变：**
+  **L1 主读数**（同 v1）：`correction_risk.json` 的 `prob_3d + n_cell_3d + base_rate` 三同框——这就是 turin 研究的直接产物（第三维 VIX 期限结构三态 = E1 唯一击败 VIX 档差的维度）。
+  **L2 turin 旁注两行**：同 json 的 `side_readings.nhnl`（state + `hist_rate_e1`）与 `side_readings.gex`（`pct_rank_252d` + `hist_rate_e1`）——各配半句它答什么（NHNL=内部宽度 washout 深浅；GEX=dealer 缓冲厚薄），**旁注永不并进 L1 的数**。
+  **L3 tick cycle 一行**：`tick_cycle.json` 的 `band + reading` 原句（Linda 的 LBR 复刻；已在晨读第一页，此处复用同 json，零新数据活）——它答「磨还是走」，与 L1 的「会不会崩」是两个问题，排版上分开别读成同一题的两票。
+  三层共用的老规矩不变：无危险色、不做 RegimeBand 票、`prob` 永不单飞、各层 staleness 各自按「未测量」降级。数据源就两个每晚已在产的 json，前端不用等任何管道改动。
