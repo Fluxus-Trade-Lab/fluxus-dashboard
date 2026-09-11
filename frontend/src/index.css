@@ -54,7 +54,14 @@
        muted      bg 4.83  surface 5.61  raised 4.52   */
   --color-text-secondary: #4b453e;
   --color-text-muted: #655e55;
-  --color-text-bold: #292524;
+  /* Emphasis has to be at least as strong as the body it emphasises. It was
+     #292524 until 2026-09-11 — LIGHTER than --color-text (#1c1917): 13.3 vs
+     15.3 on surface — so every `text-bold` on the site read weaker than the
+     plain text beside it (found by the Market State type audit; Andy:
+     「全站修掉」). Now one step past the body, the way dark mode already had it
+     (#fff over #e6e5e5).
+       bold  bg 14.93  surface 17.32  raised 13.98   (text: 13.21 / 15.34 / 12.37)   */
+  --color-text-bold: #0c0a09;
 
   /* v3 charter (2026-08-15): the signal WORD carries the reading; hue only
      ever reinforced it. POWER 3 / CAUTION / WARNING fold into the grey ladder

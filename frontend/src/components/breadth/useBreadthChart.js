@@ -10,7 +10,7 @@ export function chartTokens() {
     took: g('--color-took', '#1f5288'),
     refused: g('--color-refused', '#d94032'),
     ink: g('--color-text', '#1c1917'),
-    inkBold: g('--color-text-bold', '#292524'),
+    inkBold: g('--color-text-bold', '#0c0a09'),
     secondary: g('--color-text-secondary', '#5f584f'),
     muted: g('--color-text-muted', '#7d766d'),
     border: g('--color-border', '#e2dcd0'),
