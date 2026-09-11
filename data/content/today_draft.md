@@ -1,32 +1,34 @@
-date: 2026-09-10
+date: 2026-09-11
 tier: B
-source: queue（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周表 · 第 5 / 第 1 / 第 4 条，三条全部逾期未发）
-gate: 🎮 0/5 · streak 0（W7 = 09-07→09-13 第 4 天；上次发布 09-03，已 7 天零发布）
+source: `Fluxus_Own_Lines.md` #106（金句库，从未进过队列）+ queue（`Fluxus_Brand/ops/Fluxus_Queue.md` origin/main 09-06 版 · 第 2 / 第 1 条）
+gate: 🎮 0/5 · streak 0（W7 = 09-07→09-13 第 5 天；上次发布 09-03，已 8 天零发布）
 ---
 ## C1
-bucket: QUOTE（自嘲 · 英文，单独成条不挂链接） | entry: -
+bucket: QUOTE（出手时机 · 英文，单独成条不挂链接） | entry: -
 
-I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me.
+Wait for buyers FIRST, then enter. Don't enter hoping buyers show up.
 
-why: 队列里排 09-04 的那条，逾期 6 天未发（已核 posts.csv 全表 19 行，从未发过）。**今天把它排在昨天那条之前，是按 09-08 修好的排序键办的**——你昨天否掉的那条病根是「零具体物」，而这条里有一个具体的东西：一个你至今还在做的动作（micromanage），外加它的代价。出处是你自己的 Discord 原话（「我现在还时不时micromanage 就心态上的问题 有时候不必要」，[`Fluxus_Own_Lines.md:174`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:174) #29 ⭐⭐⭐）。10 秒粘贴，本周关卡 0/5 → 1/5。
+why: 这条是你英文频道的原句，一个字没改（[`Fluxus_Own_Lines.md:609`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:609) #106 ⭐⭐⭐，「领头羊与出手时机」节）。队列、posts.csv、verdicts、近 15 份备稿里都查不到它，是第一次端上来。排第一的理由：它是今天三条里唯一一条**零打磨**的原话，而且说的是一个下单动作，不是一种态度。
 ---
 ## C2
+bucket: QUOTE（疼 · 中文） | entry: -
+
+普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。
+
+why: 你 09-06 结算时留下的两条之一，队列排在**明天 09-12（六）**（[`Fluxus_Own_Lines.md:721`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:721) #127，原话「普通人不是不敏感,普通人是什么都想要,或者只想要通常是刺激的一部份,不愿承认另一部份」）。今天先端出来，是因为本周队列只剩它没过期。今天发了的话，明天队列就空了。
+---
+## C3
 bucket: QUOTE（主张 · 英文） | entry: -
 
 Discipline is not a personality trait. It's a design problem.
 
-why: **昨天的 C1，你没发也没否，所以它今天还在台上，只是降了一位。**逾期最久的一条（队列首条），出处是你的原话（「纪律不是性格问题，是系统设计和训练的问题」，[`Fluxus_Own_Lines.md:451`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:451) #77 ⭐⭐⭐）。降位的理由只有一个：它是三条里唯一一条**只有态度、没有一个能查的东西**的，而这正是你 09-08 点名的那个病。
----
-## C3
-bucket: QUOTE（教学 · 中文） | entry: -
-
-底部的仓位永远比消息先到。
-
-why: 队列里排 09-03 的中文条（[`Fluxus_Own_Lines.md:559`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:559) #97 ⭐⭐⭐，原话「底部position永远比消息先早来」），从未发过。它带的是一个可验证的盘面主张（读者可以自己去回看任何一个底），不是态度句；排第三只因为中英轮换——C1 已经占了英文位。
+why: 你 09-06 留下的另一条，排 09-07，已逾期 4 天（[`Fluxus_Own_Lines.md:451`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:451) #77）。09-09 当 C1、09-10 当 C2 都没动静，今天降到第三。它排最后是因为打磨版删掉了你原话里的「和训练」，三条里离原话最远。
 ---
 ## notes
-- **⚠️ C1 的英文是打磨稿，不是逐字原话。** 你原话的落点是「大部分时候**没必要**」，打磨版改成了「most of the time it **costs me**」——多了一个代价主张。想严格贴自己的话，把尾巴换成 `and most of the time it isn't necessary.` 两个版本都是你的意思，但只有后者是你说过的话。这个选择我不替你做。
-- **维修期条款仍生效**：09-08 维修令之后还没有新规则 campaign 卡过你的手（最新一张 `2026-09-06_autumn-effect-decay` 被你毙了题目，status=killed），所以今天 C1 仍只从金句库出，待批 campaign 包的变体不进 C1。
-- **A 档为什么没用上**：往前最近的 queued 卡是 `2026-09-03_noise-with-structure`（常青、无窗口），但它同族的 `2026-09-01_august-scorecard/V2` 09-08 刚被你判「挺ai的，就是说了几句话不知道在说什么」，同包同轮次的变体今天不端。APPROVAL_QUEUE 里三张卡等你，两张已零发布死绝。
-- **⚠️ 零发布已连 7 天**（posts.csv 最后一行是 09-03）。本周队列 7 条一条没灌、一条没发；今天这三条全部来自那 7 条。
-- 未读到的源：无。`Fluxus_Week_Plan.md` 最后一条日期是 2026-08-03，已停更，本班未据它排期。
+- **⚠️ 更正昨天那一班：09-10 的 C1（#29 micromanage）和 C3（#97 底部的仓位）是你 09-06 结算时已经踢出本周队列的条目。** 原因：昨天那班读的是主树的 `Fluxus_Queue.md`，那份停在 08-30、踢人之前；origin/main 那份（09-06 `8bb14519`）才有踢人的记录。今天读的是 origin/main 版，被踢的 5 条（#139 / #76 / #97 / #29 / #24）一条没端。规矩冲突在「门铃待按」里另报。
+- **维修期条款仍生效**：最新一张卡 `2026-09-06_autumn-effect-decay` 是 killed，09-08 维修令后还没有新规则卡过你的手，所以 C1 仍只从金句库和 `voice/raw/` 出。
+- **A 档为什么没用上**：往前最近一张 queued 卡是 `2026-09-03_noise-with-structure`。它唯一过得了具体物闸的是 V3（票根变体，两个 commit 时间戳已复核：`a2e3132b` 09-01 07:55:58 +0900 → `deb7a0f5` 09-02 04:55:59 +0900，间隔 21 小时），但 V3 已经端过 3 次（09-05 / 09-06 / 09-08），三次都没回应，今天不端第 4 次。以后要发它有两处要改：①正文里的 "Sept 1, 07:55" 是 JST，没标时区，美东读者会读成 ET；②收尾一句 "the expensive part was not the fix. It was…" 是「不是A而是B」骨架，verdicts 里被否过的就是这种写法。
+- **`voice/raw/` 09-06 那三份口述（C17 ATR/EV · C19 顶部大纲 · C26 routine）是 9/20 课程的原料，不是可以直接发的成品**，本班不切。
+- **零发布已连 8 天**（posts.csv 最后一行 09-03）。09-05 以来端出的候选全部没发也没否。你 08-31→09-03 实际发的 4 条都是盘面帖（ES 小时 SFP、$MU vs $IBIT、$GEV $BE），没有一条来自金句队列。三批队列（08-04 / 08-10 / 08-31）加起来发出 0 条。这件事留给 Steve 周检处理，今天不改排法。
+- 本周关卡：剩周五/六/日三天，要 5 条。
+- 未读到的源：无。`Fluxus_Week_Plan.md` 最后一条日期是 2026-08-03，已停更，本班没按它排期。
