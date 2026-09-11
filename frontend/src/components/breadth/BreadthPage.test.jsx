@@ -110,3 +110,36 @@ describe('BreadthPage — 09-11 three-card rebuild', () => {
     expect(today.textContent).toContain(last.ad_line.toLocaleString())
   })
 })
+
+/* The three Correction risk charts, on the real payloads. */
+import { CondGrid, StateBars, TickEvidence } from './CorrectionRiskPanel'
+
+describe('Correction risk charts', () => {
+  const cr = read('data/output/correction_risk.json')
+  const tc = read('data/output/tick_cycle.json')
+
+  it('rings exactly one cell of the grid, and it is today\'s', () => {
+    const t = { ...cr.today, ts_state: cr.ts_dimension.today.ts_state }
+    const { container } = render(<CondGrid ts={cr.ts_dimension} today={t} />)
+    const rings = container.querySelectorAll('rect[stroke-width="2.2"]')
+    expect(rings.length).toBe(1)
+    const title = rings[0].parentElement.querySelector('title').textContent
+    expect(title).toContain(`${(cr.ts_dimension.today.prob_3d * 100).toFixed(1)}%`)
+    expect(title).toContain(cr.ts_dimension.today.n_cell_3d.toLocaleString())
+  })
+
+  it('draws a reading\'s state bars only when its table is in the payload', () => {
+    expect(render(<StateBars reading={cr.side_readings.nhnl} />).container.firstChild).toBeNull()
+    const withTable = { ...cr.side_readings.nhnl, today_state: '2', base_rate: 0.1755,
+      table: { 1: { rate: 0.3718, n: 503 }, 2: { rate: 0.1943, n: 3787 }, 3: { rate: 0.0914, n: 2024 } } }
+    const { container } = render(<StateBars reading={withTable} />)
+    expect(container.querySelectorAll('rect').length).toBe(3)
+    expect(container.querySelector('rect[opacity="1"]').parentElement.textContent).toContain('19%')
+  })
+
+  it('draws the TICK comparison from the evidence block', () => {
+    const { container } = render(<TickEvidence e={tc.evidence} />)
+    expect(container.querySelectorAll('rect').length).toBe(4)
+    expect(container.textContent).toContain(`${(tc.evidence.sell_p_dd5 * 100).toFixed(1)}%`)
+  })
+})
