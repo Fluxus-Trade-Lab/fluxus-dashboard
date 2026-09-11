@@ -48,8 +48,11 @@ ROOT = Path(__file__).resolve().parents[2]
 # Declared with 6 on 2026-09-12; the same night four were backfilled as `na`
 # (not effect-size tests) and adr-floor got the injection-measured mde from
 # its own preregistered re-test. The one left ran a test and found nothing,
-# and its study never measured what it could have seen: going back to the
-# data (with date clustering) is the work, not a sentence.
+# and its study never measured what it could have seen. Worse, measured
+# 2026-09-12: its numbers (study.json "standalone": any -2.4 / uptrend -0.1)
+# have NO committed engine -- tightness_grid.py computes the grid, not that
+# row -- so a resolution cannot be backfilled without first guessing how the
+# 71,636-row sample was drawn. Rebuild it, or downgrade the claim.
 LEGACY: dict[str, tuple[str, str]] = {
     "tightness-compression-no-standalone-edge": ("Nighty Zac", "2026-09-12"),
 }
