@@ -257,3 +257,28 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     vi.unstubAllGlobals()
   })
 })
+
+/* Studio Q 09-11 (a7bd310b): the page names its method, a green-day call is
+   tagged synthetic, and Q1 stays faded while provisional. */
+describe('Studio Q rulings on the page', () => {
+  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.2026-09-10.json'), 'utf8'))
+
+  it('names the light\'s method and the lesson chart\'s other method', async () => {
+    withFetch({ market_light: real })
+    renderPage()
+    expect(await screen.findByText(/The lesson’s own chart uses SMA 10 \/ 20/)).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+
+  it('tags a green-day verdict as synthetic, and shows breadth\'s three-valued answer', async () => {
+    const green = { ...real, verdict: 'dim', verdict_pending: null,
+      spy: { ...real.spy, light: 'green', checks_passed: 3 },
+      brightness: { ...real.brightness, breadth: { state: 'mixed' } } }
+    withFetch({ market_light: green })
+    renderPage()
+    expect((await screen.findAllByText('DIM')).length).toBeGreaterThan(0)
+    expect(screen.getByText(/synthetic — the rule that combines/)).toBeInTheDocument()
+    expect(screen.getByText('Mixed')).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+})
