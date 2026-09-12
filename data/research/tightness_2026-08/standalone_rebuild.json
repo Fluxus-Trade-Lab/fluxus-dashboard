@@ -1,0 +1,79 @@
+{
+  "sample": {
+    "start": 130,
+    "step": 5,
+    "tight": "atr14__pct252 < 20",
+    "compare": "tight minus rest",
+    "bootstrap": 2000,
+    "seed": 20260913
+  },
+  "any": {
+    "n": 71691,
+    "n_tight": 6672,
+    "delta_pp": -2.4,
+    "printed_pp": -2.4,
+    "reproduces": true,
+    "week": {
+      "ci95": [
+        -5.46,
+        0.58
+      ],
+      "halfwidth_pp": 3.02,
+      "mde80_pp": 4.36
+    },
+    "ticker": {
+      "ci95": [
+        -4.08,
+        -0.6
+      ],
+      "halfwidth_pp": 1.74,
+      "mde80_pp": 2.47
+    }
+  },
+  "uptrend": {
+    "n": 25971,
+    "n_tight": 2420,
+    "delta_pp": -0.07,
+    "printed_pp": -0.1,
+    "reproduces": true,
+    "week": {
+      "ci95": [
+        -3.19,
+        3.62
+      ],
+      "halfwidth_pp": 3.41,
+      "mde80_pp": 4.99
+    },
+    "ticker": {
+      "ci95": [
+        -2.88,
+        2.67
+      ],
+      "halfwidth_pp": 2.77,
+      "mde80_pp": 3.9
+    }
+  },
+  "setup_all": {
+    "n": 5967,
+    "n_tight": 161,
+    "delta_pp": -0.94,
+    "printed_pp": -0.9,
+    "reproduces": true,
+    "week": {
+      "ci95": [
+        -9.03,
+        7.59
+      ],
+      "halfwidth_pp": 8.31,
+      "mde80_pp": 11.93
+    },
+    "ticker": {
+      "ci95": [
+        -9.17,
+        7.83
+      ],
+      "halfwidth_pp": 8.5,
+      "mde80_pp": 12.33
+    }
+  }
+}
