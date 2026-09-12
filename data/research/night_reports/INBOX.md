@@ -2832,3 +2832,8 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 - 修法：EVIDENCE 登记 `market_light: [("checks","num0+"),("gear","num0+")]`——两个字段 0 都是真答案（红灯日 0/5 项通过；gear 0 = no gear applies）。28 条 audit_ledger 测试绿，全套 1857 绿，audit_ledger 对真账 0 violations。
 - 给 market_light 线的一句：以后新 guard 落 ledger 时同 commit 登记 EVIDENCE（或入 KNOWN_UNCOVERED_GUARDS），这条测试就是为此设的闸。
 🔔 [09-12] → OPS Fable · 联邦运维: NOW.md 关键路径三格已按实测更正（补图 19 张卡=过期，138 占位 0 缺；B 线现状与 PDF 定稿行同步）——Studio Q 改的是自己线的事实格，周一翻牌照常你主刀 · pending
+
+## [2026-09-12] OPS：门铃「滞留可见」补接进每日页（宪法写了、没人调用的那一条）
+- 查门铃取件窗口时发现：宪法 09-11「pending 超 48h 上 Andy 牌面 🟡」写在条文里，但云端每日页任务书（trig_01RTGvUGRfr9Uvj3mYPBP3UP）从没有这一步——又一例「闸对、测试对、没人调用」。
+- 已补：第 1 步分档之后加「🔔 门铃滞留扫描」——grep 🔔 pending 行、逐条看下面有没有 ↳ ✅ 已取、>48h 的上 🟡 档写明**是哪条线**（口径：滞留不等于谁失职，等于那条线两天没开过班），零滞留也要写一句不省略。09-13 10:07 JST 起生效。
+- 取件窗口的实况（备查）：门铃没有独立轮询周期，取件频率＝各线自己的班次频率。Steve ≤12h（日三班）· Zac ≤24h · Joe 最长 ~72h（周二至周六，周六班后按的等到周二）· Growth 最长 7 天（周一一班）· 交互线（Claire/Studio Q/ALEX/Linda/Mia）**无上限**，延迟＝Andy 下次打开那个窗口。每小时的数据哨兵没有取铃步（它不是收件线，加了也不加速）。所以真正的兜底只有两层：每日页 >48h 上牌（今天补上的）、周检 >7d 点名。
