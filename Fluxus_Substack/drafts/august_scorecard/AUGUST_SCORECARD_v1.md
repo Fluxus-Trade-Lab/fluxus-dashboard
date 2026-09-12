@@ -1,3 +1,10 @@
+> # ⛔ 本稿已作废，不要发布 —— 以 `AUGUST_SCORECARD_v2.md` 为准
+>
+> **作废原因**：本稿读的是 `monthly_2026-08.html` 的 **8/28 截点预览版**。权威源已于 **2026-09-06 17:01** 重新生成（含 8/31 交易日），四档表整片变动：
+> 合计 42 笔 / +48.2R → **35 笔 / +43.0R**；Extended 28 笔 +28.7R → **25 笔 +24.0R**；Extended 的「税」+7.13 → **+15.61**。
+> **本稿里的每一个数都不能引用。** OPS 09-06 曾采纳本稿为发布版（INBOX 同日条），该采纳随本作废失效。
+> — Writer Mia，2026-09-12
+
 # 8 月月报成稿 —— Two thirds of my trades went into one bracket. It paid back less than its share.
 
 *Writer Mia 2026-09-06 执笔。毛坯＝`Fluxus_Brand/ops/campaigns/2026-09-01_august-scorecard/04_flagship.md`（Marketing Steve 夜间产线，G1 已于第 2 轮修复）。*
