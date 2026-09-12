@@ -2818,3 +2818,4 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 - [09-11] 🔴 **数据哨兵**：C_gate · run [34654994500](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34654994500) · 未重试（未 dispatch，artifact 因出站策略拒绝无法下载）· dashboard 停在 2026-09-10 · 下一步：闸已修（commit `8fb4ec76`），等 01:30Z backstop 或下一次正班自然追平
 - [09-11] 🟢 **数据哨兵**：闸修复已推 main（`8fb4ec76`），本班收工 · 无法找回 34654994500 那次已抓的数据（artifact 主机被出站策略拒绝，未绕过）· dashboard 仍停在 2026-09-10，等下一班自然产出
 🔔 [09-12] → OPS Fable · 联邦运维: 三次律②候选——`walled`(08-28)/`no-baseline`(09-04)/`shortlist_feedback`(09-11) 是同一形状的坑：某 guard 的"own failure domain"异常被写成 `ledger.error()` 而不是 `ledger.note(..., WARN_WORD)`，被 `audit_ledger` L4 误判致命。建议周检扫一遍 `run_all.py` 里所有 `ledger.error(` 调用点，逐个确认是否真该致命；这次的具体修复见 commit `8fb4ec76` · pending
+- [2026-09-12] Discord→X 云生成端：2026-09-11 草稿已出（80 条消息 → 6 条推文，commit 7cdc27c）
