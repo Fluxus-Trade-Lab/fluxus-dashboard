@@ -67,6 +67,12 @@ EVIDENCE: Dict[str, List[tuple]] = {
     "shortlist":        [("cards", "num+")],
     "asset_signals":    [("count", "num+")],
     "fundamentals":     [("store", "num+"), ("ok", "num0+")],
+    # market_light joined 2026-09-12 (guard first appeared in the 2026-09-11
+    # rows; CI's test_no_new_guard_slips_in_without_evidence caught it saying
+    # "ok" with zero evidence checks). Both fields take num0+ because 0 is a
+    # real answer for each: a red-light day passes 0 of the 5 checks, and
+    # gear 0 means "no gear applies" (market_light.py's own words).
+    "market_light":     [("checks", "num0+"), ("gear", "num0+")],
 }
 BREADTH_BLOCKS = {"conditions", "regime", "state_board", "verdict"}
 OK_WORDS = {"ok", "OK", True}

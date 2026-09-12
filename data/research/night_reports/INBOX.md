@@ -2826,3 +2826,8 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 - [09-12] 🔴 **数据哨兵**：A_infra · 无 run（01:30Z backstop 未出现在 run list，账本无该班记录，第 5 次被 GitHub 丢弃——同 08-27/09-08/09-09 形状）· 已重试至第 1 班 · dashboard 停在 2026-09-10 · 下一步：可发时段内手动 dispatch
 - [09-12] ✅ **数据哨兵**：已修复（run [34667306907](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/34667306907) · 第 1 班接力）—— 02:18 UTC 手动 workflow_dispatch，02:41 UTC 成功落 commit `8c76c744`（session 2026-09-11，universe_quality ok，tradeable 2544，无 errors），dashboard 追平至 2026-09-11。backstop cron 被丢弃已是第 5 次（08-27/09-08×2/09-09/09-12），建议 OPS 按三次律②评估机制级修复（起跑前自比对 main 是否已追平，或加一道独立于 GitHub schedule 的外部触发保底）。
 - [09-12] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-11，commit `8c76c744`，上一班 02:41 UTC 第 1 班接力已修复）。本班 06:15 UTC 巡检：universe_quality ok / tradeable 2544 / no errors，today ET 为周六，09-11 即最近已完成交易日，无新失败，无需分诊/重跑动作。backstop 连续第 5 次被丢弃的机制级建议仍待 OPS（见上一班行）。
+
+## [2026-09-12] OPS：tests-main 连红 4 班已修 —— market_light 落账未登记证据
+- Andy Gmail 收到 `Run failed: tests - main (e7de397)`。根因：09-11 的 market_light（640643c4）会写 run_ledger guard，但 audit_ledger 的 EVIDENCE 表未登记；今晨追平班第一次把带 market_light 的 ledger 行推上 main，`test_no_new_guard_slips_in_without_evidence` 按设计报红（正是 shortlist_feedback 零证据说 ok 的那个形状，这次在 CI 拦住了）。
+- 修法：EVIDENCE 登记 `market_light: [("checks","num0+"),("gear","num0+")]`——两个字段 0 都是真答案（红灯日 0/5 项通过；gear 0 = no gear applies）。28 条 audit_ledger 测试绿，全套 1857 绿，audit_ledger 对真账 0 violations。
+- 给 market_light 线的一句：以后新 guard 落 ledger 时同 commit 登记 EVIDENCE（或入 KNOWN_UNCOVERED_GUARDS），这条测试就是为此设的闸。
