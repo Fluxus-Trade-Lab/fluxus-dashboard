@@ -2831,3 +2831,4 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 - Andy Gmail 收到 `Run failed: tests - main (e7de397)`。根因：09-11 的 market_light（640643c4）会写 run_ledger guard，但 audit_ledger 的 EVIDENCE 表未登记；今晨追平班第一次把带 market_light 的 ledger 行推上 main，`test_no_new_guard_slips_in_without_evidence` 按设计报红（正是 shortlist_feedback 零证据说 ok 的那个形状，这次在 CI 拦住了）。
 - 修法：EVIDENCE 登记 `market_light: [("checks","num0+"),("gear","num0+")]`——两个字段 0 都是真答案（红灯日 0/5 项通过；gear 0 = no gear applies）。28 条 audit_ledger 测试绿，全套 1857 绿，audit_ledger 对真账 0 violations。
 - 给 market_light 线的一句：以后新 guard 落 ledger 时同 commit 登记 EVIDENCE（或入 KNOWN_UNCOVERED_GUARDS），这条测试就是为此设的闸。
+🔔 [09-12] → OPS Fable · 联邦运维: NOW.md 关键路径三格已按实测更正（补图 19 张卡=过期，138 占位 0 缺；B 线现状与 PDF 定稿行同步）——Studio Q 改的是自己线的事实格，周一翻牌照常你主刀 · pending
