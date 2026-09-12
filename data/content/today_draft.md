@@ -1,34 +1,32 @@
-date: 2026-09-11
+date: 2026-09-12
 tier: B
-source: `Fluxus_Own_Lines.md` #106（金句库，从未进过队列）+ queue（`Fluxus_Brand/ops/Fluxus_Queue.md` origin/main 09-06 版 · 第 2 / 第 1 条）
-gate: 🎮 0/5 · streak 0（W7 = 09-07→09-13 第 5 天；上次发布 09-03，已 8 天零发布）
+source: `Fluxus_Own_Lines.md` 金句库（#193 / #127 / #130）+ queue（`Fluxus_Brand/ops/Fluxus_Queue.md` origin/main 09-06 版 · 第 2 条今天到期）
+gate: 🎮 0/5 · streak 0（W7 = 09-07→09-13 第 6 天；上次发布 **09-03**，已 9 天零发布）
 ---
 ## C1
-bucket: QUOTE（出手时机 · 英文，单独成条不挂链接） | entry: -
+bucket: QUOTE（复利/重复 · 英文） | entry: -
 
-Wait for buyers FIRST, then enter. Don't enter hoping buyers show up.
+Every loss teaches you. Every win reinforces you. Which is why the dullest part of this job is the part that makes you happy.
 
-why: 这条是你英文频道的原句，一个字没改（[`Fluxus_Own_Lines.md:609`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:609) #106 ⭐⭐⭐，「领头羊与出手时机」节）。队列、posts.csv、verdicts、近 15 份备稿里都查不到它，是第一次端上来。排第一的理由：它是今天三条里唯一一条**零打磨**的原话，而且说的是一个下单动作，不是一种态度。
+why: 这是你 **2026-08-10 亲口口述**的那条，从未上过稿、从未进过队列、近 15 份备稿里查不到（[`Fluxus_Own_Lines.md:821`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:821) #193 ⭐⭐⭐）。排第一的理由是它有票根：条目里记着 331 笔的数据背书（130 笔止损在教 / 47 笔 >3R 在强化）——**这三个数今天没现场复核，所以不上稿，只当选它的理由**。⚠️ 条目自带的警告照抄：**单发「重复可以让你幸福」会被读成鸡汤，必须带前半句**，上面这版两拍齐全。同周别排 #129（围棋复盘）——条目标了亲缘。
 ---
 ## C2
 bucket: QUOTE（疼 · 中文） | entry: -
 
 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。
 
-why: 你 09-06 结算时留下的两条之一，队列排在**明天 09-12（六）**（[`Fluxus_Own_Lines.md:721`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:721) #127，原话「普通人不是不敏感,普通人是什么都想要,或者只想要通常是刺激的一部份,不愿承认另一部份」）。今天先端出来，是因为本周队列只剩它没过期。今天发了的话，明天队列就空了。
+why: 队列排的就是**今天**（09-12 六，[`Fluxus_Queue.md`](Fluxus_Brand/ops/Fluxus_Queue.md) 第 2 条 · [`Fluxus_Own_Lines.md:721`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:721) #127）。**它是本周队列最后一条还没过期的**——#77 排 09-07 已过期未发，#24 被你 09-06 踢掉，今天不发，本周队列清零。排第二不是因为它弱，是因为它已经被端过三次（09-05 / 09-09 / 09-11）都没动；同一条第四次放 C1 是我在自欺。
 ---
 ## C3
-bucket: QUOTE（主张 · 英文） | entry: -
+bucket: QUOTE（机制 · 英文） | entry: -
 
-Discipline is not a personality trait. It's a design problem.
+You know exactly which price hurts you. The market will go visit it. That's its job.
 
-why: 你 09-06 留下的另一条，排 09-07，已逾期 4 天（[`Fluxus_Own_Lines.md:451`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:451) #77）。09-09 当 C1、09-10 当 C2 都没动静，今天降到第三。它排最后是因为打磨版删掉了你原话里的「和训练」，三条里离原话最远。
+why: 你的原话，从未上过稿（[`Fluxus_Own_Lines.md:736`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:736) #130 ⭐⭐⭐）。它和 C1 的分工：C1 说重复，这条说一个具体位置上会发生什么，主语是市场不是态度。
 ---
 ## notes
-- **⚠️ 更正昨天那一班：09-10 的 C1（#29 micromanage）和 C3（#97 底部的仓位）是你 09-06 结算时已经踢出本周队列的条目。** 原因：昨天那班读的是主树的 `Fluxus_Queue.md`，那份停在 08-30、踢人之前；origin/main 那份（09-06 `8bb14519`）才有踢人的记录。今天读的是 origin/main 版，被踢的 5 条（#139 / #76 / #97 / #29 / #24）一条没端。规矩冲突在「门铃待按」里另报。
-- **维修期条款仍生效**：最新一张卡 `2026-09-06_autumn-effect-decay` 是 killed，09-08 维修令后还没有新规则卡过你的手，所以 C1 仍只从金句库和 `voice/raw/` 出。
-- **A 档为什么没用上**：往前最近一张 queued 卡是 `2026-09-03_noise-with-structure`。它唯一过得了具体物闸的是 V3（票根变体，两个 commit 时间戳已复核：`a2e3132b` 09-01 07:55:58 +0900 → `deb7a0f5` 09-02 04:55:59 +0900，间隔 21 小时），但 V3 已经端过 3 次（09-05 / 09-06 / 09-08），三次都没回应，今天不端第 4 次。以后要发它有两处要改：①正文里的 "Sept 1, 07:55" 是 JST，没标时区，美东读者会读成 ET；②收尾一句 "the expensive part was not the fix. It was…" 是「不是A而是B」骨架，verdicts 里被否过的就是这种写法。
-- **`voice/raw/` 09-06 那三份口述（C17 ATR/EV · C19 顶部大纲 · C26 routine）是 9/20 课程的原料，不是可以直接发的成品**，本班不切。
-- **零发布已连 8 天**（posts.csv 最后一行 09-03）。09-05 以来端出的候选全部没发也没否。你 08-31→09-03 实际发的 4 条都是盘面帖（ES 小时 SFP、$MU vs $IBIT、$GEV $BE），没有一条来自金句队列。三批队列（08-04 / 08-10 / 08-31）加起来发出 0 条。这件事留给 Steve 周检处理，今天不改排法。
-- 本周关卡：剩周五/六/日三天，要 5 条。
-- 未读到的源：无。`Fluxus_Week_Plan.md` 最后一条日期是 2026-08-03，已停更，本班没按它排期。
+- **三条同属金句库，bucket 没拉开**（都是 QUOTE 的三个子类）。B 档本该三条不同 bucket——今天做不到，原因写在下一行，不假装过闸。
+- **维修期条款生效中**：`PIPELINE.md` 顶部 09-08 维修令未解除，最新一张卡 `2026-09-06_autumn-effect-decay` 已被你**题目级毙掉**（status=killed），上一张 `2026-09-03_noise-with-structure` status=queued 但仍等你签字。按条款 C1 只出金句库与 `voice/raw/`，campaign 变体不上 C1——所以今天没有 campaign 变体进来占位。
+- **门铃已取（晨报 09-12 第三节 · authority-clips 待搬 3 条）**：3 条都**不是成品**，按"手上没成品不许现编"不端上桌，作为编辑部动作记在这里——①@Hrundel75 波动帖：我方差异句已有（波动是除数不是信号，出处 `amplitude_2026-08/results.md`）；②@TheOneLanceB 十条 + @Muninn Model Book：**已判且有自有数字**（`reversal_checklist_2026-09/results.md`，引用边界在末节）——这条是三条里唯一够格进下一张卡 signal 站的；③@Muninn ADR 下界：我们**测不了**（日线口径下 ρ=+0.981），差异句弱，不收。搬运动作归编辑部，成稿归 Mia。
+- **顺带更正（门铃③）**：`Fluxus_Muninn_Teardown.md` 的发帖日应为 **08-14**（Article `created_at` 与帖子同秒，第二个证据）——归档文件不在本班边界，已留在此处待编辑部改。
+- **9 天零发布**（上次 09-03）。NOW.md A 线写的是「每天发一条，无例外」，这是本周最大的那个洞；备稿每天都在，卡在按发送这一步。
