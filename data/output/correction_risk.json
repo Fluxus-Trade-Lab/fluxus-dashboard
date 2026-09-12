@@ -1,420 +1,420 @@
 {
- "date": "2026-09-10",
- "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
- "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
- "prob": 0.1242,
- "base_rate": 0.166,
- "today": {
-  "date": "2026-09-10",
-  "spx_close": 7591.7,
-  "vix": 17.84,
-  "vix_quintile": 3,
-  "above_200dma": true,
-  "d200": 0.0607,
-  "prob": 0.1242,
-  "n_cell": 1650,
-  "prob_vix_only": 0.1375,
-  "n_vix_only": 1847,
-  "base_rate": 0.166
- },
- "table": {
-  "sample": {
-   "from": "1990-01-02",
-   "to": "2026-09-09",
-   "sessions": 9239,
-   "episodes": 199,
-   "half_split": "2008-04-29"
-  },
+  "date": "2026-09-11",
+  "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
+  "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
+  "prob": 0.0862,
   "base_rate": 0.166,
-  "vix_edges": [
-   8.14,
-   13.34,
-   16.14,
-   19.44,
-   24.17,
-   83.69
-  ],
-  "by_vix_quintile": {
-   "full": {
-    "1": {
-     "rate": 0.0551,
-     "n": 1852
-    },
-    "2": {
-     "rate": 0.0812,
-     "n": 1848
-    },
-    "3": {
-     "rate": 0.1375,
-     "n": 1847
-    },
-    "4": {
-     "rate": 0.2587,
-     "n": 1844
-    },
-    "5": {
-     "rate": 0.2982,
-     "n": 1848
-    }
-   },
-   "first_half": {
-    "1": {
-     "rate": 0.0215,
-     "n": 1021
-    },
-    "2": {
-     "rate": 0.0558,
-     "n": 806
-    },
-    "3": {
-     "rate": 0.1194,
-     "n": 821
-    },
-    "4": {
-     "rate": 0.2778,
-     "n": 1044
-    },
-    "5": {
-     "rate": 0.2751,
-     "n": 927
-    }
-   },
-   "second_half": {
-    "1": {
-     "rate": 0.0963,
-     "n": 831
-    },
-    "2": {
-     "rate": 0.1008,
-     "n": 1042
-    },
-    "3": {
-     "rate": 0.152,
-     "n": 1026
-    },
-    "4": {
-     "rate": 0.2338,
-     "n": 800
-    },
-    "5": {
-     "rate": 0.3214,
-     "n": 921
-    }
-   }
-  },
-  "monotone_spearman": {
-   "full": 1.0,
-   "first_half": 0.9,
-   "second_half": 1.0
-  },
-  "by_vix_quintile_x_200dma": {
-   "Q1_below200": {
-    "rate": 0.0,
-    "n": 47
-   },
-   "Q1_above200": {
-    "rate": 0.0565,
-    "n": 1805
-   },
-   "Q2_below200": {
-    "rate": 0.0084,
-    "n": 119
-   },
-   "Q2_above200": {
-    "rate": 0.0862,
-    "n": 1729
-   },
-   "Q3_below200": {
-    "rate": 0.2487,
-    "n": 197
-   },
-   "Q3_above200": {
-    "rate": 0.1242,
-    "n": 1650
-   },
-   "Q4_below200": {
-    "rate": 0.392,
-    "n": 625
-   },
-   "Q4_above200": {
-    "rate": 0.1903,
-    "n": 1219
-   },
-   "Q5_below200": {
-    "rate": 0.3404,
-    "n": 1278
-   },
-   "Q5_above200": {
-    "rate": 0.2035,
-    "n": 570
-   }
-  }
- },
- "overlay": {
-  "note": "breadth/gamma layer is NOT in `prob`; regime.py's validated read is reported here with its own window and never averaged in",
-  "regime_bands_2024_2026": {
-   "damaged": 0.272,
-   "extended": 0.058,
-   "source": "pipeline/screeners/regime.py docstring, 558 sessions, ~10 independent episodes"
-  }
- },
- "predicts_return": false,
- "separates_tail": true,
- "caveats": [
-  "Tail reading, not a direction call: it answers how often a 5% drawdown followed this state, never which way to lean.",
-  "A table, not a model: VIX quintile x 200-day side. A 9-feature logistic was worse than the base rate out of sample (see appendix) -- the honest skill lives in these two variables and is modest.",
-  "Cells are unequal: Q1/Q2 below the 200-day are rare (n < 130); read n_cell beside prob.",
-  "Quintile edges are set on the full 1990-> sample; the half-sample check shows the ordering holds in both halves.",
-  "Overlapping 21-day windows: sessions are not independent -- the episode count is the sample size that matters."
- ],
- "ts_dimension": {
-  "table": {
-   "sample": {
-    "from": "2006-07-17",
-    "to": "2026-09-09",
-    "sessions": 5069,
-    "episodes": 115,
-    "base_rate": 0.1799
-   },
-   "vix_edges_this_sample": [
-    8.14,
-    13.37,
-    15.96,
-    18.9,
-    24.11,
-    83.69
-   ],
-   "ts_state_labels": {
-    "1": "complacency(<0.8)",
-    "2": "neutral(0.8-1.0)",
-    "3": "backwardation(>1.0)"
-   },
-   "by_ts_state": {
-    "full": {
-     "1": {
-      "rate": 0.058,
-      "n": 224
-     },
-     "2": {
-      "rate": 0.17,
-      "n": 4347
-     },
-     "3": {
-      "rate": 0.3213,
-      "n": 498
-     }
-    },
-    "first_half": {
-     "1": {
-      "rate": 0.0,
-      "n": 43
-     },
-     "2": {
-      "rate": 0.1837,
-      "n": 2161
-     },
-     "3": {
-      "rate": 0.3545,
-      "n": 330
-     }
-    },
-    "second_half": {
-     "1": {
-      "rate": 0.0718,
-      "n": 181
-     },
-     "2": {
-      "rate": 0.1565,
-      "n": 2186
-     },
-     "3": {
-      "rate": 0.256,
-      "n": 168
-     }
-    }
-   },
-   "ts_monotone_spearman": {
-    "full": 1.0,
-    "first_half": 1.0,
-    "second_half": 1.0
-   },
-   "by_vix_quintile_x_200dma_x_ts": {
-    "Q1_above200_ts1": {
-     "rate": 0.0139,
-     "n": 144
-    },
-    "Q1_above200_ts2": {
-     "rate": 0.1047,
-     "n": 869
-    },
-    "Q1_above200_ts3": {
-     "rate": 0.0,
-     "n": 2
-    },
-    "Q2_below200_ts2": {
-     "rate": 0.0714,
-     "n": 14
-    },
-    "Q2_below200_ts3": {
-     "rate": 0.0,
-     "n": 1
-    },
-    "Q2_above200_ts1": {
-     "rate": 0.0,
-     "n": 42
-    },
-    "Q2_above200_ts2": {
-     "rate": 0.1082,
-     "n": 952
-    },
-    "Q2_above200_ts3": {
-     "rate": 0.0,
-     "n": 11
-    },
-    "Q3_below200_ts2": {
-     "rate": 0.3117,
-     "n": 77
-    },
-    "Q3_below200_ts3": {
-     "rate": 0.0,
-     "n": 5
-    },
-    "Q3_above200_ts1": {
-     "rate": 0.3478,
-     "n": 23
-    },
-    "Q3_above200_ts2": {
-     "rate": 0.1368,
-     "n": 892
-    },
-    "Q3_above200_ts3": {
-     "rate": 0.0833,
-     "n": 12
-    },
-    "Q4_below200_ts2": {
-     "rate": 0.4377,
-     "n": 297
-    },
-    "Q4_below200_ts3": {
-     "rate": 0.25,
-     "n": 28
-    },
-    "Q4_above200_ts1": {
-     "rate": 0.2,
-     "n": 15
-    },
-    "Q4_above200_ts2": {
-     "rate": 0.1716,
-     "n": 606
-    },
-    "Q4_above200_ts3": {
-     "rate": 0.1212,
-     "n": 66
-    },
-    "Q5_below200_ts2": {
-     "rate": 0.2932,
-     "n": 399
-    },
-    "Q5_below200_ts3": {
-     "rate": 0.3969,
-     "n": 320
-    },
-    "Q5_above200_ts2": {
-     "rate": 0.195,
-     "n": 241
-    },
-    "Q5_above200_ts3": {
-     "rate": 0.3208,
-     "n": 53
-    }
-   }
-  },
   "today": {
-   "date": "2026-09-10",
-   "ts_ema": 0.881,
-   "ts_state": 2,
-   "ts_label": "neutral(0.8-1.0)",
-   "prob_3d": 0.1368,
-   "n_cell_3d": 892,
-   "prob_ts_only": 0.17,
-   "input_staleness_days": 0,
-   "stale_warning": false
+    "date": "2026-09-11",
+    "spx_close": 7656.98,
+    "vix": 15.84,
+    "vix_quintile": 2,
+    "above_200dma": true,
+    "d200": 0.069,
+    "prob": 0.0862,
+    "n_cell": 1729,
+    "prob_vix_only": 0.0812,
+    "n_vix_only": 1848,
+    "base_rate": 0.166
   },
-  "provenance": "E1 2026-08-21 (turin study): only cut that beat the VIX-quintile spread on its own sample; interacts with VIX level -- read the 3d cell, not ts alone"
- },
- "side_readings": {
-  "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
-  "nhnl": {
-   "date": "2026-09-09",
-   "ratio_10ema": 0.564,
-   "state": "mid",
-   "hist_rate_e1": 0.194,
-   "today_state": "2",
-   "table": {
-    "1": {
-     "rate": 0.3718,
-     "n": 503
+  "table": {
+    "sample": {
+      "from": "1990-01-02",
+      "to": "2026-09-10",
+      "sessions": 9240,
+      "episodes": 199,
+      "half_split": "2008-04-30"
     },
-    "2": {
-     "rate": 0.1943,
-     "n": 3787
+    "base_rate": 0.166,
+    "vix_edges": [
+      8.14,
+      13.34,
+      16.14,
+      19.44,
+      24.17,
+      83.69
+    ],
+    "by_vix_quintile": {
+      "full": {
+        "1": {
+          "rate": 0.0551,
+          "n": 1852
+        },
+        "2": {
+          "rate": 0.0812,
+          "n": 1848
+        },
+        "3": {
+          "rate": 0.1374,
+          "n": 1848
+        },
+        "4": {
+          "rate": 0.2587,
+          "n": 1844
+        },
+        "5": {
+          "rate": 0.2982,
+          "n": 1848
+        }
+      },
+      "first_half": {
+        "1": {
+          "rate": 0.0215,
+          "n": 1021
+        },
+        "2": {
+          "rate": 0.0558,
+          "n": 806
+        },
+        "3": {
+          "rate": 0.1194,
+          "n": 821
+        },
+        "4": {
+          "rate": 0.2775,
+          "n": 1045
+        },
+        "5": {
+          "rate": 0.2751,
+          "n": 927
+        }
+      },
+      "second_half": {
+        "1": {
+          "rate": 0.0963,
+          "n": 831
+        },
+        "2": {
+          "rate": 0.1008,
+          "n": 1042
+        },
+        "3": {
+          "rate": 0.1519,
+          "n": 1027
+        },
+        "4": {
+          "rate": 0.234,
+          "n": 799
+        },
+        "5": {
+          "rate": 0.3214,
+          "n": 921
+        }
+      }
     },
-    "3": {
-     "rate": 0.0914,
-     "n": 2024
+    "monotone_spearman": {
+      "full": 1.0,
+      "first_half": 0.9,
+      "second_half": 1.0
+    },
+    "by_vix_quintile_x_200dma": {
+      "Q1_below200": {
+        "rate": 0.0,
+        "n": 47
+      },
+      "Q1_above200": {
+        "rate": 0.0565,
+        "n": 1805
+      },
+      "Q2_below200": {
+        "rate": 0.0084,
+        "n": 119
+      },
+      "Q2_above200": {
+        "rate": 0.0862,
+        "n": 1729
+      },
+      "Q3_below200": {
+        "rate": 0.2487,
+        "n": 197
+      },
+      "Q3_above200": {
+        "rate": 0.1242,
+        "n": 1651
+      },
+      "Q4_below200": {
+        "rate": 0.392,
+        "n": 625
+      },
+      "Q4_above200": {
+        "rate": 0.1903,
+        "n": 1219
+      },
+      "Q5_below200": {
+        "rate": 0.3404,
+        "n": 1278
+      },
+      "Q5_above200": {
+        "rate": 0.2035,
+        "n": 570
+      }
     }
-   },
-   "base_rate": 0.1755,
-   "sample": {
-    "from": "2001-06-05",
-    "to": "2026-08-19"
-   },
-   "labels": {
-    "1": "oversold (<0.30)",
-    "2": "mid",
-    "3": "overbought (>0.85)"
-   }
   },
-  "gex": {
-   "date": "2026-09-09",
-   "pct_rank_252d": 0.278,
-   "quintile": 2,
-   "hist_rate_e1": 0.158,
-   "today_state": "2",
-   "table": {
-    "1": {
-     "rate": 0.2118,
-     "n": 779
-    },
-    "2": {
-     "rate": 0.1582,
-     "n": 784
-    },
-    "3": {
-     "rate": 0.1138,
-     "n": 773
-    },
-    "4": {
-     "rate": 0.1053,
-     "n": 646
-    },
-    "5": {
-     "rate": 0.0894,
-     "n": 615
+  "overlay": {
+    "note": "breadth/gamma layer is NOT in `prob`; regime.py's validated read is reported here with its own window and never averaged in",
+    "regime_bands_2024_2026": {
+      "damaged": 0.272,
+      "extended": 0.058,
+      "source": "pipeline/screeners/regime.py docstring, 558 sessions, ~10 independent episodes"
     }
-   },
-   "base_rate": 0.139,
-   "sample": {
-    "from": "2012-04-30",
-    "to": "2026-08-19"
-   },
-   "labels": {
-    "1": "low dealer gamma (Q1)",
-    "2": "Q2",
-    "3": "Q3",
-    "4": "Q4",
-    "5": "high dealer gamma (Q5)"
-   }
+  },
+  "predicts_return": false,
+  "separates_tail": true,
+  "caveats": [
+    "Tail reading, not a direction call: it answers how often a 5% drawdown followed this state, never which way to lean.",
+    "A table, not a model: VIX quintile x 200-day side. A 9-feature logistic was worse than the base rate out of sample (see appendix) -- the honest skill lives in these two variables and is modest.",
+    "Cells are unequal: Q1/Q2 below the 200-day are rare (n < 130); read n_cell beside prob.",
+    "Quintile edges are set on the full 1990-> sample; the half-sample check shows the ordering holds in both halves.",
+    "Overlapping 21-day windows: sessions are not independent -- the episode count is the sample size that matters."
+  ],
+  "ts_dimension": {
+    "table": {
+      "sample": {
+        "from": "2006-07-17",
+        "to": "2026-09-10",
+        "sessions": 5070,
+        "episodes": 115,
+        "base_rate": 0.1799
+      },
+      "vix_edges_this_sample": [
+        8.14,
+        13.37,
+        15.96,
+        18.9,
+        24.11,
+        83.69
+      ],
+      "ts_state_labels": {
+        "1": "complacency(<0.8)",
+        "2": "neutral(0.8-1.0)",
+        "3": "backwardation(>1.0)"
+      },
+      "by_ts_state": {
+        "full": {
+          "1": {
+            "rate": 0.058,
+            "n": 224
+          },
+          "2": {
+            "rate": 0.17,
+            "n": 4348
+          },
+          "3": {
+            "rate": 0.3213,
+            "n": 498
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.0,
+            "n": 44
+          },
+          "2": {
+            "rate": 0.1837,
+            "n": 2161
+          },
+          "3": {
+            "rate": 0.3545,
+            "n": 330
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.0722,
+            "n": 180
+          },
+          "2": {
+            "rate": 0.1564,
+            "n": 2187
+          },
+          "3": {
+            "rate": 0.256,
+            "n": 168
+          }
+        }
+      },
+      "ts_monotone_spearman": {
+        "full": 1.0,
+        "first_half": 1.0,
+        "second_half": 1.0
+      },
+      "by_vix_quintile_x_200dma_x_ts": {
+        "Q1_above200_ts1": {
+          "rate": 0.0139,
+          "n": 144
+        },
+        "Q1_above200_ts2": {
+          "rate": 0.1047,
+          "n": 869
+        },
+        "Q1_above200_ts3": {
+          "rate": 0.0,
+          "n": 2
+        },
+        "Q2_below200_ts2": {
+          "rate": 0.0714,
+          "n": 14
+        },
+        "Q2_below200_ts3": {
+          "rate": 0.0,
+          "n": 1
+        },
+        "Q2_above200_ts1": {
+          "rate": 0.0,
+          "n": 42
+        },
+        "Q2_above200_ts2": {
+          "rate": 0.1082,
+          "n": 952
+        },
+        "Q2_above200_ts3": {
+          "rate": 0.0,
+          "n": 11
+        },
+        "Q3_below200_ts2": {
+          "rate": 0.3117,
+          "n": 77
+        },
+        "Q3_below200_ts3": {
+          "rate": 0.0,
+          "n": 5
+        },
+        "Q3_above200_ts1": {
+          "rate": 0.3478,
+          "n": 23
+        },
+        "Q3_above200_ts2": {
+          "rate": 0.1366,
+          "n": 893
+        },
+        "Q3_above200_ts3": {
+          "rate": 0.0833,
+          "n": 12
+        },
+        "Q4_below200_ts2": {
+          "rate": 0.4377,
+          "n": 297
+        },
+        "Q4_below200_ts3": {
+          "rate": 0.25,
+          "n": 28
+        },
+        "Q4_above200_ts1": {
+          "rate": 0.2,
+          "n": 15
+        },
+        "Q4_above200_ts2": {
+          "rate": 0.1716,
+          "n": 606
+        },
+        "Q4_above200_ts3": {
+          "rate": 0.1212,
+          "n": 66
+        },
+        "Q5_below200_ts2": {
+          "rate": 0.2932,
+          "n": 399
+        },
+        "Q5_below200_ts3": {
+          "rate": 0.3969,
+          "n": 320
+        },
+        "Q5_above200_ts2": {
+          "rate": 0.195,
+          "n": 241
+        },
+        "Q5_above200_ts3": {
+          "rate": 0.3208,
+          "n": 53
+        }
+      }
+    },
+    "today": {
+      "date": "2026-09-11",
+      "ts_ema": 0.866,
+      "ts_state": 2,
+      "ts_label": "neutral(0.8-1.0)",
+      "prob_3d": 0.1082,
+      "n_cell_3d": 952,
+      "prob_ts_only": 0.17,
+      "input_staleness_days": 0,
+      "stale_warning": false
+    },
+    "provenance": "E1 2026-08-21 (turin study): only cut that beat the VIX-quintile spread on its own sample; interacts with VIX level -- read the 3d cell, not ts alone"
+  },
+  "side_readings": {
+    "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
+    "nhnl": {
+      "date": "2026-09-10",
+      "ratio_10ema": 0.507,
+      "state": "mid",
+      "hist_rate_e1": 0.194,
+      "today_state": "2",
+      "table": {
+        "1": {
+          "rate": 0.3718,
+          "n": 503
+        },
+        "2": {
+          "rate": 0.1943,
+          "n": 3787
+        },
+        "3": {
+          "rate": 0.0914,
+          "n": 2024
+        }
+      },
+      "base_rate": 0.1755,
+      "sample": {
+        "from": "2001-06-05",
+        "to": "2026-08-19"
+      },
+      "labels": {
+        "1": "oversold (<0.30)",
+        "2": "mid",
+        "3": "overbought (>0.85)"
+      }
+    },
+    "gex": {
+      "date": "2026-09-10",
+      "pct_rank_252d": 0.345,
+      "quintile": 2,
+      "hist_rate_e1": 0.158,
+      "today_state": "2",
+      "table": {
+        "1": {
+          "rate": 0.2118,
+          "n": 779
+        },
+        "2": {
+          "rate": 0.1582,
+          "n": 784
+        },
+        "3": {
+          "rate": 0.1138,
+          "n": 773
+        },
+        "4": {
+          "rate": 0.1053,
+          "n": 646
+        },
+        "5": {
+          "rate": 0.0894,
+          "n": 615
+        }
+      },
+      "base_rate": 0.139,
+      "sample": {
+        "from": "2012-04-30",
+        "to": "2026-08-19"
+      },
+      "labels": {
+        "1": "low dealer gamma (Q1)",
+        "2": "Q2",
+        "3": "Q3",
+        "4": "Q4",
+        "5": "high dealer gamma (Q5)"
+      }
+    }
   }
- }
 }

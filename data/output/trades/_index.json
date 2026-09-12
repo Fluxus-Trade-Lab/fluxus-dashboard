@@ -1,6 +1,48 @@
 {
-  "generated_at": "2026-09-10T23:00:15.045656+00:00",
+  "generated_at": "2026-09-12T02:41:36.613619+00:00",
   "trades": [
+    {
+      "trade_id": "SWKS_2026-09-10_000",
+      "ticker": "SWKS",
+      "direction": "long",
+      "entry_date": "2026-09-10",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.7462277091906697,
+      "optimal_R": 2.4156378600822936,
+      "capture_pct": null,
+      "setup_type": "Breakout / near 52W high",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "CRCL_2026-09-10_000",
+      "ticker": "CRCL",
+      "direction": "long",
+      "entry_date": "2026-09-10",
+      "exit_date": "2026-09-11",
+      "closed": true,
+      "realized_R": -0.7577092511013177,
+      "optimal_R": 1.1806167400880971,
+      "capture_pct": -64.17910447761209,
+      "setup_type": "Long in mixed structure",
+      "lesson": "Failed setup",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "AAPU_2026-09-09_000",
+      "ticker": "AAPU",
+      "direction": "long",
+      "entry_date": "2026-09-09",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.3730979403110545,
+      "optimal_R": 2.8749999999999956,
+      "capture_pct": null,
+      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "lesson": "In progress",
+      "hold_days": 2
+    },
     {
       "trade_id": "TZA_2026-09-08_000",
       "ticker": "TZA",
@@ -9,11 +51,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 1.3425597201713264,
-      "optimal_R": 0.9677777777777684,
+      "optimal_R": 3.1746031746031615,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 2
+      "hold_days": 3
     },
     {
       "trade_id": "SOXL_2026-09-08_000",
@@ -106,12 +148,12 @@
       "entry_date": "2026-09-02",
       "exit_date": null,
       "closed": false,
-      "realized_R": -0.2857142857142869,
-      "optimal_R": 3.3095238095237973,
+      "realized_R": 1.6825396825396706,
+      "optimal_R": 8.142857142857114,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 8
+      "hold_days": 9
     },
     {
       "trade_id": "SAIL_2026-08-26_000",
@@ -223,7 +265,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 21
+      "hold_days": 22
     },
     {
       "trade_id": "SOXL_2026-08-19_000",
@@ -293,7 +335,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 22
+      "hold_days": 23
     },
     {
       "trade_id": "SOXL_2026-08-18_000",
@@ -1019,7 +1061,7 @@
       "realized_R": 0.8038961038961047,
       "optimal_R": 1.9974025974026035,
       "capture_pct": 40.24707412223659,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Premature trim",
       "hold_days": 4
     },
@@ -1047,7 +1089,7 @@
       "realized_R": 0.25316455696202694,
       "optimal_R": 0.6424050632911403,
       "capture_pct": 39.40886699507408,
-      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 1
     },
@@ -1061,7 +1103,7 @@
       "realized_R": -0.5343915343915332,
       "optimal_R": 1.8412698412698392,
       "capture_pct": -29.022988505747094,
-      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 13
     },
@@ -1647,11 +1689,11 @@
       "exit_date": "2026-06-02",
       "closed": true,
       "realized_R": 1.1279069767441876,
-      "optimal_R": 1.580232558139536,
-      "capture_pct": 71.37601177336282,
+      "optimal_R": null,
+      "capture_pct": null,
       "setup_type": "Long in mixed structure",
-      "lesson": "Good execution",
-      "hold_days": 2
+      "lesson": "Insufficient data",
+      "hold_days": null
     },
     {
       "trade_id": "DOCN_2026-05-31_000",
@@ -1731,11 +1773,11 @@
       "exit_date": "2026-06-03",
       "closed": true,
       "realized_R": -0.42052681699146305,
-      "optimal_R": 1.5215909090909112,
-      "capture_pct": -27.637311348206644,
+      "optimal_R": null,
+      "capture_pct": null,
       "setup_type": "Long in mixed structure",
-      "lesson": "Choppy / no edge",
-      "hold_days": 5
+      "lesson": "Insufficient data",
+      "hold_days": null
     },
     {
       "trade_id": "CRCL_2026-05-29_000",
@@ -2515,8 +2557,8 @@
       "exit_date": "2026-05-12",
       "closed": true,
       "realized_R": -0.04134904207789702,
-      "optimal_R": 1.8184825327510916,
-      "capture_pct": -2.273821240138178,
+      "optimal_R": 1.7376746724890841,
+      "capture_pct": -2.3795617633459387,
       "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 5
@@ -4699,8 +4741,8 @@
       "exit_date": "2026-02-11",
       "closed": true,
       "realized_R": -0.6159052453468679,
-      "optimal_R": 0.8982064297800354,
-      "capture_pct": -68.57056740260687,
+      "optimal_R": 0.898197969543146,
+      "capture_pct": -68.57121327719524,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 2

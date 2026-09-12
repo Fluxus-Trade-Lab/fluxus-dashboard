@@ -1,8 +1,8 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-09-09T22:34:00Z",
+  "fetched_at": "2026-09-12T02:36:45Z",
   "_schema": "v2",
-  "current_price": 36.2400016784668,
+  "current_price": 35.33000183105469,
   "info": {
     "symbol": "OUST",
     "longName": "Ouster, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://ouster.com",
     "fullTimeEmployees": 320,
-    "marketCap": 2613351168,
-    "enterpriseValue": 2458807296,
+    "marketCap": 2547728896,
+    "enterpriseValue": 2303044608,
     "trailingPE": null,
-    "forwardPE": -289.92,
-    "priceToSalesTrailing12Months": 12.7538395,
-    "enterpriseToRevenue": 12.0,
-    "priceToBook": 6.685114,
+    "forwardPE": -282.64,
+    "priceToSalesTrailing12Months": 12.433586,
+    "enterpriseToRevenue": 11.239,
+    "priceToBook": 6.517248,
     "grossMargins": 0.46623,
     "operatingMargins": -0.46580002,
     "profitMargins": -0.26025,
@@ -32,8 +32,8 @@
     "currentRatio": 4.164,
     "fiftyTwoWeekHigh": 63.79,
     "fiftyTwoWeekLow": 16.4,
-    "averageVolume": 3774993,
-    "averageVolume10days": 1891430,
+    "averageVolume": 3707350,
+    "averageVolume10days": 1812060,
     "beta": 3.246,
     "sharesOutstanding": 72112333,
     "sharesFloat": 69838631,
@@ -310,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.055187635413062534,
+  "options_implied_move": 0.0820832111435367,
   "technicals": {
-    "ma20": 38.75200023651123,
-    "ma50": 40.805400161743165,
-    "ma200": 30.14777501106262,
-    "rsi14": 45.23004742671808,
+    "ma20": 37.71750030517578,
+    "ma50": 39.76580017089844,
+    "ma200": 30.302325019836427,
+    "rsi14": 43.47271162843412,
     "high_20d": 51.8489990234375,
-    "low_5d": 33.07500076293945,
+    "low_5d": 35.0,
     "low_10d": 32.970001220703125,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 1.9612069811139787,
-    "atr14_pct": 5.411718792163564,
-    "position_in_52w_range_pct": 41.86537564242209
+    "atr14": 1.8239285605294364,
+    "atr14_pct": 5.162548729126368,
+    "position_in_52w_range_pct": 39.94513968017962
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-10",
-      "open": 6.14,
-      "high": 6.325,
-      "low": 6.02,
-      "close": 6.24,
-      "volume": 1110400.0
-    },
-    {
-      "date": "2024-09-11",
-      "open": 6.2,
-      "high": 6.36,
-      "low": 6.11,
-      "close": 6.21,
-      "volume": 941900.0
-    },
     {
       "date": "2024-09-12",
       "open": 6.2,
@@ -4329,29 +4313,29 @@
     {
       "date": "2026-09-09",
       "open": 36.8,
-      "high": 38.0387,
-      "low": 36.1228,
+      "high": 38.039,
+      "low": 36.123,
       "close": 36.24,
-      "volume": 1489976.0
+      "volume": 1491800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 35.14,
+      "high": 36.95,
+      "low": 35.0,
+      "close": 35.23,
+      "volume": 1430300.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 35.56,
+      "high": 36.4,
+      "low": 35.13,
+      "close": 35.33,
+      "volume": 1579800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-09",
-      "open": 28.01,
-      "high": 28.6,
-      "low": 27.68,
-      "close": 28.51,
-      "volume": 1410900.0
-    },
-    {
-      "date": "2025-09-10",
-      "open": 30.045,
-      "high": 30.045,
-      "low": 27.96,
-      "close": 28.29,
-      "volume": 2433200.0
-    },
     {
       "date": "2025-09-11",
       "open": 28.29,
@@ -6347,10 +6331,26 @@
     {
       "date": "2026-09-09",
       "open": 36.8,
-      "high": 38.0387,
-      "low": 36.1228,
+      "high": 38.039,
+      "low": 36.123,
       "close": 36.24,
-      "volume": 1489976.0
+      "volume": 1491800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 35.14,
+      "high": 36.95,
+      "low": 35.0,
+      "close": 35.23,
+      "volume": 1430300.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 35.56,
+      "high": 36.4,
+      "low": 35.13,
+      "close": 35.33,
+      "volume": 1579800.0
     }
   ],
   "ai_synthesis": null,

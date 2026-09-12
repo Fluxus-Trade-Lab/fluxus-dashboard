@@ -1,80 +1,43 @@
 {
   "ticker": "FIG",
-  "fetched_at": "2026-09-09T22:33:40Z",
+  "fetched_at": "2026-09-12T02:36:21Z",
   "_schema": "v2",
-  "current_price": 22.010000228881836,
+  "current_price": 23.200000762939453,
   "info": {
     "symbol": "FIG",
     "longName": "Figma, Inc.",
-    "sector": "Technology",
-    "industry": "Software - Application",
+    "sector": null,
+    "industry": null,
     "exchange": "NYQ",
-    "country": "United States",
-    "city": "San Francisco",
-    "website": "https://www.figma.com",
-    "fullTimeEmployees": 1886,
-    "marketCap": 11731547136,
-    "enterpriseValue": 10526587904,
+    "country": null,
+    "city": null,
+    "website": null,
+    "fullTimeEmployees": null,
+    "marketCap": 12365829120,
+    "enterpriseValue": null,
     "trailingPE": null,
-    "forwardPE": 61.855377,
-    "priceToSalesTrailing12Months": 9.154751,
-    "enterpriseToRevenue": 8.214,
-    "priceToBook": 7.903052,
-    "grossMargins": 0.79139,
-    "operatingMargins": -0.31693,
-    "profitMargins": -1.23149,
-    "returnOnEquity": -1.08644,
-    "totalCash": 1667138048,
-    "totalDebt": 67751000,
-    "totalRevenue": 1281470976,
-    "freeCashflow": 866974272,
-    "debtToEquity": 4.584,
-    "currentRatio": 2.451,
+    "forwardPE": 65.19968,
+    "priceToSalesTrailing12Months": null,
+    "enterpriseToRevenue": null,
+    "priceToBook": 8.330341,
+    "grossMargins": null,
+    "operatingMargins": null,
+    "profitMargins": null,
+    "returnOnEquity": null,
+    "totalCash": null,
+    "totalDebt": null,
+    "totalRevenue": null,
+    "freeCashflow": null,
+    "debtToEquity": null,
+    "currentRatio": null,
     "fiftyTwoWeekHigh": 71.48,
     "fiftyTwoWeekLow": 16.6,
-    "averageVolume": 20653764,
-    "averageVolume10days": 16056560,
+    "averageVolume": null,
+    "averageVolume10days": null,
     "beta": null,
     "sharesOutstanding": 455113611,
-    "sharesFloat": 266067865,
-    "companyOfficers": [
-      {
-        "name": "Mr. Dylan  Field",
-        "title": "CEO, President & Chairman",
-        "age": 32,
-        "yearBorn": 1993
-      },
-      {
-        "name": "Mr. Kris  Rasmussen",
-        "title": "Chief Technology Officer",
-        "age": 41,
-        "yearBorn": 1984
-      },
-      {
-        "name": "Mr. Shaunt  Voskanian",
-        "title": "Chief Revenue Officer",
-        "age": 41,
-        "yearBorn": 1984
-      },
-      {
-        "name": "Mr. Praveer  Melwani",
-        "title": "CFO & Treasurer",
-        "age": 34,
-        "yearBorn": 1991
-      },
-      {
-        "name": "Mr. Tyler  Herb",
-        "title": "Chief Accounting Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Kate  DeLeo",
-        "title": "VP of Business Operations & Investor Relations",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
+    "sharesFloat": null,
+    "companyOfficers": []
   },
   "earnings_history": [
     {
@@ -310,20 +273,20 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.052703316126177575,
+  "options_implied_move": 0.0693965494420101,
   "technicals": {
-    "ma20": 26.17100019454956,
-    "ma50": 24.308600158691405,
-    "ma200": 25.791500120162965,
-    "rsi14": 38.061475884639925,
+    "ma20": 25.93300018310547,
+    "ma50": 24.463800163269042,
+    "ma200": 25.67880011558533,
+    "rsi14": 43.24425199317934,
     "high_20d": 31.219999313354492,
-    "low_5d": 21.829999923706055,
-    "low_10d": 21.829999923706055,
+    "low_5d": 21.6200008392334,
+    "low_10d": 21.6200008392334,
     "high_52w": 71.4800033569336,
     "low_52w": 16.600000381469727,
-    "atr14": 1.675957271030971,
-    "atr14_pct": 7.614526368026821,
-    "position_in_52w_range_pct": 9.857870907607001
+    "atr14": 1.673428671700614,
+    "atr14_pct": 7.213054382195587,
+    "position_in_52w_range_pct": 12.026239110119038
   },
   "ohlc_2y": [
     {
@@ -2553,29 +2516,29 @@
     {
       "date": "2026-09-09",
       "open": 23.05,
-      "high": 23.1434,
+      "high": 23.143,
       "low": 21.83,
       "close": 22.01,
-      "volume": 17806255.0
+      "volume": 17918800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 21.96,
+      "high": 22.575,
+      "low": 21.62,
+      "close": 22.14,
+      "volume": 16774100.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 21.9,
+      "high": 23.36,
+      "low": 21.8,
+      "close": 23.2,
+      "volume": 13514200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-09",
-      "open": 52.45,
-      "high": 53.615,
-      "low": 51.43,
-      "close": 53.32,
-      "volume": 7845400.0
-    },
-    {
-      "date": "2025-09-10",
-      "open": 53.61,
-      "high": 55.21,
-      "low": 50.815,
-      "close": 51.06,
-      "volume": 9614200.0
-    },
     {
       "date": "2025-09-11",
       "open": 51.05,
@@ -4571,10 +4534,26 @@
     {
       "date": "2026-09-09",
       "open": 23.05,
-      "high": 23.1434,
+      "high": 23.143,
       "low": 21.83,
       "close": 22.01,
-      "volume": 17806255.0
+      "volume": 17918800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 21.96,
+      "high": 22.575,
+      "low": 21.62,
+      "close": 22.14,
+      "volume": 16774100.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 21.9,
+      "high": 23.36,
+      "low": 21.8,
+      "close": 23.2,
+      "volume": 13514200.0
     }
   ],
   "ai_synthesis": null,

@@ -1,6 +1,6 @@
 {
   "trade_id": "FNGU_2026-06-28_000",
-  "generated_at": "2026-09-10T23:00:14+00:00",
+  "generated_at": "2026-09-12T02:41:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FNGU",
@@ -35,8 +35,8 @@
     "volume": 8280700.0,
     "ma20": 28.6055,
     "ma50": 27.6846,
-    "ma200": 25.5156,
-    "rsi14": 40.512722694352895,
+    "ma200": null,
+    "rsi14": 40.512720491238895,
     "atr14": 2.4067857142857143,
     "atr14_pct": 10.040824840574528,
     "high_52w": 36.78,
@@ -46,7 +46,7 @@
     "low_10d": 23.08,
     "low_5d": 23.08
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.6424050632911403,
     "mfe_date": "2026-06-29",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **FNGU** long on 2026-06-28 at $24.58 (qty 9275) with stop $23.00 (1R = $1.58/sh = $14,654). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($28.61), MA20 > MA50 > MA200 (golden alignment), RSI 41, 45% through 52W range, ATR 10.0% of price. Realized **+0.25R**, peak was **+0.64R** on 2026-06-29 (day +1) \u2014 captured **39%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **FNGU** long on 2026-06-28 at $24.58 (qty 9275) with stop $23.00 (1R = $1.58/sh = $14,654). Setup: **Long in mixed structure** \u2014 price below MA20 ($28.61), RSI 41, 45% through 52W range, ATR 10.0% of price. Realized **+0.25R**, peak was **+0.64R** on 2026-06-29 (day +1) \u2014 captured **39%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-05-29",

@@ -1,8 +1,8 @@
 {
   "ticker": "ETHA",
-  "fetched_at": "2026-09-09T22:33:39Z",
+  "fetched_at": "2026-09-12T02:36:19Z",
   "_schema": "v2",
-  "current_price": 18.579999923706055,
+  "current_price": 19.15999984741211,
   "info": {
     "symbol": "ETHA",
     "longName": "iShares Ethereum Trust ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 36.04,
     "fiftyTwoWeekLow": 11.525,
-    "averageVolume": 33917350,
-    "averageVolume10days": 40270280,
+    "averageVolume": 34014359,
+    "averageVolume10days": 39112750,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-09T22:33:39Z",
+  "quarterly_asof": "2026-09-12T02:36:19Z",
   "news": [
     {
       "date": "2026-09-09T18:10:03Z",
@@ -111,38 +111,22 @@
       "source": "etf.com"
     }
   ],
-  "options_implied_move": 0.03390742748045917,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 17.30349988937378,
-    "ma50": 15.269799919128419,
-    "ma200": 17.254875001907347,
-    "rsi14": 66.03395426120181,
-    "high_20d": 19.135000228881836,
-    "low_5d": 17.899999618530273,
+    "ma20": 17.76999988555908,
+    "ma50": 15.542599906921387,
+    "ma200": 17.232924995422362,
+    "rsi14": 69.7567671634284,
+    "high_20d": 20.1200008392334,
+    "low_5d": 18.209999084472656,
     "low_10d": 17.899999618530273,
     "high_52w": 36.040000915527344,
     "low_52w": 11.524999618530273,
-    "atr14": 0.7130717550005231,
-    "atr14_pct": 3.837845844610157,
-    "position_in_52w_range_pct": 28.778298722912872
+    "atr14": 0.6623576028006417,
+    "atr14_pct": 3.4569812530040522,
+    "position_in_52w_range_pct": 31.14419671606166
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-10",
-      "open": 17.78,
-      "high": 18.122,
-      "low": 17.605,
-      "close": 18.06,
-      "volume": 1099300.0
-    },
-    {
-      "date": "2024-09-11",
-      "open": 17.68,
-      "high": 17.96,
-      "low": 17.27,
-      "close": 17.75,
-      "volume": 1609500.0
-    },
     {
       "date": "2024-09-12",
       "open": 17.78,
@@ -4129,30 +4113,30 @@
     },
     {
       "date": "2026-09-09",
-      "open": 18.97,
+      "open": 18.975,
       "high": 19.03,
       "low": 18.57,
       "close": 18.58,
-      "volume": 37725281.0
+      "volume": 37906800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 18.24,
+      "high": 18.669,
+      "low": 18.21,
+      "close": 18.56,
+      "volume": 33085000.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 18.87,
+      "high": 20.12,
+      "low": 18.79,
+      "close": 19.16,
+      "volume": 96836400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-09",
-      "open": 32.85,
-      "high": 33.02,
-      "low": 32.33,
-      "close": 32.475,
-      "volume": 27086100.0
-    },
-    {
-      "date": "2025-09-10",
-      "open": 33.1,
-      "high": 33.74,
-      "low": 32.51,
-      "close": 32.7,
-      "volume": 51930000.0
-    },
     {
       "date": "2025-09-11",
       "open": 33.37,
@@ -6147,11 +6131,27 @@
     },
     {
       "date": "2026-09-09",
-      "open": 18.97,
+      "open": 18.975,
       "high": 19.03,
       "low": 18.57,
       "close": 18.58,
-      "volume": 37725281.0
+      "volume": 37906800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 18.24,
+      "high": 18.669,
+      "low": 18.21,
+      "close": 18.56,
+      "volume": 33085000.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 18.87,
+      "high": 20.12,
+      "low": 18.79,
+      "close": 19.16,
+      "volume": 96836400.0
     }
   ],
   "ai_synthesis": null,

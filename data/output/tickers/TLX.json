@@ -1,8 +1,8 @@
 {
   "ticker": "TLX",
-  "fetched_at": "2026-09-09T22:34:33Z",
+  "fetched_at": "2026-09-12T02:37:27Z",
   "_schema": "v2",
-  "current_price": 12.34000015258789,
+  "current_price": 11.289999961853027,
   "info": {
     "symbol": "TLX",
     "longName": "Telix Pharmaceuticals Limited",
@@ -13,13 +13,13 @@
     "city": "North Melbourne",
     "website": "https://telixpharma.com",
     "fullTimeEmployees": 1120,
-    "marketCap": 4192938240,
-    "enterpriseValue": 4398566912,
-    "trailingPE": 123.4,
-    "forwardPE": 84.188324,
-    "priceToSalesTrailing12Months": 4.7070146,
-    "enterpriseToRevenue": 4.938,
-    "priceToBook": 8.599303,
+    "marketCap": 3836164608,
+    "enterpriseValue": 4164115712,
+    "trailingPE": 125.44444,
+    "forwardPE": 77.02481,
+    "priceToSalesTrailing12Months": 4.306499,
+    "enterpriseToRevenue": 4.675,
+    "priceToBook": 7.867596,
     "grossMargins": 0.47566003,
     "operatingMargins": 0.09712,
     "profitMargins": 0.0376,
@@ -32,8 +32,8 @@
     "currentRatio": 2.014,
     "fiftyTwoWeekHigh": 12.48,
     "fiftyTwoWeekLow": 6.28,
-    "averageVolume": 160877,
-    "averageVolume10days": 154530,
+    "averageVolume": 164529,
+    "averageVolume10days": 220850,
     "beta": 0.604,
     "sharesOutstanding": 339784294,
     "sharesFloat": 273621496,
@@ -106,10 +106,10 @@
     "bullish": 5,
     "neutral": 0,
     "bearish": 0,
-    "avg_price_target": 21.604563,
-    "high_price_target": 22.315859,
-    "low_price_target": 20.184864,
-    "current_price": 12.34,
+    "avg_price_target": 21.4589,
+    "high_price_target": 22.1654,
+    "low_price_target": 20.048773,
+    "current_price": 11.29,
     "recent_rating_changes": [
       {
         "date": "2026-09-02T11:29:09",
@@ -183,7 +183,7 @@
       }
     ]
   },
-  "quarterly_asof": "2026-09-09T22:34:33Z",
+  "quarterly_asof": "2026-09-12T02:37:27Z",
   "news": [
     {
       "date": "2026-09-04T18:42:48Z",
@@ -248,18 +248,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 11.707749938964843,
-    "ma50": 11.234100017547608,
-    "ma200": 9.471399977207184,
-    "rsi14": 61.711588567290036,
+    "ma20": 11.652249908447265,
+    "ma50": 11.230500011444091,
+    "ma200": 9.49894997358322,
+    "rsi14": 47.64666124158614,
     "high_20d": 12.479999542236328,
-    "low_5d": 11.380000114440918,
+    "low_5d": 11.196000099182129,
     "low_10d": 10.800000190734863,
     "high_52w": 12.479999542236328,
     "low_52w": 6.28000020980835,
-    "atr14": 0.44057144437517437,
-    "atr14_pct": 3.570270979962505,
-    "position_in_52w_range_pct": 97.74194508511968
+    "atr14": 0.40585715430123465,
+    "atr14_pct": 3.594837517028843,
+    "position_in_52w_range_pct": 80.80645631428986
   },
   "ohlc_2y": [
     {
@@ -3892,26 +3892,26 @@
       "high": 12.48,
       "low": 11.965,
       "close": 12.34,
-      "volume": 546616.0
+      "volume": 546600.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 12.1,
+      "high": 12.2,
+      "low": 11.88,
+      "close": 11.9,
+      "volume": 335800.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 11.75,
+      "high": 11.75,
+      "low": 11.196,
+      "close": 11.29,
+      "volume": 414800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-09",
-      "open": 9.2,
-      "high": 9.31,
-      "low": 9.11,
-      "close": 9.29,
-      "volume": 208100.0
-    },
-    {
-      "date": "2025-09-10",
-      "open": 9.54,
-      "high": 9.74,
-      "low": 9.49,
-      "close": 9.69,
-      "volume": 300200.0
-    },
     {
       "date": "2025-09-11",
       "open": 9.19,
@@ -5910,7 +5910,23 @@
       "high": 12.48,
       "low": 11.965,
       "close": 12.34,
-      "volume": 546616.0
+      "volume": 546600.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 12.1,
+      "high": 12.2,
+      "low": 11.88,
+      "close": 11.9,
+      "volume": 335800.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 11.75,
+      "high": 11.75,
+      "low": 11.196,
+      "close": 11.29,
+      "volume": 414800.0
     }
   ],
   "ai_synthesis": null,

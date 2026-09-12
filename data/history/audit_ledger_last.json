@@ -1,25 +1,38 @@
 {
  "as_of_session": "2026-09-11",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 39,
+ "lines": 40,
  "runs": [
   {
    "session": "2026-09-11",
    "code_sha": "d14371f",
    "trigger": "schedule",
-   "violations": [
-    "L4 error in shortlist_feedback: exception"
-   ],
+   "violations": [],
    "warnings": [
     "L2 no_downgrade no-baseline (stored copy is session 2026-09-10, candidate is 2026-09-11 -- a different day is the market moving, not the pipeline)",
-    "L5 guard(s) present last session, missing now: shortlist_feedback"
+    "L5 guard(s) present last session, missing now: shortlist_feedback",
+    "(superseded attempt) L4 error in shortlist_feedback: exception"
+   ],
+   "fund_fail_rate": 0.0,
+   "universe_rows": 5617,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-11",
+   "code_sha": "a5d99f8",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-10, candidate is 2026-09-11 -- a different day is the market moving, not the pipeline)"
    ],
    "fund_fail_rate": 0.0,
    "universe_rows": 5617
   }
  ],
- "violations": 1,
- "warnings": 2,
- "top": [],
- "ok": false
+ "violations": 0,
+ "warnings": 4,
+ "top": [
+  "L6 2026-09-11: 2 lines (re-run; both happened, not a violation)"
+ ],
+ "ok": true
 }

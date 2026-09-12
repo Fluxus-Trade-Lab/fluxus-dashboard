@@ -1,6 +1,6 @@
 {
   "trade_id": "SLV_2026-06-25_000",
-  "generated_at": "2026-09-10T23:00:14+00:00",
+  "generated_at": "2026-09-12T02:41:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SLV",
@@ -35,18 +35,18 @@
     "volume": 24606600.0,
     "ma20": 61.661500000000004,
     "ma50": 66.8016,
-    "ma200": 62.1033,
-    "rsi14": 28.826169265309346,
+    "ma200": null,
+    "rsi14": 28.82617488750897,
     "atr14": 2.964285714285714,
     "atr14_pct": 5.661355451271417,
     "high_52w": 109.83,
-    "low_52w": 37.01,
-    "position_in_52w_range_pct": 21.079373798407037,
+    "low_52w": 37.33,
+    "position_in_52w_range_pct": 20.731034482758623,
     "high_20d": 69.35,
     "low_10d": 50.31,
     "low_5d": 50.31
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 1.8412698412698392,
     "mfe_date": "2026-07-06",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 13
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **SLV** long on 2026-06-25 at $52.89 (qty 1818) with stop $51.00 (1R = $1.89/sh = $3,436). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($61.66), MA stack mixed, RSI 29, 21% through 52W range, ATR 5.7% of price. Realized **-0.53R**, peak was **+1.84R** on 2026-07-06 (day +11) \u2014 captured **-29%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **SLV** long on 2026-06-25 at $52.89 (qty 1818) with stop $51.00 (1R = $1.89/sh = $3,436). Setup: **Long in mixed structure** \u2014 price below MA20 ($61.66), RSI 29, 21% through 52W range, ATR 5.7% of price. Realized **-0.53R**, peak was **+1.84R** on 2026-07-06 (day +11) \u2014 captured **-29%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-26",

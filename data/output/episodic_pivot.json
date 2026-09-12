@@ -1,15 +1,33 @@
 {
-  "timestamp": "2026-09-10T22:41:15.453911+00:00",
-  "count": 1,
+  "timestamp": "2026-09-12T02:19:37.005873+00:00",
+  "count": 3,
   "tickers": [
     {
-      "ticker": "WLTH",
-      "change_pct": 0.1501,
-      "rel_volume": 4.03,
-      "market_cap": 1630000000.0,
+      "ticker": "ACVA",
+      "change_pct": 0.4418,
+      "rel_volume": 11.97,
+      "market_cap": 1770000000.0,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 6.4,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "FEIM",
+      "change_pct": 0.424,
+      "rel_volume": 5.4,
+      "market_cap": 987820000.0,
       "sector": "Technology",
-      "atr_ext": 4.24,
+      "atr_ext": 5.11,
       "atr_color": "amber"
+    },
+    {
+      "ticker": "ATEC",
+      "change_pct": 0.1968,
+      "rel_volume": 3.44,
+      "market_cap": 1630000000.0,
+      "sector": "Healthcare",
+      "atr_ext": 2.8,
+      "atr_color": "green"
     }
   ]
 }

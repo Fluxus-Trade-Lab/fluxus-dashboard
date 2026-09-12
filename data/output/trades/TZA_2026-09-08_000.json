@@ -1,6 +1,6 @@
 {
   "trade_id": "TZA_2026-09-08_000",
-  "generated_at": "2026-09-10T23:00:15+00:00",
+  "generated_at": "2026-09-12T02:41:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
@@ -41,8 +41,8 @@
     "volume": 4290900.0,
     "ma20": 38.818,
     "ma50": 39.4628,
-    "ma200": 54.346213,
-    "rsi14": 54.218427459898464,
+    "ma200": 54.346213500000005,
+    "rsi14": 54.21842895821435,
     "atr14": 1.172857142857144,
     "atr14_pct": 2.902393325555912,
     "high_52w": 93.094,
@@ -54,22 +54,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 0.9677777777777684,
-    "mfe_date": "2026-09-09",
+    "mfe_R": 3.1746031746031615,
+    "mfe_date": "2026-09-10",
     "mae_R": 2.7936507936507904,
     "mae_date": "2026-09-08",
-    "optimal_exit_price": 42.2397,
-    "optimal_exit_date": "2026-09-09",
-    "optimal_R": 0.9677777777777684,
-    "days_to_optimal": 1,
+    "optimal_exit_price": 43.63,
+    "optimal_exit_date": "2026-09-10",
+    "optimal_R": 3.1746031746031615,
+    "days_to_optimal": 2,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 2
+    "hold_calendar_days": 3
   },
   "lesson": "In progress",
-  "narrative": "Entered **TZA** long on 2026-09-08 at $41.63 (qty 9094) with stop $41.00 (1R = $0.63/sh = $5,729). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. **In progress.** Peak so far +0.97R; worst drawdown -2.79R.",
+  "narrative": "Entered **TZA** long on 2026-09-08 at $41.63 (qty 9094) with stop $41.00 (1R = $0.63/sh = $5,729). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. **In progress.** Peak so far +3.17R; worst drawdown -2.79R.",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -242,10 +242,26 @@
     {
       "date": "2026-09-09",
       "open": 40.95,
-      "high": 42.2397,
+      "high": 42.24,
       "low": 40.67,
       "close": 42.09,
-      "volume": 4477868.0
+      "volume": 4503100.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 43.05,
+      "high": 43.63,
+      "low": 42.49,
+      "close": 43.39,
+      "volume": 4876600.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 42.1,
+      "high": 42.98,
+      "low": 41.78,
+      "close": 42.93,
+      "volume": 5825600.0
     }
   ]
 }
