@@ -53,9 +53,9 @@ ROOT = Path(__file__).resolve().parents[2]
 # have NO committed engine -- tightness_grid.py computes the grid, not that
 # row -- so a resolution cannot be backfilled without first guessing how the
 # 71,636-row sample was drawn. Rebuild it, or downgrade the claim.
-LEGACY: dict[str, tuple[str, str]] = {
-    "tightness-compression-no-standalone-edge": ("Nighty Zac", "2026-09-12"),
-}
+# 2026-09-13: rebuilt (data/research/tightness_2026-08/standalone_rebuild.py),
+# resolution backfilled, claim narrowed. Ratchet 1 -> 0.
+LEGACY: dict[str, tuple[str, str]] = {}
 
 
 def resolution_of(row: dict) -> str | None:
