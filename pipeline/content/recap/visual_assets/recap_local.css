@@ -233,8 +233,9 @@ table.idx.wk td:nth-child(4) {
     break-inside: avoid;
   }
 
+  /* the lesson travels as one block (title, paragraph, schematic): X image 4 must not open mid-paragraph */
   .sec.edu {
-    break-inside: auto;
+    break-inside: avoid;
   }
 
   /* X posts use pages 1–4: the book always starts a page of its own */
