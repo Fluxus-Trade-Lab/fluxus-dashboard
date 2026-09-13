@@ -522,7 +522,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     if a.week:
         sessions = [d.isoformat() for d in week_sessions(a.week)]
         T, W0 = sessions[-1], prior_week_close(a.week).isoformat()
-        out_dir = month_dir(T, a.sample) / f"pack_{a.week}"
+        out_dir = pack_dir(a.week, a.sample)
         andy = andy_block(sessions)
         pack = {"kind": "weekly", "label": a.week, "sessions": sessions, "date": T, "prev_week_close": W0,
                 "assets": week_asset_block(sessions, W0), "days": days_block(sessions, W0),

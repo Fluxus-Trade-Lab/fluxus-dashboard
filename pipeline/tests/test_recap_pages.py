@@ -64,6 +64,42 @@ def test_stale_gate_green_for_session_rules_and_exempts_0904_itself():
     assert check_rules(list(STALE_0904["EN"]) + [GOOD_EN[6]], "EN", "2026-09-04") is None
 
 
+from pipeline.content.recap.pages import check_x_pages, page_sections  # noqa: E402
+
+P_BODY = "\n".join(f"body line {i}" for i in range(20))
+
+
+def test_x1_red_when_book_shows_on_page_4_en():
+    book = P_BODY + "\n PORTFOLIO UPDATE\n RETURN        CASH       OPEN NAMES\n HOOD      long     2026-08-19    +4.26R\n"
+    text = "\f".join([P_BODY, P_BODY, P_BODY, book, P_BODY]) + "\f"
+    r = check_x_pages(text, "EN", ["HOOD"])
+    assert not r["ok"] and 4 in r["x1_hits"]
+    assert {"Portfolio Update", "cell:RETURN", "cell:CASH", "book row:HOOD"} <= set(r["x1_hits"][4])
+
+
+def test_x1_red_zh_and_letter_spaced_heading():
+    book = P_BODY + "\n组 合 更 新\n收益      现金      持仓名数\n浮动 R    已实现 R\n"
+    r = check_x_pages("\f".join([P_BODY, book, P_BODY, P_BODY]) + "\f", "ZH")
+    assert 2 in r["x1_hits"] and "组合更新" in r["x1_hits"][2]
+
+
+def test_x1_green_on_prose_that_only_mentions_cash_or_return():
+    prose = P_BODY + "\nHigh cash is still a good position into CPI; a return to the 50-day.\n10 年期收益率到了高点，高现金仍是好位置。\n"
+    prose += "SWKS   +19.4%   week; +5.1% Friday\n"
+    assert check_x_pages("\f".join([prose] * 5) + "\f", "EN", ["SWKS"])["x1_ok"]
+    assert check_x_pages("\f".join([prose] * 5) + "\f", "ZH", ["SWKS"])["x1_ok"]
+
+
+def test_x2_red_under_four_pages():
+    r = check_x_pages("\f".join([P_BODY] * 3) + "\f", "EN")
+    assert not r["x2_ok"] and not r["ok"]
+
+
+def test_page_sections_are_case_and_spacing_tolerant():
+    text = "T H E  B I G  P I C T U R E\nx\f组 合 更 新\ny\f"
+    assert page_sections(text, ["The Big Picture", "组合更新"]) == [["The Big Picture"], ["组合更新"]]
+
+
 def test_rules_check_red_when_rule7_loses_the_fixed_opening():
     bad = GOOD_EN[:6] + ["Crude staying weak matters most"]
     assert "rule 7" in check_rules(bad, "EN")

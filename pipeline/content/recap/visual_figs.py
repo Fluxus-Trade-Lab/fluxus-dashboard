@@ -1,12 +1,13 @@
-"""Education schematics as data specs, drawn by the review page's JS in the Visual `.tell` style.
+"""Education schematics as data specs, drawn by the page JS in the Visual `.tell` style.
 
-Same concepts and data as figures.py (the matplotlib versions), with spec §5's three checks kept as
-asserts on the data, so a wrong drawing fails the build instead of shipping:
+Every builder encodes spec §5's three checks as asserts on its own data, so a wrong drawing fails
+the build instead of shipping:
   (1) price really performs the move the concept names,
   (2) the structural relationship is right (support below / resistance above / who leads),
   (3) every label is computed from, or placed on, the thing it names.
 A spec is {"ylim", "aria", "items"}; x runs 0–100, y in ylim. Item kinds: path (flat x,y list),
-hline, vline, band, text, callout. Colours come only from CSS classes on the page.
+hline, vline, band, rect, seg, text, callout. Colours come only from CSS classes on the page.
+The figure name doubles as the education concept tag in the topic ledger (dedupe.py).
 """
 from __future__ import annotations
 
@@ -34,6 +35,12 @@ class Canvas:
     def band(self, y0, y1, cls):
         self.items.append(["band", cls, _r(y0), _r(y1)])
 
+    def rect(self, x0, y0, x1, y1, cls):
+        self.items.append(["rect", cls, _r(x0), _r(y0), _r(x1), _r(y1)])
+
+    def seg(self, x0, y0, x1, y1, cls):
+        self.items.append(["seg", cls, _r(x0), _r(y0), _r(x1), _r(y1)])
+
     def text(self, x, y, s, cls="", anchor="start"):
         self.items.append(["text", cls, _r(x), _r(y), s, anchor])
 
@@ -48,7 +55,7 @@ def _lin(a, b, n):
     return [a + (b - a) * i / (n - 1) for i in range(n)]
 
 
-# ------------------------------------------------------------------ 09-11 · left side of the V
+# ================================================================== A topics (samples)
 def left_side_of_v(lang):
     T = {"EN": ["20 EMA · falling", "50 SMA", "pop sold at the 20", "lower high, sold again",
                 "averages coil · range tightens", "right side of the V", "LEFT SIDE"],
@@ -79,7 +86,6 @@ def left_side_of_v(lang):
     return c.svg(T[5])
 
 
-# ------------------------------------------------------------------ 09-10 · RS line leads price
 def rs_before_price(lang):
     T = {"EN": ["stock's high", "index · lower lows", "RS LINE = STOCK ÷ INDEX", "RS new high first", "price still under its high"],
          "ZH": ["个股前高", "指数 · 低点更低", "RS 线 = 个股 ÷ 指数", "RS 先创新高", "价格仍在前高下方"]}[lang]
@@ -112,7 +118,6 @@ def rs_before_price(lang):
     return c.svg(T[3])
 
 
-# ------------------------------------------------------------------ 09-09 · one line sets the posture
 def bull_bear_line(lang):
     T = {"EN": ["bull / bear line", "ABOVE · long bias", "BELOW · defense, cash is a position", "loses the line", "reclaims it"],
          "ZH": ["多空线", "线上 · 偏多", "线下 · 偏守，现金也是仓位", "跌破这条线", "收回来"]}[lang]
@@ -136,7 +141,6 @@ def bull_bear_line(lang):
     return c.svg(T[0])
 
 
-# ------------------------------------------------------------------ 09-08 · cap weight holds, equal weight breaks
 def equal_weight_split(lang):
     T = {"EN": ["CAP-WEIGHTED", "EQUAL-WEIGHT", "50-day", "held above", "first close under the 50-day"],
          "ZH": ["市值加权", "等权", "50 日线", "守在线上", "首次收在 50 日线下"]}[lang]
@@ -164,7 +168,6 @@ def equal_weight_split(lang):
     return c.svg(T[4])
 
 
-# ------------------------------------------------------------------ weekly · shallow pullbacks lead
 def shallow_pullback(lang):
     xa = [3, 10, 16, 22, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 97]
     va = [92, 100, 93, 95, 84, 73, 80, 78, 86, 90, 100.5, 99, 104, 103, 108]
@@ -192,10 +195,137 @@ def shallow_pullback(lang):
     return c.svg(T[3])
 
 
+# ================================================================== B topics (samples)
+def low_volume_breakout(lang):
+    T = {"EN": ["pivot", "breakout on light volume", "back under the pivot", "VOLUME", "average", "breakout bar under average"],
+         "ZH": ["突破位", "缩量突破", "又跌回突破位下", "成交量", "均量", "突破日量低于均量"]}[lang]
+    PIV = 44.0
+    px = _lin(4, 96, 16)
+    py = [36, 40, 38, 42.5, 39.5, 43, 40.5, 43.4, 41, 43.2, 46.2, 44.6, 42.5, 41, 39.5, 38.2]
+    vol = [9, 8, 7.5, 7, 6.5, 7, 6, 6.5, 5.5, 6, 5.2, 5.0, 8.5, 9.5, 10, 9]
+    avg = sum(vol[:10]) / 10
+    b = next(i for i in range(1, len(py)) if py[i - 1] < PIV <= py[i])
+    back = next(i for i in range(b + 1, len(py)) if py[i] < PIV)
+    assert all(p < PIV for p in py[:b]), "base stays under the pivot before the breakout"
+    assert vol[b] < avg, "breakout volume under its average"
+    assert all(p < PIV for p in py[back:]), "fails back under the pivot and stays there"
+    c = Canvas(ylim=(0, 60))
+    c.hline(PIV, "lvl")
+    for i, (x, v) in enumerate(zip(px, vol)):
+        c.rect(x - 2.0, 2, x + 2.0, 2 + v, "volbar hi" if i == b else "volbar")
+    c.hline(2 + avg, "guide")
+    c.path(px, py, "trend")
+    c.text(2, PIV + 1.2, T[0], "lab-acc")
+    c.text(2, 15, T[3], "small")
+    c.text(99, 2 + avg + 1, T[4], "small", "end")
+    c.callout(px[b], py[b], px[b] - 8, 56, T[1])
+    c.callout(px[back + 1], py[back + 1], px[back + 1] + 3, 30, T[2], "lab-dn")
+    c.callout(px[b], 2 + vol[b], px[b] - 14, 21, T[5], "lab-acc")
+    return c.svg(T[1])
+
+
+def gap_down_first_bar(lang):
+    T = {"EN": ["prior close", "gap down", "first 15-min bar", "stop under its low", "low holds, price recovers"],
+         "ZH": ["前收", "跳空低开", "第一根 15 分钟线", "止损放在它的低点下", "低点守住，价格回升"]}[lang]
+    PRIOR, BAR_HI, BAR_LO, STOP = 46.0, 40.5, 36.0, 34.0
+    prev_x, prev_y = [2, 8, 14, 20], [44.0, 45.5, 44.8, PRIOR]
+    px = [24, 27, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96]
+    py = [39.0, 37.2, 40.2, 38.3, 39.6, 37.4, 38.9, 41.2, 40.1, 42.6, 41.8, 43.9, 43.1, 44.8]
+    assert py[0] < PRIOR, "opens below the prior close"
+    assert BAR_LO <= min(py[:3]) and max(py[:3]) <= BAR_HI, "first bar box contains the first 15 minutes"
+    assert STOP < BAR_LO, "stop sits under the first bar's low"
+    assert min(py[3:]) > BAR_LO and py[-1] > BAR_HI, "low holds, then price clears the bar"
+    c = Canvas(ylim=(24, 54))
+    c.hline(PRIOR, "guide", 20, 100)
+    c.path(prev_x, prev_y, "trend")
+    c.seg(20, PRIOR, 24, py[0], "evt")
+    c.rect(22.5, BAR_LO, 31.5, BAR_HI, "barbox")
+    c.hline(STOP, "stop", 22, 100)
+    c.path(px, py, "trend")
+    c.text(99, PRIOR + 0.8, T[0], "small", "end")
+    c.callout(22, 42.5, 12, 30, T[1], "lab-dn")
+    c.text(22.5, BAR_HI + 1.0, T[2], "small")
+    c.text(99, STOP - 2.2, T[3], "lab-dn small", "end")
+    c.callout(px[5], py[5], px[5] + 16, 30, T[4], "lab-up")
+    return c.svg(T[2])
+
+
+def low_vix_not_risk_on(lang):
+    T = {"EN": ["index · lower highs", "VIX", "VIX stays near its lows", "calm is not demand"],
+         "ZH": ["指数 · 高点更低", "VIX", "VIX 一直贴着低位", "平静不等于买盘"]}[lang]
+    xi = _lin(4, 96, 14)
+    idx = [52, 48, 50.5, 46.5, 48.8, 45, 47, 43.5, 45.4, 42, 44, 40.6, 42.2, 39.5]
+    vix = [8.5, 9.0, 8.8, 9.4, 9.1, 9.6, 9.2, 9.8, 9.5, 10.1, 9.7, 10.4, 10.0, 10.6]
+    LOW_BAND = 12.0
+    highs = [idx[i] for i in range(1, len(idx) - 1) if idx[i] > idx[i - 1] and idx[i] > idx[i + 1]]
+    assert len(highs) >= 3 and all(b < a for a, b in zip(highs, highs[1:])), "index makes lower highs"
+    assert idx[-1] < idx[0], "index ends lower"
+    assert max(vix) < LOW_BAND and max(vix) - min(vix) < 3, "VIX stays low and flat"
+    c = Canvas(ylim=(0, 60))
+    c.band(3, LOW_BAND, "zone-up")
+    c.hline(22, "guide")
+    c.path(xi, idx, "trend")
+    c.path(xi, vix, "ma")
+    c.text(xi[-1], idx[-1] - 3.5, T[0], "small", "end")
+    c.text(2, 14, T[1], "lab-acc small")
+    c.callout(xi[9], vix[9], xi[9] - 6, 17.5, T[2], "lab-acc")
+    c.text(50, 30, T[3], "", "middle")
+    return c.svg(T[3])
+
+
+def open_equals_high(lang):
+    T = {"EN": ["open = high of day", "rallies sold under the open", "close near the low"],
+         "ZH": ["开盘即全天最高", "反弹都在开盘价下被卖", "收在低点附近"]}[lang]
+    px = _lin(4, 96, 20)
+    py = [48, 45, 46.8, 43, 44.9, 41.5, 43.8, 40.2, 42, 38.6, 41.2, 37.5, 39.4, 36.2, 38.1, 35.0, 36.4, 33.6, 34.8, 33.0]
+    OPEN, lo, hi = py[0], min(py), max(py)
+    assert hi == OPEN and all(p < OPEN for p in py[1:]), "the open is the high"
+    assert py[-1] <= lo + (hi - lo) / 3, "close in the lower third of the range"
+    c = Canvas(ylim=(20, 56))
+    c.hline(OPEN, "guide")
+    c.path(px, py, "trend")
+    c.callout(px[0], OPEN, 16, 54, T[0], "lab-dn")
+    c.callout(px[6], py[6], px[6] + 14, 51, T[1])
+    c.callout(px[-1], py[-1], px[-1] - 8, 24, T[2], "lab-dn")
+    return c.svg(T[0])
+
+
+def weekly_close(lang):
+    T = {"EN": ["50-day", "Thu: close under the 50-day", "Fri: takes it back", "WEEKLY BAR", "week closes back above the line"],
+         "ZH": ["50 日线", "周四：收在 50 日线下", "周五：收回来", "周线", "周收回到线上方"]}[lang]
+    ma = lambda x: 30 + 0.02 * x
+    xd = [4, 10, 16, 22, 28, 34, 40, 46, 52, 58, 64, 70]
+    yd = [36.0, 34.4, 35.2, 33.6, 32.5, 31.8, 30.9, 29.4, 29.6, 31.5, 32.8, 33.4]
+    closes = {"Tue": 2, "Wed": 5, "Thu": 8, "Fri": 11}
+    wk_open, wk_close, wk_low, wk_high = yd[0], yd[-1], min(yd), max(yd)
+    CX = 86
+    assert yd[closes["Wed"]] > ma(xd[closes["Wed"]]), "Wednesday still closes above the 50-day"
+    assert yd[closes["Thu"]] < ma(xd[closes["Thu"]]), "Thursday closes under it"
+    assert yd[closes["Fri"]] > ma(xd[closes["Fri"]]), "Friday takes it back"
+    assert wk_low < ma(CX) < wk_close < wk_open, "weekly bar: low under the line, down week closing above it"
+    c = Canvas(ylim=(20, 44))
+    c.path([2, 98], [ma(2), ma(98)], "ma")
+    c.vline(78, "guide")
+    c.path(xd, yd, "trend")
+    c.seg(CX, wk_low, CX, wk_high, "wick")
+    c.rect(CX - 3, wk_close, CX + 3, wk_open, "body-dn")
+    c.text(76, ma(76) - 1.6, T[0], "lab-acc small", "end")
+    c.callout(xd[closes["Thu"]], yd[closes["Thu"]], 40, 23, T[1], "lab-dn")
+    c.callout(xd[closes["Fri"]], yd[closes["Fri"]], 60, 41, T[2], "lab-up")
+    c.text(80, 42.5, T[3], "small")
+    c.text(99, 22.5, T[4], "small", "end")
+    return c.svg(T[4])
+
+
 FIGS = {
     "left_side_of_v": left_side_of_v,
     "rs_before_price": rs_before_price,
     "bull_bear_line": bull_bear_line,
     "equal_weight_split": equal_weight_split,
     "shallow_pullback": shallow_pullback,
+    "low_volume_breakout": low_volume_breakout,
+    "gap_down_first_bar": gap_down_first_bar,
+    "low_vix_not_risk_on": low_vix_not_risk_on,
+    "open_equals_high": open_equals_high,
+    "weekly_close": weekly_close,
 }

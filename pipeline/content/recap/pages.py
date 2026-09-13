@@ -51,6 +51,57 @@ def margin_overflow(bbox_html: str, left_mm: float, right_mm: float, tol_pt: flo
     return bad
 
 
+def _spaced(term: str) -> str:
+    """Regex for a label as pdftotext may emit it: letter-spaced headings can gain single spaces."""
+    return r"\s?".join(re.escape(ch) if ch != " " else r"\s{1,3}" for ch in term)
+
+
+# X posts carry pages 1–4 of the EN PDF: none of those pages may show the book.
+X_STRONG = {"EN": [("Portfolio Update", re.I), ("OPEN R", 0), ("REALIZED R", 0), ("Open position", re.I)],
+            "ZH": [("组合更新", 0), ("浮动 R", 0), ("已实现 R", 0)]}
+X_CELLS = {"EN": ("RETURN", "CASH"), "ZH": ("收益", "现金", "持仓")}  # only as a stand-alone cell, never inside prose
+
+
+def x_page_hits(page_text: str, lang: str, book_tickers=()) -> list[str]:
+    hits = []
+    for term, flags in X_STRONG[lang]:
+        tail = r"(?![A-Za-z])" if term.endswith(" R") else ""
+        if re.search(_spaced(term) + tail, page_text, flags):
+            hits.append(term)
+    for line in page_text.splitlines():
+        cells = [c.strip() for c in re.split(r"\s{2,}", line.strip()) if c.strip()]
+        for term in X_CELLS[lang]:
+            if term in cells:
+                hits.append(f"cell:{term}")
+        for tk in book_tickers:
+            if re.match(rf"^\s*{re.escape(tk)}\s{{2,}}(long|short|多|空)(\s|$)", line):
+                hits.append(f"book row:{tk}")
+    return hits
+
+
+def check_x_pages(text: str, lang: str, book_tickers=(), first_n: int = 4, min_pages: int = 4) -> dict:
+    """X1: pages 1..first_n carry no portfolio content. X2: the PDF has at least min_pages pages."""
+    pages = text.split("\f")
+    if pages and not pages[-1].strip():
+        pages = pages[:-1]
+    x1 = {i + 1: h for i, p in enumerate(pages[:first_n]) if (h := x_page_hits(p, lang, book_tickers))}
+    return {"pages": len(pages), "x1_hits": x1, "x1_ok": not x1, "x2_ok": len(pages) >= min_pages,
+            "ok": not x1 and len(pages) >= min_pages}
+
+
+def page_sections(text: str, headings: list[str]) -> list[list[str]]:
+    """For each page, the section headings that start on it (letter-spacing and case tolerant)."""
+    pages = text.split("\f")
+    if pages and not pages[-1].strip():
+        pages = pages[:-1]
+    squash = lambda s: re.sub(r"\s+", "", s).upper()
+    out = []
+    for p in pages:
+        sp = squash(p)
+        out.append([h for h in headings if h and squash(h) in sp])
+    return out
+
+
 def check_margins(pdf_path, left_mm: float = 14.0, right_mm: float = 14.0, tol_pt: float = 2.0) -> dict:
     out = subprocess.run(["pdftotext", "-bbox", str(pdf_path), "-"], capture_output=True, text=True, check=True).stdout
     bad = margin_overflow(out, left_mm, right_mm, tol_pt)
