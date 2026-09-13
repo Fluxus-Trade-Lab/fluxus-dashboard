@@ -8,33 +8,31 @@
     "sector": "Technology",
     "entry_date": "2026-01-05",
     "entry_price": 17.48,
-    "original_qty": 2862,
-    "current_qty": 0,
     "stop_price": 15.97,
     "initial_stop": 15.97,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-06",
     "hold_business_days": 1,
-    "r_dollars": 4321.619999999999,
-    "realized_pl": -2881.080000000001,
+    "r_pct_of_entry": 8.638443935926771,
     "realized_R": -0.666666666666667,
     "trims": [
       {
         "date": "2026-01-06",
         "price": 16.98,
-        "qty": 954,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-06",
         "price": 16.47,
-        "qty": 954,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-06",
         "price": 15.97,
-        "qty": 954,
+        "pct_of_position": 33.33333333333333,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **AEVA** long on 2026-01-05 at $17.48 (qty 2862) with stop $15.97 (1R = $1.51/sh = $4,322). Setup: **Long in mixed structure** \u2014 price below MA20 ($14.15), RSI 48, 36% through 52W range, ATR 7.7% of price. Realized **-0.67R**, peak was **+0.63R** on 2026-01-06 (day +1) \u2014 captured **-106%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **AEVA** long on 2026-01-05 at $17.48 with stop $15.97 (1R = $1.51/sh = 8.6% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($14.15), RSI 48, 36% through 52W range, ATR 7.7% of price. Realized **-0.67R**, peak was **+0.63R** on 2026-01-06 (day +1) \u2014 captured **-106%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2025-12-08",

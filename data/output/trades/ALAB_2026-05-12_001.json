@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-05-12",
     "entry_price": 209.1,
-    "original_qty": 219,
-    "current_qty": 0,
     "stop_price": 200.0,
     "initial_stop": 200.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-01",
     "hold_business_days": 14,
-    "r_dollars": 1992.8999999999987,
-    "realized_pl": 27093.090000000004,
+    "r_pct_of_entry": 4.351984696317548,
     "realized_R": 13.594806563299725,
     "trims": [
       {
         "date": "2026-05-28",
         "price": 349.81,
-        "qty": 43,
+        "pct_of_position": 19.63470319634703,
         "type": "trim_1_5"
       },
       {
         "date": "2026-06-01",
         "price": 328.66,
-        "qty": 176,
+        "pct_of_position": 80.36529680365297,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 20
   },
   "lesson": "Good execution",
-  "narrative": "Entered **ALAB** long on 2026-05-12 at $209.10 (qty 219) with stop $200.00 (1R = $9.10/sh = $1,993). Setup: **Long in mixed structure** \u2014 price above MA20 ($195.07), RSI 61, 65% through 52W range, ATR 8.4% of price. Realized **+13.59R**, peak was **+15.98R** on 2026-05-28 (day +16) \u2014 captured **85%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **ALAB** long on 2026-05-12 at $209.10 with stop $200.00 (1R = $9.10/sh = 4.4% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($195.07), RSI 61, 65% through 52W range, ATR 8.4% of price. Realized **+13.59R**, peak was **+15.98R** on 2026-05-28 (day +16) \u2014 captured **85%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-04-13",

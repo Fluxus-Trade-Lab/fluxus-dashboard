@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-07-08",
     "entry_price": 144.87,
-    "original_qty": 933,
-    "current_qty": 0,
     "stop_price": 140.0,
     "initial_stop": 140.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-10",
     "hold_business_days": 2,
-    "r_dollars": 4543.710000000005,
-    "realized_pl": -7203.609999999999,
+    "r_pct_of_entry": 3.361634568923866,
     "realized_R": -1.5854026775476409,
     "trims": [
       {
         "date": "2026-07-10",
         "price": 138.0,
-        "qty": 466,
+        "pct_of_position": 49.94640943193998,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-10",
         "price": 136.3,
-        "qty": 467,
+        "pct_of_position": 50.053590568060024,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **DOCN** long on 2026-07-08 at $144.87 (qty 933) with stop $140.00 (1R = $4.87/sh = $4,544). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($156.93), MA20 > MA50 > MA200 (golden alignment), RSI 44, 69% through 52W range, ATR 9.7% of price. Realized **-1.59R**, peak was **+0.72R** on 2026-07-09 (day +1) \u2014 captured **-219%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **DOCN** long on 2026-07-08 at $144.87 with stop $140.00 (1R = $4.87/sh = 3.4% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($156.93), MA20 > MA50 > MA200 (golden alignment), RSI 44, 69% through 52W range, ATR 9.7% of price. Realized **-1.59R**, peak was **+0.72R** on 2026-07-09 (day +1) \u2014 captured **-219%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-08",

@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-30",
     "entry_price": 43.5,
-    "original_qty": 1169,
-    "current_qty": 0,
     "stop_price": 44.6,
     "initial_stop": 44.6,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-01",
     "hold_business_days": 2,
-    "r_dollars": 1285.9000000000017,
-    "realized_pl": 2805.5999999999985,
+    "r_pct_of_entry": 2.5287356321839116,
     "realized_R": 2.1818181818181777,
     "trims": [
       {
         "date": "2026-04-01",
         "price": 41.1,
-        "qty": 1169,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Good execution",
-  "narrative": "Entered **APA** short on 2026-03-30 at $43.50 (qty 1169) with stop $44.60 (1R = $1.10/sh = $1,286). Setup: **Short in mixed structure** \u2014 price above MA20 ($35.99), RSI 85, 92% through 52W range, ATR 3.9% of price. Realized **+2.18R**, peak was **+3.34R** on 2026-04-01 (day +2) \u2014 captured **65%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **APA** short on 2026-03-30 at $43.50 with stop $44.60 (1R = $1.10/sh = 2.5% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($35.99), RSI 85, 92% through 52W range, ATR 3.9% of price. Realized **+2.18R**, peak was **+3.34R** on 2026-04-01 (day +2) \u2014 captured **65%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-03-02",

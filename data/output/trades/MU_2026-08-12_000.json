@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-08-12",
     "entry_price": 917.21,
-    "original_qty": 230,
-    "current_qty": 0,
     "stop_price": 900.0,
     "initial_stop": 900.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-14",
     "hold_business_days": 2,
-    "r_dollars": 3958.3000000000084,
-    "realized_pl": 10558.379999999988,
+    "r_pct_of_entry": 1.8763423861493045,
     "realized_R": 2.667402672864605,
     "trims": [
       {
         "date": "2026-08-14",
         "price": 969.43,
-        "qty": 76,
+        "pct_of_position": 33.04347826086956,
         "type": "trim_1_3"
       },
       {
         "date": "2026-08-14",
         "price": 960.0,
-        "qty": 154,
+        "pct_of_position": 66.95652173913044,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Good execution",
-  "narrative": "Entered **MU** long on 2026-08-12 at $917.21 (qty 230) with stop $900.00 (1R = $17.21/sh = $3,958). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($879.09), MA stack mixed, RSI 51, 69% through 52W range, ATR 8.7% of price. Realized **+2.67R**, peak was **+3.88R** on 2026-08-14 (day +2) \u2014 captured **69%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **MU** long on 2026-08-12 at $917.21 with stop $900.00 (1R = $17.21/sh = 1.9% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($879.09), MA stack mixed, RSI 51, 69% through 52W range, ATR 8.7% of price. Realized **+2.67R**, peak was **+3.88R** on 2026-08-14 (day +2) \u2014 captured **69%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-13",

@@ -8,21 +8,19 @@
     "sector": "Consumer Cyclical",
     "entry_date": "2026-01-20",
     "entry_price": 168.5,
-    "original_qty": 667,
-    "current_qty": 0,
     "stop_price": 162.0,
     "initial_stop": 162.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-23",
     "hold_business_days": 67,
-    "r_dollars": 4335.5,
-    "realized_pl": -24612.300000000003,
+    "r_pct_of_entry": 3.857566765578635,
     "realized_R": -5.676923076923077,
     "trims": [
       {
         "date": "2026-04-23",
         "price": 131.6,
-        "qty": 667,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 93
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **BABA** long on 2026-01-20 at $168.50 (qty 667) with stop $162.00 (1R = $6.50/sh = $4,336). Setup: **Long in mixed structure** \u2014 price above MA20 ($154.27), RSI 55, 36% through 52W range, ATR 3.9% of price. Realized **-5.68R**, peak was **+1.68R** on 2026-01-22 (day +2) \u2014 captured **-337%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **BABA** long on 2026-01-20 at $168.50 with stop $162.00 (1R = $6.50/sh = 3.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($154.27), RSI 55, 36% through 52W range, ATR 3.9% of price. Realized **-5.68R**, peak was **+1.68R** on 2026-01-22 (day +2) \u2014 captured **-337%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2025-12-22",

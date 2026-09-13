@@ -8,27 +8,25 @@
     "sector": "Technology",
     "entry_date": "2026-02-04",
     "entry_price": 133.8,
-    "original_qty": 745,
-    "current_qty": 0,
     "stop_price": 136.0,
     "initial_stop": 136.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-02-06",
     "hold_business_days": 2,
-    "r_dollars": 1638.9999999999916,
-    "realized_pl": -101.3999999999944,
+    "r_pct_of_entry": 1.6442451420029809,
     "realized_R": -0.06186699206833125,
     "trims": [
       {
         "date": "2026-02-05",
         "price": 129.8,
-        "qty": 248,
+        "pct_of_position": 33.288590604026844,
         "type": "trim_1_3"
       },
       {
         "date": "2026-02-06",
         "price": 136.0,
-        "qty": 497,
+        "pct_of_position": 66.71140939597315,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **PLTR** short on 2026-02-04 at $133.80 (qty 745) with stop $136.00 (1R = $2.20/sh = $1,639). Setup: **Short with RSI oversold \u2014 risky** \u2014 price below MA20 ($166.22), RSI 30, 5% through 52W range, ATR 6.1% of price. Realized **-0.06R**, peak was **+2.49R** on 2026-02-05 (day +1) \u2014 captured **-2%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **PLTR** short on 2026-02-04 at $133.80 with stop $136.00 (1R = $2.20/sh = 1.6% of entry). Setup: **Short with RSI oversold \u2014 risky** \u2014 price below MA20 ($166.22), RSI 30, 5% through 52W range, ATR 6.1% of price. Realized **-0.06R**, peak was **+2.49R** on 2026-02-05 (day +1) \u2014 captured **-2%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-01-05",

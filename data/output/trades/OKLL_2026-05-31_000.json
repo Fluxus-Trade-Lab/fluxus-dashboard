@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-05-31",
     "entry_price": 9.26,
-    "original_qty": 8154,
-    "current_qty": 0,
     "stop_price": 8.4,
     "initial_stop": 8.4,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-02",
     "hold_business_days": 2,
-    "r_dollars": 7012.439999999995,
-    "realized_pl": 7909.380000000006,
+    "r_pct_of_entry": 9.287257019438439,
     "realized_R": 1.1279069767441876,
     "trims": [
       {
         "date": "2026-06-02",
         "price": 10.23,
-        "qty": 8154,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -49,7 +47,7 @@
   "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **OKLL** long on 2026-05-31 at $9.26 (qty 8154) with stop $8.40 (1R = $0.86/sh = $7,012). Setup: **Long in mixed structure** \u2014 price below MA20 ($47.97), RSI 48, 2% through 52W range, ATR 18.4% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **OKLL** long on 2026-05-31 at $9.26 with stop $8.40 (1R = $0.86/sh = 9.3% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($47.97), RSI 48, 2% through 52W range, ATR 18.4% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-01",

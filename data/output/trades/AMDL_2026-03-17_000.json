@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-03-17",
     "entry_price": 11.84,
-    "original_qty": 6632,
-    "current_qty": 0,
     "stop_price": 11.4,
     "initial_stop": 11.4,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-19",
     "hold_business_days": 2,
-    "r_dollars": 2918.0799999999967,
-    "realized_pl": 287.3000000000017,
+    "r_pct_of_entry": 3.7162162162162122,
     "realized_R": 0.09845514859085495,
     "trims": [
       {
         "date": "2026-03-18",
         "price": 11.97,
-        "qty": 2210,
+        "pct_of_position": 33.32328106151991,
         "type": "trim_1_3"
       },
       {
         "date": "2026-03-19",
         "price": 11.84,
-        "qty": 4422,
+        "pct_of_position": 66.6767189384801,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **AMDL** long on 2026-03-17 at $11.84 (qty 6632) with stop $11.40 (1R = $0.44/sh = $2,918). Setup: **Long in mixed structure** \u2014 price below MA20 ($12.25), RSI 42, 16% through 52W range, ATR 8.7% of price. Realized **+0.10R**, peak was **+2.02R** on 2026-03-19 (day +2) \u2014 captured **5%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **AMDL** long on 2026-03-17 at $11.84 with stop $11.40 (1R = $0.44/sh = 3.7% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($12.25), RSI 42, 16% through 52W range, ATR 8.7% of price. Realized **+0.10R**, peak was **+2.02R** on 2026-03-19 (day +2) \u2014 captured **5%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",

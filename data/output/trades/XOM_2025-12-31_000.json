@@ -8,21 +8,19 @@
     "sector": "Energy",
     "entry_date": "2025-12-31",
     "entry_price": 120.61,
-    "original_qty": 331,
-    "current_qty": 0,
     "stop_price": 118.0,
     "initial_stop": 118.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-20",
     "hold_business_days": 14,
-    "r_dollars": 863.9099999999999,
-    "realized_pl": 3316.6199999999985,
+    "r_pct_of_entry": 2.163999668352541,
     "realized_R": 3.839080459770114,
     "trims": [
       {
         "date": "2026-01-20",
         "price": 130.63,
-        "qty": 331,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 20
   },
   "lesson": "Good execution",
-  "narrative": "Entered **XOM** long on 2025-12-31 at $120.61 (qty 331) with stop $118.00 (1R = $2.61/sh = $864). Setup: **Long in mixed structure** \u2014 price above MA20 ($115.90), RSI 59, 88% through 52W range, ATR 1.5% of price. Realized **+3.84R**, peak was **+3.35R** on 2026-01-20 (day +20) \u2014 captured **115%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **XOM** long on 2025-12-31 at $120.61 with stop $118.00 (1R = $2.61/sh = 2.2% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($115.90), RSI 59, 88% through 52W range, ATR 1.5% of price. Realized **+3.84R**, peak was **+3.35R** on 2026-01-20 (day +20) \u2014 captured **115%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2025-12-01",

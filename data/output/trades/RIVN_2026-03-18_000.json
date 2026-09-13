@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-18",
     "entry_price": 16.6,
-    "original_qty": 2909,
-    "current_qty": 0,
     "stop_price": 15.8,
     "initial_stop": 15.8,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-19",
     "hold_business_days": 1,
-    "r_dollars": 2327.200000000002,
-    "realized_pl": 1745.3999999999937,
+    "r_pct_of_entry": 4.819277108433739,
     "realized_R": 0.7499999999999967,
     "trims": [
       {
         "date": "2026-03-19",
         "price": 17.2,
-        "qty": 2909,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Good execution",
-  "narrative": "Entered **RIVN** long on 2026-03-18 at $16.60 (qty 2909) with stop $15.80 (1R = $0.80/sh = $2,327). Setup: **Long in mixed structure** \u2014 price above MA20 ($15.43), RSI 49, 30% through 52W range, ATR 5.5% of price. Realized **+0.75R**, peak was **+0.65R** on 2026-03-19 (day +1) \u2014 captured **115%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **RIVN** long on 2026-03-18 at $16.60 with stop $15.80 (1R = $0.80/sh = 4.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($15.43), RSI 49, 30% through 52W range, ATR 5.5% of price. Realized **+0.75R**, peak was **+0.65R** on 2026-03-19 (day +1) \u2014 captured **115%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",

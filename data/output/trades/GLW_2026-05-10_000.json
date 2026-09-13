@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-05-10",
     "entry_price": 206.1,
-    "original_qty": 352,
-    "current_qty": 0,
     "stop_price": 195.0,
     "initial_stop": 195.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-15",
     "hold_business_days": 5,
-    "r_dollars": 3907.199999999998,
-    "realized_pl": -3555.199999999998,
+    "r_pct_of_entry": 5.385735080058222,
     "realized_R": -0.9099099099099098,
     "trims": [
       {
         "date": "2026-05-15",
         "price": 196.0,
-        "qty": 352,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 5
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **GLW** long on 2026-05-10 at $206.10 (qty 352) with stop $195.00 (1R = $11.10/sh = $3,907). Setup: **Long in mixed structure** \u2014 price above MA20 ($167.43), RSI 67, 91% through 52W range, ATR 6.3% of price. Realized **-0.91R**, peak was **+0.45R** on 2026-05-13 (day +3) \u2014 captured **-203%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **GLW** long on 2026-05-10 at $206.10 with stop $195.00 (1R = $11.10/sh = 5.4% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($167.43), RSI 67, 91% through 52W range, ATR 6.3% of price. Realized **-0.91R**, peak was **+0.45R** on 2026-05-13 (day +3) \u2014 captured **-203%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-04-10",

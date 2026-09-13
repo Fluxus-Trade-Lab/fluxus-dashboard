@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-07-12",
     "entry_price": 188.6,
-    "original_qty": 917,
-    "current_qty": 0,
     "stop_price": 183.0,
     "initial_stop": 183.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-13",
     "hold_business_days": 1,
-    "r_dollars": 5135.199999999994,
-    "realized_pl": -2751.6,
+    "r_pct_of_entry": 2.9692470837751825,
     "realized_R": -0.5358311263436678,
     "trims": [
       {
         "date": "2026-07-13",
         "price": 186.2,
-        "qty": 458,
+        "pct_of_position": 49.94547437295529,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-13",
         "price": 185.0,
-        "qty": 459,
+        "pct_of_position": 50.05452562704471,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **ANET** long on 2026-07-12 at $188.60 (qty 917) with stop $183.00 (1R = $5.60/sh = $5,135). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($168.30), MA20 > MA50 > MA200 (golden alignment), RSI 63, 96% through 52W range, ATR 5.8% of price. Realized **-0.54R**, peak was **+0.17R** on 2026-07-13 (day +1). **Lesson: Failed setup.**",
+  "narrative": "Entered **ANET** long on 2026-07-12 at $188.60 with stop $183.00 (1R = $5.60/sh = 3.0% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($168.30), MA20 > MA50 > MA200 (golden alignment), RSI 63, 96% through 52W range, ATR 5.8% of price. Realized **-0.54R**, peak was **+0.17R** on 2026-07-13 (day +1). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-12",

@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-04-07",
     "entry_price": 959.0,
-    "original_qty": 110,
-    "current_qty": 0,
     "stop_price": 920.0,
     "initial_stop": 920.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-13",
     "hold_business_days": 4,
-    "r_dollars": 4290.0,
-    "realized_pl": -3421.0000000000027,
+    "r_pct_of_entry": 4.066736183524505,
     "realized_R": -0.797435897435898,
     "trims": [
       {
         "date": "2026-04-13",
         "price": 927.9,
-        "qty": 110,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **LLY** long on 2026-04-07 at $959.00 (qty 110) with stop $920.00 (1R = $39.00/sh = $4,290). Setup: **Long in mixed structure** \u2014 price below MA20 ($931.31), RSI 46, 52% through 52W range, ATR 2.7% of price. Realized **-0.80R**, peak was **+0.05R** on 2026-04-10 (day +3). **Lesson: Failed setup.**",
+  "narrative": "Entered **LLY** long on 2026-04-07 at $959.00 with stop $920.00 (1R = $39.00/sh = 4.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($931.31), RSI 46, 52% through 52W range, ATR 2.7% of price. Realized **-0.80R**, peak was **+0.05R** on 2026-04-10 (day +3). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-03-09",

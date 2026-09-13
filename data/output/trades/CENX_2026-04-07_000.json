@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-04-07",
     "entry_price": 65.7,
-    "original_qty": 1287,
-    "current_qty": 0,
     "stop_price": 62.4,
     "initial_stop": 62.4,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-14",
     "hold_business_days": 5,
-    "r_dollars": 4247.100000000006,
-    "realized_pl": -1724.5800000000045,
+    "r_pct_of_entry": 5.022831050228317,
     "realized_R": -0.40606060606060657,
     "trims": [
       {
         "date": "2026-04-14",
         "price": 64.36,
-        "qty": 1287,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **CENX** long on 2026-04-07 at $65.70 (qty 1287) with stop $62.40 (1R = $3.30/sh = $4,247). Setup: **Long in mixed structure** \u2014 price above MA20 ($55.19), RSI 70, 96% through 52W range, ATR 6.8% of price. Realized **-0.41R**, peak was **+0.91R** on 2026-04-09 (day +2) \u2014 captured **-45%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **CENX** long on 2026-04-07 at $65.70 with stop $62.40 (1R = $3.30/sh = 5.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($55.19), RSI 70, 96% through 52W range, ATR 6.8% of price. Realized **-0.41R**, peak was **+0.91R** on 2026-04-09 (day +2) \u2014 captured **-45%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-03-09",

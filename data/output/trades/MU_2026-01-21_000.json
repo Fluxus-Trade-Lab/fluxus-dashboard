@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-01-21",
     "entry_price": 380.42,
-    "original_qty": 292,
-    "current_qty": 0,
     "stop_price": 376.0,
     "initial_stop": 376.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-28",
     "hold_business_days": 5,
-    "r_dollars": 1290.6400000000046,
-    "realized_pl": 8592.099999999995,
+    "r_pct_of_entry": 1.1618737185216381,
     "realized_R": 6.657239819004497,
     "trims": [
       {
         "date": "2026-01-22",
         "price": 389.0,
-        "qty": 146,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-01-28",
         "price": 430.69,
-        "qty": 146,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Good execution",
-  "narrative": "Entered **MU** long on 2026-01-21 at $380.42 (qty 292) with stop $376.00 (1R = $4.42/sh = $1,291). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($322.30), RSI 77, 98% through 52W range, ATR 4.9% of price. Realized **+6.66R**, peak was **+13.18R** on 2026-01-28 (day +7) \u2014 captured **50%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **MU** long on 2026-01-21 at $380.42 with stop $376.00 (1R = $4.42/sh = 1.2% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($322.30), RSI 77, 98% through 52W range, ATR 4.9% of price. Realized **+6.66R**, peak was **+13.18R** on 2026-01-28 (day +7) \u2014 captured **50%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2025-12-22",

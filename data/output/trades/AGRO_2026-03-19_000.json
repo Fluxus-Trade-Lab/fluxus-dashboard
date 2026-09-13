@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-19",
     "entry_price": 14.34,
-    "original_qty": 1009,
-    "current_qty": 0,
     "stop_price": 12.5,
     "initial_stop": 12.5,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-09",
     "hold_business_days": 15,
-    "r_dollars": 1856.56,
-    "realized_pl": 141.26000000000056,
+    "r_pct_of_entry": 12.831241283124129,
     "realized_R": 0.07608695652173944,
     "trims": [
       {
         "date": "2026-04-09",
         "price": 14.48,
-        "qty": 1009,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 21
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **AGRO** long on 2026-03-19 at $14.34 (qty 1009) with stop $12.50 (1R = $1.84/sh = $1,857). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.18), RSI 91, 98% through 52W range, ATR 5.4% of price. Realized **+0.08R**, peak was **+0.77R** on 2026-03-31 (day +12) \u2014 captured **10%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **AGRO** long on 2026-03-19 at $14.34 with stop $12.50 (1R = $1.84/sh = 12.8% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.18), RSI 91, 98% through 52W range, ATR 5.4% of price. Realized **+0.08R**, peak was **+0.77R** on 2026-03-31 (day +12) \u2014 captured **10%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",

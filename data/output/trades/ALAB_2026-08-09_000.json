@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-08-09",
     "entry_price": 332.4,
-    "original_qty": 300,
-    "current_qty": 0,
     "stop_price": 320.0,
     "initial_stop": 320.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-10",
     "hold_business_days": 1,
-    "r_dollars": 3719.999999999993,
-    "realized_pl": -3719.999999999993,
+    "r_pct_of_entry": 3.730445246690727,
     "realized_R": -1.0,
     "trims": [
       {
         "date": "2026-08-10",
         "price": 320.0,
-        "qty": 300,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **ALAB** long on 2026-08-09 at $332.40 (qty 300) with stop $320.00 (1R = $12.40/sh = $3,720). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($317.32), MA stack mixed, RSI 51, 59% through 52W range, ATR 10.6% of price. Realized **-1.00R**, peak was **+0.85R** on 2026-08-10 (day +1) \u2014 captured **-117%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **ALAB** long on 2026-08-09 at $332.40 with stop $320.00 (1R = $12.40/sh = 3.7% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($317.32), MA stack mixed, RSI 51, 59% through 52W range, ATR 10.6% of price. Realized **-1.00R**, peak was **+0.85R** on 2026-08-10 (day +1) \u2014 captured **-117%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-07-10",

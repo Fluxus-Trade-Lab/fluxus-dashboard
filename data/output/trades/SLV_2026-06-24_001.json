@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-06-24",
     "entry_price": 52.89,
-    "original_qty": 1709,
-    "current_qty": 0,
     "stop_price": 51.0,
     "initial_stop": 51.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-13",
     "hold_business_days": 13,
-    "r_dollars": 3230.010000000001,
-    "realized_pl": -837.8100000000034,
+    "r_pct_of_entry": 3.573454339194556,
     "realized_R": -0.2593830978851468,
     "trims": [
       {
         "date": "2026-07-13",
         "price": 52.8,
-        "qty": 854,
+        "pct_of_position": 49.97074312463429,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-13",
         "price": 52.0,
-        "qty": 855,
+        "pct_of_position": 50.02925687536571,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 19
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **SLV** long on 2026-06-24 at $52.89 (qty 1709) with stop $51.00 (1R = $1.89/sh = $3,230). Setup: **Long in mixed structure** \u2014 price below MA20 ($62.42), RSI 27, 20% through 52W range, ATR 5.7% of price. Realized **-0.26R**, peak was **+1.84R** on 2026-07-06 (day +12) \u2014 captured **-14%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **SLV** long on 2026-06-24 at $52.89 with stop $51.00 (1R = $1.89/sh = 3.6% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($62.42), RSI 27, 20% through 52W range, ATR 5.7% of price. Realized **-0.26R**, peak was **+1.84R** on 2026-07-06 (day +12) \u2014 captured **-14%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-05-26",

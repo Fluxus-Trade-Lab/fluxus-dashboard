@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-06-08",
     "entry_price": 68.72,
-    "original_qty": 1564,
-    "current_qty": 0,
     "stop_price": 60.0,
     "initial_stop": 60.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-29",
     "hold_business_days": 15,
-    "r_dollars": 13638.079999999998,
-    "realized_pl": 8154.139999999999,
+    "r_pct_of_entry": 12.68917345750873,
     "realized_R": 0.5978950116145382,
     "trims": [
       {
         "date": "2026-06-15",
         "price": 80.0,
-        "qty": 312,
+        "pct_of_position": 19.948849104859335,
         "type": "trim_1_5"
       },
       {
         "date": "2026-06-25",
         "price": 74.16,
-        "qty": 782,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-06-29",
         "price": 69.53,
-        "qty": 470,
+        "pct_of_position": 30.051150895140665,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 21
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **VECO** long on 2026-06-08 at $68.72 (qty 1564) with stop $60.00 (1R = $8.72/sh = $13,638). Setup: **Long in mixed structure** \u2014 price above MA20 ($59.34), RSI 58, 89% through 52W range, ATR 6.3% of price. Realized **+0.60R**, peak was **+2.05R** on 2026-06-15 (day +7) \u2014 captured **29%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **VECO** long on 2026-06-08 at $68.72 with stop $60.00 (1R = $8.72/sh = 12.7% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($59.34), RSI 58, 89% through 52W range, ATR 6.3% of price. Realized **+0.60R**, peak was **+2.05R** on 2026-06-15 (day +7) \u2014 captured **29%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-05-11",

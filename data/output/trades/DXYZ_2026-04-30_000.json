@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-04-30",
     "entry_price": 34.34,
-    "original_qty": 2551,
-    "current_qty": 0,
     "stop_price": 32.29,
     "initial_stop": 32.29,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-11",
     "hold_business_days": 7,
-    "r_dollars": 5229.550000000011,
-    "realized_pl": 38157.99,
+    "r_pct_of_entry": 5.969714618520688,
     "realized_R": 7.296610607031182,
     "trims": [
       {
         "date": "2026-05-05",
         "price": 38.53,
-        "qty": 1275,
+        "pct_of_position": 49.98039984319875,
         "type": "trim_1_2"
       },
       {
         "date": "2026-05-08",
         "price": 53.04,
-        "qty": 510,
+        "pct_of_position": 19.9921599372795,
         "type": "trim_1_5"
       },
       {
         "date": "2026-05-11",
         "price": 64.73,
-        "qty": 766,
+        "pct_of_position": 30.027440219521758,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 11
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **DXYZ** long on 2026-04-30 at $34.34 (qty 2551) with stop $32.29 (1R = $2.05/sh = $5,230). Setup: **Long in mixed structure** \u2014 price above MA20 ($29.43), RSI 64, 60% through 52W range, ATR 4.6% of price. Realized **+7.30R**, peak was **+18.00R** on 2026-05-11 (day +11) \u2014 captured **41%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **DXYZ** long on 2026-04-30 at $34.34 with stop $32.29 (1R = $2.05/sh = 6.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($29.43), RSI 64, 60% through 52W range, ATR 4.6% of price. Realized **+7.30R**, peak was **+18.00R** on 2026-05-11 (day +11) \u2014 captured **41%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-03-31",

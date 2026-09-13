@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-07-20",
     "entry_price": 125.21,
-    "original_qty": 922,
-    "current_qty": 0,
     "stop_price": 122.0,
     "initial_stop": 122.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-22",
     "hold_business_days": 2,
-    "r_dollars": 2959.6199999999944,
-    "realized_pl": -2461.7399999999884,
+    "r_pct_of_entry": 2.563692995767106,
     "realized_R": -0.8317757009345771,
     "trims": [
       {
         "date": "2026-07-22",
         "price": 122.54,
-        "qty": 922,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **SPCX** long on 2026-07-20 at $125.21 (qty 922) with stop $122.00 (1R = $3.21/sh = $2,960). Setup: **Long in mixed structure** \u2014 price below MA20 ($148.36), RSI 64, 0% through 52W range, ATR 7.4% of price. Realized **-0.83R**, peak was **+1.45R** on 2026-07-21 (day +1) \u2014 captured **-57%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **SPCX** long on 2026-07-20 at $125.21 with stop $122.00 (1R = $3.21/sh = 2.6% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($148.36), RSI 64, 0% through 52W range, ATR 7.4% of price. Realized **-0.83R**, peak was **+1.45R** on 2026-07-21 (day +1) \u2014 captured **-57%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-22",

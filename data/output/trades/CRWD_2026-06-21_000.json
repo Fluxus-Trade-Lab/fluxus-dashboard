@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-06-21",
     "entry_price": 699.12,
-    "original_qty": 385,
-    "current_qty": 0,
     "stop_price": 680.0,
     "initial_stop": 680.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-22",
     "hold_business_days": 1,
-    "r_dollars": 7361.200000000002,
-    "realized_pl": -7361.200000000002,
+    "r_pct_of_entry": 2.734866689552581,
     "realized_R": -1.0,
     "trims": [
       {
         "date": "2026-06-22",
         "price": 680.0,
-        "qty": 385,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -49,7 +47,7 @@
   "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **CRWD** long on 2026-06-21 at $699.12 (qty 385) with stop $680.00 (1R = $19.12/sh = $7,361). Setup: **Long in mixed structure** \u2014 price below MA20 ($172.32), RSI 58, 77% through 52W range, ATR 5.7% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **CRWD** long on 2026-06-21 at $699.12 with stop $680.00 (1R = $19.12/sh = 2.7% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($172.32), RSI 58, 77% through 52W range, ATR 5.7% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-22",

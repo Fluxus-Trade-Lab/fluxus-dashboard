@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-08-20",
     "entry_price": 104.1,
-    "original_qty": 1248,
-    "current_qty": 999,
     "stop_price": 104.1,
     "initial_stop": 100.0,
     "closed": false,
+    "remaining_pct": 80.04807692307693,
     "exit_date": null,
     "hold_business_days": null,
-    "r_dollars": 5116.799999999993,
-    "realized_pl": 4668.75,
+    "r_pct_of_entry": 3.9385206532180543,
     "realized_R": 0.9124355065666054,
     "trims": [
       {
         "date": "2026-09-03",
         "price": 122.85,
-        "qty": 249,
+        "pct_of_position": 19.951923076923077,
         "type": "trim_1_5"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 22
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 (qty 1248) with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = $5,117). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.16R; worst drawdown -2.55R.",
+  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = 3.9% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.16R; worst drawdown -2.55R.",
   "ohlc_window": [
     {
       "date": "2026-07-21",

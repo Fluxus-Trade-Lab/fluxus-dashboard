@@ -8,33 +8,31 @@
     "sector": "ETF",
     "entry_date": "2026-01-06",
     "entry_price": 43.81,
-    "original_qty": 3403,
-    "current_qty": 0,
     "stop_price": 42.85,
     "initial_stop": 42.85,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-30",
     "hold_business_days": 18,
-    "r_dollars": 3266.880000000003,
-    "realized_pl": 13803.069999999994,
+    "r_pct_of_entry": 2.1912805295594633,
     "realized_R": 4.225153663434219,
     "trims": [
       {
         "date": "2026-01-16",
         "price": 50.0,
-        "qty": 1134,
+        "pct_of_position": 33.323538054657654,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-20",
         "price": 47.5,
-        "qty": 1134,
+        "pct_of_position": 33.323538054657654,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-30",
         "price": 46.1,
-        "qty": 1135,
+        "pct_of_position": 33.352923890684686,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 24
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **WGMI** long on 2026-01-06 at $43.81 (qty 3403) with stop $42.85 (1R = $0.96/sh = $3,267). Setup: **Long in mixed structure** \u2014 price above MA20 ($41.72), RSI 55, 31% through 52W range, ATR 5.9% of price. Realized **+4.23R**, peak was **+8.54R** on 2026-01-28 (day +22) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **WGMI** long on 2026-01-06 at $43.81 with stop $42.85 (1R = $0.96/sh = 2.2% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($41.72), RSI 55, 31% through 52W range, ATR 5.9% of price. Realized **+4.23R**, peak was **+8.54R** on 2026-01-28 (day +22) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2025-12-08",

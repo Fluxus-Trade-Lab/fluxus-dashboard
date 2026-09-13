@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-06-10",
     "entry_price": 258.78,
-    "original_qty": 486,
-    "current_qty": 0,
     "stop_price": 247.0,
     "initial_stop": 247.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-16",
     "hold_business_days": 4,
-    "r_dollars": 5725.079999999987,
-    "realized_pl": -5917.049999999985,
+    "r_pct_of_entry": 4.552129221732736,
     "realized_R": -1.0335314091680812,
     "trims": [
       {
         "date": "2026-06-16",
         "price": 250.0,
-        "qty": 243,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-06-16",
         "price": 243.21,
-        "qty": 243,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **CRDO** long on 2026-06-10 at $258.78 (qty 486) with stop $247.00 (1R = $11.78/sh = $5,725). Setup: **Long in mixed structure** \u2014 price above MA20 ($207.79), RSI 64, 86% through 52W range, ATR 10.8% of price. Realized **-1.03R**, peak was **+0.97R** on 2026-06-12 (day +2) \u2014 captured **-106%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **CRDO** long on 2026-06-10 at $258.78 with stop $247.00 (1R = $11.78/sh = 4.6% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($207.79), RSI 64, 86% through 52W range, ATR 10.8% of price. Realized **-1.03R**, peak was **+0.97R** on 2026-06-12 (day +2) \u2014 captured **-106%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-11",

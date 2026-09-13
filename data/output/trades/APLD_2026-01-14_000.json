@@ -8,21 +8,19 @@
     "sector": "Technology",
     "entry_date": "2026-01-14",
     "entry_price": 35.9,
-    "original_qty": 838,
-    "current_qty": 0,
     "stop_price": 34.0,
     "initial_stop": 34.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-20",
     "hold_business_days": 4,
-    "r_dollars": 1592.199999999999,
-    "realized_pl": -1030.7399999999973,
+    "r_pct_of_entry": 5.292479108635094,
     "realized_R": -0.6473684210526303,
     "trims": [
       {
         "date": "2026-01-20",
         "price": 34.67,
-        "qty": 838,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **APLD** long on 2026-01-14 at $35.90 (qty 838) with stop $34.00 (1R = $1.90/sh = $1,592). Setup: **Long in mixed structure** \u2014 price above MA20 ($28.69), RSI 65, 83% through 52W range, ATR 7.8% of price. Realized **-0.65R**, peak was **+0.83R** on 2026-01-16 (day +2) \u2014 captured **-78%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **APLD** long on 2026-01-14 at $35.90 with stop $34.00 (1R = $1.90/sh = 5.3% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($28.69), RSI 65, 83% through 52W range, ATR 7.8% of price. Realized **-0.65R**, peak was **+0.83R** on 2026-01-16 (day +2) \u2014 captured **-78%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2025-12-15",
