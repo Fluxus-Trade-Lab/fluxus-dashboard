@@ -468,7 +468,7 @@
         fixed(r[6], 0) + '</td><td class="n">' + plusGrouped(r[7]) + '</td><td class="n">' +
         (isNum(r[8]) ? r[8].toFixed(1) + "%" : DASH) + '</td><td class="n">' + plus(r[9], 1) + "</td></tr>";
     });
-    return tableIdx(c.labels.days_cols, rows.join(""), [2, 3, 4, 5, 6]);
+    return tableIdx(c.labels.days_cols, rows.join(""), [2, 3, 4, 5, 6], "days");
   }
 
   function scorecard(is) {

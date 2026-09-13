@@ -37,7 +37,7 @@ from pipeline.content.recap import dedupe, issue_dir, last_session, pack_dir
 from pipeline.content.recap import visual as vis
 from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.pages import check_margins, check_pages, check_x_pages, page_sections
+from pipeline.content.recap.pages import check_margins, check_pages, check_true_size_pdf, check_x_pages, page_sections
 from pipeline.content.recap.weeks import week_label, week_sessions
 
 IMG_WIDTH = 1460
@@ -252,6 +252,7 @@ def cmd_render(a) -> int:
         text = subprocess.run(["pdftotext", "-layout", str(tmp), "-"], capture_output=True, text=True, check=True).stdout
         content = data_issue["V"][lang]
         g, pg, mg = run_gates(text), check_pages(text), check_margins(tmp, *vis.PAGE_MARGIN_MM)
+        l2 = check_true_size_pdf(tmp, lang)  # L2: glyph font sizes read from the PDF, not line boxes
         # X (Andy 09-13「周复盘不发X, X一致对外用英文版本」): only daily EN pages 1–4 go to X
         x_applies = not iss.weekly and lang == "EN"
         xg = check_x_pages(text, lang, data_issue["_book_tickers"]) if x_applies else {"ok": True, "x1_hits": {}, "x2_ok": None}
@@ -268,16 +269,16 @@ def cmd_render(a) -> int:
         book_h = content["labels"]["portfolio"]
         layout_ok = bool(sections) and sections[-1] == [book_h] and all(book_h not in s for s in sections[:-1]) \
             and (iss.weekly or pg["pages"] == 5)
-        ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules and layout_ok
+        ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules and layout_ok and l2["ok"]
         if not iss.weekly:  # the page → section table is for dailies (checks the book sits on its own page)
             state["page_map"][lang] = [[name_of.get(h, h) for h in sec] for sec in sections]
         state["pdf"][lang] = {"ok": ok, "path": str(final), "pages": pg["pages"], "thin": pg["thin_pages"], "margin_overflow": mg["count"],
                               "gates": {"banned": len(g["banned"]), "leadership_zh": g["leadership_zh"], "money": len(g["money_shares"]),
                                         "voice": len(g["voice"])},
                               "x1_hits": xg["x1_hits"], "x2_ok": xg["x2_ok"], "cards_leaked": cards, "zh_mixed": mixed, "rules": bad_rules,
-                              "layout_ok": layout_ok,
+                              "layout_ok": layout_ok, "l2": l2,
                               "seconds": round(time.time() - t1, 1)}
-        print(f"PDF {lang} ok={ok} layout={layout_ok} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
+        print(f"PDF {lang} ok={ok} layout={layout_ok} L2 body={l2['body_pt']} table={l2['table_pt']} {'ok' if l2['ok'] else 'RED ' + '; '.join(l2['hits'])} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
               f"x2={xg['x2_ok']} cards={cards} gates={g['ok']} · {time.time() - t1:.1f}s")
         if ok:
             shutil.move(tmp, final)
