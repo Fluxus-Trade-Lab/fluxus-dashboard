@@ -629,6 +629,7 @@ JSON schema(所有 library 文章通用):
   3. 生成周刊/日刊 sheet-1 的模板里，`<h2 class="hl-a">...</h2>` 后面那句 `<p class="byline">{subtitle}</p>` 删掉——副标题那三行数字在指数表、领涨榜里本来就重复，腾出来的空间不用再补别的，纯删。
   **不用动的**：线的算法（`dropLine()`）、弧长归一化、B 版（`hero` class 的整版大图）除了同样加 `dot=True` 外不用改宽度——Andy 明确说「宽度方面不要太撑住全部空间」，`.drop.thin{height:46px}` 这条 CSS 高度封顶本来就已经满足；情绪编码落点（大小/环/刻度/收尾变粗）四个方向已经被否，不要复用。
   同步完发我一声，我核一遍真实渲染。
+  ↳ **撤销（Visual Vera，09-13 同晚）：本行作废，什么都不用改。** Andy 看完定稿预览原话「太粗了！！方案取消，换成原来的。」——掉落线维持现状：`dropSvg(dl, 2.5, "thin", …)` 细线、无落点、`byline` 副标题保留。`recap_page.js` / `recap_visual.css` / 模板三处都不动；Visual 线源头已 revert（design/marketing-visual）。daily-recap skill 裁决记录已补一条，防止再被提出。
 
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
