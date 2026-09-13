@@ -84,6 +84,11 @@
   - **增长官会在每周一记账时把本条抄进周报置顶，直到 Andy 说做完。**
   - 同节另有 T2（支付宝渠道流水，阻塞台账全量）与 T3（PII 清史，等 Andy 发话）。
 
+- **[09-14 · Nighty Zac 代录 · 回 y/n 即核销]** **两条待合分支，都是纯新增、都碰了夜班白名单外的 `data/reference/`，所以我不自合：**
+  - `auto/night-20260912-bb6565-protocol` · `RESEARCH_PROTOCOL.md` §五补「NULL 必须带分辨率」7 行（**第 3 晚**；main 自分叉后没碰过该文件）· 建议 y
+  - `auto/night-20260914-4ef60f-metric`（`1486755c`）· `METRIC_SOURCES.md` 登记 `audit_events_vs_bars` 两条恒等式的自造容差（宪法 08-31 要求）· 建议 y
+  - 核销：你回 y/n，或任何线主人合了/关了，就在本条下追 `↳ ✅`。依据见 [`2026-09-14.md`](2026-09-14.md) 第三节。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
@@ -2953,3 +2958,5 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 - [09-13] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍追平 2026-09-11，commit `8c76c744`，run_ledger 最新场次 34667306907 quality ok/tradeable 2544）。本班 14:16 UTC / 10:16 ET 巡检：`actions_list` 最新一条仍是 09-12T06:04Z（成功，非市场数据班），无新 run/无新失败；today ET 仍是周日，09-11 仍是最近已完成交易日；主排程（Mon-Fri 20:20Z）与 backstop（Tue-Sat 01:30Z）今日均不触发，下一次预期活动是周一 09-14 20:20Z 正班，本班无分诊/重跑动作。backstop 连续多次被丢弃的机制级建议仍待 OPS。
 - [09-13] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍追平 2026-09-11，commit `8c76c744`，run_ledger 最新场次 34667306907 quality ok/tradeable 2544）。本班 15:17 UTC / 11:17 ET 巡检：`actions_list` 最新一条仍是 09-12T06:04Z（成功，非市场数据班），无新 run/无新失败；today ET 仍是周日，09-11 仍是最近已完成交易日；主排程（Mon-Fri 20:20Z）与 backstop（Tue-Sat 01:30Z）今日均不触发，下一次预期活动是周一 09-14 20:20Z 正班，本班无分诊/重跑动作。backstop 连续多次被丢弃的机制级建议仍待 OPS。
 - [09-13] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍追平 2026-09-11，commit `8c76c744`，run_ledger 最新场次 34667306907 quality ok/tradeable 2544）。本班 18:17 UTC / 14:17 ET 巡检：`actions_list` 最新一条仍是 34677184393（09-12T06:04Z，成功，非市场数据班，backstop 判定跳过），无新 run/无新失败；today ET 仍是周日，09-11 仍是最近已完成交易日；主排程（Mon-Fri 20:20Z）与 backstop（Tue-Sat 01:30Z）今日均不触发，下一次预期活动是周一 09-14 20:20Z 正班，本班无分诊/重跑动作。backstop 连续多次被丢弃的机制级建议仍待 OPS。
+
+🔔 [09-14] → DATA ALEX · Dashboard数据端: 08-07 工单复核通过（volume 独立证据：新 preset 行 86/86 配 08-07，冻结坏行 78/78 配 08-06）；`audit_events_vs_bars` 加了第二条恒等式 volume、两条都改按票计票（「查不了」6→5 天，03-26/27/30 此前是重复行数出来的绿）。你那条仍欠的④生产接线：两条一起接，放在 K 线库刷新之后（docstring 盲区 5）。详见 night_reports/2026-09-14.md 第一、二节 · pending
