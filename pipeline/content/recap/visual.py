@@ -1,23 +1,15 @@
 #!/usr/bin/env python3
-"""Visual-line layout for the recap samples: a data-driven review page + A4 PDFs, one renderer.
+"""Visual-line layout for the recap: data → one JS renderer → review page + A4 PDFs.
 
-Usage (recap venv):
-    ~/.venvs/fluxus-recap/bin/python -m pipeline.content.recap.visual --sample
+Library used by run.py (production) and, via --step, by the five-issue sample page.
 
-How it is built
   * Python gathers each issue's numbers (pack.json + origin/main archives as of the issue date) and the
     words (content_<LANG>.json) into one JSON document, formatted so no line exceeds 300 characters.
-  * visual_assets/recap_page.js draws everything from that JSON in the browser — drop line, conditions
-    chart, vote strip, bar panels, schematic — using the Visual line's CSS (recap_visual.css, verbatim)
-    plus recap_local.css. The published page and the PDFs come from the same JS.
-  * PDFs: headless Chrome prints the A layout (#…&print=1) from a local copy whose fonts are the files
-    in ~/.venvs/fluxus-recap/fonts (never fetched at render time).
-
-Delivery checks (any failure → blocked_* output, exit 1)
-  page     size ≤ 350 KB, every line ≤ 300 chars; gates on the JSON words of every issue × language;
-           gates again on the DOM Chrome actually rendered for all 20 variants, which must contain the
-           drawn SVGs; two screenshots saved as _web_preview_*.png
-  PDF      gates + rules check + page fill + text inside the type area (pages.check_margins)
+  * visual_assets/recap_page.js draws everything from that JSON — drop line, conditions chart, vote
+    strip, bar panels, schematic — using the Visual line's CSS (recap_visual.css, verbatim) plus
+    recap_local.css. Preview pages and PDFs come from the same JS; print mode drops the topic cards.
+  * Headless Chrome runs with a fixed profile (~/.venvs/fluxus-recap/chrome-profile), one at a time;
+    on timeout the whole process group is killed so no helper keeps the profile lock.
 """
 from __future__ import annotations
 
@@ -25,20 +17,19 @@ import argparse
 import datetime as dt
 import html
 import json
+import os
 import re
-import shutil
+import signal
 import subprocess
 import sys
-import tempfile
 import time
 from collections import defaultdict
 from pathlib import Path
 
-from pipeline.content.recap import month_dir, pack_dir
+from pipeline.content.recap import pack_dir, month_dir
 from pipeline.content.recap.build_pack import csv_rows, show
 from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.pages import check_margins, check_pages
 from pipeline.content.recap.visual_figs import FIGS
 from pipeline.content.recap.weeks import week_sessions
 from pipeline.marketcal import is_trading_day
@@ -47,7 +38,8 @@ e = html.escape
 ASSETS = Path(__file__).with_name("visual_assets")
 FONT_DIR = Path.home() / ".venvs" / "fluxus-recap" / "fonts"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
+CHROME_PROFILE = Path.home() / ".venvs" / "fluxus-recap" / "chrome-profile"
+SAMPLE_ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
 MAX_LINE, MAX_BYTES = 300, 350 * 1024
 PAGE_MARGIN_MM = (14.0, 14.0)  # left/right, must match @page in recap_local.css
 FONTS_LINK = ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600'
@@ -59,7 +51,7 @@ CHROME_LABELS = {
            "votes": "votes", "top3": "top 3 · bottom 3", "d1": "1 day", "w1": "1 week", "ll": "Leaders and Laggards",
            "rot_d": "Rotation · the session", "rot_w": "Rotation · the week", "board": "The Board",
            "b_votes": "Breadth votes", "b_cond": "Conditions", "b_led": "Led", "b_paid": "Paid",
-           "pick_on": "A · sample default", "pick_off": "B · alternative",
+           "pick_on_word": "chosen", "pick_off_word": "alternative",
            "schem": "Schematic — illustrates the concept, not price data.", "score": "Weekly Scorecard",
            "tape": "The Tape", "founders": "Founders Note", "sessions": "Session by session",
            "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX drop line, 21 sessions",
@@ -70,7 +62,7 @@ CHROME_LABELS = {
            "votes": "票", "top3": "前 3 · 后 3", "d1": "1 日", "w1": "1 周", "ll": "领涨与落后",
            "rot_d": "轮动 · 当天", "rot_w": "轮动 · 本周", "board": "看板",
            "b_votes": "广度票板", "b_cond": "市场状况", "b_led": "领涨", "b_paid": "让位",
-           "pick_on": "A · 样张默认", "pick_off": "B · 备选",
+           "pick_on_word": "选用", "pick_off_word": "备选",
            "schem": "示意图——说明概念，不是真实价格。", "score": "周成绩单",
            "tape": "盘面", "founders": "Founders Note", "sessions": "逐日读数",
            "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX 掉落线，21 个交易日",
@@ -80,6 +72,7 @@ CHROME_LABELS = {
                        "% above 200-day": "站上 200 日线占比", "T2108 zone": "T2108 区间", "SPY warnings": "SPY 警示",
                        "QQQ warnings": "QQQ 警示", "Benchmark trend": "基准趋势"}},
 }
+CARD_WORDS = {"EN": ("chosen", "alternative"), "ZH": ("选用", "备选")}  # must never reach a member PDF
 
 
 # ------------------------------------------------------------------ JSON with short lines
@@ -172,10 +165,19 @@ def spx_segment(D):
     return seg
 
 
-def issue_data(tag: str, label: str, sample: bool) -> dict:
+def pick_edu(education: dict, key: str) -> dict:
+    """Content education block → what the page renders: the chosen option's title/body/figure + the cards."""
+    opts = education.get("options") or []
+    sel = next((o for o in opts if o.get("key") == key), None)
+    if sel is None or not sel.get("body") or not sel.get("figure"):
+        raise SystemExit(f"education option {key} is missing title/body/figure — see CONTENT_SCHEMA.md")
+    return {"chosen": key, "title": sel["title"], "body": sel["body"], "figure": sel["figure"],
+            "options": [{"key": o["key"], "title": o["title"], "why": o.get("why", "")} for o in opts]}
+
+
+def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     weekly = "-W" in label
     D = week_sessions(label)[-1].isoformat() if weekly else label
-    pdir = (month_dir(D, sample) / f"pack_{label}") if weekly else pack_dir(label, sample)
     pack = json.loads((pdir / "pack.json").read_text())
     content = {lang: json.loads((pdir / f"content_{lang}.json").read_text()) for lang in ("EN", "ZH")}
     seg = spx_segment(D)
@@ -253,35 +255,42 @@ def issue_data(tag: str, label: str, sample: bool) -> dict:
         "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
         "pos": [[p["ticker"], p["direction"], p["entry_date"], p["open_R"]] for p in bkk["positions"]]}
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
-            "led", "lagged", "sentiment", "tomorrow", "rules", "education", "portfolio_note", "weekly_k_line", "labels")
-    out["V"] = {lang: {k: content[lang].get(k) for k in keep} for lang in ("EN", "ZH")}
-    out["fig"] = {lang: FIGS[content[lang]["education"]["figure"]](lang) for lang in ("EN", "ZH")}
+            "led", "lagged", "sentiment", "tomorrow", "rules", "portfolio_note", "weekly_k_line", "labels")
+    out["V"] = {}
+    out["fig"] = {}
+    for lang in ("EN", "ZH"):
+        ed = pick_edu(content[lang]["education"], edu)
+        out["V"][lang] = {**{k: content[lang].get(k) for k in keep}, "education": ed}
+        out["fig"][lang] = FIGS[ed["figure"]](lang)
     out["_rules_check"] = {lang: check_rules(content[lang].get("rules"), lang, D) for lang in ("EN", "ZH")}
+    out["_book_tickers"] = sorted({p[0] for p in (out["book"] or {}).get("pos", [])})
     return out
 
 
+def public(iss: dict) -> dict:
+    return {k: v for k, v in iss.items() if not k.startswith("_")}
+
+
 # ------------------------------------------------------------------ page
-HEADER = """<header class="top">
-  <p class="eyebrow">Fluxus Capital · Market Recap · 样张 · W37</p>
-  <h1>复盘样张 · Visual 版式</h1>
-  <p class="lede">
-    五期内容不变，换成 Visual 线 9/11 周刊的视觉系统。A 登记体、B 掉落体，中英各一套；
-    教育段加 A/B 选题，样张默认 A。
-  </p>
-  <div class="switches">
-    <div class="switch" role="group" aria-label="期数">
-{issues}
-    </div>
-    <div class="switch" role="group" aria-label="语言">
-      <button type="button" data-set="lang" data-val="ZH" aria-pressed="true">中</button>
-      <button type="button" data-set="lang" data-val="EN" aria-pressed="false">EN</button>
-    </div>
-    <div class="switch" role="group" aria-label="排版">
-      <button type="button" data-set="layout" data-val="A" aria-pressed="true">A · 登记体</button>
-      <button type="button" data-set="layout" data-val="B" aria-pressed="false">B · 掉落体</button>
-    </div>
-  </div>
-</header>"""
+def header_html(tags: list[str], layouts=("A", "B"), eyebrow="Fluxus Capital · Market Recap · 样张 · W37",
+                h1="复盘样张 · Visual 版式",
+                lede=("五期内容不变，换成 Visual 线 9/11 周刊的视觉系统。A 登记体、B 掉落体，中英各一套；",
+                      "教育段加 A/B 选题，样张默认 A。")) -> str:
+    issue_btns = "\n".join(f'      <button type="button" data-set="issue" data-val="{e(t)}" aria-pressed="{"true" if i == 0 else "false"}">{e(t)}</button>'
+                           for i, t in enumerate(tags))
+    layout_group = ""
+    if len(layouts) > 1:
+        names = {"A": "A · 登记体", "B": "B · 掉落体"}
+        layout_group = ('    <div class="switch" role="group" aria-label="排版">\n' + "\n".join(
+            f'      <button type="button" data-set="layout" data-val="{x}" aria-pressed="{"true" if i == 0 else "false"}">{names[x]}</button>'
+            for i, x in enumerate(layouts)) + "\n    </div>\n")
+    lede_html = "\n".join(f"    {e(x)}" for x in lede)
+    return (f'<header class="top">\n  <p class="eyebrow">{e(eyebrow)}</p>\n  <h1>{e(h1)}</h1>\n  <p class="lede">\n{lede_html}\n  </p>\n'
+            '  <div class="switches">\n    <div class="switch" role="group" aria-label="期数">\n' + issue_btns + "\n    </div>\n"
+            '    <div class="switch" role="group" aria-label="语言">\n'
+            '      <button type="button" data-set="lang" data-val="ZH" aria-pressed="true">中</button>\n'
+            '      <button type="button" data-set="lang" data-val="EN" aria-pressed="false">EN</button>\n    </div>\n'
+            + layout_group + "  </div>\n</header>")
 
 
 def wrap_long_css(css: str) -> str:
@@ -290,22 +299,21 @@ def wrap_long_css(css: str) -> str:
         if len(ln) <= MAX_LINE:
             out.append(ln)
         else:
-            out.extend(x for x in re.sub(r";\s*", ";\n  ", ln).splitlines())
+            out.extend(re.sub(r";\s*", ";\n  ", ln).splitlines())
     return "\n".join(out)
 
 
-def header_html() -> str:
-    btns = "\n".join(f'      <button type="button" data-set="issue" data-val="{t}" aria-pressed="{"true" if t == "W37" else "false"}">{t}</button>'
-                     for t, _ in ISSUES)
-    return HEADER.replace("{issues}", btns)
-
-
-def page_html(data_json: str, fonts: str) -> str:
+def page_html(data_json: str, fonts: str, header: str, title: str = "Fluxus Recap 样张") -> str:
     css = wrap_long_css((ASSETS / "recap_visual.css").read_text() + "\n" + (ASSETS / "recap_local.css").read_text())
     js = (ASSETS / "recap_page.js").read_text()
-    return (f"<title>Fluxus Recap 样张</title>\n{fonts}\n<style>\n{css}\n</style>\n{header_html()}\n"
+    return (f"<title>{e(title)}</title>\n{fonts}\n<style>\n{css}\n</style>\n{header}\n"
             '<main id="app">\n  <p class="prose">—</p>\n</main>\n'
             f'<script type="application/json" id="recap-data">\n{data_json}\n</script>\n<script>\n{js}\n</script>\n')
+
+
+def page_shape(page: str) -> dict:
+    longest, size = max(len(ln) for ln in page.splitlines()), len(page.encode())
+    return {"bytes": size, "lines": page.count("\n"), "longest_line": longest, "ok": longest <= MAX_LINE and size <= MAX_BYTES}
 
 
 def local_wrapper(page: str) -> str:
@@ -332,267 +340,113 @@ def html_text(fragment: str) -> str:
 
 
 # ------------------------------------------------------------------ Chrome
-def chrome(args: list[str], timeout: int = 120) -> subprocess.CompletedProcess:
-    """One headless Chrome run, never in parallel with another.
-    Measured 2026-09-13: a fresh --user-data-dir profile made dump-dom/screenshot hang past 60–120 s on this
-    machine, while the default profile with a virtual-time budget finished a JS-page screenshot in 15.5 s."""
+def file_ready(path: Path, settle_s: float = 1.0):
+    """done() for chrome(): the output file exists, is non-empty and its size held for settle_s."""
+    last = {"size": -1, "since": 0.0}
+
+    def done(_stdout: str) -> bool:
+        if not path.exists():
+            return False
+        size, now = path.stat().st_size, time.time()
+        if size > 0 and size == last["size"]:
+            return now - last["since"] >= settle_s
+        last["size"], last["since"] = size, now
+        return False
+    return done
+
+
+def chrome(args: list[str], timeout: int = 120, done=None) -> subprocess.CompletedProcess:
+    """One headless Chrome run on the fixed profile (~/.venvs/fluxus-recap/chrome-profile), never two at once.
+
+    Measured 2026-09-13: with any --user-data-dir (fresh temp dir or this fixed one) Chrome writes its output —
+    a complete screenshot, a complete PDF, the full DOM on stdout — and then does not exit; every run sat until
+    the 90 s cap. So the caller passes `done`, the run ends as soon as the output is complete, and the whole
+    process group is killed (a killed parent alone leaves helpers holding the profile lock, which is what made
+    the following runs hang in the earlier attempts)."""
+    import threading
+
+    CHROME_PROFILE.mkdir(parents=True, exist_ok=True)
     args = [x for x in args if not x.startswith("--virtual-time-budget")]
-    return subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--virtual-time-budget=8000", *args],
-                          capture_output=True, text=True, timeout=timeout)
-
-
-def dump_dom(url: str) -> str:
-    return chrome(["--virtual-time-budget=6000", "--dump-dom", url]).stdout
-
-
-def main(argv=None) -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--sample", action="store_true")
-    ap.add_argument("--skip-pdf", action="store_true")
-    a = ap.parse_args(argv)
+    cmd = [CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run", "--no-default-browser-check",
+           f"--user-data-dir={CHROME_PROFILE}", "--virtual-time-budget=8000", *args]
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, start_new_session=True)
+    buf: list[str] = []
+    reader = threading.Thread(target=lambda: buf.extend(iter(p.stdout.readline, "")), daemon=True)
+    reader.start()
     t0 = time.time()
-    issues = [issue_data(tag, label, a.sample) for tag, label in ISSUES]
-    out = month_dir(issues[1]["D"], a.sample) / "visual"
-    out.mkdir(parents=True, exist_ok=True)
-    report, status = {"page": {}, "dom": {}, "pdf": {}}, 0
-
-    # words: gates on everything the page can show, per issue × language
-    head_text = html_text(header_html())
-    for iss in issues:
-        for lang in ("ZH", "EN"):
-            words = "\n".join(strings(unjoin([iss["V"][lang], iss["fig"][lang], CHROME_LABELS[lang], iss["when"][lang]])))
-            g = run_gates(head_text + "\n" + words)
-            bad = iss["_rules_check"][lang]
-            ok = g["ok"] and not bad
-            report["page"][f'{iss["tag"]}/{lang}'] = {"ok": ok, "rules": bad, "banned": len(g["banned"]), "voice": len(g["voice"]),
-                                                     "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"]}
-            if not ok:
-                status = 1
-                print(f'WORDS BLOCKED {iss["tag"]}/{lang}: {bad or ""} ' + "; ".join(f'{h["gate_rule"]}:{h["match"]!r}' for h in g["banned"] + g["money_shares"] + g["voice"]), file=sys.stderr)
-    data = {"chrome": CHROME_LABELS, "issues": [{k: v for k, v in iss.items() if not k.startswith("_")} for iss in issues]}
-    data_json = jdump(data)
-    page = page_html(data_json, FONTS_LINK)
-    longest = max(len(ln) for ln in page.splitlines())
-    size = len(page.encode())
-    report["page_stats"] = {"bytes": size, "lines": page.count("\n"), "longest_line": longest}
-    if longest > MAX_LINE or size > MAX_BYTES:
-        status = 1
-        print(f"PAGE SHAPE BLOCKED: {size} bytes, longest line {longest}", file=sys.stderr)
-    name = "recap_samples.html" if status == 0 else "blocked_recap_samples.html"
-    (out / name).write_text(page)
-    render = out / "_render.html"
-    render.write_text(local_wrapper(page))
-    print(f"PAGE {out / name} · {size / 1024:.0f} KB · {page.count(chr(10))} lines · longest {longest} · {time.time() - t0:.1f}s")
-
-    # DOM Chrome actually rendered: all variants
-    must = {"A": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"'),
-            "B": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"', 'class="bpanel"')}
-    for iss in issues:
-        for lang in ("ZH", "EN"):
-            for layout in ("A", "B"):
-                dom = dump_dom(f'{render.as_uri()}#issue={iss["tag"]}&lang={lang}&layout={layout}')
-                m = re.search(r'<main id="app"[^>]*data-rendered="([^"]+)"[^>]*>(.*)</main>', dom, re.S)
-                drawn = bool(m) and m.group(1) == f'{iss["tag"]}|{lang}|{layout}' and all(x in m.group(2) for x in must[layout])
-                g = run_gates(html_text(m.group(2))) if m else {"ok": False, "banned": [], "voice": [], "money_shares": [], "leadership_zh": 0}
-                ok = drawn and g["ok"] and m.group(2).count("—</p>") == 0
-                report["dom"][f'{iss["tag"]}/{lang}/{layout}'] = {"ok": ok, "drawn": drawn, "banned": len(g["banned"]),
-                                                                 "voice": len(g["voice"]), "money": len(g["money_shares"]),
-                                                                 "dash_sections": m.group(2).count("—</p>") if m else None}
-                if not ok:
-                    status = 1
-                    print(f'DOM BLOCKED {iss["tag"]}/{lang}/{layout}: drawn={drawn} ' + "; ".join(f'{h["gate_rule"]}:{h["match"]!r}' for h in g["banned"] + g["money_shares"] + g["voice"]), file=sys.stderr)
-    print(f"DOM checks {sum(v['ok'] for v in report['dom'].values())}/{len(report['dom'])} · {time.time() - t0:.1f}s")
-    for tag, lang, layout, h in (("W37", "ZH", "A", 6200), ("09-11", "EN", "B", 6600)):
-        shot = out / f"_web_preview_{tag}_{lang}_{layout}.png"
-        chrome([f"--window-size=1200,{h}", "--virtual-time-budget=6000", f"--screenshot={shot}",
-                f"{render.as_uri()}#issue={tag}&lang={lang}&layout={layout}&theme=light"])
-        print("SHOT", shot, shot.exists() and shot.stat().st_size)
-
-    if a.skip_pdf:
-        (out / "visual_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1))
-        return status
-    printable = out / "_print.html"
-    printable.write_text(local_wrapper(page_html(data_json, local_fonts_css())))
-    for old in out.glob("_preview_*.png"):
-        old.unlink()
-    blocked = out / "_blocked"
-    for iss in issues:
-        for lang in ("EN", "ZH"):
-            t1 = time.time()
-            final = out / f'Market_Recap_{iss["label"]}_{lang}.pdf'
-            tmp = out / f'.partial_{iss["label"]}_{lang}.pdf'
-            chrome(["--no-pdf-header-footer", f"--print-to-pdf={tmp}",
-                    f'{printable.as_uri()}#issue={iss["tag"]}&lang={lang}&layout=A&print=1'], timeout=180)
-            if not tmp.exists():
-                status = 1
-                print(f"PDF NOT PRODUCED {final.name}", file=sys.stderr)
-                continue
-            text = subprocess.run(["pdftotext", "-layout", str(tmp), "-"], capture_output=True, text=True, check=True).stdout
-            g, pg, mg = run_gates(text), check_pages(text), check_margins(tmp, *PAGE_MARGIN_MM)
-            bad = iss["_rules_check"][lang]
-            ok = g["ok"] and pg["ok"] and mg["ok"] and not bad
-            report["pdf"][f'{iss["label"]}/{lang}'] = {"ok": ok, "pages": pg["pages"], "body_lines": pg["body_lines"], "thin": pg["thin_pages"],
-                                                        "margin_overflow": mg["count"], "banned": len(g["banned"]), "voice": len(g["voice"]),
-                                                        "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "rules": bad,
-                                                        "seconds": round(time.time() - t1, 1)}
-            if ok:
-                shutil.move(tmp, final)
-                subprocess.run(["pdftoppm", "-r", "50", "-png", str(final), str(out / f'_preview_{iss["label"]}_{lang}')], check=False)
-                print(f"DELIVERED {final} · pages {pg['pages']} {pg['body_lines']} · margins ok · {time.time() - t1:.1f}s")
-            else:
-                status = 1
-                blocked.mkdir(exist_ok=True)
-                if final.exists():
-                    shutil.move(final, blocked / f"previous_{final.name}")
-                shutil.move(tmp, blocked / final.name)
-                print(f"PDF BLOCKED {final.name}: thin={pg['thin_pages']} margin_overflow={mg['count']} {mg['overflow'][:3]} "
-                      f"banned={len(g['banned'])} voice={len(g['voice'])} money={len(g['money_shares'])} rules={bad}", file=sys.stderr)
-    (out / "visual_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1))
-    return status
+    try:
+        while p.poll() is None:
+            if done is not None and done("".join(buf)):
+                break
+            if time.time() - t0 > timeout:
+                raise subprocess.TimeoutExpired(cmd, timeout)
+            time.sleep(0.25)
+    finally:
+        if p.poll() is None:
+            try:
+                os.killpg(p.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        p.wait()
+        reader.join(timeout=2)
+    return subprocess.CompletedProcess(cmd, p.returncode, "".join(buf), "")
 
 
+DRAWN = {"A": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"'),
+         "B": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"', 'class="bpanel"')}
+
+
+def check_dom(url: str, expect: str, layout: str, timeout: int = 90) -> dict:
+    try:
+        dom = chrome(["--dump-dom", url], timeout=timeout, done=lambda out: "</html>" in out).stdout
+    except subprocess.TimeoutExpired:
+        dom = ""
+    m = re.search(r'<main id="app"[^>]*data-rendered="([^"]+)"[^>]*>(.*)</main>', dom, re.S)
+    body = m.group(2) if m else ""
+    drawn = bool(m) and m.group(1) == expect and all(x in body for x in DRAWN[layout])
+    g = run_gates(html_text(body))
+    dashes = body.count("—</p>")
+    return {"ok": drawn and g["ok"] and dashes == 0, "drawn": drawn, "banned": len(g["banned"]), "voice": len(g["voice"]),
+            "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "dash_sections": dashes}
+
+
+def print_pdf(url: str, out: Path, timeout: int = 90) -> bool:
+    out.unlink(missing_ok=True)
+    try:
+        chrome(["--no-pdf-header-footer", f"--print-to-pdf={out}", url], timeout=timeout, done=file_ready(out))
+    except subprocess.TimeoutExpired:
+        return False
+    return out.exists() and out.stat().st_size > 0
+
+
+# ------------------------------------------------------------------ five-issue sample page (review only)
 def run_steps(argv=None) -> int:
-    """Same checks as main(), one step per invocation so each stays short in the foreground.
-    Only --step page writes recap_samples.html; dom/shots/pdf read the page already on disk."""
     ap = argparse.ArgumentParser()
-    ap.add_argument("--sample", action="store_true")
-    ap.add_argument("--step", required=True, choices=["page", "dom", "shots", "pdf"])
-    ap.add_argument("--only", default="", help="dom: TAG/LANG/LAYOUT · pdf: LABEL/LANG (default: all)")
+    ap.add_argument("--step", required=True, choices=["page", "dom"])
     ap.add_argument("--chrome-timeout", type=int, default=90)
     a = ap.parse_args(argv)
-    t0 = time.time()
-    out = month_dir("2026-09-11", a.sample) / "visual"
+    out = month_dir("2026-09-11", True) / "visual"
     out.mkdir(parents=True, exist_ok=True)
-    rep_path = out / "visual_report.json"
-    try:
-        report = json.loads(rep_path.read_text())
-    except (OSError, ValueError):
-        report = {}
-    for k in ("page", "dom", "pdf", "shots"):
-        report.setdefault(k, {})
+    render = out / "_render.html"
     status = 0
-    render, printable = out / "_render.html", out / "_print.html"
-
     if a.step == "page":
-        issues = [issue_data(tag, label, a.sample) for tag, label in ISSUES]
-        head_text = html_text(header_html())
-        for iss in issues:
-            for lang in ("ZH", "EN"):
-                words = "\n".join(strings(unjoin([iss["V"][lang], iss["fig"][lang], CHROME_LABELS[lang], iss["when"][lang]])))
-                g = run_gates(head_text + "\n" + words)
-                bad = iss["_rules_check"][lang]
-                ok = g["ok"] and not bad
-                report["page"][f'{iss["tag"]}/{lang}'] = {"ok": ok, "rules": bad, "banned": len(g["banned"]), "voice": len(g["voice"]),
-                                                         "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"]}
-                if not ok:
-                    status = 1
-                    print(f'WORDS BLOCKED {iss["tag"]}/{lang}: {bad or ""} ' + "; ".join(f'{h["gate_rule"]}:{h["match"]!r}' for h in g["banned"] + g["money_shares"] + g["voice"]), file=sys.stderr)
-        data = {"chrome": CHROME_LABELS, "issues": [{k: v for k, v in iss.items() if not k.startswith("_")} for iss in issues]}
-        data_json = jdump(data)
-        page = page_html(data_json, FONTS_LINK)
-        longest, size = max(len(ln) for ln in page.splitlines()), len(page.encode())
-        report["page_stats"] = {"bytes": size, "lines": page.count("\n"), "longest_line": longest}
-        if longest > MAX_LINE or size > MAX_BYTES:
-            status = 1
+        issues = [issue_data(tag, label, pack_dir(label, True)) for tag, label in SAMPLE_ISSUES]
+        data = {"chrome": CHROME_LABELS, "layouts": ["A", "B"], "store_key": "fluxusRecapSamplesW37", "issues": [public(i) for i in issues]}
+        page = page_html(jdump(data), FONTS_LINK, header_html([t for t, _ in SAMPLE_ISSUES]))
+        shape = page_shape(page)
+        status = 0 if shape["ok"] else 1
         (out / ("recap_samples.html" if status == 0 else "blocked_recap_samples.html")).write_text(page)
         render.write_text(local_wrapper(page))
-        printable.write_text(local_wrapper(page_html(data_json, local_fonts_css())))
-        print(f"PAGE status={status} · {size / 1024:.0f} KB · {page.count(chr(10))} lines · longest {longest} · {time.time() - t0:.1f}s")
-
-    elif a.step == "dom":
-        must = {"A": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"'),
-                "B": ('class="drop', 'class="chart"', 'class="votes', 'class="tell"', 'class="bpanel"')}
-        combos = [(t, lg, ly) for t, _ in ISSUES for lg in ("ZH", "EN") for ly in ("A", "B")]
-        if a.only:
-            combos = [c for c in combos if "/".join(c) == a.only]
-        for tag, lang, layout in combos:
-            t1 = time.time()
-            try:
-                dom = chrome(["--dump-dom", f"{render.as_uri()}#issue={tag}&lang={lang}&layout={layout}"],
-                             timeout=a.chrome_timeout).stdout
-            except subprocess.TimeoutExpired:
-                dom = ""
-            m = re.search(r'<main id="app"[^>]*data-rendered="([^"]+)"[^>]*>(.*)</main>', dom, re.S)
-            body = m.group(2) if m else ""
-            drawn = bool(m) and m.group(1) == f"{tag}|{lang}|{layout}" and all(x in body for x in must[layout])
-            g = run_gates(html_text(body))
-            dashes = body.count("—</p>")
-            ok = drawn and g["ok"] and dashes == 0
-            report["dom"][f"{tag}/{lang}/{layout}"] = {"ok": ok, "drawn": drawn, "banned": len(g["banned"]), "voice": len(g["voice"]),
-                                                      "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "dash_sections": dashes}
-            status |= 0 if ok else 1
-            print(f"DOM {tag}/{lang}/{layout} ok={ok} drawn={drawn} gates={g['ok']} dashes={dashes} · {time.time() - t1:.1f}s")
-
-    elif a.step == "shots":
-        for tag, lang, layout, h in (("W37", "ZH", "A", 6200), ("09-11", "EN", "B", 6600)):
-            shot = out / f"_web_preview_{tag}_{lang}_{layout}.png"
-            t1 = time.time()
-            chrome([f"--window-size=1100,{h}", f"--screenshot={shot}",
-                    f"{render.as_uri()}#issue={tag}&lang={lang}&layout={layout}&theme=light"], timeout=a.chrome_timeout)
-            report["shots"][shot.name] = shot.exists() and shot.stat().st_size
-            print("SHOT", shot, report["shots"][shot.name], f"{time.time() - t1:.1f}s")
-
-    elif a.step == "pdf":
-        labels = {label: tag for tag, label in ISSUES}
-        combos = [(label, lg) for _, label in ISSUES for lg in ("EN", "ZH")]
-        if a.only:
-            combos = [c for c in combos if "/".join(c) == a.only]
-        blocked = out / "_blocked"
-        for label, lang in combos:
-            t1 = time.time()
-            weekly = "-W" in label
-            D = week_sessions(label)[-1].isoformat() if weekly else label
-            pdir = (month_dir(D, a.sample) / f"pack_{label}") if weekly else pack_dir(label, a.sample)
-            rules = json.loads((pdir / f"content_{lang}.json").read_text()).get("rules")
-            final = out / f"Market_Recap_{label}_{lang}.pdf"
-            tmp = out / f".partial_{label}_{lang}.pdf"
-            tmp.unlink(missing_ok=True)
-            try:
-                chrome(["--no-pdf-header-footer", f"--print-to-pdf={tmp}",
-                        f"{printable.as_uri()}#issue={labels[label]}&lang={lang}&layout=A&print=1"], timeout=a.chrome_timeout)
-            except subprocess.TimeoutExpired:
-                pass
-            if not tmp.exists():
-                status = 1
-                report["pdf"][f"{label}/{lang}"] = {"ok": False, "error": "not produced"}
-                print(f"PDF NOT PRODUCED {final.name} · {time.time() - t1:.1f}s")
-                continue
-            text = subprocess.run(["pdftotext", "-layout", str(tmp), "-"], capture_output=True, text=True, check=True).stdout
-            g, pg, mg = run_gates(text), check_pages(text), check_margins(tmp, *PAGE_MARGIN_MM)
-            bad = check_rules(rules, lang, D)
-            mixed = lang == "ZH" and "bull/bear" in text
-            ok = g["ok"] and pg["ok"] and mg["ok"] and not bad and not mixed
-            report["pdf"][f"{label}/{lang}"] = {"ok": ok, "pages": pg["pages"], "body_lines": pg["body_lines"], "thin": pg["thin_pages"],
-                                                "margin_overflow": mg["count"], "banned": len(g["banned"]), "voice": len(g["voice"]),
-                                                "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "rules": bad,
-                                                "zh_mixed_bull_bear": mixed}
-            if ok:
-                shutil.move(tmp, final)
-                for old in out.glob(f"_preview_{label}_{lang}-*.png"):
-                    old.unlink()
-                subprocess.run(["pdftoppm", "-r", "50", "-png", str(final), str(out / f"_preview_{label}_{lang}")], check=False)
-            else:
-                status = 1
-                blocked.mkdir(exist_ok=True)
-                shutil.move(tmp, blocked / final.name)
-            print(f"PDF {final.name} ok={ok} pages={pg['pages']} thin={pg['thin_pages']} margin_overflow={mg['count']} "
-                  f"{[o['word'] for o in mg['overflow'][:3]]} gates={g['ok']} rules={bad} mixed={mixed} · {time.time() - t1:.1f}s")
-
-    # steps may run side by side: re-read and replace only this step's section so none is lost
-    section = {"page": ("page", "page_stats"), "dom": ("dom",), "shots": ("shots",), "pdf": ("pdf",)}[a.step]
-    try:
-        latest = json.loads(rep_path.read_text())
-    except (OSError, ValueError):
-        latest = {}
-    for key in section:
-        if key in report:
-            if isinstance(report[key], dict) and isinstance(latest.get(key), dict) and key != "page_stats":
-                latest[key].update(report[key])
-            else:
-                latest[key] = report[key]
-    rep_path.write_text(json.dumps(latest, ensure_ascii=False, indent=1))
+        print("PAGE", shape)
+    else:
+        for tag, _ in SAMPLE_ISSUES:
+            for lang in ("ZH", "EN"):
+                for layout in ("A", "B"):
+                    r = check_dom(f"{render.as_uri()}#issue={tag}&lang={lang}&layout={layout}", f"{tag}|{lang}|{layout}", layout, a.chrome_timeout)
+                    status |= 0 if r["ok"] else 1
+                    print("DOM", tag, lang, layout, r)
     return status
 
 
 if __name__ == "__main__":
-    sys.exit(run_steps() if "--step" in sys.argv else main())
+    sys.exit(run_steps())

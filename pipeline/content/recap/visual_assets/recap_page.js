@@ -1,7 +1,9 @@
-/* Fluxus recap review page: renders one issue × language × layout from the embedded JSON.
+/* Fluxus recap page: renders one issue × language × layout from the embedded JSON.
    Components are ports of the Visual line's build_recap.py / build_recap_0911.py.
    Robustness: rendering never waits for web fonts (CSS stacks fall back); a section whose data
-   is missing or malformed renders "—" instead of taking the page down. */
+   is missing or malformed renders "—" instead of taking the page down.
+   Modes: preview (topic cards visible) · print (#print=1: A layout, light theme, no topic cards —
+   member PDFs carry reader content only). DATA.layouts limits the layouts a page offers. */
 (function () {
   "use strict";
 
@@ -11,6 +13,7 @@
   var X1 = 960;
   var YT = 30;
   var YB = 350;
+  var printMode = false;
 
   /* ---------------------------------------------------------------- formatting */
   function txt(v) {
@@ -367,6 +370,16 @@
         var bt = Y(Math.min(it[2], it[3]));
         o.push("<rect" + klass(c) + ' x="' + X0 + '" y="' + tp.toFixed(1) + '" width="' + (X1 - X0) +
           '" height="' + (bt - tp).toFixed(1) + '"/>');
+      } else if (kind === "rect") {
+        var rx0 = X(Math.min(it[2], it[4]));
+        var rx1 = X(Math.max(it[2], it[4]));
+        var ry0 = Y(Math.max(it[3], it[5]));
+        var ry1 = Y(Math.min(it[3], it[5]));
+        o.push("<rect" + klass(c) + ' x="' + rx0.toFixed(1) + '" y="' + ry0.toFixed(1) + '" width="' +
+          (rx1 - rx0).toFixed(1) + '" height="' + (ry1 - ry0).toFixed(1) + '"/>');
+      } else if (kind === "seg") {
+        o.push("<line" + klass(c) + ' x1="' + X(it[2]).toFixed(1) + '" y1="' + Y(it[3]).toFixed(1) +
+          '" x2="' + X(it[4]).toFixed(1) + '" y2="' + Y(it[5]).toFixed(1) + '"/>');
       } else if (kind === "text") {
         o.push("<text" + klass(c) + ' x="' + X(it[2]).toFixed(1) + '" y="' + Y(it[3]).toFixed(1) +
           '" text-anchor="' + (it[5] || "start") + '">' + esc(it[4]) + "</text>");
@@ -533,11 +546,16 @@
     }).join("");
   }
 
+  /* topic cards are review information: preview pages only, never in a member PDF */
   function eduPick(c, V) {
+    if (printMode) {
+      return "";
+    }
+    var chosen = (c.education && c.education.chosen) || "A";
     return '<div class="edu-pick">' + list(c.education && c.education.options).map(function (o) {
-      var on = o.key === "A";
-      return '<div class="card ' + (on ? "on" : "off") + '"><div class="k">' + esc(on ? V.pick_on : V.pick_off) +
-        "</div><b>" + esc(o.title) + "</b><p>" + esc(o.why) + "</p></div>";
+      var on = o.key === chosen;
+      return '<div class="card ' + (on ? "on" : "off") + '"><div class="k">' + esc(o.key) + " · " +
+        esc(on ? V.pick_on_word : V.pick_off_word) + "</div><b>" + esc(o.title) + "</b><p>" + esc(o.why) + "</p></div>";
     }).join("") + "</div>";
   }
 
@@ -599,7 +617,7 @@
     var s4 = '<article class="sheet a">' + mast(is, V) +
       sec(true, L.education, edu.title, eduPick(c, V) + '<p class="prose">' + rich(edu.body) + "</p>" +
         safe(function () { return figure(is.fig && is.fig[c.lang]); }) + '<p class="schem">' + esc(V.schem) + "</p>", "edu") +
-      (bk ? sec(false, L.portfolio, "", bk) : "") +
+      (bk ? sec(false, L.portfolio, "", bk, "book-sec") : "") +
       folio(is, V, 4, false, dl) + "</article>";
     return s1 + s2 + s3 + s4;
   }
@@ -662,11 +680,12 @@
   } catch (err) {
     DATA = null;
   }
-  var st = { issue: "W37", lang: "ZH", layout: "A" };
-  var printMode = false;
+  var layouts = (DATA && Array.isArray(DATA.layouts) && DATA.layouts.length) ? DATA.layouts : ["A", "B"];
+  var storeKey = (DATA && DATA.store_key) || "fluxusRecapPage";
+  var st = { issue: "", lang: "ZH", layout: layouts[0] };
   var themeParam = "";
   try {
-    var saved = JSON.parse(window.localStorage.getItem("fluxusRecapSamplesW37") || "{}");
+    var saved = JSON.parse(window.localStorage.getItem(storeKey) || "{}");
     Object.keys(st).forEach(function (k) {
       if (saved[k]) {
         st[k] = saved[k];
@@ -708,10 +727,11 @@
       return;
     }
     var is = DATA.issues.filter(function (x) { return x.tag === st.issue; })[0] || DATA.issues[0];
+    st.issue = is.tag;
     var lang = (is.V && is.V[st.lang]) ? st.lang : "ZH";
     var c = is.V[lang];
     var V = (DATA.chrome && DATA.chrome[lang]) || {};
-    var layout = printMode ? "A" : (st.layout === "B" ? "B" : "A");
+    var layout = printMode ? "A" : (layouts.indexOf(st.layout) >= 0 ? st.layout : layouts[0]);
     app.innerHTML = safe(function () {
       return layout === "B" ? layoutB(is, c, V) : layoutA(is, c, V);
     });
@@ -722,7 +742,7 @@
     });
     if (!printMode) {
       try {
-        window.localStorage.setItem("fluxusRecapSamplesW37", JSON.stringify(st));
+        window.localStorage.setItem(storeKey, JSON.stringify(st));
       } catch (err) {
         /* ignore */
       }

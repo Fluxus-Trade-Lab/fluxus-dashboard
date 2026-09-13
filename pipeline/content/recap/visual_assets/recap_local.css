@@ -129,6 +129,41 @@
   font-weight: 600;
 }
 
+.tell .volbar {
+  fill: var(--bar);
+}
+
+.tell .volbar.hi {
+  fill: var(--accent);
+}
+
+.tell .barbox {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 3;
+}
+
+.tell .stop {
+  stroke: var(--dn);
+  stroke-width: 2;
+}
+
+.tell .wick {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.tell .body-dn {
+  fill: var(--dn);
+}
+
+.tell line.evt {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+
 /* wide tables: numbers stay on one line, prose columns wrap inside the sheet */
 table.idx td:nth-child(5),
 table.idx td:nth-child(6),
@@ -200,6 +235,36 @@ table.idx.wk td:nth-child(4) {
 
   .sec.edu {
     break-inside: auto;
+  }
+
+  /* X posts use pages 1–4: the book always starts a page of its own */
+  .sec.book-sec {
+    break-before: page;
+  }
+
+  /* print density: next-session watch, rules, education and its schematic share page 4, so the
+     unbreakable schematic never lands alone on a page before the book (measured 2026-09-13) */
+  .sec {
+    margin-top: 20px;
+  }
+
+  .sec h3 {
+    margin-bottom: 8px;
+  }
+
+  .prose {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  ol li {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .sec.edu .tell {
+    width: 64%;
+    margin: 4px auto 0;
   }
 
   .tell,
