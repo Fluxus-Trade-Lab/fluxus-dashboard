@@ -42,6 +42,7 @@ CHROME_PROFILE = Path.home() / ".venvs" / "fluxus-recap" / "chrome-profile"
 SAMPLE_ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
 MAX_LINE, MAX_BYTES = 300, 350 * 1024
 PAGE_MARGIN_MM = (12.0, 12.0)  # left/right, must match @page in recap_local.css
+DROP_SESSIONS = 5  # Andy 09-14: the drop line draws the last 5 SPX sessions (was 21)
 FONTS_LINK = ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600'
               '&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">')
 
@@ -54,7 +55,7 @@ CHROME_LABELS = {
            "pick_on_word": "chosen", "pick_off_word": "alternative",
            "schem": "Schematic — illustrates the concept, not price data.", "score": "Weekly Scorecard",
            "tape": "The Tape", "founders": "Founders Note", "sessions": "Session by session",
-           "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX drop line, 21 sessions",
+           "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX drop line, 5 sessions",
            "cond_aria": "Market Conditions score by session",
            "legal": "Nothing here is advice or a recommendation to buy or sell anything. Measure your own water.",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
@@ -67,7 +68,7 @@ CHROME_LABELS = {
            "pick_on_word": "选用", "pick_off_word": "备选",
            "schem": "示意图——说明概念，不是真实价格。", "score": "周成绩单",
            "tape": "盘面", "founders": "Founders Note", "sessions": "逐日读数",
-           "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX 掉落线，21 个交易日",
+           "daily": "Daily Market Recap", "weekly": "Weekly Market Recap", "droparia": "SPX 掉落线，5 个交易日",
            "cond_aria": "市场状况分，逐日", "months": [f"{i}月" for i in range(1, 13)],
            "legal": "这里不给建议，也不劝人买卖。量好自己的水。",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
@@ -164,8 +165,8 @@ def jshow(path):
 def spx_segment(D):
     rows = sorted({(r["date"], float(r["spx_close"])) for r in csv_rows("data/history/breadth_archive.csv")
                    if r["date"] <= D and fl(r.get("spx_close")) and is_trading_day(dt.date.fromisoformat(r["date"]))})
-    seg = rows[-21:]
-    assert seg[-1][0] == D and len(seg) == 21, (D, seg[-1])
+    seg = rows[-DROP_SESSIONS:]
+    assert seg[-1][0] == D and len(seg) == DROP_SESSIONS, (D, seg[-1])
     return seg
 
 
@@ -223,6 +224,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
            "groups": groups, "led": main[0][::2], "paid": main[-1][::2], "idx": idx}
     if weekly:
         first = week_sessions(label)[0]
+        out["W0"] = first.isoformat()
         wk = label.split("W")[-1]
         out["when"] = {"EN": f"Week {wk} · {d:%B} {first.day}–{d.day} · {d.year}",
                        "ZH": f"{d.year} 年第 {wk} 周 · {d.month} 月 {first.day}–{d.day} 日"}

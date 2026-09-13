@@ -129,8 +129,10 @@
       return null;
     }
     var p0 = closes[0];
+    /* x spans 20 units whatever the session count, so a 5-session line keeps the 21-session line's height */
+    var step = 20 / (closes.length - 1);
     var P = closes.map(function (p, k) {
-      return [k, -Math.log(p / p0) * 100];
+      return [k * step, -Math.log(p / p0) * 100];
     });
     var i;
     for (var it = 0; it < 3; it++) {
@@ -162,13 +164,50 @@
     var miny = Math.min.apply(null, ys);
     var maxy = Math.max.apply(null, ys);
     var k = 1000 / (maxx - minx);
-    var d = "M " + P.map(function (q) {
-      return ((q[0] - minx) * k).toFixed(1) + "," + ((q[1] - miny) * k).toFixed(1);
-    }).join(" L ");
-    return { d: d, h: (maxy - miny) * k, arc: arc / 1000 };
+    var pts = P.map(function (q) {
+      return [(q[0] - minx) * k, (q[1] - miny) * k];
+    });
+    return { d: pathD(pts), pts: pts, n: closes.length, h: (maxy - miny) * k, arc: arc / 1000 };
   }
 
-  function dropSvg(dl, stroke, klass, aria, pad, dot) {
+  function pathD(pts) {
+    return "M " + pts.map(function (q) {
+      return q[0].toFixed(1) + "," + q[1].toFixed(1);
+    }).join(" L ");
+  }
+
+  var tailN = 0;
+
+  /* tail: the last session in accent, the earlier ones in a grey that fades toward the oldest (daily cover) */
+  function tailPaths(dl, stroke) {
+    var cut = 1000 * (dl.n - 2) / (dl.n - 1);
+    var old = [];
+    var last = [];
+    for (var i = 0; i < dl.pts.length; i++) {
+      var q = dl.pts[i];
+      if (q[0] <= cut) {
+        old.push(q);
+      }
+      if (q[0] >= cut) {
+        last.push(q);
+      }
+      var r = dl.pts[i + 1];
+      if (r && q[0] < cut && r[0] > cut) {
+        var t = (cut - q[0]) / (r[0] - q[0]);
+        var m = [cut, q[1] + (r[1] - q[1]) * t];
+        old.push(m);
+        last.push(m);
+      }
+    }
+    var id = "droptail" + (++tailN);
+    return '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="' + cut.toFixed(1) +
+      '" y2="0"><stop offset="0" style="stop-color:var(--muted);stop-opacity:.12"/>' +
+      '<stop offset="1" style="stop-color:var(--muted);stop-opacity:1"/></linearGradient></defs>' +
+      '<path style="stroke-width:' + stroke + ";stroke:url(#" + id + ')" d="' + pathD(old) + '"/>' +
+      '<path style="stroke-width:' + stroke + '" d="' + pathD(last) + '"/>';
+  }
+
+  function dropSvg(dl, stroke, klass, aria, pad, dot, tail) {
     if (!dl) {
       return '<p class="reg">' + DASH + "</p>";
     }
@@ -178,22 +217,19 @@
       var q = dl.d.split(" ").pop().split(",");
       mark = '<circle class="dropdot" style="stroke-width:' + stroke + '" cx="' + q[0] + '" cy="' + q[1] + '" r="' + (dot * (1000 + 2 * p) / (704 * 0.84)).toFixed(2) + '"/>';
     }
+    var line = tail && dl.n > 2 ? tailPaths(dl, stroke) : '<path style="stroke-width:' + stroke + '" d="' + dl.d + '"/>';
     return '<svg class="drop ' + klass + '" viewBox="' + (-p) + " " + (-p) + " " + (1000 + 2 * p) + " " +
-      (dl.h + 2 * p).toFixed(1) + '" role="img" aria-label="' + esc(aria) + '">' +
-      '<path style="stroke-width:' + stroke + '" d="' + dl.d + '"/>' + mark + "</svg>";
+      (dl.h + 2 * p).toFixed(1) + '" role="img" aria-label="' + esc(aria) + '">' + line + mark + "</svg>";
   }
 
   function regLine(is, dl) {
     var arc = dl ? dl.arc.toFixed(3) : DASH;
-    /* the tag names the window this line draws (21 SPX sessions), so it is always the date-style tag of the
-       last session — never the issue number. On a weekly, "#W37" next to 08-13 → 09-11 read as "week 37
-       started on 08-13" (Andy 09-13); the issue number lives in the mast as "No. W37". Keep the dash
-       (09-11, not 0911): a bare 4-digit tag reads identically to a daily issue number (a daily issue for
-       the same date renders "#0911" too), which reopened the exact confusion the date-style tag was
-       meant to fix (Andy 09-14, quoting the still-ambiguous weekly caption back). */
-    var tag = is.weekly ? String(is.D || "").slice(5) : is.no;
-    return '<p class="reg">1m · drop <span class="m">#' + esc(tag) + "</span> · " + esc(is.D0) + " → " +
-      esc(is.D) + " · SPX · ∫ = " + arc + " m</p>";
+    /* Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11". The weekly range is
+       the week itself, never the data window — a month-long range under a weekly mast read as "this week". */
+    var tag = is.weekly ?
+      "Week" + esc(String(is.no || "").replace(/^W/, "")) + "</span> · " + esc(is.W0) + " → " + esc(is.D) :
+      "#" + esc(String(is.D || "").slice(5)) + "</span>";
+    return '<p class="reg">1m · drop <span class="m">' + tag + " · SPX · ∫ = " + arc + " m</p>";
   }
 
   /* ---------------------------------------------------------------- conditions chart */
@@ -607,7 +643,7 @@
     var dl = dropLine(is.spx);
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
-    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5) + regLine(is, dl) +
+    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5, !is.weekly) + regLine(is, dl) +
       '<h2 class="hl-a">' + titleHtml(c.title) + "</h2>" +
       sec(false, L.big_picture, "", '<p class="prose">' + rich(c.big_picture) + "</p>") +
       sec(false, L.index_action, "", safe(function () { return indexTable(is, c); })) +

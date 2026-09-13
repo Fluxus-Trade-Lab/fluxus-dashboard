@@ -88,10 +88,15 @@ def test_legal_line_exists_in_both_languages_and_passes_the_gates():
     assert not re.search(r"[A-Za-z]", zh)  # ZH carries no English duplicate
 
 
-def test_the_weekly_drop_line_tag_is_a_date_not_the_issue_number():
+def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies():
     js = (pathlib.Path(__file__).resolve().parents[1] / "content/recap/visual_assets/recap_page.js").read_text()
     reg = js[js.index("function regLine"):js.index("function condChart")]
     code = "\n".join(ln for ln in reg.splitlines() if not ln.strip().startswith(("/*", "*", "//")))
-    assert "var tag = is.weekly ? String(is.D" in code and "esc(tag)" in code and "esc(is.no)" not in code
+    # Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11" (the week, not the data window)
+    assert "Week" in code and "esc(is.W0)" in code and "esc(is.D0)" not in code
+    assert "String(is.D || \"\").slice(5)" in code  # daily keeps the dash: #09-11
+    from pipeline.content.recap.visual import DROP_SESSIONS
+    assert DROP_SESSIONS == 5
+    assert 'V.droparia, 6, 4.5, !is.weekly)' in js  # grey tail on dailies, all accent on weeklies
     book = js[js.index("function book(is, c, V)"):]
     assert 'class="legal"' in book[:2000]  # the legal line rides the book section
