@@ -26,6 +26,7 @@ def test_clean_text_passes_all_three():
     "the 21 over 21 list", "the sweet 17 watch list", "RG8 up 0.94%",
     "a Toddzilla holding", "Ted Zhang here", "Connor Bates", "Okta Grok Tasha holding",
     "855 real wealth", "ted@revereasset.com", "riverasset",
+    "Long-term: Grow", "长期：Grow",
 ])
 def test_banned_gate_goes_red(inject):
     r = run_gates(CLEAN_EN + " " + inject)
@@ -67,6 +68,10 @@ def test_voice_gate_spares_tickers_and_ordinary_words():
 def test_money_gate_does_not_flag_prices_or_percent_or_cashtag_free_levels():
     r = run_gates("SPX 7,657 · QQQ 715 bull/bear line · +0.86% · 1.66× volume · 股票 · 个股 · 股价")
     assert r["money_shares"] == []
+
+
+def test_grow_gate_spares_ordinary_growth_words():
+    assert run_gates("Growth stocks grow when rates ease; regrowth and grower are fine.")["banned"] == []
 
 
 def test_dont_is_not_the_host_name():

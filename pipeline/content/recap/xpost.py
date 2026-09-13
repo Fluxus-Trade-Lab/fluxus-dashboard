@@ -1,29 +1,40 @@
-"""X short-post drafts for daily issues (EN only — Andy 09-13「周复盘不发X, X一致对外用英文版本」) and gate P1.
+"""X long post for daily issues (EN only — Andy 09-13「周复盘不发X, X一致对外用英文版本」) and gates P1 / P2.
 
-Two variants per issue, taken from content_EN.json `x_posts` (written with the content):
-  v1 · judgment first  — the day's character, one or two key readings, 2–4 leader cashtags
-  v2 · structure first — the day's main structural event, what it means (only judgments already in the
-                          content file), same cashtags
-If `x_posts` is missing, a plain fallback is composed from the content fields and marked `auto`.
+Andy 09-13: 「X短文结构先行，不过太短了，我是会员，可以写更多。直接用the big picture的文字可以吗？」 → on the rule
+"Big Picture's first sentence already states the structure → use Big Picture as is; otherwise put one structure
+sentence in front": 「是好主意。」
 
-P1 (any hit → red): over 280 X characters · proprietary names · "Andy" · first person · dollar amounts
-(cashtags are fine) · 「领导力」 · hashtags · emoji · links · calls to action · a number that does not
-appear verbatim in the content file.
+Post:
+    <lead>          optional structure sentence; null when Big Picture's first sentence already states the day's
+                    structural event (which average was reclaimed / lost, which index split from which)
+    <Big Picture>   verbatim content_EN.json big_picture, <b></b> removed, ◇ removed with the space before it
+    $T1 $T2 …       2–4 leader cashtags
+content_EN.json: x_posts = {"lead": str | null, "cashtags": ["HPE", …], "why": optional one-line reason}.
+If x_posts is missing: Big Picture only, cashtags from the led table, marked `auto`.
+
+P1 (any hit → red): over 1,500 X characters (guards against a runaway post; member long posts allow 25,000) ·
+proprietary names · "Andy" · first person · dollar amounts (cashtags are fine) · 「领导力」 · hashtags · emoji ·
+links · calls to action · a number that does not appear verbatim in the content file · leftover <b> or ◇ ·
+fewer than 2 or more than 4 cashtags.
+P2 (no double opening): lead present and SequenceMatcher(lead, Big Picture first sentence) ≥ 0.4 → red; set lead to null.
 X counting: code points in the Latin/general-punctuation ranges weigh 1, everything else 2, a URL 23.
 """
 from __future__ import annotations
 
+import difflib
 import re
 
 from pipeline.content.recap.gates import run_gates
 
-LIMIT = 280
+LIMIT = 1500
+P2_MAX = 0.4
 URL_RE = re.compile(r"https?://\S+|www\.\S+", re.I)
 HASHTAG_RE = re.compile(r"(?<![\w&])#[A-Za-z_]\w*")
 EMOJI_RE = re.compile("[\U0001F000-\U0001FAFF☀-➿⬀-⯿️‍]")
 CTA_RE = re.compile(r"\b(link in bio|subscribe|sign up|join (?:us|now)|follow (?:us|me|for)|click|read more|check out|dm (?:me|us))\b", re.I)
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)*")
 CASHTAG_RE = re.compile(r"(?<![\w$])\$[A-Z]{1,6}\b")
+LEFTOVER_RE = re.compile(r"</?b>|◇")
 
 
 def x_length(text: str) -> int:
@@ -53,6 +64,16 @@ def _strings(o):
             yield from _strings(v)
 
 
+def clean_big_picture(bp) -> str:
+    text = "".join(bp["j"]) if isinstance(bp, dict) else (bp or "")
+    text = re.sub(r"</?b>", "", text)
+    return re.sub(r"\s*◇", "", text).strip()
+
+
+def first_sentence(text: str) -> str:
+    return re.split(r"(?<=[.!?])\s+", text.strip())[0]
+
+
 def p1(text: str, content_en: dict) -> dict:
     hits = []
     chars = x_length(text)
@@ -70,11 +91,23 @@ def p1(text: str, content_en: dict) -> dict:
         hits.append("link")
     if CTA_RE.search(text):
         hits.append("call to action")
+    if LEFTOVER_RE.search(text):
+        hits.append("leftover <b> or ◇")
+    n_tags = len(CASHTAG_RE.findall(text))
+    if not 2 <= n_tags <= 4:
+        hits.append(f"{n_tags} cashtags (need 2–4)")
     source = "\n".join(_strings(content_en))
     missing = sorted({n for n in NUM_RE.findall(CASHTAG_RE.sub("", text)) if n not in source})
     if missing:
         hits.append("numbers not in content: " + ", ".join(missing))
     return {"ok": not hits, "chars": chars, "hits": hits}
+
+
+def p2(lead: str | None, big_picture: str) -> dict:
+    if not lead:
+        return {"ok": True, "similarity": None}
+    s = round(difflib.SequenceMatcher(None, lead, first_sentence(clean_big_picture(big_picture))).ratio(), 3)
+    return {"ok": s < P2_MAX, "similarity": s}
 
 
 def _tickers(content_en: dict, n: int = 4) -> list[str]:
@@ -88,25 +121,23 @@ def _tickers(content_en: dict, n: int = 4) -> list[str]:
 
 def compose(content_en: dict) -> dict:
     given = content_en.get("x_posts") or {}
-    if given.get("v1") and given.get("v2"):
-        return {k: {"text": given[k]["text"], "fields": given[k].get("fields", []), "source": "content"} for k in ("v1", "v2")}
-    tags = " ".join("$" + t for t in _tickers(content_en))
-    bp = re.sub(r"<[^>]+>", "", "".join(content_en["big_picture"]["j"]) if isinstance(content_en.get("big_picture"), dict)
-                else content_en.get("big_picture", ""))
-    first = re.split(r"(?<=[.!?])\s+", bp)[0]
-    notes = content_en.get("index_notes") or {}
-    ev = "; ".join(f"{tk} {notes[tk][0]}" for tk in ("SPY", "QQQ") if tk in notes)
-    return {"v1": {"text": f"{first}\n\n{tags}".strip(), "fields": ["big_picture", "led"], "source": "auto"},
-            "v2": {"text": f"{ev}. {content_en.get('state_line', '')}\n\n{tags}".strip(), "fields": ["index_notes", "state_line", "led"],
-                   "source": "auto"}}
+    bp = clean_big_picture(content_en.get("big_picture"))
+    if "lead" in given and given.get("cashtags"):
+        lead, tags, why, source = given["lead"], given["cashtags"], given.get("why"), "content"
+    else:
+        lead, tags, why, source = None, _tickers(content_en), "x_posts missing: Big Picture only", "auto"
+    tags = ["$" + t.lstrip("$") for t in tags]
+    if not why:
+        why = "Big Picture 第一句已在讲结构事件" if not lead else "Big Picture 第一句没讲结构事件，前面补一句结构句"
+    text = "\n\n".join(p for p in (lead, bp, " ".join(tags)) if p)
+    return {"text": text, "lead": lead, "cashtags": tags, "why": why, "source": source}
 
 
-def to_markdown(label: str, posts: dict, results: dict) -> str:
-    names = {"v1": "Variant 1 · judgment first", "v2": "Variant 2 · structure first"}
-    out = [f"# X post drafts · {label} · EN", ""]
-    for k in ("v1", "v2"):
-        r = results[k]
-        out += [f"## {names[k]}", "", posts[k]["text"], "",
-                f"_{r['chars']} / {LIMIT} X characters · fields: {', '.join(posts[k]['fields'])} · source: {posts[k]['source']} · "
-                f"P1: {'pass' if r['ok'] else 'RED — ' + '; '.join(r['hits'])}_", ""]
-    return "\n".join(out)
+def to_markdown(label: str, post: dict, r1: dict, r2: dict) -> str:
+    gate = f"P1 {'通过' if r1['ok'] else '报红：' + '；'.join(r1['hits'])} · P2 " + (
+        "不适用（lead 为空）" if r2["similarity"] is None else f"{'通过' if r2['ok'] else '报红'}（与 Big Picture 第一句相似度 {r2['similarity']}，红线 {P2_MAX}）")
+    return "\n".join([f"# X post · {label} · EN", "", post["text"], "", "---", "",
+                      f"- 字符数：{r1['chars']} / {LIMIT}（X 计数）",
+                      f"- lead：{'省略' if not post['lead'] else '保留'}",
+                      f"- 理由：{post['why']}",
+                      f"- 闸：{gate} · 来源 {post['source']}", ""])

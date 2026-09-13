@@ -1,7 +1,7 @@
 """Label layout for the education schematics: estimated text boxes, callout avoidance, and gate F1.
 
 Geometry mirrors recap_page.js figure(): viewBox 1000×380, x 0–100 → 40–960, y in ylim → 350–30.
-Type is IBM Plex Mono 13 px (12 px for `.small`), so a Latin glyph is ~0.6 em wide; CJK falls back to a
+Type is IBM Plex Mono 16 px (15.5 px for `.small`), so a Latin glyph is ~0.6 em wide; CJK falls back to a
 full-width face, ~1 em. A text box spans baseline − 0.8 em to baseline + 0.25 em.
 
 resolve(spec)       moves callout labels (never data, never fixed texts) until no two label boxes meet,
@@ -19,7 +19,8 @@ X0, X1, YT, YB, W, H = 40.0, 960.0, 30.0, 350.0, 1000.0, 380.0
 
 
 def font_size(cls: str) -> float:
-    return 12.0 if "small" in (cls or "").split() else 13.0
+    """Must match the print sizes in recap_local.css (.tell text 16.28px / .tell .small 15.02px)."""
+    return 15.02 if "small" in (cls or "").split() else 16.28
 
 
 def text_width(label: str, fs: float) -> float:
