@@ -406,8 +406,11 @@ def check_dom(url: str, expect: str, layout: str, timeout: int = 90) -> dict:
     drawn = bool(m) and m.group(1) == expect and all(x in body for x in DRAWN[layout])
     g = run_gates(html_text(body))
     dashes = body.count("—</p>")
-    return {"ok": drawn and g["ok"] and dashes == 0, "drawn": drawn, "banned": len(g["banned"]), "voice": len(g["voice"]),
-            "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "dash_sections": dashes}
+    from pipeline.content.recap.figlayout import check_svg_labels
+    f1 = check_svg_labels(body)  # F1: no two schematic labels overlap in the SVG Chrome drew
+    return {"ok": drawn and g["ok"] and dashes == 0 and f1["ok"], "drawn": drawn, "banned": len(g["banned"]), "voice": len(g["voice"]),
+            "money": len(g["money_shares"]), "leadership_zh": g["leadership_zh"], "dash_sections": dashes,
+            "f1_overlaps": f1["overlaps"]}
 
 
 def print_pdf(url: str, out: Path, timeout: int = 90) -> bool:

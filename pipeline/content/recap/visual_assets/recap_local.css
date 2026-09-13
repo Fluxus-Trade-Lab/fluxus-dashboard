@@ -242,29 +242,37 @@ table.idx.wk td:nth-child(4) {
     break-before: page;
   }
 
-  /* print density: next-session watch, rules, education and its schematic share page 4, so the
-     unbreakable schematic never lands alone on a page before the book (measured 2026-09-13) */
+  /* print density: text gives way, the schematic keeps the full type width (it is X image 4 and must
+     read on a phone). Next-session watch, rules and education then still fit ahead of the book. */
   .sec {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   .sec h3 {
-    margin-bottom: 8px;
+    padding-top: 7px;
+    margin-bottom: 6px;
   }
 
   .prose {
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: 12.5px;
+    line-height: 1.55;
   }
 
   ol li {
-    padding: 5px 0;
-    font-size: 13px;
+    padding: 3px 0;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  table.idx td,
+  table.led td {
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .sec.edu .tell {
-    width: 64%;
-    margin: 4px auto 0;
+    width: 100%;
+    margin: 4px 0 0;
   }
 
   .tell,
