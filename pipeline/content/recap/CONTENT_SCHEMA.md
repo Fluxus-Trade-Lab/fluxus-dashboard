@@ -47,6 +47,7 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
 | `education` | object | see below |
 | `portfolio_note` | string | one neutral sentence; R and % only |
 | `labels` | object | section and column labels for this language (copy from the previous issue) |
+| `x_posts` | object | **EN dailies only**: `{"v1": {"text", "fields"}, "v2": {"text", "fields"}}` — v1 judgment first (the day's character, 1–2 readings, 2–4 leader cashtags on the last line), v2 structure first (the main structural event, what it means using only judgments already in this file, same cashtags). ≤ 280 X characters, no hashtags / emoji / links / calls to action, every number must appear verbatim elsewhere in this file; `fields` lists the fields the post draws on. Gate P1 in `xpost.py`; missing → a plain fallback marked `auto` |
 | `weekly_k_names` | array | weekly only: tickers for the weekly-close table, in order |
 | `weekly_k_line` | string | weekly only: one sentence under that table |
 

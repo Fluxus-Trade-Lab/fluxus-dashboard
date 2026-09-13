@@ -48,7 +48,8 @@ class Canvas:
         self.items.append(["callout", cls, _r(x), _r(y), _r(tx), _r(ty), label])
 
     def svg(self, aria):
-        return {"ylim": self.ylim, "aria": aria, "items": self.items}
+        from pipeline.content.recap import figlayout  # callout labels step aside from each other (F1)
+        return figlayout.resolve({"ylim": self.ylim, "aria": aria, "items": self.items})
 
 
 def _lin(a, b, n):

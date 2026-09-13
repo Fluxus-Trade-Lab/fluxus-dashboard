@@ -283,10 +283,23 @@ def cmd_render(a) -> int:
         for i, rec in enumerate(state["images"]["EN"][:4], start=1):
             src = iss.dir / rec["file"]
             shutil.copy2(src, xdir / f"img{i}{src.suffix}")
-        (xdir / "post_EN.md").touch(exist_ok=True)
         zh_post = xdir / "post_ZH.md"
         if zh_post.exists() and zh_post.stat().st_size == 0:
             zh_post.unlink()
+    if not iss.weekly and state["pdf"].get("EN", {}).get("ok"):
+        from pipeline.content.recap import xpost
+        c_en = json.loads((iss.pack / "content_EN.json").read_text())
+        posts = xpost.compose(c_en)
+        results = {k: xpost.p1(v["text"], c_en) for k, v in posts.items()}
+        state["x_posts"] = {k: {"source": posts[k]["source"], **results[k]} for k in posts}
+        xdir = iss.dir / "x"
+        xdir.mkdir(parents=True, exist_ok=True)
+        good = all(r["ok"] for r in results.values())
+        (xdir / ("post_EN.md" if good else "post_EN.blocked.md")).write_text(xpost.to_markdown(iss.label, posts, results))
+        if good and (xdir / "post_EN.blocked.md").exists():
+            (xdir / "post_EN.blocked.md").unlink()
+        print("X POSTS", {k: (r["chars"], r["ok"], r["hits"]) for k, r in results.items()})
+        status |= 0 if good else 1
     state["ok"] = status == 0
     if state["ok"] and blocked.exists():
         shutil.rmtree(blocked)  # a passing render supersedes earlier blocked attempts
@@ -327,6 +340,11 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
         jpgs = [r["file"] for recs in state.get("images", {}).values() for r in recs if r["file"].endswith(".jpg")]
         lines.append(f"- 图片宽 {IMG_WIDTH}px；超过 5MB 改 JPG 的：{', '.join(jpgs) if jpgs else '无'}")
         lines.append("- X 配图：`x/img1–img4` = 英文版第 1–4 页")
+    if state.get("x_posts"):
+        lines.append("")
+        lines.append("## X 短帖草稿（EN，`x/post_EN.md`）")
+        for k, r in state["x_posts"].items():
+            lines.append(f"- {k}：{r['chars']}/280 字符 · 来源 {r['source']} · P1 {'通过' if r['ok'] else '报红：' + '；'.join(r['hits'])}")
     if state.get("page_map"):
         lines.append("")
         lines.append("## 每页对应的节（该页开始的节；空 = 续上一页）")
