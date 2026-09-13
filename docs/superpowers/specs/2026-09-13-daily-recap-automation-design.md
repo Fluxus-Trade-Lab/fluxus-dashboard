@@ -87,10 +87,10 @@ Andy 原话：「Daily recap和weekly recap内容和生产线就这样定稿了�
 |---|---|---|
 | 会员（Discord） | 中英 PDF | 定稿 |
 | Substack | 正文逐页放图（1460px 宽 = 730px 正文栏 ×2），文末挂 PDF 附件 | Substack 支持 PDF/XLSX 作为**可下载附件**嵌入（≤700MB），不在正文内渲染——所以正文用图 |
-| X | 一条短帖 + 4 图 = PDF 第 1–4 页（EN）；第 5 页组合更新不上 X | X 每帖最多 4 张图，单图 ≤5MB；**格式与文案仍在调**（样张迭代中） |
+| X（**仅日刊**） | 一条英文短帖 + 4 图 = EN 版 PDF 第 1–4 页；第 5 页组合更新不上 X；**周刊不发 X** | X 每帖最多 4 张图，单图 ≤5MB；Andy「周复盘不发X, X一致对外用英文版本」；**格式与文案仍在调**（样张迭代中） |
 
-**每期目录**（本机，不进 git）：`~/Documents/Trading/01_Market_Reports_Daily/YYYY-MM/<期号>/` 下 `pdf/`（中英 PDF）· `img/EN`、`img/ZH`（逐页 PNG）· `x/`（img1–4 + 短帖文案）· `pack/`（字幕/材料包/内容文件）· `delivery.md`。期号：日刊 `YYYY-MM-DD`，周刊 `YYYY-Www`。Andy 手工流程留下的平铺旧文件不动。
+**每期目录**（本机，不进 git）：`~/Documents/Trading/01_Market_Reports_Daily/YYYY-MM/<期号>/` 下 `pdf/`（中英 PDF）· `img/EN`、`img/ZH`（逐页 PNG）· `x/`（仅日刊：EN 版 img1–4 + `post_EN.md`）· `pack/`（字幕/材料包/内容文件）· `delivery.md`。期号：日刊 `YYYY-MM-DD`，周刊 `YYYY-Www`。Andy 手工流程留下的平铺旧文件不动。
 
 **闸（新增）**：X1 前 4 页不得出现组合更新内容（打印 CSS 让组合更新节强制另起一页）· X2 PDF 少于 4 页即红 · 单图 >5MB 改出 JPEG。
-**待定**：周刊 6 页，上 X 选哪 4 页（按页-节对照表与 Andy 定）；X 短帖语言（`brain/x.md` 定「对外一律 EN」，他 09-12 实际中英合发）与长度。
+**已定**（Andy「周复盘不发X, X一致对外用英文版本」）：周刊不出 `x/`；X 只用英文（图取 EN 版、文案只出 `post_EN.md`）。**仍待定**：X 短帖长度与写法（样张迭代）。
 
