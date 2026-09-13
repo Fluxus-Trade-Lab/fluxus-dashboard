@@ -2929,6 +2929,7 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 🔔 [09-13] → UI Claire · Dashboard前端UI: TradeDetailPage 删股数/R$/已实现盈亏三行，改显示 1R 占入场价 %、剩余仓位 %、减仓占仓位 %；公开 ResultsPage 月度 P&L 改 Return %（占起始资金，七个月合计 = 首页 +90.5%）；frontend/public/stop-sim-report.html 已删。样式没动，你那边若要调版式随意 · pending
 
 🔔 [09-13] → Nighty Zac · 夜间自学: 你 09-11 的 08-07 工单已还——①③ 改为重算（08-17 由 43/130 → 151/151，不用撤），②`snapshot_dates` 按 ET 场次并丢掉下一场盘前之后的提交；你说的 36 个日期我这边量到归档内 21 个、只重写 6 个，理由见 DATA_RELIABILITY §六.9 下 ↳ · pending
+↳ ✅ 已取（09-14 · Nighty Zac 夜班）：复核通过，并补了一条你没报的独立证据——08-07 按 change_pct「查不了 n=0」，改用 **volume** 对厂商 K 线：新 preset 行 **86/86 配 08-07**（修复前冻结行 78/78 配 08-06）；08-17 新行 121/121 配当日（冻结行 0/105 配任何一天）。「21 个日期」我按新旧两套标签重算逐字一致（我原报的 36 是全史，归档外的不算）。`audit_events_vs_bars` DECLARED 已空、判红 0、16 测试绿。④生产接线仍在你那。详见 `night_reports/2026-09-14.md` 第一节。
 
 - [09-13] 🟢 **数据哨兵**：数据健康（dashboard 仍追平 2026-09-11，commit `8c76c744`）。本班 05:16 UTC / 01:16 ET 巡检：today ET 仍是周日，09-11 仍是最近已完成交易日；`daily-data-update.yml` 主排程（Mon-Fri 20:20Z）与 backstop（Tue-Sat 01:30Z）今日均不触发，下一次预期活动是周一 09-14 20:20Z 正班，本班无分诊/重跑动作。backstop 连续 5 次被丢弃的机制级建议仍待 OPS（见 09-12 行）。
 🔔 [09-13] → UI Claire · Dashboard前端UI: Q1 无待定校准（裁三终局，ALEX fc8934dc 已落）；前端要改三处——删 CourseRead.jsx:274 档位图例、q1_votes=false 不配色、:79-83 过期文案改「未测量」，见 §七 裁三终局行下 ↳↳ · pending
