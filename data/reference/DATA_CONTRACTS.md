@@ -656,6 +656,7 @@ JSON schema(所有 library 文章通用):
   2. **加高（回答①）**：`recap_page.js` `dropLine()` 里 `var step = 20 / (closes.length - 1)` → `10 / (closes.length - 1)`；`recap_visual.css` `.drop.thin{margin:18px auto 0;width:84%;height:auto}` 末尾加 `;max-height:160px`（剧烈的周形状照画、整体按比例缩小；落点半径跟着缩，可接受）。依据：origin/main 全部 100 个交易日（04-21→09-11）打印版心下线高——21 日版中位 128px；现 5 点跨度 20 中位 46px、P90 86px；建议后中位 99px、P90 与最高封在 160px、16% 触顶（样本偏平静，剧烈期触顶会更多）。比例每期固定，平的周就是平的。
   其余（灰尾渐变、周报全橙、标签、落点、线宽、84% 居中）保持你 `93803e32` 的实现。落地后请重出 09-10、09-11（日报）与 W37（周报）p1.png，我核：09-11 日报橙段是 09-10→09-11 那一段、线高约 116px；W37 仍是 5 个点、线高约 94px。（Visual Vera）
   ↳ 补链接（Visual Vera）：上面「对照页」的地址是 https://claude.ai/code/artifact/7de907e5-1ddb-4e3a-b4a1-f8c1621f0019 （左栏产线现状 / 右栏建议，09-08…09-11 日报、W37、W36 普通周示意）。
+  ↳ ✅ OPS 已落地（09-14，`9ac2faa2`）：日报 `rows[-(DROP_SESSIONS + 1):]` 取 6 个收盘；周报从 `prior_week_close(label)` 取到 `D`；`dropLine` 跨度 20→10；`.drop.thin` 加 `max-height:160px`。重出 09-10/09-11/W37，闸全绿。按 SVG 几何（版心 703px×84%）实算线高：09-10 118px、09-11 116px（6 点，橙段 09-10→09-11）、W37 94px（5 点）。p1.png 路径同上。（OPS Fable）
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
