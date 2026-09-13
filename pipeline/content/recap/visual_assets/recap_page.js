@@ -153,10 +153,6 @@
     P = P.map(function (q) {
       return [q[0] * 1000 / len, q[1] * 1000 / len];
     });
-    var arc = 0;
-    for (i = 1; i < P.length; i++) {
-      arc += Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]);
-    }
     var xs = P.map(function (q) { return q[0]; });
     var ys = P.map(function (q) { return q[1]; });
     var minx = Math.min.apply(null, xs);
@@ -167,7 +163,7 @@
     var pts = P.map(function (q) {
       return [(q[0] - minx) * k, (q[1] - miny) * k];
     });
-    return { d: pathD(pts), pts: pts, n: closes.length, h: (maxy - miny) * k, arc: arc / 1000 };
+    return { d: pathD(pts), pts: pts, n: closes.length, h: (maxy - miny) * k };
   }
 
   function pathD(pts) {
@@ -222,14 +218,13 @@
       (dl.h + 2 * p).toFixed(1) + '" role="img" aria-label="' + esc(aria) + '">' + line + mark + "</svg>";
   }
 
-  function regLine(is, dl) {
-    var arc = dl ? dl.arc.toFixed(3) : DASH;
-    /* Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11". The weekly range is
-       the week itself, never the data window — a month-long range under a weekly mast read as "this week". */
+  function regLine(is) {
+    /* Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11", nothing after it
+       (「删除啊！」). The weekly range is the week itself, never the data window. */
     var tag = is.weekly ?
       "Week" + esc(String(is.no || "").replace(/^W/, "")) + "</span> · " + esc(is.W0) + " → " + esc(is.D) :
       "#" + esc(String(is.D || "").slice(5)) + "</span>";
-    return '<p class="reg">1m · drop <span class="m">' + tag + " · SPX · ∫ = " + arc + " m</p>";
+    return '<p class="reg">1m · drop <span class="m">' + tag + "</p>";
   }
 
   /* ---------------------------------------------------------------- conditions chart */
@@ -643,7 +638,7 @@
     var dl = dropLine(is.spx);
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
-    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5, !is.weekly) + regLine(is, dl) +
+    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5, !is.weekly) + regLine(is) +
       '<h2 class="hl-a">' + titleHtml(c.title) + "</h2>" +
       sec(false, L.big_picture, "", '<p class="prose">' + rich(c.big_picture) + "</p>") +
       sec(false, L.index_action, "", safe(function () { return indexTable(is, c); })) +
@@ -694,7 +689,7 @@
     var hl = head.map(esc).join("<br>");
     var cover = '<article class="sheet b cover"><div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>' +
       esc((is.when || {})[c.lang]) + '</span></div><div class="hero">' + dropSvg(dl, 7, "hero", V.droparia) + "</div>" +
-      regLine(is, dl) + '<hr class="r ink"><h2 class="hl-b">' + hl + '</h2><div class="cover-grid">' +
+      regLine(is) + '<hr class="r ink"><h2 class="hl-b">' + hl + '</h2><div class="cover-grid">' +
       '<p class="prose lead">' + rich(c.big_picture) + '</p><aside class="board"><div class="brd-h">' + esc(V.board) +
       "</div>" + safe(function () { return boardRows(is, V); }) + "</aside></div>" + folio(is, V, 1, true, dl) + "</article>";
     var s2 = '<article class="sheet b"><div class="kicker">' + esc(V.tape) + '</div><h3 class="hb">' + esc(L.index_action) +

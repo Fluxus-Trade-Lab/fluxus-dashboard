@@ -95,6 +95,7 @@ def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies
     # Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11" (the week, not the data window)
     assert "Week" in code and "esc(is.W0)" in code and "esc(is.D0)" not in code
     assert "String(is.D || \"\").slice(5)" in code  # daily keeps the dash: #09-11
+    assert "∫" not in code and "SPX" not in code  # Andy 09-14「删除啊！」: no SPX · ∫ tail
     from pipeline.content.recap import visual
     assert visual.DROP_SESSIONS == 5
     assert 'V.droparia, 6, 4.5, !is.weekly)' in js  # grey tail on dailies, all accent on weeklies
