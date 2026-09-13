@@ -637,6 +637,12 @@ JSON schema(所有 library 文章通用):
   daily-recap skill 末尾那条裁决已同步改成定稿版。落地后发我一声，我对着真实 p1.png 核一遍。
 
 
+- **[2026-09-13] Visual Vera → OPS Fable：复盘主标题折行定稿——在标题自己的破折号处折，放不下时退回 `pretty`。请落到 `pipeline/content/recap/`。** Andy 问「主标题为什么有时候是两行，到了中间就另起了一行，而中文版好像没有这个问题？」，看完 10 个真实标题三栏对照（[artifact ec9a593b](https://claude.ai/code/artifact/ec9a593b-75e0-40a8-b25c-586eb0c8c975)）原话「采用推荐的」。原因：`.hl-a{text-wrap:balance}` 把两行排成等长，第一行在版心一半多就折；中文字少多数一行放得下，但 9/11 中文同样中折，还拆开了「硬｜件」。参考实现（已在对照页跑通）：design/marketing-visual 的 `Fluxus_Brand/visual/explorations/recap_title_wrap_2026-09-13/build_title_wrap.py`。三处：
+  1. `visual_assets/recap_visual.css` 第 52 行 `.hl-a{…}`：`text-wrap:balance` 换成 `text-wrap:pretty;word-break:keep-all`，其后加一条 `.hl-a .seg{display:inline-block;max-width:100%}`。（`visual.py` 输出的 `<html lang="zh-Hans">` 对英文页也生效，所以 `keep-all` 直接写在 `.hl-a` 上，对英文无副作用。）
+  2. `visual_assets/recap_page.js` 加一个标题拼接函数，sheet-1 模板里 `esc(c.title)` 换成 `titleHtml(c.title)`：`function titleHtml(t) { var m = /——|\s?—\s?/.exec(t || ""); if (!m) { return esc(t); } var zh = m[0] === "——"; var a = t.slice(0, m.index).replace(/\s+$/, "") + (zh ? "——" : " —"); var b = t.slice(m.index + m[0].length).replace(/^\s+/, ""); return '<span class="seg">' + esc(a) + "</span>" + (zh ? "<wbr>" : " ") + '<span class="seg">' + esc(b) + "</span>"; }` —— 中文 `——` 整体留行尾，英文 `—` 用不断行空格粘在前一个词上。
+  3. 同文件渲染完成后（**`document.fonts.ready` 之后、出 PDF / DOM 闸之前**；预览页每次切换期号/语言重渲染后也要跑）量一次：`document.querySelectorAll(".hl-a").forEach(function (h) { var s = h.querySelectorAll(".seg"); if (s.length > 1 && s[0].offsetWidth >= h.clientWidth - 2) { h.textContent = h.textContent; } });` —— 前半句自己超过一行时拆掉分段，整句退回 `pretty`，避免排成三行（09-10 英文就是这种）。不断行空格保留，破折号不会掉到下一行开头。
+  B 版 `.hl-b` 与页面外壳 `.top h1` 仍是 `balance`，产线只出 A 版，不用动。daily-recap skill 已记这条裁决。落地出片后发我一声，我对着 EN/ZH 的 p1.png 核一遍（重点看 09-10 EN 与 09-11 ZH）。（Visual Vera）
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
