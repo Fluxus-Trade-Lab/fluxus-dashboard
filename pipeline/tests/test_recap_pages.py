@@ -1,5 +1,5 @@
 """Page-fill check + fixed rules: prove the check goes red on the real failure shape first."""
-from pipeline.content.recap.constants import RULES_EN, RULES_ZH
+from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.pages import check_pages
 
 HEAD = "FLUXUS CAPITAL                                   DAILY MARKET RECAP\n\n"
@@ -31,6 +31,40 @@ def test_chrome_lines_are_not_counted_as_body():
     assert check_pages(text)["body_lines"] == [2]
 
 
-def test_rules_are_seven_and_end_with_the_200_day():
-    assert len(RULES_EN) == 7 and len(RULES_ZH) == 7
-    assert "200-day" in RULES_EN[-1] and "200 日线" in RULES_ZH[-1]
+GOOD_EN = [f"session rule {i}" for i in range(6)] + ["Never serious trouble until S&P breaks the 200-day — well above it"]
+GOOD_ZH = [f"当天第 {i} 条" for i in range(6)] + ["标普不破 200 日线，谈不上真正的麻烦——离得还远"]
+
+
+def test_rules_check_accepts_session_rules_with_fixed_rule7():
+    assert check_rules(GOOD_EN, "EN") is None and check_rules(GOOD_ZH, "ZH") is None
+
+
+def test_rules_check_red_on_wrong_count():
+    assert check_rules(GOOD_EN[:6], "EN") and check_rules(GOOD_EN + ["extra"], "EN") and check_rules(None, "ZH")
+
+
+def test_stale_gate_red_on_verbatim_0904_rules():
+    from pipeline.content.recap.constants import STALE_0904
+    for lang in ("EN", "ZH"):
+        injected = list(STALE_0904[lang]) + [GOOD_EN[6] if lang == "EN" else GOOD_ZH[6]]
+        assert "09-04" in check_rules(injected, lang, "2026-09-11")
+
+
+def test_stale_gate_red_on_near_duplicate():
+    near = ["7,800 is the S&P upside pivot; the declining tops line is the near term cap"] + GOOD_EN[1:]
+    assert "09-04" in check_rules(near, "EN", "2026-09-10")
+    near_zh = ["7,800 是标普往上的 pivot，下降趋势线是近处的顶部"] + GOOD_ZH[1:]
+    assert "09-04" in check_rules(near_zh, "ZH", "2026-09-10")
+
+
+def test_stale_gate_green_for_session_rules_and_exempts_0904_itself():
+    from pipeline.content.recap.constants import STALE_0904
+    session = ["QQQ has to hold 715; SPX has to get back above 7,650"] + GOOD_EN[1:]
+    assert check_rules(session, "EN", "2026-09-09") is None
+    assert check_rules(list(STALE_0904["EN"]) + [GOOD_EN[6]], "EN", "2026-09-04") is None
+
+
+def test_rules_check_red_when_rule7_loses_the_fixed_opening():
+    bad = GOOD_EN[:6] + ["Crude staying weak matters most"]
+    assert "rule 7" in check_rules(bad, "EN")
+    assert "rule 7" in check_rules(GOOD_ZH[:6] + ["标普跌破 200 日线之前都还好"], "ZH")
