@@ -37,7 +37,7 @@ from pipeline.content.recap import dedupe, issue_dir, last_session, pack_dir
 from pipeline.content.recap import visual as vis
 from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.pages import (check_layout, check_margins, check_pages, check_true_size_pdf, check_x_pages,
+from pipeline.content.recap.pages import (check_layout, check_margins, check_pages, check_state_row, check_true_size_pdf, check_x_pages,
                                           page_sections)
 from pipeline.content.recap.weeks import week_label, week_sessions
 
@@ -270,7 +270,8 @@ def cmd_render(a) -> int:
         book_h = content["labels"]["portfolio"]
         edu_h = next((h for k, h in hmap if k == "education"), "")
         l1 = check_layout(text, sections, edu_h, book_h, iss.weekly)
-        layout_ok = l1["ok"]
+        l3 = check_state_row(text)  # L3: the state row may not break across pages
+        layout_ok = l1["ok"] and l3["ok"]
         ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules and layout_ok and l2["ok"]
         if not iss.weekly:  # the page → section table is for dailies (checks the book sits on its own page)
             state["page_map"][lang] = [[name_of.get(h, h) for h in sec] for sec in sections]
@@ -278,9 +279,9 @@ def cmd_render(a) -> int:
                               "gates": {"banned": len(g["banned"]), "leadership_zh": g["leadership_zh"], "money": len(g["money_shares"]),
                                         "voice": len(g["voice"])},
                               "x1_hits": xg["x1_hits"], "x2_ok": xg["x2_ok"], "cards_leaked": cards, "zh_mixed": mixed, "rules": bad_rules,
-                              "layout_ok": layout_ok, "l1": l1, "l2": l2,
+                              "layout_ok": layout_ok, "l1": l1, "l2": l2, "l3": l3,
                               "seconds": round(time.time() - t1, 1)}
-        print(f"PDF {lang} ok={ok} L1={layout_ok}{'' if layout_ok else ' ' + str(l1['hits'])} edu_p={l1['edu_pages']} L2 body={l2['body_pt']} table={l2['table_pt']} {'ok' if l2['ok'] else 'RED ' + '; '.join(l2['hits'])} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
+        print(f"PDF {lang} ok={ok} L1={l1['ok']}{'' if l1['ok'] else ' ' + str(l1['hits'])} L3={l3['ok']}{'' if l3['ok'] else ' ' + str(l3['split'] or 'row missing')} edu_p={l1['edu_pages']} L2 body={l2['body_pt']} table={l2['table_pt']} {'ok' if l2['ok'] else 'RED ' + '; '.join(l2['hits'])} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
               f"x2={xg['x2_ok']} cards={cards} gates={g['ok']} · {time.time() - t1:.1f}s")
         if ok:
             shutil.move(tmp, final)

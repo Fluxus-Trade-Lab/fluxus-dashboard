@@ -233,3 +233,17 @@ def check_margins(pdf_path, left_mm: float = 14.0, right_mm: float = 14.0, tol_p
     out = subprocess.run(["pdftotext", "-bbox", str(pdf_path), "-"], capture_output=True, text=True, check=True).stdout
     bad = margin_overflow(out, left_mm, right_mm, tol_pt)
     return {"ok": not bad, "count": len(bad), "overflow": bad[:12]}
+
+
+# ------------------------------------------------------------------ L3 · the state row travels whole
+_STATE_VOTES = re.compile(r"/\s*\d+\s*(?:votes|票)\s*$")
+_STATE_ENV = re.compile(r"^\s*[A-Z]{4,}\b")
+
+
+def check_state_row(layout_text: str) -> dict:
+    """L3 (Visual Vera 09-14): the big state word, its score and "/ N votes" print as one row on one page.
+    In pdftotext -layout that row is one line; a page break inside the flex row leaves the "/ N votes" line
+    without the state word (09-11 EN: "MIXED" closed page 1, "0 / 12 votes" opened page 2)."""
+    rows = [ln for ln in layout_text.splitlines() if _STATE_VOTES.search(ln)]
+    split = [ln.strip() for ln in rows if not _STATE_ENV.search(ln)]
+    return {"ok": bool(rows) and not split, "rows": len(rows), "split": split}

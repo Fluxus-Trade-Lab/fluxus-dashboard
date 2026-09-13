@@ -6,7 +6,7 @@ import re
 import pytest
 
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.pages import margin_overflow
+from pipeline.content.recap.pages import check_state_row, margin_overflow
 from pipeline.content.recap.visual import html_text, jdump, strings, unjoin
 from pipeline.content.recap.visual_figs import FIGS
 
@@ -107,3 +107,23 @@ def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies
     assert ".drop.thin{margin:18px auto 0;width:84%;height:auto;max-height:160px}" in css
     book = js[js.index("function book(is, c, V)"):]
     assert 'class="legal"' in book[:2000]  # the legal line rides the book section
+
+
+def test_l3_goes_red_when_the_state_row_breaks_across_pages():
+    # pdftotext -layout excerpts from the real 09-14 renders
+    split_0911_en = "MIXED\n                               FLUXUS CAPITAL · CONFIDENTIAL · 1 / 5\n\f                         0 / 12 votes\n−0.41\n"
+    whole_0911_zh = "\n\nMIXED 0                 / 12    票\n"
+    whole_0910_en = "BEARISH −7                            / 12 votes\n"
+    whole_top_of_page = "\fMIXED 0                   / 12 votes\n"
+    red = check_state_row(split_0911_en)
+    assert not red["ok"] and red["split"] == ["0 / 12 votes"]
+    for txt in (whole_0911_zh, whole_0910_en, whole_top_of_page):
+        assert check_state_row(txt)["ok"], txt
+    assert not check_state_row("no state row here\n")["ok"]
+
+
+def test_the_state_row_is_on_the_print_break_inside_avoid_list():
+    css = (pathlib.Path(__file__).resolve().parents[1] / "content/recap/visual_assets/recap_local.css").read_text()
+    block = css[css.index("  .prose,\n  p,"):]
+    block = block[:block.index("break-inside: avoid;")]
+    assert ".state-row," in block
