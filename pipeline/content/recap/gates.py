@@ -36,6 +36,13 @@ BANNED: dict[str, re.Pattern] = {
     "Don": re.compile(r"(?<![A-Za-z])Don(?![A-Za-z'’])"),
     "Jackson": _word("Jackson"),
     "Naidik": _word("Naidik", re.I),
+    # host surnames / nicknames and contact lines seen in the 09-08..09-12 captions
+    "Toddzilla": re.compile(r"Todd\s?zilla", re.I),
+    "Zhang": _word("Zhang"),
+    "Bates": _word("Bates"),
+    "Grok Tasha (caption variant)": re.compile(r"Grok\s?Tasha", re.I),
+    "Real Wealth line": re.compile(r"real\s?-?\s?wealth", re.I),
+    "company domain": re.compile(r"rever\w*asset|river\w*asset", re.I),
     "email": re.compile(r"[\w.+-]+@[\w-]+\.[A-Za-z]{2,}"),
     "phone": re.compile(r"\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b"),
 }
@@ -61,13 +68,24 @@ def _hits(text: str, pats: dict[str, re.Pattern]) -> list[dict]:
     return out
 
 
+# Andy 2026-09-13「正文里不出现Andy 说这样的字眼，也不用第一人称」
+VOICE: dict[str, re.Pattern] = {
+    "names Andy": re.compile(r"Andy", re.I),
+    "first person (en)": re.compile(r"(?<![A-Za-z’'])(?:I|I'm|I’m|I've|I’ve|I'll|I’ll|I'd|I’d|me|my|mine|we|We|we're|we’re|"
+                                    r"we've|we’ve|we'll|we’ll|our|Our|ours|us)(?![A-Za-z’'])"),
+    "first person (zh)": re.compile(r"我"),
+}
+
+
 def run_gates(text: str) -> dict:
     banned = _hits(text, BANNED)
     lead = text.count(LEADERSHIP_ZH)
     money = _hits(text, MONEY_SHARES)
+    voice = _hits(text, VOICE)
     return {
         "banned": banned,
         "leadership_zh": lead,
         "money_shares": money,
-        "ok": not banned and lead == 0 and not money,
+        "voice": voice,
+        "ok": not banned and lead == 0 and not money and not voice,
     }

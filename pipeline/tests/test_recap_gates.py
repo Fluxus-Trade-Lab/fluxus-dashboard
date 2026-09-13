@@ -24,6 +24,8 @@ def test_clean_text_passes_all_three():
     # misspellings that really occur in the 2026-09-11 auto-captions
     "we do not call tops at Revier", "grotction up 0.69%", "Gretection was up", "turboction",
     "the 21 over 21 list", "the sweet 17 watch list", "RG8 up 0.94%",
+    "a Toddzilla holding", "Ted Zhang here", "Connor Bates", "Okta Grok Tasha holding",
+    "855 real wealth", "ted@revereasset.com", "riverasset",
 ])
 def test_banned_gate_goes_red(inject):
     r = run_gates(CLEAN_EN + " " + inject)
@@ -44,6 +46,22 @@ def test_money_shares_gate_goes_red(inject):
     r = run_gates(CLEAN_EN + " " + inject)
     assert r["money_shares"], inject
     assert not r["ok"]
+
+
+@pytest.mark.parametrize("inject", [
+    "Andy at 08:33 ET: rates matter", "per andy", "Andy：盯债券", "I do think we can sell off",
+    "stops set in place, I'm out", "our book", "we wait", "我在日内模式", "我们等均线收拢",
+])
+def test_voice_gate_goes_red(inject):
+    r = run_gates(CLEAN_EN + " " + inject)
+    assert r["voice"], inject
+    assert not r["ok"]
+
+
+def test_voice_gate_spares_tickers_and_ordinary_words():
+    # US (country / ticker-ish caps), IWM, "Index", "mega", "Wedge", "ourselves"-free prose
+    r = run_gates("US CPI hot · IWM heavy · Index down 4 days · mega caps · memory · weekly · Iran · IBIT · MU −0.2%")
+    assert r["voice"] == [], r["voice"]
 
 
 def test_money_gate_does_not_flag_prices_or_percent_or_cashtag_free_levels():
