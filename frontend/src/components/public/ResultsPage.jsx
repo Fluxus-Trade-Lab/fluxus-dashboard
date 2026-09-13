@@ -13,7 +13,7 @@ const SAMPLE_STATS = {
   //
   // Two conventions exist and they disagree. compute_mtm_drawdown() in
   // pipeline/portfolio/h1_report.py returns both and calls the DOLLAR-max one
-  // canonical: -11.1% / -$223k (2026-06-02 -> 2026-06-10, on a ~$2.00M peak).
+  // canonical: -11.1% (2026-06-02 -> 2026-06-10, a later dip on a larger account).
   // The masterclass (L15.4) and the Track Record standard both say percent, on
   // the grounds that a later dollar-drop on a bigger account understates the
   // real damage. We publish the percent figure to stay consistent with those.
@@ -22,14 +22,17 @@ const SAMPLE_STATS = {
   maxDrawdown: -17.9,
 }
 
+// Closed-trade P&L by exit month as % of starting capital — R and % only, never
+// dollars (Andy 2026-09-13, 「管线只做R 和%, 不写股数和美元」). The seven rows sum
+// to the +90.5% H1 return quoted on the landing page.
 const SAMPLE_MONTHLY = [
-  { month: 'Jan 2026', trades: 36, pnl: 43710 },
-  { month: 'Feb 2026', trades: 23, pnl: 9569 },
-  { month: 'Mar 2026', trades: 58, pnl: 20370 },
-  { month: 'Apr 2026', trades: 59, pnl: 141337 },
-  { month: 'May 2026', trades: 70, pnl: 319907 },
-  { month: 'Jun 2026', trades: 57, pnl: 271142 },
-  { month: 'Jul 2026', trades: 28, pnl: 99220 },
+  { month: 'Jan 2026', trades: 36, pct: 4.37 },
+  { month: 'Feb 2026', trades: 23, pct: 0.96 },
+  { month: 'Mar 2026', trades: 58, pct: 2.04 },
+  { month: 'Apr 2026', trades: 59, pct: 14.13 },
+  { month: 'May 2026', trades: 70, pct: 31.99 },
+  { month: 'Jun 2026', trades: 57, pct: 27.11 },
+  { month: 'Jul 2026', trades: 28, pct: 9.92 },
 ]
 
 const SAMPLE_RECENT = [
@@ -98,7 +101,7 @@ export default function ResultsPage() {
                 <tr className="border-b border-[var(--color-border)]">
                   <th className="text-left py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Month</th>
                   <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Trades</th>
-                  <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">P&amp;L</th>
+                  <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Return</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,13 +109,16 @@ export default function ResultsPage() {
                   <tr key={m.month} className="border-b border-[var(--color-border-light)]">
                     <td className="py-2 text-[var(--color-text)]">{m.month}</td>
                     <td className="py-2 text-right font-mono text-[var(--color-text-secondary)]">{m.trades}</td>
-                    <td className={`py-2 text-right font-mono ${m.pnl >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
-                      {m.pnl >= 0 ? '+' : '-'}${Math.abs(m.pnl).toLocaleString()}
+                    <td className={`py-2 text-right font-mono ${m.pct == null ? 'text-[var(--color-text-muted)]' : m.pct >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+                      {m.pct == null ? '—' : `${m.pct >= 0 ? '+' : ''}${m.pct.toFixed(2)}%`}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <p className="mt-3 text-xs text-[var(--color-text-muted)] max-w-[600px]">
+              Closed trades by exit month, as a percentage of starting capital.
+            </p>
           </div>
         </div>
       </section>

@@ -146,8 +146,8 @@ export default function TradeDetailPage({ tradeId }) {
           <div className="text-[13px] flex flex-col gap-1.5">
             <Row label="Entry price" value={fmtCur(t.entry_price)} />
             <Row label="Stop" value={fmtCur(t.stop_price)} />
-            <Row label="Original qty" value={String(t.original_qty)} />
-            <Row label="R$" value={fmtCur(t.r_dollars)} />
+            {/* R and % only — no share counts or dollar risk (Andy 2026-09-13). */}
+            <Row label="1R (stop distance)" value={fmtPct(t.r_pct_of_entry, 1, ' of entry')} />
             <hr className="border-[var(--color-border-light)] my-1" />
             <Row label="MA20" value={snap.ma20 != null ? fmtCur(snap.ma20) : '—'} />
             <Row label="MA50" value={snap.ma50 != null ? fmtCur(snap.ma50) : '—'} />
@@ -163,9 +163,9 @@ export default function TradeDetailPage({ tradeId }) {
           <div className="font-semibold mb-3 text-[13px]">Execution</div>
           <div className="text-[13px] flex flex-col gap-1.5">
             <Row label="Status" value={t.closed ? 'Closed' : 'Open'} />
+            {!t.closed && <Row label="Position remaining" value={fmtPct(t.remaining_pct, 0)} />}
             <Row label="Exit date" value={t.exit_date ? String(t.exit_date).slice(0, 10) : '—'} />
             <Row label="Hold (cal days)" value={analytics.hold_calendar_days ?? '—'} />
-            <Row label="Realized P/L" value={fmtCur(t.realized_pl)} />
             <Row label="Realized R" value={fmtR(t.realized_R)} valueColor={rColor(t.realized_R)} />
             <hr className="border-[var(--color-border-light)] my-1" />
             <div className="text-[11px] uppercase text-[var(--color-text-muted)] mt-1">Trims</div>
@@ -175,7 +175,7 @@ export default function TradeDetailPage({ tradeId }) {
               t.trims.map((tr, i) => (
                 <div key={i} className="text-[11px] flex justify-between">
                   <span className="text-[var(--color-text-muted)]">{String(tr.date).slice(0, 10)} · {tr.type}</span>
-                  <span className="tabular-nums">{tr.qty} @ {fmtCur(tr.price)}</span>
+                  <span className="tabular-nums">{fmtPct(tr.pct_of_position, 0)} @ {fmtCur(tr.price)}</span>
                 </div>
               ))
             )}
@@ -212,6 +212,7 @@ function Row({ label, value, valueColor }) {
 }
 
 function fmtR(r) { return r == null ? '—' : `${r >= 0 ? '+' : ''}${r.toFixed(2)}R` }
+function fmtPct(v, digits = 0, suffix = '') { return v == null ? '—' : `${v.toFixed(digits)}%${suffix}` }
 function rColor(r) {
   if (r == null) return 'text-[var(--color-text-muted)]'
   if (r > 0) return 'text-[var(--color-profit)]'
