@@ -354,15 +354,57 @@ def test_the_volume_band_is_one_sided_and_both_edges_are_pinned(tmp_path, scale,
     assert res["volume"]["judged"]["2026-09-02"]["rate"] == (1.0 if inside else 0.0)
 
 
-def test_a_ticker_written_by_many_screeners_votes_once(tmp_path):
-    """五个筛子写同一只票不许投五票：3 只坏票各被写 10 遍，也只是 3/18。"""
+def test_identical_readings_vote_once_and_different_readings_each_vote(tmp_path):
+    """同票同量抄十遍只算一票；同票不同量各算一票、且与行序无关。
+
+    3 只票各有一个坏量（抄 10 遍）+ 18 只票的好量 → 21 个读数、15+3 命中… 不：
+    坏量 3 个不命中、好量 18 个命中 → hit 18 / n 21。把坏行挪到后面，读数必须不变
+    （旧的「首行胜出」在 08-14 真数据上会在 0.925 和 0.975 之间翻）。"""
     rows = _vol_rows("2026-09-02", "2026-09-02")
     bad = [{"date": "2026-09-02", "ticker": t, "screener": f"preset:s{i}", "change_pct": "0.0",
             "volume": "1.0"} for t in TICKERS[:3] for i in range(10)]
-    res = A.audit(_archive(tmp_path, bad + rows), _store_v(tmp_path), declared={})
+    first = A.audit(_archive(tmp_path, bad + rows, "a.csv"), _store_v(tmp_path), declared={})
+    last = A.audit(_archive(tmp_path, rows + bad, "b.csv"), tmp_path / "tickers_v", declared={})
+    for res in (first, last):
+        rec = res["volume"]["judged"]["2026-09-02"]
+        assert (rec["hit"], rec["n"]) == (18, 21)
+
+
+def test_non_finite_and_non_numeric_volumes_are_skipped(tmp_path):
+    dirty = [{"date": "2026-09-02", "ticker": t, "screener": "vcp", "change_pct": "0.0", "volume": val}
+             for t in TICKERS for val in ("nan", "inf", "-5", "abc", "1e400")]
+    res = A.audit(_archive(tmp_path, dirty + _vol_rows("2026-09-02", "2026-09-02")),
+                  _store_v(tmp_path), declared={})
     rec = res["volume"]["judged"]["2026-09-02"]
-    assert rec["n"] == 18
-    assert rec["hit"] == 15
+    assert (rec["hit"], rec["n"]) == (18, 18)
+
+
+def test_zero_volume_rows_are_skipped_not_counted_as_misses(tmp_path):
+    """写 0 的 volume 是「本列不填」，不是成交量为零。算进分母会把干净日稀释成红。"""
+    zeros = [{"date": "2026-09-02", "ticker": t, "screener": "vcp", "change_pct": "0.0",
+              "volume": "0.0"} for t in TICKERS]
+    res = A.audit(_archive(tmp_path, zeros + _vol_rows("2026-09-02", "2026-09-02")),
+                  _store_v(tmp_path), declared={})
+    assert res["volume"]["judged"]["2026-09-02"]["hit"] == 18
+    assert res["volume"]["judged"]["2026-09-02"]["n"] == 18
+
+
+def test_a_day_half_of_whose_volumes_come_from_another_frame_is_red(tmp_path):
+    """判定线从两边钉住：整场换帧在真数据上最高也能偶然配上 0.304，而部分重放要尽量早报。
+    一半换帧（9/18）红；换掉 5 只（13/18 = 0.72）也红；换掉 3 只（15/18 = 0.83）绿。"""
+    store = _store_v(tmp_path)
+
+    def replaced(k: int, name: str):
+        rows = [dict(r, volume=f"{VOLS[r['ticker']]['2026-09-01']:.1f}") if i < k else r
+                for i, r in enumerate(_vol_rows("2026-09-02", "2026-09-02"))]
+        return A.audit(_archive(tmp_path, rows, name), store, declared={})["volume"]
+
+    half = replaced(9, "half.csv")
+    assert half["judged"]["2026-09-02"]["rate"] == 0.5 and "2026-09-02" in half["bad"]
+    five = replaced(5, "five.csv")
+    assert five["judged"]["2026-09-02"]["hit"] == 13 and "2026-09-02" in five["bad"]
+    three = replaced(3, "three.csv")
+    assert three["judged"]["2026-09-02"]["hit"] == 15 and three["bad"] == {}
 
 
 def test_a_declared_day_silences_the_volume_identity_too(tmp_path):
@@ -408,8 +450,10 @@ def test_the_finviz_rename_week_is_no_longer_blind_and_is_clean():
         assert d in vj, f"{d} 仍然是盲的"
         assert vj[d]["rate"] > 0.90, (d, vj[d])
     assert res["volume"]["bad"] == {}
-    assert min(r["rate"] for r in vj.values()) > 0.85                 # 最差的干净日（实测 0.925）
-    assert {d for d, _ in res["blind"]} <= {"2026-03-12", "2026-03-13"}
+    assert min(r["rate"] for r in vj.values()) > 0.85                 # 最差的干净日（实测 0.929）
+    # 只管 K 线库覆盖得到的日子：归档常比库新一场（盲区 5），那一场两条都是 n=0，不是本闸退化
+    covered = set(A.calendar(A.load_store(REAL_STORE)))
+    assert {d for d, _ in res["blind"] if d in covered} <= {"2026-03-12", "2026-03-13"}
 
 
 @_real
