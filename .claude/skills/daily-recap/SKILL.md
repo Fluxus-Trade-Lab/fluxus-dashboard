@@ -155,6 +155,7 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **落点**：当天收盘处一个空心圆，fill `var(--sheet)`、stroke `var(--accent)` 2.5px，半径 4.5px（按打印版心 704px × 84% 换算成 viewBox 单位）。不编码任何行情数字：大小/环/刻度/收尾变粗四个情绪编码方案已否（「落点这些方案不行」），裂纹落点暂停（「大改动也暂停」）
 - **副标题**：sheet-1 标题下的 `byline` 删除
 - 预览 artifact 058faf91；源头 Visual 线 design/marketing-visual；产线落地步骤见 DATA_CONTRACTS §七 同日 Visual Vera → OPS Fable 行。版式归 Visual Vera，改线的粗细、位置、落点或副标题前先读这条
+- ↳ ✅ 已落地代码（09-14，`f0e4d760`）：三处改完，09-11 daily + W37 weekly 重渲染闸全绿，收据见 DATA_CONTRACTS §七 同条 OPS 回执行。
 
 ### [2026-09-13] 主标题折行定稿（Andy 看完三栏对照原话「采用推荐的」）
 - 原因：`.hl-a{text-wrap:balance}` 把两行排成等长，第一行在版心一半多就折（Andy「到了中间就另起了一行」）；中文字少多数一行放得下，但 9/11 中文同样中折且拆开「硬｜件」
