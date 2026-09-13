@@ -1,62 +1,47 @@
-"""Education schematics as inline SVG in the Visual line's `.tell` style (lines, muted labels, mono type).
+"""Education schematics as data specs, drawn by the review page's JS in the Visual `.tell` style.
 
 Same concepts and data as figures.py (the matplotlib versions), with spec §5's three checks kept as
 asserts on the data, so a wrong drawing fails the build instead of shipping:
   (1) price really performs the move the concept names,
   (2) the structural relationship is right (support below / resistance above / who leads),
   (3) every label is computed from, or placed on, the thing it names.
-Colours come only from CSS classes that use the Visual CSS variables (see visual.py EXTRA).
+A spec is {"ylim", "aria", "items"}; x runs 0–100, y in ylim. Item kinds: path (flat x,y list),
+hline, vline, band, text, callout. Colours come only from CSS classes on the page.
 """
 from __future__ import annotations
 
-import html
 
-e = html.escape
-W, H = 1000, 380
-X0, X1, YT, YB = 40, 960, 30, 350
+def _r(v):
+    return None if v is None else round(float(v), 2)
 
 
 class Canvas:
-    def __init__(self, ylim=(0, 60), xlim=(0, 100)):
-        self.ylim, self.xlim, self.o = ylim, xlim, []
-
-    def X(self, x):
-        return X0 + (x - self.xlim[0]) / (self.xlim[1] - self.xlim[0]) * (X1 - X0)
-
-    def Y(self, y):
-        return YB - (y - self.ylim[0]) / (self.ylim[1] - self.ylim[0]) * (YB - YT)
+    def __init__(self, ylim=(0, 60)):
+        self.ylim, self.items = [ylim[0], ylim[1]], []
 
     def path(self, xs, ys, cls):
-        d = " L ".join(f"{self.X(x):.1f},{self.Y(y):.1f}" for x, y in zip(xs, ys))
-        self.o.append(f'<path class="{cls}" d="M {d}"/>')
+        flat = []
+        for x, y in zip(xs, ys):
+            flat += [_r(x), _r(y)]
+        self.items.append(["path", cls, flat])
 
     def hline(self, y, cls, x_from=None, x_to=None):
-        a = self.X(self.xlim[0] if x_from is None else x_from)
-        b = self.X(self.xlim[1] if x_to is None else x_to)
-        self.o.append(f'<line class="{cls}" x1="{a:.1f}" x2="{b:.1f}" y1="{self.Y(y):.1f}" y2="{self.Y(y):.1f}"/>')
+        self.items.append(["hline", cls, _r(y), _r(x_from), _r(x_to)])
 
     def vline(self, x, cls):
-        self.o.append(f'<line class="{cls}" x1="{self.X(x):.1f}" x2="{self.X(x):.1f}" y1="{YT}" y2="{YB}"/>')
+        self.items.append(["vline", cls, _r(x)])
 
     def band(self, y0, y1, cls):
-        top, bot = self.Y(max(y0, y1)), self.Y(min(y0, y1))
-        self.o.append(f'<rect class="{cls}" x="{X0}" y="{top:.1f}" width="{X1 - X0}" height="{bot - top:.1f}"/>')
+        self.items.append(["band", cls, _r(y0), _r(y1)])
 
     def text(self, x, y, s, cls="", anchor="start"):
-        c = f' class="{cls}"' if cls else ""
-        self.o.append(f'<text{c} x="{self.X(x):.1f}" y="{self.Y(y):.1f}" text-anchor="{anchor}">{e(s)}</text>')
+        self.items.append(["text", cls, _r(x), _r(y), s, anchor])
 
     def callout(self, x, y, tx, ty, label, cls=""):
-        cx, cy, lx, ly = self.X(x), self.Y(y), self.X(tx), self.Y(ty)
-        self.o.append(f'<ellipse class="mark" cx="{cx:.1f}" cy="{cy:.1f}" rx="20" ry="12"/>')
-        edge_y = cy - 12 if ly < cy else cy + 12
-        self.o.append(f'<line class="lead" x1="{cx:.1f}" y1="{edge_y:.1f}" x2="{lx:.1f}" y2="{ly + (5 if ly < cy else -14):.1f}"/>')
-        c = f' class="{cls}"' if cls else ""
-        self.o.append(f'<text{c} x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle">{e(label)}</text>')
+        self.items.append(["callout", cls, _r(x), _r(y), _r(tx), _r(ty), label])
 
     def svg(self, aria):
-        from pipeline.content.recap.svg_attrs import presentational  # print renderers ignore page CSS on inline SVG
-        return presentational(f'<svg class="tell" viewBox="0 0 {W} {H}" role="img" aria-label="{e(aria)}">' + "".join(self.o) + "</svg>")
+        return {"ylim": self.ylim, "aria": aria, "items": self.items}
 
 
 def _lin(a, b, n):
