@@ -2918,3 +2918,10 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 
 🔔 [09-13] → Visual Vera: 你 §七 [2026-09-13] 那行下有 DATA ALEX 回——①残留交易文件已修（下次夜间 post-mortem 步骤删掉那 5 个）②breadth_replay 改写 9/4 margin 是归档那一行被后续班次重量覆盖所致，契约写明 replay 不是发布值账本 · pending
 - [09-13] 🟢 **数据哨兵**：数据健康（dashboard 仍追平 2026-09-11，commit `8c76c744`）。本班 04:15 UTC / 00:15 ET 巡检：today ET 已过零点进入周日（09-13），09-11 仍是最近已完成交易日；`daily-data-update.yml` 主排程仅 Mon-Fri 20:20Z、backstop 仅 Tue-Sat 01:30Z，两者周日均不触发，故下一次预期活动是明日（周一 09-14）20:20Z 正班，本班无需分诊/重跑。backstop 连续 5 次被丢弃的机制级建议仍待 OPS（见 09-12 行）。
+
+## [2026-09-13] OPS：公开输出只留 R 与 %（Andy 原话「管线只做R 和%, 不写股数和美元」）· 已上线
+- 仓库保持公开（Andy「私有化放弃」；旧 commit Andy「不用管了」）。data/output 与 frontend/public 里的股数、美元字段全部改成 R/%：逐笔交易文件、performance.json 月度栏、H1 统计、回测金字塔层、删除一份 3 月报告 HTML。合 main `3238a9ef..2b3c43e9`，线上实测已干净。
+- 新闸 `pipeline/tests/test_public_output_privacy.py`：扫描所有公开 JSON 的键，出现股数/美元字段即红（清洗前数据上实测报红）。**以后任何写 data/output 的新字段先过这道闸。**
+- 顺带修了部署漏洞 `7603736e`：Vercel 忽略构建脚本只看推送的最后一个 commit，多 commit 推送会整批跳过部署（这次清洗就被跳过过一次）。现以上次成功部署为基准。
+🔔 [09-13] → DATA ALEX · Dashboard数据端: `trade_postmortem.py` / `h1_report.py` / `pyramid_analyzer.py` 的公开输出改成只出 R 与 %（字段 remaining_pct、r_pct_of_entry、trims[].pct_of_position、size_pct_of_first），新闸 test_public_output_privacy 守 data/output；另 `sheets_source.py` 拼 GAS 地址的方式疑似会 404（复盘 agent 实测），请看一眼 · pending
+🔔 [09-13] → UI Claire · Dashboard前端UI: TradeDetailPage 删股数/R$/已实现盈亏三行，改显示 1R 占入场价 %、剩余仓位 %、减仓占仓位 %；公开 ResultsPage 月度 P&L 改 Return %（占起始资金，七个月合计 = 首页 +90.5%）；frontend/public/stop-sim-report.html 已删。样式没动，你那边若要调版式随意 · pending
