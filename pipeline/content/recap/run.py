@@ -74,7 +74,9 @@ def cmd_fetch(a) -> int:
         rc = ft.main(args)
         if rc not in (0, 3):
             return rc
-        return build_pack.main(["--date", iss.T])
+        rc = build_pack.main(["--date", iss.T])
+        vis.cache_spx_bars(iss.pack, iss.T)
+        return rc
     vid = a.video_id
     if not vid:
         end = (dt.date.fromisoformat(iss.T) + dt.timedelta(days=3)).isoformat().replace("-", "")
@@ -91,7 +93,9 @@ def cmd_fetch(a) -> int:
         (iss.pack / "transcript.md").write_text(ft.to_markdown(paras, meta), encoding="utf-8")
     else:
         print(f"[no-weekend-video] none found for {iss.label}", file=sys.stderr)
-    return build_pack.main(["--week", iss.label])
+    rc = build_pack.main(["--week", iss.label])
+    vis.cache_spx_bars(iss.pack, iss.T, iss.label)
+    return rc
 
 
 # ------------------------------------------------------------------ check (R1, R2, rules)

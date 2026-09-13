@@ -42,7 +42,8 @@ CHROME_PROFILE = Path.home() / ".venvs" / "fluxus-recap" / "chrome-profile"
 SAMPLE_ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
 MAX_LINE, MAX_BYTES = 300, 350 * 1024
 PAGE_MARGIN_MM = (12.0, 12.0)  # left/right, must match @page in recap_local.css
-DROP_SESSIONS = 5  # Andy 09-14: the drop line draws the last 5 SPX sessions, one segment each (was 21)
+DROP_SESSIONS = 5  # Andy 09-14: the drop line draws the last 5 SPX sessions (was 21)
+DROP_BARS, DROP_SMOOTH_MIN = "60m", 195  # Andy 09-14「SPX 60分钟 平滑度半天」: 60-minute bars, half-session smoothing
 FONTS_LINK = ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600'
               '&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">')
 
@@ -162,20 +163,48 @@ def jshow(path):
     return _json_cache[path]
 
 
-def spx_segment(D, label=None):
-    """Closes the drop line connects, one segment per session: a daily takes the last DROP_SESSIONS moves
-    (DROP_SESSIONS + 1 closes); a weekly takes the prior week's last close plus every session of the week."""
-    rows = sorted({(r["date"], float(r["spx_close"])) for r in csv_rows("data/history/breadth_archive.csv")
-                   if r["date"] <= D and fl(r.get("spx_close")) and is_trading_day(dt.date.fromisoformat(r["date"]))})
+def drop_window(D: str, label: str | None = None) -> tuple[str, list[str]]:
+    """(anchor, sessions drawn): a daily draws its last DROP_SESSIONS sessions, a weekly draws its week.
+    The anchor is the session before the first one drawn, so every drawn session starts from its prior close."""
     if label:
-        start = prior_week_close(label).isoformat()
-        seg = [r for r in rows if r[0] >= start]
-        want = len(week_sessions(label)) + 1
-    else:
-        seg = rows[-(DROP_SESSIONS + 1):]
-        want = DROP_SESSIONS + 1
-    assert seg[-1][0] == D and len(seg) == want, (D, label, seg[0], seg[-1], len(seg))
-    return seg
+        return prior_week_close(label).isoformat(), [d.isoformat() for d in week_sessions(label)]
+    days, d = [], dt.date.fromisoformat(D)
+    while len(days) < DROP_SESSIONS + 1:
+        if is_trading_day(d):
+            days.append(d.isoformat())
+        d -= dt.timedelta(days=1)
+    days.reverse()
+    return days[0], days[1:]
+
+
+def cache_spx_bars(pdir: Path, D: str, label: str | None = None) -> Path:
+    """Fetch step (system python3 has yfinance): SPX DROP_BARS closes for the drop window -> pack/spx_<bars>.json.
+    Yahoo keeps 60-minute bars for 730 days; render only ever reads this file."""
+    import yfinance as yf
+    anchor, sessions = drop_window(D, label)
+    end = (dt.date.fromisoformat(sessions[-1]) + dt.timedelta(days=1)).isoformat()
+    h = yf.Ticker("^GSPC").history(start=anchor, end=end, interval=DROP_BARS, prepost=False)
+    by_day = defaultdict(list)
+    for ts, c in zip(h.index.tz_convert("America/New_York"), h["Close"]):
+        by_day[ts.date().isoformat()].append(round(float(c), 2))
+    missing = [d for d in [anchor, *sessions] if not by_day.get(d)]
+    if missing:
+        raise SystemExit(f"SPX {DROP_BARS} bars missing for {missing} (Yahoo keeps 60-minute bars for 730 days)")
+    path = pdir / f"spx_{DROP_BARS}.json"
+    path.write_text(json.dumps({"interval": DROP_BARS, "anchor": anchor, "anchor_close": by_day[anchor][-1],
+                                "sessions": {d: by_day[d] for d in sessions},
+                                "fetched_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}))
+    return path
+
+
+def drop_series(cache: dict, anchor: str, sessions: list[str]) -> tuple[list[float], int]:
+    """Anchor close + every bar of every session; cut = index of the last session's starting point (its prior close)."""
+    assert cache["anchor"] == anchor and list(cache["sessions"]) == sessions, (cache["anchor"], list(cache["sessions"]), anchor, sessions)
+    spx = [cache["anchor_close"]]
+    for d in sessions[:-1]:
+        spx += cache["sessions"][d]
+    cut = len(spx) - 1
+    return spx + cache["sessions"][sessions[-1]], cut
 
 
 def pick_edu(education: dict, key: str) -> dict:
@@ -193,7 +222,11 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     D = week_sessions(label)[-1].isoformat() if weekly else label
     pack = json.loads((pdir / "pack.json").read_text())
     content = {lang: json.loads((pdir / f"content_{lang}.json").read_text()) for lang in ("EN", "ZH")}
-    seg = spx_segment(D, label if weekly else None)
+    anchor, sessions = drop_window(D, label if weekly else None)
+    bars = pdir / f"spx_{DROP_BARS}.json"
+    if not bars.exists():
+        raise SystemExit(f"{bars} missing: run `python3 -m pipeline.content.recap.run fetch` first (it caches SPX {DROP_BARS} bars)")
+    spx, cut = drop_series(json.loads(bars.read_text()), anchor, sessions)
     cond = [h for h in jshow("data/output/breadth.json")["conditions"]["history"] if h["date"] <= D]
     assert cond[-1]["date"] == D
     months, last = [], None
@@ -223,9 +256,9 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
         else:
             idx.append({"t": tk, "last": r5(a["close"]), "chg": r5(a["change_pct"]), "vol": r5(a["rel_volume"])})
     d = dt.date.fromisoformat(D)
-    out = {"tag": tag, "label": label, "weekly": weekly, "D": D, "D0": seg[0][0],
+    out = {"tag": tag, "label": label, "weekly": weekly, "D": D, "D0": anchor,
            "no": label.split("-")[-1] if weekly else D[5:].replace("-", ""),
-           "spx": [round(p, 2) for _, p in seg],
+           "spx": spx, "spx_cut": cut, "spx_smooth": round(DROP_SMOOTH_MIN / int(DROP_BARS[:-1]), 3),
            "cond": {"scores": [h["score"] for h in cond], "months": months},
            "verd": {"env": verd["env"], "score": verd["score"],
                     "votes": [[v["label"], v["side"], r5(v["margin"]), v["unit"], bool(v["measurable"])] for v in verd["vote_detail"]]},

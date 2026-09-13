@@ -100,9 +100,8 @@ def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies
     assert visual.DROP_SESSIONS == 5
     assert 'V.droparia, 6, 4.5, !is.weekly)' in js  # grey tail on dailies, all accent on weeklies
     # Visual Vera 09-14: one segment per session (daily 6 closes; weekly prior close + the week), span 10, 160px cap
-    src = pathlib.Path(visual.__file__).read_text()
-    assert "rows[-(DROP_SESSIONS + 1):]" in src and "prior_week_close(label)" in src
-    assert "seg = spx_segment(D, label if weekly else None)" in src
+    assert visual.DROP_BARS == "60m" and visual.DROP_SMOOTH_MIN == 195  # Andy 09-14: 60-minute bars, half-day smoothing
+    assert "dropLine(is.spx, is.spx_smooth, is.spx_cut)" in js and "function smoothCloses" in js
     assert "var step = 10 / (closes.length - 1)" in js
     css = (pathlib.Path(visual.__file__).with_name("visual_assets") / "recap_visual.css").read_text()
     assert ".drop.thin{margin:18px auto 0;width:84%;height:auto;max-height:160px}" in css
@@ -128,3 +127,17 @@ def test_the_state_row_is_on_the_print_break_inside_avoid_list():
     block = css[css.index("  .prose,\n  p,"):]
     block = block[:block.index("break-inside: avoid;")]
     assert ".state-row," in block
+
+
+def test_the_drop_window_starts_every_session_from_its_prior_close():
+    from pipeline.content.recap.visual import drop_series, drop_window
+    assert drop_window("2026-09-11") == ("2026-09-03", ["2026-09-04", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11"])
+    week = ["2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11"]
+    assert drop_window("2026-09-11", "2026-W37") == ("2026-09-04", week)
+    cache = {"anchor": "2026-09-04", "anchor_close": 100.0,
+             "sessions": {"2026-09-08": [101.0, 102.0], "2026-09-09": [103.0], "2026-09-10": [104.0, 105.0], "2026-09-11": [106.0, 107.0]}}
+    spx, cut = drop_series(cache, "2026-09-04", week)
+    assert spx == [100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0]
+    assert spx[cut] == 105.0  # the accent segment starts at 09-10's last bar
+    with pytest.raises(AssertionError):
+        drop_series(cache, "2026-09-03", week)  # a cache for another window never renders

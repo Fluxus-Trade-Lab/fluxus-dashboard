@@ -124,10 +124,34 @@
   }
 
   /* ---------------------------------------------------------------- drop line (SPX, 21 sessions) */
-  function dropLine(closes) {
-    if (!Array.isArray(closes) || closes.length < 2 || !closes.every(isNum)) {
+  /* Gaussian over the bars (sigma = half the window), true first and last close kept: the line reads the day's
+     shape, not every hourly wiggle (Andy 09-14: 60-minute bars, half-session window) */
+  function smoothCloses(v, bars) {
+    if (!(bars >= 1) || v.length < 3) {
+      return v.slice();
+    }
+    var s = bars / 2;
+    var R = Math.ceil(3 * s);
+    var out = v.map(function (_, i) {
+      var num = 0;
+      var den = 0;
+      for (var j = Math.max(0, i - R); j <= Math.min(v.length - 1, i + R); j++) {
+        var g = Math.exp(-((j - i) * (j - i)) / (2 * s * s));
+        num += v[j] * g;
+        den += g;
+      }
+      return num / den;
+    });
+    out[0] = v[0];
+    out[v.length - 1] = v[v.length - 1];
+    return out;
+  }
+
+  function dropLine(raw, smoothBars, cut) {
+    if (!Array.isArray(raw) || raw.length < 2 || !raw.every(isNum)) {
       return null;
     }
+    var closes = smoothCloses(raw, smoothBars);
     var p0 = closes[0];
     /* x spans 10 units whatever the point count (Visual Vera 09-14: median line ~99px on the print column) */
     var step = 10 / (closes.length - 1);
@@ -163,7 +187,7 @@
     var pts = P.map(function (q) {
       return [(q[0] - minx) * k, (q[1] - miny) * k];
     });
-    return { d: pathD(pts), pts: pts, n: closes.length, h: (maxy - miny) * k };
+    return { d: pathD(pts), pts: pts, n: closes.length, cut: isNum(cut) ? cut : closes.length - 2, h: (maxy - miny) * k };
   }
 
   function pathD(pts) {
@@ -176,7 +200,7 @@
 
   /* tail: the last session in accent, the earlier ones in a grey that fades toward the oldest (daily cover) */
   function tailPaths(dl, stroke) {
-    var cut = 1000 * (dl.n - 2) / (dl.n - 1);
+    var cut = 1000 * dl.cut / (dl.n - 1);
     var old = [];
     var last = [];
     for (var i = 0; i < dl.pts.length; i++) {
@@ -635,7 +659,7 @@
   /* ---------------------------------------------------------------- layout A · 登记体 */
   function layoutA(is, c, V) {
     var L = c.labels;
-    var dl = dropLine(is.spx);
+    var dl = dropLine(is.spx, is.spx_smooth, is.spx_cut);
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
     var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5, !is.weekly) + regLine(is) +
@@ -682,7 +706,7 @@
   /* ---------------------------------------------------------------- layout B · 掉落体 */
   function layoutB(is, c, V) {
     var L = c.labels;
-    var dl = dropLine(is.spx);
+    var dl = dropLine(is.spx, is.spx_smooth, is.spx_cut);
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
     var head = txt(c.title).split(/\s+—\s+|——/);
