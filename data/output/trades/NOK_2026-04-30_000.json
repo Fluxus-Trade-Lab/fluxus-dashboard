@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-04-30",
     "entry_price": 12.4,
-    "original_qty": 3993,
-    "current_qty": 0,
     "stop_price": 12.25,
     "initial_stop": 12.25,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-07",
     "hold_business_days": 5,
-    "r_dollars": 598.9500000000014,
-    "realized_pl": -399.2999999999986,
+    "r_pct_of_entry": 1.2096774193548416,
     "realized_R": -0.6666666666666627,
     "trims": [
       {
         "date": "2026-05-07",
         "price": 12.3,
-        "qty": 3993,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Stopped too tight",
-  "narrative": "Entered **NOK** long on 2026-04-30 at $12.40 (qty 3993) with stop $12.25 (1R = $0.15/sh = $599). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.27), RSI 82, 100% through 52W range, ATR 5.1% of price. Realized **-0.67R**, peak was **+10.53R** on 2026-05-05 (day +5) \u2014 captured **-6%** of the move. **Lesson: Stopped too tight.**",
+  "narrative": "Entered **NOK** long on 2026-04-30 at $12.40 with stop $12.25 (1R = $0.15/sh = 1.2% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.27), RSI 82, 100% through 52W range, ATR 5.1% of price. Realized **-0.67R**, peak was **+10.53R** on 2026-05-05 (day +5) \u2014 captured **-6%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2026-03-31",

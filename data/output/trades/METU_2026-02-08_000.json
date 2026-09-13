@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-02-08",
     "entry_price": 32.66,
-    "original_qty": 3154,
-    "current_qty": 0,
     "stop_price": 31.0,
     "initial_stop": 31.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-02-11",
     "hold_business_days": 3,
-    "r_dollars": 5235.639999999989,
-    "realized_pl": 0.0,
+    "r_pct_of_entry": 5.082669932639304,
     "realized_R": 0.0,
     "trims": [
       {
         "date": "2026-02-11",
         "price": 32.66,
-        "qty": 3154,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **METU** long on 2026-02-08 at $32.66 (qty 3154) with stop $31.00 (1R = $1.66/sh = $5,236). Setup: **Long in mixed structure** \u2014 price below MA20 ($31.12), RSI 47, 25% through 52W range, ATR 7.9% of price. Realized **+0.00R**, peak was **+0.15R** on 2026-02-09 (day +1). **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **METU** long on 2026-02-08 at $32.66 with stop $31.00 (1R = $1.66/sh = 5.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($31.12), RSI 47, 25% through 52W range, ATR 7.9% of price. Realized **+0.00R**, peak was **+0.15R** on 2026-02-09 (day +1). **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-01-09",

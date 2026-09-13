@@ -3,7 +3,6 @@
     "csv": "data/portfolio/portfolio_2026-07-03.csv",
     "start": "2026-01-01",
     "end": "2026-06-30",
-    "starting_capital": 1000000.0,
     "window_label": "H1 2026 \u00b7 2026-01-01 to 2026-06-30 \u00b7 303 closed trades",
     "distinct_from": {
       "file": "data/portfolio/reviews/h1_2026_full.json",
@@ -13,10 +12,8 @@
   },
   "headline": {
     "h1_return_pct": 90.8,
-    "mtm_equity": 1908290.0,
-    "profit_total": 908290.0,
-    "realized_pnl": 760805.0,
-    "unrealized_pnl": 147485.0,
+    "realized_pct": 76.08,
+    "unrealized_pct": 14.75,
     "spy_h1_pct": 9.31,
     "outperformance_x": 9.8,
     "twr_pct": 101.2
@@ -25,11 +22,8 @@
     "n_closed_h1": 303,
     "n_open": 6,
     "win_rate": 42.7,
-    "avg_winner": 10772.0,
-    "avg_loser": -3419.0,
     "win_loss_ratio": 3.15,
     "profit_factor": 2.35,
-    "expectancy": 2642.0,
     "avg_r": 0.88,
     "avg_winning_r": 3.19,
     "avg_losing_r": -0.76,
@@ -38,17 +32,14 @@
     "max_dd_pct": 11.1,
     "max_dd": {
       "pct": -11.15,
-      "amount": -223460,
       "peak_date": "2026-06-02",
       "trough_date": "2026-06-10",
-      "peak_equity": 2004153,
       "basis": "mark-to-market daily equity (open positions at fill-anchored close)",
       "window": "2026-01-01..2026-06-30",
       "engine": "pipeline.portfolio.mtm.build_mtm_curve + mtm.drawdown",
       "trading_days": 129,
       "deepest_pct": {
         "pct": -17.94,
-        "amount": -207329,
         "peak_date": "2026-01-28",
         "trough_date": "2026-03-19"
       }
@@ -123,8 +114,7 @@
       "sector": "Unknown",
       "entry": 82.7,
       "mark": 130.13,
-      "qty": 1059,
-      "unrealized": 67926.93,
+      "contrib_pct": 6.79,
       "pct": 57.35
     },
     {
@@ -132,8 +122,7 @@
       "sector": "Unknown",
       "entry": 34.75,
       "mark": 39.33,
-      "qty": 6641,
-      "unrealized": 30415.78,
+      "contrib_pct": 3.04,
       "pct": 13.18
     },
     {
@@ -141,8 +130,7 @@
       "sector": "Unknown",
       "entry": 170.12,
       "mark": 215.62,
-      "qty": 360,
-      "unrealized": 27149.0,
+      "contrib_pct": 2.71,
       "pct": 26.75
     },
     {
@@ -150,8 +138,7 @@
       "sector": "Unknown",
       "entry": 47.79,
       "mark": 49.2,
-      "qty": 1821,
-      "unrealized": 15658.61,
+      "contrib_pct": 1.57,
       "pct": 2.95
     },
     {
@@ -159,8 +146,7 @@
       "sector": "Unknown",
       "entry": 52.89,
       "mark": 55.02,
-      "qty": 1818,
-      "unrealized": 3872.34,
+      "contrib_pct": 0.39,
       "pct": 4.03
     },
     {
@@ -168,8 +154,7 @@
       "sector": "Unknown",
       "entry": 53.0,
       "mark": 55.02,
-      "qty": 1383,
-      "unrealized": 2461.98,
+      "contrib_pct": 0.25,
       "pct": 3.81
     }
   ],
@@ -177,56 +162,56 @@
     {
       "ticker": "BE",
       "sector": "Unknown",
-      "pnl": 74052.0,
+      "contrib_pct": 7.41,
       "r": 7.33,
       "days": 20
     },
     {
       "ticker": "ALAB",
       "sector": "Unknown",
-      "pnl": 63975.58,
+      "contrib_pct": 6.4,
       "r": 21.01,
       "days": 42
     },
     {
       "ticker": "ACMR",
       "sector": "Unknown",
-      "pnl": 51600.75,
+      "contrib_pct": 5.16,
       "r": 3.45,
       "days": 30
     },
     {
       "ticker": "SNDK",
       "sector": "Unknown",
-      "pnl": 48788.76,
+      "contrib_pct": 4.88,
       "r": 4.1,
       "days": 1
     },
     {
       "ticker": "ALAB",
       "sector": "Unknown",
-      "pnl": 42599.25,
+      "contrib_pct": 4.26,
       "r": 3.16,
       "days": 9
     },
     {
       "ticker": "DXYZ",
       "sector": "Unknown",
-      "pnl": 38157.99,
+      "contrib_pct": 3.82,
       "r": 7.3,
       "days": 11
     },
     {
       "ticker": "NVDL",
       "sector": "Unknown",
-      "pnl": 30886.9,
+      "contrib_pct": 3.09,
       "r": 3.17,
       "days": 3
     },
     {
       "ticker": "MRVL",
       "sector": "Unknown",
-      "pnl": 29549.9,
+      "contrib_pct": 2.95,
       "r": 5.72,
       "days": 13
     }
@@ -235,42 +220,42 @@
     {
       "ticker": "BABA",
       "sector": "Consumer Cyclical",
-      "pnl": -24612.3,
+      "contrib_pct": -2.46,
       "r": -5.68,
       "days": 93
     },
     {
       "ticker": "CRCL",
       "sector": "Unknown",
-      "pnl": -16349.88,
+      "contrib_pct": -1.63,
       "r": -1.33,
       "days": 5
     },
     {
       "ticker": "LEU",
       "sector": "Unknown",
-      "pnl": -15975.57,
+      "contrib_pct": -1.6,
       "r": -1.1,
       "days": 3
     },
     {
       "ticker": "BABA",
       "sector": "Consumer Cyclical",
-      "pnl": -13570.77,
+      "contrib_pct": -1.36,
       "r": -4.23,
       "days": 102
     },
     {
       "ticker": "CWEB",
       "sector": "Unknown",
-      "pnl": -13523.13,
+      "contrib_pct": -1.35,
       "r": -1.08,
       "days": 3
     },
     {
       "ticker": "VIAV",
       "sector": "Unknown",
-      "pnl": -13489.56,
+      "contrib_pct": -1.35,
       "r": -1.77,
       "days": 2
     }
@@ -282,30 +267,28 @@
       "desc": "clean-energy fuel cells",
       "entry_date": "2026-04-08",
       "entry": 147.2,
-      "qty": 990,
-      "position": 145728,
       "stop": 137.0,
       "risk_per_share": 10.2,
       "exits": [
         {
           "date": "2026-04-14",
           "price": 204.16,
-          "qty": 330
+          "pct_of_position": 33.33
         },
         {
           "date": "2026-04-23",
           "price": 237.1,
-          "qty": 330
+          "pct_of_position": 33.33
         },
         {
           "date": "2026-04-28",
           "price": 224.74,
-          "qty": 330
+          "pct_of_position": 33.33
         }
       ],
       "avg_exit": 222.0,
       "pct": 50.8,
-      "pnl": 74052,
+      "contrib_pct": 7.41,
       "r": 7.3,
       "days": 20,
       "n_exits": 3,
@@ -317,30 +300,28 @@
       "desc": "AI data-center connectivity",
       "entry_date": "2026-05-12",
       "entry": 208.32,
-      "qty": 366,
-      "position": 76245,
       "stop": 200.0,
       "risk_per_share": 8.32,
       "exits": [
         {
           "date": "2026-05-28",
           "price": 349.81,
-          "qty": 73
+          "pct_of_position": 19.95
         },
         {
           "date": "2026-06-03",
           "price": 364.23,
-          "qty": 122
+          "pct_of_position": 33.33
         },
         {
           "date": "2026-06-23",
           "price": 410.81,
-          "qty": 171
+          "pct_of_position": 46.72
         }
       ],
       "avg_exit": 383.12,
       "pct": 83.9,
-      "pnl": 63976,
+      "contrib_pct": 6.4,
       "r": 21.0,
       "days": 42,
       "n_exits": 3,
@@ -352,30 +333,28 @@
       "desc": "semiconductor equipment",
       "entry_date": "2026-05-06",
       "entry": 59.12,
-      "qty": 2443,
-      "position": 144430,
       "stop": 53.0,
       "risk_per_share": 6.12,
       "exits": [
         {
           "date": "2026-05-08",
           "price": 59.46,
-          "qty": 488
+          "pct_of_position": 19.98
         },
         {
           "date": "2026-05-29",
           "price": 88.05,
-          "qty": 1221
+          "pct_of_position": 49.98
         },
         {
           "date": "2026-06-05",
           "price": 81.07,
-          "qty": 734
+          "pct_of_position": 30.05
         }
       ],
       "avg_exit": 80.24,
       "pct": 35.7,
-      "pnl": 51601,
+      "contrib_pct": 5.16,
       "r": 3.5,
       "days": 30,
       "n_exits": 3,
@@ -387,30 +366,28 @@
       "desc": "memory & storage",
       "entry_date": "2026-06-24",
       "entry": 1958.0,
-      "qty": 205,
-      "position": 401390,
       "stop": 1900.0,
       "risk_per_share": 58.0,
       "exits": [
         {
           "date": "2026-06-25",
           "price": 2180.0,
-          "qty": 41
+          "pct_of_position": 20.0
         },
         {
           "date": "2026-06-25",
           "price": 2259.53,
-          "qty": 68
+          "pct_of_position": 33.17
         },
         {
           "date": "2026-06-25",
           "price": 2157.82,
-          "qty": 96
+          "pct_of_position": 46.83
         }
       ],
       "avg_exit": 2195.99,
       "pct": 12.2,
-      "pnl": 48789,
+      "contrib_pct": 4.88,
       "r": 4.1,
       "days": 1,
       "n_exits": 3,
@@ -422,30 +399,28 @@
       "desc": "AI data-center connectivity",
       "entry_date": "2026-05-18",
       "entry": 237.78,
-      "qty": 618,
-      "position": 146948,
       "stop": 216.0,
       "risk_per_share": 21.78,
       "exits": [
         {
           "date": "2026-05-21",
           "price": 287.4,
-          "qty": 123
+          "pct_of_position": 19.9
         },
         {
           "date": "2026-05-22",
           "price": 312.35,
-          "qty": 206
+          "pct_of_position": 33.33
         },
         {
           "date": "2026-05-27",
           "price": 310.91,
-          "qty": 289
+          "pct_of_position": 46.76
         }
       ],
       "avg_exit": 306.71,
       "pct": 29.0,
-      "pnl": 42599,
+      "contrib_pct": 4.26,
       "r": 3.2,
       "days": 9,
       "n_exits": 3,
@@ -457,30 +432,28 @@
       "desc": "Unknown",
       "entry_date": "2026-04-30",
       "entry": 34.34,
-      "qty": 2551,
-      "position": 87601,
       "stop": 32.29,
       "risk_per_share": 2.05,
       "exits": [
         {
           "date": "2026-05-05",
           "price": 38.53,
-          "qty": 1275
+          "pct_of_position": 49.98
         },
         {
           "date": "2026-05-08",
           "price": 53.04,
-          "qty": 510
+          "pct_of_position": 19.99
         },
         {
           "date": "2026-05-11",
           "price": 64.73,
-          "qty": 766
+          "pct_of_position": 30.03
         }
       ],
       "avg_exit": 49.3,
       "pct": 43.6,
-      "pnl": 38158,
+      "contrib_pct": 3.82,
       "r": 7.3,
       "days": 11,
       "n_exits": 3,
@@ -492,30 +465,28 @@
       "desc": "Unknown",
       "entry_date": "2026-05-05",
       "entry": 95.75,
-      "qty": 3265,
-      "position": 312624,
       "stop": 92.77,
       "risk_per_share": 2.98,
       "exits": [
         {
           "date": "2026-05-06",
           "price": 97.45,
-          "qty": 653
+          "pct_of_position": 20.0
         },
         {
           "date": "2026-05-07",
           "price": 105.32,
-          "qty": 653
+          "pct_of_position": 20.0
         },
         {
           "date": "2026-05-08",
           "price": 107.76,
-          "qty": 1959
+          "pct_of_position": 60.0
         }
       ],
       "avg_exit": 105.21,
       "pct": 9.9,
-      "pnl": 30887,
+      "contrib_pct": 3.09,
       "r": 3.2,
       "days": 3,
       "n_exits": 3,
@@ -527,30 +498,28 @@
       "desc": "Unknown",
       "entry_date": "2026-03-31",
       "entry": 102.5,
-      "qty": 1475,
-      "position": 151188,
       "stop": 99.0,
       "risk_per_share": 3.5,
       "exits": [
         {
           "date": "2026-04-09",
           "price": 119.1,
-          "qty": 737
+          "pct_of_position": 49.97
         },
         {
           "date": "2026-04-09",
           "price": 119.3,
-          "qty": 295
+          "pct_of_position": 20.0
         },
         {
           "date": "2026-04-13",
           "price": 130.4,
-          "qty": 443
+          "pct_of_position": 30.03
         }
       ],
       "avg_exit": 122.53,
       "pct": 19.5,
-      "pnl": 29550,
+      "contrib_pct": 2.96,
       "r": 5.7,
       "days": 13,
       "n_exits": 3,
@@ -564,20 +533,18 @@
       "desc": "Consumer Cyclical",
       "entry_date": "2026-01-20",
       "entry": 168.5,
-      "qty": 667,
-      "position": 112390,
       "stop": 162.0,
       "risk_per_share": 6.5,
       "exits": [
         {
           "date": "2026-04-23",
           "price": 131.6,
-          "qty": 667
+          "pct_of_position": 100.0
         }
       ],
       "avg_exit": 131.6,
       "pct": -21.9,
-      "pnl": -24612,
+      "contrib_pct": -2.46,
       "r": -5.7,
       "days": 93,
       "n_exits": 1,
@@ -589,20 +556,18 @@
       "desc": "Unknown",
       "entry_date": "2026-05-10",
       "entry": 129.12,
-      "qty": 1349,
-      "position": 174183,
       "stop": 120.0,
       "risk_per_share": 9.12,
       "exits": [
         {
           "date": "2026-05-15",
           "price": 117.0,
-          "qty": 1349
+          "pct_of_position": 100.0
         }
       ],
       "avg_exit": 117.0,
       "pct": -9.4,
-      "pnl": -16350,
+      "contrib_pct": -1.64,
       "r": -1.3,
       "days": 5,
       "n_exits": 1,
@@ -614,20 +579,18 @@
       "desc": "Unknown",
       "entry_date": "2026-01-27",
       "entry": 318.64,
-      "qty": 507,
-      "position": 161550,
       "stop": 290.0,
       "risk_per_share": 28.64,
       "exits": [
         {
           "date": "2026-01-30",
           "price": 287.13,
-          "qty": 507
+          "pct_of_position": 100.0
         }
       ],
       "avg_exit": 287.13,
       "pct": -9.9,
-      "pnl": -15976,
+      "contrib_pct": -1.6,
       "r": -1.1,
       "days": 3,
       "n_exits": 1,
@@ -639,25 +602,23 @@
       "desc": "Consumer Cyclical",
       "entry_date": "2026-01-11",
       "entry": 158.87,
-      "qty": 951,
-      "position": 151085,
       "stop": 155.5,
       "risk_per_share": 3.37,
       "exits": [
         {
           "date": "2026-01-14",
           "price": 170.6,
-          "qty": 317
+          "pct_of_position": 33.33
         },
         {
           "date": "2026-04-23",
           "price": 131.6,
-          "qty": 634
+          "pct_of_position": 66.67
         }
       ],
       "avg_exit": 144.6,
       "pct": -9.0,
-      "pnl": -13571,
+      "contrib_pct": -1.36,
       "r": -4.2,
       "days": 102,
       "n_exits": 2,
@@ -669,20 +630,18 @@
       "desc": "Unknown",
       "entry_date": "2026-05-12",
       "entry": 30.09,
-      "qty": 4061,
-      "position": 122195,
       "stop": 27.0,
       "risk_per_share": 3.09,
       "exits": [
         {
           "date": "2026-05-15",
           "price": 26.76,
-          "qty": 4061
+          "pct_of_position": 100.0
         }
       ],
       "avg_exit": 26.76,
       "pct": -11.1,
-      "pnl": -13523,
+      "contrib_pct": -1.35,
       "r": -1.1,
       "days": 3,
       "n_exits": 1,
@@ -694,20 +653,18 @@
       "desc": "Unknown",
       "entry_date": "2026-06-02",
       "entry": 53.89,
-      "qty": 2828,
-      "position": 152401,
       "stop": 51.2,
       "risk_per_share": 2.69,
       "exits": [
         {
           "date": "2026-06-04",
           "price": 49.12,
-          "qty": 2828
+          "pct_of_position": 100.0
         }
       ],
       "avg_exit": 49.12,
       "pct": -8.9,
-      "pnl": -13490,
+      "contrib_pct": -1.35,
       "r": -1.8,
       "days": 2,
       "n_exits": 1,
@@ -722,11 +679,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 124529,
+      "total_contrib_pct": 12.45,
       "n_trades": 6,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 63976,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 6.4,
       "best_r": 21.0,
       "best_days": 42,
       "kind": "durational",
@@ -740,11 +697,11 @@
         "Cloud / Software"
       ],
       "direction": "long",
-      "total_pnl": 85627,
+      "total_contrib_pct": 8.56,
       "n_trades": 7,
       "n_open": 1,
-      "open_pnl": 67927,
-      "best_pnl": 14558,
+      "open_contrib_pct": 6.79,
+      "best_contrib_pct": 1.46,
       "best_r": 4.2,
       "best_days": 7,
       "kind": "durational",
@@ -758,11 +715,11 @@
         "AI / Semiconductors"
       ],
       "direction": "short",
-      "total_pnl": 84380,
+      "total_contrib_pct": 8.44,
       "n_trades": 8,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 26982,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 2.7,
       "best_r": 4.3,
       "best_days": 6,
       "kind": "burst",
@@ -776,11 +733,11 @@
         "Energy / Power"
       ],
       "direction": "long",
-      "total_pnl": 71182,
+      "total_contrib_pct": 7.12,
       "n_trades": 16,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 74052,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 7.41,
       "best_r": 7.3,
       "best_days": 20,
       "kind": "durational",
@@ -794,11 +751,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 67395,
+      "total_contrib_pct": 6.74,
       "n_trades": 7,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 28845,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 2.88,
       "best_r": 1.8,
       "best_days": 5,
       "kind": "burst",
@@ -812,11 +769,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 60714,
+      "total_contrib_pct": 6.07,
       "n_trades": 6,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 48789,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 4.88,
       "best_r": 4.1,
       "best_days": 1,
       "kind": "burst",
@@ -830,11 +787,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 56813,
+      "total_contrib_pct": 5.68,
       "n_trades": 3,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 51601,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 5.16,
       "best_r": 3.5,
       "best_days": 30,
       "kind": "durational",
@@ -848,11 +805,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 38158,
+      "total_contrib_pct": 3.82,
       "n_trades": 1,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 38158,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 3.82,
       "best_r": 7.3,
       "best_days": 11,
       "kind": "durational",
@@ -866,11 +823,11 @@
         "AI / Semiconductors"
       ],
       "direction": "long",
-      "total_pnl": 30887,
+      "total_contrib_pct": 3.09,
       "n_trades": 1,
       "n_open": 0,
-      "open_pnl": 0,
-      "best_pnl": 30887,
+      "open_contrib_pct": 0.0,
+      "best_contrib_pct": 3.09,
       "best_r": 3.2,
       "best_days": 3,
       "kind": "burst",
@@ -881,57 +838,57 @@
   "sectors": [
     {
       "sector": "Unknown",
-      "pnl": 738340.74,
+      "contrib_pct": 73.83,
       "trades": 269
     },
     {
       "sector": "Technology",
-      "pnl": 25659.25,
+      "contrib_pct": 2.57,
       "trades": 15
     },
     {
       "sector": "Energy",
-      "pnl": 21445.75,
+      "contrib_pct": 2.14,
       "trades": 2
     },
     {
       "sector": "ETF",
-      "pnl": 13283.57,
+      "contrib_pct": 1.33,
       "trades": 2
     },
     {
       "sector": "Industrials",
-      "pnl": 13271.29,
+      "contrib_pct": 1.33,
       "trades": 3
     },
     {
       "sector": "Aerospace & Defense",
-      "pnl": 12818.93,
+      "contrib_pct": 1.28,
       "trades": 2
     },
     {
       "sector": "Materials",
-      "pnl": 4987.36,
+      "contrib_pct": 0.5,
       "trades": 1
     },
     {
       "sector": "Technology Services",
-      "pnl": 0.0,
+      "contrib_pct": 0.0,
       "trades": 1
     },
     {
       "sector": "Communication Services",
-      "pnl": -1933.56,
+      "contrib_pct": -0.19,
       "trades": 2
     },
     {
       "sector": "Retail",
-      "pnl": -12649.8,
+      "contrib_pct": -1.26,
       "trades": 1
     },
     {
       "sector": "Consumer Cyclical",
-      "pnl": -54418.34,
+      "contrib_pct": -5.44,
       "trades": 5
     }
   ],
@@ -946,29 +903,29 @@
   "exit_styles": {
     "strength": {
       "count": 69,
-      "total_pnl": 576459.6699999999,
-      "avg_pnl": 8354.487971014492,
+      "total_contrib_pct": 57.65,
+      "avg_contrib_pct": 0.84,
       "wins": 65,
       "losses": 4
     },
     "stop_only": {
       "count": 120,
-      "total_pnl": -353122.9,
-      "avg_pnl": -2942.6908333333336,
+      "total_contrib_pct": -35.31,
+      "avg_contrib_pct": -0.29,
       "wins": 0,
       "losses": 105
     },
     "weakness": {
       "count": 97,
-      "total_pnl": 171442.30999999997,
-      "avg_pnl": 1767.4464948453606,
+      "total_contrib_pct": 17.14,
+      "avg_contrib_pct": 0.18,
       "wins": 41,
       "losses": 56
     },
     "mixed": {
       "count": 17,
-      "total_pnl": 366026.11000000004,
-      "avg_pnl": 21530.947647058827,
+      "total_contrib_pct": 36.6,
+      "avg_contrib_pct": 2.15,
       "wins": 17,
       "losses": 0
     }

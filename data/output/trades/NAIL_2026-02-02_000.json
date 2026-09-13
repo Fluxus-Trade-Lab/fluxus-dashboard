@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-02-02",
     "entry_price": 66.43,
-    "original_qty": 1481,
-    "current_qty": 0,
     "stop_price": 59.17,
     "initial_stop": 59.17,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-02-12",
     "hold_business_days": 8,
-    "r_dollars": 10752.060000000007,
-    "realized_pl": 18008.139999999985,
+    "r_pct_of_entry": 10.928797230167099,
     "realized_R": 1.674854865021212,
     "trims": [
       {
         "date": "2026-02-12",
         "price": 79.41,
-        "qty": 740,
+        "pct_of_position": 49.966239027684,
         "type": "trim_1_2"
       },
       {
         "date": "2026-02-12",
         "price": 77.77,
-        "qty": 741,
+        "pct_of_position": 50.033760972316,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 10
   },
   "lesson": "Good execution",
-  "narrative": "Entered **NAIL** long on 2026-02-02 at $66.43 (qty 1481) with stop $59.17 (1R = $7.26/sh = $10,752). Setup: **Long in mixed structure** \u2014 price below MA20 ($61.82), RSI 46, 27% through 52W range, ATR 7.8% of price. Realized **+1.67R**, peak was **+1.99R** on 2026-02-12 (day +10) \u2014 captured **84%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **NAIL** long on 2026-02-02 at $66.43 with stop $59.17 (1R = $7.26/sh = 10.9% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($61.82), RSI 46, 27% through 52W range, ATR 7.8% of price. Realized **+1.67R**, peak was **+1.99R** on 2026-02-12 (day +10) \u2014 captured **84%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-01-05",

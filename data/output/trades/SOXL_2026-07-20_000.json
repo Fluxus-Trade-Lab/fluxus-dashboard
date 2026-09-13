@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-07-20",
     "entry_price": 158.0,
-    "original_qty": 974,
-    "current_qty": 0,
     "stop_price": 152.0,
     "initial_stop": 152.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-22",
     "hold_business_days": 2,
-    "r_dollars": 5844.0,
-    "realized_pl": -1636.3199999999924,
+    "r_pct_of_entry": 3.79746835443038,
     "realized_R": -0.2799999999999987,
     "trims": [
       {
         "date": "2026-07-22",
         "price": 148.24,
-        "qty": 487,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-22",
         "price": 164.4,
-        "qty": 487,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **SOXL** long on 2026-07-20 at $158.00 (qty 974) with stop $152.00 (1R = $6.00/sh = $5,844). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($198.70), MA stack mixed, RSI 40, 40% through 52W range, ATR 23.0% of price. Realized **-0.28R**, peak was **+1.29R** on 2026-07-22 (day +2) \u2014 captured **-22%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **SOXL** long on 2026-07-20 at $158.00 with stop $152.00 (1R = $6.00/sh = 3.8% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($198.70), MA stack mixed, RSI 40, 40% through 52W range, ATR 23.0% of price. Realized **-0.28R**, peak was **+1.29R** on 2026-07-22 (day +2) \u2014 captured **-22%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-06-22",

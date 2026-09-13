@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-01-15",
     "entry_price": 685.3,
-    "original_qty": 336,
-    "current_qty": 0,
     "stop_price": 636.0,
     "initial_stop": 636.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-22",
     "hold_business_days": 5,
-    "r_dollars": 16564.799999999985,
-    "realized_pl": -8977.919999999984,
+    "r_pct_of_entry": 7.1939296658397724,
     "realized_R": -0.541987829614604,
     "trims": [
       {
         "date": "2026-01-20",
         "price": 668.0,
-        "qty": 112,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-22",
         "price": 653.87,
-        "qty": 224,
+        "pct_of_position": 66.66666666666666,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **GEV** long on 2026-01-15 at $685.30 (qty 336) with stop $636.00 (1R = $49.30/sh = $16,565). Setup: **Long in mixed structure** \u2014 price below MA20 ($653.05), RSI 49, 56% through 52W range, ATR 3.4% of price. Realized **-0.54R**, peak was **+0.30R** on 2026-01-20 (day +5) \u2014 captured **-179%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **GEV** long on 2026-01-15 at $685.30 with stop $636.00 (1R = $49.30/sh = 7.2% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($653.05), RSI 49, 56% through 52W range, ATR 3.4% of price. Realized **-0.54R**, peak was **+0.30R** on 2026-01-20 (day +5) \u2014 captured **-179%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2025-12-16",

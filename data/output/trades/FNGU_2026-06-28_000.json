@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-06-28",
     "entry_price": 24.58,
-    "original_qty": 9275,
-    "current_qty": 0,
     "stop_price": 23.0,
     "initial_stop": 23.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-29",
     "hold_business_days": 1,
-    "r_dollars": 14654.499999999984,
-    "realized_pl": 3710.0000000000196,
+    "r_pct_of_entry": 6.4279902359641925,
     "realized_R": 0.25316455696202694,
     "trims": [
       {
         "date": "2026-06-29",
         "price": 24.98,
-        "qty": 9275,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **FNGU** long on 2026-06-28 at $24.58 (qty 9275) with stop $23.00 (1R = $1.58/sh = $14,654). Setup: **Long in mixed structure** \u2014 price below MA20 ($28.61), RSI 41, 45% through 52W range, ATR 10.0% of price. Realized **+0.25R**, peak was **+0.64R** on 2026-06-29 (day +1) \u2014 captured **39%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **FNGU** long on 2026-06-28 at $24.58 with stop $23.00 (1R = $1.58/sh = 6.4% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($28.61), RSI 41, 45% through 52W range, ATR 10.0% of price. Realized **+0.25R**, peak was **+0.64R** on 2026-06-29 (day +1) \u2014 captured **39%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-05-29",

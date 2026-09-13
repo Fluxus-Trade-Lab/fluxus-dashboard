@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-19",
     "entry_price": 70.1,
-    "original_qty": 413,
-    "current_qty": 0,
     "stop_price": 73.0,
     "initial_stop": 73.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-31",
     "hold_business_days": 8,
-    "r_dollars": 1197.7000000000023,
-    "realized_pl": 1457.8900000000006,
+    "r_pct_of_entry": 4.136947218259637,
     "realized_R": 1.217241379310343,
     "trims": [
       {
         "date": "2026-03-31",
         "price": 66.57,
-        "qty": 413,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 12
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **ARKK** short on 2026-03-19 at $70.10 (qty 413) with stop $73.00 (1R = $2.90/sh = $1,198). Setup: **Short in mixed structure** \u2014 price below MA20 ($72.56), RSI 45, 19% through 52W range, ATR 3.5% of price. Realized **+1.22R**, peak was **+2.47R** on 2026-03-30 (day +11) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **ARKK** short on 2026-03-19 at $70.10 with stop $73.00 (1R = $2.90/sh = 4.1% of entry). Setup: **Short in mixed structure** \u2014 price below MA20 ($72.56), RSI 45, 19% through 52W range, ATR 3.5% of price. Realized **+1.22R**, peak was **+2.47R** on 2026-03-30 (day +11) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",

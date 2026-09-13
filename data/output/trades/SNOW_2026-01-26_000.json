@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-01-26",
     "entry_price": 214.5,
-    "original_qty": 758,
-    "current_qty": 0,
     "stop_price": 210.0,
     "initial_stop": 210.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-28",
     "hold_business_days": 2,
-    "r_dollars": 3411.0,
-    "realized_pl": 3411.0,
+    "r_pct_of_entry": 2.097902097902098,
     "realized_R": 1.0,
     "trims": [
       {
         "date": "2026-01-28",
         "price": 219.0,
-        "qty": 758,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Good execution",
-  "narrative": "Entered **SNOW** long on 2026-01-26 at $214.50 (qty 758) with stop $210.00 (1R = $4.50/sh = $3,411). Setup: **Long in mixed structure** \u2014 price below MA20 ($216.95), RSI 43, 9% through 52W range, ATR 3.6% of price. Realized **+1.00R**, peak was **+1.90R** on 2026-01-28 (day +2) \u2014 captured **53%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **SNOW** long on 2026-01-26 at $214.50 with stop $210.00 (1R = $4.50/sh = 2.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($216.95), RSI 43, 9% through 52W range, ATR 3.6% of price. Realized **+1.00R**, peak was **+1.90R** on 2026-01-28 (day +2) \u2014 captured **53%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2025-12-29",

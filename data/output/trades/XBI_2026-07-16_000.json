@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-07-16",
     "entry_price": 153.16,
-    "original_qty": 1873,
-    "current_qty": 0,
     "stop_price": 151.0,
     "initial_stop": 151.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-20",
     "hold_business_days": 2,
-    "r_dollars": 4045.6799999999935,
-    "realized_pl": -299.6799999999936,
+    "r_pct_of_entry": 1.410289892922432,
     "realized_R": -0.07407407407407261,
     "trims": [
       {
         "date": "2026-07-20",
         "price": 153.0,
-        "qty": 1873,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **XBI** long on 2026-07-16 at $153.16 (qty 1873) with stop $151.00 (1R = $2.16/sh = $4,046). Setup: **Long in mixed structure** \u2014 price below MA20 ($154.65), MA20 > MA50 > MA200 (golden alignment), RSI 52, 81% through 52W range, ATR 2.7% of price. Realized **-0.07R**, peak was **+1.56R** on 2026-07-20 (day +4) \u2014 captured **-5%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **XBI** long on 2026-07-16 at $153.16 with stop $151.00 (1R = $2.16/sh = 1.4% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($154.65), MA20 > MA50 > MA200 (golden alignment), RSI 52, 81% through 52W range, ATR 2.7% of price. Realized **-0.07R**, peak was **+1.56R** on 2026-07-20 (day +4) \u2014 captured **-5%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-06-16",

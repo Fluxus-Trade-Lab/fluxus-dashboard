@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-07-09",
     "entry_price": 355.91,
-    "original_qty": 545,
-    "current_qty": 0,
     "stop_price": 350.0,
     "initial_stop": 350.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-16",
     "hold_business_days": 5,
-    "r_dollars": 3220.9500000000135,
-    "realized_pl": 6229.349999999973,
+    "r_pct_of_entry": 1.6605321570059914,
     "realized_R": 1.9340101522842474,
     "trims": [
       {
         "date": "2026-07-16",
         "price": 367.34,
-        "qty": 545,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Good execution",
-  "narrative": "Entered **GOOGL** long on 2026-07-09 at $355.91 (qty 545) with stop $350.00 (1R = $5.91/sh = $3,221). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($357.61), MA stack mixed, RSI 48, 71% through 52W range, ATR 3.3% of price. Realized **+1.93R**, peak was **+3.24R** on 2026-07-16 (day +7) \u2014 captured **60%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **GOOGL** long on 2026-07-09 at $355.91 with stop $350.00 (1R = $5.91/sh = 1.7% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($357.61), MA stack mixed, RSI 48, 71% through 52W range, ATR 3.3% of price. Realized **+1.93R**, peak was **+3.24R** on 2026-07-16 (day +7) \u2014 captured **60%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-06-09",

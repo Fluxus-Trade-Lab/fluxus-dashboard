@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-08-13",
     "entry_price": 63.24,
-    "original_qty": 1623,
-    "current_qty": 0,
     "stop_price": 62.47,
     "initial_stop": 62.47,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-18",
     "hold_business_days": 3,
-    "r_dollars": 1249.710000000005,
-    "realized_pl": 1428.2400000000043,
+    "r_pct_of_entry": 1.2175838077166399,
     "realized_R": 1.1428571428571417,
     "trims": [
       {
         "date": "2026-08-18",
         "price": 64.12,
-        "qty": 811,
+        "pct_of_position": 49.969192852741834,
         "type": "trim_1_2"
       },
       {
         "date": "2026-08-18",
         "price": 64.12,
-        "qty": 812,
+        "pct_of_position": 50.03080714725816,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 5
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **MRNA** long on 2026-08-13 at $63.24 (qty 1623) with stop $62.47 (1R = $0.77/sh = $1,250). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. Realized **+1.14R**, peak was **+2.97R** on 2026-08-17 (day +4) \u2014 captured **39%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **MRNA** long on 2026-08-13 at $63.24 with stop $62.47 (1R = $0.77/sh = 1.2% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. Realized **+1.14R**, peak was **+2.97R** on 2026-08-17 (day +4) \u2014 captured **39%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-07-14",

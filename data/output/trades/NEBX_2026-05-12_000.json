@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-05-12",
     "entry_price": 115.42,
-    "original_qty": 529,
-    "current_qty": 0,
     "stop_price": 100.0,
     "initial_stop": 100.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-15",
     "hold_business_days": 3,
-    "r_dollars": 8157.180000000001,
-    "realized_pl": 7804.619999999996,
+    "r_pct_of_entry": 13.359902963091319,
     "realized_R": 0.9567791810405061,
     "trims": [
       {
         "date": "2026-05-15",
         "price": 135.32,
-        "qty": 176,
+        "pct_of_position": 33.2703213610586,
         "type": "trim_1_3"
       },
       {
         "date": "2026-05-15",
         "price": 130.23,
-        "qty": 176,
+        "pct_of_position": 33.2703213610586,
         "type": "trim_1_3"
       },
       {
         "date": "2026-05-15",
         "price": 125.0,
-        "qty": 177,
+        "pct_of_position": 33.459357277882795,
         "type": "sell_rest"
       }
     ]
@@ -61,7 +59,7 @@
   "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **NEBX** long on 2026-05-12 at $115.42 (qty 529) with stop $100.00 (1R = $15.42/sh = $8,157). Setup: **Long in mixed structure** \u2014 price above MA20 ($25.03), RSI 59, 77% through 52W range, ATR 16.1% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **NEBX** long on 2026-05-12 at $115.42 with stop $100.00 (1R = $15.42/sh = 13.4% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($25.03), RSI 59, 77% through 52W range, ATR 16.1% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-13",

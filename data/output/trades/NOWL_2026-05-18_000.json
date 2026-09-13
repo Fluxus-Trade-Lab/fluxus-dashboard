@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-05-18",
     "entry_price": 5.08,
-    "original_qty": 28956,
-    "current_qty": 0,
     "stop_price": 4.8,
     "initial_stop": 4.8,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-21",
     "hold_business_days": 3,
-    "r_dollars": 8107.680000000008,
-    "realized_pl": -9265.920000000007,
+    "r_pct_of_entry": 5.511811023622052,
     "realized_R": -1.1428571428571428,
     "trims": [
       {
         "date": "2026-05-20",
         "price": 4.76,
-        "qty": 14478,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-05-21",
         "price": 4.76,
-        "qty": 14478,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Stopped too tight",
-  "narrative": "Entered **NOWL** long on 2026-05-18 at $5.08 (qty 28956) with stop $4.80 (1R = $0.28/sh = $8,108). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.23), RSI 58, 8% through 52W range, ATR 8.4% of price. Realized **-1.14R**, peak was **+3.00R** on 2026-05-19 (day +1) \u2014 captured **-38%** of the move. **Lesson: Stopped too tight.**",
+  "narrative": "Entered **NOWL** long on 2026-05-18 at $5.08 with stop $4.80 (1R = $0.28/sh = 5.5% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.23), RSI 58, 8% through 52W range, ATR 8.4% of price. Realized **-1.14R**, peak was **+3.00R** on 2026-05-19 (day +1) \u2014 captured **-38%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2026-04-20",

@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-01-22",
     "entry_price": 22.93,
-    "original_qty": 3838,
-    "current_qty": 0,
     "stop_price": 22.0,
     "initial_stop": 22.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-28",
     "hold_business_days": 4,
-    "r_dollars": 3569.339999999999,
-    "realized_pl": -2379.869999999999,
+    "r_pct_of_entry": 4.055822067160923,
     "realized_R": -0.6667535174570088,
     "trims": [
       {
         "date": "2026-01-28",
         "price": 22.62,
-        "qty": 1279,
+        "pct_of_position": 33.32464825429911,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-28",
         "price": 22.31,
-        "qty": 1279,
+        "pct_of_position": 33.32464825429911,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-28",
         "price": 22.0,
-        "qty": 1280,
+        "pct_of_position": 33.350703491401774,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **CSIQ** long on 2026-01-22 at $22.93 (qty 3838) with stop $22.00 (1R = $0.93/sh = $3,569). Setup: **Long in mixed structure** \u2014 price below MA20 ($22.40), RSI 46, 45% through 52W range, ATR 8.9% of price. Realized **-0.67R**, peak was **+0.70R** on 2026-01-23 (day +1) \u2014 captured **-95%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **CSIQ** long on 2026-01-22 at $22.93 with stop $22.00 (1R = $0.93/sh = 4.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($22.40), RSI 46, 45% through 52W range, ATR 8.9% of price. Realized **-0.67R**, peak was **+0.70R** on 2026-01-23 (day +1) \u2014 captured **-95%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2025-12-23",

@@ -8,21 +8,19 @@
     "sector": "Technology",
     "entry_date": "2026-02-17",
     "entry_price": 23.87,
-    "original_qty": 4209,
-    "current_qty": 0,
     "stop_price": 22.2,
     "initial_stop": 22.2,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-16",
     "hold_business_days": 19,
-    "r_dollars": 7029.030000000007,
-    "realized_pl": 126.26999999998984,
+    "r_pct_of_entry": 6.996229576874745,
     "realized_R": 0.01796407185628596,
     "trims": [
       {
         "date": "2026-03-16",
         "price": 23.9,
-        "qty": 4209,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 27
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **PL** long on 2026-02-17 at $23.87 (qty 4209) with stop $22.20 (1R = $1.67/sh = $7,029). Setup: **Long in mixed structure** \u2014 price below MA20 ($24.31), RSI 47, 60% through 52W range, ATR 9.5% of price. Realized **+0.02R**, peak was **+2.21R** on 2026-03-06 (day +17) \u2014 captured **1%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **PL** long on 2026-02-17 at $23.87 with stop $22.20 (1R = $1.67/sh = 7.0% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($24.31), RSI 47, 60% through 52W range, ATR 9.5% of price. Realized **+0.02R**, peak was **+2.21R** on 2026-03-06 (day +17) \u2014 captured **1%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-01-20",

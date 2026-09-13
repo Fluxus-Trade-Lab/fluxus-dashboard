@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-26",
     "entry_price": 63.87,
-    "original_qty": 1516,
-    "current_qty": 0,
     "stop_price": 65.0,
     "initial_stop": 65.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-30",
     "hold_business_days": 2,
-    "r_dollars": 1713.0800000000038,
-    "realized_pl": 19359.319999999992,
+    "r_pct_of_entry": 1.7692187255362497,
     "realized_R": 11.300884955752183,
     "trims": [
       {
         "date": "2026-03-30",
         "price": 51.1,
-        "qty": 1516,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Good execution",
-  "narrative": "Entered **AXTI** short on 2026-03-26 at $63.87 (qty 1516) with stop $65.00 (1R = $1.13/sh = $1,713). Setup: **Short in mixed structure** \u2014 price above MA20 ($48.73), RSI 61, 82% through 52W range, ATR 13.4% of price. Realized **+11.30R**, peak was **+12.88R** on 2026-03-30 (day +4) \u2014 captured **88%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **AXTI** short on 2026-03-26 at $63.87 with stop $65.00 (1R = $1.13/sh = 1.8% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($48.73), RSI 61, 82% through 52W range, ATR 13.4% of price. Realized **+11.30R**, peak was **+12.88R** on 2026-03-30 (day +4) \u2014 captured **88%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-02-24",

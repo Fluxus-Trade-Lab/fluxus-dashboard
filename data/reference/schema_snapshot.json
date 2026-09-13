@@ -439,8 +439,8 @@
  },
  "h1_2026_stats.json": {
   "campaigns[]": [
+   "best_contrib_pct",
    "best_days",
-   "best_pnl",
    "best_r",
    "direction",
    "first_entry",
@@ -448,21 +448,21 @@
    "last_exit",
    "n_open",
    "n_trades",
-   "open_pnl",
+   "open_contrib_pct",
    "theme",
    "ticker",
-   "total_pnl"
+   "total_contrib_pct"
   ],
   "exit_styles{}": [
-   "avg_pnl",
+   "avg_contrib_pct",
    "count",
    "losses",
-   "total_pnl",
+   "total_contrib_pct",
    "wins"
   ],
   "losers[]": [
+   "contrib_pct",
    "days",
-   "pnl",
    "r",
    "sector",
    "ticker"
@@ -478,16 +478,15 @@
    "win"
   ],
   "open_positions[]": [
+   "contrib_pct",
    "entry",
    "mark",
    "pct",
-   "qty",
    "sector",
-   "ticker",
-   "unrealized"
+   "ticker"
   ],
   "sectors[]": [
-   "pnl",
+   "contrib_pct",
    "sector",
    "trades"
   ],
@@ -510,6 +509,7 @@
   ],
   "top_trades[]": [
    "avg_exit",
+   "contrib_pct",
    "days",
    "desc",
    "entry",
@@ -518,9 +518,6 @@
    "exits",
    "n_exits",
    "pct",
-   "pnl",
-   "position",
-   "qty",
    "r",
    "risk_per_share",
    "sector",
@@ -529,18 +526,20 @@
   ],
   "top_trades[].exits[]": [
    "date",
-   "price",
-   "qty"
+   "pct_of_position",
+   "price"
   ],
+  "track_record.matrix{}[]": null,
   "winners[]": [
+   "contrib_pct",
    "days",
-   "pnl",
    "r",
    "sector",
    "ticker"
   ],
   "worst_trades[]": [
    "avg_exit",
+   "contrib_pct",
    "days",
    "desc",
    "entry",
@@ -549,9 +548,6 @@
    "exits",
    "n_exits",
    "pct",
-   "pnl",
-   "position",
-   "qty",
    "r",
    "risk_per_share",
    "sector",
@@ -560,8 +556,8 @@
   ],
   "worst_trades[].exits[]": [
    "date",
-   "price",
-   "qty"
+   "pct_of_position",
+   "price"
   ]
  },
  "healthy_charts.json": {
@@ -659,7 +655,7 @@
  "performance.json": {
   "monthly[]": [
    "month",
-   "pnl",
+   "pct",
    "trades"
   ],
   "recentTrades[]": [
@@ -710,7 +706,7 @@
   "pyramid_campaigns[].layer_entries[]": [
    "date",
    "price",
-   "qty"
+   "size_pct_of_first"
   ],
   "top": [
    "_schema",

@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-08-09",
     "entry_price": 27.18,
-    "original_qty": 5761,
-    "current_qty": 0,
     "stop_price": 27.18,
     "initial_stop": 26.2,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-09-10",
     "hold_business_days": 24,
-    "r_dollars": 5645.7800000000025,
-    "realized_pl": 18655.62,
+    "r_pct_of_entry": 3.605592347314203,
     "realized_R": 3.3043476720665685,
     "trims": [
       {
         "date": "2026-08-14",
         "price": 29.11,
-        "qty": 1920,
+        "pct_of_position": 33.32754730081583,
         "type": "trim_1_3"
       },
       {
         "date": "2026-09-01",
         "price": 31.43,
-        "qty": 2880,
+        "pct_of_position": 49.99132095122374,
         "type": "trim_1_2"
       },
       {
         "date": "2026-09-10",
         "price": 30.0,
-        "qty": 961,
+        "pct_of_position": 16.681131747960425,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 32
   },
   "lesson": "Good execution",
-  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (currently trailed to $27.18) (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. Realized **+3.30R**, peak was **+5.74R** on 2026-09-04 (day +26) \u2014 captured **58%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 with stop $26.20 (currently trailed to $27.18) (1R = $0.98/sh = 3.6% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. Realized **+3.30R**, peak was **+5.74R** on 2026-09-04 (day +26) \u2014 captured **58%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-10",

@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-06-03",
     "entry_price": 31.49,
-    "original_qty": 2990,
-    "current_qty": 0,
     "stop_price": 28.4,
     "initial_stop": 28.4,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-05",
     "hold_business_days": 2,
-    "r_dollars": 9239.1,
-    "realized_pl": -7609.549999999994,
+    "r_pct_of_entry": 9.8126389329946,
     "realized_R": -0.8236245954692549,
     "trims": [
       {
         "date": "2026-06-04",
         "price": 30.0,
-        "qty": 1495,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-06-05",
         "price": 27.89,
-        "qty": 1495,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **SNXX** long on 2026-06-03 at $31.49 (qty 2990) with stop $28.40 (1R = $3.09/sh = $9,239). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($22.90), RSI 73, 94% through 52W range, ATR 11.0% of price. Realized **-0.82R**, peak was **+0.49R** on 2026-06-03 (day +0) \u2014 captured **-170%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **SNXX** long on 2026-06-03 at $31.49 with stop $28.40 (1R = $3.09/sh = 9.8% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($22.90), RSI 73, 94% through 52W range, ATR 11.0% of price. Realized **-0.82R**, peak was **+0.49R** on 2026-06-03 (day +0) \u2014 captured **-170%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-04",

@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-08-02",
     "entry_price": 28.45,
-    "original_qty": 6696,
-    "current_qty": 0,
     "stop_price": 27.0,
     "initial_stop": 27.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-05",
     "hold_business_days": 3,
-    "r_dollars": 9709.199999999995,
-    "realized_pl": 28837.789999999994,
+    "r_pct_of_entry": 5.096660808435851,
     "realized_R": 2.9701509908128383,
     "trims": [
       {
         "date": "2026-08-04",
         "price": 31.26,
-        "qty": 1339,
+        "pct_of_position": 19.99701314217443,
         "type": "trim_1_5"
       },
       {
         "date": "2026-08-05",
         "price": 33.3,
-        "qty": 2232,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-08-05",
         "price": 33.01,
-        "qty": 3125,
+        "pct_of_position": 46.66965352449223,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Good execution",
-  "narrative": "Entered **FNGU** long on 2026-08-02 at $28.45 (qty 6696) with stop $27.00 (1R = $1.45/sh = $9,709). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($26.92), MA stack mixed, RSI 50, 57% through 52W range, ATR 6.2% of price. Realized **+2.97R**, peak was **+3.79R** on 2026-08-05 (day +3) \u2014 captured **78%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **FNGU** long on 2026-08-02 at $28.45 with stop $27.00 (1R = $1.45/sh = 5.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($26.92), MA stack mixed, RSI 50, 57% through 52W range, ATR 6.2% of price. Realized **+2.97R**, peak was **+3.79R** on 2026-08-05 (day +3) \u2014 captured **78%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-06",

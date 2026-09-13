@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-04-20",
     "entry_price": 623.19,
-    "original_qty": 204,
-    "current_qty": 0,
     "stop_price": 633.0,
     "initial_stop": 633.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-21",
     "hold_business_days": 1,
-    "r_dollars": 2001.2399999999889,
-    "realized_pl": -1389.2399999999889,
+    "r_pct_of_entry": 1.5741587637798977,
     "realized_R": -0.6941896024464814,
     "trims": [
       {
         "date": "2026-04-21",
         "price": 630.0,
-        "qty": 204,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Stopped too tight",
-  "narrative": "Entered **CAR** short on 2026-04-20 at $623.19 (qty 204) with stop $633.00 (1R = $9.81/sh = $2,001). Setup: **Short in mixed structure** \u2014 price above MA20 ($266.72), RSI 95, 99% through 52W range, ATR 9.9% of price. Realized **-0.69R**, peak was **+15.00R** on 2026-04-20 (day +0) \u2014 captured **-5%** of the move. **Lesson: Stopped too tight.**",
+  "narrative": "Entered **CAR** short on 2026-04-20 at $623.19 with stop $633.00 (1R = $9.81/sh = 1.6% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($266.72), RSI 95, 99% through 52W range, ATR 9.9% of price. Realized **-0.69R**, peak was **+15.00R** on 2026-04-20 (day +0) \u2014 captured **-5%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2026-03-23",

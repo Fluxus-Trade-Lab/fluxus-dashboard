@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-19",
     "entry_price": 153.2,
-    "original_qty": 315,
-    "current_qty": 0,
     "stop_price": 156.0,
     "initial_stop": 156.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-23",
     "hold_business_days": 2,
-    "r_dollars": 882.0000000000036,
-    "realized_pl": -1827.0000000000036,
+    "r_pct_of_entry": 1.8276762402088846,
     "realized_R": -2.071428571428567,
     "trims": [
       {
         "date": "2026-03-23",
         "price": 159.0,
-        "qty": 315,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **PLTR** short on 2026-03-19 at $153.20 (qty 315) with stop $156.00 (1R = $2.80/sh = $882). Setup: **Short in mixed structure** \u2014 price above MA20 ($146.86), RSI 57, 36% through 52W range, ATR 4.1% of price. Realized **-2.07R**, peak was **+1.47R** on 2026-03-20 (day +1) \u2014 captured **-141%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **PLTR** short on 2026-03-19 at $153.20 with stop $156.00 (1R = $2.80/sh = 1.8% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($146.86), RSI 57, 36% through 52W range, ATR 4.1% of price. Realized **-2.07R**, peak was **+1.47R** on 2026-03-20 (day +1) \u2014 captured **-141%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",

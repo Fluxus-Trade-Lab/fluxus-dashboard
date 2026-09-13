@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-07-13",
     "entry_price": 40.51,
-    "original_qty": 1875,
-    "current_qty": 0,
     "stop_price": 39.0,
     "initial_stop": 39.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-21",
     "hold_business_days": 6,
-    "r_dollars": 2831.2499999999964,
-    "realized_pl": -1893.7499999999964,
+    "r_pct_of_entry": 3.727474697605525,
     "realized_R": -0.66887417218543,
     "trims": [
       {
         "date": "2026-07-21",
         "price": 39.5,
-        "qty": 1875,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 8
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **BUG** long on 2026-07-13 at $40.51 (qty 1875) with stop $39.00 (1R = $1.51/sh = $2,831). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($36.79), MA20 > MA50 > MA200 (golden alignment), RSI 65, 90% through 52W range, ATR 3.5% of price. Realized **-0.67R**, peak was **+1.46R** on 2026-07-15 (day +2) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **BUG** long on 2026-07-13 at $40.51 with stop $39.00 (1R = $1.51/sh = 3.7% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($36.79), MA20 > MA50 > MA200 (golden alignment), RSI 65, 90% through 52W range, ATR 3.5% of price. Realized **-0.67R**, peak was **+1.46R** on 2026-07-15 (day +2) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-15",

@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-07-13",
     "entry_price": 192.3,
-    "original_qty": 1382,
-    "current_qty": 0,
     "stop_price": 188.0,
     "initial_stop": 188.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-22",
     "hold_business_days": 7,
-    "r_dollars": 5942.600000000016,
-    "realized_pl": 11318.969999999988,
+    "r_pct_of_entry": 2.236089443577749,
     "realized_R": 1.9047167906303568,
     "trims": [
       {
         "date": "2026-07-15",
         "price": 211.34,
-        "qty": 460,
+        "pct_of_position": 33.28509406657019,
         "type": "trim_1_3"
       },
       {
         "date": "2026-07-21",
         "price": 197.53,
-        "qty": 691,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-22",
         "price": 187.74,
-        "qty": 231,
+        "pct_of_position": 16.71490593342981,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 9
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **CRWD** long on 2026-07-13 at $192.30 (qty 1382) with stop $188.00 (1R = $4.30/sh = $5,943). Setup: **Pullback in uptrend** \u2014 price above MA20 ($181.52), MA20 > MA50 > MA200 (golden alignment), RSI 58, 83% through 52W range, ATR 5.1% of price. Realized **+1.90R**, peak was **+5.86R** on 2026-07-15 (day +2) \u2014 captured **33%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **CRWD** long on 2026-07-13 at $192.30 with stop $188.00 (1R = $4.30/sh = 2.2% of entry). Setup: **Pullback in uptrend** \u2014 price above MA20 ($181.52), MA20 > MA50 > MA200 (golden alignment), RSI 58, 83% through 52W range, ATR 5.1% of price. Realized **+1.90R**, peak was **+5.86R** on 2026-07-15 (day +2) \u2014 captured **33%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-06-15",

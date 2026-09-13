@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-08-24",
     "entry_price": 67.25,
-    "original_qty": 2595,
-    "current_qty": 0,
     "stop_price": 65.2,
     "initial_stop": 65.2,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-28",
     "hold_business_days": 4,
-    "r_dollars": 5319.749999999993,
-    "realized_pl": -129.7499999999926,
+    "r_pct_of_entry": 3.048327137546464,
     "realized_R": -0.02439024390243767,
     "trims": [
       {
         "date": "2026-08-28",
         "price": 67.2,
-        "qty": 2595,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **TEM** long on 2026-08-24 at $67.25 (qty 2595) with stop $65.20 (1R = $2.05/sh = $5,320). Setup: **Long in mixed structure** \u2014 price above MA20 ($52.50), MA20 < MA50 < MA200 (death alignment), RSI 64, 40% through 52W range, ATR 7.1% of price. Realized **-0.02R**, peak was **+2.33R** on 2026-08-24 (day +0) \u2014 captured **-1%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **TEM** long on 2026-08-24 at $67.25 with stop $65.20 (1R = $2.05/sh = 3.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($52.50), MA20 < MA50 < MA200 (death alignment), RSI 64, 40% through 52W range, ATR 7.1% of price. Realized **-0.02R**, peak was **+2.33R** on 2026-08-24 (day +0) \u2014 captured **-1%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",

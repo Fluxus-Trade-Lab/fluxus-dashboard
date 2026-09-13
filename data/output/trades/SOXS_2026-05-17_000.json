@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-05-17",
     "entry_price": 9.13,
-    "original_qty": 16533,
-    "current_qty": 0,
     "stop_price": 8.3,
     "initial_stop": 8.3,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-18",
     "hold_business_days": 1,
-    "r_dollars": 13722.390000000001,
-    "realized_pl": 18186.37999999998,
+    "r_pct_of_entry": 9.090909090909092,
     "realized_R": 1.3253070347075093,
     "trims": [
       {
         "date": "2026-05-18",
         "price": 10.09,
-        "qty": 8266,
+        "pct_of_position": 49.996975745478736,
         "type": "trim_1_2"
       },
       {
         "date": "2026-05-18",
         "price": 10.37,
-        "qty": 8266,
+        "pct_of_position": 49.996975745478736,
         "type": "trim_1_2"
       },
       {
         "date": "2026-05-18",
         "price": 10.31,
-        "qty": 1,
+        "pct_of_position": 0.0060485090425210185,
         "type": "sell_rest"
       }
     ]
@@ -61,7 +59,7 @@
   "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **SOXS** long on 2026-05-17 at $9.13 (qty 16533) with stop $8.30 (1R = $0.83/sh = $13,722). Setup: **Long in mixed structure** \u2014 price below MA20 ($1854.74), RSI 29, 1% through 52W range, ATR 14.1% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **SOXS** long on 2026-05-17 at $9.13 with stop $8.30 (1R = $0.83/sh = 9.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($1854.74), RSI 29, 1% through 52W range, ATR 14.1% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-17",

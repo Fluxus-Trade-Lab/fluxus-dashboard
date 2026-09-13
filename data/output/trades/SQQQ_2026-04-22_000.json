@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-04-22",
     "entry_price": 55.52,
-    "original_qty": 2411,
-    "current_qty": 0,
     "stop_price": 52.0,
     "initial_stop": 52.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-04-24",
     "hold_business_days": 2,
-    "r_dollars": 8486.720000000008,
-    "realized_pl": -4797.890000000005,
+    "r_pct_of_entry": 6.340057636887614,
     "realized_R": -0.5653409090909091,
     "trims": [
       {
         "date": "2026-04-24",
         "price": 53.53,
-        "qty": 2411,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **SQQQ** long on 2026-04-22 at $55.52 (qty 2411) with stop $52.00 (1R = $3.52/sh = $8,487). Setup: **Long in mixed structure** \u2014 price below MA20 ($68.86), RSI 28, 0% through 52W range, ATR 5.8% of price. Realized **-0.57R**, peak was **+0.20R** on 2026-04-23 (day +1). **Lesson: Failed setup.**",
+  "narrative": "Entered **SQQQ** long on 2026-04-22 at $55.52 with stop $52.00 (1R = $3.52/sh = 6.3% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($68.86), RSI 28, 0% through 52W range, ATR 5.8% of price. Realized **-0.57R**, peak was **+0.20R** on 2026-04-23 (day +1). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-03-23",

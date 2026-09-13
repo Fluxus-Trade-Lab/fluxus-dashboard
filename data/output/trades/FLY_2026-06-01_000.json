@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-06-01",
     "entry_price": 44.56,
-    "original_qty": 1661,
-    "current_qty": 0,
     "stop_price": 40.0,
     "initial_stop": 40.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-03",
     "hold_business_days": 2,
-    "r_dollars": 7574.1600000000035,
-    "realized_pl": -4052.840000000008,
+    "r_pct_of_entry": 10.233393177737886,
     "realized_R": -0.5350877192982464,
     "trims": [
       {
         "date": "2026-06-03",
         "price": 42.12,
-        "qty": 1661,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **FLY** long on 2026-06-01 at $44.56 (qty 1661) with stop $40.00 (1R = $4.56/sh = $7,574). Setup: **Long in mixed structure** \u2014 price above MA20 ($42.51), RSI 52, 61% through 52W range, ATR 13.5% of price. Realized **-0.54R**, peak was **+0.41R** on 2026-06-02 (day +1) \u2014 captured **-130%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **FLY** long on 2026-06-01 at $44.56 with stop $40.00 (1R = $4.56/sh = 10.2% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($42.51), RSI 52, 61% through 52W range, ATR 13.5% of price. Realized **-0.54R**, peak was **+0.41R** on 2026-06-02 (day +1) \u2014 captured **-130%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-04",

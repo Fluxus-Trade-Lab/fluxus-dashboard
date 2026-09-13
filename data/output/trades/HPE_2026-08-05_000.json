@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-08-05",
     "entry_price": 50.9,
-    "original_qty": 1926,
-    "current_qty": 0,
     "stop_price": 49.0,
     "initial_stop": 49.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-18",
     "hold_business_days": 9,
-    "r_dollars": 3659.3999999999974,
-    "realized_pl": 17019.420000000002,
+    "r_pct_of_entry": 3.7328094302554002,
     "realized_R": 4.65087719298246,
     "trims": [
       {
         "date": "2026-08-13",
         "price": 62.32,
-        "qty": 642,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-08-13",
         "price": 61.42,
-        "qty": 642,
+        "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
       },
       {
         "date": "2026-08-18",
         "price": 55.47,
-        "qty": 642,
+        "pct_of_position": 33.33333333333333,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 13
   },
   "lesson": "Good execution",
-  "narrative": "Entered **HPE** long on 2026-08-05 at $50.90 (qty 1926) with stop $49.00 (1R = $1.90/sh = $3,659). Setup: **Long in mixed structure** \u2014 price above MA20 ($47.83), MA20 > MA50 > MA200 (golden alignment), RSI 65, 76% through 52W range, ATR 5.4% of price. Realized **+4.65R**, peak was **+6.60R** on 2026-08-13 (day +8) \u2014 captured **70%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **HPE** long on 2026-08-05 at $50.90 with stop $49.00 (1R = $1.90/sh = 3.7% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($47.83), MA20 > MA50 > MA200 (golden alignment), RSI 65, 76% through 52W range, ATR 5.4% of price. Realized **+4.65R**, peak was **+6.60R** on 2026-08-13 (day +8) \u2014 captured **70%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-06",

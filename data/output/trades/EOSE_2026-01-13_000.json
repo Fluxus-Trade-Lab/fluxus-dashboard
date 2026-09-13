@@ -8,21 +8,19 @@
     "sector": "Industrials",
     "entry_date": "2026-01-13",
     "entry_price": 17.37,
-    "original_qty": 3455,
-    "current_qty": 0,
     "stop_price": 15.5,
     "initial_stop": 15.5,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-21",
     "hold_business_days": 6,
-    "r_dollars": 6460.850000000003,
-    "realized_pl": -1969.350000000001,
+    "r_pct_of_entry": 10.765687967760512,
     "realized_R": -0.3048128342245989,
     "trims": [
       {
         "date": "2026-01-21",
         "price": 16.8,
-        "qty": 3455,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 8
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **EOSE** long on 2026-01-13 at $17.37 (qty 3455) with stop $15.50 (1R = $1.87/sh = $6,461). Setup: **Long in mixed structure** \u2014 price above MA20 ($13.21), RSI 67, 77% through 52W range, ATR 5.8% of price. Realized **-0.30R**, peak was **+0.64R** on 2026-01-20 (day +7) \u2014 captured **-48%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **EOSE** long on 2026-01-13 at $17.37 with stop $15.50 (1R = $1.87/sh = 10.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($13.21), RSI 67, 77% through 52W range, ATR 5.8% of price. Realized **-0.30R**, peak was **+0.64R** on 2026-01-20 (day +7) \u2014 captured **-48%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2025-12-15",

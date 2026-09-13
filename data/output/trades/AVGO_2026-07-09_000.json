@@ -8,33 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-07-09",
     "entry_price": 401.8,
-    "original_qty": 675,
-    "current_qty": 0,
     "stop_price": 380.0,
     "initial_stop": 380.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-07-15",
     "hold_business_days": 4,
-    "r_dollars": 14715.000000000007,
-    "realized_pl": -7624.000000000008,
+    "r_pct_of_entry": 5.425584868093582,
     "realized_R": -0.5181107713217808,
     "trims": [
       {
         "date": "2026-07-13",
         "price": 387.0,
-        "qty": 337,
+        "pct_of_position": 49.925925925925924,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-14",
         "price": 394.0,
-        "qty": 337,
+        "pct_of_position": 49.925925925925924,
         "type": "trim_1_2"
       },
       {
         "date": "2026-07-15",
         "price": 394.0,
-        "qty": 1,
+        "pct_of_position": 0.14814814814814814,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **AVGO** long on 2026-07-09 at $401.80 (qty 675) with stop $380.00 (1R = $21.80/sh = $14,715). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($381.16), MA stack mixed, RSI 54, 55% through 52W range, ATR 4.1% of price. Realized **-0.52R**, peak was **+0.26R** on 2026-07-09 (day +0) \u2014 captured **-197%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **AVGO** long on 2026-07-09 at $401.80 with stop $380.00 (1R = $21.80/sh = 5.4% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($381.16), MA stack mixed, RSI 54, 55% through 52W range, ATR 4.1% of price. Realized **-0.52R**, peak was **+0.26R** on 2026-07-09 (day +0) \u2014 captured **-197%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-09",

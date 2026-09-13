@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-09-07",
     "entry_price": 149.46,
-    "original_qty": 1196,
-    "current_qty": 0,
     "stop_price": 145.2,
     "initial_stop": 145.2,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-09-09",
     "hold_business_days": 2,
-    "r_dollars": 5094.960000000023,
-    "realized_pl": -2093.0,
+    "r_pct_of_entry": 2.850260939381787,
     "realized_R": -0.41079812206572586,
     "trims": [
       {
         "date": "2026-09-09",
         "price": 148.21,
-        "qty": 598,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-09-09",
         "price": 147.21,
-        "qty": 598,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **SPCX** long on 2026-09-07 at $149.46 (qty 1196) with stop $145.20 (1R = $4.26/sh = $5,095). Setup: **Long in mixed structure** \u2014 price above MA20 ($140.95), RSI 63, 36% through 52W range, ATR 4.0% of price. Realized **-0.41R**, peak was **+1.30R** on 2026-09-08 (day +1) \u2014 captured **-32%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **SPCX** long on 2026-09-07 at $149.46 with stop $145.20 (1R = $4.26/sh = 2.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($140.95), RSI 63, 36% through 52W range, ATR 4.0% of price. Realized **-0.41R**, peak was **+1.30R** on 2026-09-08 (day +1) \u2014 captured **-32%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-08-10",

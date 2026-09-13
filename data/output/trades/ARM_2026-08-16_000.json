@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-08-16",
     "entry_price": 281.08,
-    "original_qty": 511,
-    "current_qty": 0,
     "stop_price": 276.0,
     "initial_stop": 276.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-08-17",
     "hold_business_days": 1,
-    "r_dollars": 2595.879999999992,
-    "realized_pl": -2595.879999999992,
+    "r_pct_of_entry": 1.807314643517854,
     "realized_R": -1.0,
     "trims": [
       {
         "date": "2026-08-17",
         "price": 276.0,
-        "qty": 511,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **ARM** long on 2026-08-16 at $281.08 (qty 511) with stop $276.00 (1R = $5.08/sh = $2,596). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($266.66), MA stack mixed, RSI 50, 51% through 52W range, ATR 8.1% of price. Realized **-1.00R**, peak was **+1.19R** on 2026-08-17 (day +1) \u2014 captured **-84%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **ARM** long on 2026-08-16 at $281.08 with stop $276.00 (1R = $5.08/sh = 1.8% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($266.66), MA stack mixed, RSI 50, 51% through 52W range, ATR 8.1% of price. Realized **-1.00R**, peak was **+1.19R** on 2026-08-17 (day +1) \u2014 captured **-84%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-07-17",

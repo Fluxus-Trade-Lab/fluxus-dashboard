@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-05-12",
     "entry_price": 30.09,
-    "original_qty": 4061,
-    "current_qty": 0,
     "stop_price": 27.0,
     "initial_stop": 27.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-15",
     "hold_business_days": 3,
-    "r_dollars": 12548.49,
-    "realized_pl": -13523.129999999994,
+    "r_pct_of_entry": 10.269192422731804,
     "realized_R": -1.0776699029126209,
     "trims": [
       {
         "date": "2026-05-15",
         "price": 26.76,
-        "qty": 4061,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **CWEB** long on 2026-05-12 at $30.09 (qty 4061) with stop $27.00 (1R = $3.09/sh = $12,548). Setup: **Long in mixed structure** \u2014 price below MA20 ($27.66), RSI 49, 7% through 52W range, ATR 4.0% of price. Realized **-1.08R**, peak was **+0.12R** on 2026-05-13 (day +1). **Lesson: Failed setup.**",
+  "narrative": "Entered **CWEB** long on 2026-05-12 at $30.09 with stop $27.00 (1R = $3.09/sh = 10.3% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($27.66), RSI 49, 7% through 52W range, ATR 4.0% of price. Realized **-1.08R**, peak was **+0.12R** on 2026-05-13 (day +1). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-04-13",

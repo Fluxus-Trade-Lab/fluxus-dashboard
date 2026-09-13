@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-06-16",
     "entry_price": 390.97,
-    "original_qty": 716,
-    "current_qty": 0,
     "stop_price": 370.0,
     "initial_stop": 370.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-23",
     "hold_business_days": 5,
-    "r_dollars": 15014.520000000019,
-    "realized_pl": -7868.840000000027,
+    "r_pct_of_entry": 5.363582883597213,
     "realized_R": -0.5240820219361003,
     "trims": [
       {
         "date": "2026-06-23",
         "price": 384.12,
-        "qty": 358,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
         "date": "2026-06-23",
         "price": 375.84,
-        "qty": 358,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **AVGO** long on 2026-06-16 at $390.97 (qty 716) with stop $370.00 (1R = $20.97/sh = $15,015). Setup: **Long in mixed structure** \u2014 price below MA20 ($414.31), RSI 41, 42% through 52W range, ATR 6.8% of price. Realized **-0.52R**, peak was **+1.13R** on 2026-06-22 (day +6) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **AVGO** long on 2026-06-16 at $390.97 with stop $370.00 (1R = $20.97/sh = 5.4% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($414.31), RSI 41, 42% through 52W range, ATR 6.8% of price. Realized **-0.52R**, peak was **+1.13R** on 2026-06-22 (day +6) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-18",

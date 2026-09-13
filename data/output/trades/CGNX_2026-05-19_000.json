@@ -8,27 +8,25 @@
     "sector": "Unknown",
     "entry_date": "2026-05-19",
     "entry_price": 63.1,
-    "original_qty": 2419,
-    "current_qty": 0,
     "stop_price": 60.0,
     "initial_stop": 60.0,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-06-05",
     "hold_business_days": 13,
-    "r_dollars": 7498.900000000003,
-    "realized_pl": -205.81000000000205,
+    "r_pct_of_entry": 4.912836767036452,
     "realized_R": -0.02744535865260264,
     "trims": [
       {
         "date": "2026-05-21",
         "price": 63.21,
-        "qty": 1209,
+        "pct_of_position": 49.979330301777594,
         "type": "trim_1_2"
       },
       {
         "date": "2026-06-05",
         "price": 62.82,
-        "qty": 1210,
+        "pct_of_position": 50.020669698222406,
         "type": "sell_rest"
       }
     ]
@@ -69,7 +67,7 @@
     "hold_calendar_days": 17
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **CGNX** long on 2026-05-19 at $63.10 (qty 2419) with stop $60.00 (1R = $3.10/sh = $7,499). Setup: **Long in mixed structure** \u2014 price above MA20 ($59.57), RSI 54, 70% through 52W range, ATR 5.4% of price. Realized **-0.03R**, peak was **+1.87R** on 2026-05-27 (day +8) \u2014 captured **-1%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **CGNX** long on 2026-05-19 at $63.10 with stop $60.00 (1R = $3.10/sh = 4.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($59.57), RSI 54, 70% through 52W range, ATR 5.4% of price. Realized **-0.03R**, peak was **+1.87R** on 2026-05-27 (day +8) \u2014 captured **-1%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-04-20",

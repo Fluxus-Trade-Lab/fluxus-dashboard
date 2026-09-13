@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-03-01",
     "entry_price": 19.94,
-    "original_qty": 4874,
-    "current_qty": 0,
     "stop_price": 17.5,
     "initial_stop": 17.5,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-03-03",
     "hold_business_days": 2,
-    "r_dollars": 11892.560000000007,
-    "realized_pl": -1949.6000000000104,
+    "r_pct_of_entry": 12.23671013039118,
     "realized_R": -0.16393442622950896,
     "trims": [
       {
         "date": "2026-03-03",
         "price": 19.54,
-        "qty": 4874,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **FSLY** long on 2026-03-01 at $19.94 (qty 4874) with stop $17.50 (1R = $2.44/sh = $11,893). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($13.80), RSI 75, 91% through 52W range, ATR 11.2% of price. Realized **-0.16R**, peak was **+0.53R** on 2026-03-02 (day +1) \u2014 captured **-31%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **FSLY** long on 2026-03-01 at $19.94 with stop $17.50 (1R = $2.44/sh = 12.2% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($13.80), RSI 75, 91% through 52W range, ATR 11.2% of price. Realized **-0.16R**, peak was **+0.53R** on 2026-03-02 (day +1) \u2014 captured **-31%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-01-30",

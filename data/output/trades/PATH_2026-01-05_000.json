@@ -8,33 +8,31 @@
     "sector": "Technology",
     "entry_date": "2026-01-05",
     "entry_price": 16.95,
-    "original_qty": 5903,
-    "current_qty": 0,
     "stop_price": 16.47,
     "initial_stop": 16.47,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-01-09",
     "hold_business_days": 4,
-    "r_dollars": 2833.4400000000023,
-    "realized_pl": -1889.2800000000016,
+    "r_pct_of_entry": 2.8318584070796486,
     "realized_R": -0.6667796035913942,
     "trims": [
       {
         "date": "2026-01-09",
         "price": 16.79,
-        "qty": 1967,
+        "pct_of_position": 33.32203964086058,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-09",
         "price": 16.63,
-        "qty": 1967,
+        "pct_of_position": 33.32203964086058,
         "type": "trim_1_3"
       },
       {
         "date": "2026-01-09",
         "price": 16.47,
-        "qty": 1969,
+        "pct_of_position": 33.35592071827884,
         "type": "sell_rest"
       }
     ]
@@ -75,7 +73,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Stopped too tight",
-  "narrative": "Entered **PATH** long on 2026-01-05 at $16.95 (qty 5903) with stop $16.47 (1R = $0.48/sh = $2,833). Setup: **Long in mixed structure** \u2014 price below MA20 ($16.99), RSI 48, 55% through 52W range, ATR 5.5% of price. Realized **-0.67R**, peak was **+2.06R** on 2026-01-07 (day +2) \u2014 captured **-32%** of the move. **Lesson: Stopped too tight.**",
+  "narrative": "Entered **PATH** long on 2026-01-05 at $16.95 with stop $16.47 (1R = $0.48/sh = 2.8% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($16.99), RSI 48, 55% through 52W range, ATR 5.5% of price. Realized **-0.67R**, peak was **+2.06R** on 2026-01-07 (day +2) \u2014 captured **-32%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2025-12-08",

@@ -8,21 +8,19 @@
     "sector": "Unknown",
     "entry_date": "2026-05-26",
     "entry_price": 5.12,
-    "original_qty": 26829,
-    "current_qty": 0,
     "stop_price": 4.9,
     "initial_stop": 4.9,
     "closed": true,
+    "remaining_pct": 0.0,
     "exit_date": "2026-05-27",
     "hold_business_days": 1,
-    "r_dollars": 5902.379999999994,
-    "realized_pl": -2146.320000000002,
+    "r_pct_of_entry": 4.296874999999996,
     "realized_R": -0.36363636363636437,
     "trims": [
       {
         "date": "2026-05-27",
         "price": 5.04,
-        "qty": 26829,
+        "pct_of_position": 100.0,
         "type": "sell_rest"
       }
     ]
@@ -63,7 +61,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **NOWL** long on 2026-05-26 at $5.12 (qty 26829) with stop $4.90 (1R = $0.22/sh = $5,902). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.34), RSI 52, 6% through 52W range, ATR 10.8% of price. Realized **-0.36R**, peak was **+1.00R** on 2026-05-27 (day +1) \u2014 captured **-37%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **NOWL** long on 2026-05-26 at $5.12 with stop $4.90 (1R = $0.22/sh = 4.3% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.34), RSI 52, 6% through 52W range, ATR 10.8% of price. Realized **-0.36R**, peak was **+1.00R** on 2026-05-27 (day +1) \u2014 captured **-37%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-04-27",
