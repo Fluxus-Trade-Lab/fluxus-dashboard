@@ -87,7 +87,7 @@ Andy 原话：「Daily recap和weekly recap内容和生产线就这样定稿了�
 |---|---|---|
 | 会员（Discord） | 中英 PDF | 定稿 |
 | Substack | 正文逐页放图（1460px 宽 = 730px 正文栏 ×2），文末挂 PDF 附件 | Substack 支持 PDF/XLSX 作为**可下载附件**嵌入（≤700MB），不在正文内渲染——所以正文用图 |
-| X（**仅日刊**） | 一条英文短帖 + 4 图 = EN 版 PDF 第 1–4 页；第 5 页组合更新不上 X；**周刊不发 X** | X 每帖最多 4 张图，单图 ≤5MB；Andy「周复盘不发X, X一致对外用英文版本」；**格式与文案仍在调**（样张迭代中） |
+| X（**仅日刊**） | 一条英文长帖（结构句 + Big Picture 全文 + cashtag；首句已讲结构则省结构句）+ 4 图 = EN 版 PDF 第 1–4 页；第 5 页组合更新不上 X；**周刊不发 X** | X 每帖最多 4 张图，单图 ≤5MB；Andy「周复盘不发X, X一致对外用英文版本」；**格式与文案仍在调**（样张迭代中） |
 
 **每期目录**（本机，不进 git）：`~/Documents/Trading/01_Market_Reports_Daily/YYYY-MM/<期号>/` 下 `pdf/`（中英 PDF）· `img/EN`、`img/ZH`（逐页 PNG）· `x/`（仅日刊：EN 版 img1–4 + `post_EN.md`）· `pack/`（字幕/材料包/内容文件）· `delivery.md`。期号：日刊 `YYYY-MM-DD`，周刊 `YYYY-Www`。Andy 手工流程留下的平铺旧文件不动。
 
@@ -102,5 +102,5 @@ Andy 原话：「Daily recap和weekly recap内容和生产线就这样定稿了�
   - `recap-weekly` 周日 10:00 JST —— 复盘刚结束的 ISO 周（周末回顾视频），不出 X
   - `recap-dryrun-0914` 一次性 09-14 09:00 JST —— 输出进 `_dryrun`，记录耗时与权限弹窗，写 `_dryrun/DRYRUN_2026-09-14.md`
 - 首次生产：09-15（复盘 09-14）；首次周刊：09-20（W38）。
-- 仍待定：X 短帖用 v1（判断先行）还是 v2（结构先行）、结尾带不带 Substack 链接（样张在 `2026-09-1x/x/post_EN.md`）。
+- X 帖已定：结构先行 + Big Picture 全文（Andy「是好主意」）。仍待定：结尾带不带 Substack 链接。
 
