@@ -31,7 +31,7 @@ from pipeline.content.recap.build_pack import csv_rows, show
 from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.gates import run_gates
 from pipeline.content.recap.visual_figs import FIGS
-from pipeline.content.recap.weeks import week_sessions
+from pipeline.content.recap.weeks import prior_week_close, week_sessions
 from pipeline.marketcal import is_trading_day
 
 e = html.escape
@@ -42,7 +42,7 @@ CHROME_PROFILE = Path.home() / ".venvs" / "fluxus-recap" / "chrome-profile"
 SAMPLE_ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
 MAX_LINE, MAX_BYTES = 300, 350 * 1024
 PAGE_MARGIN_MM = (12.0, 12.0)  # left/right, must match @page in recap_local.css
-DROP_SESSIONS = 5  # Andy 09-14: the drop line draws the last 5 SPX sessions (was 21)
+DROP_SESSIONS = 5  # Andy 09-14: the drop line draws the last 5 SPX sessions, one segment each (was 21)
 FONTS_LINK = ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600'
               '&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">')
 
@@ -162,11 +162,19 @@ def jshow(path):
     return _json_cache[path]
 
 
-def spx_segment(D):
+def spx_segment(D, label=None):
+    """Closes the drop line connects, one segment per session: a daily takes the last DROP_SESSIONS moves
+    (DROP_SESSIONS + 1 closes); a weekly takes the prior week's last close plus every session of the week."""
     rows = sorted({(r["date"], float(r["spx_close"])) for r in csv_rows("data/history/breadth_archive.csv")
                    if r["date"] <= D and fl(r.get("spx_close")) and is_trading_day(dt.date.fromisoformat(r["date"]))})
-    seg = rows[-DROP_SESSIONS:]
-    assert seg[-1][0] == D and len(seg) == DROP_SESSIONS, (D, seg[-1])
+    if label:
+        start = prior_week_close(label).isoformat()
+        seg = [r for r in rows if r[0] >= start]
+        want = len(week_sessions(label)) + 1
+    else:
+        seg = rows[-(DROP_SESSIONS + 1):]
+        want = DROP_SESSIONS + 1
+    assert seg[-1][0] == D and len(seg) == want, (D, label, seg[0], seg[-1], len(seg))
     return seg
 
 
@@ -185,7 +193,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     D = week_sessions(label)[-1].isoformat() if weekly else label
     pack = json.loads((pdir / "pack.json").read_text())
     content = {lang: json.loads((pdir / f"content_{lang}.json").read_text()) for lang in ("EN", "ZH")}
-    seg = spx_segment(D)
+    seg = spx_segment(D, label if weekly else None)
     cond = [h for h in jshow("data/output/breadth.json")["conditions"]["history"] if h["date"] <= D]
     assert cond[-1]["date"] == D
     months, last = [], None

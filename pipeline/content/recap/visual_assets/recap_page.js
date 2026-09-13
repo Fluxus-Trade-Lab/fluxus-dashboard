@@ -129,8 +129,8 @@
       return null;
     }
     var p0 = closes[0];
-    /* x spans 20 units whatever the session count, so a 5-session line keeps the 21-session line's height */
-    var step = 20 / (closes.length - 1);
+    /* x spans 10 units whatever the point count (Visual Vera 09-14: median line ~99px on the print column) */
+    var step = 10 / (closes.length - 1);
     var P = closes.map(function (p, k) {
       return [k * step, -Math.log(p / p0) * 100];
     });

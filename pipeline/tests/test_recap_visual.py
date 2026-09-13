@@ -95,8 +95,15 @@ def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies
     # Andy 09-14: daily "1M DROP #09-11"; weekly "1M DROP Week37 2026-09-08 → 2026-09-11" (the week, not the data window)
     assert "Week" in code and "esc(is.W0)" in code and "esc(is.D0)" not in code
     assert "String(is.D || \"\").slice(5)" in code  # daily keeps the dash: #09-11
-    from pipeline.content.recap.visual import DROP_SESSIONS
-    assert DROP_SESSIONS == 5
+    from pipeline.content.recap import visual
+    assert visual.DROP_SESSIONS == 5
     assert 'V.droparia, 6, 4.5, !is.weekly)' in js  # grey tail on dailies, all accent on weeklies
+    # Visual Vera 09-14: one segment per session (daily 6 closes; weekly prior close + the week), span 10, 160px cap
+    src = pathlib.Path(visual.__file__).read_text()
+    assert "rows[-(DROP_SESSIONS + 1):]" in src and "prior_week_close(label)" in src
+    assert "seg = spx_segment(D, label if weekly else None)" in src
+    assert "var step = 10 / (closes.length - 1)" in js
+    css = (pathlib.Path(visual.__file__).with_name("visual_assets") / "recap_visual.css").read_text()
+    assert ".drop.thin{margin:18px auto 0;width:84%;height:auto;max-height:160px}" in css
     book = js[js.index("function book(is, c, V)"):]
     assert 'class="legal"' in book[:2000]  # the legal line rides the book section
