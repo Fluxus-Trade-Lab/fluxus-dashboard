@@ -187,8 +187,11 @@
     var arc = dl ? dl.arc.toFixed(3) : DASH;
     /* the tag names the window this line draws (21 SPX sessions), so it is always the date-style tag of the
        last session — never the issue number. On a weekly, "#W37" next to 08-13 → 09-11 read as "week 37
-       started on 08-13" (Andy 09-13); the issue number lives in the mast as "No. W37". */
-    var tag = is.weekly ? String(is.D || "").slice(5).replace("-", "") : is.no;
+       started on 08-13" (Andy 09-13); the issue number lives in the mast as "No. W37". Keep the dash
+       (09-11, not 0911): a bare 4-digit tag reads identically to a daily issue number (a daily issue for
+       the same date renders "#0911" too), which reopened the exact confusion the date-style tag was
+       meant to fix (Andy 09-14, quoting the still-ambiguous weekly caption back). */
+    var tag = is.weekly ? String(is.D || "").slice(5) : is.no;
     return '<p class="reg">1m · drop <span class="m">#' + esc(tag) + "</span> · " + esc(is.D0) + " → " +
       esc(is.D) + " · SPX · ∫ = " + arc + " m</p>";
   }
