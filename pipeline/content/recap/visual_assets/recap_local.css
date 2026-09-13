@@ -181,6 +181,17 @@ table.idx.wk td:nth-child(4) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+/* legal line: rides the book section, so it lands at the foot of the last page (Andy 09-13) */
+.legal {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  margin: 22px 0 0;
+}
+
 /* ------------------------------------------------------------------ print
    A layout, one flowing document, light palette forced by JS (data-theme="light").
 
@@ -341,6 +352,7 @@ table.idx.wk td:nth-child(4) {
   .statebar b { font-size: 11.34pt; }
   .statebar.big b { font-size: 18.48pt; }
   .schem, .disc { font-size: 8.8pt; }
+  .legal { font-size: 8.4pt; padding-top: 8px; margin-top: 16px; }
   .chart .ax { font-size: 10.96px; }
   .chart .nowlab { font-size: 14.25px; }
   /* figlayout.font_size() carries the same two numbers (gate F1 measures with them) */
