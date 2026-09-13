@@ -34,6 +34,17 @@
       .replace(/"/g, "&quot;");
   }
 
+  function titleHtml(t) {
+    var m = /——|\s?—\s?/.exec(t || "");
+    if (!m) {
+      return esc(t);
+    }
+    var zh = m[0] === "——";
+    var a = t.slice(0, m.index).replace(/\s+$/, "") + (zh ? "——" : " —");
+    var b = t.slice(m.index + m[0].length).replace(/^\s+/, "");
+    return '<span class="seg">' + esc(a) + "</span>" + (zh ? "<wbr>" : " ") + '<span class="seg">' + esc(b) + "</span>";
+  }
+
   function rich(v) {
     return esc(v).replace(/&lt;(\/?)b&gt;/g, "<$1b>");
   }
@@ -594,7 +605,7 @@
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
     var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5) + regLine(is, dl) +
-      '<h2 class="hl-a">' + esc(c.title) + "</h2>" +
+      '<h2 class="hl-a">' + titleHtml(c.title) + "</h2>" +
       sec(false, L.big_picture, "", '<p class="prose">' + rich(c.big_picture) + "</p>") +
       sec(false, L.index_action, "", safe(function () { return indexTable(is, c); })) +
       (is.weekly ? sec(false, V.score, "", safe(function () { return scorecard(is); })) : "") +
@@ -759,6 +770,18 @@
         /* ignore */
       }
     }
+    if (document.documentElement.classList.contains("fonts-ready")) {
+      retreatTitles();
+    }
+  }
+
+  function retreatTitles() {
+    document.querySelectorAll(".hl-a").forEach(function (h) {
+      var s = h.querySelectorAll(".seg");
+      if (s.length > 1 && s[0].offsetWidth >= h.clientWidth - 2) {
+        h.textContent = h.textContent;
+      }
+    });
   }
 
   buttons.forEach(function (b) {
@@ -774,6 +797,7 @@
   if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
     document.fonts.ready.then(function () {
       document.documentElement.classList.add("fonts-ready");
+      retreatTitles();
     }, function () {
       /* fallback stacks already in use */
     });
