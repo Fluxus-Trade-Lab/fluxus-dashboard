@@ -102,12 +102,83 @@ def page_sections(text: str, headings: list[str]) -> list[list[str]]:
     return out
 
 
+# ------------------------------------------------------------------ L1 · page layout
+# Andy 09-13 (final): 「只要除了教育和portfolio update之外的内容能够全部进入这前4页就算通过」,「教育段可以跨页」.
+# So: everything except the lesson and the book lands by page 4; the book owns the last page alone; the lesson
+# sits between them and may run onto page 5 — a daily is 5 pages (lesson fitted) or 6 (lesson spilled).
+# The one hard line on the spill: a break may not fall inside a sentence, because X image 4 is EN page 4.
+CONTENT_PAGES = 4
+_SENT_END = re.compile(r"[.!?:;。！？：；”\"')）\]】…·%]$|[0-9]$|^$")
+_CONT_START = re.compile(r"^[a-z(\[]|^[，。、；：）】]")
+
+
+def _pages_of(text: str) -> list[str]:
+    pages = text.split("\f")
+    if pages and not pages[-1].strip():
+        pages = pages[:-1]
+    return pages
+
+
+def _body_lines(page_text: str) -> list[str]:
+    return [ln.strip() for ln in page_text.splitlines() if ln.strip() and not _CHROME.search(ln)]
+
+
+def sentence_split_breaks(text: str, continued_pages: list[int]) -> list[int]:
+    """Page numbers whose top continues the previous page inside a sentence (no new heading started there)."""
+    pages = _pages_of(text)
+    bad = []
+    for p in continued_pages:
+        if not 2 <= p <= len(pages):
+            continue
+        prev, cur = _body_lines(pages[p - 2]), _body_lines(pages[p - 1])
+        if prev and cur and not _SENT_END.search(prev[-1]) and _CONT_START.search(cur[0]):
+            bad.append(p)
+    return bad
+
+
+def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_heading: str, weekly: bool = False) -> dict:
+    """L1: non-lesson, non-book content ends by page CONTENT_PAGES; the book owns the last page alone;
+    the lesson may span pages 4–5; no page may open mid-sentence."""
+    hits, pages = [], len(sections)
+    if not sections:
+        return {"ok": False, "pages": 0, "hits": ["no pages"], "book_page": None, "edu_pages": []}
+    if sections[-1] != [book_heading]:
+        hits.append(f"last page is not the book alone: {sections[-1]}")
+    if any(book_heading in s for s in sections[:-1]):
+        hits.append("book appears before the last page")
+    active, present = None, []
+    for starts in sections:
+        here = list(starts)
+        if active and starts[:1] != [book_heading] and (not starts or starts[0] != active):
+            here.insert(0, active)  # the section that continues onto this page (the book always starts a page)
+        present.append(here)
+        if starts:
+            active = starts[-1]
+    if not weekly:  # the weekly has no page budget; only the daily must clear pages 5+
+        for i, here in enumerate(present[:-1], start=1):  # every page but the book's
+            if i <= CONTENT_PAGES:
+                continue
+            stray = [h for h in here if h not in (edu_heading, book_heading)]
+            if stray:
+                hits.append(f"page {i} still carries {stray}")
+        if pages not in (CONTENT_PAGES + 1, CONTENT_PAGES + 2):
+            hits.append(f"{pages} pages (want {CONTENT_PAGES + 1} or {CONTENT_PAGES + 2})")
+    continued = [i + 1 for i, s in enumerate(sections) if i and not s]
+    split = sentence_split_breaks(text, continued)
+    if split:
+        hits.append(f"page(s) {split} open mid-sentence")
+    return {"ok": not hits, "pages": pages, "hits": hits,
+            "book_page": next((i + 1 for i, s in enumerate(sections) if book_heading in s), None),
+            "edu_pages": [i + 1 for i, here in enumerate(present) if edu_heading in here]}
+
+
 # ------------------------------------------------------------------ L2 · true printed size
 # Chrome silently shrinks a whole page when any element is wider than the type area (09-11 EN 0.924, W37 EN
 # 0.849). Line-box heights misread that twice, so L2 reads each glyph's font size from the PDF (pdfminer).
+# The 12pt build fails this on purpose: the shipped size is 10.5pt body / 9.5pt tables.
 BODY_FONT = {"EN": "IBMPlexSans-Regular", "ZH": "PingFangSC-Regular"}
 TABLE_FONT = "IBMPlexMono-Regular"  # table figures
-BODY_PT, BODY_TOL, TABLE_MIN_PT = 12.0, 0.1, 10.5
+BODY_PT, BODY_TOL, TABLE_MIN_PT = 10.5, 0.1, 9.5  # Andy 09-13, final:「表格用9.5， 正文用10.5」
 
 
 def size_tiers(pdf_path, max_pages: int = 2) -> dict:

@@ -77,3 +77,7 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
   among spec §5's eight topics; a weekly A may not repeat a concept used by a daily A of the same week.
 - Member PDFs show only the chosen option's title, body and figure. The topic cards and reasons appear
   only in `preview.html` and `delivery.md`.
+- The lesson may run onto page 5 (Andy 09-13:「教育段可以跨页」,「接受日刊变成5+1的组合」), so a daily prints
+  5 pages when it fits and 6 when it spills. Gate L1: every other section ends by page 4, the book owns the
+  last page alone, and no page opens mid-sentence — a paragraph, list item, table row and figure each travel
+  whole, which is what keeps X image 4 (EN page 4) from cutting inside a sentence.
