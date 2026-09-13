@@ -169,7 +169,11 @@
 
   function regLine(is, dl) {
     var arc = dl ? dl.arc.toFixed(3) : DASH;
-    return '<p class="reg">1m · drop <span class="m">#' + esc(is.no) + "</span> · " + esc(is.D0) + " → " +
+    /* the tag names the window this line draws (21 SPX sessions), so it is always the date-style tag of the
+       last session — never the issue number. On a weekly, "#W37" next to 08-13 → 09-11 read as "week 37
+       started on 08-13" (Andy 09-13); the issue number lives in the mast as "No. W37". */
+    var tag = is.weekly ? String(is.D || "").slice(5).replace("-", "") : is.no;
+    return '<p class="reg">1m · drop <span class="m">#' + esc(tag) + "</span> · " + esc(is.D0) + " → " +
       esc(is.D) + " · SPX · ∫ = " + arc + " m</p>";
   }
 
@@ -498,7 +502,7 @@
       "</p>" + rs + '<p class="prose">' + rich(c.weekly_k_line) + "</p>";
   }
 
-  function book(is, c) {
+  function book(is, c, V) {
     var b = is.book;
     if (!b) {
       return "";
@@ -522,8 +526,11 @@
       return '<tr><td class="t">' + esc(p[0]) + "</td><td>" + esc(p[1] === "long" ? L.long : L.short) +
         "</td><td>" + esc(p[2]) + '</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) + "</td></tr>";
     }).join("");
+    /* the legal line rides the book section, so it always prints at the foot of the last page */
+    var legal = V && V.legal ? '<p class="legal">' + esc(V.legal) + ' <span class="m">' + esc(V.handle) +
+      "</span> · " + esc(V.site) + "</p>" : "";
     return m + '<div class="scroll"><table class="book"><thead><tr>' + head + "</tr></thead><tbody>" + rows +
-      '</tbody></table></div><p class="prose">' + rich(c.portfolio_note) + "</p>";
+      '</tbody></table></div><p class="prose">' + rich(c.portfolio_note) + "</p>" + legal;
   }
 
   function boardRows(is, V) {
@@ -613,7 +620,7 @@
       sec(false, L.rules, "", olist(c.rules, "ol-a")) +
       folio(is, V, 3, false, dl) + "</article>";
     var edu = c.education || {};
-    var bk = safe(function () { return book(is, c); });
+    var bk = safe(function () { return book(is, c, V); });
     var s4 = '<article class="sheet a">' + mast(is, V) +
       sec(true, L.education, edu.title, eduPick(c, V) + '<p class="prose">' + rich(edu.body) + "</p>" +
         safe(function () { return figure(is.fig && is.fig[c.lang]); }) + '<p class="schem">' + esc(V.schem) + "</p>", "edu") +
@@ -660,7 +667,7 @@
       safe(function () { return barsPanel(g.theme && g.theme.w1, L.themes, V.w1); }) + "</div>" +
       (wk ? '<div class="kicker sp">' + esc(L.weekly_k) + "</div>" + wk : "") + folio(is, V, 3, true, dl) + "</article>";
     var edu = c.education || {};
-    var bk = safe(function () { return book(is, c); });
+    var bk = safe(function () { return book(is, c, V); });
     var left = (c.founders_note ? '<div class="kicker">' + esc(V.founders) + '</div><p class="prose">' +
       rich(c.founders_note) + '</p><div class="kicker sp">' : '<div class="kicker">') + esc(L.tomorrow) + "</div>" +
       olist(c.tomorrow, "ol-b") + (bk ? '<div class="kicker sp">' + esc(L.portfolio) + "</div>" + bk : "");

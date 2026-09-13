@@ -1,5 +1,7 @@
 """Visual review page: short-line JSON, page-text gates, schematic specs, and the type-area check."""
 import json
+import pathlib
+import re
 
 import pytest
 
@@ -70,3 +72,26 @@ def test_margin_overflow_red_on_text_past_the_right_margin():
 def test_margin_overflow_green_inside_the_type_area():
     inside = BBOX.replace('xMin="500.000000" yMin="100.0" xMax="590.500000"', 'xMin="500.000000" yMin="100.0" xMax="550.000000"')
     assert margin_overflow(inside, 14, 14) == []
+
+
+# ---------------------------------------------------------------- last-page legal line (Andy 09-13)
+def test_legal_line_exists_in_both_languages_and_passes_the_gates():
+    from pipeline.content.recap.visual import CHROME_LABELS
+    for lang in ("EN", "ZH"):
+        ch = CHROME_LABELS[lang]
+        assert ch["handle"] == "@Fluxus_Z" and ch["site"] == "fluxus-capital.com"
+        g = run_gates(ch["legal"])
+        assert g["ok"], (lang, g)          # no proprietary name, no first person, no money
+    assert "advice" in CHROME_LABELS["EN"]["legal"] and "Measure your own water" in CHROME_LABELS["EN"]["legal"]
+    zh = CHROME_LABELS["ZH"]["legal"]
+    assert "量好自己的水" in zh and "我" not in zh
+    assert not re.search(r"[A-Za-z]", zh)  # ZH carries no English duplicate
+
+
+def test_the_weekly_drop_line_tag_is_a_date_not_the_issue_number():
+    js = (pathlib.Path(__file__).resolve().parents[1] / "content/recap/visual_assets/recap_page.js").read_text()
+    reg = js[js.index("function regLine"):js.index("function condChart")]
+    code = "\n".join(ln for ln in reg.splitlines() if not ln.strip().startswith(("/*", "*", "//")))
+    assert "var tag = is.weekly ? String(is.D" in code and "esc(tag)" in code and "esc(is.no)" not in code
+    book = js[js.index("function book(is, c, V)"):]
+    assert 'class="legal"' in book[:2000]  # the legal line rides the book section
