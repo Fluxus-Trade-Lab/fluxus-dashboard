@@ -151,6 +151,15 @@ def test_one_ticker_written_by_many_screeners_is_one_change_pct_reading(tmp_path
     assert rec["hit"] == 18
 
 
+def test_non_finite_change_pct_is_skipped_not_counted_as_a_miss(tmp_path):
+    dirty = [{"date": "2026-09-02", "ticker": t, "screener": "preset:x", "change_pct": val, "volume": ""}
+             for t in TICKERS for val in ("nan", "inf", "-inf")]
+    res = A.audit(_archive(tmp_path, dirty + _rows_for("2026-09-02", "2026-09-02")),
+                  _store(tmp_path), declared={})
+    rec = res["judged"]["2026-09-02"]
+    assert (rec["hit"], rec["n"]) == (18, 18)
+
+
 def test_a_declared_day_is_green_but_still_printed_in_full(tmp_path):
     rows = _rows_for("2026-09-03", "2026-09-02")
     declared = {"2026-09-03": ("DATA ALEX", "2026-09-11", "合成的欠条")}
