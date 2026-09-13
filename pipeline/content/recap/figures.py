@@ -182,7 +182,7 @@ def shallow_pullback(out: Path) -> Path:
     _callout(ax, xa[ia], float(y(va[ia])), 5, 3.4, xa[ia] - 10, 30, f"−{da:.0%} pullback")
     _callout(ax, xb[ib], float(y(vb[ib])), 5, 3.4, xb[ib] + 12, 13, f"−{db:.0%} pullback", AMB)
     _callout(ax, back_a, float(y(HIGH)), 5, 3.4, back_a - 4, 58, "first back to the high", GRN)
-    ax.text(97, float(y(vb[-1])) - 5.0, "still repairing", fontsize=7.4, family=MONO, color=AMB, ha="right")
+    ax.text(97, float(y(vb.min())) + 4.0, "still repairing", fontsize=7.4, family=MONO, color=AMB, ha="right")
     return _save(fig, out)
 
 
