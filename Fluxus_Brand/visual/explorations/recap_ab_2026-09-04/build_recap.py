@@ -33,9 +33,15 @@ def signed(v,unit):
 SIDE={"bull":("for","Counts for"),"bear":("against","Counts against"),"neutral":("near","Inside its line")}
 
 # ---------- components ----------
-def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 4"):
+# final form (Andy 09-13, priority=speed): bold line + hollow dot at today's close. Stroke is solved for a
+# constant ~6px on-screen weight regardless of the day's DROP_H, since .drop.thin is CSS-capped at 46px tall
+# and a fixed stroke number would render thinner on a taller (more volatile) day. dot = drop_svg(...,dot=True).
+def bold_stroke(px=6,box_px=46,pad=6): return px*(DROP_H+2*pad)/box_px
+def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 4",dot=False):
+    ex,ey=(float(v) for v in DROP.split()[-1].split(","))
+    mark=f'<circle class="dropdot" style="stroke-width:{stroke*0.5:.1f}" cx="{ex}" cy="{ey}" r="{stroke*1.7:.1f}"/>' if dot else ""
     return (f'<svg class="drop {cls}" viewBox="{-pad} {-pad} {1000+2*pad} {DROP_H+2*pad}" role="img" aria-label="{e(label)}">'
-            f'<path style="stroke-width:{stroke}" d="{DROP}"/></svg>')
+            f'<path style="stroke-width:{stroke}" d="{DROP}"/>{mark}</svg>')
 REG=f'1m · drop <span class="m">#0904</span> · 2026-08-07 → 2026-09-04 · SPX · ∫ = 1.000 m'
 
 def cond_chart():
@@ -205,10 +211,9 @@ BK_M,BK_T,BK_N=book_html(BK_ROWS,BK_NAMES,BK_CLOSED,'+123.35%','76.86%')
 # ---------------- VERSION A ----------------
 A=f'''
 <article class="sheet a">{mast_a()}
-  {drop_svg(2.5,"thin")}
+  {drop_svg(bold_stroke(),"thin",dot=True)}
   <p class="reg">{REG}</p>
   <h2 class="hl-a">{e(TITLE)}</h2>
-  <p class="byline">{e(BYLINE)}</p>
   <section class="sec"><h3>The Big Picture</h3><p class="prose">{BIG}</p></section>
   <section class="sec"><h3>Index Action · Friday</h3>{idx_table()}</section>
   {folio_a(1)}
@@ -251,7 +256,7 @@ def folio_b(n):
 B=f'''
 <article class="sheet b cover">
   <div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>Friday · September 4 · 2026</span></div>
-  <div class="hero">{drop_svg(7,"hero")}</div>
+  <div class="hero">{drop_svg(7,"hero",dot=True)}</div>
   <p class="reg">{REG} — same length, different shapes</p>
   <hr class="r ink">
   <h2 class="hl-b">No Follow-Through.<br>Semis Take What Software Gives Up.</h2>
@@ -352,6 +357,7 @@ hr.r.ink{border-top:1.5px solid var(--ink)}
 
 .drop{display:block;width:100%;height:auto;overflow:visible}
 .drop path{fill:none;stroke:var(--accent);stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.drop .dropdot{fill:var(--sheet);stroke:var(--accent);vector-effect:non-scaling-stroke}
 .drop.thin{margin-top:18px;height:46px}
 .drop.fmark{width:64px;height:14px}
 .drop.fmark path{stroke:var(--muted)}
