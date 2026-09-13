@@ -1,7 +1,8 @@
 # Recap content file schema — `content_EN.json` / `content_ZH.json`
 
 The scheduled writing session produces these two files in the issue's pack directory
-(`~/Documents/Trading/01_Market_Reports_Daily/YYYY-MM/pack_<DATE>/` or `pack_<YYYY-Www>/`),
+(`$FLUXUS_RECAP_ROOT/YYYY-MM/<issue>/pack/`, default root `~/Documents/Trading/01_Market_Reports_Daily`;
+issue = `YYYY-MM-DD` for dailies, `YYYY-Www` for weeklies; the five 2026-09 samples keep `YYYY-MM/samples/pack_<issue>/`),
 after `run.py fetch` has written `pack.json` and `transcript.md`. **Numbers are not typed here**:
 index closes, breadth, votes, groups, R and % all render from `pack.json` / the archives.
 The files never enter git.
