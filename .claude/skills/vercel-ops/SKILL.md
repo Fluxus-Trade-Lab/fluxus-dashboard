@@ -43,7 +43,9 @@ paths:
 - 项目 `fluxus-dashboard`，Hobby；`projectId=prj_SKz7d6P3kRrycsT2i7KHpfmSMsam`，`teamId=team_0YuCrfwzMHjHuDPUFFlCtMuu`（也在仓库 `.vercel/project.json`）
 - **保留期**（09-06 改）：Canceled 1 天 · Errored 1 周 · Pre-Production 1 周 · Production 2 周
   - ⚠️ 设置入口在 **Settings → Build and Deployment → Deployment Retention Policy**，不是文档说的 Security；**Recently Deleted** 在 Settings → Security
-- **部署闸**：`vercel.json` 的 `ignoreCommand` → `scripts/vercel_ignore_build.sh`，只有 `frontend/`、`data/output/`、`vercel.json`、`package*.json` 变了才构建（`89c59a1d`；14 天回放 781 次 commit 只该构建 56 次）
+- **部署闸**：`vercel.json` 的 `ignoreCommand` → `scripts/vercel_ignore_build.sh`，只有 `frontend/`、`data/output/`、`vercel.json`、`package*.json`、脚本自己变了才构建（`89c59a1d`；14 天回放 781 次 commit 只该构建 56 次）
+  - ⚠️ **比较基准是「上次成功部署」**（`VERCEL_GIT_PREVIOUS_SHA`，`7603736e`，09-13），不是 `HEAD^`：旧版只看一次推送的最后一个 commit，09-13 隐私清洗一次推 5 个 commit、最后一个只改测试，整批被判「没碰产物」跳过，清洗后的数据没上线。基准不在浅克隆里会先加深拉取，仍拿不到就偏向构建
+  - 「网站没更新」先查这条：多 commit 推送里产物改动在中间那几个，旧闸会漏
 - **成本审计**：`python -m pipeline.tools.audit_deploy_cost`，接在周六 `weekly-data-audit`。它盯的是**乘积**：闸在不在且覆盖产物的每个来源（D1）、预算（D2）、大而久不变的产物（D3）。它只读 git，不依赖 Vercel 凭证。
 
 ## 怎么取真实数字
@@ -89,3 +91,4 @@ paths:
 - **[09-06] 改保留期找错页面**——文档写 Security，实际在 Build and Deployment。
 - **[09-12] 「要 280 天」**——见闸 1。
 - **[09-13] 「删最旧 10 天」**——见闸 2。同一天把 Hobby 暂停的后果从「部署停了」更正为「生产站 503 下线且不自动恢复」。
+- **[09-13] 部署闸只看最后一个 commit**——OPS 隐私清洗一次推 5 个 commit，最后一个只改测试，整批被跳过、清洗过的数据没上线；修为以上次成功部署为基准（`7603736e`，测试 `pipeline/tests/test_vercel_ignore_build.py`）。「有闸」是 bool，缺口住在它比的是哪两个点。
