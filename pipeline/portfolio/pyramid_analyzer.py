@@ -139,6 +139,13 @@ def compute_counterfactual(
         c.delta_R = c.actual_realized_R - R
 
 
+def layer_size_pct_of_first(qty, first_qty) -> Optional[float]:
+    """A layer's share count restated as % of the first layer's."""
+    if not first_qty:
+        return None
+    return qty / first_qty * 100
+
+
 def build_pyramid_section(campaigns: list[Campaign]) -> list[dict]:
     """Convert campaign objects to plain dicts for the report."""
     out = []
@@ -153,8 +160,13 @@ def build_pyramid_section(campaigns: list[Campaign]) -> list[dict]:
             'actual_R': float(c.actual_realized_R),
             'counterfactual_R': float(c.counterfactual_R) if c.counterfactual_R is not None else None,
             'delta_R': float(c.delta_R) if c.delta_R is not None else None,
+            # Layer size relative to the first layer (%), never share counts:
+            # this lands in data/output/portfolio_backtest.json, which Vercel
+            # serves from a public repo (Andy 2026-09-13,
+            # 「管线只做R 和%, 不写股数和美元」).
             'layer_entries': [
-                {'date': l.entry_date.isoformat(), 'price': l.entry_price, 'qty': l.original_qty}
+                {'date': l.entry_date.isoformat(), 'price': l.entry_price,
+                 'size_pct_of_first': layer_size_pct_of_first(l.original_qty, c.layers[0].original_qty)}
                 for l in c.layers
             ],
         })
