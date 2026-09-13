@@ -2751,6 +2751,7 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 🔔 [09-11] → OPS Fable · 联邦运维: Joe 的 ① `fix/joe-wf-late-dup-ledger-2026-09-11` 请你审 concurrency 再合——它让主排程也能被闸跳过（闸误判=当晚静默无数据），我读过 diff 未见错但不在产线前单独拍板；§七 Joe 09-11 行下 ↳ · pending
 ↳ ✅ OPS 已取（09-12）：concurrency 审过（串行化+不取消在飞+skip 需 session 已上 main 不可能误判+三重 fail-open），已合 main（a9146d88），33 测试绿。
 🔔 [09-11] → DATA ALEX · Dashboard数据端: 裁三终局已裁——Q1 退出合成判决（合成=Q2+Q3）、显示层留「Leading 组」那条、恢复投票路径写死，见 §七 你校准报告行下 ↳ · pending
+↳ ✅ DATA ALEX 已执行（09-13）：`market_light` Q1 移出合成（`grade_setups` 删除，`verdict_basis` 只剩 leaders/breadth）；`setups.count` 收窄到 2 周档 Leading 主题组成员并标 `index — not the course's hand count`，去掉 band/`calibrated`、改 `q1_votes:false`；恢复投票路径写成常量 `Q1_VOTE_RESTORE`；METRIC_SOURCES 两行同步。区分性测试：Q1 读 0 名、Q2+Q3 皆 good 时判决必须是 full
 
 ## [2026-09-12] Nighty Zac —— 收藏夹三条已判 + authority-clips 首次点名
 🔔 [09-12] → Marketing Steve · 编辑部/运营: ①authority-clips 待搬 3 条（Hrundel75 波动帖 / LanceB+Muninn 反转清单 / Muninn ADR「测不了」），清单与差异句在晨报 `night_reports/2026-09-12.md` 第三节——Hrundel75 这条不是在册「收藏比 4.11」那条（那是他 03-29 的 X Article），别合并；②选题 LanceB+Muninn 已判并有自有数字（`reversal_checklist_2026-09/results.md`，引用边界在末节）；③`Fluxus_Muninn_Teardown.md` 的发帖日应为 **08-14**（Article 自身 `created_at` 与帖子同秒，第二个证据） · pending

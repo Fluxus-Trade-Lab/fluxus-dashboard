@@ -184,7 +184,7 @@ def test_setups_read_the_tickers_key_and_dedupe():
         _panel('vcs', ['ZZZ'] * 1),               # not an entries panel -> ignored
     ]}]}
     s = ml.setups_block(wl)
-    assert s['count'] == 3, "AAA, BBB, CCC -- a name in two panels is one name"
+    assert s['pool_count'] == 3, "AAA, BBB, CCC -- a name in two panels is one name"
     assert s['provisional'] is True
 
 
@@ -205,20 +205,37 @@ def test_ma_reclaim_is_not_a_pullback_setup():
     wl = {'zones': [{'panels': [_panel('ma_reclaim', ['R1', 'R2', 'R3']),
                                 _panel('liquid_leader_pullback', ['P1'])]}]}
     s = ml.setups_block(wl)
-    assert s['count'] == 1 and 'ma_reclaim' not in s['by_panel']
+    assert s['pool_count'] == 1 and 'ma_reclaim' not in s['by_panel']
 
 
-@pytest.mark.parametrize('n,band,default', [(0, 'none', False), (1, 'dim', False),
-                                            (3, 'dim', False), (4, 'dim', True),
-                                            (9, 'dim', True), (10, 'bright', False)])
-def test_setup_bands_with_four_to_nine_as_the_default_dim(n, band, default):
-    """L7:49-50 lights only 10+ and 1-3. Studio Q ruling 2 puts 4-9 in 'dim',
-    the course's default state, and flags it so it reads apart from the
-    lesson-stated 1-3."""
-    wl = {'zones': [{'panels': [_panel('ll_hl_1st', [f'T{i}' for i in range(n)])]}]}
-    got = ml.setups_block(wl)
-    assert got['band'] == band and got['band_default'] is default
-    assert got['calibrated'] is False, "ruling 3: provisional until calibrated"
+def test_q1_count_is_narrowed_to_the_leading_pool_and_labelled_an_index():
+    """Studio Q ruling 3 (final): the displayed Q1 is the entries names that
+    are also 2w-Leading theme members, labelled as an index."""
+    wl = {'zones': [{'panels': [_panel('ll_hl_1st', ['AAA', 'BBB', 'CCC']),
+                                _panel('episodic_pivot', ['DDD'])]}]}
+    s = ml.setups_block(wl, {'BBB': 'Semis', 'DDD': 'AI', 'ZZZ': 'AI'})
+    assert s['count'] == 2, "BBB and DDD; ZZZ leads but has no setup"
+    assert s['pool_count'] == 4
+    assert s['label'] == "index — not the course's hand count"
+
+
+def test_q1_without_the_leading_pool_is_unmeasured_not_the_raw_pool():
+    """Falling back to the unnarrowed count would put the retired reading
+    (red-day median 68) back on the page under the new label."""
+    wl = {'zones': [{'panels': [_panel('ll_hl_1st', ['AAA', 'BBB'])]}]}
+    assert ml.setups_block(wl)['count'] is None
+    assert ml.setups_block(wl, {})['count'] == 0, "measured, nobody leads"
+
+
+def test_q1_carries_no_band_and_says_it_does_not_vote():
+    """No 1-3 / 10+ band on an index (that is the conversion the ruling
+    forbids), no `calibrated` flag, and the only way back is written down."""
+    wl = {'zones': [{'panels': [_panel('ll_hl_1st', [f'T{i}' for i in range(12)])]}]}
+    s = ml.setups_block(wl, {f'T{i}': 'S' for i in range(12)})
+    assert not {'band', 'band_default', 'calibrated'} & set(s)
+    assert s['q1_votes'] is False
+    assert 'hand-picked daily list' in s['vote_restore_rule']
+    assert not hasattr(ml, 'grade_setups'), "Q1 has no grade to feed the verdict"
 
 
 def _uni(**rows):
@@ -266,29 +283,47 @@ def test_rs_ties_break_stably():
 
 
 def test_red_decides_the_verdict_alone():
-    """L6:183 -- on red nothing else is consulted, not even three good grades."""
-    good = {'setups': 'good', 'leaders': 'good', 'breadth': 'good'}
+    """L6:183 -- on red nothing else is consulted, not even good grades."""
+    good = {'leaders': 'good', 'breadth': 'good'}
     assert ml.verdict({'light': 'red'}, good) == 'avoid'
     assert ml.verdict(None, good) is None
 
 
 @pytest.mark.parametrize('grades,want', [
-    ({'setups': 'good', 'leaders': 'good', 'breadth': 'good'}, 'full'),
-    ({'setups': 'good', 'leaders': 'mid', 'breadth': 'good'}, 'dim'),
-    ({'setups': 'mid', 'leaders': 'mid', 'breadth': 'mid'}, 'dim'),
-    ({'setups': 'good', 'leaders': 'good', 'breadth': 'bad'}, 'avoid'),
-    ({'setups': 'bad', 'leaders': 'good', 'breadth': 'good'}, 'avoid'),
+    ({'leaders': 'good', 'breadth': 'good'}, 'full'),
+    ({'leaders': 'mid', 'breadth': 'good'}, 'dim'),
+    ({'leaders': 'mid', 'breadth': 'mid'}, 'dim'),
+    ({'leaders': 'good', 'breadth': 'bad'}, 'avoid'),
+    ({'leaders': 'bad', 'breadth': 'good'}, 'avoid'),
 ])
 def test_green_day_combination_is_studio_qs_table(grades, want):
-    """Ruling 1: any bad -> avoid; all good -> full; otherwise dim."""
+    """Ruling 1 on Q2 + Q3 (ruling 3 final): any bad -> avoid; both good ->
+    full; otherwise dim."""
     assert ml.verdict({'light': 'green'}, grades) == want
 
 
 def test_green_day_with_an_ungradable_question_is_not_dim():
     """'Not measured' is not 'mid'. Folding a missing grade into dim would print
-    a verdict the three questions never produced."""
-    assert ml.verdict({'light': 'green'},
-                      {'setups': 'good', 'leaders': 'good', 'breadth': None}) is None
+    a verdict the questions never produced."""
+    assert ml.verdict({'light': 'green'}, {'leaders': 'good', 'breadth': None}) is None
+
+
+def test_green_day_verdict_does_not_listen_to_q1():
+    """Discriminating case for ruling 3: a Q1 that would have graded 'bad'
+    (zero names) beside good Q2 + Q3 must still read 'full', and a Q1 that
+    would have graded 'good' cannot lift a 'mid' Q2 above dim."""
+    hist = {'SPY': _df(np.linspace(100, 160, 90))}
+    groups = {'themes': [{'group': 'S', 'kind': 'theme', 'tickers': ['X']}]}
+    ladder = {'themes': {'S': {'2w': 'Leading'}}}
+    zero = {'zones': [{'panels': [_panel('ll_hl_1st', ['NOT_LEADING'])]}]}
+    p = ml.build(hist, zero, groups, ladder, _uni(X=dict(rs_rating=99, sma50_dist=3)),
+                 breadth={'verdict': {'env': 'BULLISH'}})
+    assert p['brightness']['setups']['count'] == 0
+    assert p['verdict'] == 'full'
+    assert p['verdict_basis'] == {'leaders': 'good', 'breadth': 'good'}
+    p = ml.build(hist, zero, groups, ladder, _uni(X=dict(rs_rating=99, sma50_dist=3)),
+                 breadth={'verdict': {'env': 'MIXED'}})
+    assert p['verdict'] == 'dim'
 
 
 def test_leader_grade_is_a_share_of_the_known_statuses():
@@ -323,7 +358,7 @@ def test_breadth_absent_is_none():
 
 
 def test_build_composes_the_green_day_verdict_end_to_end():
-    """All three grades good on a green day -> 'full', marked synthetic."""
+    """Q2 and Q3 good on a green day -> 'full', marked synthetic."""
     hist = {'SPY': _df(np.linspace(100, 160, 90))}
     wl = {'zones': [{'panels': [_panel('ll_hl_1st', [f'T{i}' for i in range(12)])]}]}
     groups = {'themes': [{'group': 'S', 'kind': 'theme', 'tickers': ['X']}]}
@@ -332,7 +367,7 @@ def test_build_composes_the_green_day_verdict_end_to_end():
                  breadth={'verdict': {'env': 'BULLISH'}})
     assert p['spy']['light'] == 'green'
     assert p['verdict'] == 'full' and p['verdict_synthetic'] is True
-    assert p['verdict_basis'] == {'setups': 'good', 'leaders': 'good', 'breadth': 'good'}
+    assert p['verdict_basis'] == {'leaders': 'good', 'breadth': 'good'}
     assert p['verdict_pending'] is None
 
 

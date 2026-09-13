@@ -46,11 +46,11 @@ said the book's (then SMA) numbers "reproduce under NO definition tried". False
 one cell that reproduces (SMA x rising-vs-3-days). The superseded spec is kept
 in the course ledger as `coverage_chart_spec`.
 
-The brightness block (Q1 setups, Q2 leaders) is our mapping onto the course's
-semantics and is shipped `provisional: true` until Studio Q signs off under the
-§七 row. The verdict when the light is GREEN needs a combination rule the
-course does not give; until it is agreed the verdict is null on green days.
-On red days the course decides it alone: avoid.
+The brightness block (Q1 setups, Q2 leaders, Q3 breadth) is our mapping onto
+the course's semantics and ships `provisional: true`. On red days the course
+decides the verdict alone: avoid. On green days it is Studio Q's synthetic
+combination of Q2 + Q3 (`verdict_synthetic`). Q1 is displayed as an index and
+does not vote (`q1_votes: false`) -- see Q1_VOTE_RESTORE for the only way back.
 """
 from __future__ import annotations
 
@@ -192,8 +192,17 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dic
     }
 
 
-def setups_block(watchlist: Optional[Mapping[str, Any]]) -> Optional[Dict[str, Any]]:
-    """Q1 -- unique names across the setup-bearing panels. Provisional."""
+def setups_block(watchlist: Optional[Mapping[str, Any]],
+                 leading: Optional[Mapping[str, str]] = None) -> Optional[Dict[str, Any]]:
+    """Q1 -- an INDEX, not the course's count, and it does not vote.
+
+    `count` = unique names across the setup-bearing panels that are also members
+    of a 2-week Leading theme group (`leading`, the Q2 pool). Studio Q ruling 3
+    (final) kept this one narrowing for display -- best red/green separation of
+    the four tried (red median 14, green max 34) and the course's own meaning --
+    and kept the other narrowings off the page. Without the Leading pool the
+    count is None, not the raw pool: showing the unnarrowed number would put
+    back the reading the ruling retired. `pool_count` stays for tracing."""
     if not watchlist or not watchlist.get('zones'):
         return None
     names: set = set()
@@ -222,17 +231,17 @@ def setups_block(watchlist: Optional[Mapping[str, Any]]) -> Optional[Dict[str, A
             names |= tickers
     if not seen_panel:
         return None
-    count = len(names)
-    # Studio Q ruling 2: 4-9 is 'dim' -- the course's default state ("be picky,
-    # size smaller, or pass"); the lesson lit only the two ends. Flagged so a
-    # reader can tell a lesson-stated 'dim' (1-3) from the default one.
-    band = 'bright' if count >= 10 else ('none' if count == 0 else 'dim')
+    # No band: the lesson's 1-3 / 10+ bands belong to a hand count, and reading
+    # them off an index is the conversion ruling 3 forbids. The page does not
+    # colour Q1.
     return {
-        'count': count,
+        'count': (len(names & set(leading)) if leading is not None else None),
+        'label': Q1_INDEX_LABEL,
+        'narrowed_to': '2w Leading theme members (same pool as Q2)',
+        'pool_count': len(names),
         'count_is_floor': bool(capped),
-        'band': band,
-        'band_default': 4 <= count <= 9,
-        'calibrated': False,          # Studio Q ruling 3 -- see Q1_CALIBRATION
+        'q1_votes': False,
+        'vote_restore_rule': Q1_VOTE_RESTORE,
         'by_panel': by_panel,
         'capped_panels': capped,
         'setups_without_panel': list(Q1_SETUPS_WITHOUT_PANEL),
@@ -240,15 +249,13 @@ def setups_block(watchlist: Optional[Mapping[str, Any]]) -> Optional[Dict[str, A
     }
 
 
-def leaders_block(groups: Optional[Mapping[str, Any]],
-                  ladder: Optional[Mapping[str, Any]],
-                  universe_rows: Optional[Iterable[Mapping[str, Any]]],
-                  n: int = 10) -> Optional[Dict[str, Any]]:
-    """Q2 -- the strongest names of the current thematic wave, each with a
-    status. Provisional. Only `kind == 'theme'` groups count: the lesson says
-    "current thematic wave", and factor groups (Small Caps, High Beta) are not
-    one. Status is binary on purpose -- see STATUS_RULE."""
-    if not groups or not ladder or universe_rows is None:
+def leading_members(groups: Optional[Mapping[str, Any]],
+                    ladder: Optional[Mapping[str, Any]]) -> Optional[Dict[str, str]]:
+    """ticker -> group for members of `kind == 'theme'` groups on the 2-week
+    `Leading` rung. One pool for Q2 and for Q1's display narrowing (Studio Q
+    ruling 3, final: "与 Q2 同池省一个任意宇宙"). None when either input is
+    missing -- an empty dict means measured and nobody leads."""
+    if not groups or not ladder:
         return None
     states = ladder.get('themes') or {}
     leading = {name for name, rungs in states.items()
@@ -259,6 +266,23 @@ def leaders_block(groups: Optional[Mapping[str, Any]],
             continue
         for t in g.get('tickers') or []:
             members.setdefault(str(t).upper(), g['group'])
+    return members
+
+
+def leaders_block(groups: Optional[Mapping[str, Any]],
+                  ladder: Optional[Mapping[str, Any]],
+                  universe_rows: Optional[Iterable[Mapping[str, Any]]],
+                  n: int = 10) -> Optional[Dict[str, Any]]:
+    """Q2 -- the strongest names of the current thematic wave, each with a
+    status. Provisional. Only `kind == 'theme'` groups count: the lesson says
+    "current thematic wave", and factor groups (Small Caps, High Beta) are not
+    one. Status is binary on purpose -- see STATUS_RULE."""
+    members = leading_members(groups, ladder)
+    if members is None or universe_rows is None:
+        return None
+    states = ladder.get('themes') or {}
+    leading = {name for name, rungs in states.items()
+               if isinstance(rungs, Mapping) and rungs.get('2w') == 'Leading'}
     if not members:
         return {'leaders': [], 'themes': sorted(leading), 'provisional': True}
     by_t = {str(r.get('ticker')).upper(): r for r in universe_rows}
@@ -304,26 +328,27 @@ def _status(r: Mapping[str, Any]) -> Optional[str]:
     return 'broken' if sma50 < 0 else 'holding'
 
 
-Q1_CALIBRATION = (
-    "Not calibrated. Studio Q ruling 3 anchors: red-day median in 1-3, strongest "
-    "green stretch reaching 10+. Over the 17 sessions in watchlist_hits.csv "
-    "(2026-08-18 -> 09-10, 13 red / 4 green) the current mapping reads a red-day "
-    "median of 68. Narrowed to leading-theme names 14, to RS-line 21-day pctl>=90 "
-    "25, to both 7 -- none reaches 1-3. Threshold is held at 10 per the ruling; "
-    "the pool choice is Studio Q's.")
+# Studio Q ruling 3, FINAL (2026-09-11, §七 under the calibration report):
+# calibration is abandoned, not pending. The course's Q1 is a HAND count on a
+# hand-picked list; the gated pool counts pattern supply. Four course-meaning
+# narrowings over 17 sessions read red-day medians 68 / 14 / 25 / 7 -- none
+# reaches 1-3, because the list the lesson counts does not exist in the system.
+# Adding filters until the anchor is hit is forbidden (n is 17 days, 4 green).
+Q1_INDEX_LABEL = "index — not the course's hand count"
+Q1_VOTE_RESTORE = (
+    "Q1 votes again only when the system holds a hand-picked daily list artifact "
+    "(Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger "
+    "count today, read with the lesson's own 1-3 / 10+ bands, and that day is "
+    "calibrated. No percentile or index conversion -- the lesson teaches an "
+    "absolute hand count, and converting it rewrites the lesson.")
+
 
 # Studio Q ruling 1: each question graded good/mid/bad, then combined. The
 # grades and the combination are SYNTHETIC -- ours and Studio Q's, not the
 # course's; the course gives the three questions and the words only.
-def grade_setups(s: Optional[Mapping[str, Any]]) -> Optional[str]:
-    if not s:
-        return None
-    n = s.get('count')
-    if n is None:
-        return None
-    return 'good' if n >= 10 else ('bad' if n == 0 else 'mid')
-
-
+# There is no grade_setups: Q1 left the combination (ruling 3, final). It read
+# 'good' on almost every day it was measured, so on green days it was a thumb on
+# the 'full' side of the scale. Unmeasured beats mismeasured.
 def grade_leaders(leaders: Optional[List[Mapping[str, Any]]]) -> Optional[str]:
     """'broken <=2/10 good, >=5/10 bad' -- read as a share, which is what the
     ruling's /10 notation says when the list is shorter than ten. Names whose
@@ -360,8 +385,9 @@ def grade_breadth(b: Optional[Mapping[str, Any]]) -> Optional[str]:
 def verdict(spy: Optional[Mapping[str, Any]],
             grades: Optional[Mapping[str, Optional[str]]] = None) -> Optional[str]:
     """Red decides it alone -- 'avoid' (L6:183 "sit still"). Green combines the
-    three grades: any bad -> avoid; all good -> full; otherwise dim (ruling 1,
-    conservative side wins, same shape as L6's "anything else = red").
+    grades it is given -- Q2 and Q3 since ruling 3 (final) took Q1 out: any
+    bad -> avoid; all good -> full; otherwise dim (ruling 1, conservative side
+    wins, same shape as L6's "anything else = red").
 
     A green day with a question that cannot be graded returns None: "not
     measured" is not "mid", and folding it into dim would hide the gap."""
@@ -395,11 +421,11 @@ def build(histories: Mapping[str, pd.DataFrame],
     # a dict where it maps over a list and drawn nothing. The list goes where
     # the contract says; the metadata sits beside it under `leaders_meta`.
     lb = leaders_block(groups, ladder, universe_rows)
-    setups = setups_block(watchlist)
+    setups = setups_block(watchlist, leading_members(groups, ladder))
     leaders = lb['leaders'] if lb else None
     br = breadth_block(breadth)
-    grades = {'setups': grade_setups(setups), 'leaders': grade_leaders(leaders),
-              'breadth': grade_breadth(br)}
+    # Q1 is shown, never graded: `setups.q1_votes` is False (ruling 3, final).
+    grades = {'leaders': grade_leaders(leaders), 'breadth': grade_breadth(br)}
     v = verdict(spy, grades)
     green = bool(spy and spy.get('light') == 'green')
     missing = [k for k, g in grades.items() if g is None]
