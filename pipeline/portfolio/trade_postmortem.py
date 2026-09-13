@@ -525,6 +525,10 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
 
     # Group trades by ticker to give same-day re-entries stable indices
     by_ticker_date: dict[tuple, int] = {}
+    # Every id the book names this run, INCLUDING the ones skipped below: a
+    # skipped trade (OHLC gone, entry older than the window) keeps the file an
+    # earlier run wrote. Only ids the book no longer names are orphans.
+    book_ids: set[str] = set()
 
     for trade in sorted(trades, key=lambda t: (t.entry_date, t.ticker)):
         key = (trade.ticker, trade.entry_date)
@@ -532,6 +536,7 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
         by_ticker_date[key] = idx + 1
 
         tid = _trade_id(trade, idx)
+        book_ids.add(tid)
 
         if trade.ticker not in ohlc_cache:
             ohlc_cache[trade.ticker] = _load_ohlc_df(trade.ticker)
@@ -569,7 +574,30 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
             json.dump(record, f, indent=2, default=str)
         succeeded += 1
 
-    return {'succeeded': succeeded, 'skipped': skipped, 'total': len(trades)}
+    removed = _remove_orphans(output_dir, book_ids) if trades else []
+    return {'succeeded': succeeded, 'skipped': skipped, 'total': len(trades),
+            'removed': removed}
+
+
+def _remove_orphans(output_dir: Path, book_ids: set[str]) -> list[str]:
+    """Delete per-trade files whose id the book no longer names.
+
+    The id embeds entry_date, so correcting a date in the Sheet writes a NEW
+    file and used to leave the old one behind. _build_index globs the
+    directory, so the stale twin was listed again: on 2026-09-12 five
+    `*_2026-08-18_*` files (HOOD x2, MRNA, SOFI, SOXL) sat beside their
+    `*_2026-08-19_*` corrections, closed count +4 and a phantom HOOD open row
+    (Visual Vera, DATA_CONTRACTS §七 2026-09-13). Not called on an empty book:
+    a Sheet that returns nothing must not wipe the directory."""
+    removed = []
+    for p in sorted(output_dir.glob('*.json')):
+        if p.name == '_index.json' or p.stem in book_ids:
+            continue
+        p.unlink()
+        removed.append(p.stem)
+    if removed:
+        logger.info("Removed %d orphan post-mortems: %s", len(removed), ', '.join(removed))
+    return removed
 
 
 def _slice_ohlc(df: pd.DataFrame, trade: Trade) -> list[dict]:

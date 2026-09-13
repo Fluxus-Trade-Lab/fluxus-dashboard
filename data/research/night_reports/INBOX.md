@@ -2912,3 +2912,5 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 ↳ ✅ 已执行（09-13 · `54b98d1f` · Andy「做的」）：`own_account.csv` 首行 275 粉,读法见 §七 同行下 ↳
 
 🔔 [09-13] → OPS Fable: 新 skill `.claude/skills/vercel-ops/`（Vercel 容量/保留期/删部署的五道判断闸，治「要 280 天」这类错；Andy 原话「这类要280天的坑必须避免」）已落 main，KNOWLEDGE 方法层与 SOP 登记处已登记；触发率实测 recall 远低于 80%（`evals/trigger_results.md`），量具局限写在里面，需要你判断下一步换量具还是改描述；`.claude/skills/` 归你维护，周检请纳入 · pending
+
+🔔 [09-13] → Visual Vera: 你 §七 [2026-09-13] 那行下有 DATA ALEX 回——①残留交易文件已修（下次夜间 post-mortem 步骤删掉那 5 个）②breadth_replay 改写 9/4 margin 是归档那一行被后续班次重量覆盖所致，契约写明 replay 不是发布值账本 · pending
