@@ -1,0 +1,219 @@
+/* Local additions on top of recap_visual.css (the Visual line's CSS, verbatim).
+   Colours only through the Visual variables; the single literal below (#8A857A in the
+   print footer) is the Visual --muted value, because page margin boxes do not resolve var(). */
+
+:root {
+  --sans: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 22px;
+}
+
+.switches .switch {
+  margin: 0;
+}
+
+.print-mode .top {
+  display: none;
+}
+
+/* education topic cards */
+.edu-pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+@media (max-width: 560px) {
+  .edu-pick {
+    grid-template-columns: 1fr;
+  }
+}
+
+.edu-pick .card {
+  border: 1px solid var(--rule);
+  padding: 10px 12px;
+  background: var(--sheet);
+}
+
+.edu-pick .card.on {
+  border: 1.5px solid var(--ink);
+}
+
+.edu-pick .k {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.edu-pick .card.on .k {
+  color: var(--ink);
+}
+
+.edu-pick b {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.35;
+  margin: 3px 0 4px;
+  color: var(--ink);
+}
+
+.edu-pick .card.off b {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.edu-pick p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* schematic classes (the Visual .tell block styles path/text; these add the rest) */
+.tell .ma {
+  stroke: var(--accent);
+}
+
+.tell .ma2 {
+  stroke: var(--muted);
+}
+
+.tell .lvl {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.tell .guide {
+  stroke: var(--rule);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 4;
+}
+
+.tell .mark {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.4;
+}
+
+.tell .lead {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.tell .zone-up {
+  fill: var(--up);
+  opacity: .07;
+}
+
+.tell .zone-dn {
+  fill: var(--dn);
+  opacity: .07;
+}
+
+.tell .lab-acc {
+  fill: var(--accent);
+  font-weight: 600;
+}
+
+/* wide tables: numbers stay on one line, prose columns wrap inside the sheet */
+table.idx td:nth-child(5),
+table.idx td:nth-child(6),
+table.led td:nth-child(3) {
+  overflow-wrap: anywhere;
+}
+
+table.idx.wk td:nth-child(2),
+table.idx.wk td:nth-child(3),
+table.idx.wk td:nth-child(4) {
+  white-space: nowrap;
+}
+
+.metrics.six {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* print: A layout, one flowing document, light palette forced by JS (data-theme="light") */
+@page {
+  size: A4;
+  margin: 15mm 14mm 16mm;
+
+  @bottom-center {
+    content: "FLUXUS CAPITAL · CONFIDENTIAL · " counter(page) " / " counter(pages);
+    font-family: "IBM Plex Mono", Menlo, monospace;
+    font-size: 7pt;
+    letter-spacing: .12em;
+    color: #8A857A;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: var(--sheet);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  .top {
+    display: none !important;
+  }
+
+  .sheet,
+  .sheet.a {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    background: var(--sheet);
+  }
+
+  .sheet + .sheet .mast,
+  .sheet + .sheet hr.r.ink {
+    display: none;
+  }
+
+  .folio {
+    display: none;
+  }
+
+  .sec {
+    break-inside: avoid;
+  }
+
+  .sec.edu {
+    break-inside: auto;
+  }
+
+  .tell,
+  .edu-pick,
+  .votes,
+  .metrics {
+    break-inside: avoid;
+  }
+
+  .scroll {
+    overflow: visible;
+  }
+
+  .prose {
+    max-width: none;
+  }
+}
