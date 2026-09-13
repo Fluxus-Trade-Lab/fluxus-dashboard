@@ -1,4 +1,5 @@
-import json, csv, html
+import json, csv, html, io, tarfile, subprocess
+from datetime import datetime, timedelta
 from collections import defaultdict
 SP="/private/tmp/claude-501/-Users-taolezhu-Documents-AI-Trading-System-Fluxus-Marketing-Visual-Design/ee3710aa-d552-414c-9357-4584bfc6459a/scratchpad"
 ROOT="/Users/taolezhu/Documents/AI-Trading-System"
@@ -163,6 +164,44 @@ WIN,LOS=weekly_lines()
 def folio_a(n): return f'<div class="folio"><span>Fluxus Capital · Daily Market Recap</span><span>{n} / 4</span></div>'
 def mast_a(): return '<div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>Daily Market Recap · No. 0904</span></div><hr class="r ink">'
 
+R_BOOK=ROOT
+
+def load_book(D):
+    """Open book as of D, computed from data/output/trades on origin/main.
+    Drops files the latest export run did not rewrite: trade_postmortem.py names files by trade_id
+    (which embeds entry_date) and never deletes, so an entry-date correction leaves the old file behind."""
+    raw=subprocess.run(["git","-C",R_BOOK,"archive","origin/main","data/output/trades"],capture_output=True,check=True).stdout
+    recs=[]
+    with tarfile.open(fileobj=io.BytesIO(raw)) as tf:
+        for m in tf.getmembers():
+            if m.isfile() and m.name.endswith(".json"):
+                j=json.loads(tf.extractfile(m).read())
+                if isinstance(j,dict) and isinstance(j.get("trade"),dict): recs.append(j)
+    ts=lambda j: datetime.fromisoformat(j["generated_at"])
+    latest=max(ts(j) for j in recs)
+    live=[j for j in recs if latest-ts(j)<=timedelta(minutes=10)]
+    op=[j for j in live if j["trade"]["entry_date"]<=D and (not j["trade"]["closed"] or (j["trade"]["exit_date"] or "9999")>D)]
+    cl=[j for j in live if j["trade"]["closed"] and (j["trade"]["exit_date"] or "9999")<=D]
+    rows=[]
+    for j in sorted(op,key=lambda j:(j["trade"]["entry_date"],j["trade"]["ticker"])):
+        t=j["trade"]; px=[b for b in j["ohlc_window"] if b["date"]<=D]
+        sign=1 if t["direction"]=="long" else -1
+        rows.append((t["ticker"],t["entry_date"],sign*(px[-1]["close"]-t["entry_price"])/(t["r_dollars"]/t["original_qty"])))
+    return rows,len({r[0] for r in rows}),len(cl),len(recs)-len(live)
+
+def book_html(rows,names,closed,ret,cash):
+    m=(f'<div class="metrics"><div><span>Return</span><b>{ret}</b><i class="src">tracker</i></div>'
+       f'<div><span>Cash</span><b>{cash}</b><i class="src">tracker</i></div>'
+       f'<div><span>Open names</span><b>{names}</b><i class="src">computed</i></div>'
+       f'<div><span>Closed</span><b>{closed}</b><i class="src">computed</i></div></div>')
+    tr="".join(f'<tr><td class="t">{tk}</td><td>{ed}</td><td class="n {"up" if r>=0 else "dn"}">{(f"{r:+.2f}R").replace("-","−")}</td></tr>' for tk,ed,r in rows)
+    t=f'<div class="scroll"><table class="book"><thead><tr><th>Open position</th><th>Entry</th><th class="rn">Open R · close</th></tr></thead><tbody>{tr}</tbody></table></div>'
+    n='<p class="schem">Open names, closed count and open R are computed from the trade records at the session close. Return and cash come from the tracker and are not in the data layer yet.</p>'
+    return m,t,n
+
+BK_ROWS,BK_NAMES,BK_CLOSED,BK_STALE=load_book(D)
+assert (len(BK_ROWS),BK_NAMES,BK_CLOSED)==(4,3,373),(len(BK_ROWS),BK_NAMES,BK_CLOSED)
+BK_M,BK_T,BK_N=book_html(BK_ROWS,BK_NAMES,BK_CLOSED,'+123.35%','76.86%')
 # ---------------- VERSION A ----------------
 A=f'''
 <article class="sheet a">{mast_a()}
@@ -201,9 +240,8 @@ A=f'''
   <section class="sec first"><h3>Tuesday Watch <span class="h3n">Monday closed — Labor Day</span></h3>{olist(WATCH,"ol-a")}</section>
   <section class="sec"><h3>The Rules</h3>{olist(RULES,"ol-a")}</section>
   <section class="sec"><h3>Portfolio Update</h3>
-    <div class="metrics"><div><span>Return</span><b>+123.35%</b></div><div><span>Cash</span><b>76.86%</b></div><div><span>Open</span><b>3</b></div><div><span>Closed</span><b>373</b></div></div>
-    <p class="tick">Open · ZETA · HOOD ×2 · ETHA</p>
-    <p class="prose">{PORTNOTE}</p></section>
+    {BK_M}{BK_T}
+    <p class="prose">{PORTNOTE}</p>{BK_N}</section>
   {folio_a(4)}
 </article>'''
 
@@ -266,8 +304,8 @@ B=f'''
     <div><div class="kicker">The Rules</div>{olist(RULES,"ol-b rules")}</div>
   </div>
   <div class="kicker sp">Book</div>
-  <div class="metrics b"><div><span>Return</span><b>+123.35%</b></div><div><span>Cash</span><b>76.86%</b></div><div><span>Open</span><b>3</b></div><div><span>Closed</span><b>373</b></div></div>
-  <p class="prose">{PORTNOTE}</p>
+  {BK_M}{BK_T}
+  <p class="prose">{PORTNOTE}</p>{BK_N}
   {folio_b(4)}
 </article>'''
 
@@ -438,6 +476,11 @@ ol.rules li{font-size:14.5px;color:var(--ink)}
 .bsep{border-top:1px dashed var(--rule);margin:4px 0}
 .pull{border-bottom:1.5px solid var(--ink);padding-bottom:26px;margin-bottom:6px}
 @media(max-width:560px){.sheet.a,.sheet.b{padding:30px 22px 22px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.metrics i.src{font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+table.book{font-size:12px;margin:4px 0 12px;max-width:480px}
+table.book th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 16px 6px 0;border-bottom:1px solid var(--rule)}
+table.book th.rn,table.book td.n{text-align:right}
+table.book td{padding:6px 16px 6px 0;border-bottom:1px solid var(--soft);color:var(--ink2)}
 """
 
 JS = """
@@ -462,6 +505,7 @@ TOP=f'''<header class="top">
   <h1>A 登记体 · B 掉落体</h1>
   <p class="lede">同一期、同一份数据，两种外观，各四页全文。所有表格、票面和图都由数据文件生成，不再贴截图。</p>
   <p class="prov">数据 · <b>groups_archive.csv</b> 行业 120 / 主题 56（9/4）· <b>breadth.json</b> Conditions 序列（9/4 = 51，与已发布一致）· <b>breadth_replay.json</b> 12 票明细（09-10 重算）· SPX 收盘（掉落线，弧长 1.000 m）。
+  持仓 · <b>data/output/trades</b>（剔除 5 个旧导出残留文件）算出开仓 4 行 / 3 个名字 / 已平 373，与发布一致；收益率和现金仓位仍来自 tracker。
   ⚠ 12 票中有 4 票的边距与已发布 PDF 不一致，是重算造成的。</p>
   <div class="switch" role="group" aria-label="切换版本">
     <button type="button" data-ver="A" aria-pressed="true">A · 登记体</button>
