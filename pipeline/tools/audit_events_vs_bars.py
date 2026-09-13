@@ -29,6 +29,8 @@
 **分辨率（先量再信，别信没量过的阴性）**：
 * 干净日的基线：116 个日期里 **110 个**可比行数 ≥15，其中 **108 个匹配率 ≥0.95**，
   中位 **1.000**；最差的干净日是 2026-05-04 的 **0.956**。
+  ↳ 2026-09-14 按票计票、且 DATA ALEX 09-13 重算后：可判 **109** 天，最差干净日 **0.929**（08-14，
+  那天 gainers 家族是已知盘前坏快照），离判定线 0.90 只剩 0.03——那一族再坏一点就该红，这是对的。
 * 坏日：08-07 = **0.014**、08-17 = **0.328**。**判定线 0.90 落在 0.328 和 0.956 之间的空档里**，
   不是拍的。
 * 非配对日的噪声底 ≈ **0.10–0.14**（任取一个不相干的日子都能偶然对上一成）。
@@ -43,7 +45,8 @@
    **这一格 2026-09-14 起由第二条恒等式补上**（Nighty Zac）：`volume(某日, 某票)` 应等于
    厂商 K 线**当日**那根 bar 的成交量。它和 change_pct 同行同快照，但**不共用任何算术**
    （一个是两根收盘价之比，一个是一根 bar 的量），所以能在 change_pct 整列为空时单独判。
-   两条都 <15 才判「查不了」：现存只剩 **03-12 / 03-13**。
+   两条都 <15 才判「查不了」：现存 **03-12 / 03-13 / 03-26 / 03-27 / 03-30** 五天
+   （后三天是 09-14 改成按票计票后才露出来的——此前被重复行抬过了 MIN_N，见 `_comparable`）。
    * **带是单边的，而且是自造的**：Finviz 快照量 ÷ yfinance 当日量 ∈ [0.90, 1.01]。
      查过（reconciliation 的标准做法只规定「逐单元格比 + 容差」，不规定成交量容差是多少），无标准，
      按实测定：Finviz 那一侧偏低，按月中位 0.992–0.996（少记 0.4–0.8%），单日最低到 0.98（04-29）；
@@ -180,7 +183,13 @@ def _bar_pct(store, cal_index: Mapping[str, int], cal: Sequence[str],
 
 
 def _comparable(rows: Sequence[Mapping[str, str]], day: str) -> List[Tuple[str, float]]:
-    out = []
+    """day 这一场的 (票, change_pct) 读数，计票规则与 `_comparable_volume` 相同：同票同值只算一次。
+
+    2026-09-14 以前按**行**计：一只票在五个筛子里就投五票。复算 verifier 按票计时发现
+    03-26 / 03-27 / 03-30 的可比数其实是 14 / 12 / 10，是重复行把它们抬过了 MIN_N ——
+    那三天此前的「判绿」是同几只票数了好几遍。改后可判日 112 → 109，最差干净日 0.941 → 0.929（08-14）。"""
+    seen = set()
+    out: List[Tuple[str, float]] = []
     for r in rows:
         if r.get("date") != day:
             continue
@@ -188,9 +197,16 @@ def _comparable(rows: Sequence[Mapping[str, str]], day: str) -> List[Tuple[str, 
         if raw in _BLANK:
             continue
         try:
-            out.append((r["ticker"], float(raw)))
+            cp = float(raw)
         except ValueError:
             continue
+        if not math.isfinite(cp):
+            continue
+        key = (r["ticker"], round(cp, 4))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((r["ticker"], cp))
     return out
 
 

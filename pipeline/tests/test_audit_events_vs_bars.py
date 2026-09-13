@@ -135,6 +135,22 @@ def test_rows_that_never_carry_change_pct_are_skipped_not_counted_as_agreeing(tm
     assert ("2026-09-03", 5) in res["unjudgeable"]        # 分母是 5 不是 23
 
 
+def test_one_ticker_written_by_many_screeners_is_one_change_pct_reading(tmp_path):
+    """按行计票时，14 只票各被 5 个筛子写一遍 = 70 行，会被当成「可判」。按票计是 14 → 查不了。
+    另外 3 只坏票各抄 10 遍，也只是 3 个读数，不能把一个好日子拖红。"""
+    good = [dict(r, screener=f"preset:s{i}") for r in _rows_for("2026-09-02", "2026-09-02")[:14]
+            for i in range(5)]
+    res = A.audit(_archive(tmp_path, good, "few.csv"), _store(tmp_path), declared={})
+    assert ("2026-09-02", 14) in res["unjudgeable"]
+    bad = [dict(r, screener=f"preset:s{i}") for r in _rows_for("2026-09-02", "2026-09-01")[:3]
+           for i in range(10)]
+    res2 = A.audit(_archive(tmp_path, bad + _rows_for("2026-09-02", "2026-09-02"), "dup.csv"),
+                   tmp_path / "tickers", declared={})
+    rec = res2["judged"]["2026-09-02"]
+    assert rec["n"] == 21                                  # 18 个好读数 + 3 个坏读数，不是 18 + 30
+    assert rec["hit"] == 18
+
+
 def test_a_declared_day_is_green_but_still_printed_in_full(tmp_path):
     rows = _rows_for("2026-09-03", "2026-09-02")
     declared = {"2026-09-03": ("DATA ALEX", "2026-09-11", "合成的欠条")}
@@ -453,7 +469,8 @@ def test_the_finviz_rename_week_is_no_longer_blind_and_is_clean():
     assert min(r["rate"] for r in vj.values()) > 0.85                 # 最差的干净日（实测 0.929）
     # 只管 K 线库覆盖得到的日子：归档常比库新一场（盲区 5），那一场两条都是 n=0，不是本闸退化
     covered = set(A.calendar(A.load_store(REAL_STORE)))
-    assert {d for d, _ in res["blind"] if d in covered} <= {"2026-03-12", "2026-03-13"}
+    assert {d for d, _ in res["blind"] if d in covered} <= {
+        "2026-03-12", "2026-03-13", "2026-03-26", "2026-03-27", "2026-03-30"}
 
 
 @_real
