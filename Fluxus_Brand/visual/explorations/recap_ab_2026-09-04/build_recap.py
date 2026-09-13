@@ -364,7 +364,10 @@ hr.r.ink{border-top:1.5px solid var(--ink)}
 .reg{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:9px 0 0}
 .reg .m{color:var(--ink);font-weight:600}
 
-.hl-a{font-family:var(--cond);font-weight:700;font-size:clamp(26px,3.6vw,36px);line-height:1.06;letter-spacing:-.01em;margin:22px 0 6px;text-wrap:balance}
+.hl-a{font-family:var(--cond);font-weight:700;font-size:clamp(26px,3.6vw,36px);line-height:1.06;letter-spacing:-.01em;margin:22px 0 6px;text-wrap:pretty;word-break:keep-all}
+/* Andy 09-13 title wrap: break at the title's own dash (spans built by titleHtml, see recap_title_wrap_2026-09-13); a first half
+   that wraps by itself is flattened back to plain text after fonts load, so it falls back to text-wrap:pretty */
+.hl-a .seg{display:inline-block;max-width:100%}
 .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0}
 .sec{margin-top:30px}
 .sec.first{margin-top:24px}
