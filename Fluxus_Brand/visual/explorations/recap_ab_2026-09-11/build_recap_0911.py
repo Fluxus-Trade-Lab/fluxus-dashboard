@@ -45,14 +45,9 @@ def signed(v,unit):
 SIDE={"bull":"for","bear":"against","neutral":"near"}
 
 # ---------- components ----------
-# final form (Andy 09-13, priority=speed): bold line + hollow dot at today's close. Stroke solved for a
-# constant ~6px on-screen weight regardless of the day's DROP_H (.drop.thin is CSS-capped at 46px tall).
-def bold_stroke(px=6,box_px=46,pad=6): return px*(DROP_H+2*pad)/box_px
-def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 11",dot=False):
-    ex,ey=(float(v) for v in DROP.split()[-1].split(","))
-    mark=f'<circle class="dropdot" style="stroke-width:{stroke*0.5:.1f}" cx="{ex}" cy="{ey}" r="{stroke*1.7:.1f}"/>' if dot else ""
+def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 11"):
     return (f'<svg class="drop {cls}" viewBox="{-pad} {-pad} {1000+2*pad} {DROP_H+2*pad:.1f}" role="img" aria-label="{e(label)}">'
-            f'<path style="stroke-width:{stroke}" d="{DROP}"/>{mark}</svg>')
+            f'<path style="stroke-width:{stroke}" d="{DROP}"/></svg>')
 REG=f'1m · drop <span class="m">#0911</span> · {D0} → {D} · SPX · ∫ = {ARC:.3f} m'
 def cond_chart():
     n=len(cond); W=940; base=190; top=18; bw=W/n
@@ -232,8 +227,8 @@ IDX_TABLE=f'<div class="scroll"><table class="idx"><thead><tr><th>Index</th><th 
 WEEK_M='<div class="metrics">'+"".join(f'<div><span>{e(a)}</span><b class="dn">{c}</b></div>' for a,c in WEEK)+'</div>'
 
 A=f'''
-<article class="sheet a">{mast_a()}{drop_svg(bold_stroke(),"thin",dot=True)}<p class="reg">{REG}</p>
-  <h2 class="hl-a">{e(TITLE)}</h2>
+<article class="sheet a">{mast_a()}{drop_svg(2.5,"thin")}<p class="reg">{REG}</p>
+  <h2 class="hl-a">{e(TITLE)}</h2><p class="byline">{e(BYLINE)}</p>
   <section class="sec"><h3>The Big Picture</h3><p class="prose">{BIG}</p></section>
   <section class="sec"><h3>Index Action · Friday</h3>{IDX_TABLE}</section>
   <section class="sec"><h3>Market State</h3>{statebar()}</section>{folio_a(1)}</article>
@@ -257,7 +252,7 @@ tiles="".join(f'<div class="bi"><div class="bi-t">{t}</div><div class="bi-c {chg
 B=f'''
 <article class="sheet b cover">
   <div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>Friday · September 11 · 2026</span></div>
-  <div class="hero">{drop_svg(7,"hero",dot=True)}</div><p class="reg">{REG} — same length, different shapes</p><hr class="r ink">
+  <div class="hero">{drop_svg(7,"hero")}</div><p class="reg">{REG} — same length, different shapes</p><hr class="r ink">
   <h2 class="hl-b">Rebound Snaps the 4-Day Slide.<br>A News Failure Despite Firm CPI.</h2>
   <div class="cover-grid"><p class="prose lead">{BIG}</p>
     <aside class="board"><div class="brd-h">The Board</div>
