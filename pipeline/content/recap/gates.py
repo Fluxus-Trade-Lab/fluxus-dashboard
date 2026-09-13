@@ -1,0 +1,73 @@
+"""Delivery gates for the recap PDF — run on pdftotext output, all must be 0.
+
+Three gates (Daily_Recap_Workflow_Spec §4/§8 + Andy 2026-09-13 privacy ruling
+「管线只做R 和%, 不写股数和美元」):
+  1. banned   — source-proprietary names (channel, products, hosts, contacts)
+  2. leadership_zh — 「领导力」 (leadership → 龙头)
+  3. money_shares  — any dollar amount or share count
+
+Pure functions, no I/O, so each gate can be proven red on an injected positive
+(pipeline/tests/test_recap_gates.py) before its green is trusted.
+"""
+from __future__ import annotations
+
+import re
+
+# ASCII-letter lookarounds instead of \b: CJK characters count as \w, so
+# \bTed\b misses "Ted说" in the Chinese PDF.
+def _word(w: str, flags: int = 0) -> re.Pattern:
+    return re.compile(rf"(?<![A-Za-z]){w}(?![A-Za-z])", flags)
+
+BANNED: dict[str, re.Pattern] = {
+    "Revere": _word("Revere", re.I),
+    "Rever/Revier (caption misspellings)": _word("Rev(?:i?er)", re.I),
+    "Growction caption variants": re.compile(r"(?<![A-Za-z])gr[eo]w?t?e?ction", re.I),
+    "proprietary list names": re.compile(r"21\s*over\s*21|Sweet\s*17|(?<![A-Za-z])RG\s?8(?![0-9])", re.I),
+    "River Asset": re.compile(r"River\s+Asset", re.I),
+    "River AI 100 / AI 100": re.compile(r"(?:River\s+)?AI\s*100(?:\s+Index)?", re.I),
+    "Turboction": _word("Turboction", re.I),
+    "Growction": _word("Growction", re.I),
+    "Turbo": re.compile(r"(?<![A-Za-z])Turbo", re.I),
+    # host names — case-sensitive so ordinary words survive; Don't ≠ Don
+    "Ted": _word("Ted"),
+    "Dan": _word("Dan"),
+    "Connor": _word("Connor"),
+    "Todd": _word("Todd"),
+    "Don": re.compile(r"(?<![A-Za-z])Don(?![A-Za-z'’])"),
+    "Jackson": _word("Jackson"),
+    "Naidik": _word("Naidik", re.I),
+    "email": re.compile(r"[\w.+-]+@[\w-]+\.[A-Za-z]{2,}"),
+    "phone": re.compile(r"\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b"),
+}
+
+LEADERSHIP_ZH = "领导力"
+
+MONEY_SHARES: dict[str, re.Pattern] = {
+    "dollar sign amount": re.compile(r"(?:US)?[$＄]\s?\d"),
+    "amount + currency word": re.compile(
+        r"\d[\d,.]*\s?(?:[kKmMbB万千亿]\s?)?(?:USD|美元|美金|美刀|dollars?(?![A-Za-z])|bucks(?![A-Za-z]))", re.I),
+    "share count (en)": re.compile(r"(?<![\w.])\d[\d,]*\s?(?:shares?|shs|sh)(?![A-Za-z])", re.I),
+    "share count (zh)": re.compile(r"\d[\d,]*\s?股(?![票价指市本份东息权利])"),
+}
+
+
+def _hits(text: str, pats: dict[str, re.Pattern]) -> list[dict]:
+    out = []
+    for name, p in pats.items():
+        for m in p.finditer(text):
+            a, b = max(0, m.start() - 20), min(len(text), m.end() + 20)
+            out.append({"gate_rule": name, "match": m.group(0),
+                        "context": text[a:b].replace("\n", " ")})
+    return out
+
+
+def run_gates(text: str) -> dict:
+    banned = _hits(text, BANNED)
+    lead = text.count(LEADERSHIP_ZH)
+    money = _hits(text, MONEY_SHARES)
+    return {
+        "banned": banned,
+        "leadership_zh": lead,
+        "money_shares": money,
+        "ok": not banned and lead == 0 and not money,
+    }
