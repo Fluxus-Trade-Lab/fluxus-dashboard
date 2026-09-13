@@ -256,6 +256,19 @@ table.idx.wk td:nth-child(4) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
+  /* the weekly session-by-session table: ten nowrap columns with letter-spaced uppercase headers ran
+     828px in EN and shrank W37 EN to 0.849 (body 10.2pt measured by pdfminer). In print its headers
+     wrap, the letter-spacing tightens and the cell padding halves. */
+  table.idx.days th {
+    white-space: normal;
+    letter-spacing: .04em;
+  }
+
+  table.idx.days th,
+  table.idx.days td {
+    padding-right: 7px;
+  }
+
   /* pagination: the book starts its own page (X uses pages 1–4); plain sections may flow across pages,
      but the lesson (never opens mid-paragraph on X image 4), every figure block, table rows and list
      items travel whole, and a heading never ends a page */

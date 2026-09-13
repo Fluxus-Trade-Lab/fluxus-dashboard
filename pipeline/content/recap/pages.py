@@ -102,6 +102,62 @@ def page_sections(text: str, headings: list[str]) -> list[list[str]]:
     return out
 
 
+# ------------------------------------------------------------------ L2 · true printed size
+# Chrome silently shrinks a whole page when any element is wider than the type area (09-11 EN 0.924, W37 EN
+# 0.849). Line-box heights misread that twice, so L2 reads each glyph's font size from the PDF (pdfminer).
+BODY_FONT = {"EN": "IBMPlexSans-Regular", "ZH": "PingFangSC-Regular"}
+TABLE_FONT = "IBMPlexMono-Regular"  # table figures
+BODY_PT, BODY_TOL, TABLE_MIN_PT = 12.0, 0.1, 10.5
+
+
+def size_tiers(pdf_path, max_pages: int = 2) -> dict:
+    """{(font without subset prefix, size rounded to 0.1pt): glyph count} over the first pages."""
+    import collections
+    import logging
+
+    from pdfminer.high_level import extract_pages
+    from pdfminer.layout import LTChar
+
+    logging.getLogger("pdfminer").setLevel(logging.ERROR)
+    tiers = collections.Counter()
+
+    def walk(o):
+        if isinstance(o, LTChar):
+            if o.get_text().strip():
+                tiers[(o.fontname.split("+")[-1], round(o.size, 1))] += 1
+        elif hasattr(o, "__iter__"):
+            for x in o:
+                walk(x)
+
+    for page in extract_pages(str(pdf_path), maxpages=max_pages):
+        walk(page)
+    return dict(tiers)
+
+
+def _top_size(tiers: dict, font: str):
+    sizes = {sz: n for (fn, sz), n in tiers.items() if fn == font}
+    return max(sizes, key=sizes.get) if sizes else None
+
+
+def check_true_size(tiers: dict, lang: str) -> dict:
+    """L2: body tier (most glyphs of the body font) must be 12.0±0.1pt; table tier (most glyphs of the
+    mono figures) must not be under 10.5pt."""
+    body, table = _top_size(tiers, BODY_FONT[lang]), _top_size(tiers, TABLE_FONT)
+    hits = []
+    if body is None or abs(body - BODY_PT) > BODY_TOL:
+        hits.append(f"body {body}pt (want {BODY_PT}±{BODY_TOL})")
+    if table is None or table < TABLE_MIN_PT:
+        hits.append(f"table {table}pt (< {TABLE_MIN_PT})")
+    return {"ok": not hits, "body_pt": body, "table_pt": table, "hits": hits}
+
+
+def check_true_size_pdf(pdf_path, lang: str) -> dict:
+    try:
+        return check_true_size(size_tiers(pdf_path), lang)
+    except ImportError:  # fail closed: a missing reader must not read as a pass
+        return {"ok": False, "body_pt": None, "table_pt": None, "hits": ["pdfminer.six not installed"]}
+
+
 def check_margins(pdf_path, left_mm: float = 14.0, right_mm: float = 14.0, tol_pt: float = 2.0) -> dict:
     out = subprocess.run(["pdftotext", "-bbox", str(pdf_path), "-"], capture_output=True, text=True, check=True).stdout
     bad = margin_overflow(out, left_mm, right_mm, tol_pt)
