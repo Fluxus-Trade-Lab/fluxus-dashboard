@@ -27,6 +27,8 @@ Andy 现在每天手工走八步：找 YouTube 当天视频链接 → 提取字�
 | 送达时间 | 「10:30 JST 前」 |
 | 首跑日 | 「09-15 周二」 |
 | 持仓口径 | 「管线只做R 和%, 不写股数和美元」 |
+| 口吻 | 「正文里不出现Andy 说这样的字眼，也不用第一人称」——判断改写成中性陈述，引号原句不署名；成品闸加「Andy」= 0 |
+| Founders Note 缺失 | 「Founders note如果连接不上，可以空着，有时候我没有写，写的时候可以加上」——整节不出现，页面不提示 |
 
 ## 4. 架构：本机一条龙，材料包为界
 
@@ -37,7 +39,7 @@ Andy 现在每天手工走八步：找 YouTube 当天视频链接 → 提取字�
 |---|---|---|---|
 | 取字幕 | 09:00 起 | 在 Revere 频道挑当天日更（排除 Your Money Podcast 与 Weekend Review），yt-dlp 抓英文自动字幕，VTT 去重成 `transcript.md`。实测上传时间 06:09–08:44 | 每 15 分钟重试到 10:00；仍无则出无字幕版并在交付说明写明 |
 | 取数 | 同上 | 读当天 `data/output` / 历史日期读 `data/history` 归档；等数据班落地（最晚 10:00） | 10:00 未落地：对应格占位并写明 |
-| 取原话 | 同上 | Discord 三频道当日消息（`data/output/threads/<date>/messages.json`）；Founders Note 走 `pipeline/tools/founders_note.py`（取 T 与 T 后第一条） | 没写就留白，永不代笔 |
+| 取原话 | 同上 | Discord 三频道当日消息（`data/output/threads/<date>/messages.json`）；Founders Note 走 GAS（取 T 与 T 后第一条） | 没写或连不上：整节不出现、页面不提示，只记进交付说明；永不代笔 |
 | 持仓 | 同上 | 从 GAS 直接取，只算 R 与 % | GAS 不通：Portfolio 节占位 |
 | 画面 | 同上 | 市场状况、板块龙头两块：生产日用 Chrome 无头截亮主题（先核页面日期 = 目标交易日）；历史日期用归档数据渲染 | 截图日期不对就改用渲染 |
 | 生成 | 取材完成后 | 按 Andy 规格写结构化内容（EN + ZH；ZH 过 fable-voice 与 biaoda 两本账），给 A/B 选题，停在会话里等 Andy | — |
@@ -50,7 +52,7 @@ Andy 现在每天手工走八步：找 YouTube 当天视频链接 → 提取字�
 
 - `pipeline/content/recap/fetch_transcript.py`：日期 → 当天日更 → 字幕 → transcript.md
 - `pipeline/content/recap/build_pack.py`：日期 → `pack.json`（数据摘录、原话、Founders Note、持仓 R/%、字幕路径）
-- `pipeline/content/recap/render.py`：结构化内容 → 双语 HTML → PDF；`pdftotext` 抽文本跑三道闸：规格 §4 禁用专属名词 = 0 · 「领导力」= 0 · 美元金额与股数 = 0
+- `pipeline/content/recap/render.py`：结构化内容 → 双语 HTML → PDF；`pdftotext` 抽文本跑四道闸：规格 §4 禁用专属名词 = 0 · 「领导力」= 0 · 美元金额与股数 = 0 · 「Andy」= 0；另查末页正文不少于约 3 行
 - `pipeline/tests/test_recap_*.py`：VTT 去重、日更挑选、三道闸（每道闸先用注入样本证明能报红）
 - PDF 环境：`~/.venvs/fluxus-recap`（weasyprint + matplotlib），不放 /tmp
 - 定时任务 `recap-daily`（本机，周二至周六 09:00 JST）：**样张过 Andy 之后再建**
