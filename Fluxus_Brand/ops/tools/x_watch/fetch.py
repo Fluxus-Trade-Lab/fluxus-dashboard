@@ -10,7 +10,7 @@
     python3 fetch.py --since 2026-09-04 --until 2026-09-06
 
 产出:
-    data/content/x_watch/posts/YYYY-MM-DD.jsonl
+    data/content/x_watch/posts/YYYY-MM-DD.jsonl  (按 id 并集，不覆盖)
     data/content/x_watch/members.json
     data/content/x_watch/mentions.csv        (累加)
     data/content/x_watch/runlog.csv          (累加)
@@ -38,6 +38,12 @@ STOPWORDS = {
     "IPO","IS","IT","ITM","IV","LOL","ME","MY","NO","NOT","OF","OK","ON","OR","OTM","PT","QQQ",
     "RE","RSI","SO","TA","THE","TO","TP","UP","US","USA","VS","WE","WTF","YOY","YTD",
 }
+
+# 指标名 / 经济数据名：只在「裸大写词」分支拦，带 $ 的照认。
+# RS（Reliance Steel）、SMA（Summit Materials）、MA（Mastercard）是真代码，所以不能进
+# STOPWORDS。09-11 主班实测：人数榜上 $RS 4 人、$SMA 3 人，全部来自「50 SMA」
+# 「RS line」这类正文，没有一条带 $。
+INDICATOR_BARE = {"SMA","EMA","RS","PPI","MA","VWAP","ATR","MACD","PCE"}
 
 
 def key() -> str:
@@ -98,9 +104,28 @@ def paged(path: str, params: dict, k: str, cap: int, item_key: str):
 def tickers(text: str) -> set[str]:
     out = {m.upper() for m in re.findall(r"\$([A-Za-z]{1,5})\b", text)}
     for m in re.findall(r"\b([A-Z]{2,5})\b", text):
-        if m not in STOPWORDS:
+        if m not in STOPWORDS and m not in INDICATOR_BARE:
             out.add(m)
     return out
+
+
+def _post_key(r: dict) -> str:
+    return str(r["id"]) if r.get("id") is not None else f'{r.get("h")}|{r.get("dt")}'
+
+
+def merge_day_posts(existing: list[dict], fresh: list[dict]) -> list[dict]:
+    """同一个 ET 日的并集。键 = id；本轮抓到的那条整行覆盖旧的（曝光/收藏只会涨）。
+
+    09-10 事故：API 翻 7 页就报 has_next_page=false，旧写法用 "w" 把当日写成
+    116 条残片，盖掉了睡前速报那份 205 条 —— 「没翻到底」的警告在写盘之后才打印。
+    09-06 另有一例：thesetupfactory 06:48 ET 那条，第二轮 API 不再返回，照写就从
+    归档里消失，而它在 mentions.csv 里的行还在。
+    并集之后，一轮短抓只能往文件里加东西，不能再让它变短。
+    """
+    merged = {_post_key(r): r for r in existing}
+    for r in fresh:
+        merged[_post_key(r)] = r
+    return sorted(merged.values(), key=lambda x: x.get("dt") or "")
 
 
 def main() -> None:
@@ -193,9 +218,20 @@ def main() -> None:
     for r in rows:
         by_day.setdefault(r["et_date"], []).append(r)
     for d, rs in by_day.items():
-        with (OUT / "posts" / f"{d}.jsonl").open("w", encoding="utf-8") as f:
-            for r in sorted(rs, key=lambda x: x["dt"]):
+        fp = OUT / "posts" / f"{d}.jsonl"
+        old = []
+        if fp.exists():
+            with fp.open(encoding="utf-8") as f:
+                old = [json.loads(l) for l in f if l.strip()]
+        merged = merge_day_posts(old, rs)
+        with fp.open("w", encoding="utf-8") as f:
+            for r in merged:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        if old:
+            fresh_keys = {_post_key(r) for r in rs}
+            kept = sum(1 for r in merged if _post_key(r) not in fresh_keys)
+            print(f"posts/{d}.jsonl: 旧 {len(old)} · 本轮 {len(fresh_keys)} → 并集 {len(merged)}"
+                  + (f"（本轮没返回、从旧文件保留 {kept} 条）" if kept else ""))
 
     # mentions.csv 是 upsert，不是 append —— 同一个 ET 日期会被抓两次（两班制：
     # 02:00 JST 的睡前速报抓前半天，13:30 JST 的主班重抓全天），append 会把同一批
