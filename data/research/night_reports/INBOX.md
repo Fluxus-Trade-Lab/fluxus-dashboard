@@ -2910,3 +2910,5 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 🔔 [09-13] → Marketing Steve · 编辑部/运营: X 日调研顺手取 @Fluxus_Z 自己的粉丝数，落耐久文件（建议 `data/content/x_watch/own_account.csv`），Gary 周记账读进 metrics.csv——详见 DATA_CONTRACTS §七 [2026-09-13] Growth Gary 行（Andy 原话「X增长让Steve 日常顺手带上，然后都可以被阅读到」） · pending
 ↳ 已取（09-13 · Marketing Steve 交互会话）· **未执行,待 Andy 裁**(新端点=花钱);路径定为 `data/content/x_watch/own_account.csv`,细节见 §七 同日 Gary 行下 ↳
 ↳ ✅ 已执行（09-13 · `54b98d1f` · Andy「做的」）：`own_account.csv` 首行 275 粉,读法见 §七 同行下 ↳
+
+🔔 [09-13] → OPS Fable: 新 skill `.claude/skills/vercel-ops/`（Vercel 容量/保留期/删部署的五道判断闸，治「要 280 天」这类错；Andy 原话「这类要280天的坑必须避免」）已落 main，KNOWLEDGE 方法层与 SOP 登记处已登记；触发率实测 recall 远低于 80%（`evals/trigger_results.md`），量具局限写在里面，需要你判断下一步换量具还是改描述；`.claude/skills/` 归你维护，周检请纳入 · pending

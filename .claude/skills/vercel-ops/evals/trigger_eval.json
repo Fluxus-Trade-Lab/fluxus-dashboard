@@ -1,0 +1,22 @@
+[
+  {"query": "vercel又发邮件说storage快满了 让upgrade to pro 怎么处理", "should_trigger": true},
+  {"query": "fluxus-dashboard.vercel.app 打开是 503 DEPLOYMENT_PAUSED 是咋回事", "should_trigger": true},
+  {"query": "网站还停在上周三的数据，是不是没部署上去", "should_trigger": true},
+  {"query": "帮我看下现在部署存储多少了，还要多久能降下来", "should_trigger": true},
+  {"query": "把vercel上那些老的preview部署清掉一些吧", "should_trigger": true},
+  {"query": "production保留期现在两周，要不要再改短一点省空间", "should_trigger": true},
+  {"query": "vercel.json 里那个 ignoreCommand 能不能把 docs/ 目录的改动也排除掉", "should_trigger": true},
+  {"query": "今天是不是又每个commit都在触发构建？部署了多少次查一下", "should_trigger": true},
+  {"query": "升级Pro一个月20刀值不值，主要就是容量那个问题", "should_trigger": true},
+  {"query": "线上页面回滚到昨天那个版本，今天的改坏了", "should_trigger": true},
+  {"query": "用 Vercel AI SDK 写一个流式聊天的 route handler", "should_trigger": false},
+  {"query": "GitHub Actions 夜间 cron 又被丢了，查一下 backstop 跑了没", "should_trigger": false},
+  {"query": "universe.json 太大前端加载慢，能不能按字母拆成几个文件", "should_trigger": false},
+  {"query": "Supabase storage 的 bucket 权限怎么设成只读", "should_trigger": false},
+  {"query": "shortlist_feedback 同步 Google Sheets 又超时了", "should_trigger": false},
+  {"query": "Rotation 页那个绿色太亮了，换个颜色", "should_trigger": false},
+  {"query": ".git 目录有 542MB，要不要清一下历史", "should_trigger": false},
+  {"query": "Netlify 和 Vercel 哪个适合部署个人 Astro 博客", "should_trigger": false},
+  {"query": "IBKR TWS 断线了，GEX levels 今天没更新", "should_trigger": false},
+  {"query": "Substack 文章里的配图应该存在哪个目录", "should_trigger": false}
+]

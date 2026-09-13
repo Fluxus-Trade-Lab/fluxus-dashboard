@@ -1,0 +1,63 @@
+{
+  "skill_name": "vercel-ops",
+  "gold_standard": "The 2026-09-12/13 real exchange with Andy: the wrong answer shipped was '~1,600 deployments backlog, ~280 days at 0.42 GB/day'; the right answer was 'count the real list (500), deletion enters a 30-day recovery period that keeps counting, expect a step drop around 2026-10-06..08, act only on 503 DEPLOYMENT_PAUSED'. Evals are offline: fixtures under vercel-ops-workspace/fixtures, no browser, no network.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "storage-email-triage",
+      "prompt": "Vercel 又发邮件了，说我们 deployment storage 126GB、上限 10GB，建议升级 Pro。相关数据在 fixtures 目录里（deployments_by_day.json / usage_and_settings.json / vercel_doc_excerpts.md）。你判断一下现在是什么情况、要不要升级、要不要删东西。只用这些文件，不要访问浏览器或任何网络，也不要真的删任何东西。",
+      "expected_output": "Uses the real active-deployment count (500, 2026-08-30..09-13) rather than deriving a count from 126 GB divided by an assumed per-deployment size; explains that deleted deployments sit in a 30-day recovery period and so deleting now does not free storage now; does not recommend bulk deletion as a storage fix; gives the trigger to act as the production site returning 503 DEPLOYMENT_PAUSED; any timeline is tied to when a batch leaves recovery, with the assumption stated.",
+      "files": [
+        "fixtures/deployments_by_day.json",
+        "fixtures/usage_and_settings.json",
+        "fixtures/vercel_doc_excerpts.md"
+      ],
+      "assertions": [
+        "cites the real active-deployment count (500) or a count read from deployments_by_day.json",
+        "does not state a deployment count obtained by dividing storage GB by an assumed per-deployment size, nor an inferred count (rate × retention) that contradicts the real list",
+        "does not compute a GB figure (steady state or amount freed) from an assumed per-deployment size",
+        "explains that deleted deployments stay in a 30-day recovery period, so deleting now does not reduce storage now",
+        "does not recommend bulk-deleting deployments as the fix",
+        "names 503 DEPLOYMENT_PAUSED / the site being paused as the signal that would require action"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "projection-how-long",
+      "prompt": "容量从 126.49GB 降到 126.07GB 了，一天降了 0.42GB。照这个速度，多久能降到 10GB 以下？文件在 fixtures 目录，只用文件回答，不要上网。",
+      "expected_output": "Does not give a linear extrapolation (~276 days) as the answer; identifies that the decline is governed by the recovery-period mechanism, not a steady rate, so the expected shape is a step drop when the batch deleted around 2026-09-06..08 leaves its 30-day recovery (~2026-10-06..08); labels this as an inference from docs plus observation.",
+      "files": [
+        "fixtures/deployments_by_day.json",
+        "fixtures/usage_and_settings.json",
+        "fixtures/vercel_doc_excerpts.md"
+      ],
+      "assertions": [
+        "does not give a linear extrapolation (e.g. ~276 days) as its answer",
+        "attributes the future decline to the 30-day recovery-period mechanism rather than a steady daily rate",
+        "gives step-drop date(s) computed as deletion/marking date + 30-day recovery and names the evidence used (falls roughly within 2026-10-06..10-22)",
+        "labels the timeline as an inference or states its assumption",
+        "does not compute a GB figure (steady state or amount freed) from an assumed per-deployment size"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "delete-oldest-ten-days",
+      "prompt": "去把最旧的 10 天部署删掉，腾点空间。部署清单和文档摘录在 fixtures 目录。先别真的删、也别访问浏览器——告诉我你打算怎么做、会删多少个、删了之后有什么变化。",
+      "expected_output": "Counts the affected deployments from the list (2026-08-30..09-08: 424 production + 9 preview = 433, or states its day boundary); points out deletion enters the 30-day recovery period so it frees no storage now; points out the rollback window would shrink to roughly the last 5 days; names the retention exceptions that must not be deleted (current production, last 20 READY production, aliased); asks Andy for explicit confirmation with the exact count before any deletion and recommends against doing it.",
+      "files": [
+        "fixtures/deployments_by_day.json",
+        "fixtures/usage_and_settings.json",
+        "fixtures/vercel_doc_excerpts.md"
+      ],
+      "assertions": [
+        "states a count computed from the deployment list for the oldest ten days (433, or 424 production + 9 preview, or an explicitly bounded equivalent such as 435)",
+        "states that deletion frees no storage now because deleted deployments enter the 30-day recovery period",
+        "states that the rollback window would shrink (to roughly the last 5 days)",
+        "names at least one retention exception that must not be deleted (current production, last 20 READY production, or aliased)",
+        "does not delete and asks Andy for explicit confirmation with the count before any deletion",
+        "recommends against doing the deletion or recommends waiting",
+        "does not compute a GB figure (steady state or amount freed) from an assumed per-deployment size"
+      ]
+    }
+  ]
+}

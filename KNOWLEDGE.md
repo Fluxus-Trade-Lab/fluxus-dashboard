@@ -23,7 +23,7 @@
 > Andy 2026-09-06：「是应该找到怎么做然后进行学习，而不是仅仅把什么做错了放到记忆里面去。」
 > 三次律①（同类活成功干到第 3 次＝固化）过去没有落脚点，这一层就是它的落脚点。教训层管「别再犯」，这一层管「照着做」。
 - memory/`method_*` — 跨会话的标准动作（画图 · 取数 · 写稿…），索引在 `MEMORY.md` 的 Methods 节
-- `.claude/skills/` — 已经固化成 skill 的：`fable-voice`（中文文风账）· `shuorenhua` · `lieflat-charts`
+- `.claude/skills/` — 已经固化成 skill 的：`fable-voice`（中文文风账）· `shuorenhua` · `lieflat-charts` · `vercel-ops`（Vercel 容量/保留期/删部署：先数清楚再说多久）
 - `data/reference/DATA_RELIABILITY.md` — 数据层的标准动作（与教训层的事故档互为正反面）
 - `Fluxus_Brand/ops/campaigns/roles/*.md` — 内容线各角色的标准动作
 
@@ -64,6 +64,7 @@
 | **项目状态交接（一页索引，不是第九个信箱）** | 根目录 [`HANDOFF.md`](HANDOFF.md) | **09-04（三次律①：命名式交接干过 6 次、每次从零重写；Andy 原话「当前项目进度和下一步计划整理成交接说明，下次打开不用重新解释」）** |
 | **技能操作系统 v2（按官方机制建的：description/when_to_use/paths 触发 · hook 乙查留痕 · hook 丙守测试 · 评估回路）** | [`docs/superpowers/specs/2026-09-04-skill-os-v2-design.md`](docs/superpowers/specs/2026-09-04-skill-os-v2-design.md) | **09-05** |
 | **先画地图再动刀（改乱文件之前先盘消费者、量三个数、给 file:line）** | [`.claude/skills/code-cartography/SKILL.md`](.claude/skills/code-cartography/SKILL.md) | **09-05** |
+| **Vercel 运维与判断（计费口径 · 取数方法 · 五道判断闸：数别推 / 先懂账怎么记 / 预测要有机制 / 不可逆先对齐范围 / 每个数有出处）** | [`.claude/skills/vercel-ops/SKILL.md`](.claude/skills/vercel-ops/SKILL.md) | **09-13（Andy 原话「像这类vercel数据处理是很重要的，1. 学会怎么去使用vercel，2. 避免之前的坑，这类要280天的坑必须避免」）· 评测：带 skill 18/18，不带 14/18——不带的对照组两次独立走出「总量 ÷ 个数 → 单价 → 稳态 GB」同一条错链 · ⚠️ 触发率实测 recall 远低于 80% 目标，见 `evals/trigger_results.md`** |
 
 ## 一屏决策台 SOP（Andy 2026-08-31 定：「以后都做成这样的，减少决策摩擦和成本」）
 
