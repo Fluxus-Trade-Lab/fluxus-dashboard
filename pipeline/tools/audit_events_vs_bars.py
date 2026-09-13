@@ -38,8 +38,20 @@
    一次只毁掉库外票的损坏，这把尺子是瞎的。它量的是**整场**级别的错，不是逐行体检。
 2. **change_pct 恒为 0 的筛子测不了**：`healthy_charts` `ema21_watch` `momentum_97` `vcp`
    全史 100% 写 0.0（那是「本列不填」不是「涨跌为零」），本闸整列跳过。
-   于是 **2026-08-11/12/13/14 与 03-12/13 这 6 天可比行 <15 → 判「查不了」，不判绿**
-   （08-07~08-13 gainers 家族零行，正是 Finviz 改名事故那一周）。
+   于是 08-07 与 08-11/12/13 这一周（Finviz 改名，gainers 家族零行）在 change_pct 上可比行 <15。
+   **这一格 2026-09-14 起由第二条恒等式补上**（Nighty Zac）：`volume(某日, 某票)` 应等于
+   厂商 K 线**当日**那根 bar 的成交量。它和 change_pct 同行同快照，但**不共用任何算术**
+   （一个是两根收盘价之比，一个是一根 bar 的量），所以能在 change_pct 整列为空时单独判。
+   两条都 <15 才判「查不了」：现存只剩 **03-12 / 03-13**。
+   * **带是单边的，而且是自造的**：Finviz 快照量 ÷ yfinance 当日量 ∈ [0.90, 1.01]。
+     查过（reconciliation 的标准做法只规定「逐单元格比 + 容差」，不规定成交量容差是多少），无标准，
+     按实测定：Finviz 取数早于最终合并成交量，春夏的日子系统性偏低 1–3%（04-29 比值中位 0.981），
+     08-20 起中位 1.000；全史 7,275 行里比值 >1.01 的只有 5 行。对称 ±2% 会把 04-29 判成 0.567。
+   * **分辨率**（全史 113 个可判日）：干净日最差 **0.925**（08-14），中位 1.000；
+     非自身日的噪声底中位 0.17、最高 **0.304**；冻结坏行 08-07 = **0.125**（帧 = 08-06，1.000）、
+     08-17 = **0.24**（配不上任何单日）。判定线 `VOL_OK_RATE = 0.70` 落在 0.304 与 0.925 的空档里。
+     **时间切分复核**：带只用 06-15 前 66 天选，06-15 起 52 天上干净日最差 0.925 / 噪声最高 0.304，站得住。
+   * 看不见的：一场只偏了成交量级别（不是整场换帧）的错；以及量恰好在 ±10% 内相邻两日的票（噪声底就是它）。
 3. **K 线是复权价**：除息日的单日涨跌会差一个股息率量级（<1% 的量级）。
    容差 0.005 吃掉的正是这一类，代价是同量级的真错误也会被吃掉。
 4. **本地 K 线库是一张快照**（`fetched_at` 全库同一晚），它自己也可能是坏的。
@@ -83,6 +95,13 @@ NAME_FRAME_MIN = 0.70
 
 # 帧归属搜索的半径（交易日）。只在已经判红之后跑，用来给机制提供线索。
 FRAME_SPAN = 8
+
+# 第二条恒等式（volume）的单边带与判定线。**自造**，依据见 docstring 盲区 2 的实测。
+# 下沿宽、上沿紧：Finviz 快照早于最终合并成交量，只会少记不会多记（全史 >1.01 的 5/7,275 行）。
+VOL_LO = 0.90
+VOL_HI = 1.01
+# 干净日最差 0.925 / 噪声底最高 0.304 / 冻结坏行 0.125 与 0.24。0.70 落在空档里。
+VOL_OK_RATE = 0.70
 
 # 全史 100% 写 0.0 的筛子 —— 那是「本列不填」，不是涨跌为零。逐行按值跳过（见 _comparable）。
 _BLANK = {"", "0", "0.0", "0.00", "0.0000"}
@@ -173,15 +192,49 @@ def _rate(pairs: Sequence[Tuple[str, float]], store, cal_index, cal, day: str,
     return hit, n
 
 
+def _comparable_volume(rows: Sequence[Mapping[str, str]], day: str) -> List[Tuple[str, float]]:
+    """day 这一场每只票一个 volume。同一只票被几个筛子写了几遍，只算一次 ——
+    否则一只票出现在五个筛子里就投五票，坏日会被少数几只票的重复稀释或放大。"""
+    seen: Dict[str, float] = {}
+    for r in rows:
+        if r.get("date") != day:
+            continue
+        t = r.get("ticker")
+        if not t or t in seen:
+            continue
+        try:
+            v = float((r.get("volume") or "").strip())
+        except ValueError:
+            continue
+        if v > 0:
+            seen[t] = v
+    return list(seen.items())
+
+
+def _vol_rate(pairs: Sequence[Tuple[str, float]], store, cal_index, cal, day: str,
+              lo: float = VOL_LO, hi: float = VOL_HI) -> Tuple[int, int]:
+    """volume 对**当日**那根 bar 的成交量（不是前一日 —— 与 change_pct 不同，这里没有前收）。"""
+    hit = n = 0
+    for ticker, v in pairs:
+        bar = (store.get(ticker) or {}).get(day)
+        if not bar or not bar.get("volume"):
+            continue
+        n += 1
+        if lo <= v / bar["volume"] <= hi:
+            hit += 1
+    return hit, n
+
+
 def attribute_frame(pairs, store, cal_index, cal, day: str,
-                    span: int = FRAME_SPAN) -> List[Tuple[float, str, int]]:
+                    span: int = FRAME_SPAN, rate_fn=None) -> List[Tuple[float, str, int]]:
     """这一帧最像哪一天？**自造的量**，只在判红之后用来提供线索，不单独判红。"""
+    rate_fn = _rate if rate_fn is None else rate_fn
     if day not in cal_index:
         return []
     i = cal_index[day]
     out = []
     for cand in cal[max(0, i - span): i + span + 1]:
-        hit, n = _rate(pairs, store, cal_index, cal, cand)
+        hit, n = rate_fn(pairs, store, cal_index, cal, cand)
         if n >= MIN_N:
             out.append((hit / n, cand, n))
     out.sort(reverse=True)
@@ -223,8 +276,34 @@ def audit(archive: Path | None = None, store_dir: Path | None = None,
         + (f" —— 整场配的是 {r['frame']} 的帧" if r["frame"] else " —— 配不上任何单日")
         for d, r in sorted(bad.items()) if d not in declared
     ]
+
+    # 第二条恒等式：volume 对当日 bar。和上面独立判、独立报；声明对两条都生效。
+    vjudged: Dict[str, dict] = {}
+    vunjudgeable: List[Tuple[str, int]] = []
+    for day in days:
+        vpairs = _comparable_volume(rows, day)
+        hit, n = _vol_rate(vpairs, store, cal_index, cal, day)
+        if n < MIN_N:
+            vunjudgeable.append((day, n))
+            continue
+        rate = hit / n
+        rec = {"rate": rate, "hit": hit, "n": n, "frame": None, "frames": []}
+        if rate < VOL_OK_RATE:
+            frames = attribute_frame(vpairs, store, cal_index, cal, day, rate_fn=_vol_rate)
+            rec["frames"] = frames[:5]
+            if frames and frames[0][0] >= NAME_FRAME_MIN and frames[0][1] != day:
+                rec["frame"] = frames[0][1]
+        vjudged[day] = rec
+    vbad = {d: r for d, r in vjudged.items() if r["rate"] < VOL_OK_RATE}
+    violations += [
+        f"{d}: volume 只有 {r['hit']}/{r['n']} ({r['rate']:.1%}) 配得上厂商 K 线当日成交量"
+        + (f" —— 整场配的是 {r['frame']} 的帧" if r["frame"] else " —— 配不上任何单日")
+        for d, r in sorted(vbad.items()) if d not in declared
+    ]
     return {
         "judged": judged, "bad": bad, "unjudgeable": unjudgeable,
+        "volume": {"judged": vjudged, "bad": vbad, "unjudgeable": vunjudgeable},
+        "blind": [(d, n) for d, n in unjudgeable if d not in vjudged],
         "declared": dict(declared), "violations": violations,
         "store_tickers": len(store),
         "archive_tickers": len({r["ticker"] for r in rows if r.get("ticker")}),
@@ -237,12 +316,33 @@ def _fmt(res: dict) -> str:
     L.append(f"  判过的交易日: {len(res['judged'])}  (其中 {ok} 天 ≥{OK_RATE:.0%})")
     L.append(f"  覆盖: 本地 K 线库 {res['store_tickers']} 只 / 归档 {res['archive_tickers']} 只 "
              f"—— **这把尺子只量整场级别的错，不是逐行体检**")
-    if res["unjudgeable"]:
-        L.append(f"  查不了（可比读数 <{MIN_N}）: {len(res['unjudgeable'])} 天 —— "
+    vol = res["volume"]
+    vok = sum(1 for r in vol["judged"].values() if r["rate"] >= VOL_OK_RATE)
+    L.append(f"  volume 恒等式判过: {len(vol['judged'])} 天  (其中 {vok} 天 ≥{VOL_OK_RATE:.0%})")
+    rescued = [(d, n) for d, n in res["unjudgeable"] if d in vol["judged"]]
+    if rescued:
+        L.append(f"  change_pct 查不了、改由 volume 判: {len(rescued)} 天")
+        for d, n in rescued:
+            r = vol["judged"][d]
+            L.append(f"      {d}  change_pct n={n} · volume {r['hit']}/{r['n']} ({r['rate']:.1%})")
+    if res["blind"]:
+        L.append(f"  查不了（两条恒等式可比读数都 <{MIN_N}）: {len(res['blind'])} 天 —— "
                  "不判绿，见 docstring 盲区 2")
-        for d, n in res["unjudgeable"]:
+        for d, n in res["blind"]:
             L.append(f"      {d}  n={n}")
     L.append("")
+    for d, r in sorted(vol["bad"].items()):
+        entry = res["declared"].get(d)
+        L.append(f"  {'[declared]' if entry else '[UNDECLARED]'} {d}: "
+                 f"volume {r['hit']}/{r['n']} ({r['rate']:.1%}) 配得上当日成交量")
+        if entry and d not in res["bad"]:
+            L.append(f"      owner: {entry[0]}  (发现于 {entry[1]})")
+            L.append(f"      why:   {entry[2]}")
+        if r["frame"]:
+            L.append(f"      帧归属: **{r['frame']}** —— 整场的成交量是那一天的")
+        elif r["frames"]:
+            top = ", ".join(f"{c}={x:.3f}" for x, c, _ in r["frames"][:3])
+            L.append(f"      帧归属: 配不上任何单日（最高 {top}；噪声底 0.17–0.30）")
     for d, r in sorted(res["bad"].items()):
         entry = res["declared"].get(d)
         L.append(f"  {'[declared]' if entry else '[UNDECLARED]'} {d}: "
