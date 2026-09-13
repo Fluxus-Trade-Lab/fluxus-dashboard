@@ -43,7 +43,8 @@ hr.r.ink{border-top:1.5px solid var(--ink)}
 
 .drop{display:block;width:100%;height:auto;overflow:visible}
 .drop path{fill:none;stroke:var(--accent);stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.drop.thin{margin-top:18px;height:46px}
+.drop .dropdot{fill:var(--sheet);stroke:var(--accent);vector-effect:non-scaling-stroke}
+.drop.thin{margin:18px auto 0;width:84%;height:auto}
 .drop.fmark{width:64px;height:14px}
 .drop.fmark path{stroke:var(--muted)}
 .reg{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:9px 0 0}

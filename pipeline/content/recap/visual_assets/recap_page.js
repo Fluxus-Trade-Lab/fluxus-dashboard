@@ -157,14 +157,19 @@
     return { d: d, h: (maxy - miny) * k, arc: arc / 1000 };
   }
 
-  function dropSvg(dl, stroke, klass, aria, pad) {
+  function dropSvg(dl, stroke, klass, aria, pad, dot) {
     if (!dl) {
       return '<p class="reg">' + DASH + "</p>";
     }
     var p = pad === undefined ? 6 : pad;
+    var mark = "";
+    if (dot) {
+      var q = dl.d.split(" ").pop().split(",");
+      mark = '<circle class="dropdot" style="stroke-width:' + stroke + '" cx="' + q[0] + '" cy="' + q[1] + '" r="' + (dot * (1000 + 2 * p) / (704 * 0.84)).toFixed(2) + '"/>';
+    }
     return '<svg class="drop ' + klass + '" viewBox="' + (-p) + " " + (-p) + " " + (1000 + 2 * p) + " " +
       (dl.h + 2 * p).toFixed(1) + '" role="img" aria-label="' + esc(aria) + '">' +
-      '<path style="stroke-width:' + stroke + '" d="' + dl.d + '"/></svg>';
+      '<path style="stroke-width:' + stroke + '" d="' + dl.d + '"/>' + mark + "</svg>";
   }
 
   function regLine(is, dl) {
@@ -588,8 +593,8 @@
     var dl = dropLine(is.spx);
     var s = is.state || {};
     var nVotes = list(is.verd && is.verd.votes).length;
-    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia) + regLine(is, dl) +
-      '<h2 class="hl-a">' + esc(c.title) + '</h2><p class="byline">' + esc(c.subtitle) + "</p>" +
+    var s1 = '<article class="sheet a">' + mast(is, V) + dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5) + regLine(is, dl) +
+      '<h2 class="hl-a">' + esc(c.title) + "</h2>" +
       sec(false, L.big_picture, "", '<p class="prose">' + rich(c.big_picture) + "</p>") +
       sec(false, L.index_action, "", safe(function () { return indexTable(is, c); })) +
       (is.weekly ? sec(false, V.score, "", safe(function () { return scorecard(is); })) : "") +
