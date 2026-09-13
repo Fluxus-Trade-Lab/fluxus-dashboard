@@ -630,6 +630,11 @@ JSON schema(所有 library 文章通用):
   **不用动的**：线的算法（`dropLine()`）、弧长归一化、B 版（`hero` class 的整版大图）除了同样加 `dot=True` 外不用改宽度——Andy 明确说「宽度方面不要太撑住全部空间」，`.drop.thin{height:46px}` 这条 CSS 高度封顶本来就已经满足；情绪编码落点（大小/环/刻度/收尾变粗）四个方向已经被否，不要复用。
   同步完发我一声，我核一遍真实渲染。
   ↳ **撤销（Visual Vera，09-13 同晚）：本行作废，什么都不用改。** Andy 看完定稿预览原话「太粗了！！方案取消，换成原来的。」——掉落线维持现状：`dropSvg(dl, 2.5, "thin", …)` 细线、无落点、`byline` 副标题保留。`recap_page.js` / `recap_visual.css` / 模板三处都不动；Visual 线源头已 revert（design/marketing-visual）。daily-recap skill 裁决记录已补一条，防止再被提出。
+  ↳ **再更正（Visual Vera，09-13 更晚）：上面的「撤销」只撤了加粗，请按这里落地。** Andy 原话依次：「落点 / 删副标题是要的。」「让线尽量在宽度和高度上占领视觉空间的中心大部分。」预览 [artifact 058faf91](https://claude.ai/code/artifact/058faf91-ced9-4c9a-9477-e14a99dfe176)，源头 design/marketing-visual 的两个 `build_recap*.py`。三处：
+  1. `visual_assets/recap_visual.css`：`.drop.thin{margin-top:18px;height:46px}` 改成 `.drop.thin{margin:18px auto 0;width:84%;height:auto}`；在 `.drop path{…}` 之后加 `.drop .dropdot{fill:var(--sheet);stroke:var(--accent);vector-effect:non-scaling-stroke}`。`recap_local.css` 打印段的 `.drop.thin{margin-top:12px}` 不用动（只覆盖上边距，左右 auto 保留）。
+  2. `visual_assets/recap_page.js` 的 `dropSvg(dl, stroke, klass, aria, pad)` 加第 6 个参数 `dot`（空心圆半径，渲染像素）：`var mark = ""; if (dot) { var q = dl.d.split(" ").pop().split(","); mark = '<circle class="dropdot" style="stroke-width:' + stroke + '" cx="' + q[0] + '" cy="' + q[1] + '" r="' + (dot * (1000 + 2 * p) / (704 * 0.84)).toFixed(2) + '"/>'; }`，把 `mark` 拼在 `</path>` 之后、`</svg>` 之前。sheet-1 那次调用改成 `dropSvg(dl, 2.5, "thin", V.droparia, 6, 4.5)`。**线宽保持 2.5**（CSS 是非缩放描边，这个数就是屏幕像素，别换算）。`fmark` 与 B 版 `hero` 不动。
+  3. 同一函数里 `'<p class="byline">' + esc(c.subtitle) + "</p>"` 删掉。如果 gates/页面填充检查依赖副标题占的高度，按实际渲染调；`content_*.json` 里的 `subtitle` 字段留不留由你定（X 帖和交付说明可能还在用）。
+  daily-recap skill 末尾那条裁决已同步改成定稿版。落地后发我一声，我对着真实 p1.png 核一遍。
 
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
