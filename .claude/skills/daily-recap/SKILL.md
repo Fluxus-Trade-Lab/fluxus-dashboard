@@ -108,3 +108,11 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
   2. **macOS 截图文件名**含 U+202F（PM 前的窄不换行空格）——路径永不手打，用 glob 取真实路径、`Path.as_uri()` 编码
   3. **weasyprint 环境**：PEP 668 挡 pip --user，装在 venv（当前 /tmp/pdfenv，重启即失；固化位置待迁 pipeline/content/）
   4. **成品终检三件套**：pdftotext 禁词 grep（Spec §4 名单 + 领导力）必须 0 命中 · 每页 rasterize 过目 · 图片渲染进来了没有（weasyprint 图片路径错是静默跳过，不报错）
+
+### [2026-09-13] 自动化立项：四条裁决 + 持仓口径（设计全文 `docs/superpowers/specs/2026-09-13-daily-recap-automation-design.md`，Andy「Spec同意」）
+- **Big Picture 以字幕叙事为主**（他选「照原 spec，字幕叙事为主」）：对 Big Picture 取代三条法 C 的「判断句只取他原话」；其余节的数据规则不变，教学选题的命名权仍归他
+- **教育选题**（他选「早上递 A/B，挑完出成品」）：机器出两个、他挑一个，不回就等，永不替他选；调试样张默认 A 并在交付说明写明
+- **送达**「10:30 JST 前」· **首跑**「09-15 周二」· 首跑前先交过去一周样张（他原话「先做过去这一周的每天复盘和每周复盘，作为调试的样本」）
+- **持仓只用 R 与 %**（他原话「管线只做R 和%, 不写股数和美元」）：Portfolio Update 从 GAS 直取、只算 R/%——**取代 09-06「以他最后交付物/截图为权威」那条**
+- **仓库是公开的**：字幕、材料包、PDF、持仓数据一律不进 git，只存本机
+- weasyprint 环境固化位置定为 `~/.venvs/fluxus-recap`（取代上文 gotcha 3 的 /tmp/pdfenv）
