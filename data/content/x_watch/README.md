@@ -174,6 +174,7 @@
 | `posts/<ET日>.jsonl` | **按 `id` 并集**,不覆盖。同一条帖被重抓时整行换成新的 | **曝光/收藏/回复读这里** —— 它是最新值 |
 | `mentions.csv` | **首次抓到时的快照**。upsert 规定已存在的行整行保留,所以 `views`/`bookmarks` 停在第一次被抓到那一刻(睡前速报抓过的票,停在 13:00 ET 的数) | **只拿它计人数和回填 stance**,别拿它的曝光排序。行尾是 **CRLF**,改它只用 csv 模块 |
 | `members.json` | Andy 截图录入的名册。API 成员接口对私密 List 永远返回空,脚本读不到就跳过、不覆盖 | 34 人为准 |
+| `own_account.csv` | **@Fluxus_Z 自己的**粉丝/关注/发帖数。每次跑 `fetch.py` 顺手取一次,按 `date_et` upsert(两班同日抓,后抓的留下),末行 = 最新。取不到写空、`source` 写原因,不估 | Growth Gary 周记账读末行进 `metrics.csv` 的 `x_followers`(09-13 挂单)|
 
 **提交 `mentions.csv` 前的自检**:`python3 data/content/x_watch/tools/check_mentions.py`,退出码非 0 不许提交。
 ⛔ **别再用 `git diff | grep '^-'`** —— 有 stance 回填的日子它必然报红,数的是改行不是丢行(09-11 实测数出 35,正好等于当班回填条数,丢行是 0)。

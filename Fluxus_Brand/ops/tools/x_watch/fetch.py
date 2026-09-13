@@ -12,6 +12,7 @@
 产出:
     data/content/x_watch/posts/YYYY-MM-DD.jsonl  (按 id 并集，不覆盖)
     data/content/x_watch/members.json
+    data/content/x_watch/own_account.csv     (@Fluxus_Z 自己的读数,按 date_et upsert)
     data/content/x_watch/mentions.csv        (累加)
     data/content/x_watch/runlog.csv          (累加)
 """
@@ -113,6 +114,43 @@ def _post_key(r: dict) -> str:
     return str(r["id"]) if r.get("id") is not None else f'{r.get("h")}|{r.get("dt")}'
 
 
+OWN_COLS = ["date_et", "followers", "following", "tweets", "fetched_utc", "source"]
+OWN_SRC = "twitterapi.io /twitter/user/info"
+
+
+def own_account_row(resp: dict, date_et: str, fetched_utc: str) -> dict:
+    """@Fluxus_Z 自己的账号读数。取不到就写空、source 写原因,**不估**。
+
+    Growth Gary 09-13 挂单(Andy 原话「X增长让Steve 日常顺手带上,然后都可以被阅读到」):
+    metrics.csv 的 x_followers 自建表以来全空,因为 WebFetch x.com 回 402。
+    """
+    u = resp.get("data") if isinstance(resp, dict) else None
+    row = {"date_et": date_et, "fetched_utc": fetched_utc,
+           "followers": "", "following": "", "tweets": ""}
+    if not isinstance(u, dict) or u.get("followers") is None:
+        why = (resp.get("msg") if isinstance(resp, dict) else None) or "空响应"
+        row["source"] = f"取不到: {why}"
+        return row
+    row.update(followers=u.get("followers"), following=u.get("following", ""),
+               tweets=u.get("statusesCount", ""), source=OWN_SRC)
+    return row
+
+
+def upsert_own_account(path: Path, row: dict) -> None:
+    """按 date_et upsert:同一个 ET 日两班都抓,后抓的那行留下;按日期排序,末行 = 最新。"""
+    rows = {}
+    if path.exists():
+        with path.open(newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                rows[r["date_et"]] = r
+    rows[row["date_et"]] = row
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=OWN_COLS)
+        w.writeheader()
+        for d in sorted(rows):
+            w.writerow({c: rows[d].get(c, "") for c in OWN_COLS})
+
+
 def merge_day_posts(existing: list[dict], fresh: list[dict]) -> list[dict]:
     """同一个 ET 日的并集。键 = id；本轮抓到的那条整行覆盖旧的（曝光/收藏只会涨）。
 
@@ -135,6 +173,7 @@ def main() -> None:
     ap.add_argument("--list-id", default=LIST_ID)
     ap.add_argument("--probe", action="store_true", help="只拉 1 页，打印字段与花费，不落盘")
     ap.add_argument("--max-pages", type=int, default=40)
+    ap.add_argument("--own-handle", default="Fluxus_Z")
     a = ap.parse_args()
     k = key()
     started = datetime.now(timezone.utc)
@@ -183,6 +222,16 @@ def main() -> None:
             [{"h": x.get("userName"), "name": x.get("name"),
               "followers": x.get("followers"), "bio": (x.get("description") or "")[:200]}
              for x in mem], ensure_ascii=False, indent=1))
+
+    # 自己的账号读数:一次请求,失败不致命(get 出错走 sys.exit,这里接住)
+    try:
+        own_resp = get("/twitter/user/info", {"userName": a.own_handle}, k)
+    except SystemExit as e:
+        own_resp = {"msg": str(e)}
+    own = own_account_row(own_resp, datetime.now(ET).strftime("%Y-%m-%d"),
+                          datetime.now(timezone.utc).isoformat(timespec="seconds"))
+    upsert_own_account(OUT / "own_account.csv", own)
+    print(f"own_account.csv ← @{a.own_handle} {own['date_et']} 粉丝 {own['followers'] or '空'} · {own['source']}")
 
     raw, pages = paged("/twitter/list/tweets", {"listId": a.list_id}, k,
                        a.max_pages, "tweets")

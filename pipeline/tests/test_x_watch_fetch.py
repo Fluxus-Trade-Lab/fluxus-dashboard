@@ -71,3 +71,32 @@ def test_dollar_prefixed_indicator_names_still_count(text, sym):
 
 def test_ordinary_bare_tickers_still_count():
     assert "NVDA" in fx.tickers("NVDA looks strong")
+
+
+# --------------------------------------------------------------------------
+# own_account —— @Fluxus_Z 自己的粉丝数(Growth Gary 09-13 挂单)
+# --------------------------------------------------------------------------
+
+def test_own_account_maps_the_real_fields():
+    resp = {"status": "success", "data": {"followers": 275, "following": 534, "statusesCount": 895}}
+    r = fx.own_account_row(resp, "2026-09-12", "2026-09-13T03:10:00+00:00")
+    assert (r["followers"], r["following"], r["tweets"]) == (275, 534, 895)
+    assert r["source"] == fx.OWN_SRC
+
+
+@pytest.mark.parametrize("resp", [{}, {"msg": "Credits is not enough"}, {"data": {}}, None])
+def test_own_account_failure_writes_blank_with_reason_not_a_guess(resp):
+    r = fx.own_account_row(resp, "2026-09-12", "t")
+    assert r["followers"] == "" and r["source"].startswith("取不到")
+
+
+def test_own_account_upsert_keeps_one_row_per_et_day_latest_last(tmp_path):
+    p = tmp_path / "own.csv"
+    mk = lambda d, n: {"date_et": d, "followers": n, "following": 1, "tweets": 1,
+                       "fetched_utc": "t", "source": "s"}
+    fx.upsert_own_account(p, mk("2026-09-12", 270))
+    fx.upsert_own_account(p, mk("2026-09-11", 260))
+    fx.upsert_own_account(p, mk("2026-09-12", 275))   # 同日第二班
+    lines = p.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 3
+    assert lines[-1].startswith("2026-09-12,275,")
