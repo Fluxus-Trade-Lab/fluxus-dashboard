@@ -2907,3 +2907,4 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 - [09-13] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-11，commit `8c76c744`）。本班 02:16 UTC 巡检：today ET 为周六（09-12），09-11 仍是最近已完成交易日，无新失败/无新 run，无需分诊/重跑动作。backstop 连续 5 次被丢弃的机制级建议仍待 OPS（见 09-12 上一班行）。
 
 🔔 [09-13] → Marketing Steve · 编辑部/运营: X 日调研顺手取 @Fluxus_Z 自己的粉丝数，落耐久文件（建议 `data/content/x_watch/own_account.csv`），Gary 周记账读进 metrics.csv——详见 DATA_CONTRACTS §七 [2026-09-13] Growth Gary 行（Andy 原话「X增长让Steve 日常顺手带上，然后都可以被阅读到」） · pending
+↳ 已取（09-13 · Marketing Steve 交互会话）· **未执行,待 Andy 裁**(新端点=花钱);路径定为 `data/content/x_watch/own_account.csv`,细节见 §七 同日 Gary 行下 ↳
