@@ -88,24 +88,14 @@ FRAME_SPAN = 8
 _BLANK = {"", "0", "0.0", "0.00", "0.0000"}
 
 # 日期 -> (owner, 发现日, 理由)。改这张表 = 打一张新欠条，请照体例写清出处。
-DECLARED: Dict[str, Tuple[str, str, str]] = {
-    "2026-08-07": (
-        "DATA ALEX", "2026-09-11",
-        "整场偏一天：当日 72 个可比 change_pct **0 个**配 08-07 的 K 线、**72/72 配 08-06 的**；"
-        "volume 独立复述同一句话（77/77 配 08-06、2/77 配自己）。当天 604 行全部来自 preset:* "
-        "（gainers 家族因 Finviz 改名 e8ac440e 在 08-07~08-13 是零行）。"
-        "此前三把闸都看不见它：内部一致、行数正常、days_since 不适用。"
-        "修法归数据端：重算或撤下该日的 604 行",
-    ),
-    "2026-08-17": (
-        "DATA ALEX", "2026-09-06",
-        "已由 audit_event_agreement / audit_progress 声明（65bbb080 的手动重跑 + e2554467 的预设回填）。"
-        "⚠️ 本闸给的补充是**否定性**的：该日 preset 行在厂商 K 线下配不上**任何**单日"
-        "（±25 日内最高 0.202，噪声底 0.10–0.14），也配不上任何累计窗口 —— "
-        "所以『整日携带 08-14 读数』这个机制，在我能测的 99 只票上得不到外部支持。"
-        "『撤下该日 preset:* 行』这个动作不受影响；受影响的是写在旁边的那句机制",
-    ),
-}
+#
+# 已还清的欠条（2026-09-13 DATA ALEX，原行冻在 pipeline/tests/fixtures/events_vs_bars/ 当真阳性对照）：
+#   2026-08-07  整场偏一天 —— backfill_preset_hits 用 UTC 日历日给 universe.json 快照定日期，
+#               08-06 21:08 ET 的 69754ed3 被记成 08-07。snapshot_dates 改按 ET 场次挑、并排除下一场盘前
+#               之后的提交，重算后该日 preset 行来自 7c162f49；change_pct 那周因 Finviz 改名为空，判「查不了」。
+#   2026-08-17  配不上任何单日 —— 旧快照是周一盘前的手动重跑 65bbb080；重算改用 422e9270（行内 bar_date=08-17），
+#               151/151 配当日 K 线。
+DECLARED: Dict[str, Tuple[str, str, str]] = {}
 
 
 def load_store(store_dir: Path | None = None) -> Dict[str, Dict[str, dict]]:

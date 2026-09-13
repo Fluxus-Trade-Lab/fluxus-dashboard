@@ -34,7 +34,7 @@ import pandas as pd
 
 from pipeline.screeners.preset_hits import PREFIX, extract_preset_events, load_presets
 from pipeline.screeners.ticker_events import EVENT_COLUMNS, load_events, write_events
-from pipeline.tools.backfill_ticker_events import snapshot_dates
+from pipeline.tools.backfill_ticker_events import GIT_LOG_FORMAT, snapshot_dates
 
 logger = logging.getLogger(__name__)
 _REPO = Path(__file__).resolve().parents[2]
@@ -44,6 +44,30 @@ _DEFAULT_CSV = _REPO / 'data' / 'history' / 'ticker_events.csv'
 def _git(args: List[str]) -> str:
     return subprocess.run(['git', *args], cwd=_REPO, check=True,
                           capture_output=True, text=True).stdout
+
+
+def payload_disagrees(payload: Dict[str, Any], session: str) -> str | None:
+    """Why this snapshot's own data contradicts its session label, or None.
+
+    The label comes from the commit clock (snapshot_dates). The payload carries
+    two clocks of its own: `timestamp` (when it was generated) and, since
+    2026-08-17, a per-row `bar_date`. Either one naming another session means
+    the file holds another day's tape -- skip it rather than stamp it. Absent
+    fields are not evidence either way."""
+    from pipeline.marketcal import last_completed_session
+    import datetime as dt
+    stamp = payload.get('timestamp')
+    if stamp:
+        try:
+            gen = last_completed_session(dt.datetime.fromisoformat(str(stamp).replace('Z', '+00:00'))).isoformat()
+        except ValueError:
+            gen = None
+        if gen and gen != session:
+            return f'timestamp says {gen}'
+    bars = {r.get('bar_date') for r in (payload.get('rows') or [])[:200] if r.get('bar_date')}
+    if bars and session not in bars:
+        return f"bar_date says {sorted(bars)[-1]}"
+    return None
 
 
 def merge_preset_rows(frame: pd.DataFrame, rows: List[Dict[str, Any]]) -> pd.DataFrame:
@@ -63,18 +87,22 @@ def main(argv: List[str] | None = None) -> int:
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--csv', default=str(_DEFAULT_CSV))
     ap.add_argument('--since', default=None, help='ISO date; only dates >= this')
+    ap.add_argument('--dates', default=None,
+                    help='comma-separated ISO sessions; only these (targeted repair)')
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 
     frame = load_events(args.csv)
     archive_dates = set(frame['date'].astype(str)) if len(frame) else set()
-    pairs = snapshot_dates(_git(['log', '--format=%H %ad', '--date=short', '--',
+    pairs = snapshot_dates(_git(['log', GIT_LOG_FORMAT, '--',
                                  'data/output/universe.json']))
     presets = load_presets()
     rows: List[Dict[str, Any]] = []
     skipped = Counter()
     for sha, date in pairs:
         if args.since and date < args.since:
+            continue
+        if args.dates and date not in set(args.dates.split(',')):
             continue
         if date not in archive_dates:
             skipped['not in archive'] += 1
@@ -83,6 +111,11 @@ def main(argv: List[str] | None = None) -> int:
             payload = json.loads(_git(['show', f'{sha}:data/output/universe.json']))
         except (subprocess.CalledProcessError, json.JSONDecodeError):
             skipped['unreadable'] += 1
+            continue
+        why = payload_disagrees(payload, date)
+        if why:
+            skipped[f'snapshot is another session ({why})'] += 1
+            logger.warning('%s  %s: %s -- skipped', date, sha[:8], why)
             continue
         urows = payload.get('rows') or []
         day = extract_preset_events(urows, presets, date)

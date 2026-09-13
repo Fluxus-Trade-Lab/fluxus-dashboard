@@ -17,6 +17,8 @@ and never interpolates. Use --dry-run's per-month counts to spot holes.
 
 from __future__ import annotations
 
+import datetime as dt
+
 import argparse
 import json
 import logging
@@ -26,6 +28,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+from pipeline.marketcal import MARKET_TZ, is_trading_day, last_completed_session
 from pipeline.screeners.ticker_events import (
     SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
     load_events, load_sessions, rolling_momentum_median, upsert_day,
@@ -39,21 +42,66 @@ _DEFAULT_CSV = _REPO / 'data' / 'history' / 'ticker_events.csv'
 _DEFAULT_SESSIONS_CSV = _REPO / 'data' / 'history' / 'breadth_archive.csv'
 
 
-def snapshot_dates(git_log_output: str) -> List[Tuple[str, str]]:
-    """Parse '<sha> <date>' lines (git's newest-first order) -> oldest-first.
+# `--format` every caller must pass to `git log` for snapshot_dates: the full
+# author instant WITH its offset. The short calendar-date form is the bug
+# this replaced (see snapshot_dates).
+GIT_LOG_FORMAT = '--format=%H %aI'
 
-    One commit per date: git lists newest first, so the first line seen for a
-    date is that day's final committed state.
+
+PREMARKET_OPEN = dt.time(4, 0)
+
+
+def _next_premarket(session: dt.date) -> dt.datetime:
+    """04:00 ET on the first trading day after `session`."""
+    day = session + dt.timedelta(days=1)
+    while not is_trading_day(day):
+        day += dt.timedelta(days=1)
+    return dt.datetime.combine(day, PREMARKET_OPEN, tzinfo=MARKET_TZ)
+
+
+def snapshot_dates(git_log_output: str) -> List[Tuple[str, str]]:
+    """Parse '<sha> <ISO-8601 instant with offset>' lines (git's newest-first
+    order) -> oldest-first (sha, ET session).
+
+    Each commit is labelled with the session its data can hold:
+    `marketcal.last_completed_session` at the commit instant, in ET.
+
+    The first version read git's short-date output, i.e. the calendar day in the
+    commit's OWN timezone. The nightly cron commits in UTC, so `69754ed3`
+    (2026-08-07 01:08 UTC = 08-06 21:08 ET, holding the 08-06 session) was
+    stamped 2026-08-07, and the preset backfill wrote the 08-06 tape under
+    08-07: 72/72 change_pct matched the 08-06 bars, 0/72 the 08-07 bars
+    (Nighty Zac, audit_events_vs_bars, 2026-09-11). Same family as the
+    `--date=format:` bug in pitfall_the_exemption_makes_the_check_green.
+
+    A commit made once the NEXT session's premarket has begun (04:00 ET) is
+    not a snapshot of any session and is dropped: its bars still end on the
+    previous close, but vendor fields are live -- `05cf2a1c` reverted exactly
+    such a run ("09:18 UTC dispatch pulled Finviz PREM"). Without this rule the
+    newest-wins pick below would let a Monday-premarket manual run (`65bbb080`,
+    `8fb939f`) or a daytime dev commit (`fbf2c0fb`) displace the clean
+    post-close snapshot of the Friday before.
+
+    A bare date is rejected, not guessed: it carries no clock, and the clock is
+    what decides the session. One commit per session: git lists newest first,
+    so the first line seen for a session is its final committed state.
     """
     seen: Dict[str, str] = {}
     for line in git_log_output.splitlines():
         parts = line.split()
         if len(parts) != 2:
             continue
-        sha, date = parts
-        if len(date) != 10 or date.count('-') != 2:
+        sha, stamp = parts
+        try:
+            ts = dt.datetime.fromisoformat(stamp.replace('Z', '+00:00'))
+        except ValueError:
             continue
-        seen.setdefault(date, sha)
+        if ts.tzinfo is None:
+            continue
+        session = last_completed_session(ts)
+        if ts.astimezone(MARKET_TZ) >= _next_premarket(session):
+            continue
+        seen.setdefault(session.isoformat(), sha)
     return [(seen[d], d) for d in sorted(seen)]
 
 
@@ -102,7 +150,7 @@ def _commits_for(screener: str) -> str:
     # --follow keeps history across a rename of the screener's output file;
     # without it a renamed file looks like it has no history at all, and its
     # dates would appear "skipped" by accident (see plan_purge).
-    return _git(['log', '--follow', '--format=%H %ad', '--date=short', '--',
+    return _git(['log', '--follow', GIT_LOG_FORMAT, '--',
                  f'data/output/{screener}.json'])
 
 

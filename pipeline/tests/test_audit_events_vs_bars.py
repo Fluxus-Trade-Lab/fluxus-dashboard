@@ -214,33 +214,39 @@ _real = pytest.mark.skipif(
     reason="真归档或本地 K 线库不在这棵树上")
 
 
+FROZEN = Path(__file__).parent / "fixtures" / "events_vs_bars"
+
+
 @_real
-def test_the_real_archive_puts_08_07_on_the_previous_sessions_frame():
-    """真阳性对照之一：08-07 这一天不是合成的，它真的偏了一整场。"""
-    res = A.audit()
+def test_the_08_07_rows_as_first_written_sit_on_the_previous_sessions_frame():
+    """真阳性对照之一，已冻成夹具。2026-09-13 DATA ALEX 按 ET 场次重挑快照、重算了该日
+    preset 行，真归档里不再有这一天的坏行 —— 原样冻结，免得对照随修复一起消失
+    （pitfall_positive_control_vanished_when_vendor_healed）。"""
+    res = A.audit(FROZEN / "ticker_events_2026-08-07_as_written.csv", declared={})
     rec = res["judged"]["2026-08-07"]
     assert rec["rate"] < 0.10
     assert rec["frame"] == "2026-08-06"
-    assert res["violations"] == []          # 它已被声明；棘轮今天该是绿的
+    assert res["violations"], "未声明的坏日必须判红"
 
 
 @_real
-def test_the_real_archive_refuses_to_name_a_frame_for_08_17():
-    """08-17 是「坏，但说不出来自哪一天」那一类。闸不许替它编一个机制。"""
-    rec = A.audit()["judged"]["2026-08-17"]
+def test_the_08_17_rows_as_first_written_get_no_invented_frame():
+    """08-17 是「坏，但说不出来自哪一天」那一类。闸不许替它编一个机制。（同上，已冻成夹具）"""
+    rec = A.audit(FROZEN / "ticker_events_2026-08-17_as_written.csv", declared={})["judged"]["2026-08-17"]
     assert rec["rate"] < 0.50
     assert rec["frame"] is None
 
 
 @_real
-def test_the_real_archive_is_otherwise_clean_and_the_gap_is_wide():
-    """阴性对照 + 分辨率：干净日和坏日之间要有实测空档，判定线才不是拍的。"""
+def test_the_real_archive_is_clean_and_the_gap_to_the_frozen_bad_days_is_wide():
+    """阴性对照 + 分辨率：真归档今天没有坏日；它最差的一天和冻结的坏日之间要有实测空档，
+    判定线才不是拍的。"""
     res = A.audit()
-    bad = set(res["bad"])
-    assert bad == {"2026-08-07", "2026-08-17"}
-    clean = [r["rate"] for d, r in res["judged"].items() if d not in bad]
-    assert min(clean) > 0.90                       # 最差的干净日
-    assert max(res["judged"][d]["rate"] for d in bad) < 0.50   # 最好的坏日
+    assert set(res["bad"]) == set()
+    assert min(r["rate"] for r in res["judged"].values()) > 0.90      # 最差的干净日
+    worst_bad = max(A.audit(FROZEN / f"ticker_events_{d}_as_written.csv", declared={})["judged"][d]["rate"]
+                    for d in ("2026-08-07", "2026-08-17"))
+    assert worst_bad < 0.50                                           # 最好的坏日
 
 
 @_real

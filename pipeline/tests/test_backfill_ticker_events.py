@@ -5,20 +5,60 @@ import pytest
 class TestSnapshotDates:
     def test_parses_and_orders_oldest_first(self):
         from pipeline.tools.backfill_ticker_events import snapshot_dates
-        log = "ccc 2026-05-06\nbbb 2026-05-05\naaa 2026-05-04\n"
+        log = ("ccc 2026-05-06T22:10:00Z\nbbb 2026-05-05T22:10:00Z\n"
+               "aaa 2026-05-04T22:10:00Z\n")
         assert snapshot_dates(log) == [('aaa', '2026-05-04'), ('bbb', '2026-05-05'),
                                        ('ccc', '2026-05-06')]
 
     def test_one_commit_per_date_keeps_last_of_day(self):
         """git log is newest-first, so the FIRST line for a date is that day's final state."""
         from pipeline.tools.backfill_ticker_events import snapshot_dates
-        log = "late 2026-05-05\nearly 2026-05-05\naaa 2026-05-04\n"
+        log = ("late 2026-05-06T01:30:00Z\nearly 2026-05-05T22:10:00Z\n"
+               "aaa 2026-05-04T22:10:00Z\n")
         assert snapshot_dates(log) == [('aaa', '2026-05-04'), ('late', '2026-05-05')]
 
     def test_ignores_blank_and_malformed_lines(self):
         from pipeline.tools.backfill_ticker_events import snapshot_dates
-        log = "\naaa 2026-05-04\ngarbage\n\n"
+        log = "\naaa 2026-05-04T22:10:00Z\ngarbage\nbbb not-a-time\n\n"
         assert snapshot_dates(log) == [('aaa', '2026-05-04')]
+
+    def test_a_utc_evening_commit_is_the_et_session_before_it(self):
+        """The 2026-08-07 bug: 69754ed3 committed 08-07 01:08 UTC = 08-06 21:08
+        ET and held the 08-06 tape. --date=short stamped it 08-07; 72/72 of
+        that day's preset change_pct matched the 08-06 bars."""
+        from pipeline.tools.backfill_ticker_events import snapshot_dates
+        assert snapshot_dates("69754ed3 2026-08-07T01:08:23Z") == [('69754ed3', '2026-08-06')]
+
+    def test_a_weekend_commit_is_friday(self):
+        """Sunday 7c162f49 (13:29 ET) holds Friday 08-07's tape."""
+        from pipeline.tools.backfill_ticker_events import snapshot_dates
+        assert snapshot_dates("7c162f49 2026-08-09T17:29:01Z") == [('7c162f49', '2026-08-07')]
+
+    def test_a_next_premarket_or_daytime_commit_never_displaces_the_post_close_one(self):
+        """Real 08-14 history, newest first: a Monday daytime dev commit and a
+        Monday-premarket manual run both came AFTER the clean Friday cron
+        snapshot. Newest-wins alone would have picked the dev commit."""
+        from pipeline.tools.backfill_ticker_events import snapshot_dates
+        log = ("fbf2c0fb 2026-08-18T02:20:37+09:00\n"   # Mon 08-17 13:20 ET
+               "65bbb080 2026-08-17T17:32:26+09:00\n"   # Mon 08-17 04:32 ET
+               "38144f5a 2026-08-17T03:51:16Z\n"        # Sun 08-16 23:51 ET
+               "09bfd0a2 2026-08-14T22:05:57Z\n")       # Fri 08-14 18:05 ET
+        assert snapshot_dates(log) == [('38144f5a', '2026-08-14')]
+
+    def test_a_bare_date_is_rejected_not_guessed(self):
+        """A calendar day with no clock cannot name a session -- that was the bug."""
+        from pipeline.tools.backfill_ticker_events import snapshot_dates
+        assert snapshot_dates("aaa 2026-08-07\n") == []
+
+    def test_both_backfills_ask_git_for_the_full_instant(self):
+        """Wiring: a caller still passing --date=short would feed bare dates in
+        and silently get nothing back."""
+        from pathlib import Path
+        tools = Path(__file__).resolve().parents[1] / 'tools'
+        for name in ('backfill_ticker_events.py', 'backfill_preset_hits.py'):
+            src = (tools / name).read_text()
+            assert '--date=short' not in src, name
+            assert 'GIT_LOG_FORMAT' in src, name
 
 
 class TestRowsFromSnapshot:

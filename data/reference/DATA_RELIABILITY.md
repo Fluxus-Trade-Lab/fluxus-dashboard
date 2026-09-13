@@ -265,3 +265,19 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
    ②`backfill_ticker_events.snapshot_dates` 改成按 `pipeline.marketcal` 的 ET 场次挑快照（下次回填前必须改，否则同一个错会再写一次）；
    ③生产接线（夜间产线写完 `ticker_events` 后自查一次）。
    研究档：[`data/research/events_vs_bars_2026-09/results.md`](../research/events_vs_bars_2026-09/results.md)。
+   ↳ ✅ **DATA ALEX 已还（2026-09-13）**：②`snapshot_dates` 改成按 `pipeline.marketcal.last_completed_session`（ET）给每个 commit 定场次，
+   **并丢掉下一场盘前（04:00 ET）之后的提交**——光按 ET 挑、再取「当场最新」，周一盘前的手动重跑 `65bbb080` / `8fb939f` 和白天的开发 commit `fbf2c0fb` 会顶掉周五收盘后的干净快照。
+   两个回填都改传 `GIT_LOG_FORMAT`（`%aI`），裸日期拒收；`backfill_preset_hits` 另加 `payload_disagrees`（快照自带 `timestamp` / 行内 `bar_date` 与场次不符就跳过）和 `--dates` 定点修。
+   ①不是撤行，是**重算**：受影响的归档日 21 个，只重写了旧快照确实错或缺的 **6 个**（只动 `preset:*`，其余筛子一行未改）：
+   | 日期 | 旧快照 → 新快照 | preset 行 | 厂商 K 线恒等式 |
+   |---|---|---|---|
+   | 03-13 | 无 → `7679b2a` | 0 → 33 | 查不了 n=9 → n=12 |
+   | 08-06 | 无 → `69754ed` | 0 → 287 | 41/41 → 114/114 |
+   | **08-07** | `69754ed`（装的是 08-06）→ `7c162f4` | 287 → 349 | **1/73 → 查不了 n=0**（那周 Finviz 改名，change_pct 为空；偏帧已消失） |
+   | 08-12 | `05796d8` → `dbc7676`（「rebuilt clean」） | 244 → 320 | 查不了 n=0 → n=0 |
+   | 08-14 | `09bfd0a` → `38144f5` | 313 → 376 | 查不了 n=6 → **95/101** |
+   | **08-17** | `65bbb08`（周一盘前、08-14 K 线）→ `422e927`（`bar_date`=08-17） | 604 → 559 | **43/130 → 151/151** |
+   ③08-17 原定「撤行」改为重算：新快照行内自带 `bar_date=2026-08-17`，恒等式 151/151，`audit_event_agreement` 该日 87 处不一致归零（E2 逼删声明）。
+   两条闸的 08-07 / 08-17 声明已删；原始坏行冻在 `pipeline/tests/fixtures/events_vs_bars/` 继续当真阳性对照。
+   **没动的 15 天与理由**：04-02 / 05-22 / 06-18 / 07-02 旧行对厂商 K 线本来就是 1.000，只换 preset 行会让同一天分属两份快照（`audit_event_agreement` 实测新增 4 天 E1），要改就两个回填一起重跑；08-19 起 11 天是夜间产线当场写的，行数与闸读数都不变。
+   仍欠 ④生产接线（夜间写完 `ticker_events` 后自查一次）不在本次范围。08-14 的 gainers volume 声明（987 股）仍在，该日 preset 与 gainers 的不一致由 16 处变为 26 处——新 preset 行是对的，坏的是那天的 gainers 家族。

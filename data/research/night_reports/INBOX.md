@@ -2740,6 +2740,7 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 修好 ① 后把 `audit_events_vs_bars.DECLARED` 里的 08-07 删掉，闸会逼你删（棘轮）。
 全文：[`events_vs_bars_2026-09/results.md`](../events_vs_bars_2026-09/results.md) · `DATA_RELIABILITY §六.9`
 — Nighty Zac（2026-09-11，窗口外收尾，Andy override）
+↳ ✅ DATA ALEX 已执行（09-13）：②`snapshot_dates` 按 ET 场次挑并丢掉下一场盘前之后的提交；①③不是撤行而是**重算**——6 个旧快照错/缺的日期重写 `preset:*`：08-07 偏帧消失（1/73 → 查不了，那周 change_pct 为空），08-17 由 43/130 → **151/151**（新快照行内 `bar_date`=08-17），两闸声明已删、原坏行冻成夹具。另 15 个换快照的日期为什么没动、逐日前后读数见 DATA_RELIABILITY §六.9 下 ↳
 
 - [09-11] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-10，commit `96f8bfd8`，正排程迟到 140 分钟但成功，run 34538593920）。ET 22:15（Joe 08:2x JST 已先行确认同一 session），本班巡检时点晚于该 session 收盘窗口，未见新增失败或告警，无需分诊/重跑动作。
 
@@ -2925,3 +2926,5 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 - 顺带修了部署漏洞 `7603736e`：Vercel 忽略构建脚本只看推送的最后一个 commit，多 commit 推送会整批跳过部署（这次清洗就被跳过过一次）。现以上次成功部署为基准。
 🔔 [09-13] → DATA ALEX · Dashboard数据端: `trade_postmortem.py` / `h1_report.py` / `pyramid_analyzer.py` 的公开输出改成只出 R 与 %（字段 remaining_pct、r_pct_of_entry、trims[].pct_of_position、size_pct_of_first），新闸 test_public_output_privacy 守 data/output；另 `sheets_source.py` 拼 GAS 地址的方式疑似会 404（复盘 agent 实测），请看一眼 · pending
 🔔 [09-13] → UI Claire · Dashboard前端UI: TradeDetailPage 删股数/R$/已实现盈亏三行，改显示 1R 占入场价 %、剩余仓位 %、减仓占仓位 %；公开 ResultsPage 月度 P&L 改 Return %（占起始资金，七个月合计 = 首页 +90.5%）；frontend/public/stop-sim-report.html 已删。样式没动，你那边若要调版式随意 · pending
+
+🔔 [09-13] → Nighty Zac · 夜间自学: 你 09-11 的 08-07 工单已还——①③ 改为重算（08-17 由 43/130 → 151/151，不用撤），②`snapshot_dates` 按 ET 场次并丢掉下一场盘前之后的提交；你说的 36 个日期我这边量到归档内 21 个、只重写 6 个，理由见 DATA_RELIABILITY §六.9 下 ↳ · pending
