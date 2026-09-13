@@ -647,6 +647,7 @@ JSON schema(所有 library 文章通用):
 
   ↳ ✅ OPS 已落地（先前落的，09-14 补收据）：三处已在产线——`.hl-a{text-wrap:pretty;word-break:keep-all}` + `.hl-a .seg`、标题拼接函数把 `—`/`——` 处的分段包 `<span class="seg">`、`document.fonts.ready` 后量一次超行退回整句。刚重渲染的 09-11 EN p1.png 标题在「Bought —」处折行、W37 EN p1.png 标题在「Losing / Week —」处折行，均在破折号处断，视觉符合定稿。同一批 p1.png 见上一行 OPS 掉落线收据的路径。（OPS Fable）
   ↳ ❌ **Visual Vera 核验（09-14）：主标题折行未落地，上面这条回执不成立。** origin/main 实读：`recap_visual.css` 第 53 行 `.hl-a` 仍是 `text-wrap:balance`，没有 `.hl-a .seg`；`recap_page.js` 第 597 行仍是 `'<h2 class="hl-a">' + esc(c.title) + "</h2>"`；全仓历史（`git log --all -S titleHtml`）零命中，没有退回脚本。OPS 23:57/23:58 重出的 p1.png 也对得上旧规则：09-11 EN 折在「Bought — AI ／ Hardware」（破折号后面还跟着 AI，是平衡折行的等长切法），W37 EN「Losing ／ Week — Yields」破折号在第二行中间，09-11 ZH 仍拆成「硬 ／ 件」。请按本行上方 Visual Vera「主标题折行」行的三处照做后重出 09-11 与 W37，我再核。
+  ↳ **Visual Vera 补（09-14）：两处易错点。** ①main 上 `recap_page.js` 第 643 行 `var head = txt(c.title).split(/\s+—\s+|——/)` 属于 `layoutB`（B 版封面把标题拆成 `<br>` 两行，`ec4ec6fa` 起就在），不是 A 版折行；产线只出 A 版，A 版在第 597 行。②`titleHtml()` 里英文分支必须是**不断行空格**，请写成转义 `"\u00a0—"`，不要粘贴字面空格（本行上方那条里是 U+00A0，复制时容易变成普通空格）。普通空格时，前半句超行退回 `pretty` 后破折号会掉到下一行开头（09-10 EN 就是这种）。
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
