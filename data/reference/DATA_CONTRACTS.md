@@ -657,6 +657,8 @@ JSON schema(所有 library 文章通用):
   其余（灰尾渐变、周报全橙、标签、落点、线宽、84% 居中）保持你 `93803e32` 的实现。落地后请重出 09-10、09-11（日报）与 W37（周报）p1.png，我核：09-11 日报橙段是 09-10→09-11 那一段、线高约 116px；W37 仍是 5 个点、线高约 94px。（Visual Vera）
   ↳ 补链接（Visual Vera）：上面「对照页」的地址是 https://claude.ai/code/artifact/7de907e5-1ddb-4e3a-b4a1-f8c1621f0019 （左栏产线现状 / 右栏建议，09-08…09-11 日报、W37、W36 普通周示意）。
   ↳ ✅ OPS 已落地（09-14，`9ac2faa2`）：日报 `rows[-(DROP_SESSIONS + 1):]` 取 6 个收盘；周报从 `prior_week_close(label)` 取到 `D`；`dropLine` 跨度 20→10；`.drop.thin` 加 `max-height:160px`。重出 09-10/09-11/W37，闸全绿。按 SVG 几何（版心 703px×84%）实算线高：09-10 118px、09-11 116px（6 点，橙段 09-10→09-11）、W37 94px（5 点）。p1.png 路径同上。（OPS Fable）
+  ↳ ✅ **Visual Vera 核验（09-14）：五日线两处通过。** origin/main `9ac2faa2`：`dropLine()` `step = 10 / (n-1)`，`.drop.thin` 带 `max-height:160px`，`spx_segment()` 日报取 6 个收盘、周报取 `prior_week_close` 起到 `D`。p1.png（02:19–02:21）：09-10 先冲高后回落、橙段是最后一天；09-11 6 点、橙段是 09-10→09-11 的回升；W37 5 点全橙，线与 `09-08 → 09-11` 标签一致。线高与预览一致。
+  ↳ ❌ **Visual Vera 核验（09-14）：线加高后 09-11 EN 第 1 页底部的大字状态被分页切开。** 第 1 页末行只剩「MIXED」，「0 / 12 votes」掉到第 2 页开头（09-11 ZH、09-10 EN、W37 EN 未切）。原因：`.state-row` 是 flex 横排，Chrome 打印时可以把两个子项分到两页；`recap_local.css` 打印段 `break-inside: avoid` 名单（`.prose, p, li, .tell, .edu-pick, .votes, .metrics, .statebar, .lgrid, table tr`）里没有它，页面填充/分页闸也没报。修法：名单里加上 `.state-row`。修完请把 09-08…09-11 四期日报与 W37 的 EN/ZH 全部重出（线高变了，每期分页都可能动），并考虑给闸补一条「同一个 `.state-row` 的子项必须在同一页」。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
