@@ -280,3 +280,161 @@ def test_injecting_a_replay_into_the_real_archive_turns_it_red(tmp_path):
     res = A.audit(p, REAL_STORE, declared={})
     assert last in res["bad"], f"注射了一场重放，闸却没报 {last}"
     assert any(last in v for v in res["violations"])
+
+
+# --------------------------------------------------------------------------- 第二条恒等式：volume
+#
+# 合成成交量：三天的量彼此差得远（×1.5、×0.6），免得「配错一天」偶然落进带里。
+
+VOLS = {t: {"2026-09-01": 1000.0 * (k + 1), "2026-09-02": 1500.0 * (k + 1),
+            "2026-09-03": 900.0 * (k + 1)} for k, t in enumerate(TICKERS)}
+
+
+def _store_v(tmp_path: Path, name: str = "tickers_v") -> Path:
+    d = tmp_path / name
+    d.mkdir()
+    for t, series in BARS.items():
+        blob = {"ticker": t, "ohlc_2y": [
+            {"date": day, "open": c, "high": c, "low": c, "close": c, "volume": VOLS[t][day]}
+            for day, c in series]}
+        (d / f"{t}.json").write_text(json.dumps(blob))
+    return d
+
+
+def _vol_rows(day: str, values_from: str, scale: float = 1.0, screener="momentum_97") -> list[dict]:
+    """change_pct 写 0.0（momentum_97 那类「本列不填」的筛子），volume 取自 values_from 那天 × scale。"""
+    return [{"date": day, "ticker": t, "screener": screener, "change_pct": "0.0",
+             "volume": f"{VOLS[t][values_from] * scale:.1f}"} for t in TICKERS]
+
+
+def test_a_day_without_change_pct_is_judged_by_volume_not_left_blind(tmp_path):
+    """Finviz 改名那一周的形状：change_pct 整列为空。以前判「查不了」，现在由 volume 判。"""
+    res = A.audit(_archive(tmp_path, _vol_rows("2026-09-02", "2026-09-02")),
+                  _store_v(tmp_path), declared={})
+    assert ("2026-09-02", 0) in res["unjudgeable"]            # change_pct 那条仍然判不了
+    assert res["volume"]["judged"]["2026-09-02"]["rate"] == 1.0
+    assert res["volume"]["judged"]["2026-09-02"]["n"] == 18
+    assert res["blind"] == []
+    assert res["violations"] == []
+    out = A._fmt(res)
+    assert "改由 volume 判" in out
+    assert "两条恒等式可比读数都" not in out
+
+
+def test_a_volume_replay_is_red_and_the_frame_is_named(tmp_path):
+    """09-03 这场记的是 09-02 的成交量，change_pct 为空 —— 以前这一天会静默，现在必须红并指对帧。"""
+    rows = _vol_rows("2026-09-02", "2026-09-02") + _vol_rows("2026-09-03", "2026-09-02")
+    res = A.audit(_archive(tmp_path, rows), _store_v(tmp_path), declared={})
+    assert len(res["violations"]) == 1
+    assert "2026-09-03" in res["violations"][0] and "volume" in res["violations"][0]
+    rec = res["volume"]["judged"]["2026-09-03"]
+    assert rec["rate"] == 0.0
+    assert rec["frame"] == "2026-09-02"
+    assert res["volume"]["judged"]["2026-09-02"]["rate"] == 1.0
+    assert "[UNDECLARED] 2026-09-03: volume" in A._fmt(res)
+
+
+def test_a_volume_shuffle_is_red_without_an_invented_frame(tmp_path):
+    shuffled = TICKERS[1:] + TICKERS[:1]
+    rows = [{"date": "2026-09-03", "ticker": t, "screener": "momentum_97", "change_pct": "0.0",
+             "volume": f"{VOLS[other]['2026-09-03']:.1f}"} for t, other in zip(TICKERS, shuffled)]
+    res = A.audit(_archive(tmp_path, rows), _store_v(tmp_path), declared={})
+    assert len(res["violations"]) == 1
+    assert "配不上任何单日" in res["violations"][0]
+    assert res["volume"]["judged"]["2026-09-03"]["frame"] is None
+
+
+@pytest.mark.parametrize("scale,inside", [
+    (0.91, True), (0.89, False),      # 下沿宽：Finviz 少记 9% 仍算同一天，少记 11% 不算
+    (1.009, True), (1.02, False),     # 上沿紧：多记 2% 就不算 —— 两个方向都钉住
+])
+def test_the_volume_band_is_one_sided_and_both_edges_are_pinned(tmp_path, scale, inside):
+    res = A.audit(_archive(tmp_path, _vol_rows("2026-09-02", "2026-09-02", scale)),
+                  _store_v(tmp_path), declared={})
+    assert res["volume"]["judged"]["2026-09-02"]["rate"] == (1.0 if inside else 0.0)
+
+
+def test_a_ticker_written_by_many_screeners_votes_once(tmp_path):
+    """五个筛子写同一只票不许投五票：3 只坏票各被写 10 遍，也只是 3/18。"""
+    rows = _vol_rows("2026-09-02", "2026-09-02")
+    bad = [{"date": "2026-09-02", "ticker": t, "screener": f"preset:s{i}", "change_pct": "0.0",
+            "volume": "1.0"} for t in TICKERS[:3] for i in range(10)]
+    res = A.audit(_archive(tmp_path, bad + rows), _store_v(tmp_path), declared={})
+    rec = res["volume"]["judged"]["2026-09-02"]
+    assert rec["n"] == 18
+    assert rec["hit"] == 15
+
+
+def test_a_declared_day_silences_the_volume_identity_too(tmp_path):
+    rows = _vol_rows("2026-09-03", "2026-09-02")
+    declared = {"2026-09-03": ("DATA ALEX", "2026-09-14", "合成的欠条")}
+    res = A.audit(_archive(tmp_path, rows), _store_v(tmp_path), declared=declared)
+    assert res["violations"] == []
+    out = A._fmt(res)
+    assert "[declared] 2026-09-03: volume" in out
+    assert "合成的欠条" in out
+
+
+def test_both_identities_blind_is_still_unjudgeable_not_green(tmp_path):
+    rows = _vol_rows("2026-09-03", "2026-09-02")[:5]
+    res = A.audit(_archive(tmp_path, rows), _store_v(tmp_path), declared={})
+    assert res["violations"] == []
+    assert "2026-09-03" not in res["volume"]["judged"]
+    assert res["blind"] == [("2026-09-03", 0)]
+    assert "两条恒等式可比读数都" in A._fmt(res)
+
+
+@_real
+def test_the_08_07_rows_as_first_written_are_red_on_volume_and_point_at_08_06():
+    """冻结坏行在第二条恒等式上也要红，而且帧指向同一天 —— 两条不共用算术的尺子说同一句话。"""
+    rec = A.audit(FROZEN / "ticker_events_2026-08-07_as_written.csv", declared={})["volume"]["judged"]["2026-08-07"]
+    assert rec["rate"] < 0.30
+    assert rec["frame"] == "2026-08-06"
+
+
+@_real
+def test_the_08_17_rows_as_first_written_are_red_on_volume_with_no_frame():
+    rec = A.audit(FROZEN / "ticker_events_2026-08-17_as_written.csv", declared={})["volume"]["judged"]["2026-08-17"]
+    assert rec["rate"] < 0.50
+    assert rec["frame"] is None
+
+
+@_real
+def test_the_finviz_rename_week_is_no_longer_blind_and_is_clean():
+    """阴性对照 + 覆盖：08-07、08-11/12/13 在 change_pct 上判不了，volume 必须能判且判绿。"""
+    res = A.audit()
+    vj = res["volume"]["judged"]
+    for d in ("2026-08-07", "2026-08-11", "2026-08-12", "2026-08-13"):
+        assert d in vj, f"{d} 仍然是盲的"
+        assert vj[d]["rate"] > 0.90, (d, vj[d])
+    assert res["volume"]["bad"] == {}
+    assert min(r["rate"] for r in vj.values()) > 0.85                 # 最差的干净日（实测 0.925）
+    assert {d for d, _ in res["blind"]} <= {"2026-03-12", "2026-03-13"}
+
+
+@_real
+def test_injecting_a_volume_replay_into_the_real_archive_turns_it_red(tmp_path):
+    """真阳性对照：把 K 线库覆盖得到的最新一场的 volume 换成前一场的，volume 恒等式必须红。"""
+    with open(REAL_ARCHIVE, newline="") as fh:
+        rows = list(csv.DictReader(fh))
+        head = list(rows[0].keys())
+    covered = set(A.calendar(A.load_store(REAL_STORE)))
+    days = sorted({r["date"] for r in rows} & covered)
+    last, prev = days[-1], days[-2]
+    prev_vol = {}
+    for r in rows:
+        if r["date"] == prev and r["volume"]:
+            prev_vol.setdefault(r["ticker"], r["volume"])
+    hit = 0
+    for r in rows:
+        if r["date"] == last and r["ticker"] in prev_vol and r["volume"]:
+            r["volume"] = prev_vol[r["ticker"]]
+            hit += 1
+    assert hit > 50, "注射本身没生效，下面的红就没有意义"
+    p = tmp_path / "injected_v.csv"
+    with open(p, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=head)
+        w.writeheader()
+        w.writerows(rows)
+    res = A.audit(p, REAL_STORE, declared={})
+    assert last in res["volume"]["bad"], f"注射了一场成交量重放，volume 恒等式却没报 {last}"
