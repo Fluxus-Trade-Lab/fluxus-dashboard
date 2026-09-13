@@ -3,7 +3,7 @@ import pytest
 
 from pipeline.content.recap import figlayout
 from pipeline.content.recap.visual_figs import FIGS
-from pipeline.content.recap.xpost import LIMIT, P2_MAX, compose, p1, p2, x_length
+from pipeline.content.recap.xpost import LIMIT, P2_MAX, compose, p1, p2, p3, x_length
 
 OVERLAP_SVG = ('<svg class="tell" viewBox="0 0 1000 380">'
                '<text class="lab-acc" x="113.6" y="71.6" text-anchor="start">20 EMA · falling</text>'
@@ -78,6 +78,27 @@ def test_p2_red_on_the_0910_control():
 def test_p2_green_on_the_0911_control():
     r = p2("SPY and QQQ reclaimed the 50-day; RSP and IWM did not.", BP_0911)
     assert r["ok"] and r["similarity"] == pytest.approx(0.28, abs=0.01)
+
+
+P3_CONTENT = {"big_picture": "AI hardware led: <b>HPE +12.4%</b>.", "index_notes": {"SPY": ["reclaimed the 50-day", ""]},
+              "led": [["NET / DOCN", "+9.9%", "software"]], "lagged": [["OKTA", "−2.7%", "failed"]],
+              "tomorrow": ["SWKS after the call"], "rules": ["Trade the leaders"], "state_line": "NVDA only here", "x_posts": {"cashtags": ["TSLA"]}}
+
+
+def test_p3_green_when_every_cashtag_is_in_the_recap():
+    assert p3(["HPE", "$DOCN", "OKTA", "SWKS", "SPY"], P3_CONTENT) == {"ok": True, "missing": []}
+
+
+def test_p3_red_on_a_ticker_the_recap_never_names():
+    r = p3(["HPE", "TSLA"], P3_CONTENT)  # TSLA sits only in x_posts
+    assert not r["ok"] and r["missing"] == ["TSLA"]
+    assert p3(["NVDA"], P3_CONTENT)["missing"] == ["NVDA"]  # outside the six fields does not count
+    assert p3(["HP"], P3_CONTENT)["missing"] == ["HP"]  # stand-alone word, not a prefix of HPE
+
+
+def test_p1_red_on_substack():
+    r = p1(GOOD.replace("\n\n$HPE", " Full recap on Substack.\n\n$HPE"), CONTENT)
+    assert not r["ok"] and "substack" in r["hits"]
 
 
 def test_p2_does_not_apply_without_a_lead():

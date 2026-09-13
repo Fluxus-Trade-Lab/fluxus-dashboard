@@ -17,6 +17,9 @@ proprietary names · "Andy" · first person · dollar amounts (cashtags are fine
 links · calls to action · a number that does not appear verbatim in the content file · leftover <b> or ◇ ·
 fewer than 2 or more than 4 cashtags.
 P2 (no double opening): lead present and SequenceMatcher(lead, Big Picture first sentence) ≥ 0.4 → red; set lead to null.
+P3 (Andy 09-13「X挑选不用禁止cash出现当前持仓，就挑当天复盘里出现的个股，Substack帖子末尾就不用出现。」): every cashtag
+must appear as a stand-alone word in the issue's big_picture / index_notes / led / lagged / tomorrow / rules; book
+tickers are not avoided. "Substack" anywhere in the post is a P1 hit (no link or pointer at the end).
 X counting: code points in the Latin/general-punctuation ranges weigh 1, everything else 2, a URL 23.
 """
 from __future__ import annotations
@@ -35,6 +38,8 @@ CTA_RE = re.compile(r"\b(link in bio|subscribe|sign up|join (?:us|now)|follow (?
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)*")
 CASHTAG_RE = re.compile(r"(?<![\w$])\$[A-Z]{1,6}\b")
 LEFTOVER_RE = re.compile(r"</?b>|◇")
+SUBSTACK_RE = re.compile(r"substack", re.I)
+P3_FIELDS = ("big_picture", "index_notes", "led", "lagged", "tomorrow", "rules")
 
 
 def x_length(text: str) -> int:
@@ -93,6 +98,8 @@ def p1(text: str, content_en: dict) -> dict:
         hits.append("call to action")
     if LEFTOVER_RE.search(text):
         hits.append("leftover <b> or ◇")
+    if SUBSTACK_RE.search(text):
+        hits.append("substack")
     n_tags = len(CASHTAG_RE.findall(text))
     if not 2 <= n_tags <= 4:
         hits.append(f"{n_tags} cashtags (need 2–4)")
@@ -108,6 +115,14 @@ def p2(lead: str | None, big_picture: str) -> dict:
         return {"ok": True, "similarity": None}
     s = round(difflib.SequenceMatcher(None, lead, first_sentence(clean_big_picture(big_picture))).ratio(), 3)
     return {"ok": s < P2_MAX, "similarity": s}
+
+
+def p3(cashtags: list[str], content_en: dict) -> dict:
+    source = "\n".join(_strings({k: content_en.get(k) for k in P3_FIELDS if content_en.get(k) is not None}))
+    source += "\n" + " ".join(content_en.get("index_notes") or {})  # the index rows are keyed by ticker
+    missing = [t for t in (c.lstrip("$") for c in cashtags)
+               if not re.search(rf"(?<![A-Za-z0-9$]){re.escape(t)}(?![A-Za-z0-9])", source)]
+    return {"ok": not missing, "missing": missing}
 
 
 def _tickers(content_en: dict, n: int = 4) -> list[str]:
@@ -133,9 +148,11 @@ def compose(content_en: dict) -> dict:
     return {"text": text, "lead": lead, "cashtags": tags, "why": why, "source": source}
 
 
-def to_markdown(label: str, post: dict, r1: dict, r2: dict) -> str:
+def to_markdown(label: str, post: dict, r1: dict, r2: dict, r3: dict | None = None) -> str:
     gate = f"P1 {'通过' if r1['ok'] else '报红：' + '；'.join(r1['hits'])} · P2 " + (
         "不适用（lead 为空）" if r2["similarity"] is None else f"{'通过' if r2['ok'] else '报红'}（与 Big Picture 第一句相似度 {r2['similarity']}，红线 {P2_MAX}）")
+    if r3 is not None:
+        gate += " · P3 " + ("通过" if r3["ok"] else "报红：复盘里没有 " + "、".join(r3["missing"]))
     return "\n".join([f"# X post · {label} · EN", "", post["text"], "", "---", "",
                       f"- 字符数：{r1['chars']} / {LIMIT}（X 计数）",
                       f"- lead：{'省略' if not post['lead'] else '保留'}",

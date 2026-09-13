@@ -307,14 +307,16 @@ def cmd_render(a) -> int:
         post = xpost.compose(c_en)
         r1 = xpost.p1(post["text"], c_en)
         r2 = xpost.p2(post["lead"], c_en.get("big_picture"))
-        state["x_post"] = {"source": post["source"], "lead": post["lead"], "why": post["why"], "text": post["text"], "p1": r1, "p2": r2}
+        r3 = xpost.p3(post["cashtags"], c_en)
+        state["x_post"] = {"source": post["source"], "lead": post["lead"], "why": post["why"], "text": post["text"],
+                           "p1": r1, "p2": r2, "p3": r3}
         xdir = iss.dir / "x"
         xdir.mkdir(parents=True, exist_ok=True)
-        good = r1["ok"] and r2["ok"]
-        (xdir / ("post_EN.md" if good else "post_EN.blocked.md")).write_text(xpost.to_markdown(iss.label, post, r1, r2))
+        good = r1["ok"] and r2["ok"] and r3["ok"]
+        (xdir / ("post_EN.md" if good else "post_EN.blocked.md")).write_text(xpost.to_markdown(iss.label, post, r1, r2, r3))
         if (xdir / ("post_EN.blocked.md" if good else "post_EN.md")).exists():
             (xdir / ("post_EN.blocked.md" if good else "post_EN.md")).unlink()
-        print("X POST", r1["chars"], "P1", r1["ok"], r1["hits"], "P2", r2, "lead", "omitted" if not post["lead"] else "kept")
+        print("X POST", r1["chars"], "P1", r1["ok"], r1["hits"], "P2", r2, "P3", r3, "lead", "omitted" if not post["lead"] else "kept")
         status |= 0 if good else 1
     state["ok"] = status == 0
     if state["ok"] and blocked.exists():
@@ -377,7 +379,8 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
         lines.append(f"- {xp['p1']['chars']}/{LIMIT} 字符 · lead {'省略' if not xp['lead'] else '保留'}：{xp['why']} · 来源 {xp['source']}")
         p2 = xp["p2"]
         lines.append(f"- P1 {'通过' if xp['p1']['ok'] else '报红：' + '；'.join(xp['p1']['hits'])} · P2 "
-                     + ("不适用（lead 为空）" if p2["similarity"] is None else f"{'通过' if p2['ok'] else '报红'}（相似度 {p2['similarity']}，红线 {P2_MAX}）"))
+                     + ("不适用（lead 为空）" if p2["similarity"] is None else f"{'通过' if p2['ok'] else '报红'}（相似度 {p2['similarity']}，红线 {P2_MAX}）")
+                     + (f" · P3 {'通过' if xp['p3']['ok'] else '报红：复盘里没有 ' + '、'.join(xp['p3']['missing'])}" if xp.get("p3") else ""))
     if state.get("page_map"):
         lines.append("")
         lines.append("## 每页对应的节（该页开始的节；空 = 续上一页）")
