@@ -25,6 +25,10 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
 - ZH is a rewrite, not a translation; ZH cells carry no English duplicates (「多空线」, not
   「多空线 / bull/bear line」). Tickers, metric names and group names stay as they are.
 - `◇` marks anything from outside the data layer (transcript, news, external index levels).
+- **No “week” shorthand** (Andy 09-13: “theme week” reads as “theme weak”). Write
+  `−10.5% over the week (theme)` or `1-week −9.4%`, never `theme week`, `IBIT week;` or a note opening
+  with `week −9.4%`. ZH writes 本周 / 一周. Gate W1 (`wording.py`) blocks `check` and `render`.
+- “Grow” (a source trend-gauge state) is a proprietary name; growth / grow in ordinary prose are fine.
 - Rich text: `<b>…</b>` is the only markup allowed inside strings.
 
 ## Top-level fields (both languages)
@@ -47,7 +51,7 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
 | `education` | object | see below |
 | `portfolio_note` | string | one neutral sentence; R and % only |
 | `labels` | object | section and column labels for this language (copy from the previous issue) |
-| `x_posts` | object | **EN dailies only**: `{"v1": {"text", "fields"}, "v2": {"text", "fields"}}` — v1 judgment first (the day's character, 1–2 readings, 2–4 leader cashtags on the last line), v2 structure first (the main structural event, what it means using only judgments already in this file, same cashtags). ≤ 280 X characters, no hashtags / emoji / links / calls to action, every number must appear verbatim elsewhere in this file; `fields` lists the fields the post draws on. Gate P1 in `xpost.py`; missing → a plain fallback marked `auto` |
+| `x_posts` | object | **EN dailies only** (Andy 09-13: long post = structure sentence + Big Picture): `{"lead": string \| null, "cashtags": ["HPE", …], "why": "one-line reason (optional)"}`. The post is `lead` (if any), then `big_picture` verbatim with `<b></b>` and ` ◇` stripped, then 2–4 leader cashtags. `lead` is **null when Big Picture's first sentence already states the day's main structural event** (which average was reclaimed / lost, which index split from which); otherwise one structure sentence that only restates this file — no new judgment. The body is never rewritten. Gates in `xpost.py`: P1 (≤ 1,500 X characters, no proprietary names / Andy / first person / dollar amounts / hashtags / emoji / links / calls to action, every number in the file, no leftover `<b>` or ◇, 2–4 cashtags) and P2 (lead vs Big Picture's first sentence, SequenceMatcher ≥ 0.4 → red, set lead to null). Missing → Big Picture only, marked `auto` |
 | `weekly_k_names` | array | weekly only: tickers for the weekly-close table, in order |
 | `weekly_k_line` | string | weekly only: one sentence under that table |
 

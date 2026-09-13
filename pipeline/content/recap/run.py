@@ -121,8 +121,10 @@ def run_check(iss: Issue) -> dict:
     week_dates = [d.isoformat() for d in week_sessions(iss.label)] if iss.weekly else []
     r1 = dedupe.r1(iss.label, iss.T, iss.weekly, merged_options(contents), ledger, week_dates)
     r2 = dedupe.r2(contents, iss.weekly, week_priors(iss))
-    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2,
-           "ok": not any(rules.values()) and not r1 and not r2}
+    from pipeline.content.recap.wording import w1_hits
+    w1 = w1_hits(contents["EN"])
+    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2, "w1": w1,
+           "ok": not any(rules.values()) and not r1 and not r2 and not w1}
     iss.dir.mkdir(parents=True, exist_ok=True)
     (iss.dir / "check.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1))
     return rep
@@ -138,6 +140,8 @@ def print_check(rep: dict) -> None:
               f"{h['vs']['title_en']!r}: {', '.join(h['why'])}")
     for h in rep["r2"]:
         print(f"  R2 {h['lang']} {h['item']} ~ {h['vs_issue']} {h['vs_item']} = {h['similarity']} (≥{h['threshold']}): {h['text'][:70]!r}")
+    for h in rep.get("w1", []):
+        print(f"  W1 {h['matches']} in {h['text'][:80]!r}")
 
 
 def cmd_check(a) -> int:
@@ -206,6 +210,11 @@ def cmd_render(a) -> int:
         write_delivery(iss, state, rep)
         return 2
     copy_pack(iss)
+    from pipeline.content.recap.wording import week_weak_review
+    tr = iss.pack / "transcript.md"
+    state["week_weak"] = week_weak_review(json.loads((iss.pack / "content_EN.json").read_text()),
+                                          tr.read_text() if tr.exists() else None)
+    state["week_weak"]["transcript_present"] = tr.exists()
     data_issue = vis.issue_data(iss.tag, iss.label, iss.pack, a.edu)
     data = {"chrome": vis.CHROME_LABELS, "layouts": ["A"], "store_key": f"fluxusRecap-{iss.label}", "issues": [vis.public(data_issue)]}
     data_json = vis.jdump(data)
@@ -251,18 +260,24 @@ def cmd_render(a) -> int:
         cards = [w for w in vis.CARD_WORDS[lang] if f"·{w}" in squash] + [t for t in other if re.sub(r"\s+", "", t) in squash]
         mixed = lang == "ZH" and "bull/bear" in text
         bad_rules = data_issue["_rules_check"][lang]
-        ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules
         hmap = headings(content, iss.weekly)
         sections = page_sections(text, [h for _, h in hmap])
         name_of = {h: k for k, h in hmap}
+        # L1 (Andy 09-13「保证还是只用4页，第5页是portfolio update」): the book alone on the last page;
+        # dailies exactly 5 pages
+        book_h = content["labels"]["portfolio"]
+        layout_ok = bool(sections) and sections[-1] == [book_h] and all(book_h not in s for s in sections[:-1]) \
+            and (iss.weekly or pg["pages"] == 5)
+        ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules and layout_ok
         if not iss.weekly:  # the page → section table is for dailies (checks the book sits on its own page)
             state["page_map"][lang] = [[name_of.get(h, h) for h in sec] for sec in sections]
         state["pdf"][lang] = {"ok": ok, "path": str(final), "pages": pg["pages"], "thin": pg["thin_pages"], "margin_overflow": mg["count"],
                               "gates": {"banned": len(g["banned"]), "leadership_zh": g["leadership_zh"], "money": len(g["money_shares"]),
                                         "voice": len(g["voice"])},
                               "x1_hits": xg["x1_hits"], "x2_ok": xg["x2_ok"], "cards_leaked": cards, "zh_mixed": mixed, "rules": bad_rules,
+                              "layout_ok": layout_ok,
                               "seconds": round(time.time() - t1, 1)}
-        print(f"PDF {lang} ok={ok} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
+        print(f"PDF {lang} ok={ok} layout={layout_ok} pages={pg['pages']} thin={pg['thin_pages']} margins={mg['count']} x1={xg['x1_hits']} "
               f"x2={xg['x2_ok']} cards={cards} gates={g['ok']} · {time.time() - t1:.1f}s")
         if ok:
             shutil.move(tmp, final)
@@ -289,16 +304,17 @@ def cmd_render(a) -> int:
     if not iss.weekly and state["pdf"].get("EN", {}).get("ok"):
         from pipeline.content.recap import xpost
         c_en = json.loads((iss.pack / "content_EN.json").read_text())
-        posts = xpost.compose(c_en)
-        results = {k: xpost.p1(v["text"], c_en) for k, v in posts.items()}
-        state["x_posts"] = {k: {"source": posts[k]["source"], **results[k]} for k in posts}
+        post = xpost.compose(c_en)
+        r1 = xpost.p1(post["text"], c_en)
+        r2 = xpost.p2(post["lead"], c_en.get("big_picture"))
+        state["x_post"] = {"source": post["source"], "lead": post["lead"], "why": post["why"], "text": post["text"], "p1": r1, "p2": r2}
         xdir = iss.dir / "x"
         xdir.mkdir(parents=True, exist_ok=True)
-        good = all(r["ok"] for r in results.values())
-        (xdir / ("post_EN.md" if good else "post_EN.blocked.md")).write_text(xpost.to_markdown(iss.label, posts, results))
-        if good and (xdir / "post_EN.blocked.md").exists():
-            (xdir / "post_EN.blocked.md").unlink()
-        print("X POSTS", {k: (r["chars"], r["ok"], r["hits"]) for k, r in results.items()})
+        good = r1["ok"] and r2["ok"]
+        (xdir / ("post_EN.md" if good else "post_EN.blocked.md")).write_text(xpost.to_markdown(iss.label, post, r1, r2))
+        if (xdir / ("post_EN.blocked.md" if good else "post_EN.md")).exists():
+            (xdir / ("post_EN.blocked.md" if good else "post_EN.md")).unlink()
+        print("X POST", r1["chars"], "P1", r1["ok"], r1["hits"], "P2", r2, "lead", "omitted" if not post["lead"] else "kept")
         status |= 0 if good else 1
     state["ok"] = status == 0
     if state["ok"] and blocked.exists():
@@ -332,6 +348,19 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
         lines.append(f"  - {h['lang']} {h['item']} ≈ {h['vs_issue']} {h['vs_item']}（{h['similarity']} ≥ {h['threshold']}）")
     bad_rules = {k: v for k, v in rep["rules"].items() if v}
     lines.append(f"- 纪律格式：{'通过' if not bad_rules else bad_rules}")
+    lines.append(f"- W1 week 缩写：{'通过' if not rep.get('w1') else '报红'}")
+    for h in rep.get("w1", []):
+        lines.append(f"  - {h['matches']}：{h['text']}")
+    ww = state.get("week_weak")
+    if ww:
+        lines.append("")
+        lines.append("## week / weak 人工扫一眼（字幕会把两个词听混）")
+        if not ww.get("transcript_present"):
+            lines.append("- 本期材料包没有字幕文件，无法比对来源")
+        lines.append(f"- 字幕里含 week/weak 的句子：{ww['transcript_week_weak']} 条；正文里含 week/weak 的句子：{len(ww['content'])} 条"
+                     f"（其中与字幕句子接近的 {sum(r['from_transcript'] for r in ww['content'])} 条，标 ★）")
+        for r in ww["content"]:
+            lines.append(f"  - {'★ ' if r['from_transcript'] else ''}{r['text']}")
     if state.get("pdf"):
         lines.append("")
         lines.append("## PDF 与图片")
@@ -340,11 +369,15 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
         jpgs = [r["file"] for recs in state.get("images", {}).values() for r in recs if r["file"].endswith(".jpg")]
         lines.append(f"- 图片宽 {IMG_WIDTH}px；超过 5MB 改 JPG 的：{', '.join(jpgs) if jpgs else '无'}")
         lines.append("- X 配图：`x/img1–img4` = 英文版第 1–4 页")
-    if state.get("x_posts"):
+    xp = state.get("x_post")
+    if xp:
+        from pipeline.content.recap.xpost import LIMIT, P2_MAX
         lines.append("")
-        lines.append("## X 短帖草稿（EN，`x/post_EN.md`）")
-        for k, r in state["x_posts"].items():
-            lines.append(f"- {k}：{r['chars']}/280 字符 · 来源 {r['source']} · P1 {'通过' if r['ok'] else '报红：' + '；'.join(r['hits'])}")
+        lines.append("## X 长帖（EN，`x/post_EN.md`：结构句 + Big Picture 全文 + cashtag）")
+        lines.append(f"- {xp['p1']['chars']}/{LIMIT} 字符 · lead {'省略' if not xp['lead'] else '保留'}：{xp['why']} · 来源 {xp['source']}")
+        p2 = xp["p2"]
+        lines.append(f"- P1 {'通过' if xp['p1']['ok'] else '报红：' + '；'.join(xp['p1']['hits'])} · P2 "
+                     + ("不适用（lead 为空）" if p2["similarity"] is None else f"{'通过' if p2['ok'] else '报红'}（相似度 {p2['similarity']}，红线 {P2_MAX}）"))
     if state.get("page_map"):
         lines.append("")
         lines.append("## 每页对应的节（该页开始的节；空 = 续上一页）")

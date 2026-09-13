@@ -3,7 +3,7 @@ import pytest
 
 from pipeline.content.recap import figlayout
 from pipeline.content.recap.visual_figs import FIGS
-from pipeline.content.recap.xpost import LIMIT, p1, x_length
+from pipeline.content.recap.xpost import LIMIT, P2_MAX, compose, p1, p2, x_length
 
 OVERLAP_SVG = ('<svg class="tell" viewBox="0 0 1000 380">'
                '<text class="lab-acc" x="113.6" y="71.6" text-anchor="start">20 EMA · falling</text>'
@@ -40,13 +40,48 @@ def test_without_resolve_the_left_side_of_v_labels_do_collide(monkeypatch):
     assert not figlayout.check_spec_labels(raw)["ok"]  # positive control: avoidance is doing real work
 
 
-CONTENT = {"big_picture": "SPY +0.85% and QQQ +0.87% reclaimed the 50-day; net advances +641.", "led": [["AI hardware", "+12.4%", "HPE"]]}
+CONTENT = {"big_picture": "Four down days ended with a gap up that stuck: <b>SPY +0.85%, QQQ +0.87%, both back above the 50-day</b> ◇. "
+                          "Net advances +641.",
+           "led": [["AI hardware", "+12.4%", "HPE"]],
+           "x_posts": {"lead": "SPY and QQQ reclaimed the 50-day; RSP and IWM did not.", "cashtags": ["HPE", "DELL"]}}
 GOOD = "SPY +0.85% and QQQ +0.87% reclaimed the 50-day.\n\n$HPE $DELL"
+BP_0910 = ("A fourth straight down day, and the first close under the 50-day for both <b>SPY (−0.60%) and QQQ (−1.06%)</b>. "
+           "Producer prices ran hot on the headline.")
+BP_0911 = ("Four down days ended with a gap up that stuck: <b>SPY +0.85%, QQQ +0.87%, both back above the 50-day</b> — on a CPI print "
+           "that ran hot, core +0.3% m/m against 0.2% expected. Bad data, higher prices.")
 
 
 def test_p1_green_on_a_clean_post():
     r = p1(GOOD, CONTENT)
     assert r["ok"], r
+
+
+def test_long_post_is_lead_then_big_picture_verbatim_then_cashtags():
+    post = compose(CONTENT)
+    lead, body, tags = post["text"].split("\n\n")
+    assert lead == CONTENT["x_posts"]["lead"]
+    assert body == "Four down days ended with a gap up that stuck: SPY +0.85%, QQQ +0.87%, both back above the 50-day. Net advances +641."
+    assert tags == "$HPE $DELL"
+    assert p1(post["text"], CONTENT)["ok"]
+
+
+def test_null_lead_starts_with_big_picture():
+    post = compose({**CONTENT, "x_posts": {"lead": None, "cashtags": ["HPE", "DELL"]}})
+    assert post["text"].startswith("Four down days") and post["lead"] is None
+
+
+def test_p2_red_on_the_0910_control():
+    r = p2("SPY and QQQ closed under the 50-day together for the first time in the slide.", BP_0910)
+    assert not r["ok"] and r["similarity"] == pytest.approx(0.46, abs=0.01) and P2_MAX == 0.4
+
+
+def test_p2_green_on_the_0911_control():
+    r = p2("SPY and QQQ reclaimed the 50-day; RSP and IWM did not.", BP_0911)
+    assert r["ok"] and r["similarity"] == pytest.approx(0.28, abs=0.01)
+
+
+def test_p2_does_not_apply_without_a_lead():
+    assert p2(None, BP_0910) == {"ok": True, "similarity": None}
 
 
 @pytest.mark.parametrize("inject, expect", [
@@ -59,15 +94,25 @@ def test_p1_green_on_a_clean_post():
     (" Subscribe for more.", "call to action"),
     (" Per the Revere roundup.", "Revere"),
     (" Breadth 77.7% strong.", "numbers not in content"),
+    (" <b>SPY</b>", "leftover"),
+    (" held ◇", "leftover"),
+    (" $SWKS $SMTC $NVDA", "cashtags"),
 ])
 def test_p1_red_on_each_injection(inject, expect):
     r = p1(GOOD + inject, CONTENT)
     assert not r["ok"] and any(expect in h for h in r["hits"]), r
 
 
-def test_p1_red_over_280_and_counts_minus_sign_double():
-    long = "SPY +0.85% " * 40
-    assert not p1(long, CONTENT)["ok"]
+def test_p1_red_on_a_single_cashtag():
+    r = p1("SPY +0.85% reclaimed the 50-day.\n\n$HPE", CONTENT)
+    assert not r["ok"] and any("cashtags" in h for h in r["hits"])
+
+
+def test_p1_red_over_1500_and_counts_minus_sign_double():
+    assert LIMIT == 1500
+    long = "SPY +0.85% and QQQ +0.87% reclaimed the 50-day. " * 32 + "\n\n$HPE $DELL"
+    assert x_length(long) > LIMIT and not p1(long, CONTENT)["ok"]
+    assert p1("SPY +0.85% and QQQ +0.87% reclaimed the 50-day. " * 20 + "\n\n$HPE $DELL", CONTENT)["ok"]  # ~1,000 chars passes now
     assert x_length("−") == 2 and x_length("—") == 1 and x_length("https://a.b/c") == 23
     assert x_length("a" * LIMIT) == LIMIT
 

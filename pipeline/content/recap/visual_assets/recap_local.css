@@ -181,15 +181,26 @@ table.idx.wk td:nth-child(4) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* print: A layout, one flowing document, light palette forced by JS (data-theme="light") */
+/* ------------------------------------------------------------------ print
+   A layout, one flowing document, light palette forced by JS (data-theme="light").
+   Type scale (Andy 09-13「对，我倾向用正文12, 其他以此类推。」): Chrome prints CSS px at 96 dpi, 1px = 0.75pt, then
+   shrinks the whole page when anything is wider than the type area — so every printed size was CSS px × 0.75 × the
+   same shrink, and "12 ÷ printed body" is the same ratio for every size. Body was 12.5px, so each print size below
+   is its previous CSS px × 0.96 pt (1.28× nominal), and nothing may be wider than the type area (shrink = 1).
+   Measured 09-11 EN body: 8.67pt before (CSS 9.38pt × shrink 0.924), 12.00pt after (shrink 1.000).
+   The footer prints in the page margin and was never shrunk: 7pt × 12/8.67 = 9.7pt. Nothing is capped.
+   Schematic and chart labels are SVG user units: × 1.28 × 182/186 for the wider type area.
+   4 content pages + the book at 12pt come from spacing only: 12mm margins, line-height 1.3 / 1.25 / 1.2,
+   tighter section and cell gaps, and plain sections flowing across pages while the lesson, figures, rows
+   and list items travel whole. Page margins must match visual.PAGE_MARGIN_MM. */
 @page {
   size: A4;
-  margin: 15mm 14mm 16mm;
+  margin: 12mm;
 
   @bottom-center {
     content: "FLUXUS CAPITAL · CONFIDENTIAL · " counter(page) " / " counter(pages);
     font-family: "IBM Plex Mono", Menlo, monospace;
-    font-size: 7pt;
+    font-size: 9.7pt;
     letter-spacing: .12em;
     color: #8A857A;
   }
@@ -229,65 +240,105 @@ table.idx.wk td:nth-child(4) {
     display: none;
   }
 
-  .sec {
-    break-inside: avoid;
-  }
-
-  /* the lesson travels as one block (title, paragraph, schematic): X image 4 must not open mid-paragraph */
-  .sec.edu {
-    break-inside: avoid;
-  }
-
-  /* X posts use pages 1–4: the book always starts a page of its own */
-  .sec.book-sec {
-    break-before: page;
-  }
-
-  /* print density: text gives way, the schematic keeps the full type width (it is X image 4 and must
-     read on a phone). Next-session watch, rules and education then still fit ahead of the book. */
-  .sec {
-    margin-top: 16px;
-  }
-
-  .sec h3 {
-    padding-top: 7px;
-    margin-bottom: 6px;
-  }
-
-  .prose {
-    font-size: 12.5px;
-    line-height: 1.55;
-  }
-
-  ol li {
-    padding: 3px 0;
-    font-size: 12.5px;
-    line-height: 1.45;
-  }
-
-  table.idx td,
-  table.led td {
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .sec.edu .tell {
-    width: 100%;
-    margin: 4px 0 0;
-  }
-
-  .tell,
-  .edu-pick,
-  .votes,
-  .metrics {
-    break-inside: avoid;
-  }
-
   .scroll {
     overflow: visible;
   }
 
+  /* width: print media queries see the A4 page (794px) while layout gets the type area (703px), so the
+     Visual's min-width:720px rule put the industry and theme panels side by side — four nowrap tables
+     1,051px wide — and Chrome shrank every page to fit (09-11 EN body printed at 0.924 of its CSS size).
+     In print the two panels stack; each keeps its 1-day | 1-week tables side by side. */
+  .lwrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lgrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* pagination: the book starts its own page (X uses pages 1–4); plain sections may flow across pages,
+     but the lesson (never opens mid-paragraph on X image 4), every figure block, table rows and list
+     items travel whole, and a heading never ends a page */
+  .sec {
+    break-inside: auto;
+    margin-top: 6px;
+  }
+
+  .sec.book-sec {
+    break-before: page;
+  }
+
+  .sec.edu,
+  .tell,
+  .edu-pick,
+  .votes,
+  .metrics,
+  .statebar,
+  .lgrid,
+  table tr,
+  ol li {
+    break-inside: avoid;
+  }
+
+  .sec h3 {
+    break-after: avoid;
+  }
+
   .prose {
-    max-width: none;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ---- type: previous CSS px × 0.96 pt */
+  .mast { font-size: 10.08pt; }
+  .reg { font-size: 9.6pt; }
+  .hl-a { font-size: 24.96pt; line-height: 1.12; }
+  .byline { font-size: 10.56pt; }
+  .sec h3 { font-size: 10.56pt; padding-top: 3px; margin-bottom: 3px; }
+  .prose { font-size: 12pt; line-height: 1.3; max-width: none; }
+  table.idx, table.led, table.book { font-size: 11.52pt; }
+  table.idx th, table.book th { font-size: 9.6pt; }
+  table.lt { font-size: 11.04pt; }
+  table.lt td.gname { font-size: 11.52pt; }
+  table.lt td.st { font-size: 9.12pt; }
+  .env { font-size: 38.4pt; }
+  .score { font-size: 24.96pt; }
+  .score small { font-size: 11.52pt; }
+  .vnum { font-size: 14.4pt; }
+  .votes.big .vnum { font-size: 19.2pt; }
+  .vunit { font-size: 9.12pt; }
+  .vlab { font-size: 11.04pt; }
+  .legend { font-size: 9.6pt; }
+  .lpanel h4 { font-size: 12.48pt; }
+  .lhead { font-size: 9.6pt; }
+  dl.kvl dt { font-size: 10.08pt; }
+  dl.kvl dd { font-size: 12.96pt; }
+  ol li { font-size: 12pt; line-height: 1.25; padding: 1px 0; }
+  ol.rules li { font-size: 13.92pt; }
+  ol li::before { font-size: 10.56pt; }
+  .metrics span { font-size: 9.6pt; }
+  .metrics b { font-size: 26.88pt; }
+  .metrics i.src { font-size: 8.64pt; }
+  .tick { font-size: 11.52pt; }
+  .statebar span { font-size: 9.6pt; }
+  .statebar b { font-size: 12.96pt; }
+  .statebar.big b { font-size: 21.12pt; }
+  .schem, .disc { font-size: 10.08pt; }
+  .chart .ax { font-size: 12.52px; }
+  .chart .nowlab { font-size: 16.28px; }
+  /* figlayout.font_size() carries the same two numbers (gate F1 measures with them) */
+  .tell text { font-size: 16.28px; }
+  .tell .small { font-size: 15.02px; }
+
+  /* ---- spacing (line-height, paragraph and cell spacing only) */
+  table.idx td, table.led td, table.book td, table.lt td { padding-top: 1px; padding-bottom: 1px; line-height: 1.2; }
+  table.idx th, table.book th { padding-bottom: 2px; }
+  .lwrap, .lgrid { gap: 10px; }
+  .statebar > div, .metrics > div { padding-top: 5px; padding-bottom: 5px; }
+  .vote { padding-top: 4px; padding-bottom: 4px; }
+  .drop.thin { margin-top: 6px; }
+
+  .sec.edu .tell {
+    width: 100%;
   }
 }

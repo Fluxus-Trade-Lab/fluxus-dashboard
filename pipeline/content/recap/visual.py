@@ -41,7 +41,7 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 CHROME_PROFILE = Path.home() / ".venvs" / "fluxus-recap" / "chrome-profile"
 SAMPLE_ISSUES = [("W37", "2026-W37"), ("09-11", "2026-09-11"), ("09-10", "2026-09-10"), ("09-09", "2026-09-09"), ("09-08", "2026-09-08")]
 MAX_LINE, MAX_BYTES = 300, 350 * 1024
-PAGE_MARGIN_MM = (14.0, 14.0)  # left/right, must match @page in recap_local.css
+PAGE_MARGIN_MM = (12.0, 12.0)  # left/right, must match @page in recap_local.css
 FONTS_LINK = ('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600'
               '&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">')
 

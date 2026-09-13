@@ -38,6 +38,8 @@ BANNED: dict[str, re.Pattern] = {
     "Naidik": _word("Naidik", re.I),
     # host surnames / nicknames and contact lines seen in the 09-08..09-12 captions
     "Toddzilla": re.compile(r"Todd\s?zilla", re.I),
+    # trend-gauge state name from the source (Andy 09-13「"Grow"也是专有词，也屏蔽」); growth / grow pass
+    "Grow": re.compile(r"(?<![A-Za-z])Grow(?![A-Za-z])"),
     "Zhang": _word("Zhang"),
     "Bates": _word("Bates"),
     "Grok Tasha (caption variant)": re.compile(r"Grok\s?Tasha", re.I),

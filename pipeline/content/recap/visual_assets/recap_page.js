@@ -207,7 +207,7 @@
       if (q === 0 || mm === 1) {
         lab += " " + String(m[1]).slice(2, 4);
       }
-      if (x - lastx >= 48) {
+      if (x - lastx >= 64) {
         o.push('<text class="ax" x="' + x.toFixed(1) + '" y="216">' + esc(lab) + "</text>");
         lastx = x;
       }
