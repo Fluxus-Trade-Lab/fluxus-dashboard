@@ -78,9 +78,8 @@ export function VerdictCard({ ml }) {
     <Card title="Today" aside={ml?.date ? `SPY daily · ${ml.date}` : undefined}>
       {!v && ml?.spy?.light === 'green' && ml?.verdict_pending ? (
         <p className="m-0 text-[17px] text-[var(--color-text-secondary)]">
-          <b className="font-semibold text-[var(--color-text)]">The light is green.</b>{' '}
-          How bright is Step 2&rsquo;s call — the rule that turns its three answers into one word is still being set
-          with the course, so the page does not make one up.
+          <b className="font-semibold text-[var(--color-text)]">The light is green, and the call is not measured:</b>{' '}
+          {ml.verdict_pending}
         </p>
       ) : !v ? <NotMeasured what="Today's aggression" /> : (
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
@@ -100,10 +99,10 @@ export function VerdictCard({ ml }) {
               )}
               {VERDICT[v].line}
             </p>
-            {(ml?.verdict_synthetic ?? spy?.light === 'green') && (
+            {ml?.verdict_synthetic && (
               <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
-                synthetic — the rule that combines Step 2&rsquo;s three answers (any bad → avoid, all good → full,
-                otherwise dim) was set with the course on 09-11; it is not in the lesson text.
+                synthetic — combined from Q2 and Q3 (either bad → avoid, both good → full, otherwise dim), a rule set
+                with the course on 09-11, not in the lesson text. Q1 is shown but does not vote.
               </p>
             )}
             <div className="flex gap-1.5 mt-3" aria-hidden="true">
@@ -269,15 +268,30 @@ export function BrightnessStep({ ml, breadthRows }) {
           <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Q1 · Quality setups</div>
           {b?.setups?.count == null ? <NotMeasured what="Setup count" /> : (
             <>
-              <div className={`text-[38px] leading-none font-bold mt-1 tabular-nums ${b.setups.provisional !== false
+              {/* No lesson bands under this number: the lesson's 1–3 / 10+ count a
+                  hand-picked list, and printing them under an index would put back
+                  the conversion the ruling forbids (Studio Q, 09-13). Grey while
+                  it does not vote. */}
+              <div className={`text-[38px] leading-none font-bold mt-1 tabular-nums ${b.setups.q1_votes === false
                 ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text)]'}`} style={{ fontFamily: 'var(--font-cond)' }}>{b.setups.count}</div>
-              <div className="text-[13px] text-[var(--color-text-secondary)]">10+ bright · 1–3 dim · 0 avoid</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)]">{b.setups.label ?? 'setups today'}</div>
+              {b.setups.narrowed_to && (
+                <div className="text-[11px] text-[var(--color-text-muted)] mt-0.5">
+                  {b.setups.narrowed_to}{b.setups.pool_count != null ? ` · ${b.setups.pool_count} across the whole scan` : ''}
+                </div>
+              )}
               {b.setups.setups_without_panel?.length > 0 && (
                 <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
                   no scan yet for {b.setups.setups_without_panel.join(' / ')} — reads low for those
                 </div>
               )}
-              {b.setups.provisional !== false && <Provisional />}
+              {b.setups.q1_votes === false && (
+                <span className="inline-block mt-1.5 text-[11px] font-mono tracking-[.1em] px-1.5 py-0.5 rounded
+                                 bg-[var(--color-v2-off)] text-[var(--color-text-muted)]"
+                      title={b.setups.vote_restore_rule ?? undefined}>
+                  shown, does not vote
+                </span>
+              )}
             </>
           )}
         </div>

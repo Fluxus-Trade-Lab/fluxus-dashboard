@@ -243,7 +243,7 @@ describe('deleted content is back, in the folds', () => {
    on the 2026-09-10 session), not a hand-written shape — so a renamed key on
    either side turns this red. */
 describe('the course read on DATA ALEX\'s real market_light.json', () => {
-  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.2026-09-10.json'), 'utf8'))
+  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
 
   it('draws the light, the count, the gear and the call from the real file', async () => {
     withFetch({ market_light: real })
@@ -254,10 +254,15 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     expect(screen.getByText(`${real.spy.gear.n} / 7`)).toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
-    expect(screen.getAllByText('provisional').length).toBe(2)
+    // Q1 is shown but does not vote (Studio Q 09-13); only Q2 carries `provisional`
+    expect(screen.getAllByText('provisional').length).toBe(1)
+    expect(screen.getByText('shown, does not vote')).toBeInTheDocument()
+    expect(screen.getByText(real.brightness.setups.label)).toBeInTheDocument()
+    expect(screen.queryByText(/10\+ bright/)).not.toBeInTheDocument()
     // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
-    expect(screen.queryByText(/synthetic — the rule that combines/)).not.toBeInTheDocument()
-    expect(screen.getByText('Not confirming')).toBeInTheDocument()
+    expect(screen.queryByText(/synthetic — combined from Q2 and Q3/)).not.toBeInTheDocument()
+    const q3 = { confirm: 'Confirming', mixed: 'Mixed', negate: 'Not confirming' }[real.brightness.breadth.state]
+    expect(screen.getByText(q3)).toBeInTheDocument()
     expect(screen.getByText(/no scan yet for BO \/ HTF/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
@@ -266,7 +271,7 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
 /* Studio Q 09-11 (a7bd310b): the page names its method, a green-day call is
    tagged synthetic, and Q1 stays faded while provisional. */
 describe('Studio Q rulings on the page', () => {
-  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.2026-09-10.json'), 'utf8'))
+  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
 
   it('names the light\'s method — EMA, as Andy ruled on 09-11', async () => {
     withFetch({ market_light: real })
@@ -282,8 +287,25 @@ describe('Studio Q rulings on the page', () => {
     withFetch({ market_light: green })
     renderPage()
     expect((await screen.findAllByText('DIM')).length).toBeGreaterThan(0)
-    expect(screen.getByText(/synthetic — the rule that combines/)).toBeInTheDocument()
+    expect(screen.getByText(/synthetic — combined from Q2 and Q3/)).toBeInTheDocument()
     expect(screen.getByText('Mixed')).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
+})
+
+/* Studio Q 09-13: a green day whose verdict is missing says which question lacks
+   data, rather than claiming the rule is unsettled. */
+describe('a green day with a question missing its data', () => {
+  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
+
+  it('names what is not measured', async () => {
+    const green = { ...real, verdict: null, verdict_synthetic: false,
+      verdict_pending: 'green day, Q3 not measured',
+      spy: { ...real.spy, light: 'green', checks_passed: 3 } }
+    withFetch({ market_light: green })
+    renderPage()
+    expect(await screen.findByText(/the call is not measured/)).toBeInTheDocument()
+    expect(screen.getByText(/green day, Q3 not measured/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 })
