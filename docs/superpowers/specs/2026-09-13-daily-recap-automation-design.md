@@ -94,3 +94,13 @@ Andy 原话：「Daily recap和weekly recap内容和生产线就这样定稿了�
 **闸（新增）**：X1 前 4 页不得出现组合更新内容（打印 CSS 让组合更新节强制另起一页）· X2 PDF 少于 4 页即红 · 单图 >5MB 改出 JPEG。
 **已定**（Andy「周复盘不发X, X一致对外用英文版本」）：周刊不出 `x/`；X 只用英文（图取 EN 版、文案只出 `post_EN.md`）。**仍待定**：X 短帖长度与写法（样张迭代）。
 
+## 10. 上线（09-13 晚）
+
+- 工具链合 main：`05a0d657..2f6ade50`（`pipeline/content/recap/` + 测试，全套 2069 过）；内容文件格式 `pipeline/content/recap/CONTENT_SCHEMA.md`。
+- 本机定时任务（任务书只走 `update_scheduled_task` 改）：
+  - `recap-daily` 周二至周六 09:00 JST —— 复盘 ET 最近完成交易日；目标 10:30 前交付；INBOX 只留状态行
+  - `recap-weekly` 周日 10:00 JST —— 复盘刚结束的 ISO 周（周末回顾视频），不出 X
+  - `recap-dryrun-0914` 一次性 09-14 09:00 JST —— 输出进 `_dryrun`，记录耗时与权限弹窗，写 `_dryrun/DRYRUN_2026-09-14.md`
+- 首次生产：09-15（复盘 09-14）；首次周刊：09-20（W38）。
+- 仍待定：X 短帖用 v1（判断先行）还是 v2（结构先行）、结尾带不带 Substack 链接（样张在 `2026-09-1x/x/post_EN.md`）。
+
