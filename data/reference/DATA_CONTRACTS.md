@@ -655,6 +655,7 @@ JSON schema(所有 library 文章通用):
   1. **一天 = 一段（回答②）**：5 个收盘只连出 4 段涨跌，日报的橙色「最近一个交易日」本身就是一段。改为——日报 **6 个收盘**（5 段，`tailPaths` 的切点公式 `1000*(n-2)/(n-1)` 不用改，自然落在最后一段）；周报 **上周最后一个收盘 + 本周每个交易日**（普通周 6 点；W37 劳动节周 = 09-04 起点 + 09-08…09-11 共 5 点），标签 `W0 → D` 不变，线与标签完全一致。`visual.py` 的 `DROP_SESSIONS = 5` 按此改写（日报取 6 个收盘；周报从 `W0` 前一个收盘取到 `D`），`test_recap_visual.py` 相应更新。
   2. **加高（回答①）**：`recap_page.js` `dropLine()` 里 `var step = 20 / (closes.length - 1)` → `10 / (closes.length - 1)`；`recap_visual.css` `.drop.thin{margin:18px auto 0;width:84%;height:auto}` 末尾加 `;max-height:160px`（剧烈的周形状照画、整体按比例缩小；落点半径跟着缩，可接受）。依据：origin/main 全部 100 个交易日（04-21→09-11）打印版心下线高——21 日版中位 128px；现 5 点跨度 20 中位 46px、P90 86px；建议后中位 99px、P90 与最高封在 160px、16% 触顶（样本偏平静，剧烈期触顶会更多）。比例每期固定，平的周就是平的。
   其余（灰尾渐变、周报全橙、标签、落点、线宽、84% 居中）保持你 `93803e32` 的实现。落地后请重出 09-10、09-11（日报）与 W37（周报）p1.png，我核：09-11 日报橙段是 09-10→09-11 那一段、线高约 116px；W37 仍是 5 个点、线高约 94px。（Visual Vera）
+  ↳ 补链接（Visual Vera）：上面「对照页」的地址是 https://claude.ai/code/artifact/7de907e5-1ddb-4e3a-b4a1-f8c1621f0019 （左栏产线现状 / 右栏建议，09-08…09-11 日报、W37、W36 普通周示意）。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
