@@ -33,7 +33,7 @@ import time
 from pathlib import Path
 
 from pipeline.content.recap import month_dir, pack_dir
-from pipeline.content.recap.constants import RULES
+from pipeline.content.recap.constants import check_rules
 from pipeline.content.recap.gates import run_gates
 from pipeline.content.recap.pages import check_pages
 from pipeline.content.recap.weeks import week_sessions
@@ -313,8 +313,9 @@ table.pos { width: 60%; }
 
 
 def build_html(pack: dict, c: dict, fig: Path) -> str:
-    if "rules" in c:
-        raise SystemExit("content may not supply rules — THE RULES are fixed text in constants.py")
+    bad = check_rules(c.get("rules"), c["lang"], pack.get("date"))
+    if bad:
+        raise SystemExit(f"{c['lang']}: {bad}")
     L, weekly = c["labels"], pack.get("kind") == "weekly"
     i = iter(range(30))
     parts = [f'<div class="titlebar" style="--tone:{TONE[c["tone"]]}"><h1>{e(c["title"])}</h1><p>{e(c["subtitle"])}</p></div>',
@@ -337,7 +338,7 @@ def build_html(pack: dict, c: dict, fig: Path) -> str:
         parts.append(section(next(i), L["sentiment"], f'<p>{rich(c["sentiment"])}</p>'))
     edu = c["education"]
     parts += [section(next(i), L["tomorrow"], olist(c["tomorrow"])),
-              section(next(i), L["rules"], olist(RULES[c["lang"]]), "keep"),
+              section(next(i), L["rules"], olist(c["rules"]), "keep"),
               section(next(i), f'{L["education"]} · {edu["title"]}',
                       f'<p>{rich(edu["body"])}</p><img src="{fig.as_uri()}" alt="">', "edu")]
     book = book_block(pack, c)
