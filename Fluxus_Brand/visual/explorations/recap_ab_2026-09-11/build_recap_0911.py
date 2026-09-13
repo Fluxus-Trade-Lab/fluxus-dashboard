@@ -45,9 +45,15 @@ def signed(v,unit):
 SIDE={"bull":"for","bear":"against","neutral":"near"}
 
 # ---------- components ----------
-def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 11"):
+# Andy 09-13: the line keeps its 2.5px weight; it takes the centre of its band (84% of the column, height follows
+# the curve), today's close gets a hollow dot, the subtitle goes. Stroke is non-scaling (CSS), so 2.5 is screen px;
+# the dot radius is viewBox units, solved for DOT_PX on the print column (A4 704px x 84%).
+DOT_PX=4.5; DROP_W=704*0.84
+def drop_svg(stroke,cls="",pad=6,label="Drop line, 21 sessions to Sep 11",dot=0):
+    ex,ey=DROP.split()[-1].split(",")
+    mark=f'<circle class="dropdot" style="stroke-width:{stroke}" cx="{ex}" cy="{ey}" r="{dot*(1000+2*pad)/DROP_W:.2f}"/>' if dot else ""
     return (f'<svg class="drop {cls}" viewBox="{-pad} {-pad} {1000+2*pad} {DROP_H+2*pad:.1f}" role="img" aria-label="{e(label)}">'
-            f'<path style="stroke-width:{stroke}" d="{DROP}"/></svg>')
+            f'<path style="stroke-width:{stroke}" d="{DROP}"/>{mark}</svg>')
 REG=f'1m · drop <span class="m">#0911</span> · {D0} → {D} · SPX · ∫ = {ARC:.3f} m'
 def cond_chart():
     n=len(cond); W=940; base=190; top=18; bw=W/n
@@ -227,8 +233,8 @@ IDX_TABLE=f'<div class="scroll"><table class="idx"><thead><tr><th>Index</th><th 
 WEEK_M='<div class="metrics">'+"".join(f'<div><span>{e(a)}</span><b class="dn">{c}</b></div>' for a,c in WEEK)+'</div>'
 
 A=f'''
-<article class="sheet a">{mast_a()}{drop_svg(2.5,"thin")}<p class="reg">{REG}</p>
-  <h2 class="hl-a">{e(TITLE)}</h2><p class="byline">{e(BYLINE)}</p>
+<article class="sheet a">{mast_a()}{drop_svg(2.5,"thin",dot=DOT_PX)}<p class="reg">{REG}</p>
+  <h2 class="hl-a">{e(TITLE)}</h2>
   <section class="sec"><h3>The Big Picture</h3><p class="prose">{BIG}</p></section>
   <section class="sec"><h3>Index Action · Friday</h3>{IDX_TABLE}</section>
   <section class="sec"><h3>Market State</h3>{statebar()}</section>{folio_a(1)}</article>
