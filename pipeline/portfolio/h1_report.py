@@ -173,8 +173,8 @@ def compute_mtm_drawdown(csv_path: str, starting_capital: float,
         % of the peak it fell from. This is the project's canonical definition.
       * `deepest_pct` below: the largest PERCENTAGE decline, which for H1 2026
         is an earlier, smaller-dollar dip on a much smaller account
-        (-17.9% Jan 28 -> Mar 19 on a ~$1.16M peak, vs -11.1%/-$223k
-        Jun 2 -> Jun 10 on a ~$2.00M peak).
+        (-17.9% Jan 28 -> Mar 19, vs -11.1% Jun 2 -> Jun 10 on a peak
+        roughly 1.7x larger).
     Both are returned so neither gets silently rediscovered as "the" drawdown.
 
     Raises RuntimeError if prices are unavailable — a silently wrong headline
@@ -278,8 +278,9 @@ def main() -> dict:
     open_rows.sort(key=lambda r: r["unrealized"], reverse=True)
 
     # --- Headline: account value = starting + realized + open unrealized.
-    # This ties to the live dashboard ($1.93M as of 7/3) and to the CSV, so it
-    # is verifiable. (Compounded monthly returns give a time-weighted +101%,
+    # This ties to the live dashboard (as of 7/3) and to the CSV, so it
+    # is verifiable. Dollar figures are computed here but never published:
+    # public_h1_stats() converts them to % before the file is written. (Compounded monthly returns give a time-weighted +101%,
     # kept below as a secondary reference but NOT the headline to avoid
     # overstating vs. the actual account value.) ---
     mtm_equity = start_cap + realized_pnl_total + unrealized_total
@@ -489,10 +490,98 @@ def main() -> dict:
     stats["track_record"] = TRACK_RECORD
     stats["benchmarks"] = build_benchmarks(TRACK_RECORD, stats["headline"]["h1_return_pct"])
 
+    stats = public_h1_stats(stats)
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w") as f:
         json.dump(stats, f, indent=2)
     return stats
+
+
+def _swap(d: dict, changes: dict) -> dict:
+    """Rebuild `d` in its original key order. changes[old] is None to drop the
+    key, or (new_key, value) to replace it in place."""
+    out = {}
+    for k, v in d.items():
+        if k not in changes:
+            out[k] = v
+        elif changes[k] is not None:
+            nk, nv = changes[k]
+            out[nk] = nv
+    return out
+
+
+def public_h1_stats(stats: dict) -> dict:
+    """The publishable form of the report: R and % only.
+
+    Andy 2026-09-13: 「管线只做R 和%, 不写股数和美元」. OUT_PATH is under
+    data/output, which Vercel serves verbatim from a public repository. Share
+    counts and position sizes are dropped; every dollar P&L becomes its
+    contribution to the H1 return (% of starting capital), so totals still add
+    up to headline.h1_return_pct; dollar-only stats that already have an R twin
+    (avg_winner/avg_loser/expectancy -> avg_winning_r/avg_losing_r/avg_r) are
+    dropped. The starting capital itself is dropped last, because every % here
+    is relative to it.
+
+    Pure: also used by the one-off cleanup of the already-published file
+    (pipeline/tools/strip_private_fields_2026_09_13.py), so both produce the
+    same bytes. Guarded by pipeline/tests/test_public_output_privacy.py.
+    """
+    import copy
+    s = copy.deepcopy(stats)
+    cap = s["meta"]["starting_capital"]
+
+    def pct(v):
+        return None if v is None else round(v / cap * 100, 2)
+
+    s["meta"] = _swap(s["meta"], {"starting_capital": None})
+    h = s["headline"]
+    s["headline"] = _swap(h, {
+        "mtm_equity": None, "profit_total": None,
+        "realized_pnl": ("realized_pct", pct(h["realized_pnl"])),
+        "unrealized_pnl": ("unrealized_pct", pct(h["unrealized_pnl"])),
+    })
+    ts = _swap(s["trade_stats"], {"avg_winner": None, "avg_loser": None, "expectancy": None})
+    if isinstance(ts.get("max_dd"), dict):
+        dd = _swap(ts["max_dd"], {"amount": None, "peak_equity": None})
+        if isinstance(dd.get("deepest_pct"), dict):
+            dd["deepest_pct"] = _swap(dd["deepest_pct"], {"amount": None})
+        ts["max_dd"] = dd
+    s["trade_stats"] = ts
+
+    s["open_positions"] = [
+        _swap(r, {"qty": None, "unrealized": ("contrib_pct", pct(r.get("unrealized")))})
+        for r in s.get("open_positions", [])
+    ]
+    for key in ("winners", "losers"):
+        s[key] = [_swap(r, {"pnl": ("contrib_pct", pct(r.get("pnl")))}) for r in s.get(key, [])]
+    for key in ("top_trades", "worst_trades"):
+        cards = []
+        for r in s.get(key, []):
+            orig = r.get("qty")
+            exits = [
+                _swap(e, {"qty": ("pct_of_position",
+                                  round(e["qty"] / orig * 100, 2) if orig else None)})
+                for e in r.get("exits", [])
+            ]
+            r = _swap(r, {"qty": None, "position": None,
+                          "pnl": ("contrib_pct", pct(r.get("pnl")))})
+            r["exits"] = exits
+            cards.append(r)
+        s[key] = cards
+    s["campaigns"] = [
+        _swap(c, {"total_pnl": ("total_contrib_pct", pct(c.get("total_pnl"))),
+                  "open_pnl": ("open_contrib_pct", pct(c.get("open_pnl"))),
+                  "best_pnl": ("best_contrib_pct", pct(c.get("best_pnl")))})
+        for c in s.get("campaigns", [])
+    ]
+    s["sectors"] = [_swap(r, {"pnl": ("contrib_pct", pct(r.get("pnl")))})
+                    for r in s.get("sectors", [])]
+    s["exit_styles"] = {
+        name: _swap(v, {"total_pnl": ("total_contrib_pct", pct(v.get("total_pnl"))),
+                        "avg_pnl": ("avg_contrib_pct", pct(v.get("avg_pnl")))})
+        for name, v in s.get("exit_styles", {}).items()
+    }
+    return s
 
 
 def H_return_to_dd(stats) -> float:
@@ -547,12 +636,12 @@ if __name__ == "__main__":
     s = main()
     h = s["headline"]
     ts = s["trade_stats"]
-    print(f"H1 2026: {h['h1_return_pct']:+.1f}%  ->  ${h['mtm_equity']:,.0f}")
-    print(f"  realized ${h['realized_pnl']:,.0f} + unrealized ${h['unrealized_pnl']:,.0f}")
+    print(f"H1 2026: {h['h1_return_pct']:+.1f}%")
+    print(f"  realized {h['realized_pct']:+.2f}% + unrealized {h['unrealized_pct']:+.2f}%")
     print(f"  closed H1: {ts['n_closed_h1']}  open: {ts['n_open']}  win%: {ts['win_rate']}")
-    print(f"  profit factor {ts['profit_factor']}  expectancy ${ts['expectancy']:,.0f}  avg R {ts['avg_r']}")
+    print(f"  profit factor {ts['profit_factor']}  avg R {ts['avg_r']}")
     d = ts["max_dd"]
-    print(f"  max DD (MTM) {d['pct']}%  (${d['amount']:,.0f})  "
+    print(f"  max DD (MTM) {d['pct']}%  "
           f"{d['peak_date']} -> {d['trough_date']}")
     print(f"  max DD (realized, ref) -{ts['max_dd_realized_pct']}%  "
           f"return/DD {ts['return_to_dd']}x  Sharpe {ts['sharpe']}")

@@ -408,7 +408,9 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
     current_stop = trade.stop_price
     has_r = initial_stop is not None
     r_per_share = abs(entry_price - initial_stop) if has_r else None
-    R_dollars = r_per_share * trade.original_qty if has_r else None
+    # 1R as % of entry, not as dollars: the narrative is published verbatim and
+    # "(qty 2262) ... = $7,713" was the account size in two numbers.
+    r_pct = r_pct_of_entry(entry_price, initial_stop)
     trailed = has_r and abs(current_stop - initial_stop) > 0.01
 
     px = snap.get('close')
@@ -426,11 +428,11 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
         stop_phrase += f" (currently trailed to ${current_stop:.2f})"
     sent1_parts = [
         f"Entered **{trade.ticker}** {direction} on {entry_date_str} at "
-        f"${entry_price:.2f} (qty {trade.original_qty}) {stop_phrase}",
+        f"${entry_price:.2f} {stop_phrase}",
         # The 1R clause is a fact about the entry stop. Without one it is
         # dropped rather than printed as $0.00, which would read as a trade
         # sized against nothing instead of one whose sizing is unrecorded.
-        (f"(1R = ${r_per_share:.2f}/sh = ${R_dollars:,.0f})." if has_r
+        (f"(1R = ${r_per_share:.2f}/sh = {r_pct:.1f}% of entry)." if has_r
          else "(1R not computable — no entry stop recorded)."),
     ]
 
@@ -490,25 +492,47 @@ def _trade_id(trade: Trade, idx: int) -> str:
     return f"{trade.ticker}_{trade.entry_date.isoformat()}_{idx:03d}"
 
 
+def pct_of_position(qty, original_qty) -> Optional[float]:
+    """A share count restated as a share of the original position (%)."""
+    if not original_qty:
+        return None
+    return qty / original_qty * 100
+
+
+def r_pct_of_entry(entry_price, initial_stop) -> Optional[float]:
+    """1R as a percentage of the entry price — the size-free way to say how
+    wide the stop was. None when there is no entry stop on record."""
+    if initial_stop is None or not entry_price:
+        return None
+    return abs(entry_price - initial_stop) / entry_price * 100
+
+
 def _trade_to_dict(trade: Trade) -> dict:
+    # Public output: R and % only, never share counts or dollars (Andy
+    # 2026-09-13, 「管线只做R 和%, 不写股数和美元」). data/output is served
+    # verbatim by Vercel from a public repo; until that date this dict carried
+    # original_qty / current_qty / r_dollars / realized_pl / trims[].qty for
+    # every trade, live positions included. Guarded by
+    # pipeline/tests/test_public_output_privacy.py.
     return {
         'ticker': trade.ticker,
         'direction': trade.direction,
         'sector': trade.sector,
         'entry_date': trade.entry_date.isoformat(),
         'entry_price': trade.entry_price,
-        'original_qty': trade.original_qty,
-        'current_qty': trade.current_qty,
         'stop_price': trade.stop_price,        # current / trailing
         'initial_stop': trade.initial_stop,    # locked at entry — R denominator
         'closed': trade.closed,
+        # Share of the original position still held, %.
+        'remaining_pct': pct_of_position(trade.current_qty, trade.original_qty),
         'exit_date': trade.exit_date.isoformat() if trade.exit_date else None,
         'hold_business_days': trade.hold_business_days,
-        'r_dollars': trade.R_dollars,
-        'realized_pl': trade.realized_pl,
+        'r_pct_of_entry': r_pct_of_entry(trade.entry_price, trade.initial_stop),
         'realized_R': trade.realized_R,
         'trims': [
-            {'date': t.date.isoformat(), 'price': t.price, 'qty': t.qty, 'type': t.type}
+            {'date': t.date.isoformat(), 'price': t.price,
+             'pct_of_position': pct_of_position(t.qty, trade.original_qty),
+             'type': t.type}
             for t in trade.trims
         ],
     }
