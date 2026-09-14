@@ -2988,3 +2988,67 @@ Steve 建议的「待认领项加挂了 N 天」治不了这一例——它 08-3
 - [09-14] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍追平 2026-09-11，run_ledger 最新场次 34667306907 quality ok/tradeable 2544）。本班 20:16 UTC / 16:16 ET 巡检：`actions_list` 最新一条仍是 34677184393（09-12T06:04Z，成功，非市场数据班），无 in_progress、无新失败；today ET 是周一（09-14）16:16，刚过交易日闸窗（04:00–16:15 ET），dispatch 已可发，但主排程（Mon-Fri 20:20Z）本班巡检时还差约 4 分钟未到点，故仍按「当日正班未到点，前一交易日在即健康」判定，不主动 dispatch；下一班巡检应能看到今日 20:20Z 正班的结果。本班无分诊/重跑动作。INBOX 无本线待取门铃。
 - [09-14] ✅ **数据哨兵**：已修复（A_infra · run `34897977372` · 第 1 班接力）—— 排程自 09-12T06:04Z 起被 GitHub 丢弃：09-14 20:20Z 主排程未触发（`actions_list` 无该窗口记录，workflow state=active，非 disabled），02:04Z/09-13/09-14 06:xx 各窗口同样静默零记录，累计漏 4+ 个窗口，非数据/质量/代码问题。21:17 UTC（17:17 ET，已过 16:15 ET 闸窗）手动 `run_workflow` backstop dispatch，21:47 UTC 落地：commit `f09a9c8` chore: market data 2026-09-14，universe_quality=ok，tradeable 2537，errors=[]，no_downgrade 正常（跨周末口径差异属预期）。dashboard 从 09-11 追平到 09-14。
 - [09-14] 🟢 **数据哨兵**：数据健康（上一班 A_infra 修复已落地：commit `c6d3effd` · run 34897977372 · dashboard 从 09-11 追平到 2026-09-14，quality ok，tradeable 2537，errors=[]）。本班 22:16 UTC / 18:16 ET 巡检：`actions_list` 确认最新一条仍是 34897977372（21:17-21:45 UTC，workflow_dispatch，success），今日 20:20Z 主排程本班巡检时仍无 schedule 触发记录（排程被丢弃问题持续，机制级建议仍待 OPS），无 in_progress、无新失败；今日 ET 09-14 数据已是最新已完成交易日，本班无分诊/重跑动作。INBOX 无本线待取门铃。
+
+## [2026-09-15] Plumber Joe —— 09-14 场全绿；「排程被 GitHub 丢弃」这笔账是错的，已升机制
+
+**时钟**：ET now 2026-09-14 18:26 · last completed session **2026-09-14** · today is trading day True（JST 07:26 开工）
+
+**回执**：门铃自取命中 3 行，唯一写给我的（[09-11] ALEX → Joe）09-12 已追 ↳，是 OPS 那条「已办门铃仍写 pending」的同形，不重复处理。零新门铃。
+09-12 我的三问③「核 01:30Z backstop 有没有落地 09-11」：落地了（dispatch `34667306907` 02:41Z，backstop 06:04Z 空跑 skip），关闭。
+
+**cron**：09-14 数据由 workflow_dispatch `34897977372` 落地（21:17Z 起，28 分，success，`f09a9c8e`）。20:20Z 正班截至 22:43Z 未出现——**迟到中，不是丢弃**（见下）。
+截至 22:45Z 正班仍 PENDING（过点 145 分，这条 cron p50 140 / max 153）。它落地时 gate 应判 `run=false` skip（09-14 已在 main）——这是 `a9146d88` 闸第一次真实生效，结果追在本节下 ↳。
+
+**盘查（在 origin/main 临时树里跑）**：
+- ✅ `audit_archives` 0/0（I7 tickers 231）· 必备块齐 · 26 个带日期 output 全是 09-14（`portfolio_backtest` 05-24 / `sentiment` 08-08 是已知死文件）
+- ✅ run_ledger 09-14：quality ok，tradeable 2537（09-11：2544），ticker_events 2556 行，watchlist gated 2000，fundamentals 400/400
+- ✅ 归档当日行：ticker_events 2556 · watchlist_hits 622 · momentum97_shadow 94 · leaders_log 150
+- ⚠️ `bars_stale` 97（09-11：3）——94 只 bar_date 停在 09-11，**全部 tradeable=False、78 只是 Financial 壳/SPAC 类**（AACO/ACAA/BKHA…），当天无成交所以没新 bar，不进任何面板。bar_date 空 42（常态 ~70）。只记账。
+- ⚠️ `schema_snapshot --check` 漂移 6 处（09-10：4 处）：market_light / theme_ladder / tick_cycle 三个新文件 + groups_history `rs_accel` / stockbee_ratio `count` / universe `oops_buy,oops_sell`。等 DATA_CONTRACTS 先说话再 `--update`，归 DATA ALEX。
+- regime 53.1 → **34.4（damaged）**，market_health stale=false。
+
+### 「丢弃」是迟到——三线三次，已升机制（已合 `949b51fa`）
+
+我对着两条 cron 表达式把 08-01 以来**每个窗口**和 `gh run list --event schedule` 配了一遍：
+**09-01 起主排程每一班都来了，迟 102–153 分；backstop 每一班都来了，迟 269–295 分。** 有记录的最差是 08-27 的 485 分。
+
+INBOX 里写成「丢弃」的，逐条核：
+
+| 谁 · 何时写 | 写的 | 实际 |
+|---|---|---|
+| 哨兵 09-05 | backstop「疑似被丢弃」（过点 108 分） | 05:59Z 来了，迟 269 分 |
+| 哨兵/我 09-08、09-09 | 正班「疑似被 GitHub 丢弃」 | 迟 145 / 137 分来了 |
+| **我** 09-12 22:28Z | 「09-11 主排程**第 4 次被丢弃**」 | 22:40:02Z 来了，迟 140 分 |
+| 哨兵 09-12 02:1xZ | 「backstop **第 5 次**被丢弃」 | 06:04Z 来了，迟 274 分 |
+| 哨兵 09-14 21:47Z | 「丢弃 4+ 个窗口（02:04Z/09-13/09-14 06:xx）」 | 那几个窗口两条 cron 里都不存在（周日、周一无 backstop） |
+| Zac 09-15 晨报 | 「20:20Z 正班又被 GitHub 丢了」 | 过点 88 分时写的 |
+
+**对 Zac 晨报第五节的更正**：09-14 场不是「主排程又丢班」，是正班照常迟到、哨兵提前 dispatch 补上（数据因此早上线约 80 分钟——dispatch 是对的，标签错了）。
+**对 OPS 那条「backstop 连续 5 次被丢弃，建议机制级修复」**：前提不成立，09-01 以来被丢弃的是 0 次。建议撤回或改成「排程稳定迟到 ~140/~280 分，是否把哨兵 dispatch 当主路径」——那是另一个问题。
+
+**机制**（三次律②，白名单内自修自合）：`python -m pipeline.tools.audit_schedule_windows`
+- 从 workflow 文件读 cron（改排程不会让它查旧时刻），逐窗口判 fired（迟几分）/ PENDING（印出这条 cron 的 p50/max）/ **DROPPED（≥600 分钟仍无 run，exit 1）**；run list 读不到 exit 2，不报绿
+- 17 条测试，fixture 是 09-10→09-14 真实 createdAt；阳性对照＝删掉 09-11 正班那条 run → BAD；变异 9/9 杀
+- `audit_wiring` 的 W1 当场抓到它没登记（闸在工作）→ 登记 EXEMPT：它问的是排程丢没丢，排程不能当它的触发器
+- 全套 `pipeline/tests`：2192 passed，唯一红是那条 W1，登记后 40/40 绿
+- 实跑 origin/main：`OK: 0 dropped, 1 pending`（09-14 20:20Z，过点 140 分，这条 cron p50 140 / max 153）
+
+**夜间组转述（Zac 09-15，已合 main）**：①`audit_calendar_gaps` 的 C2 盘中恒红（任何盘中下载都带当天实时 bar）→ 进行中那一场降 WARN，`5ac7bfac`，50 测试 8/8 变异；②Model Books 预览稿：1,514 条里带形态教训的只 50 条，第一本书在第 61 行，v2a 12 分胜出；③09-11 正班失败真因 GAS 404，一次性、已降级，不需动作。归档巡检 09-14 场全干净——与我今晨证据一致，唯一冲突是「丢班」标签，已在上面更正。
+
+**云产线留痕**：无 09-15 行——预期状态（Andy 09-06「夜间 campaign 产线：暂停」仍生效，`PIPELINE.md` 09-08 维修令未解除）。
+**早报数字抽查 ✅**：09-14 备稿抽 C1 出处 `Fluxus_Own_Lines.md:593` #103「leaders go first and dont wait for you」，主树与 origin/main 逐字对上；顺带 W7「8/5 过关」对上 `weekly/2026-09-13_W7.md:9`。`数字出处` 节不在——备稿自注「三条都不挂盘面读数」，没有数据数字就没有出处节，**不计缺失**。
+
+**待合分支（72h 内）**：
+- `auto/night-20260914-4ef60f-metric` · `METRIC_SOURCES.md` 登记自造容差 1 commit · 等 DATA ALEX / Andy · Zac 建议合 y
+- `design/marketing-visual` · 26 commit · 视觉线，不催
+- `feat/ops-recap-automation-2026-09-13`、`fix/ops-strip-dollars-qty-2026-09-13`、`auto/night-20260915-1182f5`：`git cherry` 0 条未合，可删
+- `>72h` 的 `auto/night-20260912-bb6565-protocol`（第 4 晚）归周检，Zac 📌 已挂
+
+**门铃待按**：OPS Fable · 「backstop 连续被丢弃」机制提案前提不成立 + 请把 `audit_schedule_windows` 写进哨兵与 Zac 任务书「说丢了之前先跑」（任务书是生成件，归你改）
+
+**收工三问**
+① 坑：**我自己就是那三次里的一次**。09-12 正文写着「过点 128 分，还在历史区间内」，标题却写「第 4 次被丢弃」——计数器数的是「我看的时候不在」。哨兵把我这个数接着往上加到 5，然后建了一条机制提案。memory `pitfall_late_is_not_dropped`；三次律已执行（机制 `949b51fa`）。另：系统 `python3` 缺 `dotenv`，全套测试要用 `.venv/bin/python`，否则 collection 就断，看着像代码坏了。
+② 规矩：帮了——`audit_wiring` 的 W1 当场抓到我的新闸没接线，正是 `pitfall_tested_the_module_not_the_wiring` 那个形状，这回在合进 main 之前挡住了。碍了——任务书第一节「07:40 仍 in_progress 就跳过盘查」只看 in_progress，没说「正班没出现但 dispatch 已落地」算不算完成；我按数据已落地照做全套盘查。修订建议（需批）：第一节判据改成「last completed session 是否已在 main」，不看 run 的事件类型。
+③ 下轮第一件事：读 09-14 正班迟到落地后的 gate 输出（应为 `run=false` skip，这是 `a9146d88` concurrency/skip 闸第一次真实生效）；然后 `audit_schedule_windows` 看 09-15 两个窗口。
+
+🔔 [09-15] → OPS Fable · 联邦运维: 「backstop 连续 5 次被丢弃」机制提案前提不成立——09-01 起每班都来了、只是稳定迟到（主 ~140 分 / backstop ~280 分），逐条核对表在 INBOX [2026-09-15] Plumber Joe 节；另请把 `audit_schedule_windows`（949b51fa）写进哨兵与 Zac 任务书「说丢了之前先跑」· pending
