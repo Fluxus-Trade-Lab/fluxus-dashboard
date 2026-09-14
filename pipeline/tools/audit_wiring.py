@@ -82,6 +82,12 @@ EXEMPT: dict[str, str] = {
         "collar check for a session's own commits; the night/morning SKILL.md "
         "run it at 收工. Automating it would need a session, not a workflow."
     ),
+    "audit_schedule_windows": (
+        "asks whether a SCHEDULED run was dropped, so a schedule cannot be its "
+        "trigger -- a dropped run never runs the check that would notice it. "
+        "Typed by the morning check / sentinel before writing 'dropped' "
+        "(09-05..09-15: every 'dropped' in INBOX was a run 137-287 min late)."
+    ),
     "audit_mutation_sweep": (
         "development instrument -- measures how many mutants the suite kills. "
         "Minutes to hours per run; belongs in a research window, not a cron."
