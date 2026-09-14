@@ -105,6 +105,54 @@ def test_c2_bar_past_the_last_completed_session_is_a_violation():
     assert any(v.startswith("C2 2026-08-28") for v in out["violations"])
 
 
+def test_c2_for_the_session_in_progress_is_a_warning_not_a_violation():
+    # 2026-09-15 04:3x JST the real tool went red mid-session on a healthy
+    # feed. The live bar of the session that is open is what every mid-session
+    # download looks like; red there reports the clock, not the feed.
+    out = check(feed(WEEK), START, END, dt.date(2026, 8, 27),
+                in_progress=dt.date(2026, 8, 28))
+    assert out["ok"], out["violations"]
+    assert out["violations"] == []
+    assert any(w.startswith("C2 2026-08-28: 10/10") and "in progress" in w
+               for w in out["warnings"])
+
+
+def test_c2_past_the_session_in_progress_is_still_a_violation():
+    # Friday is open; a bar dated Monday is not Friday's live bar.
+    present = feed(WEEK + ["2026-08-31"])
+    out = check(present, START, dt.date(2026, 8, 31), dt.date(2026, 8, 27),
+                in_progress=dt.date(2026, 8, 28))
+    assert not out["ok"]
+    assert [v.split(":")[0] for v in out["violations"]] == ["C2 2026-08-31"]
+    assert any(w.startswith("C2 2026-08-28") for w in out["warnings"])
+
+
+class TestSessionInProgress:
+    ET = dt.timezone(dt.timedelta(hours=-4))   # EDT, no DST edge in September
+
+    def _at(self, y, m, d, hh, mm):
+        return dt.datetime(y, m, d, hh, mm, tzinfo=self.ET)
+
+    def test_mid_session_monday_is_in_progress(self):
+        from pipeline.tools.audit_calendar_gaps import session_in_progress
+        # the exact moment the false red was seen
+        assert session_in_progress(self._at(2026, 9, 14, 15, 31)) == dt.date(2026, 9, 14)
+
+    def test_premarket_counts_as_in_progress(self):
+        from pipeline.tools.audit_calendar_gaps import session_in_progress
+        assert session_in_progress(self._at(2026, 9, 14, 5, 0)) == dt.date(2026, 9, 14)
+
+    def test_after_the_close_nothing_is_in_progress(self):
+        from pipeline.tools.audit_calendar_gaps import session_in_progress
+        assert session_in_progress(self._at(2026, 9, 14, 16, 0)) is None
+        assert session_in_progress(self._at(2026, 9, 14, 15, 59)) == dt.date(2026, 9, 14)
+
+    def test_weekend_and_holiday_are_never_in_progress(self):
+        from pipeline.tools.audit_calendar_gaps import session_in_progress
+        assert session_in_progress(self._at(2026, 9, 12, 12, 0)) is None   # Saturday
+        assert session_in_progress(self._at(2026, 9, 7, 12, 0)) is None    # Labor Day
+
+
 def test_c2_does_not_fire_once_that_session_closes():
     assert check(feed(WEEK), START, END, END)["ok"]
 

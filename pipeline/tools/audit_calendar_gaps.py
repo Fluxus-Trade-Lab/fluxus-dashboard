@@ -29,7 +29,17 @@ is not corrupt; the *index* is, and no value-level check can see it.
   C1  a session marketcal says is COMPLETE is absent from the feed
   C2  the feed carries a bar for a session that has not closed yet -- during
       an open session yfinance returns a live partial bar stamped today, which
-      downstream code reads as a close
+      downstream code reads as a close.
+      For the session IN PROGRESS this is a warning, not a violation. As first
+      written it was a violation, and then it fired if and only if the tool
+      was run between the open and the close: 2026-09-15 04:3x JST (15:3x ET
+      Monday) it reported "8/8 tickers carry a bar past 09-11" against a
+      healthy feed. That red said what time it was, not what the feed did --
+      every yfinance daily download made mid-session looks like that. A bar
+      dated past the last close that is NOT the session in progress (a later
+      date, or any date while no session is open) is still a violation.
+      Half-days read as in progress from 13:00 to 16:00 ET, because marketcal
+      does not model early closes; that errs toward the warning.
   C3  the feed carries a date marketcal says is not a trading day at all
       (we and the vendor disagree about when the market was open)
   C5  a session the feed DOES return, carrying a bar that is not a real
@@ -80,7 +90,8 @@ import datetime as dt
 import json
 from pathlib import Path
 
-from pipeline.marketcal import is_trading_day, last_completed_session
+from pipeline.marketcal import (is_trading_day, last_completed_session,
+                                market_today)
 
 DEFAULT_TICKERS = ["SPY", "QQQ", "IWM", "AAPL", "MSFT", "JPM", "XOM", "JNJ"]
 UNIVERSAL_FRAC = 0.80
@@ -96,9 +107,22 @@ def trading_grid(start: dt.date, end: dt.date) -> list[str]:
     return out
 
 
+def session_in_progress(now: dt.datetime | None = None) -> dt.date | None:
+    """Today's session if it is a trading day that has not closed yet, else None.
+
+    Premarket counts as in progress: the session has not closed, so any bar the
+    feed stamps with today's date is not a close either way.
+    """
+    today = market_today(now)
+    if is_trading_day(today) and today > last_completed_session(now):
+        return today
+    return None
+
+
 def check(present: dict[str, set[str]], start: dt.date, end: dt.date,
           last_complete: dt.date, universal_frac: float = UNIVERSAL_FRAC,
-          degenerate: dict[str, set[str]] | None = None) -> dict:
+          degenerate: dict[str, set[str]] | None = None,
+          in_progress: dt.date | None = None) -> dict:
     """Compare what the feed returned against what the calendar says exists.
 
     present         {ticker: {"YYYY-MM-DD", ...}} as the feed returned them
@@ -108,6 +132,9 @@ def check(present: dict[str, set[str]], start: dt.date, end: dt.date,
     degenerate      {ticker: {dates whose bar is present but not a real
                     session}} -- null close with volume, or zero-volume
                     O=H=L=C. Optional; when omitted C5 does not run.
+    in_progress     the session open right now (`session_in_progress()`), or
+                    None. Its live bar is expected and reported as a C2
+                    warning; see the module docstring for why.
     """
     grid = trading_grid(start, end)
     complete = [d for d in grid if d <= str(last_complete)]
@@ -146,10 +173,14 @@ def check(present: dict[str, set[str]], start: dt.date, end: dt.date,
     early = sorted({d for t in tickers for d in present[t] if d > str(last_complete)})
     for d in early:
         who = sum(1 for t in tickers if d in present[t])
-        violations.append(
-            f"C2 {d}: {who}/{n} tickers carry a bar past the last completed "
-            f"session ({last_complete}) -- that is a live intraday quote, "
-            f"not a close")
+        msg = (f"C2 {d}: {who}/{n} tickers carry a bar past the last completed "
+               f"session ({last_complete}) -- that is a live intraday quote, "
+               f"not a close")
+        if in_progress is not None and d == str(in_progress):
+            warnings.append(msg + " (session in progress: expected, trim it "
+                                  "before use)")
+        else:
+            violations.append(msg)
 
     # C3 -- bars on days the calendar says the market was shut
     shut = sorted({d for t in tickers for d in present[t]
@@ -372,7 +403,7 @@ def main(argv=None) -> int:
               f"{out['tickers']} tickers  vs {args.archive}")
     else:
         out = check(present, start, end, last_complete, args.universal_frac,
-                    degenerate=degenerate)
+                    degenerate=degenerate, in_progress=session_in_progress())
         print(f"window {out['window'][0]}..{out['window'][1]}  "
               f"{out['sessions_expected']} sessions expected  "
               f"{out['tickers']} tickers  (last completed {out['last_complete']})")
