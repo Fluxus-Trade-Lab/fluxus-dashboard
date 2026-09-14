@@ -20,7 +20,7 @@
 | `whop_members` | 真实人头（身份合并后） | 08-25 = 38。店面页显示的 "30 members" 是 Whop 店面口径（漏 PayPal-only、含非客户账号），**不入本列**。 |
 | `mrr_usd` | **已测量**部分（后台可见产品实读） | 08-25 = $1,052。前瞻/反解值（$1,478 前瞻、$1,671 含 canceling）**只写进 notes 与周报，不入本列**——本列必须能一路追到后台读数。 |
 | `x_week_views` | **上一个完整 ISO 周（周一–周日）** 内 `data/content/posts.csv` 各帖 views 之和 | 周一记账时当周尚未开始，所以看上一周。notes 必须写「来源:posts.csv · 聚合日」。⚠️ 该列天然是**下限**：posts.csv 的 views 是每帖最后一次抄录的快照，抄录时点不一（有的帖子自注「基线 T+0」）。 |
-| `x_followers` | X 主页公开粉丝数 | **公开页取不到**（08-31 实测 `x.com/Fluxus_Z` 返回 HTTP 402），详见下方 SOP。留空是正常状态，不是漏记。 |
+| `x_followers` | X 主页公开粉丝数 | **09-14 起读 Steve 日调研的 `data/content/x_watch/own_account.csv` 末行**（twitterapi.io `/twitter/user/info`，按 `date_et` upsert）；notes 必须带该行 `date_et`。公开页取不到（08-31 实测 HTTP 402），详见下方 SOP。 |
 | `substack_subs` | Substack 后台 Total subscribers | **公开页取不到**（08-28 实测证伪 `/about`、`/`、`/archive` 三处），详见下方 SOP。留空是正常状态，不是漏记。 |
 
 ⚠️ **`notes` 字段禁用半角逗号**（用 `;` 或全角 `，`）。本表不给 notes 加引号，一个半角逗号就把该行切成 9+ 列：08-25 行曾因此被解析成 **11 列**，`csv.DictReader` 把尾部塞进 `None` 键，**该行的 MRR 口径说明与 discord 真人口径说明整段丢失**（数值列因逗号都在末列之后侥幸没错位）。08-31 已把该行改成带引号写法并逐格对照复原；新增行仍按「不用半角逗号」写，别依赖引号。
@@ -95,10 +95,11 @@ Andy 口述或截图给增长官即可，**格式：`<数字> · <截取日期>`
 
 X 已把未登录抓取整体关掉，**这不是渲染问题、也不是选择器问题，是网关层拒绝**——换 UA、换 nitter 镜像、换 `/photo` 之类的子路径都属于同一堵墙的不同位置，不要每周重试一遍。
 
-### ✅ 取数路径
+### ✅ 取数路径（09-14 改）
 
-1. **Andy 口述或截图**（首选）：X 主页粉丝数，格式 `<数字> · <截取日期>`。
-2. 真 Chrome 登录态（`mcp__claude-in-chrome__*`，人在场时）——无人值守会话不做，任何形态的登录抓取都不做。
+1. **Steve 日调研**（首选，09-13 契约行 `54b98d1f` 落地）：`git show origin/main:data/content/x_watch/own_account.csv | tail -1`，取 `followers` 与 `date_et` 一起追进当周行。末行 `followers` 为空＝那天没取到（原因在 `source` 列）→ 本列留空，不往前找旧行顶替。
+2. **Andy 口述或截图**：格式 `<数字> · <截取日期>`（Steve 文件断更时的兜底）。
+3. 真 Chrome 登录态（`mcp__claude-in-chrome__*`，人在场时）——无人值守会话不做，任何形态的登录抓取都不做。
 
 ### 记账规则
 
