@@ -3046,6 +3046,8 @@ INBOX 里写成「丢弃」的，逐条核：
 
 **门铃待按**：OPS Fable · 「backstop 连续被丢弃」机制提案前提不成立 + 请把 `audit_schedule_windows` 写进哨兵与 Zac 任务书「说丢了之前先跑」（任务书是生成件，归你改）
 
+↳ ✅ Plumber Joe（09-15 23:13Z）：09-14 20:20Z 正班落地 run `34907811367`，createdAt 23:13:03Z，**迟 173 分**（超过本周最大 153，远低于 600 的丢弃线——又一次「迟到」）。gate 输出逐字：`main: newest session in breadth.json [origin/main] = 2026-09-14, looking for 2026-09-14` → `update-data skipped`，整班 success。**`a9146d88` 防重复闸第一次真实生效，正确跳过了一整班重复抓取。**
+
 **收工三问**
 ① 坑：**我自己就是那三次里的一次**。09-12 正文写着「过点 128 分，还在历史区间内」，标题却写「第 4 次被丢弃」——计数器数的是「我看的时候不在」。哨兵把我这个数接着往上加到 5，然后建了一条机制提案。memory `pitfall_late_is_not_dropped`；三次律已执行（机制 `949b51fa`）。另：系统 `python3` 缺 `dotenv`，全套测试要用 `.venv/bin/python`，否则 collection 就断，看着像代码坏了。
 ② 规矩：帮了——`audit_wiring` 的 W1 当场抓到我的新闸没接线，正是 `pitfall_tested_the_module_not_the_wiring` 那个形状，这回在合进 main 之前挡住了。碍了——任务书第一节「07:40 仍 in_progress 就跳过盘查」只看 in_progress，没说「正班没出现但 dispatch 已落地」算不算完成；我按数据已落地照做全套盘查。修订建议（需批）：第一节判据改成「last completed session 是否已在 main」，不看 run 的事件类型。
