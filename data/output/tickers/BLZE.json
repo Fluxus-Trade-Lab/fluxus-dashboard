@@ -1,8 +1,8 @@
 {
   "ticker": "BLZE",
-  "fetched_at": "2026-09-12T02:36:06Z",
+  "fetched_at": "2026-09-14T21:36:51Z",
   "_schema": "v2",
-  "current_price": 12.399999618530273,
+  "current_price": 12.84000015258789,
   "info": {
     "symbol": "BLZE",
     "longName": "Backblaze, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.backblaze.com",
     "fullTimeEmployees": 320,
-    "marketCap": 767560000,
+    "marketCap": 794796032,
     "enterpriseValue": 800115008,
     "trailingPE": null,
-    "forwardPE": 43.97163,
-    "priceToSalesTrailing12Months": 4.910718,
+    "forwardPE": 47.555553,
+    "priceToSalesTrailing12Months": 5.0849695,
     "enterpriseToRevenue": 5.119,
-    "priceToBook": 8.653175,
+    "priceToBook": 8.960223,
     "grossMargins": 0.62289,
     "operatingMargins": -0.06679,
     "profitMargins": -0.13069001,
@@ -32,8 +32,8 @@
     "currentRatio": 0.999,
     "fiftyTwoWeekHigh": 23.99,
     "fiftyTwoWeekLow": 3.261,
-    "averageVolume": 3618998,
-    "averageVolume10days": 1653300,
+    "averageVolume": 3621277,
+    "averageVolume10days": 1616410,
     "beta": 1.565,
     "sharesOutstanding": 61900000,
     "sharesFloat": 59379432,
@@ -173,8 +173,15 @@
     "avg_price_target": 22.83333,
     "high_price_target": 25.0,
     "low_price_target": 21.0,
-    "current_price": 13.455,
+    "current_price": 12.84,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T10:02:18",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
       {
         "date": "2026-08-04T17:05:24",
         "firm": "Oppenheimer",
@@ -237,18 +244,17 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-06-23T16:25:33",
-        "firm": "Craig-Hallum",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:07:53Z",
+  "quarterly_asof": "2026-09-14T21:36:51Z",
   "news": [
+    {
+      "date": "2026-09-14T18:42:00Z",
+      "title": "AudioEye (AEYE) Soars 5.7%: Is Further Upside Left in the Stock?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/audioeye-aeye-soars-5-7-184200725.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T04:43:26Z",
       "title": "AppLovin vs. CoreWeave: What Recent Revenue Trends Tell Investors",
@@ -302,46 +308,24 @@
       "title": "Backblaze, Inc. Q2 2026 Earnings Call Summary",
       "url": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-backblaze-inc-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
       "source": "Moby"
-    },
-    {
-      "date": "2026-08-04T05:04:27Z",
-      "title": "Backblaze Inc (BLZE) (Q2 2026) Earnings Call Highlights: Record $335M Coreweave Deal and 34% B2 ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/backblaze-inc-blze-q2-2026-050427975.html",
-      "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.07741935722041461,
+  "options_implied_move": 0.06853582473070585,
   "technicals": {
-    "ma20": 15.068249940872192,
-    "ma50": 15.39730001449585,
-    "ma200": 7.976175001859665,
-    "rsi14": 35.13765713158027,
-    "high_20d": 20.420000076293945,
+    "ma20": 14.759249925613403,
+    "ma50": 15.341700019836425,
+    "ma200": 8.017575002908707,
+    "rsi14": 38.713136135546186,
+    "high_20d": 19.829999923706055,
     "low_5d": 12.149999618530273,
     "low_10d": 12.149999618530273,
     "high_52w": 23.989999771118164,
     "low_52w": 3.260999917984009,
-    "atr14": 0.7891427448817662,
-    "atr14_pct": 6.364054589989579,
-    "position_in_52w_range_pct": 44.08799153503047
+    "atr14": 0.7705712999616351,
+    "atr14_pct": 6.001334040532134,
+    "position_in_52w_range_pct": 46.21062425814803
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 5.92,
-      "high": 5.98,
-      "low": 5.875,
-      "close": 5.92,
-      "volume": 132500.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 5.99,
-      "high": 6.21,
-      "low": 5.92,
-      "close": 6.18,
-      "volume": 152600.0
-    },
     {
       "date": "2024-09-16",
       "open": 6.19,
@@ -4333,17 +4317,17 @@
       "low": 12.15,
       "close": 12.4,
       "volume": 1358700.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 12.26,
+      "high": 12.88,
+      "low": 12.19,
+      "close": 12.84,
+      "volume": 1885515.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 9.88,
-      "high": 9.918,
-      "low": 9.43,
-      "close": 9.46,
-      "volume": 1615900.0
-    },
     {
       "date": "2025-09-12",
       "open": 9.4,
@@ -6351,6 +6335,14 @@
       "low": 12.15,
       "close": 12.4,
       "volume": 1358700.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 12.26,
+      "high": 12.88,
+      "low": 12.19,
+      "close": 12.84,
+      "volume": 1885515.0
     }
   ],
   "ai_synthesis": null,

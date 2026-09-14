@@ -1,8 +1,8 @@
 {
   "ticker": "PURR",
-  "fetched_at": "2026-09-12T02:36:48Z",
+  "fetched_at": "2026-09-14T21:37:58Z",
   "_schema": "v2",
-  "current_price": 11.609999656677246,
+  "current_price": 11.850000381469727,
   "info": {
     "symbol": "PURR",
     "longName": "Hyperliquid Strategies Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.hypestrat.xyz",
     "fullTimeEmployees": 5,
-    "marketCap": 2296894464,
+    "marketCap": 2344375552,
     "enterpriseValue": 2158979584,
-    "trailingPE": 3.6168222,
-    "forwardPE": 35.181816,
-    "priceToSalesTrailing12Months": 242.80069,
+    "trailingPE": 3.6915889,
+    "forwardPE": 35.909092,
+    "priceToSalesTrailing12Months": 247.81982,
     "enterpriseToRevenue": 228.222,
-    "priceToBook": 1.9398495,
+    "priceToBook": 1.97995,
     "grossMargins": 1.0,
     "operatingMargins": 95.9509,
     "profitMargins": 32.29831,
@@ -32,8 +32,8 @@
     "currentRatio": 41.618,
     "fiftyTwoWeekHigh": 14.14,
     "fiftyTwoWeekLow": 3.01,
-    "averageVolume": 16214479,
-    "averageVolume10days": 29188070,
+    "averageVolume": 16310153,
+    "averageVolume10days": 27101250,
     "beta": null,
     "sharesOutstanding": 197837597,
     "sharesFloat": 197554689,
@@ -141,11 +141,18 @@
     "bullish": 3,
     "neutral": 0,
     "bearish": 0,
-    "avg_price_target": 19.86667,
-    "high_price_target": 22.6,
+    "avg_price_target": 23.73333,
+    "high_price_target": 34.2,
     "low_price_target": 17.0,
-    "current_price": 12.18,
+    "current_price": 11.85,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T12:22:00",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
       {
         "date": "2026-08-28T12:33:42",
         "firm": "Chardan Capital",
@@ -208,17 +215,10 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2025-12-24T12:25:44",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:08:52Z",
+  "quarterly_asof": "2026-09-14T21:37:58Z",
   "news": [
     {
       "date": "2026-09-11T02:30:05Z",
@@ -281,19 +281,19 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.10335917618307987,
+  "options_implied_move": 0.08776371025491995,
   "technicals": {
-    "ma20": 10.802250003814697,
-    "ma50": 8.493100023269653,
-    "rsi14": 58.82972158716047,
+    "ma20": 11.060750031471253,
+    "ma50": 8.569100027084351,
+    "rsi14": 60.10982407863301,
     "high_20d": 14.140000343322754,
     "low_5d": 10.960000038146973,
     "low_10d": 10.930000305175781,
     "high_52w": 14.140000343322754,
     "low_52w": 3.009999990463257,
-    "atr14": 1.3660713604518346,
-    "atr14_pct": 11.766334201966728,
-    "position_in_52w_range_pct": 77.26863785772024
+    "atr14": 1.3682142666407995,
+    "atr14_pct": 11.546111583087589,
+    "position_in_52w_range_pct": 79.42497853322453
   },
   "ohlc_2y": [
     {
@@ -1847,6 +1847,14 @@
       "low": 11.12,
       "close": 11.61,
       "volume": 21968800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 11.42,
+      "high": 12.26,
+      "low": 11.25,
+      "close": 11.85,
+      "volume": 13217654.0
     }
   ],
   "ohlc_1y": [
@@ -3401,6 +3409,14 @@
       "low": 11.12,
       "close": 11.61,
       "volume": 21968800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 11.42,
+      "high": 12.26,
+      "low": 11.25,
+      "close": 11.85,
+      "volume": 13217654.0
     }
   ],
   "ai_synthesis": null,

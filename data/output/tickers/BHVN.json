@@ -1,8 +1,8 @@
 {
   "ticker": "BHVN",
-  "fetched_at": "2026-09-12T02:37:25Z",
+  "fetched_at": "2026-09-14T21:38:49Z",
   "_schema": "v2",
-  "current_price": 12.710000038146973,
+  "current_price": 12.640000343322754,
   "info": {
     "symbol": "BHVN",
     "longName": "Biohaven Ltd.",
@@ -13,13 +13,13 @@
     "city": "New Haven",
     "website": "https://www.biohaven.com",
     "fullTimeEmployees": 274,
-    "marketCap": 1919766400,
+    "marketCap": 1909193344,
     "enterpriseValue": 1948935424,
     "trailingPE": null,
-    "forwardPE": -6.789784,
+    "forwardPE": -6.7523894,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 156.91357,
+    "priceToBook": 156.0494,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 4.733,
     "fiftyTwoWeekHigh": 18.566,
     "fiftyTwoWeekLow": 7.48,
-    "averageVolume": 3063896,
-    "averageVolume10days": 3500280,
+    "averageVolume": 3060645,
+    "averageVolume10days": 3243860,
     "beta": 3.17,
     "sharesOutstanding": 151043781,
     "sharesFloat": 116572569,
@@ -170,11 +170,25 @@
     "bullish": 14,
     "neutral": 4,
     "bearish": 1,
-    "avg_price_target": 21.73333,
+    "avg_price_target": 21.26667,
     "high_price_target": 42.0,
     "low_price_target": 10.0,
-    "current_price": 15.69,
+    "current_price": 12.64,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T17:36:32",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-08T14:27:04",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      },
       {
         "date": "2026-08-12T15:38:01",
         "firm": "Morgan Stanley",
@@ -230,24 +244,10 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-03-04T11:56:36",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-03T15:35:18",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:09:37Z",
+  "quarterly_asof": "2026-09-14T21:38:49Z",
   "news": [
     {
       "date": "2026-09-11T11:17:22Z",
@@ -310,38 +310,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.0991345394349581,
+  "options_implied_move": 0.08386075721587768,
   "technicals": {
-    "ma20": 14.708500099182128,
-    "ma50": 14.730200023651124,
-    "ma200": 11.79875,
-    "rsi14": 37.463348204156866,
+    "ma20": 14.608500099182129,
+    "ma50": 14.663800029754638,
+    "ma200": 11.813550000190736,
+    "rsi14": 37.11794532535254,
     "high_20d": 18.239999771118164,
     "low_5d": 12.4350004196167,
     "low_10d": 12.4350004196167,
     "high_52w": 18.56599998474121,
     "low_52w": 7.480000019073486,
-    "atr14": 1.4724999836512975,
-    "atr14_pct": 11.58536569025831,
-    "position_in_52w_range_pct": 47.17661947745168
+    "atr14": 1.4653570992606026,
+    "atr14_pct": 11.593014710910959,
+    "position_in_52w_range_pct": 46.54519520322291
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 35.63,
-      "high": 36.53,
-      "low": 35.29,
-      "close": 35.75,
-      "volume": 970700.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 36.16,
-      "high": 38.11,
-      "low": 36.16,
-      "close": 38.08,
-      "volume": 614400.0
-    },
     {
       "date": "2024-09-16",
       "open": 38.61,
@@ -4333,17 +4317,17 @@
       "low": 12.58,
       "close": 12.71,
       "volume": 2862300.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 12.52,
+      "high": 12.86,
+      "low": 12.52,
+      "close": 12.64,
+      "volume": 1648436.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 14.09,
-      "high": 14.15,
-      "low": 13.76,
-      "close": 14.07,
-      "volume": 1650900.0
-    },
     {
       "date": "2025-09-12",
       "open": 14.1,
@@ -6351,6 +6335,14 @@
       "low": 12.58,
       "close": 12.71,
       "volume": 2862300.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 12.52,
+      "high": 12.86,
+      "low": 12.52,
+      "close": 12.64,
+      "volume": 1648436.0
     }
   ],
   "ai_synthesis": null,

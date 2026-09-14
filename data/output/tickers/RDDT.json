@@ -1,8 +1,8 @@
 {
   "ticker": "RDDT",
-  "fetched_at": "2026-09-12T02:40:43Z",
+  "fetched_at": "2026-09-14T21:44:13Z",
   "_schema": "v2",
-  "current_price": 157.77000427246094,
+  "current_price": 162.3800048828125,
   "info": {
     "symbol": "RDDT",
     "longName": "Reddit, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://redditinc.com",
     "fullTimeEmployees": 2555,
-    "marketCap": 30354399232,
+    "marketCap": 31241347072,
     "enterpriseValue": 27588907008,
-    "trailingPE": 36.102978,
-    "forwardPE": 16.285952,
-    "priceToSalesTrailing12Months": 10.92343,
+    "trailingPE": 37.675175,
+    "forwardPE": 16.761824,
+    "priceToSalesTrailing12Months": 11.24261,
     "enterpriseToRevenue": 9.928,
-    "priceToBook": 9.234957,
+    "priceToBook": 9.5048,
     "grossMargins": 0.91442,
     "operatingMargins": 0.28788,
     "profitMargins": 0.31348,
@@ -32,8 +32,8 @@
     "currentRatio": 10.486,
     "fiftyTwoWeekHigh": 282.95,
     "fiftyTwoWeekLow": 119.27,
-    "averageVolume": 5803687,
-    "averageVolume10days": 4184170,
+    "averageVolume": 5762148,
+    "averageVolume10days": 4232330,
     "beta": 2.022,
     "sharesOutstanding": 146103200,
     "sharesFloat": 140697644,
@@ -57,12 +57,6 @@
         "yearBorn": 1976
       },
       {
-        "name": "Mr. Benjamin  Lee J.D.",
-        "title": "Chief Legal Officer & Corporate Secretary",
-        "age": 57,
-        "yearBorn": 1968
-      },
-      {
         "name": "Ms. Michelle  Reynolds",
         "title": "Chief Accounting Officer",
         "age": 42,
@@ -71,6 +65,12 @@
       {
         "name": "Mr. Amit  Puntambekar",
         "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Jesse  Rose",
+        "title": "Head of Investor Relations",
         "age": null,
         "yearBorn": null
       }
@@ -173,7 +173,7 @@
     "avg_price_target": 213.10303,
     "high_price_target": 300.0,
     "low_price_target": 130.0,
-    "current_price": 154.46,
+    "current_price": 162.38,
     "recent_rating_changes": [
       {
         "date": "2026-08-21T16:55:27",
@@ -247,101 +247,85 @@
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:14:04Z",
+  "quarterly_asof": "2026-09-14T21:44:13Z",
   "news": [
+    {
+      "date": "2026-09-14T17:32:02Z",
+      "title": "Man, 37, Makes $250K a Year But Has Just $1K Saved \u2014 And $250K in Debt",
+      "url": "https://finance.yahoo.com/markets/articles/man-37-makes-250k-just-173202163.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-14T14:00:07Z",
+      "title": "I'm Paying More for Streaming, Fast Food, Appliances and Software and Somehow Getting Less. Is This Just the New Normal We're Supposed to Accept?",
+      "url": "https://finance.yahoo.com/media-advertising/articles/im-paying-more-streaming-fast-140007343.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-14T13:16:25Z",
+      "title": "Five Years From Now, the World Could Be Completely Different Because of AI. Who Will Actually Be the Long-Term AI Winners?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/five-years-now-world-could-131625041.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-14T12:00:20Z",
+      "title": "37-Year-Old Makes $250,000 A Year But Has Just $1,000 Saved \u2014 And is $250,000 In Debt",
+      "url": "https://finance.yahoo.com/markets/articles/37-old-makes-250-000-120020044.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-14T10:37:31Z",
+      "title": "Social Buzz: Wallstreetbets Stocks Fall Pre-Bell Monday; Nebius Group, AMD to Open Lower",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-fall-103731728.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-13T23:00:12Z",
+      "title": "I Retired at 62 After 40 Years as an Auto Mechanic. It was a Big Mistake, as Social Security Isn't Enough, but now Nobody Wants to Hire Me",
+      "url": "https://finance.yahoo.com/small-business/articles/retired-62-40-years-auto-230012915.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-13T18:00:22Z",
+      "title": "32-Year-Old Couple Making Over $200,000 A Year Say Buying A Home ' Feels Not Worth It' \u2014 '$100K Is Lower Middle Class Here'",
+      "url": "https://finance.yahoo.com/real-estate/articles/32-old-couple-making-over-180022661.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-12T14:45:09Z",
+      "title": "Why Am I Punished With a Higher Tax Bill for Improving My Own Home? I Already Paid Taxes on the Materials and Labor",
+      "url": "https://finance.yahoo.com/real-estate/articles/why-am-punished-higher-tax-144509940.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-12T14:07:01Z",
+      "title": "I Solely Inherited $500K From My Dad. I Lent My Half-Sister $10K for Property Taxes \u2014 Now She Won't Pay It Back and Acts Like It Never Happened",
+      "url": "https://finance.yahoo.com/small-business/articles/solely-inherited-500k-dad-lent-140701850.html",
+      "source": "Benzinga"
+    },
     {
       "date": "2026-09-12T02:27:05Z",
       "title": "1 Momentum  Stock for Long-Term Investors and 2 We Turn Down",
       "url": "https://finance.yahoo.com/markets/stocks/articles/1-momentum-stock-long-term-022705701.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-09-12T01:31:05Z",
-      "title": "3 Market-Beating Stocks on Our Buy List",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-market-beating-stocks-buy-013105047.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-11T21:47:42Z",
-      "title": "What Are You Really Paying For Reddit's Ad Growth?",
-      "url": "https://www.trefis.com/articles/615037/what-are-you-really-paying-for-reddits-ad-growth/2026-09-11",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-09-11T17:30:02Z",
-      "title": "3 ETFs, 3 Bearish Bets \u2014 Inside Yesterday\u2019s Unusual Options Activity",
-      "url": "https://www.barchart.com/story/news/4562260/3-etfs-3-bearish-bets-inside-yesterdays-unusual-options-activity",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-09-11T15:45:22Z",
-      "title": "Woman Learns She's Inheriting $550,000\u2014Now Everyone In Her Family Has An Opinion On What She Should Do Next",
-      "url": "https://finance.yahoo.com/markets/articles/woman-learns-shes-inheriting-550-154522506.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-09-11T14:00:08Z",
-      "title": "I'm an Engineer Making $210K, but I Can't Stop Thinking About Real Estate. Should I Become a Loan Officer, Rehab Houses or Buy a Roofing Company?",
-      "url": "https://finance.yahoo.com/real-estate/articles/im-engineer-making-210k-cant-140008563.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-09-11T12:00:13Z",
-      "title": "It's 2026 and Gurus Are Still Promising $10K a Month From Low-Effort AI Side Hustles. It Feels Like 99% of the Money Is \u2018About Selling the Shovel\u2019",
-      "url": "https://finance.yahoo.com/technology/ai/articles/2026-gurus-still-promising-10k-120013941.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-09-11T10:38:02Z",
-      "title": "Social Buzz: Wallstreetbets Stocks Mixed Premarket Friday; Oracle to Rise, Adobe to Fall",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-mixed-103802922.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-11T00:49:04Z",
-      "title": "Reddit (RDDT) Stock Trades Up, Here Is Why",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/reddit-rddt-stock-trades-why-004904739.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-10T20:31:04Z",
-      "title": "I'm in a Senior Corporate Role and Pretend I'm Busy but Slack Off Half the Day. Is Everyone Else Secretly Doing the Same Thing?",
-      "url": "https://www.yahoo.com/lifestyle/articles/im-senior-corporate-role-pretend-203104605.html",
-      "source": "Benzinga"
     }
   ],
-  "options_implied_move": 0.06053115130495672,
+  "options_implied_move": 0.05203842681306884,
   "technicals": {
-    "ma20": 155.1770004272461,
-    "ma50": 167.9373992919922,
-    "ma200": 173.89509986877442,
-    "rsi14": 50.495243802714825,
-    "high_20d": 184.28399658203125,
+    "ma20": 154.3915008544922,
+    "ma50": 167.29159942626953,
+    "ma200": 173.7319998931885,
+    "rsi14": 53.54211550354772,
+    "high_20d": 178.33999633789062,
     "low_5d": 144.8000030517578,
     "low_10d": 143.47000122070312,
     "high_52w": 282.95001220703125,
     "low_52w": 119.2699966430664,
-    "atr14": 7.478857857840402,
-    "atr14_pct": 4.740354728598971,
-    "position_in_52w_range_pct": 23.521507800901347
+    "atr14": 7.755286080496652,
+    "atr14_pct": 4.776010498394515,
+    "position_in_52w_range_pct": 26.33797906922794
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 60.0,
-      "high": 62.659,
-      "low": 59.38,
-      "close": 59.63,
-      "volume": 4783600.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 59.63,
-      "high": 60.25,
-      "low": 58.04,
-      "close": 59.09,
-      "volume": 3726000.0
-    },
     {
       "date": "2024-09-16",
       "open": 58.6,
@@ -4333,17 +4317,17 @@
       "low": 154.61,
       "close": 157.77,
       "volume": 3192600.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 160.0,
+      "high": 166.18,
+      "low": 157.11,
+      "close": 162.38,
+      "volume": 4454477.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 260.57,
-      "high": 266.64,
-      "low": 257.45,
-      "close": 260.54,
-      "volume": 3726900.0
-    },
     {
       "date": "2025-09-12",
       "open": 262.22,
@@ -6351,6 +6335,14 @@
       "low": 154.61,
       "close": 157.77,
       "volume": 3192600.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 160.0,
+      "high": 166.18,
+      "low": 157.11,
+      "close": 162.38,
+      "volume": 4454477.0
     }
   ],
   "ai_synthesis": null,

@@ -1,5 +1,5 @@
 {
- "date": "2026-09-11",
+ "date": "2026-09-14",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,37 +7,30 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 764.942,
-    "b": 765.0099
+    "a": 764.2035,
+    "b": 764.6166
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 764.942,
-    "b": 765.0869
+    "a": 764.2035,
+    "b": 764.942
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 765.0099,
-    "b": 765.0857
+    "a": 764.6166,
+    "b": 765.0099
    }
   ],
   "checks_passed": 0,
   "light": "red",
   "gear": {
-   "n": 5,
-   "label": "brake",
-   "label_zh": "\u70b9\u5239"
+   "n": 7,
+   "label": "maximum defense",
+   "label_zh": "\u6700\u5927\u9632\u5fa1"
   },
   "history": [
-   {
-    "date": "2026-06-17",
-    "close": 739.056,
-    "fast": 742.4124,
-    "slow": 740.8294,
-    "checks_passed": 1
-   },
    {
     "date": "2026-06-18",
     "close": 746.74,
@@ -450,6 +443,13 @@
     "fast": 764.942,
     "slow": 765.0099,
     "checks_passed": 0
+   },
+   {
+    "date": "2026-09-14",
+    "close": 760.88,
+    "fast": 764.2035,
+    "slow": 764.6166,
+    "checks_passed": 0
    }
   ]
  },
@@ -457,38 +457,31 @@
   "checks": [
    {
     "key": "fast_above_slow",
-    "pass": true,
-    "a": 714.5228,
-    "b": 714.2775
+    "pass": false,
+    "a": 713.5514,
+    "b": 713.792
    },
    {
     "key": "fast_rising",
-    "pass": true,
-    "a": 714.5228,
-    "b": 714.4434
+    "pass": false,
+    "a": 713.5514,
+    "b": 714.5228
    },
    {
     "key": "slow_rising",
-    "pass": true,
-    "a": 714.2775,
-    "b": 714.2141
+    "pass": false,
+    "a": 713.792,
+    "b": 714.2775
    }
   ],
-  "checks_passed": 3,
-  "light": "green",
+  "checks_passed": 0,
+  "light": "red",
   "gear": {
-   "n": 4,
-   "label": "ease off",
-   "label_zh": "\u677e\u6cb9\u95e8"
+   "n": 7,
+   "label": "maximum defense",
+   "label_zh": "\u6700\u5927\u9632\u5fa1"
   },
   "history": [
-   {
-    "date": "2026-06-17",
-    "close": 721.7169,
-    "fast": 723.0938,
-    "slow": 718.6505,
-    "checks_passed": 2
-   },
    {
     "date": "2026-06-18",
     "close": 739.807,
@@ -901,22 +894,31 @@
     "fast": 714.5228,
     "slow": 714.2775,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-14",
+    "close": 709.18,
+    "fast": 713.5514,
+    "slow": 713.792,
+    "checks_passed": 0
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 54,
+   "count": 5,
+   "label": "index \u2014 not the course's hand count",
+   "narrowed_to": "2w Leading theme members (same pool as Q2)",
+   "pool_count": 47,
    "count_is_floor": false,
-   "band": "bright",
-   "band_default": false,
-   "calibrated": false,
+   "q1_votes": false,
+   "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
     "episodic_pivot": 1,
-    "ll_hl_1st": 19,
-    "ll_hl_2nd": 12,
-    "ll_hl_trend_break": 14,
-    "liquid_leader_pullback": 9
+    "ll_hl_1st": 12,
+    "ll_hl_2nd": 14,
+    "ll_hl_trend_break": 15,
+    "liquid_leader_pullback": 6
    },
    "capped_panels": [],
    "setups_without_panel": [
@@ -927,82 +929,79 @@
   },
   "leaders": [
    {
-    "ticker": "MXL",
-    "theme": "Optics & Networking Equipment",
+    "ticker": "OKTA",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 99
+    "rs_rating": 97
    },
    {
-    "ticker": "SNDK",
-    "theme": "Memory & Storage",
+    "ticker": "CRWD",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 99
+    "rs_rating": 96
    },
    {
-    "ticker": "AXTI",
-    "theme": "Optics & Networking Equipment",
-    "status": "holding",
-    "above_ema21": false,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "LITE",
-    "theme": "Optics & Networking Equipment",
+    "ticker": "FSLY",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 98
+    "rs_rating": 95
    },
    {
-    "ticker": "MU",
-    "theme": "Semiconductors Large Caps",
+    "ticker": "PANW",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 98
+    "rs_rating": 95
    },
    {
-    "ticker": "STX",
-    "theme": "Memory & Storage",
+    "ticker": "FROG",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 94
+   },
+   {
+    "ticker": "FTNT",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 94
+   },
+   {
+    "ticker": "BB",
+    "theme": "Cybersecurity",
     "status": "broken",
     "above_ema21": false,
-    "rs_rating": 98
+    "rs_rating": 93
    },
    {
-    "ticker": "BAND",
-    "theme": "Optics & Networking Equipment",
+    "ticker": "QLYS",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 98
+    "rs_rating": 92
    },
    {
-    "ticker": "INTC",
-    "theme": "Semiconductors Broad",
+    "ticker": "RBRK",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 98
+    "rs_rating": 92
    },
    {
-    "ticker": "HPE",
-    "theme": "Optics & Networking Equipment",
+    "ticker": "NTSK",
+    "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 97
-   },
-   {
-    "ticker": "UMC",
-    "theme": "Semiconductors Broad",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 97
+    "rs_rating": 91
    }
   ],
   "leaders_meta": {
    "themes": [
-    "Memory & Storage",
-    "Optics & Networking Equipment",
-    "Semiconductors Broad",
-    "Semiconductors Large Caps"
+    "Cybersecurity"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
    "provisional": true
@@ -1011,7 +1010,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": 0
+   "score": -3
   }
  },
  "verdict": "avoid",

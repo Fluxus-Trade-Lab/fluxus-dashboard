@@ -1,8 +1,8 @@
 {
   "ticker": "AVTR",
-  "fetched_at": "2026-09-12T02:38:31Z",
+  "fetched_at": "2026-09-14T21:40:28Z",
   "_schema": "v2",
-  "current_price": 14.8100004196167,
+  "current_price": 15.15999984741211,
   "info": {
     "symbol": "AVTR",
     "longName": "Avantor, Inc.",
@@ -13,13 +13,13 @@
     "city": "Radnor",
     "website": "https://www.avantorsciences.com",
     "fullTimeEmployees": 13500,
-    "marketCap": 10016874496,
+    "marketCap": 10253599744,
     "enterpriseValue": 13407874048,
     "trailingPE": null,
-    "forwardPE": 16.801098,
-    "priceToSalesTrailing12Months": 1.5267066,
+    "forwardPE": 17.198153,
+    "priceToSalesTrailing12Months": 1.5627867,
     "enterpriseToRevenue": 2.044,
-    "priceToBook": 1.7794065,
+    "priceToBook": 1.8214586,
     "grossMargins": 0.31825,
     "operatingMargins": 0.07162,
     "profitMargins": -0.08809,
@@ -32,8 +32,8 @@
     "currentRatio": 1.782,
     "fiftyTwoWeekHigh": 15.93,
     "fiftyTwoWeekLow": 7.265,
-    "averageVolume": 9255927,
-    "averageVolume10days": 7728590,
+    "averageVolume": 9222233,
+    "averageVolume10days": 7746800,
     "beta": 0.895,
     "sharesOutstanding": 676358840,
     "sharesFloat": 657806317,
@@ -170,11 +170,18 @@
     "bullish": 3,
     "neutral": 11,
     "bearish": 3,
-    "avg_price_target": 14.56429,
+    "avg_price_target": 14.66,
     "high_price_target": 19.0,
     "low_price_target": 12.0,
-    "current_price": 14.97,
+    "current_price": 15.16,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-09T16:27:25",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
       {
         "date": "2026-07-30T17:24:41",
         "firm": "Morgan Stanley",
@@ -237,17 +244,10 @@
         "to_grade": "Neutral",
         "from_grade": "Neutral",
         "action": "main"
-      },
-      {
-        "date": "2026-04-30T14:54:11",
-        "firm": "Evercore ISI Group",
-        "to_grade": "In-Line",
-        "from_grade": "In-Line",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:11:06Z",
+  "quarterly_asof": "2026-09-14T21:40:28Z",
   "news": [
     {
       "date": "2026-09-11T17:39:05Z",
@@ -310,38 +310,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.04794057933040731,
+  "options_implied_move": 0.060026385828449845,
   "technicals": {
-    "ma20": 14.444999980926514,
-    "ma50": 13.003600006103516,
-    "ma200": 10.442550024986268,
-    "rsi14": 61.19528790435883,
+    "ma20": 14.519999980926514,
+    "ma50": 13.100400009155273,
+    "ma200": 10.460800023078919,
+    "rsi14": 65.19803931384698,
     "high_20d": 15.460000038146973,
     "low_5d": 14.595000267028809,
     "low_10d": 14.1899995803833,
     "high_52w": 15.930000305175781,
     "low_52w": 7.264999866485596,
-    "atr14": 0.4316427367074149,
-    "atr14_pct": 2.91453561429802,
-    "position_in_52w_range_pct": 87.07443936692538
+    "atr14": 0.43582132884434294,
+    "atr14_pct": 2.8748109052173896,
+    "position_in_52w_range_pct": 91.11367087385784
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 26.88,
-      "high": 27.07,
-      "low": 26.2,
-      "close": 26.48,
-      "volume": 4278100.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 26.67,
-      "high": 27.08,
-      "low": 26.56,
-      "close": 26.88,
-      "volume": 3071400.0
-    },
     {
       "date": "2024-09-16",
       "open": 27.0,
@@ -4333,17 +4317,17 @@
       "low": 14.7,
       "close": 14.81,
       "volume": 6179000.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 14.87,
+      "high": 15.1685,
+      "low": 14.7,
+      "close": 15.16,
+      "volume": 9134546.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 12.69,
-      "high": 13.04,
-      "low": 12.67,
-      "close": 13.01,
-      "volume": 16021000.0
-    },
     {
       "date": "2025-09-12",
       "open": 13.0,
@@ -6351,6 +6335,14 @@
       "low": 14.7,
       "close": 14.81,
       "volume": 6179000.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 14.87,
+      "high": 15.1685,
+      "low": 14.7,
+      "close": 15.16,
+      "volume": 9134546.0
     }
   ],
   "ai_synthesis": null,

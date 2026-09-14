@@ -1,8 +1,8 @@
 {
   "ticker": "CIFR",
-  "fetched_at": "2026-09-12T02:38:56Z",
+  "fetched_at": "2026-09-14T21:41:13Z",
   "_schema": "v2",
-  "current_price": 16.850000381469727,
+  "current_price": 15.635000228881836,
   "info": {
     "symbol": "CIFR",
     "longName": "Cipher Digital Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.cipherdigital.com",
     "fullTimeEmployees": 66,
-    "marketCap": 6993267712,
+    "marketCap": 6489005568,
     "enterpriseValue": 11773917184,
     "trailingPE": null,
-    "forwardPE": 77.768036,
-    "priceToSalesTrailing12Months": 36.59615,
+    "forwardPE": 72.16043,
+    "priceToSalesTrailing12Months": 33.957317,
     "enterpriseToRevenue": 61.614,
-    "priceToBook": 12.417097,
+    "priceToBook": 11.521739,
     "grossMargins": -0.100360006,
     "operatingMargins": -3.01691,
     "profitMargins": 0.0,
@@ -31,9 +31,9 @@
     "debtToEquity": 950.563,
     "currentRatio": 2.996,
     "fiftyTwoWeekHigh": 30.14,
-    "fiftyTwoWeekLow": 9.85,
-    "averageVolume": 30627182,
-    "averageVolume10days": 31925560,
+    "fiftyTwoWeekLow": 10.47,
+    "averageVolume": 30758109,
+    "averageVolume10days": 31773920,
     "beta": 3.167,
     "sharesOutstanding": 415030722,
     "sharesFloat": 341624238,
@@ -173,8 +173,15 @@
     "avg_price_target": 32.17647,
     "high_price_target": 69.0,
     "low_price_target": 22.0,
-    "current_price": 17.74,
+    "current_price": 15.635,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T11:53:56",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-09-04T11:37:04",
         "firm": "Rosenblatt",
@@ -237,17 +244,10 @@
         "to_grade": "Overweight",
         "from_grade": "Overweight",
         "action": "main"
-      },
-      {
-        "date": "2026-06-25T13:23:51",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:11:40Z",
+  "quarterly_asof": "2026-09-14T21:41:13Z",
   "news": [
     {
       "date": "2026-09-11T21:09:17Z",
@@ -310,38 +310,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.105044508007638,
+  "options_implied_move": 0.10105532311290516,
   "technicals": {
-    "ma20": 16.477249956130983,
-    "ma50": 18.847499942779542,
-    "ma200": 18.42917501449585,
-    "rsi14": 48.31504850180184,
+    "ma20": 16.366249990463256,
+    "ma50": 18.75939992904663,
+    "ma200": 18.423800020217897,
+    "rsi14": 44.534866692984394,
     "high_20d": 19.489999771118164,
     "low_5d": 15.279999732971191,
     "low_10d": 14.180000305175781,
     "high_52w": 30.139999389648438,
     "low_52w": 9.850000381469727,
-    "atr14": 1.3509999002729143,
-    "atr14_pct": 8.017803380934254,
-    "position_in_52w_range_pct": 34.49975525961516
+    "atr14": 1.3895713942391532,
+    "atr14_pct": 8.887568748942263,
+    "position_in_52w_range_pct": 28.511582701804123
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 3.08,
-      "high": 3.14,
-      "low": 3.0,
-      "close": 3.09,
-      "volume": 5425700.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 3.1,
-      "high": 3.215,
-      "low": 3.04,
-      "close": 3.09,
-      "volume": 5362900.0
-    },
     {
       "date": "2024-09-16",
       "open": 3.0,
@@ -4333,17 +4317,17 @@
       "low": 15.89,
       "close": 16.85,
       "volume": 34278400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 15.545,
+      "high": 16.458,
+      "low": 15.4,
+      "close": 15.635,
+      "volume": 34706108.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 10.15,
-      "high": 10.675,
-      "low": 9.875,
-      "close": 9.97,
-      "volume": 39869100.0
-    },
     {
       "date": "2025-09-12",
       "open": 9.935,
@@ -6351,6 +6335,14 @@
       "low": 15.89,
       "close": 16.85,
       "volume": 34278400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 15.545,
+      "high": 16.458,
+      "low": 15.4,
+      "close": 15.635,
+      "volume": 34706108.0
     }
   ],
   "ai_synthesis": null,

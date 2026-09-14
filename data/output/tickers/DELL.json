@@ -1,8 +1,8 @@
 {
   "ticker": "DELL",
-  "fetched_at": "2026-09-12T02:37:35Z",
+  "fetched_at": "2026-09-14T21:39:14Z",
   "_schema": "v2",
-  "current_price": 567.2899780273438,
+  "current_price": 534.280029296875,
   "info": {
     "symbol": "DELL",
     "longName": "Dell Technologies Inc.",
@@ -13,13 +13,13 @@
     "city": "Round Rock",
     "website": "https://www.dell.com",
     "fullTimeEmployees": 97000,
-    "marketCap": 360690188288,
+    "marketCap": 339702054912,
     "enterpriseValue": 384404226048,
-    "trailingPE": 29.50026,
-    "forwardPE": 19.785532,
-    "priceToSalesTrailing12Months": 2.3855643,
+    "trailingPE": 31.080862,
+    "forwardPE": 18.634233,
+    "priceToSalesTrailing12Months": 2.246751,
     "enterpriseToRevenue": 2.542,
-    "priceToBook": -256.4602,
+    "priceToBook": -241.5371,
     "grossMargins": 0.19910999,
     "operatingMargins": 0.12020001,
     "profitMargins": 0.07525,
@@ -32,11 +32,11 @@
     "currentRatio": 0.962,
     "fiftyTwoWeekHigh": 567.75,
     "fiftyTwoWeekLow": 110.22,
-    "averageVolume": 7510053,
-    "averageVolume10days": 12026090,
+    "averageVolume": 7644353,
+    "averageVolume10days": 13000400,
     "beta": 1.409,
     "sharesOutstanding": 315433188,
-    "sharesFloat": 296956345,
+    "sharesFloat": 291927066,
     "companyOfficers": [
       {
         "name": "Mr. Michael Saul Dell",
@@ -84,6 +84,12 @@
       "eps_surprise_pct": 0.4314
     },
     {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 4.86,
+      "eps_estimate": 2.96358,
+      "eps_surprise_pct": 0.6399
+    },
+    {
       "period_end": "2026-01-31T00:00:00",
       "eps_actual": 3.89,
       "eps_estimate": 3.51279,
@@ -91,33 +97,27 @@
     },
     {
       "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 2.28,
-      "eps_estimate": 1.97,
-      "eps_surprise_pct": 0.1574
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 2.32,
-      "eps_estimate": 2.29157,
-      "eps_surprise_pct": 0.0124
+      "eps_actual": 2.59,
+      "eps_estimate": 2.47719,
+      "eps_surprise_pct": 0.045500003
     }
   ],
   "next_earnings": {
     "date": "2026-11-27",
-    "revenue_low": 35101000000,
-    "revenue_high": 46011985000
+    "revenue_low": 48883706760,
+    "revenue_high": 49723650680
   },
   "quarterly_metrics": [
     {
       "period_end": "2026-07-31T00:00:00",
-      "revenue": null,
-      "gross_profit": null,
-      "operating_income": null,
+      "revenue": 46971000000.0,
+      "gross_profit": 9830000000.0,
+      "operating_income": 5472000000.0,
       "eps": 6.34,
-      "cash": null,
-      "operating_cashflow": null,
-      "gross_margin_pct": null,
-      "yoy_pct": null
+      "cash": 11569000000.0,
+      "operating_cashflow": 2225000000.0,
+      "gross_margin_pct": 20.927806518915926,
+      "yoy_pct": 57.747850617947336
     },
     {
       "period_end": "2026-04-30T00:00:00",
@@ -128,7 +128,7 @@
       "cash": 11578000000.0,
       "operating_cashflow": 4081000000.0,
       "gross_margin_pct": 17.75010264130286,
-      "yoy_pct": 87.53528958850201
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -156,7 +156,7 @@
       "period_end": "2025-07-31T00:00:00",
       "revenue": 29776000000.0,
       "gross_profit": 5447000000.0,
-      "operating_income": 1773000000.0,
+      "operating_income": 1901000000.0,
       "eps": 1.7,
       "cash": 8145000000.0,
       "operating_cashflow": 2543000000.0,
@@ -170,11 +170,25 @@
     "bullish": 19,
     "neutral": 8,
     "bearish": 0,
-    "avg_price_target": 564.4583,
+    "avg_price_target": 570.48,
     "high_price_target": 735.0,
     "low_price_target": 465.0,
-    "current_price": 524.14,
+    "current_price": 534.28,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T20:20:43",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-09-09T16:26:26",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
       {
         "date": "2026-09-02T18:41:41",
         "firm": "Citigroup",
@@ -230,118 +244,88 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-09-02T13:36:13",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-02T13:24:10",
-        "firm": "Bernstein",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:09:53Z",
+  "quarterly_asof": "2026-09-14T21:39:14Z",
   "news": [
     {
-      "date": "2026-09-11T23:39:09Z",
-      "title": "Dell Technologies (DELL) Raises its AI Server Forecast for the Second Time This Year",
-      "url": "https://finance.yahoo.com/technology/ai/articles/dell-technologies-dell-raises-ai-233909317.html",
-      "source": "Insider Monkey"
+      "date": "2026-09-14T20:37:00Z",
+      "title": "5 Top AI Stocks to Buy on the Dip as Slowdown Fears Hit Markets",
+      "url": "https://finance.yahoo.com/technology/ai/articles/5-top-ai-stocks-buy-203700535.html",
+      "source": "Zacks"
     },
     {
-      "date": "2026-09-11T23:10:55Z",
-      "title": "S&P 500, Dow Break Past Four-Day Loss To End Higher As Investors Eye Fed Meeting Next Week \u2014 DELL, HPE, EL, WMT In Focus",
-      "url": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-break-past-four-day-loss-to-end-higher-as-investors-eye-fed-meeting-next-week-dell-hpe-el-wmt-in-focus/cZtXyR4RBbK",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-11T21:05:43Z",
-      "title": "Stock Market Today, Sept. 11: HPE Surges on AI Infrastructure Demand and Recently Raised Guidance",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/11/stock-market-today-sept-11-hpe-surges-on-ai-infrastructure-demand-and-recently-raised-guidance/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-11T20:53:14Z",
-      "title": "Update: Wall Street Rises at End of Losing Week Amid Inflation Worries",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-rises-end-losing-205314084.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-11T20:49:23Z",
-      "title": "How Far Could Cisco Stock Swing On You As AI Networking Orders Grow?",
-      "url": "https://www.trefis.com/articles/615034/how-far-could-cisco-stock-swing-on-you-as-ai-networking-orders-grow/2026-09-11",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-09-11T20:40:38Z",
-      "title": "What Did Dell Technologies Say Before Its Stock Quadrupled?",
-      "url": "https://www.trefis.com/articles/615036/what-did-dell-technologies-say-before-its-stock-quadrupled/2026-09-11",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-09-11T20:17:25Z",
-      "title": "S&P 500 ends higher as strong inflation data cements rate-hike bets",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-recover-oil-095547409.html",
-      "source": "Reuters"
-    },
-    {
-      "date": "2026-09-11T20:11:14Z",
-      "title": "US Equity Markets End Higher Amid Broad-Based Rally as Crude Oil Prices Drop",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-markets-end-higher-201114793.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-11T20:10:43Z",
-      "title": "RBC Drops Jaw Dropping Price Target on Dell Stock",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rbc-drops-jaw-dropping-price-201043556.html",
+      "date": "2026-09-14T18:59:58Z",
+      "title": "Dell Stock Tumbles 5% as Fresh AI Warning Sparks Tech Selloff",
+      "url": "https://finance.yahoo.com/news/dell-stock-tumbles-5-fresh-185958280.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-11T19:58:56Z",
-      "title": "Sector Update: Tech Stocks Gain Late Afternoon",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sector-tech-stocks-gain-afternoon-195856760.html",
+      "date": "2026-09-14T17:49:16Z",
+      "title": "Is HPE Stock Now A Bet On Memory Prices?",
+      "url": "https://www.trefis.com/articles/615229/is-hpe-stock-now-a-bet-on-memory-prices/2026-09-14",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-14T17:20:37Z",
+      "title": "Dell Drops Over 7% as AI Servers Pass Half of Infrastructure Revenue",
+      "url": "https://finance.yahoo.com/technology/ai/articles/dell-drops-over-7-ai-172037476.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-14T16:15:19Z",
+      "title": "Forget the Magnificent 7. This Duo Says Broadcom, Not Nvidia, Wins the Next Leg of AI.",
+      "url": "https://247wallst.com/investing/2026/09/14/forget-the-magnificent-7-this-duo-says-broadcom-not-nvidia-wins-the-next-leg-of-ai/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-14T15:45:24Z",
+      "title": "Baldwin Agrees to Go Private in $7.7 Billion Deal Involving Dell CEO's Family Investment Firm",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/baldwin-agrees-private-7-7-154524414.html",
       "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-14T14:58:36Z",
+      "title": "Michael Dell is now the fifth richest person in the world\u2014his worth has nearly doubled to $262 billion in the last year alone thanks to AI",
+      "url": "https://finance.yahoo.com/technology/ai/articles/michael-dell-now-fifth-richest-145836269.html",
+      "source": "Fortune"
+    },
+    {
+      "date": "2026-09-14T14:50:39Z",
+      "title": "Which Tech Stocks Are Getting Hit Hardest Today",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-09-14-2026/card/which-tech-stocks-are-getting-hit-hardest-today-NXMZGdwdwqjvnj32Ghbc?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
+    },
+    {
+      "date": "2026-09-14T14:19:00Z",
+      "title": "Can SMCI Expand Its Market Opportunity With DCBBS and DLC?",
+      "url": "https://finance.yahoo.com/technology/articles/smci-expand-market-opportunity-dcbbs-141900631.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-14T14:13:40Z",
+      "title": "Should You Buy Dell Technologies Stock For All That AI Revenue?",
+      "url": "https://www.trefis.com/articles/615212/should-you-buy-dell-technologies-stock-for-all-that-ai-revenue/2026-09-14",
+      "source": "Trefis"
     }
   ],
-  "options_implied_move": 0.06862451569367148,
+  "options_implied_move": 0.05779740642868273,
   "technicals": {
-    "ma20": 479.37350006103514,
-    "ma50": 448.7317785644531,
-    "ma200": 261.15087551116943,
-    "rsi14": 66.5747226693302,
+    "ma20": 481.54700164794923,
+    "ma50": 451.5439892578125,
+    "ma200": 263.1919411849976,
+    "rsi14": 59.27403748838496,
     "high_20d": 567.75,
     "low_5d": 506.25,
     "low_10d": 421.8900146484375,
     "high_52w": 567.75,
     "low_52w": 109.6987412978457,
-    "atr14": 32.92356654575893,
-    "atr14_pct": 5.8036573570795555,
-    "position_in_52w_range_pct": 99.89956976126216
+    "atr14": 33.914280482700896,
+    "atr14_pct": 6.347660145061548,
+    "position_in_52w_range_pct": 92.69296392767066
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 105.4158,
-      "high": 109.8089,
-      "low": 105.3188,
-      "close": 108.7616,
-      "volume": 9893500.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 108.7907,
-      "high": 111.186,
-      "low": 108.0342,
-      "close": 110.8466,
-      "volume": 7353300.0
-    },
     {
       "date": "2024-09-16",
       "open": 108.9846,
@@ -394,7 +378,7 @@
       "date": "2024-09-24",
       "open": 114.5997,
       "high": 114.8615,
-      "low": 112.4952,
+      "low": 112.4953,
       "close": 113.7657,
       "volume": 6851800.0
     },
@@ -416,7 +400,7 @@
     },
     {
       "date": "2024-09-27",
-      "open": 120.2536,
+      "open": 120.2535,
       "high": 120.6512,
       "low": 116.4423,
       "close": 116.5878,
@@ -426,7 +410,7 @@
       "date": "2024-09-30",
       "open": 115.4046,
       "high": 116.3356,
-      "low": 113.4165,
+      "low": 113.4166,
       "close": 114.9585,
       "volume": 8638100.0
     },
@@ -568,7 +552,7 @@
     },
     {
       "date": "2024-10-24",
-      "open": 117.3817,
+      "open": 117.3816,
       "high": 118.1408,
       "low": 116.1651,
       "close": 117.3427,
@@ -585,7 +569,7 @@
     {
       "date": "2024-10-28",
       "open": 119.7077,
-      "high": 120.3014,
+      "high": 120.3013,
       "low": 117.3233,
       "close": 117.4303,
       "volume": 3582900.0
@@ -595,7 +579,7 @@
       "open": 117.4498,
       "high": 119.26,
       "low": 116.8853,
-      "close": 118.3743,
+      "close": 118.3744,
       "volume": 3909800.0
     },
     {
@@ -632,8 +616,8 @@
     },
     {
       "date": "2024-11-05",
-      "open": 127.4935,
-      "high": 130.6857,
+      "open": 127.4936,
+      "high": 130.6858,
       "low": 126.277,
       "close": 129.8877,
       "volume": 6998600.0
@@ -648,10 +632,10 @@
     },
     {
       "date": "2024-11-07",
-      "open": 135.2308,
+      "open": 135.2307,
       "high": 135.6882,
       "low": 132.3792,
-      "close": 134.1797,
+      "close": 134.1796,
       "volume": 6297500.0
     },
     {
@@ -673,7 +657,7 @@
     {
       "date": "2024-11-12",
       "open": 135.0361,
-      "high": 137.547,
+      "high": 137.5471,
       "low": 132.3013,
       "close": 132.8171,
       "volume": 6667800.0
@@ -681,15 +665,15 @@
     {
       "date": "2024-11-13",
       "open": 134.0726,
-      "high": 135.3184,
+      "high": 135.3183,
       "low": 130.8707,
-      "close": 130.9291,
+      "close": 130.929,
       "volume": 4701400.0
     },
     {
       "date": "2024-11-14",
       "open": 132.2429,
-      "high": 133.2454,
+      "high": 133.2453,
       "low": 129.7612,
       "close": 130.8317,
       "volume": 3510700.0
@@ -744,9 +728,9 @@
     },
     {
       "date": "2024-11-25",
-      "open": 143.4546,
+      "open": 143.4545,
       "high": 143.7076,
-      "low": 138.8123,
+      "low": 138.8122,
       "close": 140.3013,
       "volume": 12208200.0
     },
@@ -779,7 +763,7 @@
       "open": 122.8123,
       "high": 126.1797,
       "low": 119.9802,
-      "close": 122.4717,
+      "close": 122.4716,
       "volume": 13328000.0
     },
     {
@@ -825,7 +809,7 @@
     {
       "date": "2024-12-10",
       "open": 119.8537,
-      "high": 119.9412,
+      "high": 119.9413,
       "low": 113.4303,
       "close": 113.6639,
       "volume": 12659500.0
@@ -835,7 +819,7 @@
       "open": 114.6469,
       "high": 115.9899,
       "low": 112.5058,
-      "close": 115.5131,
+      "close": 115.513,
       "volume": 8156100.0
     },
     {
@@ -872,7 +856,7 @@
     },
     {
       "date": "2024-12-18",
-      "open": 116.3306,
+      "open": 116.3305,
       "high": 116.7782,
       "low": 108.934,
       "close": 109.6542,
@@ -899,7 +883,7 @@
       "open": 113.4011,
       "high": 115.951,
       "low": 113.1481,
-      "close": 115.6395,
+      "close": 115.6396,
       "volume": 5324200.0
     },
     {
@@ -907,14 +891,14 @@
       "open": 115.8147,
       "high": 116.2235,
       "low": 115.0167,
-      "close": 115.7564,
+      "close": 115.7563,
       "volume": 2077400.0
     },
     {
       "date": "2024-12-26",
       "open": 115.2503,
       "high": 116.6712,
-      "low": 115.0653,
+      "low": 115.0654,
       "close": 116.0872,
       "volume": 2743100.0
     },
@@ -977,14 +961,14 @@
     {
       "date": "2025-01-08",
       "open": 116.7685,
-      "high": 117.3817,
+      "high": 117.3816,
       "low": 114.5982,
       "close": 116.1164,
       "volume": 5137700.0
     },
     {
       "date": "2025-01-10",
-      "open": 114.7636,
+      "open": 114.7637,
       "high": 114.8318,
       "low": 111.5228,
       "close": 111.698,
@@ -1000,7 +984,7 @@
     },
     {
       "date": "2025-01-14",
-      "open": 108.3209,
+      "open": 108.3208,
       "high": 108.8172,
       "low": 104.3306,
       "close": 106.1408,
@@ -1096,7 +1080,7 @@
     },
     {
       "date": "2025-01-31",
-      "open": 103.8983,
+      "open": 103.8984,
       "high": 104.7875,
       "low": 101.1624,
       "close": 101.2308,
@@ -1128,7 +1112,7 @@
     },
     {
       "date": "2025-02-06",
-      "open": 102.5695,
+      "open": 102.5694,
       "high": 104.7973,
       "low": 102.3349,
       "close": 103.4977,
@@ -1184,7 +1168,7 @@
     },
     {
       "date": "2025-02-18",
-      "open": 113.8455,
+      "open": 113.8456,
       "high": 118.1547,
       "low": 113.6013,
       "close": 117.588,
@@ -1219,7 +1203,7 @@
       "open": 113.4547,
       "high": 113.699,
       "low": 108.4909,
-      "close": 111.5297,
+      "close": 111.5298,
       "volume": 7327800.0
     },
     {
@@ -1243,7 +1227,7 @@
       "open": 114.3243,
       "high": 114.764,
       "low": 104.9732,
-      "close": 105.364,
+      "close": 105.3641,
       "volume": 15737200.0
     },
     {
@@ -1344,7 +1328,7 @@
     },
     {
       "date": "2025-03-18",
-      "open": 94.7036,
+      "open": 94.7035,
       "high": 94.9771,
       "low": 92.6027,
       "close": 94.2345,
@@ -1354,7 +1338,7 @@
       "date": "2025-03-19",
       "open": 94.7817,
       "high": 98.1333,
-      "low": 94.6351,
+      "low": 94.6352,
       "close": 96.4624,
       "volume": 5460100.0
     },
@@ -1536,7 +1520,7 @@
     },
     {
       "date": "2025-04-22",
-      "open": 81.5237,
+      "open": 81.5236,
       "high": 83.9723,
       "low": 81.091,
       "close": 82.6841,
@@ -1544,7 +1528,7 @@
     },
     {
       "date": "2025-04-23",
-      "open": 87.601,
+      "open": 87.6011,
       "high": 90.3644,
       "low": 87.1192,
       "close": 87.6797,
@@ -1617,7 +1601,7 @@
     {
       "date": "2025-05-06",
       "open": 91.1216,
-      "high": 93.1572,
+      "high": 93.1573,
       "low": 90.9938,
       "close": 92.3902,
       "volume": 5015400.0
@@ -1641,16 +1625,16 @@
     {
       "date": "2025-05-09",
       "open": 95.8321,
-      "high": 96.314,
+      "high": 96.3139,
       "low": 94.0521,
-      "close": 94.3177,
+      "close": 94.3176,
       "volume": 4367400.0
     },
     {
       "date": "2025-05-12",
-      "open": 99.3231,
+      "open": 99.3232,
       "high": 102.352,
-      "low": 99.3231,
+      "low": 99.3232,
       "close": 101.703,
       "volume": 7927700.0
     },
@@ -1672,8 +1656,8 @@
     },
     {
       "date": "2025-05-15",
-      "open": 107.1411,
-      "high": 109.6586,
+      "open": 107.1412,
+      "high": 109.6587,
       "low": 106.7675,
       "close": 109.0293,
       "volume": 4488800.0
@@ -1713,7 +1697,7 @@
     {
       "date": "2025-05-22",
       "open": 110.5339,
-      "high": 111.1043,
+      "high": 111.1042,
       "low": 108.8228,
       "close": 110.0913,
       "volume": 4013700.0
@@ -1752,7 +1736,7 @@
     },
     {
       "date": "2025-05-30",
-      "open": 110.6126,
+      "open": 110.6125,
       "high": 115.028,
       "low": 107.387,
       "close": 109.4226,
@@ -1800,8 +1784,8 @@
     },
     {
       "date": "2025-06-09",
-      "open": 112.6089,
-      "high": 114.6937,
+      "open": 112.6088,
+      "high": 114.6936,
       "low": 112.3138,
       "close": 112.3237,
       "volume": 5123700.0
@@ -1882,7 +1866,7 @@
       "date": "2025-06-24",
       "open": 117.811,
       "high": 119.8073,
-      "low": 117.1817,
+      "low": 117.1816,
       "close": 118.5879,
       "volume": 5034500.0
     },
@@ -1913,7 +1897,7 @@
     {
       "date": "2025-06-30",
       "open": 122.0986,
-      "high": 122.4232,
+      "high": 122.4231,
       "low": 120.1023,
       "close": 120.5645,
       "volume": 5427000.0
@@ -2010,7 +1994,7 @@
       "date": "2025-07-17",
       "open": 121.6758,
       "high": 122.374,
-      "low": 119.8466,
+      "low": 119.8467,
       "close": 121.8233,
       "volume": 3763700.0
     },
@@ -2027,7 +2011,7 @@
       "open": 128.4514,
       "high": 128.8054,
       "low": 126.4551,
-      "close": 126.8189,
+      "close": 126.819,
       "volume": 5560200.0
     },
     {
@@ -2074,7 +2058,7 @@
       "date": "2025-07-29",
       "open": 133.2125,
       "high": 134.3085,
-      "low": 130.8525,
+      "low": 130.8526,
       "close": 131.8301,
       "volume": 4013200.0
     },
@@ -2104,15 +2088,15 @@
     },
     {
       "date": "2025-08-04",
-      "open": 127.0213,
+      "open": 127.0214,
       "high": 129.0653,
       "low": 126.2808,
-      "close": 128.5913,
+      "close": 128.5914,
       "volume": 2765300.0
     },
     {
       "date": "2025-08-05",
-      "open": 129.7367,
+      "open": 129.7368,
       "high": 130.2206,
       "low": 125.1058,
       "close": 128.8382,
@@ -2163,7 +2147,7 @@
       "open": 138.5544,
       "high": 138.8309,
       "low": 134.348,
-      "close": 137.3892,
+      "close": 137.3893,
       "volume": 6025200.0
     },
     {
@@ -2177,8 +2161,8 @@
     {
       "date": "2025-08-15",
       "open": 138.9395,
-      "high": 139.3739,
-      "low": 135.7007,
+      "high": 139.374,
+      "low": 135.7008,
       "close": 136.5401,
       "volume": 3448200.0
     },
@@ -2209,7 +2193,7 @@
     {
       "date": "2025-08-21",
       "open": 127.6829,
-      "high": 128.6703,
+      "high": 128.6704,
       "low": 125.9451,
       "close": 126.2216,
       "volume": 4057800.0
@@ -2241,7 +2225,7 @@
     {
       "date": "2025-08-27",
       "open": 129.2825,
-      "high": 131.0006,
+      "high": 131.0007,
       "low": 129.0061,
       "close": 130.8328,
       "volume": 3799300.0
@@ -2307,7 +2291,7 @@
       "open": 119.3491,
       "high": 120.1786,
       "low": 116.6634,
-      "close": 119.7638,
+      "close": 119.7639,
       "volume": 10704400.0
     },
     {
@@ -2321,7 +2305,7 @@
     {
       "date": "2025-09-11",
       "open": 123.3383,
-      "high": 127.1399,
+      "high": 127.1398,
       "low": 122.9532,
       "close": 123.7925,
       "volume": 6159400.0
@@ -2344,15 +2328,15 @@
     },
     {
       "date": "2025-09-16",
-      "open": 126.034,
+      "open": 126.0339,
       "high": 127.0707,
-      "low": 124.3159,
-      "close": 126.0735,
+      "low": 124.3158,
+      "close": 126.0734,
       "volume": 4461300.0
     },
     {
       "date": "2025-09-17",
-      "open": 126.4882,
+      "open": 126.4881,
       "high": 131.3265,
       "low": 126.2907,
       "close": 128.7,
@@ -2410,7 +2394,7 @@
       "date": "2025-09-26",
       "open": 126.3993,
       "high": 129.4603,
-      "low": 125.9944,
+      "low": 125.9945,
       "close": 129.1147,
       "volume": 3841000.0
     },
@@ -2465,9 +2449,9 @@
     {
       "date": "2025-10-07",
       "open": 150.8774,
-      "high": 152.7535,
-      "low": 142.5831,
-      "close": 148.9717,
+      "high": 152.7534,
+      "low": 142.583,
+      "close": 148.9716,
       "volume": 18683200.0
     },
     {
@@ -2521,8 +2505,8 @@
     {
       "date": "2025-10-16",
       "open": 153.336,
-      "high": 156.5057,
-      "low": 147.7868,
+      "high": 156.5056,
+      "low": 147.7867,
       "close": 149.4061,
       "volume": 6947600.0
     },
@@ -2545,7 +2529,7 @@
     {
       "date": "2025-10-21",
       "open": 146.6089,
-      "high": 149.9286,
+      "high": 149.9285,
       "low": 143.7748,
       "close": 148.0755,
       "volume": 5191400.0
@@ -2555,7 +2539,7 @@
       "open": 148.8385,
       "high": 150.0177,
       "low": 143.9334,
-      "close": 148.7692,
+      "close": 148.7691,
       "volume": 6136700.0
     },
     {
@@ -2568,7 +2552,7 @@
     },
     {
       "date": "2025-10-24",
-      "open": 156.1714,
+      "open": 156.1715,
       "high": 158.4902,
       "low": 155.3787,
       "close": 157.202,
@@ -2584,7 +2568,7 @@
     },
     {
       "date": "2025-10-28",
-      "open": 160.9477,
+      "open": 160.9478,
       "high": 165.4862,
       "low": 159.2235,
       "close": 163.3855,
@@ -2633,7 +2617,7 @@
     {
       "date": "2025-11-05",
       "open": 150.7213,
-      "high": 153.5256,
+      "high": 153.5257,
       "low": 147.798,
       "close": 151.0285,
       "volume": 7326500.0
@@ -2688,7 +2672,7 @@
     },
     {
       "date": "2025-11-14",
-      "open": 128.7424,
+      "open": 128.7423,
       "high": 135.9365,
       "low": 128.1577,
       "close": 132.5475,
@@ -2824,7 +2808,7 @@
     },
     {
       "date": "2025-12-10",
-      "open": 136.7987,
+      "open": 136.7986,
       "high": 139.8507,
       "low": 135.0249,
       "close": 139.3553,
@@ -2850,7 +2834,7 @@
       "date": "2025-12-15",
       "open": 130.1098,
       "high": 132.2205,
-      "low": 128.4351,
+      "low": 128.4352,
       "close": 129.327,
       "volume": 5336200.0
     },
@@ -2858,7 +2842,7 @@
       "date": "2025-12-16",
       "open": 129.109,
       "high": 133.7763,
-      "low": 128.8415,
+      "low": 128.8414,
       "close": 132.5376,
       "volume": 5365600.0
     },
@@ -2866,8 +2850,8 @@
       "date": "2025-12-17",
       "open": 132.2602,
       "high": 132.5277,
-      "low": 125.4624,
-      "close": 126.7308,
+      "low": 125.4623,
+      "close": 126.7307,
       "volume": 6125700.0
     },
     {
@@ -2889,15 +2873,15 @@
     {
       "date": "2025-12-22",
       "open": 127.6028,
-      "high": 127.6821,
+      "high": 127.682,
       "low": 124.2237,
-      "close": 125.4624,
+      "close": 125.4623,
       "volume": 4852700.0
     },
     {
       "date": "2025-12-23",
       "open": 125.1849,
-      "high": 127.464,
+      "high": 127.4641,
       "low": 125.1849,
       "close": 126.4632,
       "volume": 3494400.0
@@ -4333,18 +4317,18 @@
       "low": 517.52,
       "close": 567.29,
       "volume": 14385700.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 538.57,
+      "high": 546.29,
+      "low": 525.85,
+      "close": 534.28,
+      "volume": 9119604.0
     }
   ],
   "ohlc_1y": [
     {
-      "date": "2025-09-11",
-      "open": 123.3383,
-      "high": 127.1399,
-      "low": 122.9532,
-      "close": 123.7925,
-      "volume": 6159400.0
-    },
-    {
       "date": "2025-09-12",
       "open": 124.3158,
       "high": 126.034,
@@ -4362,15 +4346,15 @@
     },
     {
       "date": "2025-09-16",
-      "open": 126.034,
+      "open": 126.0339,
       "high": 127.0707,
-      "low": 124.3159,
-      "close": 126.0735,
+      "low": 124.3158,
+      "close": 126.0734,
       "volume": 4461300.0
     },
     {
       "date": "2025-09-17",
-      "open": 126.4882,
+      "open": 126.4881,
       "high": 131.3265,
       "low": 126.2907,
       "close": 128.7,
@@ -4428,7 +4412,7 @@
       "date": "2025-09-26",
       "open": 126.3993,
       "high": 129.4603,
-      "low": 125.9944,
+      "low": 125.9945,
       "close": 129.1147,
       "volume": 3841000.0
     },
@@ -4483,9 +4467,9 @@
     {
       "date": "2025-10-07",
       "open": 150.8774,
-      "high": 152.7535,
-      "low": 142.5831,
-      "close": 148.9717,
+      "high": 152.7534,
+      "low": 142.583,
+      "close": 148.9716,
       "volume": 18683200.0
     },
     {
@@ -4539,8 +4523,8 @@
     {
       "date": "2025-10-16",
       "open": 153.336,
-      "high": 156.5057,
-      "low": 147.7868,
+      "high": 156.5056,
+      "low": 147.7867,
       "close": 149.4061,
       "volume": 6947600.0
     },
@@ -4563,7 +4547,7 @@
     {
       "date": "2025-10-21",
       "open": 146.6089,
-      "high": 149.9286,
+      "high": 149.9285,
       "low": 143.7748,
       "close": 148.0755,
       "volume": 5191400.0
@@ -4573,7 +4557,7 @@
       "open": 148.8385,
       "high": 150.0177,
       "low": 143.9334,
-      "close": 148.7692,
+      "close": 148.7691,
       "volume": 6136700.0
     },
     {
@@ -4586,7 +4570,7 @@
     },
     {
       "date": "2025-10-24",
-      "open": 156.1714,
+      "open": 156.1715,
       "high": 158.4902,
       "low": 155.3787,
       "close": 157.202,
@@ -4602,7 +4586,7 @@
     },
     {
       "date": "2025-10-28",
-      "open": 160.9477,
+      "open": 160.9478,
       "high": 165.4862,
       "low": 159.2235,
       "close": 163.3855,
@@ -4651,7 +4635,7 @@
     {
       "date": "2025-11-05",
       "open": 150.7213,
-      "high": 153.5256,
+      "high": 153.5257,
       "low": 147.798,
       "close": 151.0285,
       "volume": 7326500.0
@@ -4706,7 +4690,7 @@
     },
     {
       "date": "2025-11-14",
-      "open": 128.7424,
+      "open": 128.7423,
       "high": 135.9365,
       "low": 128.1577,
       "close": 132.5475,
@@ -4842,7 +4826,7 @@
     },
     {
       "date": "2025-12-10",
-      "open": 136.7987,
+      "open": 136.7986,
       "high": 139.8507,
       "low": 135.0249,
       "close": 139.3553,
@@ -4868,7 +4852,7 @@
       "date": "2025-12-15",
       "open": 130.1098,
       "high": 132.2205,
-      "low": 128.4351,
+      "low": 128.4352,
       "close": 129.327,
       "volume": 5336200.0
     },
@@ -4876,7 +4860,7 @@
       "date": "2025-12-16",
       "open": 129.109,
       "high": 133.7763,
-      "low": 128.8415,
+      "low": 128.8414,
       "close": 132.5376,
       "volume": 5365600.0
     },
@@ -4884,8 +4868,8 @@
       "date": "2025-12-17",
       "open": 132.2602,
       "high": 132.5277,
-      "low": 125.4624,
-      "close": 126.7308,
+      "low": 125.4623,
+      "close": 126.7307,
       "volume": 6125700.0
     },
     {
@@ -4907,15 +4891,15 @@
     {
       "date": "2025-12-22",
       "open": 127.6028,
-      "high": 127.6821,
+      "high": 127.682,
       "low": 124.2237,
-      "close": 125.4624,
+      "close": 125.4623,
       "volume": 4852700.0
     },
     {
       "date": "2025-12-23",
       "open": 125.1849,
-      "high": 127.464,
+      "high": 127.4641,
       "low": 125.1849,
       "close": 126.4632,
       "volume": 3494400.0
@@ -6351,6 +6335,14 @@
       "low": 517.52,
       "close": 567.29,
       "volume": 14385700.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 538.57,
+      "high": 546.29,
+      "low": 525.85,
+      "close": 534.28,
+      "volume": 9119604.0
     }
   ],
   "ai_synthesis": null,

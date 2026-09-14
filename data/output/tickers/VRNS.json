@@ -1,8 +1,8 @@
 {
   "ticker": "VRNS",
-  "fetched_at": "2026-09-12T02:37:45Z",
+  "fetched_at": "2026-09-14T21:39:10Z",
   "_schema": "v2",
-  "current_price": 45.119998931884766,
+  "current_price": 47.47999954223633,
   "info": {
     "symbol": "VRNS",
     "longName": "Varonis Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Miami",
     "website": "https://www.varonis.com",
     "fullTimeEmployees": 2658,
-    "marketCap": 5182504960,
+    "marketCap": 5453575680,
     "enterpriseValue": 5012613120,
     "trailingPE": null,
-    "forwardPE": 110.53675,
-    "priceToSalesTrailing12Months": 7.531671,
+    "forwardPE": 116.318375,
+    "priceToSalesTrailing12Months": 7.925615,
     "enterpriseToRevenue": 7.285,
-    "priceToBook": 11.658915,
+    "priceToBook": 12.268734,
     "grossMargins": 0.77069,
     "operatingMargins": -0.22564,
     "profitMargins": -0.20547001,
@@ -32,8 +32,8 @@
     "currentRatio": 1.645,
     "fiftyTwoWeekHigh": 63.9,
     "fiftyTwoWeekLow": 19.7,
-    "averageVolume": 2064857,
-    "averageVolume10days": 2216670,
+    "averageVolume": 2067475,
+    "averageVolume10days": 2275620,
     "beta": 0.82,
     "sharesOutstanding": 114860485,
     "sharesFloat": 111380212,
@@ -170,11 +170,18 @@
     "bullish": 18,
     "neutral": 5,
     "bearish": 1,
-    "avg_price_target": 50.68182,
+    "avg_price_target": 51.31818,
     "high_price_target": 60.0,
     "low_price_target": 28.0,
-    "current_price": 46.09,
+    "current_price": 47.48,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-09T10:06:52",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-07-30T18:53:24",
         "firm": "Citigroup",
@@ -237,17 +244,10 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-07-27T16:02:51",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:09:57Z",
+  "quarterly_asof": "2026-09-14T21:39:10Z",
   "news": [
     {
       "date": "2026-09-11T15:40:04Z",
@@ -310,38 +310,22 @@
       "source": "Investing.com"
     }
   ],
-  "options_implied_move": 0.09862588885957034,
+  "options_implied_move": 0.07518955422112567,
   "technicals": {
-    "ma20": 43.79299945831299,
-    "ma50": 44.17179985046387,
-    "ma200": 32.85777494430542,
-    "rsi14": 54.32348479389205,
+    "ma20": 43.91749935150146,
+    "ma50": 44.264199829101564,
+    "ma200": 32.937824945449826,
+    "rsi14": 61.20519595570922,
     "high_20d": 48.209999084472656,
     "low_5d": 44.172000885009766,
     "low_10d": 40.88999938964844,
     "high_52w": 63.900001525878906,
     "low_52w": 19.700000762939453,
-    "atr14": 2.02807126726423,
-    "atr14_pct": 4.494838907966066,
-    "position_in_52w_range_pct": 57.51130708183
+    "atr14": 2.1044998168945312,
+    "atr14_pct": 4.432392243438106,
+    "position_in_52w_range_pct": 62.85067488638977
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 51.75,
-      "high": 53.07,
-      "low": 51.55,
-      "close": 52.89,
-      "volume": 1274100.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 52.9,
-      "high": 54.33,
-      "low": 52.88,
-      "close": 53.75,
-      "volume": 1222500.0
-    },
     {
       "date": "2024-09-16",
       "open": 53.85,
@@ -4333,17 +4317,17 @@
       "low": 44.172,
       "close": 45.12,
       "volume": 2227200.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 46.02,
+      "high": 47.605,
+      "low": 45.62,
+      "close": 47.48,
+      "volume": 2837624.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 56.45,
-      "high": 57.31,
-      "low": 56.04,
-      "close": 57.19,
-      "volume": 764500.0
-    },
     {
       "date": "2025-09-12",
       "open": 57.27,
@@ -6351,6 +6335,14 @@
       "low": 44.172,
       "close": 45.12,
       "volume": 2227200.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 46.02,
+      "high": 47.605,
+      "low": 45.62,
+      "close": 47.48,
+      "volume": 2837624.0
     }
   ],
   "ai_synthesis": null,

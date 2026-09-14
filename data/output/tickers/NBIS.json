@@ -1,43 +1,80 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-09-12T02:36:43Z",
+  "fetched_at": "2026-09-14T21:37:49Z",
   "_schema": "v2",
-  "current_price": 224.5500030517578,
+  "current_price": 212.19000244140625,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "NBIS",
+    "longName": "Nebius Group N.V.",
+    "sector": "Communication Services",
+    "industry": "Internet Content & Information",
+    "exchange": "NMS",
+    "country": "Netherlands",
+    "city": "Schiphol",
+    "website": "https://nebius.com",
+    "fullTimeEmployees": 1543,
+    "marketCap": 53874659328,
+    "enterpriseValue": 63703093248,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -67.55255,
+    "priceToSalesTrailing12Months": 39.75696,
+    "enterpriseToRevenue": 47.01,
+    "priceToBook": 5.6250997,
+    "grossMargins": 0.7426,
+    "operatingMargins": -0.00223,
+    "profitMargins": 0.03129,
+    "returnOnEquity": 0.00601,
+    "totalCash": 8042100224,
+    "totalDebt": 10195300352,
+    "totalRevenue": 1355100032,
+    "freeCashflow": -9614650368,
+    "debtToEquity": 98.596,
+    "currentRatio": 4.03,
+    "fiftyTwoWeekHigh": 299.86,
+    "fiftyTwoWeekLow": 73.52,
+    "averageVolume": 20911350,
+    "averageVolume10days": 13337690,
+    "beta": 1.436,
+    "sharesOutstanding": 220406311,
+    "sharesFloat": 228609396,
+    "companyOfficers": [
+      {
+        "name": "Mr. Arkady  Volozh",
+        "title": "Founder, CEO & Non-Independent Executive Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Maria del Dado Alonso Sanchez",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Ophir  Nave",
+        "title": "COO & Non-Independent Executive Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Danila  Shtan",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Neil A. Doshi",
+        "title": "VP & Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Attorney Yael  Almog",
+        "title": "General Counsel",
+        "age": 57,
+        "yearBorn": 1968
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.2025
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-10",
+    "revenue_low": 876600000,
+    "revenue_high": 942600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -125,15 +166,22 @@
   ],
   "analyst": {
     "consensus": "Buy",
-    "total_ratings": 14,
+    "total_ratings": 15,
     "bullish": 8,
-    "neutral": 5,
+    "neutral": 6,
     "bearish": 1,
-    "avg_price_target": 286.6875,
+    "avg_price_target": 290.70587,
     "high_price_target": 415.0,
     "low_price_target": 144.0,
-    "current_price": 226.39,
+    "current_price": 212.19,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-09T20:10:07",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-08-18T15:23:15",
         "firm": "DA Davidson",
@@ -196,93 +244,86 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-07-20T11:09:25",
-        "firm": "Freedom Capital Markets",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:08:42Z",
+  "quarterly_asof": "2026-09-14T21:37:49Z",
   "news": [
     {
-      "date": "2026-09-12T00:03:00Z",
-      "title": "Veteran analyst resets Palantir price target for rest of 2026",
-      "url": "https://www.thestreet.com/investing/palantir-da-davidson-raises-price-target",
-      "source": "TheStreet"
+      "date": "2026-09-14T13:45:19Z",
+      "title": "Chip stocks fall as oil prices gain, Treasury yields stay elevated: AlphaCheck",
+      "url": "https://finance.yahoo.com/markets/article/chip-stocks-fall-as-oil-prices-gain-treasury-yields-stay-elevated-alphacheck-134519544.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-09-11T21:10:41Z",
-      "title": "Oracle's AI Cloud Growth Lifts CoreWeave, Nebius and IREN",
-      "url": "https://finance.yahoo.com/technology/ai/articles/oracles-ai-cloud-growth-lifts-211041374.html",
-      "source": "GuruFocus.com"
+      "date": "2026-09-14T18:57:57Z",
+      "title": "CoreWeave Pays SOFR +5.5%. Nebius Pays +2.5%. AI Lenders Are Already Drawing a Line",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/coreweave-pays-sofr-5-5-185757301.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-11T17:31:23Z",
-      "title": "Nebius CEO Volozh estimates $250 billion in capex spend by 2030",
-      "url": "https://blockspace.media/insight/nebius-5gw-buildout-needs-250-billion/",
-      "source": "Blockspace"
+      "date": "2026-09-14T18:52:34Z",
+      "title": "Michael Burry Is Pushing Back on AI-Slowdown Calls. CoreWeave and Nebius Are the Stress Test",
+      "url": "https://finance.yahoo.com/technology/ai/articles/michael-burry-pushing-back-ai-185234642.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-11T14:49:00Z",
-      "title": "CoreWeave Doubles Down on Physical AI: Can CRWV Capture More Demand?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/coreweave-doubles-down-physical-ai-144900968.html",
+      "date": "2026-09-14T15:56:54Z",
+      "title": "Palantir's AIPCon Highlights Data Sovereignty Demand, Ecosystem Adoption, Oppenheimer Says",
+      "url": "https://finance.yahoo.com/technology/ai/articles/palantir-apos-aipcon-highlights-data-155654907.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-14T15:07:49Z",
+      "title": "Nebius Keeps Getting My Money. There Is One Reason and It Is Not Hype.",
+      "url": "https://247wallst.com/investing/2026/09/14/nebius-keeps-getting-my-money-there-is-one-reason-and-it-is-not-hype/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-14T14:19:33Z",
+      "title": "Oracle Slides 5% as Layoff Costs Outweigh Ellison\u2019s Canceled $7.5B Stock Sale; Nebius and CoreWeave Fall 5%",
+      "url": "https://247wallst.com/investing/2026/09/14/oracle-slides-5-as-layoff-costs-outweigh-ellisons-canceled-7-5b-stock-sale-nebius-and-coreweave-fall-5/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-14T13:35:00Z",
+      "title": "SpaceX Focuses on Compute-Renting Model: Can It Make a Comeback?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/spacex-focuses-compute-renting-model-133500764.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-09-11T13:31:40Z",
-      "title": "Oracle Surges 7% as AI Cloud Backlog Hits $664B, CoreWeave and Nebius Climb 4%",
-      "url": "https://247wallst.com/investing/2026/09/11/oracle-surges-7-as-ai-cloud-backlog-hits-664b-coreweave-and-nebius-climb-4/",
+      "date": "2026-09-14T13:27:51Z",
+      "title": "Rumble Soars 10% on Report Anthropic Is the $13.7B Compute Customer; CoreWeave and Nebius Drop 9%",
+      "url": "https://247wallst.com/investing/2026/09/14/rumble-soars-10-on-report-anthropic-is-the-13-7b-compute-customer-coreweave-and-nebius-drop-9/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-11T12:22:00Z",
-      "title": "Nebius' Heavy CapEx Push: Can Customer Prepayments Ease the Strain?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-heavy-capex-push-customer-122200284.html",
+      "date": "2026-09-14T10:37:31Z",
+      "title": "Social Buzz: Wallstreetbets Stocks Fall Pre-Bell Monday; Nebius Group, AMD to Open Lower",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-fall-103731728.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-14T03:35:00Z",
+      "title": "Viral AI Doomer Tweet: Engineered Panic?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/viral-ai-doomer-tweet-engineered-033500828.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-10T19:46:35Z",
-      "title": "Michael Burry Dumps Nvidia and Palantir Put Options in Fresh Risk Warning",
-      "url": "https://finance.yahoo.com/markets/options/articles/michael-burry-dumps-nvidia-palantir-194635018.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-09-10T17:02:28Z",
-      "title": "NVIDIA CEO Sees $4 Trillion AI Infrastructure Boom as Demand Outpaces Supply",
-      "url": "https://www.marketbeat.com/instant-alerts/event-nvidia-ceo-sees-4-trillion-ai-infrastructure-boom-as-demand-outpaces-supply-2026-09-10/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-10T17:01:02Z",
-      "title": "CoreWeave Sinks 5% Despite Burry Pulling In His AI Short, Oracle Eases Into Earnings, Cloudflare Holds Steady",
-      "url": "https://247wallst.com/investing/2026/09/10/coreweave-sinks-5-despite-burry-pulling-in-his-ai-short-oracle-eases-into-earnings-cloudflare-holds-steady/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-10T15:55:50Z",
-      "title": "How Dangerous Are Top Neoclouds as Rate Hike Odds Increase?",
-      "url": "https://247wallst.com/investing/2026/09/10/how-dangerous-are-top-neoclouds-as-rate-hike-odds-increase/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07380178057316496,
   "technicals": {
-    "ma20": 225.82149963378907,
-    "ma50": 211.6798001098633,
-    "ma200": 157.70522541046142,
-    "rsi14": 51.44449982480437,
+    "ma20": 222.5470001220703,
+    "ma50": 211.61120025634764,
+    "ma200": 158.30667541503905,
+    "rsi14": 47.23196526704007,
     "high_20d": 280.8299865722656,
-    "low_5d": 209.40499877929688,
+    "low_5d": 203.8699951171875,
     "low_10d": 194.8000030517578,
     "high_52w": 299.8599853515625,
     "low_52w": 73.5199966430664,
-    "atr14": 13.659715924944196,
-    "atr14_pct": 6.083151075173083,
-    "position_in_52w_range_pct": 66.72705396446908
+    "atr14": 13.905502319335938,
+    "atr14_pct": 6.553325868015755,
+    "position_in_52w_range_pct": 61.266242253344515
   },
   "ohlc_2y": [
     {
@@ -4076,17 +4117,17 @@
       "low": 223.64,
       "close": 224.55,
       "volume": 11178900.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 204.98,
+      "high": 219.32,
+      "low": 203.87,
+      "close": 212.19,
+      "volume": 13671398.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 92.67,
-      "high": 93.87,
-      "low": 88.415,
-      "close": 89.19,
-      "volume": 37580600.0
-    },
     {
       "date": "2025-09-12",
       "open": 91.19,
@@ -6094,6 +6135,14 @@
       "low": 223.64,
       "close": 224.55,
       "volume": 11178900.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 204.98,
+      "high": 219.32,
+      "low": 203.87,
+      "close": 212.19,
+      "volume": 13671398.0
     }
   ],
   "ai_synthesis": null,

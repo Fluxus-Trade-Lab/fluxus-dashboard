@@ -1,8 +1,8 @@
 {
   "ticker": "YSS",
-  "fetched_at": "2026-09-12T02:41:29Z",
+  "fetched_at": "2026-09-14T21:45:19Z",
   "_schema": "v2",
-  "current_price": 7.880000114440918,
+  "current_price": 7.710000038146973,
   "info": {
     "symbol": "YSS",
     "longName": "York Space Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Greenwood Village",
     "website": "https://www.yorkspacesystems.com",
     "fullTimeEmployees": 710,
-    "marketCap": 1082377856,
+    "marketCap": 1059027072,
     "enterpriseValue": 725693952,
     "trailingPE": null,
-    "forwardPE": -19.7,
-    "priceToSalesTrailing12Months": 2.672525,
+    "forwardPE": -19.275,
+    "priceToSalesTrailing12Months": 2.6148689,
     "enterpriseToRevenue": 1.792,
-    "priceToBook": 0.5836605,
+    "priceToBook": 0.5710688,
     "grossMargins": 0.21150999,
     "operatingMargins": -0.38147,
     "profitMargins": -0.50064,
@@ -32,8 +32,8 @@
     "currentRatio": 5.335,
     "fiftyTwoWeekHigh": 44.54,
     "fiftyTwoWeekLow": 7.45,
-    "averageVolume": 2338829,
-    "averageVolume10days": 2643300,
+    "averageVolume": 2340874,
+    "averageVolume10days": 2754750,
     "beta": null,
     "sharesOutstanding": 137357605,
     "sharesFloat": 56628420,
@@ -158,11 +158,18 @@
     "bullish": 7,
     "neutral": 3,
     "bearish": 0,
-    "avg_price_target": 16.85,
-    "high_price_target": 33.0,
+    "avg_price_target": 14.85,
+    "high_price_target": 18.0,
     "low_price_target": 11.0,
-    "current_price": 8.96,
+    "current_price": 7.71,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T16:20:56",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-08-31T16:08:17",
         "firm": "Wells Fargo",
@@ -225,17 +232,10 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-05-18T10:35:14",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:14:50Z",
+  "quarterly_asof": "2026-09-14T21:45:19Z",
   "news": [
     {
       "date": "2026-08-27T19:31:31Z",
@@ -298,19 +298,19 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.12563451594191252,
+  "options_implied_move": 0.1297016854801911,
   "technicals": {
-    "ma20": 9.173000001907349,
-    "ma50": 13.811999988555907,
-    "rsi14": 29.914735747868917,
+    "ma20": 9.011999988555909,
+    "ma50": 13.468199996948242,
+    "rsi14": 29.153281841390083,
     "high_20d": 11.729999542236328,
     "low_5d": 7.449999809265137,
     "low_10d": 7.449999809265137,
     "high_52w": 44.540000915527344,
     "low_52w": 7.449999809265137,
-    "atr14": 0.5999999727521624,
-    "atr14_pct": 7.614212741603903,
-    "position_in_52w_range_pct": 1.1593429289576935
+    "atr14": 0.5849999700273786,
+    "atr14_pct": 7.587548211841227,
+    "position_in_52w_range_pct": 0.7009981696601729
   },
   "ohlc_2y": [
     {
@@ -1560,6 +1560,14 @@
       "low": 7.65,
       "close": 7.88,
       "volume": 3163400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 7.79,
+      "high": 8.17,
+      "low": 7.66,
+      "close": 7.71,
+      "volume": 2582151.0
     }
   ],
   "ohlc_1y": [
@@ -2810,6 +2818,14 @@
       "low": 7.65,
       "close": 7.88,
       "volume": 3163400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 7.79,
+      "high": 8.17,
+      "low": 7.66,
+      "close": 7.71,
+      "volume": 2582151.0
     }
   ],
   "ai_synthesis": null,

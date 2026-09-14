@@ -1,6 +1,6 @@
 {
   "trade_id": "SWKS_2026-09-10_000",
-  "generated_at": "2026-09-12T02:41:36+00:00",
+  "generated_at": "2026-09-14T21:45:29+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SWKS",
@@ -10,18 +10,24 @@
     "entry_price": 86.43,
     "stop_price": 86.43,
     "initial_stop": 84.0,
-    "closed": false,
-    "remaining_pct": 66.66666666666666,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-14",
+    "hold_business_days": 2,
     "r_pct_of_entry": 2.8115237764665126,
-    "realized_R": 0.7462277091906697,
+    "realized_R": 0.2661179698216724,
     "trims": [
       {
         "date": "2026-09-11",
         "price": 91.87,
         "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-14",
+        "price": 84.68,
+        "pct_of_position": 66.66666666666666,
+        "type": "sell_rest"
       }
     ]
   },
@@ -31,10 +37,10 @@
     "high": 85.89,
     "low": 74.79,
     "volume": 11329600.0,
-    "ma20": 69.8995,
+    "ma20": 69.89950000000002,
     "ma50": 65.5254,
-    "ma200": 63.57995400000001,
-    "rsi14": 80.29595356287413,
+    "ma200": 63.579954,
+    "rsi14": 80.29595298564605,
     "atr14": 3.5928571428571416,
     "atr14_pct": 4.275683854405738,
     "high_52w": 88.0456,
@@ -54,14 +60,14 @@
     "optimal_exit_date": "2026-09-11",
     "optimal_R": 2.4156378600822936,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 0.2661179698216724,
+    "capture_pct": 11.016467915956845,
+    "missed_R": 2.1495198902606214,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 4
   },
-  "lesson": "In progress",
-  "narrative": "Entered **SWKS** long on 2026-09-10 at $86.43 with stop $84.00 (currently trailed to $86.43) (1R = $2.43/sh = 2.8% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($69.90), MA20 > MA50 > MA200 (golden alignment), RSI 80, 89% through 52W range, ATR 4.3% of price. **In progress.** Peak so far +2.42R; worst drawdown -4.79R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **SWKS** long on 2026-09-10 at $86.43 with stop $84.00 (currently trailed to $86.43) (1R = $2.43/sh = 2.8% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($69.90), MA20 > MA50 > MA200 (golden alignment), RSI 80, 89% through 52W range, ATR 4.3% of price. Realized **+0.27R**, peak was **+2.42R** on 2026-09-11 (day +1) \u2014 captured **11%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-08-11",
@@ -246,6 +252,14 @@
       "low": 83.95,
       "close": 88.35,
       "volume": 11126000.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 86.0,
+      "high": 86.73,
+      "low": 79.035,
+      "close": 79.26,
+      "volume": 11162983.0
     }
   ]
 }

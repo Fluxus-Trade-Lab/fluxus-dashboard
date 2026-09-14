@@ -1,8 +1,8 @@
 {
   "ticker": "SAIL",
-  "fetched_at": "2026-09-12T02:36:50Z",
+  "fetched_at": "2026-09-14T21:38:02Z",
   "_schema": "v2",
-  "current_price": 17.239999771118164,
+  "current_price": 19.8799991607666,
   "info": {
     "symbol": "SAIL",
     "longName": "SailPoint, Inc.",
@@ -13,30 +13,30 @@
     "city": "Austin",
     "website": "https://www.sailpoint.com",
     "fullTimeEmployees": 3229,
-    "marketCap": 9842515968,
-    "enterpriseValue": 9509903360,
+    "marketCap": 11349722112,
+    "enterpriseValue": 9564032000,
     "trailingPE": null,
-    "forwardPE": 42.800396,
-    "priceToSalesTrailing12Months": 8.444569,
-    "enterpriseToRevenue": 8.159,
-    "priceToBook": 1.4273887,
+    "forwardPE": 49.35452,
+    "priceToSalesTrailing12Months": 9.737704,
+    "enterpriseToRevenue": 8.206,
+    "priceToBook": 1.6459678,
     "grossMargins": 0.66272,
-    "operatingMargins": -0.17724001,
+    "operatingMargins": -0.18846,
     "profitMargins": -0.16921,
     "returnOnEquity": -0.02884,
     "totalCash": 309849984,
-    "totalDebt": 25485000,
+    "totalDebt": 31365000,
     "totalRevenue": 1165543936,
-    "freeCashflow": 346937888,
-    "debtToEquity": 0.371,
+    "freeCashflow": 339256640,
+    "debtToEquity": 0.457,
     "currentRatio": 1.228,
     "fiftyTwoWeekHigh": 24.0,
     "fiftyTwoWeekLow": 10.3,
-    "averageVolume": 4003620,
-    "averageVolume10days": 4491640,
+    "averageVolume": 4009882,
+    "averageVolume10days": 4145610,
     "beta": null,
     "sharesOutstanding": 570911633,
-    "sharesFloat": 71093661,
+    "sharesFloat": 74703787,
     "companyOfficers": [
       {
         "name": "Mr. Mark D. McClain TTEE",
@@ -78,10 +78,10 @@
   },
   "earnings_history": [
     {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": 0.05,
-      "eps_estimate": 0.04427,
-      "eps_surprise_pct": 0.1294
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.09,
+      "eps_estimate": 0.07907,
+      "eps_surprise_pct": 0.1382
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -91,9 +91,9 @@
     },
     {
       "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 0.08,
-      "eps_estimate": 0.06039,
-      "eps_surprise_pct": 0.3247
+      "eps_actual": -0.06,
+      "eps_estimate": -0.05817,
+      "eps_surprise_pct": -0.0315
     },
     {
       "period_end": "2025-07-31T00:00:00",
@@ -104,10 +104,21 @@
   ],
   "next_earnings": {
     "date": "2026-09-09",
-    "revenue_low": 327696000,
-    "revenue_high": 330000000
+    "revenue_low": 309500000,
+    "revenue_high": 311000000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 308813000.0,
+      "gross_profit": 205385000.0,
+      "operating_income": -58958000.0,
+      "eps": -0.09,
+      "cash": 309850000.0,
+      "operating_cashflow": 44963000.0,
+      "gross_margin_pct": 66.5078866498496,
+      "yoy_pct": 16.8157694650078
+    },
     {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 280142000.0,
@@ -117,7 +128,7 @@
       "cash": 390806000.0,
       "operating_cashflow": 38241000.0,
       "gross_margin_pct": 64.65007032147983,
-      "yoy_pct": 21.553534547095477
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 49945000.0,
       "gross_margin_pct": 67.25929512518961,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 230468000.0,
-      "gross_profit": 127655000.0,
-      "operating_income": -184965000.0,
-      "eps": -0.42,
-      "cash": 228117000.0,
-      "operating_cashflow": -96807000.0,
-      "gross_margin_pct": 55.38946838606661,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,11 +170,60 @@
     "bullish": 19,
     "neutral": 3,
     "bearish": 1,
-    "avg_price_target": 20.06,
+    "avg_price_target": 20.84,
     "high_price_target": 25.0,
     "low_price_target": 10.0,
-    "current_price": 18.82,
+    "current_price": 19.88,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T18:44:53",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-10T17:12:47",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-10T15:53:21",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-10T14:05:01",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-10T13:15:44",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-10T11:50:44",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-09T17:51:31",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
       {
         "date": "2026-09-01T18:45:37",
         "firm": "Barclays",
@@ -195,60 +244,17 @@
         "to_grade": "Overweight",
         "from_grade": "Overweight",
         "action": "main"
-      },
-      {
-        "date": "2026-08-19T17:50:10",
-        "firm": "Mizuho",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T14:37:10",
-        "firm": "Truist Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-17T15:54:23",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-17T13:07:00",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-14T14:08:15",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T10:01:36",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-08T11:36:03",
-        "firm": "Rosenblatt",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:08:56Z",
+  "quarterly_asof": "2026-09-14T21:38:02Z",
   "news": [
+    {
+      "date": "2026-09-14T18:13:00Z",
+      "title": "Why CrowdStrike and Palo Alto Are Leading the Software Stock Rally",
+      "url": "https://www.barrons.com/articles/crowdstrike-palo-alto-stock-ai-cybersecurity-software-9334614b?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
     {
       "date": "2026-09-11T18:11:37Z",
       "title": "Agentic Fabric and AI Could Drive SailPoint\u2019s (SAIL) Next Growth Phase",
@@ -302,28 +308,22 @@
       "title": "SailPoint, Inc.  (SAIL) Q2 Earnings: Taking a Look at Key Metrics Versus Estimates",
       "url": "https://finance.yahoo.com/markets/stocks/articles/sailpoint-inc-sail-q2-earnings-133003563.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-09T12:15:02Z",
-      "title": "SailPoint, Inc.  (SAIL) Q2 Earnings Surpass Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sailpoint-inc-sail-q2-earnings-121502042.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07656612630653105,
+  "options_implied_move": 0.07193159257381262,
   "technicals": {
-    "ma20": 18.735999965667723,
-    "ma50": 17.23070001602173,
-    "ma200": 15.99657497882843,
-    "rsi14": 44.21302386983241,
+    "ma20": 18.753499889373778,
+    "ma50": 17.322899990081787,
+    "ma200": 16.003274970054626,
+    "rsi14": 57.945277648604616,
     "high_20d": 21.364999771118164,
     "low_5d": 16.6200008392334,
     "low_10d": 16.6200008392334,
     "high_52w": 24.0,
     "low_52w": 10.300000190734863,
-    "atr14": 1.258357320513044,
-    "atr14_pct": 7.29905648039013,
-    "position_in_52w_range_pct": 50.65693194893234
+    "atr14": 1.422928810119629,
+    "atr14_pct": 7.1575898902842745,
+    "position_in_52w_range_pct": 69.92700075479495
   },
   "ohlc_2y": [
     {
@@ -3493,17 +3493,17 @@
       "low": 16.62,
       "close": 17.24,
       "volume": 4979900.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 18.3,
+      "high": 20.26,
+      "low": 17.96,
+      "close": 19.88,
+      "volume": 9481963.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 19.9,
-      "high": 20.92,
-      "low": 19.65,
-      "close": 20.84,
-      "volume": 2609200.0
-    },
     {
       "date": "2025-09-12",
       "open": 20.85,
@@ -5511,6 +5511,14 @@
       "low": 16.62,
       "close": 17.24,
       "volume": 4979900.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 18.3,
+      "high": 20.26,
+      "low": 17.96,
+      "close": 19.88,
+      "volume": 9481963.0
     }
   ],
   "ai_synthesis": null,

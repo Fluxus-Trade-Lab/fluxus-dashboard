@@ -1,8 +1,8 @@
 {
   "ticker": "PATH",
-  "fetched_at": "2026-09-12T02:40:37Z",
+  "fetched_at": "2026-09-14T21:44:02Z",
   "_schema": "v2",
-  "current_price": 13.75,
+  "current_price": 14.65999984741211,
   "info": {
     "symbol": "PATH",
     "longName": "UiPath, Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.uipath.com",
     "fullTimeEmployees": 3981,
-    "marketCap": 7165886976,
+    "marketCap": 7640138240,
     "enterpriseValue": 5961656832,
-    "trailingPE": 20.833332,
-    "forwardPE": 14.930397,
-    "priceToSalesTrailing12Months": 4.164136,
+    "trailingPE": 21.880596,
+    "forwardPE": 15.918518,
+    "priceToSalesTrailing12Months": 4.4397264,
     "enterpriseToRevenue": 3.464,
-    "priceToBook": 3.6764705,
+    "priceToBook": 3.919786,
     "grossMargins": 0.82583,
     "operatingMargins": 0.08922,
     "profitMargins": 0.21031,
@@ -32,8 +32,8 @@
     "currentRatio": 2.387,
     "fiftyTwoWeekHigh": 19.84,
     "fiftyTwoWeekLow": 9.2,
-    "averageVolume": 70314800,
-    "averageVolume10days": 66322970,
+    "averageVolume": 70330166,
+    "averageVolume10days": 63290490,
     "beta": 1.023,
     "sharesOutstanding": 456464703,
     "sharesFloat": 392487350,
@@ -45,6 +45,24 @@
         "yearBorn": 1972
       },
       {
+        "name": "Mr. Ashim  Gupta",
+        "title": "Chief Operating Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Brad C. Brubaker J.D.",
+        "title": "Chief Administrative Officer, General Counsel, Chief Legal Officer & Secretary",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Hitesh  Ramani",
+        "title": "CFO, Chief Accounting Officer Principal Financial & Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
         "name": "Mr. Raghavendra  Malpani",
         "title": "Chief Product & Technology Officer",
         "age": 47,
@@ -53,24 +71,6 @@
       {
         "name": "Ms. Allise  Furlani",
         "title": "Senior Director of Investor Relations",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Michael  Atalla",
-        "title": "Chief Marketing Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Agi  Garaba",
-        "title": "Chief People Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Ms. Andreea  Baciu",
-        "title": "Chief Culture Officer",
         "age": null,
         "yearBorn": null
       }
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "revenue": 410256000.0,
+      "gross_profit": 329669000.0,
+      "operating_income": 31604000.0,
+      "eps": 0.07,
+      "cash": 607414000.0,
+      "operating_cashflow": 30699000.0,
+      "gross_margin_pct": 80.3568991068991,
+      "yoy_pct": 13.415605095541405
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "revenue": 418382000.0,
       "gross_profit": 341454000.0,
@@ -117,7 +128,7 @@
       "cash": 632195000.0,
       "operating_cashflow": 131928000.0,
       "gross_margin_pct": 81.61297570163151,
-      "yoy_pct": 17.31739871685585
+      "yoy_pct": null
     },
     {
       "period_end": "2026-01-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 41587000.0,
       "gross_margin_pct": 82.2020966029724,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-04-30T00:00:00",
-      "revenue": 356624000.0,
-      "gross_profit": 292767000.0,
-      "operating_income": -16412000.0,
-      "eps": -0.04,
-      "cash": 700641000.0,
-      "operating_cashflow": 119002000.0,
-      "gross_margin_pct": 82.09402620126521,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,11 +170,18 @@
     "bullish": 3,
     "neutral": 16,
     "bearish": 1,
-    "avg_price_target": 16.4675,
-    "high_price_target": 22.0,
+    "avg_price_target": 16.85176,
+    "high_price_target": 23.0,
     "low_price_target": 10.98,
-    "current_price": 15.19,
+    "current_price": 14.66,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-08T16:10:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-09-04T18:02:33",
         "firm": "Barclays",
@@ -237,18 +244,53 @@
         "to_grade": "Neutral",
         "from_grade": "Neutral",
         "action": "main"
-      },
-      {
-        "date": "2026-09-04T12:06:45",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:13:56Z",
+  "quarterly_asof": "2026-09-14T21:44:02Z",
   "news": [
+    {
+      "date": "2026-09-14T17:34:58Z",
+      "title": "C3.ai Jumps 7% as Software Rally Lifts Beaten-Down AI Names; UiPath Climbs 8%, SoundHound AI Gains 5%",
+      "url": "https://247wallst.com/investing/2026/09/14/c3-ai-jumps-7-as-software-rally-lifts-beaten-down-ai-names-uipath-climbs-8-soundhound-ai-gains-5/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-14T17:18:17Z",
+      "title": "Off-Quarter Software Companies' Revenue Outperformance Decelerates Slightly Sequentially, RBC Says",
+      "url": "https://finance.yahoo.com/technology/articles/off-quarter-software-companies-apos-171817350.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-14T15:39:30Z",
+      "title": "1 of Wall Street\u2019s Favorite Stocks for Long-Term Investors and 2 We Ignore",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-wall-street-favorite-stocks-153930087.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-14T11:34:10Z",
+      "title": "CrowdStrike vs. UiPath: Which Technology Stock Is a Better Buy in 2026?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/09/14/crowdstrike-vs-uipath-which-technology-stock-is-a-better-buy-in-2026/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-14T03:02:01Z",
+      "title": "UiPath Targets AI-Powered Growth Reacceleration as ARR Hits $1.94B",
+      "url": "https://www.marketbeat.com/instant-alerts/event-uipath-targets-ai-powered-growth-reacceleration-as-arr-hits-194b-2026-09-13/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-13T04:53:20Z",
+      "title": "C3.ai vs. UiPath: What Revenue Trends Between These Artificial Intelligence Companies Tell Investors",
+      "url": "https://www.fool.com/coverage/charts/2026/09/13/c3-ai-vs-uipath-what-revenue-trends-between-these-artificial-intelligence-companies-tell-investors/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-12T23:49:21Z",
+      "title": "UiPath, Inc. (PATH) Stock Has AI Potential, But Slowing Growth Keeps Investors Cautious",
+      "url": "https://finance.yahoo.com/technology/ai/articles/uipath-inc-path-stock-ai-234921172.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-09-11T17:28:28Z",
       "title": "Is UiPath Stock A Buy After Falling Despite A Raised Outlook?",
@@ -266,82 +308,24 @@
       "title": "Dips In UiPath Stock Have Mostly Kept Falling, Will This One Too?",
       "url": "https://www.trefis.com/articles/614713/dips-in-uipath-stock-have-mostly-kept-falling-will-this-one-too/2026-09-09",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-09-09T21:59:57Z",
-      "title": "UiPath (PATH) Q2 2027 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/09/09/uipath-path-q2-2027-earnings-call-transcript/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-09T17:45:08Z",
-      "title": "UiPath Slips 3% Despite Citi Buy Initiation and $23 Target, Pegasystems and C3.ai Lag",
-      "url": "https://247wallst.com/investing/2026/09/09/uipath-slips-3-despite-citi-buy-initiation-and-23-target-pegasystems-and-c3-ai-lag/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-09T00:23:18Z",
-      "title": "Why UiPath (PATH) Stock Is Trading Lower Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-uipath-path-stock-trading-002318041.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-08T17:34:09Z",
-      "title": "Citi Just Upgraded UiPath Stock. Here's Why.",
-      "url": "https://www.barchart.com/story/news/4495930/citi-just-upgraded-uipath-stock-here-s-why",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-09-08T17:15:50Z",
-      "title": "UiPath and Pegasystems Sink 7% as Price Target Hikes Arrive Without a Single Buy Rating",
-      "url": "https://247wallst.com/investing/2026/09/08/uipath-and-pegasystems-sink-7-as-price-target-hikes-arrive-without-a-single-buy-rating/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-08T15:29:00Z",
-      "title": "UiPath Slides 24% After Q2 Earnings: Is PATH Stock a Buy?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/uipath-slides-24-q2-earnings-152900821.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-08T13:38:18Z",
-      "title": "SpaceX initiated, Intel upgraded: Wall Street's top analyst calls",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/intel-upgraded-reddit-initiated-wall-140337510.html",
-      "source": "The Fly"
     }
   ],
-  "options_implied_move": 0.06545454545454546,
+  "options_implied_move": 0.059345157507186386,
   "technicals": {
-    "ma20": 16.27749981880188,
-    "ma50": 14.125999927520752,
-    "ma200": 12.903099994659424,
-    "rsi14": 38.94670936541883,
+    "ma20": 16.209999799728394,
+    "ma50": 14.184999923706055,
+    "ma200": 12.909849991798401,
+    "rsi14": 45.66019964341175,
     "high_20d": 18.829999923706055,
     "low_5d": 13.25,
     "low_10d": 13.25,
     "high_52w": 19.84000015258789,
     "low_52w": 9.199999809265137,
-    "atr14": 1.0238568442208427,
-    "atr14_pct": 7.446231594333401,
-    "position_in_52w_range_pct": 42.763158307511375
+    "atr14": 1.0717140606471471,
+    "atr14_pct": 7.3104643369852,
+    "position_in_52w_range_pct": 51.315788176392815
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 12.03,
-      "high": 12.21,
-      "low": 11.85,
-      "close": 12.02,
-      "volume": 8434300.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 12.1,
-      "high": 12.57,
-      "low": 12.0,
-      "close": 12.51,
-      "volume": 11382700.0
-    },
     {
       "date": "2024-09-16",
       "open": 12.5,
@@ -4333,17 +4317,17 @@
       "low": 13.74,
       "close": 13.75,
       "volume": 41749400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 14.19,
+      "high": 14.94,
+      "low": 13.99,
+      "close": 14.66,
+      "volume": 61268387.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 11.64,
-      "high": 11.718,
-      "low": 11.42,
-      "close": 11.69,
-      "volume": 11254500.0
-    },
     {
       "date": "2025-09-12",
       "open": 11.76,
@@ -6351,6 +6335,14 @@
       "low": 13.74,
       "close": 13.75,
       "volume": 41749400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 14.19,
+      "high": 14.94,
+      "low": 13.99,
+      "close": 14.66,
+      "volume": 61268387.0
     }
   ],
   "ai_synthesis": null,

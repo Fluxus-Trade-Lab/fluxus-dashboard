@@ -1,6 +1,6 @@
 {
   "trade_id": "ETHA_2026-09-02_000",
-  "generated_at": "2026-09-12T02:41:36+00:00",
+  "generated_at": "2026-09-14T21:45:29+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ETHA",
@@ -40,7 +40,7 @@
     "ma20": 16.421,
     "ma50": 14.7288,
     "ma200": 17.341825,
-    "rsi14": 67.38656734974649,
+    "rsi14": 67.38656137958901,
     "atr14": 0.6801428571428572,
     "atr14_pct": 3.768104471705579,
     "high_52w": 36.04,
@@ -64,7 +64,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 9
+    "hold_calendar_days": 12
   },
   "lesson": "In progress",
   "narrative": "Entered **ETHA** long on 2026-09-02 at $18.41 with stop $18.20 (currently trailed to $18.41) (1R = $0.21/sh = 1.1% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($16.42), MA stack mixed, RSI 67, 27% through 52W range, ATR 3.8% of price. **In progress.** Peak so far +8.14R; worst drawdown -2.43R.",
@@ -300,6 +300,14 @@
       "low": 18.79,
       "close": 19.16,
       "volume": 96836400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 18.88,
+      "high": 19.24,
+      "low": 18.805,
+      "close": 19.17,
+      "volume": 37243004.0
     }
   ]
 }

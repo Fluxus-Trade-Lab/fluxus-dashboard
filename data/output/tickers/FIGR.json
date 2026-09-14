@@ -1,8 +1,8 @@
 {
   "ticker": "FIGR",
-  "fetched_at": "2026-09-12T02:39:26Z",
+  "fetched_at": "2026-09-14T21:42:02Z",
   "_schema": "v2",
-  "current_price": 34.869998931884766,
+  "current_price": 35.650001525878906,
   "info": {
     "symbol": "FIGR",
     "longName": "Figure Technology Solutions, Inc.",
@@ -13,13 +13,13 @@
     "city": "Reno",
     "website": "https://www.figure.com",
     "fullTimeEmployees": 602,
-    "marketCap": 7824056320,
+    "marketCap": 7999071232,
     "enterpriseValue": 7860975616,
-    "trailingPE": 36.70526,
-    "forwardPE": 21.349022,
-    "priceToSalesTrailing12Months": 12.637464,
+    "trailingPE": 37.135418,
+    "forwardPE": 21.826576,
+    "priceToSalesTrailing12Months": 12.920149,
     "enterpriseToRevenue": 12.697,
-    "priceToBook": 5.518278,
+    "priceToBook": 5.641716,
     "grossMargins": 1.0,
     "operatingMargins": 0.35525,
     "profitMargins": 0.38301,
@@ -32,8 +32,8 @@
     "currentRatio": 1.861,
     "fiftyTwoWeekHigh": 78.0,
     "fiftyTwoWeekLow": 24.11,
-    "averageVolume": 4177645,
-    "averageVolume10days": 4321160,
+    "averageVolume": 4180772,
+    "averageVolume10days": 4422890,
     "beta": null,
     "sharesOutstanding": 185672153,
     "sharesFloat": 139228713,
@@ -170,11 +170,18 @@
     "bullish": 6,
     "neutral": 0,
     "bearish": 1,
-    "avg_price_target": 52.0,
+    "avg_price_target": 55.28571,
     "high_price_target": 70.0,
-    "low_price_target": 31.0,
-    "current_price": 35.96,
+    "low_price_target": 45.0,
+    "current_price": 35.65,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-09T13:17:13",
+        "firm": "B of A Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
       {
         "date": "2026-08-20T10:23:28",
         "firm": "Needham",
@@ -237,17 +244,10 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-03-26T13:22:18",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:12:19Z",
+  "quarterly_asof": "2026-09-14T21:42:02Z",
   "news": [
     {
       "date": "2026-09-09T15:16:07Z",
@@ -310,20 +310,20 @@
       "source": "CoinDesk"
     }
   ],
-  "options_implied_move": 0.08230570943252029,
+  "options_implied_move": 0.07349228296941587,
   "technicals": {
-    "ma20": 36.46099967956543,
-    "ma50": 32.29669979095459,
-    "ma200": 36.894150009155275,
-    "rsi14": 50.19893780163064,
+    "ma20": 36.67199974060058,
+    "ma50": 32.331499824523924,
+    "ma200": 36.89355001449585,
+    "rsi14": 52.11120311552748,
     "high_20d": 41.5,
-    "low_5d": 34.70000076293945,
+    "low_5d": 33.720001220703125,
     "low_10d": 32.20000076293945,
     "high_52w": 78.0,
     "low_52w": 24.110000610351562,
-    "atr14": 2.7268565041678294,
-    "atr14_pct": 7.820064776871616,
-    "position_in_52w_range_pct": 19.966595738355227
+    "atr14": 2.8167847224644254,
+    "atr14_pct": 7.901219079667293,
+    "position_in_52w_range_pct": 21.41399340550749
   },
   "ohlc_2y": [
     {
@@ -2341,17 +2341,17 @@
       "low": 34.8,
       "close": 34.87,
       "volume": 4371500.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 33.82,
+      "high": 36.51,
+      "low": 33.72,
+      "close": 35.65,
+      "volume": 2610983.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 36.0,
-      "high": 38.05,
-      "low": 30.13,
-      "close": 31.11,
-      "volume": 39451400.0
-    },
     {
       "date": "2025-09-12",
       "open": 30.21,
@@ -4359,6 +4359,14 @@
       "low": 34.8,
       "close": 34.87,
       "volume": 4371500.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 33.82,
+      "high": 36.51,
+      "low": 33.72,
+      "close": 35.65,
+      "volume": 2610983.0
     }
   ],
   "ai_synthesis": null,

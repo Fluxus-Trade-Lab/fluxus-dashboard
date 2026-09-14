@@ -1,43 +1,80 @@
 {
   "ticker": "SPCX",
-  "fetched_at": "2026-09-12T02:36:59Z",
+  "fetched_at": "2026-09-14T21:38:15Z",
   "_schema": "v2",
-  "current_price": 151.2100067138672,
+  "current_price": 148.14999389648438,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SPCX",
+    "longName": "Space Exploration Technologies Corp.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Starbase",
+    "website": "https://www.spacex.com",
+    "fullTimeEmployees": 21000,
+    "marketCap": 1951755665408,
+    "enterpriseValue": 3926132785152,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": 95.59051,
+    "priceToSalesTrailing12Months": 84.696915,
+    "enterpriseToRevenue": 170.375,
+    "priceToBook": 15.342792,
+    "grossMargins": 0.51875,
+    "operatingMargins": -0.01804,
+    "profitMargins": -0.35661998,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 100009000960,
+    "totalDebt": 39708000256,
+    "totalRevenue": 23043999744,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 31.211,
+    "currentRatio": 5.115,
+    "fiftyTwoWeekHigh": 225.64,
+    "fiftyTwoWeekLow": 104.83,
+    "averageVolume": 102549824,
+    "averageVolume10days": 79633390,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 7571396888,
+    "sharesFloat": 3589398679,
+    "companyOfficers": [
+      {
+        "name": "Mr. Elon R. Musk",
+        "title": "Founder & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Ms. Gwynne E. Shotwell",
+        "title": "President & COO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Bret W. Johnsen",
+        "title": "CFO & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Michael  Sagan",
+        "title": "Senior Director of Legal",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Timothy R. Hughes",
+        "title": "Senior VP of Global Business & Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Richard J. Lee",
+        "title": "Treasurer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -53,7 +90,11 @@
       "eps_surprise_pct": null
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 11111000000,
+    "revenue_high": 16022988310
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -106,11 +147,25 @@
     "bullish": 7,
     "neutral": 3,
     "bearish": 1,
-    "avg_price_target": 222.3158,
+    "avg_price_target": 220.6842,
     "high_price_target": 450.0,
     "low_price_target": 117.0,
-    "current_price": 147.95,
+    "current_price": 148.15,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-08T12:38:13",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-08T09:12:26",
+        "firm": "Pivotal Research",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-09-02T16:59:14",
         "firm": "Oppenheimer",
@@ -166,99 +221,85 @@
         "to_grade": "Neutral",
         "from_grade": "Neutral",
         "action": "main"
-      },
-      {
-        "date": "2026-08-05T09:45:39",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T14:40:17",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:09:08Z",
+  "quarterly_asof": "2026-09-14T21:38:15Z",
   "news": [
     {
-      "date": "2026-09-11T19:53:00Z",
-      "title": "Elon Musk\u2019s Boring Company raises $3B at $23B valuation",
-      "url": "https://finance.yahoo.com/video/elon-musk-boring-company-raises-195300108.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-09-14T15:30:21Z",
+      "title": "Trump dismisses calls to slow AI development, blames 'conspiracy' against AI and data centers",
+      "url": "https://finance.yahoo.com/technology/article/trump-dismisses-calls-to-slow-ai-development-blames-conspiracy-against-ai-and-data-centers-153021111.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-09-12T01:36:00Z",
-      "title": "Kalshi and Polymarket Aren\u2019t Public. You Can Still Buy Them Through an ETF.",
-      "url": "https://www.barrons.com/articles/kalshi-polymarket-pre-ipo-etfs-prediction-markets-4806892d?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
+      "date": "2026-09-14T14:18:18Z",
+      "title": "Elon Musk: I've been 'sounding the alarm' on AI for a while",
+      "url": "https://finance.yahoo.com/markets/stocks/article/elon-musk-ive-been-sounding-the-alarm-on-ai-for-a-while-141818917.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-09-12T01:03:00Z",
-      "title": "David Tepper makes surprising double bet on AI's biggest bottleneck",
-      "url": "https://www.thestreet.com/investing/david-tepper-adds-coreweave-spacex-stock-ai-bottleneck",
+      "date": "2026-09-14T21:22:48Z",
+      "title": "Tesla Roadster Reveal Could Be Musk's Biggest Test Yet",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-roadster-reveal-could-musks-212248792.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-14T21:20:47Z",
+      "title": "Update: Semiconductors Help Push US Equity Indexes Lower While Benchmark Treasury Yield Hits 5%",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/semiconductors-help-push-us-equity-212047694.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-14T21:03:00Z",
+      "title": "Elon Musk sends strong signal for SpaceX, Nvidia stocks",
+      "url": "https://www.thestreet.com/investing/stocks/elon-musk-spacex-nvidia-ai-2027",
       "source": "TheStreet"
     },
     {
-      "date": "2026-09-11T22:50:00Z",
-      "title": "$5,000 Invested in SpaceX Today Could Grow Significantly by 2027",
-      "url": "https://www.fool.com/investing/2026/09/11/5000-invested-in-spacex-today-could-grow-significa/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-11T21:36:08Z",
-      "title": "Goldman, BofA vie to manage Anthropic employee wealth post-IPO - report",
-      "url": "https://finance.yahoo.com/technology/ai/articles/goldman-bofa-vie-manage-anthropic-213608799.html",
-      "source": "Investing.com"
-    },
-    {
-      "date": "2026-09-11T21:11:12Z",
-      "title": "SpaceX Just Added a $13 Billion AI Revenue Engine",
-      "url": "https://finance.yahoo.com/technology/ai/articles/spacex-just-added-13-billion-211112988.html",
+      "date": "2026-09-14T20:56:20Z",
+      "title": "OpenAI Left Exposed After Apple's Surprise Legal Break",
+      "url": "https://finance.yahoo.com/technology/ai/articles/openai-left-exposed-apples-surprise-205620397.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-11T21:10:49Z",
-      "title": "SpaceX Makes Blockbuster Move in AI Race",
-      "url": "https://finance.yahoo.com/technology/ai/articles/spacex-makes-blockbuster-move-ai-211049393.html",
+      "date": "2026-09-14T20:53:35Z",
+      "title": "Tesla's long-delayed Roadster may finally get its SpaceX moment",
+      "url": "https://finance.yahoo.com/technology/articles/teslas-long-delayed-roadster-may-205335794.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-11T20:27:59Z",
-      "title": "SpaceX CFO Touts New $13 Billion AI Deal, Upcoming Starship Milestones",
-      "url": "https://www.investors.com/news/spacex-revenue-ai-compute-client-starship-test-flight-details-goldman-conference-spcx-stock/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-09-14T20:41:12Z",
+      "title": "Update: Wall Street Dips as AI Warnings Weigh on Tech Sector",
+      "url": "https://finance.yahoo.com/technology/ai/articles/wall-street-dips-ai-warnings-204112098.html",
+      "source": "MT Newswires"
     },
     {
-      "date": "2026-09-11T20:17:00Z",
-      "title": "Rocket Lab Has Something SpaceX Doesn\u2019t. The Case to Buy the Stock.",
-      "url": "https://www.barrons.com/articles/rocket-lab-stock-buy-spacex-17d5699a?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-09-14T20:25:00Z",
+      "title": "Oracle, Corning, Alphabet, GE Vernova, CrowdStrike, SpaceX, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-259d1f80?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
     {
-      "date": "2026-09-11T20:11:00Z",
-      "title": "SpaceX\u2019s New AI Deal and 4 Other Revelations From Its CFO",
-      "url": "https://www.barrons.com/articles/spacex-stock-orbital-ai-cfo-1ced4262?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-09-14T20:09:00Z",
+      "title": "Boy, We Were Wrong About SpaceX",
+      "url": "https://www.barrons.com/articles/spacex-stock-valuation-ai-e1607713?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05021937432679538,
   "technicals": {
-    "ma20": 142.99349975585938,
-    "ma50": 135.0745999145508,
-    "rsi14": 62.2412072377285,
+    "ma20": 143.4009994506836,
+    "ma50": 134.79759979248047,
+    "rsi14": 59.018022977963966,
     "high_20d": 155.0,
     "low_5d": 144.88999938964844,
-    "low_10d": 137.89999389648438,
+    "low_10d": 138.1699981689453,
     "high_52w": 225.63999938964844,
     "low_52w": 104.83000183105469,
-    "atr14": 6.128569466727121,
-    "atr14_pct": 4.05301844759794,
-    "position_in_52w_range_pct": 38.39086650119155
+    "atr14": 6.179998125348773,
+    "atr14_pct": 4.17144676338419,
+    "position_in_52w_range_pct": 35.85795293507822
   },
   "ohlc_2y": [
     {
@@ -764,6 +805,14 @@
       "low": 145.92,
       "close": 151.21,
       "volume": 78876800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 147.24,
+      "high": 152.56,
+      "low": 146.61,
+      "close": 148.15,
+      "volume": 67544758.0
     }
   ],
   "ohlc_1y": [
@@ -1270,6 +1319,14 @@
       "low": 145.92,
       "close": 151.21,
       "volume": 78876800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 147.24,
+      "high": 152.56,
+      "low": 146.61,
+      "close": 148.15,
+      "volume": 67544758.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "AEHR",
-  "fetched_at": "2026-09-12T02:38:02Z",
+  "fetched_at": "2026-09-14T21:39:38Z",
   "_schema": "v2",
-  "current_price": 94.69000244140625,
+  "current_price": 83.37000274658203,
   "info": {
     "symbol": "AEHR",
     "longName": "Aehr Test Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Fremont",
     "website": "https://www.aehr.com",
     "fullTimeEmployees": 138,
-    "marketCap": 3092532480,
+    "marketCap": 2722826496,
     "enterpriseValue": 2982354432,
     "trailingPE": null,
-    "forwardPE": 68.45077,
-    "priceToSalesTrailing12Months": 61.84941,
+    "forwardPE": 60.267616,
+    "priceToSalesTrailing12Months": 54.45544,
     "enterpriseToRevenue": 59.646,
-    "priceToBook": 14.011542,
+    "priceToBook": 12.336491,
     "grossMargins": 0.35301,
     "operatingMargins": -0.06403,
     "profitMargins": -0.14252,
@@ -32,8 +32,8 @@
     "currentRatio": 10.33,
     "fiftyTwoWeekHigh": 147.4,
     "fiftyTwoWeekLow": 18.7,
-    "averageVolume": 2704347,
-    "averageVolume10days": 3279820,
+    "averageVolume": 2708016,
+    "averageVolume10days": 3393170,
     "beta": 3.067,
     "sharesOutstanding": 32659546,
     "sharesFloat": 31272247,
@@ -55,6 +55,24 @@
         "title": "CFO, Executive VP of Finance & Secretary",
         "age": 54,
         "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Adil  Engineer",
+        "title": "Chief Operating Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Donald P. Richmond II",
+        "title": "Chief Technology Officer",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Vernon  Rogers",
+        "title": "Executive Vice President of Sales & Marketing",
+        "age": 58,
+        "yearBorn": 1967
       }
     ]
   },
@@ -152,11 +170,18 @@
     "bullish": 3,
     "neutral": 1,
     "bearish": 0,
-    "avg_price_target": 130.0,
+    "avg_price_target": 128.0,
     "high_price_target": 175.0,
     "low_price_target": 110.0,
-    "current_price": 86.26,
+    "current_price": 83.37,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-10T12:11:29",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-08-14T12:33:43",
         "firm": "Jefferies",
@@ -219,18 +244,17 @@
         "to_grade": "Hold",
         "from_grade": "Buy",
         "action": "down"
-      },
-      {
-        "date": "2024-03-25T16:01:29",
-        "firm": "William Blair",
-        "to_grade": "Market Perform",
-        "from_grade": "Outperform",
-        "action": "down"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:10:23Z",
+  "quarterly_asof": "2026-09-14T21:39:38Z",
   "news": [
+    {
+      "date": "2026-09-14T16:31:00Z",
+      "title": "Can AEHR's Diversification Strengthen Its Growth Outlook?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aehrs-diversification-strengthen-growth-outlook-163100252.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-10T16:06:26Z",
       "title": "Aehr Poised for AI-Driven Inflection as Rising Chip Value Raises Cost of Late Failures, Oppenheimer Says",
@@ -284,46 +308,24 @@
       "title": "Aehr Test Systems Insider Sells $847,000 Worth of Stock",
       "url": "https://www.fool.com/coverage/filings/2026/08/31/aehr-test-systems-insider-sells-usd847-000-worth-of-stock/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-31T14:53:00Z",
-      "title": "AEHR vs. COHU: Which Semiconductor Equipment Stock Is The Better Buy?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/aehr-vs-cohu-semiconductor-equipment-145300245.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.11975921119040145,
+  "options_implied_move": 0.11155091392126983,
   "technicals": {
-    "ma20": 97.3234992980957,
-    "ma50": 90.97879989624023,
-    "ma200": 64.21434995651245,
-    "rsi14": 50.7124144567596,
-    "high_20d": 147.39999389648438,
-    "low_5d": 77.83999633789062,
+    "ma20": 94.78899955749512,
+    "ma50": 91.24699996948242,
+    "ma200": 64.5268499660492,
+    "rsi14": 43.81246242445211,
+    "high_20d": 146.60000610351562,
+    "low_5d": 82.53040313720703,
     "low_10d": 74.2300033569336,
     "high_52w": 147.39999389648438,
     "low_52w": 18.700000762939453,
-    "atr14": 7.743570055280413,
-    "atr14_pct": 8.17781165447968,
-    "position_in_52w_range_pct": 59.044293498614365
+    "atr14": 7.925684247698102,
+    "atr14_pct": 9.506637863248764,
+    "position_in_52w_range_pct": 50.24864447081831
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 12.9,
-      "high": 13.1,
-      "low": 12.43,
-      "close": 12.75,
-      "volume": 853700.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 12.97,
-      "high": 13.25,
-      "low": 12.85,
-      "close": 12.94,
-      "volume": 684700.0
-    },
     {
       "date": "2024-09-16",
       "open": 12.86,
@@ -4315,17 +4317,17 @@
       "low": 94.44,
       "close": 94.69,
       "volume": 2931800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 85.455,
+      "high": 88.37,
+      "low": 82.5304,
+      "close": 83.37,
+      "volume": 3116380.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 26.52,
-      "high": 28.41,
-      "low": 26.42,
-      "close": 26.57,
-      "volume": 1626000.0
-    },
     {
       "date": "2025-09-12",
       "open": 26.51,
@@ -6333,6 +6335,14 @@
       "low": 94.44,
       "close": 94.69,
       "volume": 2931800.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 85.455,
+      "high": 88.37,
+      "low": 82.5304,
+      "close": 83.37,
+      "volume": 3116380.0
     }
   ],
   "ai_synthesis": null,

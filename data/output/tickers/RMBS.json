@@ -1,8 +1,8 @@
 {
   "ticker": "RMBS",
-  "fetched_at": "2026-09-12T02:40:48Z",
+  "fetched_at": "2026-09-14T21:44:22Z",
   "_schema": "v2",
-  "current_price": 86.97000122070312,
+  "current_price": 80.38999938964844,
   "info": {
     "symbol": "RMBS",
     "longName": "Rambus Inc.",
@@ -13,13 +13,13 @@
     "city": "San Jose",
     "website": "https://www.rambus.com",
     "fullTimeEmployees": 791,
-    "marketCap": 9432905728,
+    "marketCap": 8693131264,
     "enterpriseValue": 8629761024,
-    "trailingPE": 39.894493,
-    "forwardPE": 23.37118,
-    "priceToSalesTrailing12Months": 12.471928,
+    "trailingPE": 36.876144,
+    "forwardPE": 21.602955,
+    "priceToSalesTrailing12Months": 11.493818,
     "enterpriseToRevenue": 11.41,
-    "priceToBook": 6.4317408,
+    "priceToBook": 5.945126,
     "grossMargins": 0.80357003,
     "operatingMargins": 0.36671,
     "profitMargins": 0.3169,
@@ -32,10 +32,10 @@
     "currentRatio": 9.754,
     "fiftyTwoWeekHigh": 174.1,
     "fiftyTwoWeekLow": 77.89,
-    "averageVolume": 2796038,
-    "averageVolume10days": 1952250,
+    "averageVolume": 2783301,
+    "averageVolume10days": 1935500,
     "beta": 1.872,
-    "sharesOutstanding": 108461603,
+    "sharesOutstanding": 108136967,
     "sharesFloat": 107614518,
     "companyOfficers": [
       {
@@ -61,6 +61,18 @@
         "title": "Senior VP & CFO",
         "age": 55,
         "yearBorn": 1970
+      },
+      {
+        "name": "Mr. John K. Allen",
+        "title": "VP of Accounting & Chief Accounting Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Shyam  Ramachandran",
+        "title": "Senior VP & Chief Information Officer",
+        "age": null,
+        "yearBorn": null
       }
     ]
   },
@@ -161,7 +173,7 @@
     "avg_price_target": 147.85715,
     "high_price_target": 180.0,
     "low_price_target": 100.0,
-    "current_price": 85.46,
+    "current_price": 80.39,
     "recent_rating_changes": [
       {
         "date": "2025-04-29T11:03:34",
@@ -235,7 +247,7 @@
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:14:11Z",
+  "quarterly_asof": "2026-09-14T21:44:22Z",
   "news": [
     {
       "date": "2026-08-27T17:30:22Z",
@@ -298,38 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.06634471563772333,
+  "options_implied_move": 0.057718622157341096,
   "technicals": {
-    "ma20": 89.28549995422364,
-    "ma50": 96.14179992675781,
-    "ma200": 107.93919998168946,
-    "rsi14": 42.72628074432807,
+    "ma20": 88.2625,
+    "ma50": 95.49119995117188,
+    "ma200": 107.8773999786377,
+    "rsi14": 34.78244874872709,
     "high_20d": 104.11000061035156,
-    "low_5d": 83.81999969482422,
-    "low_10d": 81.4800033569336,
+    "low_5d": 80.0,
+    "low_10d": 80.0,
     "high_52w": 174.10000610351562,
-    "low_52w": 77.8499984741211,
-    "atr14": 3.387143816266741,
-    "atr14_pct": 3.894611669225129,
-    "position_in_52w_range_pct": 9.475326777841007
+    "low_52w": 77.88999938964844,
+    "atr14": 3.521429879324777,
+    "atr14_pct": 4.380432772808579,
+    "position_in_52w_range_pct": 2.5984823048969434
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 41.01,
-      "high": 41.08,
-      "low": 39.14,
-      "close": 39.62,
-      "volume": 1698900.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 40.24,
-      "high": 41.45,
-      "low": 39.97,
-      "close": 40.87,
-      "volume": 1670200.0
-    },
     {
       "date": "2024-09-16",
       "open": 40.0,
@@ -4321,17 +4317,17 @@
       "low": 85.81,
       "close": 86.97,
       "volume": 1203000.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 81.32,
+      "high": 82.3999,
+      "low": 80.0,
+      "close": 80.39,
+      "volume": 2985745.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 77.85,
-      "high": 89.98,
-      "low": 77.85,
-      "close": 88.58,
-      "volume": 4971200.0
-    },
     {
       "date": "2025-09-12",
       "open": 88.2,
@@ -6339,6 +6335,14 @@
       "low": 85.81,
       "close": 86.97,
       "volume": 1203000.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 81.32,
+      "high": 82.3999,
+      "low": 80.0,
+      "close": 80.39,
+      "volume": 2985745.0
     }
   ],
   "ai_synthesis": null,

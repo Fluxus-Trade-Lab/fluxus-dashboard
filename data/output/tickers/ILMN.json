@@ -1,8 +1,8 @@
 {
   "ticker": "ILMN",
-  "fetched_at": "2026-09-12T02:39:51Z",
+  "fetched_at": "2026-09-14T21:42:47Z",
   "_schema": "v2",
-  "current_price": 206.4499969482422,
+  "current_price": 208.2100067138672,
   "info": {
     "symbol": "ILMN",
     "longName": "Illumina, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Diego",
     "website": "https://www.illumina.com",
     "fullTimeEmployees": 8600,
-    "marketCap": 31173949440,
+    "marketCap": 31439710208,
     "enterpriseValue": 32532948992,
-    "trailingPE": 38.588783,
-    "forwardPE": 33.817043,
-    "priceToSalesTrailing12Months": 6.9367933,
+    "trailingPE": 38.772816,
+    "forwardPE": 34.105335,
+    "priceToSalesTrailing12Months": 6.99593,
     "enterpriseToRevenue": 7.239,
-    "priceToBook": 10.984304,
+    "priceToBook": 11.077947,
     "grossMargins": 0.67934996,
     "operatingMargins": 0.21139,
     "profitMargins": 0.18336001,
@@ -32,11 +32,11 @@
     "currentRatio": 1.796,
     "fiftyTwoWeekHigh": 231.81,
     "fiftyTwoWeekLow": 88.0,
-    "averageVolume": 1927234,
-    "averageVolume10days": 1730380,
+    "averageVolume": 1935054,
+    "averageVolume10days": 1777870,
     "beta": 1.467,
     "sharesOutstanding": 151000000,
-    "sharesFloat": 149796530,
+    "sharesFloat": 149776900,
     "companyOfficers": [
       {
         "name": "Mr. Jacob  Thaysen Ph.D.",
@@ -170,11 +170,18 @@
     "bullish": 11,
     "neutral": 5,
     "bearish": 4,
-    "avg_price_target": 198.89474,
-    "high_price_target": 230.0,
+    "avg_price_target": 202.65,
+    "high_price_target": 260.0,
     "low_price_target": 113.0,
-    "current_price": 218.22,
+    "current_price": 208.21,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-09T13:26:45",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
       {
         "date": "2026-09-03T13:23:48",
         "firm": "Argus Research",
@@ -237,17 +244,10 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-07-31T11:54:30",
-        "firm": "Barclays",
-        "to_grade": "Underweight",
-        "from_grade": "Underweight",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-06T05:12:55Z",
+  "quarterly_asof": "2026-09-14T21:42:47Z",
   "news": [
     {
       "date": "2026-09-09T20:34:58Z",
@@ -310,38 +310,22 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.05303947765494618,
+  "options_implied_move": 0.04562700971935218,
   "technicals": {
-    "ma20": 211.19800033569337,
-    "ma50": 200.30379913330077,
-    "ma200": 153.56564971923828,
-    "rsi14": 49.62702577343445,
+    "ma20": 212.0640007019043,
+    "ma50": 200.6943994140625,
+    "ma200": 153.97689975738524,
+    "rsi14": 50.95058557916301,
     "high_20d": 231.80999755859375,
     "low_5d": 200.00999450683594,
     "low_10d": 200.00999450683594,
     "high_52w": 231.80999755859375,
     "low_52w": 88.0,
-    "atr14": 8.655713762555804,
-    "atr14_pct": 4.192644170746016,
-    "position_in_52w_range_pct": 82.3656205821025
+    "atr14": 8.263926914760045,
+    "atr14_pct": 3.9690344595765534,
+    "position_in_52w_range_pct": 83.58946440068534
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-12",
-      "open": 124.26,
-      "high": 126.28,
-      "low": 120.51,
-      "close": 126.25,
-      "volume": 1635500.0
-    },
-    {
-      "date": "2024-09-13",
-      "open": 126.31,
-      "high": 129.71,
-      "low": 126.31,
-      "close": 129.18,
-      "volume": 1180200.0
-    },
     {
       "date": "2024-09-16",
       "open": 129.8,
@@ -4333,17 +4317,17 @@
       "low": 200.01,
       "close": 206.45,
       "volume": 2412100.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 206.74,
+      "high": 208.93,
+      "low": 202.815,
+      "close": 208.21,
+      "volume": 1982140.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-11",
-      "open": 95.69,
-      "high": 99.56,
-      "low": 95.63,
-      "close": 99.31,
-      "volume": 1738000.0
-    },
     {
       "date": "2025-09-12",
       "open": 99.51,
@@ -6351,6 +6335,14 @@
       "low": 200.01,
       "close": 206.45,
       "volume": 2412100.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 206.74,
+      "high": 208.93,
+      "low": 202.815,
+      "close": 208.21,
+      "volume": 1982140.0
     }
   ],
   "ai_synthesis": null,
