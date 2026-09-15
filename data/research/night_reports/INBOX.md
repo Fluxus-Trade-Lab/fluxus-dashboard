@@ -3059,3 +3059,4 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-15] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-14，run_ledger 最新场次 `34897977372` quality ok / tradeable 2537 / errors=[]）。本班 01:15 UTC / 09-14 21:15 ET 巡检：`actions_list` 确认今日 09-14 20:20Z 主排程已落地（run `34907811367`，schedule 触发，23:13 UTC 成功，迟到 173 分——Plumber Joe 09-15 晨检已更正「排程被丢弃」为「稳定迟到」，机制 `audit_schedule_windows` 已合 `949b51fa`），gate `a9146d88` 正确 skip 重复抓取；无 in_progress、无新失败；09-14 已是最近已完成交易日且已入库——健康，本班无分诊/重跑动作。INBOX 无本线待取门铃。
 - [2026-09-15] Discord→X 云生成端：2026-09-14 草稿已出（44 条消息 → 7 条推文，commit c33d1240）
 - [09-15] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-14，run_ledger 最新场次 `34907811367` schedule/success，23:13 UTC 落地）。本班 02:16 UTC / 09-14 22:16 ET 巡检：`actions_list` 确认 daily-data-update.yml 最新一条仍是 34907811367，无 in_progress、无新失败；09-14 已是最近已完成交易日且已入库——健康，本班无分诊/重跑动作。INBOX 无本线待取门铃。
+- [09-15] 📰 每日复盘 2026-09-14：重出 v2（补 Discord 原话 · 持仓更新 TZA 已平 · 标题去掉有争议的 QQQ 50 日线表述）· 闸全绿
