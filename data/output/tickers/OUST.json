@@ -1,8 +1,8 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-09-14T21:37:53Z",
+  "fetched_at": "2026-09-15T23:13:32Z",
   "_schema": "v2",
-  "current_price": 33.459999084472656,
+  "current_price": 32.790000915527344,
   "info": {
     "symbol": "OUST",
     "longName": "Ouster, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://ouster.com",
     "fullTimeEmployees": 320,
-    "marketCap": 2412878592,
-    "enterpriseValue": 2303044608,
+    "marketCap": 2364563456,
+    "enterpriseValue": 2168194560,
     "trailingPE": null,
-    "forwardPE": -267.68,
-    "priceToSalesTrailing12Months": 11.775481,
-    "enterpriseToRevenue": 11.239,
-    "priceToBook": 6.1722927,
+    "forwardPE": -262.32,
+    "priceToSalesTrailing12Months": 11.539691,
+    "enterpriseToRevenue": 10.581,
+    "priceToBook": 6.0487,
     "grossMargins": 0.46623,
     "operatingMargins": -0.46580002,
     "profitMargins": -0.26025,
@@ -32,8 +32,8 @@
     "currentRatio": 4.164,
     "fiftyTwoWeekHigh": 63.79,
     "fiftyTwoWeekLow": 16.4,
-    "averageVolume": 3657880,
-    "averageVolume10days": 1771370,
+    "averageVolume": 3623633,
+    "averageVolume10days": 1795790,
     "beta": 3.246,
     "sharesOutstanding": 72112333,
     "sharesFloat": 69944636,
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:37:53Z",
   "news": [
     {
+      "date": "2026-09-15T22:15:02Z",
+      "title": "Ouster, Inc. (OUST) Suffers a Larger Drop Than the General Market: Key Insights",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-inc-oust-suffers-larger-221502788.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-14T16:39:00Z",
       "title": "Is it the Right Time to Buy TTMI Stock at a P/S Multiple of 2.59X?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/time-buy-ttmi-stock-p-163900926.html",
@@ -302,28 +308,22 @@
       "title": "How Ouster Is Helping Deere Implement Physical AI",
       "url": "https://www.barrons.com/articles/ouster-deere-stocks-ai-lidar-52c5d5df?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-26T13:37:00Z",
-      "title": "Ouster Vs. Aeva: Which is the Better Physical AI Lidar Bet Now?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-vs-aeva-better-physical-133700143.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07083084473543261,
+  "options_implied_move": 0.06556876913601704,
   "technicals": {
-    "ma20": 36.95500030517578,
-    "ma50": 39.43820014953613,
-    "ma200": 30.362775011062624,
-    "rsi14": 39.67218479252238,
-    "high_20d": 51.8489990234375,
-    "low_5d": 32.67250061035156,
-    "low_10d": 32.67250061035156,
+    "ma20": 36.18800029754639,
+    "ma50": 39.097400131225584,
+    "ma200": 30.417825012207032,
+    "rsi14": 38.37762769967809,
+    "high_20d": 47.15999984741211,
+    "low_5d": 32.2400016784668,
+    "low_10d": 32.2400016784668,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 1.8194645472935267,
-    "atr14_pct": 5.437730415652826,
-    "position_in_52w_range_pct": 35.99915382788439
+    "atr14": 1.7987145015171595,
+    "atr14_pct": 5.485557948445797,
+    "position_in_52w_range_pct": 34.585357350550744
   },
   "ohlc_2y": [
     {
@@ -4320,22 +4320,22 @@
     },
     {
       "date": "2026-09-14",
-      "open": 33.14,
+      "open": 33.215,
       "high": 35.08,
-      "low": 32.6725,
+      "low": 32.673,
       "close": 33.46,
-      "volume": 2506452.0
+      "volume": 2521100.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 33.4,
+      "high": 33.79,
+      "low": 32.24,
+      "close": 32.79,
+      "volume": 2304008.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 30.06,
-      "high": 30.275,
-      "low": 27.455,
-      "close": 28.95,
-      "volume": 4221900.0
-    },
     {
       "date": "2025-09-15",
       "open": 29.19,
@@ -6338,11 +6338,19 @@
     },
     {
       "date": "2026-09-14",
-      "open": 33.14,
+      "open": 33.215,
       "high": 35.08,
-      "low": 32.6725,
+      "low": 32.673,
       "close": 33.46,
-      "volume": 2506452.0
+      "volume": 2521100.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 33.4,
+      "high": 33.79,
+      "low": 32.24,
+      "close": 32.79,
+      "volume": 2304008.0
     }
   ],
   "ai_synthesis": null,

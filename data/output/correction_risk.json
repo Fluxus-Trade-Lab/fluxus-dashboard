@@ -1,29 +1,29 @@
 {
-  "date": "2026-09-14",
+  "date": "2026-09-15",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
-  "prob": 0.1242,
+  "prob": 0.1241,
   "base_rate": 0.166,
   "today": {
-    "date": "2026-09-14",
-    "spx_close": 7619.98,
-    "vix": 17.1,
+    "date": "2026-09-15",
+    "spx_close": 7585.73,
+    "vix": 17.2,
     "vix_quintile": 3,
     "above_200dma": true,
-    "d200": 0.0632,
-    "prob": 0.1242,
-    "n_cell": 1651,
+    "d200": 0.0578,
+    "prob": 0.1241,
+    "n_cell": 1652,
     "prob_vix_only": 0.1374,
-    "n_vix_only": 1848,
+    "n_vix_only": 1849,
     "base_rate": 0.166
   },
   "table": {
     "sample": {
       "from": "1990-01-02",
-      "to": "2026-09-11",
-      "sessions": 9241,
+      "to": "2026-09-14",
+      "sessions": 9242,
       "episodes": 199,
-      "half_split": "2008-04-30"
+      "half_split": "2008-05-01"
     },
     "base_rate": 0.166,
     "vix_edges": [
@@ -46,7 +46,7 @@
         },
         "3": {
           "rate": 0.1374,
-          "n": 1848
+          "n": 1849
         },
         "4": {
           "rate": 0.2587,
@@ -71,8 +71,8 @@
           "n": 821
         },
         "4": {
-          "rate": 0.2775,
-          "n": 1045
+          "rate": 0.2772,
+          "n": 1046
         },
         "5": {
           "rate": 0.2751,
@@ -89,12 +89,12 @@
           "n": 1043
         },
         "3": {
-          "rate": 0.1519,
-          "n": 1027
+          "rate": 0.1518,
+          "n": 1028
         },
         "4": {
-          "rate": 0.234,
-          "n": 799
+          "rate": 0.2343,
+          "n": 798
         },
         "5": {
           "rate": 0.3214,
@@ -129,8 +129,8 @@
         "n": 197
       },
       "Q3_above200": {
-        "rate": 0.1242,
-        "n": 1651
+        "rate": 0.1241,
+        "n": 1652
       },
       "Q4_below200": {
         "rate": 0.392,
@@ -170,18 +170,18 @@
   "ts_dimension": {
     "table": {
       "sample": {
-        "from": "2006-07-17",
-        "to": "2026-09-11",
-        "sessions": 5071,
-        "episodes": 115,
-        "base_rate": 0.1798
+        "from": "2009-09-18",
+        "to": "2026-09-14",
+        "sessions": 4272,
+        "episodes": 92,
+        "base_rate": 0.1538
       },
       "vix_edges_this_sample": [
         8.14,
-        13.37,
-        15.96,
-        18.9,
-        24.11,
+        13.4,
+        15.75,
+        18.21,
+        22.5,
         83.69
       ],
       "ts_state_labels": {
@@ -192,151 +192,139 @@
       "by_ts_state": {
         "full": {
           "1": {
-            "rate": 0.058,
-            "n": 224
+            "rate": 0.0588,
+            "n": 221
           },
           "2": {
-            "rate": 0.1699,
-            "n": 4349
+            "rate": 0.1496,
+            "n": 3777
           },
           "3": {
-            "rate": 0.3213,
-            "n": 498
+            "rate": 0.2883,
+            "n": 274
           }
         },
         "first_half": {
           "1": {
-            "rate": 0.0,
-            "n": 44
+            "rate": 0.0128,
+            "n": 156
           },
           "2": {
-            "rate": 0.1837,
-            "n": 2161
+            "rate": 0.1348,
+            "n": 1855
           },
           "3": {
-            "rate": 0.3545,
-            "n": 330
+            "rate": 0.288,
+            "n": 125
           }
         },
         "second_half": {
           "1": {
-            "rate": 0.0722,
-            "n": 180
+            "rate": 0.1692,
+            "n": 65
           },
           "2": {
-            "rate": 0.1563,
-            "n": 2188
+            "rate": 0.1639,
+            "n": 1922
           },
           "3": {
-            "rate": 0.256,
-            "n": 168
+            "rate": 0.2886,
+            "n": 149
           }
         }
       },
       "ts_monotone_spearman": {
         "full": 1.0,
         "first_half": 1.0,
-        "second_half": 1.0
+        "second_half": 0.5
       },
       "by_vix_quintile_x_200dma_x_ts": {
         "Q1_above200_ts1": {
-          "rate": 0.0139,
-          "n": 144
+          "rate": 0.0142,
+          "n": 141
         },
         "Q1_above200_ts2": {
-          "rate": 0.1047,
-          "n": 869
-        },
-        "Q1_above200_ts3": {
-          "rate": 0.0,
-          "n": 2
+          "rate": 0.1103,
+          "n": 716
         },
         "Q2_below200_ts2": {
-          "rate": 0.0714,
-          "n": 14
-        },
-        "Q2_below200_ts3": {
-          "rate": 0.0,
-          "n": 1
+          "rate": 0.1111,
+          "n": 9
         },
         "Q2_above200_ts1": {
           "rate": 0.0,
-          "n": 42
+          "n": 41
         },
         "Q2_above200_ts2": {
-          "rate": 0.1081,
-          "n": 953
-        },
-        "Q2_above200_ts3": {
-          "rate": 0.0,
-          "n": 11
+          "rate": 0.0985,
+          "n": 802
         },
         "Q3_below200_ts2": {
-          "rate": 0.3117,
-          "n": 77
-        },
-        "Q3_below200_ts3": {
-          "rate": 0.0,
-          "n": 5
+          "rate": 0.1282,
+          "n": 39
         },
         "Q3_above200_ts1": {
-          "rate": 0.3478,
-          "n": 23
+          "rate": 0.3333,
+          "n": 24
         },
         "Q3_above200_ts2": {
-          "rate": 0.1366,
-          "n": 893
+          "rate": 0.1229,
+          "n": 789
         },
         "Q3_above200_ts3": {
-          "rate": 0.0833,
-          "n": 12
+          "rate": 0.5,
+          "n": 2
         },
         "Q4_below200_ts2": {
-          "rate": 0.4377,
-          "n": 297
+          "rate": 0.4156,
+          "n": 154
         },
         "Q4_below200_ts3": {
           "rate": 0.25,
-          "n": 28
+          "n": 12
         },
         "Q4_above200_ts1": {
-          "rate": 0.2,
-          "n": 15
+          "rate": 0.1538,
+          "n": 13
         },
         "Q4_above200_ts2": {
-          "rate": 0.1716,
-          "n": 606
+          "rate": 0.1518,
+          "n": 639
         },
         "Q4_above200_ts3": {
-          "rate": 0.1212,
-          "n": 66
+          "rate": 0.0263,
+          "n": 38
         },
         "Q5_below200_ts2": {
-          "rate": 0.2932,
-          "n": 399
+          "rate": 0.2615,
+          "n": 348
         },
         "Q5_below200_ts3": {
-          "rate": 0.3969,
-          "n": 320
+          "rate": 0.3155,
+          "n": 168
+        },
+        "Q5_above200_ts1": {
+          "rate": 0.5,
+          "n": 2
         },
         "Q5_above200_ts2": {
-          "rate": 0.195,
-          "n": 241
+          "rate": 0.1851,
+          "n": 281
         },
         "Q5_above200_ts3": {
-          "rate": 0.3208,
-          "n": 53
+          "rate": 0.3889,
+          "n": 54
         }
       }
     },
     "today": {
-      "date": "2026-09-14",
-      "ts_ema": 0.877,
+      "date": "2026-09-15",
+      "ts_ema": 0.883,
       "ts_state": 2,
       "ts_label": "neutral(0.8-1.0)",
-      "prob_3d": 0.1366,
-      "n_cell_3d": 893,
-      "prob_ts_only": 0.1699,
+      "prob_3d": 0.1229,
+      "n_cell_3d": 789,
+      "prob_ts_only": 0.1496,
       "input_staleness_days": 0,
       "stale_warning": false
     },
@@ -345,8 +333,8 @@
   "side_readings": {
     "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
     "nhnl": {
-      "date": "2026-09-11",
-      "ratio_10ema": 0.493,
+      "date": "2026-09-14",
+      "ratio_10ema": 0.467,
       "state": "mid",
       "hist_rate_e1": 0.194,
       "today_state": "2",

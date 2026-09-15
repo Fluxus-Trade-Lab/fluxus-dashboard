@@ -1,6 +1,6 @@
 {
   "trade_id": "AAPU_2026-09-09_000",
-  "generated_at": "2026-09-14T21:45:29+00:00",
+  "generated_at": "2026-09-15T23:17:40+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AAPU",
@@ -34,12 +34,12 @@
     "ma20": 40.05,
     "ma50": 41.1046,
     "ma200": 34.8679545,
-    "rsi14": 47.8955370597864,
+    "rsi14": 47.895536888867035,
     "atr14": 1.8631428571428568,
     "atr14_pct": 4.642768146381402,
     "high_52w": 48.89,
-    "low_52w": 24.4328,
-    "position_in_52w_range_pct": 64.18232667680684,
+    "low_52w": 25.7153,
+    "position_in_52w_range_pct": 62.20015793084701,
     "high_20d": 44.22,
     "low_10d": 38.75,
     "low_5d": 38.75
@@ -58,10 +58,10 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 5
+    "hold_calendar_days": 6
   },
   "lesson": "In progress",
-  "narrative": "Entered **AAPU** long on 2026-09-09 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($40.05), MA stack mixed, RSI 48, 64% through 52W range, ATR 4.6% of price. **In progress.** Peak so far +2.87R; worst drawdown -2.71R.",
+  "narrative": "Entered **AAPU** long on 2026-09-09 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($40.05), MA stack mixed, RSI 48, 62% through 52W range, ATR 4.6% of price. **In progress.** Peak so far +2.87R; worst drawdown -2.71R.",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -258,10 +258,18 @@
     {
       "date": "2026-09-14",
       "open": 45.08,
-      "high": 45.2899,
-      "low": 44.1501,
+      "high": 45.29,
+      "low": 44.15,
       "close": 44.61,
-      "volume": 1296283.0
+      "volume": 1298500.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 43.885,
+      "high": 44.2599,
+      "low": 43.395,
+      "close": 44.15,
+      "volume": 785238.0
     }
   ]
 }

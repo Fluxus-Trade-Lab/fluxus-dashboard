@@ -1,8 +1,8 @@
 {
   "ticker": "SNOW",
-  "fetched_at": "2026-09-14T21:39:18Z",
+  "fetched_at": "2026-09-15T23:14:18Z",
   "_schema": "v2",
-  "current_price": 332.3500061035156,
+  "current_price": 322.9800109863281,
   "info": {
     "symbol": "SNOW",
     "longName": "Snowflake Inc.",
@@ -13,13 +13,13 @@
     "city": "Menlo Park",
     "website": "https://www.snowflake.com",
     "fullTimeEmployees": 9394,
-    "marketCap": 117253079040,
-    "enterpriseValue": 116361445376,
+    "marketCap": 113947344896,
+    "enterpriseValue": 117545574400,
     "trailingPE": null,
-    "forwardPE": 110.488335,
-    "priceToSalesTrailing12Months": 21.575106,
-    "enterpriseToRevenue": 21.411,
-    "priceToBook": 54.492542,
+    "forwardPE": 107.37332,
+    "priceToSalesTrailing12Months": 20.966835,
+    "enterpriseToRevenue": 21.629,
+    "priceToBook": 52.956223,
     "grossMargins": 0.6703,
     "operatingMargins": -0.17001,
     "profitMargins": -0.20071,
@@ -32,8 +32,8 @@
     "currentRatio": 0.939,
     "fiftyTwoWeekHigh": 384.56,
     "fiftyTwoWeekLow": 118.3,
-    "averageVolume": 5545690,
-    "averageVolume10days": 7093750,
+    "averageVolume": 5527277,
+    "averageVolume10days": 7262940,
     "beta": 1.328,
     "sharesOutstanding": 352800000,
     "sharesFloat": 342981219,
@@ -250,6 +250,18 @@
   "quarterly_asof": "2026-09-14T21:39:18Z",
   "news": [
     {
+      "date": "2026-09-15T18:30:00Z",
+      "title": "Palantir wins higher UBS target as customer demand outpaces capacity",
+      "url": "https://www.proactiveinvestors.com/companies/news/1098587/palantir-wins-higher-ubs-target-as-customer-demand-outpaces-capacity-1098587.html",
+      "source": "Proactive"
+    },
+    {
+      "date": "2026-09-15T05:15:46Z",
+      "title": "How Investors May Respond To Snowflake (SNOW) AI-fueled Guidance Hike and $3.7 Billion Buyback",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/investors-may-respond-snowflake-snow-051546708.html",
+      "source": "Simply Wall St."
+    },
+    {
       "date": "2026-09-14T18:00:36Z",
       "title": "Did You Pay For Palantir's Guidance Or For Something Else?",
       "url": "https://www.trefis.com/articles/615232/did-you-pay-for-palantirs-guidance-or-for-something-else/2026-09-14",
@@ -296,34 +308,22 @@
       "title": "2 of Wall Street\u2019s Favorite Stocks to Target This Week and 1 Facing Challenges",
       "url": "https://finance.yahoo.com/markets/stocks/articles/2-wall-street-favorite-stocks-001105144.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-09-11T21:01:59Z",
-      "title": "Snowflake Says AI Adoption Is Driving Consumption Growth and Margin Gains",
-      "url": "https://www.marketbeat.com/instant-alerts/event-snowflake-says-ai-adoption-is-driving-consumption-growth-and-margin-gains-2026-09-11/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-11T15:00:28Z",
-      "title": "Can Snowflake Stock Keep Climbing On The Work Its AI Tools Bring In?",
-      "url": "https://www.trefis.com/articles/615050/can-snowflake-stock-keep-climbing-on-the-work-its-ai-tools-bring-in/2026-09-11",
-      "source": "Trefis"
     }
   ],
-  "options_implied_move": 0.03986760871571364,
+  "options_implied_move": 0.03894977884725045,
   "technicals": {
-    "ma20": 327.7779968261719,
-    "ma50": 304.9533984375,
-    "ma200": 221.09634979248048,
-    "rsi14": 55.140675758469314,
+    "ma20": 327.42149810791017,
+    "ma50": 306.17119873046875,
+    "ma200": 221.459649810791,
+    "rsi14": 50.489763225835475,
     "high_20d": 384.55999755859375,
-    "low_5d": 319.0,
+    "low_5d": 318.5000915527344,
     "low_10d": 303.8900146484375,
     "high_52w": 384.55999755859375,
     "low_52w": 118.30000305175781,
-    "atr14": 18.178782871791295,
-    "atr14_pct": 5.46977058460749,
-    "position_in_52w_range_pct": 80.39134960857302
+    "atr14": 17.937347412109375,
+    "atr14_pct": 5.5537020255004785,
+    "position_in_52w_range_pct": 76.87223471692643
   },
   "ohlc_2y": [
     {
@@ -4324,18 +4324,18 @@
       "high": 336.485,
       "low": 319.0,
       "close": 332.35,
-      "volume": 4775160.0
+      "volume": 4775900.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 324.89,
+      "high": 328.66,
+      "low": 318.5001,
+      "close": 322.98,
+      "volume": 3973273.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 224.5,
-      "high": 224.815,
-      "low": 220.81,
-      "close": 221.15,
-      "volume": 2634700.0
-    },
     {
       "date": "2025-09-15",
       "open": 222.015,
@@ -6342,7 +6342,15 @@
       "high": 336.485,
       "low": 319.0,
       "close": 332.35,
-      "volume": 4775160.0
+      "volume": 4775900.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 324.89,
+      "high": 328.66,
+      "low": 318.5001,
+      "close": 322.98,
+      "volume": 3973273.0
     }
   ],
   "ai_synthesis": null,

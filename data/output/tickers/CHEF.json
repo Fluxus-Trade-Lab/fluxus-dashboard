@@ -1,8 +1,8 @@
 {
   "ticker": "CHEF",
-  "fetched_at": "2026-09-14T21:41:09Z",
+  "fetched_at": "2026-09-15T23:15:21Z",
   "_schema": "v2",
-  "current_price": 112.83999633789062,
+  "current_price": 106.45999908447266,
   "info": {
     "symbol": "CHEF",
     "longName": "The Chefs' Warehouse, Inc.",
@@ -13,13 +13,13 @@
     "city": "Ridgefield",
     "website": "https://www.chefswarehouse.com",
     "fullTimeEmployees": 5156,
-    "marketCap": 4603429888,
-    "enterpriseValue": 5317069312,
-    "trailingPE": 53.733334,
-    "forwardPE": 36.70429,
-    "priceToSalesTrailing12Months": 1.0482577,
-    "enterpriseToRevenue": 1.211,
-    "priceToBook": 7.099534,
+    "marketCap": 4343151104,
+    "enterpriseValue": 5414572032,
+    "trailingPE": 50.69524,
+    "forwardPE": 34.62902,
+    "priceToSalesTrailing12Months": 0.988989,
+    "enterpriseToRevenue": 1.233,
+    "priceToBook": 6.698125,
     "grossMargins": 0.24457,
     "operatingMargins": 0.05017,
     "profitMargins": 0.02094,
@@ -32,8 +32,8 @@
     "currentRatio": 2.148,
     "fiftyTwoWeekHigh": 117.65,
     "fiftyTwoWeekLow": 53.2,
-    "averageVolume": 663190,
-    "averageVolume10days": 800460,
+    "averageVolume": 649801,
+    "averageVolume10days": 758610,
     "beta": 1.38,
     "sharesOutstanding": 40796083,
     "sharesFloat": 36950644,
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:41:09Z",
   "news": [
     {
+      "date": "2026-09-15T14:31:00Z",
+      "title": "HAIN's Q4 Loss Wider Than Expected, Sales Beat Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/hains-q4-loss-wider-expected-143100843.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-09-11T12:43:00Z",
       "title": "Wholesale Inflation Climbs on Surging Oil Prices: 4 Defensive Picks",
       "url": "https://finance.yahoo.com/economy/policy/articles/wholesale-inflation-climbs-surging-oil-124300884.html",
@@ -302,28 +308,22 @@
       "title": "Kraft Heinz (KHC) Up 1.8% Since Last Earnings Report: Can It Continue?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/kraft-heinz-khc-1-8-153027416.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T15:30:19Z",
-      "title": "Chefs' Warehouse (CHEF) Down 0.9% Since Last Earnings Report: Can It Rebound?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/chefs-warehouse-chef-down-0-153019606.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.04289259267172426,
+  "options_implied_move": 0.025079842409931254,
   "technicals": {
-    "ma20": 111.51949920654297,
-    "ma50": 106.17419967651367,
-    "ma200": 78.78229984283448,
-    "rsi14": 56.15613584779489,
+    "ma20": 111.31399917602539,
+    "ma50": 106.40359970092773,
+    "ma200": 79.0038998413086,
+    "rsi14": 44.045136877596875,
     "high_20d": 117.6500015258789,
-    "low_5d": 107.80999755859375,
-    "low_10d": 107.80999755859375,
+    "low_5d": 105.5,
+    "low_10d": 105.5,
     "high_52w": 117.6500015258789,
     "low_52w": 53.20000076293945,
-    "atr14": 3.748572758265904,
-    "atr14_pct": 3.322024884723581,
-    "position_in_52w_range_pct": 92.53684231024219
+    "atr14": 4.121894291469029,
+    "atr14_pct": 3.871777500390955,
+    "position_in_52w_range_pct": 82.63770006370456
   },
   "ohlc_2y": [
     {
@@ -4321,21 +4321,21 @@
     {
       "date": "2026-09-14",
       "open": 110.87,
-      "high": 113.99,
+      "high": 114.0,
       "low": 109.81,
       "close": 112.84,
       "volume": 458500.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 112.84,
+      "high": 114.6865,
+      "low": 105.5,
+      "close": 106.46,
+      "volume": 691674.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 66.16,
-      "high": 66.89,
-      "low": 65.79,
-      "close": 66.17,
-      "volume": 370500.0
-    },
     {
       "date": "2025-09-15",
       "open": 65.97,
@@ -6339,10 +6339,18 @@
     {
       "date": "2026-09-14",
       "open": 110.87,
-      "high": 113.99,
+      "high": 114.0,
       "low": 109.81,
       "close": 112.84,
       "volume": 458500.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 112.84,
+      "high": 114.6865,
+      "low": 105.5,
+      "close": 106.46,
+      "volume": 691674.0
     }
   ],
   "ai_synthesis": null,

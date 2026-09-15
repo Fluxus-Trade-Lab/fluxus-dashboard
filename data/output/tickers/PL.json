@@ -1,8 +1,8 @@
 {
   "ticker": "PL",
-  "fetched_at": "2026-09-14T21:44:04Z",
+  "fetched_at": "2026-09-15T23:16:52Z",
   "_schema": "v2",
-  "current_price": 16.200000762939453,
+  "current_price": 16.020000457763672,
   "info": {
     "symbol": "PL",
     "longName": "Planet Labs PBC",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.planet.com",
     "fullTimeEmployees": 945,
-    "marketCap": 5894338048,
-    "enterpriseValue": 5618504192,
+    "marketCap": 5828845056,
+    "enterpriseValue": 5527542272,
     "trailingPE": null,
-    "forwardPE": -12960.001,
-    "priceToSalesTrailing12Months": 15.5820265,
-    "enterpriseToRevenue": 14.853,
-    "priceToBook": 13.012049,
+    "forwardPE": -12816.001,
+    "priceToSalesTrailing12Months": 15.408892,
+    "enterpriseToRevenue": 14.612,
+    "priceToBook": 12.86747,
     "grossMargins": 0.55486,
     "operatingMargins": -0.11995,
     "profitMargins": -0.95132005,
@@ -31,9 +31,9 @@
     "debtToEquity": 88.353,
     "currentRatio": 2.843,
     "fiftyTwoWeekHigh": 51.76,
-    "fiftyTwoWeekLow": 9.485,
-    "averageVolume": 10036920,
-    "averageVolume10days": 15577610,
+    "fiftyTwoWeekLow": 9.66,
+    "averageVolume": 9922077,
+    "averageVolume10days": 15536150,
     "beta": 2.108,
     "sharesOutstanding": 340354193,
     "sharesFloat": 302226694,
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:44:04Z",
   "news": [
     {
+      "date": "2026-09-14T22:03:30Z",
+      "title": "Spotting Winners: Planet Labs (NYSE:PL) And Data & Business Process Services Stocks In Q2",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/spotting-winners-planet-labs-nyse-220330732.html",
+      "source": "StockStory"
+    },
+    {
       "date": "2026-09-13T23:35:54Z",
       "title": "Planet Labs' 2026 Outlook: Government Contracts Power Revenue Growth",
       "url": "https://www.fool.com/coverage/moneyball/2026/09/13/planet-labs-2026-outlook-government-contracts-power-revenue-growth/",
@@ -302,28 +308,22 @@
       "title": "How Far Could RKLB Stock Fall In The Next Shock?",
       "url": "https://www.trefis.com/articles/614529/how-far-could-rklb-stock-fall-in-the-next-shock/2026-09-08",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-09-08T13:29:59Z",
-      "title": "Grounded and Falling: Why One Wall Street Pro Says Rocket Lab Will More Than Double Soon",
-      "url": "https://247wallst.com/investing/2026/09/08/grounded-and-falling-why-one-wall-street-pro-says-rocket-lab-will-more-than-double-soon/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.06111110823308176,
+  "options_implied_move": 0.056179773675589295,
   "technicals": {
-    "ma20": 20.00900011062622,
-    "ma50": 22.161000022888185,
-    "ma200": 27.113650002479552,
-    "rsi14": 22.716593356118295,
-    "high_20d": 25.159000396728516,
-    "low_5d": 15.979999542236328,
-    "low_10d": 15.979999542236328,
+    "ma20": 19.591000175476076,
+    "ma50": 21.864200019836424,
+    "ma200": 27.13510000705719,
+    "rsi14": 22.174572851960292,
+    "high_20d": 23.915000915527344,
+    "low_5d": 15.635000228881836,
+    "low_10d": 15.635000228881836,
     "high_52w": 51.7599983215332,
-    "low_52w": 9.390000343322754,
-    "atr14": 1.1050713402884347,
-    "atr14_pct": 6.8214277052164904,
-    "position_in_52w_range_pct": 16.072694700431345
+    "low_52w": 9.484999656677246,
+    "atr14": 1.0864998953683036,
+    "atr14_pct": 6.782146468926972,
+    "position_in_52w_range_pct": 15.458311076232158
   },
   "ohlc_2y": [
     {
@@ -4316,7 +4316,7 @@
       "high": 17.05,
       "low": 16.445,
       "close": 16.45,
-      "volume": 11813600.0
+      "volume": 11856100.0
     },
     {
       "date": "2026-09-14",
@@ -4324,18 +4324,18 @@
       "high": 16.425,
       "low": 15.98,
       "close": 16.2,
-      "volume": 7792446.0
+      "volume": 7797000.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 16.08,
+      "high": 16.315,
+      "low": 15.635,
+      "close": 16.02,
+      "volume": 8361563.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 9.62,
-      "high": 9.79,
-      "low": 9.39,
-      "close": 9.78,
-      "volume": 14954200.0
-    },
     {
       "date": "2025-09-15",
       "open": 9.97,
@@ -6334,7 +6334,7 @@
       "high": 17.05,
       "low": 16.445,
       "close": 16.45,
-      "volume": 11813600.0
+      "volume": 11856100.0
     },
     {
       "date": "2026-09-14",
@@ -6342,7 +6342,15 @@
       "high": 16.425,
       "low": 15.98,
       "close": 16.2,
-      "volume": 7792446.0
+      "volume": 7797000.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 16.08,
+      "high": 16.315,
+      "low": 15.635,
+      "close": 16.02,
+      "volume": 8361563.0
     }
   ],
   "ai_synthesis": null,

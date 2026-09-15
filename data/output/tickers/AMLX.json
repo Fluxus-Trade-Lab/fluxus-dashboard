@@ -1,8 +1,8 @@
 {
   "ticker": "AMLX",
-  "fetched_at": "2026-09-14T21:40:07Z",
+  "fetched_at": "2026-09-15T23:14:48Z",
   "_schema": "v2",
-  "current_price": 33.63999938964844,
+  "current_price": 33.150001525878906,
   "info": {
     "symbol": null,
     "longName": null,
@@ -40,11 +40,7 @@
     "companyOfficers": []
   },
   "earnings_history": [],
-  "next_earnings": {
-    "date": "2026-11-05",
-    "revenue_low": 0,
-    "revenue_high": 416000
-  },
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -106,81 +102,9 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": null,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-27T13:43:43",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T17:41:32",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T13:28:11",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T11:02:41",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-18T17:36:16",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-17T11:26:29",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-03T19:35:04",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T11:33:45",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-25T14:08:10",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-28T11:45:17",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      }
-    ]
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:40:07Z",
+  "quarterly_asof": "2026-09-15T23:14:48Z",
   "news": [
     {
       "date": "2026-09-01T13:50:00Z",
@@ -243,20 +167,20 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.10671819456407897,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 34.590500354766846,
-    "ma50": 25.685600128173828,
-    "ma200": 17.33000006198883,
-    "rsi14": 59.36990697146283,
+    "ma20": 35.176500415802,
+    "ma50": 25.989200172424315,
+    "ma200": 17.42135006904602,
+    "rsi14": 57.32400529173699,
     "high_20d": 41.13999938964844,
     "low_5d": 31.3700008392334,
     "low_10d": 31.3700008392334,
     "high_52w": 41.13999938964844,
     "low_52w": 10.829999923706055,
-    "atr14": 1.7925000871930803,
-    "atr14_pct": 5.328478358250687,
-    "position_in_52w_range_pct": 75.25569075503508
+    "atr14": 1.7382142203194755,
+    "atr14_pct": 5.243481569563488,
+    "position_in_52w_range_pct": 73.63906959897034
   },
   "ohlc_2y": [
     {
@@ -4257,18 +4181,18 @@
       "high": 33.955,
       "low": 31.57,
       "close": 33.64,
-      "volume": 1816909.0
+      "volume": 1923700.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 33.22,
+      "high": 33.54,
+      "low": 32.36,
+      "close": 33.15,
+      "volume": 1827391.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 11.84,
-      "high": 11.99,
-      "low": 11.44,
-      "close": 11.65,
-      "volume": 2150000.0
-    },
     {
       "date": "2025-09-15",
       "open": 12.05,
@@ -6275,7 +6199,15 @@
       "high": 33.955,
       "low": 31.57,
       "close": 33.64,
-      "volume": 1816909.0
+      "volume": 1923700.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 33.22,
+      "high": 33.54,
+      "low": 32.36,
+      "close": 33.15,
+      "volume": 1827391.0
     }
   ],
   "ai_synthesis": null,

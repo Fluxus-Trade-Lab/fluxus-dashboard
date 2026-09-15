@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T21:45:29.657078+00:00",
+  "generated_at": "2026-09-15T23:17:40.977353+00:00",
   "trades": [
     {
       "trade_id": "SWKS_2026-09-10_000",
@@ -41,20 +41,20 @@
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 5
+      "hold_days": 6
     },
     {
       "trade_id": "TZA_2026-09-08_000",
       "ticker": "TZA",
       "direction": "long",
       "entry_date": "2026-09-08",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 1.3425597201713264,
-      "optimal_R": 3.3571428571428354,
-      "capture_pct": null,
+      "exit_date": "2026-09-14",
+      "closed": true,
+      "realized_R": 2.2761423020934677,
+      "optimal_R": 3.3650793650793474,
+      "capture_pct": 67.64007784523076,
       "setup_type": "Long below MA200 \u2014 counter-trend",
-      "lesson": "In progress",
+      "lesson": "Good execution",
       "hold_days": 6
     },
     {
@@ -146,14 +146,14 @@
       "ticker": "ETHA",
       "direction": "long",
       "entry_date": "2026-09-02",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 1.6825396825396706,
+      "exit_date": "2026-09-15",
+      "closed": true,
+      "realized_R": 1.6031746031745904,
       "optimal_R": 8.142857142857114,
-      "capture_pct": null,
+      "capture_pct": 19.688109161793285,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 12
+      "lesson": "Premature trim",
+      "hold_days": 13
     },
     {
       "trade_id": "SAIL_2026-08-26_000",
@@ -265,7 +265,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 25
+      "hold_days": 26
     },
     {
       "trade_id": "SOXL_2026-08-19_000",
@@ -335,7 +335,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 26
+      "hold_days": 27
     },
     {
       "trade_id": "NOW_2026-08-18_000",
@@ -4167,8 +4167,8 @@
       "exit_date": "2026-03-19",
       "closed": true,
       "realized_R": -0.8101265822784804,
-      "optimal_R": 1.1104936708860855,
-      "capture_pct": -72.95193151637362,
+      "optimal_R": 1.1019620253164626,
+      "capture_pct": -73.5167422893568,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 3
@@ -4293,8 +4293,8 @@
       "exit_date": "2026-03-13",
       "closed": true,
       "realized_R": 0.15761448349307755,
-      "optimal_R": 0.28281789137380225,
-      "capture_pct": 55.73002568099818,
+      "optimal_R": 0.28209478168264135,
+      "capture_pct": 55.87288164387066,
       "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 8
@@ -4461,8 +4461,8 @@
       "exit_date": "2026-03-03",
       "closed": true,
       "realized_R": -0.5703544575725027,
-      "optimal_R": 1.764973147153596,
-      "capture_pct": -32.31519179157618,
+      "optimal_R": 1.7580021482277137,
+      "capture_pct": -32.44333109305307,
       "setup_type": "Extended long \u2014 RSI overbought",
       "lesson": "Failed setup",
       "hold_days": 8
@@ -4671,8 +4671,8 @@
       "exit_date": "2026-02-11",
       "closed": true,
       "realized_R": -0.6159052453468679,
-      "optimal_R": 0.898197969543146,
-      "capture_pct": -68.57121327719524,
+      "optimal_R": 0.8982064297800354,
+      "capture_pct": -68.57056740260687,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 2

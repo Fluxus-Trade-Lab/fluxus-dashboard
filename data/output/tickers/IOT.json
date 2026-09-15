@@ -1,8 +1,8 @@
 {
   "ticker": "IOT",
-  "fetched_at": "2026-09-14T21:37:34Z",
+  "fetched_at": "2026-09-15T23:13:22Z",
   "_schema": "v2",
-  "current_price": 42.90999984741211,
+  "current_price": 41.650001525878906,
   "info": {
     "symbol": "IOT",
     "longName": "Samsara Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.samsara.com",
     "fullTimeEmployees": 4100,
-    "marketCap": 25128318976,
-    "enterpriseValue": 21716092928,
-    "trailingPE": 286.06665,
-    "forwardPE": 45.484898,
-    "priceToSalesTrailing12Months": 13.600872,
-    "enterpriseToRevenue": 11.754,
-    "priceToBook": 16.58678,
+    "marketCap": 24390457344,
+    "enterpriseValue": 24368883712,
+    "trailingPE": 277.66666,
+    "forwardPE": 44.117027,
+    "priceToSalesTrailing12Months": 13.2015,
+    "enterpriseToRevenue": 13.19,
+    "priceToBook": 16.099731,
     "grossMargins": 0.76432,
     "operatingMargins": 0.00959,
     "profitMargins": 0.04901,
@@ -32,8 +32,8 @@
     "currentRatio": 1.625,
     "fiftyTwoWeekHigh": 47.47,
     "fiftyTwoWeekLow": 23.38,
-    "averageVolume": 6138341,
-    "averageVolume10days": 9966180,
+    "averageVolume": 6200214,
+    "averageVolume10days": 10512020,
     "beta": 1.344,
     "sharesOutstanding": 380273036,
     "sharesFloat": 366776255,
@@ -105,7 +105,7 @@
   "next_earnings": {
     "date": "2026-12-03",
     "revenue_low": 514560000,
-    "revenue_high": 626300000
+    "revenue_high": 516102000
   },
   "quarterly_metrics": [
     {
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:37:34Z",
   "news": [
     {
+      "date": "2026-09-15T01:55:30Z",
+      "title": "Procore Technologies, Bentley Systems, PTC, Samsara, and Agilysys Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/procore-technologies-bentley-systems-ptc-015530257.html",
+      "source": "StockStory"
+    },
+    {
       "date": "2026-09-13T01:03:51Z",
       "title": "Samsara (IOT)\u2019s Growth Momentum Meets Valuation Test. Can Samsara Justify the New Price Target?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-iot-growth-momentum-meets-010351426.html",
@@ -302,28 +308,22 @@
       "title": "Samsara Q2 Earnings Surpass Estimates, Revenues Rise Y/Y",
       "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-q2-earnings-surpass-estimates-142300964.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-04T14:00:00Z",
-      "title": "Samsara Q2 Earnings Call Puts AI Growth Against Cash Flow Pressure",
-      "url": "https://finance.yahoo.com/technology/ai/articles/samsara-q2-earnings-call-puts-140000889.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.14681892384998343,
+  "options_implied_move": 0.05522208681243175,
   "technicals": {
-    "ma20": 39.66100025177002,
-    "ma50": 38.28760021209717,
-    "ma200": 33.73969996452332,
-    "rsi14": 61.27950970434766,
+    "ma20": 39.79350032806396,
+    "ma50": 38.370400276184085,
+    "ma200": 33.76069996833801,
+    "rsi14": 56.90973622898589,
     "high_20d": 45.119998931884766,
     "low_5d": 37.310001373291016,
     "low_10d": 36.665000915527344,
     "high_52w": 47.470001220703125,
     "low_52w": 23.3799991607666,
-    "atr14": 2.6213572365897044,
-    "atr14_pct": 6.108965849245506,
-    "position_in_52w_range_pct": 81.07097972866246
+    "atr14": 2.5820715767996654,
+    "atr14_pct": 6.199451337823637,
+    "position_in_52w_range_pct": 75.840601091092
   },
   "ohlc_2y": [
     {
@@ -4324,18 +4324,18 @@
       "high": 43.185,
       "low": 38.97,
       "close": 42.91,
-      "volume": 10059361.0
+      "volume": 10095200.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 42.7,
+      "high": 43.18,
+      "low": 41.47,
+      "close": 41.65,
+      "volume": 8060211.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 38.99,
-      "high": 39.155,
-      "low": 38.125,
-      "close": 38.26,
-      "volume": 5905000.0
-    },
     {
       "date": "2025-09-15",
       "open": 38.5,
@@ -6342,7 +6342,15 @@
       "high": 43.185,
       "low": 38.97,
       "close": 42.91,
-      "volume": 10059361.0
+      "volume": 10095200.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 42.7,
+      "high": 43.18,
+      "low": 41.47,
+      "close": 41.65,
+      "volume": 8060211.0
     }
   ],
   "ai_synthesis": null,

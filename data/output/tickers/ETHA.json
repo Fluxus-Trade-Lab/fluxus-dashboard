@@ -1,8 +1,8 @@
 {
   "ticker": "ETHA",
-  "fetched_at": "2026-09-14T21:37:11Z",
+  "fetched_at": "2026-09-15T23:13:11Z",
   "_schema": "v2",
-  "current_price": 19.170000076293945,
+  "current_price": 18.200000762939453,
   "info": {
     "symbol": "ETHA",
     "longName": "iShares Ethereum Trust ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 36.04,
     "fiftyTwoWeekLow": 11.525,
-    "averageVolume": 35122483,
-    "averageVolume10days": 42849630,
+    "averageVolume": 35073703,
+    "averageVolume10days": 41067140,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,13 +48,25 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:11Z",
+  "quarterly_asof": "2026-09-15T23:13:11Z",
   "news": [
+    {
+      "date": "2026-09-15T14:23:00Z",
+      "title": "Zacks Investment Ideas feature highlights: Coinbase, IBIT, ETHA, SOLZ and stablecoin operator Circle",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/zacks-investment-ideas-feature-highlights-142300116.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-14T16:30:00Z",
       "title": "The Clarity Act Gains Momentum: What you Need to Know",
       "url": "https://finance.yahoo.com/markets/crypto/articles/clarity-act-gains-momentum-know-163000462.html",
       "source": "Zacks"
+    },
+    {
+      "date": "2026-09-14T15:25:00Z",
+      "title": "5 Names That Showed Signs of Life After Friday's CPI Report",
+      "url": "https://www.marketbeat.com/articles/5-names-that-showed-signs-of-life-after-fridays-cpi-report/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     },
     {
       "date": "2026-09-09T18:10:03Z",
@@ -97,34 +109,22 @@
       "title": "ETHT vs. ETHA: Should You Use a 2x Ether ETF or Just Own Spot ETH?",
       "url": "https://247wallst.com/investing/2026/06/16/etht-vs-etha-should-you-use-a-2x-ether-etf-or-just-own-spot-eth/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-06-10T17:00:00Z",
-      "title": "After Bitcoin Crash, Can the hype for HYPE ETFs Continue?",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-crash-hype-hype-etfs-170000975.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-06-08T11:30:24Z",
-      "title": "The Ethereum Trust ETF (ETHA) Lost 46% of Its Value in 2026, and Friday\u2019s Payroll Print Finished the Work",
-      "url": "https://247wallst.com/investing/2026/06/08/the-ethereum-trust-etf-etha-lost-46-of-its-value-in-2026-and-fridays-payroll-print-finished-the-work/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.05268648909652269,
+  "options_implied_move": 0.04175824000774677,
   "technicals": {
-    "ma20": 18.01949987411499,
-    "ma50": 15.66879991531372,
-    "ma200": 17.216524991989136,
-    "rsi14": 69.81993814048231,
+    "ma20": 18.20949993133545,
+    "ma50": 15.761799926757812,
+    "ma200": 17.196875,
+    "rsi14": 57.31387650673623,
     "high_20d": 20.1200008392334,
-    "low_5d": 18.209999084472656,
-    "low_10d": 17.899999618530273,
+    "low_5d": 17.75,
+    "low_10d": 17.75,
     "high_52w": 36.040000915527344,
     "low_52w": 11.524999618530273,
-    "atr14": 0.6306432996477399,
-    "atr14_pct": 3.2897407258104696,
-    "position_in_52w_range_pct": 31.18498899977678
+    "atr14": 0.7070718492780413,
+    "atr14_pct": 3.8850099980097106,
+    "position_in_52w_range_pct": 27.22823084340128
   },
   "ohlc_2y": [
     {
@@ -4117,7 +4117,7 @@
       "high": 20.12,
       "low": 18.79,
       "close": 19.16,
-      "volume": 96836400.0
+      "volume": 97174900.0
     },
     {
       "date": "2026-09-14",
@@ -4125,18 +4125,18 @@
       "high": 19.24,
       "low": 18.805,
       "close": 19.17,
-      "volume": 37243004.0
+      "volume": 38724400.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 18.682,
+      "high": 18.682,
+      "low": 17.75,
+      "close": 18.2,
+      "volume": 73082083.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 34.22,
-      "high": 35.38,
-      "low": 34.105,
-      "close": 35.36,
-      "volume": 53400000.0
-    },
     {
       "date": "2025-09-15",
       "open": 34.28,
@@ -6135,7 +6135,7 @@
       "high": 20.12,
       "low": 18.79,
       "close": 19.16,
-      "volume": 96836400.0
+      "volume": 97174900.0
     },
     {
       "date": "2026-09-14",
@@ -6143,7 +6143,15 @@
       "high": 19.24,
       "low": 18.805,
       "close": 19.17,
-      "volume": 37243004.0
+      "volume": 38724400.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 18.682,
+      "high": 18.682,
+      "low": 17.75,
+      "close": 18.2,
+      "volume": 73082083.0
     }
   ],
   "ai_synthesis": null,

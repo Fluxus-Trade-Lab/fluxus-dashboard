@@ -1,46 +1,112 @@
 {
   "ticker": "ANET",
-  "fetched_at": "2026-09-14T21:36:42Z",
+  "fetched_at": "2026-09-15T23:12:56Z",
   "_schema": "v2",
-  "current_price": 187.80999755859375,
+  "current_price": 192.83999633789062,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "symbol": "ANET",
+    "longName": "Arista Networks, Inc.",
+    "sector": "Technology",
+    "industry": "Computer Hardware",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.arista.com",
+    "fullTimeEmployees": 5115,
+    "marketCap": 243214565376,
+    "enterpriseValue": 223527305216,
+    "trailingPE": 61.025314,
+    "forwardPE": 37.370064,
+    "priceToSalesTrailing12Months": 23.073635,
+    "enterpriseToRevenue": 21.206,
+    "priceToBook": 16.435694,
+    "grossMargins": 0.63004,
+    "operatingMargins": 0.45393002,
+    "profitMargins": 0.38371,
+    "returnOnEquity": 0.31476,
+    "totalCash": 13343299584,
+    "totalDebt": 0,
+    "totalRevenue": 10540800000,
+    "freeCashflow": 3891512576,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 2.957,
+    "fiftyTwoWeekHigh": 214.89,
+    "fiftyTwoWeekLow": 114.52,
+    "averageVolume": 7245138,
+    "averageVolume10days": 4360550,
+    "beta": 1.617,
+    "sharesOutstanding": 1261224648,
+    "sharesFloat": 1049465030,
+    "companyOfficers": [
+      {
+        "name": "Ms. Jayshree V. Ullal",
+        "title": "CEO & Chairperson",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Kenneth  Duda Ph.D.",
+        "title": "Co-Founder, President, CTO & Director",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Todd  Nightingale",
+        "title": "President & COO",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Chantelle Y. Breithaupt",
+        "title": "Senior VP & CFO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Dr. Andreas B. Bechtolsheim Ph.D.",
+        "title": "Co-Founder &  Chief Architect",
+        "age": 70,
+        "yearBorn": 1955
+      },
+      {
+        "name": "Mr. Sean  Christofferson",
+        "title": "VP & General Counsel",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.02,
+      "eps_estimate": 0.88559,
+      "eps_surprise_pct": 0.1518
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.87,
+      "eps_estimate": 0.80761,
+      "eps_surprise_pct": 0.0773
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.82,
+      "eps_estimate": 0.75804,
+      "eps_surprise_pct": 0.0817
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.75,
+      "eps_estimate": 0.71442,
+      "eps_surprise_pct": 0.0498
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 3300000000,
+    "revenue_high": 3482751000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,13 +165,132 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 30,
+    "bullish": 29,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 241.03607,
+    "high_price_target": 289.0,
+    "low_price_target": 185.0,
+    "current_price": 192.84,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-01T17:43:37",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "init"
+      },
+      {
+        "date": "2026-08-06T13:03:18",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T21:09:59",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:47:12",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T18:36:07",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T17:54:53",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T16:02:34",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-05T15:39:11",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T14:34:24",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T13:59:44",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
-  "quarterly_asof": "2026-09-14T21:36:42Z",
+  "quarterly_asof": "2026-09-15T23:12:56Z",
   "news": [
+    {
+      "date": "2026-09-15T22:08:05Z",
+      "title": "Can Arista's Third Guidance Raise Still Make You Money?",
+      "url": "https://www.trefis.com/articles/615359/can-aristas-third-guidance-raise-still-make-you-money/2026-09-15",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-15T21:45:04Z",
+      "title": "Why the Market Dipped But Arista Networks (ANET) Gained Today",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-market-dipped-arista-networks-214504258.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-15T21:32:00Z",
+      "title": "Why Did Cisco Stop Leading With Its Campus Refresh?",
+      "url": "https://www.trefis.com/articles/615393/why-did-cisco-stop-leading-with-its-campus-refresh/2026-09-15",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-15T21:18:54Z",
+      "title": "Was Arista Networks Stock's Surge Visible Before It Happened?",
+      "url": "https://www.trefis.com/articles/615355/was-arista-networks-stocks-surge-visible-before-it-happened/2026-09-15",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-15T17:23:07Z",
+      "title": "Jim Cramer on Arista (ANET) CEO: \u201cShe Is Money and the Company\u2019s Fantastic\u201d",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-arista-anet-ceo-172307585.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-15T14:34:00Z",
+      "title": "Zacks Investment Ideas feature highlights: Nvidia, Taiwan Semiconductor, Arista Networks, Dell Technologies, Hewlett Packard and Super Micro Computer",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-143400211.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-15T14:12:00Z",
+      "title": "CIEN's New Venture Fund: Can it Turn AI Networking Into Growth Engine?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ciens-venture-fund-turn-ai-141200665.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-09-14T20:37:00Z",
       "title": "5 Top AI Stocks to Buy on the Dip as Slowdown Fears Hit Markets",
@@ -123,64 +308,22 @@
       "title": "Investors Heavily Search Arista Networks, Inc. (ANET): Here is What You Need to Know",
       "url": "https://finance.yahoo.com/markets/stocks/articles/investors-heavily-search-arista-networks-130004550.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-14T12:40:00Z",
-      "title": "Arista's Cash Flow Momentum Builds: How Sustainable is it?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/aristas-cash-flow-momentum-builds-124000207.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-14T09:55:00Z",
-      "title": "The Zacks Analyst Blog Highlights Alphabet, Microsoft, NVIDIA, Arista Networks and Vertiv",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-analyst-blog-highlights-alphabet-095500062.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-13T16:56:52Z",
-      "title": "Arista Released Critical Security Advisories. Cisco Shows Why AI Network Growth Also Creates Repair Work",
-      "url": "https://finance.yahoo.com/technology/ai/articles/arista-released-critical-security-advisories-165652596.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-09-13T11:57:14Z",
-      "title": "Dow Jones Futures: Fed Rate Hike Seen As Oil, Yields Pressure Stocks; Apple, Moderna Are New Buys",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-100-oil-surging-yields-pressure-stocks-with-fed-rate-hike-seen-apple-leads-new-buys/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-09-12T17:56:53Z",
-      "title": "Jim Cramer Doubles Down on This $252B AI Stock: \u201cYou Have to Buy\u201d Every Dip",
-      "url": "https://247wallst.com/investing/2026/09/12/jim-cramer-doubles-down-on-this-252b-ai-stock-you-have-to-buy-every-dip/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-12T09:35:00Z",
-      "title": "Nike Is Being Deleted From the S&P 100. Is Its Seat in the Dow Jones Industrial Average in Jeopardy?",
-      "url": "https://www.fool.com/investing/2026/09/12/nike-just-got-deleted-from-the-sp-100-is-its-seat/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-11T21:05:43Z",
-      "title": "Stock Market Today, Sept. 11: HPE Surges on AI Infrastructure Demand and Recently Raised Guidance",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/11/stock-market-today-sept-11-hpe-surges-on-ai-infrastructure-demand-and-recently-raised-guidance/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04117403106608486,
   "technicals": {
-    "ma20": 192.60949935913087,
-    "ma50": 185.85320068359374,
-    "ma200": 153.7246998977661,
-    "rsi14": 47.860372365180275,
+    "ma20": 192.1614990234375,
+    "ma50": 186.2444006347656,
+    "ma200": 154.06369987487793,
+    "rsi14": 51.46033385449067,
     "high_20d": 206.1300048828125,
     "low_5d": 186.11000061035156,
     "low_10d": 181.27000427246094,
     "high_52w": 214.88999938964844,
     "low_52w": 114.5199966430664,
-    "atr14": 7.695142473493304,
-    "atr14_pct": 4.097301833515301,
-    "position_in_52w_range_pct": 73.01982555542287
+    "atr14": 7.822743007114956,
+    "atr14_pct": 4.05659777829911,
+    "position_in_52w_range_pct": 78.03128180893798
   },
   "ohlc_2y": [
     {
@@ -4178,21 +4321,21 @@
     {
       "date": "2026-09-14",
       "open": 189.82,
-      "high": 191.1,
+      "high": 191.105,
       "low": 186.11,
       "close": 187.81,
-      "volume": 5651980.0
+      "volume": 5673800.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 191.885,
+      "high": 194.6864,
+      "low": 190.905,
+      "close": 192.84,
+      "volume": 4907655.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 149.18,
-      "high": 149.47,
-      "low": 139.02,
-      "close": 139.39,
-      "volume": 17920400.0
-    },
     {
       "date": "2025-09-15",
       "open": 139.6,
@@ -6196,10 +6339,18 @@
     {
       "date": "2026-09-14",
       "open": 189.82,
-      "high": 191.1,
+      "high": 191.105,
       "low": 186.11,
       "close": 187.81,
-      "volume": 5651980.0
+      "volume": 5673800.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 191.885,
+      "high": 194.6864,
+      "low": 190.905,
+      "close": 192.84,
+      "volume": 4907655.0
     }
   ],
   "ai_synthesis": null,

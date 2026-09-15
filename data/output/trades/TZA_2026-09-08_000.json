@@ -1,6 +1,6 @@
 {
   "trade_id": "TZA_2026-09-08_000",
-  "generated_at": "2026-09-14T21:45:29+00:00",
+  "generated_at": "2026-09-15T23:17:40+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
@@ -10,12 +10,12 @@
     "entry_price": 41.63,
     "stop_price": 41.0,
     "initial_stop": 41.0,
-    "closed": false,
-    "remaining_pct": 46.679129096107324,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-14",
+    "hold_business_days": 4,
     "r_pct_of_entry": 1.5133317319240993,
-    "realized_R": 1.3425597201713264,
+    "realized_R": 2.2761423020934677,
     "trims": [
       {
         "date": "2026-09-10",
@@ -28,6 +28,12 @@
         "price": 43.06,
         "pct_of_position": 19.991202990983066,
         "type": "trim_1_5"
+      },
+      {
+        "date": "2026-09-14",
+        "price": 42.89,
+        "pct_of_position": 46.679129096107324,
+        "type": "sell_rest"
       }
     ]
   },
@@ -39,8 +45,8 @@
     "volume": 4290900.0,
     "ma20": 38.818,
     "ma50": 39.462799999999994,
-    "ma200": 54.346213,
-    "rsi14": 54.21842664827659,
+    "ma200": 54.346213000000006,
+    "rsi14": 54.21842763037653,
     "atr14": 1.172857142857144,
     "atr14_pct": 2.902393325555912,
     "high_52w": 93.094,
@@ -52,22 +58,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 3.3571428571428354,
+    "mfe_R": 3.3650793650793474,
     "mfe_date": "2026-09-14",
     "mae_R": 2.7936507936507904,
     "mae_date": "2026-09-08",
-    "optimal_exit_price": 43.745,
+    "optimal_exit_price": 43.75,
     "optimal_exit_date": "2026-09-14",
-    "optimal_R": 3.3571428571428354,
+    "optimal_R": 3.3650793650793474,
     "days_to_optimal": 6,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
-    "post_exit_R": null,
+    "realized_R": 2.2761423020934677,
+    "capture_pct": 67.64007784523076,
+    "missed_R": 1.0889370629858797,
+    "post_exit_R": 5.01587301587299,
     "hold_calendar_days": 6
   },
-  "lesson": "In progress",
-  "narrative": "Entered **TZA** long on 2026-09-08 at $41.63 with stop $41.00 (1R = $0.63/sh = 1.5% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. **In progress.** Peak so far +3.36R; worst drawdown -2.79R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **TZA** long on 2026-09-08 at $41.63 with stop $41.00 (1R = $0.63/sh = 1.5% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($38.82), MA20 < MA50 < MA200 (death alignment), RSI 54, 7% through 52W range, ATR 2.9% of price. Realized **+2.28R**, peak was **+3.37R** on 2026-09-14 (day +6) \u2014 captured **68%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -259,15 +265,23 @@
       "high": 42.98,
       "low": 41.78,
       "close": 42.93,
-      "volume": 5825600.0
+      "volume": 5839800.0
     },
     {
       "date": "2026-09-14",
       "open": 43.59,
-      "high": 43.745,
-      "low": 42.53,
+      "high": 43.75,
+      "low": 42.52,
       "close": 43.38,
-      "volume": 6250155.0
+      "volume": 6262100.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 43.66,
+      "high": 44.79,
+      "low": 43.51,
+      "close": 44.28,
+      "volume": 3958826.0
     }
   ]
 }

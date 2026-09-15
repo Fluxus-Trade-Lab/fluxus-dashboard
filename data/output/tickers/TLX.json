@@ -1,8 +1,8 @@
 {
   "ticker": "TLX",
-  "fetched_at": "2026-09-14T21:38:45Z",
+  "fetched_at": "2026-09-15T23:14:04Z",
   "_schema": "v2",
-  "current_price": 11.779999732971191,
+  "current_price": 12.829999923706055,
   "info": {
     "symbol": "TLX",
     "longName": "Telix Pharmaceuticals Limited",
@@ -13,13 +13,13 @@
     "city": "North Melbourne",
     "website": "https://telixpharma.com",
     "fullTimeEmployees": 1120,
-    "marketCap": 3990793728,
-    "enterpriseValue": 4164115712,
-    "trailingPE": 117.799995,
-    "forwardPE": 80.92254,
-    "priceToSalesTrailing12Months": 4.4800863,
-    "enterpriseToRevenue": 4.675,
-    "priceToBook": 9.608483,
+    "marketCap": 4346509824,
+    "enterpriseValue": 4330610176,
+    "trailingPE": 128.3,
+    "forwardPE": 228.03853,
+    "priceToSalesTrailing12Months": 4.879415,
+    "enterpriseToRevenue": 4.862,
+    "priceToBook": 10.464927,
     "grossMargins": 0.47566003,
     "operatingMargins": 0.09712,
     "profitMargins": 0.0376,
@@ -30,10 +30,10 @@
     "freeCashflow": -62596000,
     "debtToEquity": 118.903,
     "currentRatio": 2.014,
-    "fiftyTwoWeekHigh": 12.48,
+    "fiftyTwoWeekHigh": 13.1098,
     "fiftyTwoWeekLow": 6.28,
-    "averageVolume": 168566,
-    "averageVolume10days": 254950,
+    "averageVolume": 173922,
+    "averageVolume10days": 309020,
     "beta": 0.604,
     "sharesOutstanding": 338777049,
     "sharesFloat": 273621496,
@@ -106,11 +106,25 @@
     "bullish": 5,
     "neutral": 0,
     "bearish": 0,
-    "avg_price_target": 21.360846,
-    "high_price_target": 22.064116,
-    "low_price_target": 19.95716,
-    "current_price": 11.78,
+    "avg_price_target": 20.955435,
+    "high_price_target": 22.031372,
+    "low_price_target": 19.930124,
+    "current_price": 12.83,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-15T13:54:54",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-14T12:42:23",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
       {
         "date": "2026-09-02T11:29:09",
         "firm": "HC Wainwright & Co.",
@@ -166,24 +180,10 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "reit"
-      },
-      {
-        "date": "2026-04-07T11:03:41",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-02-24T17:44:11",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
-  "quarterly_asof": "2026-09-14T21:38:45Z",
+  "quarterly_asof": "2026-09-15T23:14:04Z",
   "news": [
     {
       "date": "2026-09-04T18:42:48Z",
@@ -248,18 +248,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 11.650249910354614,
-    "ma50": 11.228700008392334,
-    "ma200": 9.511999971866608,
-    "rsi14": 53.175488893264145,
-    "high_20d": 12.479999542236328,
+    "ma20": 11.705249929428101,
+    "ma50": 11.24230001449585,
+    "ma200": 9.527949969768525,
+    "rsi14": 62.35082961303002,
+    "high_20d": 13.109800338745117,
     "low_5d": 11.196000099182129,
     "low_10d": 10.800000190734863,
-    "high_52w": 12.479999542236328,
+    "high_52w": 13.109800338745117,
     "low_52w": 6.28000020980835,
-    "atr14": 0.4422856739589146,
-    "atr14_pct": 3.754547402246501,
-    "position_in_52w_range_pct": 88.70967928006195
+    "atr14": 0.5265571049281529,
+    "atr14_pct": 4.104108402644887,
+    "position_in_52w_range_pct": 95.90324153332696
   },
   "ohlc_2y": [
     {
@@ -3912,22 +3912,22 @@
     },
     {
       "date": "2026-09-14",
-      "open": 12.225,
+      "open": 12.2,
       "high": 12.23,
       "low": 11.67,
       "close": 11.78,
-      "volume": 628948.0
+      "volume": 629200.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 12.62,
+      "high": 13.1098,
+      "low": 12.5903,
+      "close": 12.83,
+      "volume": 1075571.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-12",
-      "open": 9.16,
-      "high": 9.24,
-      "low": 9.14,
-      "close": 9.21,
-      "volume": 165700.0
-    },
     {
       "date": "2025-09-15",
       "open": 9.33,
@@ -5930,11 +5930,19 @@
     },
     {
       "date": "2026-09-14",
-      "open": 12.225,
+      "open": 12.2,
       "high": 12.23,
       "low": 11.67,
       "close": 11.78,
-      "volume": 628948.0
+      "volume": 629200.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 12.62,
+      "high": 13.1098,
+      "low": 12.5903,
+      "close": 12.83,
+      "volume": 1075571.0
     }
   ],
   "ai_synthesis": null,
