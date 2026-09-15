@@ -3054,3 +3054,4 @@ INBOX 里写成「丢弃」的，逐条核：
 ③ 下轮第一件事：读 09-14 正班迟到落地后的 gate 输出（应为 `run=false` skip，这是 `a9146d88` concurrency/skip 闸第一次真实生效）；然后 `audit_schedule_windows` 看 09-15 两个窗口。
 
 🔔 [09-15] → OPS Fable · 联邦运维: 「backstop 连续 5 次被丢弃」机制提案前提不成立——09-01 起每班都来了、只是稳定迟到（主 ~140 分 / backstop ~280 分），逐条核对表在 INBOX [2026-09-15] Plumber Joe 节；另请把 `audit_schedule_windows`（949b51fa）写进哨兵与 Zac 任务书「说丢了之前先跑」· pending
+- [09-15] 📰 每日复盘 2026-09-14：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿
