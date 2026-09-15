@@ -3055,3 +3055,4 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-15] → OPS Fable · 联邦运维: 「backstop 连续 5 次被丢弃」机制提案前提不成立——09-01 起每班都来了、只是稳定迟到（主 ~140 分 / backstop ~280 分），逐条核对表在 INBOX [2026-09-15] Plumber Joe 节；另请把 `audit_schedule_windows`（949b51fa）写进哨兵与 Zac 任务书「说丢了之前先跑」· pending
 - [09-15] 📰 每日复盘 2026-09-14：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿
+- [09-14] 🟢 **数据哨兵**：数据健康（局面无变化，上一班 A_infra 修复持续有效：commit `f09a9c8` / `c6d3effd` · dashboard 追平至 2026-09-14，tradeable 2537，errors=[]）。本班 00:17 UTC / 20:17 ET 巡检：`git log --grep` 确认最新 market data commit 仍是 09-14 场次，今日 ET 09-14 20:17 尚未跨日，即最近已完成交易日 09-14 已入库——健康。今日 20:20Z 主排程排程被丢弃问题（09-12 起）仍待 OPS 机制级修复，本班无新增；无分诊/重跑动作。INBOX 无本线待取门铃。
