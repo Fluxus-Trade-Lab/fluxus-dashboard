@@ -1,37 +1,35 @@
-date: 2026-09-14
+date: 2026-09-15
 tier: B
-source: `Fluxus_Queue.md` 本周队列 #1（Andy 09-13「队列 7 条全收」）+ `Fluxus_Own_Lines.md` 金句库（#28 / #51）· 维修期条款生效，campaign 变体不上桌
-gate: 🎮 **W8 0/5**（09-14→09-20 第一天；W7 已结算 8/5 过关，连胜 1 周，见 `weekly/2026-09-13_W7.md`）
+source: `Fluxus_Queue.md` 本周队列 #2（Andy 09-13「队列 7 条全收」）+ `Fluxus_Own_Lines.md` 金句库（#119 / #100）· 维修期条款生效，campaign 变体不上桌
+gate: 🎮 **W8 ?/5**（09-15 是第二天；posts.csv 09-14 零行，台账只能证阳性，昨天发没发没核到，见 notes）
 ---
 ## C1
-bucket: QUOTE（主张 · EN 原话） | entry: -
+bucket: QUOTE（主张 · 中） | entry: -
 
-Leaders go first. They don't wait for you.
+这件事里你只控制三样：买入、卖出、仓位。剩下的全是外因。想多了都不行。
 
-why: 本周队列第 1 条，排的就是今天，你 09-13 在结算台上全收了。原话是你自己用英文说的「leaders go first and dont wait for you」（[`Fluxus_Own_Lines.md:593`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:593) #103 ⭐⭐⭐），只补了标点和一个 They，不是改写。posts.csv 全量搜 leader / go first / wait for you 零命中，历史备稿从没端过。要中英并一条发的话，库里的中文是打磨版「龙头先走,不等你。」（不是你的原话，你来定用不用）。
+why: 本周队列第 2 条，今天该发的就是它，你 09-13 全收的。你的原话是「炒股票 只有3件事情可以控制 买入卖出和仓位 / 其他的都是外因 / 想多了都不行」（[`Fluxus_Own_Lines.md:251`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:251) #41，库里标「全场最好的一条」）。上面这句是打磨版，后两句基本没改。想发原话就直接粘原话。posts.csv 全量搜 控制 / 仓位 / 外因 / control 零命中，历史备稿和队列都没端过。
 ---
 ## C2
-bucket: QUOTE（自嘲 · EN+中） | entry: 6（反馈环 · 文字形态）
+bucket: QUOTE（主张 · EN 原话） | entry: -
 
-You'll notice I get stopped out a lot. Part of that is discipline. Part of it is that I trade too much.
+Price over everything, babe.
 
-你看我止损的单子特别多。一部分是纪律,一部分是我做太多了。
-
-why: 你的原话「所以你看我止损的单子很多的 当然也是overtrade」（[`Fluxus_Own_Lines.md:169`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:169) #28 ⭐⭐⭐）。昨天 C1，你没回也没否，今天是第二次端。具体的东西是你自己的止损记录，翻你主页就能查到。库里自嘲这类最难仿，posts.csv 没有同族的帖。
+why: 你自己用英文说过两次，「as a trader I am in the price > everything else camp」和「price over everything babe」（[`Fluxus_Own_Lines.md:677`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:677) #119 ⭐⭐⭐ EN），只补了大写和逗号。从没端过，posts.csv 搜 price over / over everything 零命中。跟 C1 能配一对：C1 讲你手里能控制什么，这句讲你看什么。两条都想发的话，隔开几小时。
 ---
 ## C3
-bucket: QUOTE（生活比喻 · 中+EN） | entry: 2（架构机制：净额 ≠ 价格）
+bucket: QUOTE（情绪 vs 价格 · 中） | entry: -
 
-资金净流入创了新高。可那是净额——菜贩子收摊前清仓甩卖,一堆人来抢,花出去的钱当然变多了。可菜价还在跌。
+价格只是回到了几个月前的价格而已……但情绪就完全不同了
 
-Net inflows hit a record. But it's a net number. When the vegetable seller dumps everything before closing, a crowd shows up and a lot more money changes hands. The price of cabbage is still falling.
-
-why: 你的原话（[`Fluxus_Own_Lines.md:305`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:305) #51 ⭐⭐⭐）。昨天 C2，没回也没否，第二次端。排第三是因为它最长，而且今天周一开盘前，发出去会被读成在说今天的资金流，其实这句没挂任何当天的数。
+why: 你的原话原样（[`Fluxus_Own_Lines.md:574`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:574) #100 ⭐⭐⭐），只把四个点改成了省略号。库里的打磨版是「价格只是回到几个月前。情绪回不去了。」，后半句是改写，所以这里端原话。从没端过，posts.csv 搜 情绪 / sentiment 零命中。排第三是因为昨天 AI 股开盘跳空，今天发会被读成在评这一波，但这句没挂任何当天的数。你要是就想借这个势，这个误读反而是好事，你来定。
 ---
 ## notes
-- **维修期条款仍生效**：`PIPELINE.md` 09-08 维修令没解除；最新卡 `2026-09-06_autumn-effect-decay` status=killed，往前三张（08-29 / 09-01 / 09-03）都是 queued，还在等你签字，所以 C1 只能从队列和金句库出。`voice/raw/` 两边合起来只有课程口述和 08 月的参考料，没有能单发的成品。
-- **三条还是同一个 bucket**（都算 QUOTE 的子类），入口拉开了（- / 6 / 2）。维修期来源只剩金句库，拉不开 bucket。
-- **#130 今天撤下**：09-12 C1、09-13 C3 两次没选，今天不连端第三次，还在库里。09-13 三条的 ignored 判决已补进 `verdicts.jsonl`（依据：posts.csv 09-13 三行都不是备稿里的）。
-- **查重的分辨率**：posts.csv 的 note 列是摘要不是全文，关键词零命中是阴性，但分辨率有限。
-- **蹭号 2 条（NOW.md A 线）**：最新睡前速报 `x_watch/nightcap/2026-09-13.md` 的蹭位榜是 ET 周日上午的，到现在已经 10 小时以上，窗口基本关了，不端。今天 13:30 主班和 02:00 睡前班出新榜再看。
-- 陈旧提醒：无（三条都不挂盘面读数）。
+- **维修期条款仍生效**：`PIPELINE.md` 09-08 维修令没解除。最新一张卡 `2026-09-06_autumn-effect-decay` 是 killed，之后没有新卡；`2026-09-03_noise-with-structure` 仍是 queued、没签字，所以 C1 只能从队列和金句库出。`voice/raw/` 两边合起来只有课程口述和 08 月参考料，没有能单发的成品。
+- **#28 / #51 今天撤下**：09-13、09-14 各端了一次，今天不连端第三次，还在库里。#130 同理，09-14 已撤。
+- **09-14 那三条（#103 / #28 / #51）没记判决**：posts.csv 09-14 零行，x_watch 不抓 @Fluxus_Z 自己的帖，所以查不到你昨天发没发。台账只能证阳性，零行不等于没发，所以不写 ignored，等补账或你回一句。
+- **没选的**：#104「Leaders lead. Sit on your hands」跟昨天 C1 #103 同题，今天不端；#167 / #175 / #187 是电影台词改的梗，不是你的原话，不端；#142「控制你能控制的」跟 C1 同族，留到别的日子。
+- **Own_Lines 主树那份是旧的**（09-07 mtime，main 09-12 有更新，差 80 行 diff），今天的出处和行号都按 origin/main。
+- **蹭号 2 条（NOW.md A 线）**：最新睡前速报 `x_watch/nightcap/2026-09-14.md` 的蹭位榜是 ET 周一 13:04 抓的，到现在已经 20 小时以上，窗口关了，不端。今天 13:30 主班和 02:00 睡前班出新榜再看。
+- **门铃**：Steve 名下 3 条 pending 下面都已经有 ↳ ✅（09-12 / 09-13 日推班和交互会话追的），零新活。
+- 陈旧提醒：无（三条都没挂盘面读数）。
