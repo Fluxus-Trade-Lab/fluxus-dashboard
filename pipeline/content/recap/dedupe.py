@@ -143,6 +143,8 @@ def r2_items(content: dict, lang: str) -> list[tuple[str, str]]:
         tail = tail.strip(" —-–:：，,")
         if norm(tail):
             items.append(("rule 7 tail", tail))
+    for i, t in enumerate(content.get("session_commentary") or [], start=1):
+        items.append((f"commentary {i}", t))
     for i, t in enumerate(content.get("tomorrow") or [], start=1):
         items.append((f"next {i}", t))
     bp = content.get("big_picture")

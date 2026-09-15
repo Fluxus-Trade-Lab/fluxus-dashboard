@@ -35,13 +35,14 @@ when_to_use: 复盘、recap、briefing、market recap、每日市场、生成 PD
 2. **The Big Picture**：一段。骨架用他当天 Discord 的句子（例：「QQQ starts acting strong while SPY weaker now. since semi and mags are stronger」），每句挂上量化它的读数
 3. **Index Action**：三列等宽表 `% | 技术变化（事件！）| 关键位/备注`；关键位是判断 → `⟨Andy⟩`
 4. **Founders Note**：他手写的，Sheet 里取；取不到留白，永不代笔
-5. **What Led**：按板块分组，个股一行＝名字+%+RS+事件；**他点过名的票必须在**（Top watch / 论点股 / doing good 的全算）
+5. **What Led**：按板块分组，个股一行＝名字+%+RS+事件；**他点过名的票必须在**（Top watch / 论点股 / doing good 的全算）；**领涨落后每行必须写出驱动的 ticker**（Andy 2026-09-15），只有真正无单票可指的整组状态变化才允许没有 ticker
 6. **What Lagged / Blew Up**：不 working 的是画面的一半；财报失望（数据源补齐前只写他提到的）
 7. **主线深挖**：当天唯一最大的事（09-04＝Memory & Storage），成分展开、放量与站位分开说
 8. **（仅周五）Weekly**：周收盘视角——`perf_1w`、`wk_ema10/20`、`three_weeks_tight`、`rs_0_1w`；他的话：「weekly close very important」。30 周线补上前不引 Weinstein stage
-9. **Tomorrow**：加速度排名在这儿用——他的口径是**为明天做准备**，不是描述昨天；写成「看什么」清单
-10. **The Rules**：他的七条，固定文本照抄
-11. **Portfolio Update**：指标条+截图+一句中性点评；依赖他先更新 tracker（人肉前置，堵了就留占位）
+9. **Session Commentary（盘中评论，2026-09-15 立）**：Discord 里当天盘中说的话——被拒的反弹、守住的位置、"卖方控盘"这类实时判断、点名某只票——放这里，不进 Tomorrow。`content_*.json` 字段 `session_commentary`（数组，可省略），中性口吻不署名，同三条法 C
+10. **Tomorrow**：加速度排名在这儿用——他的口径是**为明天做准备**，不是描述昨天，只写下一交易日的关键位/事件/待验证问题；写成「看什么」清单。**盘中已经发生的观察不放这里**（见第 9 条）
+11. **The Rules**：他的七条，固定文本照抄
+12. **Portfolio Update**：指标条+截图+一句中性点评；依赖他先更新 tracker（人肉前置，堵了就留占位）
 
 ## 工作流
 
@@ -181,3 +182,10 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **窗口**：日报 = 前一交易日最后一根 + 最近 5 个交易日每一根；周报 = 上周最后一根 + 本周每一根；`spx_cut` 标出最后一个交易日的起点，橙段正好是这一天
 - **平滑**：高斯，窗口 195 分钟（3.25 根，σ = 半窗），首尾两点保持真实收盘；几何沿用 `dropLine()`（x 跨度 10、Chaikin 三轮、160px 封顶）
 - 灰尾、周报全橙、标签、落点、线宽不变。对照页 artifact 7605aade（K 线周期 × 平滑 21 格）。代码 `b87eb7c0`
+
+### [2026-09-15] Session Commentary 独立成节 + 领涨落后必须带 ticker（Andy 原话：「1. DISCORD内容应该是变成"盘中评论"，而不是"下个交易日看什么"。2. 主题和行业的领涨落后 要写上ticker名字。3. 这些改动下次生效。不需要改动已经生成的pdf」）
+- **09-14 v2 出片时的错法**：把 Discord 盘中观察（"开盘一小时抄底全落空""PLTR 第一次被 20EMA 挡回""原油顶到趋势线压力位"）塞进了 Tomorrow——那些是**已经发生**的盘中读数，不是「为明天做准备」的看什么清单，两者被 09-06 定的 Tomorrow 口径（「为明天做准备，不是描述昨天」）互斥
+- **修法**：新增字段 `session_commentary`（数组，可省略），独立渲染一节「Session Commentary / 盘中评论」，位置在 Sentiment 之后、Tomorrow 之前；Tomorrow 收紧为只装下一交易日的关键位/事件/待验证问题。落地在 `pipeline/content/recap/visual.py`（`keep` 元组）、`run.py`（`headings()`）、`visual_assets/recap_page.js`（layout A/B 都加了，生产只出 A）、`dedupe.py`（R2 同周查重覆盖新字段）、`xpost.py`（P3 cashtag 来源字段覆盖新字段）、`CONTENT_SCHEMA.md`
+- **领涨落后（What Led/Lagged）**：note 里必须写出驱动的 ticker，不能只写板块名和百分比；只有真正无单票可指的整组状态变化行才允许没有 ticker
+- **只对下次生效**：09-14 已出的两版 PDF 不重出，此次改动是产线机制，不是内容勘误
+- 未做：没有加硬闸拦截「note 里零 ticker」——09-11 的合法样本里就有整组无 ticker 的行（如「元器件 / 通信设备」一行），硬闸会误杀；先靠这条记录和 schema 文档的书面要求执行，真出现第二次漏写再考虑机制化（三次律）

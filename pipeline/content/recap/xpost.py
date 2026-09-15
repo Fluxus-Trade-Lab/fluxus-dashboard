@@ -18,7 +18,8 @@ links · calls to action · a number that does not appear verbatim in the conten
 fewer than 2 or more than 4 cashtags.
 P2 (no double opening): lead present and SequenceMatcher(lead, Big Picture first sentence) ≥ 0.4 → red; set lead to null.
 P3 (Andy 09-13「X挑选不用禁止cash出现当前持仓，就挑当天复盘里出现的个股，Substack帖子末尾就不用出现。」): every cashtag
-must appear as a stand-alone word in the issue's big_picture / index_notes / led / lagged / tomorrow / rules; book
+must appear as a stand-alone word in the issue's big_picture / index_notes / led / lagged / session_commentary /
+tomorrow / rules; book
 tickers are not avoided. "Substack" anywhere in the post is a P1 hit (no link or pointer at the end).
 X counting: code points in the Latin/general-punctuation ranges weigh 1, everything else 2, a URL 23.
 """
@@ -39,7 +40,7 @@ NUM_RE = re.compile(r"\d+(?:[.,]\d+)*")
 CASHTAG_RE = re.compile(r"(?<![\w$])\$[A-Z]{1,6}\b")
 LEFTOVER_RE = re.compile(r"</?b>|◇")
 SUBSTACK_RE = re.compile(r"substack", re.I)
-P3_FIELDS = ("big_picture", "index_notes", "led", "lagged", "tomorrow", "rules")
+P3_FIELDS = ("big_picture", "index_notes", "led", "lagged", "session_commentary", "tomorrow", "rules")
 
 
 def x_length(text: str) -> int:

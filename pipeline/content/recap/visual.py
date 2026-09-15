@@ -302,7 +302,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
         "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
         "pos": [[p["ticker"], p["direction"], p["entry_date"], p["open_R"]] for p in bkk["positions"]]}
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
-            "led", "lagged", "sentiment", "tomorrow", "rules", "portfolio_note", "weekly_k_line", "labels")
+            "led", "lagged", "sentiment", "session_commentary", "tomorrow", "rules", "portfolio_note", "weekly_k_line", "labels")
     out["V"] = {}
     out["fig"] = {}
     for lang in ("EN", "ZH"):

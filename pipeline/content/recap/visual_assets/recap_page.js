@@ -690,6 +690,7 @@
       sec(false, L.laggards, "", ledger(c.lagged)) +
       (wk ? sec(false, L.weekly_k, "", wk) : "") +
       (c.sentiment ? sec(false, L.sentiment, "", '<p class="prose">' + rich(c.sentiment) + "</p>") : "") +
+      (c.session_commentary && c.session_commentary.length ? sec(false, L.session_commentary, "", olist(c.session_commentary, "ol-a")) : "") +
       sec(false, L.tomorrow, "", olist(c.tomorrow, "ol-a")) +
       sec(false, L.rules, "", olist(c.rules, "ol-a")) +
       folio(is, V, 3, false, dl) + "</article>";
@@ -733,6 +734,8 @@
     var s3 = '<article class="sheet b"><div class="split-b"><div><div class="kicker">' + esc(L.working) + "</div>" +
       ledger(c.led) + '</div><div><div class="kicker">' + esc(L.laggards) + "</div>" + ledger(c.lagged) + "</div></div>" +
       (c.sentiment ? '<div class="kicker sp">' + esc(L.sentiment) + '</div><p class="prose">' + rich(c.sentiment) + "</p>" : "") +
+      (c.session_commentary && c.session_commentary.length ? '<div class="kicker sp">' + esc(L.session_commentary) +
+        "</div>" + olist(c.session_commentary, "ol-b") : "") +
       '<div class="kicker sp">' + esc(V.rot_d) + '</div><div class="bars2">' +
       safe(function () { return barsPanel(g.industry && g.industry.d1, L.industries, V.d1); }) +
       safe(function () { return barsPanel(g.theme && g.theme.d1, L.themes, V.d1); }) + "</div>" +
