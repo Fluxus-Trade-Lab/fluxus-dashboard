@@ -50,3 +50,37 @@ Andy 原话：「这三个分支，"金9银10"这个研究分析删除，不需�
 | `fix/alex-stockbee-s2-prev-volume` | `e3d38ecc595252482e119d759dda5e0c37cb2c84` | `e3d38ecc595252482e119d759dda5e0c37cb2c84` |
 
 ⚠️ main 上已停用的选题卡 `2026-09-06_autumn-effect-decay/RECORD.md` 引用的 `7e924be4` 从此只能靠本表的 sha 找回。
+
+## 追记（2026-09-17）：janitor 审计后的「安全批」——3 worktree + 15 分支 + 17 根目录文件
+
+Andy 批「安全的那批可以删除」（janitor 报告 `janitor_report_0917.md` 判定：零差异已合入 main / 零独有 commit / 零引用）。
+
+**worktree（`git worktree remove`，均 0 dirty、内容与 origin/main 0 差异）**
+| 路径 | 分支/HEAD | sha |
+|---|---|---|
+| `AI-Trading-System-rotation-v3` | detached | `2a8932ec` |
+| `.claude/worktrees/vibrant-cray-7ce971` | detached | `34b6b8f8` |
+| scratchpad `wt-ml3` | detached | `ea1b882c` |
+
+**分支（`git branch -D` + 有 origin 的一并 `git push origin --delete`，均 0 独有 commit）**
+| 分支 | sha | origin 也删 |
+|---|---|---|
+| `push/l3` | `1f06b688` | 无 origin |
+| `push/tick` | `b5d50a83` | 无 origin |
+| `feat/skill-os-v2` | `197af68f` | 无 origin |
+| `feat/audit-deploy-cost` | `8a8166cd` | 无 origin |
+| `docs/almanac-seasonality` | `b8409459` | 无 origin |
+| `fix/alex-no-downgrade-overwrite-2026-08-31` | `4f2fe309` | ✅ |
+| `fix/joe-backstop-gate-date-2026-08-29` | `9170aba3` | ✅ |
+| `voice/deslop-own-lines` | `1e1053d1` | ✅ |
+| `fix/sp500-roster` | `4b387dd8` | 无 origin |
+| `feat/market-light` | `640643c4` | 无 origin |
+| `feat/market-light-rulings` | `ca004859` | 无 origin |
+| `fix/vercel-storage-ignore-build` | `89c59a1d` | ✅ |
+| `feat/rotation-v3` | `701f5e56` | ✅ |
+| `worktree-agent-a31f308c6353de144` | `6b01e1f1` | 无 origin |
+| `worktree-agent-a8e8e36055bcf4307` | `6b01e1f1` | 无 origin |
+
+**根目录死文件（17 个，commit `307d6197`）**：16 个 `Fluxus_*.md`（08-02 死副本，正本在 `Fluxus_Brand/`）+ `MERGE_REPORT.md`（零引用）。
+
+**本轮未动、留人工裁决**：worktree `stoic-driscoll-4a87cf`（分支 `claude/friendly-chaplygin-b46c13` 07-11，247 独有 commit / 2514 文件差异，疑似早期分叉，需人工确认价值）；12 条有独有内容的分支（6 条 08-22 wip 封存快照、`fix/ohlc-staleness-guard`、`worktree-fluxus-data-art` 孤儿分支、2 条 `archive/*`、2 条早期 feature 归档）；`.git` 681MB 大文件历史（需 filter-repo 级操作）；主树 `feat/morning-three-pages` 落后 main 十几天的漂移对齐。详见 `janitor_report_0917.md`。
