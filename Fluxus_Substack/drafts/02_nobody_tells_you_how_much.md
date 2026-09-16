@@ -2,7 +2,9 @@
 
 *Section: Method  ·  Audience: everyone  ·  Day 1*
 *框架取自 `user_trading_profile.md`(Account A 实盘规则)。数字是你真实在用的,不是示范用的。*
-*✅ 已按你的要求改为**纯百分比口径** —— 全文无任何美元金额、无账户量级。*
+*✅ 纯百分比口径,无美元金额、无账户量级。*
+*✅ 2026-08-09 数字对齐 `performance_review.py` 实算(331 笔 / 46 纯止损 / 156 分批离场)。*
+*✅ 2026-09-17 Writer Mia：频率句随 46 笔重算（`pipeline.marketcal`：2026-01-01→07-22 共 138 个交易日 ÷ 46 ＝ 每 3 个交易日一次）。*
 
 ---
 
@@ -48,7 +50,7 @@ Two consequences follow, and they're both features.
 
 A setup that's a mess — wide, gappy, no clear place to be wrong — mechanically gets a tiny position. I don't have to summon discipline to pass on bad structure. The arithmetic passes for me. *No tightness, no trade* isn't willpower, it's division.
 
-And when I'm wrong, I'm wrong for a quarter of a percent. This year I've taken 331 trades. A hundred and thirty of them ended with nothing happening except the stop firing. That's roughly once a business day, all year, and not one of those days mattered.
+And when I'm wrong, I'm wrong for a quarter of a percent. This year I've taken 331 trades. Forty-six of them ended with nothing happening except the stop firing at about –1R. That's about once every three trading days, all year, and not one of those days mattered.
 
 ## The two-leg structure
 
@@ -60,7 +62,7 @@ This is the piece I haven't seen written down elsewhere, and it's where most of 
 
 Most people run one stop for the entire life of a trade and it's wrong at both ends: too wide to give them size at entry, too tight to let them hold anything through a normal pullback. Running two legs lets each stop answer the question it's actually good at.
 
-This year, the 20 trades where I ran both legs properly averaged **about 3× what a single well-timed exit made me** — and roughly nine times the average trade overall. Twenty trades out of 331. Same trader, same seven months, same ideas. The difference was structure.
+This year, 156 of 331 trades were scaled out in pieces rather than closed in one decision. They averaged **+1.67R** and produced **+260R of the total** — more than twice what the 44 clean sell-into-strength exits made, despite a lower average per trade. The two-leg structure does not win by being the best exit. It wins by being the one available often enough to compound.
 
 ## Three caps that sit above all of it
 
