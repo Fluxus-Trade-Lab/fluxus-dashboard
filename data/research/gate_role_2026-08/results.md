@@ -1,5 +1,7 @@
 # 结果 · 每一道筛子是「选股闸」还是「仓位闸」
 
+> ⚠️ **半字母表标注（Nighty Zac 2026-09-17）**：train（67 天）不含窗口日，头条「选股维度是空的」不受影响；**holdout 29 天里 21 天在 A–L 窗口，事件 72.4%**。凡引用 holdout 的句子（表 2 holdout 列、「11/11 同向」「4 道反号」）建在半宇宙上；干净 holdout 只剩 8 天，低于 `MIN_DAYS=20`，无法干净重报。详见 [重报](../half_alphabet_reach_2026-09-17/README.md)。
+
 预注册 [`prereg.md`](prereg.md)（跑之前落盘，含末节偏离记录） ·
 引擎 [`measure.py`](measure.py) → [`measure_adr_matched.py`](measure_adr_matched.py) → [`measure_robust.py`](measure_robust.py) ·
 表格由 [`tables.py`](tables.py) 生成 · 计数由 [`facts.py`](facts.py) 计算

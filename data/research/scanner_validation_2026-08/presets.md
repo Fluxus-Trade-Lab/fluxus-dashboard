@@ -1,5 +1,7 @@
 # 每把刀一份档(A 出处 · B 我们的实现 · C 实证 · D 案例 · E 判词)
 
+> ⚠️ **半字母表标注（Nighty Zac 2026-09-17）**：C 段面板读数有 42.8% 的 fwd20 样本来自 A–L 半宇宙快照（06-26/07-02/07-10/07-31），横截面分位也在半宇宙上排。剔窗后 PP 三格由负转正、LL-HL 方向不变。详见 [重报](../half_alphabet_reach_2026-09-17/README.md)。
+
 *C/D/E 段等 `study_*.csv` 出来后填;A/B 段先立。原话引用来自 `data/research/screener_competitors_2026-08-17.md`(Stockbee 博客、@oratnek_ill / @SteveDJacobs / @PrimeTrading_ 的 X 帖,2026-08-17 抓)和 `data/reference/screener_methods.md`。标【待补】的是还没抓到作者原文/案例的。*
 
 ---

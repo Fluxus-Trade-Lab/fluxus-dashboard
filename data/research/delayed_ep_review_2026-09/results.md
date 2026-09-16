@@ -1,5 +1,7 @@
 # Delayed EP 账本首次复盘 · 2026-09-01
 
+> ⚠️ **半字母表标注（Nighty Zac 2026-09-17）**：本轮 648 行里 as_of 在继承脏区的占 95.7%，M–Z 8.2%（窗口外 46.4%）。「左尾 24.7% vs 8.8%」与文末可发布的那句话都建在这上面；`ep_date>08-07` 子集只有 14 对 13。09-09 的 [`results_2026-09-09.md`](results_2026-09-09.md) 已按行剔除重读。详见 [重报](../half_alphabet_reach_2026-09-17/README.md)。
+
 **账本**：`data/history/delayed_ep_log.csv` —— 648 行 / 12 个 session（2026-08-13 .. 08-28）/ 90 只票
 **脚本**：[`review_benchmarked.py`](review_benchmarked.py) · **原始输出**：[`run_2026-09-01.txt`](run_2026-09-01.txt)
 **背景**：`delayed_ep_scan --review` 自 08-13 建账本以来**从未跑过**。这是第一次。

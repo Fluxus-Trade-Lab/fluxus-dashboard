@@ -1,5 +1,7 @@
 # 结果 —— 「下一段是大还是小」测出来是什么
 
+> ⚠️ **半字母表标注（Nighty Zac 2026-09-17）**：样本 32.4% 在 A–L 窗口（06-26..08-07）。剔除后「幅度可预测」仍成立（disc ρ 0.296→0.267），但**「方向 ρ = 0」不稳**：disc 变成 +0.057（p=3.8e-5），原来的零是干净段与窗口段互相抵消；干净时段只留 A–L 仍是 +0.048，所以这是时段效应不是截断效应，holdout 臂未复制。详见 [重报](../half_alphabet_reach_2026-09-17/README.md)。
+
 预注册：[prereg_amplitude.md](prereg_amplitude.md)（**跑第一行计算前**已 commit `563c05b1`）
 工具：[`study.py`](study.py) · 复跑：`python3 data/research/amplitude_2026-08/study.py --holdout`
 原始读数：[results.json](results.json)

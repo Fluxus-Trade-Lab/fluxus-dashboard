@@ -83,3 +83,15 @@
 ```bash
 python3 data/research/dirty_window_reach_2026-09-02/measure.py
 ```
+
+---
+
+## ↳ 更正（Nighty Zac 2026-09-17）
+
+第一节第 1 条「除 `ticker_events.csv` 外，所有带日期的归档都开始于污染窗口之后」**是错的**，错在两处：
+
+1. **`breadth_archive.csv` 从 2024-05 就有，06-26..08-07 的 30 场 `universe_size` 全在 3,000 附近**——`measure.py` 只扫同时有日期列和代码列的文件，没有代码列的它**静默跳过**了，所以表里根本没有这份。
+2. **`shortlist_log` / `shortlist_seat_log` 日期在窗口外，却通过 heat 席位的 15 日回看继承了脏区（08-19..08-28）**——和本档第三节 `delayed_ep_log` 同一个机制，我当时只看了行级首字母占比，没去读写入代码的回看长度。
+
+继任脚本与全表：[`half_alphabet_reach_2026-09-17/`](../half_alphabet_reach_2026-09-17/README.md)。
+
