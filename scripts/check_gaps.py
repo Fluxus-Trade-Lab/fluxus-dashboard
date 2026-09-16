@@ -15,6 +15,13 @@ Exit code carries the urgency so the chain can act on it without parsing text:
 for something nobody can fix is how alarms get ignored, and the eight
 unrecoverable flow reads in this repo would have done exactly that.
 
+The chain is consulted when TWS is up, because a deadline has to be looked up
+rather than estimated. The first version counted days instead and on 2026-08-18
+told Andy that 08-17's 0DTE was still recoverable when the expiry had already
+left the chain. Without TWS every contract-backed gap comes back `unknown` and
+the exit code stays 0 -- we do not know of anything to do, which is not the same
+as knowing there is nothing.
+
 Usage:
     .venv/bin/python scripts/check_gaps.py
     .venv/bin/python scripts/check_gaps.py --days 10 --json
@@ -36,9 +43,30 @@ def main():
                     help="Trading sessions to look back over.")
     ap.add_argument("--symbol", default="SPX")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--offline", action="store_true",
+                    help="Do not consult the chain. Contract-backed gaps then "
+                         "report `unknown` rather than a guess.")
     args = ap.parse_args()
 
-    r = G.scan(days=args.days, symbol=args.symbol)
+    listed = None
+    if not args.offline:
+        try:
+            from ib_async import Index
+            from pipeline import ibkr as IBKR
+            ib = IBKR.connect(247, timeout=8)
+            try:
+                u = Index("SPX", "CBOE")
+                ib.qualifyContracts(u)
+                ch = max(ib.reqSecDefOptParams(u.symbol, "", u.secType, u.conId),
+                         key=lambda c: len(c.strikes))
+                listed = set(ch.expirations)
+            finally:
+                ib.disconnect()
+        except Exception as e:      # noqa: BLE001 - unknown is a real answer
+            print(f"  chain not consulted ({type(e).__name__}) — "
+                  f"contract-backed gaps will read `unknown`")
+
+    r = G.scan(days=args.days, symbol=args.symbol, listed_expiries=listed)
     print(json.dumps(r, indent=2) if args.json else G.report(r))
 
     u = G.urgent(r)
