@@ -83,6 +83,7 @@
   - 归属 Andy 本人（Discord 角色管理不在任何线的文件边界内）。依据与建议动作在 `data/growth/weekly/2026-08-25-paypal-reconcile.md` 的「⏳ 待办」节 T1。
   - **增长官会在每周一记账时把本条抄进周报置顶，直到 Andy 说做完。**
   - 同节另有 T2（支付宝渠道流水，阻塞台账全量）与 T3（PII 清史，等 Andy 发话）。
+  - ↳ ⏸ **不是待办（OPS 09-17 核）**：Andy 08-28 已否决暂缓，原话「否定。还不做这件事。」——增长台账 `2026-08-25-paypal-reconcile.md` T1 早记为 `status: deferred`，本条的「待办」没跟着改，每日页因此一直把它端上牌。重开前先重查成员状态。
 
 - **[09-14 · Nighty Zac 代录 · 回 y/n 即核销]** **两条待合分支，都是纯新增、都碰了夜班白名单外的 `data/reference/`，所以我不自合：**
   - `auto/night-20260912-bb6565-protocol` · `RESEARCH_PROTOCOL.md` §五补「NULL 必须带分辨率」7 行（**第 3 晚**；main 自分叉后没碰过该文件）· 建议 y

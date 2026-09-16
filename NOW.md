@@ -25,8 +25,6 @@
 - [ ] 🔴 蒸馏厂：口述 3 张（C19 / C14 / C21）+ 判断题 2 道（C17 / C26）—— `FluxusTrading_Obsidian/90_Inbox/candidates/_TO_REVIEW.md` 页底「09-17 更新」
 - [ ] 🔴 课程 NEEDS_ANDY 交互式审核 + 交互课件范围 —— 明天
 - [ ] 🟠 课程上架两件无留痕：落地页（Writer Mia）· Whop 上架与定价（Growth Gary）—— 09-10 后零进展
-- [ ] 🟠 Substack About 页两个决定（会员数放不放 · Discord 算不算订阅权益）—— `Fluxus_Substack/00_SETUP.md` §4a
-- [ ] 🟡 Discord 两个付费角色回收（08-25「提醒我」，2 分钟）
 - [ ] 🟡 官网 fluxus-capital.com Tier 2 两行 —— 待你登录 Squarespace
 
 ## 停做清单（09-17 Andy 勾定，到 09-20）
@@ -46,6 +44,7 @@
 - Library = 问答界面 + 每日概念（09-04），与 08-17 Library 视觉化改版同一块地 —— [`docs/plans/2026-09-04-library-ai-assistant-reference.md`](docs/plans/2026-09-04-library-ai-assistant-reference.md)
 - 播客 · 视频（09-02 排除出 09-20，上线后各自另立三件套）
 - Welcome 邮件补两个链接位（站上文章够五篇后）
+- Discord 两个付费角色回收 —— 08-28 否决暂缓（「否定。还不做这件事。」），重开前先重查成员状态，见 `data/growth/weekly/2026-08-25-paypal-reconcile.md` T1
 - safe-merge 白名单与外部动作边界的报告（OPS 欠，提案存档 `data/reference/proposals/2026-08-31_safe_merge_boundary.md`）
 
 ## 规则备忘
