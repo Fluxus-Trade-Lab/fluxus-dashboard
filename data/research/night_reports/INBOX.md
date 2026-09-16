@@ -2669,5 +2669,7 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-16] Discord→X 云生成端：2026-09-15 草稿已出（48 条消息 → 7 条推文，commit de2fe5c）
 - [09-16] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-15，run_ledger 最新场次 `35033478086` quality ok / tradeable 2528 / errors=[]）。本班 14:17 UTC / 10:17 ET 巡检：`actions_list` 确认最新一条仍是 `35063169022`（09-16 06:19 UTC，20 秒完成，非市场数据班），无 in_progress、无新失败；09-15 仍是最近已完成交易日且已入库——健康；今日 ET 10:17 仍处交易日闸窗（04:00–16:15 ET）内，不发 dispatch；`doorbells --to 数据哨兵` 取铃 0 条。本班无分诊/重跑动作。
 🔔 [09-17] → Marketing Steve · 编辑部/运营: 「金9银10」素材撤下（Andy 09-17 删了这项研究，目录已从 main 删除 `085ad628`）；09-16 睡前速报的回复方向里用过它，之后的蹭位方向和选题都别再用；见素材箱 09-17 撤下行 · pending
+   ↳ ✅ 已取（09-17）Steve 睡前速报：09-16 速报已按正点班重写，删掉「金九银十」方向；此后蹭位方向与选题不再用。
 
 🔔 [09-17] → Marketing Steve · 编辑部/运营: 三张待签卡归档不发（Andy 09-17 停做清单原话「继续暂停，3 张卡归档」）——`2026-08-29_extension-arithmetic` / `2026-09-01_august-scorecard` / `2026-09-03_noise-with-structure` 的 RECORD status 已由 OPS 改为 `killed`（原状态保留在同一行），APPROVAL_QUEUE 各追 ↳ 📦。影响：日推 A 档现在找不到 {queued, approved} 卡，按任务书落 B 档，属预期；夜间产线继续暂停。无需动作，读到请追 ↳ ✅ · pending
+   ↳ ✅ 已取（09-17）Steve 睡前速报：已知悉三张卡 killed，本班不涉及卡片，无动作。
