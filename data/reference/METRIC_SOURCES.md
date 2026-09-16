@@ -89,7 +89,7 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |
 | — | Bullish Percent Index | P&F 买入信号占比 | 🔲 我们没有 |
 | —（拟 `climax_signs`） | O'Neil **Climax Top / Climax Run** | 长期上涨（典型 ≥18 周）之后加速的 1–2 周终段，同时看七个征兆：①**exhaustion gap**（跳空高开于昨日高点之上，重量）②**该轮最大单日涨幅** ③**该轮最大单日成交量** ④连续 7–8 个上涨日（或 10 日中 8 日涨）⑤**该轮最大周振幅**（周高−周低大于本轮起点以来任何一周）⑥价格刺穿上轨通道线（该线由 4–5 个月内 ≥3 个高点连成）⑦距 200 日均线 +70~100% 以上 | 🔲 **我们没有**。七条里只有第 ⑦ 条现成（`sma200_dist`）；①②③⑤⑥ 需要「本轮上涨起点」这个锚，而我们**没有任何字段定义"本轮"** |
-| —（拟 `ftd`） | O'Neil / IBD **Follow-Through Day** | 前置：指数创新低后出现 **rally attempt 第 1 天**（当日收盘高于开盘 / 高于前收，或小跌但收在当日区间上半部）；随后 2、3 日**不得跌破第 1 天的低点**，跌破则重新计数。**第 4 天或以后**（最佳 4–7 天，最迟约 10 天）某大盘指数**收涨 ≥1.25%**（IBD 现代口径抬到 **≥1.7%**，2% 更好）**且成交量高于前一交易日**——成交量只需高于前一日，不要求高于均量 | 🔲 **我们没有**，且**指数成交量在 `data/output/` 里根本不存在** |
+| —（拟 `ftd`） | O'Neil / IBD **Follow-Through Day** | 前置：指数创新低后出现 **rally attempt 第 1 天**（当日收盘高于开盘 / 高于前收，或小跌但收在当日区间上半部）；随后 2、3 日**不得跌破第 1 天的低点**，跌破则重新计数。**第 4 天或以后**（最佳 4–7 天，最迟约 10 天）某大盘指数**收涨 ≥1.25%**（IBD 现代口径抬到 **≥1.7%**，2% 更好）**且成交量高于前一交易日**——成交量只需高于前一日，不要求高于均量 | 🔲 **管线没有**，且**指数成交量在 `data/output/` 里根本不存在**。研究侧有一版自用检测器（09-07，vault 模型册用，**不在本仓库**），口径与读数见下方「FTD 口径」节 |
 | —（拟 `dist_day` / `dist_count_25`） | IBD **Distribution Day** | 某大盘指数（Nasdaq Composite 或 S&P 500）**收跌 >0.2%** **且当日成交量高于前一交易日**（同样只要求高于前一日，不要求高于均量）。计数看**滚动 25 个交易日**窗口；一天在下列任一条件下出列：已过 25 个交易日，或指数自该日收盘起**涨 ≥5%**。**4–5 天 = Under Pressure，6 天以上通常先于回调** | 🔲 **我们没有**；缺的字段与 FTD 同一个（指数日量） |
 | —（拟 `sfp`） | **查过，无单一权威**。现代通用名 Swing Failure Pattern (SFP) | 通行描述：一根 K 线的**影线**穿越前一个 swing high / swing low，**收盘回到该极值之内**。Wyckoff 谱系里的对应物是有阶段前提的 **Upthrust After Distribution (UTAD)** 与 **Spring / Shakeout**；SFP 是把同一机制**剥掉阶段前提**推广到任意 swing 极值 | ⚠️ **不得当作标准读数**。同一形状在四套体系里叫四个名字（Wyckoff upthrust / Wilder failure swing / SFP / SMC 的 liquidity sweep），**没有一套给出可判定的数值门槛** |
 | —（拟 `weinstein_stage`） | Weinstein **Four Stages**（原书 Ch.2） | 以 **30 周均线（30-week MA）的斜率 + 价格相对它的位置**判定：**Stage 1 基地区**＝MA 由跌转**平**，价格在 MA 上下来回、仍在阻力位下方的箱体内；**Stage 2 上升期**＝价格**放量突破阻力区与 30 周 MA**，MA 突破后不久**转升**，此后每次回调都**守在上升的 MA 之上**、峰与谷双双抬高；**Stage 3 顶部区**＝MA 失去上升斜率**转平**，价格开始在 MA **上下反复穿刺**（Stage 2 时回调始终守在 MA 上或之上），放量滞涨（churning）；**Stage 4 下跌期**＝价格**跌破支撑区**、MA **下行**且价格在 MA 之下（**破位不需要放量也成立**，放量更凶） | 🔲 **我们没有**；**30 周均线的值与斜率两个都没发**（见下） |
@@ -101,6 +101,54 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `audit_events_vs_bars` 的两条恒等式 + 帧归属（审计闸，**不上页**） | Reconciliation / cross-source validation | 逐单元格比对独立来源 + 容差 + 覆盖率同报；**不规定**具体容差，也没有「帧归属」这一步 | ⚠️ **容差与判定线是自造的，按实测空档定**：①`change_pct` 对 `close/前收−1`，容差 0.005、判定线 0.90（Zac 2026-09-11）；②`volume` 对当日 bar 量，**单边带** [0.90, 1.01]、判定线 0.80、同票同量计一票（Zac 2026-09-14；Finviz 一侧只偏低，成因未证实，带依赖运行时刻）；③帧归属（best-matching bar date）查无标准名，只在判红后给线索；④**「当晚临时量不判」窗口**：K 线库最新一根 bar 若 `fetched_at` 与之同日或次日（UTC），volume 不判它——自造，依据 09-15 实测库量比次日终值少 1–10%、Finviz 与终值差 <0.3%（DATA ALEX 2026-09-17，`_mark_provisional`）。依据与分辨率全在该文件 docstring |
 
 来源（本批 2026-09-06 追加，源 [`recap_vocab_sources_2026-09-06.md`](../research/ops/recap_vocab_sources_2026-09-06.md)；Andy 批「候选行批了，Power Trend 改判定对齐 Webster，撞名立机制」，口语三词 hot potato / the tell / lone standout 被裁「都是口语，忽略」，未登记）。
+
+## FTD 口径（2026-09-07 登记）
+
+> **合入说明（Nighty Zac 2026-09-17，OPS 门铃）**：本节 09-07 写在主树、从没提交，今晨只把这一节合进 main 版，表格里不另开 `ftd` 行（09-06 已有「拟 `ftd`」行，已在该行状态列指到这里）。两处与该行不一致，以该行为准：①Day 1 判据，该行写的是「收盘高于开盘/前收，或小跌但收在当日区间上半部」，本节只写了「第一个上涨日」；②「跌破 Day 1 低点重新计数」该行已列为通行口径，本节当时按自造记账。⚠️ 下表与阳性对照的数字是 09-07 登记时的读数，**生成它们的检测器代码不在本仓库，今晨未复算**；引用前先找到代码复算。
+
+**为什么查**：要给 `60_ModelBook/02_市场底部/` 建市场底部册，起手是 2020 年那个窗口。
+按本表的规矩，先查有没有专业口径——**有，而且很明确**，所以照抄，没自己造。
+
+**照抄的部分**（来源见文末）：
+- `Day 1 of the rally attempt` = 「**the first up day from a bottom in the major indexes**」
+- FTD 只能出现在 **Day 4 或之后**（「I only allowed for Follow Through Days to qualify starting Day 4 as per IBD」）
+- 当日**涨幅 ≥1.7%**，且**成交量高于前一日**
+  （原始口径是 ≥1%；IBD 后来上调到 1.7%，理由是「volatility had increased in the market」）
+
+**⚠️ 自造的部分（三个，必须明写）**：
+1. **「bottom」怎么操作化**——我用「收盘价创 20 日新低，且距 252 日收盘高点回撤 ≥8%」。
+   原文只说 "from a bottom"，**没给判据**。20 日 / 8% 两个数是我拍的。
+2. **尝试何时作废**——盘中低点跌破 Day 1 当日低点即重新计数。这条是 IBD 的通行做法，
+   但我没找到它的原始出处，**按自造记账**。
+3. **修复退出**——指数收回 Day 1 那天的 252 日高点即放弃计数。
+   纯粹是我加的，防止一次尝试在整段牛市里一直数下去（未加之前出现过 Day 338 的荒唐读数）。
+
+**⭐ 阳性对照（外部真值，不是自我验证）**：
+《2018-2020 TraderLion Model Book》**独立地**写着「AMZN broke out through \$1,933.02 on **April 6th
+as the NASDAQ followed through**」「CRWD…on April 7th, **one day after** the NASDAQ followed through」
+「DOCU…on March 30th **about a week before** the NASDAQ followed though」。
+我的检测器在 ^IXIC 上给出的 2020 年唯一春季 FTD 是 **2020-04-06**（Day 10，+7.33%，量 ×1.17），
+**与这三句话全部自洽**。这是外部来源的复现，不是我拿自己的规则验自己。
+
+**⚠️ 实测：这个信号本身没有可测的择时优势（1998-01 ~ 2026-09，^IXIC / ^GSPC）**
+
+| | ^IXIC | ^GSPC |
+|---|---|---|
+| FTD 条数（1.7% 口径） | 65 | 45 |
+| 一年内跌破 Day 1 低点（＝失败） | **58%** | **58%** |
+| 失败的中位耗时 | 20 个交易日 | 27 个交易日 |
+| FTD 后 +252 日中位涨幅 / 胜率 | +17.9% / 73% | +12.7% / 68% |
+| **同期「已回撤 ≥8% 的任意一天」基线** | **+17.8% / 66%** | **+13.3% / 65%** |
+
+→ **中位涨幅几乎完全相同**（17.9 vs 17.8；12.7 vs 13.3）。胜率高 5–7pp，但 n=65/45，
+落在噪声里。**结论：FTD 不是一个能提高指数前瞻收益的择时信号。**
+这与 Quantifiable Edges 1971–2008 的独立回测方向一致（他测出 55.7% 的"成功率"，
+而 IBD 宣称 70–80%）。
+
+→ **但这不等于它没用**：模型册里它的实际用法不是预测指数，是**给个股突破定位一个时间窗**——
+2020 年 12 只龙头有 10 只在 FTD 的 −5 ~ +3 个交易日里突破。
+⚠️ 那 12 只是 Ross 事后挑的，**挑的人本来就用 FTD 思考**，所以那个聚集**不是独立证据**，
+只是「他们怎么用这个概念」的示范。要证明聚集，得用一个不知道 FTD 的名单重做。
 
 ## 已登记的债
 
@@ -124,6 +172,9 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 [Barchart 新高新低汇总（池子排除规则）](https://www.barchart.com/stocks/highs-lows/summary) ·
 [AAII: Using New Highs and New Lows to Measure Market Breadth](https://www.aaii.com/journal/article/455994-using-new-highs-and-new-lows-to-measure-market-breadth)
 
+
+FTD 口径来源：[Quantifiable Edges — IBD Follow Through Days pt.1（含 1971-2008 独立回测）](https://quantifiableedges.blogspot.com/2008/01/ibd-follow-through-days-pt-1-are-they.html) ·
+[TraderLion — Follow Through Day](https://traderlion.com/trading-strategies/follow-through-day/)（正文 403，仅作出处登记，未取用其文字）
 
 ## 已删除的字段（2026-09-05，第二关 I 项）
 
