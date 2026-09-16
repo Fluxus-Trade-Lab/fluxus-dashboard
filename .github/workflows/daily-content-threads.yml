@@ -8,8 +8,10 @@ name: Daily Content Threads
 
 on:
   schedule:
-    # 22:00 UTC = 17:00 EST Mon-Fri (30 min after data pipeline)
-    - cron: '0 22 * * 1-5'
+    # 20:00 UTC = 16:00 EDT / 15:00 EST Mon-Fri. Moved up 2h from 22:00 UTC
+    # (Andy 2026-09-16: he's asleep before the last hour into close anyway,
+    # so fetching before that hour loses no Discord commentary).
+    - cron: '0 20 * * 1-5'
   workflow_dispatch:
     inputs:
       date:
