@@ -488,8 +488,8 @@ def test_injecting_a_volume_replay_into_the_real_archive_turns_it_red(tmp_path):
     with open(REAL_ARCHIVE, newline="") as fh:
         rows = list(csv.DictReader(fh))
         head = list(rows[0].keys())
-    covered = set(A.calendar(A.load_store(REAL_STORE)))
-    days = sorted({r["date"] for r in rows} & covered)
+    # 最新一根 bar 若是当晚抓的临时量，volume 不判（见 test_a_bar_fetched_the_same_evening_is_not_judged_on_volume）
+    days = sorted(A.audit(REAL_ARCHIVE, REAL_STORE, declared={})["volume"]["judged"])
     last, prev = days[-1], days[-2]
     prev_vol = {}
     for r in rows:
@@ -508,3 +508,30 @@ def test_injecting_a_volume_replay_into_the_real_archive_turns_it_red(tmp_path):
         w.writerows(rows)
     res = A.audit(p, REAL_STORE, declared={})
     assert last in res["volume"]["bad"], f"注射了一场成交量重放，volume 恒等式却没报 {last}"
+
+
+def _store_v_fetched(tmp_path: Path, fetched_at: str) -> Path:
+    d = _store_v(tmp_path, name="tickers_vf")
+    for f in d.glob("*.json"):
+        blob = json.loads(f.read_text())
+        blob["fetched_at"] = fetched_at
+        f.write_text(json.dumps(blob))
+    return d
+
+
+def test_a_bar_fetched_the_same_evening_is_not_judged_on_volume(tmp_path):
+    """2026-09-15 的形状：K 线库 23:13Z 抓下的当日 bar 量是临时的（比次日终值少 1–10%），
+    而 Finviz 的量已经对上终值（37/37 在 0.1% 内）。归档是对的、尺子是错的 —— 那一根不判 volume。"""
+    rows = _vol_rows("2026-09-03", "2026-09-03", scale=1.2)       # 看上去「Finviz 偏高 20%」
+    res = A.audit(_archive(tmp_path, rows), _store_v_fetched(tmp_path, "2026-09-03T23:13:00Z"),
+                  declared={})
+    assert res["violations"] == []
+    assert ("2026-09-03", 0) in res["volume"]["unjudgeable"]
+
+
+def test_a_bar_fetched_two_days_later_is_final_and_still_judged(tmp_path):
+    """阳性对照：同一组偏 20% 的量，只要那根 bar 是隔夜以后抓的，照样判红。"""
+    rows = _vol_rows("2026-09-03", "2026-09-03", scale=1.2)
+    res = A.audit(_archive(tmp_path, rows), _store_v_fetched(tmp_path, "2026-09-05T23:13:00Z"),
+                  declared={})
+    assert "2026-09-03" in res["volume"]["bad"]

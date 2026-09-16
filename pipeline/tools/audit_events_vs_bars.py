@@ -75,6 +75,9 @@
 5. **最新一场常常查不了**：cron 写完归档时，K 线库可能还停在上一场
    （2026-09-11 实测：归档已有 09-10，库的最后一根 bar 是 09-09）。于是写入当晚最该查的那一场
    恰好判「查不了」。生产接线必须放在**K 线库刷新之后**，否则它每晚都对最新一场是瞎的。
+   ↳ 2026-09-17（DATA ALEX）：刷新之后 change_pct 能判最新一场，**volume 仍不能**——当晚抓的最新
+   bar 量是临时值（09-15 实测比终值少 1–10%，误判 73.8% 红），由 `_mark_provisional` 排除，
+   **隔一晚**（下一班 --refresh-existing 重抓后）才判。已接线：`daily-data-update.yml`「Audit events vs vendor bars」。
 
 ⚠️ 这是**棘轮**不是警报（同 `audit_event_agreement` / `audit_ci_test_coverage`）。
 归档归 DATA ALEX，夜间组不改 `data/history/`。已知的坏日在 DECLARED 里**具名声明**
@@ -89,6 +92,7 @@ import math
 import os
 import sys
 from collections import defaultdict
+from datetime import date, datetime
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence, Tuple
 
@@ -153,8 +157,31 @@ def load_store(store_dir: Path | None = None) -> Dict[str, Dict[str, dict]]:
         bars = blob.get("ohlc_2y") or blob.get("ohlc_1y") or []
         if not bars:
             continue
-        out[os.path.basename(p)[:-5]] = {b["date"]: b for b in bars if b.get("date")}
+        series = {b["date"]: b for b in bars if b.get("date")}
+        _mark_provisional(series, blob.get("fetched_at"))
+        out[os.path.basename(p)[:-5]] = series
     return out
+
+
+def _mark_provisional(series: Dict[str, dict], fetched_at) -> None:
+    """最新一根 bar 若是**当晚或次日（UTC）**抓的，它的成交量还是临时值 —— 标出来，volume 不判它。
+
+    2026-09-15 实测（DATA ALEX 09-17）：库在 23:13Z 抓下的 09-15 bar，量比次日 yfinance 终值少
+    1–10%（ALB 0.897、BB 0.901、AVGO 0.945），而 Finviz 那一侧 37 只里 35 只与终值差 <0.3%。
+    归档是对的，尺子是错的，volume 判了 73.8% 红。收盘价不受影响，change_pct 照判。
+    「当晚或次日」是**自造**的窗口：夜间 cron 每晚 --refresh-existing 重抓，隔一晚的 bar 实测已是终值。
+    没有 fetched_at 的库（测试夹具、旧文件）不标 —— 不知道就当终值，不替它编一个时间。
+    """
+    if not series or not fetched_at:
+        return
+    try:
+        fetched = datetime.fromisoformat(str(fetched_at).replace("Z", "+00:00")).date()
+        last = max(series)
+        lag = (fetched - date.fromisoformat(last)).days
+    except ValueError:
+        return
+    if 0 <= lag <= 1:
+        series[last] = dict(series[last], _provisional_volume=True)
 
 
 def calendar(store: Mapping[str, Mapping[str, dict]]) -> List[str]:
@@ -255,6 +282,8 @@ def _vol_rate(pairs: Sequence[Tuple[str, float]], store, cal_index, cal, day: st
     hit = n = 0
     for ticker, v in pairs:
         bar = (store.get(ticker) or {}).get(day)
+        if (bar or {}).get("_provisional_volume"):
+            continue
         try:
             bv = float((bar or {}).get("volume") or 0)
         except (TypeError, ValueError):
