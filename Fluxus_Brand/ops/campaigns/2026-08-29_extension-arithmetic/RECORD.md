@@ -1,6 +1,6 @@
 # CAMPAIGN: extension-arithmetic · 2026-08-29（第 2、3 轮：2026-08-30 断点续跑）
 
-status: **queued** —— **第 4 轮（终轮）：放行一个子集。进包＝旗舰 + V1 + V4；下架＝V2 + V3。** 已追 [`APPROVAL_QUEUE.md`](../APPROVAL_QUEUE.md)，等 Andy 签字（`approved` 只有他能写）。判定全文 [06_gate_review.md](06_gate_review.md) §第 4 轮。
+status: **killed** —— 📦 Andy 2026-09-17 归档不发（停做清单原话「继续暂停，3 张卡归档」）。此前 status：**queued** —— **第 4 轮（终轮）：放行一个子集。进包＝旗舰 + V1 + V4；下架＝V2 + V3。** 已追 [`APPROVAL_QUEUE.md`](../APPROVAL_QUEUE.md)，等 Andy 签字（`approved` 只有他能写）。判定全文 [06_gate_review.md](06_gate_review.md) §第 4 轮。
 rounds: 4  <!-- 轮数上限已用尽：第 4 轮只能放行或毙，不产生第 5 轮 -->
 
 > **这张卡走了三轮。** 08-29 首轮被退回旗舰站；08-30 夜间断点续跑，**没开新 campaign**（PIPELINE 断点续跑规则）。

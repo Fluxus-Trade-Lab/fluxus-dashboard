@@ -1,6 +1,6 @@
 # CAMPAIGN: noise-with-structure · 2026-09-03
 
-status: **queued**
+status: **killed** —— 📦 Andy 2026-09-17 归档不发（停做清单原话「继续暂停，3 张卡归档」）。此前 status：**queued**
 rounds: 3
 
 > **09-04（云端夜间产线）断点续跑记账 · 已过闸**：

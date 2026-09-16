@@ -27,6 +27,7 @@
   · 顺带（不用回，但你的否决会成为 `verdicts.jsonl` 的第一条真记录）：旗舰收口 `Conviction doesn't change the division.` 是被点名三轮仍未定的最后一句巧话，重话备选见 04 §三选择 4。
   · 判定全文：[`06_gate_review.md`](2026-08-29_extension-arithmetic/06_gate_review.md) §第 4 轮（终轮）
   ↳ ❌ **V1 否（Andy 2026-09-04 每日页批注，原话「太ai slop了，也不行」）**——旗舰与 V4 已于 08-31 窗口作废，V1 是最后活着的一条。**本包就此全灭，零发布。** 判例已入 `voice/verdicts.jsonl`（首条 rejected）。
+  ↳ 📦 **归档不发（Andy 2026-09-17 停做清单，原话「继续暂停，3 张卡归档」）**——RECORD status 改写 `killed`（模板「毙件标 killed 留原地」；不用新词 `archived`，免得产线重开时被续跑判据当成未完成卡）。
 
 - **[09-02] `2026-09-01_august-scorecard`** · 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-01_august-scorecard/`](2026-09-01_august-scorecard/)
   （旗舰＝[`04_flagship.md`](2026-09-01_august-scorecard/04_flagship.md) §一 · 四条变体见 [`05_distribution.md`](2026-09-01_august-scorecard/05_distribution.md) §一）
@@ -41,6 +42,7 @@
     **一致** → V1 的三个数与 V4 的 40.5%+四档格直接用；**变了** → 这两条的数**全部作废按新输出重写**，**V2 与 V3 不受影响、可照发**（两条零读数，完全常青）。
   · 顺带（不用回）：本卡对外**不再引用 SQN**，故 `METRIC_SOURCES.md` 缺 SQN 口径行**已不是发布前阻塞**，降为常规挂单转数据线。另 `05_distribution.md` §六.1 前两格的记账数没跟着撤下更新（仍写「5 个 / 1-2-4-5-6」）——**读者不可见**，不影响发布。
   · 判定全文：[`06_gate_review.md`](2026-09-01_august-scorecard/06_gate_review.md) §第 2 轮（过闸）
+  ↳ 📦 **归档不发（Andy 2026-09-17 停做清单，原话「继续暂停，3 张卡归档」）**——RECORD status 改写 `killed`（模板「毙件标 killed 留原地」；不用新词 `archived`，免得产线重开时被续跑判据当成未完成卡）。
 
 - **[09-04] `2026-09-03_noise-with-structure`**（云端夜间产线，断点续跑第 2/3 轮）· 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/`](2026-09-03_noise-with-structure/)
   （旗舰＝[`04_flagship.md`](2026-09-03_noise-with-structure/04_flagship.md) · 六条 X 变体 + newsletter 骨架见 [`05_distribution.md`](2026-09-03_noise-with-structure/05_distribution.md)；**V7 已由 Gate 裁定撤下独立帖，改列为 V1 配图规格，不在本包变体表内**）
@@ -51,6 +53,7 @@
     1. **等 Mia/Vera 有 routine 再发，还是这次也按毛坯直接发**——本卡不含时效窗口（不同于上一张因等窗口错过发布的卡），等待成本较低，但拖延成本仍在你
     2. **V1 长文的配图（三行对照表，原 V7）谁来画**——Vera 无 routine，若要按计划带图发布，需你亲自出或指派
   · 判定全文：[`RECORD.md`](2026-09-03_noise-with-structure/RECORD.md) `## review` 节（round 1 退回 → round 2 退回窄范围一处 → round 3 独立新上下文 Gate 过闸，三轮均为不同子 agent 独立复审）
+  ↳ 📦 **归档不发（Andy 2026-09-17 停做清单，原话「继续暂停，3 张卡归档」）**——RECORD status 改写 `killed`（模板「毙件标 killed 留原地」；不用新词 `archived`，免得产线重开时被续跑判据当成未完成卡）。
 
 - **[09-06] `2026-09-06_autumn-effect-decay`** · 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-06_autumn-effect-decay/RECORD.md`](2026-09-06_autumn-effect-decay/RECORD.md)
   （旗舰＝`## flagship` 节正文 · 四条变体见 `## distribution` 节 V1–V4）

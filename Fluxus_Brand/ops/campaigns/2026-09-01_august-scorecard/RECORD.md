@@ -1,6 +1,6 @@
 # CAMPAIGN: august-scorecard · 2026-09-01
 
-status: **queued**
+status: **killed** —— 📦 Andy 2026-09-17 归档不发（停做清单原话「继续暂停，3 张卡归档」）。此前 status：**queued**
 rounds: 3
 
 > 本卡的选题动机之一是**修上一张卡的死因**：`2026-08-29_extension-arithmetic` 的支柱读数半衰期＝一个交易日（VEEV 一天证伪），
