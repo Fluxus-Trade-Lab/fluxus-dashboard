@@ -338,6 +338,8 @@ round 1 两处退回理由的实质修法**均已确认落地且干净**：V1 �
 
 （owns：Andy 本人）
 
+**09-16（Steve 日推交互会话转录）**：Andy 对日推递出的 V3/V4 两条候选原话「C2 C3都删除」——两条撤下，未展开内容层面的理由，判决账见 `Fluxus_Brand/voice/verdicts.jsonl` [2026-09-16] noise-with-structure-V3/V4 两行。本卡在 APPROVAL_QUEUE 的整体状态（是否等 Mia/Vera routine）不受此次撤下影响。
+
 ## performance
 
 （待发布后 T+24h/T+72h）
