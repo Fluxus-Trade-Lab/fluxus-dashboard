@@ -28,6 +28,7 @@ Environment variables required:
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -48,6 +49,24 @@ STATE_PATH = THREADS_DIR / ".run_state.json"
 
 # Cold-start lookback when there is no watermark yet (first ever rolling run).
 COLD_START_HOURS = 24
+
+# data/output/threads is served publicly by Vercel (Andy 2026-09-13:「管线只做R 和%,
+# 不写股数和美元」). Scrub thousands-separated dollar totals and "qty N" at write
+# time -- per-share quotes like $44.41 stay. Mirrors the literals in
+# pipeline/tests/test_public_output_privacy.py on purpose (the gate keeps its own).
+_REDACT_PATTERNS = [
+    re.compile(r"\$\s?\d{1,3}(,\d{3})+(\.\d+)?"),
+    re.compile(r"\bqty\s*[:=]?\s*\d[\d,]*", re.I),
+]
+REDACTED = "[amount redacted]"
+
+
+def redact_amounts(text: str | None) -> str | None:
+    if not text:
+        return text
+    for rx in _REDACT_PATTERNS:
+        text = rx.sub(REDACTED, text)
+    return text
 
 
 def _msg_timestamp(msg: dict) -> datetime:
@@ -244,9 +263,9 @@ def main():
         msg_path = out_dir / "messages.json"
         msg_path.write_text(json.dumps(
             [{k: v for k, v in (
-                ("content", m["content"]), ("timestamp", m["timestamp"]),
+                ("content", redact_amounts(m["content"])), ("timestamp", m["timestamp"]),
                 ("channel", m.get("channel", "live-commentary")),
-                ("question", m.get("question")),
+                ("question", redact_amounts(m.get("question"))),
              ) if v is not None} for m in filtered],
             ensure_ascii=False, indent=1))
         if not backfill:

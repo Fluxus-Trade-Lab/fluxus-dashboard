@@ -130,3 +130,25 @@ def test_qa_mode_ignores_self_reply(threads_dir, monkeypatch):
         _run(["--fetch-only"], monkeypatch)
     out = json.loads(next(threads_dir.glob("*/messages.json")).read_text())
     assert "question" not in out[0]
+
+
+@pytest.mark.parametrize("raw,want", [
+    ("Bessent: $5,000 checks", "Bessent: [amount redacted] checks"),
+    ("took $12,345.67 off", "took [amount redacted] off"),
+    ("qty 2262 filled", "[amount redacted] filled"),
+    ("MU $44.41 reclaim, +3R", "MU $44.41 reclaim, +3R"),  # per-share quote stays
+])
+def test_redact_amounts(raw, want):
+    assert d2t.redact_amounts(raw) == want
+
+
+def test_fetch_only_redacts_dollar_totals(threads_dir, monkeypatch):
+    msgs = [{"content": "Bessent: $5,000 checks", "timestamp": "2026-09-09T15:00:00.000000+00:00",
+             "question": "is $1,000,000 enough?"}]
+    monkeypatch.setattr(d2t, "fetch_messages", lambda *a, **k: [])
+    monkeypatch.setattr(d2t, "filter_by_author_and_date", lambda *a, **k: msgs)
+    monkeypatch.setattr(d2t, "filter_since", lambda *a, **k: msgs)
+    _run(["--fetch-only", "--date", "2026-09-09"], monkeypatch)
+    out = next(threads_dir.rglob("messages.json")).read_text()
+    assert "5,000" not in out and "1,000,000" not in out
+    assert out.count("[amount redacted]") == 2
