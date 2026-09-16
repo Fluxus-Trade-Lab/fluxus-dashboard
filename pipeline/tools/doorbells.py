@@ -113,7 +113,7 @@ def main(argv=None) -> int:
             print(f"cannot read origin/main:{INBOX}: {r.stderr.strip()}", file=sys.stderr)
             return 2
         text = r.stdout
-    bells = open_bells(text, a.to, dt.datetime.now(), a.older_than_hours)
+    bells = open_bells(text, a.to, dt.datetime.now(), a.older_than_hours)  # localtime-ok doorbell [MM-DD] stamps are written in JST local time; age must use the same clock
     for b in bells:
         print(f"L{b.lineno} [{b.date:%m-%d}] → {b.to}: {b.text[:160]}")
     print(f"open: {len(bells)}")
