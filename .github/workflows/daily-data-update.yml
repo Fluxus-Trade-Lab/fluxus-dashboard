@@ -262,6 +262,24 @@ jobs:
           FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
           FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
 
+      # Cross-vendor check (pipeline/tools/audit_events_vs_bars.py): every
+      # ticker_events change_pct / volume must match yfinance bars from the
+      # store refreshed two steps up -- the only archive guard that does not
+      # read the archive against itself (2026-08-07 sat 35 days internally
+      # consistent and one day off). Placed AFTER the store refresh: before it,
+      # tonight's session has no bar and reads "查不了" (docstring blind spot 5).
+      # Volume still skips tonight's bar (provisional until re-fetched the next
+      # night -- 2026-09-15 read 73.8% red on good data); change_pct judges it.
+      # RED but NON-BLOCKING, same reasoning as the staleness report: the store
+      # itself can be the bad side (blind spot 4), and a side-store must not
+      # veto publishing good market data.
+      - name: Audit events vs vendor bars
+        continue-on-error: true
+        run: python -m pipeline.tools.audit_events_vs_bars
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TZ: UTC
+
       - name: Refresh trade post-mortems
         continue-on-error: true
         run: |
