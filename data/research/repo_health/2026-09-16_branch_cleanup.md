@@ -84,3 +84,29 @@ Andy 批「安全的那批可以删除」（janitor 报告 `janitor_report_0917.
 **根目录死文件（17 个，commit `307d6197`）**：16 个 `Fluxus_*.md`（08-02 死副本，正本在 `Fluxus_Brand/`）+ `MERGE_REPORT.md`（零引用）。
 
 **本轮未动、留人工裁决**：worktree `stoic-driscoll-4a87cf`（分支 `claude/friendly-chaplygin-b46c13` 07-11，247 独有 commit / 2514 文件差异，疑似早期分叉，需人工确认价值）；12 条有独有内容的分支（6 条 08-22 wip 封存快照、`fix/ohlc-staleness-guard`、`worktree-fluxus-data-art` 孤儿分支、2 条 `archive/*`、2 条早期 feature 归档）；`.git` 681MB 大文件历史（需 filter-repo 级操作）；主树 `feat/morning-three-pages` 落后 main 十几天的漂移对齐。详见 `janitor_report_0917.md`。
+
+## 追记（2026-09-17 深夜）：人工裁定批——10 条分支 + worktree `stoic-driscoll`
+
+Andy 原话：「照建议，data-art 搬走再删」。逐条依据见当晚会话：内容已在 main（换了 SHA 合入）或已被后续改动取代；只有 08-22 wip 快照里的一个回归测试与一个「非交易日不写行」守卫没有落地（归档实测 0 行非交易日，暂不需要）。
+
+| 分支 | 本地 sha | 远端 sha（- = 无远端） |
+|---|---|---|
+| `archive/capital-deployment-6b92509e` | `6b92509e0a4f67f997cd3a463824c51164f9c733` | `6b92509e0a4f67f997cd3a463824c51164f9c733` |
+| `claude/keen-germain-696b72` | `fca037c2ddb765d716fb154a8971db27777d0f2d` | `-` |
+| `claude/optimistic-clarke-4c56d0` | `19ce6314026ba408343eec8fda3c5577e05badea` | `-` |
+| `fix/ohlc-staleness-guard` | `24c9e4a029f7b4c7b9493432454fbf90bd932b63` | `-` |
+| `claude/sharp-boyd-7ee3fc` | `5b118a11b4b856ff75d8edac354fc8f6493ee2e5` | `-` |
+| `claude/friendly-chaplygin-b46c13` | `8a2553e75a9f1f2842b604e6bb4e27d64db70361` | `8a2553e75a9f1f2842b604e6bb4e27d64db70361` |
+| `claude/wonderful-shannon-b66cdf` | `27fdc257e5ffe4ec997845717249b61a152c919a` | `27fdc257e5ffe4ec997845717249b61a152c919a` |
+| `claude/silly-borg-68395f` | `015b1841f48041e28490c5c96169949788331c34` | `015b1841f48041e28490c5c96169949788331c34` |
+| `claude/adoring-haibt-ceef68` | `aa7ad82279610bd74de680f5ac5ee81cc782053c` | `-` |
+| `worktree-fluxus-data-art` | `ba1d16672a42448ae1b1cdc398ae846f1aa0488e` | `ba1d16672a42448ae1b1cdc398ae846f1aa0488e` |
+
+worktree `.claude/worktrees/stoic-driscoll-4a87cf`（分支 `claude/friendly-chaplygin-b46c13`，0 未提交、0 未推送）已 `worktree remove`。
+
+### ⚠️ 真实持仓曾在公开分支上
+
+- `worktree-fluxus-data-art`（08-12 起在 origin）含 `Fluxus_DataArt/sources/portfolio_2026-07-26.csv` 与带美元盈亏的概念稿、月报；`claude/friendly-chaplygin-b46c13`（07-11 起在 origin）含 `data/portfolio/portfolio_2026-05-23.csv`。仓库是 PUBLIC。
+- 09-17 处理：data-art 整棵原样搬进私有 vault `90_Inbox/_parked/Fluxus_DataArt_2026-08/`（87 个文件 blob 哈希逐一一致），两条分支本地与远端均已删除。
+- main 的历史里从未提交过 `data/portfolio/*.csv`（`git log origin/main -- data/portfolio/*.csv` 为空）；`.gitignore` 已挡 `data/portfolio/`。其余远端分支里唯一的持仓样式 csv 是 `frontend/public/sample/portfolio_2026-03-14.csv`（起始资金 100,000 的示例，03-19 起有意公开）。
+- **删分支不等于从 GitHub 上抹掉**：按 SHA 仍可能访问到对象，直到 GitHub 回收；要彻底清除需 Andy 向 GitHub Support 申请清理缓存视图与未引用对象。
