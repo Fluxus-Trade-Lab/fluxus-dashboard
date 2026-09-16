@@ -52,3 +52,36 @@
 1. **两道闸值得进面板**:不是删行,是像追高折叠那样把 ATR > 4 或涨幅 > 8% 的折到格底灰显。理由是 MAE:被闸掉的票 57.9% 会见到 −10%,过闸的 44.8%。这是风险口径的收益,不是收益口径的。
 2. **「第一波」子格先别建**(§八.1 里列在 entries 区)。三种叠加都没抬中位,建了是给页面加一格没有边的东西。
 3. 若要继续,值得测的是**同一组闸在别的刀上**(weekly_20_gainers 的追高更极端),而不是在 4% Bullish 上继续调参。
+
+---
+
+## ↳ 补记（Nighty Zac 2026-09-17）：今天重跑工具复现不出上面的 n，原因是 `atr_from_sma50` 在 08-24 换了定义
+
+**一句话**：上面的表是用 08-24 之前的 `(close − SMA50) / ATR` 算的；`6eb98457`（08-24）把 `atr_multiple_from_levels` 改成了 Jeff Sun 源定义 `dist% / ATR%`，旧量改名 `plain_atr_multiple_from_sma50`。工具还在调用原来那个函数名，于是**今天照文件头的命令重跑，拿到的是另一个量**，gated 从 1,568 变成 1,317。结论方向不受影响。
+
+同一份归档（`d5323d50`，08-18 当晚版本）+ 同一份 `event_bars.pkl`，只换这一个函数：
+
+| 组 | 旧定义（本文原表）n / fwd20 中位 | 现行定义 n / fwd20 中位 |
+|---|---|---|
+| gated | 1,568 / +2.35% | **1,317 / +2.39%** |
+| dropped | 1,978 / −0.16% | 2,229 / +0.22% |
+| ATR ≤ 4 | 2,412 / +1.86% | 1,945 / +2.25% |
+| ATR > 4 | 1,134 / −0.50% | 1,601 / −0.24% |
+| MAE20 ≤ −10%：gated / dropped | 44.8% / 57.9% | 43.2% / 57.4% |
+| gated + 两者（第一波） | 827 / +2.24% | 643 / +2.25% |
+
+旧定义这一列**逐字复现**本文原表（n 全部一致，中位与 MAE 比例一致）。现行定义的全表：[`study_b4_gates_summary_jeffsun.csv`](study_b4_gates_summary_jeffsun.csv)。
+
+**p 值是单侧的，原文没写**：原文的 0.0022 / 0.0009 / 0.0298（fwd20 / fwd10 / fwd5）是 Mann–Whitney `alternative='greater'`；双侧是 0.0045 / 0.0018 / 0.0595。现行定义下单侧 **0.0026 / 0.0004 / 0.0289**，双侧 0.0051 / 0.0008 / 0.0578。
+
+**半字母表**：样本 12.6% 的命中（有 fwd20 的 4.7%）落在 A–L 窗口，剔除后方向不变，判 B，见 [`half_alphabet_reach_2026-09-17`](../half_alphabet_reach_2026-09-17/README.md)。
+
+**这道闸没有上线**（`watchlist.py:528` 只实现了 ≥15% 追高折叠），所以没有线上读数受影响。若以后要上线「ATR ≤ 4」，用的会是现行定义——请引用右列，不要引用原表。
+
+复现：
+```bash
+git show d5323d50:data/history/ticker_events.csv > /tmp/te_0818.csv
+python3 -m pipeline.tools.bullish4_gate_study --events /tmp/te_0818.csv \
+    --bars data/research/scanner_validation_2026-08/event_bars.pkl --out /tmp/b4/study_b4_gates.csv
+# 旧定义：把 bullish4_gate_study.atr_multiple_from_levels 换成 (c - sma50) / atr 再跑
+```
