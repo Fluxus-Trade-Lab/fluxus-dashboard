@@ -110,3 +110,45 @@ worktree `.claude/worktrees/stoic-driscoll-4a87cf`（分支 `claude/friendly-cha
 - 09-17 处理：data-art 整棵原样搬进私有 vault `90_Inbox/_parked/Fluxus_DataArt_2026-08/`（87 个文件 blob 哈希逐一一致），两条分支本地与远端均已删除。
 - main 的历史里从未提交过 `data/portfolio/*.csv`（`git log origin/main -- data/portfolio/*.csv` 为空）；`.gitignore` 已挡 `data/portfolio/`。其余远端分支里唯一的持仓样式 csv 是 `frontend/public/sample/portfolio_2026-03-14.csv`（起始资金 100,000 的示例，03-19 起有意公开）。
 - **删分支不等于从 GitHub 上抹掉**：按 SHA 仍可能访问到对象，直到 GitHub 回收；要彻底清除需 Andy 向 GitHub Support 申请清理缓存视图与未引用对象。
+
+## 追记（2026-09-17 深夜）：主树对齐
+
+Andy 原话：「做主树对齐」。
+
+**之前**：主树停在 `feat/morning-three-pages` @ `562988f0`（09-04），落后 origin/main 790 个 commit，`git status` 1,162 条；暂存区为空。
+**做法**（工作区文件除下列刷新项外一个不碰）：
+1. 先把主树里与 main 不同的 102 个文件存进**本地分支** `salvage/main-tree-2026-09-17`（`9b326697`，含清单 `SALVAGE_MANIFEST_2026-09-17.md`；**不推送**——含本机数据，仓库是 PUBLIC），逐个 blob 核对一致。
+2. 本地 `main` 指到 origin/main，主树 HEAD 换到 `main`，暂存区按 main 重置（`reset` 不带 `--hard`，工作区不动），上游设为 origin/main。
+3. 按内容分类后，用 `git checkout origin/main --pathspec-from-file` 刷新 618 个文件：176 个工作区是历史旧版本的文件 + 441 个缺失文件（272 个是 main 后来新增、主树从没拉下来的；169 个旧 HEAD 里有、本地被删但删除从未提交）+ 今天新增的 C17/C26 裁决原话。
+4. `feat/morning-three-pages`（唯一 commit 已以 `33864dbe` 合入 main）本地与远端删除：`562988f056d81159d58e2bba62a82ab471879524`。
+
+**之后**：主树在 `main` = origin/main；`git status` 228 条 = 27 个从未提交过的修改（原样保留）+ 1 个 voice/raw 本地删除（按「voice/raw 以主树为准」保留：`Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md`）+ 200 个 main 上没有的本机文件/目录（未动）。
+
+**原样保留的 27 个（从未进过任何 commit，快照里都有）**：
+- `.claude/agents/growth-officer.md`
+- `.claude/launch.json`
+- `.github/workflows/daily-data-update.yml`
+- `Fluxus_Substack/drafts/02_nobody_tells_you_how_much.md`
+- `Fluxus_Substack/drafts/03_i_lose_more_than_i_win.md`
+- `JeffSun_Wiki/.obsidian/app.json`
+- `JeffSun_Wiki/.obsidian/appearance.json`
+- `JeffSun_Wiki/.obsidian/community-plugins.json`
+- `JeffSun_Wiki/sources/tweets/jfsrev-1864933928924254327.md`
+- `data/centaur/brief_pushes.jsonl`
+- `data/centaur/skill_SPX.json`
+- `data/centaur/views.jsonl`
+- `data/flow/session_reads.jsonl`
+- `data/gex/levels_log.jsonl`
+- `data/growth/metrics.csv`
+- `data/profile/tff_tables.json`
+- `data/reference/DATA_CONTRACTS.md`
+- `data/reference/METRIC_SOURCES.md`
+- `data/reference/learning_log.jsonl`
+- `data/reference/scorecard_SPX.json`
+- `data/reference/skew_daily.log`
+- `data/research/setup_labeling/worksheet.csv`
+- `docs/plans/2026-08-20-selection-lab-design.md`
+- `pipeline/adapters/yfinance_adapter.py`
+- `pipeline/screeners/run_all.py`
+- `scripts/check_gaps.py`
+- `tests/reference/test_gaps.py`
