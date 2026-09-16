@@ -3062,3 +3062,27 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-15] 📰 每日复盘 2026-09-14：重出 v2（补 Discord 原话 · 持仓更新 TZA 已平 · 标题去掉有争议的 QQQ 50 日线表述）· 闸全绿
 - [09-15] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-14，run_ledger 最新场次 `34907811367` schedule/success，23:13 UTC 落地）。本班 04:15 UTC / 09-15 00:15 ET 巡检：`actions_list` 确认 daily-data-update.yml 最新一条仍是 34907811367，无 in_progress、无新失败；今日 ET 00:15 尚未到 09-15 交易日窗口，最近已完成交易日仍是 09-14 且已入库——健康，本班无分诊/重跑动作。INBOX 无本线待取门铃。
 - [09-15] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-14，run_ledger 最新场次 `34907811367` schedule/success，23:13 UTC 落地）。本班 05:15 UTC / 09-15 01:15 ET 巡检：`actions_list` 确认 daily-data-update.yml 最新一条仍是 34907811367，无 in_progress、无新失败；今日 ET 01:15 尚未到 09-15 交易日窗口，最近已完成交易日仍是 09-14 且已入库——健康，本班无分诊/重跑动作。INBOX 无本线待取门铃。
+
+## [2026-09-16] Plumber Joe · 数据晨检（21:15 JST 重跑班；07:26 班被周额度拒）
+
+**时钟**：ET 2026-09-16 08:14 · last completed session 2026-09-15 · 交易日。
+**cron ✅**：09-15 正班 `35033478086` 迟 157 分落地 `88295474`；01:30Z backstop 空转 20 秒。`audit_schedule_windows`：0 dropped。
+**盘查 ✅**：audit_archives 0/0 · 必备块齐 · 带日期 output 全 09-15（sentiment.json 08-08 死文件、portfolio_backtest 静态，老账）· universe 5,609 · themes 56 · regime 28.1 damaged · market_health stale=false · schema 漂移 13 处（均为新增字段/新文件，exit 0，归 DATA ALEX 核契约后 `--update`）。
+**量级留意**：bars_stale 3→97→**115**、unmeasurable 189→274→**306**（三场单调涨）；fundamentals failed 0→**25**；watchlist ma_reclaim 92→**36**（下跌日，gainers_4pct 459→232 同向，暂判市场）。明早再看一场，三场都涨再开工单。
+
+🔴 **周额度耗尽，全联邦静音约 30 小时**（09-15 05:17Z 后 → 09-16 12:00Z 重置）：哨兵每小时照开火、13 秒被 `rate_limit: rejected (seven_day)` 拒；Zac 09-16 无晨报、Discord→X 09-15 无草稿、老板每日页挂到 12:16Z。数据管线（GitHub Actions）不受影响，数据是好的。**能报警的会话和被监控的会话共用同一个额度，所以没人报。** → [incidents/2026-09-16_weekly_limit_silenced_the_federation.md](../../reference/incidents/2026-09-16_weekly_limit_silenced_the_federation.md)
+
+**夜间组转述**：Zac 09-16 班被额度拒，main 上无晨报/分支；12:14Z 已随重置重跑（本机任务 last_activity 12:14Z），产出待看。
+**云产线留痕**：无 09-16 行——预期（Andy 09-06「夜间 campaign 产线：暂停」仍生效，云 routine `enabled=false`）。
+**早报数字抽查 ⏭ 跳过**：09-16 老板每日页 12:16Z 才开始生成，内容台 48 小时无新备稿，无可抽的新数字出处。不计缺失。
+
+**待合分支（72h 内）**：同 09-15 晨检，无新增。`auto/night-20260914-4ef60f-metric` 等 DATA ALEX/Andy；`design/marketing-visual` 视觉线不催；`origin/auto/night-20260914-4ef60f`、`auto/night-20260915-1182f5`、`feat/ops-recap-automation-2026-09-13` `git cherry` 全为 `-`（已等价合入），可删。
+
+**修复**：无代码修复（今晨缺陷不在代码里）。
+
+**收工三问**
+① 坑：「一片安静」差点被读成「局面无变化」——哨兵健康时每班都 commit，断档本身就是信号。事故档已写。
+② 规矩：任务书「cron 未完成就跳过盘查」帮了反向忙——cron 是绿的，出问题的是巡检者自己；建议任务书第一节加一行「先看哨兵最后一条 commit 距今多久，>3h 先查 run log 的 rate_limit」。
+③ 下轮第一件事：确认 Zac/老板每日页重跑已落地；bars_stale / unmeasurable 第四场读数（再涨就开工单给 DATA ALEX）；看 OPS 是否认领事故档里的「不耗额度心跳」。
+
+🔔 [09-16] → OPS Fable · 联邦运维: 周额度耗尽让哨兵/Zac/Joe 同时静音约 30h 且无人报警；请认领事故档 `incidents/2026-09-16_weekly_limit_silenced_the_federation.md` 待认领①（不耗 Claude 额度的 Actions 心跳）②（额度预算，含 Andy 级套餐决定）· pending
