@@ -37,3 +37,16 @@
 - `design/marketing-visual`（Visual Vera 长期设计分支，不合）
 - `archive/*`、`claude/*`、`fix/ohlc-staleness-guard`、`worktree-fluxus-data-art`（08-22 大扫除前的封存与旧工作区）
 - `feat/morning-three-pages`（主工作树当前分支）
+
+## 追记（2026-09-17）：原「有意保留」的三条也删了
+
+Andy 原话：「这三个分支，"金9银10"这个研究分析删除，不需要了。其他两个可删除。」
+`805da3-metricsrc`（金9银10 口径登记 + §七 结案行）**不合**，直接删；另两条的内容已在 main 上。
+
+| 分支 | 本地 sha | 远端 sha |
+|---|---|---|
+| `auto/night-20260905-805da3-metricsrc` | `7e924be4ab6fce73cc55960147cb8c554278f7b2` | `7e924be4ab6fce73cc55960147cb8c554278f7b2` |
+| `auto/night-20260903-5cea87` | `b482c89bcde73283943eeea395e405fbdd7f213d` | `b482c89bcde73283943eeea395e405fbdd7f213d` |
+| `fix/alex-stockbee-s2-prev-volume` | `e3d38ecc595252482e119d759dda5e0c37cb2c84` | `e3d38ecc595252482e119d759dda5e0c37cb2c84` |
+
+⚠️ main 上已停用的选题卡 `2026-09-06_autumn-effect-decay/RECORD.md` 引用的 `7e924be4` 从此只能靠本表的 sha 找回。
