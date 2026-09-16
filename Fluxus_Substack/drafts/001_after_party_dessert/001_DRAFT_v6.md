@@ -150,7 +150,6 @@ Now look at what is actually paying: **PLTR 13.0R in 24 days. NOW 6.5R in 12. ZE
 | 「MAGS/FNGS 除了 NVDA 之外呢？我选 AMZN」 | AMZN 266.43，刚收回 21日EMA 260.81；**唯一月线为负的（−1.9%）** | 写成「防守轮动若为真，先在落后股身上出现」 |
 | 「OKTA/ZETA/IOT 一类的」 | OKTA 周 **+26.9%**、高于 50 日 18%；周五 gap up 后 reversed into overhead supply（他自己 recap） | 选 OKTA：它把段 2 的 news-failure 形状带进了唯一还在领跑的组 |
 | 「农业就 DBA」 | ⭐ **他是对的，而且纠正了我**：Agribusiness *股票* 主题 **Weakening −1.35%**，而 DBA *商品* **就在 52 周新高**（rrs_rank 85，3M +7.16%） | 信里明写「两个读数都对，只是不是同一个东西」——这是全信第二个「我错了」的诚实点 |
-| 「GLD 呢？金9银10 是一句老话」 | ⚠️ **上周 GLD −4.17%**（rate fears），月线 +10.05% | 不背书老话：「The saying and the tape disagree, and I have a rule about that」＋「I don't trade sayings」 |
 
 **被 Andy 自己判掉的**：MU（原话「只是短的交易，可能还是弱」——数据同意：唯一低于 50 日线的，−2.3%，距 52 周高 −25.7%）。v5 的 CRM/RNG/NVDA/MU/BG 全部退场；NVDA 仍留在段 2 当 news-failure 的主角，不重复占 FOCUS 名额。**ZETA/IOT 未选**（同桶，OKTA 的张力更强），换名字很便宜。
 

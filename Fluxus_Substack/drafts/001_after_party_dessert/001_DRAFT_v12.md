@@ -203,17 +203,6 @@ Now look at what is actually paying: **PLTR 13.0R in 24 days. NOW 6.5R in 12. ZE
 
 **已撤下**：**IOT**（Andy 08-31：「不需要加软件了」）· **OKTA**（引擎无活结构，`sp_1st/2nd/stop` 全 null，给不出价位）· **GLD**（v7 已删，验不了）。
 **DBA 已按 Andy 08-31「留」加回**（第 4 只）。它是 ETF，结构引擎只覆盖个股，因此 *Levels* 一行**如实写「none quoted」**而不是编一个价位——这正是本轮的分界线。手上只有：收盘 29.19 · **52 周新高** · 周 +3.1% · 3 月 +7.2% · rrs_rank 85。段 2 里农业股票 vs 商品那段独立保留。
-
-### v6 → v7：GLD／「金9银10」已删（Andy 08-31：验不了就删）
-
-**查证结果：本地无法验证，因此不写。** 全仓与黄金相关的最长序列是 `data/history/asset_signals.csv`，覆盖 **9 个交易日**（2026-08-19 → 08-27）；`data/history/quality/etf_data.csv` 只有 11 行。季节性主张至少需要 20–40 年月度回报，我们没有。
-
-⚠️ **而且这条老话是典型的多重比较陷阱**：12 个月 × 2 种金属 ＝ **24 个候选说法**，事后挑出奏效的两个编成顺口溜是必然结果。任何诚实的检验都必须先预注册、再对 24 次比较做校正，否则报出来的「显著」是假的。参照 `pitfalls`: `shipped_before_out_of_sample`（紧致度研究栽在「32 个比较里报最好看的那个」）。
-
-**FOCUS 因此从 5 只变 4 只：HOOD · OKTA · AMZN · DBA**（规格允许 3–5）。若 Andy 想补回第 5 只，同桶现成候选：**ZETA**（距 52 周高 −1.0%，月 +41.4%，他持仓）· **IOT**（41.16，月 +10.4%）· **MU**（他自评「短交易、可能还是弱」）。
-
-**已挂 §七 给研究线**：把「金9银10」做成一次预注册检验，NULL 也可发（正好是 THE NULL 轮换栏的素材）。
-
 ### v5 → v6：FOCUS 换成 Andy 亲选（08-31 口述）＋ YTD 入信＋收口重写
 
 **FOCUS 五只全部由 Andy 点名**，我只负责取数与写判据：**HOOD · OKTA · AMZN · DBA · GLD**。
@@ -224,7 +213,6 @@ Now look at what is actually paying: **PLTR 13.0R in 24 days. NOW 6.5R in 12. ZE
 | 「MAGS/FNGS 除了 NVDA 之外呢？我选 AMZN」 | AMZN 266.43，刚收回 21日EMA 260.81；**唯一月线为负的（−1.9%）** | 写成「防守轮动若为真，先在落后股身上出现」 |
 | 「OKTA/ZETA/IOT 一类的」 | OKTA 周 **+26.9%**、高于 50 日 18%；周五 gap up 后 reversed into overhead supply（他自己 recap） | 选 OKTA：它把段 2 的 news-failure 形状带进了唯一还在领跑的组 |
 | 「农业就 DBA」 | ⭐ **他是对的，而且纠正了我**：Agribusiness *股票* 主题 **Weakening −1.35%**，而 DBA *商品* **就在 52 周新高**（rrs_rank 85，3M +7.16%） | 信里明写「两个读数都对，只是不是同一个东西」——这是全信第二个「我错了」的诚实点 |
-| 「GLD 呢？金9银10 是一句老话」 | ⚠️ **上周 GLD −4.17%**（rate fears），月线 +10.05% | 不背书老话：「The saying and the tape disagree, and I have a rule about that」＋「I don't trade sayings」 |
 
 **被 Andy 自己判掉的**：MU（原话「只是短的交易，可能还是弱」——数据同意：唯一低于 50 日线的，−2.3%，距 52 周高 −25.7%）。v5 的 CRM/RNG/NVDA/MU/BG 全部退场；NVDA 仍留在段 2 当 news-failure 的主角，不重复占 FOCUS 名额。**ZETA/IOT 未选**（同桶，OKTA 的张力更强），换名字很便宜。
 
