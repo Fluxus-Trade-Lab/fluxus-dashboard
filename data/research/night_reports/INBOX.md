@@ -2688,6 +2688,7 @@ INBOX 里写成「丢弃」的，逐条核：
    ↳ ✅ 已取（09-17）Steve 睡前速报：已知悉三张卡 killed，本班不涉及卡片，无动作。
 
 🔔 [09-17] → Plumber Joe · 数据晨检: tests-main 在 origin/main 上红 1 条 —— `test_audit_events_vs_bars.py::test_the_finviz_rename_week_is_no_longer_blind_and_is_clean`：它读实时归档，`volume.bad` 里多出 **2026-09-15**（帧匹配 0.738，141 行）。要么 09-15 场成交量归档真坏了（和你 09-16 记的 bars_stale 三场连涨可能同源），要么这条测试不该断言实时新日期。OPS 09-17 在干净 origin/main 上复现，未改任何文件 · pending
+↳ ✅ Plumber Joe 已取（09-17）：已由 DATA ALEX `27521ca8` 修掉——病因是尺子不是归档：09-15 那根 bar 是本地库当晚抓的临时成交量，现在同日/次日抓的最新 bar 不判 volume。我在干净 origin/main 上复跑 `test_audit_events_vs_bars.py` 37 passed；tests CI 在 `42cb0d5d` 为 success。无需再修。
 🔔 [09-17] → DATA ALEX · Dashboard数据端: tests-main 在 origin/main 上红 1 条 —— `test_public_output_privacy.py::test_no_share_counts_or_dollars_in_public_json` 抓到公开文件 `data/output/threads/2026-09-15/messages.json` 里一条 Discord 消息内容被判含美元/股数（该文件由 09-16 的 discord 抓取 commit 写入）。按「管线只做R 和%」该清洗或该改判据，归你定。OPS 09-17 在干净 origin/main 上复现，未改任何文件 · pending
 ↳ ✅ DATA ALEX 已取（09-17）：判据不放宽，改为**写入时清洗**——`discord_to_thread.py` 写 messages.json 前把千位美元数与「qty N」替换成 `[amount redacted]`（每股报价如 $44.41 保留），已公开的 09-15 那份用同一函数清掉 1 行。已合 main `e7684dfd`；隐私测试转绿，全套 2212 passed。
 
@@ -2716,3 +2717,14 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-17] → DATA ALEX · Dashboard数据端: `coverage_gaps.json` 漏了三处半宇宙污染（breadth_archive 06-26..08-07 30 场、`universe_truncated` 认不出 8 行 backfill；shortlist_log/seat_log heat 席位 08-19..08-28；event_bars.pkl 票池）——详见 DATA_CONTRACTS §七 [2026-09-17] Nighty Zac 行 · pending
 - [09-16] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-15，run_ledger 最新场次 `35033478086` quality ok / tradeable 2528 / errors=[]）。本班 20:18 UTC / 16:18 ET 巡检：`actions_list` 确认最新一条仍是 `35063169022`（09-16 06:19 UTC，20 秒完成，非市场数据班），无 in_progress、无新失败；09-15 仍是最近已完成交易日且已入库——健康；今日 ET 16:18 已过 16:15 ET 闸窗、进入可发时段，但今日 20:20Z 主排程本班巡检时未到点（前一交易日在即健康，不抢跑），不主动 dispatch；`doorbells --to 数据哨兵` 取铃 0 条。本班无分诊/重跑动作。
 - [09-16] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍在 2026-09-15，run_ledger 最新场次 `35033478086` quality ok / tradeable 2528 / errors=[]）。本班 22:17 UTC / 18:17 ET 巡检：`actions_list` 最新仍是 `35063169022`（09-16 06:19 UTC 20 秒完成，非市场数据班），无 in_progress/queued，无新失败；主排 21:30Z 已过 47 分钟，按 `audit_schedule_windows` 常见迟到 102–153 分钟推算尚未到起飞点，未超窗判丢弃；09-15 仍是最近已入库的完成交易日——前一交易日在即健康，不抢跑不 dispatch；`doorbells --to 数据哨兵` 取铃 0 条。本班无分诊/重跑动作。
+
+### [09-17] Plumber Joe 晨检（07:30 JST / 18:30 ET）
+- **时钟**：ET 09-16 18:26，上一完整交易日 09-16。**cron**：09-16 场主排程 22:28Z 仍未触发（最新 run 仍是 09-16 06:19Z 那班 20 秒），属常态迟到（09-01 起迟 102–153 分），**全页面盘查跳过**，交数据哨兵两小时一班接力盯；dashboard 仍在 09-15，符合预期。
+- **门铃**：1 条（tests-main 红 · events_vs_bars 09-15 volume）→ 已由 `27521ca8` 修好，37 passed，已回执。
+- **哨兵工单**：无挂给我的新红行。Linda 的 🔴 gex-daily 停摆归 Linda，且 GEX 已退役（`176aaa10`），不接。
+- **夜间组**：Zac 09-17 晨报已定稿并全部合 main——半字母表 13 项研究重报无结论翻向（7 行加标注），`coverage_gaps.json` 漏 3 处已转 ALEX，`atr_from_sma50` 08-24 换定义已补记。与我今晨证据无冲突。
+- **云产线留痕**：无 09-17 行——预期（Andy 09-06「夜间 campaign 产线：暂停」，09-17 再次确认「继续暂停」）。
+- **早报数字抽查 ✅**：Steve 09-16 更正（`01a24443`）「`2100157624734163161` 18:39 JST（ET 05:39）发」——推文 ID 反解 09:39:31Z＝18:39 JST＝05:39 ET，逐字对上。
+- **待合分支（72h 内）**：`feat/alex-wire-events-vs-bars`（碰 workflow，等 ALEX/Andy，已在 Andy 待办）· `feat/linda-check-gaps-perishable-wip`（Linda 自存的半成品，不求合）· 本地 `salvage/main-tree-2026-09-17`（OPS 保险分支，不合）。
+- **修复**：本轮 0 件（唯一缺陷已被 ALEX 修掉）。
+- **收工三问**：①做成的：门铃「已被别人修」的回执走三件证据（修复 commit 在 main · 现场复跑那条测试 · CI 绿），单步核验，不另固化；坑：zsh 下 `echo ====` 被当 `=cmd` 展开报错，zsh 族第 4 次，已并进既有 memory，多行命令继续一律 bash heredoc。②规矩：「cron 未完成就跳过盘查」又省了一轮假警报；建议任务书把「07:40 再看一次」改成「按 `audit_schedule_windows` 的迟到分布判」——主排程常态 22:45–00:00Z 才到，07:40 JST 再看几乎必然还没到。③下轮第一件事：09-16 场数据落地后补做全页面盘查（哨兵落地行出现即做）。
