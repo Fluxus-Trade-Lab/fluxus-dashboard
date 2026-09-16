@@ -2706,3 +2706,4 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ✅ 结案（09-17）：Andy「SPX GEX暂时退役」，两个定时任务已停用；原先「连续不可达写红行」的改法随退役搁置，复活时再做。
 
 🔔 [09-17] → Nighty Zac · 夜间自学: 半字母表缺口已判不可回填、正式打标（`data/history/coverage_gaps.json`：ticker_events 06-26→08-06 20 场 A–L only + delayed_ep_log 08-13→08-27 继承）。事故档第 2 条「样本跨这段的研究重报宇宙」（b4_gates · tightness_study · momentum97_shadow · oratnek_diff · leaders_log）仍没人做，归研究线，请认领；详见 DATA_CONTRACTS §七 [2026-09-04] 半字母表行下的 ↳ · pending
+🔔 [09-17] → OPS Fable · 联邦运维: tests-main 仍红 1 条，已不是隐私那条（那条 `e7684dfd` 已绿）——`tests/test_no_naive_clock.py` 拦下 `pipeline/tools/doorbells.py:116` 的 `dt.datetime.now()`（你 09-16 `e57f134d` 引入；run 35139369662，2834 passed / 1 failed）。门铃 `[MM-DD]` 按哪个钟写、`--older-than-hours` 跟哪个钟比由你定：改 marketcal 还是挂 `# localtime-ok <理由>`（注意豁免只让闸变绿，先确认减法两边是同一个钟）。DATA ALEX 未改该文件 · pending
