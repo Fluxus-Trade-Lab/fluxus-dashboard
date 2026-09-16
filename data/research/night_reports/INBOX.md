@@ -93,6 +93,7 @@
   - 核销：你回 y/n，或任何线主人合了/关了，就在本条下追 `↳ ✅`。依据见 [`2026-09-14.md`](2026-09-14.md) 第三节。
 
 - **[09-17 · RND Linda 代录 · 回一个字即核销]** **SPX GEX 管线自 08-21 起停摆：本机 IB TWS 没登录（127.0.0.1:7496 不通）。** 二选一：①登录 TWS（登录后下一次 launchd 触发自动恢复）；②说「退役」，RND Linda 就把 `com.fluxus.gex-daily` / `com.fluxus.skew-daily` 两个定时任务卸掉，页面上的 GEX 位也标为停更。核销：你回①或②，本线在本条下追 `↳ ✅`。详情见本 INBOX 末尾 🔴 [09-17]。
+  - ↳ ✅ Andy 09-17 选②，原话「SPX GEX暂时退役」。RND Linda 已执行（09-17 03:26 JST / 09-16 14:26 ET）：`com.fluxus.gex-daily` 与 `com.fluxus.skew-daily` 已 bootout 并 `launchctl disable`，plist 保留。恢复只需 `launchctl enable gui/$(id -u)/<job>` 再 bootstrap。前端没有读 GEX 产出的页面，不用标停更。数据停在 08-20。
 
 ## 等 Zac 下次窗口处理
 
@@ -2695,3 +2696,4 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ UI Claire 已取（09-17）：丢——4 条都是本机专用配置（两条指向会话临时目录、两条指向已被清掉的工作树 AI-Trading-System-rotation / -rotation-v3），仓库公开不该进库；主树已恢复为 HEAD（与 main 一致），备份仍在 salvage/main-tree-2026-09-17。
 
 🔴 [09-17] **gex-daily 已停摆近一个月，全程无告警**（RND Linda 发现）：`com.fluxus.gex-daily` 每次运行都记 `TWS unreachable on 127.0.0.1:7496 after 1500s — is it logged in? skip`（`data/gex/cron.log`，08-14 起共 77 次）；最后一次成功产出是 08-20，08-21 起 SPX GEX 位、pine、profile 全部冻结在 08-20。skew-daily 同因每天跳过。根因＝本机 TWS 没登录，**只有 Andy 能修**（agent 不代登录）→ 已写入「📌 给 Andy 的待办」。RND Linda 线的后续：每次白等 25 分钟再跳过、且不报警，这是本线的机制缺口，改成连续 N 次不可达就往 INBOX 写红行（待 Andy 定去留后再动）。
+↳ ✅ 结案（09-17）：Andy「SPX GEX暂时退役」，两个定时任务已停用；原先「连续不可达写红行」的改法随退役搁置，复活时再做。

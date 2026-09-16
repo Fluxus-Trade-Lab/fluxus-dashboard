@@ -46,6 +46,8 @@
 - Welcome 邮件补两个链接位（站上文章够五篇后）
 - Discord 两个付费角色回收 —— 08-28 否决暂缓（「否定。还不做这件事。」），重开前先重查成员状态，见 `data/growth/weekly/2026-08-25-paypal-reconcile.md` T1
 - safe-merge 白名单与外部动作边界的报告（OPS 欠，提案存档 `data/reference/proposals/2026-08-31_safe_merge_boundary.md`）
+- [09-17] **个股盘中 mean reversion 入场指标**（RND Linda）：开盘下杀后出现 doji/hammer 作为衰竭标记，再用 Gil Morales 6/20（5 分钟 EMA6/20 + MACD 6,20,9 + VWAP）触发入场，放 TradingView 用。Andy 原话「9/20之后再说」。设计在 RND Linda 09-17 的会话里，到时候落 `data/research/`。
+- [09-17] **SPX GEX 管线暂时退役**（RND Linda）：Andy 原话「SPX GEX暂时退役」。gex-daily/skew-daily 已停用，数据停在 08-20；复活条件＝TWS 常驻登录。
 
 ## 规则备忘
 
