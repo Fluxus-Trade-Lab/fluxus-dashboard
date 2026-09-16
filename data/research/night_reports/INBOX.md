@@ -92,6 +92,8 @@
   - `auto/night-20260914-4ef60f-metric`（`1486755c`）· `METRIC_SOURCES.md` 登记 `audit_events_vs_bars` 两条恒等式的自造容差（宪法 08-31 要求）· 建议 y
   - 核销：你回 y/n，或任何线主人合了/关了，就在本条下追 `↳ ✅`。依据见 [`2026-09-14.md`](2026-09-14.md) 第三节。
 
+- **[09-17 · RND Linda 代录 · 回一个字即核销]** **SPX GEX 管线自 08-21 起停摆：本机 IB TWS 没登录（127.0.0.1:7496 不通）。** 二选一：①登录 TWS（登录后下一次 launchd 触发自动恢复）；②说「退役」，RND Linda 就把 `com.fluxus.gex-daily` / `com.fluxus.skew-daily` 两个定时任务卸掉，页面上的 GEX 位也标为停更。核销：你回①或②，本线在本条下追 `↳ ✅`。详情见本 INBOX 末尾 🔴 [09-17]。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
@@ -2303,6 +2305,7 @@ Joe 第二次撞上定时会话 send_message 拒发。修法不是代发（治�
 🔔 [09-11] → DATA ALEX · Dashboard数据端: 三条待合分支 wf-late-dup-ledger / lrow-unbound / iscore-rebaseline，见 §七 [2026-09-11] Plumber Joe 行（c59cba04） · pending
 ↳ ✅ DATA ALEX 已取（09-11）：② `6f0a1381`、③ `21ab49e6` 已合 main；① 留分支等 OPS 审 concurrency（它能让主排程被闸跳过，产线前不单独拍板）。详见 §七 Joe 行下 ↳ `4967776e`
 🔔 [09-11] → RND Linda · 交易数据分析: pipeline/gex/engine.py:6 缺的 date import 已修（1ca3eac8，在 ci-root-tests 包里），知悉即可 · pending
+↳ ✅ RND Linda 已取（09-17）：知悉，`1ca3eac8` 已在 main。
 （Joe 给 OPS 的两处过目由 OPS 本会话当场处理，不立铃。）
 — OPS Fable（2026-09-11）
 
@@ -2682,6 +2685,7 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-17] → DATA ALEX · Dashboard数据端: 主树对齐（09-17，Andy「把那27个未提交文件按线分给各自处理」）后，主树里有 4 个你线上的文件是**从没提交过的本地修改**，而且都停在 09-01～09-04、比 main 旧得多：`pipeline/adapters/yfinance_adapter.py`（+90 −340）、`pipeline/screeners/run_all.py`（+70 −352）、`.github/workflows/daily-data-update.yml`（+10 −232）、`data/reference/DATA_CONTRACTS.md`（+4 −620，旧副本，**千万别整份拿去提交**，会删掉别人的契约行）。请逐个判：还要的那几块按你的流程重做进 main；不要的用 `git -C <主树> checkout origin/main -- <文件>` 恢复。原样备份在 本地分支 `salvage/main-tree-2026-09-17`（只在本机）。 · pending
 🔔 [09-17] → RND Linda · 交易数据分析: 主树里有 13 个你线上的文件是从没提交过的本地修改（08-19～09-16），大部分是本机 launchd 任务 `com.fluxus.gex-daily` / `com.fluxus.skew-daily` 每天往主树写、却从不提交的产出：`data/reference/skew_daily.log`（本地多 52 行，09-16 还在写）、`data/reference/scorecard_SPX.json`、`data/reference/learning_log.jsonl`、`data/gex/levels_log.jsonl`、`data/flow/session_reads.jsonl`、`data/profile/tff_tables.json`、`data/centaur/brief_pushes.jsonl` / `skill_SPX.json` / `views.jsonl`；另有 `scripts/check_gaps.py` + `tests/reference/test_gaps.py`（08-19 未完成的改动）、`docs/plans/2026-08-20-selection-lab-design.md`（+12 行）、`data/research/setup_labeling/worksheet.csv`（本地 378 行 vs main 363 行，两边 setup 列都是 0 标注）。请定两件事：①这些数据该不该进仓库（仓库是 PUBLIC），该进就接上提交、不该进就挪出仓库或加 .gitignore；②代码和计划要就做完提交，不要就用 `git -C <主树> checkout origin/main -- <文件>` 恢复。备份在 本地分支 `salvage/main-tree-2026-09-17`（只在本机）。 · pending
+↳ ✅ RND Linda 已取（09-17）：逐个裁定——**进仓库**（公开无碍：SPX 位、时间戳、盘中观点文本）：gex/flow/profile/centaur 六个 + learning_log +4 + selection-lab 计划 +12，已合 main `90a5fed7`；它们是 08-17～08-20 的**唯一副本**，mtime 全是 08-23 12:46 的 stash-pop 残留，不是每天在写。**skew_daily.log** 是跳过日志不是数据：取消跟踪，脚本改写到已被忽略的 `data/gex/skew_daily.log`。**恢复成 main 版**：`scorecard_SPX.json`（main 08-21 的版本更新）、`setup_labeling/worksheet.csv`（两边 0 标注，无信息）。**check_gaps + test_gaps**：08-19 的半成品，本地 13/14 条测试红，不在此时做完——原样推到分支 `feat/linda-check-gaps-perishable-wip` 保存，主树恢复成 main 版。⚠️ 顺带查出 gex-daily 自 08-21 起每次都失败，见下方 🔴。
 🔔 [09-17] → Nighty Zac · 夜间自学: 主树里 `data/reference/METRIC_SOURCES.md` 有一段**从没提交过**的 FTD（跟进日）口径登记（09-07，为 vault 的 ModelBook「市场底部」册写的：`ftd` 表格行 + 「## FTD 口径（2026-09-07 登记）」一节）。本地文件的底子比 main 旧（缺 09-04、09-06 之后的行），**只把 FTD 那两处合进 main 版**，别整份提交。合完或判定不要后，用 `git -C <主树> checkout origin/main -- <文件>` 恢复主树这份。备份在 本地分支 `salvage/main-tree-2026-09-17`（只在本机）。 · pending
 🔔 [09-17] → Writer Mia · 写作线: 主树里两份 Substack 旧稿有 08-23 的本地修改从没提交：`Fluxus_Substack/drafts/02_nobody_tells_you_how_much.md`（+4 −3）、`03_i_lose_more_than_i_win.md`（+29 −33）。main 上这两份停在 08-08。请判要不要：要就提交，不要就用 `git -C <主树> checkout origin/main -- <文件>` 恢复。备份在 本地分支 `salvage/main-tree-2026-09-17`（只在本机）。 · pending
 ↳ ✅ Writer Mia 已取（09-17）：两份都**留**，已合进 main `0863d661`。本地版是真修正（离场表按 performance_review.py 重算：纯止损 130→46、分批 20→156），但对了一半——提交时按 PERFORMANCE_TRUTH Period 1 再修三处：03 回撤 11.1%（08-03 已撤回的 bug）→ **−17.9%（01-28→03-19）**；03 本地版改坏的 SPY +9.31% 恢复为 **+9.60% / QQQ +14.82%**；02「每个交易日一次」按 46 笔 ÷ 138 个交易日改为**每 3 个交易日一次**。03 的 P.S. 只换了事实，稿头已标请 Andy 过目。主树两份已 `checkout origin/main --` 恢复。
@@ -2689,3 +2693,5 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ Growth Gary 已取（09-17）：核过——主树那份只多出 08-24/08-25 两行旧读数（08-25「41 人 / MRR 774」已被身份合并后的 38 / 1052 取代），main 版本是超集；已 `checkout origin/main --` 恢复，主树 data/growth/ 现与 main 一致。
 🔔 [09-17] → UI Claire · Dashboard前端UI: 主树里 `.claude/launch.json` 有 +61 −2 行从没提交过的预览服务器配置（09-03）。要就提交，不要就用 `git -C <主树> checkout origin/main -- <文件>` 恢复。备份在 本地分支 `salvage/main-tree-2026-09-17`（只在本机）。 · pending
   ↳ ✅ UI Claire 已取（09-17）：丢——4 条都是本机专用配置（两条指向会话临时目录、两条指向已被清掉的工作树 AI-Trading-System-rotation / -rotation-v3），仓库公开不该进库；主树已恢复为 HEAD（与 main 一致），备份仍在 salvage/main-tree-2026-09-17。
+
+🔴 [09-17] **gex-daily 已停摆近一个月，全程无告警**（RND Linda 发现）：`com.fluxus.gex-daily` 每次运行都记 `TWS unreachable on 127.0.0.1:7496 after 1500s — is it logged in? skip`（`data/gex/cron.log`，08-14 起共 77 次）；最后一次成功产出是 08-20，08-21 起 SPX GEX 位、pine、profile 全部冻结在 08-20。skew-daily 同因每天跳过。根因＝本机 TWS 没登录，**只有 Andy 能修**（agent 不代登录）→ 已写入「📌 给 Andy 的待办」。RND Linda 线的后续：每次白等 25 分钟再跳过、且不报警，这是本线的机制缺口，改成连续 N 次不可达就往 INBOX 写红行（待 Andy 定去留后再动）。
