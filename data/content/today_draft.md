@@ -1,35 +1,62 @@
-date: 2026-09-15
+date: 2026-09-16
 tier: B
-source: `Fluxus_Queue.md` 本周队列 #2（Andy 09-13「队列 7 条全收」）+ `Fluxus_Own_Lines.md` 金句库（#119 / #100）· 维修期条款生效，campaign 变体不上桌
-gate: 🎮 **W8 ?/5**（09-15 是第二天；posts.csv 09-14 零行，台账只能证阳性，昨天发没发没核到，见 notes）
+source: queue（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周队列第 3 条,09-16 排定）+ campaign `2026-09-03_noise-with-structure`（status: queued,维修期内降为 C2/C3）
+gate: 见 notes（posts.csv 09-13 后未回填 09-14~09-16,本班给不出准确 X/5）
 ---
 ## C1
-bucket: QUOTE（主张 · 中） | entry: -
-
-这件事里你只控制三样：买入、卖出、仓位。剩下的全是外因。想多了都不行。
-
-why: 本周队列第 2 条，今天该发的就是它，你 09-13 全收的。你的原话是「炒股票 只有3件事情可以控制 买入卖出和仓位 / 其他的都是外因 / 想多了都不行」（[`Fluxus_Own_Lines.md:251`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:251) #41，库里标「全场最好的一条」）。上面这句是打磨版，后两句基本没改。想发原话就直接粘原话。posts.csv 全量搜 控制 / 仓位 / 外因 / control 零命中，历史备稿和队列都没端过。
+bucket: QUOTE（金句 · 单独成条不挂链接） | entry: -
+Market on a mission to destroy both sides.
+why: 09-08 维修令仍生效（未见新规则卡过 Andy）,C1 只出金句库/raw 两个来源;这条是本周队列里排给今天(09-16)的那条,具体物闸占「他自己的原话」,零落地成本。
 ---
 ## C2
-bucket: QUOTE（主张 · EN 原话） | entry: -
+bucket: 票根（3·时差票根钩,🆕 首用） | entry: 3
+```
+Sept 1, 07:55 — a commit that says: run our own test-checker four times against
+the same code on the same machine and it returns 43, 47, 49, 43. Six percentage
+points. Six of the forty-nine verdicts change sides between two of the runs.
+Written down at the time as: a thing you measure with is worth about what a guess
+is worth, until you have measured it.
 
-Price over everything, babe.
+Sept 2, 04:55 — the next commit. Cause located, intervention run, dispersion
+gone, fix in main, and seven tests on a tool that had been running four nights
+with none of its own.
 
-why: 你自己用英文说过两次，「as a trader I am in the price > everything else camp」和「price over everything babe」（[`Fluxus_Own_Lines.md:677`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:677) #119 ⭐⭐⭐ EN），只补了大写和逗号。从没端过，posts.csv 搜 price over / over everything 零命中。跟 C1 能配一对：C1 讲你手里能控制什么，这句讲你看什么。两条都想发的话，隔开几小时。
+Twenty-one hours between those two timestamps. The gap is the claim here: the
+expensive part was not the fix. It was somebody asking a different question
+instead of running it a fifth time.
+```
+why: 具体物闸占「一个能查的时间戳」——两个自有 commit(`a2e3132b` 09-01 07:55:58 → `deb7a0f5` 09-02 04:55:59,间隔 21h)。campaign 已过 Gate(queued)、APPROVAL_QUEUE 标「窗口:常青,数字已关账」不受今天读数影响,维修期内只能进 C2 不进 C1。
 ---
 ## C3
-bucket: QUOTE（情绪 vs 价格 · 中） | entry: -
+bucket: 可复用物（4·反面先行钩） | entry: 4
+```
+Three ways to check whether a wobble in your own numbers is noise. All three feel
+like work. None of them can find a thing that is actually sitting there.
 
-价格只是回到了几个月前的价格而已……但情绪就完全不同了
+— You report the spread. Or the standard deviation of the runs, which is the
+  spread wearing a hat. A scalar cannot have a shape.
+— You go looking inside the reading's own dimensions: recompute the variance,
+  run one more significance test on the same numbers.
+— You finish on a p-value.
 
-why: 你的原话原样（[`Fluxus_Own_Lines.md:574`](Fluxus_Brand/voice/Fluxus_Own_Lines.md:574) #100 ⭐⭐⭐），只把四个点改成了省略号。库里的打磨版是「价格只是回到几个月前。情绪回不去了。」，后半句是改写，所以这里端原话。从没端过，posts.csv 搜 情绪 / sentiment 零命中。排第三是因为昨天 AI 股开盘跳空，今天发会被读成在评这一波，但这句没挂任何当天的数。你要是就想借这个势，这个误读反而是好事，你来定。
+The swap, three steps:
+
+1. Report the list, not the spread. Write down the items that changed sides
+   between two runs — which trades, which folds, which verdicts.
+2. Ask whether that list resembles itself, along a dimension that is not in the
+   reading. Order. Timing. Size. What was left over from the item before.
+3. If it resembles itself, go turn the shared thing off and measure again.
+   Dispersion collapsing to zero is the confirmation. A probability is not.
+
+Step 3 is the one that gets skipped. Ours came with p = 0.0061, and it proved
+nothing — the proof was turning the cache off.
+```
+why: 具体物闸占「一个能查的数字」(p=0.0061,已关账)。零叙事、读者今晚能直接照抄执行的三步清单,是待批堆里落地成本最低的一条;与 C2 同源 campaign 但入口号不同(3 vs 4)、hook 不同,互不重复。
 ---
 ## notes
-- **维修期条款仍生效**：`PIPELINE.md` 09-08 维修令没解除。最新一张卡 `2026-09-06_autumn-effect-decay` 是 killed，之后没有新卡；`2026-09-03_noise-with-structure` 仍是 queued、没签字，所以 C1 只能从队列和金句库出。`voice/raw/` 两边合起来只有课程口述和 08 月参考料，没有能单发的成品。
-- **#28 / #51 今天撤下**：09-13、09-14 各端了一次，今天不连端第三次，还在库里。#130 同理，09-14 已撤。
-- **09-14 那三条（#103 / #28 / #51）没记判决**：posts.csv 09-14 零行，x_watch 不抓 @Fluxus_Z 自己的帖，所以查不到你昨天发没发。台账只能证阳性，零行不等于没发，所以不写 ignored，等补账或你回一句。
-- **没选的**：#104「Leaders lead. Sit on your hands」跟昨天 C1 #103 同题，今天不端；#167 / #175 / #187 是电影台词改的梗，不是你的原话，不端；#142「控制你能控制的」跟 C1 同族，留到别的日子。
-- **Own_Lines 主树那份是旧的**（09-07 mtime，main 09-12 有更新，差 80 行 diff），今天的出处和行号都按 origin/main。
-- **蹭号 2 条（NOW.md A 线）**：最新睡前速报 `x_watch/nightcap/2026-09-14.md` 的蹭位榜是 ET 周一 13:04 抓的，到现在已经 20 小时以上，窗口关了，不端。今天 13:30 主班和 02:00 睡前班出新榜再看。
-- **门铃**：Steve 名下 3 条 pending 下面都已经有 ↳ ✅（09-12 / 09-13 日推班和交互会话追的），零新活。
-- 陈旧提醒：无（三条都没挂盘面读数）。
+维修期条款(PIPELINE 09-08 维修令)仍生效——今日无新规则 campaign 卡过 Andy,C1 硬限定金句库/`voice/raw/`,campaign 2026-09-03_noise-with-structure 的变体只能进 C2/C3,未端入 C1。
+陈旧闸:该 campaign 在 `APPROVAL_QUEUE.md` 明确标「⏰ 窗口:常青,数字已关账(41/45/47→45/45/45、43/47/49/43、22/48 等),零处引用当前杀死率(C7)」,不随今天仓库读数漂移,免复算。
+关卡计数缺口:`data/content/posts.csv` 最后一行停在 09-13,09-14~09-16 三天未回填——按 [pitfall_the_ledger_went_quiet_not_him.md] 的教训,这不等于他没发,只等于台账没记;本班无法给出可信的 🎮 X/5,交周检/Growth 对着 X 主页核实后回填。
+`voice/raw/` 与 `verdicts.jsonl` 近 7 天均无新增(最新 raw 是 09-06 三条课程口述,verdicts 只有表头);未触发「硬凑三条」红线,因为今天有队列已成品可端,不算输入枯竭。
+门铃自取:INBOX 命中 5 条 🔔→Steve pending,逐条核对后 4 条已在下方有 `↳ ✅` 完成标记(09-12/09-13 备稿班已处理)、1 条是 OPS 内部行(grep-only-first-line 已知缺陷,09-13 已登记待修)——本班无新待处理项,未触发额外动作。
+APPROVAL_QUEUE 里 `2026-09-03_noise-with-structure` 还有「等 Mia/Vera routine 还是按毛坯直接发」等 2 件需 Andy 定,今天若顺手看中 C2/C3 想发,发前请先翻那两条。
