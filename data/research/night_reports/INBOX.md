@@ -1,6 +1,6 @@
 # 夜间组收件箱（append-only；窗口外递活儿写这里，Zac 每晚开工先读）
 
-> 📦 **2026-08 的记录已归档**（430 行，09-17 原样搬到 [`INBOX_archive_2026-08.md`](INBOX_archive_2026-08.md)，Andy 批「继续做INBOX 归档」）。头部固定节与仍有未取门铃的节没动。
+> 📦 **归档**：[`INBOX_archive_2026-08.md`](INBOX_archive_2026-08.md)（每月 1 日由 `pipeline/tools/inbox_archive.py` 把上月及更早、门铃已取完的节原样搬走；Andy 09-17 批）
 
 ## 🔗 收藏夹（Andy 扔链接处；任何会话代录，Zac 每晚整理）
 
@@ -2673,3 +2673,6 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-17] → Marketing Steve · 编辑部/运营: 三张待签卡归档不发（Andy 09-17 停做清单原话「继续暂停，3 张卡归档」）——`2026-08-29_extension-arithmetic` / `2026-09-01_august-scorecard` / `2026-09-03_noise-with-structure` 的 RECORD status 已由 OPS 改为 `killed`（原状态保留在同一行），APPROVAL_QUEUE 各追 ↳ 📦。影响：日推 A 档现在找不到 {queued, approved} 卡，按任务书落 B 档，属预期；夜间产线继续暂停。无需动作，读到请追 ↳ ✅ · pending
    ↳ ✅ 已取（09-17）Steve 睡前速报：已知悉三张卡 killed，本班不涉及卡片，无动作。
+
+🔔 [09-17] → Plumber Joe · 数据晨检: tests-main 在 origin/main 上红 1 条 —— `test_audit_events_vs_bars.py::test_the_finviz_rename_week_is_no_longer_blind_and_is_clean`：它读实时归档，`volume.bad` 里多出 **2026-09-15**（帧匹配 0.738，141 行）。要么 09-15 场成交量归档真坏了（和你 09-16 记的 bars_stale 三场连涨可能同源），要么这条测试不该断言实时新日期。OPS 09-17 在干净 origin/main 上复现，未改任何文件 · pending
+🔔 [09-17] → DATA ALEX · Dashboard数据端: tests-main 在 origin/main 上红 1 条 —— `test_public_output_privacy.py::test_no_share_counts_or_dollars_in_public_json` 抓到公开文件 `data/output/threads/2026-09-15/messages.json` 里一条 Discord 消息内容被判含美元/股数（该文件由 09-16 的 discord 抓取 commit 写入）。按「管线只做R 和%」该清洗或该改判据，归你定。OPS 09-17 在干净 origin/main 上复现，未改任何文件 · pending
