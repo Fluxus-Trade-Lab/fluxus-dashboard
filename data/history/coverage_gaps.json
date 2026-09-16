@@ -1,0 +1,25 @@
+{
+ "_about": "Declared coverage gaps in data/history archives: sessions whose rows are real but whose UNIVERSE is incomplete. Readers that compute breadth, cross-sectional ranks or 'the market' over these sessions must exclude them or label them. Owner: DATA ALEX. Pinned to the real archive by pipeline/tests/test_coverage_gaps.py.",
+ "gaps": [
+  {
+   "archive": "data/history/ticker_events.csv",
+   "first": "2026-06-26",
+   "last": "2026-08-06",
+   "sessions": 20,
+   "rows": 19533,
+   "universe": "A-L only (0 symbols sorting after 'L')",
+   "cause": "Finviz scrape page cap: the screener universe grew past 3,000 and the pager stopped mid-L; fixed in code 2f782b53 (2026-08-09). Incident: data/reference/incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md",
+   "backfill": "not recoverable -- Finviz serves no historical screener snapshots, and rebuilding the M-Z half from price bars would be a different screener, not the missing rows (checked 2026-09-17, DATA ALEX). 2026-08-07 is no longer in the window: its rows were recomputed from snapshots on 2026-09-13 (771e583c) and carry 23% M-Z.",
+   "declared": "2026-09-17 DATA ALEX, per Andy 2026-09-04 ruling step 3"
+  },
+  {
+   "archive": "data/history/delayed_ep_log.csv",
+   "first": "2026-08-13",
+   "last": "2026-08-27",
+   "universe": "inherited: 15-session lookback reaches into the ticker_events gap above; M-Z share ramps 0% -> 31% until the left edge clears on 2026-08-28",
+   "cause": "derived archive, see incident addendum (Nighty Zac 2026-09-02) and data/research/dirty_window_reach_2026-09-02/",
+   "backfill": "not recoverable for the same reason",
+   "declared": "2026-09-17 DATA ALEX"
+  }
+ ]
+}

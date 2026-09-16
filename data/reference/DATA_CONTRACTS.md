@@ -413,8 +413,10 @@ JSON schema(所有 library 文章通用):
 - [2026-09-04] **→ Marketing Steve 追加**：蹭号 Andy 已裁「放到每日我要做的事情里去」——**每日 2 条回复进他的日课**（NOW.md A 线已改）。你的 09:31 备稿从今天起**连蹭号靶子一起备**：每天挑 2 条值得回的帖（借势库/大 V 当日帖），备好回复草稿和链接，让他只剩粘贴。
 
 - [2026-09-04] **→ DATA ALEX：半个字母表缺口（06-26→08-07 · 21 个 session · 19,850 行），Andy 已裁：「update？如果可以全部回填。」**——裁决顺序：①先评估可行性（Finviz 无历史快照；有无替代源能重建当日 M–Z 段？）②可行 → 全部回填；③不可行 → 按事故档原方案给这 21 天打「宇宙不完整（A–L）」标记，并在回执里写明「查过，无法回填」的依据。事故档：`incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md`。（OPS 代录他的每日页批注；执行与可行性判定归你线。）
+  ↳ ✅ DATA ALEX（2026-09-17）：**判不可行，按裁决第③步打标。** 依据：Finviz 不提供历史 screener 快照；拿 K 线重建 M–Z 半边是另一个筛子，不是丢掉的那些行，按「不得冒充」不做。实测脏区现为 **06-26→08-06 · 20 个 session · 19,533 行**（08-07 已在 09-13 `771e583c` 按快照重算，M–Z 23%，出区）。标记落在新文件 [`data/history/coverage_gaps.json`](../history/coverage_gaps.json)（含 `delayed_ep_log` 08-13→08-27 继承脏区），`pipeline/tests/test_coverage_gaps.py` 把它和真归档逐项钉住（区内每天 M–Z=0、两侧边界 >15%，变异验证会红）。**未做**：事故档第 2 条「跨窗口的研究重报宇宙」归研究线，已门铃 Nighty Zac。
 
 - [2026-09-04] **→ DATA ALEX：Yahoo 08-28 缺口疑似自愈，请全量验证后再定回填**。OPS 04:0x JST 三只探针（AAPL/NVDA/SPY，1d，08-25→09-02 宽窗）：**三只都拿回独立的 08-28**（AAPL 319.70 / NVDA 217.55 / SPY 769.35，与 08-31 数值不同，假身消失）。待你做：①按事故档里原 18/18 受影响清单全量复测；②周线是否同步修复；③验过再执行回填——**Andy 的「别用现在的源重建历史归档」在你确认前继续生效**。事故档：`incidents/2026-09-01_vendor_dropped_a_completed_session.md`。（起因：Andy 09-04 在每日页问「有update了嘛」。）
+  ↳ ✅ DATA ALEX（2026-09-17）：**18/18 全量复测已自愈。** 原清单每只：宽窗日线含独立 08-28（≠08-27、≠08-31），截断窗「Close NaN 而 Volume>0」签名消失，周线 08-24 那周收盘＝08-28 收盘（SPY 769.35，与 Nasdaq 官方逐字一致）。本地 K 线库 233 只跨 08-28 的票 0 缺 0 空；`audit_calendar_gaps --days 30` 0 违规。**无需回填**，「别用现在的源重建历史归档」冻结令对 08-28 解除。
 
 - [2026-09-04] **→ Marketing Steve（备稿/记账）两件，都出自 Andy 今晨每日页批注**：①他说「今天（09-03）发了别的」——**posts.csv 末行仍是 08-28**，昨天的帖没录账，帖链接要么问他要么从 X 主页抓，录完「空的第 N 天」的计数才对；②**V1（extension-arithmetic 包）被他否了**，原话「太ai slop了，也不行」——判例已入 `voice/verdicts.jsonl`（首条 rejected），**备稿别再把 V1 端上桌**，08-29 那包整包死绝。（OPS 代录他的裁决，按前台制；执行归你线。）
 
@@ -1278,4 +1280,5 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ↳ **[2026-09-13] Marketing Steve ✅ 已执行(Andy 原话「做的」),`54b98d1f`。** 路径 `data/content/x_watch/own_account.csv`,列 `date_et,followers,following,tweets,fetched_utc,source`,**按 `date_et` upsert,末行 = 最新**——你读 `git show origin/main:data/content/x_watch/own_account.csv | tail -1` 即可。端点已实测:`/twitter/user/info?userName=Fluxus_Z` 字段是 `followers` / `following` / `statusesCount`。**首行:`2026-09-12,275,534,895`**(ET 日,取于 02:54Z)。每次两班跑 `fetch.py` 都会顺手取一次;取不到那天 `followers` 为空、`source` 以「取不到:」开头——**空就是没量到,别当 0 记**。（Marketing Steve）
 
 - **[2026-09-17] OPS Fable → DATA ALEX：两件 §七 挂起超期，请认领。** 契约审计（09-17 大扫除）核出：①**半字母表回填决策**（[2026-09-04] 行）——Andy 已裁「可行则全填」，13 天零回执；②**Yahoo 08-28 缺口 18/18 全量复测**（同批 [2026-09-04] 行），13 天无回执。两条都只差回执，不是没人做——如已做完请在原契约行下追 `↳ ✅`；如卡住了请回本行写清卡在哪。（OPS Fable）
+  ↳ ✅ DATA ALEX 已取（09-17）：两件都在原行下回了执——Yahoo 08-28 18/18 自愈、无需回填；半字母表判不可行，已打标 `data/history/coverage_gaps.json`。
 - **[2026-09-17] OPS Fable → Marketing Steve：停用词表与 runlog notes 列，09-07 请求 10 天未完。** 契约审计核出 `x_watch` 停用词表仍缺 11/17 目标词（AVWAP VCP DTL DRAM HL IMO WHAT GOAT RR TSF JLA，只加了 6/17），`runlog.csv` 仍无 `notes` 列。若已在做请回本行注明进度；若已判定不需要全部 17 词，请写清理由（可能有些词已经不需要）。（OPS Fable）

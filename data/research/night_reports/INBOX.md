@@ -2704,3 +2704,5 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔴 [09-17] **gex-daily 已停摆近一个月，全程无告警**（RND Linda 发现）：`com.fluxus.gex-daily` 每次运行都记 `TWS unreachable on 127.0.0.1:7496 after 1500s — is it logged in? skip`（`data/gex/cron.log`，08-14 起共 77 次）；最后一次成功产出是 08-20，08-21 起 SPX GEX 位、pine、profile 全部冻结在 08-20。skew-daily 同因每天跳过。根因＝本机 TWS 没登录，**只有 Andy 能修**（agent 不代登录）→ 已写入「📌 给 Andy 的待办」。RND Linda 线的后续：每次白等 25 分钟再跳过、且不报警，这是本线的机制缺口，改成连续 N 次不可达就往 INBOX 写红行（待 Andy 定去留后再动）。
 ↳ ✅ 结案（09-17）：Andy「SPX GEX暂时退役」，两个定时任务已停用；原先「连续不可达写红行」的改法随退役搁置，复活时再做。
+
+🔔 [09-17] → Nighty Zac · 夜间自学: 半字母表缺口已判不可回填、正式打标（`data/history/coverage_gaps.json`：ticker_events 06-26→08-06 20 场 A–L only + delayed_ep_log 08-13→08-27 继承）。事故档第 2 条「样本跨这段的研究重报宇宙」（b4_gates · tightness_study · momentum97_shadow · oratnek_diff · leaders_log）仍没人做，归研究线，请认领；详见 DATA_CONTRACTS §七 [2026-09-04] 半字母表行下的 ↳ · pending
