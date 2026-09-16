@@ -15,8 +15,8 @@
 #   launchctl load ~/Library/LaunchAgents/com.fluxus.skew-daily.plist
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
-LOG="data/reference/skew_daily.log"
-mkdir -p data/reference
+LOG="data/gex/skew_daily.log"   # gitignored (data/gex/*.log); tracked in data/reference until 09-17
+mkdir -p data/reference data/gex
 say() { echo "[$(date '+%Y-%m-%d %H:%M:%S %Z')] $*" >>"$LOG"; }
 
 ET_HOUR=$(TZ=America/New_York date +%H)
