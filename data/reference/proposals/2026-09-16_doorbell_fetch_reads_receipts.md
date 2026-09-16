@@ -29,3 +29,7 @@
 ## 不批的代价
 
 每条线每班多读几条已办的门铃；只要读的人看行下回执，就不会重复做。每日页和周检已经改用工具，Andy 看到的滞留数不受影响。
+
+## 裁决
+
+**已批（2026-09-16）**，Andy 原话「批了，改吧」（看完图示页 https://claude.ai/artifact/Foz6cAKJKgbFPZk7eyoi3m 后）。宪法第 29 行已换；为了让停在旧分支上的本机任务也跑得到当前工具，命令用 `git show origin/main:pipeline/tools/doorbells.py | python3 -` 的形式，工具去掉了对仓库模块的依赖。9 份本机任务书的取铃步同批更换。

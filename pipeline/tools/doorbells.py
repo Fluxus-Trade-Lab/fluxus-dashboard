@@ -13,6 +13,10 @@ unrelated `↳ ✅ Plumber Joe …` note landed under an OPS doorbell. Unsigned
 receipts (`↳ ✅ 已执行（09-13 · <commit>）`) do close — most lines write them that way.
 
     python3 -m pipeline.tools.doorbells --to OPS --older-than-hours 48
+    git -C <repo> show origin/main:pipeline/tools/doorbells.py | python3 - --repo <repo> --to Joe
+
+The second form is the constitution's fetch command: it needs nothing from the checkout it runs in,
+so a task sitting on an old branch still runs the current tool against the current INBOX.
 """
 from __future__ import annotations
 
@@ -23,7 +27,6 @@ import subprocess
 import sys
 from dataclasses import dataclass
 
-from pipeline.marketcal import market_now
 
 INBOX = "data/research/night_reports/INBOX.md"
 _BELL = re.compile(r"^🔔\s*\[(\d{2})-(\d{2})\]\s*→\s*([^:：]+)[:：]\s*(.*)$")
@@ -100,16 +103,17 @@ def main(argv=None) -> int:
     ap.add_argument("--to", help="addressee substring, e.g. OPS / Joe / Steve")
     ap.add_argument("--older-than-hours", type=float, default=0)
     ap.add_argument("--file", help="read a local file instead of origin/main")
+    ap.add_argument("--repo", default=".", help="repository to read origin/main from")
     a = ap.parse_args(argv)
     if a.file:
         text = open(a.file, encoding="utf-8").read()
     else:
-        r = subprocess.run(["git", "show", f"origin/main:{INBOX}"], capture_output=True, text=True)
+        r = subprocess.run(["git", "-C", a.repo, "show", f"origin/main:{INBOX}"], capture_output=True, text=True)
         if r.returncode:
             print(f"cannot read origin/main:{INBOX}: {r.stderr.strip()}", file=sys.stderr)
             return 2
         text = r.stdout
-    bells = open_bells(text, a.to, market_now(), a.older_than_hours)
+    bells = open_bells(text, a.to, dt.datetime.now(), a.older_than_hours)
     for b in bells:
         print(f"L{b.lineno} [{b.date:%m-%d}] → {b.to}: {b.text[:160]}")
     print(f"open: {len(bells)}")

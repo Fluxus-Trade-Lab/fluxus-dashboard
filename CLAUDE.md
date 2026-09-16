@@ -26,11 +26,11 @@
 **门铃自取制（Andy 2026-09-11 批，原话「定时会话不能发消息，这个要改」；Joe 第二次撞上 send_message 拒发后立）**：
 定时会话按不了门铃是 harness 设计 + 本宪法铁律（无人值守禁发），**不改这条，改门铃的方向——从「发给你」改成「你来取」**：
 - **写门铃**：任何会话要通知某线，往 `data/research/night_reports/INBOX.md` 追一行固定格式：`🔔 [MM-DD] → <TEAM.md 线名>: <一句话+在哪> · pending`（append-only，走直推 main）。
-- **取门铃**：每条定时线任务书的开工步固定含一句——`git show origin/main:data/research/night_reports/INBOX.md | grep "🔔.*→ *<自己线名>.*pending"`，命中的先读再开工，处理后在该行下追 `↳ ✅ <线名> 已取（MM-DD）`。
-- **交互会话同样取铃**：任何会话（含被 Andy 打开的交互线）开工第一动作里含同一句 grep——门铃对交互线的延迟＝它下次被打开的时间，不是任何人的转发延迟。
+- **取门铃**（09-16 改，Andy 原话「批了，改吧」；提案 `data/reference/proposals/2026-09-16_doorbell_fetch_reads_receipts.md`）：每条定时线任务书的开工步固定含一句——`git -C /Users/taolezhu/Documents/AI-Trading-System show origin/main:pipeline/tools/doorbells.py | python3 - --repo /Users/taolezhu/Documents/AI-Trading-System --to <自己线名>`（云端 checkout 里直接 `python3 -m pipeline.tools.doorbells --to <自己线名>`），它只列**没人取的**门铃，列出的先读再开工，处理后在该行下追 `↳ ✅ <线名> 已取（MM-DD）`。旧的 `grep "🔔.*pending"` 不再用：门铃行办完仍写着 pending，grep 会把已办的一起列出来（09-16 每日页据此报「OPS 滞留 9 条」，实际 4 条）。
+- **交互会话同样取铃**：任何会话（含被 Andy 打开的交互线）开工第一动作里含同一句取铃命令——门铃对交互线的延迟＝它下次被打开的时间，不是任何人的转发延迟。
 - **长轮次中途也取**（09-11 ALEX 案后补）：连续工作超过约 1 小时的会话，每告一段落回读一次自己的 🔔 行——排队中的真消息会静默蒸发（09-11 实测 4 例），门铃箱不会。
 - 交互会话在场时仍可代发真消息加速，但**真消息不再是投递链条的环节**——生效只看 🔔 行与 ✅ 回执。
-- **滞留可见**：每日页扫描产地时，`pending` 超过 48h 的 🔔 行上 Andy 牌面 🟡 档「门铃滞留」——耽误不消失，但一定可见。
+- **滞留可见**：每日页扫描产地时，取铃工具加 `--older-than-hours 48` 列出的门铃上 Andy 牌面 🟡 档「门铃滞留」——耽误不消失，但一定可见。
 
 **消息永远只是门铃**：内容必须已经在 §七/INBOX/incidents 里；消息只说「哪里有你的新行」。**转交写完 ≠ 送到，合并进 main 才算**（08-23 有条契约行因分支没合，同一个 bug 隔夜被重新发现一次）。
 
