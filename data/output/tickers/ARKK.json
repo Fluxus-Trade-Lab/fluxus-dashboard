@@ -1,21 +1,21 @@
 {
   "ticker": "ARKK",
-  "fetched_at": "2026-09-15T23:14:57Z",
+  "fetched_at": "2026-09-16T23:20:05Z",
   "_schema": "v2",
-  "current_price": 83.48999786376953,
+  "current_price": 83.18000030517578,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "ARKK",
+    "longName": "ARK Innovation ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "BTS",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 53.68599,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 92.65,
+    "fiftyTwoWeekLow": 62.945,
+    "averageVolume": 5188830,
+    "averageVolume10days": 4422200,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,8 +48,14 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-15T23:14:57Z",
+  "quarterly_asof": "2026-09-16T23:20:05Z",
   "news": [
+    {
+      "date": "2026-09-16T10:31:55Z",
+      "title": "Cathie Wood's ARK Invest Buys AVAV Stock Again, Trims GOOGL Stake And Sells Iridium",
+      "url": "https://stocktwits.com/news-articles/markets/equity/cathie-wood-ark-invest-buys-avav-stock-again-trims-googl-stake-sells-iridium/cZtYg1iRB2Y",
+      "source": "Stocktwits"
+    },
     {
       "date": "2026-09-15T20:18:36Z",
       "title": "Cathie Wood Dumps $60 Million In Crypto Stock Ahead Of Clarity Act Vote",
@@ -103,38 +109,24 @@
       "title": "2 Stocks Cathie Wood Is Snapping Up at a Discount Right Now",
       "url": "https://www.fool.com/investing/2026/09/11/2-stocks-cathie-wood-snapping-up-discount/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-11T13:57:15Z",
-      "title": "Bitcoin vs. Gold: Cathie Wood Sees a Breakout",
-      "url": "https://247wallst.com/investing/2026/09/11/bitcoin-vs-gold-cathie-wood-sees-a-breakout/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.025847559414666394,
   "technicals": {
-    "ma20": 84.54349937438965,
-    "ma50": 80.1361996459961,
-    "ma200": 77.208300075531,
-    "rsi14": 51.07859700812529,
+    "ma20": 84.7449993133545,
+    "ma50": 80.17599960327148,
+    "ma200": 77.23185007095337,
+    "rsi14": 50.268991579899385,
     "high_20d": 87.83000183105469,
-    "low_5d": 82.41999816894531,
-    "low_10d": 82.41999816894531,
+    "low_5d": 82.04000091552734,
+    "low_10d": 82.04000091552734,
     "high_52w": 92.6500015258789,
     "low_52w": 62.94499969482422,
-    "atr14": 2.1457154410226003,
-    "atr14_pct": 2.570026944453586,
-    "position_in_52w_range_pct": 69.16343007077961
+    "atr14": 2.2328578404017856,
+    "atr14_pct": 2.6843686369436672,
+    "position_in_52w_range_pct": 68.11984299962964
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 45.53,
-      "high": 45.935,
-      "low": 44.97,
-      "close": 45.69,
-      "volume": 4271900.0
-    },
     {
       "date": "2024-09-17",
       "open": 46.18,
@@ -4131,20 +4123,20 @@
       "date": "2026-09-15",
       "open": 83.9,
       "high": 84.32,
-      "low": 82.92,
+      "low": 82.91,
       "close": 83.49,
-      "volume": 3860834.0
+      "volume": 3869600.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 83.88,
+      "high": 84.57,
+      "low": 82.04,
+      "close": 83.18,
+      "volume": 5455844.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 79.65,
-      "high": 79.98,
-      "low": 79.01,
-      "close": 79.72,
-      "volume": 9863800.0
-    },
     {
       "date": "2025-09-16",
       "open": 80.195,
@@ -6149,9 +6141,17 @@
       "date": "2026-09-15",
       "open": 83.9,
       "high": 84.32,
-      "low": 82.92,
+      "low": 82.91,
       "close": 83.49,
-      "volume": 3860834.0
+      "volume": 3869600.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 83.88,
+      "high": 84.57,
+      "low": 82.04,
+      "close": 83.18,
+      "volume": 5455844.0
     }
   ],
   "ai_synthesis": null,

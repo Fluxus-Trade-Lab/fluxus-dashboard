@@ -1,43 +1,80 @@
 {
   "ticker": "APP",
-  "fetched_at": "2026-09-15T23:14:54Z",
+  "fetched_at": "2026-09-16T23:20:02Z",
   "_schema": "v2",
-  "current_price": 331.4599914550781,
+  "current_price": 326.55999755859375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "APP",
+    "longName": "AppLovin Corporation",
+    "sector": "Communication Services",
+    "industry": "Advertising Agencies",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Palo Alto",
+    "website": "https://www.applovin.com",
+    "fullTimeEmployees": 876,
+    "marketCap": 109283475456,
+    "enterpriseValue": 111385190400,
+    "trailingPE": 25.062164,
+    "forwardPE": 15.567682,
+    "priceToSalesTrailing12Months": 16.002562,
+    "enterpriseToRevenue": 16.31,
+    "priceToBook": 34.615223,
+    "grossMargins": 0.88464,
+    "operatingMargins": 0.77678,
+    "profitMargins": 0.64575994,
+    "returnOnEquity": 2.03686,
+    "totalCash": 3053306112,
+    "totalDebt": 3515072000,
+    "totalRevenue": 6829124096,
+    "freeCashflow": 3179956224,
+    "debtToEquity": 111.13,
+    "currentRatio": 4.3,
+    "fiftyTwoWeekHigh": 745.61,
+    "fiftyTwoWeekLow": 297.5,
+    "averageVolume": 5922396,
+    "averageVolume10days": 4402120,
+    "beta": 2.488,
+    "sharesOutstanding": 304443000,
+    "sharesFloat": 253431202,
+    "companyOfficers": [
+      {
+        "name": "Mr. Adam Arash Foroughi",
+        "title": "Co-Founder, CEO & Director",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Matthew A. Stumpf",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Ms. Victoria  Valenzuela",
+        "title": "Consultant",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Dmitriy  Dorosh",
+        "title": "Vice President Controller & Principal Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Giovanni  Ge",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. David  Hsiao",
+        "title": "Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.026099999
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1984568000,
+    "revenue_high": 2090700000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,36 @@
   "quarterly_asof": "2026-09-14T21:40:18Z",
   "news": [
     {
+      "date": "2026-09-16T21:45:02Z",
+      "title": "Here's Why AppLovin (APP) Fell More Than Broader Market",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-applovin-app-fell-214502593.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-16T17:23:00Z",
+      "title": "APP Stock Falls 36% in 3 Months: Is it a Buy After the Pullback?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/app-stock-falls-36-3-172300396.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-16T11:54:00Z",
+      "title": "1 Stock to Buy Now Before It Climbs 54% Over the Next Year, According to Wall Street Analysts",
+      "url": "https://www.fool.com/investing/2026/09/16/1-stock-to-buy-now-before-it-climbs-54-over-the-ne/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-16T07:14:53Z",
+      "title": "AppLovin (APP) Launches Wurl Content Intelligence Platform For Streaming TV Targeting",
+      "url": "https://finance.yahoo.com/media-advertising/articles/applovin-app-launches-wurl-content-071453841.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-15T23:15:47Z",
+      "title": "Is AppLovin's Lead Over Its Peers Already In The Price?",
+      "url": "https://www.trefis.com/articles/615392/is-applovins-lead-over-its-peers-already-in-the-price/2026-09-15",
+      "source": "Trefis"
+    },
+    {
       "date": "2026-09-14T13:00:05Z",
       "title": "Investors Heavily Search AppLovin Corporation (APP): Here is What You Need to Know",
       "url": "https://finance.yahoo.com/markets/stocks/articles/investors-heavily-search-applovin-corporation-130005499.html",
@@ -237,62 +308,24 @@
       "title": "Why Is AppLovin Stock Trading Near Its Low While Revenue Keeps Growing?",
       "url": "https://www.trefis.com/articles/614908/why-is-applovin-stock-trading-near-its-low-while-revenue-keeps-growing/2026-09-10",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-09-10T18:20:29Z",
-      "title": "AppLovin vs. Reddit: Which Technology Stock Is a Better Buy in 2026?",
-      "url": "https://www.fool.com/coverage/better-buy/2026/09/10/applovin-vs-reddit-which-technology-stock-is-a-better-buy-in-2026/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-10T18:01:12Z",
-      "title": "Digital Turbine Advances 6% Despite Shelf Registration Overhang, AppLovin Rises 4%, Trade Desk and Magnite Sit Out the Rally",
-      "url": "https://247wallst.com/investing/2026/09/10/digital-turbine-advances-6-despite-shelf-registration-overhang-applovin-rises-4-trade-desk-and-magnite-sit-out-the-rally/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-08T23:03:06Z",
-      "title": "ServiceTitan Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/transcript-servicetitan-q2-earnings-call-highlights-2026-09-08/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-07T20:45:03Z",
-      "title": "Evercore Warns AI IPOs Could Pressure These Struggling Stocks. IBM and AppLovin Face Different Tests",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/evercore-warns-ai-ipos-could-204503562.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-09-07T12:49:38Z",
-      "title": "OpenAI, Anthropic IPOs Could Spark a Selloff in These Struggling Stocks \u2014 IBM, Tesla, AppLovin Among Names at Risk",
-      "url": "https://www.benzinga.com/markets/equities/26/09/61647784/openai-anthropic-ipos-could-spark-a-selloff-in-these-struggling-stocks-ibm-tesla-applovin-among-names-at-risk?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
-      "source": "Benzinga Private Markets"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03965580627393414,
   "technicals": {
-    "ma20": 313.92149658203124,
-    "ma50": 369.48059997558596,
-    "ma200": 479.58312561035154,
-    "rsi14": 49.500541529077985,
+    "ma20": 314.88649597167966,
+    "ma50": 365.4522003173828,
+    "ma200": 478.2840756225586,
+    "rsi14": 47.31948450994557,
     "high_20d": 338.3399963378906,
     "low_5d": 300.0899963378906,
     "low_10d": 300.0899963378906,
     "high_52w": 745.6099853515625,
     "low_52w": 297.5,
-    "atr14": 14.236822945731026,
-    "atr14_pct": 4.295185938801457,
-    "position_in_52w_range_pct": 7.578494692198162
+    "atr14": 14.55535888671875,
+    "atr14_pct": 4.457177546403895,
+    "position_in_52w_range_pct": 6.48501450727434
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 111.4,
-      "high": 116.97,
-      "low": 110.9,
-      "close": 116.25,
-      "volume": 6967200.0
-    },
     {
       "date": "2024-09-17",
       "open": 118.16,
@@ -4289,20 +4322,20 @@
       "date": "2026-09-15",
       "open": 328.325,
       "high": 334.46,
-      "low": 323.8025,
+      "low": 323.803,
       "close": 331.46,
-      "volume": 6496272.0
+      "volume": 6604900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 333.58,
+      "high": 336.39,
+      "low": 322.01,
+      "close": 326.56,
+      "volume": 3523094.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 578.54,
-      "high": 595.27,
-      "low": 574.227,
-      "close": 593.14,
-      "volume": 6246600.0
-    },
     {
       "date": "2025-09-16",
       "open": 596.7,
@@ -6307,9 +6340,17 @@
       "date": "2026-09-15",
       "open": 328.325,
       "high": 334.46,
-      "low": 323.8025,
+      "low": 323.803,
       "close": 331.46,
-      "volume": 6496272.0
+      "volume": 6604900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 333.58,
+      "high": 336.39,
+      "low": 322.01,
+      "close": 326.56,
+      "volume": 3523094.0
     }
   ],
   "ai_synthesis": null,

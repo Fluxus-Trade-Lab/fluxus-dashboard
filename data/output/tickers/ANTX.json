@@ -1,43 +1,80 @@
 {
   "ticker": "ANTX",
-  "fetched_at": "2026-09-15T23:14:50Z",
+  "fetched_at": "2026-09-16T23:19:59Z",
   "_schema": "v2",
-  "current_price": 5.360000133514404,
+  "current_price": 5.340000152587891,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "ANTX",
+    "longName": "AN2 Therapeutics, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Menlo Park",
+    "website": "https://www.an2therapeutics.com",
+    "fullTimeEmployees": 21,
+    "marketCap": 201511504,
+    "enterpriseValue": 123879232,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -6.675,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 2.553802,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.50118,
+    "totalCash": 78387000,
+    "totalDebt": 0,
     "totalRevenue": null,
-    "freeCashflow": null,
+    "freeCashflow": -18017876,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 14.322,
+    "fiftyTwoWeekHigh": 7.19,
+    "fiftyTwoWeekLow": 1.0,
+    "averageVolume": 286227,
+    "averageVolume10days": 205810,
+    "beta": -0.992,
+    "sharesOutstanding": 37736237,
+    "sharesFloat": 21406635,
+    "companyOfficers": [
+      {
+        "name": "Mr. Eric E. Easom",
+        "title": "Co-Founder, CEO, President & Chairman of the Board",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Joseph S. Zakrzewski",
+        "title": "Co-Founder & Independent Director",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Ms. Lucy O. Day CPA",
+        "title": "CFO, & Principal Financial Officer",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Mr. Joshua M. Eizen J.D.",
+        "title": "Chief Legal Officer, COO & Corporate Secretary",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Dr. George Harrison Talbot FACP, M.D.",
+        "title": "Co-Founder & Senior Clinical Advisor",
+        "age": 77,
+        "yearBorn": 1948
+      },
+      {
+        "name": "Dr. Michael R. K. Alley Ph.D.",
+        "title": "Co-Founder, Senior VP of Research Fellow & Head of Biology",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": -0.4091
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "[]",
+    "revenue_low": 0,
+    "revenue_high": 0
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -221,30 +262,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1217228429637768,
   "technicals": {
-    "ma20": 5.705999970436096,
-    "ma50": 5.405599985122681,
-    "ma200": 3.516099991798401,
-    "rsi14": 42.82188561117559,
+    "ma20": 5.674499988555908,
+    "ma50": 5.426399984359741,
+    "ma200": 3.5374999928474424,
+    "rsi14": 42.35179181456464,
     "high_20d": 6.199999809265137,
-    "low_5d": 5.204999923706055,
-    "low_10d": 5.204999923706055,
+    "low_5d": 5.199999809265137,
+    "low_10d": 5.199999809265137,
     "high_52w": 7.190000057220459,
     "low_52w": 1.0,
-    "atr14": 0.3482142516544887,
-    "atr14_pct": 6.4965343839679015,
-    "position_in_52w_range_pct": 70.4361889048545
+    "atr14": 0.33357139996119906,
+    "atr14_pct": 6.24665525148988,
+    "position_in_52w_range_pct": 70.11308743891536
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 1.05,
-      "high": 1.065,
-      "low": 1.04,
-      "close": 1.05,
-      "volume": 171000.0
-    },
     {
       "date": "2024-09-17",
       "open": 1.05,
@@ -4241,20 +4274,20 @@
       "date": "2026-09-15",
       "open": 5.43,
       "high": 5.5,
-      "low": 5.205,
+      "low": 5.2,
       "close": 5.36,
-      "volume": 156796.0
+      "volume": 156800.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 5.38,
+      "high": 5.44,
+      "low": 5.3,
+      "close": 5.34,
+      "volume": 146044.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 1.25,
-      "high": 1.29,
-      "low": 1.22,
-      "close": 1.24,
-      "volume": 91800.0
-    },
     {
       "date": "2025-09-16",
       "open": 1.25,
@@ -6259,9 +6292,17 @@
       "date": "2026-09-15",
       "open": 5.43,
       "high": 5.5,
-      "low": 5.205,
+      "low": 5.2,
       "close": 5.36,
-      "volume": 156796.0
+      "volume": 156800.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 5.38,
+      "high": 5.44,
+      "low": 5.3,
+      "close": 5.34,
+      "volume": 146044.0
     }
   ],
   "ai_synthesis": null,

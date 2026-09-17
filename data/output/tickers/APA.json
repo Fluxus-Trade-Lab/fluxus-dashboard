@@ -1,43 +1,80 @@
 {
   "ticker": "APA",
-  "fetched_at": "2026-09-15T23:14:51Z",
+  "fetched_at": "2026-09-16T23:20:00Z",
   "_schema": "v2",
-  "current_price": 47.40999984741211,
+  "current_price": 44.790000915527344,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "APA",
+    "longName": "APA Corporation",
+    "sector": "Energy",
+    "industry": "Oil & Gas E&P",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Houston",
+    "website": "https://www.apacorp.com",
+    "fullTimeEmployees": 1791,
+    "marketCap": 15692244992,
+    "enterpriseValue": 20970164224,
+    "trailingPE": 9.449368,
+    "forwardPE": 10.200411,
+    "priceToSalesTrailing12Months": 1.8306398,
+    "enterpriseToRevenue": 2.446,
+    "priceToBook": 2.2370393,
+    "grossMargins": 0.78255,
+    "operatingMargins": 0.56331,
+    "profitMargins": 0.19564,
+    "returnOnEquity": 0.26659,
+    "totalCash": 444000000,
+    "totalDebt": 3880999936,
+    "totalRevenue": 8572000256,
+    "freeCashflow": 2146749952,
+    "debtToEquity": 48.854,
+    "currentRatio": 0.946,
+    "fiftyTwoWeekHigh": 47.44,
+    "fiftyTwoWeekLow": 21.63,
+    "averageVolume": 5550517,
+    "averageVolume10days": 5034430,
+    "beta": 0.366,
+    "sharesOutstanding": 350351510,
+    "sharesFloat": 348123274,
+    "companyOfficers": [
+      {
+        "name": "Mr. John J. Christmann IV",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Stephen J. Riney",
+        "title": "President",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Ben C. Rodgers",
+        "title": "Executive VP & CFO",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Kimberly O. Warnica J.D.",
+        "title": "Executive VP, Chief Legal Officer & Corporate Secretary",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Ms. Tracey K. Henderson",
+        "title": "Executive Vice President of Exploration",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Robert P. Rayphole",
+        "title": "VP, Chief Accounting Officer & Controller",
+        "age": 51,
+        "yearBorn": 1974
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.1759
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 2117400000,
+    "revenue_high": 2389000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,8 +250,20 @@
   "quarterly_asof": "2026-09-14T21:40:14Z",
   "news": [
     {
-      "date": "2026-09-15T22:56:42Z",
-      "title": "Dow Jones Futures Rise; ServiceNow, Twilio Lead New Buys As Fed Hike Looms",
+      "date": "2026-09-16T22:15:02Z",
+      "title": "Here's Why APA (APA) Fell More Than Broader Market",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-apa-apa-fell-221502110.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-16T21:16:52Z",
+      "title": "Diamondback Energy, Permian Resources, APA Corporation, Viper Energy, and Comstock Resources Shares Are Falling, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/diamondback-energy-permian-resources-apa-211652011.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-16T12:07:50Z",
+      "title": "Dow Jones Futures Rise As Oil Prices, Yields Fall Before Fed Rate Hike; Will Market Rally Bid Bond Voyage?",
       "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-sp500-nasdaq-how-will-bonds-react-to-fed-rate-hike/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
@@ -255,44 +308,24 @@
       "title": "APA (APA) Up 20.9% Since Last Earnings Report: Can It Continue?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/apa-apa-20-9-since-153024526.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-09-01T10:50:20Z",
-      "title": "2 Value Stocks on Our Watchlist and 1 We Find Risky",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/2-value-stocks-watchlist-1-105020821.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-31T14:22:24Z",
-      "title": "1 Unpopular Stock That Deserves Some Love and 2 We Brush Off",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/1-unpopular-stock-deserves-love-142224101.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03081044813110498,
   "technicals": {
-    "ma20": 43.66049976348877,
-    "ma50": 39.27697090148926,
-    "ma200": 33.875257844924924,
-    "rsi14": 71.61490692788938,
+    "ma20": 43.7814998626709,
+    "ma50": 39.49752349853516,
+    "ma200": 33.9786804485321,
+    "rsi14": 58.06089526607255,
     "high_20d": 47.439998626708984,
     "low_5d": 43.939998626708984,
     "low_10d": 42.72999954223633,
     "high_52w": 47.439998626708984,
-    "low_52w": 21.132943828084876,
-    "atr14": 1.509286608014788,
-    "atr14_pct": 3.1834773526099744,
-    "position_in_52w_range_pct": 99.8859667890362
+    "low_52w": 21.132945729348105,
+    "atr14": 1.6271435873849052,
+    "atr14_pct": 3.632827760940776,
+    "position_in_52w_range_pct": 89.92666445184558
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 22.0788,
-      "high": 22.6484,
-      "low": 22.0788,
-      "close": 22.4555,
-      "volume": 6050200.0
-    },
     {
       "date": "2024-09-17",
       "open": 22.4096,
@@ -618,14 +651,14 @@
       "open": 20.5839,
       "high": 20.9273,
       "low": 20.2777,
-      "close": 20.2962,
+      "close": 20.2963,
       "volume": 6880700.0
     },
     {
       "date": "2024-11-13",
       "open": 20.3241,
       "high": 20.6675,
-      "low": 19.823,
+      "low": 19.8229,
       "close": 20.4355,
       "volume": 6715000.0
     },
@@ -658,7 +691,7 @@
       "open": 20.6582,
       "high": 20.8624,
       "low": 20.3148,
-      "close": 20.3426,
+      "close": 20.3427,
       "volume": 7203500.0
     },
     {
@@ -850,7 +883,7 @@
       "open": 20.1942,
       "high": 20.3612,
       "low": 19.7673,
-      "close": 20.2962,
+      "close": 20.2963,
       "volume": 2081900.0
     },
     {
@@ -895,7 +928,7 @@
     },
     {
       "date": "2025-01-03",
-      "open": 21.6698,
+      "open": 21.6697,
       "high": 21.7997,
       "low": 21.4006,
       "close": 21.7347,
@@ -921,7 +954,7 @@
       "date": "2025-01-08",
       "open": 21.809,
       "high": 22.0224,
-      "low": 21.7161,
+      "low": 21.7162,
       "close": 21.976,
       "volume": 4305900.0
     },
@@ -1079,7 +1112,7 @@
     },
     {
       "date": "2025-02-07",
-      "open": 20.4563,
+      "open": 20.4564,
       "high": 20.5314,
       "low": 20.2219,
       "close": 20.325,
@@ -1352,7 +1385,7 @@
     {
       "date": "2025-03-28",
       "open": 19.8655,
-      "high": 19.9123,
+      "high": 19.9124,
       "low": 19.4246,
       "close": 19.6216,
       "volume": 6917500.0
@@ -1417,7 +1450,7 @@
       "date": "2025-04-09",
       "open": 12.8685,
       "high": 15.8699,
-      "low": 12.7372,
+      "low": 12.7371,
       "close": 15.6729,
       "volume": 16533000.0
     },
@@ -1610,7 +1643,7 @@
       "open": 17.3979,
       "high": 17.5886,
       "low": 17.2073,
-      "close": 17.3216,
+      "close": 17.3217,
       "volume": 8031400.0
     },
     {
@@ -1673,7 +1706,7 @@
       "date": "2025-05-27",
       "open": 16.3016,
       "high": 16.5209,
-      "low": 15.968,
+      "low": 15.9679,
       "close": 16.5018,
       "volume": 4525200.0
     },
@@ -1832,7 +1865,7 @@
     {
       "date": "2025-06-25",
       "open": 17.2549,
-      "high": 17.3502,
+      "high": 17.3503,
       "low": 16.9117,
       "close": 16.9689,
       "volume": 6790800.0
@@ -1946,7 +1979,7 @@
       "open": 17.7888,
       "high": 17.8555,
       "low": 17.2073,
-      "close": 17.293,
+      "close": 17.2931,
       "volume": 6408300.0
     },
     {
@@ -1993,7 +2026,7 @@
       "date": "2025-07-24",
       "open": 18.4756,
       "high": 18.9201,
-      "low": 18.2341,
+      "low": 18.234,
       "close": 18.6496,
       "volume": 5281000.0
     },
@@ -2040,7 +2073,7 @@
     {
       "date": "2025-08-01",
       "open": 18.4466,
-      "high": 18.4949,
+      "high": 18.495,
       "low": 17.6253,
       "close": 17.8379,
       "volume": 7681400.0
@@ -2048,7 +2081,7 @@
     {
       "date": "2025-08-04",
       "open": 17.7606,
-      "high": 17.9732,
+      "high": 17.9731,
       "low": 17.5963,
       "close": 17.6543,
       "volume": 6345400.0
@@ -2087,7 +2120,7 @@
     },
     {
       "date": "2025-08-11",
-      "open": 19.5385,
+      "open": 19.5386,
       "high": 19.8671,
       "low": 19.1037,
       "close": 19.2487,
@@ -2114,7 +2147,7 @@
       "open": 19.7511,
       "high": 19.8574,
       "low": 19.3743,
-      "close": 19.7994,
+      "close": 19.7995,
       "volume": 6147400.0
     },
     {
@@ -2535,7 +2568,7 @@
     },
     {
       "date": "2025-10-29",
-      "open": 22.1805,
+      "open": 22.1806,
       "high": 22.7277,
       "low": 21.9949,
       "close": 22.0242,
@@ -3335,7 +3368,7 @@
     },
     {
       "date": "2026-03-25",
-      "open": 39.6437,
+      "open": 39.6438,
       "high": 41.1234,
       "low": 39.3873,
       "close": 40.7584,
@@ -4287,22 +4320,22 @@
     },
     {
       "date": "2026-09-15",
-      "open": 45.33,
+      "open": 45.67,
       "high": 47.44,
-      "low": 45.265,
+      "low": 45.25,
       "close": 47.41,
-      "volume": 6425080.0
+      "volume": 6427700.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 46.44,
+      "high": 46.65,
+      "low": 44.18,
+      "close": 44.79,
+      "volume": 9164041.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 22.2345,
-      "high": 22.4568,
-      "low": 21.877,
-      "close": 22.1379,
-      "volume": 5405700.0
-    },
     {
       "date": "2025-09-16",
       "open": 22.4664,
@@ -4553,7 +4586,7 @@
     },
     {
       "date": "2025-10-29",
-      "open": 22.1805,
+      "open": 22.1806,
       "high": 22.7277,
       "low": 21.9949,
       "close": 22.0242,
@@ -5353,7 +5386,7 @@
     },
     {
       "date": "2026-03-25",
-      "open": 39.6437,
+      "open": 39.6438,
       "high": 41.1234,
       "low": 39.3873,
       "close": 40.7584,
@@ -6305,11 +6338,19 @@
     },
     {
       "date": "2026-09-15",
-      "open": 45.33,
+      "open": 45.67,
       "high": 47.44,
-      "low": 45.265,
+      "low": 45.25,
       "close": 47.41,
-      "volume": 6425080.0
+      "volume": 6427700.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 46.44,
+      "high": 46.65,
+      "low": 44.18,
+      "close": 44.79,
+      "volume": 9164041.0
     }
   ],
   "ai_synthesis": null,

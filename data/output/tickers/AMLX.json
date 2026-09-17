@@ -1,46 +1,112 @@
 {
   "ticker": "AMLX",
-  "fetched_at": "2026-09-15T23:14:48Z",
+  "fetched_at": "2026-09-16T23:19:57Z",
   "_schema": "v2",
-  "current_price": 33.150001525878906,
+  "current_price": 32.630001068115234,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AMLX",
+    "longName": "Amylyx Pharmaceuticals, Inc.",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Cambridge",
+    "website": "https://amylyx.com",
+    "fullTimeEmployees": 136,
+    "marketCap": 3635734272,
+    "enterpriseValue": 3390228992,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -28.258667,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 15.190876,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.7473,
+    "totalCash": 250760000,
+    "totalDebt": 5255000,
     "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "freeCashflow": -77316376,
+    "debtToEquity": 2.197,
+    "currentRatio": 12.12,
+    "fiftyTwoWeekHigh": 41.14,
+    "fiftyTwoWeekLow": 10.83,
+    "averageVolume": 2472898,
+    "averageVolume10days": 1589820,
+    "beta": -0.119,
+    "sharesOutstanding": 111423048,
+    "sharesFloat": 97169812,
+    "companyOfficers": [
+      {
+        "name": "Mr. Joshua B. Cohen",
+        "title": "Co-Founder, Co-CEO & Director",
+        "age": 33,
+        "yearBorn": 1992
+      },
+      {
+        "name": "Mr. Justin B. Klee",
+        "title": "Co-CEO & Director",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Mr. James M. Frates M.B.A.",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Camille L. Bedrosian M.D.",
+        "title": "Chief Medical Officer",
+        "age": 72,
+        "yearBorn": 1953
+      },
+      {
+        "name": "Mr. Tom  Holmes",
+        "title": "Chief Technical Operations Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Lindsey  Allen",
+        "title": "Head of Investor Relations & Communications",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.39,
+      "eps_estimate": -0.35768,
+      "eps_surprise_pct": -0.0904
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.37,
+      "eps_estimate": -0.34037,
+      "eps_surprise_pct": -0.0871
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.3,
+      "eps_estimate": -0.34182,
+      "eps_surprise_pct": 0.1223
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.37,
+      "eps_estimate": -0.42986,
+      "eps_surprise_pct": 0.1393
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 0,
+    "revenue_high": 416000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,89 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 11,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 42.36364,
+    "high_price_target": 57.0,
+    "low_price_target": 20.0,
+    "current_price": 32.63,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-27T13:43:43",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:41:32",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T13:28:11",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T11:02:41",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T17:36:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T11:26:29",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T19:35:04",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T11:33:45",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T14:08:10",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-28T11:45:17",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
-  "quarterly_asof": "2026-09-15T23:14:48Z",
+  "quarterly_asof": "2026-09-16T23:19:57Z",
   "news": [
     {
       "date": "2026-09-01T13:50:00Z",
@@ -167,30 +310,22 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07048727933531912,
   "technicals": {
-    "ma20": 35.176500415802,
-    "ma50": 25.989200172424315,
-    "ma200": 17.42135006904602,
-    "rsi14": 57.32400529173699,
+    "ma20": 35.05250043869019,
+    "ma50": 26.278400192260744,
+    "ma200": 17.509500074386597,
+    "rsi14": 55.15193774367593,
     "high_20d": 41.13999938964844,
     "low_5d": 31.3700008392334,
     "low_10d": 31.3700008392334,
     "high_52w": 41.13999938964844,
     "low_52w": 10.829999923706055,
-    "atr14": 1.7382142203194755,
-    "atr14_pct": 5.243481569563488,
-    "position_in_52w_range_pct": 73.63906959897034
+    "atr14": 1.7207142966134208,
+    "atr14_pct": 5.273411707898581,
+    "position_in_52w_range_pct": 71.92346264771334
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 2.64,
-      "high": 2.68,
-      "low": 2.59,
-      "close": 2.65,
-      "volume": 767600.0
-    },
     {
       "date": "2024-09-17",
       "open": 2.82,
@@ -4189,18 +4324,18 @@
       "high": 33.54,
       "low": 32.36,
       "close": 33.15,
-      "volume": 1827391.0
+      "volume": 1828400.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 33.05,
+      "high": 33.75,
+      "low": 32.095,
+      "close": 32.63,
+      "volume": 1366175.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 12.05,
-      "high": 12.12,
-      "low": 11.42,
-      "close": 11.85,
-      "volume": 1996700.0
-    },
     {
       "date": "2025-09-16",
       "open": 11.98,
@@ -6207,7 +6342,15 @@
       "high": 33.54,
       "low": 32.36,
       "close": 33.15,
-      "volume": 1827391.0
+      "volume": 1828400.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 33.05,
+      "high": 33.75,
+      "low": 32.095,
+      "close": 32.63,
+      "volume": 1366175.0
     }
   ],
   "ai_synthesis": null,

@@ -1,43 +1,80 @@
 {
   "ticker": "APPS",
-  "fetched_at": "2026-09-15T23:14:55Z",
+  "fetched_at": "2026-09-16T23:20:03Z",
   "_schema": "v2",
-  "current_price": 11.380000114440918,
+  "current_price": 10.84000015258789,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "APPS",
+    "longName": "Digital Turbine, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Austin",
+    "website": "https://www.digitalturbine.com",
+    "fullTimeEmployees": 620,
+    "marketCap": 1311816192,
+    "enterpriseValue": 1690424960,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 11.410526,
+    "priceToSalesTrailing12Months": 2.1852386,
+    "enterpriseToRevenue": 2.816,
+    "priceToBook": 6.8825397,
+    "grossMargins": 0.49080002,
+    "operatingMargins": 0.13894,
+    "profitMargins": -0.058229998,
+    "returnOnEquity": -0.2039,
+    "totalCash": 42930000,
+    "totalDebt": 356089984,
+    "totalRevenue": 600307968,
+    "freeCashflow": 28919250,
+    "debtToEquity": 186.834,
+    "currentRatio": 1.205,
+    "fiftyTwoWeekHigh": 15.34,
+    "fiftyTwoWeekLow": 2.74,
+    "averageVolume": 3809672,
+    "averageVolume10days": 2526470,
+    "beta": 2.879,
+    "sharesOutstanding": 121016250,
+    "sharesFloat": 109131244,
+    "companyOfficers": [
+      {
+        "name": "Mr. William Gordon Stone III",
+        "title": "CEO & Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Joshua  Kinsell",
+        "title": "Interim CFO & Chief Accounting Officer",
+        "age": 39,
+        "yearBorn": 1986
+      },
+      {
+        "name": "Mr. Michael  Akkerman",
+        "title": "Chief Business Officer",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Benneaser  John",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Brian  Bartholomew",
+        "title": "Senior VP of Capital Markets & Strategy and Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Angeline  Tucker",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 2.0
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 166400000,
+    "revenue_high": 168354400
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -209,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:40:20Z",
   "news": [
     {
+      "date": "2026-09-15T23:15:47Z",
+      "title": "Is AppLovin's Lead Over Its Peers Already In The Price?",
+      "url": "https://www.trefis.com/articles/615392/is-applovins-lead-over-its-peers-already-in-the-price/2026-09-15",
+      "source": "Trefis"
+    },
+    {
       "date": "2026-09-11T01:22:13Z",
       "title": "Should You Buy AppLovin Stock For Its Widening Margin?",
       "url": "https://www.trefis.com/articles/614734/should-you-buy-applovin-stock-for-its-widening-margin/2026-09-10",
@@ -261,38 +308,24 @@
       "title": "Are Computer and Technology Stocks Lagging  Airgain (AIRG) This Year?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/computer-technology-stocks-lagging-airgain-134003318.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-31T13:31:00Z",
-      "title": "Digital Turbine's Improving Cash Flow Supports Financial Flexibility",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digital-turbines-improving-cash-flow-133100000.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06088560799903999,
   "technicals": {
-    "ma20": 11.053999996185302,
-    "ma50": 10.631000003814698,
-    "ma200": 6.608699998855591,
-    "rsi14": 52.62034866905533,
-    "high_20d": 12.630000114440918,
-    "low_5d": 10.760000228881836,
+    "ma20": 10.990000009536743,
+    "ma50": 10.64,
+    "ma200": 6.639449999332428,
+    "rsi14": 47.82971873662344,
+    "high_20d": 12.1899995803833,
+    "low_5d": 10.619999885559082,
     "low_10d": 9.75,
     "high_52w": 15.34000015258789,
     "low_52w": 2.740000009536743,
-    "atr14": 0.7207141603742327,
-    "atr14_pct": 6.333164790215297,
-    "position_in_52w_range_pct": 68.57142862549173
+    "atr14": 0.7278570447649274,
+    "atr14_pct": 6.714548288923799,
+    "position_in_52w_range_pct": 64.28571469118806
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 2.95,
-      "high": 3.02,
-      "low": 2.87,
-      "close": 2.92,
-      "volume": 2763800.0
-    },
     {
       "date": "2024-09-17",
       "open": 2.97,
@@ -4291,18 +4324,18 @@
       "high": 12.0,
       "low": 11.26,
       "close": 11.38,
-      "volume": 2328552.0
+      "volume": 2328900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 11.3,
+      "high": 11.39,
+      "low": 10.62,
+      "close": 10.84,
+      "volume": 2217380.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 4.7,
-      "high": 5.2,
-      "low": 4.7,
-      "close": 5.03,
-      "volume": 4844100.0
-    },
     {
       "date": "2025-09-16",
       "open": 5.02,
@@ -6309,7 +6342,15 @@
       "high": 12.0,
       "low": 11.26,
       "close": 11.38,
-      "volume": 2328552.0
+      "volume": 2328900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 11.3,
+      "high": 11.39,
+      "low": 10.62,
+      "close": 10.84,
+      "volume": 2217380.0
     }
   ],
   "ai_synthesis": null,

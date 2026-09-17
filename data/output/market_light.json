@@ -1,5 +1,5 @@
 {
- "date": "2026-09-15",
+ "date": "2026-09-16",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,20 +7,20 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 762.9647,
-    "b": 763.9283
+    "a": 761.3438,
+    "b": 762.9875
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 762.9647,
-    "b": 764.2035
+    "a": 761.3438,
+    "b": 762.9647
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 763.9283,
-    "b": 764.6166
+    "a": 762.9875,
+    "b": 763.9283
    }
   ],
   "checks_passed": 0,
@@ -31,13 +31,6 @@
    "label_zh": "\u6700\u5927\u9632\u5fa1"
   },
   "history": [
-   {
-    "date": "2026-06-22",
-    "close": 744.39,
-    "fast": 743.4157,
-    "slow": 741.6778,
-    "checks_passed": 3
-   },
    {
     "date": "2026-06-23",
     "close": 733.58,
@@ -450,6 +443,13 @@
     "fast": 762.9647,
     "slow": 763.9283,
     "checks_passed": 0
+   },
+   {
+    "date": "2026-09-16",
+    "close": 754.05,
+    "fast": 761.3438,
+    "slow": 762.9875,
+    "checks_passed": 0
    }
   ]
  },
@@ -458,20 +458,20 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 711.9129,
-    "b": 712.9109
+    "a": 710.6051,
+    "b": 712.1308
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 711.9129,
-    "b": 713.5514
+    "a": 710.6051,
+    "b": 711.9129
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 712.9109,
-    "b": 713.792
+    "a": 712.1308,
+    "b": 712.9109
    }
   ],
   "checks_passed": 0,
@@ -482,13 +482,6 @@
    "label_zh": "\u6700\u5927\u9632\u5fa1"
   },
   "history": [
-   {
-    "date": "2026-06-22",
-    "close": 737.95,
-    "fast": 728.2812,
-    "slow": 722.3116,
-    "checks_passed": 3
-   },
    {
     "date": "2026-06-23",
     "close": 713.65,
@@ -901,24 +894,31 @@
     "fast": 711.9129,
     "slow": 712.9109,
     "checks_passed": 0
+   },
+   {
+    "date": "2026-09-16",
+    "close": 704.72,
+    "fast": 710.6051,
+    "slow": 712.1308,
+    "checks_passed": 0
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 4,
+   "count": 1,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 44,
+   "pool_count": 33,
    "count_is_floor": false,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "episodic_pivot": 1,
-    "ll_hl_1st": 12,
-    "ll_hl_2nd": 13,
+    "episodic_pivot": 0,
+    "ll_hl_1st": 11,
+    "ll_hl_2nd": 7,
     "ll_hl_trend_break": 10,
-    "liquid_leader_pullback": 8
+    "liquid_leader_pullback": 6
    },
    "capped_panels": [],
    "setups_without_panel": [
@@ -943,21 +943,7 @@
     "rs_rating": 96
    },
    {
-    "ticker": "FSLY",
-    "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 95
-   },
-   {
     "ticker": "PANW",
-    "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 95
-   },
-   {
-    "ticker": "FROG",
     "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
@@ -971,14 +957,35 @@
     "rs_rating": 95
    },
    {
-    "ticker": "QLYS",
+    "ticker": "IRDM",
+    "theme": "Space",
+    "status": "broken",
+    "above_ema21": true,
+    "rs_rating": 95
+   },
+   {
+    "ticker": "FROG",
     "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 94
    },
    {
+    "ticker": "QLYS",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 93
+   },
+   {
     "ticker": "RBRK",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 93
+   },
+   {
+    "ticker": "FSLY",
     "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
@@ -990,18 +997,12 @@
     "status": "broken",
     "above_ema21": false,
     "rs_rating": 93
-   },
-   {
-    "ticker": "NTSK",
-    "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 92
    }
   ],
   "leaders_meta": {
    "themes": [
-    "Cybersecurity"
+    "Cybersecurity",
+    "Space"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
    "provisional": true
@@ -1010,7 +1011,7 @@
    "state": "negate",
    "source": "breadth.json verdict.env",
    "env": "BEARISH",
-   "score": -5
+   "score": -7
   }
  },
  "verdict": "avoid",

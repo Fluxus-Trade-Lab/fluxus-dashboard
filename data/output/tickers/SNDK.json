@@ -1,8 +1,8 @@
 {
   "ticker": "SNDK",
-  "fetched_at": "2026-09-15T23:13:39Z",
+  "fetched_at": "2026-09-16T23:18:52Z",
   "_schema": "v2",
-  "current_price": 1530.89501953125,
+  "current_price": 1519.969970703125,
   "info": {
     "symbol": "SNDK",
     "longName": "Sandisk Corporation",
@@ -13,13 +13,13 @@
     "city": "Milpitas",
     "website": "https://www.sandisk.com",
     "fullTimeEmployees": 11100,
-    "marketCap": 224152125440,
-    "enterpriseValue": 222679826432,
-    "trailingPE": 20.766346,
-    "forwardPE": 5.783037,
-    "priceToSalesTrailing12Months": 11.0703335,
-    "enterpriseToRevenue": 10.998,
-    "priceToBook": 14.495602,
+    "marketCap": 222552489984,
+    "enterpriseValue": 219591114752,
+    "trailingPE": 20.59859,
+    "forwardPE": 5.7417674,
+    "priceToSalesTrailing12Months": 10.991332,
+    "enterpriseToRevenue": 10.845,
+    "priceToBook": 14.392156,
     "grossMargins": 0.71474,
     "operatingMargins": 0.78472,
     "profitMargins": 0.56465,
@@ -31,9 +31,9 @@
     "debtToEquity": 1.277,
     "currentRatio": 2.29,
     "fiftyTwoWeekHigh": 2354.39,
-    "fiftyTwoWeekLow": 89.56,
-    "averageVolume": 13910974,
-    "averageVolume10days": 11773420,
+    "fiftyTwoWeekLow": 90.22,
+    "averageVolume": 13867261,
+    "averageVolume10days": 10123370,
     "beta": null,
     "sharesOutstanding": 146419001,
     "sharesFloat": 144448201,
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:38:08Z",
   "news": [
     {
+      "date": "2026-09-15T23:15:49Z",
+      "title": "Sandisk (SNDK) Refinances Credit Line As Valuation Debate Sharpens",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sandisk-sndk-refinances-credit-line-231549595.html",
+      "source": "Simply Wall St."
+    },
+    {
       "date": "2026-09-15T20:28:00Z",
       "title": "Nvidia, Coinbase, Skyworks, Axon, Tesla, Applied Aerospace, and More Stocks That Explain Today\u2019s Market",
       "url": "https://www.barrons.com/articles/stock-movers-bb7c16dd?siteid=yhoof2&yptr=yahoo",
@@ -302,28 +308,22 @@
       "title": "U.S. Stock Futures Pare Losses as Oil Prices Retreat, FOMC Meeting on Tap",
       "url": "https://www.barchart.com/story/news/4605682/u-s-stock-futures-slip-as-rising-oil-prices-lift-bond-yields-fomc-meeting-on-tap",
       "source": "Barchart"
-    },
-    {
-      "date": "2026-09-15T07:48:52Z",
-      "title": "Watch Out SKHY, MU, SNDK: Japan\u2019s Kioxia Reportedly Eyes $10B US Listing To Ride AI Memory Boom",
-      "url": "https://stocktwits.com/news-articles/markets/equity/watch-out-skhy-mu-sndk-japan-s-kioxia-reportedly-eyes-10-b-us-listing-to-ride-ai-memory-boom/cZtnTCxRBTA",
-      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.052884096536410075,
+  "options_implied_move": 0.04581669463363486,
   "technicals": {
-    "ma20": 1584.8742431640626,
-    "ma50": 1509.740693359375,
-    "ma200": 1046.8496730804443,
-    "rsi14": 47.660821570286295,
+    "ma20": 1579.583740234375,
+    "ma50": 1507.78609375,
+    "ma200": 1053.3743229675292,
+    "rsi14": 47.02864078104348,
     "high_20d": 1807.3800048828125,
-    "low_5d": 1505.0,
-    "low_10d": 1505.0,
+    "low_5d": 1504.199951171875,
+    "low_10d": 1504.199951171875,
     "high_52w": 2354.389892578125,
-    "low_52w": 85.12000274658203,
-    "atr14": 95.7886962890625,
-    "atr14_pct": 6.257038860730788,
-    "position_in_52w_range_pct": 63.7110210320551
+    "low_52w": 89.55999755859375,
+    "atr14": 95.40727887834821,
+    "atr14_pct": 6.276918670584895,
+    "position_in_52w_range_pct": 63.157501421633064
   },
   "ohlc_2y": [
     {
@@ -3506,20 +3506,20 @@
       "date": "2026-09-15",
       "open": 1569.71,
       "high": 1579.99,
-      "low": 1509.1401,
+      "low": 1509.14,
       "close": 1530.895,
-      "volume": 6830792.0
+      "volume": 6873900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 1546.62,
+      "high": 1560.58,
+      "low": 1504.2,
+      "close": 1519.97,
+      "volume": 7346697.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 85.3,
-      "high": 92.055,
-      "low": 85.12,
-      "close": 90.09,
-      "volume": 8981300.0
-    },
     {
       "date": "2025-09-16",
       "open": 90.31,
@@ -5524,9 +5524,17 @@
       "date": "2026-09-15",
       "open": 1569.71,
       "high": 1579.99,
-      "low": 1509.1401,
+      "low": 1509.14,
       "close": 1530.895,
-      "volume": 6830792.0
+      "volume": 6873900.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 1546.62,
+      "high": 1560.58,
+      "low": 1504.2,
+      "close": 1519.97,
+      "volume": 7346697.0
     }
   ],
   "ai_synthesis": null,

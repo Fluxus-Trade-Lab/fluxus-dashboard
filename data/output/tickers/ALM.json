@@ -1,43 +1,80 @@
 {
   "ticker": "ALM",
-  "fetched_at": "2026-09-15T23:14:40Z",
+  "fetched_at": "2026-09-16T23:19:50Z",
   "_schema": "v2",
-  "current_price": 14.039999961853027,
+  "current_price": 13.470000267028809,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ALM",
+    "longName": "Almonty Industries Inc.",
+    "sector": "Basic Materials",
+    "industry": "Other Industrial Metals & Mining",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Dillon",
+    "website": "https://almonty.com",
+    "fullTimeEmployees": 341,
+    "marketCap": 3822002944,
+    "enterpriseValue": 3471741696,
+    "trailingPE": 61.227276,
+    "forwardPE": 10.826515,
+    "priceToSalesTrailing12Months": 44.54393,
+    "enterpriseToRevenue": 40.462,
+    "priceToBook": 9.711099,
+    "grossMargins": 0.49807,
+    "operatingMargins": 0.37512,
+    "profitMargins": 1.2523,
+    "returnOnEquity": 0.38221002,
+    "totalCash": 1227241984,
+    "totalDebt": 813148032,
+    "totalRevenue": 85803000,
+    "freeCashflow": -49866500,
+    "debtToEquity": 147.363,
+    "currentRatio": 9.581,
+    "fiftyTwoWeekHigh": 24.41,
+    "fiftyTwoWeekLow": 4.75,
+    "averageVolume": 6571619,
+    "averageVolume10days": 7247740,
+    "beta": 1.39,
+    "sharesOutstanding": 283741849,
+    "sharesFloat": 218965544,
+    "companyOfficers": [
+      {
+        "name": "Mr. M. Lewis Black",
+        "title": "Chairman, President & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Jorge Mariano Beristain B.Com., C.F.A.",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Brig.Gen. Steven L. Allen",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. John  Yi",
+        "title": "President - Almonty Korea Tungsten",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ujin  Choi",
+        "title": "Project Managing Director of the Sangdong Mine",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Antonio  Correa de Sa",
+        "title": "Chief Executive Officer of BTW",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
   "earnings_history": [
     {
@@ -65,7 +102,11 @@
       "eps_surprise_pct": 0.7857
     }
   ],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-11-06",
+    "revenue_low": 74600000,
+    "revenue_high": 133610000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -269,30 +310,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.11952486771220616,
   "technicals": {
-    "ma20": 17.357250118255614,
-    "ma50": 15.27550012588501,
-    "ma200": 15.26660005569458,
-    "rsi14": 37.875177563663094,
+    "ma20": 17.25075011253357,
+    "ma50": 15.240900135040283,
+    "ma200": 15.302050056457519,
+    "rsi14": 35.79025574835704,
     "high_20d": 19.450000762939453,
-    "low_5d": 14.010000228881836,
-    "low_10d": 14.010000228881836,
+    "low_5d": 13.25,
+    "low_10d": 13.25,
     "high_52w": 24.40999984741211,
-    "low_52w": 4.510000228881836,
-    "atr14": 1.2762858527047294,
-    "atr14_pct": 9.090355100943196,
-    "position_in_52w_range_pct": 47.88944681233635
+    "low_52w": 4.71999979019165,
+    "atr14": 1.2998572758265905,
+    "atr14_pct": 9.650016704218752,
+    "position_in_52w_range_pct": 44.438803714622
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-16",
-      "open": 1.3207,
-      "high": 1.3365,
-      "low": 1.3185,
-      "close": 1.323,
-      "volume": 14889.0
-    },
     {
       "date": "2024-09-17",
       "open": 1.3455,
@@ -4291,18 +4324,18 @@
       "high": 15.25,
       "low": 14.01,
       "close": 14.04,
-      "volume": 4796770.0
+      "volume": 4799100.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 14.322,
+      "high": 14.41,
+      "low": 13.25,
+      "close": 13.47,
+      "volume": 5262425.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-15",
-      "open": 4.54,
-      "high": 4.83,
-      "low": 4.51,
-      "close": 4.81,
-      "volume": 694200.0
-    },
     {
       "date": "2025-09-16",
       "open": 4.945,
@@ -6309,7 +6342,15 @@
       "high": 15.25,
       "low": 14.01,
       "close": 14.04,
-      "volume": 4796770.0
+      "volume": 4799100.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 14.322,
+      "high": 14.41,
+      "low": 13.25,
+      "close": 13.47,
+      "volume": 5262425.0
     }
   ],
   "ai_synthesis": null,
