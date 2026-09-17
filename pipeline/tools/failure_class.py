@@ -61,7 +61,9 @@ NEXT_ACTION = {
     "B_vendor": "**不要立刻重跑。** 全量重拉正是把 429 变成 401 的那个动作。等一个退避窗口，"
                 "或者干脆等下一个原生排程窗口（历史上 21:30Z 那一班一直通）。",
     "C_gate": "**绝对不要重抓。** 这一班的数据是好的。去 GitHub 把这次 run 的 "
-              "`data-output-<run_id>` artifact 下载下来，修掉闸报的那一条，重审，提交。"
+              "`data-output-<run_id>` artifact（解进 data/output/）和 `data-history-<run_id>` "
+              "artifact（解进 data/history/，2026-09-17 起才有）下载下来，修掉闸报的那一条，重审，"
+              "两边一起提交——只回放输出会让归档缺一天。"
               "重抓只会用一份更差的数据覆盖一份更好的。",
     "D_code": "修代码，加一条能红的测试，再重跑。重跑不会让 traceback 消失。",
 }

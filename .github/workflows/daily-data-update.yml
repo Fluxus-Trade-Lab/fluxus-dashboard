@@ -437,6 +437,22 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
 
+      # A SEPARATE artifact for data/history, on purpose: adding the path to the
+      # one above would re-root it at data/ and break every recovery that
+      # unpacks `data-output-<id>` straight into data/output. 2026-09-17: the
+      # 09-16 run's output was restored from its artifact, but its archive rows
+      # had to be rebuilt byte-for-byte from the published outputs because the
+      # artifact carried no history (OPS dependents audit, item 2).
+      - name: Preserve archive rows when a gate failed
+        if: failure()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-history-${{ github.run_id }}
+          path: data/history/
+          retention-days: 7
+          if-no-files-found: warn
+
       # The ledger must survive the night it describes. Until now a run that
       # tripped ANY gate skipped `Commit and push`, so its run_ledger line --
       # the only record of what actually happened -- died with the runner.
