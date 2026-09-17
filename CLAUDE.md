@@ -88,6 +88,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 - **修法顺序**：先 `python3 -m pipeline.tools.failure_class --run-id <id>` 分诊。C_gate（好数据被闸挡）→ 用闸红时保存的 artifact 恢复，**不重抓**；云端取不到 artifact → 立刻挂门铃给本机会话（DATA ALEX / OPS）代执行，**不许退化成 dispatch**。B_vendor → 隔班接力。
 - **上线 ≠ 修完**：①同日补齐 `data/history/` 归档，`audit_archives` 0 违规 ②当天复盘已错过的立即重跑 ③核线上 dashboard 的日期。三件都做完才算修复完成。
 - **动数据目录之前**：删改 `data/output/`、`data/history/`、`data/reference/` 下任何文件，先全仓 `git grep` 该文件名，再跑 `python3 -m pipeline.tools.schema_snapshot --check`；数据目录归 DATA ALEX，别的线动之前先问他。事故实录：09-17 OPS 大扫除删 `sentiment.json`，只查了代码引用，漏了 schema_snapshot 基线，09-16 正班被闸挡，dashboard 停在前一天。
+- **排程必须同时对夏令时和冬令时有效（Andy 2026-09-17，原话「是要改的。所以可以直接先写进规则里」）**：数据管线只在美东 16:15 到次日 04:00 之间开跑（`run_all.py` 的时间闸）。cron 是 UTC 写死的，美东时间会随夏令时平移一小时。现行主排程 20:20 UTC 在夏令时是美东 16:20，**2026-11-01 夏令时结束后变成 15:20，会被拒跑**，直到 2027-03-14 才恢复。**2026-10-30（周五）前必须改好，否则 11-02（周一）起每天正班都跑不了。** 改的时候同时守住 JST 08:30 死线：冬令时下同一个 UTC 时刻晚一小时开盘收盘，再加上 GitHub 常迟 1.5–2.5 小时，简单往后挪一小时会顶到死线。任何数据管线的 cron、哨兵的「可发时段」、文档里的 UTC↔ET 换算，改动前都要在 EDT 和 EST 两种情况下各算一遍。归 DATA ALEX，Plumber Joe 核。
 - 依赖清单与各自的备用方案：[`data/research/repo_health/2026-09-17_dashboard_dependents.md`](data/research/repo_health/2026-09-17_dashboard_dependents.md)。
 
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
