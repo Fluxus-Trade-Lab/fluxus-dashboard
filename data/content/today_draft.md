@@ -42,3 +42,4 @@ X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降
 - 过山车：两点往下冲，一路尖叫，四点下车，站台还是那个站台。标普收 −0.4%。票钱照付，午饭没了。（口径：SPY 09-16 收盘，etf_data.json）
 - 身高梗：新主席比老主席高一英寸，利率高了 25 个基点。今天美联储什么都在往上走，除了我的胆子。 / EN: New chair, one inch taller. Rates, a quarter higher. Everything at the Fed went up today except my nerve.
 **09-17 交互（Andy）**：纠正——要的是「先按 Shake 手法造梗句，再找回复对象」，并问「我们的流程是什么」。→ 流程提案＋5 条常青梗样品落 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md`（待批；蹭号在停做清单上，09-20 后）。
+**09-17 交互（Andy）**：「我同意批准」+「5条梗句全部保留」→ 梗句库 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`。今天回 J3（→ @markminervini）或 J1；J1 不回 @kunal00（Shake 已回过），且开头别用「X is」（和 Shake 同构）→ 出 J1b 改句版，建议配 @TheShortBear（QQQ 收 +0.03%，「还是那层」对得上；Kobeissi 那条道指收 −1.15% 对不上）。
