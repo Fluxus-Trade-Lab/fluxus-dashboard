@@ -30,10 +30,25 @@ def _after_l_share():
 
 
 def test_every_entry_names_an_existing_archive_and_a_reason():
-    for g in json.loads(GAPS.read_text())["gaps"]:
-        assert (REPO / g["archive"]).exists(), g["archive"]
+    blob = json.loads(GAPS.read_text())
+    for g in blob["gaps"]:
+        for a in g["archive"].split(" + "):
+            assert (REPO / a).exists(), a
         assert g["first"] <= g["last"]
         assert g["cause"] and g["backfill"] and g["declared"]
+    for b in blob["definition_breaks"]:
+        assert b["field"] and b["changed"] and b["declared"] and b["note"]
+        for a in b["archives"]:
+            assert (REPO / a).exists(), a
+
+
+def test_breadth_entry_agrees_with_the_read_time_flag():
+    """The declaration and breadth_signals.universe_truncated must name the same sessions."""
+    from pipeline.screeners.breadth_signals import universe_truncated
+    g = _gap("data/history/breadth_archive.csv")
+    with (REPO / g["archive"]).open(newline="") as fh:
+        flagged = [r["date"] for r in csv.DictReader(fh) if universe_truncated(r)]
+    assert (flagged[0], flagged[-1], len(flagged)) == (g["first"], g["last"], g["sessions"])
 
 
 @pytest.mark.skipif(not EVENTS.exists(), reason="archive not in checkout")

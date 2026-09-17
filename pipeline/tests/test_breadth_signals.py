@@ -702,3 +702,34 @@ class TestConditionsSeries:
         # not borrow that meaning.
         assert out["today"] is None
         assert out["history"] == []
+
+
+# --- universe_truncated (Nighty Zac 09-17: the 07-15..07-24 backfill rows sit at 2974-2980) ---
+
+@pytest.mark.parametrize("date,size,want", [
+    ("2026-07-01", 3000, True),
+    ("2026-07-15", 2977, True),     # backfill row: same capped universe, a few names short
+    ("2026-07-20", 2974, True),
+    ("2026-06-25", 2588, False),    # before the cap bound
+    ("2026-08-10", 5618, False),    # after the page cap was raised
+    ("2026-09-16", 2990, False),    # a future universe near 3,000 is not a cap hit
+    ("2026-07-01", None, False),
+    ("", 3000, True),               # undated rows keep the old exact-cap answer
+    ("", 2977, False),
+])
+def test_universe_truncated_covers_the_backfilled_rows(date, size, want):
+    from pipeline.screeners.breadth_signals import universe_truncated
+    assert universe_truncated({"date": date, "universe_size": size}) is want
+
+
+def test_universe_truncated_matches_the_real_archive_window():
+    import csv
+    from pathlib import Path
+    from pipeline.screeners.breadth_signals import universe_truncated
+    p = Path(__file__).resolve().parents[2] / "data" / "history" / "breadth_archive.csv"
+    if not p.exists():
+        pytest.skip("archive not in checkout")
+    with p.open(newline="") as fh:
+        flagged = [r["date"] for r in csv.DictReader(fh) if universe_truncated(r)]
+    assert flagged[0] == "2026-06-26" and flagged[-1] == "2026-08-07"
+    assert len(flagged) == 30

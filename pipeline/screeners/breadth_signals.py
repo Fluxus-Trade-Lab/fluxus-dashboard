@@ -60,11 +60,24 @@ def _num(x) -> Optional[float]:
 # corrected: the counts cannot be recovered, and a replay crossing this stretch
 # should say so instead of comparing across it silently.
 TRUNCATED_UNIVERSE = 3000
+# The 07-15..07-24 rows were backfilled from the same capped universe and land a
+# few names short of the cap (2974-2980), so `== 3000` missed 8 of the 30 capped
+# sessions (Nighty Zac 2026-09-17). The band is self-made: real uncapped sizes
+# were 2559-2592 before 06-26 and 5600+ after 08-10. Bounded by the date the cap
+# was lifted, so a future universe that happens to sit near 3,000 is not flagged.
+TRUNCATED_BAND = (2950, TRUNCATED_UNIVERSE)
+CAP_LIFTED = '2026-08-09'   # 2f782b53
 
 
 def universe_truncated(row: Dict[str, Any]) -> bool:
     """True when this session's universe was cut off by the page cap."""
-    return _num(row.get('universe_size')) == TRUNCATED_UNIVERSE
+    size = _num(row.get('universe_size'))
+    if size is None or not (TRUNCATED_BAND[0] <= size <= TRUNCATED_BAND[1]):
+        return False
+    day = str(row.get('date') or '')[:10]
+    if not day:                      # undated row: keep the old exact-cap answer
+        return size == TRUNCATED_UNIVERSE
+    return day < CAP_LIFTED
 
 
 def thrust_count(row: Dict[str, Any]) -> Optional[float]:

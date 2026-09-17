@@ -13,12 +13,62 @@
    "declared": "2026-09-17 DATA ALEX, per Andy 2026-09-04 ruling step 3"
   },
   {
+   "archive": "data/history/breadth_archive.csv",
+   "first": "2026-06-26",
+   "last": "2026-08-07",
+   "sessions": 30,
+   "universe": "capped at the Finviz page limit: universe_size 3000 (22 live rows) or 2974-2980 (8 backfilled rows, 07-15..07-24); up_4pct/down_4pct/new highs/new lows are A-L half-universe counts",
+   "inherited": "ratio_5d through 2026-08-13, ratio_10d through 2026-08-20; ad_line is cumulative and carries the undercount permanently",
+   "cause": "same page cap as ticker_events (2f782b53). Flagged at read time by breadth_signals.universe_truncated (date-bounded band since 2026-09-17; was == 3000 and missed the 8 backfilled rows). Source: data/research/half_alphabet_reach_2026-09-17/README.md section 3",
+   "backfill": "not recoverable -- whole-universe counts need the missing M-Z rows",
+   "declared": "2026-09-17 DATA ALEX, from Nighty Zac 2026-09-17 §七"
+  },
+  {
    "archive": "data/history/delayed_ep_log.csv",
    "first": "2026-08-13",
    "last": "2026-08-27",
    "universe": "inherited: 15-session lookback reaches into the ticker_events gap above; M-Z share ramps 0% -> 31% until the left edge clears on 2026-08-28",
    "cause": "derived archive, see incident addendum (Nighty Zac 2026-09-02) and data/research/dirty_window_reach_2026-09-02/",
    "backfill": "not recoverable for the same reason",
+   "declared": "2026-09-17 DATA ALEX"
+  },
+  {
+   "archive": "data/history/shortlist_log.csv + data/history/shortlist_seat_log.csv",
+   "first": "2026-08-19",
+   "last": "2026-08-28",
+   "universe": "inherited: compute_heat looks back 15 archive sessions (ticker_heat.py:47) to pick burning seats; heat top-50 M-Z share climbs from .10 (08-19) to .58 (08-28)",
+   "cause": "derived from ticker_events inside its gap (run_all.py compute_heat). Measured by Nighty Zac 2026-09-17",
+   "backfill": "not recoverable for the same reason",
+   "declared": "2026-09-17 DATA ALEX, from Nighty Zac 2026-09-17 §七"
+  }
+ ],
+ "definition_breaks": [
+  {
+   "field": "atr_from_sma50",
+   "changed": "2026-08-24",
+   "commit": "6eb98457",
+   "archives": [
+    "data/history/leaders_log.csv",
+    "data/history/watchlist_hits.csv",
+    "data/history/shortlist_log.csv",
+    "data/history/shortlist_seat_log.csv",
+    "data/history/asset_signals.csv"
+   ],
+   "before": "(close - SMA50) / ATR",
+   "after": "dist% / ATR%",
+   "note": "same column name, two quantities; leaders_log daily median jumps 3.64 (08-21) -> 4.20 (08-24). Do not compare or pool across 2026-08-24. universe_quality's same-named column is a quality statistic, not this field.",
+   "declared": "2026-09-17 DATA ALEX, from Nighty Zac 2026-09-17 §七"
+  },
+  {
+   "field": "universe size (all count-type breadth history)",
+   "changed": "2026-08-10",
+   "commit": "2f782b53",
+   "archives": [
+    "data/history/breadth_archive.csv"
+   ],
+   "before": "about 2,590 names (3,000 while capped)",
+   "after": "about 5,620 names",
+   "note": "NOT MEASURED: historical percentiles of raw counts across this date compare universes of different size. Prefer ratio fields (record_high_pct etc.) across it.",
    "declared": "2026-09-17 DATA ALEX"
   }
  ]

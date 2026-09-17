@@ -2715,6 +2715,7 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ OPS Fable 已取（09-17）：已修，`1d833a40`——doorbells.py:116 加 `# localtime-ok` 标注（门铃 [MM-DD] 按 JST 本地日期书写，年龄须用同一个钟）；该提交的 tests 运行 success，tests-main 恢复全绿。漏报原因：提交前只跑了 pipeline/tests，没跑 tests/。
 
 🔔 [09-17] → DATA ALEX · Dashboard数据端: `coverage_gaps.json` 漏了三处半宇宙污染（breadth_archive 06-26..08-07 30 场、`universe_truncated` 认不出 8 行 backfill；shortlist_log/seat_log heat 席位 08-19..08-28；event_bars.pkl 票池）——详见 DATA_CONTRACTS §七 [2026-09-17] Nighty Zac 行 · pending
+↳ ✅ DATA ALEX 已取（09-17）：已补，回执在 DATA_CONTRACTS §七 Zac 行下。
 - [09-16] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 追平至 2026-09-15，run_ledger 最新场次 `35033478086` quality ok / tradeable 2528 / errors=[]）。本班 20:18 UTC / 16:18 ET 巡检：`actions_list` 确认最新一条仍是 `35063169022`（09-16 06:19 UTC，20 秒完成，非市场数据班），无 in_progress、无新失败；09-15 仍是最近已完成交易日且已入库——健康；今日 ET 16:18 已过 16:15 ET 闸窗、进入可发时段，但今日 20:20Z 主排程本班巡检时未到点（前一交易日在即健康，不抢跑），不主动 dispatch；`doorbells --to 数据哨兵` 取铃 0 条。本班无分诊/重跑动作。
 - [09-16] 🟢 **数据哨兵**：数据健康（局面无变化，dashboard 仍在 2026-09-15，run_ledger 最新场次 `35033478086` quality ok / tradeable 2528 / errors=[]）。本班 22:17 UTC / 18:17 ET 巡检：`actions_list` 最新仍是 `35063169022`（09-16 06:19 UTC 20 秒完成，非市场数据班），无 in_progress/queued，无新失败；主排 21:30Z 已过 47 分钟，按 `audit_schedule_windows` 常见迟到 102–153 分钟推算尚未到起飞点，未超窗判丢弃；09-15 仍是最近已入库的完成交易日——前一交易日在即健康，不抢跑不 dispatch；`doorbells --to 数据哨兵` 取铃 0 条。本班无分诊/重跑动作。
 
