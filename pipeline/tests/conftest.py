@@ -40,6 +40,11 @@ REPO = Path(__file__).resolve().parents[2]
 _REAL_DIR_DEFAULTS = [
     ("pipeline.quality", "QUALITY_DIR", "quality"),
     ("pipeline.quality", "HISTORY", "universe_quality.csv"),
+    # 2026-09-17: run_all's smoke test reaches write_tick_cycle_json, which only
+    # writes when the local TradingView TICK csv exists -- so CI stayed green
+    # while every local full run dirtied data/output/tick_cycle.json and the
+    # session guard below failed on whichever test ran last (test_yahoo_budget).
+    ("pipeline.risk.regime_ledger", "TICK_CYCLE_JSON", "tick_cycle.json"),
 ]
 
 
@@ -60,7 +65,7 @@ def _sandbox_real_dirs(monkeypatch, tmp_path_factory):
         if not hasattr(mod, attr):
             continue
         target = sandbox / leaf
-        if not leaf.endswith(".csv"):
+        if not Path(leaf).suffix:               # a directory default, not a file
             target.mkdir(parents=True, exist_ok=True)
         monkeypatch.setattr(mod, attr, target, raising=False)
     yield
