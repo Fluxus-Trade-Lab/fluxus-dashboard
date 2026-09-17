@@ -30,3 +30,9 @@ FOMC 09-16 背景（Steve 现场核，11:0x JST）：加息 25bp 至 3.75–4%�
 X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降 50bp，2026 Warsh 在中期选举前加 25bp」13.7K 赞 · 身高梗 Powell 6'0" / Warsh 6'1" 4.7K · conksresearch「加 25 = 利好，加 50 = 利好，不加也利好」3.5K · Kobeissi「道指盘中 −800」3.5K · Minervini「史上最被预期的加息」1.7K · TheShortBear「QQQ 今天是好久没见的 sell the news 反转」385 · 白宫称「rather unfortunate」、Trump 公开跟 Warsh 唱反调。
 **09-17 交互（Andy）**：丢来 @shakepryzby1 `2100404888333357057`（ET 09-16 22:02，引用 @kunal00「FOMC 是个哈欠，又回到区间里的区间」），原话「这个很妙」。帖子内容：把震荡市比作「她爱我、她不爱我」一片片摘花瓣，最后一片翻成离谱的反转，再自问「这是 Livermore 还是 Darvas 说的」。可作 C3 回复位（震荡＝两边都挨打），也是他偏好「比喻压过数据」的又一例。
 ↳ **更正（Andy 同日追话）**：「不是我的意思是说花瓣的比喻是一个值得学习的方案我是不会回复他这一条的」——上一行「可作 C3 回复位」作废，不回复该帖；已作为学习样本入 `Fluxus_Brand/voice/Fluxus_Swipe_File.md`「待解剖」节。
+**09-17 交互（Andy）**：「你觉得你能写什么类似的出来吗特别是可以回复上面几个你说的热度很高的帖子」→ Steve 给了 4 条回复草图（⚠️ AI 草图，不是 Andy 语料，不进 Own_Lines/verdicts 的原话栏；要成稿走 Mia）：
+- 回 @markminervini「史上最被预期的加息」：A surprise party where the birthday guy sent out the invitations.
+- 回 @conksresearch「加 25/50/不加都利好」：Asking FinTwit if it's bullish is like asking a golden retriever if it wants to go for a walk.
+- 回 @KobeissiLetter「道指盘中 −800」/ @TheShortBear QQQ 反转：Rollercoaster day. Big drop, lots of screaming, and you get off exactly where you got on. Minus your lunch.
+- 回 @NewsLambert 身高梗：New chair is one inch taller. Rates went up a quarter. Everything at the Fed is going up.
+- 未给 @zerohedge（选举/政治题，品牌不碰）。
