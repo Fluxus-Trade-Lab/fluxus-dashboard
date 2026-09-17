@@ -2767,3 +2767,4 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-17] 📰 每日复盘 2026-09-16：改判已出（Andy 11:0x JST「先把 X 图和逐页图生成出来，中英文PDF 我直接用」）—— 英文 PDF 仍被 L1 误判拦着，按他裁决直接用；逐页图、X 四图、X 帖已补出（X 帖 P1–P3 过检查），教育题已手动记进台账。L1 修复门铃仍 pending
 
 🔔 [09-17] → Plumber Joe · 数据巡检: 冬令时排程修法在分支 `feat/alex-dst-schedule`（`cb7d37df`），宪法要求你核：请读 gate 的 off-season 分支与 `pipeline/tests/test_schedule_dst.py`，核过在 INBOX「夏令时排程要改」行下追 ↳，Andy 的待合条目在 📌 节。你之前那条同主题门铃可一并销。 · pending
+- [09-17] 🟢 **数据哨兵**：数据健康，dashboard 已追平 2026-09-16（run_ledger 最新成功场次 `35160482205`，schema 闸修复后由 `27883a92` 恢复上线；ALEX 已补 17 个归档行，`ticker_events.csv`/`breadth_archive.csv` 现场核对均见 09-16 行）。本班 02:06 UTC / 11:06 JST 巡检：`actions_list` 最新 run 是自造 B_vendor `35166009764`（已由上一班在 INBOX 记录并停手，非本班动作），无 in_progress/queued；`doorbells --to 数据哨兵` 取铃 0 条。09-16 为最近已完成交易日（ET 22:06 收盘后）——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
