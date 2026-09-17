@@ -1,5 +1,5 @@
 {
- "date": "2026-09-16",
+ "date": "2026-09-17",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,37 +7,30 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 761.3438,
-    "b": 762.9875
+    "a": 761.5722,
+    "b": 762.9506
    },
    {
     "key": "fast_rising",
-    "pass": false,
-    "a": 761.3438,
-    "b": 762.9647
+    "pass": true,
+    "a": 761.5722,
+    "b": 761.3438
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 762.9875,
-    "b": 763.9283
+    "a": 762.9506,
+    "b": 762.9875
    }
   ],
-  "checks_passed": 0,
+  "checks_passed": 1,
   "light": "red",
   "gear": {
-   "n": 7,
-   "label": "maximum defense",
-   "label_zh": "\u6700\u5927\u9632\u5fa1"
+   "n": 5,
+   "label": "brake",
+   "label_zh": "\u70b9\u5239"
   },
   "history": [
-   {
-    "date": "2026-06-23",
-    "close": 733.58,
-    "fast": 741.6274,
-    "slow": 740.9066,
-    "checks_passed": 1
-   },
    {
     "date": "2026-06-24",
     "close": 733.24,
@@ -450,6 +443,13 @@
     "fast": 761.3438,
     "slow": 762.9875,
     "checks_passed": 0
+   },
+   {
+    "date": "2026-09-17",
+    "close": 762.6,
+    "fast": 761.5722,
+    "slow": 762.9506,
+    "checks_passed": 1
    }
   ]
  },
@@ -458,37 +458,30 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 710.6051,
-    "b": 712.1308
+    "a": 711.7533,
+    "b": 712.5869
    },
    {
     "key": "fast_rising",
-    "pass": false,
-    "a": 710.6051,
-    "b": 711.9129
+    "pass": true,
+    "a": 711.7533,
+    "b": 710.6051
    },
    {
     "key": "slow_rising",
-    "pass": false,
-    "a": 712.1308,
-    "b": 712.9109
+    "pass": true,
+    "a": 712.5869,
+    "b": 712.1308
    }
   ],
-  "checks_passed": 0,
+  "checks_passed": 2,
   "light": "red",
   "gear": {
-   "n": 7,
-   "label": "maximum defense",
-   "label_zh": "\u6700\u5927\u9632\u5fa1"
+   "n": 2,
+   "label": "add",
+   "label_zh": "\u52a0\u4ed3"
   },
   "history": [
-   {
-    "date": "2026-06-23",
-    "close": 713.65,
-    "fast": 725.621,
-    "slow": 721.4867,
-    "checks_passed": 1
-   },
    {
     "date": "2026-06-24",
     "close": 710.62,
@@ -901,26 +894,36 @@
     "fast": 710.6051,
     "slow": 712.1308,
     "checks_passed": 0
+   },
+   {
+    "date": "2026-09-17",
+    "close": 716.92,
+    "fast": 711.7533,
+    "slow": 712.5869,
+    "checks_passed": 2
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 1,
+   "count": 9,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 33,
-   "count_is_floor": false,
+   "pool_count": 86,
+   "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "episodic_pivot": 0,
-    "ll_hl_1st": 11,
-    "ll_hl_2nd": 7,
-    "ll_hl_trend_break": 10,
-    "liquid_leader_pullback": 6
+    "episodic_pivot": 2,
+    "ll_hl_1st": 30,
+    "ll_hl_2nd": 25,
+    "ll_hl_trend_break": 38,
+    "liquid_leader_pullback": 10
    },
-   "capped_panels": [],
+   "capped_panels": [
+    "ll_hl_1st",
+    "ll_hl_trend_break"
+   ],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -933,24 +936,10 @@
     "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 97
-   },
-   {
-    "ticker": "CRWD",
-    "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
     "rs_rating": 96
    },
    {
-    "ticker": "PANW",
-    "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 95
-   },
-   {
-    "ticker": "FTNT",
+    "ticker": "CRWD",
     "theme": "Cybersecurity",
     "status": "holding",
     "above_ema21": true,
@@ -964,6 +953,20 @@
     "rs_rating": 95
    },
    {
+    "ticker": "PANW",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 94
+   },
+   {
+    "ticker": "FTNT",
+    "theme": "Cybersecurity",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 94
+   },
+   {
     "ticker": "FROG",
     "theme": "Cybersecurity",
     "status": "holding",
@@ -971,11 +974,11 @@
     "rs_rating": 94
    },
    {
-    "ticker": "QLYS",
+    "ticker": "BB",
     "theme": "Cybersecurity",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 93
+    "status": "broken",
+    "above_ema21": false,
+    "rs_rating": 94
    },
    {
     "ticker": "RBRK",
@@ -992,8 +995,8 @@
     "rs_rating": 93
    },
    {
-    "ticker": "BB",
-    "theme": "Cybersecurity",
+    "ticker": "VSAT",
+    "theme": "Space",
     "status": "broken",
     "above_ema21": false,
     "rs_rating": 93
@@ -1008,10 +1011,10 @@
    "provisional": true
   },
   "breadth": {
-   "state": "negate",
+   "state": "mixed",
    "source": "breadth.json verdict.env",
-   "env": "BEARISH",
-   "score": -7
+   "env": "MIXED",
+   "score": -1
   }
  },
  "verdict": "avoid",
