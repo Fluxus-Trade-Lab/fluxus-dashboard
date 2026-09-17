@@ -43,3 +43,4 @@ X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降
 - 身高梗：新主席比老主席高一英寸，利率高了 25 个基点。今天美联储什么都在往上走，除了我的胆子。 / EN: New chair, one inch taller. Rates, a quarter higher. Everything at the Fed went up today except my nerve.
 **09-17 交互（Andy）**：纠正——要的是「先按 Shake 手法造梗句，再找回复对象」，并问「我们的流程是什么」。→ 流程提案＋5 条常青梗样品落 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md`（待批；蹭号在停做清单上，09-20 后）。
 **09-17 交互（Andy）**：「我同意批准」+「5条梗句全部保留」→ 梗句库 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`。今天回 J3（→ @markminervini）或 J1；J1 不回 @kunal00（Shake 已回过），且开头别用「X is」（和 Shake 同构）→ 出 J1b 改句版，建议配 @TheShortBear（QQQ 收 +0.03%，「还是那层」对得上；Kobeissi 那条道指收 −1.15% 对不上）。
+**09-17 交互（Andy）**：「我今天的打法是自己的啊每日复盘打算在x上面进行一个发布同时会配一段文字那可能需要把这个梗写进去其中一个梗啊剩下的一个我们回复别人」→ Steve 建议：J3（惊喜派对）放复盘 X 帖开头、紧接「The hike was priced; the tone was not.」的意思（复盘帖本机 `Trading/01_Market_Reports_Daily/2026-09/2026-09-16/x/post_EN.md`，1151/1500 字符，加 J3 约 +105 仍在上限内；文件不改，由 Andy 粘）；J1b（电梯改句版）回 @TheShortBear。
