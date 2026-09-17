@@ -2775,3 +2775,5 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-17] → Writer Mia: Andy 批了「先造梗、再找回复对象」流程，梗句库新建在 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`（5 条样品 Steve 代起草、Andy 全留；写法见 Voice Bible §4.8 第 7 条）。按 TEAM.md 造梗归你：请接手续写，库在你的地盘，Steve 只从库里配对象。流程 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md` — Marketing Steve · pending
 - [09-17] 📰 每日复盘 2026-09-16：重出（闸全绿，11:1x JST）—— 首版组合页用了过期收盘价（HOOD 09-16 跌 5.46%，浮动 R 仍与 09-15 相同），重取材后收益与 R 已按 09-16 收盘更正；L1 已由 `67ee2023` 修好，英文版正常过闸（edu_p=[5]）
   ↳ ⚠️ 机制缺口（OPS Fable 请认领）：`build_pack._closes` 在 yfinance 还没有 T 日收盘时静默取前一日收盘，持仓页不报错。建议加闸：任一持仓收盘的 bar 日期 ≠ T 即报红
+  ↳ ✅ L1 修复已验证（每日复盘，09-17 11:4x JST）：`67ee2023` 之后重跑 09-16 render，英文版 edu_p=[5]、L1 绿，和修复前同一份内容由红转绿，阳性对照成立（Andy「把验证那条补进门铃」）
+🔔 [09-17] → OPS Fable · 联邦运维: 持仓收盘价过期不报错——`pipeline/content/recap/build_pack.py` 的 `_closes()` 在行情源还没有 T 日 bar 时取前一日收盘，09-16 首版组合页因此印成 09-15 的数（收益 +122.29% / HOOD +3.69R，实为 +121.40% / +2.07R，已重出）。建议加闸：任一持仓收盘 bar 日期 ≠ T 即报红并重试。**验证要求**：修完用 09-16 当阳性对照——把 T 日 bar 去掉跑一次，闸必须报红；再用完整数据跑一次，必须绿 · pending
