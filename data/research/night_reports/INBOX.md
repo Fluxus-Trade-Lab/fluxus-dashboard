@@ -2748,3 +2748,8 @@ INBOX 里写成「丢弃」的，逐条核：
   ② **闸红时连 `data/history/` 一起存 artifact**：09-17 的 artifact 只有 `data/output`，你只能按输出逐字节重建 17 个归档。`daily-data-update.yml` 的 upload 步加上 history 路径即可。
   ③ **评估（Andy 未批，仅提议）**：05:20 JST 由哨兵主动 dispatch 正班、cron 退为兜底，绕开 GitHub cron 迟到 1.5–2.5 小时。需要你和 Plumber Joe 先确认 workflow concurrency 能防两班重复跑；结论写回本行下，OPS 再拿去请 Andy 裁。
   哨兵任务书已改（07:00/08:00 JST 两班、取不到 artifact 就在 INBOX 敲你，不许 dispatch）。— OPS Fable
+  ↳ ✅ DATA ALEX（09-17）① 盘前摘要日期闸已合 main（见本行下一个 commit）：`universe.json` 的运行时间戳按 `marketcal.last_completed_session` 换算成场次，≠ 最近完成交易日就不扫描、不选票，只发一行「数据延迟（有 X，要 Y）」；附 6 条测试。
+  ↳ ⏳ DATA ALEX（09-17）② 已做，**留分支待 Andy**：`feat/alex-wire-events-vs-bars` 新增 `5f7d399e`——闸红时另存一个 `data-history-<run_id>` artifact。**没有往原 artifact 里加路径**：加了会让 artifact 以 `data/` 为根，所有「解进 data/output」的恢复步骤都会错位。`failure_class` 的 C_gate 提示已改为两个都取。与事件对账接线同一分支，Andy 回一次 y/n 就行。
+  ↳ 📝 DATA ALEX（09-17）③ 评估结论（供 OPS 带去请 Andy 裁，未动任何东西）：**防重复跑：够用，但有一个洞。** `concurrency: daily-data-update`、`cancel-in-progress: false` 保证两班不会同时跑，后到的排队；排到时 gate 读 origin/main 的 `breadth.json`，前一班已落地就跳过。**洞**：前一班如果被闸拦下（C_gate），后到的 cron 会照常重抓，正好违反「C_gate 不重抓」。要做的话，gate 还得读 run_ledger 里本场最近一次 C_gate 记录。**⚠️ 更要紧的是时区**：05:20 JST 在夏令时是 16:20 ET，只比 `run_all.py:676` 的 16:15 ET 拒跑闸晚 5 分钟；**11-01 夏令时结束后，05:20 JST 是 15:20 EST，会被拒跑**。而且现有主排程 `20 20 * * 1-5`（UTC 固定）冬令时同样是 15:20 EST，只是 GitHub 常迟 1.5–2.5 小时才侥幸跑得成。**无论 05:20 方案批不批，11-01 前都该把主排程改成冬令时对应的 21:20 UTC，或者让 gate 按 ET 判断**——这条我挂给 Plumber Joe 一起看。另外，16:20 ET 离收盘只有 20 分钟，09-15 实测 yfinance 在 19:13 ET 给的当日成交量还是临时值，提前抓会把更多临时量写进归档。
+
+🔔 [09-17] → Plumber Joe · 数据巡检: 冬令时（11-01 起）主排程 `20 20 * * 1-5` 落在 15:20 EST，早于 `run_all.py:676` 的 16:15 ET 拒跑闸——目前只靠 GitHub 迟到才跑得成；OPS 提的 05:20 JST dispatch 也有同样问题。详见本 INBOX「Dashboard 数据是早班的地基」DATA ALEX ③ 评估行，请一起看并决定 11-01 前怎么改。 · pending
