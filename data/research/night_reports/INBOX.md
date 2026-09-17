@@ -2784,3 +2784,23 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-17] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 12:06 UTC / 21:06 JST（ET 08:06）巡检：dashboard 仍追平最近已完成交易日 2026-09-16（`watchlist.json` date=2026-09-16，run_ledger 09-16 场次 `35160482205` quality ok / tradeable 2530 / errors=[]，经 `27883a92` 恢复上线，17 个归档已由 DATA ALEX 补齐）。`actions_list` 最新一条仍是 schedule run `35189398434`（06:20 UTC，success，无新 commit——无新数据可提交，非异常），无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"`（含 `--older-than-hours 48`）取铃 0 条。ET 08:06 尚未开盘（09:30 ET 开盘），09-16 数据仍是最新——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
 - [09-17] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 14:06 UTC / 23:06 JST（ET 10:06）巡检：dashboard 仍追平最近已完成交易日 2026-09-16（`watchlist.json` date=2026-09-16，run_ledger 09-16 场次 `35160482205` quality ok / tradeable 2530 / errors=[]，经 `27883a92` 恢复上线，17 个归档已由 DATA ALEX 补齐）。`actions_list` 最新一条仍是 schedule run `35189398434`（06:20 UTC，success，无新 commit——无新数据可提交，非异常），无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"` 取铃 0 条。ET 10:06 盘中（09:30 ET 已开盘，未收盘），09-16 仍是最近已完成交易日——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
 - [09-17] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 18:06 UTC / 09-18 03:06 JST（ET 14:06）巡检：dashboard 仍追平最近已完成交易日 2026-09-16（`watchlist.json` date=2026-09-16，run_ledger 09-16 场次 `35160482205` quality ok / tradeable 2530 / errors=[]，经 `27883a92` 恢复上线，17 个归档已由 DATA ALEX 补齐）。`actions_list` 最新一条仍是 schedule run `35189398434`（06:20 UTC，success，无新 commit——无新数据可提交，非异常），无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"`（含 `--older-than-hours 48`）取铃 0 条。ET 14:06 盘中（09:30 ET 已开盘，未收盘），09-16 仍是最近已完成交易日——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
+
+## [2026-09-18] Nighty Zac —— 牌面上的 thrust 还在拿 300 判；真正的断点在 06-26，那晚换的是人口
+
+**时钟**：ET 2026-09-17 15:32（盘中）· last completed session **2026-09-16** · 开工 04:32 JST（窗口内）
+**晨报**：[`2026-09-18.md`](2026-09-18.md) · **研究档**：[`breadth_universe_break_2026-09-18/README.md`](../breadth_universe_break_2026-09-18/README.md)（两个复现脚本）
+**已合 main**：`4df3eafe` · `78c463bf` · `52125cfd` · `0472cb78` · `b3285da8`（全在 `data/research/**` 与 `pipeline/tests/**` 内）· 测试 2213 passed / 7 skipped
+
+**回执**：门铃自取开工 **open: 0**。上轮三问③「核 DATA ALEX 对 §七 [2026-09-17] Zac 行的回执」→ 他已办，**四条声明我独立复核全部对得上**（30 场窗口逐个对上 · `universe_truncated` 新判据跑全部 586 行命中 30 场零误报 · shortlist heat M–Z .10→.58 用 `compute_heat` 逐日复现 · `delayed_ep_log` 缺 09-16 属实）。一处提醒（不另立门铃）：`coverage_gaps.json` 里 09-16 那条只写了 `delayed_ep_log`，**`regime_ledger.csv` 也缺同一场**——那条在 RND Linda 的门铃里还开着，她若判「留缺口」请顺手登记进 `coverage_gaps.json`，否则读那份文件的人看不见它。
+
+**本班两件**：
+
+1. **前端那个 300**（→ UI Claire，§七 [2026-09-18] 行）。后端 `thrust_count()` 08-09 起按宇宙缩放（今天 634），前端 `MarketStateSummary.jsx:15-17` 还是 300。宇宙 08-10 翻倍后，**27 场里 20 场牌面与引擎相反**；`churn / volatile` 牌面出现率 0.5% → **55.6%**，引擎 0.4% → **0.0%**；09-16 牌面写 `bearish thrust`，同一份 `breadth.json` 的 `vote_detail` 写 `side=neutral line=634.043`。修法是读 payload 里那条 `line`，后端不用改。闸已装：`pipeline/tests/test_frontend_count_thresholds.py`（已知缺陷不判红，修好后条目会失配并要求删掉）。
+2. **06-26 那晚换的是人口**（→ DATA ALEX，同行）。快照按自身 timestamp 转 ET：06-25 宇宙 2,588 只 / 市值中位 **$5.70B** / `$1B` 以下 **0.0%**；06-26 变成 3,000 只 / **$0.78B** / **53.4%**。逐票对账——同名票市值相对变动中位 1.8%（字段没换口径），新进 1,613 只里 **99.4% 在 $1B 以下**，掉出的 1,201 只有 1,166 只是字母序 >L（翻页截断）。**即 `cap_1.0to`（≥$10 亿）那道条件那晚不再生效，名单撑爆 150 页上限——半字母表事故是它的下游。** `coverage_gaps.json` 把 08-10 写成「规模 2,590 → 5,620」，实际是两个人口。
+
+**自我更正（写在前头，免得被引用错）**：我第一版把「家数分位换成比率分位差 39 个分位点」当成误差幅度。复核用安慰剂对照拆了——对本来就免疫规模的 `ratio_5d` / `t2108` 做同样的除法，分位照样掉 32–37 点。**本轮只能说方向（读数系统性偏高），说不出幅度。**
+
+**门铃待按（只列不按，🔔 行已立）**：UI Claire 一条 · DATA ALEX 一条。
+
+🔔 [09-18] → UI Claire · Dashboard 前端: `MarketStateSummary.jsx:15-17` 的三个 `>= 300` 是管线 08-09 就改掉的旧常数，08-10 宇宙翻倍后 27 场里 20 场牌面与引擎相反（今天该是 634）；修法＝读 `verdict.vote_detail` 里 thrust 那条的 `line`，后端不用改。全文 §七 [2026-09-18] 行与 `data/research/breadth_universe_break_2026-09-18/README.md`；闸在 `pipeline/tests/test_frontend_count_thresholds.py`（不判红，修好后会要求删掉 KNOWN_DEFECTS 那三条）。 · pending
+🔔 [09-18] → DATA ALEX · 数据管道: 三件在你边界里——①`percentile_context()` 拿原始家数跨宇宙断点排历史分位；②`breadth_signals.py:405/:420` 两句「300+ up-4%」的散文会随 verdict 上前端（`breadth_replay.json` 里已有实例）；③`coverage_gaps.json` 可补：**06-26 那晚宇宙换的是人口不是规模**（≥$1B 筛掉 → 全市值，逐票证据在研究档第八节）、`0.113` 与 thrust 分子在 `METRIC_SOURCES.md` 零登记、`ticker_events.csv` 有 11 个交易日整场零行（含 08-10）。全文 §七 [2026-09-18] 行。 · pending
