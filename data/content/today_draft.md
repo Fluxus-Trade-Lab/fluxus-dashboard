@@ -25,3 +25,6 @@ why: Own_Lines #93 原话原样；09-16 未发、回了弹药库，Andy 当天�
 门铃：取铃工具 `--to Steve` 零命中。
 voice/raw 近 7 天只有 09-17 C17/C26 裁决记录（课程口述卡，不是发帖原料）；verdicts 最新是 09-16 那 4 行。今天有队列成品可端，不算输入枯竭。
 保质期：三条都是不依赖盘面的金句，无陈旧风险。
+**09-17 交互（Andy 10:5x JST）**：「今天可以用C2或者C3，我们看一下FOMC之后大家都在说什么呢」→ C1 今天不发（回弹药库）；C2/C3 二选一待他在屏上定。
+FOMC 09-16 背景（Steve 现场核，11:0x JST）：加息 25bp 至 3.75–4%，12-0，点阵图 16/18 预期年内再加一次。收盘读 `data/output/etf_data.json`（27883a92）：SPY −0.44% · QQQ +0.03% · IWM −0.43% · DIA −1.15% · XLF −1.62% · KRE −1.77% · XLE −2.88% · SMH +0.64%。
+X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降 50bp，2026 Warsh 在中期选举前加 25bp」13.7K 赞 · 身高梗 Powell 6'0" / Warsh 6'1" 4.7K · conksresearch「加 25 = 利好，加 50 = 利好，不加也利好」3.5K · Kobeissi「道指盘中 −800」3.5K · Minervini「史上最被预期的加息」1.7K · TheShortBear「QQQ 今天是好久没见的 sell the news 反转」385 · 白宫称「rather unfortunate」、Trump 公开跟 Warsh 唱反调。
