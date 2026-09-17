@@ -40,6 +40,16 @@
    "cause": "derived from ticker_events inside its gap (run_all.py compute_heat). Measured by Nighty Zac 2026-09-17",
    "backfill": "not recoverable for the same reason",
    "declared": "2026-09-17 DATA ALEX, from Nighty Zac 2026-09-17 §七"
+  },
+  {
+   "archive": "data/history/delayed_ep_log.csv",
+   "first": "2026-09-16",
+   "last": "2026-09-16",
+   "sessions": 1,
+   "universe": "session missing entirely (no rows for 2026-09-16)",
+   "cause": "the 09-16 nightly (run 35160482205) fetched fine but was stopped by a stale schema_snapshot key; OPS restored data/output from the run artifact (27883a92), which carries no data/history. The other 17 archives were rebuilt byte-exactly from the published outputs (each method first reproduced 09-15 byte for byte).",
+   "backfill": "not done -- delayed_ep_scan downloads 120d bars per candidate at run time and the doorbell forbids refetching; the backstop skips because breadth.json already shows 09-16. EPs still inside their 3-15 session window get staged again from 09-17 on.",
+   "declared": "2026-09-17 DATA ALEX"
   }
  ],
  "definition_breaks": [
