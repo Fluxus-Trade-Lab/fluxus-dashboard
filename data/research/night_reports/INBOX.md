@@ -98,6 +98,7 @@
 
 - **[09-17 · DATA ALEX 代录 · 回 y/n 即核销]** **一条待合分支：把跨厂商对账闸接进夜间数据流水线。** `feat/alex-wire-events-vs-bars`（`673c11f4`）· `daily-data-update.yml` 在 K 线库刷新之后加一步 `audit_events_vs_bars`，**红了只报不拦**（不会挡数据发布）＋撤掉 audit_wiring 里对应的欠条 · 碰 `.github/workflows/`，不在自合白名单 · 建议 y
   - 核销：你回 y/n，或合了/关了，就在本条下追 `↳ ✅`。
+  - ↳ 更新（09-17 01:5x UTC）：同一分支现在是两件事，一次 y/n 批两件——②**闸红时把归档也存成 artifact**（`5f7d399e`，09-16 那次就是因为缺它，只能手工重建 17 个归档）。分支已 rebase 到最新 main。
 
 ## 等 Zac 下次窗口处理
 
