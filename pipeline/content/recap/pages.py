@@ -136,6 +136,17 @@ def sentence_split_breaks(text: str, continued_pages: list[int]) -> list[int]:
     return bad
 
 
+def _opens_with_heading(page_text: str, starts: list[str]) -> bool:
+    """True when the page's first body line IS its first section heading, so nothing carried over.
+    2026-09-16 EN: the lesson began at the top of page 5 and L1 still read the rules as continuing there.
+    Headings print upper-case (CSS text-transform); matching the upper-cased label against the raw line
+    keeps a paragraph that merely begins with the heading's word counted as carried-over prose."""
+    lines = _body_lines(page_text)
+    if not starts or not lines:
+        return False
+    return re.sub(r"\s+", "", lines[0]).startswith(re.sub(r"\s+", "", starts[0]).upper())
+
+
 def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_heading: str, weekly: bool = False) -> dict:
     """L1: non-lesson, non-book content ends by page CONTENT_PAGES; the book owns the last page alone;
     the lesson may span pages 4–5; no page may open mid-sentence."""
@@ -147,9 +158,11 @@ def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_he
     if any(book_heading in s for s in sections[:-1]):
         hits.append("book appears before the last page")
     active, present = None, []
-    for starts in sections:
+    page_texts = _pages_of(text)
+    for idx, starts in enumerate(sections):
         here = list(starts)
-        if active and starts[:1] != [book_heading] and (not starts or starts[0] != active):
+        if active and starts[:1] != [book_heading] and (not starts or starts[0] != active) \
+                and not _opens_with_heading(page_texts[idx] if idx < len(page_texts) else "", starts):
             here.insert(0, active)  # the section that continues onto this page (the book always starts a page)
         present.append(here)
         if starts:

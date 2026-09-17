@@ -51,3 +51,38 @@ def test_l1_red_when_the_lesson_breaks_inside_a_sentence():
     text = "\f".join(["p1.", "p2.", "p3.", "the 20 flattens, drifts into the 50, and price", "tightens between the two", "Book."]) + "\f"
     r = check_layout(text, SPILL, EDU, BOOK)
     assert not r["ok"] and "mid-sentence" in r["hits"][0]
+
+
+# 2026-09-16 EN: the lesson started at the TOP of page 5, the rules ended on page 4 — a legal 6-page daily.
+# L1 used to assume "a page that doesn't open with the last active section continues it", and read page 5
+# as still carrying the rules. A page continues the previous section only if its first body line is not
+# a section heading. Headings print upper-case (CSS), prose does not — so a paragraph that merely starts
+# with a heading's word still counts as continuation.
+TOP = [["TITLE"], ["CONDITIONS"], ["LEADERS"], ["RULES"], [EDU], [BOOK]]
+
+
+def _pages(p5_first_line):
+    return "\f".join(["p1.", "p2.", "p3.", "RULES\n1 Know the priced range.",
+                      f"FLUXUS CAPITAL · DAILY MARKET RECAP\n{p5_first_line}\nMore lesson text.", "Book."]) + "\f"
+
+
+def test_l1_green_when_the_lesson_starts_at_the_top_of_page_five():
+    r = check_layout(_pages("T H E  L E S S O N      A Midweek Break Is a Draft"), TOP, EDU, BOOK)
+    assert r["ok"], r["hits"]
+    assert r["pages"] == 6 and r["edu_pages"] == [5]
+
+
+@pytest.mark.parametrize("first", [
+    "7 Never serious trouble until the 200-day.",   # rules text ran over, lesson heading further down
+    "The lesson learned here is simple.",          # prose that merely starts with the heading's words
+])
+def test_l1_red_when_page_five_opens_with_carried_over_text(first):
+    r = check_layout(_pages(first), TOP, EDU, BOOK)
+    assert not r["ok"] and "RULES" in r["hits"][0]
+
+
+def test_l1_matches_a_title_case_label_against_its_upper_case_print():
+    # content labels are title case ("Education"); the PDF prints them upper-case
+    sections = [["Title"], ["Conditions"], ["Leaders"], ["The Rules"], ["Education"], ["Portfolio Update"]]
+    text = "\f".join(["p1.", "p2.", "p3.", "THE RULES\n1 rule.", "E D U C A T I O N   A lesson\nbody.", "Book."]) + "\f"
+    assert check_layout(text, sections, "Education", "Portfolio Update")["ok"]
