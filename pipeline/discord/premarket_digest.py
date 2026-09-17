@@ -29,7 +29,7 @@ import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -106,6 +106,44 @@ def _now_et() -> datetime:
 def _is_runtime_window() -> bool:
     """True if ET hour is 8 (we want to fire once per day at 8am ET)."""
     return _now_et().hour == 8
+
+
+# -------- Step 0: date gate ----------------------------------------------------
+# Andy 2026-09-17: dashboard data is the morning's foundation. A universe.json
+# left over from an earlier session must not be scanned and pushed to members as
+# today's candidates -- post one line saying the data is late instead.
+
+
+def universe_session(path: Path | None = None) -> date | None:
+    """The session universe.json was written for, from its UTC run timestamp."""
+    from pipeline.marketcal import last_completed_session
+    path = UNIVERSE_PATH if path is None else path
+    try:
+        ts = json.loads(path.read_text()).get("timestamp") or ""
+        written = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    except (OSError, ValueError, AttributeError):
+        return None
+    if written.tzinfo is None:
+        return None
+    return last_completed_session(written)
+
+
+def universe_is_fresh(now: datetime) -> bool:
+    from pipeline.marketcal import last_completed_session
+    have = universe_session()
+    return have is not None and have == last_completed_session(now)
+
+
+def build_delay_notice(now: datetime) -> dict[str, Any]:
+    from pipeline.marketcal import last_completed_session
+    have = universe_session()
+    return {
+        "username": "Fluxus PM Desk",
+        "content": (f"⚠️ Pre-Market Digest skipped · {now.strftime('%a %b %d %Y')}: "
+                    f"dashboard data is late (have {have or 'unknown'}, "
+                    f"need {last_completed_session(now)}). No candidates today "
+                    f"rather than candidates from a stale close."),
+    }
 
 
 # -------- Step 1: universe filter --------------------------------------------
@@ -525,6 +563,14 @@ def run(dry_run: bool = False, force: bool = False) -> int:
     if not force and not os.environ.get("PREMARKET_FORCE_RUN") and not _is_runtime_window():
         logger.info("Not 8:00am ET (current hour=%d) — skipping. Use --force to override.", runtime.hour)
         return 0
+
+    if not universe_is_fresh(runtime):
+        payload = build_delay_notice(runtime)
+        logger.error("Stale universe.json -- %s", payload["content"])
+        if dry_run or os.environ.get("PREMARKET_DRY_RUN"):
+            print(json.dumps(payload, indent=2, ensure_ascii=False))
+            return 0
+        return 0 if post_to_discord(payload) else 1
 
     candidates = load_universe_candidates()
     if not candidates:
