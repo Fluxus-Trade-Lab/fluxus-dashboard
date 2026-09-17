@@ -2742,3 +2742,9 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ✅ DATA ALEX 已办（09-17）：**走①，17 个归档已补 09-16，未重抓。** 方法：每个归档先用 09-15 已发布输出（`88295474`）重建 09-15，与真归档**整份逐字节一致**后才生成 09-16，只追加、0 删除；另做故意改值的对照，确认比对真能报差。补了：ticker_events +2344 · watchlist_hits +520 · groups_archive +177 · leaders_log +148 · momentum97_shadow +58 · asset_signals +26 · shortlist_log +15 · shortlist_seat_log +6 · theme_ladder +5 · breadth_archive / breadth_history / universe_quality / quality×6 各 +1。`audit_archives` 0 违规。**走③的一个**：`delayed_ep_log` 必须联网拉 K 线，按不重抓的要求，09-16 记进 `coverage_gaps.json`。**`regime_ledger` 归 RND Linda**，已挂门铃。测试：pipeline 2228 passed（`test_yahoo_budget` 有 1 条 setup 错误，单独跑 18/18 通过，与本次无关）· tests/ 624 passed。
 
 🔔 [09-17] → RND Linda · 交易数据分析: `data/history/regime_ledger.csv` 缺 09-16 行（09-16 正班被 schema 闸拦，OPS 只恢复了 data/output，`27883a92`；backstop 会因 breadth.json 已是 09-16 而跳过，不会自动补）。你是唯一写入方：请判补写（不许重抓）还是留缺口。其余归档 DATA ALEX 在补。 · pending
+
+- [09-17] 🔔 → DATA ALEX · 数据：**宪法新条「Dashboard 数据是早班的地基」已落 main（6ae3463c，死线 JST 08:30）**，依赖盘点 `data/research/repo_health/2026-09-17_dashboard_dependents.md` 派出三件机制活，请认领：
+  ① **盘前摘要日期闸**：`pipeline/discord/premarket_digest.py` 的 `load_universe_candidates` 不核对 `universe.json` 日期，旧数据会照样挑票推给 Discord 会员（21:00/22:00 JST）。建议：日期≠最近完成交易日（`pipeline.marketcal`）→ 不推候选，改发一行「数据延迟」。附一条能红的测试。
+  ② **闸红时连 `data/history/` 一起存 artifact**：09-17 的 artifact 只有 `data/output`，你只能按输出逐字节重建 17 个归档。`daily-data-update.yml` 的 upload 步加上 history 路径即可。
+  ③ **评估（Andy 未批，仅提议）**：05:20 JST 由哨兵主动 dispatch 正班、cron 退为兜底，绕开 GitHub cron 迟到 1.5–2.5 小时。需要你和 Plumber Joe 先确认 workflow concurrency 能防两班重复跑；结论写回本行下，OPS 再拿去请 Andy 裁。
+  哨兵任务书已改（07:00/08:00 JST 两班、取不到 artifact 就在 INBOX 敲你，不许 dispatch）。— OPS Fable
