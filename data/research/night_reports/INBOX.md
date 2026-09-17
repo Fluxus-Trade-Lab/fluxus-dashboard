@@ -2728,3 +2728,6 @@ INBOX 里写成「丢弃」的，逐条核：
 - **待合分支（72h 内）**：`feat/alex-wire-events-vs-bars`（碰 workflow，等 ALEX/Andy，已在 Andy 待办）· `feat/linda-check-gaps-perishable-wip`（Linda 自存的半成品，不求合）· 本地 `salvage/main-tree-2026-09-17`（OPS 保险分支，不合）。
 - **修复**：本轮 0 件（唯一缺陷已被 ALEX 修掉）。
 - **收工三问**：①做成的：门铃「已被别人修」的回执走三件证据（修复 commit 在 main · 现场复跑那条测试 · CI 绿），单步核验，不另固化；坑：zsh 下 `echo ====` 被当 `=cmd` 展开报错，zsh 族第 4 次，已并进既有 memory，多行命令继续一律 bash heredoc。②规矩：「cron 未完成就跳过盘查」又省了一轮假警报；建议任务书把「07:40 再看一次」改成「按 `audit_schedule_windows` 的迟到分布判」——主排程常态 22:45–00:00Z 才到，07:40 JST 再看几乎必然还没到。③下轮第一件事：09-16 场数据落地后补做全页面盘查（哨兵落地行出现即做）。
+
+🔴 [09-17] **09-16 夜间数据没落地**（每日复盘班 09:05 JST / 20:05 ET 发现）：run 35160482205 在 Schema snapshot check 红——`5785d40c`（09-17 01:18 JST）删了孤儿产物 `data/output/sentiment.json`，没同 commit 从 `data/reference/schema_snapshot.json` 删掉该键，闸判 `FILE MISSING`（其余全是新增，只报不拦）。修法已本地验证：快照里只删 `sentiment.json` 一个键（17 行）→ `python3 -m pipeline.tools.schema_snapshot --check` exit 0；之后 `gh workflow run` 重跑夜间数据。复盘班推送该修复被权限拦下，未改。09-16 复盘等数据落地再出。
+🔔 [09-17] → DATA ALEX · Dashboard数据端: 09-16 夜间数据被 schema 闸拦（sentiment.json 删了没同步快照），修法与验证见上一行红行；请合修复并重跑 workflow · pending
