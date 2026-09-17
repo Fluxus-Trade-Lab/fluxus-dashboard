@@ -36,3 +36,8 @@ X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降
 - 回 @KobeissiLetter「道指盘中 −800」/ @TheShortBear QQQ 反转：Rollercoaster day. Big drop, lots of screaming, and you get off exactly where you got on. Minus your lunch.
 - 回 @NewsLambert 身高梗：New chair is one inch taller. Rates went up a quarter. Everything at the Fed is going up.
 - 未给 @zerohedge（选举/政治题，品牌不碰）。
+**09-17 交互（Andy）**：「我们有中文表达包可以玩梗脱口秀很多东西的嘛」→ 调 biaoda 脱口秀卡重做（⚠️ AI 草图，不是 Andy 语料）。按卡改：火只烧自己（金毛那条原版涮整个 FinTwit，已改）、不点具体标的、数字带口径、不编他的交易：
+- 惊喜派对：惊喜派对，请柬是寿星自己发的。两点整灯一关，寿星还是尖叫了。 / EN: A surprise party where the birthday boy mailed the invites. Lights went off at 2pm and he still screamed.
+- 金毛：加 25 利好，加 50 利好，不加也利好。我家狗也这样：出门好，下雨出门好，刚遛完再出门，还是好。区别是狗回家从来不看账户。 / EN: 25 bps, bullish. 50, bullish. No hike, bullish. My dog feels the same way about walks. Difference is he never checks the account when he gets home.
+- 过山车：两点往下冲，一路尖叫，四点下车，站台还是那个站台。标普收 −0.4%。票钱照付，午饭没了。（口径：SPY 09-16 收盘，etf_data.json）
+- 身高梗：新主席比老主席高一英寸，利率高了 25 个基点。今天美联储什么都在往上走，除了我的胆子。 / EN: New chair, one inch taller. Rates, a quarter higher. Everything at the Fed went up today except my nerve.
