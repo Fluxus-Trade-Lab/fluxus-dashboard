@@ -8,6 +8,7 @@
 |---|---|---|---|---|---|
 | J1 | 震荡 | Chop is an elevator where a kid pressed every button. Ding. Ding. Ding. Forty minutes later you step out on the floor you got on. | 震荡就是坐电梯碰上小孩把每层都按了。叮。叮。叮。四十分钟后门一开，还是你上来那层。 | AI 起草 · Andy 09-17 留（「全部保留都非常的好」）。⚠️ Andy：开头别用「X is …」，和 Shake 摘花瓣帖结构太近——发之前用改句版（下行） | |
 | J1b | 震荡（改句版，避开 Shake 结构） | Got in the elevator at 2pm. Some kid had pressed every button. Ding. Ding. Ding. Doors opened at 4, same floor I got on. | 两点进电梯，有个小孩把每层都按了。叮。叮。叮。四点门一开，还是我上来那层。 | AI 按 Andy 09-17 意见改句，待他定 | |
+| J1c | 震荡（Andy 手改定稿） | Got in the elevator at 2pm. Some kid had pressed every button. Ding. Ding. Ding. Doors opened at 4, I step out of the same floor I got on! | — | **Andy 09-17 手改**（原话「语句结构稍微ai了点，然后语气太没味道了。感叹号就好很多」；代录 `raw/2026-09-17_joke_edit.md`） | 待填 post_id |
 | J2 | 利好兑现 | Every FOMC day is Black Friday. Everyone camps out all night, doors open at 2pm, and the TV is gone by 2:05. | 每个议息日都是双十一。蹲一整天，两点整开抢，两点零五分，购物车里全是「已售罄」。 | AI 起草 · Andy 09-17 留 | |
 | J3 | 事件前预期 | A surprise party where the birthday boy mailed the invites. Lights went off at 2pm and he still screamed. | 惊喜派对，请柬是寿星自己发的。两点整灯一关，寿星还是尖叫了。 | AI 起草 · Andy 09-17 留 | |
 | J4 | 突破失败 | Breakouts in this tape are microwave popcorn. Pop. Pop. Pop-pop-pop. You open the door and half the bag is still kernels. | 这行情的突破像微波炉爆米花。噼。噼。噼里啪啦。门一开，半袋还是玉米粒。 | AI 起草 · Andy 09-17 留 | |
