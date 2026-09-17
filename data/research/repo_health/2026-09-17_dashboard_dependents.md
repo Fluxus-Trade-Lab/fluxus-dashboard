@@ -10,7 +10,7 @@
 | 数据夜间班 `daily-data-update` | 05:20 正班 · 10:30 backstop | 生产 `data/output` + `data/history` | GitHub cron 常迟 102–153 分（正班）、269–295 分（backstop）；闸红时只把 `data/output` 存成 artifact | 哨兵分诊后走 artifact / 隔班接力 | ⚠️ backstop 已过死线；artifact 不含 `data/history` |
 | 数据哨兵（云，`trig_01QCuAfFpqtYivKM5bbHwEws`） | 每 2 小时整点 + 07:00、08:00 专守死线 | run 列表、账本、`data/output` | 能分诊；**云端下载不了 artifact**（出口策略 403），09-17 因此违规 dispatch 撞上供应商冷却 | 取不到 artifact → 门铃交本机会话 | ⚠️ 任务书待改 |
 | Plumber Joe 晨检 | 07:20 | cron、归档、各页 | 正班常在它之后才落地；09-17 的失败在 08:23，晨检早已结束 | 哨兵 08:00 班接力 | ⚠️ 时间对不上 |
-| 每日复盘 `recap-daily` | 09:00（周二至六） | **`data/history` 归档**（按交易日取）＋ `data/output` 少量 | 数据未到每 15 分钟重试到 10:15；只修好 `data/output` 仍做不出；修好后**不会自动重跑** | 修复完成后由修复者手动 `run_scheduled_task recap-daily` | ❌ 缺自动重跑 |
+| 每日复盘 `recap-daily` | 09:00（周二至六） | **`data/history` 归档**（按交易日取）＋ `data/output` 少量 | 数据未到每 15 分钟重试到 10:15；只修好 `data/output` 仍做不出；修好后**不会自动重跑** | 修复完成后由修复者重跑——**先 `list_task_runs recap-daily` 看原班是否还在跑**，在跑就不重跑（两班同写一个 PDF 目录） | ❌ 缺自动重跑 |
 | 每日页（云） | 10:07 | 仓库各台账 | 不依赖市场数据 | — | ✅ |
 | 盘前摘要 `premarket-digest`（发 Discord 会员） | 21:00 / 22:00 | `data/output/universe.json` | **不核对数据日期**，旧数据照样挑票推给会员 | 应加日期闸：非最近完成交易日 → 不推候选、改发「数据延迟」 | ❌ 对外风险最大 |
 | Andy 盘前看 dashboard | 晚间 | `data/output`（Vercel 原样发布） | 部分页面（breadth 等）有过期提示，没有全站提示 | — | ⚠️ 部分 |
@@ -29,3 +29,5 @@
 ## 09-17 实例（为什么有这页）
 
 09-16 正班 08:23 JST 失败（C_gate：OPS 删 `sentiment.json` 漏查 schema_snapshot 基线）→ 09:05 复盘发现数据没到 → 09:35 哨兵分诊，云端取不到 artifact，违规 dispatch 被供应商拒 → 10:04 OPS 本机取 artifact 恢复 `data/output`（`27883a92`），10:05 线上显示 09-16 → DATA ALEX 按输出重建 17 个归档（`739e6c4b`，0 违规）→ 复盘重跑。
+
+**09-17 补记**：原班 09:00 开跑，10:15 前最后一轮重试接住了 10:04 恢复的数据，自己出片了。OPS 10:18 又手动触发一班，两班在 10:22 同时重建同一个素材包；OPS 10:25 停掉手动那班。所以「数据恢复后重跑」的第一步是查原班状态。
