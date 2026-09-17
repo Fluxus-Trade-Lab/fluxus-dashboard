@@ -82,6 +82,14 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 5. **周检新指标**：本周「新增方法（skill 条目/修订）: 新增坑账」比。长期只有坑没有方法＝在结疤不在长本事。
 6. **方向（逐步执行，不一次动刀）**：官方建议 CLAUDE.md <200 行、多步过程迁出当 skill——本宪法的流程类段落逐步迁为 skill，每迁一段单独引 Andy 点头。
 
+**Dashboard 数据是早班的地基（Andy 2026-09-17 定，原话「Dashboard出现错误，一定要马上紧急修补，每天的很多事情都等着它上面的数据才能开始工作」「这些材料这些数据一定要准备好了这个时间点的优先级很重要的」）**：
+- **死线＝JST 08:30**：最近完成交易日的数据必须在此前落 main 并上线。09:00 每日复盘、Andy 的盘前准备、21:00 盘前摘要都等它。
+- **没按时落地或出错＝P0**：谁发现谁立即修，不等下一班，不等 backstop（backstop 排在 10:30 JST，已过死线，实际还常迟 4–5 小时）。**07:30 JST 仍未落地即进入紧急修复。** 哨兵 07:00 / 08:00 JST 两班专守死线（Andy「第二条可以加」）。
+- **修法顺序**：先 `python3 -m pipeline.tools.failure_class --run-id <id>` 分诊。C_gate（好数据被闸挡）→ 用闸红时保存的 artifact 恢复，**不重抓**；云端取不到 artifact → 立刻挂门铃给本机会话（DATA ALEX / OPS）代执行，**不许退化成 dispatch**。B_vendor → 隔班接力。
+- **上线 ≠ 修完**：①同日补齐 `data/history/` 归档，`audit_archives` 0 违规 ②当天复盘已错过的立即重跑 ③核线上 dashboard 的日期。三件都做完才算修复完成。
+- **动数据目录之前**：删改 `data/output/`、`data/history/`、`data/reference/` 下任何文件，先全仓 `git grep` 该文件名，再跑 `python3 -m pipeline.tools.schema_snapshot --check`；数据目录归 DATA ALEX，别的线动之前先问他。事故实录：09-17 OPS 大扫除删 `sentiment.json`，只查了代码引用，漏了 schema_snapshot 基线，09-16 正班被闸挡，dashboard 停在前一天。
+- 依赖清单与各自的备用方案：[`data/research/repo_health/2026-09-17_dashboard_dependents.md`](data/research/repo_health/2026-09-17_dashboard_dependents.md)。
+
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
 
 **语言**：默认中文回复；代码 / token / 度量名照抄英文。提到文件给可点击链接加行号。
