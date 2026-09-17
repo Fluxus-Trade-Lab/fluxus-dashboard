@@ -29,3 +29,4 @@ voice/raw 近 7 天只有 09-17 C17/C26 裁决记录（课程口述卡，不是�
 FOMC 09-16 背景（Steve 现场核，11:0x JST）：加息 25bp 至 3.75–4%，12-0，点阵图 16/18 预期年内再加一次。收盘读 `data/output/etf_data.json`（27883a92）：SPY −0.44% · QQQ +0.03% · IWM −0.43% · DIA −1.15% · XLF −1.62% · KRE −1.77% · XLE −2.88% · SMH +0.64%。
 X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降 50bp，2026 Warsh 在中期选举前加 25bp」13.7K 赞 · 身高梗 Powell 6'0" / Warsh 6'1" 4.7K · conksresearch「加 25 = 利好，加 50 = 利好，不加也利好」3.5K · Kobeissi「道指盘中 −800」3.5K · Minervini「史上最被预期的加息」1.7K · TheShortBear「QQQ 今天是好久没见的 sell the news 反转」385 · 白宫称「rather unfortunate」、Trump 公开跟 Warsh 唱反调。
 **09-17 交互（Andy）**：丢来 @shakepryzby1 `2100404888333357057`（ET 09-16 22:02，引用 @kunal00「FOMC 是个哈欠，又回到区间里的区间」），原话「这个很妙」。帖子内容：把震荡市比作「她爱我、她不爱我」一片片摘花瓣，最后一片翻成离谱的反转，再自问「这是 Livermore 还是 Darvas 说的」。可作 C3 回复位（震荡＝两边都挨打），也是他偏好「比喻压过数据」的又一例。
+↳ **更正（Andy 同日追话）**：「不是我的意思是说花瓣的比喻是一个值得学习的方案我是不会回复他这一条的」——上一行「可作 C3 回复位」作废，不回复该帖；已作为学习样本入 `Fluxus_Brand/voice/Fluxus_Swipe_File.md`「待解剖」节。
