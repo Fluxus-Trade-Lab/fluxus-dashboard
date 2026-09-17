@@ -106,6 +106,12 @@
   - 核销：你回 y/n，或合了/关了，就在本条下追 `↳ ✅`。
   ↳ ✅ 已核销（09-17）：Andy「Y」，OPS 合进 main（e0a4eced、60e82b52）；全套 2854 passed。Joe 的核对门铃照常。
 
+
+- **[09-18 · Nighty Zac 代录 · 回一句即核销]** **你的 Screener 页那几张单子，三个月前换了一批股票，不是谁决定的。** 数字：`gainers_4pct` 里市值 10 亿美元以下的小票，2026-06-25 是 **0.0%**，06-26 变成 **64.6%**，现在 **69.8%**；`vol_up_gainers` 同样从 0.0% 到 **70.9%**；`momentum_97` / `healthy_charts` / `ema21_watch` 都从 0.0% 变成三到四成。原因：数据源那道「市值 ≥10 亿」的筛选条件在 06-26 那晚不再生效，一千六百只中位市值 1.43 亿的小票一次性进了池子，**筛子原样照跑，只是脚下的池子换了人**。
+  - **没跟着变的**：Watchlist / Short List 走 tradeable 闸（市值 ≥3 亿且日成交额 ≥200 万），今天实测 219 只里小票 **0.0%**。所以这件事只影响**没有闸的那几张单子**。
+  - **要你回的一句**：这些筛子单**要不要也加一道市值/成交额闸**？（回「加」＝ DATA ALEX 加，回「不加」＝ 保持现状但我们记一行账说明它是被动变成这样的。）两边都可逆，不花钱。
+  - 依据：[`data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`](../../reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md) · 复现脚本在 `data/research/breadth_universe_break_2026-09-18/`。核销：你回一句，或 DATA ALEX 做完了，就在本条下追 `↳ ✅`。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
@@ -2807,3 +2813,32 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-18] → Writer Mia: 共享主树 `/Users/taolezhu/Documents/AI-Trading-System` 里，`Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md` 处于**未提交的删除态**（`git status` 报 ` D`），而 main 上这个文件还在（`cb8ec136` 09-02 合入，内容是 Andy 亲手写的四条 X 帖逐字稿、写稿的正样本）。**文件在 main 上是安全的**，但主树里那个删除一旦被谁的 `git commit -a` 扫进去就会真删——宪法禁 `commit -a` 正是为这个。请判：是你有意要删（那就走正式提交并说明），还是误删（在主树 `git checkout origin/main -- Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md` 即可恢复）。我没动主树任何文件，只报不改。（Nighty Zac 09-18 收工巡检时发现） · pending
 - [09-17] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 20:06 UTC / 09-18 05:06 JST（ET 16:06）巡检：ET 16:06 收盘刚过（16:00 收盘），窗口未开（ET 16:15 起才可发）；dashboard 仍追平最近已完成交易日 2026-09-16（`watchlist.json` date=2026-09-16，run_ledger 09-16 场次 `35160482205` quality ok / tradeable 2530 / errors=[]，经 `27883a92` 恢复上线，17 个归档已由 DATA ALEX 补齐）。`actions_list` 最新一条仍是 schedule run `35189398434`（06:20 UTC，success，无新 commit——无新数据可提交，非异常），无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"`（含 `--older-than-hours 48`）取铃 0 条。09-17 收盘数据要等今晚窗口（ET 16:15 后，约 20:20 UTC）的正班才会抓——本班尚未到点，健康，无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
+
+
+## [2026-09-18 收工补] Nighty Zac —— 这个断点咬到哪些研究：污染的是**分母**，不是分子
+
+**续本页 [2026-09-18] 那节**。三组只读 agent 分批重报十三份研究，承重的几条我逐条自己核过。
+全文与判定表：[`breadth_universe_break_2026-09-18/README.md`](../breadth_universe_break_2026-09-18/README.md) 第十一节 ·
+**事故档**：[`incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`](../../reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md)
+
+- **命中样本几乎都是干净的**：面板、九个预设、`vcp`、`b4_gates` 的样本里 `<$1B` 占 **0.0%**（自带 `marketCapMin = 1.0`）。
+  **脏的是基线**——`scanner_event_study` 的对照是「同日从全票池随机抽一只」，那个池子 06-26 之后塞进三千只小票。
+  全宇宙 20 日前瞻中位：06-26 核心 **+0.63%** vs `<$1B` **−4.12%**；07-02 −0.24% vs **−7.53%**；07-10 +2.83% vs −1.51%
+  （我用 `price_panel.pkl` + `universe.json` 快照独立核过，与 agent 的 `event_bars.pkl` 路径同一形状）。
+  → **断点之后每个「超额 vs 同日随机」系统性虚高 1.5–2.5pp**。`vcp` 最干净：命中零小票，超额却从 **+1.60pp 缩到 +0.57pp**。
+- **翻号两条**，都在 Stockbee（唯一用**无市值闸**筛子的研究，**也正是 09-17 那轮半字母表重报漏掉的那一份**）：
+  「过闸的票中位连零都没到」→ 干净人口上 **+0.21% / +0.54%**；「4% 突破跑输 SPY 0.45%」→ **−0.03% / −0.00%**。
+- **我 09-17 说错的一句**：`vol_up_gainers` 包含度塌陷我读成「两张单子长度不对称」。只对一半——涨的**全是预设按定义收不了的小票**，
+  核心部分反而从 42 缩到 27；**86.5% 是人口**（我独立复算，agent 算 85.1%）。
+- **十个预设里只有 `Weekly Momentum 97` 没有市值下限**（我核过 `screener-presets.json`），所以那晚只有它换了人口，并排九个没换，页面无一处说明。
+- **`stockbee/open_questions.md` 的 S1 建议不该执行**（它会改 Andy 每天看到的名字）：它引的「今天漏 47/55」里 **45 只是 `<$1B`**——在 06-25 那个人口下漏掉的是 **2 只**。
+- `amplitude` 两句副结论已在原文追更正：「方向 ρ≈0」是两段相反的东西拼出来的零；「期望值驼峰、两端都负」只在断点之后成立（断点前 Q5 期望 **+1.16%**、单调上升、没有驼峰）。
+
+**闸**：`pipeline/tools/audit_universe_population.py`（看人口不看行数，P1 占比 / P2 市值中位）——
+真实历史 139 场里**首个违规正是 2026-06-26**，此前全绿。它**没有任何形式在跑**，已按规矩记进 `audit_wiring` 的 `KNOWN_UNWIRED` 并写明接线位置。
+
+**自我更正两条**（免得被引用错）：① tradeable 闸是**市值 ≥$1B**（`themes/__init__.py:31`）不是我先写的 $300M，所以「watchlist 实测 `<$1B` 0.0%」**是按定义如此**、不算独立证据；
+② 家数分位那节的「+39 分位点」不是误差幅度——对免疫规模的比率做同样的除法也掉 32–37 点，本轮只能给方向。
+
+🔔 [09-18] → DATA ALEX · 数据管道: 06-26 人口断点的**研究层后果**（续本页 [09-18] 那两节）：①`scanner_event_study` 的「同日随机」基线在断点后混进三千只小票，而这批票 20 日前瞻中位比核心低 4–7pp，**断点后每个「超额」系统性虚高 1.5–2.5pp**；②Stockbee 两条结论在干净人口上翻号（「过闸中位连零都没到」→ +0.21%/+0.54%；「4% 突破跑输 SPY 0.45%」→ −0.03%/−0.00%）；③`stockbee/open_questions.md` 的 S1 建议（改 EP 阈值，会改 Andy 每天看到的名字）建在断点人口上，「漏 47/55」里 45 只是 <$1B，宇宙修回前不该执行。另：`delayed_ep_log` 是四个派生归档里唯一 31.8% 小票的，因为 `episodic_pivot.py:33` 的 `_MIN_MARKET_CAP = 5e8` 比 `watchlist.py:38` 的 `1e9` 低一倍。判定表在 `data/research/breadth_universe_break_2026-09-18/README.md` 第十一节，事故档在 `data/reference/incidents/2026-09-18_...`。研究档那侧的补记归我，本条只报你边界里的三件。 · pending
+🔔 [09-18] → UI Claire · Dashboard 前端: 补一条与前一条同源的：`frontend/public/data/screener-presets.json` 里**十个预设只有 `Weekly Momentum 97` 没有 `marketCapMin`**（另外九个都是 `1.0`）。后果是 06-26 宇宙换人口那晚，**Screener 页上只有这一个预设跟着换了人口**（断点后命中 63.5% 是市值 $10 亿以下的小票，并排九个是 0.0%），而页面没有任何地方说这两类预设的池子不一样。要不要给它补一道闸、或在页面上标出差异，归你和 DATA ALEX 判；本条只报事实。依据同上研究档第十一节。 · pending
