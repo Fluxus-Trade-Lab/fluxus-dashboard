@@ -140,7 +140,7 @@ payload 里**已经带着正确的线**：`verdict.vote_detail` 里 `key == 'thr
 
 ## 九、给数据端的一句建议（只建议，不越界）
 
-`data/output/run_ledger.jsonl` 里每晚都有 `tradeable`（cap ≥ $300M 且日成交额 ≥ $2M），
+`data/output/run_ledger.jsonl` 里每晚都有 `tradeable`（市值 ≥$1B 且日成交额 ≥$2M，`pipeline/themes/__init__.py:31-32`），
 实测 08-10 前后都稳定在 **2,445–2,562**——**它没有跨过任何断点**。
 所以「钉在固定质量层上算宽度」这条路，仓库里已经有现成的分母了；
 `record_high_pct` / `high_low_index`（08-28 起）也是比值型、对断点免疫的现成口径。
