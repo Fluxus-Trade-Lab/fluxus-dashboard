@@ -49,6 +49,7 @@ REPO = Path(__file__).resolve().parents[2]
 WORKFLOW = REPO / ".github" / "workflows" / "daily-data-update.yml"
 BACKSTOP_CRON = "30 1 * * 2-6"
 MAIN_CRON = "20 20 * * 1-5"
+MAIN_CRON_EST = "20 21 * * 1-5"   # winter twin, see test_schedule_dst.py
 SCHEDULE_EXPR = "${{ github.event.schedule }}"
 EVENT_EXPR = "${{ github.event_name }}"
 
@@ -277,7 +278,7 @@ def test_workflow_carries_the_crons_this_file_tests():
     and nothing noticed, because the old gate ran on anything that was not the
     backstop. Now the constants must match the file."""
     crons = re.findall(r"^\s*-\s*cron:\s*'([^']+)'", WORKFLOW.read_text(encoding="utf-8"), re.M)
-    assert sorted(crons) == sorted([MAIN_CRON, BACKSTOP_CRON]), crons
+    assert sorted(crons) == sorted([MAIN_CRON, MAIN_CRON_EST, BACKSTOP_CRON]), crons
 
 
 def test_dispatch_always_runs_even_when_landed(tmp_path, gnu_date_path):

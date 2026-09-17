@@ -17,7 +17,8 @@ from pipeline.tools import audit_schedule_windows as S
 
 MAIN = "20 20 * * 1-5"
 BACKSTOP = "30 1 * * 2-6"
-CRONS = [MAIN, BACKSTOP]
+CRONS = [MAIN, BACKSTOP]          # the schedule of the fixture week (2026-09-10..12)
+MAIN_EST = "20 21 * * 1-5"        # winter twin added 2026-09-17 (test_schedule_dst.py)
 REPO = Path(__file__).resolve().parents[2]
 
 REAL_RUNS = [
@@ -36,7 +37,7 @@ def utc(s):
 
 def test_reads_the_crons_the_workflow_actually_has():
     text = (REPO / S.WORKFLOW).read_text(encoding="utf-8")
-    assert S.parse_crons(text) == CRONS
+    assert S.parse_crons(text) == [MAIN, MAIN_EST, BACKSTOP]
 
 
 def test_commented_cron_is_not_a_schedule():
@@ -94,8 +95,11 @@ def test_positive_control_a_real_drop_goes_red(tmp_path, capsys):
     runs = [r for r in REAL_RUNS if r["databaseId"] != 34654994500]
     f = tmp_path / "runs.json"
     f.write_text(json.dumps(runs))
-    rc = S.main(["--repo", str(REPO), "--runs-json", str(f), "--since", SINCE,
-                 "--now", "2026-09-12T10:00:00Z"])
+    # The workflow as it was that week (the winter twin did not exist yet).
+    wf = tmp_path / "wf.yml"
+    wf.write_text("on:\n  schedule:\n" + "".join(f"    - cron: '{c}'\n" for c in CRONS))
+    rc = S.main(["--repo", str(tmp_path), "--workflow", "wf.yml", "--runs-json", str(f),
+                 "--since", SINCE, "--now", "2026-09-12T10:00:00Z"])
     out = capsys.readouterr().out
     assert rc == 1
     assert "DROPPED  2026-09-11T20:20:00Z" in out
