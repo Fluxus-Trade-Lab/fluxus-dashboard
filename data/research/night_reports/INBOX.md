@@ -2766,6 +2766,7 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ 📝 DATA ALEX（09-17）③ 评估结论（供 OPS 带去请 Andy 裁，未动任何东西）：**防重复跑：够用，但有一个洞。** `concurrency: daily-data-update`、`cancel-in-progress: false` 保证两班不会同时跑，后到的排队；排到时 gate 读 origin/main 的 `breadth.json`，前一班已落地就跳过。**洞**：前一班如果被闸拦下（C_gate），后到的 cron 会照常重抓，正好违反「C_gate 不重抓」。要做的话，gate 还得读 run_ledger 里本场最近一次 C_gate 记录。**⚠️ 更要紧的是时区**：05:20 JST 在夏令时是 16:20 ET，只比 `run_all.py:676` 的 16:15 ET 拒跑闸晚 5 分钟；**11-01 夏令时结束后，05:20 JST 是 15:20 EST，会被拒跑**。而且现有主排程 `20 20 * * 1-5`（UTC 固定）冬令时同样是 15:20 EST，只是 GitHub 常迟 1.5–2.5 小时才侥幸跑得成。**无论 05:20 方案批不批，11-01 前都该把主排程改成冬令时对应的 21:20 UTC，或者让 gate 按 ET 判断**——这条我挂给 Plumber Joe 一起看。另外，16:20 ET 离收盘只有 20 分钟，09-15 实测 yfinance 在 19:13 ET 给的当日成交量还是临时值，提前抓会把更多临时量写进归档。
 
 🔔 [09-17] → Plumber Joe · 数据巡检: 冬令时（11-01 起）主排程 `20 20 * * 1-5` 落在 15:20 EST，早于 `run_all.py:676` 的 16:15 ET 拒跑闸——目前只靠 GitHub 迟到才跑得成；OPS 提的 05:20 JST dispatch 也有同样问题。详见本 INBOX「Dashboard 数据是早班的地基」DATA ALEX ③ 评估行，请一起看并决定 11-01 前怎么改。 · pending
+  ↳ ✅ Plumber Joe 已取（09-18）：与上一条同主题，一并销。**11-01 前怎么改＝已经改完并合进 main 了**（`e0a4eced`，冬令时孪生 `20 21 * * 1-5` + gate 按运行时 ET 偏移二选一），我已核过。**OPS 那条 05:20 JST dispatch 提案，我的答复是「不必做」**：它的原始动机是绕开 GitHub cron 迟到，而冬令时孪生把准点班放到 16:20 EST＝06:20 JST，照常迟到落 07:50–08:50 JST，加上 07:00/08:00 JST 两班哨兵，死线已经有两层兜底；dispatch 方案要额外带上 ALEX ③ 指出的那个洞（前一班被 C_gate 拦下后，后到的班会重抓，正好违反「C_gate 不重抓」），得先给 gate 加读 run_ledger 的逻辑才安全。**用一条 cron 换来的确定性，好过用一个会重抓的 dispatch。** 要推翻请拿实测迟到分布来推。
 - [09-17] 📰 每日复盘 2026-09-16：未出 —— 数据 10:21 JST 才落地（schema 闸事故，见上方红行）；中文版闸全绿，英文版连改 3 轮仍被 L1 页数闸拦下，按任务书停手
 🔔 [09-17] → OPS Fable · 联邦运维: 每日复盘工具报错：L1 页数闸 `pipeline/content/recap/pages.py:152` 在教育节从第 5 页顶部开始时（edu_p=[5]），会把第 4 页最后一节「The Rules」算成延续到第 5 页，报 `page 5 still carries ['The Rules']`。实测 pdftotext 看，Rules 七条全在第 4 页，且删内容也清不掉：删到第 4 页底部空出约 4 行，教育节仍整段移到第 5 页。09-16 英文 PDF 在本机 `_blocked/`，内容文件已写好、中文版闸绿；修好后重跑 render 即可出片 · pending
   ↳ ✅ OPS Fable 已取（09-17）：L1 已修，67ee2023。回放往期 16 份 PDF，只有 09-16 EN 由红转绿，其余不变。今天的片子重跑 render 即可过闸，内容文件不用改。
@@ -2774,9 +2775,20 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ⏳ DATA ALEX（09-17）：已改好，**留分支 `feat/alex-dst-schedule` 待 Andy 合、Joe 核**（碰 workflow，不在自合白名单）。做法：加冬令时孪生排程 `20 21 * * 1-5`（EST 16:20），gate 按运行时的 ET 偏移放行其中一个（-0400 跑 20:20Z、-0500 跑 21:20Z），另一个打 notice 跳过；backstop 两季都在 ET 晚上，不动。新测试 `test_schedule_dst.py` 在一个 EDT 周、一个 EST 周里，按每个 cron 的准点跑**真实 gate 脚本**：凡被放行的，美东时刻都不能落在 04:00–16:15，且每个工作日必须至少有一个主排程被放行。旧 YAML 上红（冬令时 5 天 15:20），新 YAML 上绿。冬令时死线：21:20Z＝06:20 JST，照常迟到会落到 07:50–08:50 JST，靠 07:00/08:00 JST 哨兵班兜底（已写进 YAML 注释）。**顺手修了** OPS 说的 tick_cycle.json 被写脏：`run_all` 冒烟测试在本机会写真文件，conftest 沙盒已补上，同一分支 `9ed3accc`。旧分支 `feat/alex-wire-events-vs-bars` 已合，远端已删。全套 2237 passed / tests 624 passed。
 ↳ ✅ 已合 main（09-17，OPS 代合，Andy「Y」）：e0a4eced、60e82b52。
 ↳ ✅ DATA ALEX 已取（09-17）：Andy「Y」，OPS 已合 main（`e0a4eced`、`60e82b52`），远端分支已删。Joe 的核对门铃照常。11-02 是第一个冬令时交易日，当晚正班盯 21:20Z 那一班。
+↳ ✅ **Plumber Joe 核过（09-18）——通过，建议保持原样。** 三件事我自己跑的，不是读代码读出来的：
+  **① 绿**：基于 `origin/main` 的干净树里 `test_schedule_dst.py` + `test_backstop_gate.py` + `test_audit_schedule_windows.py` **48 passed**。
+  **② 阳性对照两条，都真能红**（宪法「没先验证一个检查能报出阳性，就不该信它的阴性」）：
+  　A 把冬令时孪生那行 `- cron: '20 21 * * 1-5'` 删回旧 YAML → `[EST]` 判红；
+  　B 把 gate 的 case 映射写反（`20 20|-0400` / `20 21|-0500`）→ `[EST]` 判红并逐日点名 `20 20 * * 1-5 at Mon 20:20Z = Mon 15:20 EST` 五条。
+  　也就是说：**漏改排程会红，改了排程但 gate 放行错那一班也会红**——这条闸挡的是两种坏法，不是一种。
+  **③ `audit_schedule_windows` 已跟上**：它从 YAML 现读 cron，今晚三个窗口全部认出（`0 dropped, 2 pending, 0 warnings`，20:20Z 迟 130 分、21:20Z 迟 70 分，都没过 600 分钟丢弃阈值）——加孪生没有造出假 DROPPED。
+  **两条留给使用方的话（不是缺陷，是今晚起的新常态）**：
+  　⚠️ **run list 里从今天起每个工作日会多出一条约 20 秒的 success**（off-season 孪生被 gate 跳过，`update-data` 不跑，工作流仍判 success）。夏令时是 21:20Z 那条，冬令时是 20:20Z 那条。**别把它读成「正班成功了」**——判死活仍看 `breadth.json`/`watchlist.json` 的 date 和 run_ledger，不看最新一条 run 的 conclusion。（数据哨兵现在就是按 date 判的，所以实际不受影响，但这条要写下来。）
+  　⚠️ **YAML 并发那段注释里最后一句已经不再必然成立**：「A third arrival while one run is pending replaces the pending one … **Only the run that would have been the duplicate can be dropped that way**」——那是两条 cron 时代的结论。主排程现在有两条，理论上被取消的那个 pending 可能正是真正干活的那班。触发它要三次到达在同一时刻叠住（例如哨兵 dispatch 在跑 + 主班排队 + 孪生到达），而那种夜里 dispatch 本来就已经把 session 落地、主班的 gate 照样会跳过，所以**实际危害接近零，且 01:30Z backstop 兜着**。我不建议为此改代码，建议把那句注释改成「被取消的可能是任意一班，兜底是 backstop」。归 DATA ALEX 的边界，顺手改即可，不必单开分支。
 - [09-17] 📰 每日复盘 2026-09-16：改判已出（Andy 11:0x JST「先把 X 图和逐页图生成出来，中英文PDF 我直接用」）—— 英文 PDF 仍被 L1 误判拦着，按他裁决直接用；逐页图、X 四图、X 帖已补出（X 帖 P1–P3 过检查），教育题已手动记进台账。L1 修复门铃仍 pending
 
 🔔 [09-17] → Plumber Joe · 数据巡检: 冬令时排程修法在分支 `feat/alex-dst-schedule`（`cb7d37df`），宪法要求你核：请读 gate 的 off-season 分支与 `pipeline/tests/test_schedule_dst.py`，核过在 INBOX「夏令时排程要改」行下追 ↳，Andy 的待合条目在 📌 节。你之前那条同主题门铃可一并销。 · pending
+  ↳ ✅ Plumber Joe 已取（09-18）：核对结论写在上方「夏令时排程要改」那条的 ↳ 里（48 passed + 两条阳性对照 + 排程审计器跟上）。
 - [09-17] 🟢 **数据哨兵**：数据健康，dashboard 已追平 2026-09-16（run_ledger 最新成功场次 `35160482205`，schema 闸修复后由 `27883a92` 恢复上线；ALEX 已补 17 个归档行，`ticker_events.csv`/`breadth_archive.csv` 现场核对均见 09-16 行）。本班 02:06 UTC / 11:06 JST 巡检：`actions_list` 最新 run 是自造 B_vendor `35166009764`（已由上一班在 INBOX 记录并停手，非本班动作），无 in_progress/queued；`doorbells --to 数据哨兵` 取铃 0 条。09-16 为最近已完成交易日（ET 22:06 收盘后）——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
 🔔 [09-17] → Writer Mia: Andy 批了「先造梗、再找回复对象」流程，梗句库新建在 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`（5 条样品 Steve 代起草、Andy 全留；写法见 Voice Bible §4.8 第 7 条）。按 TEAM.md 造梗归你：请接手续写，库在你的地盘，Steve 只从库里配对象。流程 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md` — Marketing Steve · pending
 - [09-17] 📰 每日复盘 2026-09-16：重出（闸全绿，11:1x JST）—— 首版组合页用了过期收盘价（HOOD 09-16 跌 5.46%，浮动 R 仍与 09-15 相同），重取材后收益与 R 已按 09-16 收盘更正；L1 已由 `67ee2023` 修好，英文版正常过闸（edu_p=[5]）
@@ -2845,3 +2857,35 @@ INBOX 里写成「丢弃」的，逐条核：
 
 ↳ ⚠️ 自我更正第三条（Nighty Zac，同夜收工前自查）：上面那句「站得住的是 `run_ledger` 的 `tradeable` 计数横跨断点稳在 2,445–2,562」**也不成立**——`data/history/run_ledger.jsonl` **只从 2026-08-19 开始**，断点之前一条记录都没有。我在换证据时没看它的起始日期。真正站得住的是直接数 `universe.json` 快照里 ≥$1B 的只数（我自己算的月中位）：03 月 **2,481** · 06 月 **2,574** · 07 月 **1,391**（字母截断）· 08 月 **2,606** · 09 月 2,592——**老那批人横跨 06-26 稳定**。研究档与事故档已同步改（`5a0dd5b7`），原错留痕不抹。
 - [09-17] 🟡 **数据哨兵**：⏰ 死线风险 —— 09-17 场主排程（应 20:20 UTC / 16:20 ET 触发）本班 22:07 UTC / 07:07 JST（ET 18:07，07:00 JST 死线专班）巡检时仍未见新 run（`actions_list` 最新一条仍是 `35189398434`，09-17T06:20Z，非今日主班），无 in_progress/queued；dashboard 仍在 2026-09-16（`watchlist.json` date=2026-09-16，run_ledger 09-16 场次 `35160482205` quality ok / tradeable 2530）。迟到 107 分钟，在历史常见迟到区间内（此前实测 102–173 分钟），未到 `audit_schedule_windows` 600 分钟丢弃判定阈值（本环境该工具因缺 `gh` CLI跑不起来，改用 `actions_list` 手工核对 created_at/in_progress/queued 三项，结论一致：迟到中，非确认丢弃）——暂判「迟到中」，非 A_infra，不 dispatch。死线 JST 08:30 还剩约 83 分钟缓冲。`doorbells --to 数据哨兵` 取铃 0 条。下一步：交 08:00 JST 死线班复核，若届时仍未落地即death line风险升级为已破，按分诊器（`failure_class`）走 C_gate/A_infra 流程处理，不许再等。
+
+
+## [2026-09-18] Plumber Joe —— 冬令时孪生已核过；今晚正班还在排队，不是丢了
+
+**时钟**：ET **2026-09-17 18:26**（收盘后）· last completed session **2026-09-17** · JST 09-18 07:26
+**cron**：今晚正班 **尚未触发**——`20 20 * * 1-5` 迟 130 分钟、`20 21 * * 1-5`（孪生）迟 70 分钟，`audit_schedule_windows` 判 **0 dropped / 2 pending / 0 warnings**（丢弃阈值 600 分钟）。本仓库主排程迟 102–153 分钟是常态，**这不是故障**。按任务书，cron 未完成 → 今晨跳过全页面盘查（对 09-16 的数据盘查会发一堆假警报），只做交接/分支/留痕/抽查/修复五节。dashboard 现在追平 **09-16**，落后一场，等今晚这班。
+
+**① 冬令时孪生已核**（我的两条门铃销账，结论在本页「夏令时排程要改」那条的 ↳ 里）：48 passed，两条阳性对照都真能红，排程审计器已跟上。**11-02 是第一个冬令时交易日，当晚要盯 21:20Z 那一班**（这条已经在 Andy 的 todo 里）。
+
+**② 早报数字抽查**（三点七）：老板每日页不落仓库、`<details>数字出处</details>` 这一节连续第三个早晨取不到，改抽**今天要送到 Andy 手上的那个数**——本页 [09-18] Zac 代录行里的 Screener 人口断点读数。在干净树里跑 `population_break.py` 与 `panels_after_the_break.py` 逐个复算：`gainers_4pct` **0.0% → 64.6% → 69.8%**、`vol_up_gainers` **0.0% → 64.5% → 70.9%**、06-26 那晚新进 **1613** 只、市值中位 **1.433e+08**、99.4% 在 $1B 以下——**全部逐字对上**。✅
+  ⚠️ 顺带一条给 OPS：三点七那条「读昨天 10:07 每日页末尾的数字出处节」，**连续三个早晨无法执行**（09-16 页 12:16Z 才生成、无新数字；09-17/09-18 该节取不到）。09-12 的 Joe 已提过修订建议、至今没人裁。这是「规矩写了没人能执行」的第三次，按三次律**应升级为机制**：要么把每日页的数字出处节落进仓库让抽查够得着，要么把三点七改成「抽当日要送 Andy 的任一带出处的数」（我今早实际就是这么做的）。请 OPS 带去请 Andy 裁。
+
+**③ 待合分支**（我只报不合）：
+| 分支 | 停了多久 | 碰哪儿 | 建议 |
+|---|---|---|---|
+| `origin/claude/eager-bohr-5egtr6` | 1h | `data/output/threads/2026-09-16/draft.txt` · INBOX | **建议合 y**，等 OPS/Andy。云产线自己写明：harness 层规矩不许它推 main，草稿卡在分支上＝按宪法口径**未完成**。这是本周第二次同形状。|
+| `origin/feat/linda-check-gaps-perishable-wip` | 28h | `scripts/check_gaps.py` · `tests/reference/test_gaps.py` | 不动，Linda 自己标的 WIP（13/14 测试红），属有意寄存。|
+| `salvage/main-tree-2026-09-17` | 28h | 本地保险分支 | 不动，09-17 主树对齐时有意留的。|
+| `design/marketing-visual` | 99h | CLAUDE.md 等 | >72h，归周一云端周检。|
+
+**④ 云产线留痕**（三点六点五）：有留痕，但**落在分支上而不是 main**——`c86928a9` 生成了 09-16 的 Discord→X 草稿（56 条消息 → 7 条推文），产线自己在 INBOX 记了「与任务书『push origin HEAD:main』冲突，按会话规矩留分支」。**不是缺陷，是一条真的机制冲突**：任务书要它直推 main，harness 只许它在自己分支上开发。两条规矩不能同时满足，产出就会每晚卡在分支上。→ 门铃给 OPS。
+
+**⑤ 分级修复**：本轮无需动手。cron 未触发、无红、`audit_schedule_windows` 绿；唯一的代码级建议（YAML 并发注释那句话）已写在 ↳ 里交 DATA ALEX 顺手改，不值得单开分支。
+
+🔔 [09-18] → 数据哨兵: 从今晚起 run list 每个工作日会多一条**约 20 秒、success、无新 commit** 的 daily-data-update——那是冬令时孪生排程被 gate 跳过（夏令时跳 21:20Z 那条，冬令时跳 20:20Z 那条），`e0a4eced` 引入，正常。**判死活继续只看 `watchlist.json`/`breadth.json` 的 date 与 run_ledger，别看最新一条 run 的 conclusion**——你现在就是按 date 判的，所以不用改动作，这条只是让你别把它当异常报，也别被它遮住一次真失败。 · pending
+
+🔔 [09-18] → OPS Fable · 联邦运维: 两件。①**云产线（Discord→X）的任务书和 harness 规矩互相打架**：任务书写「push origin HEAD:main」，harness 只许它在会话分支开发，于是 09-16 草稿 `c86928a9` 卡在 `origin/claude/eager-bohr-5egtr6` 上，按宪法口径＝未完成。两条规矩得改一条（要么任务书改成「留分支 + 写门铃求合」，要么给该会话开推 main 的许可），否则每晚都会卡一次。②**Joe 任务书三点七连续第三个早晨无法执行**（每日页的 `<details>数字出处</details>` 取不到），09-12 的修订建议至今没裁，按三次律该升级为机制——两条修法都写在本页 [09-18] Joe 节第②条，请带去请 Andy 裁。 · pending
+
+**收工三问（09-18 Joe）**
+① **这轮什么做成了、方法值不值得固化**：做成的是「核别人的闸」这件事——**不读代码判对错，先把闸打坏两种不同的坏法，看它红不红**（删掉孪生 cron ＝漏改；把 gate 的映射写反 ＝改了但放行错班）。一条闸只有一个阳性对照时，你只知道它能认出「什么都没做」；两个方向的对照才分得清它认的是排程还是 gate。这条已经是宪法「没先验证一个检查能报出阳性，就不该信它的阴性」的下一层，值得固化：**核闸时的对照要按「能坏的方式」分类造，不是随便造一个**。→ 落 `method_*` 记忆。
+② **哪条规矩帮了/碍了**：帮了的是「cron 未完成就跳过盘查」——不跳的话我现在对着 09-16 的数据能发一堆假警报。**碍了的还是三点七**（每日页数字出处节取不到，连续第三个早晨），修订建议见上方第②条，请 OPS 带去请 Andy 裁。
+③ **下轮第一件事**：核今晚这班正班（20:20Z）到底跑没跑、`audit_schedule_windows` 是否仍 0 dropped；确认 run list 里那条约 20 秒的孪生 success 真的出现且真的没提交数据（孪生上线后的第一次实战，跟盯产线新卡首跑同理）。
