@@ -2,6 +2,7 @@
 name: daily-recap
 description: 用我们自己的数据 + Andy 自己的话，生成每日市场复盘（Daily Market Recap，中英双语 PDF）。凡 Andy 提到 复盘/recap/briefing/DailyBriefing/市场总结/收盘总结/双语 PDF/Revere/YouTube transcript 对比/给会员的日报——即使他没说「做复盘」三个字、即使只是给了一个 YouTube 链接或让改 PDF 里的一处——都必须先读本 skill 再动手：里面有他亲定的三条法、四问、均线规则、截图规则与裁决记录，跳过任何一条都会重演已付过学费的错误。产出是给 Andy 审的底稿，判断句留白，机器永不代他下判断。
 when_to_use: 复盘、recap、briefing、market recap、每日市场、生成 PDF 底稿。不触发：盘中提醒、个股 tearsheet（有专门 skill）、Substack 周刊（另一条流程）。
+owner: ops
 ---
 
 # daily-recap — 你的数据认形态，Andy 的话下判断
@@ -189,3 +190,70 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **领涨落后（What Led/Lagged）**：note 里必须写出驱动的 ticker，不能只写板块名和百分比；只有真正无单票可指的整组状态变化行才允许没有 ticker
 - **只对下次生效**：09-14 已出的两版 PDF 不重出，此次改动是产线机制，不是内容勘误
 - 未做：没有加硬闸拦截「note 里零 ticker」——09-11 的合法样本里就有整组无 ticker 的行（如「元器件 / 通信设备」一行），硬闸会误杀；先靠这条记录和 schema 文档的书面要求执行，真出现第二次漏写再考虑机制化（三次律）
+
+---
+
+## 周模式（recap-weekly 并入，2026-09-18）
+
+周复盘出片班（归 ops 线）。用中文工作与汇报。时间盒 90 分钟。成品发会员（PDF）与 Substack（逐页图 + PDF 附件）。**周刊不发 X**（Andy 原话「周复盘不发X」）。**只出片，不发布。**
+
+### 第 0 步 · 时钟与幂等
+`date '+%Y-%m-%d %A %H:%M %Z'`；工作树里 `python3 -c "from pipeline.marketcal import last_completed_session as l; print(l())"` 得到最近完成交易日 D，期号 W = D 所在 ISO 周，格式 `YYYY-Www`（如 `2026-W38`）。
+若 `~/Documents/Trading/01_Market_Reports_Daily/<D 的 YYYY-MM>/<W>/pdf/Market_Recap_<W>_EN.pdf` 已存在 → 汇报「W 已出过」并收工。
+
+### 第 1 步 · 工作树（代码一律用 origin/main）
+```bash
+export WT="<scratchpad 绝对路径>/wt-recap-weekly"
+git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
+git -C /Users/taolezhu/Documents/AI-Trading-System worktree add --detach "$WT" origin/main
+test -d "$WT" && echo ok
+```
+python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，永不在共享主树改文件。
+
+### 第 2 步 · 取材
+```bash
+(cd "$WT" && python3 -m pipeline.content.recap.run fetch --week W)
+```
+- 叙事来源是周六美东上传的周末回顾视频（标题含 Weekend Review）。代码没挑中就在 Revere 频道 `https://www.youtube.com/channel/UCV27KlSTS2zAidGEbu0HcZA/videos` 里找该周六的周末回顾，用 `--video-id` 指定重跑。仍然没有 → 继续做，叙事由本周各期日刊内容与我方数据撑，汇报写明「无字幕版」。
+- GAS 偶发 404 属已知，代码会重试；凭据永不打印。
+
+### 第 3 步 · 必读（每次读）
+1. 本 skill 全文，尤其裁决记录（含「周五规格」与 2026-09-13 各条）
+2. `~/Downloads/Daily_Recap_Workflow_Spec.md`
+3. `$WT/pipeline/content/recap/CONTENT_SCHEMA.md`（周刊字段：`weekly_k_names`、`weekly_k_line`；**不写 `x_posts`**）
+4. 中文：`$WT/.claude/skills/fable-voice/SKILL.md` + `~/Desktop/中文表达训练/01-风格卡/风格卡-日用版.md` + `~/Desktop/中文表达训练/00-说明书/教练说明书.md` 第二、三节
+5. 本周各期日刊的 `content_EN.json` / `content_ZH.json`（在 `<YYYY-MM>/<YYYY-MM-DD>/pack/`）——周刊是**一周的总结**，不是把日刊拼起来
+6. 上一期周刊的内容文件（抄 labels）；教育台账 `~/Documents/Trading/01_Market_Reports_Daily/_ledger/edu_topics.jsonl`
+
+### 第 4 步 · 写 `<W>/pack/content_EN.json` 与 `content_ZH.json`
+口径同日刊（Andy 2026-09-13）：叙事以字幕为主、Discord 加强、我方数字为准、外部标 ◇；**不出现「Andy」、不用第一人称**；纪律 1–6 写成**周尺度**，第 7 条固定开头 + 本周读法；教育 A、B 都写全、`chosen: "A"`，**A 的 concept 不得与本周任何一期日刊的 A 相同**，也不得与台账近 20 个交易日或 spec 八个老题材重复；只用 R 与 %；中文是重写不是翻译。周线读数只引用 pack 里有的字段（`perf_1w`、`wk_ema10/20`、`three_weeks_tight`、`rs_0_1w`）。
+- **一周涨跌**写 `over the week (theme)` / `1-week` / 「本周」「一周」，**不写 `theme week` / `industry week` / `IBIT week` 这类缩写**（周刊最容易踩，W37 样张一次踩了 11 处）。
+- **「Grow」是视频专名，不出现。**
+
+### 第 5 步 · 过闸与出片
+```bash
+(cd "$WT" && python3 -m pipeline.content.recap.run check --week W)
+```
+红就改写，最多 3 轮；仍红 → 停手汇报。**绝不绕过闸。**
+```bash
+(cd "$WT" && ~/.venvs/fluxus-recap/bin/python -m pipeline.content.recap.run render --week W)
+(cd "$WT" && python3 -m pipeline.content.recap.run ledger-add --week W)
+```
+render 必须用 venv 的 python（真字号闸需要 pdfminer.six）。
+
+**版式定稿（2026-09-13 晚最终版）**：正文 10.5pt、表格 9.5pt，宽松行距（行距比 1.4–1.5）。**教育段允许跨页**，唯一底线是不许在句子/段落中间断页。**页数规则**：教育、组合更新之外的全部内容必须在前几页放完；组合更新独占最后一页；教育段收尾在哪一页由内容多少决定——周刊内容更多，正常会是 6 页，**不要为了凑某个固定页数压字号或删内容**。
+
+闸含：专名（含 Grow）、W1 一周缩写、版心截断、示意图重叠、**L1 页数结构**（教育/组合更新之外内容须在前 4 页、组合更新独占末页、断句底线）、**L2 真字号**（pdfminer 实读：正文 10.5±0.1pt、表格 ≥9.0pt——周刊的「逐日读数」表最容易撑宽页面触发 Chrome 整页缩印，红了不许缩字号，停手汇报是哪个元素超宽）。
+
+### 第 6 步 · 核对产出
+`<W>/pdf/` 中英 PDF（页数与教育是否溢出写进 `delivery.md`）· `img/EN`、`img/ZH`（数量 = 页数）· `delivery.md` · `preview.html`；**不应有 `x/`**。
+
+### 第 7 步 · INBOX 留痕（仓库公开：只写状态）
+直推 main 标准动作（临时树、只 add INBOX、删除行自检为空、冲突重放最多 3 轮、push 后核实、移除临时树），追一行：
+`- [MM-DD] 📰 周复盘 <W>：已出（中英 PDF · Substack 逐页图）· 闸全绿` 或 `…：未出 —— <一句原因>`
+
+### 红线
+不发任何消息 · 不发布到任何平台 · 字幕、材料包、PDF、图片、台账永不进 git · 不改 `pipeline/` 代码（工具报错就开一件任务给 ops：`taskboard.py new --owner ops --type skill_fix --title "周复盘工具报错 <一句>"` 并停手）· 不碰 Visual 线工作树 · 不 force、不 stash。
+
+### 最终回复（≤8 行）
+`周复盘 <W>：已出 / 未出（原因）` · PDF 路径与页数（教育是否溢出）· 正文实测字号 · 教育 A（B）题目 · `delivery.md` 里 ★ 句数 · 缺什么 · 耗时。

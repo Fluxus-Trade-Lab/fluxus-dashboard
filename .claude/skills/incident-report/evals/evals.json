@@ -1,0 +1,5 @@
+[
+  {"prompt": "昨晚那次归档自相矛盾，写个事故档留痕", "should_trigger": true, "skill": "incident-report"},
+  {"prompt": "这次闸报绿但根本没跑到那批测试，记一下怎么坏的、根因是什么", "should_trigger": true, "skill": "incident-report"},
+  {"prompt": "把 incidents 目录里 09-05 那篇的结论讲给我听", "should_trigger": false, "skill": "incident-report"}
+]

@@ -1,0 +1,5 @@
+[
+  {"prompt": "审一下 agent/alex/t_0912 这个分支，gate=reviewer", "should_trigger": true, "skill": "branch-review"},
+  {"prompt": "这条分支要合 main 之前你先按四问核一遍，给 PASS/FAIL", "should_trigger": true, "skill": "branch-review"},
+  {"prompt": "帮我把这个分支 rebase 到 origin/main 上再推", "should_trigger": false, "skill": "branch-review"}
+]

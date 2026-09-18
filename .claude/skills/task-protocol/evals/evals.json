@@ -1,0 +1,5 @@
+[
+  {"prompt": "以后每次改完数据都先跑一遍 audit_archives 再提交", "should_trigger": true, "skill": "task-protocol"},
+  {"prompt": "我现在该干什么？", "should_trigger": true, "skill": "task-protocol"},
+  {"prompt": "把 rotation 那张图的纵轴改成定死的量程", "should_trigger": false, "skill": "task-protocol"}
+]

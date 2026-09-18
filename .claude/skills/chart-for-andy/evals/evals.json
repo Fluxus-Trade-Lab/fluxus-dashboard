@@ -1,0 +1,5 @@
+[
+  {"prompt": "给 Andy 画一张主题轮动的卡片，数据在 rotation_baskets.csv", "should_trigger": true, "skill": "chart-for-andy"},
+  {"prompt": "这张图他说颜色太像了，字也太小，改一版给他看", "should_trigger": true, "skill": "chart-for-andy"},
+  {"prompt": "rotation_baskets.csv 里 RS 0-2w 这一列是怎么算出来的？", "should_trigger": false, "skill": "chart-for-andy"}
+]

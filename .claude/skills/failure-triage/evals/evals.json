@@ -1,0 +1,5 @@
+[
+  {"prompt": "dashboard 停在 09-16 了，daily-data-update 昨晚那班红的，看一下什么情况", "should_trigger": true, "skill": "failure-triage"},
+  {"prompt": "现在 JST 07:40，最近完成交易日的数据还没落 main，cron 也没有 run 在飞", "should_trigger": true, "skill": "failure-triage"},
+  {"prompt": "帮我把 breadth.json 里的 T2108 读数画成一张图", "should_trigger": false, "skill": "failure-triage"}
+]
