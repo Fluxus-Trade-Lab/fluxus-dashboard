@@ -14,6 +14,8 @@
  * 300+ days on his Market Monitor count (volume legs included). Reading the
  * vote means the card changes the night the engine does, and never argues.
  */
+import { orig } from './origCols'
+
 const VOTE_WORD = { bull: 'bull', bear: 'bear', neutral: 'neutral' }
 
 export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
@@ -26,6 +28,14 @@ export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
   const sbUp = lastRow?.up_4pct_stockbee, sbDown = lastRow?.down_4pct_stockbee
   const hasSb = Number.isFinite(sbUp) && Number.isFinite(sbDown)
   const up = hasSb ? sbUp : mm.up_4pct, down = hasSb ? sbDown : mm.down_4pct
+  // Ratio and quarter tiles: the columns the engine votes on (Stockbee's own
+  // scans). Where tonight's archive has not grown them yet, the old count
+  // prints and the label says "old count" — it is not what voted.
+  const now = lastRow ?? mm
+  const r5 = orig(now, 'ratio_5d'), r10 = orig(now, 'ratio_10d')
+  const qu = orig(now, 'up_25pct_qtr'), qd = orig(now, 'down_25pct_qtr')
+  const tag = (a, b) => (!a.old && !b.old ? ' (Stockbee)' : a.old && b.old ? ' (old count)' : ' (part old count)')
+  const f2 = (x) => (x.v == null ? '—' : x.v.toFixed(2))
   const churn = (verdict.notes ?? []).some((n) => /^Churn\/volatile/.test(n))
   const tDetail = verdict.vote_detail?.find((d) => d.key === 'thrust')
   const thrustLabel = tDetail && tDetail.measurable === false ? 'not measured'
@@ -54,16 +64,16 @@ export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
           pct={ctx.down_4pct != null ? `down-4% ${ctx.down_4pct}th pctile` : null}
         />
         <Tile
-          label="5-day / 10-day ratio"
-          value={`${mm.ratio_5d?.toFixed(2) ?? '—'} / ${mm.ratio_10d?.toFixed(2) ?? '—'}`}
+          label={`5-day / 10-day ratio${tag(r5, r10)}`}
+          value={`${f2(r5)} / ${f2(r10)}`}
           note={votes.ratio_5d && votes.ratio_10d
             ? (votes.ratio_5d === votes.ratio_10d ? `both vote ${VOTE_WORD[votes.ratio_5d]}` : `5D ${VOTE_WORD[votes.ratio_5d]} · 10D ${VOTE_WORD[votes.ratio_10d]}`)
             : '—'}
           pct={ctx.ratio_5d != null ? `5D ${ctx.ratio_5d}th pctile` : null}
         />
         <Tile
-          label="Quarterly breadth (25%+)"
-          value={`${mm.up_25pct_qtr ?? '—'} / ${mm.down_25pct_qtr ?? '—'}`}
+          label={`Quarterly breadth (25%+)${tag(qu, qd)}`}
+          value={`${qu.v ?? '—'} / ${qd.v ?? '—'}`}
           note={votes.qtr_spread ? `votes ${VOTE_WORD[votes.qtr_spread]}` : '—'}
           pct={ctx.qtr_spread != null ? `spread ${ctx.qtr_spread}th pctile` : null}
         />

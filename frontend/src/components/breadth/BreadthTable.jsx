@@ -1,3 +1,5 @@
+import { orig } from './origCols'
+
 /**
  * The archive — and, since 2026-09-11, the only place today's raw counts are
  * printed. Market monitor (15 tiles) and Classic breadth (9 tiles) were this
@@ -26,6 +28,11 @@ export default function BreadthTable({ data }) {
     <div className="bg-[var(--color-bg)] rounded-2xl overflow-hidden">
       {/* one scroll box for both axes, so the header and today's row can stick
           while the history scrolls under them */}
+      <p className="px-3 pt-2 pb-1 m-0 text-[11px] text-[var(--color-text-muted)]">
+        4%, ratio, 25%/qtr, month and NH/NL columns print Stockbee's own scans (NH/NL: common stocks).
+        <span className="italic"> Grey italic</span> = the older count, shown where the author's column
+        does not exist yet; it is never tinted and no vote reads it.
+      </p>
       <div className="overflow-auto max-h-[460px]">
         <table className="w-full text-[13px] border-separate border-spacing-0">
           <thead className="sticky top-0 z-20">
@@ -69,17 +76,17 @@ export default function BreadthTable({ data }) {
                 }`}
               >
                 <Td className="text-[var(--color-text-secondary)] whitespace-nowrap">{fmtDate(row.date)}</Td>
-                <Td>{row.up_4pct}</Td>
-                <Td>{row.down_4pct}</Td>
-                <Td className={ratioColor(row.ratio_5d, i === 0, ENGINE_LINES.ratio5)}>{row.ratio_5d?.toFixed(2)}</Td>
-                <Td className={ratioColor(row.ratio_10d, i === 0, ENGINE_LINES.ratio10)}>{row.ratio_10d?.toFixed(2)}</Td>
+                <OTd row={row} k="up_4pct" />
+                <OTd row={row} k="down_4pct" />
+                <OTd row={row} k="ratio_5d" fmt={(v) => v.toFixed(2)} tone={(v) => ratioColor(v, i === 0, ENGINE_LINES.ratio5)} />
+                <OTd row={row} k="ratio_10d" fmt={(v) => v.toFixed(2)} tone={(v) => ratioColor(v, i === 0, ENGINE_LINES.ratio10)} />
                 <TdSep />
-                <Td>{row.up_25pct_qtr}</Td>
-                <Td>{row.down_25pct_qtr}</Td>
-                <Td>{row.up_25pct_month}</Td>
-                <Td>{row.down_25pct_month}</Td>
-                <Td>{row.up_50pct_month}</Td>
-                <Td>{row.down_50pct_month}</Td>
+                <OTd row={row} k="up_25pct_qtr" />
+                <OTd row={row} k="down_25pct_qtr" />
+                <OTd row={row} k="up_25pct_month" />
+                <OTd row={row} k="down_25pct_month" />
+                <OTd row={row} k="up_50pct_month" />
+                <OTd row={row} k="down_50pct_month" />
                 <TdSep />
                 <Td className={t2108Color(row.t2108, i === 0)}>{row.t2108?.toFixed(1)}</Td>
                 <Td className={pct200Color(row.pct_above_200sma, i === 0)}>{row.pct_above_200sma?.toFixed(1)}</Td>
@@ -88,8 +95,8 @@ export default function BreadthTable({ data }) {
                 <TdSep />
                 <Td>{row.advances}</Td>
                 <Td>{row.declines}</Td>
-                <Td>{row.new_highs}</Td>
-                <Td>{row.new_lows}</Td>
+                <OTd row={row} k="new_highs" />
+                <OTd row={row} k="new_lows" />
                 <Td className={mcColor(row.mcclellan_osc, i === 0)}>{row.mcclellan_osc?.toFixed(1)}</Td>
                 <Td>{row.ad_line?.toLocaleString()}</Td>
                 <TdSep />
@@ -126,6 +133,20 @@ function Td({ children, className = '' }) {
       {children ?? '\u2014'}
     </td>
   )
+}
+
+/** A count with an author-definition column: that value, or the old one greyed. */
+function OTd({ row, k, fmt = (v) => v, tone }) {
+  const { v, old } = orig(row, k)
+  if (v == null) return <Td />
+  if (old) {
+    return (
+      <Td className="italic text-[var(--color-text-muted)] font-normal">
+        <span title="older count — the author's column starts later">{fmt(v)}</span>
+      </Td>
+    )
+  }
+  return <Td className={tone ? tone(v) : ''}>{fmt(v)}</Td>
 }
 
 function TdSep() {

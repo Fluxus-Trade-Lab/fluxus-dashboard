@@ -10,7 +10,6 @@ const FILES = [
   'vol_up_gainers',
   'ema21_watch',
   'healthy_charts',
-  'episodic_pivot',
   'vcp',
   'stockbee_ratio',
   'breadth',
@@ -32,6 +31,18 @@ export function useMarketData() {
         })
       )
       const obj = Object.fromEntries(results)
+
+      // The two EP screeners (split by author 2026-09-18, replacing the retired
+      // episodic_pivot.json). Optional: a missing file is "not arrived" (null),
+      // never a reason to fail the whole page.
+      for (const name of ['ep_stockbee', 'ep_qullamaggie']) {
+        try {
+          const r = await fetch(`${BASE}/${name}.json`)
+          obj[name] = r.ok ? await r.json() : null
+        } catch {
+          obj[name] = null
+        }
+      }
 
       // market_health is optional — tolerate absence (pipeline may not have shipped it yet)
       try {

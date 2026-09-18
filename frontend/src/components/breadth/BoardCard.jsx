@@ -1,6 +1,7 @@
 import { isWeekend } from './session'
 import Spark from './Spark'
 import Figures from './Figures'
+import { ORIG_COLS, origSeries } from './origCols'
 
 /**
  * Board — the nine-condition ladder, one card.
@@ -32,17 +33,22 @@ const HATCH =
  *  value — the down-share the evidence sentence itself states in words — and
  *  it is computed with the exact formula state_board.py uses, not a proxy. */
 const SPARK = {
+  // Same columns state_board.py reads since 2026-09-18 (Stockbee's own scans,
+  // common-stock NH/NL). Only days old, so these sparks start short and grow;
+  // they never fall back to the old counts the row no longer votes on.
   damage: (rows) => rows.map((r) => {
-    const qu = r.up_25pct_qtr, qd = r.down_25pct_qtr
+    const qu = r[ORIG_COLS.up_25pct_qtr], qd = r[ORIG_COLS.down_25pct_qtr]
     return (qu == null || qd == null || qu + qd === 0) ? null : (100 * qd) / (qu + qd)
   }),
   'selling pressure': (rows) => rows.map((r) => r.down_4pct ?? null),
   breadth: (rows) => rows.map((r) => r.pct_above_20sma ?? null),
   trend: (rows) => rows.map((r) => r.pct_above_200sma ?? null),
-  thrust: (rows) => rows.map((r) => r.up_4pct ?? null),
-  extremes: (rows) => rows.map((r) => (
-    r.new_highs == null || r.new_lows == null ? null : r.new_highs - r.new_lows)),
-  confirmation: (rows) => rows.map((r) => r.ratio_5d ?? null),
+  thrust: (rows) => origSeries(rows, 'up_4pct'),
+  extremes: (rows) => rows.map((r) => {
+    const h = r[ORIG_COLS.new_highs], l = r[ORIG_COLS.new_lows]
+    return h == null || l == null ? null : h - l
+  }),
+  confirmation: (rows) => origSeries(rows, 'ratio_5d'),
 }
 const SPARK_WINDOW = 60
 

@@ -19,7 +19,8 @@ export const SCAN_DEFS = [
   { key: 'healthy_charts', label: 'Healthy charts', container: 'rs_groups' },
   { key: 'ema21_watch',    label: 'EMA21',          container: 'rs_groups' },
   { key: 'vcp',            label: 'VCP',            container: 'results' },
-  { key: 'episodic_pivot', label: 'EP',             container: 'tickers' },
+  { key: 'ep_stockbee',    label: 'EP · Stockbee',  container: 'tickers' },
+  { key: 'ep_qullamaggie', label: 'EP · Qullamaggie', container: 'tickers' },
   { key: 'gainers_4pct',   label: '4% gainers',     container: 'tickers' },
   { key: 'vol_up_gainers', label: 'Vol-up',         container: 'tickers' },
 ]

@@ -218,7 +218,7 @@ describe('deleted content is back, in the folds', () => {
   it('summary tiles: the four readings in words, with percentiles', () => {
     renderPage()
     fireEvent.click(screen.getByText('Summary tiles').closest('button'))
-    for (const l of [/^Up 4% \/ Down 4%/, '5-day / 10-day ratio', 'Quarterly breadth (25%+)', 'T2108']) {
+    for (const l of [/^Up 4% \/ Down 4%/, /^5-day \/ 10-day ratio/, /^Quarterly breadth \(25%\+\)/, 'T2108']) {
       expect(screen.getAllByText(l).length).toBeGreaterThan(0)
     }
   })

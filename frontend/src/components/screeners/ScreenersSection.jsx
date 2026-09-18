@@ -9,9 +9,14 @@ export default function ScreenersSection({ data }) {
     <div className="flex flex-col gap-2">
       <StockbeeRatio data={data.stockbee_ratio} />
 
-      {data.episodic_pivot && (
-        <ScreenerSection title="Episodic Pivot" count={data.episodic_pivot.count}>
-          <EpisodicPivot data={data.episodic_pivot} />
+      {data.ep_stockbee && (
+        <ScreenerSection title="Episodic Pivot · Stockbee" count={data.ep_stockbee.count}>
+          <EpisodicPivot data={data.ep_stockbee} />
+        </ScreenerSection>
+      )}
+      {data.ep_qullamaggie && (
+        <ScreenerSection title="Episodic Pivot · Qullamaggie" count={data.ep_qullamaggie.count}>
+          <EpisodicPivot data={data.ep_qullamaggie} />
         </ScreenerSection>
       )}
     </div>
