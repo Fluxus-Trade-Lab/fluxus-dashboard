@@ -485,3 +485,5 @@
 - [2026-09-19] [steve] **数据缺晚，存档补过来——但窗口变短了**。regime_ledger 09-16 中断于 schema_snapshot 过期，RND Linda 用存档重建、验证通过。限制：rolling-window 字段（oas_rank252 等）基于截断序列，比 live 版短一个月的记忆。出处：`data/history/coverage_gaps.json › gaps[6]`
 
 - [09-19] [数据哨兵] 网络中断可视化：CONNECT 403 拦截五班确认，第六班恢复；班次门铃回执机制把隐形故障变成可追踪数据。 · [95887bea](../../commit/95887bea)
+
+- **[2026-09-19 · DATA ALEX · 踩坑故事]** 「300+」写死在代码里，宇宙缩放了它都没动。breadth_signals 的 reversal-watch 笔记原本是「look for back-to-back 300+ up-4% days」，前两处注释已在 fc6227e7 改成了读 thrust_count()，这一处还活在手打字面值里。参数真的变过：08-09 到 09-18 期间 universe-scaled，从 **559 只** 缩到 **634 只**，但这行文字仍是「300+」——硬编码的叙述会在它脚下那个量变化时悄悄说谎。修法：`n = thrust_count(row)` 前置，文字改成 f-string。**可发的一句：比公式错更隐蔽的，是注释用了一个迟早会过期的常数。** 出处：commit `6b42afd4` · 新测试 `test_oversold_note_reads_thrust_count_not_a_hardcoded_300`
