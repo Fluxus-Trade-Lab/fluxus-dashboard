@@ -30,7 +30,11 @@ import pandas as pd
 from pipeline.themes import MIN_MARKET_CAP
 
 GATED_SCREENERS = ('momentum_97', 'gainers_4pct', 'vol_up_gainers',
-                   'ema21_watch', 'healthy_charts')
+                   'ema21_watch', 'healthy_charts',
+                   # 2026-09-18: the two author EPs (Andy 「12 注册 EP Stockbee和 EP
+                   # Qullamaggie」). Neither author's recipe carries a cap; the floor is
+                   # the universe rule Andy set the same day, not part of their scans.
+                   'ep_stockbee', 'ep_qullamaggie')
 
 
 def cap_floor(universe: pd.DataFrame, floor: float = MIN_MARKET_CAP) -> pd.DataFrame:

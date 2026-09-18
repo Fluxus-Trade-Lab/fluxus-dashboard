@@ -68,6 +68,13 @@ CONFLUENCE_MIN = 4      # distinct weighted screeners on one date
 CONFLUENCE_BONUS = 2.0  # added per qualifying date
 
 
+# Screeners that are one signal seen by several recipes. Two authors' EP lists
+# (2026-09-18) firing on the same name is ONE repricing event: it scores once and
+# counts once toward confluence. The retired `episodic_pivot` belongs to the same
+# family so its last rows cannot stack with the new ones inside the window.
+FAMILY: Dict[str, str] = {'ep_stockbee': 'ep', 'ep_qullamaggie': 'ep', 'episodic_pivot': 'ep'}
+
+
 def compute_heat(events: pd.DataFrame, as_of: str,
                  window: int = HEAT_WINDOW) -> List[Dict[str, Any]]:
     """Rank tickers by weighted distinct-screener confluence. Pure, no clock."""
@@ -91,13 +98,17 @@ def compute_heat(events: pd.DataFrame, as_of: str,
     for ticker, grp in win.groupby('ticker', sort=True):
         screeners = []
         score = 0.0
+        fam = grp['screener'].map(lambda s: FAMILY.get(s, s))
+        for key, fsub in grp.groupby(fam, sort=True):
+            # a family scores once: the best of its members, hits counted by
+            # distinct session so two recipes on one day are one hit
+            best = max(WEIGHTS[n] for n in fsub['screener'].unique())
+            hits = fsub['date'].astype(str).nunique()
+            score += best * min(1 + REPEAT_FACTOR * (hits - 1), REPEAT_CAP)
         for name, sub in grp.groupby('screener', sort=True):
-            hits = len(sub)
-            weight = WEIGHTS[name]
-            score += weight * min(1 + REPEAT_FACTOR * (hits - 1), REPEAT_CAP)
-            screeners.append({'name': name, 'hits': int(hits),
+            screeners.append({'name': name, 'hits': int(len(sub)),
                               'last_date': str(sub['date'].max())})
-        by_day = grp.groupby(grp['date'].astype(str))['screener'].nunique()
+        by_day = grp.assign(_fam=fam).groupby(grp['date'].astype(str))['_fam'].nunique()
         conf_days = int((by_day >= CONFLUENCE_MIN).sum())
         score += CONFLUENCE_BONUS * conf_days
         first_seen, last_seen = str(grp['date'].min()), str(grp['date'].max())

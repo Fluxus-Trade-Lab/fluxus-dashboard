@@ -210,3 +210,18 @@ class TestSameDayConfluence:
         heat = compute_heat(_frame(rows), '2026-05-05')
         h = heat[0]
         assert h['confluence_days'] == 2
+
+
+def test_two_ep_authors_on_one_name_count_once():
+    """2026-09-18: EP split into ep_stockbee + ep_qullamaggie (both registered to be
+    compared later). One repricing event seen by two recipes is one signal, not two:
+    same score and same confluence as a single EP hit."""
+    import pandas as pd
+    from pipeline.screeners.ticker_heat import compute_heat
+    base = [{'date': '2026-09-17', 'ticker': 'AAA', 'screener': 'gainers_4pct', 'sector': 'Tech'}]
+    one = pd.DataFrame(base + [{'date': '2026-09-17', 'ticker': 'AAA', 'screener': 'ep_stockbee', 'sector': 'Tech'}])
+    two = pd.DataFrame(base + [{'date': '2026-09-17', 'ticker': 'AAA', 'screener': 'ep_stockbee', 'sector': 'Tech'},
+                               {'date': '2026-09-17', 'ticker': 'AAA', 'screener': 'ep_qullamaggie', 'sector': 'Tech'}])
+    h1, h2 = compute_heat(one, '2026-09-17')[0], compute_heat(two, '2026-09-17')[0]
+    assert h2['score'] == h1['score']
+    assert h2['confluence_days'] == h1['confluence_days']

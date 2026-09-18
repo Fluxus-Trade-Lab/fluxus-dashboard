@@ -71,8 +71,8 @@ export default function BreadthTable({ data }) {
                 <Td className="text-[var(--color-text-secondary)] whitespace-nowrap">{fmtDate(row.date)}</Td>
                 <Td>{row.up_4pct}</Td>
                 <Td>{row.down_4pct}</Td>
-                <Td className={ratioColor(row.ratio_5d, i === 0)}>{row.ratio_5d?.toFixed(2)}</Td>
-                <Td className={ratioColor(row.ratio_10d, i === 0)}>{row.ratio_10d?.toFixed(2)}</Td>
+                <Td className={ratioColor(row.ratio_5d, i === 0, ENGINE_LINES.ratio5)}>{row.ratio_5d?.toFixed(2)}</Td>
+                <Td className={ratioColor(row.ratio_10d, i === 0, ENGINE_LINES.ratio10)}>{row.ratio_10d?.toFixed(2)}</Td>
                 <TdSep />
                 <Td>{row.up_25pct_qtr}</Td>
                 <Td>{row.down_25pct_qtr}</Td>
@@ -164,15 +164,18 @@ function tint(level, solid) {
  * disagreed with the engine on 33 of 100 rows. Columns the engine has no rule
  * for (%>50, %>20) carry no tint. */
 export const ENGINE_LINES = {
-  ratio: { bull: 1.0, bear: 0.5 },
+  // 5-day: 1.0/0.5 (Stockbee gives no 5-day line; ours). 10-day: Stockbee 2010-05,
+  // "goes above 2 ... bullish breadth thrust", "below .5 ... bearish" -- strict.
+  ratio5: { bull: 1.0, bear: 0.5 },
+  ratio10: { bull: 2.0, bear: 0.5, strict: true },
   pct200: { bull: 50, bear: 30 },
   t2108: { strongLo: 60, weakHi: 40, oversold: 20, overbought: 80 },
 }
 
-function ratioColor(val, solid) {
+function ratioColor(val, solid, t) {
   if (val == null) return ''
-  const t = ENGINE_LINES.ratio
-  return tint(val >= t.bull ? 'high' : val < t.bear ? 'low' : 'mid', solid)
+  const bull = t.strict ? val > t.bull : val >= t.bull
+  return tint(bull ? 'high' : val < t.bear ? 'low' : 'mid', solid)
 }
 
 function pct200Color(val, solid) {

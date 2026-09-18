@@ -27,6 +27,13 @@ export function applyFilters(rows, filters, tickerSearch) {
     result = result.filter(r => r.avg_volume != null && r.avg_volume >= minVol)
   }
 
+  // Today's volume (Stockbee 9M: v>=8900000 is the session's own volume, not an
+  // average -- 2019-09-23). Filter value in millions, like vol50dMin.
+  if (filters.volumeMin) {
+    const minVol = filters.volumeMin * 1e6
+    result = result.filter(r => r.volume != null && r.volume >= minVol)
+  }
+
   // Exclude healthcare
   if (filters.excludeHealthcare) {
     result = result.filter(r => r.sector !== 'Healthcare')
@@ -103,6 +110,9 @@ export function applyFilters(rows, filters, tickerSearch) {
     // eighty-four days stale while every run reported success.
     ['ema21Atr', 'ema21_atr_dist'],
     ['sma50Atr', 'atr_from_sma50'],
+    // Alex's "-0.5 to 4 x ATR from the 50sma" is a plain price gap in ATRs
+    // ((close-SMA50)/ATR), not the B/A reading above -- 2026-09-18.
+    ['sma50AtrDist', 'sma50_atr_dist'],
   ]
   for (const [filterKey, dataKey] of atrRanges) {
     const f = filters[filterKey]

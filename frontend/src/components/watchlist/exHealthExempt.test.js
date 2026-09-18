@@ -26,12 +26,12 @@ describe('the healthcare view', () => {
   })
 
   it('does not apply to Episodic Pivot, where biotech is the main product', () => {
-    const panel = { key: 'episodic_pivot', measured: true, tickers: [bio, chip] }
+    const panel = { key: 'ep_stockbee', measured: true, tickers: [bio, chip] }
     expect(shown(panel, { exHealth: true }).map((r) => r.ticker)).toEqual(['MRNA', 'NVDA'])
   })
 
   it('leaves the exempt panel open to every other switch', () => {
-    const panel = { key: 'episodic_pivot', measured: true, tickers: [bio, { ...chip, top_3m: false }] }
+    const panel = { key: 'ep_stockbee', measured: true, tickers: [bio, { ...chip, top_3m: false }] }
     expect(shown(panel, { exHealth: true, pool3m: true }).map((r) => r.ticker)).toEqual(['MRNA'])
   })
 

@@ -801,11 +801,12 @@ def main():
         'ema21_watch': run_ema21_watch(listed),
         'healthy_charts': run_healthy_charts(listed),
         # Episodic Pivot, two authors side by side (Andy 2026-09-18: 「12 注册 EP
-        # Stockbee和 EP Qullamaggie 然后我们以后可以测试下」). Whole universe,
-        # no cap floor: neither published definition has one. They replace
-        # `episodic_pivot` (close +10% x rvol 3 x $500M -- no author's recipe).
-        'ep_stockbee': run_ep_stockbee(universe),
-        'ep_qullamaggie': run_ep_qullamaggie(universe),
+        # Stockbee和 EP Qullamaggie 然后我们以后可以测试下」). Each recipe is the
+        # author's; the $1B floor is the universe rule (「市值这个闸是要加上的」),
+        # the same one the five lists above run on. They replace `episodic_pivot`
+        # (close +10% x rvol 3 x $500M -- no author's recipe).
+        'ep_stockbee': run_ep_stockbee(listed),
+        'ep_qullamaggie': run_ep_qullamaggie(listed),
     }
 
     # 5. Stockbee ratio (needs history)

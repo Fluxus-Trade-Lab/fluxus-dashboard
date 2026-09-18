@@ -25,7 +25,9 @@ import { useTickerEvents } from '../../hooks/useTickerEvents'
  */
 
 const LABELS = {
-  episodic_pivot: 'EP',
+  ep_stockbee: 'EP·SB',
+  ep_qullamaggie: 'EP·Q',
+  episodic_pivot: 'EP',   // retired 2026-09-18, kept for history rows
   vcp: 'VCP',
   momentum_97: 'MOM',
   gainers_4pct: '4%',
@@ -35,7 +37,9 @@ const LABELS = {
 }
 
 const LONG_LABELS = {
-  episodic_pivot: 'Episodic Pivot',
+  ep_stockbee: 'Episodic Pivot (Stockbee)',
+  ep_qullamaggie: 'Episodic Pivot (Qullamaggie)',
+  episodic_pivot: 'Episodic Pivot (retired recipe)',
   vcp: 'VCP',
   momentum_97: 'Composite 97',
   gainers_4pct: 'Up 4% day',
@@ -44,7 +48,7 @@ const LONG_LABELS = {
   healthy_charts: 'Healthy chart',
 }
 
-const QUALITY = new Set(['episodic_pivot', 'vcp', 'momentum_97'])
+const QUALITY = new Set(['ep_stockbee', 'ep_qullamaggie', 'episodic_pivot', 'vcp', 'momentum_97'])
 
 /**
  * The screener presets, which arrive under a namespace rather than a name.

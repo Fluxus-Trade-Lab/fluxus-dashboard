@@ -106,7 +106,7 @@ const STEPS = [
     with: '回踩用 Liquid Leader Pullback —— 只在第 1 步的水域里做',
     dont: 'EP 第一天不进：42% 会击穿 EP 日低点。第 3 个交易日起进 Delayed-EP 观察',
     wants: ['第一波', 'EP', 'Liquid Leader Pullback'],
-    panels: ['episodic_pivot', 'liquid_leader_pullback',
+    panels: ['ep_stockbee', 'ep_qullamaggie', 'liquid_leader_pullback',
              'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break'],
   },
   {
@@ -542,7 +542,7 @@ const rsOf = (r) => r?.rs_line_pctl_21 ?? r?.rs_1m ?? null
  * one thing a view is not allowed to do. Same shape as the RS floor's zone
  * exemptions, and the count says so on the card.
  */
-const EX_HEALTH_EXEMPT = new Set(['episodic_pivot'])
+const EX_HEALTH_EXEMPT = new Set(['ep_stockbee', 'ep_qullamaggie'])   // EP split by author 2026-09-18
 const exHealthApplies = (panelKey) => !EX_HEALTH_EXEMPT.has(panelKey)
 
 export const shown = (panel, { highOnly, floor, pool3m, exHealth, zoneKey } = {}) => {
@@ -1037,7 +1037,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   const missingSteps = curStep.panels.filter((k) => !onPage.has(k))
   // the report's names for instruments that have no panel here at all
   const NAMED = { extended: 'Extended', stop_hit: 'Stop Hit', ll_break: 'Lower Low Break',
-                  episodic_pivot: 'EP' }
+                  ep_stockbee: 'EP · Stockbee', ep_qullamaggie: 'EP · Qullamaggie' }
   /** names behind each step, under the current view — the chips' number, kept */
   const stepCounts = Object.fromEntries(STEPS.map((st) => {
     const keys = new Set(st.panels)

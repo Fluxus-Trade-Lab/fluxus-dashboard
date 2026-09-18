@@ -14,8 +14,10 @@ const line = (key) => {
 
 describe('BreadthTable tints follow breadth_signals.THRESHOLDS', () => {
   it('ratio lines', () => {
-    expect(line('ratio_5d')).toEqual(ENGINE_LINES.ratio)
-    expect(line('ratio_10d')).toEqual(ENGINE_LINES.ratio)
+    expect(line('ratio_5d')).toEqual(ENGINE_LINES.ratio5)
+    const { strict, ...r10 } = ENGINE_LINES.ratio10
+    expect(line('ratio_10d')).toEqual(r10)
+    expect(strict).toBe(/'ratio_10d':[^}]*'strict':\s*True/.test(py))
   })
   it('%>200 lines are 50/30', () => {
     expect(line('pct200')).toEqual(ENGINE_LINES.pct200)
