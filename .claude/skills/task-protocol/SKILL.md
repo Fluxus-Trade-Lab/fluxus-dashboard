@@ -65,3 +65,5 @@ git -C ~/Documents/fluxus-ops diff --stat HEAD~5
 ## 附：审核与合并相关
 
 `gate <id> --worktree <路径>` 算这件改动该走哪道闸（none / reviewer / andy）；`review <id> --verdict PASS|FAIL --evidence-file <文件>` 写审核结论（判词按 `branch-review` skill 出）；`reap --max-hours <N>` 回收挂死的认领。
+
+- 任务板命令在工作树有未提交改动或未推送提交时会拒绝执行（DirtyTree）；先提交推送或丢弃再用。
