@@ -42,6 +42,32 @@ than clairvoyant -- "damaged" means breadth is already broken, and a broken
 tape is more likely to break further -- which is also why the mean washes out:
 the drawdown is followed by the recovery.
 
+**Re-cut 2026-09-18** on the original-definition inputs (thrust, quarterly
+25%, ratios = Stockbee's own scans), with history back-filled from his
+published Market Monitor sheet -- our own counts match his within a few
+percent on every overlapping day. 587 sessions, index repair rebuilt from
+SPY/QQQ closes (data/research/regime_recal_2026-09-18):
+
+    quartiles 50.0 / 64.3 / 75.0 -- on the score's own grid these cut
+    exactly where 47 / 63 / 75 do, so the constants stand
+    Damaged 28.3%   Mixed 11.9%   Healthy 8.1%   Extended 6.5%
+    Damaged vs the other three: 28.3% vs 8.7% (halves 37.5/13.7, 16.4/3.9)
+
+Only Damaged separates reliably: the upper three order in the full sample
+but not in the first half (Healthy 11.4% < Extended 14.3%). Selling pressure
+reads down_4pct_stockbee (re-checked the same day it moved). The table
+above is kept as the 08-09 record.
+
+The ten-episode caveat below is now partly answered for one input. On his
+sheet alone, 2009-2026 (4,418 sessions, ~60 independent episodes), the
+damage condition's own levels run 27.4 / 16.6 / 15.1 / 10.0% worst to best,
+and worst-above-best holds in each of 2009-14, 2015-19, 2020-23, 2024-26.
+The composite itself still has only 2.2 years.
+
+Not calibrated: `extremes` now reads common-stock new highs/lows, which exist
+from 2026-08-28 only, so it is unmeasured across the whole calibration
+window. On the 14 days it exists it lowers the score by 3.8 points on average.
+
 **So its use is the risk budget, not the direction.** It answers how much can
 be lost here, never which way to lean.
 
@@ -158,10 +184,13 @@ def score(board: Sequence[Mapping[str, Any]]) -> Optional[Dict[str, Any]]:
         "predicts_return": False,
         "separates_tail": True,
         "caveat": ("a risk-budget reading, not a direction call: over "
-                   "2024-2026 it did not predict the next month's return, but "
-                   "5% drawdown frequency fell monotonically from 27% in "
-                   "Damaged to 6% in Extended — on only ten independent "
-                   "episodes, in one rising regime"),
+                   "2024-2026 it did not predict the next month's return; "
+                   "5% drawdown frequency was 28% in Damaged against 9% in "
+                   "the other three bands, which do not separate from each "
+                   "other — on about ten independent episodes. The damage "
+                   "condition alone, on Stockbee's own counts 2009-2026 "
+                   "(~60 episodes), ran 27% at its worst level against 10% "
+                   "at its best, in every era"),
     }
 
 

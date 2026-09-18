@@ -34,8 +34,8 @@ Inputs: ^GSPC and ^VIX from yfinance -- two series, both with history to
 (they were only in the appendix model).
 
 Not here: breadth and dealer gamma (2.2 years of history). regime.py's
-validated read -- 5% drawdown frequency 27% in Damaged vs 6% in Extended
-across 2024-2026 -- is the overlay, and it is reported beside this number
+validated read -- 5% drawdown frequency 28% in Damaged vs 9% in the other
+three bands across 2024-2026 (re-cut 2026-09-18) -- is the overlay, and it is reported beside this number
 with its own window, not blended.
 """
 

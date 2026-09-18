@@ -29,12 +29,12 @@ const GOALS = [
     k: 'why',
     en: 'Why it is a separate reading',
     zh: '为什么它是独立的一读',
-    en_body: 'Market State is flat against next month\'s average return and ' +
-      'monotone against the left tail — 5% drawdown frequency ran 27% in Damaged ' +
-      'against 6% in Extended across 2024–2026. Mean and tail are different ' +
+    en_body: 'Market State is flat against next month\'s average return but ' +
+      'not against the left tail — 5% drawdown frequency ran 28% in Damaged ' +
+      'against 9% in the other three bands across 2024–2026. Mean and tail are different ' +
       'objects. This page is the tail one.',
-    zh_body: '市场状态对下个月的平均收益是平的,对左尾却是单调的 —— 2024–2026 年间,' +
-      'Damaged 档的 −5% 回撤频率 27%,Extended 档 6%。均值和尾部是两个统计量,这一页是尾部那个。',
+    zh_body: '市场状态对下个月的平均收益是平的,对左尾却不是 —— 2024–2026 年间,' +
+      'Damaged 档的 −5% 回撤频率 28%,其余三档合计 9%。均值和尾部是两个统计量,这一页是尾部那个。',
   },
   {
     k: 'blocker',
