@@ -2,7 +2,7 @@
 
 - 日期：2026-09-18
 - 作者：OPS Fable（与 Andy 七轮追问定稿）
-- 状态：待 Andy 审阅
+- 状态：**Andy 2026-09-18 批（原话「可以，我直接批了。」）**
 - 取代：`data/reference/proposals/` 中所有关于门铃、群发、挂单板、取铃的机制；`docs/superpowers/specs/2026-09-04-skill-os-design.md` 的路由与触发率部分
 - 审计依据：《联邦一月审计》（三份只读审计合成，2026-09-18）
 
@@ -217,7 +217,7 @@ Andy 在任何窗口对某 agent 说的「以后这样做」，该会话在同�
 |---|---|---|
 | none | data/、data/research/、night_reports/、tests/、material_inbox、agent 自己的 memory 与 runs | 测试过就合 |
 | reviewer | .github/workflows/、frontend/、pipeline/screeners\|tickers\|adapters/、任何 ROLE.md、任何 skill、CLAUDE.md | 审核过才合 |
-| andy | 花钱、对外发布、删数据 | 停下，needs_andy |
+| andy | 花钱、对外发布、删数据；**登录、付费、会员数据相关目录（会员版上线后再放宽为 reviewer）** | 停下，needs_andy |
 
 审核员四问，每问要证据：①是否删除 main 上已有可执行行，删了有无说明（Andy 09-05 批的判据）；②指出哪个测试改动前红、改动后绿；③是否越 owner 边界；④验收逐条对得上。
 
@@ -266,7 +266,7 @@ agent 之间的事不出现。Andy 在任何窗口说「T-xxxx 加/不做」，�
 
 ### 10.2 项目层
 
-`projects/<name>.md` 四字段：发布物、截止日、到期规则、唯一指标（数字权威归 gary/steve 的任务产出）。任务 `project` 字段关联。到期日工具按到期规则自动开任务。首批四个：课程、dashboard、市场营销、会员增长；规划本身另开一次谈话。
+`projects/<name>.md` 四字段：发布物、截止日、到期规则、唯一指标（数字权威归 gary/steve 的任务产出）。任务 `project` 字段关联。到期日工具按到期规则自动开任务。首批四个：课程、**dashboard 会员化**（登录与付费墙、数据登录后按权限取、仓库转私有或拆分；ALEX 数据侧、Claire 前端、Gary 会员台账、上线归 Andy）、市场营销、会员增长；规划本身另开一次谈话。
 
 ### 10.3 OPS 巡检
 
@@ -309,8 +309,10 @@ agent 之间的事不出现。Andy 在任何窗口说「T-xxxx 加/不做」，�
 
 ## 14. 已知风险与代价
 
+- **会员版 dashboard 是独立项目，本设计不动其内容。** 编队不依赖仓库公开与否；仓库转私有后 fluxus-ops 可并回。为此现在写死两处：§8 会员相关路径 gate=andy；禁止清单含会员信息入库。
+
 - 工人在 App 侧栏不可见；看日志与任务文件，或打开该 agent 窗口。
-- 预授权即安全换速度；禁止清单必须含删数据、改系统配置、对外发送。
+- 预授权即安全换速度；禁止清单必须含删数据、改系统配置、对外发送、**把会员个人信息写进代码仓库**（今天只靠 09-13 那条记忆，要变成工具拒绝）。
 - 守护进程是自建工具，本月 12/17 事故根因是自建工具误判；对策是 §7.4 与第 2 步的验收，以及每日页第 1 行的心跳。
 - 公共 skill 的纠正经 owner，有时间差，接受。
 - X 调研仍依赖登录 Chrome，留在 App；接口方案（xAI x_search 约每千帖 5 美元）Andy 暂缓。
