@@ -30,3 +30,11 @@ Andy 09-18：「查阅一下TML 概念 权威的是谁从哪里来 然后 谁在
 ## 没读到的（写明，不猜）
 - O'Neil 原书本机无，引用来自二手转述（RS 80–90、均值 87）。
 - TraderLion 现行页面（Leadership Blueprints、Ross Haber RS 线一文）与 ChartMill「How to Spot True Market Leaders」清单：均被站点拦截（403 / Cloudflare），未读原文。
+
+## 追补（同日）：Steve Jacobs 的 TML 与 Stage——公开部分到此为止
+Andy 09-18：「对 要SteveJacobs的 两种都可以，只要你能拿到并且对照原书验证」。用 fxtwitter 与登录态 Chrome 查了他的帖子，结论：
+- **他在用 TML**：筛选器里与 LL、O'Neil、Weinstein（Stage 2 criteria）、Minervini、Qullamaggie、SB 9M/20W/4% 并列（[2025-07-08](https://x.com/SteveDJacobs/status/1942509454295015706)）；仪表板「97 Club」（$1B+、日/周/月三个 RS 都在前 3%）里淡蓝色 = TML（[2026-04 Dashboard Explained](https://x.com/SteveDJacobs/status/2042852777626333291) 所引长帖）。
+- **具体门槛不公开**：他原话「The workbook and Trading View indicators belong to an LLC so the proprietary code and workbooks cannot be shared」（[2025-07-11](https://x.com/SteveDJacobs/status/1943819381013614749)）。「Levers & Switches」一帖只给了门槛的类别（营收/EPS 增速、利润率、ROE、ATR%），没给数字，且说明他会随市况调。
+- **他的 Stage 是日线变体**：仪表板说明原话「This Stage Analysis has been designed for day/swing traders」，子阶段写作 2A/2B；定义帖 1943404903780749601 已删除（X 显示页面不存在，fxtwitter 404）。
+- **他收藏的公开 TradingView 指标清单**（同一帖两张图）里**没有任何 Stage 指标**，也没有 @TradeDudeNYC 那个——本机 `Candles Stage Analysis.txt` 与他无关联证据。
+- **所以**：TML 的阶段条件按 **Weinstein 原书**（30 周线，METRIC_SOURCES `weinstein_stage` 行）实现；Jacobs 的口径无法复现，不冒用他的名字。
