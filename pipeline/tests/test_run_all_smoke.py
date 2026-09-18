@@ -154,7 +154,8 @@ def fixture_universe() -> pd.DataFrame:
             "rel_volume": 1.0 + (i % 5) * 0.3,
             "avg_volume": float(b["Volume"].rolling(50).mean().iloc[-1]),
             "volume": float(b["Volume"].iloc[-1]),
-            "market_cap": 2e9 + i * 5e8,
+            # every 7th name is a small cap: the screener cap floor must drop it
+            "market_cap": 5e8 if i % 7 == 3 else 2e9 + i * 5e8,
             "sector": ["Technology", "Industrials", "Healthcare", "Energy"][i % 4],
             "industry": ["Software", "Machinery", "Biotech", "Oil & Gas"][i % 4],
             "high_52w": float(close / c.max() - 1),
@@ -293,6 +294,21 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     assert None not in counts.values(), counts
     assert all(isinstance(v, int) for v in counts.values()), counts
     assert isinstance(counts["stockbee_ratio"], int)
+
+    # 3d. Screener cap floor (Andy 2026-09-18 「哦市值这个闸是要加上的。」). The
+    # fixture carries small caps; the universe keeps them, the five gated lists
+    # must not -- walked through the real orchestrator, not asserted on source.
+    small = {r["ticker"] for r in u["rows"] if (r.get("market_cap") or 0) < 1e9}
+    assert small, "fixture lost its small caps; this check would be vacuous"
+    from pipeline.screeners.universe_gate import GATED_SCREENERS
+    listed = set()
+    for name in GATED_SCREENERS:
+        p = out / "screeners" / f"{name}.json"
+        if not p.exists():
+            p = out / f"{name}.json"
+        txt = p.read_text()
+        listed |= {t for t in small if f'"{t}"' in txt}
+    assert not listed, f"small caps on gated screener lists: {sorted(listed)}"
 
     # 4. watchlist + shortlist + assets all present with required blocks
     from pipeline.quality import check_required_blocks

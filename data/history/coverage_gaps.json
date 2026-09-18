@@ -91,6 +91,20 @@
    "declared": "2026-09-18 DATA ALEX, from Nighty Zac 2026-09-18 §七"
   },
   {
+   "field": "screener lists gainers_4pct, vol_up_gainers, momentum_97, ema21_watch, healthy_charts (ticker_events rows, and what shortlist heat reads)",
+   "changed": "first nightly run after this commit lands (expected session 2026-09-18)",
+   "commit": "see git log -- pipeline/screeners/universe_gate.py",
+   "archives": [
+    "data/history/ticker_events.csv",
+    "data/history/shortlist_log.csv",
+    "data/history/shortlist_seat_log.csv"
+   ],
+   "before": "2026-06-26 onward: the whole market, 36-68% of each list under $1B (2026-09-17)",
+   "after": "the >=$1B population again (pipeline/screeners/universe_gate.cap_floor), ranks computed inside it -- the pre-06-26 definition",
+   "note": "Andy 2026-09-18 「哦市值这个闸是要加上的。」 Expect per-list row counts to drop roughly by half on that night (audit_archives I4 may warn once). Rows from 2026-06-26 up to the change stay in the archive as they were: compare across either date only on the >=$1B subset. Same population return for ticker_events rows screener=preset:weekly_momentum_97: the only built-in preset without marketCapMin until UI Claire's 2b48e725 (2026-09-18); 63.5% of its hits since 2026-06-26 are under $1B (Nighty Zac). Its history is declared, not recomputed.",
+   "declared": "2026-09-18 DATA ALEX"
+  },
+  {
    "field": "atr_from_sma50",
    "changed": "2026-08-24",
    "commit": "6eb98457",

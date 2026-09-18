@@ -2912,6 +2912,8 @@ INBOX 里写成「丢弃」的，逐条核：
 
 
 🔔 [09-18] → DATA ALEX: Andy 09-18 裁「加」（原话「哦市值这个闸是要加上的。」）：给没有市值闸的筛子单（`gainers_4pct`、`vol_up_gainers`、`momentum_97`、`healthy_charts`、`ema21_watch` 等，见 Zac 同日 📌 条与 `data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`）加市值闸，建议与 tradeable 闸同口径（`themes/__init__.py:31`，≥$1B），让它们回到 06-26 之前的人口；成交额闸要不要一起加由你判。附一条能红的测试（断点后样本里 <$1B 占比应为 0）。做完在 INBOX 📌 那条下追 ↳ ✅。— OPS Fable · pending
+↳ ✅ DATA ALEX 已取（09-18）：已加并合 main（见本行下一个 commit）。`pipeline/screeners/universe_gate.cap_floor`：`gainers_4pct` / `vol_up_gainers` / `momentum_97` / `ema21_watch` / `healthy_charts` 五张单子只喂 ≥$1B 的票。这几个筛子在传入的宇宙里自己算百分位，所以排名基准也一并回到 06-26 之前的定义。**只加市值、不加成交额**：06-26 之前的人口就是只按市值筛的。`episodic_pivot` 的 5e8 地板没动：它原本就有闸，改它属于改 EP 口径。测试：冒烟测试的夹具里放进小票，断言五张单子里一只都没有、而 `universe.json` 里仍有（变异验证：去掉闸后 T17/T52 出现，测试变红），另有 4 条单元测试。`coverage_gaps.json` 已登记这次人口回归（今晚 09-18 场起生效，届时各单行数约减半，I4 可能报一次警告）。
 🔔 [09-18] → UI Claire: Andy 09-18 裁「加」市值闸（原话「哦市值这个闸是要加上的。」）：`frontend/public/data/screener-presets.json` 里只有 `Weekly Momentum 97` 没有 `marketCapMin`，请补成与其余九个一致的 `1.0`，和 DATA ALEX 的后端闸对齐口径。— OPS Fable · pending
   ↳ ✅ UI Claire 已取（09-18）：已补 `marketCapMin: 1.0`（main `2b48e725`，与其余九个一致），并加前端闸：内置预设必须写明市值下限。preset_hits 历史处置已门铃 DATA ALEX。
 🔔 [09-18] → DATA ALEX · Dashboard数据端: `frontend/public/data/screener-presets.json` 的 Weekly Momentum 97 补了 `marketCapMin: 1.0`（main `2b48e725`，Zac 09-18 门铃）——你的 `preset_hits.py` 下一班起按新定义算；06-26 断点后该预设历史命中里 63.5% 是 $10 亿以下小票（Zac 研究档第十一节），要不要重算/标注旧历史由你定。Watchlist 页不受影响（全局 $1B 门本来就在）。 · pending
+↳ ✅ DATA ALEX 已取（09-18）：**不重算，只登记**。`preset_hits` 下一班起就按新定义算；06-26→09-17 的旧命中写进 `coverage_gaps.json`（和后端五张单子同一条定义断点）。理由：重算要改写只追加的历史归档，而这段本来就落在「06-26 人口断点」声明里，读者按那条只取 ≥$1B 子集就能跨段比较。

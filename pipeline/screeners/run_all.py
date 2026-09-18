@@ -742,12 +742,17 @@ def main():
 
     # 4. Run screeners
     logger.info("Running screeners...")
+    # Andy 2026-09-18 「哦市值这个闸是要加上的。」: the five lists that had no cap
+    # condition get the $1B floor they had implicitly before 2026-06-26.
+    from pipeline.screeners.universe_gate import cap_floor
+    listed = cap_floor(universe)
+    logger.info("Screener cap floor: %d of %d names >= $1B", len(listed), len(universe))
     results = {
-        'momentum_97': run_momentum_97(universe),
-        'gainers_4pct': run_gainers_4pct(universe),
-        'vol_up_gainers': run_vol_up_gainers(universe),
-        'ema21_watch': run_ema21_watch(universe),
-        'healthy_charts': run_healthy_charts(universe),
+        'momentum_97': run_momentum_97(listed),
+        'gainers_4pct': run_gainers_4pct(listed),
+        'vol_up_gainers': run_vol_up_gainers(listed),
+        'ema21_watch': run_ema21_watch(listed),
+        'healthy_charts': run_healthy_charts(listed),
         'episodic_pivot': run_episodic_pivot(universe),
     }
 
