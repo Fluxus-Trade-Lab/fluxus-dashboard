@@ -8,7 +8,7 @@ mechanical. So the combination is:
 
     strong (any of TI65 > 1.05 | c/minl252 >= 1.8 | c/avgc126 > 1.19)
     AND quiet today (|change_pct| <= 1%)
-    AND liquid (min 3-day volume > 100k; we also default to $1B market cap)
+    AND liquid (minv3.1 >= 100k, his text; we also default to $1B market cap)
     AND compressed (vcs >= --vcs, default 60)
     AND alive (adr_pct >= --adr-min, default 3): without this the top of the
         list is takeover targets pinned to their deal price -- ADR under 2%,
@@ -44,6 +44,17 @@ def strong(r: dict) -> list[str]:
     return tags
 
 
+def liquid(r: dict) -> bool:
+    """Stockbee's liquidity leg, as he wrote it (2026-09-18): "Liquidity =
+    minv3.1>=100000" -- stockbee.blogspot.com/2019/10/anticipation-scans-that-
+    can-make-you.html; minv3.1 = min volume of the 3 bars ending YESTERDAY
+    (his gloss, see yfinance_adapter.stockbee_ratios). Replaces a `> 100k` on
+    min_vol_3d (today included) that silently fell back to avg_volume when the
+    column was missing -- a missing reading is now a miss, not a pass."""
+    v = r.get("min_vol_3d_1")
+    return v is not None and v >= 100_000
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--vcs", type=float, default=60.0)
@@ -63,8 +74,7 @@ def main() -> None:
             continue
         if r.get("change_pct") is None or abs(r["change_pct"]) > a.quiet:
             continue
-        mv3 = r.get("min_vol_3d")
-        if (mv3 if mv3 is not None else (r.get("avg_volume") or 0)) <= 100_000:
+        if not liquid(r):
             continue
         if (r.get("adr_pct") or 0) < a.adr_min:
             continue

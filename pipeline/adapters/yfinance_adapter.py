@@ -608,10 +608,21 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
 
         ti65        = avgc7 / avgc65      (TI65:  > 1.05)
         mdt         = c / avgc126         (MDT:   > 1.19)
-        min_vol_3d  = min volume of the last 3 bars   (all: > 100k)
-        prev_volume = volume of the PREVIOUS bar      (4% scan: v > v1)
+        min_vol_3d   = min volume of the last 3 bars, TODAY INCLUDED (TC2000 minv3)
+        min_vol_3d_1 = min volume of the 3 bars ending YESTERDAY (TC2000 minv3.1)
+        prev_volume  = volume of the PREVIOUS bar      (4% scan: v > v1)
 
     Double Trouble's c/minl252 comes from the low_52w column in run_all.
+
+    `min_vol_3d_1` (2026-09-18) is the liquidity leg of the anticipation
+    scans as he wrote it: "Liquidity = minv3.1>=100000"
+    (stockbee.blogspot.com/2019/10/anticipation-scans-that-can-make-you.html),
+    and he defined the term himself -- "Minv3.1 is minimum volume in last 3
+    days calculates as of 1 day ago" (Pradeep Bonde, comment of 2021-05-27 on
+    stockbee.blogspot.com/2019/09/ultra-high-volume-moves-are-very.html; the
+    TC2000 PCF help agrees: the offset is the number of bars ago, the current
+    bar being zero). `min_vol_3d` counts today and stays as it was for its
+    existing readers.
 
     `prev_volume` is here because `v > v1` is a hard condition inside
     Stockbee's 4% breakout scan -- written into the scan, not one of the nine
@@ -627,10 +638,13 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
         ti65 = float(c.iloc[-7:].mean() / c.iloc[-65:].mean()) if n >= 65 and c.iloc[-65:].mean() > 0 else None
         mdt = float(c.iloc[-1] / c.iloc[-126:].mean()) if n >= 126 and c.iloc[-126:].mean() > 0 else None
         mv3 = float(v.iloc[-3:].min()) if len(v) >= 3 else None
+        mv3_1 = float(v.iloc[-4:-1].min()) if len(v) >= 4 else None
         pv = float(v.iloc[-2]) if len(v) >= 2 else None
-        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3, "prev_volume": pv}
+        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3, "min_vol_3d_1": mv3_1,
+                "prev_volume": pv}
     except Exception:
-        return {"ti65": None, "mdt": None, "min_vol_3d": None, "prev_volume": None}
+        return {"ti65": None, "mdt": None, "min_vol_3d": None, "min_vol_3d_1": None,
+                "prev_volume": None}
 
 
 _MM_INPUT_KEYS = ('sb_pct_from_minc65', 'sb_pct_from_maxc65', 'sb_pct_from_minc34',
@@ -1320,6 +1334,7 @@ class YfinanceAdapter(BaseAdapter):
                     'vcs': vcs,
                     **sp_row,
                     'ti65': sb['ti65'], 'mdt': sb['mdt'], 'min_vol_3d': sb['min_vol_3d'],
+                    'min_vol_3d_1': sb['min_vol_3d_1'],
                     # The helper has returned prev_volume since it was written
                     # and run_all's export list has always named it, but this
                     # line -- the only place a helper key becomes a universe

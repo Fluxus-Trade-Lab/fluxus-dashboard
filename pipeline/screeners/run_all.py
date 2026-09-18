@@ -534,15 +534,26 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['h_score_pctl'] = score_against_tradeable('_h_raw')
     df.drop(columns=['_h_raw'], inplace=True)
 
-    # --- Liquid Leader (course definition, SwingMasterclass M2_L09) ---
-    # ADV >= 2M shares, above the 50-SMA, RS rank top 20% (rs_3m >= 80 on the
-    # tradeable percentile). A QUALIFICATION list -- the water the entries
-    # should be fished from -- not an entry. Alex Desjardins's "Liquid
-    # Leaders" and Andy's course teach the same thing. Missing inputs -> False.
+    # --- Liquid Leader: Andy's COURSE version (2026-09-18: 「9 用课程版」) ---
+    # ~/Documents/SwingMasterclass/M2_L09_Scanning_Routines.md:134, verbatim:
+    #   | **Liquid Leaders** | Big-name momentum names |
+    #   | ADV ≥ 2M shares, above 50 SMA, RS rank top 20% |
+    # and the funnel at :108-111 puts every scanner behind "liquidity / price /
+    # market cap floor -> Tradable Universe" -- that is the `tradeable` term.
+    # A QUALIFICATION list -- the water the entries should be fished from --
+    # not an entry. Missing inputs -> False.
+    #
+    # NOT Alex Desjardins's list. The comment here used to say the two "teach
+    # the same thing"; they do not. His TradersLab "Liquid Leaders scan"
+    # (traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-traderslab)
+    # is Top RS Rank, Group & Theme RS > 50, $100M/day, >= 1M shares, ADR
+    # 3-15%, price > $10, cap > $1B, minus China/HK and five sectors.
+    #
+    # Not verifiable in the course, so ours: "RS rank" gives no window; we
+    # read it as rs_3m (3-month cross-sectional percentile) >= 80. ADV gives
+    # no window either; avg_volume is the 20-session mean.
     _av = pd.to_numeric(df.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
     _sd = pd.to_numeric(df.get('sma50_dist', pd.Series(dtype=float)), errors='coerce')
-    # `tradeable` is part of the definition now that rs_3m exists outside the
-    # field too: a sub-$2 name printing 2M shares is not a liquid leader.
     df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df['rs_3m'] >= 80)
                            & tradeable).fillna(False).astype(bool)
 
@@ -583,6 +594,15 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     from pipeline.screeners.atr_enrichment import (
         atr_multiple_from_sma50, plain_atr_multiple_from_sma50)
     df['atr_from_sma50'] = atr_multiple_from_sma50(
+        df['close'], df['atr'], df['sma50_dist'])
+    # The PLAIN reading, (close - SMA50)/ATR, beside it (2026-09-18). Alex's
+    # Liquid Leaders 21dma-structure Pullback scan says "-0.5 to 4 x ATR from
+    # the 50sma" (traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-
+    # traderslab), and his own ATR extensions script describes the reading as
+    # "ATR-normalized distance from 21 and 50 period moving averages" -- a price
+    # gap in ATRs, the same unit as ema21_atr_dist. B/A = plain x (1 + dist),
+    # so the two part exactly on the stretched names his 4x cap exists to cut.
+    df['sma50_atr_dist'] = plain_atr_multiple_from_sma50(
         df['close'], df['atr'], df['sma50_dist'])
 
     # --- (close - EMA21) / ATR: the reading the 21EMA Watch preset always
@@ -648,7 +668,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'atr_pct', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
+    for col in ['adr_pct', 'atr_pct', 'high_52w_dist', 'atr_from_sma50', 'sma50_atr_dist', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
         if col in df.columns:            # ti65/mdt come from enrichment; absent on the fallback path
             df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
 
@@ -1080,10 +1100,10 @@ def main():
         'adr_pct', 'atr_pct', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d',
-        'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'rs_line_pctl_63', 'rs_line_pctl_126', 'perf_5d',
+        'atr_from_sma50', 'sma50_atr_dist', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'rs_line_pctl_63', 'rs_line_pctl_126', 'perf_5d',
         'atr_pct_pctl_252', 'range5_pct_pctl_252',
         'cross_ema21_up', 'cross_sma50_up',
-        'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 
+        'ti65', 'mdt', 'min_vol_3d', 'min_vol_3d_1', 'c_low52w', 'liquid_leader', 
         'bar_date', 'bars_stale', 'bar_scale_mismatch', 'bar_scale_jumps',
         'in_sp500',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',

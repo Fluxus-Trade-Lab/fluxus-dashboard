@@ -17,7 +17,8 @@ def row(**kw):
             "adr_pct": 4.5, "trend_base": True, "pocket_pivot": True, "pp_count_30d": 3,
             "perf_1w": 0.12, "perf_1w_pctile": 0.98, "perf_3m_pctile": 0.9, "h_score": 90,
             "dcr_pct": 0.8, "ema21_atr_dist": 0.5, "atr_from_sma50": 1.5,
-            "bo_count_1y": 12, "bo_count_3m": 3, "volume": 20e6}
+            "bo_count_1y": 12, "bo_count_3m": 3, "volume": 20e6,
+            "sma50_atr_dist": 1.4, "sma50_dist": 0.05, "sma200_dist": 0.15}
     base.update(kw)
     return base
 
@@ -33,6 +34,10 @@ def test_presets_file_loads_and_slugs_are_stable():
 # One strong row nearly fits every preset; the two that disagree on the weekly
 # move (21EMA Watch caps it at 15%, Weekly 20%+ needs 20%) get the override.
 _FIT = {"Weekly 20%+ Gainers": {"perf_1w": 0.25}}
+# Author-named presets restored to the author's text on 2026-09-18 carry no
+# sector exclusion, because the author's scan has none: Stockbee 9M is
+# `v>=8900000` alone; Kacher's pocket pivot rules exclude no sector.
+_NO_SECTOR_RULE = {"Stockbee 9M Setup", "Pocket Pivot"}
 
 
 def test_every_shipped_preset_matches_a_strong_row_and_rejects_healthcare():
@@ -40,7 +45,10 @@ def test_every_shipped_preset_matches_a_strong_row_and_rejects_healthcare():
     for name, f in ps.items():
         fit = _FIT.get(name, {})
         assert P.passes(row(**fit), f), name
-        assert not P.passes(row(sector="Healthcare", **fit), f), name
+        if name in _NO_SECTOR_RULE:
+            assert P.passes(row(sector="Healthcare", **fit), f), name
+        else:
+            assert not P.passes(row(sector="Healthcare", **fit), f), name
 
 
 def test_range_semantics_mirror_the_page():

@@ -36,6 +36,10 @@ _RANGES: Dict[str, tuple] = {
     "sma200Dist": ("sma200_dist", 100.0),
     "ema21Atr": ("ema21_atr_dist", 1.0),
     "sma50Atr": ("atr_from_sma50", 1.0),
+    # PLAIN (close - SMA50)/ATR, the unit of Alex's "-0.5 to 4 x ATR from the
+    # 50sma" (2026-09-18). `sma50Atr` above is Jeff Sun's B/A -- a different
+    # quantity; the two keys are not interchangeable.
+    "sma50AtrDist": ("sma50_atr_dist", 1.0),
     "adrPct": ("adr_pct", 1.0),
     "vcs": ("vcs", 1.0),
     "dcrPct": ("dcr_pct", 100.0),
@@ -109,6 +113,13 @@ def passes(row: Mapping[str, Any], filters: Mapping[str, Any]) -> bool:
     if filters.get("vol50dEnabled", True) is not False and _num(filters.get("vol50dMin")):
         av = _num(row.get("avg_volume"))
         if av is None or av < float(filters["vol50dMin"]) * 1e6:
+            return False
+    # TODAY's volume, in millions like vol50dMin (2026-09-18). Stockbee's 9M
+    # scan is `v>=8900000` -- the session's own volume, not an average:
+    # stockbee.blogspot.com/2019/09/simple-scan-that-can-make-you-millions.html
+    if filters.get("volumeEnabled", True) is not False and _num(filters.get("volumeMin")):
+        v = _num(row.get("volume"))
+        if v is None or v < float(filters["volumeMin"]) * 1e6:
             return False
     if filters.get("excludeHealthcare") and row.get("sector") == "Healthcare":
         return False

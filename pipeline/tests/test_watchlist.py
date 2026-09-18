@@ -24,7 +24,8 @@ def row(**kw):
             "vcs": 30.0, "atr_from_sma50": 2.0, "ti65": 1.0, "c_low52w": 1.2, "mdt": 1.0,
             "change_pct": 0.005, "perf_1w_pctile": 0.5, "perf_3m_pctile": 0.5,
             "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90,
-            "dcr_pct": 0.5, "min_vol_3d": 500_000, "ema21_atr_dist": 0.5,
+            "dcr_pct": 0.5, "min_vol_3d": 500_000, "min_vol_3d_1": 500_000, "ema21_atr_dist": 0.5,
+            "sma50_atr_dist": 2.0,
             "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0,
             "vol10_green": False, "vol10_green_count_10d": 0, "perf_5d": 0.02, "rs_line_pctl_21": 60}
     base.update(kw)
@@ -57,13 +58,15 @@ class TestPanels:
         assert not W.PANELS["pp_today"].test(row(vol10_green=False, pocket_pivot=True))
         assert W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=2))
         assert not W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=1))
-        # Morales: three pivots in ten sessions (his cluster), not one
-        assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=3))
-        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=2))
-        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=0, vol10_green_count_10d=3))
+        # Morales/Kacher (2026-09-18, their own rules): one pivot is a pivot --
+        # the old ">= 3 = his cluster" had no source; context is rule 7, not
+        # under the 50-dma or the 200-dma (full pins: test_original_definitions_0918)
+        assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=1, sma50_dist=0.02, sma200_dist=0.1))
+        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=0, vol10_green_count_10d=3,
+                                                       sma50_dist=0.02, sma200_dist=0.1))
         # context gate: no trend_base, no panel -- the study's loudest finding
         assert not W.PANELS["pp_today"].test(row(vol10_green=True, trend_base=False))
-        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=3, trend_base=False))
+        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=3, sma50_dist=-0.01, sma200_dist=0.1))
 
     def test_vcs_panel_needs_the_adr_floor(self):
         """Pinned takeover names score VCS 90+ with ADR under 2 -- not
@@ -113,15 +116,16 @@ class TestPanels:
 
 
 class TestLeaders:
-    def test_liquid_leader_pullback_is_the_course_recipe(self):
-        """M2_L09 'Liquid Leader Pullback RS': liquid leader, weekly return
-        < 12%, 0.5-1 ADR from the 21EMA, 0-3 ADR from the 50 (ADR ~ ATR here)."""
-        good = row(liquid_leader=True, perf_1w=0.05, ema21_atr_dist=0.7, atr_from_sma50=1.5)
+    def test_liquid_leader_pullback_is_alex_s_recipe(self):
+        """Alex's TradersLab 21dma-structure Pullback scan (2026-09-18): DCR >
+        10%, weekly < 15%, 0-1 ATR from the 21EMA, -0.5..4 ATR from the 50
+        (plain units). Full pins: test_original_definitions_0918."""
+        good = row(liquid_leader=True, perf_1w=0.05, ema21_atr_dist=0.7, sma50_atr_dist=1.5)
         assert W.PANELS["liquid_leader_pullback"].test(good)
         assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "liquid_leader": False}))
         assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "perf_1w": 0.15}))
         assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "ema21_atr_dist": 1.5}))
-        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "atr_from_sma50": 3.5}))
+        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "sma50_atr_dist": 4.5}))
 
     def test_true_market_leader_needs_a_leading_group(self):
         """TML = liquid leader whose home theme/industry is Leading and rs_1m >= 80

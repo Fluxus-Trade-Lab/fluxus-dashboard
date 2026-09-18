@@ -13,7 +13,7 @@ Zones (order is the reading order):
     leaders       -- who leads?              True Market Leaders (liquid leader x
                                              Leading home group x rs_1m>=80); Liquid Leaders
     entries       -- can I enter today?      LL-HL 1st / 2nd / trend-line break;
-                                             Liquid Leader Pullback (course M2_L09)
+                                             Liquid Leader Pullback (Alex / TradersLab, 09-18)
     compression   -- what is loading?         VCS; anticipation (strong x quiet x VCS)
     accumulation  -- who is being bought?     Vol>10D today / 2+ in 10d (oratnek) ; Morales pocket pivot in 10d
     moving        -- what is running?         Weekly Momentum 97 / 4% Bullish / Weekly 20%+
@@ -153,8 +153,12 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           "liquid_leader and home theme/industry state = Leading and rs_1m >= 80 -- the leader inside a leading water",
           ["liquid_leader", "_group_state"],
           lambda r: r.get("liquid_leader") is True and r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
+    # Andy's course version (2026-09-18: 「9 用课程版」), SwingMasterclass
+    # M2_L09_Scanning_Routines.md:134 "ADV ≥ 2M shares, above 50 SMA, RS rank
+    # top 20%". Computed once in run_all.compute_universe_scores; see there.
     Panel("liquid_leaders", "Liquid Leaders",
-          "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Composite Score shown, count is the whole list",
+          "avg_volume >= 2M, above SMA50, rs_3m >= 80 -- course M2_L09 ('ADV >= 2M shares, above 50 SMA, RS rank top 20%'; "
+          "the RS window is ours: 3 months). Not the TradersLab scan of the same name. Top 25 by Composite Score shown, count is the whole list",
           ["liquid_leader"], lambda r: r.get("liquid_leader") is True),
     # --- entries ---
     Panel("ll_hl_1st", "LL-HL Structure 1st Pivot",
@@ -183,12 +187,38 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           "Day 1 is NOT the entry (42% undercut the EP-day low); from session 3 the name enters the Delayed-EP watch",
           ["change_pct", "rel_volume"],
           lambda r: _ge(r, "change_pct", 0.10) and _ge(r, "rel_volume", 3.0)),
+    # Alex Desjardins's own text (2026-09-18, Andy: 「全部按原文」), TradersLab
+    # "Liquid Leaders 21dma-structure Pullback scan",
+    # traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-traderslab:
+    #   All of Liquid Leaders Scan filters; plus.
+    #   Daily closing range > 10%
+    #   Price contraction (last 5 days)
+    #   Weekly return < 15%
+    #   0 to 1 x ATR from the 21ema
+    #   -0.5 to 4 x ATR from the 50sma
+    #   Advancing 21ema
+    #   Earnings in 7+ days
+    # Replaces (08..09-18): perf_1w <= 12%, 0.5-1 ATR from the 21EMA, 0-3 from
+    # the 50 read in Jeff Sun's B/A units, no DCR, no 21EMA direction.
+    # "x ATR" is a plain price gap in ATRs (his ATR extensions script: "ATR-
+    # normalized distance"), so the 50 leg reads sma50_atr_dist, not the B/A
+    # atr_from_sma50. "Advancing 21ema" gives no lookback; its minimum reading,
+    # EMA21 today > yesterday, is implied by the 0..1 band's floor (for an
+    # EMA, it rose today exactly when close > EMA today), so no extra term.
+    # NOT applied, and why: "Price contraction (last 5 days)" gives no number;
+    # "Earnings in 7+ days" -- no calendar in the row; the base is our course
+    # liquid_leader (Andy chose the course for #9), not his Liquid Leaders scan.
     Panel("liquid_leader_pullback", "Liquid Leader Pullback",
-          "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
-          ["liquid_leader", "ema21_atr_dist", "atr_from_sma50"],
-          lambda r: r.get("liquid_leader") is True and _le(r, "perf_1w", 0.12)
-          and _ge(r, "ema21_atr_dist", 0.5) and _le(r, "ema21_atr_dist", 1.0)
-          and _ge(r, "atr_from_sma50", 0.0) and _le(r, "atr_from_sma50", 3.0)),
+          "liquid_leader; daily closing range > 10%; weekly return < 15%; 0 to 1 x ATR from the 21EMA; "
+          "-0.5 to 4 x ATR from the 50SMA (Alex Desjardins, TradersLab 21dma-structure Pullback scan; "
+          "'advancing 21ema' is implied by the 0 floor. Not applied: 5-day price contraction (no number given), "
+          "earnings 7+ days out (no data); base list is the course Liquid Leaders, not his)",
+          ["liquid_leader", "ema21_atr_dist", "sma50_atr_dist", "dcr_pct"],
+          lambda r: r.get("liquid_leader") is True
+          and _f(r, "dcr_pct") is not None and _f(r, "dcr_pct") > 0.10
+          and _f(r, "perf_1w") is not None and _f(r, "perf_1w") < 0.15
+          and _ge(r, "ema21_atr_dist", 0.0) and _le(r, "ema21_atr_dist", 1.0)
+          and _ge(r, "sma50_atr_dist", -0.5) and _le(r, "sma50_atr_dist", 4.0)),
     # --- compression ---
     Panel("vcs", "Volatility Contraction Score",
           "vcs >= 60 and rs_3m >= 80 and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. "
@@ -198,10 +228,18 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           ["vcs", "rs_3m", "sma50_dist", "adr_pct"],
           lambda r: _ge(r, "vcs", 60) and _ge(r, "rs_3m", 80) and _f(r, "sma50_dist") is not None
           and _f(r, "sma50_dist") > 0 and _ge(r, "adr_pct", 3)),
+    # Liquidity leg restored 2026-09-18 (Andy: 「全部按原文」): Stockbee,
+    # stockbee.blogspot.com/2019/10/anticipation-scans-that-can-make-you.html,
+    # "Liquidity = minv3.1>=100000" -- min volume of the 3 bars ending
+    # yesterday (his own gloss; see yfinance_adapter.stockbee_ratios). It had
+    # been dropped for the $1B/$20M panel gate, which is a different ruler.
+    # vcs>=60 and adr_pct>=3 remain OUR additions (the label says "x VCS").
     Panel("anticipation", "Anticipation (strong x quiet x VCS)",
-          "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
-          ["vcs", "change_pct", "adr_pct"],
-          lambda r: _strong(r) and _quiet(r) and _ge(r, "vcs", 60) and _ge(r, "adr_pct", 3)),
+          "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; minv3.1>=100000 (Stockbee's liquidity "
+          "leg: min volume of the 3 sessions ending yesterday); vcs>=60; adr_pct>=3 (the last two are ours)",
+          ["vcs", "change_pct", "adr_pct", "min_vol_3d_1"],
+          lambda r: _strong(r) and _quiet(r) and _ge(r, "min_vol_3d_1", 100_000)
+          and _ge(r, "vcs", 60) and _ge(r, "adr_pct", 3)),
     # --- accumulation ---
     # All three carry the CONTEXT gate (trend_base: above SMA50 + weekly
     # WMA10 > WMA30). The 2026-08-17 event study (1,505 names x 293 sessions)
@@ -214,10 +252,26 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     Panel("pp_2plus_10d", "PP 2+ times (10D)",
           "vol10_green_count_10d >= 2 and trend_base", ["vol10_green_count_10d", "trend_base"],
           lambda r: _ge(r, "vol10_green_count_10d", 2) and r.get("trend_base") is True),
-    Panel("morales_pp_10d", "Pocket Pivot (Morales, 3+ in 10D)",
-          "pp_count_10d >= 3 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base. "
-          ">= 1 listed 372 names on 08-14 -- a single Morales pivot is common; three in ten sessions is his 'cluster' (111 on 08-14)",
-          ["pp_count_10d", "trend_base"], lambda r: _ge(r, "pp_count_10d", 3) and r.get("trend_base") is True),
+    # Morales & Kacher's own rules (2026-09-18, Andy: 「全部按原文」), Kacher's
+    # site, virtueofselfishinvesting.com/faqs/answer/Ten-Rules-for-Pocket-Pivots:
+    #   3. "The day's volume should be larger than the highest down volume day
+    #       over the prior 10 days."                      -> pp_count_10d (adapter)
+    #   7. "Do not buy pocket pivots if the stock is under a critical moving
+    #       average such as the 50-dma or 200-dma."      -> sma50_dist, sma200_dist >= 0
+    # Removed: ">= 3 in 10 sessions = his 'cluster'" -- no count appears in
+    # the source; the 3 was ours. trend_base (weekly 10 > 30 MA) -- not his.
+    # Rule 7 is read TODAY, the day the panel says "buy or not".
+    # NOT applied, and why: rule 10 "right near its 10-dma, otherwise it is
+    # extended" and rule 4 "act constructively around its 10-dma" give no
+    # number; rules 1/6/8/9 (constructive base, 5-month downtrend, V, wedge)
+    # are chart reads; rule 2 is fundamentals. The 10-session window is the
+    # panel's display window (the page key says 10D), not his.
+    Panel("morales_pp_10d", "Pocket Pivot (Morales/Kacher, 10D)",
+          "a Morales/Kacher pocket pivot in the last 10 sessions (up day on volume above the prior 10 bars' "
+          "highest DOWN-day volume) and close above both the 50-dma and the 200-dma today (Kacher's rule 7). "
+          "Not applied: 'near the 10-dma / not extended' (no number given in the source)",
+          ["pp_count_10d", "sma50_dist", "sma200_dist"],
+          lambda r: _ge(r, "pp_count_10d", 1) and _ge(r, "sma50_dist", 0.0) and _ge(r, "sma200_dist", 0.0)),
     # --- moving (same recipes as the Screener presets; pinned by test) ---
     Panel("weekly_momentum_97", "Weekly Momentum 97",
           "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10, not Healthcare (= the preset)",
