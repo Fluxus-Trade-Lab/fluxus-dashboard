@@ -14,7 +14,22 @@ def _row(**kw):
         'pct_above_200sma': 55.0, 't2108': 50.0,
     }
     base.update(kw)
+    # Since 2026-09-18 the votes read Stockbee's own columns (*_stockbee) and
+    # the common-stock new highs/lows. These fixtures predate that, so each
+    # author column mirrors its old twin unless a test sets it explicitly;
+    # tests that pull the two apart live in test_stockbee_mm_original.py.
+    for old, new in _AUTHOR_TWINS:
+        if new not in kw:
+            base[new] = base.get(old)
     return base
+
+
+_AUTHOR_TWINS = (
+    ('ratio_5d', 'ratio_5d_stockbee'), ('ratio_10d', 'ratio_10d_stockbee'),
+    ('up_25pct_qtr', 'up_25pct_qtr_stockbee'), ('down_25pct_qtr', 'down_25pct_qtr_stockbee'),
+    ('up_13pct_34d', 'up_13pct_34d_stockbee'), ('down_13pct_34d', 'down_13pct_34d_stockbee'),
+    ('new_highs', 'new_highs_common'), ('new_lows', 'new_lows_common'),
+)
 
 
 class TestBreadthVotes:
@@ -248,7 +263,8 @@ def _frame(rows):
 
 
 def _bull_row(**kw):
-    base = dict(ratio_5d=1.5, ratio_10d=1.3, up_4pct=350, down_4pct=80,
+    # ratio_10d 2.5: Stockbee's bull line is "goes above 2" (was 1.3 under our 1.0)
+    base = dict(ratio_5d=1.5, ratio_10d=2.5, up_4pct=350, down_4pct=80,
                 up_25pct_qtr=500, down_25pct_qtr=200, up_13pct_34d=700,
                 down_13pct_34d=300, mcclellan_osc=25.0, new_highs=40,
                 new_lows=5, pct_above_200sma=62.0, t2108=65.0)
@@ -341,7 +357,7 @@ class TestEvaluate:
         # Genuinely split tape: 3 bull votes (ratio_10d, 13/34 spread, bench),
         # 3 bear votes (qtr spread, mcclellan, nh_nl), rest neutral -> score 0.
         frame = _frame([{'date': '2026-07-29',
-                         **_row(ratio_5d=0.6, ratio_10d=1.2,
+                         **_row(ratio_5d=0.6, ratio_10d=2.4,
                                 up_25pct_qtr=200, down_25pct_qtr=300,
                                 up_13pct_34d=500, down_13pct_34d=400,
                                 mcclellan_osc=-5.0, new_highs=10, new_lows=20,

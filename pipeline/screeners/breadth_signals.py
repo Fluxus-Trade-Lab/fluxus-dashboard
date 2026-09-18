@@ -16,8 +16,29 @@ import pandas as pd
 
 # ── Single source of truth for every threshold ───────────────────────
 THRESHOLDS: Dict[str, Dict[str, float]] = {
+    # Both ratios read Stockbee's own ratio (Andy 2026-09-18: 「全部按原文，9 用
+    # 课程版，12 注册 EP Stockbee和 EP Qullamaggie 然后我们以后可以测试下。」):
+    # "total of 5 days 4% b/o divided by total of 5 days 4% b/d" and "same for
+    # 10 days using 10 day data" -- Pradeep Bonde's replies on
+    # stockbee.blogspot.com/p/mm.html (2018-08-30, 2017-03-09). Column:
+    # ratio_*_stockbee, summed over his three-leg 4% count (RATIO_COLS below).
+    #
+    # 10-day line, verbatim from
+    # stockbee.blogspot.com/2010/05/what-you-need-to-know-about-market.html :
+    #   "When the 10 day ratio goes above 2 after market has been in bearish
+    #    phase for sometime, it indicates bullish breadth thrust"
+    #   "When the 10 day ratio goes below .5 after market has been bullish for
+    #    sometime, it indicates a bearish thrust"
+    # -> bull strictly > 2, bear strictly < .5 ('strict'). The self-made bull
+    # line 1.0 (2026-07-31..09-18) is gone. NOT implemented: "after market has
+    # been in bearish / bullish phase for sometime" -- he gives no measure of
+    # "phase" or "sometime", and inventing one would be the thing Andy ruled out.
+    #
+    # 5-day line: he publishes the ratio but no line for it (checked:
+    # 2011/10/5-day-breadth-ratio-see-big-improvement.html gives none). 1.0 /
+    # 0.5 are OURS, self-made, unchanged; only the numerator became his.
     'ratio_5d':    {'bull': 1.0, 'bear': 0.5},
-    'ratio_10d':   {'bull': 1.0, 'bear': 0.5},
+    'ratio_10d':   {'bull': 2.0, 'bear': 0.5, 'strict': True},
     # Pradeep Bonde's (Stockbee) own definition, followed as written (Andy
     # 2026-09-18: 「确认原作者定义准确与否，按照原作者的定义走」):
     #   * the count is his Market Monitor "stocks up 4% plus today":
@@ -30,10 +51,16 @@ THRESHOLDS: Dict[str, Dict[str, float]] = {
     # Replaces the self-made rule (0.113 x universe_size on the price-only
     # up_4pct, single day) used 2026-08-09..09-18.
     'thrust':      {'count': 300, 'days': 2},
+    # Sign of up minus down = his "breadth crossover": "When breadth turns from
+    # positive to negative or the other way, it indicates confirmation of
+    # primary breadth trend. In Market Monitor this is indicated by: # of
+    # stocks up>25% in a quarter / # of stocks down>25% in a quarter ... # of
+    # stocks up>13% in 34 days / # of stocks down>13% in 34 days" (2010/05 post
+    # above). Counts are his scans (*_stockbee, SPREAD_COLS below).
     'qtr_spread':  {},              # sign-based
     'spread_13_34': {},             # sign-based
     'mcclellan':   {'extreme': 70},
-    'nh_nl':       {},              # sign-based
+    'nh_nl':       {},              # sign-based, common-stock counts (SPREAD_COLS)
     'pct200':      {'bull': 50, 'bear': 30},
     't2108_zone':  {'strong_lo': 60, 'weak_hi': 40, 'oversold': 20, 'overbought': 80},
     'spy_danger':  {'bull_max': 1, 'bear_min': 4},
@@ -82,6 +109,19 @@ def universe_truncated(row: Dict[str, Any]) -> bool:
 
 THRUST_UP, THRUST_DOWN = 'up_4pct_stockbee', 'down_4pct_stockbee'
 
+# Where each vote reads (2026-09-18). The unsuffixed archive columns are the
+# older point-to-point / price-only / SPAC-inclusive counts; they keep their
+# history but no longer vote. A row without these columns (the archive before
+# they existed) is unmeasurable -- never voted on the old column instead.
+RATIO_COLS = {'ratio_5d': 'ratio_5d_stockbee', 'ratio_10d': 'ratio_10d_stockbee'}
+SPREAD_COLS = {
+    'qtr_spread': ('up_25pct_qtr_stockbee', 'down_25pct_qtr_stockbee'),
+    'spread_13_34': ('up_13pct_34d_stockbee', 'down_13pct_34d_stockbee'),
+    # Standard new-high/new-low universe is common stocks only (SPACs out);
+    # breadth_metrics.new_highs_common, METRIC_SOURCES ✅.
+    'nh_nl': ('new_highs_common', 'new_lows_common'),
+}
+
 
 def thrust_count(row: Dict[str, Any]) -> Optional[float]:
     """Stockbee's thrust line: 300 names, whatever the universe (his number)."""
@@ -117,12 +157,12 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     """Votes for the 9 breadth-only rules. Missing/NaN inputs vote neutral."""
     votes: Dict[str, str] = {}
 
-    for key in ('ratio_5d', 'ratio_10d'):
-        v = _num(row.get(key))
+    for key, col in RATIO_COLS.items():
+        v = _num(row.get(col))
         t = THRESHOLDS[key]
         if v is None:
             votes[key] = 'neutral'
-        elif v >= t['bull']:
+        elif (v > t['bull']) if t.get('strict') else (v >= t['bull']):
             votes[key] = 'bull'
         elif v < t['bear']:
             votes[key] = 'bear'
@@ -142,9 +182,8 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
             return 'bear'
         return 'neutral'
 
-    votes['qtr_spread'] = _sign_vote(row.get('up_25pct_qtr'), row.get('down_25pct_qtr'))
-    votes['spread_13_34'] = _sign_vote(row.get('up_13pct_34d'), row.get('down_13pct_34d'))
-    votes['nh_nl'] = _sign_vote(row.get('new_highs'), row.get('new_lows'))
+    for key, (a, b) in SPREAD_COLS.items():
+        votes[key] = _sign_vote(row.get(a), row.get(b))
 
     mc = _num(row.get('mcclellan_osc'))
     votes['mcclellan'] = 'neutral' if mc is None else ('bull' if mc > 0 else 'bear' if mc < 0 else 'neutral')
@@ -208,7 +247,7 @@ def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
         })
 
     for k, lbl in (('ratio_5d', '5-day ratio'), ('ratio_10d', '10-day ratio')):
-        v, line = n(k), THRESHOLDS[k]['bull']
+        v, line = n(RATIO_COLS[k]), THRESHOLDS[k]['bull']
         add(k, v, line, None if v is None else v - line, 'ratio', lbl)
 
     # Back-to-back: the weaker of the two sessions is what has to clear the
@@ -220,9 +259,9 @@ def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
     add('thrust', up4, need, (min(up4, pup4) - need) if thrust_measurable else None,
         'names', 'Thrust')
 
-    for k, a, b, lbl in (('qtr_spread', 'up_25pct_qtr', 'down_25pct_qtr', 'Quarterly spread'),
-                         ('spread_13_34', 'up_13pct_34d', 'down_13pct_34d', '13%/34d spread'),
-                         ('nh_nl', 'new_highs', 'new_lows', 'New highs vs lows')):
+    for k, lbl in (('qtr_spread', 'Quarterly spread'), ('spread_13_34', '13%/34d spread'),
+                   ('nh_nl', 'New highs vs lows')):
+        a, b = SPREAD_COLS[k]
         m, unit = diff(a, b, 'names')
         add(k, n(a), 0, m, unit, lbl)
 

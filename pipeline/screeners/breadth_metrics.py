@@ -59,6 +59,71 @@ _EXCLUDED_INDUSTRIES = frozenset({'Shell Companies'})
 _MIN_BARS_52W = 200
 _MIN_BARS_4W = 20
 
+# ── Stockbee Market Monitor, on the author's own scans (2026-09-18) ──────
+# Andy 2026-09-18, verbatim: 「全部按原文，9 用课程版，12 注册 EP Stockbee和
+# EP Qullamaggie 然后我们以后可以测试下。」
+#
+# Pradeep Bonde, TC2000 v12.4, "Universe: US Common Stocks" --
+# https://stockbee.blogspot.com/2014/08/how-i-get-market-monitor-numbers.html :
+#
+#   Number of Stock up 25% plus in a quarter
+#     100 * ((C + .01) - ( MINC65 + .01)) / (MINC65 + .01) >= 25 and AVGC20 * AVGV20 >= 250000
+#   Number of Stock down 25% plus in a quarter
+#     (100 * ((C + .01) - (MAXC65 + .01)) / (MAXC65 + .01)) <= ( - 25) and AVGC20 * AVGV20 >= 250000
+#   Number of stocks up 25% plus in a month
+#     C20 >= 5 AND (AVGC20 * AVGV20) >= 250000 AND 100 * (C - C20) / C20 >= 25
+#   (down 25%: <= ( - 25); up 50%: >= 50; down 50%: <= ( - 50) -- same legs)
+#   Number of stocks up 13% plus in 34 days
+#     100 * ((C + .01) - ( MINC34 + .01)) / (MINC34 + .01) >= 13 and (AVGC20 * AVGV20) >= 250000
+#   Number of stocks down 13% plus in 34 days
+#     (100 * ((C + .01) - (MAXC34 + .01)) / (MAXC34 + .01)) <= ( - 13) and (AVGC20 * AVGV20) >= 250000
+#
+# The per-name inputs come from the bars already downloaded
+# (yfinance_adapter.stockbee_mm_inputs). "Common stocks" = the same Shell
+# Companies exclusion the 4% count uses (Finviz already keeps ETFs, CEFs,
+# preferreds and warrants out). Shipped as *_stockbee columns BESIDE the old
+# point-to-point counts, which keep their archive and do not change.
+_SB_LIQUIDITY = 250_000        # AVGC20 * AVGV20, dollars
+_SB_C20_MIN = 5.0              # C20 >= 5 (month scans only)
+_SB_MM_INPUTS = ('sb_pct_from_minc65', 'sb_pct_from_maxc65', 'sb_pct_from_minc34',
+                 'sb_pct_from_maxc34', 'sb_pct_chg_20', 'sb_c20', 'sb_avg_dollar_vol_20')
+SB_MM_COUNTS = ('up_25pct_qtr_stockbee', 'down_25pct_qtr_stockbee',
+                'up_25pct_month_stockbee', 'down_25pct_month_stockbee',
+                'up_50pct_month_stockbee', 'down_50pct_month_stockbee',
+                'up_13pct_34d_stockbee', 'down_13pct_34d_stockbee')
+
+
+def _stockbee_mm_counts(universe: pd.DataFrame) -> Dict[str, Optional[int]]:
+    """The eight Market Monitor counts on Stockbee's own scans.
+
+    NULL, not zero, when an input column is absent or entirely empty (every
+    archive row before 2026-09-18): a zero would read as "nothing moved"."""
+    def col(name):
+        return pd.to_numeric(universe.get(name, pd.Series(dtype=float)), errors='coerce')
+
+    cols = {k: col(k) for k in _SB_MM_INPUTS}
+    if any(s.notna().sum() == 0 for s in cols.values()):
+        return {k: None for k in SB_MM_COUNTS}
+    industry = universe.get('industry')
+    common = ~industry.isin(_EXCLUDED_INDUSTRIES) if industry is not None else True
+    liquid = (cols['sb_avg_dollar_vol_20'] >= _SB_LIQUIDITY) & common
+    month = liquid & (cols['sb_c20'] >= _SB_C20_MIN)
+    chg20 = cols['sb_pct_chg_20']
+
+    def cnt(mask) -> int:
+        return int(mask.sum())
+
+    return {
+        'up_25pct_qtr_stockbee': cnt(liquid & (cols['sb_pct_from_minc65'] >= 25)),
+        'down_25pct_qtr_stockbee': cnt(liquid & (cols['sb_pct_from_maxc65'] <= -25)),
+        'up_25pct_month_stockbee': cnt(month & (chg20 >= 25)),
+        'down_25pct_month_stockbee': cnt(month & (chg20 <= -25)),
+        'up_50pct_month_stockbee': cnt(month & (chg20 >= 50)),
+        'down_50pct_month_stockbee': cnt(month & (chg20 <= -50)),
+        'up_13pct_34d_stockbee': cnt(liquid & (cols['sb_pct_from_minc34'] >= 13)),
+        'down_13pct_34d_stockbee': cnt(liquid & (cols['sb_pct_from_maxc34'] <= -13)),
+    }
+
 
 def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     """Compute a single day's breadth snapshot from the universe.
@@ -83,6 +148,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
             'up_25pct_month': 0, 'down_25pct_month': 0,
             'up_50pct_month': 0, 'down_50pct_month': 0,
             'up_13pct_34d': 0, 'down_13pct_34d': 0,
+            **{k: None for k in SB_MM_COUNTS},
             't2108': 0.0,
             'pct_above_200sma': 0.0, 'pct_above_50sma': 0.0,
             'pct_above_20sma': 0.0,
@@ -139,6 +205,11 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     down_50pct_month = int((perf_1m <= -0.50).sum())
     up_13pct_34d = int((perf_34d >= 0.13).sum())
     down_13pct_34d = int((perf_34d <= -0.13).sum())
+    # ^ The eight counts above are OURS, not Stockbee's, though they carry his
+    #   labels: point-to-point (Finviz Perf Quart / Perf Month are calendar
+    #   windows; perf_34d is 34 bars back), no liquidity leg, no $5 floor, whole
+    #   universe. Kept unchanged -- 574+ archive rows sit on them.
+    mm_sb = _stockbee_mm_counts(universe)
 
     # Classic breadth: % above MAs
     sma20 = pd.to_numeric(universe.get('sma20_dist', pd.Series(dtype=float)), errors='coerce')
@@ -278,6 +349,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'down_50pct_month': down_50pct_month,
         'up_13pct_34d': up_13pct_34d,
         'down_13pct_34d': down_13pct_34d,
+        **mm_sb,
         't2108': t2108,
         'pct_above_200sma': pct_above_200,
         **idx_cols,
@@ -380,6 +452,12 @@ def _build_output(
             'down_50pct_month': last.get('down_50pct_month'),
             'up_13pct_34d': last.get('up_13pct_34d'),
             'down_13pct_34d': last.get('down_13pct_34d'),
+            # Stockbee's own definitions (2026-09-18) -- what the votes and
+            # the Board read. The keys above are the older point-to-point /
+            # price-only counts under his labels, kept for the archive.
+            'ratio_5d_stockbee': last.get('ratio_5d_stockbee'),
+            'ratio_10d_stockbee': last.get('ratio_10d_stockbee'),
+            **{k: last.get(k) for k in SB_MM_COUNTS},
         },
         'breadth': {
             't2108': last.get('t2108'),
@@ -390,6 +468,10 @@ def _build_output(
             'declines': last.get('declines'),
             'new_highs': last.get('new_highs'),
             'new_lows': last.get('new_lows'),
+            # Standard common-stock universe (SPACs out) -- what the nh_nl vote
+            # and the Board's extremes row read since 2026-09-18.
+            'new_highs_common': last.get('new_highs_common'),
+            'new_lows_common': last.get('new_lows_common'),
             'ad_line': last.get('ad_line'),
             'mcclellan_osc': last.get('mcclellan_osc'),
         },

@@ -39,6 +39,13 @@ BREADTH_COLUMNS = [
     'common_universe', 'short_history_n',
     'record_high_pct', 'high_low_index',
     'up_4pct_stockbee', 'down_4pct_stockbee',
+    # Stockbee Market Monitor on the author's own scans (2026-09-18); see
+    # breadth_metrics._stockbee_mm_counts and derive() below.
+    'ratio_5d_stockbee', 'ratio_10d_stockbee',
+    'up_25pct_qtr_stockbee', 'down_25pct_qtr_stockbee',
+    'up_25pct_month_stockbee', 'down_25pct_month_stockbee',
+    'up_50pct_month_stockbee', 'down_50pct_month_stockbee',
+    'up_13pct_34d_stockbee', 'down_13pct_34d_stockbee',
     'pct_above_20sma_sp500', 't2108_sp500',
     'pct_above_50sma_sp500', 'pct_above_200sma_sp500', 'sp500_members',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
@@ -140,6 +147,27 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
         # (mirrors the legacy compute_ratios zero-division behavior).
         ratio = (up_sum / down_sum).where(down_sum > 0, up_sum)
         out[col] = ratio.astype(float).round(4)
+
+    # Stockbee's own 5-day and 10-day ratios (2026-09-18). Andy, verbatim:
+    # 「全部按原文，9 用课程版，12 注册 EP Stockbee和 EP Qullamaggie 然后我们以后可以测试下。」
+    # Pradeep Bonde on https://stockbee.blogspot.com/p/mm.html, his own replies:
+    #   "It is ratio of 5 days of 4% b/o /5 days 4% b/d same for 10 days using
+    #    10 day data." (2017-03-09)
+    #   "total of 5 days 4% b/o divided by total of 5 days 4% b/d" (2018-08-30)
+    # where a 4% b/o is his three-leg scan -- our up_4pct_stockbee /
+    # down_4pct_stockbee. The ratio_5d/ratio_10d above sum the PRICE-ONLY
+    # count and are kept for their archive.
+    #
+    # Every session of the window must carry his count (min_periods = n), so
+    # the ratio is NULL until 5 / 10 such sessions exist (columns start
+    # 2026-09-05). A zero-decliner window is NULL too: his ratio is undefined
+    # there, and the legacy "return the up-sum" fallback is our own invention.
+    up_sb = _numeric_col('up_4pct_stockbee').astype(float)
+    dn_sb = _numeric_col('down_4pct_stockbee').astype(float)
+    for n, col in ((5, 'ratio_5d_stockbee'), (10, 'ratio_10d_stockbee')):
+        up_sum = up_sb.rolling(n, min_periods=n).sum()
+        down_sum = dn_sb.rolling(n, min_periods=n).sum()
+        out[col] = (up_sum / down_sum).where(down_sum > 0).round(4)
     return out
 
 

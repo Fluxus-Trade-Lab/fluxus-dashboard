@@ -28,7 +28,15 @@ import pandas as pd
 # on the three-leg 4% count, 05319404). A second copy here is how the two drifted
 # once already -- this row kept the single-day price-only rule for a day.
 from pipeline.screeners.breadth_signals import (
-    THRUST_DOWN, THRUST_UP, thrust_count, thrust_state)
+    RATIO_COLS, SPREAD_COLS, THRUST_DOWN, THRUST_UP, thrust_count, thrust_state)
+
+# Same owner for the columns (2026-09-18, Andy: 「全部按原文」): damage reads
+# Stockbee's own quarter scans, extremes the common-stock new highs/lows,
+# confirmation his own 5-day ratio -- the columns the votes read. The cut
+# points on top of them (0.55 / 0.45 / 0.35, 2x, 1.2) are still ours.
+QTR_UP, QTR_DOWN = SPREAD_COLS['qtr_spread']
+NH, NL = SPREAD_COLS['nh_nl']
+R5 = RATIO_COLS['ratio_5d']
 
 # Five ordinal levels, worst → best. The board reads as a shape, so the count
 # has to stay small and fixed.
@@ -82,9 +90,9 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
     out: List[Dict[str, Any]] = []
 
     # 1 · Damage — how much of the market is still deeply broken
-    qu, qd = _num(row.get("up_25pct_qtr")), _num(row.get("down_25pct_qtr"))
+    qu, qd = _num(row.get(QTR_UP)), _num(row.get(QTR_DOWN))
     if qu is None or qd is None or (qu + qd) == 0:
-        out.append(_row("damage", FACT, None, "quarterly 25% counts unavailable"))
+        out.append(_row("damage", FACT, None, "Stockbee quarterly 25% counts unavailable"))
     else:
         share = qd / (qu + qd)
         out.append(_row(
@@ -146,22 +154,22 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
             f"(Stockbee: back-to-back {need:.0f}+ is a thrust)"))
 
     # 6 · Extremes
-    nh, nl = _num(row.get("new_highs")), _num(row.get("new_lows"))
+    nh, nl = _num(row.get(NH)), _num(row.get(NL))
     if nh is None or nl is None:
-        out.append(_row("extremes", FACT, None, "new high/low counts unavailable"))
+        out.append(_row("extremes", FACT, None, "common-stock new high/low counts unavailable"))
     else:
         out.append(_row(
             "extremes", FACT,
             _lvl((nh > nl * 2, 4), (nh > nl, 3), (nl > nh * 2, 0), (True, 2)),
-            f"{nh:.0f} new 52-week highs against {nl:.0f} new lows"))
+            f"{nh:.0f} new 52-week highs against {nl:.0f} new lows (common stocks)"))
 
     # 7 · Index repair — from the benchmark candles, not from breadth
     out.append(_index_repair(health))
 
     # 8 · Confirmation — the thing that is either present or absent, no middle
-    r5 = _num(row.get("ratio_5d"))
+    r5 = _num(row.get(R5))
     if r5 is None:
-        out.append(_row("confirmation", ANTICIP, None, "5-day ratio unavailable"))
+        out.append(_row("confirmation", ANTICIP, None, "Stockbee 5-day ratio unavailable"))
     else:
         # The evidence has to describe the reading it actually got. A fixed
         # "needs to clear 1.0" printed under a 1.75 reading is a caption that

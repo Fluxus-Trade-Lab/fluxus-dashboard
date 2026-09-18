@@ -633,6 +633,66 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
         return {"ti65": None, "mdt": None, "min_vol_3d": None, "prev_volume": None}
 
 
+_MM_INPUT_KEYS = ('sb_pct_from_minc65', 'sb_pct_from_maxc65', 'sb_pct_from_minc34',
+                  'sb_pct_from_maxc34', 'sb_pct_chg_20', 'sb_c20', 'sb_avg_dollar_vol_20')
+
+
+def stockbee_mm_inputs(hist: pd.DataFrame) -> dict:
+    """Per-name inputs to Stockbee's Market Monitor scans, from the bars we
+    already hold -- no extra fetch. breadth_metrics does the counting.
+
+    Pradeep Bonde's own scans (TC2000 v12.4, "Universe: US Common Stocks"),
+    verbatim from https://stockbee.blogspot.com/2014/08/how-i-get-market-monitor-numbers.html :
+
+        up 25% in a quarter:  100 * ((C + .01) - ( MINC65 + .01)) / (MINC65 + .01) >= 25
+                              and AVGC20 * AVGV20 >= 250000
+        down 25% in a quarter: (100 * ((C + .01) - (MAXC65 + .01)) / (MAXC65 + .01)) <= ( - 25)
+                              and AVGC20 * AVGV20 >= 250000
+        up/down 25% / 50% in a month:
+                              C20 >= 5 AND (AVGC20 * AVGV20) >= 250000
+                              AND 100 * (C - C20) / C20 >= 25   (<= -25, >= 50, <= -50)
+        up 13% in 34 days:    100 * ((C + .01) - ( MINC34 + .01)) / (MINC34 + .01) >= 13
+                              and (AVGC20 * AVGV20) >= 250000   (down: MAXC34, <= -13)
+
+    TC2000 conventions: MINC65/MAXC65 = lowest/highest close of the last 65
+    bars, today included; C20 = the close 20 bars ago (iloc[-21]); AVGC20 /
+    AVGV20 = 20-bar average close / volume, today included.
+
+    Returned in the author's units (percent, dollars) so the thresholds read
+    exactly as he wrote them. None when the window is not there yet -- a
+    zero would count as "did not move", which is a reading, not a gap.
+    Adjusted closes (yfinance default) rather than TC2000's split-only
+    adjustment: a dividend inside the window moves the anchor by the yield.
+    """
+    out = {k: None for k in _MM_INPUT_KEYS}
+    try:
+        c = pd.to_numeric(hist['Close'], errors='coerce').dropna()
+        v = pd.to_numeric(hist['Volume'], errors='coerce').dropna()
+        n = len(c)
+        if n == 0:
+            return out
+        last = float(c.iloc[-1])
+
+        def _from(anchor: float) -> float:
+            return 100 * ((last + .01) - (anchor + .01)) / (anchor + .01)
+
+        if n >= 65:
+            out['sb_pct_from_minc65'] = _from(float(c.iloc[-65:].min()))
+            out['sb_pct_from_maxc65'] = _from(float(c.iloc[-65:].max()))
+        if n >= 34:
+            out['sb_pct_from_minc34'] = _from(float(c.iloc[-34:].min()))
+            out['sb_pct_from_maxc34'] = _from(float(c.iloc[-34:].max()))
+        if n >= 21:
+            c20 = float(c.iloc[-21])
+            out['sb_c20'] = c20
+            out['sb_pct_chg_20'] = 100 * (last - c20) / c20 if c20 > 0 else None
+        if n >= 20 and len(v) >= 20:
+            out['sb_avg_dollar_vol_20'] = float(c.iloc[-20:].mean() * v.iloc[-20:].mean())
+        return out
+    except Exception:
+        return {k: None for k in _MM_INPUT_KEYS}
+
+
 def accumulation_flow(hist: pd.DataFrame) -> dict:
     """The accumulation factor the 2026-08-09 audit said we lacked: volume
     weighted by price direction, accumulated across weeks. Two numbers, not
@@ -1129,6 +1189,7 @@ class YfinanceAdapter(BaseAdapter):
                 # One dict of sp_* fields, or all-None on short history.
                 sp_row = structure_pivot_row(hist)
                 sb = stockbee_ratios(hist)
+                sb_mm = stockbee_mm_inputs(hist)
                 af = accumulation_flow(hist)
 
                 # 21EMA Low Dist%: how far today's low is from 21EMA
@@ -1268,6 +1329,9 @@ class YfinanceAdapter(BaseAdapter):
                     # debt of 2026-08-24). export_cols filters silently on
                     # missing columns, so nothing ever went red.
                     'prev_volume': sb['prev_volume'],
+                    # Stockbee MM scan inputs (MINC65/MAXC65/MINC34/MAXC34,
+                    # C20, AVGC20*AVGV20) -- see stockbee_mm_inputs().
+                    **sb_mm,
                     'ema21': ema21,
                     'rs_line_pctl_21': rs_line_pctl_21,
                     'rs_line_pctl_63': rs_line_pctl_63,

@@ -15,7 +15,10 @@ def frame(**over) -> pd.DataFrame:
                 ratio_5d=0.9905, t2108=45.77, pct_above_20sma=40.7,
                 pct_above_200sma=46.77, new_highs=29, new_lows=12, net_advances=-336,
                 # the thrust row reads Stockbee's three-leg count (05319404)
-                up_4pct_stockbee=159, down_4pct_stockbee=246)
+                up_4pct_stockbee=159, down_4pct_stockbee=246,
+                # damage / extremes / confirmation read the author columns (2026-09-18)
+                up_25pct_qtr_stockbee=342, down_25pct_qtr_stockbee=523,
+                ratio_5d_stockbee=0.9905, new_highs_common=29, new_lows_common=12)
     base.update(over)
     # six rows so the five-session peak window is populated
     rows = [dict(base, down_4pct=637) for _ in range(5)] + [base]
@@ -138,7 +141,7 @@ def test_empty_frame_returns_nothing_rather_than_crashing():
 ])
 def test_confirmation_evidence_matches_its_own_number(r5, net, expect):
     """A caption reading 'needs to clear 1.0' under a 1.75 reading is a lie."""
-    board = state_board(frame(ratio_5d=r5, net_advances=net), health())
+    board = state_board(frame(ratio_5d_stockbee=r5, net_advances=net), health())
     conf = next(r for r in board if r["key"] == "confirmation")
     assert expect in conf["evidence"], conf["evidence"]
 
@@ -147,7 +150,7 @@ def test_confirmation_never_denies_a_number_it_prints():
     """Whatever the caption says, it must not contradict the ratio beside it."""
     for r5 in (0.8, 1.05, 1.25, 2.07):
         for net in (-300, 0, 300):
-            conf = next(r for r in state_board(frame(ratio_5d=r5, net_advances=net), health())
+            conf = next(r for r in state_board(frame(ratio_5d_stockbee=r5, net_advances=net), health())
                         if r["key"] == "confirmation")
             ev = conf["evidence"]
             if r5 > 1.2:
