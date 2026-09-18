@@ -103,20 +103,31 @@ export default function PickedChart({ height = 460 }) {
         </div>
       </div>
 
-      {panel.measured && symbol ? (
+      {symbol ? (
         <TickerChart symbol={symbol} height={height}
                      interval={SPANS.find((s) => s.key === span).tv} />
       ) : (
-        /* not zero, and not an empty frame: the screen did not run */
+        /* no name to open on — and the two reasons are different claims: the
+           screen did not run, or it ran and found nobody (Moglen's recipe is
+           strict; DATA ALEX expects thin nights while margins/ROE backfill) */
         <div className="rounded-3xl flex items-center justify-center p-6"
              style={{ height, backgroundImage:
                'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
-          <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
-                        text-[var(--color-text-muted)]">
-            True Market Leaders was <b className="text-[var(--color-text-secondary)]">not
-            measured</b> in tonight&rsquo;s run, so there is no name for this card to open on.
-            That is different from the screen finding nobody.
-          </p>
+          {panel.measured ? (
+            <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
+                          text-[var(--color-text-muted)]">
+              True Market Leaders ran tonight and <b className="text-[var(--color-text-secondary)]">found
+              nobody</b>, so there is no name for this card to open on. That is a
+              reading, not a failed run.
+            </p>
+          ) : (
+            <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
+                          text-[var(--color-text-muted)]">
+              True Market Leaders was <b className="text-[var(--color-text-secondary)]">not
+              measured</b> in tonight&rsquo;s run, so there is no name for this card to open on.
+              That is different from the screen finding nobody.
+            </p>
+          )}
         </div>
       )}
 
