@@ -24,9 +24,11 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
-# One owner for the thrust rule. It scales to each session's own universe,
-# and a second copy of the constant here is exactly how the two would drift.
-from pipeline.screeners.breadth_signals import thrust_count
+# One owner for the thrust rule: breadth_signals (Stockbee's back-to-back 300+
+# on the three-leg 4% count, 05319404). A second copy here is how the two drifted
+# once already -- this row kept the single-day price-only rule for a day.
+from pipeline.screeners.breadth_signals import (
+    THRUST_DOWN, THRUST_UP, thrust_count, thrust_state)
 
 # Five ordinal levels, worst → best. The board reads as a shape, so the count
 # has to stay small and fixed.
@@ -124,19 +126,24 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
         _lvl((p200 > 50, 4), (p200 > 40, 3), (p200 > 30, 2), (True, 1)),
         f"{p200:.1f}% above the 200-day"))
 
-    # 5 · Thrust
-    up4 = _num(row.get("up_4pct"))
-    # One owner for the rule: breadth_signals scales it to the row's own
-    # universe, and the board must not keep a second copy of the constant.
-    need = thrust_count(row)
-    if up4 is None or dn4 is None:
-        out.append(_row("thrust", FACT, None, "4% counts unavailable"))
+    # 5 · Thrust -- the engine's own verdict (thrust_state), never a local rule
+    trow = row.to_dict()
+    if len(frame) >= 2:
+        for c in (THRUST_UP, THRUST_DOWN):
+            trow['_prev_' + c] = frame.iloc[-2].get(c)
+    st = thrust_state(trow)
+    need = thrust_count(trow)
+    if st is None:
+        out.append(_row("thrust", FACT, None,
+                        "Stockbee 4% counts unavailable (needs this and the previous session)"))
     else:
+        up4, dn4 = _num(trow.get(THRUST_UP)), _num(trow.get(THRUST_DOWN))
+        pup, pdn = _num(trow.get('_prev_' + THRUST_UP)), _num(trow.get('_prev_' + THRUST_DOWN))
         out.append(_row(
             "thrust", FACT,
-            _lvl((up4 >= need and up4 > dn4, 4), (dn4 >= need and dn4 > up4, 0), (True, 2)),
-            f"{up4:.0f} names +4% against {dn4:.0f} −4% "
-            f"(a thrust needs {need:.0f} of today's {_num(row.get('universe_size')) or 0:.0f})"))
+            {'bull': 4, 'bear': 0}.get(st, 2),
+            f"{up4:.0f} names +4% / {dn4:.0f} −4% today, {pup:.0f} / {pdn:.0f} the session before "
+            f"(Stockbee: back-to-back {need:.0f}+ is a thrust)"))
 
     # 6 · Extremes
     nh, nl = _num(row.get("new_highs")), _num(row.get("new_lows"))

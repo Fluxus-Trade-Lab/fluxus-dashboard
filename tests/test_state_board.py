@@ -13,7 +13,9 @@ from pipeline.screeners.state_board import (
 def frame(**over) -> pd.DataFrame:
     base = dict(up_25pct_qtr=342, down_25pct_qtr=523, up_4pct=231, down_4pct=288,
                 ratio_5d=0.9905, t2108=45.77, pct_above_20sma=40.7,
-                pct_above_200sma=46.77, new_highs=29, new_lows=12, net_advances=-336)
+                pct_above_200sma=46.77, new_highs=29, new_lows=12, net_advances=-336,
+                # the thrust row reads Stockbee's three-leg count (05319404)
+                up_4pct_stockbee=159, down_4pct_stockbee=246)
     base.update(over)
     # six rows so the five-session peak window is populated
     rows = [dict(base, down_4pct=637) for _ in range(5)] + [base]
