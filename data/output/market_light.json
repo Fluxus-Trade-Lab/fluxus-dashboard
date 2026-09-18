@@ -1,5 +1,5 @@
 {
- "date": "2026-09-17",
+ "date": "2026-09-18",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,37 +7,30 @@
    {
     "key": "fast_above_slow",
     "pass": false,
-    "a": 761.5722,
-    "b": 762.9506
+    "a": 761.5936,
+    "b": 762.8306
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 761.5722,
-    "b": 761.3438
+    "a": 761.5936,
+    "b": 761.5722
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 762.9506,
-    "b": 762.9875
+    "a": 762.8306,
+    "b": 762.9506
    }
   ],
   "checks_passed": 1,
   "light": "red",
   "gear": {
-   "n": 5,
-   "label": "brake",
-   "label_zh": "\u70b9\u5239"
+   "n": 7,
+   "label": "maximum defense",
+   "label_zh": "\u6700\u5927\u9632\u5fa1"
   },
   "history": [
-   {
-    "date": "2026-06-24",
-    "close": 733.24,
-    "fast": 740.1024,
-    "slow": 740.1764,
-    "checks_passed": 0
-   },
    {
     "date": "2026-06-25",
     "close": 734.3,
@@ -450,6 +443,13 @@
     "fast": 761.5722,
     "slow": 762.9506,
     "checks_passed": 1
+   },
+   {
+    "date": "2026-09-18",
+    "close": 761.69,
+    "fast": 761.5936,
+    "slow": 762.8306,
+    "checks_passed": 1
    }
   ]
  },
@@ -457,38 +457,31 @@
   "checks": [
    {
     "key": "fast_above_slow",
-    "pass": false,
-    "a": 711.7533,
-    "b": 712.5869
+    "pass": true,
+    "a": 713.5163,
+    "b": 713.431
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 711.7533,
-    "b": 710.6051
+    "a": 713.5163,
+    "b": 711.7533
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 712.5869,
-    "b": 712.1308
+    "a": 713.431,
+    "b": 712.5869
    }
   ],
-  "checks_passed": 2,
-  "light": "red",
+  "checks_passed": 3,
+  "light": "green",
   "gear": {
-   "n": 2,
-   "label": "add",
-   "label_zh": "\u52a0\u4ed3"
+   "n": 3,
+   "label": "press",
+   "label_zh": "\u8e29\u4e0b\u53bb"
   },
   "history": [
-   {
-    "date": "2026-06-24",
-    "close": 710.62,
-    "fast": 722.8935,
-    "slow": 720.4517,
-    "checks_passed": 1
-   },
    {
     "date": "2026-06-25",
     "close": 716.38,
@@ -901,28 +894,35 @@
     "fast": 711.7533,
     "slow": 712.5869,
     "checks_passed": 2
+   },
+   {
+    "date": "2026-09-18",
+    "close": 721.45,
+    "fast": 713.5163,
+    "slow": 713.431,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 9,
+   "count": 31,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 86,
+   "pool_count": 81,
    "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "episodic_pivot": 2,
-    "ll_hl_1st": 30,
-    "ll_hl_2nd": 25,
-    "ll_hl_trend_break": 38,
-    "liquid_leader_pullback": 10
+    "ep_stockbee": 6,
+    "ep_qullamaggie": 0,
+    "ll_hl_1st": 24,
+    "ll_hl_2nd": 15,
+    "ll_hl_trend_break": 13,
+    "liquid_leader_pullback": 31
    },
    "capped_panels": [
-    "ll_hl_1st",
-    "ll_hl_trend_break"
+    "liquid_leader_pullback"
    ],
    "setups_without_panel": [
     "BO",
@@ -932,80 +932,81 @@
   },
   "leaders": [
    {
-    "ticker": "OKTA",
-    "theme": "Cybersecurity",
+    "ticker": "MRNA",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 96
+    "rs_rating": 99
    },
    {
-    "ticker": "CRWD",
-    "theme": "Cybersecurity",
+    "ticker": "TXG",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 95
+    "rs_rating": 99
    },
    {
-    "ticker": "IRDM",
-    "theme": "Space",
-    "status": "broken",
-    "above_ema21": true,
-    "rs_rating": 95
-   },
-   {
-    "ticker": "PANW",
-    "theme": "Cybersecurity",
+    "ticker": "TWST",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 94
+    "rs_rating": 99
    },
    {
-    "ticker": "FTNT",
-    "theme": "Cybersecurity",
+    "ticker": "SNDK",
+    "theme": "Memory & Storage",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 94
+    "rs_rating": 99
    },
    {
-    "ticker": "FROG",
-    "theme": "Cybersecurity",
+    "ticker": "CDNA",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 94
+    "rs_rating": 98
    },
    {
-    "ticker": "BB",
-    "theme": "Cybersecurity",
-    "status": "broken",
-    "above_ema21": false,
-    "rs_rating": 94
-   },
-   {
-    "ticker": "RBRK",
-    "theme": "Cybersecurity",
+    "ticker": "ABSI",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 93
+    "rs_rating": 98
    },
    {
-    "ticker": "FSLY",
-    "theme": "Cybersecurity",
+    "ticker": "AMD",
+    "theme": "Semiconductors Large Caps",
     "status": "holding",
     "above_ema21": true,
-    "rs_rating": 93
+    "rs_rating": 98
    },
    {
-    "ticker": "VSAT",
-    "theme": "Space",
+    "ticker": "PRAX",
+    "theme": "Genomics",
     "status": "broken",
     "above_ema21": false,
-    "rs_rating": 93
+    "rs_rating": 98
+   },
+   {
+    "ticker": "MU",
+    "theme": "Semiconductors Large Caps",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "NEO",
+    "theme": "Genomics",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 97
    }
   ],
   "leaders_meta": {
    "themes": [
-    "Cybersecurity",
-    "Space"
+    "Genomics",
+    "Memory & Storage",
+    "Semiconductors Large Caps"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
    "provisional": true
@@ -1014,7 +1015,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": -1
+   "score": -2
   }
  },
  "verdict": "avoid",

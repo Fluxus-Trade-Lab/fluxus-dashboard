@@ -1,22 +1,55 @@
 {
- "as_of_session": "2026-09-17",
+ "as_of_session": "2026-09-18",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 45,
+ "lines": 48,
  "runs": [
   {
-   "session": "2026-09-17",
-   "code_sha": "16a91ba",
+   "session": "2026-09-18",
+   "code_sha": "b299efc",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-17, candidate is 2026-09-18 -- a different day is the market moving, not the pipeline)",
+    "L5 guard(s) present last session, missing now: market_light, screeners, shortlist, shortlist_feedback, site_quality, watchlist",
+    "(superseded attempt) L2 universe_quality status='severe'",
+    "(superseded attempt) L4 error in universe_quality: severe: f_score -- run aborted, outputs unchanged"
+   ],
+   "fund_fail_rate": 0.1,
+   "universe_rows": 5618,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-18",
+   "code_sha": "a4a9f1e",
    "trigger": "schedule",
    "violations": [],
    "warnings": [
-    "L2 no_downgrade no-baseline (stored copy is session 2026-09-16, candidate is 2026-09-17 -- a different day is the market moving, not the pipeline)"
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-17, candidate is 2026-09-18 -- a different day is the market moving, not the pipeline)",
+    "L5 guard(s) present last session, missing now: market_light, screeners, shortlist, shortlist_feedback, site_quality, watchlist",
+    "(superseded attempt) L2 universe_quality status='severe'",
+    "(superseded attempt) L4 error in universe_quality: severe: f_score -- run aborted, outputs unchanged"
    ],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5615
+   "universe_rows": 5618,
+   "superseded": true
+  },
+  {
+   "session": "2026-09-18",
+   "code_sha": "2eed89a",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [
+    "L2 universe_quality degraded",
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-17, candidate is 2026-09-18 -- a different day is the market moving, not the pipeline)"
+   ],
+   "fund_fail_rate": 0.0,
+   "universe_rows": 5618
   }
  ],
  "violations": 0,
- "warnings": 1,
- "top": [],
+ "warnings": 10,
+ "top": [
+  "L6 2026-09-18: 3 lines (re-run; both happened, not a violation)"
+ ],
  "ok": true
 }

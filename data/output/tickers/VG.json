@@ -1,8 +1,8 @@
 {
   "ticker": "VG",
-  "fetched_at": "2026-09-16T23:22:35Z",
+  "fetched_at": "2026-09-18T23:35:30Z",
   "_schema": "v2",
-  "current_price": 14.649999618530273,
+  "current_price": 14.020000457763672,
   "info": {
     "symbol": "VG",
     "longName": "Venture Global, Inc.",
@@ -13,13 +13,13 @@
     "city": "Arlington",
     "website": "https://ventureglobal.com",
     "fullTimeEmployees": 2000,
-    "marketCap": 36626362368,
-    "enterpriseValue": 81417420800,
-    "trailingPE": 11.183207,
-    "forwardPE": 14.688926,
-    "priceToSalesTrailing12Months": 2.1607199,
-    "enterpriseToRevenue": 4.803,
-    "priceToBook": 4.268648,
+    "marketCap": 35051302912,
+    "enterpriseValue": 78242299904,
+    "trailingPE": 10.621212,
+    "forwardPE": 14.057253,
+    "priceToSalesTrailing12Months": 2.0678015,
+    "enterpriseToRevenue": 4.616,
+    "priceToBook": 4.0850816,
     "grossMargins": 0.46923,
     "operatingMargins": 0.47794,
     "profitMargins": 0.22052,
@@ -32,8 +32,8 @@
     "currentRatio": 1.185,
     "fiftyTwoWeekHigh": 17.62,
     "fiftyTwoWeekLow": 5.72,
-    "averageVolume": 14346483,
-    "averageVolume10days": 15070810,
+    "averageVolume": 14170156,
+    "averageVolume10days": 14648140,
     "beta": null,
     "sharesOutstanding": 531488393,
     "sharesFloat": 521644373,
@@ -250,6 +250,12 @@
   "quarterly_asof": "2026-09-14T21:45:07Z",
   "news": [
     {
+      "date": "2026-09-18T05:14:57Z",
+      "title": "Why Is Baker Hughes (BKR) Winning One Of America\u2019s Biggest LNG Compression Orders?",
+      "url": "https://finance.yahoo.com/energy/articles/why-baker-hughes-bkr-winning-051457961.html",
+      "source": "Simply Wall St."
+    },
+    {
       "date": "2026-09-16T04:20:26Z",
       "title": "Baker Hughes (BKR) and Venture Global (VG) Team Up for the Next LNG Wave",
       "url": "https://finance.yahoo.com/energy/articles/baker-hughes-bkr-venture-global-042026260.html",
@@ -302,28 +308,22 @@
       "title": "Sector Update: Energy Stocks Advance Premarket Monday",
       "url": "https://finance.yahoo.com/energy/articles/sector-energy-stocks-advance-premarket-132912222.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-09-11T21:23:00Z",
-      "title": "Top Stock Reports for Meta Platforms, Marvell & Amphenol",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/top-stock-reports-meta-platforms-212300174.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.03822525696803948,
+  "options_implied_move": 0.013552068031123793,
   "technicals": {
-    "ma20": 14.646464300155639,
-    "ma50": 13.883309688568115,
-    "ma200": 11.611722853183746,
-    "rsi14": 51.86220209862153,
+    "ma20": 14.668142127990723,
+    "ma50": 13.955214748382568,
+    "ma200": 11.682804358005523,
+    "rsi14": 45.66531538406037,
     "high_20d": 16.25730118020782,
-    "low_5d": 14.545000076293945,
-    "low_10d": 14.222646215515743,
+    "low_5d": 14.020000457763672,
+    "low_10d": 14.020000457763672,
     "high_52w": 17.549659970859143,
     "low_52w": 5.689336974787505,
-    "atr14": 0.6916256620949764,
-    "atr14_pct": 4.720994403441234,
-    "position_in_52w_range_pct": 75.55159034632285
+    "atr14": 0.6600981782538616,
+    "atr14_pct": 4.708260746798533,
+    "position_in_52w_range_pct": 70.23976906645325
   },
   "ohlc_2y": [
     {
@@ -426,8 +426,8 @@
       "date": "2025-02-11",
       "open": 16.8515,
       "high": 17.6812,
-      "low": 16.2983,
-      "close": 16.2983,
+      "low": 16.2984,
+      "close": 16.2984,
       "volume": 3999000.0
     },
     {
@@ -456,7 +456,7 @@
     },
     {
       "date": "2025-02-18",
-      "open": 16.2984,
+      "open": 16.2983,
       "high": 17.138,
       "low": 15.9526,
       "close": 16.7231,
@@ -512,7 +512,7 @@
     },
     {
       "date": "2025-02-27",
-      "open": 14.3426,
+      "open": 14.3425,
       "high": 14.6191,
       "low": 13.7301,
       "close": 13.7499,
@@ -1104,7 +1104,7 @@
     },
     {
       "date": "2025-06-13",
-      "open": 16.7424,
+      "open": 16.7423,
       "high": 17.4953,
       "low": 16.3956,
       "close": 17.4754,
@@ -1113,7 +1113,7 @@
     {
       "date": "2025-06-16",
       "open": 17.7826,
-      "high": 18.0698,
+      "high": 18.0699,
       "low": 16.5541,
       "close": 17.2377,
       "volume": 7219100.0
@@ -1211,7 +1211,7 @@
       "open": 15.6625,
       "high": 15.8309,
       "low": 15.078,
-      "close": 15.4148,
+      "close": 15.4149,
       "volume": 3044400.0
     },
     {
@@ -1507,7 +1507,7 @@
       "open": 12.9976,
       "high": 13.1264,
       "low": 12.7499,
-      "close": 12.7598,
+      "close": 12.7599,
       "volume": 5611400.0
     },
     {
@@ -2514,7 +2514,7 @@
       "date": "2026-02-26",
       "open": 9.2004,
       "high": 9.6778,
-      "low": 9.1009,
+      "low": 9.101,
       "close": 9.4192,
       "volume": 7785200.0
     },
@@ -2569,7 +2569,7 @@
     {
       "date": "2026-03-09",
       "open": 12.6817,
-      "high": 12.9601,
+      "high": 12.9602,
       "low": 11.4085,
       "close": 11.4483,
       "volume": 31073100.0
@@ -3625,29 +3625,29 @@
     {
       "date": "2026-09-16",
       "open": 15.0,
-      "high": 15.23,
-      "low": 14.545,
+      "high": 15.24,
+      "low": 14.55,
       "close": 14.65,
-      "volume": 12204389.0
+      "volume": 12215800.0
+    },
+    {
+      "date": "2026-09-17",
+      "open": 14.41,
+      "high": 14.61,
+      "low": 14.19,
+      "close": 14.42,
+      "volume": 12871000.0
+    },
+    {
+      "date": "2026-09-18",
+      "open": 14.4,
+      "high": 14.5,
+      "low": 14.02,
+      "close": 14.02,
+      "volume": 16698450.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-16",
-      "open": 13.5623,
-      "high": 14.0081,
-      "low": 13.5326,
-      "close": 13.9685,
-      "volume": 6591600.0
-    },
-    {
-      "date": "2025-09-17",
-      "open": 13.8991,
-      "high": 14.1468,
-      "low": 13.6515,
-      "close": 13.8199,
-      "volume": 7912600.0
-    },
     {
       "date": "2025-09-18",
       "open": 13.9982,
@@ -4532,7 +4532,7 @@
       "date": "2026-02-26",
       "open": 9.2004,
       "high": 9.6778,
-      "low": 9.1009,
+      "low": 9.101,
       "close": 9.4192,
       "volume": 7785200.0
     },
@@ -4587,7 +4587,7 @@
     {
       "date": "2026-03-09",
       "open": 12.6817,
-      "high": 12.9601,
+      "high": 12.9602,
       "low": 11.4085,
       "close": 11.4483,
       "volume": 31073100.0
@@ -5643,10 +5643,26 @@
     {
       "date": "2026-09-16",
       "open": 15.0,
-      "high": 15.23,
-      "low": 14.545,
+      "high": 15.24,
+      "low": 14.55,
       "close": 14.65,
-      "volume": 12204389.0
+      "volume": 12215800.0
+    },
+    {
+      "date": "2026-09-17",
+      "open": 14.41,
+      "high": 14.61,
+      "low": 14.19,
+      "close": 14.42,
+      "volume": 12871000.0
+    },
+    {
+      "date": "2026-09-18",
+      "open": 14.4,
+      "high": 14.5,
+      "low": 14.02,
+      "close": 14.02,
+      "volume": 16698450.0
     }
   ],
   "ai_synthesis": null,
