@@ -156,6 +156,36 @@
    "after": "Stockbee's definition: up_4pct_stockbee (or down) >= 300 on BOTH today and the previous session; both sides -> churn (neutral)",
    "note": "Andy 2026-09-18: 「确认原作者定义准确与否，按照原作者的定义走」. Sessions before 2026-09-05 have no Stockbee columns: their thrust vote is now unmeasurable (neutral), so replayed verdicts before that date can differ from what the page showed at the time. Sources in METRIC_SOURCES.md thrust row.",
    "declared": "2026-09-18 DATA ALEX"
+  },
+  {
+   "field": "breadth votes: ratio_5d / ratio_10d / qtr_spread / spread_13_34 / nh_nl, and Board damage / extremes / confirmation rows",
+   "changed": "first nightly run after this merge (expected session 2026-09-18)",
+   "commit": "see git log -- pipeline/screeners/breadth_signals.py pipeline/screeners/breadth_metrics.py",
+   "archives": [
+    "data/history/breadth_archive.csv",
+    "data/output/breadth.json",
+    "data/output/breadth_replay.json"
+   ],
+   "before": "price-only 4% counts in the ratios; point-to-point quarter / 34-day / calendar-month counts without liquidity; raw (SPAC-polluted) new highs / lows",
+   "after": "Stockbee's own Market Monitor scans (new *_stockbee columns: MINC65/MAXC65, MINC34/MAXC34, C20 >= $5, AVGC20*AVGV20 >= 250000, US common stocks); 10-day ratio bull line 2 (strict); nh_nl on new_highs_common / new_lows_common",
+   "note": "Andy 2026-09-18: 「全部按原文，9 用课程版，12 注册 EP Stockbee和 EP Qullamaggie 然后我们以后可以测试下。」 Old columns are kept and no longer vote. UNMEASURABLE windows (never voted on the old rule): ratio_5d_stockbee before 2026-09-11, ratio_10d_stockbee before 2026-09-18, the quarter / 34-day / month *_stockbee counts before the first nightly after this merge (they need each name's 65- and 34-bar close extremes, computed at run time only). Replaying 09-03..09-17 moves env BULLISH -> MIXED on 09-03, 09-04, 09-08, mostly because two votes turn unmeasurable. regime bands 47/63/75 read these rows: RND Linda re-calibrates (§七 2026-09-18).",
+   "declared": "2026-09-18 DATA ALEX"
+  },
+  {
+   "field": "author-named panels and presets: Stockbee 9M preset, LL Pullback panel, 21EMA Watch preset, Pocket Pivot panel and preset, Anticipation panel, VCP, Episodic Pivot (split into ep_stockbee + ep_qullamaggie), asset-layer atr_from_sma50",
+   "changed": "first nightly run after this merge (expected session 2026-09-18)",
+   "commit": "see git log -- pipeline/screeners/watchlist.py pipeline/screeners/vcp_detector.py pipeline/screeners/ep_stockbee.py",
+   "archives": [
+    "data/history/ticker_events.csv",
+    "data/history/watchlist_hits.csv",
+    "data/history/leaders_log.csv",
+    "data/history/shortlist_log.csv",
+    "data/history/asset_signals.csv"
+   ],
+   "before": "our own variants (9M on 20-day average volume + 3 extra legs; LL Pullback 0.5-1 / 0-3 in B/A units; Pocket Pivot >=3 in 10 days + trend_base; VCP conditions flagged not filtered; EP close +10% x rvol 3 x $500M)",
+   "after": "each author's text, sources in METRIC_SOURCES.md; EP runs as two lists; both EPs and the five lists above run on the >=$1B universe",
+   "note": "Andy 2026-09-18: 「全部按原文，9 用课程版，12 注册 EP Stockbee和 EP Qullamaggie 然后我们以后可以测试下。」 Hit counts on 09-17 data: 9M 8 -> 201, LL Pullback 10 -> 32, 21EMA Watch 54 -> 93, Pocket Pivot panel 50 -> 180, VCP 27 -> 4, EP 6 -> two lists. screener 'episodic_pivot' is retired in ticker_events after 2026-09-17 (RETIRED_SCREENER_FILES); heat counts the EP family once. Compare across the change only per definition.",
+   "declared": "2026-09-18 DATA ALEX"
   }
  ]
 }
