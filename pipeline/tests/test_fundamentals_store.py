@@ -15,7 +15,8 @@ class TestMapInfo:
 
     def test_missing_and_nan_are_none(self):
         m = FS.map_info({"revenueGrowth": float("nan"), "earningsGrowth": "x"})
-        assert m == {"eps_growth_next_y": None, "revenue_growth": None, "eps_growth_this_y": None}
+        assert m == {"eps_growth_next_y": None, "revenue_growth": None, "eps_growth_this_y": None,
+                     "profit_margin": None, "roe": None}
 
 
 class TestRefresh:

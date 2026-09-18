@@ -10,8 +10,8 @@ watchlists" counts ZONES rather than panels -- his three momentum panels all
 say "moving", so 3+ there mostly meant one thing three times.
 
 Zones (order is the reading order):
-    leaders       -- who leads?              True Market Leaders (liquid leader x
-                                             Leading home group x rs_1m>=80); Liquid Leaders
+    leaders       -- who leads?              True Market Leaders (Richard Moglen 2020,
+                                             see tml_moglen.py); Liquid Leaders
     entries       -- can I enter today?      LL-HL 1st / 2nd / trend-line break;
                                              Liquid Leader Pullback (Alex / TradersLab, 09-18)
     compression   -- what is loading?         VCS; anticipation (strong x quiet x VCS)
@@ -35,7 +35,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
-from pipeline.screeners import ep_qullamaggie, ep_stockbee
+from pipeline.screeners import ep_qullamaggie, ep_stockbee, tml_moglen
 
 MIN_CAP = 1e9
 LEADERS_LOG = Path("data/history/leaders_log.csv")
@@ -151,10 +151,20 @@ def _quiet(r) -> bool:
 
 PANELS: Dict[str, Panel] = {p.key: p for p in [
     # --- leaders (qualification, not entries) ---
+    # Richard Moglen's definition (2026-09-18, Andy: 「照 Moglen 2020（建议）可以」),
+    # x.com/RichardMoglen/status/1324813953474678787 -- one implementation in
+    # tml_moglen.py, called here AND by archive_leaders. Replaces (08..09-18)
+    # "liquid_leader and home group = Leading and rs_1m >= 80", which was ours.
     Panel("true_market_leaders", "True Market Leaders",
-          "liquid_leader and home theme/industry state = Leading and rs_1m >= 80 -- the leader inside a leading water",
-          ["liquid_leader", "_group_state"],
-          lambda r: r.get("liquid_leader") is True and r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
+          "Richard Moglen (TraderLion), 2020-11-06: 'an institutional quality stock in a leading industry group "
+          "with superior fundamentals and technicals'. Required: dollar volume > $30M (20-day avg close x avg "
+          "volume); RS Rating >= 97 (our reconstruction of IBD's); above a rising 30-week MA; Weinstein Stage 2 "
+          "(broke out of a Stage 1 or Stage 2 base -- Weinstein 1988, thresholds ours); close above the 10 EMA, "
+          "21 EMA and 50 SMA; Up/Down volume (50 days) > 1.2. 'Most of' the fundamentals = at least 3 of 5 met: "
+          "quarterly sales yoy > 25%, quarterly earnings yoy > 25%, net margin > 20%, ROE > 17%, next-year "
+          "EPS estimate > 25% (a missing item is not counted as met). Flag only: top-20 industry. Not measured: "
+          "volume/price contraction in the base, earnings gap-ups, story",
+          list(tml_moglen.NEEDS), tml_moglen.passes),
     # Andy's course version (2026-09-18: 「9 用课程版」), SwingMasterclass
     # M2_L09_Scanning_Routines.md:134 "ADV ≥ 2M shares, above 50 SMA, RS rank
     # top 20%". Computed once in run_all.compute_universe_scores; see there.
@@ -362,7 +372,9 @@ def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
          # is fundamentals + industry, not relative strength. Sort order is
          # unchanged: h_score_pctl is a monotone rank of h_score.
          "composite_score": _round(_f(r, "h_score_pctl")),
-         "sector": r.get("sector")}
+         "sector": r.get("sector"),
+         # Moglen: "often in the Top 20 Industry groups" -- a flag, not a filter
+         "top20_industry": tml_moglen.flags(r)["top20_industry"]}
     if r.get("_group") is not None:
         e["group"] = r.get("_group")
         e["group_state"] = r.get("_group_state")
@@ -394,28 +406,34 @@ def _with_groups(rows, group_states):
 
 
 def archive_leaders(rows, *, date: str, group_states=None, path: Path = LEADERS_LOG) -> int:
-    """One row per liquid leader per date (idempotent per date): the
-    prospective record for judging Liquid Leader / TML forward returns --
-    theme states have no history before 2026-08-07, so this is how the TML
-    dimension gets validated at all."""
+    """One row per liquid leader OR True Market Leader per date (idempotent
+    per date): the prospective record for judging Liquid Leader / TML forward
+    returns.
+
+    Since 2026-09-18 TML (Moglen) no longer requires liquid_leader, so a TML
+    that is not a liquid leader (e.g. a $30M+/day name under 2M shares) gets
+    its own row with liquid_leader=False -- otherwise the `tml` column would
+    silently drop exactly the names the new definition added. Rows before
+    2026-09-18 are all liquid_leader=True and stay as they are."""
     import csv
     fields = ["date", "ticker", "liquid_leader", "tml", "rs_1m", "rs_3m", "h_score",
               "group", "group_state", "close", "atr_from_sma50", "ema21_atr_dist"]
-    rows = [r for r in _with_groups(rows, group_states) if r.get("liquid_leader") is True and passes_gate(r)]
-    tml_pool = {r["ticker"] for r in panel_pool(rows, "leaders")}
+    gated = [r for r in _with_groups(rows, group_states) if r.get("ticker") and passes_gate(r)]
+    tml_pool = {r["ticker"] for r in panel_pool(gated, "leaders") if PANELS["true_market_leaders"].test(r)}
+    rows = [r for r in gated if r.get("liquid_leader") is True or r["ticker"] in tml_pool]
     old = []
     if path.exists():
         with path.open(newline="") as fh:
             old = [r for r in csv.DictReader(fh) if r.get("date") != date]
     new = []
     for r in rows:
-        new.append({"date": date, "ticker": r["ticker"], "liquid_leader": True,
+        new.append({"date": date, "ticker": r["ticker"], "liquid_leader": r.get("liquid_leader") is True,
                     # The panel's own test on the panel's own pool (ADR floor included,
                     # universe-wide since 08-25). Was a private copy of the rule without
                     # the floor: MSFT 09-17 logged True here, False on the page and in
                     # shortlist_log (audit_event_agreement E5). Same filter for what Andy
                     # sees and what research measures -- see panel_pool.
-                    "tml": bool(r["ticker"] in tml_pool and PANELS["true_market_leaders"].test(r)),
+                    "tml": r["ticker"] in tml_pool,
                     "rs_1m": _int_or_none(_f(r, "rs_1m")), "rs_3m": _int_or_none(_f(r, "rs_3m")),
                     "h_score": _round(_f(r, "h_score")), "group": r.get("_group"),
                     "group_state": r.get("_group_state"), "close": _f(r, "close"),
@@ -535,8 +553,8 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     """Zones -> panels -> tickers (RS 1M beside, sorted by Composite Score desc), plus
     the cross-ZONE count. Panels whose fields are absent from every row are
     emitted empty with measured=False. `group_states` (from groups.json via
-    load_group_states) supplies the home group and its four-state; without it
-    the True Market Leaders panel is unmeasured."""
+    load_group_states) supplies the home group and its four-state (shown
+    beside each ticker; since 2026-09-18 no panel filters on it)."""
     rows = _with_groups(rows, group_states)
     gated = [r for r in rows if r.get("ticker") and passes_gate(r)]
     present = set()

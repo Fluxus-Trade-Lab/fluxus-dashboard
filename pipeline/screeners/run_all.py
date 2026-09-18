@@ -500,6 +500,13 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['_i_raw'] = df['industry'].map(industry_rs)
     df['i_score'] = score_against_tradeable('_i_raw')
     df.drop(columns=['_i_raw'], inplace=True)
+    # Industry RANK on the same quantity (2026-09-18, TML = Moglen 2020: "often
+    # in the Top 20 Industry groups"; tml_moglen flags industry_rank <= 20, it
+    # does not filter). 1 = highest median rs_3m of tradeable members. NOT
+    # IBD's ruler: IBD ranks its own 197 groups on 6-month price performance;
+    # ours are Finviz industries on the 3-month RS median behind i_score.
+    _ind_rank = industry_rs.rank(ascending=False, method='min')
+    df['industry_rank'] = df['industry'].map(_ind_rank).astype('Int64')
 
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
@@ -1121,6 +1128,11 @@ def main():
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
         'bo_count_3m', 'bo_count_1y',
         'ema10', 'ema20', 'wk_ema10', 'wk_ema20',
+        # True Market Leaders = Moglen 2020 (2026-09-18; pipeline/screeners/tml_moglen.py).
+        # sb_avg_dollar_vol_20 was already computed (Stockbee MM input) but not shipped.
+        'sb_avg_dollar_vol_20', 'wk_sma30', 'wk_sma30_dist', 'wk_sma30_rising',
+        'weinstein_stage', 'stage_tdn', 'ud_vol_ratio_50', 'profit_margin', 'roe',
+        'industry_rank',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]
     # Convert to object dtype so NaN becomes None (valid JSON null, not NaN)

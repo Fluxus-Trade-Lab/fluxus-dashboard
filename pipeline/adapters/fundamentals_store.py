@@ -29,6 +29,14 @@ Field mapping (names kept so `compute_universe_scores` is untouched):
                         top-line growth -- different window; documented in
                         DATA_CONTRACTS.
   eps_growth_this_y  <- earningsGrowth (yoy)
+
+Two more fields from the SAME `info` dict (2026-09-18, TML = Moglen 2020;
+no new call, no new endpoint -- see pipeline/screeners/tml_moglen.py):
+  profit_margin      <- profitMargins (after-tax net margin, TTM)
+  roe                <- returnOnEquity (TTM)
+They are NOT in FIELDS: FIELDS decides `fund_source` and feeds growth_score,
+and neither should change. A store record written before 2026-09-18 has no
+such keys -> None until its next rolling refresh (~8 nights for the universe).
 """
 
 from __future__ import annotations
@@ -51,6 +59,7 @@ log = logging.getLogger(__name__)
 
 STORE = Path("data/reference/fundamentals.json")
 FIELDS = ("eps_growth_next_y", "revenue_growth", "eps_growth_this_y")
+EXTRA_FIELDS = ("profit_margin", "roe")
 import os
 BUDGET = int(os.environ.get('FUNDAMENTALS_BUDGET', '700'))   # tickers refreshed per run; CI sets 400
 WORKERS = 6
@@ -72,7 +81,7 @@ RETRY_WORKERS = 2               # gentler on the way back in
 
 
 def map_info(info: Mapping) -> Dict[str, Optional[float]]:
-    """yfinance `info` dict -> our three fields (None where undefined)."""
+    """yfinance `info` dict -> FIELDS + EXTRA_FIELDS (None where undefined)."""
     def num(k):
         v = info.get(k)
         try:
@@ -87,6 +96,8 @@ def map_info(info: Mapping) -> Dict[str, Optional[float]]:
         "eps_growth_next_y": eps_next,
         "revenue_growth": num("revenueGrowth"),
         "eps_growth_this_y": num("earningsGrowth"),
+        "profit_margin": num("profitMargins"),
+        "roe": num("returnOnEquity"),
     }
 
 
@@ -253,6 +264,9 @@ def apply(universe: pd.DataFrame, store: Mapping[str, Dict]) -> pd.DataFrame:
     for f in FIELDS:
         yf_col = pd.Series(yf_vals[f], index=df.index, dtype="float64")
         df[f] = yf_col.where(yf_col.notna(), df[f])
+    for f in EXTRA_FIELDS:
+        vals = [(store.get(t) or {}).get(f) if isinstance(t, str) else None for t in df["ticker"]]
+        df[f] = pd.to_numeric(pd.Series(vals, index=df.index, dtype="float64"), errors="coerce")
     df["fund_source"] = pd.Series(src, index=df.index, dtype=object)
     df["fund_asof"] = pd.Series(asof, index=df.index, dtype=object)
     return df

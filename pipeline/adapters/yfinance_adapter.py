@@ -16,6 +16,7 @@ from .yahoo_budget import BUDGET
 from ..constants.tickers import STOCK_GROUPS
 from ..constants.leveraged import get_leveraged_etfs
 from ..screeners.atr_enrichment import atr_multiple_from_levels
+from ..screeners.stage_analysis import moglen_bar_fields
 from ..macro.calc_signals import calculate_ma_structure, calculate_power_trend
 
 logger = logging.getLogger(__name__)
@@ -1352,6 +1353,10 @@ class YfinanceAdapter(BaseAdapter):
                     # Stockbee MM scan inputs (MINC65/MAXC65/MINC34/MAXC34,
                     # C20, AVGC20*AVGV20) -- see stockbee_mm_inputs().
                     **sb_mm,
+                    # True Market Leaders inputs (2026-09-18, Moglen 2020):
+                    # Weinstein 30-week stage, the Pine stage port (unverified,
+                    # reference only), IBD 50-day Up/Down volume. Same bars.
+                    **moglen_bar_fields(hist),
                     # EP inputs (2026-09-18, Andy 「全部按原文」): Stockbee's
                     # avgv50.1 and Qullamaggie's gap (open vs prior close).
                     'avg_vol50_prev': sb['avg_vol50_prev'],

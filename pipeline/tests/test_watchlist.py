@@ -127,21 +127,15 @@ class TestLeaders:
         assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "ema21_atr_dist": 1.5}))
         assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "sma50_atr_dist": 4.5}))
 
-    def test_true_market_leader_needs_a_leading_group(self):
-        """TML = liquid leader whose home theme/industry is Leading and rs_1m >= 80
-        -- the theme dimension none of the four benchmarks have."""
+    def test_true_market_leader_no_longer_reads_the_group_state(self):
+        """2026-09-18: TML = Moglen 2020 (tml_moglen.py; full pins in
+        test_tml_moglen.py). The old recipe -- liquid_leader x Leading home
+        group x rs_1m >= 80 -- was ours; a row meeting only it is not a TML,
+        and the group map no longer decides whether the panel is measured."""
         r = row(ticker="X", liquid_leader=True, rs_1m=90)
         out = W.build([r], date="2026-08-14", group_states={"X": ("Software", "Leading")})
         p = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}
-        assert [x["ticker"] for x in p["true_market_leaders"]["tickers"]] == ["X"]
-        assert p["true_market_leaders"]["tickers"][0]["group"] == "Software"
-        out2 = W.build([r], date="2026-08-14", group_states={"X": ("Software", "Weakening")})
-        p2 = {pn["key"]: pn for z in out2["zones"] for pn in z["panels"]}
-        assert p2["true_market_leaders"]["tickers"] == []
-        # no group map at all -> unmeasured, not empty-and-false
-        out3 = W.build([r], date="2026-08-14")
-        p3 = {pn["key"]: pn for z in out3["zones"] for pn in z["panels"]}
-        assert p3["true_market_leaders"]["measured"] is False
+        assert p["true_market_leaders"]["tickers"] == []
 
     def test_leaders_zone_comes_first(self):
         out = W.build([row()], date="2026-08-14")
@@ -154,7 +148,8 @@ class TestLeaders:
         assert n == 1
         import csv
         rows_ = list(csv.DictReader((tmp_path / "log.csv").open()))
-        assert rows_[0]["ticker"] == "X" and rows_[0]["tml"] == "True" and rows_[0]["group_state"] == "Leading"
+        # a liquid leader is logged whether or not it is a TML (Moglen since 09-18)
+        assert rows_[0]["ticker"] == "X" and rows_[0]["tml"] == "False" and rows_[0]["group_state"] == "Leading"
         # idempotent per date
         assert W.archive_leaders([r], date="2026-08-14", group_states={}, path=tmp_path / "log.csv") == 1
         assert len(list(csv.DictReader((tmp_path / "log.csv").open()))) == 1
@@ -167,8 +162,13 @@ class TestLeaders:
         without it. Same input, one answer: tml == "on the TML panel"."""
         import csv
         gs = {"LOW": ("Tech Mega Caps", "Leading"), "HIGH": ("Semis", "Leading")}
-        rs = [row(ticker="LOW", liquid_leader=True, rs_1m=82, adr_pct=1.86),
-              row(ticker="HIGH", liquid_leader=True, rs_1m=82, adr_pct=4.0)]
+        # 09-18: the rule is Moglen's now (tml_moglen); the invariant under test
+        # -- log == panel, ADR floor included -- is unchanged.
+        moglen = dict(sb_avg_dollar_vol_20=5e8, rs_rating=98, wk_sma30_dist=0.2, wk_sma30_rising=True,
+                      weinstein_stage=2, ema10=95.0, ema21=92.0, sma50_dist=0.1, ud_vol_ratio_50=1.5,
+                      revenue_growth=0.4, eps_growth_this_y=0.4, eps_growth_next_y=0.4)
+        rs = [row(ticker="LOW", liquid_leader=True, rs_1m=82, adr_pct=1.86, **moglen),
+              row(ticker="HIGH", liquid_leader=True, rs_1m=82, adr_pct=4.0, **moglen)]
         W.archive_leaders(rs, date="2026-09-17", group_states=gs, path=tmp_path / "log.csv")
         logged = {r["ticker"]: r["tml"] == "True" for r in csv.DictReader((tmp_path / "log.csv").open())}
         out = W.build(rs, date="2026-09-17", group_states=gs)
