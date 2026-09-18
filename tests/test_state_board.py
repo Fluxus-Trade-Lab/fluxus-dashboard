@@ -21,7 +21,7 @@ def frame(**over) -> pd.DataFrame:
                 ratio_5d_stockbee=0.9905, new_highs_common=29, new_lows_common=12)
     base.update(over)
     # six rows so the five-session peak window is populated
-    rows = [dict(base, down_4pct=637) for _ in range(5)] + [base]
+    rows = [dict(base, down_4pct=637, down_4pct_stockbee=600) for _ in range(5)] + [base]
     return pd.DataFrame(rows)
 
 
@@ -71,13 +71,15 @@ def test_index_repair_counts_benchmarks_above_their_50day():
 
 
 def test_selling_pressure_is_relative_to_the_recent_peak():
-    """288 against a 637 peak is easing; the same 288 with no prior spike is not."""
+    """Stockbee count 246 against a 600 peak is easing; the same count with no
+    prior spike is not. The price-only down_4pct no longer drives the row."""
     easing = next(r for r in state_board(frame(), health()) if r["key"] == "selling pressure")
     assert easing["level"] == 3
     flat = pd.DataFrame([dict(up_25pct_qtr=342, down_25pct_qtr=523, up_4pct=231,
                               down_4pct=288, ratio_5d=1.0, t2108=45.0,
                               pct_above_20sma=40.0, pct_above_200sma=46.0,
-                              new_highs=29, new_lows=12, net_advances=-1)
+                              new_highs=29, new_lows=12, net_advances=-1,
+                              down_4pct_stockbee=246)
                          for _ in range(6)])
     steady = next(r for r in state_board(flat, health()) if r["key"] == "selling pressure")
     assert steady["level"] == 1
@@ -157,3 +159,11 @@ def test_confirmation_never_denies_a_number_it_prints():
                 assert "not yet clear of 1.2" not in ev, (r5, net, ev)
             if r5 > 1.0:
                 assert "needs to clear 1.0" not in ev, (r5, net, ev)
+
+
+def test_selling_pressure_reads_the_stockbee_count_not_price_only():
+    """2026-09-18 (Andy 「全部按原文」): a price-only spike must not move the row."""
+    f = frame()
+    f["down_4pct"] = 5000          # huge price-only count everywhere
+    row = next(r for r in state_board(f, health()) if r["key"] == "selling pressure")
+    assert row["level"] == 3 and "246" in row["evidence"]

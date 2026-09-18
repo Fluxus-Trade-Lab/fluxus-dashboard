@@ -101,9 +101,13 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
             f"{qd:.0f} names −25% on the quarter against {qu:.0f} up 25% "
             f"— {share*100:.0f}% on the down side"))
 
-    # 2 · Selling pressure — today against the recent peak, not against zero
-    dn4 = _num(row.get("down_4pct"))
-    peak = _num(prev5["down_4pct"].max()) if len(prev5) else None
+    # 2 · Selling pressure — today against the recent peak, not against zero.
+    # The count is Stockbee's three-leg 4% decliner count (2026-09-18, Andy
+    # 「全部按原文」); the today-vs-5-day-peak reading itself is ours. Sessions
+    # before the column existed (2026-09-05) read unavailable, never price-only.
+    dn4 = _num(row.get(THRUST_DOWN))
+    peak = (_num(pd.to_numeric(prev5[THRUST_DOWN], errors="coerce").max())
+            if len(prev5) and THRUST_DOWN in prev5 else None)
     if dn4 is None or not peak:
         out.append(_row("selling pressure", FACT, None, "4% decliner counts unavailable"))
     else:
