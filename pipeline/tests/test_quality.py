@@ -353,6 +353,44 @@ class TestRetiredFields:
         assert v["status"] == "severe"
 
 
+class TestFScoreRetirement:
+    """2026-09-18: run 35399820824 and 35402553203 both aborted as
+    universe_quality=severe on a single field, f_score -- "100.0% missing in
+    a column that has been as low as 0.0% -- a feed that worked has died".
+    It hadn't: 421b2777 (same day) renamed f_score to growth_score (Andy --
+    f_score collided with the Piotroski F-Score name) but did not add
+    f_score to RETIRED_FIELDS, so universe_quality.csv's steady 0.0%-missing
+    baseline for it read the rename as a dead vendor feed. Same mechanism as
+    TestRetiredFields above, kept as its own class because the exact history
+    shape (a single always-populated field, not a batch) is worth a direct
+    regression test."""
+
+    def test_f_score_is_retired(self):
+        assert Q.is_retired("f_score")
+
+    def test_production_shape_no_longer_aborts_the_run(self):
+        """Positive control: reproduce the 09-18 history+today shape (f_score
+        healthy at 0.0% for months, gone from today's rows). Before the fix
+        (f_score absent from RETIRED_FIELDS) this asserts severe -- confirming
+        the test catches the regression -- after the fix it must not."""
+        hist = [{"date": "2026-09-17", "f_score": "0.0"}]
+        today_rates = {"f_score": 1.0}  # gone from today's rows, renamed to growth_score
+        fields = [f for f in today_rates if not Q.is_retired(f)]
+        rates = {f: today_rates[f] for f in fields}
+        v = Q.assess(rates, hist)
+        assert v["status"] == "ok"
+        assert v["fields"] == {}
+
+    def test_without_the_fix_the_same_shape_is_severe(self):
+        """Negative control: grading f_score directly (bypassing
+        discovered_fields' exclusion) reproduces the production abort --
+        proof this is the mechanism that broke, not a red herring."""
+        hist = [{"date": "2026-09-17", "f_score": "0.0"}]
+        rates = {"f_score": 1.0}
+        v = Q.assess(rates, hist)
+        assert v["status"] == "severe"
+
+
 class TestRebasedFields:
     """2026-09-11: universe quality read "degraded" seven nights running from
     one field -- i_score, "6.0% missing against a 0.2% baseline". The rise was

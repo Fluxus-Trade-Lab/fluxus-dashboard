@@ -78,8 +78,16 @@ UNGRADED: frozenset = frozenset({"ticker"})
 # renames/deletions, not to a vendor gap.
 # wk_tight_3 -> three_weeks_tight, rs_ibd -> rs_rating; the rest are the
 # dead-field batch (#7) removed outright with zero consumers.
+#
+# f_score -> growth_score: renamed 2026-09-18 (421b2777, Andy -- f_score
+# collided with the Piotroski F-Score name). Same shape as the batch above:
+# universe_quality.csv carries f_score at a steady 0.0% missing, so the first
+# night after the rename read 100% missing against that baseline and aborted
+# two runs (35399820824, 35402553203) with "a feed that worked has died" --
+# it didn't, it moved to growth_score, which bootstraps fresh (MIN_HISTORY)
+# since it has no prior column history of its own.
 RETIRED_FIELDS: frozenset = frozenset({
-    "wk_tight_3", "rs_ibd",
+    "wk_tight_3", "rs_ibd", "f_score",
     "ad_ratio_20", "atr_pctl_252", "atr_pctl_63", "bo_count_1m", "bo_count_3m",
     "bo_count_6m", "bo_count_1y", "cmf21", "ema21_low_dist", "ema21_r",
     "range5_pctl_252", "rs_126d", "sma50_r", "vol10_green_count_30d",
