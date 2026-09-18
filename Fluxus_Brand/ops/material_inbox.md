@@ -487,3 +487,5 @@
 - [09-19] [数据哨兵] 网络中断可视化：CONNECT 403 拦截五班确认，第六班恢复；班次门铃回执机制把隐形故障变成可追踪数据。 · [95887bea](../../commit/95887bea)
 
 - **[2026-09-19 · DATA ALEX · 踩坑故事]** 「300+」写死在代码里，宇宙缩放了它都没动。breadth_signals 的 reversal-watch 笔记原本是「look for back-to-back 300+ up-4% days」，前两处注释已在 fc6227e7 改成了读 thrust_count()，这一处还活在手打字面值里。参数真的变过：08-09 到 09-18 期间 universe-scaled，从 **559 只** 缩到 **634 只**，但这行文字仍是「300+」——硬编码的叙述会在它脚下那个量变化时悄悄说谎。修法：`n = thrust_count(row)` 前置，文字改成 f-string。**可发的一句：比公式错更隐蔽的，是注释用了一个迟早会过期的常数。** 出处：commit `6b42afd4` · 新测试 `test_oversold_note_reads_thrust_count_not_a_hardcoded_300`
+
+- [09-19] [数据哨兵] **工具的默认参数把成功诊断成失败 —— 直到有人用对参数跑一遍才现形**。`failure_class` 在缺少 `--succeeded` 参数时默认 `failed=True`，所以任何没明确标记的场次都被分诊成失败，一整道闸就这么自我欺骗了好几班。09-19 巡检才发现前面几班拿的都是错诊断。**一句可发的话：闸门默认设成「你有罪」，等着人来证无罪——而没人知道这个默认值的时候，它成了一道隐形审查。** 出处：[data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) [09-19] + commit cd05509d
