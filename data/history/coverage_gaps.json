@@ -74,6 +74,16 @@
    "cause": "a whole-session gap, a different failure from the half-alphabet truncation above: nothing was written for these sessions (07-14..07-24 are the backfilled breadth rows; 08-10 is the session the page cap was lifted). Found by Nighty Zac 2026-09-18 (listed 11; 04-07 also has zero rows)",
    "backfill": "not recoverable -- screener snapshots for these sessions were never taken",
    "declared": "2026-09-18 DATA ALEX, from Nighty Zac 2026-09-18 §七"
+  },
+  {
+   "archive": "data/history/regime_ledger.csv",
+   "first": "2026-09-16",
+   "last": "2026-09-16",
+   "sessions": 1,
+   "universe": "row present but reconstructed, not live-computed",
+   "cause": "the 09-16 nightly (run 35160482205) was stopped by a stale schema_snapshot key before regime_ledger ran, same run as the delayed_ep_log gap above; RND Linda rebuilt the row from committed files only (correction_risk.json of 27883a92), not a refetch (c7fb1031, 2026-09-18)",
+   "backfill": "done, but not equivalent to a live run -- the rolling-window fields (oas_rank252, gexn_rank252) were computed on a series truncated to what was committed by the rebuild date, not the full run-time state a live 09-16 session would have seen. Positive control: the same reconstruction method reproduces 2026-09-15 and 2026-09-17 byte-for-byte. RND Linda's ruling: keep the reconstructed row and record this caveat rather than treat it as equivalent to a live-computed session.",
+   "declared": "2026-09-19 alex, from RND Linda's 2026-09-18 ruling (c7fb1031) per Nighty Zac 2026-09-18 §七 note and the 2026-09-17 DATA ALEX/RND Linda doorbell (INBOX.md L2762)"
   }
  ],
  "definition_breaks": [
