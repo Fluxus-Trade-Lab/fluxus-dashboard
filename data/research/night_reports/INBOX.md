@@ -111,6 +111,7 @@
   - **没跟着变的**：Watchlist / Short List 走 tradeable 闸（市值 ≥3 亿且日成交额 ≥200 万），今天实测 219 只里小票 **0.0%**。所以这件事只影响**没有闸的那几张单子**。
   - **要你回的一句**：这些筛子单**要不要也加一道市值/成交额闸**？（回「加」＝ DATA ALEX 加，回「不加」＝ 保持现状但我们记一行账说明它是被动变成这样的。）两边都可逆，不花钱。
   - 依据：[`data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`](../../reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md) · 复现脚本在 `data/research/breadth_universe_break_2026-09-18/`。核销：你回一句，或 DATA ALEX 做完了，就在本条下追 `↳ ✅`。
+  ↳ ✅ Andy 已回（09-18，OPS 代录）：「哦市值这个闸是要加上的。」→ 加。已挂门铃 DATA ALEX（后端筛子单）＋ UI Claire（`Weekly Momentum 97` 预设缺 `marketCapMin`）。做完后在本条下追 ↳ ✅ 核销。
 
 ## 等 Zac 下次窗口处理
 
@@ -2901,3 +2902,7 @@ INBOX 里写成「丢弃」的，逐条核：
 - [2026-09-18] Discord→X 云生成端回执：2026-09-16 草稿（`data/output/threads/2026-09-16/draft.txt`，56 条消息 → 7 条推文）已由 Andy 对话内批「可以合并」直接合入 main（commit `48589457`），原分支 `claude/eager-bohr-5egtr6` 到此销账——Plumber Joe 09-18 早报「待合分支」表里那一行可划掉。
 
 - [09-18] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 04:06 UTC / 13:06 JST（ET 09-18 00:06）巡检：dashboard 仍追平最近已完成交易日 2026-09-17（`git log --grep='chore: market data'` 最新为 `fa77725b` 2026-09-17 23:14:15Z；ET 00:06 刚过午夜，09-17 仍是最近已完成交易日）。`actions_list` 最新一条是 run 194（`35287404004`，23:33:56 UTC，schedule，success，无新 commit——冬令时孪生排程被 gate 跳过的形状，`e0a4eced`/[09-18]门铃已知，非异常），run 193（`35284322945`，正班，落地 `fa77725b`）之后无更新；无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"` 取铃显示 open:1，核实即 [09-18] 孪生排程说明门铃，已由 09:06 JST 班回执确认（原行下 ↳ ✅），非新条，本班不重复回执。健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
+
+
+🔔 [09-18] → DATA ALEX: Andy 09-18 裁「加」（原话「哦市值这个闸是要加上的。」）：给没有市值闸的筛子单（`gainers_4pct`、`vol_up_gainers`、`momentum_97`、`healthy_charts`、`ema21_watch` 等，见 Zac 同日 📌 条与 `data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`）加市值闸，建议与 tradeable 闸同口径（`themes/__init__.py:31`，≥$1B），让它们回到 06-26 之前的人口；成交额闸要不要一起加由你判。附一条能红的测试（断点后样本里 <$1B 占比应为 0）。做完在 INBOX 📌 那条下追 ↳ ✅。— OPS Fable · pending
+🔔 [09-18] → UI Claire: Andy 09-18 裁「加」市值闸（原话「哦市值这个闸是要加上的。」）：`frontend/public/data/screener-presets.json` 里只有 `Weekly Momentum 97` 没有 `marketCapMin`，请补成与其余九个一致的 `1.0`，和 DATA ALEX 的后端闸对齐口径。— OPS Fable · pending
