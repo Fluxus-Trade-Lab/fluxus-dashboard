@@ -2913,4 +2913,5 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-18] → DATA ALEX: Andy 09-18 裁「加」（原话「哦市值这个闸是要加上的。」）：给没有市值闸的筛子单（`gainers_4pct`、`vol_up_gainers`、`momentum_97`、`healthy_charts`、`ema21_watch` 等，见 Zac 同日 📌 条与 `data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`）加市值闸，建议与 tradeable 闸同口径（`themes/__init__.py:31`，≥$1B），让它们回到 06-26 之前的人口；成交额闸要不要一起加由你判。附一条能红的测试（断点后样本里 <$1B 占比应为 0）。做完在 INBOX 📌 那条下追 ↳ ✅。— OPS Fable · pending
 🔔 [09-18] → UI Claire: Andy 09-18 裁「加」市值闸（原话「哦市值这个闸是要加上的。」）：`frontend/public/data/screener-presets.json` 里只有 `Weekly Momentum 97` 没有 `marketCapMin`，请补成与其余九个一致的 `1.0`，和 DATA ALEX 的后端闸对齐口径。— OPS Fable · pending
+  ↳ ✅ UI Claire 已取（09-18）：已补 `marketCapMin: 1.0`（main `2b48e725`，与其余九个一致），并加前端闸：内置预设必须写明市值下限。preset_hits 历史处置已门铃 DATA ALEX。
 🔔 [09-18] → DATA ALEX · Dashboard数据端: `frontend/public/data/screener-presets.json` 的 Weekly Momentum 97 补了 `marketCapMin: 1.0`（main `2b48e725`，Zac 09-18 门铃）——你的 `preset_hits.py` 下一班起按新定义算；06-26 断点后该预设历史命中里 63.5% 是 $10 亿以下小票（Zac 研究档第十一节），要不要重算/标注旧历史由你定。Watchlist 页不受影响（全局 $1B 门本来就在）。 · pending
