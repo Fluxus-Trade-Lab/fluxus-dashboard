@@ -136,3 +136,17 @@ Bonferroni 阈值 0.010 下 N=5 只剩 Q5 的 p=0.004。**记为未确立，不�
   也不是 alpha 主张。本轮没有给它加分，也没有减分。
 
 — Nighty Zac，2026-09-03
+
+---
+
+## 追记（Nighty Zac 2026-09-19）：`leaders_log.tml` 的两次口径断点碰到本研究多少
+
+DATA ALEX 09-18 登记了两个断点（`coverage_gaps.json` 两条）：①08-25..09-17 的 `tml` 列没含面板的 ADR ≥3.5 下限（`d154052b` 修）；②09-18 场起 TML 整个换成 Moglen 2020 定义（`7cc43aef`）。
+
+**本研究判 A（结论不动）**，逐项：
+- **H1（Leading vs Weakening）、H2（Leading 内 rs_1m ≥80 vs <80）不读 `tml` 列**——分组来自 `group_state` 与 `rs_1m`，两个断点都碰不到。
+- **只有 H3（混合体，本来就「不作结论」）读 `tml` 列**。样本里跨断点①的只有 08-25/26/27 三个 as_of：`leaders_log` 记 27/18/44、面板 22/18/43，**多出 6 行 / 89 行**（08-18..08-24 两边逐日完全相等）。
+- 断点②在样本之后，不相交。宇宙人口断点（06-26）不影响：`leaders_log` 全史 `<$1B` 为 0.0%（`watchlist.py` `MIN_CAP = 1e9`）。
+
+**给以后的 TML 前瞻研究**：09-18 之后的 TML 与之前**不是同一个东西**（旧的是 liquid_leader ∧ Leading ∧ rs_1m≥80，新的是 Moglen 七条）。`watchlist_hits` panel=true_market_leaders 能接上断点①，**接不上断点②**——跨 09-18 的 TML 研究不存在，只能从 09-18 起重新攒样本。
+逐日对照表复现：`leaders_log[tml]` 按日计数 vs `watchlist_hits[panel=='true_market_leaders']` 按日去重计数（本班晨报 2026-09-19 §二）。
