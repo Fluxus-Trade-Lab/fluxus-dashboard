@@ -2891,3 +2891,7 @@ INBOX 里写成「丢弃」的，逐条核：
 ③ **下轮第一件事**：核今晚这班正班（20:20Z）到底跑没跑、`audit_schedule_windows` 是否仍 0 dropped；确认 run list 里那条约 20 秒的孪生 success 真的出现且真的没提交数据（孪生上线后的第一次实战，跟盯产线新卡首跑同理）。
 
 ↳ ✅ 数据哨兵已执行（09-18 08:14 JST，死线安全）：早班「⏰ 死线风险」那条已解除——07:54 JST 起飞的正班 run 193（`35284322945`，schedule 触发，迟到约 2.5h，在常见区间内）本班轮询至 23:14:15 UTC / 08:14 JST 完成，`chore: market data 2026-09-17`（`fa77725b`）落 main，`watchlist.json` date=2026-09-17，run_ledger 该场次 universe_quality/watchlist 均 ok（tradeable 2536）。距 JST 08:30 死线尚余 16 分钟，死线状态：**安全**。归档：`data/history/{breadth_archive,universe_quality}.csv` 已有 2026-09-17 行，同班写入，未见缺档。JST 09:00 复盘尚未到点，数据已提前到位不受影响，未挂门铃。线上 `fluxus-dashboard.vercel.app` 因本环境出站网络策略拦截（CONNECT 403）未能核实，线上未核，交后续班次核对。
+
+- [09-18] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 00:06 UTC / 09-18 09:06 JST（ET 09-17 20:06）巡检：dashboard 已追平最近已完成交易日 2026-09-17（`watchlist.json` date=2026-09-17，run_ledger 09-17 场次 `35284322945` quality ok / tradeable 2536 / errors=[]，落地于 23:14:15 UTC / 08:14 JST，早于 08:30 死线，本轮由上一班 08:00 JST 死线班已确认并解除风险）。`actions_list` 最新一条是 run 194（`35287404004`，23:33:56 UTC，schedule，success，无新 commit）——与本页 [09-18] 门铃所述冬令时孪生排程被 gate 跳过的形状一致，非异常；无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"` 取铃 1 条（孪生排程说明，纯知会，已核对与实况一致，回执见下）。线上核对：出站网络策略拦截（CONNECT 403），线上未核，交后续班次。健康，本班无分诊/重跑动作。死线状态：安全（已由 08:00 JST 班解除，本班非专班巡检确认无回退）。
+
+↳ ✅ 数据哨兵已取（09-18 09:06 JST）：run 194 已实测出现，形状与本条描述一致（约 20 秒、success、无新 commit），判死活继续按 `watchlist.json`/`breadth.json` 的 date 与 run_ledger，未被其 conclusion 误导。
