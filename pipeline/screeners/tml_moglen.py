@@ -32,7 +32,7 @@ technical list item with a number) -- ORIGINAL TEXT -> OUR IMPLEMENTATION:
          1988 Ch.2 operationalized -- see there). Why only 2: a Stage-1 base
          broken out of IS the entry into Stage 2, and a Stage-2 base is a
          continuation inside Stage 2; a stock still IN Stage 1 has not broken
-         out. Our operationalization; the Pine port (stage_tdn) is NOT read.
+         out. Our operationalization (Weinstein's book, not a Pine port).
   "Trending above Key Moving Averages (10, 21ema, 50sma)"
       -> close > ema10 and close > ema21 and sma50_dist > 0. The source
          writes "10" without saying EMA or SMA; we read EMA (ema10 already

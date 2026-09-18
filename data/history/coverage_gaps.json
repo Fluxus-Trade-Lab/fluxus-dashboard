@@ -186,6 +186,20 @@
    "after": "each author's text, sources in METRIC_SOURCES.md; EP runs as two lists; both EPs and the five lists above run on the >=$1B universe",
    "note": "Andy 2026-09-18: 「全部按原文，9 用课程版，12 注册 EP Stockbee和 EP Qullamaggie 然后我们以后可以测试下。」 Hit counts on 09-17 data: 9M 8 -> 201, LL Pullback 10 -> 32, 21EMA Watch 54 -> 93, Pocket Pivot panel 50 -> 180, VCP 27 -> 4, EP 6 -> two lists. screener 'episodic_pivot' is retired in ticker_events after 2026-09-17 (RETIRED_SCREENER_FILES); heat counts the EP family once. Compare across the change only per definition.",
    "declared": "2026-09-18 DATA ALEX"
+  },
+  {
+   "field": "True Market Leaders panel and leaders_log.tml",
+   "changed": "first nightly run after this commit lands (expected session 2026-09-18)",
+   "commit": "see git log -- pipeline/screeners/tml_moglen.py",
+   "archives": [
+    "data/history/leaders_log.csv",
+    "data/history/watchlist_hits.csv",
+    "data/history/shortlist_log.csv"
+   ],
+   "before": "course liquid_leader AND group four-state Leading AND rs_1m >= 80 (ADR-floored panel since d154052b); nobody's published TML",
+   "after": "Richard Moglen (TraderLion) 2020 True Market Leader: $vol > 30M, rs_rating >= 97, above a rising 30-week MA, weinstein_stage 2 (Weinstein 1988 book), close > EMA10/EMA21/SMA50, up/down vol 50d > 1.2, >= 3 of 5 fundamentals",
+   "note": "Andy 2026-09-18: 「照 Moglen 2020（建议）可以」「按Weinstein原书来验证」. leaders_log now also logs TMLs that are not liquid leaders (liquid_leader column carries the real value). profit_margin / roe fill in over ~8 nights of fundamentals rotation; a missing fundamental does not count, so the first nights under-report (estimated 2 names on the first night vs 6 at full coverage, 2026-09-17 data). Old-definition rows stay as written.",
+   "declared": "2026-09-18 DATA ALEX"
   }
  ]
 }

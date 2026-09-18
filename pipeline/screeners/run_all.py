@@ -1131,7 +1131,7 @@ def main():
         # True Market Leaders = Moglen 2020 (2026-09-18; pipeline/screeners/tml_moglen.py).
         # sb_avg_dollar_vol_20 was already computed (Stockbee MM input) but not shipped.
         'sb_avg_dollar_vol_20', 'wk_sma30', 'wk_sma30_dist', 'wk_sma30_rising',
-        'weinstein_stage', 'stage_tdn', 'ud_vol_ratio_50', 'profit_margin', 'roe',
+        'weinstein_stage', 'ud_vol_ratio_50', 'profit_margin', 'roe',
         'industry_rank',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]

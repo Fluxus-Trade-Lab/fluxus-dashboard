@@ -8,8 +8,8 @@ verbatim copy in data/research/tml_origin_2026-09-18/README.md.
 
 and 「Stage Analysis本身就来自Weinstein，这点很重要。而本机pine脚本没有完全得到验证」
 /「按Weinstein原书来验证」: the stage condition reads weinstein_stage (Weinstein
-1988, quotes in stage_analysis.py); the Pine port (stage_tdn) is an unverified
-reference field that TML does not read.
+1988, quotes in stage_analysis.py). A Pine port was built and dropped; the last
+test in this file pins that it is not shipped.
 
 Every condition gets one positive and one negative case; the Pine port gets
 bar-level checks against hand-computed Pine semantics; the Weinstein machine
@@ -43,7 +43,7 @@ def tml_row(**kw):
     base = {"ticker": "T", "market_cap": 5e9, "avg_volume": 5e6, "close": 100.0,
             "sector": "Technology", "adr_pct": 4.5, "rs_1m": 90, "h_score": 80,
             "sb_avg_dollar_vol_20": 5e8, "rs_rating": 98,
-            "wk_sma30_dist": 0.20, "wk_sma30_rising": True, "weinstein_stage": 2, "stage_tdn": "3A",
+            "wk_sma30_dist": 0.20, "wk_sma30_rising": True, "weinstein_stage": 2,
             "ema10": 95.0, "ema21": 92.0, "sma50_dist": 0.10,
             "ud_vol_ratio_50": 1.5,
             "revenue_growth": 0.40, "eps_growth_this_y": 0.50, "profit_margin": 0.25,
@@ -53,85 +53,6 @@ def tml_row(**kw):
 
 
 # ------------------------------------------------------------------ Pine primitives
-class TestPinePrimitives:
-    def test_ema_is_sma_seeded(self):
-        """Pine's ta.ema: na until `length` bars, seeded with the SMA, then
-        alpha = 2/(length+1). Hand: [1..5], length 3 -> na, na, 2, 3, 4."""
-        out = SA.pine_ema(pd.Series([1.0, 2, 3, 4, 5]), 3)
-        assert np.isnan(out.iloc[0]) and np.isnan(out.iloc[1])
-        assert out.iloc[2:].tolist() == pytest.approx([2.0, 3.0, 4.0])
-
-    def test_rma_is_sma_seeded_wilder(self):
-        """ta.rma: seed = SMA(3) = 2, then (x + 2*prev)/3: 4 -> 8/3."""
-        out = SA.pine_rma(pd.Series([1.0, 2, 3, 4]), 3)
-        assert out.iloc[2] == pytest.approx(2.0)
-        assert out.iloc[3] == pytest.approx(8.0 / 3.0)
-
-    def test_atr_first_bar_true_range_is_high_minus_low(self):
-        """ta.tr(true) on the first bar is high-low (no previous close)."""
-        h = bars([100.0, 101, 102, 103], half_range=5.0)
-        tr = SA.pine_true_range(h["High"], h["Low"], h["Close"])
-        # bar 0: 10; later bars: max(10, |105-prev|, |95-prev|) = max(10, 6, 4) = 10
-        assert tr.tolist() == pytest.approx([10.0, 10.0, 10.0, 10.0])
-
-
-# ------------------------------------------------------------------ stage port (TradeDudeNYC, modified)
-class TestStageTDN:
-    def test_steady_uptrend_no_new_high_is_2A(self):
-        """Step +1, bar range +-5: EMA10 > EMA21 > SMA50 below the close
-        (upAlign). Today's close (c) is under yesterday's high (c-1+5) -> no
-        20-bar breakout -> 2A. atrx = (c - sma50)/atr = 24.5/10 = 2.45 < 7."""
-        h = bars(np.arange(100.0, 220.0))
-        s = SA.stage_tdn_series(h)
-        assert s.iloc[-1] == "2A"
-
-    def test_breakout_bar_is_2B(self):
-        """Same trend, last bar +10: close above the prior 20 bars' highest
-        high (prev close + 5) -> 2B."""
-        c = list(np.arange(100.0, 220.0)) + [229.0]
-        assert SA.stage_tdn(bars(c)) == "2B"
-
-    def test_extended_uptrend_is_2C(self):
-        """Tight bars (range +-0.5, TR 1.5) on step +1: atrx = 24.5/1.5 >= 7 -> 2C."""
-        assert SA.stage_tdn(bars(np.arange(100.0, 220.0), half_range=0.5)) == "2C"
-
-    def test_steady_downtrend_is_4A_and_breakdown_is_4B(self):
-        c = list(np.arange(300.0, 180.0, -1.0))
-        assert SA.stage_tdn(bars(c)) == "4A"
-        assert SA.stage_tdn(bars(c + [c[-1] - 10.0])) == "4B"
-
-    def test_flat_line_is_NA(self):
-        """Constant close: all MAs equal the close, strict > / < fail both
-        alignments, the 1A clause needs close < sma50 -> NA (the Pine's
-        'basing' proxy is not itself a stage)."""
-        assert SA.stage_tdn(bars(np.full(120, 100.0))) == "NA"
-
-    def test_rebound_under_sma50_is_1B(self):
-        """Decline then a V: EMA5 > EMA10 >= EMA20 and close >= EMA20, but the
-        SMA50 is still above (no upAlign), close far from SMA50 (not basing),
-        so the first bullish clause reached is meanRev -> 1B."""
-        c = list(np.arange(300.0, 200.0, -1.0)) + list(np.arange(202.0, 230.0, 2.0))   # 14 up bars; the 15th turns 2A
-        h = bars(c)
-        s = SA.stage_tdn_series(h)
-        cl = h["Close"]
-        e10, e20, s50 = SA.pine_ema(cl, 10).iloc[-1], SA.pine_ema(cl, 20).iloc[-1], cl.rolling(50).mean().iloc[-1]
-        # hand check of the branch preconditions
-        assert e10 >= e20 and cl.iloc[-1] >= e20 and s50 > e20
-        assert s.iloc[-1] == "1B"
-
-    def test_2D_is_unreachable_in_the_original(self):
-        """exhBull implies extBull, which is tested first -- so the Pine can
-        never print 2D. The port reproduces that rather than 'fixing' it."""
-        rng = np.random.default_rng(7)
-        for _ in range(20):
-            c = 100 * np.exp(np.cumsum(rng.normal(0.004, 0.03, 260)))
-            assert "2D" not in set(SA.stage_tdn_series(bars(c, half_range=0.5)).dropna())
-
-    def test_short_history_is_none(self):
-        assert SA.stage_tdn(bars(np.arange(100.0, 130.0))) is None
-
-
-# ------------------------------------------------------------------ Weinstein 30-week
 class TestWeinstein:
     """Weinstein 1988 Ch.2, operationalized as a weekly state machine
     (stage_analysis docstring). Weekly = W-FRI of business-day bars."""
@@ -295,9 +216,6 @@ class TestHardConditions:
         assert T.passes(tml_row(rs_rating=97))                # >= 97
         assert not T.passes(tml_row(sb_avg_dollar_vol_20=30e6))  # > $30M strict
         assert T.passes(tml_row(ud_vol_ratio_50=1.21))
-        # the unverified Pine port is NOT read (Andy 09-18: Weinstein is the ruler)
-        for st in ("1A", "2B", "4C", None):
-            assert T.passes(tml_row(stage_tdn=st))
 
     def test_missing_hard_input_fails(self):
         assert not T.passes(tml_row(rs_rating=None))
@@ -391,7 +309,7 @@ class TestPipelineWiring:
         from pipeline.screeners import run_all
         src = inspect.getsource(run_all)
         for f in ("sb_avg_dollar_vol_20", "wk_sma30", "wk_sma30_dist", "wk_sma30_rising",
-                  "weinstein_stage", "stage_tdn", "ud_vol_ratio_50", "profit_margin", "roe",
+                  "weinstein_stage", "ud_vol_ratio_50", "profit_margin", "roe",
                   "industry_rank"):
             assert f"'{f}'" in src, f
 
@@ -400,5 +318,17 @@ class TestPipelineWiring:
         from pipeline.adapters import yfinance_adapter
         assert "moglen_bar_fields(hist)" in inspect.getsource(yfinance_adapter)
         f = SA.moglen_bar_fields(bars(np.linspace(50, 150, 260)))
-        assert set(f) == {"stage_tdn", "wk_sma30", "wk_sma30_dist", "wk_sma30_rising",
+        assert set(f) == {"wk_sma30", "wk_sma30_dist", "wk_sma30_rising",
                           "weinstein_stage", "ud_vol_ratio_50"}
+
+
+def test_the_unverified_pine_port_is_not_shipped():
+    """Andy 2026-09-18: 「本机pine脚本没有完全得到验证」 -- Weinstein's book is the ruler.
+    No stage_tdn field, no Pine-port code, no third-party copy in the repo."""
+    import inspect
+    from pathlib import Path
+    from pipeline.screeners import run_all
+    assert not hasattr(SA, "stage_tdn") and not hasattr(SA, "stage_tdn_series")
+    assert "'stage_tdn'" not in inspect.getsource(run_all)
+    root = Path(__file__).resolve().parents[2]
+    assert not (root / "indicators/third_party/tradedudenyc_candles_stage_analysis_modified.pine").exists()

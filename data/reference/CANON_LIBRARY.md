@@ -30,7 +30,7 @@
 
 ## 没有（查过）
 
-- **Stan Weinstein《Secrets for Profiting in Bull and Bear Markets》原书**——本机无；阶段口径只有 TraderLion 转述。
+- ~~**Stan Weinstein《Secrets for Profiting in Bull and Bear Markets》原书**——本机无~~ **2026-09-18 更正：本机有**，`~/Documents/Trading/03_Trading_Strategies/Books_References/stan-weinstein-s-secrets-for-profiting-in-bull-and-bear-markpdf_compress.pdf`（`pdftotext -layout` 可抽文本）。`weinstein_stage` 即按它实现：30 周线 = 30 个周五收盘的简单均线（Ch.1）、四阶段（Ch.2）、突破量 ≥2×（Ch.4 p.105）。
 - **TraderLion 对 "three weeks tight" 的文字定义**——三本 TraderLion 材料一处都没有；IBD 那张表有数字。
 - ~~"oops reversal" 的定义~~ → **09-05 从发明者处补齐**：Larry Williams《Long-Term Secrets to Short-Term Trading》，开盘跳出昨日区间后盘中收回即触发（buy/sell 对称）。本机 Trade-Lab 图集只当标签用了 23 次。已实现 `oops_buy`/`oops_sell`。**本机仍无一手文本**，引的是二手转述的一致口径。
 - **"mini coil"**——本机所有书与转录零命中（只在我们自己的研究 README 里）。是口头/视频词汇。

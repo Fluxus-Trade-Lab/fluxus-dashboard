@@ -1,32 +1,10 @@
-"""Stage analysis, two rulers, plus IBD's Up/Down Volume -- the bar-derived
+"""Weinstein stage analysis plus IBD's Up/Down Volume -- the bar-derived
 inputs to True Market Leaders (Moglen 2020; see pipeline/screeners/tml_moglen.py).
 
 Everything here is computed from the daily bars the nightly enrichment already
 downloaded (yfinance_adapter.enrich_universe, period=1y). No fetch.
 
-1. ``stage_tdn`` -- a line-by-line port of the Pine script on Andy's machine,
-   ``indicators/third_party/tradedudenyc_candles_stage_analysis_modified.pine``
-   (header: "Stage definitions are copied from @TradeDudeNYC's indicator
-   (https://www.tradingview.com/v/agQTA0Vq/) & modified later"). All inputs at
-   the script's defaults: ATR 14 (Wilder), EMA5, EMA10, EMA20, SMA50, breakout
-   lookback 20, basing band 1.0 ATR, MA compression 1.5 ATR. Only the stage
-   selection is ported; colours and labels are display.
-
-   Pine semantics reproduced, not approximated: ``ta.ema`` / ``ta.rma`` are
-   SMA-seeded (na for the first length-1 bars); ``ta.atr`` = rma of
-   ``ta.tr(true)`` (first bar's TR = high - low); ``ta.highest(high, 20)[1]``
-   is the prior 20 bars' high, today excluded; a comparison against na is
-   false. During warm-up (SMA50 or ATR not yet defined) we publish None
-   rather than the stage the Pine would paint from na-driven falsehoods.
-
-   Two things in the original that look like bugs and are reproduced anyway:
-     * 2D ("Exhausted Bullish") is unreachable: exhBull = upAlign and
-       atrx >= 11 implies extBull (upAlign and atrx >= 7), which is tested
-       first and returns 2C.
-     * The 2D label in ``stageName`` reads "2C Exhausted Bullish"; we use the
-       constant's own name, 2D.
-
-2. ``weinstein_stage`` -- THE ruler TML uses (Andy 2026-09-18: 「Stage
+1. ``weinstein_stage`` -- THE ruler TML uses (Andy 2026-09-18: 「Stage
    Analysis本身就来自Weinstein，这点很重要。而本机pine脚本没有完全得到验证」;
    「按Weinstein原书来验证」). Stan Weinstein, *Secrets for Profiting in Bull
    and Bear Markets* (1988); local copy Trading/03_Trading_Strategies/
@@ -96,10 +74,12 @@ downloaded (yfinance_adapter.enrich_universe, period=1y). No fetch.
    Not modelled: higher highs / higher lows inside Stage 2; "churning"
    volume in Stage 3; relative strength (his Ch.4 adds it as a filter).
 
-   ``stage_tdn`` (the Pine port above) is kept as an UNVERIFIED reference
-   field only; TML does not read it.
+   A line-by-line port of the Pine script on Andy's machine ("Candles Stage
+   Analysis", credited to @TradeDudeNYC and modified) was built and dropped
+   (2026-09-18): Andy judged it unverified, it agreed with this ruler on only
+   40.4% of 1,832 names, and its 2D sub-stage turned out to be unreachable.
 
-3. ``ud_vol_ratio_50`` -- IBD's Up/Down Volume ratio: total volume on up days
+2. ``ud_vol_ratio_50`` -- IBD's Up/Down Volume ratio: total volume on up days
    divided by total volume on down days over the last 50 sessions; an up day
    closes above the prior close, a down day below, unchanged days count in
    neither (Investor's Business Daily, "Use Up/Down Volume Ratio To Gauge
@@ -114,18 +94,6 @@ from typing import Dict, Optional
 import numpy as np
 import pandas as pd
 
-# --- Pine inputs, at the script's defaults -------------------------------
-LEN_ATR = 14
-LEN_EMA5 = 5
-LEN_EMA10 = 10
-LEN_EMA20 = 20
-LEN_SMA50 = 50
-BO_LOOKBACK = 20
-BASING_BAND_ATR = 1.0
-MA_COMPRESSION_ATR = 1.5
-
-STAGES = ("1A", "1B", "2A", "2B", "2C", "2D", "3A", "3B", "4A", "4B", "4C", "NA")
-
 WK_MA_LEN = 30                  # "the prior 29 Friday weekly closings" + this one
 # --- Weinstein: the book's numbers ----------------------------------------
 BREAKOUT_VOL_MULT = 2.0         # "at least twice" / "better than twice" (Ch.4 p.105)
@@ -139,120 +107,6 @@ VOL_SEVERAL_WEEKS = 8           # "the past several weeks" before the build-up
 UD_WINDOW = 50
 
 
-# ------------------------------------------------------------------ Pine primitives
-def pine_sma(src: pd.Series, length: int) -> pd.Series:
-    return src.rolling(length, min_periods=length).mean()
-
-
-def _seeded(src: pd.Series, length: int, alpha: float) -> pd.Series:
-    x = src.to_numpy(dtype=float)
-    out = np.full(len(x), np.nan)
-    if len(x) >= length:
-        prev = float(np.mean(x[:length]))
-        out[length - 1] = prev
-        for i in range(length, len(x)):
-            prev = alpha * x[i] + (1.0 - alpha) * prev
-            out[i] = prev
-    return pd.Series(out, index=src.index)
-
-
-def pine_ema(src: pd.Series, length: int) -> pd.Series:
-    """ta.ema: SMA seed, alpha = 2 / (length + 1)."""
-    return _seeded(src, length, 2.0 / (length + 1))
-
-
-def pine_rma(src: pd.Series, length: int) -> pd.Series:
-    """ta.rma (Wilder): SMA seed, alpha = 1 / length."""
-    return _seeded(src, length, 1.0 / length)
-
-
-def pine_true_range(high: pd.Series, low: pd.Series, close: pd.Series) -> pd.Series:
-    """ta.tr(true): high - low on the first bar (handle_na = true)."""
-    pc = close.shift(1)
-    tr = pd.concat([high - low, (high - pc).abs(), (low - pc).abs()], axis=1).max(axis=1)
-    tr.iloc[0] = high.iloc[0] - low.iloc[0]
-    return tr
-
-
-def pine_atr(high, low, close, length: int = LEN_ATR) -> pd.Series:
-    return pine_rma(pine_true_range(high, low, close), length)
-
-
-# ------------------------------------------------------------------ 1. stage_tdn
-def stage_tdn_series(hist: pd.DataFrame) -> pd.Series:
-    """Stage code per bar ('1A'..'4C', 'NA'); None during warm-up.
-
-    numpy arrays throughout: a comparison involving NaN is False, which is
-    exactly Pine's "comparison against na is false"."""
-    idx = hist.index
-    close_s = pd.to_numeric(hist["Close"], errors="coerce").astype(float)
-    high_s = pd.to_numeric(hist["High"], errors="coerce").astype(float)
-    low_s = pd.to_numeric(hist["Low"], errors="coerce").astype(float)
-    close, high, low = close_s.to_numpy(), high_s.to_numpy(), low_s.to_numpy()
-
-    # === Stage Analysis Core Calculations ===
-    ema5 = pine_ema(close_s, LEN_EMA5).to_numpy()
-    ema10 = pine_ema(close_s, LEN_EMA10).to_numpy()
-    ema20 = pine_ema(close_s, LEN_EMA20).to_numpy()
-    sma50 = pine_sma(close_s, LEN_SMA50).to_numpy()
-    atr = pine_atr(high_s, low_s, close_s, LEN_ATR).to_numpy()
-
-    with np.errstate(invalid="ignore", divide="ignore"):
-        # ATR multiple from SMA50 (signed)
-        atrx = (close - sma50) / atr
-        ma_spread = np.maximum(np.maximum(ema10, ema20), sma50) - np.minimum(np.minimum(ema10, ema20), sma50)
-
-        # Trend alignment (the + slope terms are commented out in the original)
-        ema10_prev = np.concatenate([[np.nan], ema10[:-1]])
-        ema10_up = ema10 > ema10_prev
-        up_align = (close > ema10) & (ema10 > ema20) & (ema20 > sma50)
-        down_align = (close < ema10) & (ema10 < ema20) & (ema20 < sma50)
-
-        # Breakout / breakdown: ta.highest(high, 20)[1] / ta.lowest(low, 20)[1]
-        hh = high_s.rolling(BO_LOOKBACK, min_periods=BO_LOOKBACK).max().shift(1).to_numpy()
-        ll = low_s.rolling(BO_LOOKBACK, min_periods=BO_LOOKBACK).min().shift(1).to_numpy()
-        breakout = close > hh
-        breakdown = close < ll
-
-        # Extensions
-        ext_bull = up_align & (atrx >= 7)
-        exh_bull = up_align & (atrx >= 11)
-        ext_bear = down_align & (atrx <= -7)
-
-        # Transitional proxies
-        basing = (np.abs(close - sma50) <= BASING_BAND_ATR * atr) & (ma_spread <= MA_COMPRESSION_ATR * atr)
-        mean_rev = ~up_align & ~down_align & ~basing & (close >= ema20) & (ema10 >= ema20)
-        _fade_core = (up_align & ((close < ema10) | ~ema10_up)) | ((ema10 >= ema20) & (close < ema10))
-        fade_a = ~ext_bull & (close >= sma50) & _fade_core
-        exh_a = exh_bull & (close >= sma50) & _fade_core
-        fade_b = ~ext_bear & (close >= sma50) & (ema10 < ema20)
-        bear_stack = (sma50 > ema10) & (ema10 > ema5)
-        basing_1a = (close < sma50) & (close > ema10) & (ema10 < ema20)
-
-    # === Stage selection === (the if / else-if ladder, in the original order)
-    conds = [
-        ext_bull, ext_bear,
-        up_align & breakout, up_align,
-        exh_a,
-        down_align & breakdown, down_align,
-        bear_stack, fade_b, fade_a, mean_rev, basing_1a,
-    ]
-    choices = ["2C", "4C", "2B", "2A", "2D", "4B", "4A", "4A", "3B", "3A", "1B", "1A"]
-    arr = np.select(conds, choices, default="NA").astype(object)
-    warm = np.isnan(sma50) | np.isnan(atr) | np.isnan(ema20)
-    arr[warm] = None
-    return pd.Series(arr, index=idx, dtype=object)
-
-
-def stage_tdn(hist: pd.DataFrame) -> Optional[str]:
-    try:
-        s = stage_tdn_series(hist)
-    except Exception:
-        return None
-    return None if not len(s) else s.iloc[-1]
-
-
-# ------------------------------------------------------------------ 2. Weinstein 30-week
 def _weinstein_quadrant(above: bool, rising: bool) -> int:
     if above and rising:
         return 2
@@ -414,5 +268,4 @@ def up_down_vol_ratio(hist: pd.DataFrame, n: int = UD_WINDOW) -> Optional[float]
 
 def moglen_bar_fields(hist: pd.DataFrame) -> Dict[str, object]:
     """All bar-derived TML inputs in one dict; never raises."""
-    return {"stage_tdn": stage_tdn(hist), **weinstein_fields(hist),
-            "ud_vol_ratio_50": up_down_vol_ratio(hist)}
+    return {**weinstein_fields(hist), "ud_vol_ratio_50": up_down_vol_ratio(hist)}
