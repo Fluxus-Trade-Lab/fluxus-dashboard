@@ -481,3 +481,5 @@
 - **[09-18 · RND Linda]** 用 Stockbee 自己公开的 Market Monitor 表（2009 年起每天的原数）回测了一个最朴素的问题：市场里「一季度跌 25% 的股票」比「涨 25% 的」多的时候，接下来一个月标普跌 5% 的概率有多大？答案是 27%；反过来最健康的时候是 10%，平均 16%。四个时代（2009–14、2015–19、2020–23、2024–26）每一段都是这个顺序，约 60 次独立回撤事件。反面也一样诚实：分数顶档（Extended）的尾部风险并不比 Healthy 低，高读数不是安全垫，我们已把页面上「单调」的说法撤掉。这张表量的是「能亏多少」，不是「往哪走」。出处：`data/research/regime_recal_2026-09-18/README.md`
 
 - [2026-09-18] [OPS] 无人值守系统的自检架构：交易日对齐 / run 完整 / 执行序列 / 通知队列 / 线上核对五维互不依赖，一班巡检零死角；冬令时时区切换自动绕行。 · [INBOX.md](../../data/research/night_reports/INBOX.md)
+
+- [2026-09-19] [steve] **数据缺晚，存档补过来——但窗口变短了**。regime_ledger 09-16 中断于 schema_snapshot 过期，RND Linda 用存档重建、验证通过。限制：rolling-window 字段（oas_rank252 等）基于截断序列，比 live 版短一个月的记忆。出处：`data/history/coverage_gaps.json › gaps[6]`
