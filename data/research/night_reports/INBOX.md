@@ -2924,3 +2924,5 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-18] → UI Claire: thrust 改成 Stockbee 原定义（`05319404`，连续两天 ≥300、分子是 `up_4pct_stockbee`），`MarketStateSummary.jsx` 拿 `mm.up_4pct` 按单日判断会和引擎打架（09-17 牌面显示 bullish，引擎是中性）。请改读 `vote_detail` thrust 的 `side`。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire 行。 · pending
 
 🔔 [09-18] → UI Claire · Dashboard前端UI: Andy 裁「全部按原文」后的前端清单（11 件：thrust 牌面、个股页三处标签、Rel vol 提示、原始 h_score、f_score 改名、BreadthTable 上色、Liquid 闸、Regime 条、双份规则、T2108 分档、自造 RS 名）。全文在 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire「自造数字复查的前端清单」行。 · pending
+
+🔔 [09-18] → RND Linda · 模型与量化研究: Andy 要你给 regime 分档 47/63/75 重新定标——它的输入（Board 的 thrust 行，接着还有季度 25% 等计数）今天起按 Stockbee 原文改了。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → RND Linda 行。 · pending

@@ -47,9 +47,9 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 |---|---|---|---|
 | 回撤三段计时(`drawdown_pit` 研究) | Drawdown / Underwater curve | close 基准 running-ATH;峰→谷 / 谷→复原 / 总水下(Morgan Stanley Counterpoint Global, *Drawdowns and Recoveries*) | ✅ 照抄(`data/research/drawdown_pit_2026-09/`,2026-09-11) |
 | 中期选举季节窗(`midterm_perm` 研究) | Stock Trader's Almanac "Sweet Spot" | 中期年 Q4(10/1)→次年 Q2(6/30);原帖两窗(选举日→+12m、11/1→6/30)作为**变体**并列复刻,已明标非标准 | ✅ 标准窗照抄(`data/research/midterm_perm_2026-09/`,2026-09-11) |
-| `mcclellan_osc` | McClellan Oscillator | RANA = net/(adv+dec)×1000，19 与 39 日 EMA 之差 | ✅ **一致**（`breadth_store.py:84-91`） |
+| `mcclellan_osc` | McClellan Oscillator | RANA = net/(adv+dec)×1000，19 与 39 日 EMA 之差；原始口径统计 **NYSE** 上涨/下跌家数 | ⚠️ **公式一致、池子不一致**（2026-09-18 复查改判，原写 ✅）：我们用 Finviz 全池（`ind_stocksonly`），不是 NYSE。±70 极值线查无一手出处（StockCharts 用 ±50/±100）。见 `data/research/metric_audit_2026-09-18/B_market_layer.md` |
 | `ad_line` | Advance-Decline Line | 净涨跌家数累加 | ✅ 一致 |
-| `t2108` | Worden T2108 | 40 日均线上方占比 | ✅ 一致 |
+| `t2108` | Worden T2108 | 40 日均线上方占比；TC2000 官方口径是 **NYSE** 股票（[TC2000 help](https://help.tc2000.com/m/69404/l/755052-t2108-of-stocks-above-40-day-pma-also-t2s-110-112-114-116)） | ⚠️ **公式一致、池子不一致**（2026-09-18 复查改判，原写 ✅）：我们用 Finviz 全池。页面分档 <20 超卖 / >80 超买与 Stockbee 一致；**40 / 60 的 weak/strong 查无标准，是自造分档** |
 | `pct_above_20/50/200sma` | Percent Above Moving Average | **挂在具名指数上**：`$SPXA200R`(标普500) / `$NYA200R`(NYSE) 等，五个标准均线长度 | ⚠️ **口径不全**——公式对，但池子是 5630 支 Finviz 自选池，不对应任何公开指数，因此**与任何公开读数都不可比**（含 S5TH） |
 | `new_highs` / `new_lows` | 52-week New Highs/Lows | 52 周极值，**池子只含普通股** | ⚠️ **原始计数保留不动**（574 行档案的连续性），标准口径另发下一行 |
 | `new_highs_common` / `new_lows_common` | 同上 | 排除 UIT / CEF / warrant / preferred / ETF / **SPAC** / 非 SIC OTC | ✅ **一致**（2026-08-31 落地）。Finviz 已挡住 ETF/CEF/preferred/warrant，我们补上 `industry == "Shell Companies"` |
@@ -100,6 +100,19 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | —（拟 `adx14`） | **"均线缠绕所以忽略均线" ——查过，无标准。** 但它想表达的那件事**有标准**：Wilder **ADX**（趋势有无） | Wilder《New Concepts in Technical Trading Systems》(1978)：**ADX < 20 = 无趋势**，ADX > 25 = 强趋势，20–25 是灰区 | 🔲 **我们没有 ADX**。这是本轮唯一「口语说法无标准，但它指的现象有一个干净的标准量，而我们恰好没建」的词条 |
 | `conditions.today` → 页面 **Market Conditions 0-100** | oratnek 的 **Market Conditions** | 15 个条件对绝对中性线取正项占比，EMA-2 平滑（`breadth_signals.py:conditions_series` docstring 自认「Oratnek's construction」） | ⚠️ **构造复刻、数值从未对表**（与 rs_line_pctl 的 29/29 不同，这个连一次都没对过）。Andy 2026-09-06 先裁「选A」，后裁「可以直接闭了。欠条烧掉」——**免验结案，名字保留**。状态如实留 ⚠️（对表这件事没发生过，不伪造 ✅）；哪天他页面的图顺手到了，随手可补验 |
 | `audit_events_vs_bars` 的两条恒等式 + 帧归属（审计闸，**不上页**） | Reconciliation / cross-source validation | 逐单元格比对独立来源 + 容差 + 覆盖率同报；**不规定**具体容差，也没有「帧归属」这一步 | ⚠️ **容差与判定线是自造的，按实测空档定**：①`change_pct` 对 `close/前收−1`，容差 0.005、判定线 0.90（Zac 2026-09-11）；②`volume` 对当日 bar 量，**单边带** [0.90, 1.01]、判定线 0.80、同票同量计一票（Zac 2026-09-14；Finviz 一侧只偏低，成因未证实，带依赖运行时刻）；③帧归属（best-matching bar date）查无标准名，只在判红后给线索；④**「当晚临时量不判」窗口**：K 线库最新一根 bar 若 `fetched_at` 与之同日或次日（UTC），volume 不判它——自造，依据 09-15 实测库量比次日终值少 1–10%、Finviz 与终值差 <0.3%（DATA ALEX 2026-09-17，`_mark_provisional`）。依据与分辨率全在该文件 docstring |
+| `rel_volume` | Finviz **Relative Volume**（当日量 ÷ **3 个月**均量） | 当日量 ÷ **20 日**均量（`yfinance_adapter.py:1039,1205`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。窗口与 Finviz 不同；页面提示写成「3-month average (Finviz construction)」是错的，已转 UI Claire。20 日窗与 `avg_volume` 同源（`themes/__init__.py` 已声明） |
+| `rs_1m` / `rs_3m` / `rs_6m`（别名 `rs_21d` / `rs_63d`） | 形状近 IBD **RS Rating**（横截面 1–99） | 各自窗口收益在 `tradeable` 池内的横截面百分位 ×99（`run_all.py:363-417`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。IBD 只公开 12 个月加权、全市场池；我们是单窗 1/3/6 月 + 自划池。`run_all.py:394-409` 注释说收益来自 Finviz 日历窗，与 `finviz_adapter.py:161-165`（免费版不抓 Perf 列）矛盾，收益实际来自 yfinance 日线 |
+| `f_score` → 新名 `growth_score` | ⚠️ 撞名 **Piotroski F-Score**（9 项财报二元打分 0–9） | `eps_growth_next_y` 与 `revenue_growth` 两个百分位取均值，缺失记 50（`run_all.py:477-480`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），与 Piotroski 毫无共同定义。按撞名规则改名 `growth_score`：数据端先双发，UI Claire 切换后删旧名（§七 2026-09-18） |
+| `i_score` | 近 IBD **Industry Group RS Rating**（197 组排名，公式未公开） | 行业内 tradeable 成员 `rs_3m` 中位数再排名（`run_all.py:494-496`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。形状对齐 IBD 组排名，公式自造 |
+| `trend_base` | 自称「Weinstein 式 Stage 2 闸」 | close > SMA50 且 周线 10 均 > 30 均（`yfinance_adapter.py:1113-1122`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。注释写「10WMA > 30WMA」，代码是简单均线（`rolling().mean()`）；Weinstein 原文要求 30 周线**上升**，这里没有斜率条件，不能叫 Stage 2 |
+| `momentum_97` 列（universe.json） | ⚠️ 撞名三处：`momentum_97.json` 筛子、oratnek「Momentum 97」 | 1 周收益全池分位 ≥0.97 且 3 月分位 ≥0.85（`run_all.py:641-644`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。同名的 `momentum_97.json` 是四窗等权综合分位前 3%，两者不是同一个量；oratnek 的查无公开定义 |
+| `perf_1w_pctile` / `perf_3m_pctile` | 查过，无标准 | 全池横截面分位（`run_all.py:637-639`），分母与 `rs_*` 的 tradeable 池不同 | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表） |
+| `days_since_52wh` | 查过，无标准（各家只有「N 日内创 52 周高」布尔） | 距 52 周高点那根 K 线的交易日数（`yfinance_adapter.py:1211`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），驱动 Short List「52wh 回撤」席 |
+| `range5_pct` | 查过，无同名标准（近亲 Deepvue RMV 公式未公开、Crabel NR7 是单根区间） | 5 日最高最低包络 ÷ close ×100（`yfinance_adapter.py:1225`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），驱动 Short List 席位排序 |
+| `dist_hi20_pct` | 近亲 Donchian 20 日上轨（用 **High**） | 距 20 日**收盘**高点的百分比（`yfinance_adapter.py:1226`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），用收盘不用 High，与 Donchian 不同 |
+| `pp_count_30d` | Pocket Pivot（Morales/Kacher）是单日事件 | 30 日内 pocket pivot 次数（`yfinance_adapter.py:1254`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），30 日滚动计数查无标准 |
+| `ema21_atr_dist` | ATR Matrix（SteveDJacobs）的 EMA21 变体 | (close − EMA21) / ATR（`run_all.py:593-601`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。代码注释已写「our own quantity」；与已登记的 `atr_from_sma50`（B/A 式）故意不同式 |
+| `eps_growth_next_y` / `eps_growth_this_y` | ⚠️ 撞名 Finviz **EPS next Y / EPS this Y**（财年 EPS 增速、分析师预估） | next_y = forwardEps / trailingEps − 1；this_y = yfinance 单季 YoY（`fundamentals_store.py:84-89`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。不上页，但喂 `growth_score`；名字与 Finviz 列同名不同义 |
 
 来源（本批 2026-09-06 追加，源 [`recap_vocab_sources_2026-09-06.md`](../research/ops/recap_vocab_sources_2026-09-06.md)；Andy 批「候选行批了，Power Trend 改判定对齐 Webster，撞名立机制」，口语三词 hot potato / the tell / lone standout 被裁「都是口语，忽略」，未登记）。
 

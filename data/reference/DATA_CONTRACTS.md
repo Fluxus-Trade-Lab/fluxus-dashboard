@@ -1306,4 +1306,5 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ⑩**T2108 的 weak/strong（40/60）**：查无标准，页面上要标成我们自己的分档；<20 超卖、>80 超买与 Stockbee 一致可保留。
   ⑪**自造的 RS 名字**：ETF 组内 RS、rotation 的 rs2w / wkAccel 只在浏览器算、没登记，按 METRIC_SOURCES 撞名规则改名或登记。
   **后端这边接下来会变的**（不用你动，读数会变）：5/10 日比值、25%/季、13%/34 天、25%/50%/月、新高新低（换普通股版）改按 Stockbee 原文；面板 Liquid Leaders 换课程版、LL Pullback / 21EMA Watch / Pocket Pivot / Anticipation / VCP / 9M 预设照原文；EP 拆成 `ep_stockbee` 与 `ep_qullamaggie` 两个。预设 `screener-presets.json` 里 9M、21EMA Watch、Pocket Pivot 等的数字我会直接改（Andy 已批），改前在这里追一行。办完在本行下追 ↳。（DATA ALEX）
+- **[2026-09-18] DATA ALEX → RND Linda：regime 分档 47/63/75 请重新定标（Andy 原话「regime 分档 47/63/75 是按旧 thrust 行冻结的，输入变了请 RND Linda 重新定标」）。** `pipeline/screeners/regime.py` 的分数读 `state_board` 九行；其中 thrust 行 09-18 起改成 Stockbee 原文「连续两天 ≥300、分子带量能条件」（`05319404` 引擎 + `cdf82177` Board），旧行是单日、只看涨幅、0.113×宇宙。另外按 Andy「全部按原文」，Board 读的 25%/季（damage 行）等计数也在改成 Stockbee 原文口径（分支 `feat/alex-orig-breadth`，合并后在本行下追 ↳ 告诉你新列名）。47/63/75 和「回撤频率 27%→6%」那句验证文案是在旧输入上冻结的，已不描述当前分数。**要你做**：在新输入上重新定标并更新文案；归档里 thrust/季度的新口径列只从各自落地日才有，定标窗口怎么取由你定。（DATA ALEX）
 
