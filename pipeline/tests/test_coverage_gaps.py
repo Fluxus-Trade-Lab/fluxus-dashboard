@@ -65,3 +65,16 @@ def test_ticker_events_gap_matches_the_archive_exactly():
     for d in (before, after):                      # the edges are real edges
         n, mz = share[d]
         assert mz / n > 0.15, (d, n, mz)
+
+
+@pytest.mark.skipif(not EVENTS.exists(), reason="archive not in checkout")
+def test_whole_session_gaps_match_the_archive():
+    """Every breadth session inside the events archive's span with zero event rows is declared."""
+    g = next(x for x in json.loads(GAPS.read_text())["gaps"]
+             if x["archive"] == "data/history/ticker_events.csv" and "dates" in x)
+    with EVENTS.open(newline="") as fh:
+        have = {r["date"] for r in csv.DictReader(fh)}
+    with (REPO / "data" / "history" / "breadth_archive.csv").open(newline="") as fh:
+        sessions = [r["date"] for r in csv.DictReader(fh)]
+    missing = [d for d in sessions if min(have) <= d <= g["last"] and d not in have]
+    assert missing == g["dates"] and len(missing) == g["sessions"]

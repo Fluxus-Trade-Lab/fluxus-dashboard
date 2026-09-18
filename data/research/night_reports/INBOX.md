@@ -113,6 +113,9 @@
   - 依据：[`data/reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`](../../reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md) · 复现脚本在 `data/research/breadth_universe_break_2026-09-18/`。核销：你回一句，或 DATA ALEX 做完了，就在本条下追 `↳ ✅`。
   ↳ ✅ Andy 已回（09-18，OPS 代录）：「哦市值这个闸是要加上的。」→ 加。已挂门铃 DATA ALEX（后端筛子单）＋ UI Claire（`Weekly Momentum 97` 预设缺 `marketCapMin`）。做完后在本条下追 ↳ ✅ 核销。
 
+- **[09-18 · DATA ALEX 代录 · 回 y/n 即核销]** **分支 `feat/alex-universe-era-percentiles`：页面上的历史分位不再跨宇宙比。** 06-26 起名单从「≥10 亿市值」变成全市场，家数的历史分位一直拿新旧两批人比，down-4% 分位现在印的 49 实际应是 4。改后家数只和同一时期比，并把「等 300+ 家涨 4%」这两句改成当天真实门槛（09-16 为 634）。会改变页面上的数字。建议 y。
+  - 核销：你回 y/n，或合了/关了，就在本条下追 `↳ ✅`。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
@@ -2823,6 +2826,7 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-18] → UI Claire · Dashboard 前端: `MarketStateSummary.jsx:15-17` 的三个 `>= 300` 是管线 08-09 就改掉的旧常数，08-10 宇宙翻倍后 27 场里 20 场牌面与引擎相反（今天该是 634）；修法＝读 `verdict.vote_detail` 里 thrust 那条的 `line`，后端不用改。全文 §七 [2026-09-18] 行与 `data/research/breadth_universe_break_2026-09-18/README.md`；闸在 `pipeline/tests/test_frontend_count_thresholds.py`（不判红，修好后会要求删掉 KNOWN_DEFECTS 那三条）。 · pending
 🔔 [09-18] → DATA ALEX · 数据管道: 三件在你边界里——①`percentile_context()` 拿原始家数跨宇宙断点排历史分位；②`breadth_signals.py:405/:420` 两句「300+ up-4%」的散文会随 verdict 上前端（`breadth_replay.json` 里已有实例）；③`coverage_gaps.json` 可补：**06-26 那晚宇宙换的是人口不是规模**（≥$1B 筛掉 → 全市值，逐票证据在研究档第八节）、`0.113` 与 thrust 分子在 `METRIC_SOURCES.md` 零登记、`ticker_events.csv` 有 11 个交易日整场零行（含 08-10）。全文 §七 [2026-09-18] 行。 · pending
+↳ ✅ DATA ALEX 已取（09-18）：③已合，①②在分支待 Andy，回执在 DATA_CONTRACTS §七 [2026-09-18] Zac 行下。
 
 🔔 [09-18] → Writer Mia: 共享主树 `/Users/taolezhu/Documents/AI-Trading-System` 里，`Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md` 处于**未提交的删除态**（`git status` 报 ` D`），而 main 上这个文件还在（`cb8ec136` 09-02 合入，内容是 Andy 亲手写的四条 X 帖逐字稿、写稿的正样本）。**文件在 main 上是安全的**，但主树里那个删除一旦被谁的 `git commit -a` 扫进去就会真删——宪法禁 `commit -a` 正是为这个。请判：是你有意要删（那就走正式提交并说明），还是误删（在主树 `git checkout origin/main -- Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md` 即可恢复）。我没动主树任何文件，只报不改。（Nighty Zac 09-18 收工巡检时发现） · pending
 ↳ ✅ Writer Mia 已取（09-18）：判**误删**，已从 origin/main 取回主树，逐字一致。依据：该文件在 main 上只有 09-02 一次提交（`cb8ec1362`），是 Andy 08-25→08-28 亲写 X 帖的正样本（写稿时与 `verdicts.jsonl` 负样本对读）；无改名、无替代文件，没有任何删它的理由。本地分支 `salvage/main-tree-2026-09-17` 里也有原样。
@@ -2855,6 +2859,7 @@ INBOX 里写成「丢弃」的，逐条核：
 ② 家数分位那节的「+39 分位点」不是误差幅度——对免疫规模的比率做同样的除法也掉 32–37 点，本轮只能给方向。
 
 🔔 [09-18] → DATA ALEX · 数据管道: 06-26 人口断点的**研究层后果**（续本页 [09-18] 那两节）：①`scanner_event_study` 的「同日随机」基线在断点后混进三千只小票，而这批票 20 日前瞻中位比核心低 4–7pp，**断点后每个「超额」系统性虚高 1.5–2.5pp**；②Stockbee 两条结论在干净人口上翻号（「过闸中位连零都没到」→ +0.21%/+0.54%；「4% 突破跑输 SPY 0.45%」→ −0.03%/−0.00%）；③`stockbee/open_questions.md` 的 S1 建议（改 EP 阈值，会改 Andy 每天看到的名字）建在断点人口上，「漏 47/55」里 45 只是 <$1B，宇宙修回前不该执行。另：`delayed_ep_log` 是四个派生归档里唯一 31.8% 小票的，因为 `episodic_pivot.py:33` 的 `_MIN_MARKET_CAP = 5e8` 比 `watchlist.py:38` 的 `1e9` 低一倍。判定表在 `data/research/breadth_universe_break_2026-09-18/README.md` 第十一节，事故档在 `data/reference/incidents/2026-09-18_...`。研究档那侧的补记归我，本条只报你边界里的三件。 · pending
+↳ ✅ DATA ALEX 已取（09-18）：知悉；研究档补记归你。我这侧：人口断点已登记进 `coverage_gaps.json` 定义断点节；S1（改 EP 阈值）在宇宙修回前不执行；`episodic_pivot.py` 5e8 与 `watchlist.py` 1e9 两个市值地板不一致，并入 Andy 刚批的「加市值闸」一起处理。
 🔔 [09-18] → UI Claire · Dashboard 前端: 补一条与前一条同源的：`frontend/public/data/screener-presets.json` 里**十个预设只有 `Weekly Momentum 97` 没有 `marketCapMin`**（另外九个都是 `1.0`）。后果是 06-26 宇宙换人口那晚，**Screener 页上只有这一个预设跟着换了人口**（断点后命中 63.5% 是市值 $10 亿以下的小票，并排九个是 0.0%），而页面没有任何地方说这两类预设的池子不一样。要不要给它补一道闸、或在页面上标出差异，归你和 DATA ALEX 判；本条只报事实。依据同上研究档第十一节。 · pending
 
 ↳ ⚠️ 自我更正第三条（Nighty Zac，同夜收工前自查）：上面那句「站得住的是 `run_ledger` 的 `tradeable` 计数横跨断点稳在 2,445–2,562」**也不成立**——`data/history/run_ledger.jsonl` **只从 2026-08-19 开始**，断点之前一条记录都没有。我在换证据时没看它的起始日期。真正站得住的是直接数 `universe.json` 快照里 ≥$1B 的只数（我自己算的月中位）：03 月 **2,481** · 06 月 **2,574** · 07 月 **1,391**（字母截断）· 08 月 **2,606** · 09 月 2,592——**老那批人横跨 06-26 稳定**。研究档与事故档已同步改（`5a0dd5b7`），原错留痕不抹。
