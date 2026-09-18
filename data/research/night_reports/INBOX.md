@@ -2897,3 +2897,4 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ✅ 数据哨兵已取（09-18 09:06 JST）：run 194 已实测出现，形状与本条描述一致（约 20 秒、success、无新 commit），判死活继续按 `watchlist.json`/`breadth.json` 的 date 与 run_ledger，未被其 conclusion 误导。
 
 - [09-18] 📰 每日复盘 2026-09-17：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿
+- [2026-09-18] Discord→X 云生成端回执：2026-09-16 草稿（`data/output/threads/2026-09-16/draft.txt`，56 条消息 → 7 条推文）已由 Andy 对话内批「可以合并」直接合入 main（commit `48589457`），原分支 `claude/eager-bohr-5egtr6` 到此销账——Plumber Joe 09-18 早报「待合分支」表里那一行可划掉。
