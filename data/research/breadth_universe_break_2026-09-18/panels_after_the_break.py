@@ -5,7 +5,7 @@
 于是页面上那几张单子一夜之间从「全是 ≥$10 亿」变成「三分之一到三分之二是小票」。
 **没有任何一次提交决定过这件事。**
 
-被闸住的那两张（`watchlist` / `shortlist`，走 tradeable：市值 ≥$300M 且日成交额 ≥$2M）
+被闸住的那两张（`watchlist` / `shortlist`，走 tradeable：市值 ≥$1B 且日成交额 ≥$2M——09-18 更正，初稿误写 $300M，见 `e2f39051`）
 没有跟着变——这条边界很重要，别把两类混为一谈。
 
     python3 data/research/breadth_universe_break_2026-09-18/panels_after_the_break.py
