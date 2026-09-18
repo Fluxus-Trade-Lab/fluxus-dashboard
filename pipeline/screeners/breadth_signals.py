@@ -733,16 +733,16 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
     env = 'BULLISH' if score >= 4 else 'BEARISH' if score <= -4 else 'MIXED'
 
     notes: List[str] = []
+    n = thrust_count(row)
     t21 = _num(row.get('t2108'))
     z = THRESHOLDS['t2108_zone']
     if t21 is not None and t21 < z['oversold']:
         env = 'OVERSOLD'
-        notes.append('T2108 below 20 — reversal watch: look for back-to-back 300+ up-4% days')
+        notes.append(f'T2108 below 20 — reversal watch: look for back-to-back {n:.0f}+ up-4% days')
     elif t21 is not None and t21 > z['overbought']:
         env = 'OVERBOUGHT'
         notes.append('T2108 above 80 — chase risk')
 
-    n = thrust_count(row)
     if thrust_state(row) == 'churn':
         notes.append(f'Churn/volatile: back-to-back {n:.0f}+ stocks both up and down 4% — unresolved tape')
     mc = _num(row.get('mcclellan_osc'))

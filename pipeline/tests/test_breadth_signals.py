@@ -321,6 +321,19 @@ class TestEvaluate:
         assert v['env'] == 'OVERSOLD'
         assert any('thrust' in n.lower() or 'reversal' in n.lower() for n in v['notes'])
 
+    def test_oversold_note_reads_thrust_count_not_a_hardcoded_300(self, monkeypatch):
+        """The reversal-watch note must name whatever THRESHOLDS['thrust']['count']
+        is, not a hand-typed "300+" -- so it stays true if the threshold ever
+        moves (it did once already, 08-09..09-18)."""
+        from pipeline.screeners import breadth_signals
+        from pipeline.screeners.breadth_signals import evaluate
+        monkeypatch.setitem(breadth_signals.THRESHOLDS['thrust'], 'count', 250)
+        frame = _frame([{'date': '2026-07-29', **_bear_row(t2108=15.0)}])
+        v = evaluate(frame, _health_stub(spy_count=5, qqq_count=5))
+        note = next(n for n in v['notes'] if 'reversal watch' in n.lower())
+        assert '250+' in note
+        assert '300+' not in note
+
     def test_overbought_override(self):
         from pipeline.screeners.breadth_signals import evaluate
         frame = _frame([{'date': '2026-07-29', **_bull_row(t2108=85.0)}])
