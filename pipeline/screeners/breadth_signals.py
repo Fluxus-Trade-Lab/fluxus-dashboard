@@ -94,6 +94,13 @@ def thrust_count(row: Dict[str, Any]) -> Optional[float]:
                THRESHOLDS['thrust']['fraction'] * u)
 
 
+def render_copy(text: str, row: Dict[str, Any]) -> str:
+    """Fill {thrust} with this row's own thrust count. The copy said "300+" until
+    2026-09-18 while vote_detail used 0.113 x universe (634 on 09-16) -- the page
+    told people to wait for a number the engine no longer used."""
+    return text.replace('{thrust}', f"{thrust_count(row):.0f}") if '{thrust}' in text else text
+
+
 def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     """Votes for the 9 breadth-only rules. Missing/NaN inputs vote neutral."""
     votes: Dict[str, str] = {}
@@ -402,7 +409,7 @@ _PLAYBOOK = {
     'BULLISH': 'Trend participation — press winners, normal pyramids',
     'MIXED': 'Smaller size, cleaner setups, demand confirmation',
     'BEARISH': 'Capital preservation — selective shorts or cash',
-    'OVERSOLD': 'Bottom-hunt protocol — wait for a 300+ up-4% thrust day',
+    'OVERSOLD': 'Bottom-hunt protocol — wait for a {thrust}+ up-4% thrust day',
     'OVERBOUGHT': 'Late-stage strength — take partials, raise stops',
 }
 
@@ -417,7 +424,7 @@ _GUIDANCE = {
     ('BEARISH', 'Elevated'): 'Negative breadth with active warnings; capital preservation is the position.',
     ('BEARISH', 'High'): 'Full risk-off: breadth and price agree on the downside.',
     ('OVERSOLD', 'Low'): 'T2108 in the oversold zone; stop pressing shorts and watch for a reversal thrust day.',
-    ('OVERSOLD', 'Elevated'): 'Deeply oversold; the next 300+ up-4% day is the signal that matters.',
+    ('OVERSOLD', 'Elevated'): 'Deeply oversold; the next {thrust}+ up-4% day is the signal that matters.',
     ('OVERSOLD', 'High'): 'Max-pain zone; historically where bottoms form — watch for the thrust, do not front-run it.',
     ('OVERBOUGHT', 'Low'): 'T2108 overbought; strength is late-stage — harvest, do not initiate chases.',
     ('OVERBOUGHT', 'Elevated'): 'Overbought with warnings building; tighten stops into strength.',
@@ -722,8 +729,8 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
 
     return {
         'env': env, 'score': int(score), 'risk': risk, 'warn_total': int(warn_total),
-        'exposure': _EXPOSURE[(env, risk)], 'playbook': _PLAYBOOK[env],
-        'guidance': _GUIDANCE[(env, risk)],
+        'exposure': _EXPOSURE[(env, risk)], 'playbook': render_copy(_PLAYBOOK[env], row),
+        'guidance': render_copy(_GUIDANCE[(env, risk)], row),
         'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
         'confirmation': confirmation, 'notes': notes, 'votes': votes,
         'universe_size': _num(row.get('universe_size')),
@@ -736,8 +743,42 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
 
 # ── Percentile context + per-row codes (spec §1, §3) ─────────────────
 
+# Universe eras (Nighty Zac 2026-09-18, data/research/breadth_universe_break_2026-09-18
+# section 8). 2026-06-26: the >=$1B population (~2,590 names) became the whole market
+# (upstream stopped honouring cap_1.0to); 2026-08-10: the page cap was lifted and the
+# M-Z half came back (~5,620). A raw COUNT from one era is not comparable with another:
+# ranking today's up-4% count against the whole archive put it ~39 percentile points
+# too high. Ratios (ratio_5d, t2108, McClellan on RANA) are ranked on the whole archive.
+UNIVERSE_BREAKS = ('2026-06-26', '2026-08-10')
+_COUNT_KEYS = ('up_4pct', 'down_4pct', 'nh_nl_net', 'qtr_spread')
+MIN_ERA_RANK_N = 20      # fewer same-era sessions than this: no percentile at all
+
+
+def universe_era(day: str) -> int:
+    """0 before 06-26, 1 for the capped full-market stretch, 2 from 08-10."""
+    return sum(str(day)[:10] >= b for b in UNIVERSE_BREAKS)
+
+
+def _era_mask(frame: pd.DataFrame) -> pd.Series:
+    dates = frame['date'].astype(str)
+    today = universe_era(dates.iloc[-1])
+    return dates.map(universe_era) == today
+
+
+def context_basis(frame: pd.DataFrame) -> Dict[str, Any]:
+    """What the count percentiles were ranked against: the era's first session and size."""
+    if frame is None or len(frame) == 0 or 'date' not in frame:
+        return {}
+    era = frame[_era_mask(frame)]
+    return {'counts_since': str(era['date'].iloc[0])[:10], 'counts_n': int(len(era))}
+
+
 def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
-    """Today's percentile rank per headline metric vs the whole archive."""
+    """Today's percentile rank per headline metric.
+
+    Ratios rank against the whole archive; raw counts only against sessions of the
+    same universe era (see UNIVERSE_BREAKS), and are omitted when the history
+    crosses a break and today's era has fewer than MIN_ERA_RANK_N sessions."""
     derived = {
         'nh_nl_net': pd.to_numeric(frame.get('new_highs'), errors='coerce')
                      - pd.to_numeric(frame.get('new_lows'), errors='coerce'),
@@ -745,6 +786,8 @@ def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
                       - pd.to_numeric(frame.get('down_25pct_qtr'), errors='coerce'),
     }
     ctx: Dict[str, int] = {}
+    era = _era_mask(frame) if 'date' in frame and len(frame) else None
+    crossed = era is not None and not bool(era.all())
     for key in ('up_4pct', 'down_4pct', 'ratio_5d', 't2108', 'mcclellan_osc',
                 'nh_nl_net', 'qtr_spread'):
         series = derived[key] if key in derived else pd.to_numeric(frame.get(key), errors='coerce')
@@ -753,7 +796,12 @@ def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
         today = series.iloc[-1]
         if pd.isna(today):
             continue
+        if key in _COUNT_KEYS and crossed:
+            series = series[era.values]
         ranked = series.dropna()
+        # Only when the history crosses a break: a young era is too short to rank.
+        if key in _COUNT_KEYS and crossed and len(ranked) < MIN_ERA_RANK_N:
+            continue
         ctx[key] = int(round(float((ranked <= today).mean()) * 100))
     return ctx
 
@@ -788,6 +836,7 @@ def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
             health['qqq']['danger'] = danger_at(qqq_hist, last_date)
     verdict = evaluate(frame, health)
     verdict['context'] = percentile_context(frame)
+    verdict['context_basis'] = context_basis(frame)
     # Annotate a copy first: a failure here must not leave breadth_result
     # holding a verdict with missing/partial per-row codes (Spec 2 residual).
     rows = [dict(r) for r in breadth_result.get('history', {}).get('rows', [])]
@@ -826,6 +875,7 @@ def build_replay(frame: pd.DataFrame,
         prefix = frame.iloc[:i + 1].reset_index(drop=True)
         verdict = evaluate(prefix, health)
         verdict['context'] = percentile_context(prefix)
+        verdict['context_basis'] = context_basis(prefix)
         verdicts[d] = verdict
 
     health_out = None

@@ -557,7 +557,7 @@ class TestBuildReplay:
     def test_no_peek_every_date_matches_independent_evaluate(self):
         """The no-peek rule: every stored verdict equals a fresh prefix evaluate."""
         from pipeline.screeners.breadth_signals import (
-            build_replay, evaluate, percentile_context, market_health)
+            build_replay, evaluate, percentile_context, market_health, context_basis)
         frame, spy, qqq = self._frame_and_hists()
         r = build_replay(frame, spy, qqq)
         health = market_health(spy, qqq, days=None)
@@ -565,6 +565,7 @@ class TestBuildReplay:
             prefix = frame.iloc[:i + 1].reset_index(drop=True)
             expected = evaluate(prefix, health)
             expected['context'] = percentile_context(prefix)
+            expected['context_basis'] = context_basis(prefix)
             assert r['verdicts'][d] == expected, d
 
     def test_rows_are_json_safe(self):
@@ -733,3 +734,52 @@ def test_universe_truncated_matches_the_real_archive_window():
         flagged = [r["date"] for r in csv.DictReader(fh) if universe_truncated(r)]
     assert flagged[0] == "2026-06-26" and flagged[-1] == "2026-08-07"
     assert len(flagged) == 30
+
+
+# --- percentile_context across the universe breaks (Nighty Zac 09-18) ---------
+
+class TestPercentileAcrossUniverseBreaks:
+    """Raw counts must only be ranked against sessions drawn from the same universe."""
+
+    def _rows(self):
+        # 30 old-universe sessions with up_4pct 10..300, then 25 new-universe
+        # sessions with up_4pct 1000..1024; today = 1000 is the LOWEST of its era.
+        old = [{'date': f'2026-05-{(d % 28) + 1:02d}' if d < 28 else f'2026-06-{d - 27:02d}',
+                **_row(up_4pct=(d + 1) * 10)} for d in range(30)]
+        new = [{'date': f'2026-08-{10 + d:02d}' if d < 22 else f'2026-09-{d - 21:02d}',
+                **_row(up_4pct=1024 - d)} for d in range(25)]
+        return old + new
+
+    def test_counts_rank_only_inside_the_current_era(self):
+        from pipeline.screeners.breadth_signals import percentile_context
+        ctx = percentile_context(_frame(self._rows()))
+        # whole-archive ranking would put 1000 above all 30 old rows (~56th+);
+        # inside its own era it is the minimum.
+        assert ctx['up_4pct'] == 4           # 1 of 25
+
+    def test_too_short_an_era_omits_count_keys_but_keeps_ratios(self):
+        from pipeline.screeners.breadth_signals import percentile_context
+        rows = self._rows()[:30 + 5]         # only 5 new-era sessions
+        ctx = percentile_context(_frame(rows))
+        for k in ('up_4pct', 'down_4pct', 'nh_nl_net', 'qtr_spread'):
+            assert k not in ctx
+        assert 't2108' in ctx and 'ratio_5d' in ctx
+
+    def test_basis_names_the_era_and_its_size(self):
+        from pipeline.screeners.breadth_signals import context_basis
+        b = context_basis(_frame(self._rows()))
+        assert b == {'counts_since': '2026-08-10', 'counts_n': 25}
+
+    def test_era_of_known_dates(self):
+        from pipeline.screeners.breadth_signals import universe_era
+        assert universe_era('2026-06-25') != universe_era('2026-06-26')
+        assert universe_era('2026-08-07') != universe_era('2026-08-10')
+        assert universe_era('2026-08-10') == universe_era('2026-09-16')
+
+
+def test_playbook_and_guidance_name_this_universes_thrust_count_not_300():
+    from pipeline.screeners.breadth_signals import _PLAYBOOK, _GUIDANCE, render_copy
+    assert not any('300' in s for s in list(_PLAYBOOK.values()) + list(_GUIDANCE.values()))
+    text = render_copy(_PLAYBOOK['OVERSOLD'], {'universe_size': 5611})
+    assert '634' in text                       # 0.113 * 5611
+    assert '{' not in render_copy(_GUIDANCE[('OVERSOLD', 'Elevated')], {'universe_size': 5611})
