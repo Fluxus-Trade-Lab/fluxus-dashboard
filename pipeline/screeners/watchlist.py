@@ -336,6 +336,7 @@ def archive_leaders(rows, *, date: str, group_states=None, path: Path = LEADERS_
     fields = ["date", "ticker", "liquid_leader", "tml", "rs_1m", "rs_3m", "h_score",
               "group", "group_state", "close", "atr_from_sma50", "ema21_atr_dist"]
     rows = [r for r in _with_groups(rows, group_states) if r.get("liquid_leader") is True and passes_gate(r)]
+    tml_pool = {r["ticker"] for r in panel_pool(rows, "leaders")}
     old = []
     if path.exists():
         with path.open(newline="") as fh:
@@ -343,7 +344,12 @@ def archive_leaders(rows, *, date: str, group_states=None, path: Path = LEADERS_
     new = []
     for r in rows:
         new.append({"date": date, "ticker": r["ticker"], "liquid_leader": True,
-                    "tml": bool(r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
+                    # The panel's own test on the panel's own pool (ADR floor included,
+                    # universe-wide since 08-25). Was a private copy of the rule without
+                    # the floor: MSFT 09-17 logged True here, False on the page and in
+                    # shortlist_log (audit_event_agreement E5). Same filter for what Andy
+                    # sees and what research measures -- see panel_pool.
+                    "tml": bool(r["ticker"] in tml_pool and PANELS["true_market_leaders"].test(r)),
                     "rs_1m": _int_or_none(_f(r, "rs_1m")), "rs_3m": _int_or_none(_f(r, "rs_3m")),
                     "h_score": _round(_f(r, "h_score")), "group": r.get("_group"),
                     "group_state": r.get("_group_state"), "close": _f(r, "close"),

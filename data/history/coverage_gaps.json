@@ -131,6 +131,18 @@
    "after": "about 5,620 names",
    "note": "08-10 only brought the M-Z half back; the POPULATION changed on 2026-06-26 (see that entry). Ranking raw counts per universe era is on branch feat/alex-universe-era-percentiles (breadth_signals.UNIVERSE_BREAKS), pending merge; prefer ratio fields (record_high_pct, high_low_index) across either date.",
    "declared": "2026-09-17 DATA ALEX"
+  },
+  {
+   "field": "leaders_log.tml",
+   "changed": "first nightly run after this commit lands (expected session 2026-09-18)",
+   "commit": "see git log -- pipeline/screeners/watchlist.py (archive_leaders)",
+   "archives": [
+    "data/history/leaders_log.csv"
+   ],
+   "before": "2026-08-25..2026-09-17: group Leading and rs_1m >= 80, WITHOUT the ADR floor -- so it disagrees with the page's True Market Leaders panel (09-15: 39 logged vs 10 on the panel; 09-17: MSFT True vs False in shortlist_log)",
+   "after": "the panel's own answer: in panel_pool(rows, 'leaders') (ADR >= 3.5, universe-wide since Andy 2026-08-25) and PANELS['true_market_leaders'].test",
+   "note": "Before 2026-08-25 the two definitions coincided (no ADR floor yet). Not recomputed: leaders_log does not store adr_pct. For TML forward-return research use watchlist_hits panel=true_market_leaders across the break, or leaders_log.tml only from the change date on.",
+   "declared": "2026-09-18 DATA ALEX"
   }
  ]
 }

@@ -106,6 +106,14 @@ CROSS: Tuple[Tuple[str, str, str, str, Tuple[str, ...]], ...] = (
 # 跨文件一律按较粗一方记录的精度比：`delayed_ep_log` 写的是 float32 残迹
 # （150.66 存成 `150.66000366210938`），精确比会把 71 例里的 54 例判成假分歧。
 CROSS_DECLARED: Dict[str, Tuple[str, str, str]] = {
+    "2026-09-17": (
+        "DATA ALEX", "2026-09-18",
+        "leaders_log 与 shortlist_log 对 MSFT 的 tml 一真一假：两个写入方用的不是同一条规则。"
+        "页面面板（shortlist 读它）走 panel_pool，含 08-25 起升到宇宙级的 ADR 下限（MSFT ADR 1.86 < 3.5）；"
+        "leaders_log 自己抄了一份不含 ADR 的规则。修在源头：archive_leaders 改用面板自己的判定（09-18 场起），"
+        "coverage_gaps.json 登记 leaders_log.tml 08-25..09-17 为旧口径。这是**不重算**的欠条："
+        "历史各日的 adr_pct 不在 leaders_log 里",
+    ),
     "2026-09-02": (
         "DATA ALEX", "2026-09-06",
         "leaders_log 与 delayed_ep_log 对当天 11 只共同票的 close 全部不一致，而其中 "

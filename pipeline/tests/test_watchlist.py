@@ -156,6 +156,24 @@ class TestLeaders:
         assert len(list(csv.DictReader((tmp_path / "log.csv").open()))) == 1
 
 
+    def test_leaders_log_tml_is_the_panel_s_own_answer(self, tmp_path):
+        """2026-09-17 E5: MSFT (Leading, rs_1m 82, ADR 1.86) read tml=True in
+        leaders_log and False on shortlist_log -- the panel applies the ADR floor
+        (universe-wide since 08-25), leaders_log had its own copy of the rule
+        without it. Same input, one answer: tml == "on the TML panel"."""
+        import csv
+        gs = {"LOW": ("Tech Mega Caps", "Leading"), "HIGH": ("Semis", "Leading")}
+        rs = [row(ticker="LOW", liquid_leader=True, rs_1m=82, adr_pct=1.86),
+              row(ticker="HIGH", liquid_leader=True, rs_1m=82, adr_pct=4.0)]
+        W.archive_leaders(rs, date="2026-09-17", group_states=gs, path=tmp_path / "log.csv")
+        logged = {r["ticker"]: r["tml"] == "True" for r in csv.DictReader((tmp_path / "log.csv").open())}
+        out = W.build(rs, date="2026-09-17", group_states=gs)
+        panel = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}["true_market_leaders"]
+        shown = {t["ticker"] for t in panel["tickers"]}
+        assert logged == {t: t in shown for t in logged}
+        assert logged == {"LOW": False, "HIGH": True}
+
+
 class TestBuild:
     def _rows(self):
         return [
