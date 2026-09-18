@@ -100,6 +100,13 @@ EXEMPT: dict[str, str] = {
         "data/reference/METRIC_SOURCES.md's 登记表, the same manual cadence "
         "as audit_unpushed at 收工 (Andy 2026-09-06 「撞名立机制」)."
     ),
+    "audit_tml": (
+        "on-demand read of the published outputs after TML moved to Moglen 2020 "
+        "(2026-09-18): is the new definition live, how many TMLs, does the panel "
+        "match leaders_log. A one-command spot check for a person, not a nightly "
+        "invariant -- the panel/leaders_log daily agreement is already an "
+        "invariant under audit_event_agreement's cross-file tml check."
+    ),
 }
 
 # Known-unwired baseline. (owner, found_on, why_it_matters)
