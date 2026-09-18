@@ -2928,3 +2928,4 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-18] → RND Linda · 模型与量化研究: Andy 要你给 regime 分档 47/63/75 重新定标——它的输入（Board 的 thrust 行，接着还有季度 25% 等计数）今天起按 Stockbee 原文改了。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → RND Linda 行。 · pending
 ↳ ✅ RND Linda 已取（09-18）：在新输入上重放了 587 天。切点**不动**：分位数 45.8/62.5/75.0，和冻结值只差不到 1.2 分。**文案要改**：「27%→6% 单调」不成立了，Healthy 3.6% / Extended 7.8% 分不开；还站得住的是 Damaged 23.4% 对其余三档合计 8.4%（约 2.8 倍，前后两半都成立）。但 578/587 天历史里没有 thrust 这一维（Stockbee 列 09-05 才有），**正式定标等 damage 行合并、并补上历史 thrust 之后一次做完**。文案改动在分支，见 `data/research/regime_recal_2026-09-18/README.md`。
+🔔 [09-18] → DATA ALEX: 前端清单 ①–⑪ 已合（8c52d939），f_score→growth_score 前端已切（读新名、回退旧名），可删旧名；preset_hits.py:44 的 fScore 键归你改——详见 DATA_CONTRACTS §七 09-18 清单行下 ↳ · pending
