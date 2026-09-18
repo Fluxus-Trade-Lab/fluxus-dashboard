@@ -81,10 +81,10 @@ export default function BreadthTable({ data }) {
                 <Td>{row.up_50pct_month}</Td>
                 <Td>{row.down_50pct_month}</Td>
                 <TdSep />
-                <Td className={pctAboveColor(row.t2108, i === 0)}>{row.t2108?.toFixed(1)}</Td>
-                <Td className={pctAboveColor(row.pct_above_200sma, i === 0)}>{row.pct_above_200sma?.toFixed(1)}</Td>
-                <Td className={pctAboveColor(row.pct_above_50sma, i === 0)}>{row.pct_above_50sma?.toFixed(1)}</Td>
-                <Td className={pctAboveColor(row.pct_above_20sma, i === 0)}>{row.pct_above_20sma?.toFixed(1)}</Td>
+                <Td className={t2108Color(row.t2108, i === 0)}>{row.t2108?.toFixed(1)}</Td>
+                <Td className={pct200Color(row.pct_above_200sma, i === 0)}>{row.pct_above_200sma?.toFixed(1)}</Td>
+                <Td>{row.pct_above_50sma?.toFixed(1)}</Td>
+                <Td>{row.pct_above_20sma?.toFixed(1)}</Td>
                 <TdSep />
                 <Td>{row.advances}</Td>
                 <Td>{row.declines}</Td>
@@ -156,14 +156,44 @@ function tint(level, solid) {
   return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)]'
 }
 
-function ratioColor(val, solid) {
-  if (val == null) return ''
-  return tint(val >= 1.0 ? 'high' : val >= 0.5 ? 'mid' : 'low', solid)
+/* Each tint is the engine's own vote on that column, not a ruler of ours:
+ * `pipeline/screeners/breadth_signals.py::THRESHOLDS`, copied here because the
+ * votes ship for today only and the table colours a hundred rows. The copy is
+ * pinned by breadthTableLines.test.js, which reads the Python file — before
+ * that, one 60/40 ruler painted all four %-columns and %>200 (engine 50/30)
+ * disagreed with the engine on 33 of 100 rows. Columns the engine has no rule
+ * for (%>50, %>20) carry no tint. */
+export const ENGINE_LINES = {
+  ratio: { bull: 1.0, bear: 0.5 },
+  pct200: { bull: 50, bear: 30 },
+  t2108: { strongLo: 60, weakHi: 40, oversold: 20, overbought: 80 },
 }
 
-function pctAboveColor(val, solid) {
+function ratioColor(val, solid) {
   if (val == null) return ''
-  return tint(val >= 60 ? 'high' : val >= 40 ? 'mid' : 'low', solid)
+  const t = ENGINE_LINES.ratio
+  return tint(val >= t.bull ? 'high' : val < t.bear ? 'low' : 'mid', solid)
+}
+
+function pct200Color(val, solid) {
+  if (val == null) return ''
+  const t = ENGINE_LINES.pct200
+  return tint(val >= t.bull ? 'high' : val < t.bear ? 'low' : 'mid', solid)
+}
+
+// Engine: 60–80 bull, 20–40 bear, anything else neutral (the <20 / >80
+// extremes are overrides, not zone votes).
+export function t2108Level(val) {
+  const z = ENGINE_LINES.t2108
+  if (val < z.oversold || val > z.overbought) return 'mid'
+  if (val >= z.strongLo) return 'high'
+  if (val <= z.weakHi) return 'low'
+  return 'mid'
+}
+
+function t2108Color(val, solid) {
+  if (val == null) return ''
+  return tint(t2108Level(val), solid)
 }
 
 function mcColor(val, solid) {

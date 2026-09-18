@@ -113,6 +113,11 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `pp_count_30d` | Pocket Pivot（Morales/Kacher）是单日事件 | 30 日内 pocket pivot 次数（`yfinance_adapter.py:1254`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表），30 日滚动计数查无标准 |
 | `ema21_atr_dist` | ATR Matrix（SteveDJacobs）的 EMA21 变体 | (close − EMA21) / ATR（`run_all.py:593-601`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。代码注释已写「our own quantity」；与已登记的 `atr_from_sma50`（B/A 式）故意不同式 |
 | `eps_growth_next_y` / `eps_growth_this_y` | ⚠️ 撞名 Finviz **EPS next Y / EPS this Y**（财年 EPS 增速、分析师预估） | next_y = forwardEps / trailingEps − 1；this_y = yfinance 单季 YoY（`fundamentals_store.py:84-89`） | ⚠️ **自造，2026-09-18 补登记**（自造数字复查 A 表）。不上页，但喂 `growth_score`；名字与 Finviz 列同名不同义 |
+| 前端：ETF 组内 RS（`frontend/src/lib/etfRank.js`，行业/板块卡上的 0–99） | 形状同 IBD **RS Rating**（横截面 1–99） | 窗口收益在**卡片自己那一组 ETF**（11 个板块或行业 ETF 列表）内的百分位 ×99，构造抄 `run_all.py::rank_tradeable` | ⚠️ **前端自造，2026-09-18 登记**（UI Claire，自造数字复查 ⑪）。分母是卡片那一组，不是个股的 tradeable 池——板块的 75 与个股的 75 不是同一个断言，卡片已写明 cohort。不改名：页面标签是 Andy 09-06 亲定 |
+| 前端：rotation `rs2w` → 页面 **RS Last 2 weeks** | 查过，无标准 | 相对 SPY 的相对指数 10 个交易日变化 `rel[t]/rel[t−10]−1`（`rotationLogic.js::r2wSeries`）；缺相对指数时退回 `rs_0_1w + rs_1w_1m/3.2` | ⚠️ **前端自造，2026-09-18 登记**（UI Claire，⑪）。只在浏览器算，不上后端；页面标签 Andy 09-06 亲定 |
+| 前端：rotation `wkAccel` → 页面 **RS This week vs prior 3** | 查过，无标准 | 本周相对强度 − 前三周平均周速度 `rs_0_1w − rs_1w_1m/3.2`（`PRIOR_WEEKS=3.2`）（`rotationLogic.js::wkAccel`） | ⚠️ **前端自造，2026-09-18 登记**（UI Claire，⑪）。和后端 `rs_accel` 不是同一个量 |
+| 首页 **Market conditions** 条的档位词（`frontend/src/components/dashboard/RegimeBand.jsx`） | 查过，无标准 | `conditions.today` 切五档 18/40/62/84，再被 breadth / structure / Power Trend 三个投票人里**最弱的**一个往下拉（只拉低不抬高） | ⚠️ **前端自造，2026-09-18 登记**（UI Claire，⑧）。选的是「页面标明」而不是搬进后端：卡头改为「Market conditions · our composite」+ 悬停说明。与后端 `regime.py` 的 47/63/75 是**两套不同分档**，别混用 |
+| ATR from SMA50 的 **0–4 建仓 / 5–7 持有** 两档（`WatchlistPage.jsx` 悬停） | Jacobs / Jeff Sun 的 ATR 带（出自 `atr_enrichment.py:66` 注释） | 0–4 / 5–7 / ≥7；7.0 本身归 ≥7（与 `watchlist.py:246` Extended 面板一致，09-18 前端改 `<7`） | ⚠️ **出处未核原文，2026-09-18 登记**（UI Claire，⑨）。≥7 减仓已由 TradeDudeNYC 行登记；0–4/5–7 这两档只有代码注释出处，4–5 之间是空档 |
 
 来源（本批 2026-09-06 追加，源 [`recap_vocab_sources_2026-09-06.md`](../research/ops/recap_vocab_sources_2026-09-06.md)；Andy 批「候选行批了，Power Trend 改判定对齐 Webster，撞名立机制」，口语三词 hot potato / the tell / lone standout 被裁「都是口语，忽略」，未登记）。
 

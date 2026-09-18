@@ -399,7 +399,7 @@ const atrTitle = (v) => v == null || !Number.isFinite(v)
   ? 'ATR 位未测量'
   : v < 0 ? `${v.toFixed(1)} ATR — 在 50 日线下方，不在扩张刻度上`
   : v <= 4 ? `${v.toFixed(1)} ATR — 0–4 建仓区`
-  : v <= 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`
+  : v < 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`   // 7.0 itself is Extended, as watchlist.py:246 (>= 7)
   : `${v.toFixed(1)} ATR — ≥7 只减不买`
 
 

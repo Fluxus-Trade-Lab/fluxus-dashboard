@@ -51,7 +51,10 @@ const STATE_WORDS = ['Leading', 'Weakening', 'Improving', 'Lagging']
  * dropped, not waved through. That is what makes it a gate.
  */
 const GATES = {
-  liquid: { test: (r) => r.cap != null && r.cap >= 1e9 && r.vol != null && r.vol >= 1e6 },
+  // Reads the pipeline's own verdict (`pipeline/themes/__init__.py::is_tradeable`:
+  // cap ≥ $1B and ≥ $2M/day dollar volume over 20 sessions). The page used to
+  // keep a retired copy — $1B + 1M shares — that disagreed with it.
+  liquid: { test: (r) => r.tradeable === true },
   exHealth: { test: (r) => r.sector !== 'Healthcare' },
 }
 
@@ -236,6 +239,7 @@ export default function ScreenerPage() {
         sector: u?.sector ?? null,
         cap: u?.market_cap ?? null,
         vol: u?.avg_volume ?? null,
+        tradeable: u?.tradeable ?? null,
       })
     }
     return out

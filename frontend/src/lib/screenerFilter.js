@@ -108,9 +108,10 @@ export function applyFilters(rows, filters, tickerSearch) {
     const f = filters[filterKey]
     if (f?.enabled) {
       result = result.filter(r => {
-        if (r[dataKey] == null) return false
-        if (f.min !== '' && f.min != null && r[dataKey] < f.min) return false
-        if (f.max !== '' && f.max != null && r[dataKey] > f.max) return false
+        const v = dataKey === 'growth_score' ? (r.growth_score ?? r.f_score) : r[dataKey]
+        if (v == null) return false
+        if (f.min !== '' && f.min != null && v < f.min) return false
+        if (f.max !== '' && f.max != null && v > f.max) return false
         return true
       })
     }
@@ -177,7 +178,10 @@ export function applyFilters(rows, filters, tickerSearch) {
   // RS score ranges (data is 0-99 integer)
   const rsRanges = [
     ['hScore', 'h_score'],
-    ['fScore', 'f_score'],
+    // growth_score = mean of EPS/revenue growth percentiles (renamed from f_score,
+    // which collided with Piotroski's F-Score). Falls back to the old name until
+    // the data side stops publishing it — DATA_CONTRACTS §七 2026-09-18 ⑤.
+    ['growthScore', 'growth_score'],
     ['iScore', 'i_score'],
     ['rs21d', 'rs_21d'],
     ['rs63d', 'rs_63d'],
@@ -188,9 +192,10 @@ export function applyFilters(rows, filters, tickerSearch) {
     const f = filters[filterKey]
     if (f?.enabled) {
       result = result.filter(r => {
-        if (r[dataKey] == null) return false
-        if (f.min !== '' && f.min != null && r[dataKey] < f.min) return false
-        if (f.max !== '' && f.max != null && r[dataKey] > f.max) return false
+        const v = dataKey === 'growth_score' ? (r.growth_score ?? r.f_score) : r[dataKey]
+        if (v == null) return false
+        if (f.min !== '' && f.min != null && v < f.min) return false
+        if (f.max !== '' && f.max != null && v > f.max) return false
         return true
       })
     }
@@ -205,9 +210,10 @@ export function applyFilters(rows, filters, tickerSearch) {
     const f = filters[filterKey]
     if (f?.enabled) {
       result = result.filter(r => {
-        if (r[dataKey] == null) return false
-        if (f.min !== '' && f.min != null && r[dataKey] < f.min) return false
-        if (f.max !== '' && f.max != null && r[dataKey] > f.max) return false
+        const v = dataKey === 'growth_score' ? (r.growth_score ?? r.f_score) : r[dataKey]
+        if (v == null) return false
+        if (f.min !== '' && f.min != null && v < f.min) return false
+        if (f.max !== '' && f.max != null && v > f.max) return false
         return true
       })
     }

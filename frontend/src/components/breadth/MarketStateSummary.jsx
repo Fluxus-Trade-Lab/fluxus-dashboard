@@ -2,39 +2,44 @@
  * The old four-tile summary, restored into a fold on 2026-09-11 (Andy: 「如果是
  * 有内容被删除了, 那我希望被删除的内容先放在折叠页里面」). Its numbers also sit in
  * the Archive's first row; what only this card had are the four readings in
- * words (thrust, ratios agree, structural, T2108 zone) and their percentiles.
+ * words (thrust, ratio votes, T2108 zone) and their percentiles.
  * Its closing guidance sentence is the same field the Votes fold prints, so it
  * is printed there once rather than twice.
  */
-/** The engine's thrust line from vote_detail; 300 only for payloads that
- *  predate it — the same fallback the engine uses for old archive rows. */
-function thrustLine(verdict) {
-  const t = verdict?.vote_detail?.find((d) => d.key === 'thrust')
-  return Number.isFinite(t?.line) ? t.line : 300
-}
+/*
+ * Every judgement on this card is the engine's, read from its votes — none is
+ * recomputed here (DATA ALEX's 09-18 audit, Andy: 「全部按原文」). Two earlier
+ * copies of the thrust rule drifted: a flat 300 on the price-only count, then
+ * 0.113 × universe; the engine now follows Stockbee as written — back-to-back
+ * 300+ days on his Market Monitor count (volume legs included). Reading the
+ * vote means the card changes the night the engine does, and never argues.
+ */
+const VOTE_WORD = { bull: 'bull', bear: 'bear', neutral: 'neutral' }
 
-export default function MarketStateSummary({ mm, breadth, verdict }) {
+export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
   if (!mm || !breadth || !verdict) return null
   const ctx = verdict.context ?? {}
-  const qtrSpread = (mm.up_25pct_qtr ?? 0) - (mm.down_25pct_qtr ?? 0)
+  const votes = verdict.votes ?? {}
 
-  // The thrust line scales with the universe (breadth_signals.thrust_count,
-  // 0.113 × universe_size since 08-09 — 634 on 09-18). This used to be a flat
-  // 300, a second copy of the rule that drifted the day the universe doubled
-  // (08-10): 20 of the next 27 sessions read the opposite of the engine
-  // (Nighty Zac, 09-18). Read the engine's own line; mirror its four branches.
-  const line = thrustLine(verdict)
-  const up = mm.up_4pct ?? 0, down = mm.down_4pct ?? 0
-  const thrustLabel =
-    up >= line && down >= line ? 'churn / volatile'
-    : up >= line && up > down ? 'bullish thrust'
-    : down >= line && down > up ? 'bearish thrust'
+  // Stockbee's own count (the engine's numerator); the price-only count only
+  // as a labelled fallback for payloads that predate the column.
+  const sbUp = lastRow?.up_4pct_stockbee, sbDown = lastRow?.down_4pct_stockbee
+  const hasSb = Number.isFinite(sbUp) && Number.isFinite(sbDown)
+  const up = hasSb ? sbUp : mm.up_4pct, down = hasSb ? sbDown : mm.down_4pct
+  const churn = (verdict.notes ?? []).some((n) => /^Churn\/volatile/.test(n))
+  const tDetail = verdict.vote_detail?.find((d) => d.key === 'thrust')
+  const thrustLabel = tDetail && tDetail.measurable === false ? 'not measured'
+    : churn ? 'churn / volatile'
+    : votes.thrust === 'bull' ? 'bullish thrust'
+    : votes.thrust === 'bear' ? 'bearish thrust'
     : 'no thrust'
 
+  // T2108: <20 oversold and >80 overbought are Stockbee's; the three middle
+  // bands (40/60) have no published source — they are ours, and say so.
   const t = breadth.t2108
   const t2108Zone =
-    t == null ? '—' : t < 20 ? 'oversold' : t <= 40 ? 'weak' : t < 60 ? 'neutral'
-    : t <= 80 ? 'strong' : 'overbought'
+    t == null ? '—' : t < 20 ? 'oversold' : t <= 40 ? 'weak · our band' : t < 60 ? 'neutral · our band'
+    : t <= 80 ? 'strong · our band' : 'overbought'
 
   return (
     <div className="bg-[var(--color-bg)] rounded-2xl p-4">
@@ -43,32 +48,30 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
       </h3>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
         <Tile
-          label="Up 4% / Down 4%"
-          value={`${mm.up_4pct ?? '—'} / ${mm.down_4pct ?? '—'}`}
+          label={hasSb ? 'Up 4% / Down 4% (Stockbee)' : 'Up 4% / Down 4% (price only)'}
+          value={`${up ?? '—'} / ${down ?? '—'}`}
           note={thrustLabel}
           pct={ctx.down_4pct != null ? `down-4% ${ctx.down_4pct}th pctile` : null}
-          tone={thrustLabel === 'bullish thrust' ? 'up' : thrustLabel === 'bearish thrust' ? 'down' : ''}
         />
         <Tile
           label="5-day / 10-day ratio"
           value={`${mm.ratio_5d?.toFixed(2) ?? '—'} / ${mm.ratio_10d?.toFixed(2) ?? '—'}`}
-          note={mm.ratio_5d >= 1 === mm.ratio_10d >= 1 ? 'ratios agree' : 'ratios disagree'}
+          note={votes.ratio_5d && votes.ratio_10d
+            ? (votes.ratio_5d === votes.ratio_10d ? `both vote ${VOTE_WORD[votes.ratio_5d]}` : `5D ${VOTE_WORD[votes.ratio_5d]} · 10D ${VOTE_WORD[votes.ratio_10d]}`)
+            : '—'}
           pct={ctx.ratio_5d != null ? `5D ${ctx.ratio_5d}th pctile` : null}
-          tone={mm.ratio_5d >= 1 && mm.ratio_10d >= 1 ? 'up' : mm.ratio_5d < 0.5 && mm.ratio_10d < 0.5 ? 'down' : ''}
         />
         <Tile
           label="Quarterly breadth (25%+)"
           value={`${mm.up_25pct_qtr ?? '—'} / ${mm.down_25pct_qtr ?? '—'}`}
-          note={qtrSpread > 0 ? 'structural bull intact' : qtrSpread < 0 ? 'structural bear' : 'flat'}
+          note={votes.qtr_spread ? `votes ${VOTE_WORD[votes.qtr_spread]}` : '—'}
           pct={ctx.qtr_spread != null ? `spread ${ctx.qtr_spread}th pctile` : null}
-          tone={qtrSpread > 0 ? 'up' : qtrSpread < 0 ? 'down' : ''}
         />
         <Tile
           label="T2108"
           value={t != null ? `${t.toFixed(1)}%` : '—'}
           note={t2108Zone}
           pct={ctx.t2108 != null ? `${ctx.t2108}th pctile` : null}
-          tone={t2108Zone === 'strong' ? 'up' : t2108Zone === 'weak' ? 'down' : ''}
         />
       </div>
     </div>

@@ -28,7 +28,7 @@
  */
 
 /** Below this share of its own range, a vote is sitting on its line. */
-const ON_THE_LINE = 0.08
+export const ON_THE_LINE = 0.08
 
 /** Per-vote half-range, in the vote's own unit — the frame each mark is drawn
  *  inside. Chosen to be wide enough that an ordinary day does not peg the top. */
@@ -37,6 +37,14 @@ const RANGE = {
   qtr_spread: 400, spread_13_34: 400, nh_nl: 200,
   mcclellan: 70, pct200: 20, t2108_zone: 20,
   spy_danger: 5, qqq_danger: 5, bench_trend: 1,
+}
+
+/** Where a vote sits against its own line, −1..1. The thrust range is the
+ * engine's own line (`d.line`, 300 today) so it moves when the engine does.
+ * Reading.jsx's sentence reads this same function — it used to keep a copy. */
+export function voteFrac(d) {
+  const range = (d.key === 'thrust' && Number.isFinite(d.line) && d.line > 0) ? d.line : (RANGE[d.key] ?? 1)
+  return d.margin == null ? 0 : Math.max(-1, Math.min(1, d.margin / range))
 }
 
 /**
@@ -94,8 +102,7 @@ export default function VoteGlyphs({ detail, stretch = false, perRow }) {
 function Glyph({ d, stretch }) {
   // thrust is drawn against its own line (it scales with the universe — 634
   // on 09-18); the flat 300 pinned a margin of −342 to the frame (Zac 09-18).
-  const range = (d.key === 'thrust' && Number.isFinite(d.line) && d.line > 0) ? d.line : (RANGE[d.key] ?? 1)
-  const frac = d.margin == null ? 0 : Math.max(-1, Math.min(1, d.margin / range))
+  const frac = voteFrac(d)
   const onLine = d.measurable && Math.abs(frac) < ON_THE_LINE
   const fill = !d.measurable ? 'transparent'
     : d.side === 'bear' ? 'var(--color-refused)'

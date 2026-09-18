@@ -112,8 +112,11 @@ export function indicators(u) {
     { label: '资格', value: [u.liquid_leader && 'liquid leader', u.trend_base && 'trend base',
         u.momentum_97 && 'momentum 97'].filter(Boolean).join(' · ') || null,
       from: 'universe', note: 'liquid_leader / trend_base / momentum_97' },
-    { label: 'H / I / F 分', value: u.h_score == null ? null
-        : `${u.h_score} / ${u.i_score ?? '—'} / ${u.f_score ?? '—'}`, from: 'universe' },
+    { label: 'Composite Score', value: u.h_score_pctl == null ? null : n1(u.h_score_pctl),
+      from: 'universe', note: '全宇宙分位；原始 h_score 不上页' },
+    { label: 'I Score', value: u.i_score == null ? null : String(u.i_score), from: 'universe' },
+    { label: 'Growth Score', value: n1(u.growth_score ?? u.f_score),
+      from: 'universe', note: 'EPS/营收增速分位均值（我们自造，不是 Piotroski F-Score）' },
     { label: 'RSI(14)', value: null, from: 'ticker_file' },
   ]
 }

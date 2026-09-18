@@ -368,7 +368,9 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
       <div className="flex items-baseline justify-between gap-4 flex-wrap">
         <div className="flex items-baseline gap-3">
           <span className="text-[11px] font-mono uppercase tracking-[.24em]
-                           text-[var(--color-text-muted)]">Market conditions</span>
+                           text-[var(--color-text-muted)]"
+                title="Our own composite, not a published indicator: bands 18/40/62/84 over the conditions score, capped by the weakest of breadth / structure / power. Registered in METRIC_SOURCES.md.">
+            Market conditions · our composite</span>
           {score != null && (
             <span className="text-[26px] font-semibold tabular-nums leading-none"
                   style={{ fontFamily: 'var(--font-cond)' }}>

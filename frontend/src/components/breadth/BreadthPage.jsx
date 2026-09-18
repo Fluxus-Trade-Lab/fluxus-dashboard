@@ -146,7 +146,7 @@ export default function BreadthPage({ data }) {
         {/* Restored 09-11 (Andy: deleted content goes back into a fold first). */}
         <Reference label="Summary tiles" count={4}
                    note="the old four-tile summary — ±4% thrust, 5/10-day ratio, quarterly 25%, T2108, with their words and percentiles">
-          <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
+          <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} lastRow={rows[rows.length - 1]} />
         </Reference>
 
         {/* RND Linda's ruling, DATA_CONTRACTS §七 2026-09-11 (v1 + v2) —

@@ -28,7 +28,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
  *   Vol 5d/50d  five-day over fifty-day average volume, from daily bars;
  *               younger than fifty sessions prints a dash, not a ratio over
  *               a shorter window.
- *   Rel vol     today's volume over the 3-month average (Finviz construction)
+ *   Rel vol     today's volume over its 20-day average (yfinance_adapter rel_volume)
  *               — a different measurement from 5d/50d and labelled as such,
  *               not a stand-in for it.
  *
@@ -350,7 +350,7 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
                 title="rs_accel — the same number the state machine reads">{tr('scr.col.accel')}</SortTh>
             <SortTh k="h52" sort={sort} onSort={clickSort}>{tr('scr.col.from52wh')}</SortTh>
             <SortTh k="relVol" sort={sort} onSort={clickSort}
-                title="today's volume ÷ 3-month average (Finviz construction)">{tr('scr.col.relVol')}</SortTh>
+                title="today's volume ÷ 20-day average">{tr('scr.col.relVol')}</SortTh>
             <SortTh k="vol5050" sort={sort} onSort={clickSort}
                 title="5-day average volume over 50-day average volume, from daily bars">{tr('scr.col.vol5d50d')}</SortTh>
             <SortTh k="tq" sort={sort} onSort={clickSort} align="left"

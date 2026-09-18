@@ -1,3 +1,4 @@
+import { voteFrac, ON_THE_LINE } from './breadth/VoteGlyphs'
 /**
  * The narrator's line — one per page, at reading size, above the numbers.
  *
@@ -79,14 +80,6 @@ export default function Reading({ text, tickers, onTicker }) {
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`
 
-/** Below this share of its own range, a vote is sitting on its line. */
-const ON_LINE = 0.08
-const RANGE = {
-  ratio_5d: 1.5, ratio_10d: 1.5, thrust: 300, qtr_spread: 400,
-  spread_13_34: 400, nh_nl: 200, mcclellan: 70, pct200: 20,
-  t2108_zone: 20, spy_danger: 5, qqq_danger: 5, bench_trend: 1,
-}
-
 /**
  * Market State. The interesting fact most days is not the score — it is how
  * much of the score is resting on votes that have nearly crossed.
@@ -98,7 +91,7 @@ export function readMarketState(verdict) {
   const detail = verdict.vote_detail ?? []
 
   const onLine = detail.filter(
-    (d) => d.measurable && Math.abs(d.margin / (RANGE[d.key] ?? 1)) < ON_LINE,
+    (d) => d.measurable && Math.abs(voteFrac(d)) < ON_THE_LINE,
   ).length
   const uncounted = detail.filter((d) => !d.measurable && d.key !== 'bench_trend').length
 
