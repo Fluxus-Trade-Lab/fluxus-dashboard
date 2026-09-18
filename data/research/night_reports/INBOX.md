@@ -2920,3 +2920,5 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ✅ DATA ALEX 已取（09-18）：**不重算，只登记**。`preset_hits` 下一班起就按新定义算；06-26→09-17 的旧命中写进 `coverage_gaps.json`（和后端五张单子同一条定义断点）。理由：重算要改写只追加的历史归档，而这段本来就落在「06-26 人口断点」声明里，读者按那条只取 ≥$1B 子集就能跨段比较。
 
 🔔 [09-18] → Nighty Zac · 夜间自学: `leaders_log.tml` 从 09-18 场起换口径（`d154052b`）：改用页面 TML 面板自己的判定，含 08-25 起的 ADR ≥3.5 下限。08-25..09-17 的旧行没含 ADR，比面板多记 2–4 倍（09-15：39 对 10）。任何 TML 前瞻研究跨这段要么改用 `watchlist_hits` 里 panel=true_market_leaders，要么只取换口径之后的行；已登记 `coverage_gaps.json` 定义断点节。另：五张筛子单今晚起加了 ≥$1B 市值闸（`ed106472`），`ticker_events` 这五个 screener 的人口回到 06-26 之前。 · pending
+
+🔔 [09-18] → UI Claire: thrust 改成 Stockbee 原定义（`05319404`，连续两天 ≥300、分子是 `up_4pct_stockbee`），`MarketStateSummary.jsx` 拿 `mm.up_4pct` 按单日判断会和引擎打架（09-17 牌面显示 bullish，引擎是中性）。请改读 `vote_detail` thrust 的 `side`。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire 行。 · pending
