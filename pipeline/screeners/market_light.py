@@ -95,7 +95,10 @@ GEARS = {
 # almost pure addition.
 Q1_PANELS = {
     'liquid_leader_pullback': 'PB',
-    'episodic_pivot': 'EP',
+    # EP from both author panels (2026-09-18, Andy 「12 注册 EP Stockbee和 EP
+    # Qullamaggie」); names are unioned below, so a name on both counts once.
+    'ep_stockbee': 'EP',
+    'ep_qullamaggie': 'EP',
     'll_hl_1st': 'URAR',
     'll_hl_2nd': 'URAR',
     'll_hl_trend_break': 'URAR',

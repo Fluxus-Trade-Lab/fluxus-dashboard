@@ -340,21 +340,35 @@ def test_momentum97_shadow_logs_both_recipes(tmp_path):
     assert not any(t == "H" for _, t in got) and n == len(got)
 
 
-class TestEpisodicPivotPanel:
+class TestEpisodicPivotPanels:
     """2026-08-20 (Andy: '三个都同意，尤其是EP'): MRNA +177% fired four
-    screeners but Today's List had no EP panel. Same recipe as the screener;
-    deliberately NO Healthcare exclusion."""
+    screeners but Today's List had no EP panel. Deliberately NO Healthcare
+    exclusion. 2026-09-18 (Andy: 「全部按原文」「12 注册 EP Stockbee和 EP
+    Qullamaggie」): the one self-made panel (close +10% x rvol 3) becomes two,
+    each calling its screener's own row test -- one implementation."""
 
-    def test_recipe_and_no_healthcare_gate(self):
-        p = W.PANELS["episodic_pivot"]
-        assert p.test(row(change_pct=0.177, rel_volume=12.8, sector="Healthcare"))
-        assert p.test(row(change_pct=0.10, rel_volume=3.0))
-        assert not p.test(row(change_pct=0.09, rel_volume=5.0))
-        assert not p.test(row(change_pct=0.15, rel_volume=2.9))
+    def test_stockbee_panel_is_the_stockbee_scan(self):
+        p = W.PANELS["ep_stockbee"]
+        ok = dict(change_pct=0.05, volume=1_000_000, avg_vol50_prev=200_000)
+        assert p.test(row(sector="Healthcare", **ok))
+        assert not p.test(row(**dict(ok, change_pct=0.04)))          # c/c1 > 1.04 strict
+        assert not p.test(row(**dict(ok, volume=600_000)))           # v > 3*avgv50.1 strict
+        # the retired recipe's hit: +10% on rel_volume 3 but only 2x avg50
+        assert not p.test(row(change_pct=0.10, rel_volume=3.0, volume=400_000, avg_vol50_prev=200_000))
+
+    def test_qullamaggie_panel_is_a_gap(self):
+        p = W.PANELS["ep_qullamaggie"]
+        ok = dict(gap_pct=0.12, volume=300_000, avg_vol50_prev=200_000)
+        assert p.test(row(sector="Healthcare", **ok))
+        assert not p.test(row(**dict(ok, gap_pct=0.05, change_pct=0.20)))   # rally, not a gap
+        assert not p.test(row(**dict(ok, volume=150_000)))                   # under one ADV
+
+    def test_retired_panel_is_gone(self):
+        assert "episodic_pivot" not in W.PANELS
 
     def test_sits_in_entries_after_ma_reclaim(self):
         entries = [z for z in W.ZONES if z["key"] == "entries"][0]["panels"]
-        assert entries[:2] == ["ma_reclaim", "episodic_pivot"]
+        assert entries[:3] == ["ma_reclaim", "ep_stockbee", "ep_qullamaggie"]
 
 
 class TestAdrFloor:

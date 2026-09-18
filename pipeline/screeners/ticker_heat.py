@@ -34,6 +34,13 @@ import pandas as pd
 # The single source of truth for scoring weights.
 WEIGHTS: Dict[str, int] = {
     # setup quality
+    # EP, two authors (2026-09-18). Each carries the retired EP's weight; a
+    # name on BOTH on one day scores both -- the two definitions overlap by
+    # design (compare-and-test), so read a double EP hit as one event.
+    'ep_stockbee': 3,
+    'ep_qullamaggie': 3,
+    # retired 2026-09-18: its archived rows (<= 09-17) still sit inside the
+    # 15-session window and keep their weight until they age out.
     'episodic_pivot': 3,
     'vcp': 3,
     'momentum_97': 3,

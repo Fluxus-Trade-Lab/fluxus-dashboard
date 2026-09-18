@@ -27,8 +27,10 @@ Layer 1 (``layer1_finviz_filter``):
 Layer 2 (``layer2_detect_vcp``):
     Precise pattern detection on 90-day OHLCV history fetched via
     yfinance.  Finds swing highs/lows, builds a contraction sequence,
-    and verifies that contractions are progressively shallower with
-    healthy depth ratios (30-75 %) and declining volume.
+    and verifies that contractions are progressively shallower, each about
+    half the previous (30-75 % band -- the band is ours) on declining volume,
+    2-6 of them. Since 2026-09-18 every one of these GATES the row; before,
+    the ratio and volume checks were flags that never filtered.
 
 ``run_vcp_pipeline`` orchestrates both layers end-to-end.
 
@@ -44,6 +46,12 @@ import numpy as np
 import pandas as pd
 
 logger = logging.getLogger(__name__)
+
+# Minervini's contraction count range ("two to four", "as many as five or six").
+MIN_CONTRACTIONS = 2
+MAX_CONTRACTIONS = 6
+# Tolerance around Minervini's "about half" -- SELF-MADE (he gives none).
+RATIO_BAND = (0.30, 0.75)
 
 
 # =====================================================================
@@ -126,7 +134,11 @@ def layer2_detect_vcp(ohlc_data: pd.DataFrame, ticker: str) -> dict | None:
                 'avg_volume': float(np.mean(volume[hi_idx:deepest[0]+1]))
             })
 
-    if len(contractions) < 2:
+    # Minervini (Trade Like a Stock Market Wizard, 2013, ch. 10 -- the VCP):
+    # "typically two to four contractions", "as many as five or six". 2..6 is
+    # his stated range; the floor was already here, the ceiling was not (one of
+    # the 27 names on 2026-09-17 had exactly 6, none more -- audit 09-18 #43).
+    if not (MIN_CONTRACTIONS <= len(contractions) <= MAX_CONTRACTIONS):
         return None
 
     # 3. Verify contractions are getting shallower
@@ -136,13 +148,28 @@ def layer2_detect_vcp(ohlc_data: pd.DataFrame, ticker: str) -> dict | None:
     if not is_contracting:
         return None
 
-    # 4. Check depth ratios (each ~50% of prior, tolerance 30-75%)
+    # 4. Each contraction about half the prior one. Minervini: "each
+    # successive contraction is generally contained to about half (plus or
+    # minus a reasonable amount) of the previous pullback or contraction".
+    # The HALF is his; the tolerance band RATIO_BAND (0.30-0.75) is OURS -- he
+    # gives no number for "a reasonable amount" -- kept from the pre-09-18
+    # code, not newly chosen, and flagged self-made in METRIC_SOURCES.
     ratios = [depths[i+1] / depths[i] for i in range(len(depths)-1) if depths[i] > 0]
-    ratios_healthy = all(0.3 <= r <= 0.75 for r in ratios) if ratios else False
+    ratios_healthy = all(RATIO_BAND[0] <= r <= RATIO_BAND[1] for r in ratios) if ratios else False
 
-    # 5. Check volume declining
+    # 5. Volume contracts with price. Minervini: volume contracts as the
+    # contractions tighten, drying up at the right side of the base. He gives
+    # no ratio, so the reading is the plain one: each contraction's average
+    # volume no higher than the one before (no threshold invented).
     vols = [c['avg_volume'] for c in contractions[-4:]]
     vol_declining = all(vols[i] >= vols[i+1] for i in range(len(vols)-1))
+
+    # 2026-09-18 (Andy: 「全部按原文」): both are CONSTITUENT conditions of the
+    # pattern, not annotations. Until today they were computed and shipped as
+    # flags while every row passed regardless -- 27 names on vcp.json 09-17,
+    # 4 of them met both (audit 09-18 #43).
+    if not (ratios_healthy and vol_declining):
+        return None
 
     # 6. Calculate pivot and distance
     pivot = contractions[-1]['high']

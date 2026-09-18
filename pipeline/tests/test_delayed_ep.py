@@ -77,3 +77,27 @@ class TestArchive:
         assert len(rows) == 2 and {r["as_of"] for r in rows} == {"2026-08-14", "2026-08-15"}
         assert list(rows[0].keys()) == LOG_FIELDS
         assert rows[0]["stage"] == "basing"
+
+
+class TestCandidatesAfterEpSplit:
+    """2026-09-18 (Andy 「12 注册 EP Stockbee和 EP Qullamaggie」): the EP archive
+    rows now come from two screeners; the retired 'episodic_pivot' rows
+    (<= 09-17) stay candidates so the watch does not go blind in the switch."""
+
+    def _events(self, tmp_path, rows):
+        p = tmp_path / "ev.csv"
+        p.write_text("date,ticker,screener,group,change_pct,rel_volume,volume,sector,atr_ext,"
+                     "num_contractions,pct_to_pivot\n"
+                     + "".join(f"{d},{t},{s},,0.12,4.0,,Tech,,,\n" for d, t, s in rows))
+        return p
+
+    def test_both_new_screeners_and_retired_rows_are_candidates(self, tmp_path, monkeypatch):
+        import pipeline.tools.delayed_ep_scan as D
+        monkeypatch.setattr(D, "EVENTS", self._events(tmp_path, [
+            ("2026-09-15", "OLD", "episodic_pivot"),
+            ("2026-09-21", "SBX", "ep_stockbee"),
+            ("2026-09-21", "QMX", "ep_qullamaggie"),
+            ("2026-09-21", "GNX", "gainers_4pct"),           # negative: not an EP screener
+        ]))
+        got = D.load_candidates("2026-09-25", 3, 15)
+        assert set(got) == {"OLD", "SBX", "QMX"}

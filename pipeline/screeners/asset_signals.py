@@ -24,6 +24,7 @@ import pandas as pd
 from pipeline.adapters.yfinance_adapter import (
     _crossed_up, calculate_atr, rs_line_pctl,
 )
+from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +48,14 @@ ASSETS: Dict[str, tuple] = {
     "FXI": ("China Large Cap", "intl"), "EWJ": ("Japan", "intl"),
     "VNQ": ("US REITs", "real_assets"),
 }
+
+
+def _atr_matrix(close: float, atr: Optional[float], sma50: Optional[float]) -> Optional[float]:
+    """Round the shared ATR Matrix function's reading; None when unmeasurable."""
+    if not atr or not sma50:
+        return None
+    v = atr_multiple_from_sma50(close, atr, close / sma50 - 1)
+    return None if v is None or v != v else round(float(v), 2)
 
 
 def compute_row(ticker: str, hist: pd.DataFrame, spy_close: Optional[pd.Series]) -> Optional[Dict[str, Any]]:
@@ -84,7 +93,16 @@ def compute_row(ticker: str, hist: pd.DataFrame, spy_close: Optional[pd.Series])
         "ema21_dist": round(close / ema21 - 1, 4) if ema21 else None,
         "sma50_dist": round(close / sma50 - 1, 4) if sma50 else None,
         "sma200_dist": round(close / sma200 - 1, 4) if sma200 else None,
-        "atr_from_sma50": round((close - sma50) / atr, 2) if atr and sma50 else None,
+        # ATR Matrix position -- the SAME function as the stock layer's
+        # universe column (run_all.compute_universe_scores), so the asset seat's
+        # ATR<7 gate reads the number the stock seats read. Source: SteveDJacobs
+        # ATR Matrix (https://x.com/SteveDJacobs/status/1936015163624206660;
+        # local Pine "ATR Matrix.txt": extRatio = close/sma50 - 1,
+        # atrRatio = atr/close, "ATR Ext % of ATR" = extRatio/atrRatio) = Jeff
+        # Sun's B/A. Until 2026-09-18 this row computed (close - SMA50)/ATR, the
+        # formula the stock layer retired as a misport on 08-24, while the
+        # payload note claimed "same definitions" (audit 09-18 #35).
+        "atr_from_sma50": _atr_matrix(close, atr, sma50),
         "hi20": bool(close >= float(c.iloc[-20:].max())),
         "high_52w_dist": round(close / float(c.max()) - 1, 4),
         "bar_date": str(hist.index[-1].date()),

@@ -24,7 +24,7 @@ def _wl(panel_tickers):
 def test_pick_seats_v2_atr_gate_theme_preference_substitutes():
     wl = _wl({
         "true_market_leaders": {"NEW": {}, "OLD": {}}.items(),
-        "episodic_pivot": {"EPX": {}}.items(),
+        "ep_stockbee": {"EPX": {}}.items(),
         "ma_reclaim": {"DEEP": {}, "SHAL": {}}.items(),
         "vcs": {"COIL": {}}.items(),
         "bullish_4pct": {}.items(),
@@ -57,6 +57,21 @@ def test_pick_seats_v2_atr_gate_theme_preference_substitutes():
     # dry day: seats stay null with the chain named
     s4 = NC.pick_seats(_wl({}), None, [], [], {})
     assert sum(1 for x in s4 if x["ticker"] is None) == 6
+
+
+def test_entry_seat_reads_both_ep_panels():
+    """2026-09-18 (Andy: 「12 注册 EP Stockbee和 EP Qullamaggie」): the entry
+    seat's first chain is the UNION of the two EP panels, loudest rel_volume
+    first. Positive: a Qullamaggie-only name wins when it is the loudest.
+    Negative: the retired 'episodic_pivot' panel key feeds nothing."""
+    by = {"SB": {"atr_from_sma50": 2.0, "rel_volume": 4.0},
+          "QM": {"atr_from_sma50": 2.0, "rel_volume": 9.0}}
+    wl = _wl({"ep_stockbee": {"SB": {}}.items(), "ep_qullamaggie": {"QM": {}}.items()})
+    got = {s["seat"]: s for s in NC.pick_seats(wl, None, [], [], by)}
+    assert got["entry"]["ticker"] == "QM"
+    wl_old = _wl({"episodic_pivot": {"SB": {}}.items()})
+    got_old = {s["seat"]: s for s in NC.pick_seats(wl_old, None, [], [], by)}
+    assert got_old["entry"]["ticker"] is None
 
 
 def test_build_card_and_archive(tmp_path):

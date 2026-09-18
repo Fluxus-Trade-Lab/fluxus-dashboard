@@ -318,7 +318,7 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     wl = json.loads((out / "watchlist.json").read_text())
     assert wl["date"] == LAST_SESSION.isoformat()
     measured = [p["key"] for z in wl["zones"] for p in z["panels"] if p["measured"]]
-    assert "episodic_pivot" in measured and "ma_reclaim" in measured
+    assert "ep_stockbee" in measured and "ep_qullamaggie" in measured and "ma_reclaim" in measured
     sl = json.loads((out / "shortlist.json").read_text())
     assert len(sl["seats"]) == 6
     assert all(("ticker" in s) and (s["ticker"] or s.get("empty_reason")) for s in sl["seats"])

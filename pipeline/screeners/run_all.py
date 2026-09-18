@@ -16,7 +16,7 @@ import sys
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict
 
 import numpy as np
 import pandas as pd
@@ -31,7 +31,8 @@ from pipeline.screeners.gainers_4pct import run as run_gainers_4pct
 from pipeline.screeners.vol_up_gainers import run as run_vol_up_gainers
 from pipeline.screeners.ema21_watch import run as run_ema21_watch
 from pipeline.screeners.healthy_charts import run as run_healthy_charts
-from pipeline.screeners.episodic_pivot import run as run_episodic_pivot
+from pipeline.screeners.ep_stockbee import run as run_ep_stockbee
+from pipeline.screeners.ep_qullamaggie import run as run_ep_qullamaggie
 from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
@@ -237,6 +238,28 @@ def _screener_count(payload) -> Any:
         return 'no-count-key'
     n = payload['count']
     return n if isinstance(n, int) else f'count-not-int:{type(n).__name__}'
+
+
+def ep_compat_payload(results: dict) -> dict:
+    """The union of the two EP screeners in the retired file's shape.
+
+    Each row keeps the old fields (ticker/change_pct/rel_volume/market_cap/
+    sector + the ATR badge) and says which definition(s) fired it."""
+    rows: Dict[str, dict] = {}
+    for src in ('ep_stockbee', 'ep_qullamaggie'):
+        for r in (results.get(src) or {}).get('tickers') or []:
+            t = r.get('ticker')
+            if not t:
+                continue
+            if t not in rows:
+                rows[t] = {k: r.get(k) for k in ('ticker', 'change_pct', 'rel_volume',
+                                                  'market_cap', 'sector', 'atr_ext', 'atr_color')}
+                rows[t]['sources'] = []
+            rows[t]['sources'].append(src)
+    tickers = sorted(rows.values(), key=lambda r: -(r.get('change_pct') or 0))
+    return {'count': len(tickers), 'tickers': tickers,
+            'deprecated': 'retired 2026-09-18; union of ep_stockbee + ep_qullamaggie kept for the page until it reads those files',
+            'superseded_by': ['ep_stockbee', 'ep_qullamaggie']}
 
 
 def _screener_counts(results: dict) -> dict:
@@ -777,7 +800,12 @@ def main():
         'vol_up_gainers': run_vol_up_gainers(listed),
         'ema21_watch': run_ema21_watch(listed),
         'healthy_charts': run_healthy_charts(listed),
-        'episodic_pivot': run_episodic_pivot(universe),
+        # Episodic Pivot, two authors side by side (Andy 2026-09-18: 「12 注册 EP
+        # Stockbee和 EP Qullamaggie 然后我们以后可以测试下」). Whole universe,
+        # no cap floor: neither published definition has one. They replace
+        # `episodic_pivot` (close +10% x rvol 3 x $500M -- no author's recipe).
+        'ep_stockbee': run_ep_stockbee(universe),
+        'ep_qullamaggie': run_ep_qullamaggie(universe),
     }
 
     # 5. Stockbee ratio (needs history)
@@ -987,6 +1015,16 @@ def main():
               json.dumps(output, indent=2, default=_json_serializer))
         logger.info(f"Saved {name}.json")
 
+    # episodic_pivot.json: COMPATIBILITY FILE ONLY, not a screener. The old
+    # recipe is retired (2026-09-18); the frontend still fetches this path
+    # (useMarketData.js fails the whole page on a 404) and schema_snapshot
+    # treats a missing file as a break. Until UI moves to ep_stockbee /
+    # ep_qullamaggie it carries their UNION under the old field names.
+    # Not in ticker_events SCREENER_FILES, not in heat -- nothing counts it.
+    _emit(ledger, OUTPUT_DIR / 'episodic_pivot.json', json.dumps(
+        {'timestamp': timestamp, **ep_compat_payload(results)},
+        indent=2, default=_json_serializer))
+
     # Save signals
     _emit(ledger, OUTPUT_DIR / 'signals.json', json.dumps(
         {'timestamp': timestamp, **signals}, indent=2, default=_json_serializer
@@ -1087,7 +1125,8 @@ def main():
         'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
-        'atr', 'rel_volume', 'avg_volume', 'volume', 'prev_volume', 'vol_5d_50d', 'days_since_52wh',
+        'atr', 'rel_volume', 'avg_volume', 'volume', 'prev_volume', 'avg_vol50_prev', 'gap_pct',
+        'vol_5d_50d', 'days_since_52wh',
         'wk_band_3', 'three_weeks_tight', 'twt_buy_point', 'oops_buy', 'oops_sell',
         'range5_pct', 'dist_hi20_pct',
         'market_cap', 'sector', 'industry',

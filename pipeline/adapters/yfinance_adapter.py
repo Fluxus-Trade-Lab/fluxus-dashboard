@@ -611,6 +611,10 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
         min_vol_3d   = min volume of the last 3 bars, TODAY INCLUDED (TC2000 minv3)
         min_vol_3d_1 = min volume of the 3 bars ending YESTERDAY (TC2000 minv3.1)
         prev_volume  = volume of the PREVIOUS bar      (4% scan: v > v1)
+        avg_vol50_prev = mean volume of the 50 bars ENDING YESTERDAY
+                      (EP scan: v > 3*avgv50.1 -- Telechart ``.1`` = one bar
+                      ago, so today's volume is not in its own benchmark;
+                      Stockbee 2014-07 EP process-flow post). Null under 51 bars.
 
     Double Trouble's c/minl252 comes from the low_52w column in run_all.
 
@@ -640,11 +644,12 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
         mv3 = float(v.iloc[-3:].min()) if len(v) >= 3 else None
         mv3_1 = float(v.iloc[-4:-1].min()) if len(v) >= 4 else None
         pv = float(v.iloc[-2]) if len(v) >= 2 else None
+        av50p = float(v.iloc[-51:-1].mean()) if len(v) >= 51 else None
         return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3, "min_vol_3d_1": mv3_1,
-                "prev_volume": pv}
+                "prev_volume": pv, "avg_vol50_prev": av50p}
     except Exception:
         return {"ti65": None, "mdt": None, "min_vol_3d": None, "min_vol_3d_1": None,
-                "prev_volume": None}
+                "prev_volume": None, "avg_vol50_prev": None}
 
 
 _MM_INPUT_KEYS = ('sb_pct_from_minc65', 'sb_pct_from_maxc65', 'sb_pct_from_minc34',
@@ -1347,6 +1352,11 @@ class YfinanceAdapter(BaseAdapter):
                     # Stockbee MM scan inputs (MINC65/MAXC65/MINC34/MAXC34,
                     # C20, AVGC20*AVGV20) -- see stockbee_mm_inputs().
                     **sb_mm,
+                    # EP inputs (2026-09-18, Andy 「全部按原文」): Stockbee's
+                    # avgv50.1 and Qullamaggie's gap (open vs prior close).
+                    'avg_vol50_prev': sb['avg_vol50_prev'],
+                    'gap_pct': (last_open / float(hist['Close'].iloc[-2]) - 1)
+                               if n >= 2 and float(hist['Close'].iloc[-2]) > 0 and last_open > 0 else None,
                     'ema21': ema21,
                     'rs_line_pctl_21': rs_line_pctl_21,
                     'rs_line_pctl_63': rs_line_pctl_63,

@@ -138,7 +138,7 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
                  "atr": p.get("atr_from_sma50")} for _, p in pan.iterrows()][-20:] if len(pan) else []
     today = max((p["date"] for p in pan_list), default=None)
     entry_today = [p["panel"] for p in pan_list if p["date"] == today
-                   and p["panel"] in ("ma_reclaim", "episodic_pivot", "ll_hl_1st", "ll_hl_2nd",
+                   and p["panel"] in ("ma_reclaim", "ep_stockbee", "ep_qullamaggie", "ll_hl_1st", "ll_hl_2nd",
                                       "ll_hl_trend_break", "liquid_leader_pullback")]
     tml = any(p["panel"] == "true_market_leaders" and p["date"] == today for p in pan_list)
     if r.get("hi20") is None and r.get("dist_hi20_pct") is not None:
@@ -265,8 +265,11 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     # (independent 2y pool: edge -1.54pp, precision 29% vs pool 25% n.s. --
     # claims.jsonl id first-wave-recipe). Cut per RESEARCH_PROTOCOL 铁律 1;
     # restore only with fresh evidence.
-    seat("entry", feeds=("episodic_pivot", "bullish_4pct", "liquid_leader_pullback"), chain=[
-        ("今日 EP", panel_tickers("episodic_pivot"),
+    # EP = the union of the two author panels (2026-09-18, Andy 「12 注册 EP
+    # Stockbee和 EP Qullamaggie」); the self-made 'episodic_pivot' panel is retired.
+    ep_today = list(dict.fromkeys(panel_tickers("ep_stockbee") + panel_tickers("ep_qullamaggie")))
+    seat("entry", feeds=("ep_stockbee", "ep_qullamaggie", "bullish_4pct", "liquid_leader_pullback"), chain=[
+        ("今日 EP(Stockbee ∪ Qullamaggie)", ep_today,
          lambda t: by.get(t, {}).get("rel_volume") or 0),
         ("替补:Leading 主题里的回踩", [t for t in panel_tickers("liquid_leader_pullback")
                                         if states.get(t) == "Leading"], hscore),

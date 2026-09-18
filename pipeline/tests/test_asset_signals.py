@@ -41,3 +41,32 @@ def test_build_and_archive_idempotent(tmp_path):
     payload2 = dict(payload, date="2026-08-20")
     A.archive(payload2, path=p)
     assert len(list(csv.DictReader(p.open()))) == 6
+
+
+# --- 2026-09-18 (Andy: 「全部按原文」): the asset layer's ATR Matrix is the SAME
+# function as the stock layer's, not a second formula under the same name.
+def test_atr_from_sma50_is_the_stock_layer_function():
+    """Positive: the asset row equals atr_multiple_from_sma50 (Jeff Sun B/A =
+    (close/SMA50 - 1) / (ATR/close)), fed the same row's close / ATR / sma50_dist."""
+    from pipeline.adapters.yfinance_adapter import calculate_atr
+    from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
+    closes = list(np.linspace(100, 100, 60)) + list(np.linspace(100, 160, 40))   # extended rally
+    h = _hist(closes)
+    r = A.compute_row("GLD", h, None)
+    c = h["Close"]
+    close, sma50, atr = float(c.iloc[-1]), float(c.rolling(50).mean().iloc[-1]), calculate_atr(h)
+    want = atr_multiple_from_sma50(close, atr, close / sma50 - 1)
+    assert r["atr_from_sma50"] == round(float(want), 2)
+
+
+def test_atr_from_sma50_is_not_the_old_misport():
+    """Negative: on an extended name the old (close - SMA50)/ATR reads LOWER by
+    the factor SMA50/close; the asset row must not carry that number."""
+    from pipeline.adapters.yfinance_adapter import calculate_atr
+    closes = list(np.linspace(100, 100, 60)) + list(np.linspace(100, 160, 40))
+    h = _hist(closes)
+    r = A.compute_row("GLD", h, None)
+    c = h["Close"]
+    close, sma50, atr = float(c.iloc[-1]), float(c.rolling(50).mean().iloc[-1]), calculate_atr(h)
+    old = round((close - sma50) / atr, 2)
+    assert r["atr_from_sma50"] > old

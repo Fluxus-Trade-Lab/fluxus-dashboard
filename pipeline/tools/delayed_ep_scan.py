@@ -32,7 +32,7 @@ He gives no numeric thresholds in the sources we can read (his scan is
 published as images). The rules below are ours, tunable by flag, and every
 row prints the raw facts so the thresholds can be judged:
 
-    candidate     episodic_pivot fired in data/history/ticker_events.csv
+    candidate     an EP screener (EP_SCREENERS) fired in data/history/ticker_events.csv
                   3..15 sessions ago (--min-days / --max-days)
     held          lowest low since the EP day >= EP-day low  (gap not filled)
     near          close within +-10% of the EP-day close (--near)
@@ -82,6 +82,12 @@ import pandas as pd  # noqa: E402
 
 warnings.filterwarnings("ignore")
 EVENTS = Path("data/history/ticker_events.csv")
+# The EP rows in the archive. 2026-09-18 (Andy 「12 注册 EP Stockbee和 EP
+# Qullamaggie」): two author screeners replace the retired 'episodic_pivot',
+# whose rows (<= 2026-09-17) stay in the archive and stay candidates, so the
+# 3..15-session window does not go blind across the switch. A name on both
+# new screeners the same day is one candidate (keyed by ticker below).
+EP_SCREENERS = frozenset({"ep_stockbee", "ep_qullamaggie", "episodic_pivot"})
 UNIVERSE = Path("data/output/universe.json")
 LOG = Path("data/history/delayed_ep_log.csv")
 LOG_FIELDS = ["as_of", "ticker", "ep_date", "days_since", "stage", "held", "near", "contracting",
@@ -159,7 +165,7 @@ def load_candidates(as_of: str, min_days: int, max_days: int) -> dict:
     out = {}
     lo = (pd.Timestamp(as_of) - pd.Timedelta(days=max_days * 3)).strftime("%Y-%m-%d")
     for r in csv.DictReader(EVENTS.open()):
-        if r["screener"] != "episodic_pivot" or not (lo <= r["date"] <= as_of):
+        if r["screener"] not in EP_SCREENERS or not (lo <= r["date"] <= as_of):
             continue
         t = r["ticker"]
         if t not in out or r["date"] > out[t]["date"]:

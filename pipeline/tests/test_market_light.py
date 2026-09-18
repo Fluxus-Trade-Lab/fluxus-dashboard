@@ -212,11 +212,23 @@ def test_q1_count_is_narrowed_to_the_leading_pool_and_labelled_an_index():
     """Studio Q ruling 3 (final): the displayed Q1 is the entries names that
     are also 2w-Leading theme members, labelled as an index."""
     wl = {'zones': [{'panels': [_panel('ll_hl_1st', ['AAA', 'BBB', 'CCC']),
-                                _panel('episodic_pivot', ['DDD'])]}]}
+                                _panel('ep_qullamaggie', ['DDD'])]}]}
     s = ml.setups_block(wl, {'BBB': 'Semis', 'DDD': 'AI', 'ZZZ': 'AI'})
     assert s['count'] == 2, "BBB and DDD; ZZZ leads but has no setup"
     assert s['pool_count'] == 4
     assert s['label'] == "index — not the course's hand count"
+
+
+def test_q1_ep_is_both_author_panels_not_the_retired_one():
+    """2026-09-18 (Andy 「12 注册 EP Stockbee和 EP Qullamaggie」): EP feeds Q1
+    from both author panels, a name on both counted once; the retired
+    'episodic_pivot' panel key feeds nothing."""
+    wl = {'zones': [{'panels': [_panel('ep_stockbee', ['AAA', 'BBB']),
+                                _panel('ep_qullamaggie', ['BBB'])]}]}
+    s = ml.setups_block(wl, {'AAA': 'X', 'BBB': 'Y'})
+    assert s['count'] == 2 and s['pool_count'] == 2
+    old = {'zones': [{'panels': [_panel('episodic_pivot', ['AAA'])]}]}
+    assert ml.setups_block(old, {'AAA': 'X'}) is None
 
 
 def test_q1_without_the_leading_pool_is_unmeasured_not_the_raw_pool():

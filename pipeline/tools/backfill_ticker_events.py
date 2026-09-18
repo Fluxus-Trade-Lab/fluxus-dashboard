@@ -30,7 +30,7 @@ from typing import Any, Dict, List, Tuple
 
 from pipeline.marketcal import MARKET_TZ, is_trading_day, last_completed_session
 from pipeline.screeners.ticker_events import (
-    SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
+    RETIRED_SCREENER_FILES, SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
     load_events, load_sessions, rolling_momentum_median, upsert_day,
     write_events,
 )
@@ -176,7 +176,9 @@ def main(argv: List[str] | None = None) -> int:
     # screener's own commit for the day.
     per_screener: Dict[str, Dict[str, str]] = {}
     all_dates: set[str] = set()
-    for screener in SCREENER_FILES:
+    # Retired screeners are replayed too, so a rebuild keeps their history;
+    # extract_events stops them at their last measured session.
+    for screener in (*SCREENER_FILES, *RETIRED_SCREENER_FILES):
         pairs = snapshot_dates(_commits_for(screener))
         per_screener[screener] = {d: sha for sha, d in pairs}
         all_dates.update(per_screener[screener])

@@ -123,7 +123,10 @@ class TestComputeHeat:
         from pipeline.screeners.ticker_heat import WEIGHTS
         assert WEIGHTS['vcp'] == 3 and WEIGHTS['episodic_pivot'] == 3
         assert WEIGHTS['momentum_97'] == 3 and WEIGHTS['gainers_4pct'] == 1
-        assert len(WEIGHTS) == 7
+        # 2026-09-18: the two author EPs carry EP's weight; the retired
+        # episodic_pivot keeps its weight for its archived rows in the window
+        assert WEIGHTS['ep_stockbee'] == 3 and WEIGHTS['ep_qullamaggie'] == 3
+        assert len(WEIGHTS) == 9
 
 
 class TestBuilders:

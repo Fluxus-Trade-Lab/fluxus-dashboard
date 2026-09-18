@@ -69,10 +69,11 @@ class TestExtractEvents:
         assert extract_events('vcp', {'results': [{'no_ticker': 1}]}, '2026-05-04') == []
         assert extract_events('unknown_screener', {'tickers': [{'ticker': 'A'}]}, '2026-05-04') == []
 
-    def test_screener_files_covers_all_seven(self):
+    def test_screener_files_covers_all_eight(self):
+        # 2026-09-18: episodic_pivot retired, split into the two author EPs
         from pipeline.screeners.ticker_events import SCREENER_FILES
         assert set(SCREENER_FILES) == {
-            'gainers_4pct', 'vol_up_gainers', 'episodic_pivot', 'vcp',
+            'gainers_4pct', 'vol_up_gainers', 'ep_stockbee', 'ep_qullamaggie', 'vcp',
             'momentum_97', 'healthy_charts', 'ema21_watch'}
 
 

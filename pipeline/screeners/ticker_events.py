@@ -43,11 +43,26 @@ EVENT_COLUMNS: List[str] = [
 SCREENER_FILES: Dict[str, str] = {
     'gainers_4pct': 'tickers',
     'vol_up_gainers': 'tickers',
-    'episodic_pivot': 'tickers',
+    # Episodic Pivot, two authors (Andy 2026-09-18 「12 注册 EP Stockbee和 EP
+    # Qullamaggie」); they replace the retired 'episodic_pivot' below.
+    'ep_stockbee': 'tickers',
+    'ep_qullamaggie': 'tickers',
     'vcp': 'results',
     'momentum_97': 'buckets',
     'healthy_charts': 'rs_groups',
     'ema21_watch': 'rs_groups',
+}
+
+# Screeners no longer run, kept readable for their history ONLY: name ->
+# (container, last session the retired recipe measured). The archive's rows
+# up to that session are the old definition's and stay untouched; a replay
+# (backfill_ticker_events) may re-mine them, and must never mine anything
+# later -- data/output/episodic_pivot.json carries the NEW union under the
+# old name after 2026-09-17 (compatibility file for the page, run_all).
+RETIRED_SCREENER_FILES: Dict[str, Tuple[str, str]] = {
+    # close +10% x rel_volume 3 x cap $500M: matched no published EP
+    # definition (audit 2026-09-18 #44). Last nightly run: session 09-17.
+    'episodic_pivot': ('tickers', '2026-09-17'),
 }
 
 _NESTED_KEYS = {'buckets', 'rs_groups'}
@@ -74,6 +89,10 @@ def _row(entry: Any, screener: str, group: str, date_iso: str) -> Dict[str, Any]
 def extract_events(screener: str, payload: Dict[str, Any], date_iso: str) -> List[Dict[str, Any]]:
     """Flat event rows for one screener's daily payload. Pure and total."""
     container = SCREENER_FILES.get(screener)
+    if container is None and screener in RETIRED_SCREENER_FILES:
+        container, last = RETIRED_SCREENER_FILES[screener]
+        if str(date_iso) > last:
+            return []
     if container is None or not isinstance(payload, dict):
         return []
     blob = payload.get(container)

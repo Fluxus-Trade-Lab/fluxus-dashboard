@@ -35,6 +35,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
+from pipeline.screeners import ep_qullamaggie, ep_stockbee
+
 MIN_CAP = 1e9
 LEADERS_LOG = Path("data/history/leaders_log.csv")
 # 2026-08-18: DOLLAR volume, not shares (Andy: "改可以的"). The 1M-share gate
@@ -180,13 +182,23 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           "the ATR position. Counts swell on broad rebound days -- that itself is a breadth reading",
           ["cross_ema21_up", "cross_sma50_up"],
           lambda r: r.get("cross_ema21_up") is True or r.get("cross_sma50_up") is True),
-    Panel("episodic_pivot", "Episodic Pivot (today)",
-          "change_pct >= 10% and rel_volume >= 3 -- same recipe as the EP screener, inside the $1B/$20M gate. "
-          "No Healthcare exclusion (deliberate, unlike the momentum twins): an EP is a repricing event and biotech "
-          "is its home turf -- MRNA 2026-08-19 (+177%, rv 12.8) fired four screeners but had no panel to appear in. "
-          "Day 1 is NOT the entry (42% undercut the EP-day low); from session 3 the name enters the Delayed-EP watch",
-          ["change_pct", "rel_volume"],
-          lambda r: _ge(r, "change_pct", 0.10) and _ge(r, "rel_volume", 3.0)),
+    # Episodic Pivot, two authors (2026-09-18, Andy 「全部按原文」「12 注册 EP
+    # Stockbee和 EP Qullamaggie」). Each panel calls its screener's own row test,
+    # so panel and screener cannot drift. Replaces the self-made
+    # 'episodic_pivot' panel (close +10% x rvol 3), which matched no author.
+    # No Healthcare exclusion (deliberate, unlike the momentum twins): an EP is
+    # a repricing event and biotech is its home turf -- MRNA 2026-08-19.
+    Panel("ep_stockbee", "EP · Stockbee (today)",
+          "Stockbee's EP scan verbatim: c/c1>1.04 and v>3*avgv50.1 and v>=300000 (2014-07 process-flow post), "
+          "inside the $1B/$20M gate. His 'neglect + game changing earnings' read is not measured. "
+          "Day 1 is NOT the entry (42% undercut the EP-day low, measured on the retired recipe); "
+          "from session 3 the name enters the Delayed-EP watch",
+          ["change_pct", "volume", "avg_vol50_prev"], ep_stockbee.passes),
+    Panel("ep_qullamaggie", "EP · Qullamaggie (today)",
+          "Qullamaggie: gap up of 10% or more (open vs prior close) on massive volume near the open -- only the "
+          "necessary part of the volume rule is measurable from daily bars (day volume >= one 50-day ADV); "
+          "'the average daily volume in the first 15-20 minutes' needs intraday bars. Inside the $1B/$20M gate",
+          ["gap_pct", "volume", "avg_vol50_prev"], ep_qullamaggie.passes),
     # Alex Desjardins's own text (2026-09-18, Andy: 「全部按原文」), TradersLab
     # "Liquid Leaders 21dma-structure Pullback scan",
     # traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-traderslab:
@@ -304,7 +316,7 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
 
 ZONES: List[Dict[str, Any]] = [
     {"key": "leaders", "label": "Who leads?", "panels": ["true_market_leaders", "liquid_leaders"]},
-    {"key": "entries", "label": "Can I enter today?", "panels": ["ma_reclaim", "episodic_pivot", "ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
+    {"key": "entries", "label": "Can I enter today?", "panels": ["ma_reclaim", "ep_stockbee", "ep_qullamaggie", "ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
     {"key": "compression", "label": "What is loading?", "panels": ["vcs", "anticipation"]},
     {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d", "morales_pp_10d"]},
     {"key": "moving", "label": "What is running?", "panels": ["weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"]},
