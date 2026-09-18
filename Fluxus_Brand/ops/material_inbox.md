@@ -483,3 +483,5 @@
 - [2026-09-18] [OPS] 无人值守系统的自检架构：交易日对齐 / run 完整 / 执行序列 / 通知队列 / 线上核对五维互不依赖，一班巡检零死角；冬令时时区切换自动绕行。 · [INBOX.md](../../data/research/night_reports/INBOX.md)
 
 - [2026-09-19] [steve] **数据缺晚，存档补过来——但窗口变短了**。regime_ledger 09-16 中断于 schema_snapshot 过期，RND Linda 用存档重建、验证通过。限制：rolling-window 字段（oas_rank252 等）基于截断序列，比 live 版短一个月的记忆。出处：`data/history/coverage_gaps.json › gaps[6]`
+
+- [09-19] [数据哨兵] 网络中断可视化：CONNECT 403 拦截五班确认，第六班恢复；班次门铃回执机制把隐形故障变成可追踪数据。 · [95887bea](../../commit/95887bea)
