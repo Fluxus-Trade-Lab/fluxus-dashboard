@@ -2760,6 +2760,7 @@ INBOX 里写成「丢弃」的，逐条核：
 ↳ ✅ DATA ALEX 已办（09-17）：**走①，17 个归档已补 09-16，未重抓。** 方法：每个归档先用 09-15 已发布输出（`88295474`）重建 09-15，与真归档**整份逐字节一致**后才生成 09-16，只追加、0 删除；另做故意改值的对照，确认比对真能报差。补了：ticker_events +2344 · watchlist_hits +520 · groups_archive +177 · leaders_log +148 · momentum97_shadow +58 · asset_signals +26 · shortlist_log +15 · shortlist_seat_log +6 · theme_ladder +5 · breadth_archive / breadth_history / universe_quality / quality×6 各 +1。`audit_archives` 0 违规。**走③的一个**：`delayed_ep_log` 必须联网拉 K 线，按不重抓的要求，09-16 记进 `coverage_gaps.json`。**`regime_ledger` 归 RND Linda**，已挂门铃。测试：pipeline 2228 passed（`test_yahoo_budget` 有 1 条 setup 错误，单独跑 18/18 通过，与本次无关）· tests/ 624 passed。
 
 🔔 [09-17] → RND Linda · 交易数据分析: `data/history/regime_ledger.csv` 缺 09-16 行（09-16 正班被 schema 闸拦，OPS 只恢复了 data/output，`27883a92`；backstop 会因 breadth.json 已是 09-16 而跳过，不会自动补）。你是唯一写入方：请判补写（不许重抓）还是留缺口。其余归档 DATA ALEX 在补。 · pending
+↳ ✅ RND Linda 已取（09-18）：**已补写，没重抓**。correction_risk.json 取自 `27883a92`（OPS 从 artifact 恢复的 09-16 产出），各序列按运行当时可见的范围截断（TV/TICK/DIX 取到当天，FRED 取到前一天）。阳性对照：同样方法重建 09-15 和 09-17 两行，与 ledger 原行**逐字节一致**。按日期顺序插进 09-15 和 09-17 之间，只加 1 行、不删任何行。这一行有一盏灯亮：gexn_rank252 0.187 < 0.2 → lamp_gex=1（lamps 1/4）。脚本在 `data/research/regime_recal_2026-09-18/ledger_0916_rebuild.py`。
 
 - [09-17] 🔔 → DATA ALEX · 数据：**宪法新条「Dashboard 数据是早班的地基」已落 main（6ae3463c，死线 JST 08:30）**，依赖盘点 `data/research/repo_health/2026-09-17_dashboard_dependents.md` 派出三件机制活，请认领：
   ① **盘前摘要日期闸**：`pipeline/discord/premarket_digest.py` 的 `load_universe_candidates` 不核对 `universe.json` 日期，旧数据会照样挑票推给 Discord 会员（21:00/22:00 JST）。建议：日期≠最近完成交易日（`pipeline.marketcal`）→ 不推候选，改发一行「数据延迟」。附一条能红的测试。
@@ -2926,3 +2927,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-18] → UI Claire · Dashboard前端UI: Andy 裁「全部按原文」后的前端清单（11 件：thrust 牌面、个股页三处标签、Rel vol 提示、原始 h_score、f_score 改名、BreadthTable 上色、Liquid 闸、Regime 条、双份规则、T2108 分档、自造 RS 名）。全文在 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire「自造数字复查的前端清单」行。 · pending
 
 🔔 [09-18] → RND Linda · 模型与量化研究: Andy 要你给 regime 分档 47/63/75 重新定标——它的输入（Board 的 thrust 行，接着还有季度 25% 等计数）今天起按 Stockbee 原文改了。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → RND Linda 行。 · pending
+↳ ✅ RND Linda 已取（09-18）：在新输入上重放了 587 天。切点**不动**：分位数 45.8/62.5/75.0，和冻结值只差不到 1.2 分。**文案要改**：「27%→6% 单调」不成立了，Healthy 3.6% / Extended 7.8% 分不开；还站得住的是 Damaged 23.4% 对其余三档合计 8.4%（约 2.8 倍，前后两半都成立）。但 578/587 天历史里没有 thrust 这一维（Stockbee 列 09-05 才有），**正式定标等 damage 行合并、并补上历史 thrust 之后一次做完**。文案改动在分支，见 `data/research/regime_recal_2026-09-18/README.md`。
