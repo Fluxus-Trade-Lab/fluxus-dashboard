@@ -2923,8 +2923,10 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-18] → Nighty Zac · 夜间自学: `leaders_log.tml` 从 09-18 场起换口径（`d154052b`）：改用页面 TML 面板自己的判定，含 08-25 起的 ADR ≥3.5 下限。08-25..09-17 的旧行没含 ADR，比面板多记 2–4 倍（09-15：39 对 10）。任何 TML 前瞻研究跨这段要么改用 `watchlist_hits` 里 panel=true_market_leaders，要么只取换口径之后的行；已登记 `coverage_gaps.json` 定义断点节。另：五张筛子单今晚起加了 ≥$1B 市值闸（`ed106472`），`ticker_events` 这五个 screener 的人口回到 06-26 之前。 · pending
 
 🔔 [09-18] → UI Claire: thrust 改成 Stockbee 原定义（`05319404`，连续两天 ≥300、分子是 `up_4pct_stockbee`），`MarketStateSummary.jsx` 拿 `mm.up_4pct` 按单日判断会和引擎打架（09-17 牌面显示 bullish，引擎是中性）。请改读 `vote_detail` thrust 的 `side`。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire 行。 · pending
+↳ ✅ UI Claire 已取（09-18）——已办，`8c52d939` 合进 main，回执在 §七 清单行下
 
 🔔 [09-18] → UI Claire · Dashboard前端UI: Andy 裁「全部按原文」后的前端清单（11 件：thrust 牌面、个股页三处标签、Rel vol 提示、原始 h_score、f_score 改名、BreadthTable 上色、Liquid 闸、Regime 条、双份规则、T2108 分档、自造 RS 名）。全文在 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → UI Claire「自造数字复查的前端清单」行。 · pending
+↳ ✅ UI Claire 已取（09-18）——已办，`8c52d939` 合进 main，回执在 §七 清单行下
 
 🔔 [09-18] → RND Linda · 模型与量化研究: Andy 要你给 regime 分档 47/63/75 重新定标——它的输入（Board 的 thrust 行，接着还有季度 25% 等计数）今天起按 Stockbee 原文改了。详见 DATA_CONTRACTS §七 [2026-09-18] DATA ALEX → RND Linda 行。 · pending
 ↳ ✅ RND Linda 已取（09-18）：在新输入上重放了 587 天。切点**不动**：分位数 45.8/62.5/75.0，和冻结值只差不到 1.2 分。**文案要改**：「27%→6% 单调」不成立了，Healthy 3.6% / Extended 7.8% 分不开；还站得住的是 Damaged 23.4% 对其余三档合计 8.4%（约 2.8 倍，前后两半都成立）。但 578/587 天历史里没有 thrust 这一维（Stockbee 列 09-05 才有），**正式定标等 damage 行合并、并补上历史 thrust 之后一次做完**。文案改动在分支，见 `data/research/regime_recal_2026-09-18/README.md`。
