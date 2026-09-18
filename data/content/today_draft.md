@@ -1,46 +1,28 @@
-date: 2026-09-17
+date: 2026-09-18
 tier: B
-source: queue（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周队列第 4 条，09-17 排定）
-gate: 🎮 1/5（posts.csv 只记到 09-16 那条；台账只证阳性，09-14/09-15 未核）· streak 未核
+source: queue（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周队列第 5 条，排给 09-18 周五）
+gate: 🎮 2/5（posts.csv 记到 09-16 ARC + 09-17 J1c QT；台账只证阳性，09-14/09-15 未核）· streak 未核
 ---
 ## C1
-bucket: QUOTE（金句 · 疼的那条 · 中文） | entry: -
-你还没使上劲，只是活在自己的世界里，自己给自己设了个上限。这不是可悲，这是把现实看清楚——现实里有好也有坏。
-why: 本周队列排给今天（09-17 周四）的那条；维修期 C1 只出金句库，这条是 Own_Lines #58 他自己的原话打磨（具体物闸占「他说过的原话」）；零落地成本。英文版备用："You haven't actually tried yet. You're living inside your own head and calling that your ceiling. That isn't sad. That's just seeing it clearly, and clearly has good parts and bad parts."
----
-## C2
 bucket: QUOTE（金句 · 英文主张） | entry: -
 Bearish yesterday, bullish today. You trade the information you have, not the opinion you had.
-why: 队列排给 09-18 的那条（Own_Lines #142，原话「Yesterday I can be bearish and today I can be bullish too. You trade based on the information you have.」）；今天 C1 不想发中文时的英文替补，发了就明天顺延下一条。
+why: 队列排给今天的那条（Own_Lines #142，⭐⭐⭐）；维修期 C1 只出金句库，这条的来源是他自己的英文原话，过了具体物闸；零落地成本。FOMC 后两天多空来回切，今天发正合适。⚠️ 这句 EN 是打磨版，后半句「not the opinion you had」是加上去的。他的原话是：「Yesterday I can be bearish and today I can be bullish too. You trade based on the information you have.」嫌打磨版有英文味，就直接发原话。
+---
+## C2
+bucket: QUOTE（金句 · 疼的那条 · 中文） | entry: -
+你还没使上劲，只是活在自己的世界里，自己给自己设了个上限。这不是可悲，这是把现实看清楚——现实里有好也有坏。
+why: 队列 09-17 那条（Own_Lines #58）。昨天他说「今天可以用C2或者C3」，这条回了弹药库，没被否。今天 C1 想发中文的话，用它替。
 ---
 ## C3
 bucket: QUOTE（金句 · 冷嘲） | entry: -
 Market on a mission to destroy both sides.
-why: Own_Lines #93 原话原样；09-16 未发、回了弹药库，Andy 当天说「过几天再提醒我发C1」。队列写的正式提醒日是 09-19，今天先放 C3 备着。
+why: Own_Lines #93 原话原样。09-16 没发，他当天说「过几天再提醒我发C1」，队列写的正式提醒日是 09-19（明天），今天先放 C3 备着。
 ---
 ## notes
-停做清单（NOW.md 09-17）：「夜间内容产线 —— 继续暂停」，08-29/09-01/09-03 三张卡归档不发；最新卡 `2026-09-06_autumn-effect-decay` 也是 killed → 本班无 A 档，只走 Andy 09-13 已收的队列成品。
-⏰ #93 补发提醒：正式提醒日 09-19（队列第 33 行），今天只作 C3 备着；发了在队列该行下追 ↳ ✅。
-关卡：本周 09-14 → 09-20 需发 5 件，posts.csv 记到 1/5；09-14（#103）/09-15（#41）有没有发出去台账里没有，交周检对 X 主页核实。别把这两条当成没发，也别直接重端。
+停做清单（NOW.md 09-17）：「夜间内容产线 —— 继续暂停」。最新卡 `2026-09-06_autumn-effect-decay` 是 killed，08-29/09-01/09-03 三张也已 killed 归档，所以本班没有 A 档。
+⏰ #93 补发提醒：明天（09-19）是正式提醒日，明天的备稿班会主动再喊一次；发了在队列第 33 行下追 ↳ ✅。
+回复弹药（不算 C 位）：梗句库 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md` 里 J2（双十一）/J3（惊喜派对）/J4（爆米花）/J5（等公交）都还没用过；J1c 09-17 已用。配对规矩照库里写的来，梗里的事实要对得上那条帖。J3 昨天建议放进复盘帖开头，posts.csv 里没有记录，用没用未核。
+关卡：本周（09-14 → 09-20）要发 5 件，台账记到 2/5（09-16 ARC、09-17 J1c QT）；09-14（#103）/09-15（#41）发没发，台账里没有，交周检对 X 主页核实。
 门铃：取铃工具 `--to Steve` 零命中。
-voice/raw 近 7 天只有 09-17 C17/C26 裁决记录（课程口述卡，不是发帖原料）；verdicts 最新是 09-16 那 4 行。今天有队列成品可端，不算输入枯竭。
-保质期：三条都是不依赖盘面的金句，无陈旧风险。
-**09-17 交互（Andy 10:5x JST）**：「今天可以用C2或者C3，我们看一下FOMC之后大家都在说什么呢」→ C1 今天不发（回弹药库）；C2/C3 二选一待他在屏上定。
-FOMC 09-16 背景（Steve 现场核，11:0x JST）：加息 25bp 至 3.75–4%，12-0，点阵图 16/18 预期年内再加一次。收盘读 `data/output/etf_data.json`（27883a92）：SPY −0.44% · QQQ +0.03% · IWM −0.43% · DIA −1.15% · XLF −1.62% · KRE −1.77% · XLE −2.88% · SMH +0.64%。
-X 热议（真 Chrome，since:09-16）：zerohedge「2024 Powell 在大选前降 50bp，2026 Warsh 在中期选举前加 25bp」13.7K 赞 · 身高梗 Powell 6'0" / Warsh 6'1" 4.7K · conksresearch「加 25 = 利好，加 50 = 利好，不加也利好」3.5K · Kobeissi「道指盘中 −800」3.5K · Minervini「史上最被预期的加息」1.7K · TheShortBear「QQQ 今天是好久没见的 sell the news 反转」385 · 白宫称「rather unfortunate」、Trump 公开跟 Warsh 唱反调。
-**09-17 交互（Andy）**：丢来 @shakepryzby1 `2100404888333357057`（ET 09-16 22:02，引用 @kunal00「FOMC 是个哈欠，又回到区间里的区间」），原话「这个很妙」。帖子内容：把震荡市比作「她爱我、她不爱我」一片片摘花瓣，最后一片翻成离谱的反转，再自问「这是 Livermore 还是 Darvas 说的」。可作 C3 回复位（震荡＝两边都挨打），也是他偏好「比喻压过数据」的又一例。
-↳ **更正（Andy 同日追话）**：「不是我的意思是说花瓣的比喻是一个值得学习的方案我是不会回复他这一条的」——上一行「可作 C3 回复位」作废，不回复该帖；已作为学习样本入 `Fluxus_Brand/voice/Fluxus_Swipe_File.md`「待解剖」节。
-**09-17 交互（Andy）**：「你觉得你能写什么类似的出来吗特别是可以回复上面几个你说的热度很高的帖子」→ Steve 给了 4 条回复草图（⚠️ AI 草图，不是 Andy 语料，不进 Own_Lines/verdicts 的原话栏；要成稿走 Mia）：
-- 回 @markminervini「史上最被预期的加息」：A surprise party where the birthday guy sent out the invitations.
-- 回 @conksresearch「加 25/50/不加都利好」：Asking FinTwit if it's bullish is like asking a golden retriever if it wants to go for a walk.
-- 回 @KobeissiLetter「道指盘中 −800」/ @TheShortBear QQQ 反转：Rollercoaster day. Big drop, lots of screaming, and you get off exactly where you got on. Minus your lunch.
-- 回 @NewsLambert 身高梗：New chair is one inch taller. Rates went up a quarter. Everything at the Fed is going up.
-- 未给 @zerohedge（选举/政治题，品牌不碰）。
-**09-17 交互（Andy）**：「我们有中文表达包可以玩梗脱口秀很多东西的嘛」→ 调 biaoda 脱口秀卡重做（⚠️ AI 草图，不是 Andy 语料）。按卡改：火只烧自己（金毛那条原版涮整个 FinTwit，已改）、不点具体标的、数字带口径、不编他的交易：
-- 惊喜派对：惊喜派对，请柬是寿星自己发的。两点整灯一关，寿星还是尖叫了。 / EN: A surprise party where the birthday boy mailed the invites. Lights went off at 2pm and he still screamed.
-- 金毛：加 25 利好，加 50 利好，不加也利好。我家狗也这样：出门好，下雨出门好，刚遛完再出门，还是好。区别是狗回家从来不看账户。 / EN: 25 bps, bullish. 50, bullish. No hike, bullish. My dog feels the same way about walks. Difference is he never checks the account when he gets home.
-- 过山车：两点往下冲，一路尖叫，四点下车，站台还是那个站台。标普收 −0.4%。票钱照付，午饭没了。（口径：SPY 09-16 收盘，etf_data.json）
-- 身高梗：新主席比老主席高一英寸，利率高了 25 个基点。今天美联储什么都在往上走，除了我的胆子。 / EN: New chair, one inch taller. Rates, a quarter higher. Everything at the Fed went up today except my nerve.
-**09-17 交互（Andy）**：纠正——要的是「先按 Shake 手法造梗句，再找回复对象」，并问「我们的流程是什么」。→ 流程提案＋5 条常青梗样品落 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md`（待批；蹭号在停做清单上，09-20 后）。
-**09-17 交互（Andy）**：「我同意批准」+「5条梗句全部保留」→ 梗句库 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`。今天回 J3（→ @markminervini）或 J1；J1 不回 @kunal00（Shake 已回过），且开头别用「X is」（和 Shake 同构）→ 出 J1b 改句版，建议配 @TheShortBear（QQQ 收 +0.03%，「还是那层」对得上；Kobeissi 那条道指收 −1.15% 对不上）。
-**09-17 交互（Andy）**：「我今天的打法是自己的啊每日复盘打算在x上面进行一个发布同时会配一段文字那可能需要把这个梗写进去其中一个梗啊剩下的一个我们回复别人」→ Steve 建议：J3（惊喜派对）放复盘 X 帖开头、紧接「The hike was priced; the tone was not.」的意思（复盘帖本机 `Trading/01_Market_Reports_Daily/2026-09/2026-09-16/x/post_EN.md`，1151/1500 字符，加 J3 约 +105 仍在上限内；文件不改，由 Andy 粘）；J1b（电梯改句版）回 @TheShortBear。
+voice/raw 近 7 天：09-17 两份（C17/C26 裁决、梗句手改代录），都不是发帖原料；verdicts 最新是 09-17 J1c posted。今天有队列成品可端，不算输入枯竭。
+保质期：三条都是不依赖盘面的金句，没有陈旧风险。
