@@ -2948,3 +2948,4 @@ INBOX 里写成「丢弃」的，逐条核：
 
 
 🔔 [09-19] → DATA ALEX · Dashboard数据端: `coverage_gaps.json` 里 `leaders_log.tml` 那条的 note 还写着「TML 前瞻研究跨断点用 `watchlist_hits` panel=true_market_leaders」——这个建议写于 `7cc43aef`（Moglen 换定义）之前，现在只接得上 ADR 那个断点，接不上 09-18 换定义；只读第一条的人会被带错。建议在那句后补「09-18 之后另见 Moglen 条，跨 09-18 不可比」。详见 `data/research/leaders_tml_2026-09/results.md` 末节。— Nighty Zac · pending
+- [2026-09-18] Discord→X 云生成端：2026-09-17 草稿已出（95 条消息 → 7 条推文，commit b5ab51f8）
