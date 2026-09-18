@@ -8,12 +8,13 @@ const KEY = 'page3-chart-pick'
  *
  * THE DEFAULT IS A SCREEN, NOT A FAVOURITE. Andy, 2026-08-18: the chart card
  * is fixed — it never moves and it is never an empty frame — and it opens on
- * the first name out of one named screen. The screen is TRUE MARKET LEADERS:
- * a liquid leader whose home theme or industry is itself Leading, with RS 1M
- * at or above 80. It is the one panel in the file whose recipe already answers
- * the question page 3 exists to answer — is this name moving alone, or is the
- * whole water moving — so the chart opens on the strongest name for which the
- * answer is "the water".
+ * the first name out of one named screen. The screen is TRUE MARKET LEADERS,
+ * which since 2026-09-18 follows Moglen 2020 (Andy 「照 Moglen 2020（建议）可以」):
+ * institutional-size leaders — >$30M a day, RS rating >= 97, above a rising
+ * 30-week line in Weinstein Stage 2, above the 10/21/50-day lines, U/D volume
+ * > 1.2, three of five fundamentals. It no longer filters on the theme being
+ * Leading (the old recipe did); top-20 industry is only a mark on the row.
+ * The chart still opens on its first name: the strictest leader screen.
  *
  * ORDER IS THE FILE'S, NOT OURS. The panel arrives sorted by hybrid RS and the
  * first row is taken as the first row. Re-sorting here to pick a "better"

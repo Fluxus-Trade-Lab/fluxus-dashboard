@@ -188,7 +188,8 @@ export const tradeableCount = (data = {}) =>
  *
  * This page prefers the time-series one, because it is the one that is NOT
  * already implied by the panel a name sits in: several recipes gate on rs_1m
- * (True Market Leaders needs >= 80, the momentum panels are percentile cuts),
+ * (the momentum panels are percentile cuts; True Market Leaders gates on
+ * rs_rating >= 97 since the Moglen 2020 definition, 2026-09-18),
  * so printing rs_1m beside those rows repeats the entry condition, while the
  * 21-day reading adds something the membership did not already say.
  *
@@ -403,7 +404,7 @@ const atrTitle = (v) => v == null || !Number.isFinite(v)
   : `${v.toFixed(1)} ATR — ≥7 只减不买`
 
 
-function Name({ row, rsKey = 'rs_1m' }) {
+export function Name({ row, rsKey = 'rs_1m' }) {
   const v = row[rsKey]
   const alt = rsKey !== 'rs_1m' && row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null
   /**
@@ -439,6 +440,15 @@ function Name({ row, rsKey = 'rs_1m' }) {
                                   padding: '1px 4px', borderRadius: '3px' } : undefined}
                   className={`shrink-0 text-[11px] font-mono font-semibold
                               ${fill ? '' : 'text-[var(--color-text-bold)]'}`} />
+      {/* Moglen 2020: a true market leader is "often in the Top 20 Industry
+          groups" — a flag the pipeline ships on every panel row, not a filter.
+          Muted text, not a colour: one bit, and it is not about the number. */}
+      {row.top20_industry && (
+        <span title="Industry ranks in the top 20 (Moglen's 'often in the Top 20 Industry groups' — a mark, not a filter)"
+              className="shrink-0 text-[11px] font-mono text-[var(--color-text-muted)]">
+          T20
+        </span>
+      )}
       {withTheme && (
         <i title={`${row.group} · ${row.group_state}`}
            className="shrink-0 w-[3px] h-[3px] rounded-full translate-y-[-3px]
