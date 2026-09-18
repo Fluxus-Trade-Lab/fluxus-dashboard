@@ -65,7 +65,11 @@ def _et_day(ts: Optional[str]) -> Optional[str]:
         return None
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=datetime.timezone.utc)
-    return dt.astimezone(ET).date().isoformat()
+    # 2026-09-19 (Zac, verifier catch): label by the last session CLOSED at that
+    # instant, not the ET calendar date -- a snapshot written 02:12 ET holds the
+    # previous session and used to be stamped with the next date.
+    from pipeline.marketcal import last_completed_session
+    return last_completed_session(dt.astimezone(ET)).isoformat()
 
 
 def caps(rows: List[Dict]) -> List[float]:
