@@ -6,15 +6,29 @@
  * Its closing guidance sentence is the same field the Votes fold prints, so it
  * is printed there once rather than twice.
  */
+/** The engine's thrust line from vote_detail; 300 only for payloads that
+ *  predate it — the same fallback the engine uses for old archive rows. */
+function thrustLine(verdict) {
+  const t = verdict?.vote_detail?.find((d) => d.key === 'thrust')
+  return Number.isFinite(t?.line) ? t.line : 300
+}
+
 export default function MarketStateSummary({ mm, breadth, verdict }) {
   if (!mm || !breadth || !verdict) return null
   const ctx = verdict.context ?? {}
   const qtrSpread = (mm.up_25pct_qtr ?? 0) - (mm.down_25pct_qtr ?? 0)
 
+  // The thrust line scales with the universe (breadth_signals.thrust_count,
+  // 0.113 × universe_size since 08-09 — 634 on 09-18). This used to be a flat
+  // 300, a second copy of the rule that drifted the day the universe doubled
+  // (08-10): 20 of the next 27 sessions read the opposite of the engine
+  // (Nighty Zac, 09-18). Read the engine's own line; mirror its four branches.
+  const line = thrustLine(verdict)
+  const up = mm.up_4pct ?? 0, down = mm.down_4pct ?? 0
   const thrustLabel =
-    (mm.up_4pct ?? 0) >= 300 && (mm.down_4pct ?? 0) >= 300 ? 'churn / volatile'
-    : (mm.up_4pct ?? 0) >= 300 ? 'bullish thrust'
-    : (mm.down_4pct ?? 0) >= 300 ? 'bearish thrust'
+    up >= line && down >= line ? 'churn / volatile'
+    : up >= line && up > down ? 'bullish thrust'
+    : down >= line && down > up ? 'bearish thrust'
     : 'no thrust'
 
   const t = breadth.t2108

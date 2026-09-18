@@ -92,7 +92,9 @@ export default function VoteGlyphs({ detail, stretch = false, perRow }) {
 }
 
 function Glyph({ d, stretch }) {
-  const range = RANGE[d.key] ?? 1
+  // thrust is drawn against its own line (it scales with the universe — 634
+  // on 09-18); the flat 300 pinned a margin of −342 to the frame (Zac 09-18).
+  const range = (d.key === 'thrust' && Number.isFinite(d.line) && d.line > 0) ? d.line : (RANGE[d.key] ?? 1)
   const frac = d.margin == null ? 0 : Math.max(-1, Math.min(1, d.margin / range))
   const onLine = d.measurable && Math.abs(frac) < ON_THE_LINE
   const fill = !d.measurable ? 'transparent'

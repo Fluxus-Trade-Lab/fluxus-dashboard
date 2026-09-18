@@ -60,15 +60,9 @@ ALLOWED: dict = {}
 # 已知缺陷：闸看得见它，但不因为它把 main 判红（修它的是 UI Claire 的文件）。
 # 修好之后这里的条目会匹配不上，下面的测试会要求删掉它——不会烂在这儿。
 KNOWN_DEFECTS = {
-    ('components/breadth/MarketStateSummary.jsx',
-     "(mm.up_4pct??0)>=300&&(mm.down_4pct??0)>=300?'churn/volatile'"):
-        '2026-09-18 Nighty Zac：门槛该取 verdict.vote_detail 里 thrust 的 line（今日 634），已门铃 UI Claire',
-    ('components/breadth/MarketStateSummary.jsx',
-     ":(mm.up_4pct??0)>=300?'bullishthrust'"):
-        '同上，同一个 thrustLabel 三元式',
-    ('components/breadth/MarketStateSummary.jsx',
-     ":(mm.down_4pct??0)>=300?'bearishthrust'"):
-        '同上，同一个 thrustLabel 三元式',
+    # 2026-09-18: the three MarketStateSummary.jsx `>= 300` lines were fixed the
+    # same day by UI Claire (they now read vote_detail's thrust `line`); their
+    # entries are removed, as this test asks.
 }
 
 
