@@ -4,6 +4,14 @@
 工具：[`pipeline/tools/stockbee_gate_study.py`](../../../pipeline/tools/stockbee_gate_study.py)
 复跑：`python3 -m pipeline.tools.stockbee_gate_study --holdout`
 
+> ⚠️ **更正（Nighty Zac 2026-09-19）——下面「一句话」与「过闸之后」两节的两条结论在干净人口上翻号，原文保留不删。**
+> 本研究用的是**无市值闸**的 4% 筛子，样本 61.1% 落在 2026-06-26 宇宙人口断点之后（那天起宇宙从 ≥$1B 换成全市场，`<$1B` 从 0.0% 到 53.4%）。
+> 只取断点前 / 只取 ≥$1B 核心重算：
+> - 「过闸的票中位连零都没到（holdout −0.06%）」→ **+0.21%**（≥$1B 核心）/ **+0.54%**（断点前）——**不成立**
+> - 「4% 突破整体 5 日跑输 SPY 约 0.45%」→ **−0.03% / −0.00%**（断点前两半）——**那 0.45pp 基本是新进来的小票**
+> - 「闸在 holdout 上能分开」这一条本轮未复核，读时按人口混合样本看待。
+> 出处：[`breadth_universe_break_2026-09-18/README.md`](../breadth_universe_break_2026-09-18/README.md) §十一 判定表 · 事故档 [`2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md`](../../reference/incidents/2026-09-18_the_universe_changed_populations_and_nobody_logged_it.md)。
+
 ---
 
 ## 一句话
