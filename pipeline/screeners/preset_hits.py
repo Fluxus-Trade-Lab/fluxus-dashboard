@@ -41,7 +41,8 @@ _RANGES: Dict[str, tuple] = {
     "dcrPct": ("dcr_pct", 100.0),
     "ppCount": ("pp_count_30d", 1.0),
     "hScore": ("h_score", 1.0),
-    "fScore": ("f_score", 1.0),
+    "fScore": ("f_score", 1.0),    # old name, kept until presets move to growthScore
+    "growthScore": ("growth_score", 1.0),   # 2026-09-18: f_score renamed (Piotroski collision)
     "iScore": ("i_score", 1.0),
     "rs21d": ("rs_21d", 1.0),
     "rs63d": ("rs_63d", 1.0),

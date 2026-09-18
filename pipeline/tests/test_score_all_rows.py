@@ -97,3 +97,22 @@ class TestFScore:
         u["revenue_growth"] = np.linspace(-0.2, 0.9, 30)
         out = compute_universe_scores(u).set_index("ticker")
         assert out.loc["T29", "f_score"] == 99 and out.loc["T0", "f_score"] < 5
+
+
+def test_growth_score_is_the_renamed_f_score_shipped_alongside_it():
+    """Andy 2026-09-18: f_score collides with Piotroski F-Score -- rename.
+    Both names ship until the frontend moves; the values must be identical."""
+    out = compute_universe_scores(_universe())
+    assert "growth_score" in out
+    assert (out["growth_score"].astype(float) == out["f_score"].astype(float)).all()
+
+
+def test_growth_score_is_published_in_universe_json():
+    import inspect
+    from pipeline.screeners import run_all
+    assert "'growth_score'" in inspect.getsource(run_all.main)
+
+
+def test_presets_accept_the_new_key():
+    from pipeline.screeners.preset_hits import _RANGES
+    assert _RANGES["growthScore"][0] == "growth_score"

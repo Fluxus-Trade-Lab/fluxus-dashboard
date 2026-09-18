@@ -624,6 +624,10 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d',
                 'rs_rating', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
+    # f_score collides with Piotroski F-Score (a 9-point financial checklist); ours is the
+    # mean of two growth percentiles. Andy 2026-09-18: rename. Both names ship until the
+    # frontend and the presets move to growth_score; then f_score is dropped.
+    df['growth_score'] = df['f_score']
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
     #
@@ -1072,7 +1076,7 @@ def main():
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d',   # deprecated aliases, drop once the UI moves
         'rs_rating',
-        'f_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable', 'falr_252',   # tradeable: the field the scores are measured on
+        'f_score', 'growth_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable', 'falr_252',   # tradeable: the field the scores are measured on
         'adr_pct', 'atr_pct', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d',
