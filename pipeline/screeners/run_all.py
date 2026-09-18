@@ -240,28 +240,6 @@ def _screener_count(payload) -> Any:
     return n if isinstance(n, int) else f'count-not-int:{type(n).__name__}'
 
 
-def ep_compat_payload(results: dict) -> dict:
-    """The union of the two EP screeners in the retired file's shape.
-
-    Each row keeps the old fields (ticker/change_pct/rel_volume/market_cap/
-    sector + the ATR badge) and says which definition(s) fired it."""
-    rows: Dict[str, dict] = {}
-    for src in ('ep_stockbee', 'ep_qullamaggie'):
-        for r in (results.get(src) or {}).get('tickers') or []:
-            t = r.get('ticker')
-            if not t:
-                continue
-            if t not in rows:
-                rows[t] = {k: r.get(k) for k in ('ticker', 'change_pct', 'rel_volume',
-                                                  'market_cap', 'sector', 'atr_ext', 'atr_color')}
-                rows[t]['sources'] = []
-            rows[t]['sources'].append(src)
-    tickers = sorted(rows.values(), key=lambda r: -(r.get('change_pct') or 0))
-    return {'count': len(tickers), 'tickers': tickers,
-            'deprecated': 'retired 2026-09-18; union of ep_stockbee + ep_qullamaggie kept for the page until it reads those files',
-            'superseded_by': ['ep_stockbee', 'ep_qullamaggie']}
-
-
 def _screener_counts(results: dict) -> dict:
     """The `screeners.counts` block main files in the run ledger.
 
@@ -366,7 +344,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     def rank_tradeable(col: str, na: str = 'top') -> pd.Series:
         """Percentile rank within the tradeable set; NaN for everyone else.
         `na='keep'` ranks among the field members that HAVE a value and leaves
-        the missing ones NaN (used by f_score, where missing means unknown).
+        the missing ones NaN (used by growth_score, where missing means unknown).
 
         `na_option='top'`, not `'bottom'`. Pandas names these by where the NaN
         sits in the *ranking order*, not by where it lands on the score: with
@@ -500,7 +478,11 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['_rev'] = pd.to_numeric(df.get('revenue_growth', pd.Series(dtype=float)), errors='coerce')
     r_eps = score_against_tradeable('_eps', na='keep')
     r_rev = score_against_tradeable('_rev', na='keep')
-    df['f_score'] = pd.concat([r_eps, r_rev], axis=1).mean(axis=1, skipna=True).fillna(50.0)
+    # growth_score: mean of the two growth percentiles, unknown = 50. Was `f_score`
+    # until 2026-09-18 -- renamed (Andy) because Piotroski's F-Score is a 9-point
+    # financial checklist, not this; the old name stopped shipping once the
+    # frontend moved (UI Claire 8c52d939).
+    df['growth_score'] = pd.concat([r_eps, r_rev], axis=1).mean(axis=1, skipna=True).fillna(50.0)
     df.drop(columns=['_eps', '_rev'], inplace=True)
 
     # --- I score (industry RS) ---
@@ -522,7 +504,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
     df['h_score'] = (
-        df['f_score'] * 2 +
+        df['growth_score'] * 2 +
         df['i_score'] * 3 +
         df['rs_1m'] * 1 +
         df['rs_3m'] * 2 +
@@ -665,12 +647,8 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
 
     # Round score columns to integers
     for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d',
-                'rs_rating', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
+                'rs_rating', 'growth_score', 'i_score', 'h_score', 'h_score_pctl']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
-    # f_score collides with Piotroski F-Score (a 9-point financial checklist); ours is the
-    # mean of two growth percentiles. Andy 2026-09-18: rename. Both names ship until the
-    # frontend and the presets move to growth_score; then f_score is dropped.
-    df['growth_score'] = df['f_score']
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
     #
@@ -1016,16 +994,6 @@ def main():
               json.dumps(output, indent=2, default=_json_serializer))
         logger.info(f"Saved {name}.json")
 
-    # episodic_pivot.json: COMPATIBILITY FILE ONLY, not a screener. The old
-    # recipe is retired (2026-09-18); the frontend still fetches this path
-    # (useMarketData.js fails the whole page on a 404) and schema_snapshot
-    # treats a missing file as a break. Until UI moves to ep_stockbee /
-    # ep_qullamaggie it carries their UNION under the old field names.
-    # Not in ticker_events SCREENER_FILES, not in heat -- nothing counts it.
-    _emit(ledger, OUTPUT_DIR / 'episodic_pivot.json', json.dumps(
-        {'timestamp': timestamp, **ep_compat_payload(results)},
-        indent=2, default=_json_serializer))
-
     # Save signals
     _emit(ledger, OUTPUT_DIR / 'signals.json', json.dumps(
         {'timestamp': timestamp, **signals}, indent=2, default=_json_serializer
@@ -1136,7 +1104,7 @@ def main():
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d',   # deprecated aliases, drop once the UI moves
         'rs_rating',
-        'f_score', 'growth_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable', 'falr_252',   # tradeable: the field the scores are measured on
+        'growth_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable', 'falr_252',   # tradeable: the field the scores are measured on
         'adr_pct', 'atr_pct', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d',

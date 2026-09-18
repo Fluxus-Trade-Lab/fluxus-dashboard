@@ -108,19 +108,18 @@ def test_retired_rows_replay_only_up_to_their_last_session():
     assert extract_events("episodic_pivot", payload, "2026-09-18") == []
 
 
-def test_compat_file_is_the_union_in_the_old_shape():
-    from pipeline.screeners.run_all import ep_compat_payload
-    res = {"ep_stockbee": {"tickers": [{"ticker": "A", "change_pct": 0.05, "rel_volume": 4.0,
-                                        "market_cap": 1e9, "sector": "X", "atr_ext": 1.0,
-                                        "atr_color": "green"}]},
-           "ep_qullamaggie": {"tickers": [{"ticker": "A", "change_pct": 0.05},
-                                          {"ticker": "B", "change_pct": 0.30}]}}
-    out = ep_compat_payload(res)
-    assert out["count"] == 2 and [r["ticker"] for r in out["tickers"]] == ["B", "A"]
-    a = out["tickers"][1]
-    assert a["sources"] == ["ep_stockbee", "ep_qullamaggie"]
-    assert {"ticker", "change_pct", "rel_volume", "market_cap", "sector", "atr_ext", "atr_color"} <= set(a)
-    assert out["superseded_by"] == ["ep_stockbee", "ep_qullamaggie"]
+def test_the_compat_file_is_gone():
+    """UI Claire moved every reader to ep_stockbee / ep_qullamaggie (d0d6a346,
+    2026-09-18); the retired recipe's file is no longer written anywhere."""
+    import inspect
+    from pathlib import Path
+    from pipeline.screeners import run_all
+    assert not hasattr(run_all, "ep_compat_payload")
+    assert "episodic_pivot.json" not in inspect.getsource(run_all)
+    wf = Path(__file__).resolve().parents[2] / ".github/workflows/daily-data-update.yml"
+    assert "episodic_pivot.json" not in wf.read_text()
+    snap = Path(__file__).resolve().parents[2] / "data/reference/schema_snapshot.json"
+    assert '"episodic_pivot.json"' not in snap.read_text()
 
 
 def test_retired_episodic_pivot_is_not_registered():

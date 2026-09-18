@@ -75,8 +75,8 @@ class TestFScore:
         u["revenue_growth"] = np.nan
         u.loc[:19, "revenue_growth"] = np.linspace(-0.5, 0.5, 20)     # half known
         out = compute_universe_scores(u).set_index("ticker")
-        known = out.iloc[:20]["f_score"].astype(float)
-        assert (out.iloc[20:]["f_score"].astype(float) == 50).all()
+        known = out.iloc[:20]["growth_score"].astype(float)
+        assert (out.iloc[20:]["growth_score"].astype(float) == 50).all()
         assert known.min() < 10 and known.max() > 90                    # not squeezed
         assert known.is_monotonic_increasing
 
@@ -86,7 +86,7 @@ class TestFScore:
         u["revenue_growth"] = np.linspace(0.0, 0.4, 40)
         u.loc[0, "eps_growth_next_y"] = 19.0                           # 19x on a near-zero base; revenue is the worst
         out = compute_universe_scores(u).set_index("ticker")
-        f = out["f_score"].astype(float)
+        f = out["growth_score"].astype(float)
         # T0: top on eps, bottom on revenue -> middling, not 99
         assert 35 <= f["T0"] <= 65
         assert f.nunique() > 5
@@ -96,15 +96,14 @@ class TestFScore:
         u["eps_growth_next_y"] = np.nan
         u["revenue_growth"] = np.linspace(-0.2, 0.9, 30)
         out = compute_universe_scores(u).set_index("ticker")
-        assert out.loc["T29", "f_score"] == 99 and out.loc["T0", "f_score"] < 5
+        assert out.loc["T29", "growth_score"] == 99 and out.loc["T0", "growth_score"] < 5
 
 
-def test_growth_score_is_the_renamed_f_score_shipped_alongside_it():
-    """Andy 2026-09-18: f_score collides with Piotroski F-Score -- rename.
-    Both names ship until the frontend moves; the values must be identical."""
+def test_f_score_is_no_longer_published():
+    """Andy 2026-09-18 renamed f_score (Piotroski collision). The frontend reads
+    growth_score (UI Claire 8c52d939), so the old name is dropped."""
     out = compute_universe_scores(_universe())
-    assert "growth_score" in out
-    assert (out["growth_score"].astype(float) == out["f_score"].astype(float)).all()
+    assert "growth_score" in out and "f_score" not in out
 
 
 def test_growth_score_is_published_in_universe_json():
@@ -116,3 +115,4 @@ def test_growth_score_is_published_in_universe_json():
 def test_presets_accept_the_new_key():
     from pipeline.screeners.preset_hits import _RANGES
     assert _RANGES["growthScore"][0] == "growth_score"
+    assert "fScore" not in _RANGES
