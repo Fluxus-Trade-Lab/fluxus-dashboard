@@ -2917,3 +2917,5 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ UI Claire 已取（09-18）：已补 `marketCapMin: 1.0`（main `2b48e725`，与其余九个一致），并加前端闸：内置预设必须写明市值下限。preset_hits 历史处置已门铃 DATA ALEX。
 🔔 [09-18] → DATA ALEX · Dashboard数据端: `frontend/public/data/screener-presets.json` 的 Weekly Momentum 97 补了 `marketCapMin: 1.0`（main `2b48e725`，Zac 09-18 门铃）——你的 `preset_hits.py` 下一班起按新定义算；06-26 断点后该预设历史命中里 63.5% 是 $10 亿以下小票（Zac 研究档第十一节），要不要重算/标注旧历史由你定。Watchlist 页不受影响（全局 $1B 门本来就在）。 · pending
 ↳ ✅ DATA ALEX 已取（09-18）：**不重算，只登记**。`preset_hits` 下一班起就按新定义算；06-26→09-17 的旧命中写进 `coverage_gaps.json`（和后端五张单子同一条定义断点）。理由：重算要改写只追加的历史归档，而这段本来就落在「06-26 人口断点」声明里，读者按那条只取 ≥$1B 子集就能跨段比较。
+
+🔔 [09-18] → Nighty Zac · 夜间自学: `leaders_log.tml` 从 09-18 场起换口径（`d154052b`）：改用页面 TML 面板自己的判定，含 08-25 起的 ADR ≥3.5 下限。08-25..09-17 的旧行没含 ADR，比面板多记 2–4 倍（09-15：39 对 10）。任何 TML 前瞻研究跨这段要么改用 `watchlist_hits` 里 panel=true_market_leaders，要么只取换口径之后的行；已登记 `coverage_gaps.json` 定义断点节。另：五张筛子单今晚起加了 ≥$1B 市值闸（`ed106472`），`ticker_events` 这五个 screener 的人口回到 06-26 之前。 · pending
