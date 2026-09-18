@@ -34,12 +34,30 @@ class TestBreadthVotes:
         assert breadth_votes(_row(ratio_5d=0.49))['ratio_5d'] == 'bear'
 
     def test_thrust_rules(self):
+        """Stockbee: "back-to-back 300-plus days" on his 4% count (Andy 09-18:
+        follow the author). Today AND the previous session at/over 300."""
         from pipeline.screeners.breadth_signals import breadth_votes
-        assert breadth_votes(_row(up_4pct=300, down_4pct=50))['thrust'] == 'bull'
-        assert breadth_votes(_row(up_4pct=50, down_4pct=300))['thrust'] == 'bear'
-        # both >= 300 -> churn, neutral vote
-        assert breadth_votes(_row(up_4pct=350, down_4pct=320))['thrust'] == 'neutral'
-        assert breadth_votes(_row(up_4pct=299, down_4pct=100))['thrust'] == 'neutral'
+        def r(up, dn, pup, pdn):
+            return _row(up_4pct_stockbee=up, down_4pct_stockbee=dn,
+                        _prev_up_4pct_stockbee=pup, _prev_down_4pct_stockbee=pdn)
+        assert breadth_votes(r(300, 50, 300, 40))['thrust'] == 'bull'
+        assert breadth_votes(r(50, 300, 60, 310))['thrust'] == 'bear'
+        assert breadth_votes(r(350, 320, 330, 305))['thrust'] == 'neutral'   # churn
+        assert breadth_votes(r(900, 50, 299, 40))['thrust'] == 'neutral'     # one day is not a thrust
+        assert breadth_votes(r(299, 50, 900, 40))['thrust'] == 'neutral'
+
+    def test_thrust_reads_the_stockbee_count_not_the_price_only_column(self):
+        """up_4pct (price leg only) at 900 must not vote; the three-leg count decides."""
+        from pipeline.screeners.breadth_signals import breadth_votes
+        row = _row(up_4pct=900, down_4pct=10, up_4pct_stockbee=120, down_4pct_stockbee=10,
+                   _prev_up_4pct_stockbee=150, _prev_down_4pct_stockbee=10)
+        assert breadth_votes(row)['thrust'] == 'neutral'
+
+    def test_thrust_is_unmeasurable_without_stockbee_columns_or_a_previous_session(self):
+        from pipeline.screeners.breadth_signals import thrust_state, breadth_votes
+        assert thrust_state(_row(up_4pct=900, down_4pct=10)) is None            # pre-2026-09-05 row
+        assert thrust_state(_row(up_4pct_stockbee=400, down_4pct_stockbee=10)) is None   # no previous
+        assert breadth_votes(_row(up_4pct=900, down_4pct=10))['thrust'] == 'neutral'
 
     def test_spreads_and_mcclellan_and_nhnl(self):
         from pipeline.screeners.breadth_signals import breadth_votes
@@ -78,33 +96,15 @@ class TestBreadthVotes:
 
     def test_thresholds_single_source(self):
         from pipeline.screeners import breadth_signals
-        assert breadth_signals.THRESHOLDS['thrust']['fraction'] == 0.113
+        assert breadth_signals.THRESHOLDS['thrust'] == {'count': 300, 'days': 2}
         assert breadth_signals.THRESHOLDS['t2108_zone']['oversold'] == 20
         assert breadth_signals.THRESHOLDS['t2108_zone']['overbought'] == 80
 
-    def test_thrust_scales_with_the_universe_it_was_measured_in(self):
-        """300 names meant 11.3% of a ~2,650 universe. When the Finviz fetch
-        went from 150 to 600 pages the universe doubled to 5,615 and a fixed
-        300 would have meant 5.3% — half-strength thrusts lighting the vote."""
+    def test_thrust_line_is_300_whatever_the_universe(self):
+        """His number is absolute; the 0.113 x universe scaling (08-09..09-18) was ours."""
         from pipeline.screeners.breadth_signals import thrust_count
-        assert round(thrust_count({'universe_size': 3000})) == 339
-        assert round(thrust_count({'universe_size': 5615})) == 634
-        # a row predating the column keeps its historical answer rather than
-        # silently becoming unmeasurable
-        assert thrust_count({}) == 300.0
-
-    def test_thrust_vote_needs_more_names_in_a_bigger_universe(self):
-        """The same 400 up-4% names is a thrust in 3,000 and is not in 5,615."""
-        from pipeline.screeners.breadth_signals import breadth_votes
-        small = _row(up_4pct=400, down_4pct=50, universe_size=3000)
-        big = _row(up_4pct=400, down_4pct=50, universe_size=5615)
-        assert breadth_votes(small)['thrust'] == 'bull'
-        assert breadth_votes(big)['thrust'] == 'neutral'
-
-    def test_thrust_floor_holds_on_a_tiny_universe(self):
-        """A ratio alone would let a 200-name universe call 23 names a thrust."""
-        from pipeline.screeners.breadth_signals import thrust_count
-        assert thrust_count({'universe_size': 200}) == 60
+        for u in (200, 2650, 5615, None):
+            assert thrust_count({'universe_size': u}) == 300.0
 
 
 def _hist(closes, highs=None, lows=None, end='2026-07-29'):
@@ -313,9 +313,19 @@ class TestEvaluate:
 
     def test_churn_day_noted(self):
         from pipeline.screeners.breadth_signals import evaluate
-        frame = _frame([{'date': '2026-07-29', **_row(up_4pct=400, down_4pct=380)}])
+        frame = _frame([
+            {'date': '2026-09-16', **_row(up_4pct_stockbee=320, down_4pct_stockbee=310)},
+            {'date': '2026-09-17', **_row(up_4pct_stockbee=400, down_4pct_stockbee=380)}])
         v = evaluate(frame, _health_stub())
         assert any('churn' in n.lower() or 'volatile' in n.lower() for n in v['notes'])
+        assert v['votes']['thrust'] == 'neutral'
+
+    def test_evaluate_carries_the_previous_session_into_the_thrust_vote(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        rows = [{'date': '2026-09-16', **_row(up_4pct_stockbee=310, down_4pct_stockbee=40)},
+                {'date': '2026-09-17', **_row(up_4pct_stockbee=420, down_4pct_stockbee=30)}]
+        assert evaluate(_frame(rows), _health_stub())['votes']['thrust'] == 'bull'
+        assert evaluate(_frame(rows[1:]), _health_stub())['votes']['thrust'] == 'neutral'
 
     def test_health_none_degrades(self):
         from pipeline.screeners.breadth_signals import evaluate
@@ -777,9 +787,8 @@ class TestPercentileAcrossUniverseBreaks:
         assert universe_era('2026-08-10') == universe_era('2026-09-16')
 
 
-def test_playbook_and_guidance_name_this_universes_thrust_count_not_300():
+def test_playbook_and_guidance_say_back_to_back_300():
     from pipeline.screeners.breadth_signals import _PLAYBOOK, _GUIDANCE, render_copy
-    assert not any('300' in s for s in list(_PLAYBOOK.values()) + list(_GUIDANCE.values()))
-    text = render_copy(_PLAYBOOK['OVERSOLD'], {'universe_size': 5611})
-    assert '634' in text                       # 0.113 * 5611
-    assert '{' not in render_copy(_GUIDANCE[('OVERSOLD', 'Elevated')], {'universe_size': 5611})
+    for text in (_PLAYBOOK['OVERSOLD'], _GUIDANCE[('OVERSOLD', 'Elevated')]):
+        out = render_copy(text, {'universe_size': 5611})
+        assert 'back-to-back 300+' in out and '{' not in out

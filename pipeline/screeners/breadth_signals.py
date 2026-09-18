@@ -18,18 +18,18 @@ import pandas as pd
 THRESHOLDS: Dict[str, Dict[str, float]] = {
     'ratio_5d':    {'bull': 1.0, 'bear': 0.5},
     'ratio_10d':   {'bull': 1.0, 'bear': 0.5},
-    # A share of that session's own universe, not an absolute count.
-    # 300 names was tuned when the Finviz fetch capped at 150 pages and the
-    # universe sat near 2,650 — a median 11.3% of it, in a tight 10.0–12.2%
-    # band across 558 archived sessions. Raising the fetch to 600 pages took
-    # the universe to 5,615 (M–Z came back, NVDA and MSFT included), which
-    # silently halved the threshold's meaning to 5.3%: half-strength thrust
-    # days would have lit the vote from here on.
-    #
-    # 0.113 holds the historical operating point. Replaying all 558 rows with
-    # the ratio instead of the constant flips 19 of them (3.4%) — cheap
-    # backwards, necessary forwards.
-    'thrust':      {'fraction': 0.113, 'min_count': 60},
+    # Pradeep Bonde's (Stockbee) own definition, followed as written (Andy
+    # 2026-09-18: 「确认原作者定义准确与否，按照原作者的定义走」):
+    #   * the count is his Market Monitor "stocks up 4% plus today":
+    #     (100*(C-C1)/C1) >= 4 AND V >= 100000 AND V > V1, US common stocks,
+    #     ETFs excluded -- stockbee.blogspot.com/2014/08/how-i-get-market-monitor-numbers.html
+    #     (our column: up_4pct_stockbee / down_4pct_stockbee, same three legs);
+    #   * a thrust is "back-to-back 300-plus days" -- an absolute 300, on
+    #     consecutive sessions; one 300 day is not a thrust --
+    #     stockbee.blogspot.com/2026/07/understand-market-breadth.html
+    # Replaces the self-made rule (0.113 x universe_size on the price-only
+    # up_4pct, single day) used 2026-08-09..09-18.
+    'thrust':      {'count': 300, 'days': 2},
     'qtr_spread':  {},              # sign-based
     'spread_13_34': {},             # sign-based
     'mcclellan':   {'extreme': 70},
@@ -80,18 +80,30 @@ def universe_truncated(row: Dict[str, Any]) -> bool:
     return day < CAP_LIFTED
 
 
-def thrust_count(row: Dict[str, Any]) -> Optional[float]:
-    """How many names a thrust needs, for this row's own universe.
+THRUST_UP, THRUST_DOWN = 'up_4pct_stockbee', 'down_4pct_stockbee'
 
-    Falls back to the historical constant when a row predates the
-    universe_size column, so replaying old archives keeps its old answer
-    rather than silently becoming unmeasurable.
-    """
-    u = _num(row.get('universe_size'))
-    if u is None or u <= 0:
-        return 300.0
-    return max(THRESHOLDS['thrust']['min_count'],
-               THRESHOLDS['thrust']['fraction'] * u)
+
+def thrust_count(row: Dict[str, Any]) -> Optional[float]:
+    """Stockbee's thrust line: 300 names, whatever the universe (his number)."""
+    return float(THRESHOLDS['thrust']['count'])
+
+
+def thrust_state(row: Dict[str, Any]) -> Optional[str]:
+    """'bull' / 'bear' / 'churn' / 'none', or None when it cannot be measured.
+
+    Back-to-back: today AND the previous session both at/over the line. The
+    previous session's counts ride in as `_prev_<col>` (evaluate() adds them).
+    Rows without the Stockbee columns (the archive before 2026-09-05) or without
+    a previous session are unmeasurable, never a vote on another rule."""
+    n = thrust_count(row)
+    up, dn = _num(row.get(THRUST_UP)), _num(row.get(THRUST_DOWN))
+    pup, pdn = _num(row.get('_prev_' + THRUST_UP)), _num(row.get('_prev_' + THRUST_DOWN))
+    if None in (up, dn, pup, pdn) or (up + dn) <= 0:
+        return None
+    bull, bear = up >= n and pup >= n, dn >= n and pdn >= n
+    if bull and bear:
+        return 'churn'
+    return 'bull' if bull else 'bear' if bear else 'none'
 
 
 def render_copy(text: str, row: Dict[str, Any]) -> str:
@@ -117,18 +129,8 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
         else:
             votes[key] = 'neutral'
 
-    up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
-    n = thrust_count(row)
-    if up4 is None or down4 is None:
-        votes['thrust'] = 'neutral'
-    elif up4 >= n and down4 >= n:
-        votes['thrust'] = 'neutral'      # churn day — noted at composition
-    elif up4 >= n and up4 > down4:
-        votes['thrust'] = 'bull'
-    elif down4 >= n and down4 > up4:
-        votes['thrust'] = 'bear'
-    else:
-        votes['thrust'] = 'neutral'
+    st = thrust_state(row)
+    votes['thrust'] = st if st in ('bull', 'bear') else 'neutral'   # churn noted at composition
 
     def _sign_vote(a, b) -> str:
         av, bv = _num(a), _num(b)
@@ -209,12 +211,13 @@ def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
         v, line = n(k), THRESHOLDS[k]['bull']
         add(k, v, line, None if v is None else v - line, 'ratio', lbl)
 
-    up4, dn4 = n('up_4pct'), n('down_4pct')
+    # Back-to-back: the weaker of the two sessions is what has to clear the
+    # line, so the margin is taken on it. Unmeasurable (None) before the
+    # Stockbee columns existed or without a previous session.
+    up4, pup4 = n(THRUST_UP), n('_prev_' + THRUST_UP)
     need = thrust_count(row)
-    # Zero on a non-session is absence, not calm — the mark has to be able to
-    # say "not counted" rather than "nothing happened".
-    thrust_measurable = up4 is not None and dn4 is not None and (up4 + dn4) > 0
-    add('thrust', up4, need, (up4 - need) if thrust_measurable else None,
+    thrust_measurable = thrust_state(row) is not None
+    add('thrust', up4, need, (min(up4, pup4) - need) if thrust_measurable else None,
         'names', 'Thrust')
 
     for k, a, b, lbl in (('qtr_spread', 'up_25pct_qtr', 'down_25pct_qtr', 'Quarterly spread'),
@@ -409,7 +412,7 @@ _PLAYBOOK = {
     'BULLISH': 'Trend participation — press winners, normal pyramids',
     'MIXED': 'Smaller size, cleaner setups, demand confirmation',
     'BEARISH': 'Capital preservation — selective shorts or cash',
-    'OVERSOLD': 'Bottom-hunt protocol — wait for a {thrust}+ up-4% thrust day',
+    'OVERSOLD': 'Bottom-hunt protocol — wait for back-to-back {thrust}+ up-4% days',
     'OVERBOUGHT': 'Late-stage strength — take partials, raise stops',
 }
 
@@ -424,7 +427,7 @@ _GUIDANCE = {
     ('BEARISH', 'Elevated'): 'Negative breadth with active warnings; capital preservation is the position.',
     ('BEARISH', 'High'): 'Full risk-off: breadth and price agree on the downside.',
     ('OVERSOLD', 'Low'): 'T2108 in the oversold zone; stop pressing shorts and watch for a reversal thrust day.',
-    ('OVERSOLD', 'Elevated'): 'Deeply oversold; the next {thrust}+ up-4% day is the signal that matters.',
+    ('OVERSOLD', 'Elevated'): 'Deeply oversold; back-to-back {thrust}+ up-4% days are the signal that matters.',
     ('OVERSOLD', 'High'): 'Max-pain zone; historically where bottoms form — watch for the thrust, do not front-run it.',
     ('OVERBOUGHT', 'Low'): 'T2108 overbought; strength is late-stage — harvest, do not initiate chases.',
     ('OVERBOUGHT', 'Elevated'): 'Overbought with warnings building; tighten stops into strength.',
@@ -668,6 +671,10 @@ def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[st
 def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str, Any]:
     """Rule-derived verdict for the last row of `frame`. Pure and total."""
     row = frame.iloc[-1].to_dict()
+    if len(frame) >= 2:                  # thrust is back-to-back (thrust_state)
+        prev = frame.iloc[-2]
+        for c in (THRUST_UP, THRUST_DOWN):
+            row['_prev_' + c] = prev.get(c)
     date_iso = str(row.get('date', ''))
     if health is not None and date_iso:
         health = truncate_health(health, date_iso)
@@ -691,15 +698,14 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
     z = THRESHOLDS['t2108_zone']
     if t21 is not None and t21 < z['oversold']:
         env = 'OVERSOLD'
-        notes.append('T2108 below 20 — reversal watch: look for a bullish thrust day')
+        notes.append('T2108 below 20 — reversal watch: look for back-to-back 300+ up-4% days')
     elif t21 is not None and t21 > z['overbought']:
         env = 'OVERBOUGHT'
         notes.append('T2108 above 80 — chase risk')
 
-    up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
     n = thrust_count(row)
-    if up4 is not None and down4 is not None and up4 >= n and down4 >= n:
-        notes.append(f'Churn/volatile: {n:.0f}+ stocks both up and down 4% — unresolved tape')
+    if thrust_state(row) == 'churn':
+        notes.append(f'Churn/volatile: back-to-back {n:.0f}+ stocks both up and down 4% — unresolved tape')
     mc = _num(row.get('mcclellan_osc'))
     if mc is not None and abs(mc) >= THRESHOLDS['mcclellan']['extreme']:
         notes.append(f"McClellan at {mc:+.0f} — extreme reading")

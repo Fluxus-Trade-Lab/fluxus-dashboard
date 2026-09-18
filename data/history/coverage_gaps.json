@@ -143,6 +143,19 @@
    "after": "the panel's own answer: in panel_pool(rows, 'leaders') (ADR >= 3.5, universe-wide since Andy 2026-08-25) and PANELS['true_market_leaders'].test",
    "note": "Before 2026-08-25 the two definitions coincided (no ADR floor yet). Not recomputed: leaders_log does not store adr_pct. For TML forward-return research use watchlist_hits panel=true_market_leaders across the break, or leaders_log.tml only from the change date on.",
    "declared": "2026-09-18 DATA ALEX"
+  },
+  {
+   "field": "breadth verdict: thrust vote (breadth.json verdict / breadth_replay.json votes, vote_detail thrust)",
+   "changed": "2026-09-18 (code); applies to every replayed session",
+   "commit": "see git log -- pipeline/screeners/breadth_signals.py",
+   "archives": [
+    "data/output/breadth.json",
+    "data/output/breadth_replay.json"
+   ],
+   "before": "2026-08-09..2026-09-18: single day, price-only up_4pct/down_4pct >= max(60, 0.113 x universe_size), up > down (self-made)",
+   "after": "Stockbee's definition: up_4pct_stockbee (or down) >= 300 on BOTH today and the previous session; both sides -> churn (neutral)",
+   "note": "Andy 2026-09-18: 「确认原作者定义准确与否，按照原作者的定义走」. Sessions before 2026-09-05 have no Stockbee columns: their thrust vote is now unmeasurable (neutral), so replayed verdicts before that date can differ from what the page showed at the time. Sources in METRIC_SOURCES.md thrust row.",
+   "declared": "2026-09-18 DATA ALEX"
   }
  ]
 }
