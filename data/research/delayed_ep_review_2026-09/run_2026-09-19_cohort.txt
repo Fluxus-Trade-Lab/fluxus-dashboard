@@ -1,0 +1,97 @@
+ledger rows 1119 · cap known 1119 · <$1B 339 (30.3%) · as_of 2026-08-13..2026-09-17
+
+=== 全部行（含截断源与重放场） — 基准＝同日等权 cohort ===
+
+  --- +3 sessions ---
+     breaking  med -0.87%  n=34   dates=12  互不重叠日=6
+       basing  med +0.12%  n=437  dates=22  互不重叠日=8
+     drifting  med +0.28%  n=80   dates=22  互不重叠日=8
+       failed  med -0.44%  n=499  dates=22  互不重叠日=8
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -0.20%  p_low 0.2024  p_high 0.7979
+
+  --- +5 sessions ---
+     breaking  med +0.15%  n=32   dates=10  互不重叠日=3
+       basing  med -0.09%  n=414  dates=20  互不重叠日=4
+     drifting  med +1.83%  n=75   dates=20  互不重叠日=4
+       failed  med -0.27%  n=453  dates=20  互不重叠日=4
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.16%  p_low 0.4962  p_high 0.5044
+
+  --- +10 sessions ---
+     breaking  med -1.54%  n=29   dates=8   互不重叠日=1
+       basing  med +0.16%  n=326  dates=15  互不重叠日=2
+     drifting  med +2.21%  n=53   dates=15  互不重叠日=2
+       failed  med +0.58%  n=341  dates=15  互不重叠日=2
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.60%  p_low 0.0717  p_high 0.9364
+
+=== 干净子集（ep_date >= 2026-08-11，剔 2026-09-02） — 基准＝同日等权 cohort ===
+
+  --- +3 sessions ---
+     breaking  med -0.12%  n=23   dates=9   互不重叠日=4
+       basing  med -0.72%  n=190  dates=16  互不重叠日=6
+     drifting  med +0.89%  n=55   dates=15  互不重叠日=6
+       failed  med -0.59%  n=230  dates=16  互不重叠日=6
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -0.46%  p_low 0.5758  p_high 0.4273
+
+  --- +5 sessions ---
+     breaking  med +1.37%  n=21   dates=7   互不重叠日=3
+       basing  med -1.13%  n=167  dates=14  互不重叠日=3
+     drifting  med +2.39%  n=50   dates=13  互不重叠日=3
+       failed  med -0.27%  n=184  dates=14  互不重叠日=3
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.96%  p_low 0.6657  p_high 0.3691
+
+  --- +10 sessions ---
+     breaking  med +0.02%  n=18   dates=5   互不重叠日=1
+       basing  med -1.67%  n=79   dates=9   互不重叠日=1
+     drifting  med +2.72%  n=28   dates=8   互不重叠日=1
+       failed  med +2.00%  n=72   dates=9   互不重叠日=1
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -0.53%  p_low 0.6022  p_high 0.4091
+
+=== 干净子集 ∩ 市值 ≥$1B（cohort 也只在这群里算） — 基准＝同日等权 cohort ===
+
+  --- +3 sessions ---
+     breaking  med -0.62%  n=20   dates=9   互不重叠日=4
+       basing  med -0.61%  n=151  dates=15  互不重叠日=6
+     drifting  med +0.84%  n=35   dates=15  互不重叠日=6
+       failed  med -0.39%  n=131  dates=14  互不重叠日=5
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -0.42%  p_low 0.4172  p_high 0.5841
+
+  --- +5 sessions ---
+     breaking  med -0.05%  n=18   dates=7   互不重叠日=3
+       basing  med -0.74%  n=138  dates=13  互不重叠日=3
+     drifting  med +0.55%  n=31   dates=13  互不重叠日=3
+       failed  med -0.64%  n=95   dates=12  互不重叠日=3
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.13%  p_low 0.4106  p_high 0.6290
+
+  --- +10 sessions ---
+     breaking  med +0.00%  n=15   dates=5   互不重叠日=1
+       basing  med -1.39%  n=59   dates=8   互不重叠日=1
+     drifting  med -1.40%  n=20   dates=8   互不重叠日=1
+       failed  med +1.29%  n=25   dates=7   互不重叠日=1
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.00%  p_low 0.7442  p_high 0.5069
+
+=== 干净子集 ∩ 市值 <$1B（cohort 只在这群里算） — 基准＝同日等权 cohort ===
+
+  --- +3 sessions ---
+     breaking  med -2.23%  n=3    dates=3   互不重叠日=2
+       basing  med -1.86%  n=39   dates=16  互不重叠日=6
+     drifting  med +2.03%  n=20   dates=13  互不重叠日=6
+       failed  med -0.56%  n=99   dates=16  互不重叠日=6
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -0.28%  p_low 0.3540  p_high 0.7263
+
+  --- +5 sessions ---
+     breaking  med +9.08%  n=3    dates=3   互不重叠日=1
+       basing  med -3.37%  n=29   dates=14  互不重叠日=3
+     drifting  med +4.48%  n=19   dates=12  互不重叠日=3
+       failed  med +0.76%  n=89   dates=14  互不重叠日=3
+    场内置换（10000 次，p 下限 0.00010）：同场随机 +0.31%  p_low 0.9299  p_high 0.1011
+
+  --- +10 sessions ---
+     breaking  med -7.55%  n=3    dates=3   互不重叠日=1
+       basing  med -2.67%  n=20   dates=9   互不重叠日=1
+     drifting  med +5.55%  n=8    dates=7   互不重叠日=1
+       failed  med +4.22%  n=47   dates=9   互不重叠日=1
+    场内置换（10000 次，p 下限 0.00010）：同场随机 -1.52%  p_low 0.1984  p_high 0.8668
+
+⚠️ 这里没有一格是「注册的那条主张」。注册的比较是**第二次突破 vs day-1 EP 入场**
+   （`delayed_ep_scan` docstring: "that breakout is a better trade than day 1"），
+   而账本不记 day-1 那条腿。cohort 只是账本能支持的最接近的替代问题。
