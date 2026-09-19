@@ -532,3 +532,5 @@
 - [2026-09-19] [DATA ALEX · 哨兵巡检] **系统健康、数据无误**：2026-09-18 交易日数据已落地，dashboard 已同步，无需分诊。实时监测机制正常运作。出处 agents/alex/runs/2026-09-19T20:00:56+09:00-T-0919-58.md
 
 - [2026-09-19] [数据哨兵] **从发现问题升级到连续验收**。最近完成交易日 2026-09-17 的数据已由五班巡检各自独立验收：每班重新核对 run_ledger 该场次的所有 guards（universe_quality / watchlist 安全）、tradeable 票数稳定在 2536、零新失败。巡检系统不只是找问题——它在说「前面那班的活我核过了」。问题从「我拿这个数时还能信吗」变成「连续五次都对，基本能信」。出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) [2026-09-19]
+
+- [09-20] [Growth Gary] **Whop 档位信誉徽章清零坑**：产品现有 15 人徽章绑在档位代码上，编辑保留但新建则清零。发布清单新增护航项。出处 data/growth/whop_launch_checklist_2026-09-25.md · 2c4a5f17
