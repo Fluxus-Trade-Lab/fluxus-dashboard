@@ -222,7 +222,7 @@
 | 09-14·2 | 次日计划簇和主班跑点(ET 00:30)撞在一起,按发帖日切会被拆进两个文件 | 🟡 仍开 | 建议改按「计划簇归属日」落盘,不按发帖日。跨脚本逻辑改动,归 Steve 交互会话评估,不算周结小改 |
 | 09-15·1 | 主班被周额度停掉迟跑近 8 小时,蹭位榜「<20 小时」按实跑时刻算会整段虚高 | ✅ Steve 裁 | **蹭位榜「<20 小时」一律按原定跑点(主班 ET 00:30)算距今,不按实跑时刻**——本条只管本线的榜怎么算;额度停跑的根因归 OPS,Joe 已挂单,不重复挂 |
 | 09-15·2 | (=09-14·1 第 2 次)本班又用了 `Note`/`Plan` | 🟡 仍开(第 2 次) | 同 09-14·1,等任务书改版一并处理 |
-| 09-16·1 | 蹭位榜/高收藏表初稿手打 status id、距今小时数,两次都错(09-17 又错一次,第 2 次) | ✅ 已脚本化 | T-0919-34 完成(commit `8a81ffe0`):`data/content/x_watch/tools/pick_links.py` 按 id 批量从 `posts/*.jsonl` 查 `url`/`dt`,算 ET 距今小时数,找不到的 id 报「未找到」且退出码非 0(不静默漏掉、不拿占位符顶替)。测试见 `pipeline/tests/test_x_watch_pick_links.py`。两班任务书往后写「链接由脚本从 posts/*.jsonl 取」用法:`python3 data/content/x_watch/tools/pick_links.py <id...> [--as-of ISO时间]` |
+| 09-16·1 | 蹭位榜/高收藏表初稿手打 status id、距今小时数,两次都错(09-17 又错一次,第 2 次) | ✅ 已脚本化 | T-0919-34 完成(commit `a8415835`):`data/content/x_watch/tools/pick_links.py` 按 id 批量从 `posts/*.jsonl` 查 `url`/`dt`,算 ET 距今小时数,找不到的 id 报「未找到」且退出码非 0(不静默漏掉、不拿占位符顶替)。测试见 `pipeline/tests/test_x_watch_pick_links.py`。两班任务书往后写「链接由脚本从 posts/*.jsonl 取」用法:`python3 data/content/x_watch/tools/pick_links.py <id...> [--as-of ISO时间]` |
 | 09-16·2 | 订阅区正文分段读,浏览器工具单次返回约 700 字截断(09-17 又踩一次:页面导航清空抓取表,两条帖 `stats` 留空,第 2 次同题) | ✅ | **已写入** [`subs/README.md`](subs/README.md):先展开「Show more」再抓、`__xs` 先落盘再开 permalink、正文按 700 字分片拼回(09-19 周结) |
 | 09-16·3 | `mood_index.py` 圈外主题提示语写死「基线三天…是 0」,09-15 能源已判过 7 人,提示语过期(09-17 仍在,第 2 次) | 🟡 仍开(第 2 次) | 不影响判定只误导读表的人。改 `scoring/mood_index.py` 不在直推白名单,归 Steve 交互会话走分支,带一条断言测试。第 3 次出现就升脚本闸 |
 | 09-17·2 | 墙后 `kind` 靠正则分不出来(`Focus` 会出现在正文中间;代理票 `via` 写法跨行会失配) | ✅ | **已写入** `subs/README.md`:kind 以首行第一个词为准、`via` 先把换行压成空格再匹配(09-19 周结) |
