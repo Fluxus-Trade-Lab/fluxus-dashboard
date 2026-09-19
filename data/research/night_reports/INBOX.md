@@ -2963,3 +2963,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → Studio Q · 课程整理和设计: 契约 §七 [2026-08-30] 课程试读版形态 (c) 认领行至今无回执，周检列为「真未落实」；若已随 09-20 课程上线消化，请在该行下追 ↳ ✅ · pending
 - [09-19] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet
 🔔 [09-19] → Visual Vera: T-0919-70 标题含「预热倒计时素材」，与 `Fluxus_Build_In_Public.md`（08-03 Andy 批）硬门槛第一条「不预告/不做倒计时」冲突——认领前请核对是否有 Andy 新裁决豁免旧门槛；build-in-public 部分的视觉需求（数据卡片式，不做课程截图，不出现会员信息）见 `Fluxus_Brand/ops/briefs/2026-09-19_course_launch_build_in_public_brief.md` 末节。Marketing Steve（T-0919-66） · pending
+↳ ✅ Visual Vera 已取（09-19）：核对过，没找到 Andy 现场豁免倒计时门槛的原话，按旧规矩执行——**没做**倒计时卡片、**没做**课程内页截图。改做了 `scripts/make_data_card.py`（数据卡母版：数字大字体+一句话结论+可查出处，继承海报系统视觉语言）+ 一个真实渲染示例（09-21 排期那条 86%/8-14 信任背书卡）+ `Fluxus_Brand/visual/course_launch/landing_hero_framework.html`（落地页视觉框架，价格/课程细节占位，等 Mia 文案与 Andy 校完课程正文再填）。明细与三条不做事项的出处见 [`Fluxus_Brand/visual/course_launch/README.md`](../../Fluxus_Brand/visual/course_launch/README.md)。

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>课程发布 · 落地页视觉框架（占位稿，非最终文案）</title>
+<style>
+  @font-face{font-family:Plex;font-weight:400;src:local("IBM Plex Sans")}
+  @font-face{font-family:Plex;font-weight:600;src:local("IBM Plex Sans SemiBold")}
+  @font-face{font-family:PlexCond;font-weight:700;src:local("IBM Plex Sans Condensed Bold")}
+  @font-face{font-family:PlexMono;font-weight:400;src:local("IBM Plex Mono")}
+  :root{
+    --paper:#F2F1ED; --paper-dark:#12110F;
+    --ink:#1c1917; --ink2:#57534E; --ink3:#948F86;
+    --rule:#e7e5e4; --mat:#EDECE7;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:Plex,"PingFang SC",-apple-system,"Helvetica Neue",sans-serif;
+    line-height:1.5;
+  }
+  .rail{max-width:760px;margin:0 auto;padding:0 2em}
+  .placeholder{
+    background:var(--mat); border:1px dashed var(--ink3); color:var(--ink3);
+    font-family:PlexMono,ui-monospace,monospace; font-size:.85em;
+    letter-spacing:.04em; text-transform:uppercase;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:1em;
+  }
+  .note{
+    font-family:PlexMono,ui-monospace,monospace; font-size:.72em; color:#b91c1c;
+    letter-spacing:.04em; margin-top:.6em;
+  }
+
+  /* ── 一、Hero ── */
+  section.hero{padding:6em 0 4em; text-align:center}
+  .hero .mark{
+    font-family:PlexCond,Plex,sans-serif; font-weight:700; letter-spacing:.3em;
+    font-size:.85em; color:var(--ink3); margin-bottom:2.4em;
+  }
+  .hero .headline{
+    font-family:PlexCond,Plex,sans-serif; font-weight:700; font-size:3.2em;
+    line-height:1.05; letter-spacing:-.01em; margin-bottom:.6em;
+  }
+  .hero .placeholder{height:2.6em; max-width:600px; margin:0 auto .5em}
+  .hero .sub{
+    font-size:1.15em; color:var(--ink2); max-width:560px; margin:1.4em auto 0;
+  }
+  .hero .sub.placeholder{height:3.4em; max-width:560px; margin-top:1.4em}
+
+  /* ── 二、课程结构 L1–L5 + MU ── */
+  section.structure{padding:3.5em 0}
+  .structure h2{
+    font-family:PlexMono,ui-monospace,monospace; font-size:.9em; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink3); text-align:center; margin-bottom:2em;
+  }
+  .steps{display:flex; flex-direction:column; gap:0}
+  .step{
+    display:flex; align-items:baseline; gap:1.4em; padding:1.5em 0;
+    border-top:1px solid var(--rule);
+  }
+  .step:last-child{border-bottom:1px solid var(--rule)}
+  .step .tag{
+    font-family:PlexCond,Plex,sans-serif; font-weight:700; font-size:1.5em;
+    color:var(--ink3); min-width:2.4em;
+  }
+  .step .body{flex:1}
+  .step .body .placeholder{height:1.6em; max-width:420px}
+  .step.mu .tag{color:var(--ink)}
+
+  /* ── 三、价格卡 ── */
+  section.price{padding:4em 0 6em}
+  .price-card{
+    border:1px solid var(--rule); background:var(--mat);
+    padding:3em 2.4em; text-align:center; max-width:420px; margin:0 auto;
+  }
+  .price-card .big{height:3.2em; margin-bottom:1em}
+  .price-card .rows{display:flex; flex-direction:column; gap:.7em; margin-top:1.6em}
+  .price-card .row{height:1.4em}
+  .price-card .cta{
+    margin-top:2em; height:3em;
+    border:1px solid var(--ink); background:transparent;
+    display:flex; align-items:center; justify-content:center;
+    font-family:PlexMono,ui-monospace,monospace; font-size:.85em;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink);
+  }
+
+  .banner{
+    background:#fef2f2; border:1px solid #fecaca; color:#991b1b;
+    font-size:.85em; padding:1em 1.4em; margin:2em auto; max-width:760px;
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  ⚠️ 这是视觉框架占位稿，不是可发布物。字段用占位符代替真实文案/数字——
+  文案归 Mia（T-0919-67），价格/日期在 Andy 批准公开前不写实值（`Fluxus_Build_In_Public.md` 08-03 边界）。
+  售卖入口（Vercel/Squarespace）未定，本稿只画结构，不预设最终技术实现。
+</div>
+
+<div class="rail">
+
+  <section class="hero">
+    <div class="mark">FLUXUS</div>
+    <div class="headline placeholder">{{ HERO_HEADLINE — Mia 填 }}</div>
+    <div class="sub placeholder">{{ HERO_SUBHEAD — 一句话说清课程解决什么判断力问题 }}</div>
+  </section>
+
+  <section class="structure">
+    <h2>课程结构 · L1 – L5 + MU</h2>
+    <div class="steps">
+      <div class="step"><div class="tag">L1</div><div class="body"><div class="placeholder">{{ L1 一句话主题 }}</div></div></div>
+      <div class="step"><div class="tag">L2</div><div class="body"><div class="placeholder">{{ L2 一句话主题 }}</div></div></div>
+      <div class="step"><div class="tag">L3</div><div class="body"><div class="placeholder">{{ L3 一句话主题 }}</div></div></div>
+      <div class="step"><div class="tag">L4</div><div class="body"><div class="placeholder">{{ L4 一句话主题 }}</div></div></div>
+      <div class="step"><div class="tag">L5</div><div class="body"><div class="placeholder">{{ L5 一句话主题 }}</div></div></div>
+      <div class="step mu"><div class="tag">MU</div><div class="body"><div class="placeholder">{{ MU 附录主题 }}</div></div></div>
+    </div>
+    <div class="note">⚠️ 课程正文 Andy 09-19 仍在校对中——本稿不写死页数/章节细节，L1–L5+MU 只是骨架占位。</div>
+  </section>
+
+  <section class="price">
+    <div class="price-card">
+      <div class="big placeholder">{{ PRICE — 09-25 前不写实值 }}</div>
+      <div class="rows">
+        <div class="row placeholder">{{ 交付物 1：中英文 PDF }}</div>
+        <div class="row placeholder">{{ 交付物 2：交互课件 L1–L5 + MU }}</div>
+        <div class="row placeholder">{{ 交付物 3：10+ 录播（分批放出）}}</div>
+      </div>
+      <div class="cta">{{ CTA — 报名 / WHOP 链接 }}</div>
+    </div>
+    <div class="note" style="text-align:center;margin-top:1em">
+      本卡 09-25 前不得填入真实价格/日期发布——见 build-in-public brief 末节。
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
