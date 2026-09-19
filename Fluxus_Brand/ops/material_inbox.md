@@ -199,7 +199,9 @@
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 > 判据仍是 `↳ ✅`，不是所在节。
 
-- [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证，无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
+- [2026-09-16] [Marketing Steve] **Andy 首发艺术类配图推文**。09-16 「自省过度交易冲动/FOMC盘面」长推配 Nam June Paik《TV Buddha》——艺术与交易心理的首次跨界。样本=1；后续复读表现可作基线对比。出处 data/content/posts.csv · data/content/today_draft.md
+
+- [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证、无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
 
 - 2026-08-30 · OPS(蒸馏厂) · **总纲金句(Andy 原生英文,已批入体系)**:"Day trade your entry, swing trade your trim, position trade your winner." 一句装下入场(日内精度换仓位杠杆)/持仓(动能确认后沿趋势减)/赢家(position 级拿住)三段。标题级资产:课程章节/Substack/X 均可用。出处 FluxusTrading_Obsidian 总纲卡+访谈 round2 原话
   ↳ ⏸ 08-30 W5 收割时**不做成推文**：它是标题级资产，拿去当一条推就消耗掉了。建议去处 **#002 的 DIAL 或课程章节标题**。
