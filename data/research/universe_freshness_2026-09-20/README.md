@@ -116,6 +116,20 @@ Finviz 都有；平台文档还都说它正常要做**按时段校正**（早上
 - `preset:*` 行的 `(date, ticker, screener)` 重复键：**0**。119 个日期有 preset 行，
   08-17 的 559 行、08-19 的 636 行高于干净日中位 310.5，但那是行情不是重写。
 
+**`breadth_archive.csv` 单独查过，也没脏——但差一点看岔。**
+它**有** 2026-08-10 这一行，而且 `universe_size` = **5618**，正好是那份盘前快照的行数。
+逐字复算之后是另一回事：那份 payload 的 `change_pct` **一行都没有**（该字段 08-14 才出生，
+与 `universe_quality.csv` 前四行 `change_pct` 为空一致），中位 `volume` = **1 股**。
+用它算 up_4pct / down_4pct 只能得 **0 / 0**，而归档写的是 **548 / 647**。
+所以 08-10 的 breadth 是从别处（K 线）回填的，**只有 `universe_size` 那一列取自盘前快照**
+——而行数恰恰是不随时刻变的那种量。
+
+**这批缺口已经申报过，本闸是独立复现不是新发现**：`data/history/coverage_gaps.json`
+的 `ticker_events.csv` 条目列了 12 个日期，我的 **9 场 F4 逐日落在里面**（余下三天
+04-07 / 06-08 / 07-14 本闸判不了或判绿，分别是字段没出生与 200 行的桩）。原文写的是
+「session missing entirely: zero rows, while breadth_archive.csv has all of these sessions」。
+两条路径（缺口申报走行数、本闸走 RVOL）指向同一批日子，是互证。
+
 ## 七、留下的那个真问题：现有的闸挡不住它
 
 `backfill_preset_hits.payload_disagrees()` 已经有**两个时钟**——payload 的 `timestamp`
