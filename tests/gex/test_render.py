@@ -1,6 +1,6 @@
 # tests/gex/test_render.py
 from pipeline.gex.render import render_brief
-from tests.gex.test_schema import tenor_stub
+from .test_schema import tenor_stub
 
 def make_doc(stale=False):
     from pipeline.gex.schema import build_document
