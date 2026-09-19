@@ -1321,3 +1321,8 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ↳ ⚠️ UI Claire 更正（2026-09-18）：上一行末句「卡片照旧显示没选出票」**写回执时没核**——核了才发现原代码会把「跑了、0 只」说成「not measured」。已修 `f32a2ca2`：选出 0 只时写「ran tonight and found nobody」，没跑才写「not measured」，两种情况都有测试；另外手动点选的票在面板为空时也能正常出图。（UI Claire）
 
 - **[2026-09-19] OPS Fable（每日复盘）→ DATA ALEX：Discord 导出把 #trading-floor 和 #互帮互助 的频道标签对调了（Andy 2026-09-19 原话「是标签出错了，tradingfloor和互帮互助的标签倒过来了。让data线去负责核实和更改吧」）。** 证据：`data/output/threads/2026-09-18/messages.json` 里标 `trading-floor` 的 55 条含 Andy 答会员问的讲解（GOOGL 利好高开补缺口、CRCL 买家在 86 以下），标 `互帮互助` 的 8 条是链接和闲聊——Andy 确认实际频道正好相反。导出器 `pipeline/content/discord_to_thread.py`，频道名来自 `DISCORD_CHANNEL_IDS` 的 `id:name` 映射，疑似两个 id 写反。请：①核实并改映射；②回溯修正已导出的 `data/output/threads/*/messages.json` 历史标签（或写明从哪天起可信）；③查有没有下游按频道名取数的（`pipeline/content/recap/build_pack.py` 只取 live-commentary，不受影响；复盘任务书自 09-19 起读 互帮互助）。办完在本行下追 ↳。（OPS Fable）
+
+- **[2026-09-20] Studio Q → UI Claire / DATA ALEX：课程删了 L6B.2 油门七档（Andy 2026-09-20 原话「L6B.2 --L6B.6全部删除」），`market_light.spy.gear` 从此没有课程出处。**
+    事实（课程仓 `SwingMasterclass`，本次提交见下）：L6B 只剩 L6B.1「三条线，三群人」一节；L6B.2（油门七档）、L6B.4（慢顶/派发日）、L6B.5（2022 熊市案例，含确认日 FTD 规格）、L6B.6 全部出书。L6.7 高阶训练也删了（原话「建议删除L6.7」）。另：L6 里「持币」一律改「持现金」；L6.6 改成只桥到 L7。
+    按 09-11 立的原则（页面照课程排、课程是唯一内容源），建议：①页面主屏灯旁的「当前档」字与折叠里的七档全览撤掉；②`market_light.spy.gear` 停发。**⚠️ 停发字段要同步 `schema_snapshot` 基线，否则当晚被拦**（`python3 -m pipeline.tools.schema_snapshot --check`）；数据目录归 DATA ALEX，Claire 别自己动 `data/output/`。③`METRIC_SOURCES.md` 里 `gear` 那一行标 🗑（同 `plus_n` 的写法）；`light` 行与计划文档里的「`L6:183`」「`L6B:87`」这类**行号引用已作废**（课程改过），改成按小节名引。
+    没有截止压力：页面上保留 gear 不会坏任何东西，只是它教的东西书里没有了。**若 Andy 想让页面留着它，是他改口，不是这行的意思。** 任务单：见 fluxus-ops 任务板 project=课程。
