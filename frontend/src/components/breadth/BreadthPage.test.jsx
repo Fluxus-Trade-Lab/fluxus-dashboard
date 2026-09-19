@@ -80,9 +80,11 @@ describe('BreadthPage — in the course\'s order (09-11)', () => {
     expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
     expect(screen.getByText('in-between: counts as red')).toBeInTheDocument()
     expect(screen.getByText(/the course says skip this step today/)).toBeInTheDocument()
-    expect(screen.getByText('7 / 7')).toBeInTheDocument()
     // the trend-day count is off the main screen (course marks it for deletion)
     expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
+    // L6B.2 (the seven-gear throttle) left the course on 09-20 — Andy: 「L6B.2 --L6B.6全部删除」 — and left the page with it
+    expect(screen.queryByText('7 / 7')).not.toBeInTheDocument()
+    expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 
@@ -245,13 +247,15 @@ describe('deleted content is back, in the folds', () => {
 describe('the course read on DATA ALEX\'s real market_light.json', () => {
   const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
 
-  it('draws the light, the count, the gear and the call from the real file', async () => {
+  it('draws the light and the call from the real file', async () => {
     withFetch({ market_light: real })
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
     // the trend-day count left the course (Andy 09-11 「ok删除」) and the page with it
     expect(screen.queryByText('Trend-day count')).not.toBeInTheDocument()
-    expect(screen.getByText(`${real.spy.gear.n} / 7`)).toBeInTheDocument()
+    // the gear left the course too (Andy 09-20 「L6B.2 --L6B.6全部删除」) and the page with it
+    expect(screen.queryByText(`${real.spy.gear.n} / 7`)).not.toBeInTheDocument()
+    expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
     // Q1 is shown but does not vote (Studio Q 09-13); only Q2 carries `provisional`

@@ -87,7 +87,6 @@ export default function BreadthPage({ data }) {
         <p>
           Read top to bottom, the way Lesson 16 reads the morning. <b>Step 1</b> is Lesson 6&rsquo;s traffic
           light: three checks on SPY&rsquo;s 10- and 20-day lines — all three yes is green, anything else is red.
-          Beside it, Lesson 6B&rsquo;s gear: which of the seven throttle positions SPY is in against its 21 EMA.
         </p>
         <p>
           <b>Step 2</b> is Lesson 7&rsquo;s brightness — only read when the light is green: how many quality

@@ -5,9 +5,11 @@
  *
  *   Verdict   one word — FULL / DIM / AVOID. Aggression, never direction:
  *             "the course never outputs a direction call" (§五.2).
- *   Step 1    Lesson 6's light: SPY daily, three checks, and beside it
- *             Lesson 6B's gear. (The trend-day count that once sat here was
- *             removed from the course on 09-11 — Andy: 「ok删除」 — and from the page.)
+ *   Step 1    Lesson 6's light: SPY daily, three checks. (The trend-day count
+ *             that once sat here was removed from the course on 09-11 — Andy:
+ *             「ok删除」 — and from the page. Lesson 6B's gear sat beside it until
+ *             the course dropped L6B.2 on 09-20 — Andy: 「L6B.2 --L6B.6全部删除」
+ *             — and left with it, §七 2026-09-20.)
  *   Step 2    Lesson 7's brightness: setups, leaders, breadth. On a red light
  *             the course says skip it (L7.2 step 1); Andy chose to keep it
  *             visible but faded, so the reader can see WHY not — e.g. leaders
@@ -164,58 +166,46 @@ export function LightStep({ ml }) {
   return (
     <Card title="Step 1 · The light" aside={`Lesson 6 · SPY 10 / 20 ${ma}`}>
       {!spy?.checks ? <NotMeasured what="The light" /> : (
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_240px] gap-5">
-          <div>
-            <div className="space-y-2">
-              {spy.checks.map((c) => (
-                <div key={c.key} className="grid grid-cols-[26px_1fr_auto] gap-2.5 items-center text-[13px]">
-                  <span className={`w-[22px] h-[22px] rounded-md grid place-items-center text-[13px] font-bold font-mono ${c.pass
-                    ? 'bg-[var(--color-took)] text-[var(--color-surface)]'
-                    : 'border-[1.5px] border-[var(--color-refused)] text-[var(--color-refused)] bg-[var(--color-v2-off)]'}`}
-                        aria-label={c.pass ? 'yes' : 'no'}>{c.pass ? '✓' : '✗'}</span>
-                  <span className="text-[var(--color-text)]">{CHECK_LABEL[c.key]?.(ma) ?? c.key}</span>
-                  <span className="font-mono text-[var(--color-text-secondary)]">
-                    {c.key === 'fast_above_slow'
-                      ? `${c.a > c.b ? '+' : ''}${fmt(c.a - c.b, 3)}`
-                      : `${c.a - c.b > 0 ? '+' : ''}${fmt(c.a - c.b)} on the day`}
-                  </span>
-                </div>
-              ))}
-              <div className="grid grid-cols-[26px_1fr_auto] gap-2.5 items-center text-[13px]">
-                <span />
-                <span className="font-semibold text-[var(--color-text)]">
-                  {spy.light === 'green' ? 'Green' : 'Red'} — {spy.checks_passed}/3
-                </span>
-                <span className="font-mono text-[var(--color-text-muted)]">
-                  {spy.checks_passed > 0 && spy.checks_passed < 3 ? 'in-between: counts as red' : ''}
+        <div>
+          <div className="space-y-2">
+            {spy.checks.map((c) => (
+              <div key={c.key} className="grid grid-cols-[26px_1fr_auto] gap-2.5 items-center text-[13px]">
+                <span className={`w-[22px] h-[22px] rounded-md grid place-items-center text-[13px] font-bold font-mono ${c.pass
+                  ? 'bg-[var(--color-took)] text-[var(--color-surface)]'
+                  : 'border-[1.5px] border-[var(--color-refused)] text-[var(--color-refused)] bg-[var(--color-v2-off)]'}`}
+                      aria-label={c.pass ? 'yes' : 'no'}>{c.pass ? '✓' : '✗'}</span>
+                <span className="text-[var(--color-text)]">{CHECK_LABEL[c.key]?.(ma) ?? c.key}</span>
+                <span className="font-mono text-[var(--color-text-secondary)]">
+                  {c.key === 'fast_above_slow'
+                    ? `${c.a > c.b ? '+' : ''}${fmt(c.a - c.b, 3)}`
+                    : `${c.a - c.b > 0 ? '+' : ''}${fmt(c.a - c.b)} on the day`}
                 </span>
               </div>
+            ))}
+            <div className="grid grid-cols-[26px_1fr_auto] gap-2.5 items-center text-[13px]">
+              <span />
+              <span className="font-semibold text-[var(--color-text)]">
+                {spy.light === 'green' ? 'Green' : 'Red'} — {spy.checks_passed}/3
+              </span>
+              <span className="font-mono text-[var(--color-text-muted)]">
+                {spy.checks_passed > 0 && spy.checks_passed < 3 ? 'in-between: counts as red' : ''}
+              </span>
             </div>
-            <div className="mt-4"><LightChart history={spy.history} /></div>
-            <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-              <b className="font-semibold text-[var(--color-text-secondary)]">Method:</b> 10 / 20 {ma}, &ldquo;rising&rdquo; = today above
-              yesterday — the course&rsquo;s method since Andy ruled EMA on 09-11. The gear reads the 21 EMA.
-            </p>
-            <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-              SPY close (thin grey) with the 10 {ma} (ink) and 20 {ma} (dashed). Strip: each session&rsquo;s light —
-              blue = all three checks yes, red = all three no, hatched = the in-between days, which the course counts as red.
-            </p>
           </div>
-          <div className="lg:border-l lg:border-[var(--color-border-light)] lg:pl-5 space-y-4">
-            <div>
-              <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Gear · Lesson 6B</div>
-              <div className="text-[38px] leading-none font-bold mt-1 tabular-nums text-[var(--color-text)]"
-                   style={{ fontFamily: 'var(--font-cond)' }}>
-                {spy.gear?.n == null ? '—' : `${spy.gear.n} / 7`}
-              </div>
-              <div className="text-[13px] text-[var(--color-text-secondary)] first-letter:uppercase">{spy.gear?.label ?? 'not measured'}</div>
-            </div>
-            {ml?.qqq?.light && (
-              <p className="m-0 text-[11px] text-[var(--color-text-muted)]">
-                QQQ side lamp: {ml.qqq.light} ({ml.qqq.checks_passed}/3) — not part of the call; the course&rsquo;s light is SPY.
-              </p>
-            )}
-          </div>
+          <div className="mt-4"><LightChart history={spy.history} /></div>
+          <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+            <b className="font-semibold text-[var(--color-text-secondary)]">Method:</b> 10 / 20 {ma}, &ldquo;rising&rdquo; = today above
+            yesterday — the course&rsquo;s method since Andy ruled EMA on 09-11.
+          </p>
+          <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+            SPY close (thin grey) with the 10 {ma} (ink) and 20 {ma} (dashed). Strip: each session&rsquo;s light —
+            blue = all three checks yes, red = all three no, hatched = the in-between days, which the course counts as red.
+          </p>
+          {ml?.qqq?.light && (
+            <p className="m-0 mt-2 text-[11px] text-[var(--color-text-muted)]">
+              QQQ side lamp: {ml.qqq.light} ({ml.qqq.checks_passed}/3) — not part of the call; the course&rsquo;s light is SPY.
+            </p>
+          )}
         </div>
       )}
     </Card>
