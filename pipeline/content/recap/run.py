@@ -102,7 +102,8 @@ def cmd_fetch(a) -> int:
 def merged_options(contents: dict) -> list[dict]:
     en = {o["key"]: o for o in contents["EN"]["education"]["options"]}
     zh = {o["key"]: o for o in contents["ZH"]["education"]["options"]}
-    return [{"key": k, "concept": en[k].get("concept") or zh[k].get("concept"), "title_en": en[k]["title"], "title_zh": zh[k]["title"]}
+    return [{"key": k, "concept": en[k].get("concept") or zh[k].get("concept"), "title_en": en[k]["title"], "title_zh": zh[k]["title"],
+             "picked_by_andy": en[k].get("picked_by_andy") or zh[k].get("picked_by_andy")}
             for k in sorted(set(en) & set(zh))]
 
 

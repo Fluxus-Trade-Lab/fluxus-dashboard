@@ -6,6 +6,9 @@ R1 · education topics — a new issue's A and B are compared with the local top
        the last 20 sessions before the issue. The 8 topics spec §5 lists as already used carry no
        date and always count as recent. A weekly issue's A may not share a concept with any daily A
        of the same week.
+     An option carrying `picked_by_andy` (his words, verbatim) is exempt: the topic is his call
+     (Andy 2026-09-19「新的教育选题 用 neWS FailIure，我在discord里面讲过了」); R1 stops the machine
+     from repeating itself, not him from choosing.
 R2 · same-week text — rules 1–6, rule 7 minus its fixed opening, every "next session" item and the
      Big Picture's first sentence are compared item by item with the issues already written this ISO
      week (Monday on): red at ≥ 0.75 similarity between dailies, ≥ 0.85 when a weekly is involved
@@ -95,6 +98,8 @@ def sessions_between(a: str, b: str) -> int:
 def r1(issue: str, date: str, weekly: bool, options: list[dict], ledger: list[dict], week_dates: list[str] = ()) -> list[dict]:
     hits = []
     for opt in options:
+        if opt.get("picked_by_andy"):
+            continue
         for ent in ledger:
             if ent.get("issue") == issue:
                 continue

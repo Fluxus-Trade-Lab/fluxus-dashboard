@@ -318,6 +318,44 @@ def weekly_close(lang):
     return c.svg(T[4])
 
 
+def news_failure(lang):
+    T = {"EN": ["BAD NEWS", "GOOD NEWS", "gap down on the headline", "no lower low", "back over the pre-news close",
+                "gap up on the headline", "gap filled", "buyers sat lower"],
+         "ZH": ["利空", "利好", "消息一出跳空低开", "没有更低的低点", "收回消息前的收盘价",
+                "消息一出跳空高开", "缺口补掉", "买盘在下面"]}[lang]
+    # left: bad news fails to push price lower
+    xl = [4, 8, 12, 16, 20, 23, 27, 31, 35, 39, 43]
+    yl = [38, 39.5, 37.8, 39.2, 38.6, 31.5, 32.4, 34.8, 37.2, 40.1, 42.6]
+    gl = 5
+    pre_l = yl[gl - 1]
+    assert yl[gl] < pre_l - 4, "left: gaps down on the news"
+    assert min(yl[gl + 1:]) >= yl[gl], "left: no lower low after the gap"
+    assert yl[-1] > pre_l, "left: closes back over the pre-news price"
+    # right: good news fails to lift price
+    xr = [56, 60, 64, 68, 72, 75, 79, 83, 87, 91, 95]
+    yr = [36, 37.6, 36.9, 38.4, 38.0, 45.2, 43.6, 41.2, 38.9, 36.8, 35.4]
+    gr = 5
+    pre_r = yr[gr - 1]
+    assert yr[gr] > pre_r + 4, "right: gaps up on the news"
+    fill = next(i for i in range(gr + 1, len(yr)) if yr[i] < pre_r)
+    assert all(y < pre_r for y in yr[fill:]), "right: gap filled and stays filled"
+    c = Canvas(ylim=(24, 54))
+    c.vline(50, "guide")
+    c.hline(pre_l, "guide", 2, 46)
+    c.hline(pre_r, "guide", 54, 98)
+    c.path(xl, yl, "trend")
+    c.path(xr, yr, "trend")
+    c.text(4, 51, T[0], "small")
+    c.text(56, 51, T[1], "small")
+    c.callout(xl[gl], yl[gl], xl[gl] - 1, 26.5, T[2], "lab-dn")
+    c.callout(xl[gl + 2], yl[gl + 2], xl[gl + 2] + 6, 28.5, T[3])
+    c.callout(xl[-1], yl[-1], xl[-1] - 12, 48, T[4], "lab-up")
+    c.callout(xr[gr], yr[gr], xr[gr] - 10, 50, T[5], "lab-up")
+    c.callout(xr[fill], yr[fill], xr[fill] + 4, 29, T[6], "lab-dn")
+    c.text(97, 25.5, T[7], "small", "end")
+    return c.svg(T[3])
+
+
 FIGS = {
     "left_side_of_v": left_side_of_v,
     "rs_before_price": rs_before_price,
@@ -329,4 +367,5 @@ FIGS = {
     "low_vix_not_risk_on": low_vix_not_risk_on,
     "open_equals_high": open_equals_high,
     "weekly_close": weekly_close,
+    "news_failure": news_failure,
 }

@@ -74,6 +74,7 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
 - `concept` is a short English tag, identical in EN and ZH files; it is what the topic ledger stores.
 - `figure` names a builder in `visual_figs.FIGS`; a new concept needs a new builder whose asserts encode
   spec §5's three checks. `concept` and `figure` are usually the same string.
+- `picked_by_andy` (optional, per option): Andy's words, verbatim, when he names the topic himself. R1 skips that option — topic choice is his (Andy 2026-09-19「新的教育选题 用 neWS FailIure」). Never set it on a machine-picked topic.
 - R1 turns red if A or B repeats a concept, or a title (≥ 0.6 similar), used in the last 20 sessions or
   among spec §5's eight topics; a weekly A may not repeat a concept used by a daily A of the same week.
 - Member PDFs show only the chosen option's title, body and figure. The topic cards and reasons appear

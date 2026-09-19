@@ -28,6 +28,13 @@ def test_r1_red_on_a_spec_concept(ledger):
     assert hits and hits[0]["why"] == ["concept"]
 
 
+def test_r1_exempts_only_the_option_andy_picked(ledger):
+    picked = dict(opt("A", "news_failure", "News Failure", "利空失灵"), picked_by_andy="新的教育选题 用 neWS FailIure")
+    other = opt("B", "vcp", "Coils", "收缩")
+    hits = dd.r1("2026-09-18", "2026-09-18", False, [picked, other], dd.load_ledger(ledger))
+    assert [h["option"] for h in hits] == ["B"]
+
+
 def test_r1_red_on_a_similar_title_with_a_new_concept(ledger):
     hits = dd.r1("2026-09-15", "2026-09-15", False, [opt("B", "new_tag", "Failed Breakouts and Swing Failures", "别的")],
                  dd.load_ledger(ledger))
