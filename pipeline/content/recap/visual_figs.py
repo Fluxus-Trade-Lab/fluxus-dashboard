@@ -356,6 +356,122 @@ def news_failure(lang):
     return c.svg(T[3])
 
 
+def higher_low_higher_high(lang):
+    T = {"EN": ["support · rising lows", "higher high", "higher low", "lower low", "structure breaks"],
+         "ZH": ["支撑 · 低点抬高", "高点更高", "低点更高", "更低的低点", "结构被破坏"]}[lang]
+    xs = [4, 14, 24, 34, 44, 54, 64, 74, 84, 94]
+    ys = [10, 22, 16, 30, 20, 38, 14, 20, 12, 8]
+    hi, lo = (1, 3, 5), (0, 2, 4)
+    assert ys[hi[0]] < ys[hi[1]] < ys[hi[2]], "each high higher than the last"
+    assert ys[lo[0]] < ys[lo[1]] < ys[lo[2]], "each low higher than the last, while structure holds"
+    assert ys[6] < ys[lo[-1]], "the next swing undercuts the prior low"
+    m = (ys[lo[-1]] - ys[lo[0]]) / (xs[lo[-1]] - xs[lo[0]])
+    line = lambda x: ys[lo[0]] + m * (x - xs[lo[0]])
+    assert ys[6] < line(xs[6]) - 2, "price closes under the rising support line"
+    c = Canvas()
+    c.path([xs[0], xs[-1]], [line(xs[0]), line(xs[-1])], "guide")
+    c.path(xs, ys, "trend")
+    c.callout(xs[hi[2]], ys[hi[2]], xs[hi[2]] - 4, ys[hi[2]] + 12, T[1], "lab-up")
+    c.callout(xs[lo[1]], ys[lo[1]], xs[lo[1]] - 6, ys[lo[1]] - 10, T[2], "lab-up small")
+    c.callout(xs[6], ys[6], xs[6] + 6, 6, T[3], "lab-dn")
+    c.text(4, line(4) - 4, T[0], "small")
+    c.text(70, 44, T[4], "lab-dn small")
+    return c.svg(T[4])
+
+
+def three_tight_closes(lang):
+    T = {"EN": ["prior swing", "three closes within a tight range", "range", "breaks out on the fourth day", "pivot"],
+         "ZH": ["前一波", "三天收盘挤在窄幅内", "波动区间", "第四天突破", "突破位"]}[lang]
+    xs = [4, 14, 24, 34, 44, 52, 60, 68, 76, 84, 92, 97]
+    ys = [22, 30, 26, 32.5, 32.0, 32.8, 32.3, 40.0, 43.0, 46.5, 50.0, 53.0]
+    tight = ys[4:7]
+    rng = max(tight) - min(tight)
+    pivot = max(ys[:7])
+    assert rng < 1.5, "three closes sit inside a tight range"
+    assert ys[7] > pivot, "the fourth day breaks out above the range"
+    assert ys[-1] > ys[7], "price extends after the breakout"
+    c = Canvas(ylim=(15, 60))
+    c.hline(pivot, "lvl", xs[3], 100)
+    c.path(xs, ys, "trend")
+    c.text(4, 24, T[0], "small")
+    c.callout(xs[5], ys[5], xs[5] - 6, 20, T[1], "lab-acc")
+    c.text(xs[4] - 2, min(tight) - 3, T[2], "small")
+    c.callout(xs[7], ys[7], xs[7] + 8, 48, T[3], "lab-up")
+    c.text(90, pivot + 1.2, T[4], "small", "end")
+    return c.svg(T[3])
+
+
+def pocket_pivot(lang):
+    T = {"EN": ["base high", "biggest down-volume day", "pocket pivot: up-volume clears it",
+                "still under the high", "VOLUME"],
+         "ZH": ["箱体高点", "此前最大跌量日", "凹槽支点：涨量超过它", "仍在高点下方", "成交量"]}[lang]
+    HIGH = 44.0
+    px = _lin(4, 96, 12)
+    py = [36, 34.5, 37, 33.8, 38.2, 35.0, 39.5, 36.8, 41.0, 38.5, 42.6, 40.0]
+    vol = [6.0, 5.5, 6.2, 9.0, 5.0, 6.5, 5.2, 6.8, 5.4, 6.0, 9.8, 5.6]
+    down_days = [i for i in range(1, 10) if py[i] < py[i - 1]]
+    worst = max(down_days, key=lambda i: vol[i])
+    pp = 10
+    assert py[pp] > py[pp - 1], "the pocket pivot happens on an up day"
+    assert vol[pp] > vol[worst], "its volume clears the biggest down-volume day"
+    assert py[pp] < HIGH, "still trading under the base high, not a breakout yet"
+    c = Canvas(ylim=(0, 60))
+    c.hline(HIGH, "lvl")
+    for i, (x, v) in enumerate(zip(px, vol)):
+        c.rect(x - 2.4, 2, x + 2.4, 2 + v, "volbar hi" if i == pp else "volbar")
+    c.path(px, py, "trend")
+    c.text(2, HIGH + 1.2, T[0], "lab-acc")
+    c.callout(px[worst], 2 + vol[worst], px[worst] - 10, 24, T[1], "lab-dn")
+    c.callout(px[pp], 2 + vol[pp], px[pp] - 4, 30, T[2], "lab-up")
+    c.callout(px[pp], py[pp], px[pp] + 4, HIGH - 6, T[3])
+    c.text(2, 14, T[4], "small")
+    return c.svg(T[2])
+
+
+def false_breakdown_reclaim(lang):
+    T = {"EN": ["support", "undercuts it", "reclaims the very next bar", "rally follows"],
+         "ZH": ["支撑位", "跌破支撑", "下一根就收回", "随后展开反弹"]}[lang]
+    SUP = 33.0
+    xs = [4, 12, 20, 28, 36, 44, 50, 56, 64, 72, 80, 88, 96]
+    py = [44, 41, 38, 36, 34.5, 33.5, 29.5, 27.0, 35.5, 39, 42, 45, 48]
+    assert py[5] >= SUP, "still holding support before the shakeout"
+    assert py[6] < SUP and py[7] < SUP, "undercuts support for two bars"
+    assert py[8] > SUP, "reclaims support the very next bar"
+    assert py[-1] > py[8], "price rallies after the reclaim"
+    c = Canvas(ylim=(20, 54))
+    c.hline(SUP, "lvl", 2, 100)
+    c.path(xs, py, "trend")
+    c.text(2, SUP + 1.3, T[0], "small")
+    c.callout(xs[7], py[7], xs[7] - 2, 22, T[1], "lab-dn")
+    c.callout(xs[8], py[8], xs[8] + 8, 50, T[2], "lab-up")
+    c.text(90, 50, T[3], "lab-up small", "end")
+    return c.svg(T[2])
+
+
+def bearish_volume_divergence(lang):
+    T = {"EN": ["strong volume", "prior high", "higher high", "lighter volume", "VOLUME"],
+         "ZH": ["放量上攻", "前高", "更高的高点", "缩量", "成交量"]}[lang]
+    px = _lin(4, 96, 14)
+    py = [30, 34, 38, 36, 33, 37, 42, 46, 43, 40, 44, 48, 51, 47]
+    vol = [5.0, 8.5, 9.5, 4.0, 3.5, 6.0, 6.5, 7.0, 3.0, 2.8, 4.5, 4.0, 3.8, 3.0]
+    wave1_up, wave2_up = (1, 2), (5, 6, 7)
+    h1, h2 = py[2], py[7]
+    v1 = sum(vol[i] for i in wave1_up) / len(wave1_up)
+    v2 = sum(vol[i] for i in wave2_up) / len(wave2_up)
+    assert h2 > h1, "the second rally makes a higher high"
+    assert v2 < v1, "it does so on lighter volume than the first rally"
+    c = Canvas(ylim=(0, 60))
+    c.path(px, py, "trend")
+    for i, (x, v) in enumerate(zip(px, vol)):
+        c.rect(x - 2.4, 2, x + 2.4, 2 + v, "volbar hi" if i in wave1_up else "volbar")
+    c.text(px[1] - 2, 2 + vol[2] + 2.5, T[0], "small")
+    c.callout(px[2], py[2], px[2] - 8, py[2] + 11, T[1])
+    c.callout(px[7], py[7], px[7] + 4, py[7] + 8, T[2], "lab-dn")
+    c.text(px[6] - 2, 2 + vol[7] + 2.5, T[3], "lab-dn small")
+    c.text(2, 14, T[4], "small")
+    return c.svg(T[2])
+
+
 FIGS = {
     "left_side_of_v": left_side_of_v,
     "rs_before_price": rs_before_price,
@@ -368,4 +484,9 @@ FIGS = {
     "open_equals_high": open_equals_high,
     "weekly_close": weekly_close,
     "news_failure": news_failure,
+    "higher_low_higher_high": higher_low_higher_high,
+    "three_tight_closes": three_tight_closes,
+    "pocket_pivot": pocket_pivot,
+    "false_breakdown_reclaim": false_breakdown_reclaim,
+    "bearish_volume_divergence": bearish_volume_divergence,
 }
