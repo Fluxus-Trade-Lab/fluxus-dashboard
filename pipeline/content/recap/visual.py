@@ -25,6 +25,7 @@ import sys
 import time
 from collections import defaultdict
 from pathlib import Path
+from typing import Optional
 
 from pipeline.content.recap import pack_dir, month_dir
 from pipeline.content.recap.build_pack import csv_rows, show
@@ -217,6 +218,19 @@ def pick_edu(education: dict, key: str) -> dict:
             "options": [{"key": o["key"], "title": o["title"], "why": o.get("why", "")} for o in opts]}
 
 
+def book_out(bkk: dict, D: str) -> Optional[dict]:
+    """Render-time gate on the portfolio block: a stale T-day close must never
+    reach the page (09-16: pack.json printed 09-15's close as 09-16's, INBOX L2803)."""
+    if bkk.get("closes_stale"):
+        raise SystemExit(f"book closes_stale for {D}: T-day close missing for {bkk.get('stale_close')} — "
+                          f"rerun build_pack after the vendor publishes {D}'s bar, don't print a prior close as {D}'s")
+    if "open_names" not in bkk:
+        return None
+    return {"ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
+            "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
+            "pos": [[p["ticker"], p["direction"], p["entry_date"], p["open_R"]] for p in bkk["positions"]]}
+
+
 def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     weekly = "-W" in label
     D = week_sessions(label)[-1].isoformat() if weekly else label
@@ -296,11 +310,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
         b = pack["breadth"]["T"]
         out["state"] = {"env": verd["env"], "score": verd["score"], "cond": cond[-1]["score"],
                         "up4": b["up_4pct_stockbee"], "down4": b["down_4pct_stockbee"], "net": b["net_advances"]}
-    bkk = pack.get("book") or {}
-    out["book"] = None if "open_names" not in bkk else {
-        "ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
-        "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
-        "pos": [[p["ticker"], p["direction"], p["entry_date"], p["open_R"]] for p in bkk["positions"]]}
+    out["book"] = book_out(pack.get("book") or {}, D)
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
             "led", "lagged", "sentiment", "session_commentary", "tomorrow", "rules", "portfolio_note", "weekly_k_line", "labels")
     out["V"] = {}

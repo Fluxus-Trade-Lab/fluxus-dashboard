@@ -409,23 +409,44 @@ def founders_block(meta: dict, T: str, weekly_monday: Optional[str] = None) -> d
 
 
 # ------------------------------------------------------------------ Portfolio (R and % only)
-def _closes(tickers: list[str], T: str) -> dict[str, float]:
+def _last_close(rows: list[tuple[dt.date, float]], d: dt.date) -> tuple[Optional[float], bool]:
+    """rows: [(date, close), ...], any order, dates <= d only expected but not required.
+    Returns (close on-or-before d, is_stale). is_stale=True means the most recent
+    available date is before d — the vendor hasn't published d's bar yet, so the
+    caller must not print it as d's close (09-16: pack.json printed 09-15's close
+    as 09-16's, INBOX L2803)."""
+    prior = [r for r in rows if r[0] <= d]
+    if not prior:
+        return None, True
+    latest_date, latest_close = max(prior, key=lambda r: r[0])
+    return latest_close, latest_date != d
+
+
+def _closes(tickers: list[str], T: str) -> tuple[dict[str, float], list[str]]:
+    """(ticker -> close on T, tickers whose T-day bar is not published yet).
+    Stale tickers are never returned in the price dict — the caller must treat
+    them like a missing close, not fall back to a prior session silently."""
     if not tickers:
-        return {}
+        return {}, []
     import yfinance as yf
     d = dt.date.fromisoformat(T)
     df = yf.download(tickers, start=(d - dt.timedelta(days=10)).isoformat(),
                      end=(d + dt.timedelta(days=1)).isoformat(), auto_adjust=False,
                      progress=False, group_by="ticker")
-    out = {}
+    out, stale = {}, []
     for tk in tickers:
         try:
             s = (df[tk]["Close"] if len(tickers) > 1 else df["Close"]).dropna()
-            s = s[s.index.date <= d]
-            out[tk] = float(s.iloc[-1])
+            rows = [(ts.date(), float(v)) for ts, v in s.items()]
         except Exception:  # noqa: BLE001
-            pass
-    return out
+            stale.append(tk)
+            continue
+        px, is_stale = _last_close(rows, d)
+        if px is None or is_stale:
+            stale.append(tk)
+        else:
+            out[tk] = px
+    return out, stale
 
 
 def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
@@ -441,7 +462,7 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     live = [t for t in trades if t.entry_date <= d]
     open_ = [t for t in live if held_at(t) > 0]
     closed = [t for t in live if held_at(t) <= 0]
-    px = _closes(sorted({t.ticker for t in open_}), T)
+    px, stale_close = _closes(sorted({t.ticker for t in open_}), T)
     sgn = lambda t: 1.0 if t.direction == "long" else -1.0
 
     def realized_between(a: dt.date, b: dt.date) -> tuple[float, int]:
@@ -487,7 +508,10 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
         "realized_R_period": round(r_per, 2), "realized_legs_period": n_per,
         "realized_R_week_to_date": round(r_wtd, 2), "realized_legs_wtd": n_wtd,
         "positions": sorted(positions, key=lambda p: p["entry_date"]), "missing_close": missing_px,
+        "closes_stale": bool(stale_close),
     }
+    if stale_close:
+        out["stale_close"] = sorted(stale_close)
     if start_cap:
         equity = start_cap + realized_all + unreal
         out["return_pct"] = round((equity / start_cap - 1) * 100, 2)
