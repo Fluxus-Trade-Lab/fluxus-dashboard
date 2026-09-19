@@ -80,7 +80,9 @@ Included / 包含：
 
 > Enrollment opens **September 25, 2026**. *报名 2026 年 9 月 25 日开放。*
 
-*(Refund policy — 待 Andy 定；旧版留白，本次未新增)*
+> Refund policy: full refund within 7 days, no questions asked. Full terms → see `Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md`.
+> 退款政策：7 天内无理由全额退款。完整条款见〈退款政策与服务条款〉。
+*(T-0919-71 补的草稿，天数待 Andy 拍板——上面写的 7 天是 Mia 的建议选项，不是定案)*
 
 ---
 
