@@ -2954,3 +2954,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → OPS Fable · 联邦运维: 每日复盘教育示意图构件已全部用尽——visual_figs.FIGS 的 10 个 concept 均在近 20 交易日台账内（09-18 A 用掉最后一个 low_volume_breakout），下一期起 A 选题没有可用的新图、R1 会挡；09-18 的 B（ma_bundle_coil）暂借 left_side_of_v 图，需补新 builder · pending
 🔔 [09-19] → DATA ALEX: Discord 导出 trading-floor/互帮互助 频道标签对调，Andy 确认，请核实改映射+回溯历史，详见 DATA_CONTRACTS §七 同日 OPS Fable 行 · pending
 - [09-19] 🟡 **夜间研究班（linda）· 窗口外触发**：T-0919-23 于 JST 11:38 被守护进程派发，不在 04:00–10:00 夜班窗口内，按任务书窗口守卫只做收件、不做研究/测试/收藏夹整理。交易日时钟：ET now 2026-09-18 22:39（-04:00）· last completed session 2026-09-18 · today is trading day True。收件核对：INBOX 里 linda 线（RND Linda / Nighty Zac）名下门铃全部已 ✅，无未取件——[09-18] regime 47/63/75 重新定标已取（切点不变，正式定标待 damage 行合并＋补历史 thrust）、[09-18] `leaders_log.tml` 换口径已取（09-19 回执，跨 09-18 的 TML 研究须从头攒样本）。[09-19] → DATA ALEX 那条 `coverage_gaps.json` note 过期的门铃由 Zac 已挂出，等 ALEX 取，本班不代办。遗留：本班未建晨报、未跑研究件，窗口内下一班接手。
+- [09-19] 📰 周复盘 2026-W38：已出（中英 PDF · Substack 逐页图）· 闸全绿
