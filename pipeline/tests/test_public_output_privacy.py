@@ -63,6 +63,9 @@ ALLOWED_KEYS = [
     # A liquidity floor for the watchlist screen (min average dollar volume
     # traded in the stock by the whole market), not an account amount.
     ('data/output/watchlist.json', r'^\.gate\.min_dollar_volume$'),
+    # Stockbee's liquidity column: the stock's 20-day average dollar volume
+    # (whole market, close x volume) -- market data, not an account amount.
+    ('data/output/universe.json', r'\.sb_avg_dollar_vol_20$'),
 ]
 
 # Dollar totals and share counts hiding inside prose (the trade narrative said
