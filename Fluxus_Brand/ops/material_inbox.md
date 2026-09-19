@@ -520,3 +520,5 @@
 - [2026-09-19] [OPS] **分支堆积大扫除完成**：远端 33 条（09-16 前 61 条，一次削去 24 条已合并分支）。存活 5 条在 2 日内完成、25 条待清理已标记、3 条超期压在货架待裁决。worktree 整理机制确认可持续。出处 [data/research/repo_health/2026-09-19.md](../../../data/research/repo_health/2026-09-19.md) §一 · commit 49404348
 
 - [2026-09-19] [DATA] 蹭位榜候选闸判据 A/B 并排评测完成：15 日重合 38/38、发现判据 B 边界歧义（GOOGL 换人不换数个案，该日人选完全不重叠但总人数相同），见 data/content/x_watch/scoring/2026-09-19_candidate_rule_compare.md · pending
+
+- [2026-09-19] [OPS 工程 · 踩坑故事] **一条导入能破坏整个测试树，而 pytest 不会告诉你是哪一条。** 测试文件用了绝对导入 `from tests.gex.test_schema` 代替相对导入，collection 直接炸裂——符号级错误，全局影响范围。pytest 只说「collection 失败」，留给调试的是整棵树。修法就是一个点：写测试用相对导入 `from .module`，打破 pytest 的寻址链条。**可发角度**：测试基建里最不起眼的小习惯，能卡住整个持续集成；换句话说，一点导入规范=全栈稳定性。出处 `tests/gex/test_render.py` · commit `87db1543`
