@@ -70,6 +70,18 @@ def payload_disagrees(payload: Dict[str, Any], session: str) -> str | None:
     return None
 
 
+def payload_is_unfresh(payload: Dict[str, Any]) -> str | None:
+    """F1 (premarket) / F2 (avg_volume outage) per audit_universe_freshness, or
+    None. `payload_disagrees` catches F1 in practice (a premarket generation
+    timestamp resolves to the PRIOR session), but not F2 -- an avg_volume
+    outage leaves the timestamp and bar_date correct for the session, only the
+    per-row numbers are dead. This is the second, independent gate for that."""
+    from pipeline.tools.audit_universe_freshness import aggregate_rvol, classify
+    rows = payload.get('rows') or []
+    kind, why = classify(aggregate_rvol(rows), len(rows))
+    return f'{kind}: {why}' if kind in ('F1', 'F2') else None
+
+
 def merge_preset_rows(frame: pd.DataFrame, rows: List[Dict[str, Any]]) -> pd.DataFrame:
     """Replace `preset:*` rows for the dates in `rows`; keep everything else."""
     if not rows:
@@ -115,6 +127,11 @@ def main(argv: List[str] | None = None) -> int:
         why = payload_disagrees(payload, date)
         if why:
             skipped[f'snapshot is another session ({why})'] += 1
+            logger.warning('%s  %s: %s -- skipped', date, sha[:8], why)
+            continue
+        why = payload_is_unfresh(payload)
+        if why:
+            skipped[f'snapshot is unfresh ({why})'] += 1
             logger.warning('%s  %s: %s -- skipped', date, sha[:8], why)
             continue
         urows = payload.get('rows') or []

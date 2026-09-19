@@ -49,9 +49,31 @@ SHOW = ["market_cap", "avg_volume", "close", "adr_pct", "rs_1m", "rs_3m", "rs_li
         "sp_signal", "sp_setup", "sp_days", "atr_from_sma50"]
 
 
+def _load_payload(sha: str) -> dict:
+    raw = subprocess.run(["git", "show", f"{sha}:data/output/universe.json"],
+                         capture_output=True, text=True, check=True).stdout
+    return json.loads(raw)
+
+
+def pick_usable_commit(cands: list, payload_of) -> str | None:
+    """First sha (candidates ascending by time) whose universe.json is not an
+    F1 (premarket) or F2 (avg_volume outage) snapshot, per
+    `audit_universe_freshness.classify`. None when every candidate is bad --
+    the caller must not fall back to using one anyway."""
+    from pipeline.tools.audit_universe_freshness import aggregate_rvol, classify
+    for _, sha in cands:
+        rows = payload_of(sha).get("rows") or []
+        kind, why = classify(aggregate_rvol(rows), len(rows))
+        if kind in ("F1", "F2"):
+            log.warning("snapshot %s is %s (%s) -- skipping to the next candidate", sha, kind, why)
+            continue
+        return sha
+    return None
+
+
 def snapshot_commit(asof: str) -> str:
-    """The nightly universe.json commit closest after `asof` (the run that
-    carried that session's Finviz page)."""
+    """The nightly universe.json commit closest after `asof` that is actually
+    a completed session (the run that carried that session's Finviz page)."""
     # the cron runs 21:30 UTC after the close, so the snapshot that carries
     # `asof`'s bars is the first commit after asof 21:00Z -- not the first
     # commit on that calendar day (that one is the previous session's)
@@ -62,7 +84,11 @@ def snapshot_commit(asof: str) -> str:
     cands = [c for c in cands if c[0] >= f"{asof}T21:00:00+00:00"]
     if not cands:
         raise SystemExit(f"no universe.json commit on/after {asof}")
-    return sorted(cands)[0][1]
+    picked = pick_usable_commit(sorted(cands), _load_payload)
+    if picked is None:
+        raise SystemExit(f"no usable universe.json commit on/after {asof} "
+                          f"-- every candidate is F1/F2 (see audit_universe_freshness)")
+    return picked
 
 
 def load_snapshot(commit: str) -> pd.DataFrame:
