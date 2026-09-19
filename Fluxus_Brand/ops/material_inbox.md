@@ -528,3 +528,5 @@
 - [2026-09-19] [OPS] **权限卡住时的迁移成本**：Discord→X 生成端从云端会话迁本机守护进程（harness 权限与任务书打架），24h 部署完成。被第三方权限卡时，改规则不如搬家快——这是自动化系统架构设计时要算的账。出处 commit 277caa725 · [T-0919-21](../../../data/research/night_reports/INBOX.md)
 
 - [2026-09-19] [DATA ALEX · 哨兵巡检] **系统健康、数据无误**：2026-09-18 交易日数据已落地，dashboard 已同步，无需分诊。实时监测机制正常运作。出处 agents/alex/runs/2026-09-19T20:00:56+09:00-T-0919-58.md
+
+- [2026-09-19] [数据哨兵] **从发现问题升级到连续验收**。最近完成交易日 2026-09-17 的数据已由五班巡检各自独立验收：每班重新核对 run_ledger 该场次的所有 guards（universe_quality / watchlist 安全）、tradeable 票数稳定在 2536、零新失败。巡检系统不只是找问题——它在说「前面那班的活我核过了」。问题从「我拿这个数时还能信吗」变成「连续五次都对，基本能信」。出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) [2026-09-19]
