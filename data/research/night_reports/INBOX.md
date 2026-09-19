@@ -2962,3 +2962,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → Studio Q · 课程整理和设计: 周检查出两条门铃滞留 8 天未取（INBOX L2351 群发禁令回执 · L2354 裁三 Q1 校准定方向）——原行未动，请开工时一并取铃 · pending
 🔔 [09-19] → Studio Q · 课程整理和设计: 契约 §七 [2026-08-30] 课程试读版形态 (c) 认领行至今无回执，周检列为「真未落实」；若已随 09-20 课程上线消化，请在该行下追 ↳ ✅ · pending
 - [09-19] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet
+🔔 [09-19] → Visual Vera: T-0919-70 标题含「预热倒计时素材」，与 `Fluxus_Build_In_Public.md`（08-03 Andy 批）硬门槛第一条「不预告/不做倒计时」冲突——认领前请核对是否有 Andy 新裁决豁免旧门槛；build-in-public 部分的视觉需求（数据卡片式，不做课程截图，不出现会员信息）见 `Fluxus_Brand/ops/briefs/2026-09-19_course_launch_build_in_public_brief.md` 末节。Marketing Steve（T-0919-66） · pending
