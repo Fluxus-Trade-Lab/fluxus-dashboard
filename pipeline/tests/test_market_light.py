@@ -394,7 +394,7 @@ def test_payload_matches_the_consumer_contract():
         assert k in p
     spy = p['spy']
     assert {c['key'] for c in spy['checks']} == {'fast_above_slow', 'fast_rising', 'slow_rising'}
-    assert set(spy['gear']) >= {'n', 'label'}
+    assert 'gear' not in spy, "course deleted L6B.2 2026-09-20 -- spy stopped shipping it"
     assert set(spy['history'][0]) == {'date', 'close', 'fast', 'slow', 'checks_passed'}
     assert p['qqq'] is None, "an absent ticker is None -- rendered 'not measured', never zeros"
 
@@ -443,3 +443,18 @@ def test_the_deleted_trend_day_count_does_not_come_back():
     p = ml.build({'SPY': _df(np.linspace(100, 160, 90))})
     flat = str(p)
     assert 'plus_n' not in flat and 'plus_n' not in str(p['spy'].keys())
+
+
+def test_spy_gear_stays_gone_even_with_ohlc():
+    """The course deleted L6B.2 (Andy 2026-09-20 'L6B.2 --L6B.6全部删除').
+    A payload built WITH Open/High/Low -- the shape that used to trigger
+    gear computation -- must still not carry `gear` on spy. qqq keeps it
+    (module docstring RETIRED note): this pins the asymmetry so a future
+    refactor of instrument_block can't silently restore it on spy."""
+    hist = {'SPY': _df(np.linspace(100, 140, 90), Open=np.linspace(99, 139, 90),
+                       High=np.linspace(101, 141, 90), Low=np.linspace(98, 138, 90)),
+            'QQQ': _df(np.linspace(200, 240, 90), Open=np.linspace(199, 239, 90),
+                       High=np.linspace(201, 241, 90), Low=np.linspace(198, 238, 90))}
+    p = ml.build(hist)
+    assert 'gear' not in p['spy']
+    assert set(p['qqq']['gear']) >= {'n', 'label'}

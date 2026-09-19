@@ -69,10 +69,13 @@ EVIDENCE: Dict[str, List[tuple]] = {
     "fundamentals":     [("store", "num+"), ("ok", "num0+")],
     # market_light joined 2026-09-12 (guard first appeared in the 2026-09-11
     # rows; CI's test_no_new_guard_slips_in_without_evidence caught it saying
-    # "ok" with zero evidence checks). Both fields take num0+ because 0 is a
-    # real answer for each: a red-light day passes 0 of the 5 checks, and
-    # gear 0 means "no gear applies" (market_light.py's own words).
-    "market_light":     [("checks", "num0+"), ("gear", "num0+")],
+    # "ok" with zero evidence checks). num0+ because 0 is a real answer: a
+    # red-light day passes 0 of the 5 checks.
+    # `gear` DROPPED from this list 2026-09-20 (Andy "L6B.2 --L6B.6全部删除"):
+    # the course deleted the section gear came from, spy.gear stopped
+    # shipping the same day (market_light.py RETIRED note), and run_all.py
+    # stopped logging it -- leaving it here would fail L3 every single night.
+    "market_light":     [("checks", "num0+")],
 }
 BREADTH_BLOCKS = {"conditions", "regime", "state_board", "verdict"}
 OK_WORDS = {"ok", "OK", True}

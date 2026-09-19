@@ -32,6 +32,14 @@ course repo 850690a8) and from the page; this file dropped it the same day.
 While it lived it reproduced all seven SPY and QQQ numbers of the course's
 cycle_bench.json exactly -- that ledger is gone from the course repo too.
 
+RETIRED 2026-09-20 (Andy "L6B.2 --L6B.6全部删除"): the course deleted L6B.2,
+the section the seven gears came from. `spy` stopped shipping `gear` the same
+day (DATA_CONTRACTS §七 2026-09-20, Studio Q -> UI Claire/DATA ALEX;
+METRIC_SOURCES marks the row 🗑). `gear_series` and `instrument_block`'s
+`include_gear` stay for `qqq` only as leftover computation -- nothing reads
+`qqq.gear` in the frontend (useMarketLight.js) and it never had its own
+METRIC_SOURCES row.
+
 The course reprinted Lesson 6 on the EMA spec (SwingMasterclass
 _bench/l6_light.json, `coverage_ema_spec`: EMA10/20 adjust=False, rising day
 over day): 56.5 green / 19.4 red / 24.0 mixed, longest green 2017-11-16 ->
@@ -157,8 +165,13 @@ def gear_series(df: pd.DataFrame, length: int = GEAR_LEN) -> pd.Series:
     return g
 
 
-def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dict[str, Any]]:
-    """One ticker's light + gear + 60-day strip. None if unusable."""
+def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA,
+                     include_gear: bool = True) -> Optional[Dict[str, Any]]:
+    """One ticker's light + 60-day strip, `gear` only when `include_gear`.
+
+    `spy` is built with `include_gear=False` (course deleted L6B.2, module
+    docstring RETIRED note). `qqq` keeps the default -- see that note for why
+    it is not the same decision as dropping the field outright."""
     if df is None or len(df) < SLOW + 2 or 'Close' not in df:
         return None
     lf = light_frame(df['Close'].astype(float), light_ma)
@@ -175,24 +188,26 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dic
          'a': round(float(today['slow']), 4), 'b': round(float(prev['slow']), 4)},
     ]
     passed = int(today['checks_passed'])
-    gear = None
-    if {'Open', 'High', 'Low'} <= set(df.columns):
-        gn = int(gear_series(df).iloc[-1])
-        gear = {'n': gn, 'label': GEARS[gn][0] if gn else None,
-                'label_zh': GEARS[gn][1] if gn else None}
-    hist = lf.dropna(subset=['checks_passed']).tail(HISTORY_DAYS)
-    return {
+    block = {
         'checks': checks,
         'checks_passed': passed,
         'light': 'green' if passed == 3 else 'red',
-        'gear': gear,
-        'history': [
-            {'date': d.strftime('%Y-%m-%d'), 'close': round(float(r['close']), 4),
-             'fast': round(float(r['fast']), 4), 'slow': round(float(r['slow']), 4),
-             'checks_passed': int(r['checks_passed'])}
-            for d, r in hist.iterrows()
-        ],
     }
+    if include_gear:
+        gear = None
+        if {'Open', 'High', 'Low'} <= set(df.columns):
+            gn = int(gear_series(df).iloc[-1])
+            gear = {'n': gn, 'label': GEARS[gn][0] if gn else None,
+                    'label_zh': GEARS[gn][1] if gn else None}
+        block['gear'] = gear
+    hist = lf.dropna(subset=['checks_passed']).tail(HISTORY_DAYS)
+    block['history'] = [
+        {'date': d.strftime('%Y-%m-%d'), 'close': round(float(r['close']), 4),
+         'fast': round(float(r['fast']), 4), 'slow': round(float(r['slow']), 4),
+         'checks_passed': int(r['checks_passed'])}
+        for d, r in hist.iterrows()
+    ]
+    return block
 
 
 def setups_block(watchlist: Optional[Mapping[str, Any]],
@@ -416,7 +431,7 @@ def build(histories: Mapping[str, pd.DataFrame],
           universe_rows: Optional[Iterable[Mapping[str, Any]]] = None,
           breadth: Optional[Mapping[str, Any]] = None,
           light_ma: str = LIGHT_MA) -> Dict[str, Any]:
-    spy = instrument_block(histories.get('SPY'), light_ma)
+    spy = instrument_block(histories.get('SPY'), light_ma, include_gear=False)
     qqq = instrument_block(histories.get('QQQ'), light_ma)
     # ⚠️ The consumer reads `brightness.leaders` as an ARRAY of
     # {ticker, theme, status} (useMarketLight.js). The first version nested the
