@@ -522,3 +522,5 @@
 - [2026-09-19] [DATA] 蹭位榜候选闸判据 A/B 并排评测完成：15 日重合 38/38、发现判据 B 边界歧义（GOOGL 换人不换数个案，该日人选完全不重叠但总人数相同），见 data/content/x_watch/scoring/2026-09-19_candidate_rule_compare.md · pending
 
 - [2026-09-19] [OPS 工程 · 踩坑故事] **一条导入能破坏整个测试树，而 pytest 不会告诉你是哪一条。** 测试文件用了绝对导入 `from tests.gex.test_schema` 代替相对导入，collection 直接炸裂——符号级错误，全局影响范围。pytest 只说「collection 失败」，留给调试的是整棵树。修法就是一个点：写测试用相对导入 `from .module`，打破 pytest 的寻址链条。**可发角度**：测试基建里最不起眼的小习惯，能卡住整个持续集成；换句话说，一点导入规范=全栈稳定性。出处 `tests/gex/test_render.py` · commit `87db1543`
+
+- [2026-09-19] [OPS] **权限卡住时的迁移成本**：Discord→X 生成端从云端会话迁本机守护进程（harness 权限与任务书打架），24h 部署完成。被第三方权限卡时，改规则不如搬家快——这是自动化系统架构设计时要算的账。出处 commit 277caa725 · [T-0919-21](../../../data/research/night_reports/INBOX.md)
