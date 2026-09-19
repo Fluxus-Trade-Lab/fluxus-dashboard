@@ -1,5 +1,7 @@
 # Fluxus Masterclass — Page (pointer)
 
+> ⚠️ **09-19 更新在途**：下方「Key facts (locked)」栏部分已被 Andy 2026-09-19 原话更正（价格 → $1,499、录播 → 10+ 分批放出、去掉字幕承诺、新增交互课件、发布日 → 09-25）。更正后的完整文案草稿在同目录 [`Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md`](Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md) 与 [`Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`](Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md)（T-0919-67，待 Andy 批）。下方栏位在草稿获批、正式替换 `sales_copy.md` 之前**暂不改**，避免两份「locked」互相打架；获批后由执行者一并更新本栏。
+
 **Voice decision (2026-07-26):** the Masterclass page uses the canonical **"Tom" voice** (earnest master teacher), NOT the Ally-of-Volatility letter persona. The AoV re-skin is shelved. (AoV voice is the top-of-funnel hook — X, Substack, the letter; the course is the substance that closes.)
 
 ## Source of truth — edit these, deploy to Squarespace

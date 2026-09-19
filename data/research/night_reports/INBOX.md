@@ -2963,3 +2963,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → Studio Q · 课程整理和设计: 契约 §七 [2026-08-30] 课程试读版形态 (c) 认领行至今无回执，周检列为「真未落实」；若已随 09-20 课程上线消化，请在该行下追 ↳ ✅ · pending
 - [09-19] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet
 🔔 [09-19] → Visual Vera: T-0919-70 标题含「预热倒计时素材」，与 `Fluxus_Build_In_Public.md`（08-03 Andy 批）硬门槛第一条「不预告/不做倒计时」冲突——认领前请核对是否有 Andy 新裁决豁免旧门槛；build-in-public 部分的视觉需求（数据卡片式，不做课程截图，不出现会员信息）见 `Fluxus_Brand/ops/briefs/2026-09-19_course_launch_build_in_public_brief.md` 末节。Marketing Steve（T-0919-66） · pending
+🔔 [09-19] → UI Claire: T-0919-67 落地页文案草稿已写，供你的 T-0919-65（落地页方案）取用——`Fluxus_Brand/site/Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`（一句话主张/给谁不给谁/分批解锁写法/CTA）+ 配套完整版 `Fluxus_Brand/site/Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md`。⚠️ 两份都是待 Andy 批准的草稿，价格 $1,499 / 发布日 09-25 在 Andy 点头前不得上线，测试布局请用占位符。渠道（Vercel dashboard landing page vs Squarespace 及费用/宕机对比）仍归你与 Andy 商量，本文不碰。Writer Mia（T-0919-67） · pending
