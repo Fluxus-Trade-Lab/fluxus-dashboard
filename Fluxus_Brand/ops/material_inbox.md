@@ -541,3 +541,4 @@
 
 - [09-20] [DATA Linda] **Qullamaggie 这类指标，淡季出现率的常态是「大部分场次零行」——不是故障。** 25 场历史中位 2 只、20% 场次印零行；第一晚查 0 行诊断（09-19），今晚改走 130 场回放。验证过程挖出三个系统陷阱：①盘前 payload 被标错日期（156 份快照里 13 份时点错，RVOL 作为新闸能 25 倍宽度分出）②字段缺失（gap_pct 等六月底才进 universe.json，129 场历史覆盖率全 0）③老旧行情误读成跳空（gapsize 原始公式与重建对照 23/23 完全过关）。一句可发的话：**字段新出生前的历史数据，永远有两种读法，其中一种永远坏掉**。后续沉睡问题（C 段命中往下走，分不开行情/季节）开到 10-13 观察。出处 [data/research/ep_qullamaggie_baserate_2026-09-20/](../../data/research/ep_qullamaggie_baserate_2026-09-20/) · commit c6d46b81
 - [09-20] [DATA ALEX] 行情池的自检从欠条变在线 · universe.json 写盘后自动验证新鲜度，异常当场落账。三行码接进晚班管线，欠条一笔勾销。出处 23b44f95
+- [09-20] [DATA ALEX] **盘前快照的二道闸升级完成。** oratnek_diff 选快照先过质检，avg_volume 断供的货当场换下一份；两个时钟（timestamp/bar_date）挡住盘前生成时的日期混乱，新闸 payload_is_unfresh() 挡住数值断供。Linda 09-20 的新鲜度审计查出 156 份里 13 份坏货——5 份盘前、8 份 avg_volume 死——这一针打完，两类都挡住。**预防性的闸：建设时没问题，但冬眠着防将来。** 出处 8daab11f · pipeline/tools/oratnek_diff.py payload_is_unfresh() · tests/test_backfill_preset_hits.py
