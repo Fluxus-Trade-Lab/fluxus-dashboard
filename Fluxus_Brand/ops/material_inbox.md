@@ -197,6 +197,8 @@
 ## 📥 追加到这里
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
+
+- [09-19] [DATA] 复盘最隐蔽的坑：收盘价缺数据时系统无声用前日补——09-16 HOOD 盈亏报错 ±0.89%，错了一整晚才查出。改法：缺就 fail-fast，不靠陈旧行情填坑。出处 a1ca0308 · test_recap_book_closes.py
 > 判据仍是 `↳ ✅`，不是所在节。
 
 - [2026-09-16] [Marketing Steve] **Andy 首发艺术类配图推文**。09-16 「自省过度交易冲动/FOMC盘面」长推配 Nam June Paik《TV Buddha》——艺术与交易心理的首次跨界。样本=1；后续复读表现可作基线对比。出处 data/content/posts.csv · data/content/today_draft.md
