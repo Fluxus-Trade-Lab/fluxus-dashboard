@@ -208,6 +208,18 @@ def _emit(ledger, path: Path, text: str, **kwargs) -> Path:
     return path
 
 
+def _freshness_check(rows) -> tuple:
+    """WHEN dimension -- is this a completed session, or just an hour?
+
+    See `pipeline/tools/audit_universe_freshness.py`. Judges the payload
+    just written, no history re-read: three lines, and cheap on purpose.
+    Split out so the wiring is testable without running the whole pipeline
+    (same reason `_emit` is its own function).
+    """
+    from pipeline.tools.audit_universe_freshness import aggregate_rvol, classify
+    return classify(aggregate_rvol(rows), len(rows))
+
+
 def _record_external(ledger, path: Path, before_ns) -> None:
     """Record a file another module wrote, only if this run changed it.
 
@@ -1198,6 +1210,11 @@ def main():
         _emit(ledger, OUTPUT_DIR / 'universe.json',
               json.dumps(universe_export, indent=None, default=_json_serializer))
         logger.info("Saved universe.json")
+
+        fresh_kind, fresh_why = _freshness_check(rows_out)
+        ledger.note('universe_freshness', fresh_kind or 'ok', why=fresh_why)
+        if fresh_kind in ('F1', 'F2'):
+            logger.warning("universe_freshness: %s", fresh_why)
 
     # Severe means a feed is broken, not noisy. Stopping here leaves yesterday's
     # outputs in place, which is the better of two bad days: a shifted universe
