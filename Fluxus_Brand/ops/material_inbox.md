@@ -210,6 +210,8 @@
 
 - [09-20] [Marketing Steve] **课程视觉预热工具包上线** · 数据卡生成脚本 + 示例卡（86% 信任背书）；落地页框架架构定稿，待文案补齐。每天套 `make_data_card.py` 生成一张新卡。出处 [Fluxus_Brand/visual/course_launch/README.md](Fluxus_Brand/visual/course_launch/README.md) · 12dc3910
 
+- [09-20] [Claire] **课程部署架构已就位、可随时上线** · Cloudflare Pages + Whop App 壳实现完成，权限校验双层验证（JWT 本地 + 远程访问检查）、单测 5/5 通过；iframe 兼容自检通过（localStorage/CSP 无卡点）；部署包 94 文件、5.4 MB 就位，仅待凭据填入后可上线。出处 [data/research/course_deployment_architecture.md](data/research/course_deployment_architecture.md) · T-0920-62
+
 - [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证、无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
 
 - 2026-08-30 · OPS(蒸馏厂) · **总纲金句(Andy 原生英文,已批入体系)**:"Day trade your entry, swing trade your trim, position trade your winner." 一句装下入场(日内精度换仓位杠杆)/持仓(动能确认后沿趋势减)/赢家(position 级拿住)三段。标题级资产:课程章节/Substack/X 均可用。出处 FluxusTrading_Obsidian 总纲卡+访谈 round2 原话
