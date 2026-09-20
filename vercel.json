@@ -1,10 +1,14 @@
 {
   "installCommand": "cd frontend && npm install",
   "ignoreCommand": "bash scripts/vercel_ignore_build.sh",
-  "buildCommand": "cp -r data/output frontend/public/data/output_real && rm -f frontend/public/data/output && mv frontend/public/data/output_real frontend/public/data/output && cd frontend && npm run build",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
   "rewrites": [
+    {
+      "source": "/data/output/(.*)",
+      "destination": "https://raw.githubusercontent.com/Fluxus-Trade-Lab/fluxus-dashboard/main/data/output/$1"
+    },
     {
       "source": "/data/(.*)",
       "destination": "/data/$1"
