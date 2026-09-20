@@ -102,11 +102,25 @@ def paged(path: str, params: dict, k: str, cap: int, item_key: str):
     return items, pages
 
 
+def shouting(line: str) -> bool:
+    """整行全大写（>25 字且一个小写都没有）＝喊话或板块小标题，不是代码清单。
+
+    09-19 主班：RealJGBanks 一条全大写周末帖，光板块小标题就贡献了
+    EXACT / TECH / POWER / NEXT / REAL / RISK 六个假代码，把「这条挂了几个代码」
+    从 31 算成 37。取件账 09-06·3 第 3 次，三次律升机制。
+    """
+    return len(line) > 25 and not any(c.islower() for c in line)
+
+
 def tickers(text: str) -> set[str]:
+    # 带 $ 的这一遍扫全文：喊话行里真出现 $NVDA 也照认，拦的只是裸大写词。
     out = {m.upper() for m in re.findall(r"\$([A-Za-z]{1,5})\b", text)}
-    for m in re.findall(r"\b([A-Z]{2,5})\b", text):
-        if m not in STOPWORDS and m not in INDICATOR_BARE:
-            out.add(m)
+    for line in text.splitlines():
+        if shouting(line):
+            continue
+        for m in re.findall(r"\b([A-Z]{2,5})\b", line):
+            if m not in STOPWORDS and m not in INDICATOR_BARE:
+                out.add(m)
     return out
 
 

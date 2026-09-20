@@ -100,3 +100,38 @@ def test_own_account_upsert_keeps_one_row_per_et_day_latest_last(tmp_path):
     lines = p.read_text(encoding="utf-8").splitlines()
     assert len(lines) == 3
     assert lines[-1].startswith("2026-09-12,275,")
+
+
+# --- 整行全大写不出裸代码（取件账 09-06·3 第 3 次，09-20 升机制）------------
+#
+# 09-19 主班实测：RealJGBanks 一条全大写周末帖，板块小标题 EXACT/TECH/POWER/
+# NEXT/REAL/RISK 全被当成代码。两个方向都要钉住：喊话行的裸词要丢，喊话行里
+# 带 $ 的要留 —— 只造一个方向只能证明它认得出「什么都没做」。
+
+_SHOUT = "PREMARKET EXACT SETUP — TECH POWER NEXT REAL RISK WATCH"
+
+
+def test_shouting_line_drops_bare_words():
+    """整行全大写的板块小标题不进代码集。"""
+    assert fx.tickers(_SHOUT) == set()
+
+
+def test_shouting_line_keeps_dollar_codes():
+    """喊话行里真写了 $NVDA，仍然认 —— 拦的是裸词，不是这一行。"""
+    assert "NVDA" in fx.tickers(_SHOUT + " $NVDA")
+
+
+def test_normal_line_still_yields_bare_codes():
+    """正常大小写的正文，裸代码照旧认 —— 别把闸修成谁也过不去。"""
+    assert "NVDA" in fx.tickers("Watching NVDA into the close today.")
+
+
+def test_shouting_needs_length():
+    """短的全大写行（如一行就写 NVDA AMD）不算喊话，仍然出代码。"""
+    assert fx.tickers("NVDA AMD") == {"NVDA", "AMD"}
+
+
+def test_only_the_shouting_line_is_skipped():
+    """多行帖里只跳过喊话那一行，同帖其它行照常。"""
+    text = _SHOUT + "\nStill watching NVDA here."
+    assert fx.tickers(text) == {"NVDA"}
