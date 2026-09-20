@@ -547,3 +547,4 @@
 - [09-20] [DATA Linda] **时钟对了，货可以不对。** backfill_preset_hits 的时钟闸（timestamp/bar_date 双核对）看的是「这份货是哪一刻的」，宝宝就算全绿——盘前 payload `bar_date: 2026-08-18`、timestamp 解出 `last_completed_session: 2026-08-18` 也全对，但它**根本没有** 2026-08-18 一整天的交易。双时钟无法区分「时刻错」和「时刻对但不完整」，这就是为什么需要第三把闸（RVOL 分子分母同时活着的质检）。**机制最怕的不是「对」和「错」混淆，而是在「对」的频道上无法区分「完整」和「不完整」。** 出处 [data/research/universe_freshness_2026-09-20/ §七](../../data/research/universe_freshness_2026-09-20/README.md#七-留下的那个真问题现有的闸挡不住它) · audit_universe_freshness 与 backfill_preset_hits 的分工设计
 
 - [09-20] [Marketing Steve] **蒸馏厂今日一问 · C19「顶是过程底是事件」** · 大盘顶部通常长什么样？第一段音频约 5 分钟。出处 [data/reference/VAULT_STATUS.md](../../../data/reference/VAULT_STATUS.md) · 0ba27ad0
+- [09-20] [Marketing Steve] **教师金句｜"The day you stop needing me is the day I did this right."** · 教是为了不被需要；Own_Lines #123 排队项，课程 09-25 上线前最后一个周日发布窗口。英文打磨版已成稿；中文可并用「哪天你不需要我了，那就是教得最好的一天。」· [data/content/today_draft.md](../../data/content/today_draft.md) · 67cbff98
