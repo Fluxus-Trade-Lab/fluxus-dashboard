@@ -40,10 +40,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
 # 保留期(天)。与 Vercel 后台 Deployment Retention Policy 的 Production 值一致;
-# 2026-09-06 由 30 天改为 2 周;2026-09-20 存储超限告警后 Andy 定「不升 pro,
-# 缩短保留期」,四项(Production/Preview/Errored/Canceled)全改 1 天(commit
-# 57c147d6)。改了后台就要改这里,否则预算算的是别人的策略。
-RETENTION_DAYS = 1
+# 2026-09-06 由 30 天改为 2 周。改了后台就要改这里,否则预算算的是别人的策略。
+RETENTION_DAYS = 14
 
 # 陈旧判据:超过这么久没变过、又超过这么大,就该考虑搬出产物。
 STALE_DAYS = 90
@@ -112,11 +110,9 @@ def read_gate(repo: Path) -> Dict[str, Any]:
 def artifact_sources(repo: Path, gate: Dict[str, Any]) -> Dict[str, int]:
     """产物由哪些仓库路径喂出来,各多少字节。
 
-    两个来源:构建时从 buildCommand 拷进去的(如果 buildCommand 里还有 cp -r 的话),
-    以及 outputDirectory 所属包的静态目录(frontend/public)。应用代码打包后的体积
+    两个来源:构建时从 buildCommand 拷进去的(如 data/output),以及
+    outputDirectory 所属包的静态目录(frontend/public)。应用代码打包后的体积
     另算——它两位数 MB 以下且本来就该随每次部署走,不是本检查的对象。
-    09-20 起 data/output 已不走 cp——它改由 vercel.json 的 rewrite 代理到
-    raw.githubusercontent.com,不再是产物的一部分,这里也就不会再数到它。
     """
     sources: Dict[str, int] = {}
     build = gate.get("build_command", "") or ""

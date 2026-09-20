@@ -7,13 +7,8 @@
 # 2026-09-13 隐私清洗一次推了 5 个 commit，最后一个只改测试，整批被判「未触及产物」
 # 跳过，已清洗的数据没有上线。仓库是公开的，基准不在浅克隆里时可以直接加深拉取；
 # 仍拿不到基准一律偏向构建。
-#
-# 09-20：data/output 已从 WATCH 移出——它不再被 buildCommand cp 进产物，改由
-# vercel.json 的 rewrite 在请求时代理到 raw.githubusercontent.com/.../main/data/output/
-# （见 2026-09-20_vercel_storage_10gb.md）。它变了不再需要重新部署，数据经这条
-# 代理路径几分钟内自然生效，比等一次 Vercel build 更快。
 set -u
-WATCH=(frontend vercel.json package.json package-lock.json scripts/vercel_ignore_build.sh)
+WATCH=(frontend data/output vercel.json package.json package-lock.json scripts/vercel_ignore_build.sh)
 
 have_commit() { git cat-file -e "$1^{commit}" 2>/dev/null; }
 

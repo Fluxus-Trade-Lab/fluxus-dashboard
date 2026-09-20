@@ -87,8 +87,10 @@ paths:
   「当天再用另一入口（API/另一浏览器 profile）交叉核一次」，不要等一周。
 - **保留期从 2 周砍到 1 天**（Andy 09-20「不升 pro，然后缩短保留期」，commit `57c147d6`）：
   项目 Production/Preview/Errored/Canceled 四项保留期，从 30天/1周/1周/2周 全部改为 **1 天**。
-  `pipeline/tools/audit_deploy_cost.py` 的 `RETENTION_DAYS` 已同步改成 1——这是它自己代码注释
-  写的规矩（"改了后台就要改这里，否则预算算的是别人的策略"）。
+  ⚠️ `pipeline/tools/audit_deploy_cost.py` 的 `RETENTION_DAYS` **还没同步改**（仍是 14）——这是
+  它自己代码注释写的规矩（"改了后台就要改这里，否则预算算的是别人的策略"），T-0920-55 审核时
+  被判越出 claire 的文件边界（`pipeline/tools/` 不在 ROLE.md 的边界里）挡回，留给 OPS 或有该文件
+  权限的线去改，这里先记一笔别漏。
 - **官方文档 09-16 版新事实**（09-20 核）：Hobby 四项默认保留期均 30 天；Hobby 的保留例外只保
   「最近 3 个部署 + 最近 3 个 READY 生产」（09-13 那版记的「最近 10/20 个」是旧文档，已作废）；
   非生产的 READY 例外对 Hobby 不适用；**恢复期删不掉**——控制台 Recently Deleted 每行菜单只有
@@ -98,17 +100,21 @@ paths:
   rewrite 把 `/data/output/(.*)` 代理到 `raw.githubusercontent.com/Fluxus-Trade-Lab/
   fluxus-dashboard/main/data/output/$1`（同源代理，浏览器端不用处理跨域；GitHub raw 响应
   `cache-control: max-age=300`，数据改动 main 后最多 5 分钟内生效，比等一次 Vercel build 完
-  还快）。`scripts/vercel_ignore_build.sh` 的 `WATCH` 同步移除 `data/output`——它不再喂产物，
-  变了不必再触发一次构建，这本身也在减少部署次数。
-  本机 `npm run build` 实测：`dist` 从 119 MB → **47 MB**（-61%）。`audit_deploy_cost` 用新配置
-  + 1 天保留期算出预计月度存储 **0.1 GB**（10 GB 预算内，D1/D2 零违规）。
+  还快）。本机 `npm run build` 实测：`dist` 从 119 MB → **47 MB**（-61%）。`audit_deploy_cost`
+  （仍是现有配置：WATCH 含 `data/output`、`RETENTION_DAYS=14`）用新的 47 MB 产物算出预计月度
+  存储 **2.6 GB**（10 GB 预算内，D1/D2 零违规，近 14 天 793 次 commit 里 65 次会构建）。
   ⚠️ **没打到任务原定的「≤5 MB」**：那个数字没算上 `frontend/public/data/modelbooks`
   （**43 MB，git 直接跟踪，不是 buildCommand cp 进去的**——它一直都在产物里，09-06 就被
   `audit_deploy_cost` 的 D3 检查点过名，不是本次新引入）。没动它是因为它被
   `frontend/scripts/flag-modelbook-outliers.mjs` 这个 prebuild 完整性闸依赖（构建时要读全部
   OHLCV bars 现算 `suspect.json`，删掉源文件会先炸在这一步）——挪它要一并重构那个闸的输入，
-  风险和工作量都不是「顺手」级别，留给需要时的独立任务。10 GB 预算下 0.1 GB 的余量已经足够，
+  风险和工作量都不是「顺手」级别，留给需要时的独立任务。10 GB 预算下 2.6 GB 的余量已经足够，
   这次不为了凑「≤5 MB」这个字面数字去动一个没有引发本次告警的东西。
+- **推荐但本次没做（留给 OPS/下一条 vercel-ops 权限内的线）**：`scripts/vercel_ignore_build.sh`
+  的 `WATCH` 数组里 `data/output` 现在已经不喂产物了，留着它只是让数据管线每次推送都白触发一次
+  构建（不影响单次产物大小，只影响构建次数/D2 里的 builds_per_day）；连同 `RETENTION_DAYS`
+  一起，是同一次改动更完整的版本，claire 在 T-0920-55 里写过、被审核判越界后撤回，改动本身在
+  该任务的分支历史里能找到（`agent/claire/T-0920-55` 分支的中间版本）。
 - **未核实项**：`CANCELED` 保留期只有 1 天却还活着一批的异常（09-13 记 35 个，09-13T14:36 那行
   记到 54 个，09-14 记到 119 个）——本次 worker 无浏览器/Vercel 凭证，读不到 Andy 的 Chrome
   登录态，没法用 SKILL 里「怎么取真实数字」那套流程去查。留给下一个能碰浏览器的交互会话核，
