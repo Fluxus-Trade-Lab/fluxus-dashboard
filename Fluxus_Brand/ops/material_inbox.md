@@ -558,3 +558,5 @@
 - [09-20] [Marketing Steve] **周复盘 W38 字幕版上线** · 09-19 试跑版缺字幕且未递送；字幕版重写大盘叙事、中英 PDF 全新渲染（EN 7 页 / ZH 6 页），交付闸全绿 · 出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) · ab744aa3
 
 - [09-20] [steve] 两个产品线 share 同一个输出模板，守卫全是「源头数据有就打」，没人反问「这行只该在某种情况出现」。周刊版 delivery.md 指向了永远不存在的英文配图文件，一年没人发现——因为没这道回归测试。`T-0920-31` · [pipeline/tests/test_recap_delivery_md.py](../../pipeline/tests/test_recap_delivery_md.py) · [commit 1f19672b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1f19672b)
+
+- [09-20] [Marketing Steve] **试跑模式的环境隔离从 SKILL 文字升到代码断言。** daily-recap skill eval 从「SKILL.md 里说一句『用 FLUXUS_RECAP_ROOT』」升级到「eval#3 钉死试跑场景的完整流程」——当 agent 读到『试跑』这个词时，会跳过常规导流、直接跑断言来完成环境切换。同一个工作流的两种模式（试跑 vs 正式）共用一份代码；没有机制强制隔离，就等于两个模式最终会污染同一个输出目录。出处 [.claude/skills/daily-recap/evals/evals.json](../../../.claude/skills/daily-recap/evals/evals.json) · commit a144a5c2
