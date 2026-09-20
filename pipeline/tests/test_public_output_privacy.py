@@ -25,9 +25,11 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[2]
 
-# Every directory that ends up on the public site. vercel.json copies
-# data/output into frontend/public/data/output, and Vite publishes all of
-# frontend/public verbatim.
+# Every directory that ends up on the public site. Since 2026-09-20,
+# vercel.json rewrites /data/output/* to raw.githubusercontent.com instead of
+# copying it into the build -- still public (this repo is public on GitHub,
+# so data/output was already fetchable straight off raw.githubusercontent.com
+# regardless of Vercel). Vite publishes all of frontend/public verbatim.
 PUBLIC_ROOTS = [REPO / 'data' / 'output', REPO / 'frontend' / 'public']
 
 # Share counts and account-level dollar amounts, by exact key name.
