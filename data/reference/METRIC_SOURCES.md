@@ -132,7 +132,7 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `ep_stockbee` | Stockbee **Episodic Pivot**（2014-07《My process flow for EP》） | `c/c1>1.04 and v>3*avgv50.1 and v>=300000`；avgv50.1 = `avg_vol50_prev`（截至昨日的 50 日均量）——[原文](https://stockbee.blogspot.com/2014/07/my-process-flow-for-episodic-pivots-ep.html) | ✅ 逐字（2026-09-18，Andy「12 注册 EP Stockbee和 EP Qullamaggie」）。原文的人工判断「neglect + game changing earnings」做不到。跑在 $1B 宇宙上（universe 规则，非原文） |
 | `ep_qullamaggie` | Qullamaggie **Episodic Pivot**（《How to master a setup: EP》） | 「a gap up of 10% or more」＋ 开盘头 15–20 分钟成交一个日均量——[原文](https://qullamaggie.com/how-to-master-a-setup-episodic-pivots/) | ⚠️ **只做到部分**（2026-09-18）：`gap_pct≥0.10` 且全天量 ≥ `avg_vol50_prev`；「前 15–20 分钟」需分时数据；均量窗口 50 借自 Stockbee，自选。名单比原文宽。跑在 $1B 宇宙上 |
 | `episodic_pivot` | — | 收盘涨 ≥10%、相对量 ≥3、市值 ≥$5 亿 | **2026-09-18 退役**（三位作者的原文都对不上）。`episodic_pivot.json` 只作前端兼容文件（两个新 EP 的并集），不进 `ticker_events`、不计热度；历史归档中该名最后有效日 2026-09-17。热度分把两个 EP 与旧名视为同一族，只计一次 |
-| 组四态 Leading / Weakening / Improving / Lagging（`groups.json`） | ⚠️ 借用 JdK **RRG** 四象限名 | 按组 RS 的二阶加速度划分（与 RRG 的 RS-Ratio / RS-Momentum 不同） | ⚠️ **自造，2026-09-18 补登记**。所在的旧 Themes 页已下线（Andy 09-18「RRG所在的theme页面这个已经退役」），但四态仍喂面板与名片；现行 Theme（原 Rotation）页用的是 `theme_ladder` 的另一套（一阶超额）。两套同名不同义 |
+| 组四态 Leading / Weakening / Improving / Lagging（两套：`groups.json` + `theme_ladder.json`） | ⚠️ 借用 JdK **RRG** 四象限名 | `groups.json` 系统 = 一阶超额 × 二阶加速度；`theme_ladder.json` 系统 = 一阶超额 × 一阶动量，均非 RRG 的 RS-Ratio/RS-Momentum | ⚠️ **自造，2026-09-18 补登记，2026-09-21 拆分详列**（T-0921-07）。两套消费者、与 RRG 的具体差异、页面自查结果，见下方「[组四态双系统口径](#组四态双系统口径2026-09-21-补登记任务-t-0921-07)」节，不再合并在本行 |
 | `tml`（watchlist 面板 True Market Leaders + `leaders_log.tml`） | Richard Moglen（TraderLion）**True Market Leader**，[X 2020-11-06](https://x.com/RichardMoglen/status/1324813953474678787)；概念源于 O'Neil 的 Model Book Stocks | 硬条件：美元成交额 > $30M（20 日均价 × 20 日均量）、`rs_rating` ≥ 97、站上向上的 30 周线、`weinstein_stage` = 2、close > EMA10 / EMA21 / SMA50、`ud_vol_ratio_50` > 1.2；基本面 5 项（季度营收 >25%、季度盈利 >25%、净利率 >20%、ROE >17%、明年预估 >25%）至少 3 项；前 20 行业只标记（`top20_industry`） | ✅ **2026-09-18 实现**（Andy「照 Moglen 2020（建议）可以」）。操作化：RS「ideal」做成硬条件、「most」= 3/5（缺值不计入分母但仍须满 3 项）、「10」取 EMA、利润率取税后 TTM（yfinance 无税前）、行业排名按 `rs_3m` 中位（IBD 是 197 组按 6 个月涨幅）。未做：底部量价收缩、财报后放量跳空（行里无财报日）、Story。另过整页 $1B / $20M / ADR ≥3.5 闸。**Alex 没有定义过 TML**；Steve Jacobs 也在用 TML，门槛专有不公开 |
 | `ud_vol_ratio_50` | IBD **Up/Down Volume Ratio** | 50 日内上涨日成交量之和 ÷ 下跌日之和，平盘日不计；无下跌日为 null——[IBD via Yahoo](https://finance.yahoo.com/news/down-volume-ratio-gauge-demand-212800062.html)、[Linn Software UDVR](https://www.linnsoft.com/techind/updown-volume-ratio-udvr) | ✅ 一致（2026-09-18） |
 | `profit_margin` / `roe` | yfinance `profitMargins` / `returnOnEquity`（TTM） | 与现有基本面同一次调用取得，不新增抓取 | ✅ 厂商直给（2026-09-18 新存）；每晚轮换 700 只，约 8 晚覆盖全库 |
@@ -187,6 +187,37 @@ as the NASDAQ followed through**」「CRWD…on April 7th, **one day after** the
 2020 年 12 只龙头有 10 只在 FTD 的 −5 ~ +3 个交易日里突破。
 ⚠️ 那 12 只是 Ross 事后挑的，**挑的人本来就用 FTD 思考**，所以那个聚集**不是独立证据**，
 只是「他们怎么用这个概念」的示范。要证明聚集，得用一个不知道 FTD 的名单重做。
+
+## 组四态双系统口径（2026-09-21 补登记，任务 T-0921-07）
+
+**起因**：Andy 09-21 原话「dashboard数据还需要继续验证或者补全，我会和你讲哪些，特别是theme的4态读数」。查代码后发现系统里同名的 Leading / Weakening / Improving / Lagging 其实是**两套独立实现**，轴的阶数不同、消费者也不同，此前只在一行表格里含糊带过，这里拆开逐一核实。
+
+### 系统一：`groups.json` 四态（`pipeline/themes/rs_engine.py::classify`）
+- 轴：`excess_3m`（3 个月累计超额，一阶量级）× `rs_accel`（上月超额 − 前两月合计超额，**不等窗口二阶加速度**，验证过的判据，rs_engine.py 头部注释与 FOUR_STATE_DESIGN.md）。
+- 分类：`excess_3m>0` 且 `rs_accel>0` → Leading；`excess_3m>0` 且 `rs_accel<=0` → Weakening；`excess_3m<=0` 且 `rs_accel>0` → Improving；否则 Lagging。
+- 写入方：`pipeline/themes/build_groups.py`（调用 `score_groups`）→ `data/output/groups.json`。
+- **消费者（2026-09-21 现场核实，非转抄旧文档）**：
+  1. `#/groups`（nav key `groups`，i18n 标「Themes (old)」/「主题（旧）」）——**已从左侧导航栏移除，但路由仍可直接访问**（`Rail.jsx` 注释：「Themes IS the Rotation page from 2026-09-07」「old Themes is off the rail but its route still resolves」）。页面大卡 `StateField.jsx` 源码注释自称是 `classify(excess_3m, rs_accel)` 的可视化复现（「75 of 75」），`GroupTable.jsx` / `CompareReading` 同源展示该 `state` 字段。
+  2. Short List（`pipeline/screeners/name_cards.py`）：`verdict()` 把 state 译成名片上的「水域✓ / ～(Improving) / ✗」；`state_rank()`（Leading=0、Improving=1、其余=2）是**全部六个席位**候选排序（`prefer()`）的第一优先级；"entry" 席位的替补链另外硬性过滤 `states.get(t)=='Leading'`。
+  3. Watchlist（`pipeline/screeners/watchlist.py::load_group_states` → `_with_groups` → 逐行 `group_state` 字段）：喂 `WatchlistPage.jsx`（`row.group_state==='Leading'||'Improving'` 徽标）、`ShortlistTray.jsx`（tooltip / 复制文本）、`PickedChart.jsx`（个股页副标题）、`useShortlist.js`。
+  4. **不再消费的地方（核实到位，避免误传）**：`true_market_leaders`（TML）面板 2026-09-18 换成 Moglen 定义后**不再**用 home-group Leading 做硬闸（此前是「`liquid_leader` and home group=Leading and `rs_1m`>=80」，`watchlist.py:157` 注释自述已替换）；`tml_moglen.py` 的 `top20_industry` 用的是 `industry_rank`（行业 3 个月 RS 中位排名），与这套四态无关，是另一套自造口径（见本表 139 行）。
+
+### 系统二：`theme_ladder.json` 四态（`pipeline/themes/short_window.py::classify`）
+- 轴：`level`（L 个交易日累计超额）× `momentum`（M 个交易日累计超额，**一阶**）——五档窗口 2w/4w/6w/8w/10w，外加 1m/3m 两个命名别名（同一形状，只换常数）。
+- 分类：同符号判据（level>0 且 momentum>0 → Leading，以此类推），动量恰好为 0 判给弱态（Weakening/Lagging），与系统一分类的形状相同，但轴的构造是一阶动量不是二阶加速度。
+- 写入方：`pipeline/screeners/run_all.py`（夜间调用 `short_window.build`）→ `data/output/theme_ladder.json`。
+- **消费者**：`#/rotation`（nav key `rotation`，**现在导航栏里名叫「Themes」/「主题」，是唯一在导航栏可达的主题页**）——`TerrainCard`（HowToRead 称「Terrain」，五档面积图）直接读 `history` / `states_2w` 展示这套四态；`FluxCard`（折线下方逐日态迷你条）读 `series[name].states_2w`。**`PointsCard`（「Momentum & Acceleration」三条 strip）不读这套、也不读系统一的 `state` 字段**——它只用 `groups.json` 的连续量（`rs_0_1w` / `rs_1w_1m` / `excess_3m`）另外重算三条轴（`rs2w` / `acc` / `long`），不落回四态标签，`rotationLogic.js::boardsOf` 可见。
+- `market_light.py`（Market State 页 L7-Q2「龙头在带头吗」，`brightness.leaders`）读的也是这套——本表 73 行已登记：2 周档、`kind=='theme'`、Leading 状态。
+
+### 与 RRG 原口径的差异（两套都借了 JdK 的四象限**名字**，都不是同一算法）
+- JdK RRG 官方轴是 **RS-Ratio**（相对强度水平，对标基准归一到 100）× **RS-Momentum**（RS-Ratio 的一阶变化率），两轴都在**同一把尺子**（归一化的 RS-Ratio）上取值和取导数，且 RS-Ratio 本身是一条连续轨迹，能画出「旋转」式运动路径。
+- 系统一的两轴不在同一把尺子上：第一轴是原始超额收益（百分比），第二轴是超额收益的**二阶**加速度（不等窗口，刻意设计成「跑赢平均配速也可能判负」），不是 RS-Ratio 的一阶动量。
+- 系统二的两轴构造上更接近 RRG 的形状（都是一阶超额），但仍不是同一尺子——没有 RRG 式的到 100 基准的归一化，也不产出连续轨迹，只在四个象限里离散判态。
+- **代码与文案自查（2026-09-21，`git grep -in RRG` 限定 `pipeline/**/*.py` `frontend/src/**/*.{js,jsx}` `data/reference/*.md` `docs/**/*.md`）**：命中的是 `short_window.py` 的模块/函数文档字符串（自陈 `momentum` 是「the RS line's slope; RRG RS-Momentum」）、`DATA_CONTRACTS.md`（「这是 RRG 给不出的『速度量级』」）、脑暴期 `docs/plans/2026-09-02-themes-screener-brainstorm-brief.md`（构思阶段的口径来源说明，非最终实现）与本表——**都是开发者可见的代码注释/内部文档，前端没有任何用户可见页面把这套读数打上「RRG」字样或声称是 RRG**，`RotationPage.jsx` 的 HowToRead 用的是「level/momentum」而非 RRG 术语。未发现冒充 RRG 读数的地方。
+
+### 待办（不在本轮范围，留给下一轮或 Andy 指定项）
+- Andy 09-21 原话只说了「特别是 theme 的 4 态读数」，还没给出具体要核对的个例/日期——**本任务验收第三条（逐条对/错判定）暂缺输入，等他在会话里点出具体项**；上面两套的口径与消费者清单已经是可核对的基准，下一轮拿到具体项后可以直接对照本节查。
+- `#/groups`（系统一的展示页）仍在路由里活着但不在导航栏——如果确认它彻底不再需要，应该拆除而不是留着一条「死链接但代码还在跑」的收尾；这是产品决定，不在本次数据口径核对范围内，列此仅作记录。
 
 ## 已登记的债
 
