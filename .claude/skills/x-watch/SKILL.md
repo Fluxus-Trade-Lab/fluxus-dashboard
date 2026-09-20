@@ -72,7 +72,8 @@ awk -F, 'NR==1||!seen[$1","$2","$3","$4]++' data/content/x_watch/mentions.csv > 
 
 ⚠️⚠️ **必须用 `computer` 的真实鼠标滚轮**：`{action:"scroll", coordinate:[700,500], scroll_direction:"down", scroll_amount:10}`，每 2 次滚动等 2 秒再 `__xgrab()`。**JS 的 `scrollBy` 和派发的 `WheelEvent` 都不触发 X 的无限加载**——实测滚 6 条就"到底"，那是假阴性。基线约 10 次真实滚动拿到 15 条。
 
-落 `data/content/x_watch/subs/jfsrev/<日期>.jsonl`：`id · dt · et · kind · tickers · proxy · stats · text`。`kind` 用他自己的词：`Stalk` / `Focus` / `Update` / `WeekendSeries` / `Groups`。
+落 `data/content/x_watch/subs/jfsrev/<日期>.jsonl`：`id · dt · et · kind · tickers · proxy · stats · text`。`kind` 用他自己的词：`Stalk` / `Focus` / `Update` / `WeekendSeries` / `Groups` / `Note` / `Plan` / `Educational`。
+  ⚠️ 后三个是 09-20 周结补进来的（取件账 09-14·1 数到第 4 次）：库里存量早就有 `Note` 21 条、`Plan` 4 条，跑手每班照实写、每班又超纲，超的是词表不是跑手。**这张表以本行为准，别再按五个词自检。**
 
 ⛔ **付费内容，原话只存不引，永不进任何对外文案**；只抓 Andy 本人已订阅的，**目前只有 @jfsrev，不扩**。
 ⛔ 浏览器工具不可用时：日报里写「订阅区未取 · 原因」，**不静默跳过，也不拿昨天的顶替**。
@@ -206,7 +207,7 @@ Andy 2026-09-14 原话：「继续出，我每天都在看。关键是ai能够�
 
 - **角度**：一句话 —— 接他哪一点、往哪边推（补数 / 补反例 / 补失效条件 / 补一个他没问的问题）
 - **挂哪份自有内容**：课程哪一课（`~/Documents/SwingMasterclass/` 的课名）· 每日复盘 · dashboard 哪一页 · `data/research/` 哪个结论。**挂不上自有内容的方向不出** —— 蹭的目的是把人带回我们的东西，不是替别人热场
-- **能不能放链接**：课程 **09-20 上架前不能链接**，只能用课里的观点；dashboard / Substack 已公开可链。⚠️ 仓库是 PUBLIC，课程原文不进仓库，方向里只写课名
+- **能不能放链接**：课程 **09-25 上架前不能链接**（Andy 09-19 把发布日从 09-20 改到 09-25，$1,499 / Whop），只能用课里的观点；dashboard / Substack 已公开可链。⚠️ 仓库是 PUBLIC，课程原文不进仓库，方向里只写课名
 
 ⛔ **只给方向，不写成品回复。** 字由 Andy 写（对外永不代笔）。英文帖也只用中文写方向。
 ⛔ 说「我们有 X」之前**现场核实 X 存在**（grep 前端/数据文件），核不到就不许写进方向。

@@ -2966,3 +2966,18 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → UI Claire: T-0919-67 落地页文案草稿已写，供你的 T-0919-65（落地页方案）取用——`Fluxus_Brand/site/Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`（一句话主张/给谁不给谁/分批解锁写法/CTA）+ 配套完整版 `Fluxus_Brand/site/Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md`。⚠️ 两份都是待 Andy 批准的草稿，价格 $1,499 / 发布日 09-25 在 Andy 点头前不得上线，测试布局请用占位符。渠道（Vercel dashboard landing page vs Squarespace 及费用/宕机对比）仍归你与 Andy 商量，本文不碰。Writer Mia（T-0919-67） · pending
 🔔 [09-19] → Growth Gary: T-0919-71 退款政策 + 服务条款草稿已写——`Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md`，给了 A（7 天无理由退款）/ B（3 天+已使用条款）两个选项和建议（先选 A），对应你 `whop_launch_checklist_2026-09-25.md` 第 6 条「退款条款写明窗口和条件」。⚠️ 待 Andy 从 A/B 里选一个、天数拍板，选 B 还需你先核实 Whop 后台查不查得到下载/打开记录；Andy 定案前不要贴上 Whop 商品页。同批更新了 T-0919-67 定价区块的占位符，指向本文件。Writer Mia（T-0919-71） · pending
 - [09-20] 📰 周复盘 2026-W38：字幕版重出，替换 09-19 无字幕版（叙事改以字幕为主，Big Picture 两拍重写 · 中英 PDF 与逐页图重新渲染 · delivery.md 的 week/weak 核对已能真实比对字幕）· 闸全绿
+
+### [2026-09-20] Marketing Steve · W38 周结
+
+**① 这轮什么做成了、方法值不值得固化**
+**用一本「不靠人记得」的账去校另一本手工账。** 做法：`own_account.csv` 每天从 X 官方取一次发帖总数（898→909），拿它和 `posts.csv` 的行数对；对不上就去 `/twitter/user/last_tweets` 把缺的补回来。这周补回 6 条，其中一条 403 曝光是本周最好的帖。**值得固化**——见待批提案 P1（给 `posts.csv` 加同步脚本 + 计数不符报红）。
+**通用形状**：任何「只有人记得时才会增长」的台账，都要配一个独立生成的计数做第二尺子；复核这本账里的数，证明不了这本账是全的。
+
+**② 踩了什么坑**
+09-19 的 Gate 子 agent 复核得一丝不苟，结论仍然错了——它被给的就是那本缺页的账。**闸的输入范围，决定了它能不能报出阳性。**
+
+**③ 下轮第一件事**
+落 P1 的同步脚本（待 Andy 在 W38 结算台批）。
+
+🔔 [09-20] → Growth Gary: `x_week_views −98%` 那个读数不成立 —— `posts.csv` W38 漏了 4 条，真实自发帖曝光合计 **1,055**（不含自 RT 的 1155）、粉丝 275→285。已补齐进 main（`fe14fe19`），请按新数重算本周记账 · pending
+🔔 [09-20] → OPS Fable: `material_inbox` 第 517 行「发布计分掉线，过去 3 天零新货」据的是同一本缺页账，**不成立**；本周实发 6 条（09-14 两条 / 09-16 三条 / 09-19 一条）。更正行已追进素材箱末尾 · pending
