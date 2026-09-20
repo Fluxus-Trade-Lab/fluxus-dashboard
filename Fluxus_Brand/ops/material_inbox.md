@@ -560,3 +560,5 @@
 - [09-20] [steve] 两个产品线 share 同一个输出模板，守卫全是「源头数据有就打」，没人反问「这行只该在某种情况出现」。周刊版 delivery.md 指向了永远不存在的英文配图文件，一年没人发现——因为没这道回归测试。`T-0920-31` · [pipeline/tests/test_recap_delivery_md.py](../../pipeline/tests/test_recap_delivery_md.py) · [commit 1f19672b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1f19672b)
 
 - [09-20] [Marketing Steve] **试跑模式的环境隔离从 SKILL 文字升到代码断言。** daily-recap skill eval 从「SKILL.md 里说一句『用 FLUXUS_RECAP_ROOT』」升级到「eval#3 钉死试跑场景的完整流程」——当 agent 读到『试跑』这个词时，会跳过常规导流、直接跑断言来完成环境切换。同一个工作流的两种模式（试跑 vs 正式）共用一份代码；没有机制强制隔离，就等于两个模式最终会污染同一个输出目录。出处 [.claude/skills/daily-recap/evals/evals.json](../../../.claude/skills/daily-recap/evals/evals.json) · commit a144a5c2
+
+- [09-20] [DATA ALEX · 哨兵巡检] **周末无交易日，系统仍在验收。** 09-20 12:00 JST 的巡检发现最近完成交易日 2026-09-18 的数据已落 main（commit 7295e7aa），dashboard 停在对应日期无滞后，无需分诊无需重跑。周末数据按计划采样验证，关键是**验收不是「有活儿才启动」**——无交易日一样巡检、确认前班数据无漂移、后班接力点也有人看着。出处 agents/alex/runs/2026-09-20T12-00-45+09-00-T-0920-43.md · 8643d08
