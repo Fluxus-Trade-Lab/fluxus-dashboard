@@ -381,7 +381,8 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
             lines.append(f"- {lang}：{'通过' if p.get('ok') else '拦截'} · {p.get('pages', '—')} 页 · `{p.get('path', '')}`")
         jpgs = [r["file"] for recs in state.get("images", {}).values() for r in recs if r["file"].endswith(".jpg")]
         lines.append(f"- 图片宽 {IMG_WIDTH}px；超过 5MB 改 JPG 的：{', '.join(jpgs) if jpgs else '无'}")
-        lines.append("- X 配图：`x/img1–img4` = 英文版第 1–4 页")
+        if not iss.weekly:
+            lines.append("- X 配图：`x/img1–img4` = 英文版第 1–4 页")
     xp = state.get("x_post")
     if xp:
         from pipeline.content.recap.xpost import LIMIT, P2_MAX
