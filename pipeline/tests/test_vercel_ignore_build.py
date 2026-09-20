@@ -51,7 +51,7 @@ def _repo(tmp_path):
 
 def test_multi_commit_push_whose_last_commit_is_tests_only_still_builds(tmp_path):
     repo, deployed = _repo(tmp_path)
-    _commit(repo, 'frontend/src/x.js', 'export const x = 1')
+    _commit(repo, 'data/output/trades/X.json', '{"realized_R": 1}')
     _commit(repo, 'pipeline/tests/test_x.py', 'def test(): pass')
     assert _run(repo, previous_sha=deployed) == 1
 
@@ -59,24 +59,16 @@ def test_multi_commit_push_whose_last_commit_is_tests_only_still_builds(tmp_path
 def test_the_old_parent_commit_rule_would_have_skipped_that_push(tmp_path):
     """Positive control: without the previous-deploy base the same push is skipped."""
     repo, _ = _repo(tmp_path)
-    _commit(repo, 'frontend/src/x.js', 'export const x = 1')
+    _commit(repo, 'data/output/trades/X.json', '{"realized_R": 1}')
     _commit(repo, 'pipeline/tests/test_x.py', 'def test(): pass')
     assert _run(repo, previous_sha=None) == 0
 
 
 def test_docs_only_since_last_deploy_skips(tmp_path):
     repo, _ = _repo(tmp_path)
-    deployed = _commit(repo, 'frontend/src/a.js', 'export const a = 1')
+    deployed = _commit(repo, 'data/output/a.json', '{}')
     _commit(repo, 'docs/note.md', 'x')
     _commit(repo, 'data/research/r.md', 'y')
-    assert _run(repo, previous_sha=deployed) == 0
-
-
-def test_data_output_no_longer_watched(tmp_path):
-    """09-20: data/output 不再被 buildCommand cp 进产物，改由 rewrite 代理到
-    raw.githubusercontent.com——它变了不该再触发一次 Vercel build。"""
-    repo, deployed = _repo(tmp_path)
-    _commit(repo, 'data/output/trades/X.json', '{"realized_R": 1}')
     assert _run(repo, previous_sha=deployed) == 0
 
 
