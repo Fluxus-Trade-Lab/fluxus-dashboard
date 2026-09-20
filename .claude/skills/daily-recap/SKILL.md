@@ -47,6 +47,8 @@ owner: ops
 
 ## 工作流
 
+⚠️ **title 带「试跑」**：先看「试跑铁律」一节（本文件靠后），`export FLUXUS_RECAP_ROOT=…` 再往下走——日刊没有例外。
+
 1. 读当天 `data/output/`：breadth（state_board/mm/verdict）· groups（themes/industries 的 state+accel+perf_1d）· rotation（cuts+verdict）· asset_signals（`*_dist`+`rs_line_pctl_21`+`rel_volume`）· universe（个股 RS/量比/`atr_from_sma50`）· shortlist · market_health（算排列/斜率/缠绕）
 2. **对昨日做差**（breadth_archive / groups_history / asset_signals.csv）——只留变了的格子
 3. 收 Andy 当天的话：Discord #live-commentary（截图或导出）+ Founders Note；一句都不许丢
@@ -203,26 +205,26 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 
 ---
 
-## 试跑铁律（Andy 2026-09-20 追认，源于 T-0919-24 事故：试跑吃掉了 W38 正班）
+## 试跑铁律（ops 自修，源于 T-0919-24 事故：试跑吃掉了 W38 正班；不是口径/判断改动，不需要 Andy 点头）
 
-**任何 title 带「试跑」的出片班（日刊或周刊）**，第 0 步（时钟与幂等）之前先执行：
+**任何 title 带「试跑」的出片班（日刊或周刊）**，动手第一件事、在任何 `recap.run` 调用之前，先执行：
 ```bash
 export FLUXUS_RECAP_ROOT="$HOME/Documents/Trading/01_Market_Reports_Daily/_dryrun_$(date +%m%d)"
 ```
-本班全程（fetch/check/render/ledger-add）都在这个变量生效的同一个 shell 里跑——`RECAP_ROOT` 由 `pipeline/content/recap/__init__.py` 在启动时从环境变量 `FLUXUS_RECAP_ROOT` 读取，设了它，**幂等判断本身、pack、pdf、img、delivery.md、教育台账全部改落 `_dryrun_<MMDD>/`**，不会碰生产期号目录，也不会把幂等判断做在真实文件上。收工前自检：`echo $FLUXUS_RECAP_ROOT` 打印的路径含 `_dryrun`；`ls "$FLUXUS_RECAP_ROOT"` 看到的是当天试跑输出，不是历史正式期号。
+`RECAP_ROOT` 由 `pipeline/content/recap/__init__.py` 在启动时从这个环境变量读取；设了它，`fetch`/`check`/`render`/`ledger-add` 的全部产出（pack/pdf/img/delivery.md/教育台账）都改落 `_dryrun_<MMDD>/`，不碰生产期号目录。**下面各模式「幂等」那句手工判断也必须用同一个变量**（写法见下），否则判断本身仍会读到生产目录、给出假结论。⚠️ 教育选题台账（`_ledger/edu_topics.jsonl`）会跟着指向一个空文件，本班的 R1 去重闸这一轮形同虚设——试跑看到「选题不重复」不代表选题真的不重复，正班仍要用真台账核一遍。收工前自检：`echo $FLUXUS_RECAP_ROOT` 含 `_dryrun`；`ls "$FLUXUS_RECAP_ROOT"` 看到的是当天试跑输出，不是历史正式期号。
 
-**忘记这一步 = 试跑变成正班**：T-0919-24（09-19 22:49 ET 的试跑）没设这个变量，直接写进了 `2026-09/2026-W38/`；那时周六美东的周末回顾视频还没发布（`render_state.json` 的 `transcript_present:false`），出的是「无字幕版」，却被当成幂等锁死的正式成品——09-20 10:00 JST 的正班（T-0920-25）撞上幂等闸整班空转（详见 T-0920-30）。同一父目录下现成的 `_dryrun/`、`_dryrun_0913_oldrules/` 就是这个约定的先例，只是没被写进这份 skill、也没被 09-19 那次试跑用上。
+**忘记这一步 = 试跑变成正班**：T-0919-24（09-18 22:49 ET 的试跑，周五夜）没设这个变量，直接写进了生产目录 `2026-09/2026-W38/`；那时周六美东的周末回顾视频还没发布（`render_state.json` 的 `transcript_present:false`），出的是「无字幕版」，却被当成幂等锁死的正式成品——09-20 10:00 JST 的正班（T-0920-25）撞上幂等闸整班空转（详见 T-0920-30）。同一父目录下现成的 `_dryrun/`、`_dryrun_0913_oldrules/` 就是这个约定的先例，只是没被写进这份 skill、也没被那次试跑用上。
 
-此规矩只对 recap 这一类出片班生效：`RECAP_ROOT` 是仓库里唯一「产出永不进 git、靠本地文件存在与否做幂等」的路径（`pipeline/content/recap/__init__.py` 顶部注释「never into the repo」），别的班次（增长记账、仓库周检、内容台备稿、Discord→X 草稿）写的都是 `data/` 下 git 追踪的文件，撞车会在 git 层被看见，不需要这条铁律。
+此规矩只对 recap 这一类出片班生效：`RECAP_ROOT` 是仓库里唯一「产出永不进 git、靠本地文件存在与否做幂等」的路径（`pipeline/content/recap/__init__.py` 顶部注释「never into the repo」），别的班次（增长记账、仓库周检、内容台备稿、Discord→X 草稿）写的都是 `data/` 下 git 追踪、有 gate 审核的文件，撞车会在 git 层被看见，不需要这条铁律。**日刊出片班同理**：它的完整步骤书在 `ops-recap-daily`（守护进程 `schedule.json`，见 `.fluxus-ops-daemon` 仓库）里，第 0 步已经同步带上了这条铁律；这份 skill 的日刊「工作流」一节是老的、更概括的版本，没有编号步骤可挂——**日刊试跑一样先 export 这个变量，不要因为这份 skill 里日刊部分没写出来就跳过**。
 
 ## 周模式（recap-weekly 并入，2026-09-18）
 
 周复盘出片班（归 ops 线）。用中文工作与汇报。时间盒 90 分钟。成品发会员（PDF）与 Substack（逐页图 + PDF 附件）。**周刊不发 X**（Andy 原话「周复盘不发X」）。**只出片，不发布。**
 
 ### 第 0 步 · 时钟与幂等
-**title 带「试跑」先看上面「试跑铁律」，设好 `FLUXUS_RECAP_ROOT` 再往下走。**
+**title 带「试跑」先看上面「试跑铁律」，设好 `FLUXUS_RECAP_ROOT` 再往下走——下面这条判断也要用它。**
 `date '+%Y-%m-%d %A %H:%M %Z'`；工作树里 `python3 -c "from pipeline.marketcal import last_completed_session as l; print(l())"` 得到最近完成交易日 D，期号 W = D 所在 ISO 周，格式 `YYYY-Www`（如 `2026-W38`）。
-若 `~/Documents/Trading/01_Market_Reports_Daily/<D 的 YYYY-MM>/<W>/pdf/Market_Recap_<W>_EN.pdf` 已存在 → 汇报「W 已出过」并收工。
+若 `${FLUXUS_RECAP_ROOT:-$HOME/Documents/Trading/01_Market_Reports_Daily}/<D 的 YYYY-MM>/<W>/pdf/Market_Recap_<W>_EN.pdf` 已存在 → 汇报「W 已出过」并收工。
 
 ### 第 1 步 · 工作树（代码一律用 origin/main）
 ```bash
