@@ -203,11 +203,24 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 
 ---
 
+## 试跑铁律（Andy 2026-09-20 追认，源于 T-0919-24 事故：试跑吃掉了 W38 正班）
+
+**任何 title 带「试跑」的出片班（日刊或周刊）**，第 0 步（时钟与幂等）之前先执行：
+```bash
+export FLUXUS_RECAP_ROOT="$HOME/Documents/Trading/01_Market_Reports_Daily/_dryrun_$(date +%m%d)"
+```
+本班全程（fetch/check/render/ledger-add）都在这个变量生效的同一个 shell 里跑——`RECAP_ROOT` 由 `pipeline/content/recap/__init__.py` 在启动时从环境变量 `FLUXUS_RECAP_ROOT` 读取，设了它，**幂等判断本身、pack、pdf、img、delivery.md、教育台账全部改落 `_dryrun_<MMDD>/`**，不会碰生产期号目录，也不会把幂等判断做在真实文件上。收工前自检：`echo $FLUXUS_RECAP_ROOT` 打印的路径含 `_dryrun`；`ls "$FLUXUS_RECAP_ROOT"` 看到的是当天试跑输出，不是历史正式期号。
+
+**忘记这一步 = 试跑变成正班**：T-0919-24（09-19 22:49 ET 的试跑）没设这个变量，直接写进了 `2026-09/2026-W38/`；那时周六美东的周末回顾视频还没发布（`render_state.json` 的 `transcript_present:false`），出的是「无字幕版」，却被当成幂等锁死的正式成品——09-20 10:00 JST 的正班（T-0920-25）撞上幂等闸整班空转（详见 T-0920-30）。同一父目录下现成的 `_dryrun/`、`_dryrun_0913_oldrules/` 就是这个约定的先例，只是没被写进这份 skill、也没被 09-19 那次试跑用上。
+
+此规矩只对 recap 这一类出片班生效：`RECAP_ROOT` 是仓库里唯一「产出永不进 git、靠本地文件存在与否做幂等」的路径（`pipeline/content/recap/__init__.py` 顶部注释「never into the repo」），别的班次（增长记账、仓库周检、内容台备稿、Discord→X 草稿）写的都是 `data/` 下 git 追踪的文件，撞车会在 git 层被看见，不需要这条铁律。
+
 ## 周模式（recap-weekly 并入，2026-09-18）
 
 周复盘出片班（归 ops 线）。用中文工作与汇报。时间盒 90 分钟。成品发会员（PDF）与 Substack（逐页图 + PDF 附件）。**周刊不发 X**（Andy 原话「周复盘不发X」）。**只出片，不发布。**
 
 ### 第 0 步 · 时钟与幂等
+**title 带「试跑」先看上面「试跑铁律」，设好 `FLUXUS_RECAP_ROOT` 再往下走。**
 `date '+%Y-%m-%d %A %H:%M %Z'`；工作树里 `python3 -c "from pipeline.marketcal import last_completed_session as l; print(l())"` 得到最近完成交易日 D，期号 W = D 所在 ISO 周，格式 `YYYY-Www`（如 `2026-W38`）。
 若 `~/Documents/Trading/01_Market_Reports_Daily/<D 的 YYYY-MM>/<W>/pdf/Market_Recap_<W>_EN.pdf` 已存在 → 汇报「W 已出过」并收工。
 
