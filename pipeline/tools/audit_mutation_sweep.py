@@ -15,6 +15,8 @@ were reviewed -- but every survivor is a line the suite does not actually pin.
     python3 -m pipeline.tools.audit_mutation_sweep --module audit_archives
     python3 -m pipeline.tools.audit_mutation_sweep --json out.json
     python3 -m pipeline.tools.audit_mutation_sweep --module audit_x --repeat 3
+    python3 -m pipeline.tools.audit_mutation_sweep --module audit_x --list-sites
+    python3 -m pipeline.tools.audit_mutation_sweep --module audit_x --index-from 0 --index-to 40
 
 `--repeat N` exists because this instrument was caught disagreeing with
 itself: same commit, same machine, same module, four runs, kill rates
@@ -143,6 +145,16 @@ class Workspace:
         self.dir = Path(tempfile.mkdtemp(prefix="mutsweep-"))
         shutil.copytree(ROOT / "pipeline", self.dir / "pipeline")
         (self.dir / "data").symlink_to(ROOT / "data")
+        # .github is COPIED, not symlinked: it is small, and a guard's tests
+        # reading it must not be able to write through to the real repo. Left
+        # out entirely (until 2026-09-21) it made audit_schedule_windows --
+        # whose whole job is reading the workflow crons -- report "baseline is
+        # already red", which reads as "that guard's tests are broken" when the
+        # truth was "this workspace is missing what they read". A sweep that
+        # cannot build a green baseline must say what is missing, not accuse
+        # the tests.
+        if (ROOT / ".github").exists():
+            shutil.copytree(ROOT / ".github", self.dir / ".github")
         for name in ("pytest.ini", "setup.cfg", "pyproject.toml", "conftest.py"):
             if (ROOT / name).exists():
                 shutil.copy2(ROOT / name, self.dir / name)
@@ -174,7 +186,19 @@ class Workspace:
         return r.returncode == 0, r.returncode, round(time.time() - t0, 1)
 
 
-def sweep(module, verbose=True, repeat=1):
+def sweep(module, verbose=True, repeat=1, index_from=0, index_to=None):
+    """Sweep mutants [index_from, index_to) of `module`. Defaults to all of them.
+
+    The range exists because a full sweep of every guard is ~1100 pytest runs
+    and the slow guards are minutes each, which does not fit in one sitting.
+    Slicing lets the sweep be run in chunks and resumed, and the chunks are
+    mergeable: `total_sites` is the same in every slice, so a set of slices
+    covering [0, total_sites) reconstructs the whole-module numbers exactly.
+
+    Site ordering is `ast.walk` over a freshly parsed tree, so indices are
+    stable for a given source -- and only for that source. Edit the guard and
+    the slices no longer line up; `total_sites` is in every report so a merge
+    across an edit is caught rather than silently mixed."""
     if not (TESTS / f"test_{module}.py").exists():
         return {"module": module, "error": f"no test file test_{module}.py"}
 
@@ -182,13 +206,16 @@ def sweep(module, verbose=True, repeat=1):
     src_lines = src.splitlines()
     cands = sites(ast.parse(src))
 
+    lo = max(0, index_from)
+    hi = len(cands) if index_to is None else min(index_to, len(cands))
+
     survivors, unstable, killed, errored, timed_out = [], [], 0, 0, 0
     with Workspace() as ws:
         mod_path = ws.module_path(module)
         if ws.run_tests(module)[0] is not True:
             return {"module": module, "error": "baseline is already red; refusing to sweep"}
 
-        for i in range(len(cands)):
+        for i in range(lo, hi):
             node, kind, how = sites(ast.parse(src))[i]
             info = describe(node, kind, how, src_lines)
             info["index"] = i          # descriptors are NOT unique; the index is
@@ -230,6 +257,7 @@ def sweep(module, verbose=True, repeat=1):
     return {"module": module, "mutants": total, "killed": killed,
             "survived": len(survivors), "skipped": errored,
             "unstable": len(unstable), "no_verdict": timed_out, "repeat": repeat,
+            "total_sites": len(cands), "index_from": lo, "index_to": hi,
             "kill_rate": round(killed / total, 3) if total else None,
             "survivors": survivors, "unstable_mutants": unstable}
 
@@ -244,16 +272,36 @@ def main(argv=None):
                     help="run each mutant N times; a mutant that is green in one "
                          "trial and red in another is reported as UNSTABLE and "
                          "kept out of the kill rate (default 1)")
+    ap.add_argument("--index-from", type=int, default=0, metavar="I",
+                    help="first mutant index to run (default 0)")
+    ap.add_argument("--index-to", type=int, default=None, metavar="J",
+                    help="stop before this mutant index; a full sweep is ~1100 "
+                         "pytest runs, so run it in slices and merge the reports")
+    ap.add_argument("--list-sites", action="store_true",
+                    help="print every mutation site with its index and exit, "
+                         "without running anything (use it to plan slices)")
     a = ap.parse_args(argv)
 
     mods = a.module or sorted(p.stem for p in TOOLS.glob("audit_*.py")
                               if p.stem != Path(__file__).stem)
+    if a.list_sites:
+        for m in mods:
+            path = TOOLS / f"{m}.py"
+            src_lines = path.read_text().splitlines()
+            cands = sites(ast.parse(path.read_text()))
+            print(f"\n{m}  ({len(cands)} sites)")
+            for i, (node, kind, how) in enumerate(cands):
+                d = describe(node, kind, how, src_lines)
+                print(f"  [{i:4d}] L{d['line']:<4} {d['change']:<28} {d['source'][:60]}")
+        return 0
+
     t0 = time.time()
     report = {"modules": []}
     for m in mods:
         if not a.quiet:
             print(f"\n{m}")
-        report["modules"].append(sweep(m, verbose=not a.quiet, repeat=a.repeat))
+        report["modules"].append(sweep(m, verbose=not a.quiet, repeat=a.repeat,
+                                       index_from=a.index_from, index_to=a.index_to))
     report["seconds"] = round(time.time() - t0, 1)
 
     print("\n" + "=" * 68)
@@ -266,8 +314,12 @@ def main(argv=None):
             extra += f"   ⚠ {r['unstable']} UNSTABLE"
         if r.get("no_verdict"):
             extra += f"   {r['no_verdict']} timed out (no verdict)"
+        if r.get("index_from") or (r.get("index_to") is not None
+                                   and r.get("index_to") != r.get("total_sites")):
+            extra += f"   [slice {r['index_from']}:{r['index_to']} of {r['total_sites']}]"
+        rate = f"({r['kill_rate']:.0%})" if r["kill_rate"] is not None else "(n/a)"
         print(f"{r['module']:24s} {r['killed']:3d}/{r['mutants']:3d} killed "
-              f"({r['kill_rate']:.0%})   {r['survived']} survived{extra}")
+              f"{rate}   {r['survived']} survived{extra}")
     if a.json:
         a.json.write_text(json.dumps(report, indent=1))
         print(f"\nreport -> {a.json}")

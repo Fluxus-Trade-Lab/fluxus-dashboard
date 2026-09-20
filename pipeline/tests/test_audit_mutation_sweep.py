@@ -208,3 +208,105 @@ def test_no_bytecode_cache_is_left_for_the_mutated_module(
         import shutil
         shutil.rmtree(kept.get("dir", tmp_path / "nope"), ignore_errors=True)
         monkeypatch.setattr(sweep_mod.Workspace, "__exit__", real_exit)
+
+
+# --------------------------------------------------------------------------
+# slicing -- a full sweep is ~1100 pytest runs and does not fit in one sitting
+
+SIX_SITES = "A = (1, 2, 3, 4, 5, 6)\n"
+IMPORTS_ONLY = """
+    from pipeline.tools import fake_guard
+
+    def test_it_imports():
+        assert fake_guard.A
+"""
+
+
+def test_a_slice_runs_only_the_mutants_in_its_range(tmp_path, point_sweep_at):
+    """The failure this pins: the range argument is accepted and ignored.
+
+    A sweep that quietly runs all six mutants still returns a plausible-looking
+    report; the only thing that gives it away is the count."""
+    name = make_repo(tmp_path, SIX_SITES, IMPORTS_ONLY)
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep(name, verbose=False, index_from=2, index_to=4)
+    assert r["mutants"] == 2, r
+    assert {s["index"] for s in r["survivors"]} == {2, 3}
+
+
+def test_slices_carry_the_whole_module_site_count_not_the_slice_size(
+        tmp_path, point_sweep_at):
+    """`total_sites` is what makes slices mergeable and what catches a merge
+    across an edit to the guard. If it were the slice size it would be a
+    restatement of `mutants` and would say nothing."""
+    name = make_repo(tmp_path, SIX_SITES, IMPORTS_ONLY)
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep(name, verbose=False, index_from=4, index_to=6)
+    assert r["total_sites"] == 6, r
+    assert r["index_from"] == 4 and r["index_to"] == 6
+
+
+def test_complementary_slices_reconstruct_the_whole_module(tmp_path, point_sweep_at):
+    """The failure this pins: slices that overlap or leave a gap.
+
+    Off-by-one at the boundary is invisible per-slice -- each report looks
+    fine -- and only shows up when the pieces are added back together."""
+    name = make_repo(tmp_path, SIX_SITES, IMPORTS_ONLY)
+    point_sweep_at(tmp_path)
+    whole = sweep_mod.sweep(name, verbose=False)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    assert a["mutants"] + b["mutants"] == whole["mutants"]
+    assert a["killed"] + b["killed"] == whole["killed"]
+    merged = {s["index"] for s in a["survivors"]} | {s["index"] for s in b["survivors"]}
+    assert merged == {s["index"] for s in whole["survivors"]}
+
+
+def test_a_range_past_the_end_is_an_empty_slice_not_a_crash(tmp_path, point_sweep_at):
+    """Chunked runs walk off the end by construction -- the last chunk of a
+    fixed stride is short. That has to be an empty report, not a traceback,
+    and its kill rate has to be None rather than a divide-by-zero or a 0%
+    that would drag a merged average down."""
+    name = make_repo(tmp_path, SIX_SITES, IMPORTS_ONLY)
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep(name, verbose=False, index_from=99, index_to=200)
+    assert r["mutants"] == 0 and r["survived"] == 0
+    assert r["kill_rate"] is None
+    assert r["total_sites"] == 6
+
+
+def test_workspace_carries_github_so_workflow_reading_guards_can_be_swept(
+        tmp_path, point_sweep_at):
+    """A guard that reads `.github/` must be sweepable.
+
+    Until 2026-09-21 the workspace copied `pipeline/` and symlinked `data/` and
+    nothing else, so `audit_schedule_windows` -- whose entire job is reading the
+    workflow crons -- came back "baseline is already red; refusing to sweep".
+    Nothing was wrong with its tests: 86 mutants, 56% killed once the workspace
+    stopped being incomplete. The failure mode this pins is a diagnosis that
+    points at the wrong thing."""
+    name = make_repo(tmp_path, '''
+        from pathlib import Path
+
+        ROOT = Path(__file__).resolve().parents[2]
+        LIMIT = 10
+
+        def cron_lines():
+            text = (ROOT / ".github" / "workflows" / "fake.yml").read_text()
+            return [ln for ln in text.splitlines() if "cron" in ln]
+    ''', """
+        from pipeline.tools.fake_guard import cron_lines, LIMIT
+
+        def test_reads_the_workflow():
+            assert len(cron_lines()) == 2
+            assert LIMIT == 10
+    """)
+    wf = tmp_path / ".github" / "workflows"
+    wf.mkdir(parents=True)
+    (wf / "fake.yml").write_text("on:\n  schedule:\n"
+                                 "    - cron: '20 20 * * 1-5'\n"
+                                 "    - cron: '30 1 * * 1-5'\n")
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep(name, verbose=False)
+    assert not r.get("error"), r
+    assert r["mutants"] > 0, r
