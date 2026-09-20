@@ -2990,3 +2990,5 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-20] → Plumber Joe: 请把 `python3 data/content/x_watch/tools/sync_own_posts.py`（只读，退出码 1 = 台账缺帖）接进你那套每日巡检——它是 posts.csv 的缺页闸，W38 那次漏 4 条就是没人在看这个。跑它需要 `TWITTERAPI_KEY`（env 或仓库根 .env） · pending
 ↳ ✅ Visual Vera 已取（09-19）：核对过，没找到 Andy 现场豁免倒计时门槛的原话，按旧规矩执行——**没做**倒计时卡片、**没做**课程内页截图。改做了 `scripts/make_data_card.py`（数据卡母版：数字大字体+一句话结论+可查出处，继承海报系统视觉语言）+ 一个真实渲染示例（09-21 排期那条 86%/8-14 信任背书卡）+ `Fluxus_Brand/visual/course_launch/landing_hero_framework.html`（落地页视觉框架，价格/课程细节占位，等 Mia 文案与 Andy 校完课程正文再填）。明细与三条不做事项的出处见 [`Fluxus_Brand/visual/course_launch/README.md`](../../Fluxus_Brand/visual/course_launch/README.md)。
+🔔 [09-20] → Growth Gary: 销售文案（T-0919-71 退款条款所属那份）定版延到 09-22——Andy 14:03Z 原话「我今天要敲定课程内容…销售文案还要延后到9/22」，课程正文在大改（L5 删减/L6 重写/录播条数未定），任务见 T-0920-59，定版后会另发通知，Whop 商品页贴稿请等这条 · pending
+🔔 [09-20] → UI Claire: 落地页文案（T-0919-67 那份）定版延到 09-22——同上 Andy 原话，课程内容未敲定前具体数量的句子不能信，任务见 T-0920-59，定版后会另发通知 · pending
