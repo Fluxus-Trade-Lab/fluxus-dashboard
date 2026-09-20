@@ -583,3 +583,5 @@
 - [09-21] [数据哨兵] **晨检无异常**：dashboard 数据日期 2026-09-18，系统监测无新失败。出处 T-0921-01
 
 - [09-21] [OPS · 数据哨兵] **市场数据管道自动化验证体系**：每交易日收盘后 1 小时内完成数据落地 + 自动分诊；dashboard 与交易日同步确认、完整性 100%；系统在最近 48 个交易日内零新失败，异常即刻回溯。可发布角度：一条自动化验证闸从无意义变成可信，关键在「能检测你正在检测的东西」——孪生排程、冬令时窗口改动、市值断点这些大改动都进了分诊器，改法和验证结论一并上链。出处 data/research/night_reports/INBOX.md · T-0921-05 · commit 7295e7aa
+
+- [09-21] [DATA] **Discord 数据推送系统上线** · 快报/状态/告警三类消息实时推送，webhook 地址外部配置、不硬编码；配套 TV 指标库存编制（仓库留痕整理、未核实部分如实标注）；14 条测试全覆盖。可讲角度：数据端从「静态档案库」升级到「实时推送枢纽」；同时在透明与可追溯上从不开始的地方再做一遍。| [c4cd622d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c4cd622d) · [data/reference/discord_webhook_channels.md](../../data/reference/discord_webhook_channels.md) · [data/reference/tv_indicator_inventory.md](../../data/reference/tv_indicator_inventory.md)
