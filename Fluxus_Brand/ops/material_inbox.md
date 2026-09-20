@@ -545,3 +545,5 @@
 
 - [09-20] [Marketing Steve] **「检查全绿，其实少了一维」—— 数据哨兵完成时点维的升级。** 质检长期在量「有没有值」，没人量过「这批值是哪一刻的」；Linda 用标准指标(RVOL聚合版)补上这一维，回扫发现 156 份快照的 13 份来自错时刻（盘前 5、avg_volume 断 8、零库存 9 场），推动了下游四层闸的联动修复。**坏数据不长得像坏，它长得像一份很干净的数据，只是生于错误的时刻。** 出处 [data/research/universe_freshness_2026-09-20/](../../data/research/universe_freshness_2026-09-20/) · 8e466eb2（审计）· 8daab11f（修复）
 - [09-20] [DATA Linda] **时钟对了，货可以不对。** backfill_preset_hits 的时钟闸（timestamp/bar_date 双核对）看的是「这份货是哪一刻的」，宝宝就算全绿——盘前 payload `bar_date: 2026-08-18`、timestamp 解出 `last_completed_session: 2026-08-18` 也全对，但它**根本没有** 2026-08-18 一整天的交易。双时钟无法区分「时刻错」和「时刻对但不完整」，这就是为什么需要第三把闸（RVOL 分子分母同时活着的质检）。**机制最怕的不是「对」和「错」混淆，而是在「对」的频道上无法区分「完整」和「不完整」。** 出处 [data/research/universe_freshness_2026-09-20/ §七](../../data/research/universe_freshness_2026-09-20/README.md#七-留下的那个真问题现有的闸挡不住它) · audit_universe_freshness 与 backfill_preset_hits 的分工设计
+
+- [09-20] [Marketing Steve] **蒸馏厂今日一问 · C19「顶是过程底是事件」** · 大盘顶部通常长什么样？第一段音频约 5 分钟。出处 [data/reference/VAULT_STATUS.md](../../../data/reference/VAULT_STATUS.md) · 0ba27ad0
