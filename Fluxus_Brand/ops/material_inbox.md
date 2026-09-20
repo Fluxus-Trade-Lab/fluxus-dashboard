@@ -587,3 +587,5 @@
 - [09-21] [OPS · 数据哨兵] **市场数据管道自动化验证体系**：每交易日收盘后 1 小时内完成数据落地 + 自动分诊；dashboard 与交易日同步确认、完整性 100%；系统在最近 48 个交易日内零新失败，异常即刻回溯。可发布角度：一条自动化验证闸从无意义变成可信，关键在「能检测你正在检测的东西」——孪生排程、冬令时窗口改动、市值断点这些大改动都进了分诊器，改法和验证结论一并上链。出处 data/research/night_reports/INBOX.md · T-0921-05 · commit 7295e7aa
 
 - [09-21] [DATA] **Discord 数据推送系统上线** · 快报/状态/告警三类消息实时推送，webhook 地址外部配置、不硬编码；配套 TV 指标库存编制（仓库留痕整理、未核实部分如实标注）；14 条测试全覆盖。可讲角度：数据端从「静态档案库」升级到「实时推送枢纽」；同时在透明与可追溯上从不开始的地方再做一遍。| [c4cd622d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c4cd622d) · [data/reference/discord_webhook_channels.md](../../data/reference/discord_webhook_channels.md) · [data/reference/tv_indicator_inventory.md](../../data/reference/tv_indicator_inventory.md)
+
+- [09-21] [数据哨兵] **系统可靠性从「有故障才维护」升级到「持续验收」** · 最近 48 个交易日数据巡检零新失败；新鲜度闸从「看有没有值」升级到「看什么时刻的值」；盘前快照自检识别率 5/5（156 份历史快照回扫：盘前 5 份、avg_volume 断供 8 份、库存为零 9 场景），对应下游四层修复闭环。可讲角度：坏数据不长得像坏，它长得像一份很干净的数据，只是生于错误的时刻。验收升级的代价是成本（每班重核），但不做就靠运气——而运气在你有 5,600+ 只证券的池子里是一个不可靠的闸。出处 [data/research/universe_freshness_2026-09-20](../../data/research/universe_freshness_2026-09-20) · [8e466eb2](../../commit/8e466eb2)（审计）· [8daab11f](../../commit/8daab11f)（修复）· T-0921-15
