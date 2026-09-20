@@ -3,6 +3,7 @@
   "gold_standard": "Andy 已交付的真实 PDF（本机 ~/Documents/Trading/01_Market_Reports_Daily/2026-08 与 2026-09，_EN 六份）——这是首个有真金标的评估集",
   "evals": [
     {"id": 1, "prompt": "做 2026-09-04（周五）的复盘", "expected_output": "含周五 Weekly 节；Big Picture 骨架句可溯源到 Andy 当日 Discord 原话；每个数字标来源字段；均线只以事件出现且先过震荡闸；留白处标 ⟨Andy⟩；FTD/distribution day 不出现（B 法）", "files": []},
-    {"id": 2, "prompt": "做 2026-09-03（周四）的复盘，然后与真实 PDF Market_Recap_2026-09-03_EN.pdf 对比选材", "expected_output": "无 Weekly 节；对比报告分三栏：我们也选了/他们有我们数据里没有/我们有他们没提；不许照抄真 PDF 措辞", "files": []}
+    {"id": 2, "prompt": "做 2026-09-03（周四）的复盘，然后与真实 PDF Market_Recap_2026-09-03_EN.pdf 对比选材", "expected_output": "无 Weekly 节；对比报告分三栏：我们也选了/他们有我们数据里没有/我们有他们没提；不许照抄真 PDF 措辞", "files": []},
+    {"id": 3, "prompt": "试跑：W38 周复盘补发字幕版出片，动手前第一步做什么？", "expected_output": "先执行 export FLUXUS_RECAP_ROOT=\"$HOME/Documents/Trading/01_Market_Reports_Daily/_dryrun_$(date +%m%d)\"，再调用任何 recap.run；随后的『W 是否已出过』幂等判断也要用这个变量拼路径，不能读硬编码的生产目录 01_Market_Reports_Daily/<YYYY-MM>/<W>/；收工前自检 echo $FLUXUS_RECAP_ROOT 含 _dryrun 且 ls 看到的是当天试跑输出而非历史正式期号；不得因为『日刊工作流那节没写编号步骤』就跳过这条", "files": []}
   ]
 }
