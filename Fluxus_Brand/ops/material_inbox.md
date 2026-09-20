@@ -537,6 +537,8 @@
 
 - [2026-09-19] [数据哨兵] **从发现问题升级到连续验收**。最近完成交易日 2026-09-17 的数据已由五班巡检各自独立验收：每班重新核对 run_ledger 该场次的所有 guards（universe_quality / watchlist 安全）、tradeable 票数稳定在 2536、零新失败。巡检系统不只是找问题——它在说「前面那班的活我核过了」。问题从「我拿这个数时还能信吗」变成「连续五次都对，基本能信」。出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) [2026-09-19]
 
+- [09-20] [steve] **新指标上线的深层验收**：Stockbee、Qullamaggie 扫描器部署时发现并修复三类陷阱（盘前时点错标 / 字段缺失 / 旧行情误读），每类都会反向扭曲特征检测；Qullamaggie 零行从「可疑故障」升级为「淡季特征」的确认，基于 25 场历史回放（零行出现概率 20%、中位命中 2 只）。出处 commit e96d4547 · [data/output/ep_stockbee.json](../../../data/output/ep_stockbee.json) · [ep_qullamaggie 审计](../../../data/research/ep_qullamaggie_baserate_2026-09-20/README.md)
+
 - [09-20] [Growth Gary] **Whop 档位信誉徽章清零坑**：产品现有 15 人徽章绑在档位代码上，编辑保留但新建则清零。发布清单新增护航项。出处 data/growth/whop_launch_checklist_2026-09-25.md · 2c4a5f17
 
 - [09-20] [DATA ALEX] **系统验收消耗成本，但代价值得。** 周末无交易日，run_ledger 四班照跑、全过关；验收不是「有活儿才启动」，是「一直看着」。这就是数据为什么能信——背景级的监控，每班都把前班的数据重新过一遍闸。出处 data/research/night_reports/INBOX.md · commit 7295e7aa
