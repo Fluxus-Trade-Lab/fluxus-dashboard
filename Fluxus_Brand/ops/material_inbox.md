@@ -556,3 +556,5 @@
 - [09-20] [编辑部] **markdown 规矩靠不住；断言测试才能防住系统约定被悄悄改变。** 试跑重定向从「只在 SKILL.md 里说」升级到「代码里有断言钉死」——09-19 的事故如何倒逼出 09-20 的防线。出处 01e8909f
 
 - [09-20] [Marketing Steve] **周复盘 W38 字幕版上线** · 09-19 试跑版缺字幕且未递送；字幕版重写大盘叙事、中英 PDF 全新渲染（EN 7 页 / ZH 6 页），交付闸全绿 · 出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) · ab744aa3
+
+- [09-20] [steve] 两个产品线 share 同一个输出模板，守卫全是「源头数据有就打」，没人反问「这行只该在某种情况出现」。周刊版 delivery.md 指向了永远不存在的英文配图文件，一年没人发现——因为没这道回归测试。`T-0920-31` · [pipeline/tests/test_recap_delivery_md.py](../../pipeline/tests/test_recap_delivery_md.py) · [commit 1f19672b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1f19672b)
