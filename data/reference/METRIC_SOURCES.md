@@ -316,3 +316,16 @@ FTD 口径来源：[Quantifiable Edges — IBD Follow Through Days pt.1（含 19
 两条区分对照没有删掉，改成守「它不该回来」：`sma50_r` 与 `ema21_r` 各自那条断言现在检查
 **列不存在**，同时仍然断言 `atr_from_sma50` / `ema21_atr_dist` 不等于旧比值——08-24 那次
 misport 正是把这两者搞混，对照要留着。
+
+## 外部规则的口径登记（2026-09-21，T-0921-100，Linda）
+
+Andy 09-21「四条交给 Linda 测」。四条来自 X 上两位外部交易者。**动手之前逐条查了标准**，
+结论：两条有公开口径（照抄），两条查无标准（自造，已在脚本 docstring 明写偏离）。
+检验结果与台账：[`data/research/four_rules_2026-09-21/`](../research/four_rules_2026-09-21/README.md)。
+
+| 我们要测的 | 标准名 / 一手出处 | 标准口径 | 状态 |
+|---|---|---|---|
+| 难买日「守住前一天低点」 | **RS Day**（[TraderLion Relative Strength Essentials](https://traderlion.com/markets-essentials/relative-strength-essentials/)、[Deepvue: Find Strong Stocks On Down Days](https://deepvue.com/screener/find-strong-stocks-on-down-days/)） | 「市场创新低而这只票没跌破自己的前低」；Deepvue 另给可检验的「修正期 RS Day 占比 >60% 是潜在龙头」 | ✅ **照抄，未自造**。两条都测了：单日版的新高优势按离 52 周高点的距离一分档就塌成 0；>60% 版 63 日超额中位 −12.49% vs +2.08%，创新高概率却 47.7% vs 32.0% |
+| RSP 广度读数 | **RSP/SPY 比值**（[CXO Advisory](https://www.cxoadvisory.com/technical-trading/rspspy-as-a-stock-market-breadth-indicator/)）；标准的均线广度量是 %above-50MA | 等权除市值加权的比值；或成分股在 50 日线上方的占比 | ⚠️ **原规则「RSP 对它自己的 50 日线」查无标准，是外部作者自造**——它测的是方向不是广度。我们照原话测了（gap −0.06pp，90% 区间跨 0），并把有出处的比值版一起报（−0.55pp，同样跨 0） |
+| 「动能趋势里第一次回踩 20 日线」 | 形状有公开原型：TradingView 开源脚本 *Optimized 1st Touch 10SMA After Run*、Bulls on Wall Street *First Pullback* | 各家的「一段拉升」定义不同，无统一口径；**「动能趋势」查过，无标准定义** | ⚠️ **自造**：gate = 20MA>50MA 且 20MA 十日前上行；RUN ≥15 日未碰 20MA。六个变体全跑，结论不随参数变。不得上页冒充标准读数 |
+| 「族群里谁先回 52 周新高」 | 「买新高」有一手出处：O'Neil 1959 原始研究；[O'Neil Global Advisors 量化复核](https://www.oneilglobaladvisors.com/documents/FG/oneil/research/617948_OGA_Breakouts-OGA.pdf)（breakout 3M +1.1% alpha / +3.2% 收益） | 52 周新高本身有标准；**「组内谁先回新高」这个排序器查无标准** | ⚠️ **排序器自造**；52 周新高与修正识别**照抄** SwingMasterclass `_bench/appJ_correction_leaders.py`（收盘 ≥ 过去 252 根最大值；SPY 日内 52 周新高之间跌幅 ≥10%）。appJ 那 11 次修正与我们逐条一致 |
