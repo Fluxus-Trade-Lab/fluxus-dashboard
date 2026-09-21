@@ -200,6 +200,8 @@
 
 ## 📥 追加到这里
 
+- [09-21] [steve] **基线也会犯错：快照反向吃掉整班数据** · schema_snapshot 基线不是只能「滞后」，反过来它也能「领先」——基线先加 4 个字段、数据还没跟上的那 9 小时，夜间管线要合一份内容「比基线还少」的 JSON，闸会拦住说「缺字段」。**这两个错误（基线滞后 vs 基线超前）的源头相同——验收清单有多道闸，最后那道漏了更新**。整班数据停在 21:20 UTC 的危险区间，等我们回过神补一行 schema 路径。可讲角度：逆向 bug 通常比正向的贵，因为它长得像一份很对的数据，直到发现「比标准还好」这一刻。出处 [T-0921-118](../../tasks/T-0921-118.md) · [bbbe9f2e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bbbe9f2e)
+
 - [09-21] [steve] sugar_babies 字段新增流程检验：代码通过、契约落线、自动化基线漏一步 → 整班数据被拦。同样形状的「改动成功却因基线滞后被拦」已出现两次（09-18 watchlist.top20_industry、09-21 sugar_babies）——触发三次律，需要在管道里加自动同步机制。体系病源：新增字段时「改代码、改文档」两步对编码者成本很低，第三步（补基线）成本属于「等等再说」档，9 小时后就会把整班数据卡到 21:20 UTC。出处 [a1090655](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a1090655) · [T-0921-96](../../tasks/T-0921-96.md)
 
 - [09-21] [steve] EP 财报季轮动数据交付：Biotech 从 Q1 27 命中→Q2 16 命中、Semiconductors 季度间排名变化具体量化，直接用于课程《轮动》§5。[T-0921-92 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
