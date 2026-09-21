@@ -7,7 +7,12 @@
 2. 永不使用 `git stash`；需要切分支先 commit。永不在别人的 worktree 里工作。
 3. 更新数据文件用外科手术式拉取：`git fetch origin && git checkout origin/main -- data/output/ data/history/`，不要 stash+pull。
 
-**通信**：跨线请求/答复先写 `data/reference/DATA_CONTRACTS.md` §七 契约行（事实带日期），消息只当门铃。
+**⭐ 通信＝任务板（Andy 2026-09-22 原话「退门铃 补回程 都做」；本条取代下面所有门铃相关条文）**：
+- **跨线提问、派活、转交，一律开任务板单**：`python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --body-file <正文>`。守护进程 60 秒内派该线的工人接手，这是**推送**；门铃要等对方下次开工自己来取，是**拉取**——09-21 Studio Q 问 DATA ALEX 的 GICS 三问，ALEX 29 分钟就答了，但回程没人敲门，提问方和 Andy 都没收到。
+- **INBOX 🔔 门铃自即日起停用**：不再新写 🔔 行；存量门铃各线取完即止，取铃命令可以继续跑到存量清零。
+- **回程自动**：一张单做完（`done`/`close`）时，若它是别的线开给你的，任务板自动给**开单的那条线**挂一张「答复到了」的单——提问方不用守着信箱。
+- `DATA_CONTRACTS.md` §七 契约行**照旧用来记事实与裁决**（带日期、可追溯），但它是档案，不是通知渠道；要对方动手，就开单。
+- 无人值守禁发消息的铁律不变——任务板本来就不是消息。
 
 **存量追认（Andy 2026-08-31 原话：「追认：批 C1 C2 C3 C4 C5 C6 C7 C8」）**：
 本文件历史上有 8 次改动是 AI 自撰、正文与 commit message 里都没有 Andy 署名——**它们现在全部经 Andy 追认，等同亲批**：
@@ -23,7 +28,7 @@
 - **无人值守运行时**跨会话工具通常不可用：投递 = 写耐久处 + push，这就算送到。**但 Andy 在你的会话里交互时工具会变可用**——那时也照上面两条办（指名或不发），不许因为"能发了"就广播。
 - **门铃写实（08-30 深检定案，Andy 批）**：门铃无仓库痕迹、从不是投递的生效环节——生效靠契约行/挂单；**闭环审计只认收件线的 commit**，别把门铃当链条环节考核。
 
-**门铃自取制（Andy 2026-09-11 批，原话「定时会话不能发消息，这个要改」；Joe 第二次撞上 send_message 拒发后立）**：
+**门铃自取制（Andy 2026-09-11 批，原话「定时会话不能发消息，这个要改」；Joe 第二次撞上 send_message 拒发后立）——⛔ 已于 2026-09-22 退役，见上面「通信＝任务板」；下文仅作存量门铃取完前的操作说明**：
 定时会话按不了门铃是 harness 设计 + 本宪法铁律（无人值守禁发），**不改这条，改门铃的方向——从「发给你」改成「你来取」**：
 - **写门铃**：任何会话要通知某线，往 `data/research/night_reports/INBOX.md` 追一行固定格式：`🔔 [MM-DD] → <TEAM.md 线名>: <一句话+在哪> · pending`（append-only，走直推 main）。
 - **取门铃**（09-16 改，Andy 原话「批了，改吧」；提案 `data/reference/proposals/2026-09-16_doorbell_fetch_reads_receipts.md`）：每条定时线任务书的开工步固定含一句——`git -C /Users/taolezhu/Documents/AI-Trading-System show origin/main:pipeline/tools/doorbells.py | python3 - --repo /Users/taolezhu/Documents/AI-Trading-System --to <自己线名>`（云端 checkout 里直接 `python3 -m pipeline.tools.doorbells --to <自己线名>`），它只列**没人取的**门铃，列出的先读再开工，处理后在该行下追 `↳ ✅ <线名> 已取（MM-DD）`。旧的 `grep "🔔.*pending"` 不再用：门铃行办完仍写着 pending，grep 会把已办的一起列出来（09-16 每日页据此报「OPS 滞留 9 条」，实际 4 条）。
@@ -51,7 +56,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 **这行的用途是量「真的调没调」**——周检数过去 7 天 `skill-used:` 与 `skill-skipped:` 的行数比，
 替掉了官方描述优化器那个触发率（那套评测脚本有桩名冲突缺陷，把真触发记成未触发，读数无分辨率）。
 
-**开工认领——挂单不挂人（Andy 2026-08-27 定；治「找不到收件人」的第五次事故根）**：跨线的活可以**挂单**（写进门铃待按/待合分支/§七§12 契约行三处之一，不指名也算投递）；各线**开工先读联邦看板「待认领」列**（`python3 pipeline/tools/federation_board.py . board.html`，或直接读三个数据源），认领属于自己线的再开新活。点对点门铃仍然只指名、永不群发——挂单板解决的是「不知道发给谁」，不是群发的许可。
+**开工认领——挂单不挂人（Andy 2026-08-27 定；治「找不到收件人」的第五次事故根）——2026-09-22 起「挂单」就是任务板上的单，联邦看板与门铃待按列随门铃一并退役**：跨线的活可以**挂单**（写进门铃待按/待合分支/§七§12 契约行三处之一，不指名也算投递）；各线**开工先读联邦看板「待认领」列**（`python3 pipeline/tools/federation_board.py . board.html`，或直接读三个数据源），认领属于自己线的再开新活。点对点门铃仍然只指名、永不群发——挂单板解决的是「不知道发给谁」，不是群发的许可。
 
 **何时用多 agent / Workflow（Andy 2026-08-27：loop/graph 能力全线提升）**：满足其一就该用 Workflow fan-out 而不是单线程干：研究结论需要独立验证（≥2 个不同视角的 verifier）· 审计/扫描要求全覆盖 · 同构批量任务 >10 项。单点修复、写作、小改不用。ultracode 只在 Andy 说了才开。
 
