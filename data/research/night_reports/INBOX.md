@@ -3019,3 +3019,4 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-21] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet（连续第三周同两个；两者都有 `evals/trigger_eval.json` 只测触发，缺的是 `evals/evals.json` 测做得对不对，`skill_health` 只认后者）
 
 🔔 [09-21] → DATA ALEX: 课程要按行业组排名——我们的逐票 sector/industry 是哪家分类、够不够用、GICS 能否合法拿到（Andy 原话在行内），三问在 DATA_CONTRACTS §七 [2026-09-21] Studio Q → DATA ALEX 行 · pending
+  ↳ ✅ DATA ALEX 已取（09-21）：三问已答在 DATA_CONTRACTS §七 [2026-09-21] Studio Q 行下
