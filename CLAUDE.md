@@ -8,10 +8,10 @@
 3. 更新数据文件用外科手术式拉取：`git fetch origin && git checkout origin/main -- data/output/ data/history/`，不要 stash+pull。
 
 **⭐ 通信＝任务板（Andy 2026-09-22 原话「退门铃 补回程 都做」；本条取代下面所有门铃相关条文）**：
-- **跨线提问、派活、转交，一律开任务板单**：`python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --body-file <正文>`。守护进程 60 秒内派该线的工人接手，这是**推送**；门铃要等对方下次开工自己来取，是**拉取**——09-21 Studio Q 问 DATA ALEX 的 GICS 三问，ALEX 29 分钟就答了，但回程没人敲门，提问方和 Andy 都没收到。
+- **跨线提问、派活、转交，一律开任务板单**：`python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`。守护进程 60 秒内派该线的工人接手，这是**推送**；门铃要等对方下次开工自己来取，是**拉取**——09-21 Studio Q 问 DATA ALEX 的 GICS 三问，ALEX 29 分钟就答了，但回程没人敲门，提问方和 Andy 都没收到。
 - **INBOX 🔔 门铃自即日起停用**：不再新写 🔔 行；存量门铃各线取完即止，取铃命令可以继续跑到存量清零。
 - **回程自动**：一张单做完（`done`/`close`）时，若它是别的线开给你的，任务板自动给**开单的那条线**挂一张「答复到了」的单——提问方不用守着信箱。
-- `DATA_CONTRACTS.md` §七 契约行**照旧用来记事实与裁决**（带日期、可追溯），但它是档案，不是通知渠道；要对方动手，就开单。
+- `DATA_CONTRACTS.md` §七 契约行**照旧用来记事实与裁决**（带日期、可追溯），但它是档案，不是通知渠道；要对方动手，就开单。契约行里若写了要别线做的事，必须带任务号（`T-MMDD-NN`）；没带任务号的「请某线做」不算派活。
 - **云端会话的 fallback**：任务板是本机守护进程管的，云端 checkout 里的会话够不到——需要跨线转交时改往 INBOX.md 追一行 `- [MM-DD] → <线名>: <一句话>`（普通短横线开头，**不是** 🔔），本机 `ops-board-patrol` 巡逻班每天把这类行转成任务板单并回追 `↳ ✅ 已转任务板 <task_id>`。
 - 无人值守禁发消息的铁律不变——任务板本来就不是消息。
 
@@ -27,11 +27,11 @@
 - **寻址只用**（精确工具名，别猜）：`mcp__ccd_session_mgmt__list_sessions` 拿 title，对上 TEAM.md 线名（如「DATA ALEX · …」），再 `mcp__ccd_session_mgmt__send_message` 指名发。**只发一个人。**
 - 🚫 **`ListAgents` 不用于寻址**——它只列匿名 peer（`ai-trading-system-xx`），对不上花名册。它唯一的合法用途：干活前查「有没有活着的会话可能正在写这个共享目录」。
 - **无人值守运行时**跨会话工具通常不可用：投递 = 写耐久处 + push，这就算送到。**但 Andy 在你的会话里交互时工具会变可用**——那时也照上面两条办（指名或不发），不许因为"能发了"就广播。
-- **门铃写实（08-30 深检定案，Andy 批）**：门铃无仓库痕迹、从不是投递的生效环节——生效靠契约行/挂单；**闭环审计只认收件线的 commit**，别把门铃当链条环节考核。
+- **门铃写实（08-30 深检定案，Andy 批）**：门铃无仓库痕迹、从不是投递的生效环节——生效靠任务板单（契约行只是事实档案）；**闭环审计只认收件线的 commit**，别把门铃当链条环节考核。
 
 **门铃自取制（Andy 2026-09-11 批，原话「定时会话不能发消息，这个要改」；Joe 第二次撞上 send_message 拒发后立）——⛔ 已于 2026-09-22 退役，见上面「通信＝任务板」；下文仅作存量门铃取完前的操作说明**：
 定时会话按不了门铃是 harness 设计 + 本宪法铁律（无人值守禁发），**不改这条，改门铃的方向——从「发给你」改成「你来取」**：
-- **（已停用）写门铃**：不再新写 🔔 行——任何会话要通知某线，改开任务板单 `taskboard.py new --owner <线> --type <type> --title "<一句话>" --body-file <正文>`（见上面「通信＝任务板」）。
+- **（已停用）写门铃**：不再新写 🔔 行——任何会话要通知某线，改开任务板单 `python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`（见上面「通信＝任务板」）。
 - **取门铃**（09-16 改，Andy 原话「批了，改吧」；提案 `data/reference/proposals/2026-09-16_doorbell_fetch_reads_receipts.md`）：每条定时线任务书的开工步固定含一句——`git -C /Users/taolezhu/Documents/AI-Trading-System show origin/main:pipeline/tools/doorbells.py | python3 - --repo /Users/taolezhu/Documents/AI-Trading-System --to <自己线名>`（云端 checkout 里直接 `python3 -m pipeline.tools.doorbells --to <自己线名>`），它只列**没人取的**门铃，列出的先读再开工，处理后在该行下追 `↳ ✅ <线名> 已取（MM-DD）`。旧的 `grep "🔔.*pending"` 不再用：门铃行办完仍写着 pending，grep 会把已办的一起列出来（09-16 每日页据此报「OPS 滞留 9 条」，实际 4 条）。
 - **交互会话同样取铃**：任何会话（含被 Andy 打开的交互线）开工第一动作里含同一句取铃命令——门铃对交互线的延迟＝它下次被打开的时间，不是任何人的转发延迟。
 - **长轮次中途也取**（09-11 ALEX 案后补）：连续工作超过约 1 小时的会话，每告一段落回读一次自己的 🔔 行——排队中的真消息会静默蒸发（09-11 实测 4 例），门铃箱不会。
@@ -57,7 +57,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 **这行的用途是量「真的调没调」**——周检数过去 7 天 `skill-used:` 与 `skill-skipped:` 的行数比，
 替掉了官方描述优化器那个触发率（那套评测脚本有桩名冲突缺陷，把真触发记成未触发，读数无分辨率）。
 
-**开工认领——挂单不挂人（Andy 2026-08-27 定；治「找不到收件人」的第五次事故根）——2026-09-22 起「挂单」就是任务板上的单，联邦看板随门铃一并退役**：跨线的活可以**挂单**（开任务板单 `taskboard.py new --owner <线>` / 待合分支 / §七§12 契约行三处之一，不指名也算投递）；各线**开工先读任务板** `taskboard.py list --owner <自己> --status open` 认领属于自己线的再开新活（联邦看板不再读）。点对点即时消息仍然只指名、永不群发——任务板解决的是「不知道发给谁」，不是群发的许可。
+**开工认领——挂单不挂人（Andy 2026-08-27 定；治「找不到收件人」的第五次事故根）——2026-09-22 起「挂单」就是任务板上的单，联邦看板随门铃一并退役**：跨线的活**挂单**＝开任务板单 `python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`（待合分支改由 gate/复核员流程与滞留闸管，见下面 safe-merge 两节；§七§12 契约行只记事实，要别线动手必须带任务号——这两处都不再单独算挂单）；各线**开工先读任务板** `python3 ~/Documents/fluxus-ops/tools/taskboard.py list --owner <自己> --status open` 认领属于自己线的再开新活（联邦看板不再读；交互会话接单先 `taskboard.py claim <任务号> --by chat` 再干）。点对点即时消息仍然只指名、永不群发——任务板解决的是「不知道发给谁」，不是群发的许可。
 
 **何时用多 agent / Workflow（Andy 2026-08-27：loop/graph 能力全线提升）**：满足其一就该用 Workflow fan-out 而不是单线程干：研究结论需要独立验证（≥2 个不同视角的 verifier）· 审计/扫描要求全覆盖 · 同构批量任务 >10 项。单点修复、写作、小改不用。ultracode 只在 Andy 说了才开。
 
@@ -73,12 +73,12 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 **safe-merge 判据修正（Andy 2026-09-05 亲批「建议采纳」，源自 OPS〈白名单的账〉报告 09-04；`data/reference/proposals/2026-08-31_safe_merge_boundary.md` 那次提案的三个悬问到此结案）**：
 1. **上面「不改行为的兜底守卫」换成机器可判的一句**：**这个 diff 删不删 main 上已有的可执行行？** 删 → 必须留分支，或单开一行写明删的是什么、为什么；不删 → 按普通改动办。「觉得自己在干嘛」不算数——判据问的是 diff 干了什么。（回测：`8e4a64ef` 删 27 行闸接线→红；`0271daa0` 净增→绿。`0271daa0` 本身不回滚：程序违规，内容是真 bug 修复，回滚等于让数据替程序买单——但不作判例引用。）
 2. **滞留闸**（Andy 2026-09-21 改，原话「同意，门铃做完接着做这条，48 小时滞留闸改成24小时甚至12小时有问题吗？」，显示方式问卷选「只开单，超 48h 上页」）：分支按任务板状态分档——单已结或内容已在 main＝可清（只列出，删分支仍等 Andy 点头）；单在等 Andy＝不算滞留；无单或单 12 小时没动＝真滞留。真滞留由守护进程每小时自动给归属线开跟进单；跟进单超 48 小时没处理才上每日页。实现：fluxus-ops `tools/stale_branches.py`。
-3. **耐久处的明确批准算「Andy 处理了」，不算越权**：条文早写着「留分支，等 Andy 或对应线的主人处理」——Andy 在页面批注/契约行/对话里给的一个明确字（如「合」「合并」），只要执行者把原话逐字抄进 commit message，就满足这个条件；抄不出原话＝没有批准，照旧留分支。
+3. **耐久处的明确批准算「Andy 处理了」，不算越权**：白名单外的分支原本要等 Andy 或对应线处理（旧条文「留分支，等 Andy 或对应线的主人处理」已由下面 safe-merge 节的三档流程取代）——Andy 在页面批注/契约行/对话里给的一个明确字（如「合」「合并」），只要执行者把原话逐字抄进 commit message，就满足这个条件；抄不出原话＝没有批准，照旧留分支。
 
 **24 小时三律（Andy 2026-09-04 亲定，原话：「所有ai工作都是24小时的，而且出错马上报告，找专人去维修，也不是等一轮再修。不需要管我现在是什么时间应该做什么禁止做什么」）**：
 1. **AI 全天候**：任何 agent 不得以「现在几点/什么时段」为由推迟自己的工作。唯一合法的时间闸是**数据可用性**，且引用时必须挂上代码出处与证据（如 `run_all.py:454` 的 Finviz 闸）——没有出处的窗口规则不许引用，历史上已因此连错三版（09-04 实录）。
 2. **Andy 的时间不归 agent 管**：不揣测他睡没睡、该干什么、几点了；作息提醒只有他自己设的提醒任务可以发。给他的一切时间信息用**绝对时刻双标（JST+ET）**，不用「今晚/明早/待会」这类相对词——他不该花一秒钟和 AI 对表。
-3. **出错即报·即路由·即修**：发现故障的那一刻，三件事同时做：①durable 告警落 INBOX（红行）②§七 指名路由给 owner 线（专人维修）③自己白名单内能修的当场修。**「等下一轮/下一班/明天再说」不是合法状态**——等待只允许出现在外部依赖物理上未就绪时，且必须写明等的是什么、几点就绪、谁在等。
+3. **出错即报·即路由·即修**：发现故障的那一刻，三件事同时做：①durable 告警落 INBOX（红行）②开任务板单指名 owner 线（`python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`，专人维修；事实另记 §七）③自己白名单内能修的当场修。**「等下一轮/下一班/明天再说」不是合法状态**——等待只允许出现在外部依赖物理上未就绪时，且必须写明等的是什么、几点就绪、谁在等。
 
 **方法层机制（Andy 2026-09-06 批，原话「同意啊 我们就应该用workflow和create skill机制。全系统范围内的。而且确认要能用上，description变pushy」；官方依据 `data/reference/proposals/2026-09-06_official_mechanisms_for_method_layer.md`）**：
 1. **固化的触发点＝Andy 批准的那一刻**，不是数到第 3 次。凡产出被他纠正 N 轮后说「批/OK/合/都批」，收工前必须把该 workflow 按官方 skill-creator 流程固化或并入既有 skill（从会话提取：步骤、工具、**他的每一轮纠正**、输入输出格式）。样板：daily-recap（六轮纠正→裁决进账→skill→实测→diff→回流）。
@@ -94,7 +94,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 - **修法顺序**：先 `python3 -m pipeline.tools.failure_class --run-id <id>` 分诊。C_gate（好数据被闸挡）→ 用闸红时保存的 artifact 恢复，**不重抓**；云端取不到 artifact → 立刻指名 DATA ALEX / OPS 代执行。**本机会话**直接开任务板单（见上面「通信＝任务板」）；**云端会话**（任务板是本机的，够不到）改成往 INBOX.md 追一行 `- [MM-DD] → <线名>: <一句话>`（普通短横线，**不是** 🔔），`ops-board-patrol` 每天巡逻时会把这类行转成任务板单——**不许退化成 dispatch**。B_vendor → 隔班接力。
 - **上线 ≠ 修完**：①同日补齐 `data/history/` 归档，`audit_archives` 0 违规 ②当天复盘已错过的立即重跑 ③核线上 dashboard 的日期。三件都做完才算修复完成。
 - **动数据目录之前**：删改 `data/output/`、`data/history/`、`data/reference/` 下任何文件，先全仓 `git grep` 该文件名，再跑 `python3 -m pipeline.tools.schema_snapshot --check`；数据目录归 DATA ALEX，别的线动之前先问他。事故实录：09-17 OPS 大扫除删 `sentiment.json`，只查了代码引用，漏了 schema_snapshot 基线，09-16 正班被闸挡，dashboard 停在前一天。
-- **排程必须同时对夏令时和冬令时有效（Andy 2026-09-17，原话「是要改的。所以可以直接先写进规则里」）**：数据管线只在美东 16:15 到次日 04:00 之间开跑（`run_all.py` 的时间闸）。cron 是 UTC 写死的，美东时间会随夏令时平移一小时。现行主排程 20:20 UTC 在夏令时是美东 16:20，**2026-11-01 夏令时结束后变成 15:20，会被拒跑**，直到 2027-03-14 才恢复。**2026-10-30（周五）前必须改好，否则 11-02（周一）起每天正班都跑不了。** 改的时候同时守住 JST 08:30 死线：冬令时下同一个 UTC 时刻晚一小时开盘收盘，再加上 GitHub 常迟 1.5–2.5 小时，简单往后挪一小时会顶到死线。任何数据管线的 cron、哨兵的「可发时段」、文档里的 UTC↔ET 换算，改动前都要在 EDT 和 EST 两种情况下各算一遍。归 DATA ALEX，Plumber Joe 核。
+- **排程必须同时对夏令时和冬令时有效（Andy 2026-09-17，原话「是要改的。所以可以直接先写进规则里」）**：数据管线只在美东 16:15 到次日 04:00 之间开跑（`run_all.py` 的时间闸）。cron 是 UTC 写死的，美东时间会随夏令时平移一小时。现行主排程 20:20 UTC 在夏令时是美东 16:20，**2026-11-01 夏令时结束后变成 15:20，会被拒跑**，直到 2027-03-14 才恢复。**2026-10-30（周五）前必须改好，否则 11-02（周一）起每天正班都跑不了。** 改的时候同时守住 JST 08:30 死线：冬令时下同一个 UTC 时刻晚一小时开盘收盘，再加上 GitHub 常迟 1.5–2.5 小时，简单往后挪一小时会顶到死线。任何数据管线的 cron、哨兵的「可发时段」、文档里的 UTC↔ET 换算，改动前都要在 EDT 和 EST 两种情况下各算一遍。归 DATA ALEX；改动走任务板 gate（`.github/workflows/` 判 reviewer），由复核员核（原「Plumber Joe 核」，Joe 已于 2026-09-19 编队 v2 并入 DATA ALEX）。
 - 依赖清单与各自的备用方案：[`data/research/repo_health/2026-09-17_dashboard_dependents.md`](data/research/repo_health/2026-09-17_dashboard_dependents.md)。
 
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
@@ -142,7 +142,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 - ⚠️ 需要 Andy 注意或决定的事**置顶拉响**，不埋在段落里。
 - **决策分级**：可逆的小决策（样式、措辞、实现细节、前端改动）**不过问**——直接做出预览稿/变体让他选；只有不可逆、花钱、对外发布的事才先问。前端 UI 永远是「给预览挑」，不是「要不要改」。
 
-**全会话前台制（Andy 2026-08-27 定：他永远不需要选对话框）**：Andy 在**任何**会话说的**任何**事都是对的入口——听到的会话要么直接执行（归自己线的），要么路由（开任务板单指名对的线 / 写契约行），并在回复里一句话确认「已转给〔线名〕，产出会出现在你的早报里」。**永不叫 Andy 去别的会话说**——让他换窗口=事故。他聊出来的计划/任务，当场落进耐久处（NOW.md/挂单/任务书），让明早早报能引用——只活在对话框里的计划等于没定。
+**全会话前台制（Andy 2026-08-27 定：他永远不需要选对话框）**：Andy 在**任何**会话说的**任何**事都是对的入口——听到的会话要么直接执行（归自己线的），要么路由（开任务板单指名对的线；契约行只记事实，不代替开单），并在回复里一句话确认「已转给〔线名〕，产出会出现在你的早报里」。**永不叫 Andy 去别的会话说**——让他换窗口=事故。他聊出来的计划/任务，当场落进耐久处（NOW.md/挂单/任务书），让明早早报能引用——只活在对话框里的计划等于没定。
 
 **新手引路 / 前台报到制（Andy 2026-08-22）**：Andy 开新会话没认领身份、或提出一件归属不明的新事时，先当引路员再干活——对照 `TEAM.md` 判断归属，然后用一张小卡片回他：
 
@@ -166,9 +166,9 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 
 **NOW.md 约束的是 Andy，不是 AI（Andy 2026-08-23 定）**：停做清单/主线管的是 **Andy 的时间**；定时任务与夜间自动运行按各自任务书跑，不受 NOW.md 限制——AI 多干的都是白捡的杠杆，且产出只积累（分支/预览稿/报告），不催 Andy 看。反过来：**深夜（01:30 JST 后）发现 Andy 本人还在会话里干活，先提醒他该停工睡觉**（呼应温水澡机制），提醒一次即可。
 
-**收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是 Nighty Zac 的夜间活，判定结果在他晨报里。
+**收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是夜间研究班的活（现为 fluxus-ops `schedule.json` 的 `linda-night-research`；原 Nighty Zac 夜班，2026-09-19 编队 v2 并入 RND Linda），判定结果在当晚晨报里。
 
-**直推 main 的标准动作（08-23 v2，审计后修订）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
+**直推 main 的标准动作（08-23 v2，审计后修订）**：守护进程工人不用本节，走任务板 gate（fluxus-ops `agents/_worker_protocol.md` 第 5–6 步）；本节给交互会话用。任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
 ```bash
 export WT=$(mktemp -d)/wt-docs   # export 开头,配合权限 allowlist 的首 token 匹配
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
@@ -185,10 +185,10 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 三轮仍失败：内容原文留在晨报/汇报标「未投递」，不留半途 rebase 状态。**push 成功 ≠ 投递成功——收尾必须核实自己的 commit 真在 origin/main 上**（`git log origin/main -1 --oneline` 看到自己的信息才算）。
 
 **回执制（Andy 2026-08-23，治「办没办要追问」）**：
-- 无人值守会话（Zac/Joe/日推类）每份晨报/汇报的**第一节固定是「回执」**：上次自己提出的问题、收到的裁决/修正，逐条一句状态（已执行 / 已知悉今晚做 / 不适用+理由）。
-- 处理别人问题的一方（通常 OPS）写完裁决必须落在**提问者必读的位置**（Zac→INBOX、ALEX→§七、前端→§七），并在裁决行里写清「谁、何时、什么状态」。
+- 无人值守会话（守护进程定时班/日推类；原 Zac/Joe 两班已于 2026-09-19 并入 RND Linda / DATA ALEX）每份晨报/汇报的**第一节固定是「回执」**：上次自己提出的问题、收到的裁决/修正，逐条一句状态（已执行 / 已知悉今晚做 / 不适用+理由）。
+- 处理别人问题的一方（通常 OPS）写完裁决必须落在**提问者必读的位置**（有任务号的：在该单上 `done`/`close` 写明结论，任务板自动给开单线挂回程单；无任务号的存量问题：夜间研究班→INBOX、ALEX→§七、前端→§七），并在裁决行里写清「谁、何时、什么状态」。
 - 提问者执行完，在裁决行下追「↳ 已执行（日期）」。
-- **Andy 查「办没办」只看一处**：`data/research/night_reports/INBOX.md`（问答板，带状态）或 Joe 早报的回执/转述节——不需要跳进任何对话框追问。定时会话的对话框是一次性的，跑完即弃，别在那里找状态。
+- **Andy 查「办没办」只看一处**：`data/research/night_reports/INBOX.md`（问答板，带状态）或任务板上该单的状态（`taskboard.py list --owner <线>`）——不需要跳进任何对话框追问。定时会话的对话框是一次性的，跑完即弃，别在那里找状态。
 
 **主树保护六条（08-23 立，08-25 补第 6 条）**：
 1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
@@ -200,7 +200,7 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
    已经提错了：`git reset --soft HEAD~1` → `git restore --staged .` → 重新 add 指名文件 → 重提交。**没推 main 就还来得及**，所以这一步要在 push 之前做完。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
 3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外（Andy 2026-09-11 批「同意收窄」）：`Fluxus_Receipts/receipts.md` 与 `Fluxus_Brand/voice/raw/`**——receipts 是他手记读主树；voice/raw 他手录在主树、会话代录直推 main，**两边可能互有对方缺的文件，读者取两边并集、同名以更新者为准**。原五件套的 Week_Plan / Queue / Own_Lines / Ammo 已移出：09-11 实测其写者均为机器班次（Steve 周检、会话清洗）且 main 更新——一律读 `git show origin/main:`。
-4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
+4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，在该分支的任务板单上 `taskboard.py block <任务号> --reason "rebase 冲突：<一句话>"`（无单先开单）——滞留闸按单状态跟进。
 5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
 6. **写公箱一律基于 `origin/main`，永不拷贝主树副本**（Andy 08-25 定；同一个陋习两天内咬了两次）——第 3 条管**读**，这条管**写**。三个 append-only 公箱（`material_inbox` / `night_reports/INBOX.md` / `DATA_CONTRACTS §七`）在主树里的那份，可能停在别人几次追加之前；把它 `cp` 进临时树整份提交 = **删掉别人的行**，而你的 diff 看起来只是「我加了一行」。做法：在临时树里直接改（那棵树本来就是 origin/main），或取 `git show origin/main:<path>`，**不要拷主树那份**。提交前自检一行，必须为空：
 ```bash
@@ -210,9 +210,14 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
    一句总纲（Growth Gary 08-25）：**没有先验证一个检查能报出阳性，就不该信它的阴性。**
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
+**有任务号时一律以 gate 判定为准；本白名单只用于没有任务号的交互会话。**（2026-09-21 T-0921-115 OPS 裁定往严收：`pipeline/tools/audit_*` 及其测试、`DATA_RELIABILITY.md` §六追行移出本白名单——audit_* 本身就是闸，改闸必须复核；§六 追行 gate 分不出追加还是改写，一律复核。）
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
 
-碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
+碰到其他路径 → 按编队设计 spec §8（`docs/superpowers/specs/2026-09-18-agent-fleet-v2-design.md` §8；Andy 2026-09-21 问卷选「以编队设计为准 (推荐)」，问题与选项逐字见 [`data/reference/proposals/2026-09-21_merge_authority_ruling.md`](data/reference/proposals/2026-09-21_merge_authority_ruling.md)）分三档，流程全文 fluxus-ops `agents/_worker_protocol.md` 第 5–6 步：
+- **可直接合（测试过就合）**：只限 spec §8 none 档明列的路径——「data/、data/research/、night_reports/、tests/、material_inbox、agent 自己的 memory 与 runs」，且不删文件（含 ALEX 线对 `data/output`、`data/history` 的非删除改动）；**但 `data/reference/**` 除外**（放的是规矩文档：DATA_CONTRACTS、METRIC_SOURCES、proposals，改规矩不自合，走 reviewer），其中只有 `data/reference/incidents/**` 仍可直接合（OPS 2026-09-21 在 spec 基础上收紧，见裁决文件）。数据正确性靠的是**事后闸**：`schema_snapshot --check`、`audit_archives` 只在下一班数据管线和周审计里跑，push 时不跑——合进去的错要到那时才会被查出，不是合并前把关。
+- **走复核员（reviewer）**：spec §8 reviewer 档（`.github/workflows/`、`frontend/`、`pipeline/screeners|tickers|adapters/`、任何 ROLE.md、任何 skill、CLAUDE.md），**以及 spec 没列的一切路径**（如 `data/reference/**`（incidents 除外）、`pipeline/run_all.py`、`pipeline/tools/*`、`pipeline/constants/`、`vercel.json`、`TEAM.md`、`KNOWLEDGE.md`、`.claude/agents/`）：不自己合，推分支 → `taskboard.py gate <任务号> --worktree <树>` → 只读复核员按 `branch-review` skill 判，PASS 才合进 main，FAIL 停在分支，ASK 自动转 ops。
+- **走 Andy（needs-andy）**：删数据、花钱、对外发布、登录/付费/会员数据相关目录——`taskboard.py needs-andy` 等 Andy 裁。
+fluxus-ops `tools/gate.py` 按这三档实现（spec 没列的路径默认 reviewer，T-0921-115）；改 `gate.py` 本身必须走 reviewer。上面那张白名单只是没有任务号时的保底。无任务号的分支先开单。等待中的分支由滞留闸跟进（见上面「safe-merge 判据修正」第 2 条），不再在汇报里列「待合分支 y/n」。
 
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
 

@@ -16,8 +16,8 @@
 | **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
 | **Visual Vera** | **视觉线**（08-31 新设）：品牌视觉 MR. FLUXUS、海报系统、图像语料、数据艺术可视化 | `Fluxus_Brand/visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/`、**当前 campaign 的 `ops/campaigns/**/assets/` 与该卡 RECORD 的 `visual` 节** | 独立视觉项目走 `design/*`；campaign 配图直推 main（Gate 读 origin/main） |
 | **Marketing Steve** | **编辑部/运营**：对外市场调查（fintwit/竞品/需求侧）、选题与 brief、**审稿闸（五道闸/Gate，不改原稿）**、发布运营与记账、夜间六站内容产线工头 | `Fluxus_Brand/research\|ops/`、`Fluxus_Brand/brain/` 与 `Fluxus_Brand/BRAIN.md`、`data/content/`、`Fluxus_Receipts/` | 小改直推 main |
-| **Nighty Zac** | 夜间施工队（04:30–09:30 JST，时间盒 300 分钟，挑 1–5 件）：可靠性工具、**全部研究复盘**、UI 预览稿、**收藏夹整理**（Andy 扔的链接：摘要+判定+入馆 `data/research/collection.md`） | `pipeline/tools/audit_*` 及测试、`data/research/`（含 night_reports/ui_previews）；其余只读 | `auto/night-YYYYMMDD-*`，晨报给「建议合并 y/n」，本人不合 main |
-| **Plumber Joe** | 可靠性巡检 + 路由（研究归 Zac）：核 cron、全页面盘查、每条 ⚠️ 标归属并落耐久处、转述夜间组晨报 | 六支笔：todo_cron_check 追加、`incidents/`、RELIABILITY §六、§七 追行、INBOX 追行、素材箱追行——docs 改动直推 main | 只读不修；写了必须 push |
+| ~~Nighty Zac~~ | **已并入 RND Linda（2026-09-19 编队 v2）**——夜间研究复盘/可靠性工具/UI 预览稿现为 fluxus-ops `schedule.json` 的 `linda-night-research`（04:30 JST）；职责与笔以 fluxus-ops `agents/linda/ROLE.md` 为准 | 见 RND Linda 行 | —（原 `auto/night-*` 分支习惯停用，合并走任务板 gate） |
+| ~~Plumber Joe~~ | **已并入 DATA ALEX（2026-09-19 编队 v2）**——晨检现为 fluxus-ops `schedule.json` 的 `alex-morning-check`（07:20 JST）；职责与笔以 fluxus-ops `agents/alex/ROLE.md` 为准 | 见 DATA ALEX 行 | — |
 | **OPS Fable** | Operations：架构与秩序——TEAM.md/CLAUDE.md、大扫除、routines、跨线协调 | `TEAM.md`、`CLAUDE.md`、`.claude/agents/`、`data/research/repo_health/` | 小改直推 main |
 
 **[2026-09-21 ops 裁 · T-0921-70/71]** `pipeline/constants/`（`tickers.py`/`colors.py`，细分行业名单与配色）补进 DATA ALEX 边界——它是与 `pipeline/screeners|tickers|adapters/` 并列的数据契约物，此前不在任何人边界内是遗漏，不是新设。**并给一条窄口子标准授权**：数据契约改动（如清掉一只已确认退市/停止交易的 ticker）需要同步镜像它的三个前端文件（`frontend/src/lib/etfGroups.js`、`etfNames.json`、`frontend/public/data/etf_data.json` 快照）时，ALEX 可在同一提交里直接同步，不需要每次转交 UI Claire 或另开单——`frontend/` 其余部分仍是 Claire 的边界，这条只管「保持三份镜像与 `pipeline/constants/` 一致」。起因：T-0921-70（清 EATZ）审核判 ASK，见 branch-review skill Q2 补丁同批裁决。
@@ -36,7 +36,7 @@
 1. **Steve 出 brief**（选题、角度、证据包、可复用物），写自己的地盘；**一个字的成稿都不写**。
 2. **Mia 执笔**（`Fluxus_Substack/drafts/` 等自己的地盘）；夜间六站产线的**旗舰站毛坯交给 Mia 成稿**，笔始终在 Mia 手里。
 3. **Vera 配视觉**（封面/图表/海报/角色），只做图不改文案。
-4. **Steve 审稿不改原稿**——意见写 `Fluxus_Brand/ops/reviews/`（或批注版 PDF + md），要点走契约行；退回由 Mia/Vera 自己改。
+4. **Steve 审稿不改原稿**——意见写 `Fluxus_Brand/ops/reviews/`（或批注版 PDF + md），要点开任务板单给 Mia/Vera（`taskboard.py new --owner mia|vera`；契约行只记事实）；退回由 Mia/Vera 自己改。
 5. **Andy 批准发布**——唯一发布者（人批边界）。
 
 ⚠️ **同一件对外资产，四条线各只碰自己那一段**；越段＝抢笔事故（08 月已出过三次）。课程线 Studio Q 不参与对外 marketing 链条。
@@ -50,8 +50,8 @@
 - **Writer Mia**（写作线，08-31 新设）：Substack/X/newsletter 成稿、How Much 周信、声音库维护
 - **Visual Vera**（视觉线，08-31 新设）：MR. FLUXUS 角色、海报系统、图像语料、2026H1 交易数据艺术可视化、X bookmark pipeline（挂起）
 - **Marketing Steve**（编辑部/运营）：营销每日/周报 routine、**夜间六站内容流水线（含 Gate 子 agent，均属本线边界）**、Top 100 fintwit 研究调查、选题与审稿
-- **Nighty Zac**：dashboard夜间自学 routine、Fluxus data night study
-- **Plumber Joe**：data plumbing AM routine
+- **Nighty Zac**：（已并入 RND Linda，2026-09-19 编队 v2）原 dashboard夜间自学 routine、Fluxus data night study
+- **Plumber Joe**：（已并入 DATA ALEX，2026-09-19 编队 v2）原 data plumbing AM routine
 - **OPS Fable**：ClaudeCode 多Agent任务管理架构
 - **Growth Gary**：增长官（Andy 08-25 定名）——会员台账/转化率/收入对账；文件边界 `data/growth/`；周一 09:40 自动记账 routine 挂本线
 - **联邦之外（个人事务，与工作无关，不写本仓库文件）**：健身日报/周报、皮质醇×2（家在 `~/Documents/Fitness-2026`）；IB panel 两个（家在 `~/ibkr_order_panel`）
@@ -66,8 +66,8 @@
 - 每个数据文件只有一条线有写入权：
   - `data/output/`、`data/history/`（除 regime_ledger）→ DATA ALEX
   - `data/history/regime_ledger.csv` → RND Linda
-  - `data/reference/incidents/`、`DATA_RELIABILITY.md` §六 追加行 → Plumber Joe
-  - `data/research/night_reports/` → Nighty Zac
+  - `data/reference/incidents/`、`DATA_RELIABILITY.md` §六 追加行 → DATA ALEX（原 Plumber Joe，2026-09-19 编队 v2 并入；见 fluxus-ops `agents/alex/ROLE.md`）
+  - `data/research/night_reports/` → RND Linda（原 Nighty Zac，2026-09-19 编队 v2 并入；见 fluxus-ops `agents/linda/ROLE.md`）
   - `data/research/repo_health/` → OPS Fable（含云端 routine）
   - `data/growth/` → **Growth Gary**（08-25 升为具名线；growth-officer 子 agent 与周一 09:40 记账 routine 同属本线）
   - `data/content/`（posts.csv 等）、`Fluxus_Receipts/` → Marketing Steve（08-23 补：此前无主，posts.csv 断更 17 天没人负责）
@@ -80,13 +80,14 @@
 
 ## 通信纪律
 
-1. **跨线请求/派活/转交：开任务板单 `taskboard.py new --owner <线>`（见 CLAUDE.md「通信＝任务板」）。** `data/reference/DATA_CONTRACTS.md` §七 照旧用来记事实与裁决（带日期、可追溯），但它是档案不是通知渠道——要对方动手就开单，不是只写 §七 等人自己发现。
+1. **跨线请求/派活/转交：开任务板单 `taskboard.py new --owner <线>`（见 CLAUDE.md「通信＝任务板」）。** `data/reference/DATA_CONTRACTS.md` §七 照旧用来记事实与裁决（带日期、可追溯），但它是档案不是通知渠道——要对方动手就开单，不是只写 §七 等人自己发现；契约行里若写了要别线做的事，必须带任务号。
 2. 契约行里引用的事实**必须带日期**——把曾经为真当现在为真是 08-21 三次事故的共同形状。
 3. 收到发错的消息：先把内容记进 §七，再回「不是我」。
+4. **任务板入口**：任务板在私有仓 `~/Documents/fluxus-ops`。看自己线的单：`python3 ~/Documents/fluxus-ops/tools/taskboard.py list --owner <线>`（线名用小写 id：alex / linda / ops / steve / mia / vera / claire / q / gary）；交互会话接单先 `python3 ~/Documents/fluxus-ops/tools/taskboard.py claim <任务号> --by chat` 再干。
 
 ## 新会话开场白（标准件，Andy 只需换最后一句）
 
-> 你是〔线名〕。先读 TEAM.md 认领你的线和文件边界，**再读你线的入口文件**（见下表），然后看 DATA_CONTRACTS §七 有没有你的行。
+> 你是〔线名〕。先读 TEAM.md 认领你的线和文件边界，**再读你线的入口文件**（见下表），然后看任务板有没有你线的单（`python3 ~/Documents/fluxus-ops/tools/taskboard.py list --owner <线>`）。
 > 今天的任务：〔一句话说today's job〕。
 
 **每条线的入口文件（开工先读那一份，不用整读花名册）**：
@@ -98,7 +99,7 @@
 | **Visual Vera** | [`Fluxus_Brand/visual/DESK.md`](Fluxus_Brand/visual/DESK.md)（视觉台） |
 | Studio Q | `~/Documents/SwingMasterclass` 的 README ＋ vault `20_Course/` |
 | DATA ALEX | [`data/reference/DATA_CONTRACTS.md`](data/reference/DATA_CONTRACTS.md) §七 ＋ `DATA_RELIABILITY.md` |
-| RND Linda · UI Claire · Nighty Zac · Plumber Joe · Growth Gary · OPS Fable | 各自任务书 / 花名册边界行（无独立入口页） |
+| RND Linda · UI Claire · Growth Gary · OPS Fable | 各自任务书 / 花名册边界行（无独立入口页） |
 
 **内容侧四线的接力**：Steve 选题·brief → Mia 执笔 → Vera 配图 → Steve 审稿 → Andy 批发布。
 
@@ -107,10 +108,10 @@
 ## Andy 的日常操作卡（全部就这五个动作）
 
 1. **开工**：开新会话，发三句开场白（上一节模板，换掉最后一句任务描述）。
-2. **派活**：说人话就行。跨线的事补一句「先写进 §七 再通知对方」。
+2. **派活**：说人话就行。跨线的事不用你交代，会话自己开任务板单派给对应线。
 3. **收工**：离开一个会话前问一句「有没有没 push 的东西」。
-4. **听汇报只听一份**：每天 10:07 的「老板早报」（主线/关卡/各线交付/待拍板，纯业务语言）。Joe 晨检、Zac 晨报、周一云端周检都是它的原材料，不需要你读——它们只在需要你行动时被早报引用一行。
+4. **听汇报只听一份**：每天 10:07 的「老板早报」（主线/关卡/各线交付/待拍板，纯业务语言）。ALEX 晨检（`alex-morning-check`）、Linda 夜间研究晨报（`linda-night-research`）、周一周检都是它的原材料，不需要你读——它们只在需要你行动时被早报引用一行。
 5. **出问题 / 不知道找谁**：找 OPS Fable（架构线会话）。
-6. **查某件事办没办**：看 `data/research/night_reports/INBOX.md`（问答板，每条裁决带状态）或 Joe 早报的回执节——不用跳进对话框问，定时会话的对话框跑完即弃。
+6. **查某件事办没办**：看 `data/research/night_reports/INBOX.md`（问答板，每条裁决带状态）或任务板上该单的状态——不用跳进对话框问，定时会话的对话框跑完即弃。
 
 其余一切——git、契约、边界、命名——都由规矩和定时任务自动运转，不需要 Andy 记。

@@ -9,14 +9,15 @@
 | `TEAM.md` | 花名册/文件边界/单一写入方 | OPS |
 | `NOW.md` | Andy 的优先级/关卡/停做清单（只约束 Andy） | Andy 手改 + OPS 代记 |
 | `PROJECTS.md` | 生意档案 P0–P7 / 生产线 | OPS |
-| `data/reference/DATA_CONTRACTS.md` | 跨线契约与裁决（§七/§12…） | append-only 公箱 |
-| `data/reference/DATA_RELIABILITY.md` | 数据可靠性机制 | ALEX 正文 / Joe §六追行 |
+| `data/reference/DATA_CONTRACTS.md` | 跨线契约与裁决的事实档案（§七/§12…；派活走任务板，契约行里要别线做的事必须带任务号） | append-only 公箱 |
+| 任务板（私有仓 `~/Documents/fluxus-ops`） | 跨线派活/待办/等 Andy 拍板的单。看自己线：`python3 ~/Documents/fluxus-ops/tools/taskboard.py list --owner <线>`；交互会话接单先 `taskboard.py claim <任务号> --by chat` 再干 | 守护进程 + `taskboard.py` |
+| `data/reference/DATA_RELIABILITY.md` | 数据可靠性机制 | ALEX 正文 / §六追行（原 Joe，2026-09-19 并入 ALEX） |
 | `data/reference/RESEARCH_PROTOCOL.md` | 研究预注册/holdout 协议 | 研究线 |
 
 ## 结论层（量过的事实；引用必须带日期——结论会过期）
 - `data/research/claims/claims.jsonl` — 研究结论台账（gate_basis / waiver / evidence_grade）
 - `data/research/<课题>_*/report|results.md` — 各轮实测原始报告
-- `data/research/night_reports/*.md` — Zac 晨报（含 NULL 结果）；`INBOX.md` = 收件与裁决
+- `data/research/night_reports/*.md` — 夜间研究晨报（RND Linda 的 `linda-night-research`；2026-09-19 前为 Nighty Zac）（含 NULL 结果）；`INBOX.md` = 收件与裁决
 - `data/growth/weekly/*.md` + `metrics.csv` — 会员/收入的量化事实（PII 在 `private/` 不入库）
 
 ## 方法层（怎么做对；动手前先查这里，别重新发明）
@@ -55,10 +56,10 @@
 | SOP | 全文在 | 登记日 |
 |---|---|---|
 | 直推 main 标准动作（临时树+丢弃重放+落地核实） | CLAUDE.md 同名节 | 08-29（存量补登） |
-| X 单帖免登录抓取（fxtwitter 镜像） | zac-night-study 任务书 §1.5 | 08-29（存量补登） |
+| X 单帖免登录抓取（fxtwitter 镜像） | fluxus-ops `schedule.json` 的 `linda-night-research` §1.5（原 zac-night-study 任务书，2026-09-19 迁入守护进程） | 08-29（存量补登） |
 | substack_subs 取数 | `data/growth/README.md`（bbe9097c） | 08-29（存量补登） |
-| 临时树验收合并（越界检查→测试→rebase→push→删名） | Joe 任务书第五节 + safe-merge 节 | 08-29（存量补登） |
-| **台账写入前派全新上下文子 agent 复核（只给它原始数与你的清单，它查 post_id 与每个数字）** | 任务书 `steve-content-weekly-batch` 第 2.5 步（在 `~/.claude/scheduled-tasks/`，不在仓库里） · 首份实测 [`Fluxus_Brand/ops/weekly/2026-09-06_W6.md`](Fluxus_Brand/ops/weekly/2026-09-06_W6.md)「复核报表」 | **09-06（Andy 结算台原话「提案 全批」）· 适用全部有台账写入口的线：Steve / Zac / Joe / Gary。首跑就抓出 2 条错数，其中 1 条正要被写进台账** |
+| 临时树验收合并（越界检查→测试→rebase→push→删名） | fluxus-ops `agents/_worker_protocol.md` 第 5–6 步（gate → 复核员/Andy → 合；原 Joe 任务书第五节，2026-09-19 并入 DATA ALEX）+ CLAUDE.md safe-merge 节 | 08-29（存量补登） |
+| **台账写入前派全新上下文子 agent 复核（只给它原始数与你的清单，它查 post_id 与每个数字）** | 任务书 `steve-content-weekly-batch` 第 2.5 步（在 `~/.claude/scheduled-tasks/`，不在仓库里） · 首份实测 [`Fluxus_Brand/ops/weekly/2026-09-06_W6.md`](Fluxus_Brand/ops/weekly/2026-09-06_W6.md)「复核报表」 | **09-06（Andy 结算台原话「提案 全批」）· 适用全部有台账写入口的线：Steve / Zac / Joe / Gary（09-19 起 Zac→RND Linda、Joe→DATA ALEX）。首跑就抓出 2 条错数，其中 1 条正要被写进台账** |
 | **一屏决策台（把要 Andy 拍的事收敛成可点的一屏）** | 本表下方〈一屏决策台 SOP〉 | **08-31（Andy 原话「以后都做成这样的，减少决策摩擦和成本」）** |
 | **视觉方案选一（把可逆的设计决策做成可点的预览稿）** | 本表下方〈视觉方案选一 SOP〉 | **09-02（三次律①：轨迹图 / Today 版面 / STOP 格连续三次成功；Andy 原话「用了 artifact 非常的直观」）** |
 | **项目状态交接（一页索引，不是第九个信箱）** | 根目录 [`HANDOFF.md`](HANDOFF.md) | **09-04（三次律①：命名式交接干过 6 次、每次从零重写；Andy 原话「当前项目进度和下一步计划整理成交接说明，下次打开不用重新解释」）** |
