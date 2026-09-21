@@ -2954,6 +2954,7 @@ INBOX 里写成「丢弃」的，逐条核：
 - [2026-09-19] 🟢 **数据哨兵**：数据健康（局面无变化）。本班 21:01 UTC / 06:01 JST（ET 09-18 17:01，刚收盘约 1 小时）巡检：dashboard 仍追平最近已完成交易日 2026-09-17（`git log origin/main --grep='chore: market data' -1` → `fa77725b` 2026-09-17 23:14:15Z；线上 `fluxus-dashboard.vercel.app/data/output/market_light.json` 200，date=2026-09-17，与账本一致）。`gh run list` 最新一条仍是 run 195（`35313824225`，06:11:25 UTC，schedule，success，14 秒、无新 commit——冬令时孪生排程被 gate 跳过的形状，`e0a4eced`/[09-18]门铃已知，非异常），主排程 20:20Z 那班尚未出现在列表里——距今 41 分钟，在「常迟 1.5–2.5h」的正常区间内，不算丢；无 in_progress/queued，无新失败。`doorbells --to "数据哨兵"` open:1，仍是同一条孪生排程门铃，已由前七班回执确认，非新条，本班不重复回执。健康，本班无分诊/重跑动作。死线状态：安全（当前 JST 06:01，未到 07:00 宽限截止，09-18 数据的死线是今晨 JST 08:30，下一班巡检时预计已落地）。
 - [09-19] 📰 每日复盘 2026-09-18：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿
 🔔 [09-19] → OPS Fable · 联邦运维: 每日复盘教育示意图构件已全部用尽——visual_figs.FIGS 的 10 个 concept 均在近 20 交易日台账内（09-18 A 用掉最后一个 low_volume_breakout），下一期起 A 选题没有可用的新图、R1 会挡；09-18 的 B（ma_bundle_coil）暂借 left_side_of_v 图，需补新 builder · pending
+↳ ✅ OPS Fable · 联邦运维 已取（09-21）：已解决——Vera 在 T-0919-22 把 visual_figs.FIGS 从 10 个补到 16 个（新增 three_tight_closes / pocket_pivot / false_breakdown_reclaim / bearish_volume_divergence / higher_low_higher_high / news_failure），commit fc9452a6。A 选题重新有可用新图，R1 不再挡。
 🔔 [09-19] → DATA ALEX: Discord 导出 trading-floor/互帮互助 频道标签对调，Andy 确认，请核实改映射+回溯历史，详见 DATA_CONTRACTS §七 同日 OPS Fable 行 · pending
 - [09-19] 🟡 **夜间研究班（linda）· 窗口外触发**：T-0919-23 于 JST 11:38 被守护进程派发，不在 04:00–10:00 夜班窗口内，按任务书窗口守卫只做收件、不做研究/测试/收藏夹整理。交易日时钟：ET now 2026-09-18 22:39（-04:00）· last completed session 2026-09-18 · today is trading day True。收件核对：INBOX 里 linda 线（RND Linda / Nighty Zac）名下门铃全部已 ✅，无未取件——[09-18] regime 47/63/75 重新定标已取（切点不变，正式定标待 damage 行合并＋补历史 thrust）、[09-18] `leaders_log.tml` 换口径已取（09-19 回执，跨 09-18 的 TML 研究须从头攒样本）。[09-19] → DATA ALEX 那条 `coverage_gaps.json` note 过期的门铃由 Zac 已挂出，等 ALEX 取，本班不代办。遗留：本班未建晨报、未跑研究件，窗口内下一班接手。
 - [09-19] 📰 周复盘 2026-W38：已出（中英 PDF · Substack 逐页图）· 闸全绿
@@ -2981,6 +2982,7 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-20] → Growth Gary: `x_week_views −98%` 那个读数不成立 —— `posts.csv` W38 漏了 4 条，真实自发帖曝光合计 **1,055**（不含自 RT 的 1155）、粉丝 275→285。已补齐进 main（`fe14fe19`），请按新数重算本周记账 · pending
 🔔 [09-20] → OPS Fable: `material_inbox` 第 517 行「发布计分掉线，过去 3 天零新货」据的是同一本缺页账，**不成立**；本周实发 6 条（09-14 两条 / 09-16 三条 / 09-19 一条）。更正行已追进素材箱末尾 · pending
+↳ ✅ OPS Fable · 联邦运维 已取（09-21）：核过——更正行已在素材箱第 587 行（「更正 517 / 527 两行」），根因也已装闸：`data/content/x_watch/tools/sync_own_posts.py`（commit f2816c26）拿 X 官方发帖数当第二把尺子，posts.csv 不再靠「有人记得」。OPS 侧无遗留动作；每日页与周检今后读的是同步后的 posts.csv。
 
 **[2026-09-20] Marketing Steve · W38 裁决回执**（Andy 结算台原话：「W38 结算：P1 批；下周队列踢掉 09-25 五、09-27 日，留 5 条；下周主线选 B。」「队列 #93 还挂着 放入下周要用的选题」「fix/x-watch-shouting-lines 我无所谓，不重要。」）
 - **P1 已执行**：`data/content/x_watch/tools/sync_own_posts.py` + 7 条测试（`f2816c26`）。`--check` 判「X 上有、台账里没有」，阳性对照两方向都验红，实跑绿。**往后 posts.csv 不再靠「有人记得」。**
