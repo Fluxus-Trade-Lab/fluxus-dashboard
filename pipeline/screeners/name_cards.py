@@ -24,6 +24,10 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence
 
 import pandas as pd
 
+from pipeline.screeners.ep_stockbee import (C_OVER_C1 as EP_C_OVER_C1,
+                                           MIN_VOLUME as EP_MIN_VOLUME,
+                                           VOL_MULT as EP_VOL_MULT)
+
 logger = logging.getLogger(__name__)
 
 OUT = Path("data/output/shortlist.json")
@@ -54,7 +58,13 @@ def marks_from_bars(hist: pd.DataFrame, spy_close: Optional[pd.Series],
         chg = float(c.iloc[i] / c.iloc[i - 1] - 1)
         rv = float(v.iloc[i] / av.iloc[i]) if av.iloc[i] and av.iloc[i] > 0 else None
         kinds = []
-        if chg >= 0.10 and rv and rv >= 3:
+        # EP = Stockbee's EP scan on this bar (ep_stockbee, verbatim): c/c1>1.04,
+        # v > 3 x the 50-day average as of the prior bar, v >= 300000. The mark
+        # was the retired episodic_pivot recipe (+10% x 3x) until 2026-09-21.
+        av_prev = av.iloc[i - 1]
+        if (1.0 + chg) > EP_C_OVER_C1 and not pd.isna(av_prev) \
+                and float(v.iloc[i]) > EP_VOL_MULT * float(av_prev) \
+                and float(v.iloc[i]) >= EP_MIN_VOLUME:
             kinds.append("EP")
         elif chg >= 0.04 and rv and rv >= 1:
             kinds.append("4%")

@@ -416,9 +416,17 @@ class TestEvaluate:
 
 
 class TestPercentileContext:
+    # These pin ranking mechanics (era masking, NaN handling) on short fixtures;
+    # the 60-session floor for Stockbee columns has its own tests in
+    # test_breadth_stockbee_context.py.
+    @pytest.fixture(autouse=True)
+    def _short_history_ok(self, monkeypatch):
+        import pipeline.screeners.breadth_signals as bs
+        monkeypatch.setattr(bs, 'MIN_STOCKBEE_RANK_N', 1)
+
     def test_ranks_on_known_frame(self):
         from pipeline.screeners.breadth_signals import percentile_context
-        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct=d * 10)} for d in range(1, 11)]
+        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct_stockbee=d * 10)} for d in range(1, 11)]
         frame = _frame(rows)   # down_4pct: 10..100, today = 100 -> 100th pctile
         ctx = percentile_context(frame)
         assert ctx['down_4pct'] == 100
@@ -437,14 +445,14 @@ class TestPercentileContext:
         rank against dropna(), not the raw series (which would deflate the
         percentile by counting the NaN as a member with an undefined order)."""
         from pipeline.screeners.breadth_signals import percentile_context
-        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct=d * 10)} for d in range(1, 5)]
-        rows.append({'date': '2026-07-05', **_row(down_4pct=None)})
-        rows.append({'date': '2026-07-06', **_row(down_4pct=40)})
+        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct_stockbee=d * 10)} for d in range(1, 5)]
+        rows.append({'date': '2026-07-05', **_row(down_4pct_stockbee=None)})
+        rows.append({'date': '2026-07-06', **_row(down_4pct_stockbee=40)})
         frame = _frame(rows)  # non-NaN down_4pct values: 10,20,30,40(today),40
         ctx = percentile_context(frame)
         # denominator excludes the NaN row: 5 non-NaN values, today (40) ties
         # the max -> 100th percentile either way here, so pin count via mean directly
-        non_nan = pd.to_numeric(frame['down_4pct'], errors='coerce').dropna()
+        non_nan = pd.to_numeric(frame['down_4pct_stockbee'], errors='coerce').dropna()
         expected = int(round(float((non_nan <= 40).mean()) * 100))
         assert ctx['down_4pct'] == expected
         assert len(non_nan) == 5  # confirms the NaN row was excluded from ranking
@@ -778,15 +786,23 @@ def test_universe_truncated_matches_the_real_archive_window():
 # --- percentile_context across the universe breaks (Nighty Zac 09-18) ---------
 
 class TestPercentileAcrossUniverseBreaks:
+    # These pin ranking mechanics (era masking, NaN handling) on short fixtures;
+    # the 60-session floor for Stockbee columns has its own tests in
+    # test_breadth_stockbee_context.py.
+    @pytest.fixture(autouse=True)
+    def _short_history_ok(self, monkeypatch):
+        import pipeline.screeners.breadth_signals as bs
+        monkeypatch.setattr(bs, 'MIN_STOCKBEE_RANK_N', 1)
+
     """Raw counts must only be ranked against sessions drawn from the same universe."""
 
     def _rows(self):
         # 30 old-universe sessions with up_4pct 10..300, then 25 new-universe
         # sessions with up_4pct 1000..1024; today = 1000 is the LOWEST of its era.
         old = [{'date': f'2026-05-{(d % 28) + 1:02d}' if d < 28 else f'2026-06-{d - 27:02d}',
-                **_row(up_4pct=(d + 1) * 10)} for d in range(30)]
+                **_row(up_4pct_stockbee=(d + 1) * 10)} for d in range(30)]
         new = [{'date': f'2026-08-{10 + d:02d}' if d < 22 else f'2026-09-{d - 21:02d}',
-                **_row(up_4pct=1024 - d)} for d in range(25)]
+                **_row(up_4pct_stockbee=1024 - d)} for d in range(25)]
         return old + new
 
     def test_counts_rank_only_inside_the_current_era(self):

@@ -569,14 +569,26 @@ _CONDITION_WEIGHT = {'bull': 1.0, 'neutral': 0.5, 'bear': 0.0}
 # The measurements the score reads, each as a signed quantity where higher is
 # always better. Spreads are differenced here rather than voted on, because the
 # score wants magnitude and a vote throws magnitude away.
-_CONDITION_COLS = ('ratio_5d', 'ratio_10d', 't2108', 'pct_above_200sma',
-                   'pct_above_50sma', 'pct_above_20sma', 'mcclellan_osc',
-                   'net_advances')
+#
+# Stockbee's own columns (2026-09-21, Andy 「用stockbee口径」): the 5/10-day
+# ratios, the 25%/quarter and 13%/34-day spreads and the 4% net all read the
+# `*_stockbee` scans, new highs/lows the common-stock set. Each of those columns
+# starts on its own landing day (coverage_gaps.json); before it, that condition
+# is unmeasured and drops out of the denominator -- never filled from the old
+# price-only columns, which would put two definitions in one series.
+# The 4% net was keyed 'thrust' until 2026-09-21: it is the sign of one day's
+# up-minus-down, not Stockbee's thrust (back-to-back 300+, `thrust_state`), so
+# it is named for what it measures.
+_CONDITION_COLS = {'ratio_5d': 'ratio_5d_stockbee', 'ratio_10d': 'ratio_10d_stockbee',
+                   't2108': 't2108', 'pct_above_200sma': 'pct_above_200sma',
+                   'pct_above_50sma': 'pct_above_50sma',
+                   'pct_above_20sma': 'pct_above_20sma',
+                   'mcclellan_osc': 'mcclellan_osc', 'net_advances': 'net_advances'}
 _CONDITION_SPREADS = {
-    'nh_nl': ('new_highs', 'new_lows'),
-    'qtr_spread': ('up_25pct_qtr', 'down_25pct_qtr'),
-    'spread_13_34': ('up_13pct_34d', 'down_13pct_34d'),
-    'thrust': ('up_4pct', 'down_4pct'),
+    'nh_nl': ('new_highs_common', 'new_lows_common'),
+    'qtr_spread': ('up_25pct_qtr_stockbee', 'down_25pct_qtr_stockbee'),
+    'spread_13_34': ('up_13pct_34d_stockbee', 'down_13pct_34d_stockbee'),
+    'net_4pct': (THRUST_UP, THRUST_DOWN),
 }
 
 # The neutral line for each measurement -- the value at which it stops being a
@@ -588,7 +600,7 @@ _CONDITION_NEUTRAL = {
     't2108': 50.0, 'pct_above_200sma': 50.0,    # half the market
     'pct_above_50sma': 50.0, 'pct_above_20sma': 50.0,
     'mcclellan_osc': 0.0, 'net_advances': 0.0,  # net positive day
-    'nh_nl': 0.0, 'qtr_spread': 0.0, 'spread_13_34': 0.0, 'thrust': 0.0,
+    'nh_nl': 0.0, 'qtr_spread': 0.0, 'spread_13_34': 0.0, 'net_4pct': 0.0,
     'px_1m': 0.0, 'px_3m': 0.0, 'px_1y': 0.0,   # price higher than it was
 }
 
@@ -610,9 +622,9 @@ _CONDITIONS_SPAN = 2
 def _condition_frame(frame: pd.DataFrame) -> pd.DataFrame:
     """Every measurement the score reads, oriented so higher is better."""
     out: Dict[str, pd.Series] = {}
-    for col in _CONDITION_COLS:
+    for key, col in _CONDITION_COLS.items():
         if col in frame.columns:
-            out[col] = pd.to_numeric(frame[col], errors='coerce')
+            out[key] = pd.to_numeric(frame[col], errors='coerce')
     for key, (up, down) in _CONDITION_SPREADS.items():
         if up in frame.columns and down in frame.columns:
             out[key] = (pd.to_numeric(frame[up], errors='coerce')
@@ -797,6 +809,8 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
 UNIVERSE_BREAKS = ('2026-06-26', '2026-08-10')
 _COUNT_KEYS = ('up_4pct', 'down_4pct', 'nh_nl_net', 'qtr_spread')
 MIN_ERA_RANK_N = 20      # fewer same-era sessions than this: no percentile at all
+_STOCKBEE_KEYS = ('up_4pct', 'down_4pct', 'ratio_5d', 'nh_nl_net', 'qtr_spread')
+MIN_STOCKBEE_RANK_N = 60  # ours: sessions of the Stockbee column itself before it ranks
 
 
 def universe_era(day: str) -> int:
@@ -824,11 +838,19 @@ def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
     Ratios rank against the whole archive; raw counts only against sessions of the
     same universe era (see UNIVERSE_BREAKS), and are omitted when the history
     crosses a break and today's era has fewer than MIN_ERA_RANK_N sessions."""
+    def col(name):
+        return pd.to_numeric(frame.get(name), errors='coerce') if name in frame \
+            else pd.Series([np.nan] * len(frame), index=frame.index)
+    # Output keys stay as the page reads them; the values behind them are the
+    # Stockbee columns the page prints beside them (2026-09-21, Andy 「用stockbee
+    # 口径」). Until then the percentile ranked the retired price-only count while
+    # the digit next to it was Stockbee's -- two definitions in one cell.
     derived = {
-        'nh_nl_net': pd.to_numeric(frame.get('new_highs'), errors='coerce')
-                     - pd.to_numeric(frame.get('new_lows'), errors='coerce'),
-        'qtr_spread': pd.to_numeric(frame.get('up_25pct_qtr'), errors='coerce')
-                      - pd.to_numeric(frame.get('down_25pct_qtr'), errors='coerce'),
+        'up_4pct': col(THRUST_UP),
+        'down_4pct': col(THRUST_DOWN),
+        'ratio_5d': col('ratio_5d_stockbee'),
+        'nh_nl_net': col('new_highs_common') - col('new_lows_common'),
+        'qtr_spread': col('up_25pct_qtr_stockbee') - col('down_25pct_qtr_stockbee'),
     }
     ctx: Dict[str, int] = {}
     era = _era_mask(frame) if 'date' in frame and len(frame) else None
@@ -846,6 +868,10 @@ def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
         ranked = series.dropna()
         # Only when the history crosses a break: a young era is too short to rank.
         if key in _COUNT_KEYS and crossed and len(ranked) < MIN_ERA_RANK_N:
+            continue
+        # A Stockbee column ranks only against its own sessions, and not at all
+        # until it has MIN_STOCKBEE_RANK_N of them: a percentile of six days is noise.
+        if key in _STOCKBEE_KEYS and len(ranked) < MIN_STOCKBEE_RANK_N:
             continue
         ctx[key] = int(round(float((ranked <= today).mean()) * 100))
     return ctx

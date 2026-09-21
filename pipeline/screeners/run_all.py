@@ -1415,7 +1415,7 @@ def main():
             if card:
                 cards.append(card)
         sl = {'date': wl_date, 'seats': seats, 'manual': manual, 'cards': cards,
-              'legend': {'EP': '≥10%×量≥3×', '4%': '≥4%×量≥1', 'NH+RS': '20日新高+RS线新高同日',
+              'legend': {'EP': 'Stockbee EP：涨>4%×量>3×50日均量(前一日)×量≥30万', '4%': '≥4%×量≥1', 'NH+RS': '20日新高+RS线新高同日',
                          'x21': '上穿21EMA', 'x50': '上穿50SMA'}}
         _emit(ledger, OUTPUT_DIR / 'shortlist.json', json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
         n_sl = NC.archive(sl)
