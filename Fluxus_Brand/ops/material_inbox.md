@@ -627,3 +627,5 @@
 - [09-21] [OPS] **验收条件本身错，ops 一句话裁、不劳烦 Andy**。新加 ASK 判词进复核流程：代码没问题但任务描述有错（验收要求的 commit 根本不存在）→ 不拍板直送，改成任务板自动开 followup 单给 ops，ops 核实、修正或告知关闭。T-0921-50 案（验收号 4ae0e53d 不存在）原本被直送到 Andy，现在改成 ops 侧一个往返搞定，降低不必要的噪音。出处 T-0921-52 / [abc86f92](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/abc86f92)
 
 - [09-21] [DATA] **Sugar Babies 预设上线——从自制规则改用标准方法** · Stockbee 的 9M EP 高频名单（25–30 支票，Pradeep Bonde 视频 A_0ep4ekGWM）替换了原来的 4% 突破+自制阈值（boCount_1y≥10 / boCount_3m≥2）。这是「先查有没有权威口径，别自己造」这条规矩的第二次实践（第一次是 ADR 地板）。系统从「相信我们算的参数」升级到「跟踪标准写法」——交易者验证过的方法，比分析师自洽的假设更便宜。出处 [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [sugar_babies.py](../../pipeline/screeners/sugar_babies.py) · [screener_methods.md](../../data/reference/screener_methods.md) · T-0921-72
+
+- [09-21] [steve] **Sugar Babies 预设前端集成完成** · screenerFilter 新增 sugarRank 字段、预设分组同步、vitest 覆盖 (8→9 用例通过)。用户侧体验：市值≥$1B 的前 30 只高 EP 频度票实时扫描与排名（6 月优先，1 年破平）。出处 T-0921-74 · [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [screenerFilter.js](../../frontend/src/lib/screenerFilter.js) · [screener-presets.json](../../frontend/public/data/screener-presets.json)
