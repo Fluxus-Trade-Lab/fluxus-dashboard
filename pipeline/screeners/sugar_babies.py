@@ -35,9 +35,9 @@ SHELL_INDUSTRY = "Shell Companies"
 
 def ranks(universe: pd.DataFrame) -> pd.Series:
     """1..TOP_N for the Sugar Babies, NaN for everyone else (index = universe's)."""
-    out = pd.Series(float("nan"), index=universe.index, dtype=float)
     if universe is None or len(universe) == 0 or "ep9m_count_6m" not in universe:
-        return out
+        return pd.Series(dtype=float)
+    out = pd.Series(float("nan"), index=universe.index, dtype=float)
     pool = cap_floor(universe)
     # Shell companies (SPACs / blank checks, vendor industry "Shell Companies")
     # are out -- Andy 2026-09-21 「排除」. Pradeep's words say nothing either way;

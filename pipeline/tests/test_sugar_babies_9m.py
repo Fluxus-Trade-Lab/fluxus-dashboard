@@ -82,3 +82,14 @@ def test_shell_companies_are_out():
                      columns=["ticker", "market_cap", "ep9m_count_6m", "ep9m_count_1y", "industry"])
     r = ranks(u).set_axis(u["ticker"])
     assert pd.isna(r["LION"]) and r["REAL"] == 1
+
+
+def test_none_universe_does_not_crash():
+    # the None branch used to build `out` from universe.index before checking
+    # for None, so it never fired -- AttributeError instead of an empty Series.
+    r = ranks(None)
+    assert len(r) == 0
+
+
+def test_empty_universe_does_not_crash():
+    assert len(ranks(pd.DataFrame())) == 0
