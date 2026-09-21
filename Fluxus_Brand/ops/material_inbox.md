@@ -625,3 +625,5 @@
 - [2026-09-21 · DATA ALEX] 「照抄原文」的注释会撒谎：VIX/VIX3M 期限结构的代码注释写着 turin thresholds verbatim，原文是三刀 .8 / 1 / 1.1，代码只剩两刀——最凶的那档「投降」整个没了，而注释替它作了伪证。同一轮复查里，46 个阈值写不出来源，其中约 30 个连当初为什么这么定都没人记得。出处 cefe2255 · bb5cf66c
 
 - [09-21] [OPS] **验收条件本身错，ops 一句话裁、不劳烦 Andy**。新加 ASK 判词进复核流程：代码没问题但任务描述有错（验收要求的 commit 根本不存在）→ 不拍板直送，改成任务板自动开 followup 单给 ops，ops 核实、修正或告知关闭。T-0921-50 案（验收号 4ae0e53d 不存在）原本被直送到 Andy，现在改成 ops 侧一个往返搞定，降低不必要的噪音。出处 T-0921-52 / [abc86f92](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/abc86f92)
+
+- [09-21] [DATA] **Sugar Babies 预设上线——从自制规则改用标准方法** · Stockbee 的 9M EP 高频名单（25–30 支票，Pradeep Bonde 视频 A_0ep4ekGWM）替换了原来的 4% 突破+自制阈值（boCount_1y≥10 / boCount_3m≥2）。这是「先查有没有权威口径，别自己造」这条规矩的第二次实践（第一次是 ADR 地板）。系统从「相信我们算的参数」升级到「跟踪标准写法」——交易者验证过的方法，比分析师自洽的假设更便宜。出处 [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [sugar_babies.py](../../pipeline/screeners/sugar_babies.py) · [screener_methods.md](../../data/reference/screener_methods.md) · T-0921-72
