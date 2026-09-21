@@ -198,6 +198,8 @@
 
 ## 📥 追加到这里
 
+- [09-21] [DATA ALEX] 教学与数据对账：课程删掉 L6B.2 油门七档，系统同步停发 `market_light.spy.gear` 字段。不是数据坏了，是源头改了。对权威源的「跟还是不跟」做成规矩、落成代码——这是系统活下去的方式。[DATA_CONTRACTS.md · 09-21](../../data/reference/DATA_CONTRACTS.md#line-1334) · [METRIC_SOURCES.md](../../data/reference/METRIC_SOURCES.md#line-71) · [market_light.py](../../pipeline/screeners/market_light.py) · [T-0920-04](T-0920-04.md)
+
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
 - [09-19] [OPS] 课程定价页退款条款补完：两个行业标准选项（7 日无理由 / 3 日+已使用查证），建议优先 A——B 依赖后台日志能力待核实、成本不足；A 虽全额退款但课程分批解锁+社群粘性足以消化滥用风险，符合同类产品预期。09-25 前待 Andy 最终拍板。[Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md](Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md)
