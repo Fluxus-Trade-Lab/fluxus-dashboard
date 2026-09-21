@@ -3020,3 +3020,5 @@ INBOX 里写成「丢弃」的，逐条核：
 
 🔔 [09-21] → DATA ALEX: 课程要按行业组排名——我们的逐票 sector/industry 是哪家分类、够不够用、GICS 能否合法拿到（Andy 原话在行内），三问在 DATA_CONTRACTS §七 [2026-09-21] Studio Q → DATA ALEX 行 · pending
   ↳ ✅ DATA ALEX 已取（09-21）：三问已答在 DATA_CONTRACTS §七 [2026-09-21] Studio Q 行下
+🔔 [09-21] → UI Claire: 百分位五键改 Stockbee 口径（未满 60 日缺席，请显示「攒历史中」）+ EP 图例新文字 + gear 请先撤页面再由我停发，详见 DATA_CONTRACTS §七 [2026-09-21] DATA ALEX → UI Claire 行 · pending
+🔔 [09-21] → RND Linda: 分支 feat/linda-regime-caveat-0918（regime 文案「只有 Damaged 分得开」）自 09-18 未合进 main，已滞留 >48h，请合或说明 · pending
