@@ -1,0 +1,625 @@
+{
+  "timestamp": "2026-09-21T09:37:27.858169+00:00",
+  "as_of": "2026-09-18",
+  "definition": "EP hit = ep_stockbee UNION ep_qullamaggie (author-verbatim, from 2026-09-18) UNION retired episodic_pivot (rows <= 2026-09-17, self-invented, kept for historical continuity only -- see METRIC_SOURCES.md). Used as a proxy for 'post-earnings gap', not filtered by an actual earnings date (none exists universe-wide).",
+  "season_window_rule": "Earnings season has no SEC/exchange-official date range (only a 45-day filing deadline). We use the widely cited convention (FINRA / Yahoo Finance / CFI): quarter-end + ~2 weeks through the end of the following month. Self-invented operationalization of a descriptive convention -- see METRIC_SOURCES.md.",
+  "industry_source": "Finviz industry field, data/output/universe.json (current snapshot; see module docstring)",
+  "seasons": [
+    {
+      "season_id": "2026Q1",
+      "start_date": "2026-04-15",
+      "end_date": "2026-05-31",
+      "total_hits": 235,
+      "unique_tickers": 207,
+      "unmapped_tickers": [
+        "BLD",
+        "KALV",
+        "SILA",
+        "THR"
+      ],
+      "industries": [
+        {
+          "industry": "Biotechnology",
+          "tickers": 27,
+          "hits": 27
+        },
+        {
+          "industry": "Semiconductors",
+          "tickers": 14,
+          "hits": 21
+        },
+        {
+          "industry": "Software - Infrastructure",
+          "tickers": 14,
+          "hits": 17
+        },
+        {
+          "industry": "Software - Application",
+          "tickers": 11,
+          "hits": 11
+        },
+        {
+          "industry": "Computer Hardware",
+          "tickers": 10,
+          "hits": 15
+        },
+        {
+          "industry": "Communication Equipment",
+          "tickers": 7,
+          "hits": 9
+        },
+        {
+          "industry": "Information Technology Services",
+          "tickers": 5,
+          "hits": 8
+        },
+        {
+          "industry": "Electronic Components",
+          "tickers": 5,
+          "hits": 5
+        },
+        {
+          "industry": "Medical Care Facilities",
+          "tickers": 5,
+          "hits": 5
+        },
+        {
+          "industry": "Electrical Equipment & Parts",
+          "tickers": 4,
+          "hits": 6
+        },
+        {
+          "industry": "Diagnostics & Research",
+          "tickers": 4,
+          "hits": 5
+        },
+        {
+          "industry": "Aerospace & Defense",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Auto Parts",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Drug Manufacturers - Specialty & Generic",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Rental & Leasing Services",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "UNKNOWN",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Capital Markets",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Credit Services",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Engineering & Construction",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Internet Content & Information",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Internet Retail",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Medical Devices",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Medical Instruments & Supplies",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Other Industrial Metals & Mining",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Specialty Business Services",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Asset Management",
+          "tickers": 2,
+          "hits": 3
+        },
+        {
+          "industry": "Scientific & Technical Instruments",
+          "tickers": 2,
+          "hits": 3
+        },
+        {
+          "industry": "Auto & Truck Dealerships",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Department Stores",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Health Information Services",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Insurance Brokers",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Leisure",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Oil & Gas Midstream",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Pollution & Treatment Controls",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Restaurants",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Solar",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Trucking",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Drug Manufacturers - General",
+          "tickers": 1,
+          "hits": 2
+        },
+        {
+          "industry": "Packaged Foods",
+          "tickers": 1,
+          "hits": 2
+        },
+        {
+          "industry": "Utilities - Renewable",
+          "tickers": 1,
+          "hits": 2
+        },
+        {
+          "industry": "Apparel Manufacturing",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Auto Manufacturers",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Beverages - Non-Alcoholic",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Broadcasting",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Building Products & Equipment",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Discount Stores",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Entertainment",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Gambling",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Healthcare Plans",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Industrial Distribution",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Insurance - Property & Casualty",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Integrated Freight & Logistics",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Oil & Gas Refining & Marketing",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "REIT - Healthcare Facilities",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "REIT - Industrial",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "REIT - Specialty",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Recreational Vehicles",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Resorts & Casinos",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Security & Protection Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Semiconductor Equipment & Materials",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Shell Companies",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Specialty Chemicals",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Specialty Industrial Machinery",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Specialty Retail",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Telecom Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Thermal Coal",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Travel Services",
+          "tickers": 1,
+          "hits": 1
+        }
+      ]
+    },
+    {
+      "season_id": "2026Q2",
+      "start_date": "2026-07-15",
+      "end_date": "2026-08-31",
+      "total_hits": 107,
+      "unique_tickers": 103,
+      "unmapped_tickers": [
+        "FBRX"
+      ],
+      "industries": [
+        {
+          "industry": "Biotechnology",
+          "tickers": 15,
+          "hits": 16
+        },
+        {
+          "industry": "Software - Application",
+          "tickers": 7,
+          "hits": 7
+        },
+        {
+          "industry": "Software - Infrastructure",
+          "tickers": 6,
+          "hits": 6
+        },
+        {
+          "industry": "Drug Manufacturers - Specialty & Generic",
+          "tickers": 5,
+          "hits": 6
+        },
+        {
+          "industry": "Computer Hardware",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Health Information Services",
+          "tickers": 4,
+          "hits": 4
+        },
+        {
+          "industry": "Other Industrial Metals & Mining",
+          "tickers": 3,
+          "hits": 4
+        },
+        {
+          "industry": "Capital Markets",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Insurance - Property & Casualty",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Medical Devices",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Oil & Gas Equipment & Services",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Specialty Chemicals",
+          "tickers": 3,
+          "hits": 3
+        },
+        {
+          "industry": "Aerospace & Defense",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Apparel Retail",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Asset Management",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Banks - Regional",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Farm & Heavy Construction Machinery",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Household & Personal Products",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Information Technology Services",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Restaurants",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Scientific & Technical Instruments",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Semiconductor Equipment & Materials",
+          "tickers": 2,
+          "hits": 2
+        },
+        {
+          "industry": "Insurance Brokers",
+          "tickers": 1,
+          "hits": 2
+        },
+        {
+          "industry": "Auto & Truck Dealerships",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Auto Parts",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Conglomerates",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Consulting Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Diagnostics & Research",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Drug Manufacturers - General",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Electrical Equipment & Parts",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Electronic Components",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Engineering & Construction",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Gold",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Internet Content & Information",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Lodging",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Medical Care Facilities",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Medical Instruments & Supplies",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Oil & Gas E&P",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Packaged Foods",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Personal Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Rental & Leasing Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Semiconductors",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Specialty Business Services",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Steel",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Tools & Accessories",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "UNKNOWN",
+          "tickers": 1,
+          "hits": 1
+        }
+      ]
+    }
+  ],
+  "rotation_vs_prior_season": {
+    "prior_season_id": "2026Q1",
+    "current_season_id": "2026Q2",
+    "prior_top5": [
+      "Biotechnology",
+      "Semiconductors",
+      "Software - Infrastructure",
+      "Software - Application",
+      "Computer Hardware"
+    ],
+    "current_top5": [
+      "Biotechnology",
+      "Software - Application",
+      "Software - Infrastructure",
+      "Drug Manufacturers - Specialty & Generic",
+      "Computer Hardware"
+    ],
+    "entered_top5": [
+      "Drug Manufacturers - Specialty & Generic"
+    ],
+    "dropped_from_top5": [
+      "Semiconductors"
+    ]
+  }
+}
