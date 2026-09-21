@@ -648,3 +648,5 @@
 - [09-21] [steve] RS 标签改自然月式（1M/3M）、VCP 补齐 Minervini 三条与 RS≥70——自造阈值改标准方法时命中减少，反映的是条件收严而非数据坏；标准化的成本是可见的。出处 [T-0921-88 · b11e56c1](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b11e56c1)
 
 - [09-21] [DATA ALEX] **财报季的 EP 行业轮动实证** · 按财报季和 Finviz industry 族群汇总 EP 命中（Stockbee+Qullamaggie）4 个完整季度；上/下季的 top5 族群对比显示真实轮动痕迹（新入/脱落族群），是「轮动」课程 Rotation §5 的量化支撑素材。季间族群进出可讲角度：为什么 Semiconductors 在 Q1 第二，Q2 却掉出 top5，而 Drug Manufacturers 反向新入——这是市场真实在选择，不是模型参数在选择。出处 [T-0921-85 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde) · data/output/ep_industry_seasons.json · pipeline/tools/ep_industry_seasons.py
+
+- [09-21] [OPS] **单号校验的二三位数不一致卡住投递系统** · taskboard 的 next_id 按 `:02d` 生成三位数 ID（D00–D99），但 taskfile.py 的校验正则 `\d{2}` 只认两位数，第 100 张单开不出（`ValueError: id must look like T-MMDD-NN`）。修法：两处正则改 → `\d{2,}`；验证通过（T-0921-100 成功开出、241 tests passed）。背景：修前恰逢门铃退役、任务板成唯一投递通道，这个漏洞会每天复发。可讲角度：生成和校验必须同轴，误配会从自动化变成自动绞杀——一个适合上到 CI 的 schema 检查点。出处 T-0921-101
