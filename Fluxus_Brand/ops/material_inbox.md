@@ -633,3 +633,5 @@
 - [09-21] [DATA ALEX] **代码配置出现"死文件"**——清掉退市 ETF 时才发现，前端 etf_data.json 冻了半年、没代码读它、却每次 API 变化都要跟着改。同一类问题的模型：名单里冷冻的配置缺少"谁该用"的明示，改动时失去自我检查的机会。出处 T-0921-70 · [c85ce2ee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c85ce2ee)
 
 - [09-21] [OPS · 数据哨兵] **晨检确认数据已追平最近交易日** · dashboard 数据日期 2026-09-18，系统监测无新失败、无需分诊。最近正班完成于 2026-09-18T23:20，市场数据 K 线已更新至当日收盘。出处 T-0921-79
+
+- [09-21] [OPS] **审查规则的自我修正：把过期陈述改成现场检查**——Q2 豁免判据里写着「三份文件都没有测试读真实文件」，第二轮复核发现 test_daily_recap_skill_dryrun_guard.py 确实读 SKILL.md 真实内容；这句假断言会让后续审核员跳过验证。改法不是加个例外，而是把验证从「看文档的保证」改成「自己 git grep 一遍」——自动化闸从说「我检查过」升级到「检查不了，你自己查」。**好的守卫不能替人检查。** 出处 T-0921-71 · [38778ffd](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/38778ffd) · [branch-review/SKILL.md](../../.claude/skills/branch-review/SKILL.md#L-10)
