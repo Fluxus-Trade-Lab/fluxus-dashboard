@@ -30,7 +30,7 @@ Industries_COLORS = {
     "TAN": "#795548", "IBB": "#e91e63", "PAVE": "#333", "PEJ": "#4caf50",
     "KCE": "#ff5722", "XHE": "#e91e63", "IBUY": "#4caf50", "MSOS": "#4caf50",
     "FCG": "#795548", "JETS": "#4caf50", "IPAY": "#ff5722", "SLX": "#ff9800",
-    "IGV": "#3f51b5", "CIBR": "#3f51b5", "EATZ": "#4caf50", "PPH": "#e91e63",
+    "IGV": "#3f51b5", "CIBR": "#3f51b5", "PPH": "#e91e63",
     "IHI": "#e91e63", "UTES": "#009688", "ICLN": "#795548", "XME": "#ff9800",
     "IYZ": "#9c27b0", "URA": "#795548", "ITA": "#333", "VNQ": "#673ab7",
     "SCHH": "#673ab7", "KIE": "#ff5722", "REZ": "#673ab7", "CPER": "#8b6914",
