@@ -204,7 +204,7 @@
 
 - [09-21] [DATA ALEX] 教学与数据对账：课程删掉 L6B.2 油门七档，系统同步停发 `market_light.spy.gear` 字段。不是数据坏了，是源头改了。对权威源的「跟还是不跟」做成规矩、落成代码——这是系统活下去的方式。[DATA_CONTRACTS.md · 09-21](../../data/reference/DATA_CONTRACTS.md#line-1334) · [METRIC_SOURCES.md](../../data/reference/METRIC_SOURCES.md#line-71) · [market_light.py](../../pipeline/screeners/market_light.py) · [T-0920-04](T-0920-04.md)
 
-- [09-21] [steve] 财报季行业轮动实证交付——四个季度的 EP 跳空数据按 Finviz 行业分族统计：Biotech 从 Q1 的 27 命中跌到 Q2 的 16，Semiconductors 直接掉出 top3。季度间谁在衰落、谁在上升，一组数字讲清楚。课程《轮动》§5 可直接用。[T-0921-89 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
+- [09-21] [steve] 财报季行业轮动实证交付——两个季度的 EP 跳空数据按 Finviz 行业分族统计：Biotech 从 Q1 的 27 命中跌到 Q2 的 16，Semiconductors 直接掉出 top3。季度间谁在衰落、谁在上升，一组数字讲清楚。课程《轮动》§5 可直接用。[T-0921-89 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
