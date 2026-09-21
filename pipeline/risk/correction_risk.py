@@ -75,9 +75,10 @@ def build_frame(inputs: pd.DataFrame) -> pd.DataFrame:
     f["dd63"] = px / px.rolling(63).max() - 1.0
     if "^VIX3M" in inputs:
         f["term"] = inputs["^VIX"] / inputs["^VIX3M"] - 1.0
-        # E1 2026-08-21: 3-day EMA of VIX/VIX3M, states <0.8 / 0.8-1.0 / >1.0
-        # (turin thresholds verbatim) -- the only tested cut that beat the VIX
-        # quintile spread on its own sample. Third table dimension since 08-21.
+        # 3-day EMA of VIX/VIX3M -- @turintrader's term-structure proxy. The
+        # states are his cuts, see ts_state_of. Third table dimension since
+        # 08-21; E1 (2026-08-21) tested the earlier 3-state version, which had
+        # dropped his 1.1 cut, so E1's result is not a test of these 4 states.
         f["ts_ema"] = (inputs["^VIX"] / inputs["^VIX3M"]).ewm(span=3).mean()
     if "HYG" in inputs and "IEF" in inputs:
         cr = np.log(inputs["HYG"] / inputs["IEF"])
@@ -150,11 +151,28 @@ def conditional_table(f: pd.DataFrame) -> Dict:
     }
 
 
+# @turintrader, 2022-03-28 (x.com/turintrader/status/1508257418387599361):
+#   "pull up VIX:VIX3M 3ema with .8 as complacency and 1/1.1 as
+#    fear/capitulation zones"
+# Three cuts, verbatim since 2026-09-21 (Andy 「全都修了。」, audit
+# B_market_layer.md M45). Until then the code had only 0.8 / 1.0 and called
+# that "verbatim" -- his 1.1 was dropped. Ours, not his: the 0.8-1.0 band has
+# no name in the source ("neutral" is our label), and which side a value
+# exactly on a cut falls (<0.8 / <=1.0 / <1.1) is our convention -- he gives
+# levels, not inequalities. States 3 + 4 together are the old ">1.0" state 3.
+TS_CUTS = (0.8, 1.0, 1.1)
+
+
 def ts_state_of(v: float) -> int:
-    return 1 if v < 0.8 else (2 if v <= 1.0 else 3)
+    if v < TS_CUTS[0]:
+        return 1
+    if v <= TS_CUTS[1]:
+        return 2
+    return 3 if v < TS_CUTS[2] else 4
 
 
-TS_LABELS = {1: "complacency(<0.8)", 2: "neutral(0.8-1.0)", 3: "backwardation(>1.0)"}
+TS_LABELS = {1: "complacency(<0.8)", 2: "neutral(0.8-1.0)",
+             3: "fear(1.0-1.1)", 4: "capitulation(>=1.1)"}
 
 
 def ts_table(f: pd.DataFrame) -> Optional[Dict]:

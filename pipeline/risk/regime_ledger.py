@@ -4,7 +4,7 @@ One row per trading date: the correction-risk 3d cell (VIX quintile x 200dma
 x VIX-TS state) plus four confluence LAMPS, each the danger pole of a cut that
 passed the E1 house checks (data/research/turin_e1_results.json):
 
-    lamp_ts     VIX/VIX3M 3EMA > 1.0 (backwardation)            E1 rate 32.1%
+    lamp_ts     VIX/VIX3M 3EMA > 1.0 (ts_state 3 or 4)          E1 rate 32.1%
     lamp_nhnl   NYSE NHNL ratio 10d EMA < 0.30 (washout zone)   E1 rate 37.2%
     lamp_credit HY OAS trailing-252d pct rank >= 0.8 (Q5 wide)  E1 rate 34.8%
     lamp_gex    SqueezeMetrics GEX/px^2 252d pct rank < 0.2     E1 rate 21.2%
@@ -174,6 +174,18 @@ def _staleness(dim_date, ledger_date) -> int:
     return max(0, int((pd.Timestamp(ledger_date) - pd.Timestamp(dim_date)).days))
 
 
+def lamp_ts_on(state, stale_d):
+    """lamp_ts = VIX/VIX3M 3EMA > 1.0 on a fresh (<= 7 d) reading.
+
+    Since 2026-09-21 correction_risk has four states (turin's 0.8 / 1.0 / 1.1
+    cuts); 3 (fear) and 4 (capitulation) together are the old ">1.0" state 3,
+    so the lamp keeps its meaning. NOTE: the ledger's `ts_state` column changes
+    meaning on that date -- earlier rows hold 3 for everything above 1.0."""
+    if state is None:
+        return ""
+    return int(state >= 3 and stale_d != "" and stale_d <= 7)
+
+
 def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
     cr = json.loads(CR_JSON.read_text())
     today = cr["today"]
@@ -195,8 +207,7 @@ def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
         "prob_2d": today.get("prob"),
         "stale_ts_d": _staleness(ts["date"], date) if ts.get("date") else "",
     }
-    row["lamp_ts"] = ("" if ts.get("ts_state") is None
-                      else int(ts["ts_state"] == 3 and row["stale_ts_d"] != "" and row["stale_ts_d"] <= 7))
+    row["lamp_ts"] = lamp_ts_on(ts.get("ts_state"), row["stale_ts_d"])
 
     hi, lo = _series(TVDIR / "INDEX_HIGN.csv"), _series(TVDIR / "INDEX_LOWN.csv")
     if hi is not None and lo is not None:

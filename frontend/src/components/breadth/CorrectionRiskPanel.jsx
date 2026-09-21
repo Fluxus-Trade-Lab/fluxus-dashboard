@@ -68,7 +68,8 @@ function Note({ children }) {
 
 /* ── L1 · the whole table, today ringed ────────────────────────────────── */
 
-const TS_LABEL = { 1: 'complacent (<0.8)', 2: 'neutral (0.8–1.0)', 3: 'backwardation (>1.0)' }
+// @turintrader's three cuts, 0.8 / 1.0 / 1.1 (2026-09-21: 1.1 restored, four states).
+const TS_LABEL = { 1: 'complacent (<0.8)', 2: 'neutral (0.8–1.0)', 3: 'fear (1.0–1.1)', 4: 'capitulation (≥1.1)' }
 const SHADE_MAX = 0.4
 
 /** Grey by rate: the ground at 0%, near-ink at SHADE_MAX and above. */
@@ -80,7 +81,7 @@ export function CondGrid({ ts, today }) {
   const edges = ts.table.vix_edges_this_sample ?? []
   const rows = []
   for (const side of ['above200', 'below200']) {
-    for (const s of [1, 2, 3]) {
+    for (const s of [1, 2, 3, 4]) {
       const cells = [1, 2, 3, 4, 5].map((q) => g[`Q${q}_${side}_ts${s}`] ?? null)
       if (cells.some(Boolean)) rows.push({ side, s, cells })
     }
