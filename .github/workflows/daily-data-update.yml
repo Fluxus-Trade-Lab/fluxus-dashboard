@@ -365,8 +365,14 @@ jobs:
       - name: Claim registry check
         run: python -m pipeline.tools.claim_registry --check
 
-      # Schema drift is reported, not fatal: new columns land on purpose and
-      # DATA_CONTRACTS.md is where they get announced; accept with --update.
+      # Schema drift: additions are reported, not fatal (new columns land on
+      # purpose, DATA_CONTRACTS.md is where they get announced, accept with
+      # --update). Removals ARE fatal -- schema_snapshot.py exits 1 on any
+      # `removed`/`FILE MISSING`, deliberately, since the 2026-08-19 breadth
+      # blackout. That includes a column whose baseline was --update'd ahead
+      # of a real run producing it (T-0921-116/117, 2026-09-21): update the
+      # baseline in the same commit/session as the run that actually ships
+      # the field, not before.
       - name: Schema snapshot check
         run: python -m pipeline.tools.schema_snapshot --check
 
