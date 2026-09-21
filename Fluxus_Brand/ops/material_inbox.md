@@ -599,3 +599,5 @@
 - [09-21] [steve] **「顶是过程，底是事件」** · 蒸馏厂题库 C19 核心概念，三个维度拆解（大盘顶部形成机制 · 个股筑顶典型案例 · 5 分钟 M 顶 supply/demand 反应）。15 分钟可讲，课程标题级资产。出处 [data/reference/VAULT_STATUS.md](../../data/reference/VAULT_STATUS.md) · [09d58a82](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/09d58a82d)
 
 - [09-21] [steve] **今日发布三条素材排期确定** · C1 与 C3 英文金句（Own_Lines 诚实劈半与领跑姿态）+ C2 中文身份冷嘲（长期投资者的获得时机）。金句库、弹药库常青条目，未曾同族发过、无过期风险。出处 commit 4bc27212 · [data/content/today_draft.md](../../../data/content/today_draft.md)
+
+- [09-21] [OPS·数据验证] **周末无交易，系统照常待命** · 09-21 晨检确认上一交易日数据无漂移、dashboard 对应日期完整无滞后、监测 0 新告警。系统可信的基础：验收不休息——无交易日一样巡检、确认前班数据无抖动、交接点有人看。出处 T-0921-27 · [agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md](/Users/taolezhu/Documents/fluxus-ops/agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md) · 7295e7aa
