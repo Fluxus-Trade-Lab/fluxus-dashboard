@@ -593,3 +593,5 @@
 - [09-21] [OPS · 周检] **关卡机制首次过关验证：周发布 7/5 超目标** · Andy 两周前设立这套游戏机制（截止日+关卡计分），当时是「试试能不能对付拖延症」。本周周检数据说：**上周实读 7 条超预期 5 条**，同期五个此前断档的团队全部重新开张（claire/gary/mia/q/vera 从零到有）。系统化改进从「理论」变成了「实操数据」。可讲角度：一套激励设计，装进真的系统里之后，最直接的验证就是超目标交付这一个数字。出处 [data/research/repo_health/2026-09-21.md](../../data/research/repo_health/2026-09-21.md) · commit 6ac76efc · T-0921-16
 
 - [09-21] [steve] **「顶是过程，底是事件」** · 蒸馏厂题库 C19 核心概念，三个维度拆解（大盘顶部形成机制 · 个股筑顶典型案例 · 5 分钟 M 顶 supply/demand 反应）。15 分钟可讲，课程标题级资产。出处 [data/reference/VAULT_STATUS.md](../../data/reference/VAULT_STATUS.md) · [09d58a82](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/09d58a82d)
+
+- [09-21] [steve] **今日发布三条素材排期确定** · C1 与 C3 英文金句（Own_Lines 诚实劈半与领跑姿态）+ C2 中文身份冷嘲（长期投资者的获得时机）。金句库、弹药库常青条目，未曾同族发过、无过期风险。出处 commit 4bc27212 · [data/content/today_draft.md](../../../data/content/today_draft.md)
