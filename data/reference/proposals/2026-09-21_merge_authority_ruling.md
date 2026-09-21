@@ -10,8 +10,10 @@
 
 ## 选项（逐字）
 
-1. 以编队设计为准 (推荐)
-2. ⚠️ 第二个选项的逐字文本本记录人未取得，待 OPS 从问卷会话原文补入；在补入之前不得据本文件推断其内容。
+1. **以编队设计为准 (推荐)**——宪法改成「谁能直接合以 gate.py 判定为准」，ALEX 修数据不用等复核，守住 JST 08:30 死线；删数据仍要复核。数据正确性靠 schema 基线/归档审计这些 CI 闸。
+2. **以宪法白名单为准**——把 gate.py 收紧：数据文件改动一律走复核员。更稳，但数据急修多一道复核（平均几分钟到十几分钟）。
+
+> **OPS 注记**：选项一说明里的「以 gate.py 判定为准」「删数据仍要复核」「CI 闸」三处，事后复核发现与代码不符（gate.py 默认过宽、删数据实际走 Andy、CI 闸是事后闸），条文已按 spec §8 与实际代码更正；Andy 选的本意是「ALEX 修数据文件不用等复核」，这一点保留。
 
 ## Andy 的选择
 
@@ -25,5 +27,9 @@
 - spec 没列的路径一律走复核员（reviewer）；
 - 删数据走 Andy（needs-andy）；
 - 问题里说的「数据闸 CI 把关」如实是**事后闸**：`schema_snapshot --check`、`audit_archives` 在数据管线班与周审计里跑，push 时不跑。
+
+## OPS 在 spec 基础上的收紧（2026-09-21）
+
+`data/reference/**` 非删除改动判 **reviewer**，唯一例外 `data/reference/incidents/**` 判 none（它在宪法原白名单里）。理由：spec §8 原文写的是 `data/`，但 `data/reference/` 下放的是规矩文档（DATA_CONTRACTS、METRIC_SOURCES、proposals），改规矩不该自合。**这是 OPS 在 spec 基础上的收紧，理由如上，比 Andy 所选更严，不更宽。**
 
 落地：`CLAUDE.md`「safe-merge：能自己合的就别找人」节；fluxus-ops `tools/gate.py`（未列路径默认 reviewer）。
