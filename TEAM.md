@@ -10,7 +10,7 @@
 | 名字（新会话用 `claude -n "<名字>"` 启动） | 职责 | 文件边界（只在边界内写） | 分支习惯 |
 |---|---|---|---|
 | **UI Claire** | Dashboard 前端 UI | `frontend/` | `feat/*` 短分支，合并即删 |
-| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters/`、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
+| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters\|constants/`（09-21 补 `constants/`，见下方裁决行）、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
 | **Studio Q** | **课程线**（08-31 拆分后瘦身）：课程整理与设计、视频生成工作流、试读本 | 课程仓库（`~/Documents/SwingMasterclass`）、vault `FluxusTrading_Obsidian/20_Course/` | 成稿小改直推 main；大改 `feat/*` |
 | **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
@@ -19,6 +19,8 @@
 | **Nighty Zac** | 夜间施工队（04:30–09:30 JST，时间盒 300 分钟，挑 1–5 件）：可靠性工具、**全部研究复盘**、UI 预览稿、**收藏夹整理**（Andy 扔的链接：摘要+判定+入馆 `data/research/collection.md`） | `pipeline/tools/audit_*` 及测试、`data/research/`（含 night_reports/ui_previews）；其余只读 | `auto/night-YYYYMMDD-*`，晨报给「建议合并 y/n」，本人不合 main |
 | **Plumber Joe** | 可靠性巡检 + 路由（研究归 Zac）：核 cron、全页面盘查、每条 ⚠️ 标归属并落耐久处、转述夜间组晨报 | 六支笔：todo_cron_check 追加、`incidents/`、RELIABILITY §六、§七 追行、INBOX 追行、素材箱追行——docs 改动直推 main | 只读不修；写了必须 push |
 | **OPS Fable** | Operations：架构与秩序——TEAM.md/CLAUDE.md、大扫除、routines、跨线协调 | `TEAM.md`、`CLAUDE.md`、`.claude/agents/`、`data/research/repo_health/` | 小改直推 main |
+
+**[2026-09-21 ops 裁 · T-0921-70/71]** `pipeline/constants/`（`tickers.py`/`colors.py`，细分行业名单与配色）补进 DATA ALEX 边界——它是与 `pipeline/screeners|tickers|adapters/` 并列的数据契约物，此前不在任何人边界内是遗漏，不是新设。**并给一条窄口子标准授权**：数据契约改动（如清掉一只已确认退市/停止交易的 ticker）需要同步镜像它的三个前端文件（`frontend/src/lib/etfGroups.js`、`etfNames.json`、`frontend/public/data/etf_data.json` 快照）时，ALEX 可在同一提交里直接同步，不需要每次转交 UI Claire 或另开单——`frontend/` 其余部分仍是 Claire 的边界，这条只管「保持三份镜像与 `pipeline/constants/` 一致」。起因：T-0921-70（清 EATZ）审核判 ASK，见 branch-review skill Q2 补丁同批裁决。
 
 ## 一条线可以有多个会话
 
