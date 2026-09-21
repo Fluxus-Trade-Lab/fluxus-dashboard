@@ -33,3 +33,5 @@
 `data/reference/**` 非删除改动判 **reviewer**，唯一例外 `data/reference/incidents/**` 判 none（它在宪法原白名单里）。理由：spec §8 原文写的是 `data/`，但 `data/reference/` 下放的是规矩文档（DATA_CONTRACTS、METRIC_SOURCES、proposals），改规矩不该自合。**这是 OPS 在 spec 基础上的收紧，理由如上，比 Andy 所选更严，不更宽。**
 
 落地：`CLAUDE.md`「safe-merge：能自己合的就别找人」节；fluxus-ops `tools/gate.py`（未列路径默认 reviewer）。
+
+**已知缺口**（2026-09-21 记录，只记不修，OPS 另开单）：fluxus-ops 仓库本身的改动（包括 `tools/gate.py`、`agents/*/memory`）不过 gate；条文里「改 `gate.py` 必须走 reviewer」目前只是约定，没有机制兜底。

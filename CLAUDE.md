@@ -168,7 +168,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 
 **收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是夜间研究班的活（现为 fluxus-ops `schedule.json` 的 `linda-night-research`；原 Nighty Zac 夜班，2026-09-19 编队 v2 并入 RND Linda），判定结果在当晚晨报里。
 
-**直推 main 的标准动作（08-23 v2，审计后修订）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
+**直推 main 的标准动作（08-23 v2，审计后修订）**：守护进程工人不用本节，走任务板 gate（fluxus-ops `agents/_worker_protocol.md` 第 5–6 步）；本节给交互会话用。任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
 ```bash
 export WT=$(mktemp -d)/wt-docs   # export 开头,配合权限 allowlist 的首 token 匹配
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
@@ -210,7 +210,8 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
    一句总纲（Growth Gary 08-25）：**没有先验证一个检查能报出阳性，就不该信它的阴性。**
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
+**有任务号时一律以 gate 判定为准；本白名单只用于没有任务号的交互会话。**（2026-09-21 T-0921-115 OPS 裁定往严收：`pipeline/tools/audit_*` 及其测试、`DATA_RELIABILITY.md` §六追行移出本白名单——audit_* 本身就是闸，改闸必须复核；§六 追行 gate 分不出追加还是改写，一律复核。）
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
 
 碰到其他路径 → 按编队设计 spec §8（`docs/superpowers/specs/2026-09-18-agent-fleet-v2-design.md` §8；Andy 2026-09-21 问卷选「以编队设计为准 (推荐)」，问题与选项逐字见 [`data/reference/proposals/2026-09-21_merge_authority_ruling.md`](data/reference/proposals/2026-09-21_merge_authority_ruling.md)）分三档，流程全文 fluxus-ops `agents/_worker_protocol.md` 第 5–6 步：
 - **可直接合（测试过就合）**：只限 spec §8 none 档明列的路径——「data/、data/research/、night_reports/、tests/、material_inbox、agent 自己的 memory 与 runs」，且不删文件（含 ALEX 线对 `data/output`、`data/history` 的非删除改动）；**但 `data/reference/**` 除外**（放的是规矩文档：DATA_CONTRACTS、METRIC_SOURCES、proposals，改规矩不自合，走 reviewer），其中只有 `data/reference/incidents/**` 仍可直接合（OPS 2026-09-21 在 spec 基础上收紧，见裁决文件）。数据正确性靠的是**事后闸**：`schema_snapshot --check`、`audit_archives` 只在下一班数据管线和周审计里跑，push 时不跑——合进去的错要到那时才会被查出，不是合并前把关。
