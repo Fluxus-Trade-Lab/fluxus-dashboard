@@ -1,43 +1,59 @@
 """21-EMA pullback watchlist -- strong names that have come back to the line.
 
-**What it looks for: an entry inside an existing trend.** Names sitting
-between 2% below and 3% above their 20-SMA (a ~90% proxy for the 21-EMA),
-filtered to RS bracket 80 and above. The premise is that a leader pulling
-back to its rising average is offering a second entry at a place where the
-stop is close, which is what makes the position size work.
+**What it looks for: an entry inside an existing trend.** Since 2026-09-21
+(Andy: 「全都修了。」, audit C_lists_and_tickers.md #41) the list IS the
+Screener page preset `21EMA Watch`, evaluated by the same port of the page
+filter (`preset_hits.passes`) on the same preset file -- one rule, not two.
+Its core is Alex Desjardins's TradersLab "21dma-structure Pullback" scan
+(traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-traderslab):
+0 to 1 x ATR from the real 21EMA (`ema21_atr_dist`), -0.5 to 4 x ATR from the
+50SMA (`sma50_atr_dist`, plain units), daily closing range >= 10%, weekly
+return <= 15%. The preset adds its own non-Alex conditions (>= $1B, no
+Healthcare, trend_base, ppCount >= 1, ADR 3-6) -- see METRIC_SOURCES.md, the
+`21EMA Watch` row. Change the JSON and this list moves with the page.
+
+Retired (was ours, never an author's): a -2%..+3% band around the 20-SMA as a
+"~90% proxy" for the 21-EMA, plus above-SMA50/SMA200 and an RS-bracket floor
+of 80. The real ema21 has shipped in the universe since 08-24, so the proxy
+had no reason left; the RS floor was a second rule the page does not apply.
+
+RS brackets remain, as GROUPING only (the output shape `rs_groups` that the
+page and ticker_events read): perf_3m percentile across the frame given,
+snapped to 5-point labels.
 
 **What it cannot tell you: whether the trend is still alive.** A name that has
 topped passes through this band on its way down and looks exactly like one
-pausing on its way up. The screen sees distance from a line, not the
-direction the name is travelling through it. That distinction is the entire
-trade, and it lives on the chart -- the shape of the pullback, whether volume
-dried up into it, whether the low is higher than the last one.
-
-The RS bracket is the guard against the worst version of this: a name still
-in the top fifth of the field is less likely to be pulling back for good. It
-is a guard, not a guarantee.
+pausing on its way up. That distinction lives on the chart -- the shape of
+the pullback, whether volume dried up into it, whether the low is higher.
 """
 
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List
+from pathlib import Path
+from typing import Any, Dict, List, Mapping
 
 import numpy as np
 import pandas as pd
 
+from pipeline.screeners import preset_hits
+
 logger = logging.getLogger(__name__)
 
-# sma20_dist range that approximates "near the 21-EMA".
-_SMA20_LOWER = -0.02
-_SMA20_UPPER = 0.03
+PRESET_NAME = "21EMA Watch"
+_PRESETS_FILE = Path(__file__).resolve().parents[2] / preset_hits.PRESETS_PATH
 
 # RS bracket edges (descending).  Stocks with a perf_3m percentile rank
 # >= 95 go into the "100" bucket, >= 90 into "95", etc.
 _RS_BRACKETS: list[int] = list(range(100, -1, -5))  # 100, 95, 90, ...
 
-# Minimum RS bracket to include in output.
-_MIN_RS_BRACKET = 80
+
+def preset_filters(path: Path = _PRESETS_FILE) -> Mapping[str, Any]:
+    """The page preset's filter dict -- the single source of the rule."""
+    for p in preset_hits.load_presets(path):
+        if p["name"] == PRESET_NAME:
+            return p["filters"]
+    raise KeyError(f"preset {PRESET_NAME!r} not in {path}")
 
 
 def _perf_3m_rs(series: pd.Series) -> pd.Series:
@@ -48,8 +64,7 @@ def _perf_3m_rs(series: pd.Series) -> pd.Series:
     top of this scale. That is invisible while the feed is complete and
     catastrophic when it is not: on 2026-08-12 the yfinance enrichment left
     23.8% of perf_3m missing, those rows took the top 23.8% of the ranking,
-    and no real name could reach past 76.2 -- under the bracket floor of 80,
-    so this screener returned zero rows on a perfectly ordinary tape.
+    and no real name could reach past 76.2.
     """
     return series.rank(pct=True, na_option="top") * 100
 
@@ -65,14 +80,19 @@ def _bracket_label(rs: float) -> int:
     return 0
 
 
-def run(universe: pd.DataFrame) -> Dict[str, Any]:
-    """Run the 21-EMA Pullback Watchlist screener.
+def run(universe: pd.DataFrame,
+        filters: Mapping[str, Any] | None = None) -> Dict[str, Any]:
+    """Run the 21-EMA Pullback Watchlist screener (= the `21EMA Watch` preset).
 
     Parameters
     ----------
     universe : pd.DataFrame
-        Finviz-sourced universe with at least ``ticker``, ``sma20_dist``,
-        ``sma50_dist``, ``sma200_dist``, ``perf_3m``, and ``sector``.
+        Scored universe rows: the preset's columns (``ema21_atr_dist``,
+        ``sma50_atr_dist``, ``dcr_pct``, ``perf_1w``, ``pp_count_30d``,
+        ``adr_pct``, ``trend_base``, ``market_cap``, ``sector``) plus
+        ``perf_3m`` for the RS grouping and ``sma20_dist`` for the entry.
+    filters : mapping, optional
+        Preset filter dict; defaults to the page's `21EMA Watch`.
 
     Returns
     -------
@@ -85,46 +105,33 @@ def run(universe: pd.DataFrame) -> Dict[str, Any]:
         logger.warning("Empty universe passed to ema21_watch screener")
         return {"count": 0, "rs_groups": {}}
 
-    df = universe.copy()
+    if filters is None:
+        filters = preset_filters()
 
-    # Coerce key columns.
-    for col in ("sma20_dist", "sma50_dist", "sma200_dist", "perf_3m"):
+    df = universe.copy()
+    for col in ("sma20_dist", "perf_3m"):
+        if col not in df.columns:
+            df[col] = np.nan
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # Compute RS (percentile rank on perf_3m, 0-100).
+    # RS (percentile rank on perf_3m, 0-100) across the frame -- grouping only.
     df["rs"] = _perf_3m_rs(df["perf_3m"])
 
-    # --- Filters ---
-    # 1. Near the 21-EMA (proxy: sma20_dist).
-    near_ema = (df["sma20_dist"] >= _SMA20_LOWER) & (
-        df["sma20_dist"] <= _SMA20_UPPER
-    )
-    # 2. Uptrend: above both the 50-SMA and 200-SMA.
-    uptrend = (df["sma50_dist"] > 0) & (df["sma200_dist"] > 0)
+    mask = [preset_hits.passes(r, filters) for r in df.to_dict("records")]
+    hits = df.loc[mask].copy()
+    logger.info("ema21_watch: %d / %d stocks pass the %s preset",
+                len(hits), len(df), PRESET_NAME)
 
-    hits = df.loc[near_ema & uptrend].copy()
-    logger.info(
-        "ema21_watch: %d / %d stocks near 21-EMA in uptrend",
-        len(hits),
-        len(df),
-    )
-
-    # Assign bracket labels.
     hits["bracket"] = hits["rs"].apply(_bracket_label)
 
-    # Filter to RS >= _MIN_RS_BRACKET only.
-    hits = hits.loc[hits["bracket"] >= _MIN_RS_BRACKET]
-
-    # Build output grouped by RS bracket.
     rs_groups: Dict[str, List[Dict[str, Any]]] = {}
-    for _, row in (
-        hits.sort_values("rs", ascending=False).iterrows()
-    ):
+    for _, row in hits.sort_values("rs", ascending=False).iterrows():
         label = str(int(row["bracket"]))
+        sma20 = row["sma20_dist"]
         entry = {
             "ticker": row["ticker"],
             "rs": round(float(row["rs"]), 2),
-            "sma20_dist": round(float(row["sma20_dist"]), 4),
+            "sma20_dist": None if pd.isna(sma20) else round(float(sma20), 4),
             "sector": row.get("sector", ""),
         }
         rs_groups.setdefault(label, []).append(entry)

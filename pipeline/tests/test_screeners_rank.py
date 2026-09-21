@@ -52,9 +52,13 @@ class TestMissingReturnsNeverRankTop:
         every real name under the bracket floor of 80, so both screeners
         returned zero rows on an ordinary tape."""
         s = universe()["perf_3m"]
-        for module in (healthy_charts, ema21_watch):
+        # ema21_watch has had no RS floor since 2026-09-21 (it is the 21EMA
+        # Watch preset; RS is grouping only) -- the property there is that
+        # real names still reach the top bracket label, not a floor.
+        for module, floor in ((healthy_charts, healthy_charts._MIN_RS_BRACKET),
+                              (ema21_watch, 95)):
             rs = module._perf_3m_rs(s)
-            assert rs[:100].max() > module._MIN_RS_BRACKET, (
+            assert rs[:100].max() > floor, (
                 f"{module.__name__}: best real name only reached {rs[:100].max():.1f}")
 
     @pytest.mark.parametrize("missing_share", [0.05, 0.25, 0.5])

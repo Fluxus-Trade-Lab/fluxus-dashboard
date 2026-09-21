@@ -795,7 +795,10 @@ def main():
         'momentum_97': run_momentum_97(listed),
         'gainers_4pct': run_gainers_4pct(listed),
         'vol_up_gainers': run_vol_up_gainers(listed),
-        'ema21_watch': run_ema21_watch(listed),
+        # = the page's 21EMA Watch preset since 2026-09-21 (Andy 「全都修了。」);
+        # it reads ema21_atr_dist / sma50_atr_dist, which only the SCORED frame
+        # carries (compute_universe_scores works on a copy).
+        'ema21_watch': run_ema21_watch(cap_floor(scored_universe)),
         'healthy_charts': run_healthy_charts(listed),
         # Episodic Pivot, two authors side by side (Andy 2026-09-18: 「12 注册 EP
         # Stockbee和 EP Qullamaggie 然后我们以后可以测试下」). Each recipe is the
