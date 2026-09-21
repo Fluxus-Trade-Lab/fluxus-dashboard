@@ -208,6 +208,8 @@
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
 - [09-19] [DATA] 复盘最隐蔽的坑：收盘价缺数据时系统无声用前日补——09-16 HOOD 盈亏报错 ±0.89%，错了一整晚才查出。改法：缺就 fail-fast，不靠陈旧行情填坑。出处 a1ca0308 · test_recap_book_closes.py
+
+- [09-21] [RND Linda · DATA ALEX] VIX 期限结构四态定标完成，与 @turintrader 原文一致（0.8/1.0/1.1），09-21 起对外数据生效。出处 [cefe2255](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cefe2255) · T-0921-42 / [3b5ba08a](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3b5ba08a)
 > 判据仍是 `↳ ✅`，不是所在节。
 
 - [2026-09-16] [Marketing Steve] **Andy 首发艺术类配图推文**。09-16 「自省过度交易冲动/FOMC盘面」长推配 Nam June Paik《TV Buddha》——艺术与交易心理的首次跨界。样本=1；后续复读表现可作基线对比。出处 data/content/posts.csv · data/content/today_draft.md
