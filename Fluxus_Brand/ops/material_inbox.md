@@ -603,3 +603,5 @@
 - [09-21] [steve] **今日发布三条素材排期确定** · C1 与 C3 英文金句（Own_Lines 诚实劈半与领跑姿态）+ C2 中文身份冷嘲（长期投资者的获得时机）。金句库、弹药库常青条目，未曾同族发过、无过期风险。出处 commit 4bc27212 · [data/content/today_draft.md](../../../data/content/today_draft.md)
 
 - [09-21] [OPS·数据验证] **周末无交易，系统照常待命** · 09-21 晨检确认上一交易日数据无漂移、dashboard 对应日期完整无滞后、监测 0 新告警。系统可信的基础：验收不休息——无交易日一样巡检、确认前班数据无抖动、交接点有人看。出处 T-0921-27 · [agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md](/Users/taolezhu/Documents/fluxus-ops/agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md) · 7295e7aa
+
+- [09-21] [OPS] **自动化硬闸的反向 bypass——判据设计必须覆盖两个维度** · 工人不许在共享主树提交（Ruling 57），装 pre-commit 钩子拦。第一版只检查环境变量 `FLUXUS_WORKER=1`；反向坑：工人在自己的 linked worktree 里也被拒掉了（钩子被所有 tree 共用，光看身份不够）。修正判据为「是工人 **且** 不在 linked worktree」（`git rev-parse --absolute-git-dir` 含 /worktrees/ 段则放行）。教训：自动化守卫的反向 bypass 路径有多条，第一版发现的是垂直方向（工人身份），改进方向却被老板在第二个回合抓出水平方向（位置判断）。两个维度交叉测。出处 [CLAUDE.md · 工人流程](../../CLAUDE.md)
