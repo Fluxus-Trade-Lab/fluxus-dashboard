@@ -200,6 +200,8 @@
 
 ## 📥 追加到这里
 
+- [09-21] [steve] 回执写了「完成」，代码实测仍有问题——T-0921-70/71 的 EATZ 字段改动确实落地 main，但生产代码里仍在五个文件里。这说明：commit message 讲的故事 vs git diff 的现实，中间的鸿沟就是体系的故障源。不贯穿验实就填回执，下一个人接力时该信谁？出处 T-0921-83 · 提交 [38778ffd](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/38778ffd)
+
 - [09-21] [DATA ALEX] 教学与数据对账：课程删掉 L6B.2 油门七档，系统同步停发 `market_light.spy.gear` 字段。不是数据坏了，是源头改了。对权威源的「跟还是不跟」做成规矩、落成代码——这是系统活下去的方式。[DATA_CONTRACTS.md · 09-21](../../data/reference/DATA_CONTRACTS.md#line-1334) · [METRIC_SOURCES.md](../../data/reference/METRIC_SOURCES.md#line-71) · [market_light.py](../../pipeline/screeners/market_light.py) · [T-0920-04](T-0920-04.md)
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
