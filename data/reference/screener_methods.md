@@ -63,7 +63,7 @@
 - **组合**:× RS(强)是最经典的一对 —— 强的票、还没跑远。× VCS:VCS 高 + ATR Matrix 0–3 = "强势后的收缩、还贴着均线";VCS 高 + ATR Matrix 15+ = **钉价的并购票**,不是机会(见第四节的教训)。
 
 ### `ema21_atr_dist`(2026-08-17 加)
-- (close − EMA21)/ATR,同一 helper。**21EMA Watch 预设的本意**:离 21EMA **−0.5~+1 ATR** 且离 50SMA **0~3 ATR** = "回踩到 21 日线附近、还没离 50 日线太远"。这个预设 5 个月里一直指向比值列,实际筛的是"价格在 SMA20 之下",08-17 Andy 拍板改回 ATR 口径。
+- (close − EMA21)/ATR,同一 helper。**21EMA Watch 预设的本意**:离 21EMA **0~+1 ATR** 且离 50SMA **−0.5~4 ATR**(plain,`sma50_atr_dist`;09-18 起按 Alex 原文,此前是 −0.5~+1 / 0~3 B/A) = "回踩到 21 日线附近、还没离 50 日线太远"。这个预设 5 个月里一直指向比值列,实际筛的是"价格在 SMA20 之下",08-17 Andy 拍板改回 ATR 口径。`ema21_watch.py` 09-21 起读同一预设。
 
 ### Structure Pivot `sp_*`(oratnek Advanced Structure Pivot,移植,黄金对照 5/5)
 - **在找什么**:**Dow 理论意义上的趋势确认** —— 一个 Lower Low 之后出现 Higher Low,供需翻转成立;然后把 LL→2nd Pivot 这段当尺子量出入场和目标。
@@ -108,7 +108,8 @@
 - **组合**:这几个是"**今天发生了什么**",天然配"**之前是什么状态**"(VCS 高 + 今天 4% 放量 = 收缩后的启动);单独用是热度榜。
 
 ### `bo_count_1m/3m/6m/1y`(Sugar Babies)
-- Pradeep 的原规则:窗口内 **量 ≥ 9M 且涨幅 ≥ 4%** 的天数。**在找什么**:惯于放量大涨的"体质"。Sugar Babies 预设 = 一年 ≥10 天且近三月 ≥2 天。它是"过去的状态"统计,更像强弱类的边缘。
+- **代码口径(2026-09-04 起,`yfinance_adapter.breakout_days`)**:窗口内 Stockbee **4% breakout** 的天数——c/c1 ≥ 4% ∧ v > v1 ∧ v ≥ 100,000(判定一天＝他 4% 扫描的原文三条)。**在找什么**:惯于放量大涨的"体质"。Sugar Babies 预设 = 一年 ≥10 天且近三月 ≥2 天。它是"过去的状态"统计,更像强弱类的边缘。
+- ⚠️ **自造**:按票滚动计数、窗口(1m/3m/6m/1y)和 10/2 两个阈值都是我们的,Pradeep 没给过数字(2026-09-21 查过)。另注:他在访谈里把 sugar babies 说成「半年或一年里 9 million EP 次数多」的票、盯 25–30 只——单位是 9 million 放量事件而非 4% breakout,也没有阈值。改不改单位待裁,见 METRIC_SOURCES 的 Sugar Babies 行。
 
 ---
 
@@ -116,7 +117,7 @@
 
 ### 已在用(10 个只读预设)
 见 `screener_inventory_2026-08-17.md` 第二节。按上面的语法读它们:
-- **21EMA Watch** = trend_base(强)× ema21_atr −0.5..1 & sma50_atr 0..3(位)× 周涨 0–15%、DCR ≥20、PP≥1、ADR 3–6(态)—— 最完整的三件套,08-17 起位置那半才真正生效
+- **21EMA Watch** = trend_base(强)× ema21_atr_dist 0..1 & sma50_atr_dist −0.5..4(位,plain ATR)× 周涨 ≤15%、DCR ≥10、PP≥1、ADR 3–6(态)—— 最完整的三件套;位置与 DCR/周涨 09-18 起按 Alex 原文(METRIC_SOURCES 21EMA Watch 行)
 - **97 Club** = h_score ≥80 & rs_21d ≥97(强)× trend_base × ADR 3.5–6 —— 缺位置项,可考虑加 ATR Matrix ≤4
 - **Pocket Pivot / PP Count** = 态 × trend_base(强)× ADR —— 缺位置项
 - **4% Bullish / Vol Up / Weekly 20%+ / Momentum 97** = 态或强,单维热度榜,**故意不加位置**(它们是"看谁在动")
@@ -152,15 +153,15 @@
 - **预设**(`frontend/public/data/screener-presets.json`,10 个):在浏览器里对 universe.json 做过滤,Screener/Watchlist 两页用
 - **Python 筛选器**(`pipeline/screeners/*.py`,每晚跑,出 `data/output/*.json`,Screeners 页用):`momentum_97` / `vol_up_gainers` / `episodic_pivot` / `healthy_charts` / `ema21_watch` …
 
-"Momentum 97"和"21EMA Watch"两边都有,**不是同一个定义**(下面标出)。写文案、做对照时先说清是哪一个。
+"Momentum 97"两边都有,**不是同一个定义**(下面标出);"21EMA Watch" 2026-09-21 起两边是同一条规则。写文案、做对照时先说清是哪一个。
 
 ### 预设(按"强 × 位 × 态"拆)
 
-**1 · 21EMA Watch** —— *强*:trend_base · *位*:离 21EMA −0.5~+1 ATR、离 50SMA 0~3 ATR(08-17 起真 ATR 口径) · *态*:周涨 0–15%、DCR ≥20、10/30 日内 PP ≥1、ADR 3–6
+**1 · 21EMA Watch** —— *强*:trend_base · *位*:离 21EMA 0~+1 ATR、离 50SMA −0.5~4 ATR(plain ATR,09-18 起按 Alex 原文) · *态*:周涨 ≤15%、DCR ≥10、30 日内 PP ≥1、ADR 3–6
 - **原型**:Qullamaggie / oratnek 的"回踩 21EMA 再上车" —— 领头股第一波之后回到均线,止损可以放很近,仓位才做得大。oratnek 的 1st Pivot 入场本质上就是这个。
 - **在找什么**:**趋势里的第二次入场机会**,不是新趋势。
 - **它看不到的**:方向 —— 见顶的票下来时也会穿过这个带子,和上行中歇脚的票在数字上一样;这就是为什么要配 trend_base、周涨为正、有 PP。
-- **Python 同名兄弟 `ema21_watch.py`**:SMA20 距离 −2%~+3% + RS 分位 ≥80,粗得多,只做候选表。
+- **Python 同名兄弟 `ema21_watch.py`**:2026-09-21 起**就是这个预设**(读同一份 `screener-presets.json`、同一个 `preset_hits.passes`),一条规则不是两条;RS 分档只做分组。此前是 SMA20 距离 −2%~+3% + RS 分位 ≥80 的自造代理,已退役。
 
 **2 · 4% Bullish** —— *态*:日涨 ≥4%、RelVol ≥1、从开盘为正 · *强*:rs_21d ≥60 · ADR 3.5–10
 - **原型**:**Stockbee 的 4% 突破扫描** `c/c1≥1.04 and v>v1 and v≥100000`(原话)+ Qullamaggie 的"看从开盘"—— 开盘之后还在涨才是当天真有买盘,高开低走不算。
@@ -194,7 +195,7 @@
 - **组合**:EP 天然不配 VCS(它是扩张不是收缩);配的是 `sp_days`(是不是新结构)和主题四态(题材是不是 Leading)。
 
 **7 · Sugar Babies** —— bo_count_1y ≥10 且 bo_count_3m ≥2
-- **原型**:Pradeep(Stockbee)的 "sugar babies" —— **惯于放量大涨的体质股**,原规则:量 ≥9M 且涨幅 ≥4% 的天数。
+- **原型**:Pradeep(Stockbee)的 "sugar babies" —— **惯于放量大涨的体质股**。代码数的是 4% breakout 天数(c/c1 ≥4% ∧ v>v1 ∧ v ≥100k,见上面 `bo_count` 节);10/2 两个阈值是**自造**,原作者没给数字。
 - **在找什么**:不是今天,是**这只票的性格** —— 一年里有 10 天以上这种日子,近三个月还有。做爆发型交易时,先挑会爆发的票。
 - **组合**:× VCS = "会爆的票正在蓄";× 4% Bullish = "会爆的票今天爆了"。它是唯一一个"过去状态统计"型的强弱代理。
 
