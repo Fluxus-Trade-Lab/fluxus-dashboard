@@ -68,3 +68,10 @@ def test_preset_is_the_rank_not_our_old_thresholds():
 def test_short_list_no_longer_reads_the_roster_as_contrarian():
     text = verdict({"atr_from_sma50": 2.0}, None, False, [], roster_streak=9)
     assert "反指" not in text and "Sugar Babies" not in text
+
+
+def test_tie_breaks_on_the_most_recent_9m_ep_not_the_alphabet():
+    u = pd.DataFrame([("AAA", 5e9, 3, 3, "2026-04-27"), ("ZZZ", 5e9, 3, 3, "2026-09-11")],
+                     columns=["ticker", "market_cap", "ep9m_count_6m", "ep9m_count_1y", "ep9m_last"])
+    r = ranks(u).set_axis(u["ticker"])
+    assert r["ZZZ"] == 1 and r["AAA"] == 2

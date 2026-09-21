@@ -15,7 +15,9 @@ What is his and what is ours:
   ours  -- the event formula (yfinance_adapter.ep9m_days composes his EP scan
            with his 9M volume), TOP_N = 30 (top of his 25-30), the order
            (6-month count first: fully measured; the "1y" count covers only
-           ~200 bars of the one-year download, so it breaks ties only), and the
+           ~200 bars of the one-year download, so it breaks ties only; then
+           the most recent 9M EP -- a name still printing them ahead of one
+           gone quiet since spring -- and only then the ticker), and the
            $1B floor (the screener universe rule, Andy 09-18).
 This replaces the 09-04 preset `bo_count_1y >= 10 and bo_count_3m >= 2`, whose
 unit (4% breakouts) and both thresholds were ours.
@@ -38,10 +40,12 @@ def ranks(universe: pd.DataFrame) -> pd.Series:
     c6 = pd.to_numeric(pool["ep9m_count_6m"], errors="coerce")
     c1 = pd.to_numeric(pool.get("ep9m_count_1y"), errors="coerce") if "ep9m_count_1y" in pool \
         else pd.Series(0.0, index=pool.index)
-    pool = pool.assign(_c6=c6, _c1=c1.fillna(0))[c6 >= 1]
+    last = pool["ep9m_last"].fillna("") if "ep9m_last" in pool else pd.Series("", index=pool.index)
+    pool = pool.assign(_c6=c6, _c1=c1.fillna(0), _last=last)[c6 >= 1]
     if not len(pool):
         return out
-    order = pool.sort_values(["_c6", "_c1", "ticker"], ascending=[False, False, True])
+    order = pool.sort_values(["_c6", "_c1", "_last", "ticker"],
+                             ascending=[False, False, False, True])
     top = order.index[:TOP_N]
     out.loc[top] = range(1, len(top) + 1)
     return out

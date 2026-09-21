@@ -1305,6 +1305,8 @@ class YfinanceAdapter(BaseAdapter):
                 is_ep9m = ep9m_days(closes, vols)
                 ep9m_6m = int(is_ep9m[-126:].sum()) if is_ep9m.size else 0
                 ep9m_1y = int(is_ep9m.sum()) if is_ep9m.size else 0
+                _ep9m_idx = hist.index[is_ep9m] if is_ep9m.size == len(hist) else []
+                ep9m_last = str(_ep9m_idx[-1].date()) if len(_ep9m_idx) else None
 
                 enriched[ticker] = {
                     # Belt for the Finviz 'Change %' rename: with a second
@@ -1422,6 +1424,7 @@ class YfinanceAdapter(BaseAdapter):
                     # Stockbee 9M EP counts (Sugar Babies); see ep9m_days.
                     'ep9m_count_6m': ep9m_6m,
                     'ep9m_count_1y': ep9m_1y,
+                    'ep9m_last': ep9m_last,
                 }
             except Exception as e:
                 logger.debug(f"  Enrich failed for {ticker}: {e}")

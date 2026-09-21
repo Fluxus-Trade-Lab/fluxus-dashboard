@@ -1148,7 +1148,7 @@ def main():
         'trend_base', 'vcs', 
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
         'bo_count_3m', 'bo_count_1y',
-        'ep9m_count_6m', 'ep9m_count_1y', 'sugar_rank',   # Sugar Babies (Stockbee 9M EP)
+        'ep9m_count_6m', 'ep9m_count_1y', 'ep9m_last', 'sugar_rank',   # Sugar Babies (Stockbee 9M EP)
         'ema10', 'ema20', 'wk_ema10', 'wk_ema20',
         # True Market Leaders = Moglen 2020 (2026-09-18; pipeline/screeners/tml_moglen.py).
         # sb_avg_dollar_vol_20 was already computed (Stockbee MM input) but not shipped.
