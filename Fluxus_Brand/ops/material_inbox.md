@@ -629,3 +629,5 @@
 - [09-21] [DATA] **Sugar Babies 预设上线——从自制规则改用标准方法** · Stockbee 的 9M EP 高频名单（25–30 支票，Pradeep Bonde 视频 A_0ep4ekGWM）替换了原来的 4% 突破+自制阈值（boCount_1y≥10 / boCount_3m≥2）。这是「先查有没有权威口径，别自己造」这条规矩的第二次实践（第一次是 ADR 地板）。系统从「相信我们算的参数」升级到「跟踪标准写法」——交易者验证过的方法，比分析师自洽的假设更便宜。出处 [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [sugar_babies.py](../../pipeline/screeners/sugar_babies.py) · [screener_methods.md](../../data/reference/screener_methods.md) · T-0921-72
 
 - [09-21] [steve] **Sugar Babies 预设前端集成完成** · screenerFilter 新增 sugarRank 字段、预设分组同步、vitest 覆盖 (8→9 用例通过)。用户侧体验：市值≥$1B 的前 30 只高 EP 频度票实时扫描与排名（6 月优先，1 年破平）。出处 T-0921-74 · [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [screenerFilter.js](../../frontend/src/lib/screenerFilter.js) · [screener-presets.json](../../frontend/public/data/screener-presets.json)
+
+- [09-21] [DATA ALEX] **代码配置出现"死文件"**——清掉退市 ETF 时才发现，前端 etf_data.json 冻了半年、没代码读它、却每次 API 变化都要跟着改。同一类问题的模型：名单里冷冻的配置缺少"谁该用"的明示，改动时失去自我检查的机会。出处 T-0921-70 · [c85ce2ee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c85ce2ee)
