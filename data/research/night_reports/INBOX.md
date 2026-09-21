@@ -3022,3 +3022,4 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ DATA ALEX 已取（09-21）：三问已答在 DATA_CONTRACTS §七 [2026-09-21] Studio Q 行下
 🔔 [09-21] → UI Claire: 百分位五键改 Stockbee 口径（未满 60 日缺席，请显示「攒历史中」）+ EP 图例新文字 + gear 请先撤页面再由我停发，详见 DATA_CONTRACTS §七 [2026-09-21] DATA ALEX → UI Claire 行 · pending
 🔔 [09-21] → RND Linda: 分支 feat/linda-regime-caveat-0918（regime 文案「只有 Damaged 分得开」）自 09-18 未合进 main，已滞留 >48h，请合或说明 · pending
+- [2026-09-21] Discord→X 生成端（steve, T-0922-10）：今天没有新 Discord 消息可生成草稿——`data/output/threads/` 下最新文件夹仍是 2026-09-18（已有 draft.txt）；`daily-content-threads` 当天 20:00 UTC 抓取按历史延迟（2–2.75h）尚未产出新文件夹，核对时仅过 42 分钟，属正常范围，非故障。正常结束，无 draft 产出。
