@@ -16,7 +16,7 @@
 UI 要把它画成空框、画在刻度之外,不能画成最低档。
 
 **③ 契约变更走这份文档。**
-数据端加字段不会通知你;这份文档更新了才算数。反过来,UI 需要新字段也写在这里再来找我(「来找我」＝开任务板单 `taskboard.py new --owner alex`,见 CLAUDE.md「通信＝任务板」)。
+数据端加字段不会通知你;这份文档更新了才算数。反过来,UI 需要新字段也写在这里再来找我(「来找我」＝开任务板单 `python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner alex --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`,见 CLAUDE.md「通信＝任务板」)。
 
 ---
 
@@ -400,7 +400,7 @@ JSON schema(所有 library 文章通用):
 ---
 
 ## 七、待数据端(前端在此追一行当保险 —— 跨会话消息会丢,2026-08-17 就丢过一封)
-> **2026-09-22 起(CLAUDE.md「通信＝任务板」)**:本节只记事实与裁决档案,不是派活渠道。要别线动手,开任务板单 `python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> ...`;本节里写了要别线做的事,必须带任务号(`T-MMDD-NN`)。下方存量行照原样保留。
+> **2026-09-22 起(CLAUDE.md「通信＝任务板」)**:本节只记事实与裁决档案,不是派活渠道。要别线动手,开任务板单 `python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <线> --type <type> --title "<一句话>" --created-by <你的线> --body-file <正文文件>`;本节里写了要别线做的事,必须带任务号(`T-MMDD-NN`)。下方存量行照原样保留。
 
 - [2026-09-07] **→ Marketing Steve：`fetch.py` 的 `mentions.csv` 我改成 upsert 了，分支 `fix/x-watch-mentions-upsert` 待你或 Andy 合（`Fluxus_Brand/ops/tools/` 不在 safe-merge 白名单，我不自合）。** 起因是 Andy 09-07 定的**两班制**：`steve-x-nightcap` 02:00 JST 抓前半天、`steve-x-daily-watch` 13:30 JST 重抓全天，**同一个 ET 日期被抓两次**，而 mentions 原本是 append → 同一批 post_id 进两遍。改法：key = `(date,ticker,handle,post_id)`，**已存在的行整行保留**（⚠️ stance 是人工回填的，重抓不许抹掉），打印行加「mentions 新增 N 行」。实测四项全绿（548 行底账 / 15 条已回填 stance）：重抓 09-04 新增 0 且行数不变 · 15 条 stance 一条不丢 · 混入 3 条新记录新增 3 · 再跑一次新增 0。分支上另有一个**不是我写的** commit `44eef192`（QPS 5.2s 限速守卫），那是 09-06 起就躺在主工作树未提交的改动，我改同一文件时带上来并单列，免得混进我的 diff。**另外三条 `fetch.py` 的问题我没动，交给你：**①每跑一次就拿 API 成员接口结果**覆盖 `members.json`**，而私密 List 的成员接口永远返回空 → Andy 手录的 34 人被写成 `[]`（已发生两次，都从 origin/main 恢复）；②停用词表要补 `MA SMA EMA RS ATR AVWAP VCP DTL DRAM HL IMO WHAT GOAT RR TSF JLA`（09-06 提及人数第一的「票」是 `MA`）；③`runlog.csv` 缺 `notes` 列，402 空跑写进去是一行全零，做评估的人读不出含义。**背景与数据全在** `data/content/x_watch/scoring/2026-09-07_time_window.md`。
   - ↳ **已执行（2026-09-07）**：Andy 原话「合」→ 合进 main `924cf454`。原分支 rebase 时与 `3ba83613`（成员读不到就跳过）冲突，改为基于当时的 main 重做 QPS 与 upsert 两处编辑；**`3ba83613` 的 members 修完整保留**，净改动只有那两处。分支已删。⚠️ **上面第①条（`members.json` 被空结果覆盖）已由 `3ba83613` 修掉，而且找到了更深的根**：09-06 起该端点回 HTTP 400，原代码 `sys.exit` 会让整轮抓取死在第一个请求上。**②停用词表 ③`runlog` 的 `notes` 列 —— 仍未处理，还归你。**

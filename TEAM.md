@@ -36,7 +36,7 @@
 1. **Steve 出 brief**（选题、角度、证据包、可复用物），写自己的地盘；**一个字的成稿都不写**。
 2. **Mia 执笔**（`Fluxus_Substack/drafts/` 等自己的地盘）；夜间六站产线的**旗舰站毛坯交给 Mia 成稿**，笔始终在 Mia 手里。
 3. **Vera 配视觉**（封面/图表/海报/角色），只做图不改文案。
-4. **Steve 审稿不改原稿**——意见写 `Fluxus_Brand/ops/reviews/`（或批注版 PDF + md），要点走契约行；退回由 Mia/Vera 自己改。
+4. **Steve 审稿不改原稿**——意见写 `Fluxus_Brand/ops/reviews/`（或批注版 PDF + md），要点开任务板单给 Mia/Vera（`taskboard.py new --owner mia|vera`；契约行只记事实）；退回由 Mia/Vera 自己改。
 5. **Andy 批准发布**——唯一发布者（人批边界）。
 
 ⚠️ **同一件对外资产，四条线各只碰自己那一段**；越段＝抢笔事故（08 月已出过三次）。课程线 Studio Q 不参与对外 marketing 链条。

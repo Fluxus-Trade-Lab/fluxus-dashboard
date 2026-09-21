@@ -73,7 +73,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 **safe-merge 判据修正（Andy 2026-09-05 亲批「建议采纳」，源自 OPS〈白名单的账〉报告 09-04；`data/reference/proposals/2026-08-31_safe_merge_boundary.md` 那次提案的三个悬问到此结案）**：
 1. **上面「不改行为的兜底守卫」换成机器可判的一句**：**这个 diff 删不删 main 上已有的可执行行？** 删 → 必须留分支，或单开一行写明删的是什么、为什么；不删 → 按普通改动办。「觉得自己在干嘛」不算数——判据问的是 diff 干了什么。（回测：`8e4a64ef` 删 27 行闸接线→红；`0271daa0` 净增→绿。`0271daa0` 本身不回滚：程序违规，内容是真 bug 修复，回滚等于让数据替程序买单——但不作判例引用。）
 2. **滞留闸**（Andy 2026-09-21 改，原话「同意，门铃做完接着做这条，48 小时滞留闸改成24小时甚至12小时有问题吗？」，显示方式问卷选「只开单，超 48h 上页」）：分支按任务板状态分档——单已结或内容已在 main＝可清（只列出，删分支仍等 Andy 点头）；单在等 Andy＝不算滞留；无单或单 12 小时没动＝真滞留。真滞留由守护进程每小时自动给归属线开跟进单；跟进单超 48 小时没处理才上每日页。实现：fluxus-ops `tools/stale_branches.py`。
-3. **耐久处的明确批准算「Andy 处理了」，不算越权**：条文早写着「留分支，等 Andy 或对应线的主人处理」——Andy 在页面批注/契约行/对话里给的一个明确字（如「合」「合并」），只要执行者把原话逐字抄进 commit message，就满足这个条件；抄不出原话＝没有批准，照旧留分支。
+3. **耐久处的明确批准算「Andy 处理了」，不算越权**：白名单外的分支原本要等 Andy 或对应线处理（旧条文「留分支，等 Andy 或对应线的主人处理」已由下面 safe-merge 节的三档流程取代）——Andy 在页面批注/契约行/对话里给的一个明确字（如「合」「合并」），只要执行者把原话逐字抄进 commit message，就满足这个条件；抄不出原话＝没有批准，照旧留分支。
 
 **24 小时三律（Andy 2026-09-04 亲定，原话：「所有ai工作都是24小时的，而且出错马上报告，找专人去维修，也不是等一轮再修。不需要管我现在是什么时间应该做什么禁止做什么」）**：
 1. **AI 全天候**：任何 agent 不得以「现在几点/什么时段」为由推迟自己的工作。唯一合法的时间闸是**数据可用性**，且引用时必须挂上代码出处与证据（如 `run_all.py:454` 的 Finviz 闸）——没有出处的窗口规则不许引用，历史上已因此连错三版（09-04 实录）。
@@ -212,7 +212,11 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
 - `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
 
-碰到其他路径（`pipeline/screeners|tickers|adapters`、`frontend/`、workflow 文件等）→ 不自己合，留分支走任务板现行流程（全文 fluxus-ops `agents/_worker_protocol.md` 第 5–6 步）：推分支 → `taskboard.py gate <任务号> --worktree <树>` 算 gate → **gate=reviewer**：只读复核员按 `branch-review` skill 判，PASS 才合进 main，FAIL 停在分支，ASK 自动转 ops；**gate=andy**：`taskboard.py needs-andy` 等 Andy 裁。⚠️ **谁能直接合，以 fluxus-ops `tools/gate.py` 的判定为准**（Andy 2026-09-21 问卷选「以编队设计为准 (推荐)」；依据 spec §8，09-18 批）：gate 判 none 即可合——例如 ALEX 线对 `data/output`、`data/history` 的非删除改动，正确性靠 schema 基线、归档审计等 CI 闸把关；删数据仍走复核。上面那张白名单只是没有任务号时的保底。改 `gate.py` 本身必须走 reviewer。无任务号的分支先开单。等待中的分支由滞留闸跟进（见上面「safe-merge 判据修正」第 2 条），不再在汇报里列「待合分支 y/n」。
+碰到其他路径 → 按编队设计 spec §8（`docs/superpowers/specs/2026-09-18-agent-fleet-v2-design.md` §8；Andy 2026-09-21 问卷选「以编队设计为准 (推荐)」，问题与选项逐字见 [`data/reference/proposals/2026-09-21_merge_authority_ruling.md`](data/reference/proposals/2026-09-21_merge_authority_ruling.md)）分三档，流程全文 fluxus-ops `agents/_worker_protocol.md` 第 5–6 步：
+- **可直接合（测试过就合）**：只限 spec §8 none 档明列的路径——「data/、data/research/、night_reports/、tests/、material_inbox、agent 自己的 memory 与 runs」，且不删文件（含 ALEX 线对 `data/output`、`data/history` 的非删除改动）。数据正确性靠的是**事后闸**：`schema_snapshot --check`、`audit_archives` 只在下一班数据管线和周审计里跑，push 时不跑——合进去的错要到那时才会被查出，不是合并前把关。
+- **走复核员（reviewer）**：spec §8 reviewer 档（`.github/workflows/`、`frontend/`、`pipeline/screeners|tickers|adapters/`、任何 ROLE.md、任何 skill、CLAUDE.md），**以及 spec 没列的一切路径**（如 `pipeline/run_all.py`、`pipeline/tools/*`、`pipeline/constants/`、`vercel.json`、`TEAM.md`、`KNOWLEDGE.md`、`.claude/agents/`）：不自己合，推分支 → `taskboard.py gate <任务号> --worktree <树>` → 只读复核员按 `branch-review` skill 判，PASS 才合进 main，FAIL 停在分支，ASK 自动转 ops。
+- **走 Andy（needs-andy）**：删数据、花钱、对外发布、登录/付费/会员数据相关目录——`taskboard.py needs-andy` 等 Andy 裁。
+fluxus-ops `tools/gate.py` 按这三档实现（spec 没列的路径默认 reviewer，T-0921-115）；改 `gate.py` 本身必须走 reviewer。上面那张白名单只是没有任务号时的保底。无任务号的分支先开单。等待中的分支由滞留闸跟进（见上面「safe-merge 判据修正」第 2 条），不再在汇报里列「待合分支 y/n」。
 
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
 
