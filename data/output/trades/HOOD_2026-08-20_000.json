@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-20_000",
-  "generated_at": "2026-09-18T23:35:48+00:00",
+  "generated_at": "2026-09-21T22:25:51+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -31,10 +31,10 @@
     "high": 101.61,
     "low": 93.65,
     "volume": 25193700.0,
-    "ma20": 93.218,
+    "ma20": 93.21799999999999,
     "ma50": 99.8742,
     "ma200": 96.276375,
-    "rsi14": 48.73227280028341,
+    "rsi14": 48.73227000658983,
     "atr14": 4.735571428571428,
     "atr14_pct": 4.979570377046718,
     "high_52w": 153.86,
@@ -46,22 +46,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 5.158536585365862,
-    "mfe_date": "2026-09-08",
+    "mfe_R": 5.441463414634154,
+    "mfe_date": "2026-09-21",
     "mae_R": 2.548780487804879,
     "mae_date": "2026-08-20",
-    "optimal_exit_price": 125.25,
-    "optimal_exit_date": "2026-09-08",
-    "optimal_R": 5.158536585365862,
-    "days_to_optimal": 19,
+    "optimal_exit_price": 126.41,
+    "optimal_exit_date": "2026-09-21",
+    "optimal_R": 5.441463414634154,
+    "days_to_optimal": 32,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 29
+    "hold_calendar_days": 32
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = 3.9% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.16R; worst drawdown -2.55R.",
+  "narrative": "Entered **HOOD** long on 2026-08-20 at $104.10 with stop $100.00 (currently trailed to $104.10) (1R = $4.10/sh = 3.9% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($93.22), MA stack mixed, RSI 49, 35% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +5.44R; worst drawdown -2.55R.",
   "ohlc_window": [
     {
       "date": "2026-07-21",
@@ -401,11 +401,19 @@
     },
     {
       "date": "2026-09-18",
-      "open": 113.52,
-      "high": 120.5699,
+      "open": 113.34,
+      "high": 120.57,
       "low": 111.06,
       "close": 119.82,
-      "volume": 39158459.0
+      "volume": 39224600.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 125.09,
+      "high": 126.41,
+      "low": 121.51,
+      "close": 123.3,
+      "volume": 28051623.0
     }
   ]
 }

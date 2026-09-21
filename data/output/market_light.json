@@ -1,455 +1,450 @@
 {
- "date": "2026-09-18",
+ "date": "2026-09-21",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
   "checks": [
    {
     "key": "fast_above_slow",
-    "pass": false,
-    "a": 761.5936,
-    "b": 762.8306
+    "pass": true,
+    "a": 762.4956,
+    "b": 762.2997
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 761.5936,
-    "b": 761.5722
+    "a": 762.4956,
+    "b": 760.0502
    },
    {
     "key": "slow_rising",
-    "pass": false,
-    "a": 762.8306,
-    "b": 762.9506
+    "pass": true,
+    "a": 762.2997,
+    "b": 761.1207
    }
   ],
-  "checks_passed": 1,
-  "light": "red",
-  "gear": {
-   "n": 7,
-   "label": "maximum defense",
-   "label_zh": "\u6700\u5927\u9632\u5fa1"
-  },
+  "checks_passed": 3,
+  "light": "green",
   "history": [
    {
-    "date": "2026-06-25",
-    "close": 734.3,
-    "fast": 739.0474,
-    "slow": 739.6168,
-    "checks_passed": 0
-   },
-   {
     "date": "2026-06-26",
-    "close": 728.99,
-    "fast": 737.2188,
-    "slow": 738.6047,
+    "close": 727.1843,
+    "fast": 735.3927,
+    "slow": 736.7751,
     "checks_passed": 0
    },
    {
     "date": "2026-06-29",
-    "close": 741.0,
-    "fast": 737.9063,
-    "slow": 738.8328,
+    "close": 739.1645,
+    "fast": 736.0785,
+    "slow": 737.0027,
     "checks_passed": 2
    },
    {
     "date": "2026-06-30",
-    "close": 746.77,
-    "fast": 739.5179,
-    "slow": 739.5887,
+    "close": 744.9202,
+    "fast": 737.6861,
+    "slow": 737.7567,
     "checks_passed": 2
    },
    {
     "date": "2026-07-01",
-    "close": 745.76,
-    "fast": 740.6528,
-    "slow": 740.1765,
+    "close": 743.9127,
+    "fast": 738.8182,
+    "slow": 738.343,
     "checks_passed": 3
    },
    {
     "date": "2026-07-02",
-    "close": 744.78,
-    "fast": 741.4032,
-    "slow": 740.6149,
+    "close": 742.9352,
+    "fast": 739.5667,
+    "slow": 738.7804,
     "checks_passed": 3
    },
    {
     "date": "2026-07-06",
-    "close": 751.28,
-    "fast": 743.199,
-    "slow": 741.6306,
+    "close": 749.4191,
+    "fast": 741.3581,
+    "slow": 739.7936,
     "checks_passed": 3
    },
    {
     "date": "2026-07-07",
-    "close": 747.71,
-    "fast": 744.0192,
-    "slow": 742.2096,
+    "close": 745.8579,
+    "fast": 742.1762,
+    "slow": 740.3711,
     "checks_passed": 3
    },
    {
     "date": "2026-07-08",
-    "close": 745.4,
-    "fast": 744.2703,
-    "slow": 742.5135,
+    "close": 743.5536,
+    "fast": 742.4267,
+    "slow": 740.6742,
     "checks_passed": 3
    },
    {
     "date": "2026-07-09",
-    "close": 751.71,
-    "fast": 745.6229,
-    "slow": 743.3893,
+    "close": 749.848,
+    "fast": 743.776,
+    "slow": 741.5479,
     "checks_passed": 3
    },
    {
     "date": "2026-07-10",
-    "close": 754.95,
-    "fast": 747.3188,
-    "slow": 744.4904,
+    "close": 753.08,
+    "fast": 745.4676,
+    "slow": 742.6462,
     "checks_passed": 3
    },
    {
     "date": "2026-07-13",
-    "close": 749.17,
-    "fast": 747.6554,
-    "slow": 744.936,
+    "close": 747.3143,
+    "fast": 745.8034,
+    "slow": 743.0908,
     "checks_passed": 3
    },
    {
     "date": "2026-07-14",
-    "close": 751.83,
-    "fast": 748.4144,
-    "slow": 745.5926,
+    "close": 749.9677,
+    "fast": 746.5605,
+    "slow": 743.7457,
     "checks_passed": 3
    },
    {
     "date": "2026-07-15",
-    "close": 754.81,
-    "fast": 749.5772,
-    "slow": 746.4704,
+    "close": 752.9403,
+    "fast": 747.7205,
+    "slow": 744.6214,
     "checks_passed": 3
    },
    {
     "date": "2026-07-16",
-    "close": 750.72,
-    "fast": 749.785,
-    "slow": 746.8752,
+    "close": 748.8604,
+    "fast": 747.9277,
+    "slow": 745.0251,
     "checks_passed": 3
    },
    {
     "date": "2026-07-17",
-    "close": 743.29,
-    "fast": 748.6041,
-    "slow": 746.5337,
+    "close": 741.4488,
+    "fast": 746.7498,
+    "slow": 744.6845,
     "checks_passed": 1
    },
    {
     "date": "2026-07-20",
-    "close": 742.09,
-    "fast": 747.4197,
-    "slow": 746.1105,
+    "close": 740.2518,
+    "fast": 745.5683,
+    "slow": 744.2624,
     "checks_passed": 1
    },
    {
     "date": "2026-07-21",
-    "close": 748.28,
-    "fast": 747.5761,
-    "slow": 746.3171,
+    "close": 746.4265,
+    "fast": 745.7244,
+    "slow": 744.4685,
     "checks_passed": 3
    },
    {
     "date": "2026-07-22",
-    "close": 747.41,
-    "fast": 747.5459,
-    "slow": 746.4212,
+    "close": 745.5586,
+    "fast": 745.6942,
+    "slow": 744.5723,
     "checks_passed": 2
    },
    {
     "date": "2026-07-23",
-    "close": 738.18,
-    "fast": 745.843,
-    "slow": 745.6363,
+    "close": 736.3515,
+    "fast": 743.9955,
+    "slow": 743.7894,
     "checks_passed": 1
    },
    {
     "date": "2026-07-24",
-    "close": 738.93,
-    "fast": 744.5861,
-    "slow": 744.9976,
+    "close": 737.0996,
+    "fast": 742.7417,
+    "slow": 743.1522,
     "checks_passed": 0
    },
    {
     "date": "2026-07-27",
-    "close": 739.09,
-    "fast": 743.5868,
-    "slow": 744.435,
+    "close": 737.2593,
+    "fast": 741.7449,
+    "slow": 742.591,
     "checks_passed": 0
    },
    {
     "date": "2026-07-28",
-    "close": 740.86,
-    "fast": 743.091,
-    "slow": 744.0945,
+    "close": 739.0248,
+    "fast": 741.2504,
+    "slow": 742.2514,
     "checks_passed": 0
    },
    {
     "date": "2026-07-29",
-    "close": 729.46,
-    "fast": 740.6127,
-    "slow": 742.7008,
+    "close": 727.6531,
+    "fast": 738.7781,
+    "slow": 740.8611,
     "checks_passed": 0
    },
    {
     "date": "2026-07-30",
-    "close": 741.69,
-    "fast": 740.8085,
-    "slow": 742.6045,
+    "close": 739.8528,
+    "fast": 738.9735,
+    "slow": 740.765,
     "checks_passed": 1
    },
    {
     "date": "2026-07-31",
-    "close": 747.03,
-    "fast": 741.9397,
-    "slow": 743.026,
+    "close": 745.1796,
+    "fast": 740.1019,
+    "slow": 741.1855,
     "checks_passed": 2
    },
    {
     "date": "2026-08-03",
-    "close": 757.67,
-    "fast": 744.7998,
-    "slow": 744.4206,
+    "close": 755.7932,
+    "fast": 742.9549,
+    "slow": 742.5767,
     "checks_passed": 3
    },
    {
     "date": "2026-08-04",
-    "close": 771.33,
-    "fast": 749.6235,
-    "slow": 746.9834,
+    "close": 769.4194,
+    "fast": 747.7666,
+    "slow": 745.1331,
     "checks_passed": 3
    },
    {
     "date": "2026-08-05",
-    "close": 769.79,
-    "fast": 753.2901,
-    "slow": 749.1555,
+    "close": 767.8832,
+    "fast": 751.4242,
+    "slow": 747.2998,
     "checks_passed": 3
    },
    {
     "date": "2026-08-06",
-    "close": 768.56,
-    "fast": 756.0664,
-    "slow": 751.0035,
+    "close": 766.6562,
+    "fast": 754.1936,
+    "slow": 749.1433,
     "checks_passed": 3
    },
    {
     "date": "2026-08-07",
-    "close": 773.26,
-    "fast": 759.1925,
-    "slow": 753.1232,
+    "close": 771.3446,
+    "fast": 757.312,
+    "slow": 751.2577,
     "checks_passed": 3
    },
    {
     "date": "2026-08-10",
-    "close": 773.03,
-    "fast": 761.7085,
-    "slow": 755.0191,
+    "close": 771.1152,
+    "fast": 759.8217,
+    "slow": 753.1489,
     "checks_passed": 3
    },
    {
     "date": "2026-08-11",
-    "close": 770.56,
-    "fast": 763.3178,
-    "slow": 756.4992,
+    "close": 768.6513,
+    "fast": 761.4271,
+    "slow": 754.6253,
     "checks_passed": 3
    },
    {
     "date": "2026-08-12",
-    "close": 772.49,
-    "fast": 764.9855,
-    "slow": 758.0221,
+    "close": 770.5765,
+    "fast": 763.0906,
+    "slow": 756.1445,
     "checks_passed": 3
    },
    {
     "date": "2026-08-13",
-    "close": 777.88,
-    "fast": 767.3299,
-    "slow": 759.9133,
+    "close": 775.9532,
+    "fast": 765.4292,
+    "slow": 758.031,
     "checks_passed": 3
    },
    {
     "date": "2026-08-14",
-    "close": 776.34,
-    "fast": 768.9681,
-    "slow": 761.4778,
+    "close": 774.417,
+    "fast": 767.0634,
+    "slow": 759.5916,
     "checks_passed": 3
    },
    {
     "date": "2026-08-17",
-    "close": 772.67,
-    "fast": 769.6412,
-    "slow": 762.5437,
+    "close": 770.756,
+    "fast": 767.7348,
+    "slow": 760.6549,
     "checks_passed": 3
    },
    {
     "date": "2026-08-18",
-    "close": 767.45,
-    "fast": 769.2428,
-    "slow": 763.011,
+    "close": 765.549,
+    "fast": 767.3374,
+    "slow": 761.121,
     "checks_passed": 2
    },
    {
     "date": "2026-08-19",
-    "close": 769.06,
-    "fast": 769.2096,
-    "slow": 763.5871,
+    "close": 767.155,
+    "fast": 767.3042,
+    "slow": 761.6956,
     "checks_passed": 2
    },
    {
     "date": "2026-08-20",
-    "close": 762.6,
-    "fast": 768.0078,
-    "slow": 763.4931,
+    "close": 760.711,
+    "fast": 766.1054,
+    "slow": 761.6019,
     "checks_passed": 1
    },
    {
     "date": "2026-08-21",
-    "close": 765.72,
-    "fast": 767.5919,
-    "slow": 763.7052,
+    "close": 763.8232,
+    "fast": 765.6905,
+    "slow": 761.8134,
     "checks_passed": 2
    },
    {
     "date": "2026-08-24",
-    "close": 763.47,
-    "fast": 766.8424,
-    "slow": 763.6828,
+    "close": 761.5788,
+    "fast": 764.9429,
+    "slow": 761.7911,
     "checks_passed": 1
    },
    {
     "date": "2026-08-25",
-    "close": 765.91,
-    "fast": 766.6729,
-    "slow": 763.8949,
+    "close": 764.0128,
+    "fast": 764.7738,
+    "slow": 762.0027,
     "checks_passed": 2
    },
    {
     "date": "2026-08-26",
-    "close": 766.08,
-    "fast": 766.5651,
-    "slow": 764.103,
+    "close": 764.1824,
+    "fast": 764.6663,
+    "slow": 762.2103,
     "checks_passed": 2
    },
    {
     "date": "2026-08-27",
-    "close": 771.1,
-    "fast": 767.3896,
-    "slow": 764.7694,
+    "close": 769.1899,
+    "fast": 765.4887,
+    "slow": 762.875,
     "checks_passed": 3
    },
    {
     "date": "2026-08-28",
-    "close": 769.35,
-    "fast": 767.746,
-    "slow": 765.2056,
+    "close": 767.4443,
+    "fast": 765.8443,
+    "slow": 763.3102,
     "checks_passed": 3
    },
    {
     "date": "2026-08-31",
-    "close": 767.05,
-    "fast": 767.6195,
-    "slow": 765.3813,
+    "close": 765.15,
+    "fast": 765.7181,
+    "slow": 763.4854,
     "checks_passed": 2
    },
    {
     "date": "2026-09-01",
-    "close": 761.78,
-    "fast": 766.5578,
-    "slow": 765.0383,
+    "close": 759.8931,
+    "fast": 764.659,
+    "slow": 763.1433,
     "checks_passed": 1
    },
    {
     "date": "2026-09-02",
-    "close": 765.16,
-    "fast": 766.3036,
-    "slow": 765.0499,
+    "close": 763.2646,
+    "fast": 764.4055,
+    "slow": 763.1548,
     "checks_passed": 2
    },
    {
     "date": "2026-09-03",
-    "close": 773.17,
-    "fast": 767.5521,
-    "slow": 765.8232,
+    "close": 771.2548,
+    "fast": 765.6508,
+    "slow": 763.9262,
     "checks_passed": 3
    },
    {
     "date": "2026-09-04",
-    "close": 770.19,
-    "fast": 768.0317,
-    "slow": 766.2391,
+    "close": 768.2822,
+    "fast": 766.1292,
+    "slow": 764.3411,
     "checks_passed": 3
    },
    {
     "date": "2026-09-08",
-    "close": 765.96,
-    "fast": 767.655,
-    "slow": 766.2125,
+    "close": 764.0627,
+    "fast": 765.7535,
+    "slow": 764.3146,
     "checks_passed": 1
    },
    {
     "date": "2026-09-09",
-    "close": 762.4,
-    "fast": 766.6996,
-    "slow": 765.8494,
+    "close": 760.5115,
+    "fast": 764.8004,
+    "slow": 763.9524,
     "checks_passed": 1
    },
    {
     "date": "2026-09-10",
-    "close": 757.83,
-    "fast": 765.0869,
-    "slow": 765.0857,
+    "close": 755.9528,
+    "fast": 763.1918,
+    "slow": 763.1905,
     "checks_passed": 1
    },
    {
     "date": "2026-09-11",
-    "close": 764.29,
-    "fast": 764.942,
-    "slow": 765.0099,
+    "close": 762.3968,
+    "fast": 763.0472,
+    "slow": 763.1149,
     "checks_passed": 0
    },
    {
     "date": "2026-09-14",
-    "close": 760.88,
-    "fast": 764.2035,
-    "slow": 764.6166,
+    "close": 758.9952,
+    "fast": 762.3105,
+    "slow": 762.7226,
     "checks_passed": 0
    },
    {
     "date": "2026-09-15",
-    "close": 757.39,
-    "fast": 762.9647,
-    "slow": 763.9283,
+    "close": 755.5139,
+    "fast": 761.0748,
+    "slow": 762.036,
     "checks_passed": 0
    },
    {
     "date": "2026-09-16",
-    "close": 754.05,
-    "fast": 761.3438,
-    "slow": 762.9875,
+    "close": 752.1822,
+    "fast": 759.4579,
+    "slow": 761.0976,
     "checks_passed": 0
    },
    {
     "date": "2026-09-17",
-    "close": 762.6,
-    "fast": 761.5722,
-    "slow": 762.9506,
+    "close": 760.711,
+    "fast": 759.6858,
+    "slow": 761.0608,
     "checks_passed": 1
    },
    {
     "date": "2026-09-18",
     "close": 761.69,
-    "fast": 761.5936,
-    "slow": 762.8306,
-    "checks_passed": 1
+    "fast": 760.0502,
+    "slow": 761.1207,
+    "checks_passed": 2
+   },
+   {
+    "date": "2026-09-21",
+    "close": 773.5,
+    "fast": 762.4956,
+    "slow": 762.2997,
+    "checks_passed": 3
    }
   ]
  },
@@ -458,37 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 713.5163,
-    "b": 713.431
+    "a": 718.5988,
+    "b": 716.1014
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 713.5163,
-    "b": 711.7533
+    "a": 718.5988,
+    "b": 713.5163
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 713.431,
-    "b": 712.5869
+    "a": 716.1014,
+    "b": 713.431
    }
   ],
   "checks_passed": 3,
   "light": "green",
-  "gear": {
-   "n": 3,
-   "label": "press",
-   "label_zh": "\u8e29\u4e0b\u53bb"
-  },
   "history": [
-   {
-    "date": "2026-06-25",
-    "close": 716.38,
-    "fast": 721.7093,
-    "slow": 720.064,
-    "checks_passed": 1
-   },
    {
     "date": "2026-06-26",
     "close": 706.52,
@@ -901,27 +884,35 @@
     "fast": 713.5163,
     "slow": 713.431,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-21",
+    "close": 741.47,
+    "fast": 718.5988,
+    "slow": 716.1014,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 31,
+   "count": 36,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 81,
+   "pool_count": 99,
    "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 6,
-    "ep_qullamaggie": 0,
-    "ll_hl_1st": 24,
-    "ll_hl_2nd": 15,
-    "ll_hl_trend_break": 13,
-    "liquid_leader_pullback": 31
+    "ep_stockbee": 4,
+    "ep_qullamaggie": 2,
+    "ll_hl_1st": 26,
+    "ll_hl_2nd": 24,
+    "ll_hl_trend_break": 24,
+    "liquid_leader_pullback": 37
    },
    "capped_panels": [
+    "ll_hl_1st",
     "liquid_leader_pullback"
    ],
    "setups_without_panel": [
@@ -953,6 +944,27 @@
     "rs_rating": 99
    },
    {
+    "ticker": "AXTI",
+    "theme": "Optics & Networking Equipment",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
+    "ticker": "MU",
+    "theme": "Semiconductors Large Caps",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
+    "ticker": "MXL",
+    "theme": "Optics & Networking Equipment",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
     "ticker": "SNDK",
     "theme": "Memory & Storage",
     "status": "holding",
@@ -967,45 +979,27 @@
     "rs_rating": 98
    },
    {
-    "ticker": "ABSI",
-    "theme": "Genomics",
+    "ticker": "QMCO",
+    "theme": "Quantum Computing",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
    },
    {
-    "ticker": "AMD",
-    "theme": "Semiconductors Large Caps",
+    "ticker": "PURR",
+    "theme": "Crypto Equities",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
-   },
-   {
-    "ticker": "PRAX",
-    "theme": "Genomics",
-    "status": "broken",
-    "above_ema21": false,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "MU",
-    "theme": "Semiconductors Large Caps",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "NEO",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 97
    }
   ],
   "leaders_meta": {
    "themes": [
+    "Crypto Equities",
     "Genomics",
     "Memory & Storage",
+    "Optics & Networking Equipment",
+    "Quantum Computing",
     "Semiconductors Large Caps"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
@@ -1015,11 +1009,14 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": -2
+   "score": -1
   }
  },
- "verdict": "avoid",
- "verdict_synthetic": false,
- "verdict_basis": null,
+ "verdict": "dim",
+ "verdict_synthetic": true,
+ "verdict_basis": {
+  "leaders": "good",
+  "breadth": "mid"
+ },
  "verdict_pending": null
 }

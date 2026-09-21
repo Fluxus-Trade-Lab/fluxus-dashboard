@@ -1,6 +1,6 @@
 {
   "trade_id": "AAPU_2026-09-09_000",
-  "generated_at": "2026-09-18T23:35:48+00:00",
+  "generated_at": "2026-09-21T22:25:52+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AAPU",
@@ -33,35 +33,35 @@
     "volume": 4701100.0,
     "ma20": 40.05,
     "ma50": 41.1046,
-    "ma200": 34.867955,
-    "rsi14": 47.89553795673809,
+    "ma200": 34.8679545,
+    "rsi14": 47.89553862338493,
     "atr14": 1.8631428571428568,
     "atr14_pct": 4.642768146381402,
     "high_52w": 48.89,
-    "low_52w": 26.0417,
-    "position_in_52w_range_pct": 61.660167277215386,
+    "low_52w": 26.0468,
+    "position_in_52w_range_pct": 61.65160748056315,
     "high_20d": 44.22,
     "low_10d": 38.75,
     "low_5d": 38.75
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
   "path_analytics": {
-    "mfe_R": 3.324999999999994,
-    "mfe_date": "2026-09-17",
+    "mfe_R": 3.584916666666661,
+    "mfe_date": "2026-09-21",
     "mae_R": 2.708333333333327,
     "mae_date": "2026-09-09",
-    "optimal_exit_price": 45.99,
-    "optimal_exit_date": "2026-09-17",
-    "optimal_R": 3.324999999999994,
-    "days_to_optimal": 8,
+    "optimal_exit_price": 46.3019,
+    "optimal_exit_date": "2026-09-21",
+    "optimal_R": 3.584916666666661,
+    "days_to_optimal": 12,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 9
+    "hold_calendar_days": 12
   },
   "lesson": "In progress",
-  "narrative": "Entered **AAPU** long on 2026-09-09 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($40.05), MA stack mixed, RSI 48, 62% through 52W range, ATR 4.6% of price. **In progress.** Peak so far +3.32R; worst drawdown -2.71R.",
+  "narrative": "Entered **AAPU** long on 2026-09-09 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($40.05), MA stack mixed, RSI 48, 62% through 52W range, ATR 4.6% of price. **In progress.** Peak so far +3.58R; worst drawdown -2.71R.",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -289,11 +289,19 @@
     },
     {
       "date": "2026-09-18",
-      "open": 45.79,
-      "high": 45.99,
-      "low": 44.4007,
+      "open": 45.86,
+      "high": 46.0,
+      "low": 44.401,
       "close": 45.27,
-      "volume": 713519.0
+      "volume": 715500.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 45.2,
+      "high": 46.3019,
+      "low": 44.521,
+      "close": 46.17,
+      "volume": 700958.0
     }
   ]
 }

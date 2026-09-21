@@ -1,6 +1,76 @@
 {
-  "generated_at": "2026-09-18T23:35:48.830035+00:00",
+  "generated_at": "2026-09-21T22:25:52.177186+00:00",
   "trades": [
+    {
+      "trade_id": "PLTR_2026-09-20_000",
+      "ticker": "PLTR",
+      "direction": "long",
+      "entry_date": "2026-09-20",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 1.9185185185185292,
+      "capture_pct": null,
+      "setup_type": "Pullback in uptrend",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "NBIS_2026-09-20_000",
+      "ticker": "NBIS",
+      "direction": "long",
+      "entry_date": "2026-09-20",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 1.359621451104101,
+      "capture_pct": null,
+      "setup_type": "Pullback in uptrend",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "FSLY_2026-09-20_000",
+      "ticker": "FSLY",
+      "direction": "long",
+      "entry_date": "2026-09-20",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 2.1796874999999973,
+      "capture_pct": null,
+      "setup_type": "Long in mixed structure",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "ARM_2026-09-20_000",
+      "ticker": "ARM",
+      "direction": "long",
+      "entry_date": "2026-09-20",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 0.9062499999999997,
+      "capture_pct": null,
+      "setup_type": "Long in mixed structure",
+      "lesson": "In progress",
+      "hold_days": 1
+    },
+    {
+      "trade_id": "ARM_2026-09-17_000",
+      "ticker": "ARM",
+      "direction": "long",
+      "entry_date": "2026-09-17",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": -0.119020159251772,
+      "optimal_R": 11.140624999999995,
+      "capture_pct": null,
+      "setup_type": "Long in mixed structure",
+      "lesson": "In progress",
+      "hold_days": 4
+    },
     {
       "trade_id": "SWKS_2026-09-10_000",
       "ticker": "SWKS",
@@ -37,11 +107,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.3730979403110545,
-      "optimal_R": 3.324999999999994,
+      "optimal_R": 3.584916666666661,
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 9
+      "hold_days": 12
     },
     {
       "trade_id": "TZA_2026-09-08_000",
@@ -107,11 +177,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.0,
-      "optimal_R": 1.530172413793102,
+      "optimal_R": 3.202586206896551,
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 12
+      "hold_days": 15
     },
     {
       "trade_id": "XXRP_2026-09-02_000",
@@ -275,11 +345,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.9124355065666054,
-      "optimal_R": 5.158536585365862,
+      "optimal_R": 5.441463414634154,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 29
+      "hold_days": 32
     },
     {
       "trade_id": "SOXL_2026-08-19_000",
@@ -345,11 +415,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.0,
-      "optimal_R": 7.66935483870968,
+      "optimal_R": 7.981182795698927,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 30
+      "hold_days": 33
     },
     {
       "trade_id": "NOW_2026-08-18_000",
@@ -963,7 +1033,7 @@
       "realized_R": 0.0,
       "optimal_R": 4.122324159021391,
       "capture_pct": 0.0,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 1
     },
@@ -977,7 +1047,7 @@
       "realized_R": 0.0,
       "optimal_R": 1.1895306859205743,
       "capture_pct": 0.0,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 6
     },
@@ -4307,8 +4377,8 @@
       "exit_date": "2026-03-13",
       "closed": true,
       "realized_R": 0.15761448349307755,
-      "optimal_R": 0.28209584664536735,
-      "capture_pct": 55.87267071366006,
+      "optimal_R": 0.28209478168264135,
+      "capture_pct": 55.87288164387066,
       "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 8

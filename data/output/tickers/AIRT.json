@@ -1,8 +1,8 @@
 {
   "ticker": "AIRT",
-  "fetched_at": "2026-09-18T23:31:55Z",
+  "fetched_at": "2026-09-21T22:21:49Z",
   "_schema": "v2",
-  "current_price": 31.0,
+  "current_price": 31.915000915527344,
   "info": {
     "symbol": "AIRT",
     "longName": "Air T, Inc.",
@@ -13,13 +13,13 @@
     "city": "Charlotte",
     "website": "https://www.airt.com",
     "fullTimeEmployees": 1666,
-    "marketCap": 83591776,
-    "enterpriseValue": 344737088,
-    "trailingPE": 1.3135593,
+    "marketCap": 86059088,
+    "enterpriseValue": 347955200,
+    "trailingPE": 1.3523306,
     "forwardPE": null,
-    "priceToSalesTrailing12Months": 0.22490194,
-    "enterpriseToRevenue": 0.928,
-    "priceToBook": 1.2797755,
+    "priceToSalesTrailing12Months": 0.23154019,
+    "enterpriseToRevenue": 0.936,
+    "priceToBook": 1.3175495,
     "grossMargins": 0.22662,
     "operatingMargins": -0.085489996,
     "profitMargins": 0.17167999,
@@ -32,8 +32,8 @@
     "currentRatio": 1.428,
     "fiftyTwoWeekHigh": 35.0,
     "fiftyTwoWeekLow": 18.35,
-    "averageVolume": 17751,
-    "averageVolume10days": 45630,
+    "averageVolume": 19488,
+    "averageVolume10days": 53840,
     "beta": 0.275,
     "sharesOutstanding": 2696509,
     "sharesFloat": 919893,
@@ -77,11 +77,7 @@
     ]
   },
   "earnings_history": [],
-  "next_earnings": {
-    "date": "[]",
-    "revenue_low": null,
-    "revenue_high": null
-  },
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -143,9 +139,9 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 31.0
+    "current_price": 31.915
   },
-  "quarterly_asof": "2026-09-18T23:31:55Z",
+  "quarterly_asof": "2026-09-21T22:21:49Z",
   "news": [
     {
       "date": "2026-09-03T17:30:00Z",
@@ -186,36 +182,20 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 31.005000400543214,
-    "ma50": 29.591600189208986,
-    "ma200": 23.738050088882446,
-    "rsi14": 52.69123892906299,
+    "ma20": 31.16325044631958,
+    "ma50": 29.68830020904541,
+    "ma200": 23.802625093460083,
+    "rsi14": 55.69669194372228,
     "high_20d": 34.650001525878906,
-    "low_5d": 28.030000686645508,
+    "low_5d": 28.1299991607666,
     "low_10d": 28.030000686645508,
     "high_52w": 35.0,
     "low_52w": 18.350000381469727,
-    "atr14": 1.7835712432861328,
-    "atr14_pct": 5.753455623503654,
-    "position_in_52w_range_pct": 75.97597542555927
+    "atr14": 1.8478569303240096,
+    "atr14_pct": 5.7899322491480385,
+    "position_in_52w_range_pct": 81.47147654562545
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-19",
-      "open": 20.0,
-      "high": 20.54,
-      "low": 18.16,
-      "close": 18.21,
-      "volume": 58400.0
-    },
-    {
-      "date": "2024-09-20",
-      "open": 18.46,
-      "high": 19.0,
-      "low": 17.25,
-      "close": 17.25,
-      "volume": 30200.0
-    },
     {
       "date": "2024-09-23",
       "open": 17.01,
@@ -4206,18 +4186,18 @@
       "high": 31.5,
       "low": 29.55,
       "close": 31.0,
-      "volume": 127178.0
+      "volume": 127200.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 31.02,
+      "high": 32.55,
+      "low": 31.02,
+      "close": 31.915,
+      "volume": 62187.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-18",
-      "open": 23.55,
-      "high": 23.7,
-      "low": 23.55,
-      "close": 23.7,
-      "volume": 1500.0
-    },
     {
       "date": "2025-09-19",
       "open": 22.77,
@@ -6224,7 +6204,15 @@
       "high": 31.5,
       "low": 29.55,
       "close": 31.0,
-      "volume": 127178.0
+      "volume": 127200.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 31.02,
+      "high": 32.55,
+      "low": 31.02,
+      "close": 31.915,
+      "volume": 62187.0
     }
   ],
   "ai_synthesis": null,

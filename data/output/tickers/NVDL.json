@@ -1,14 +1,14 @@
 {
   "ticker": "NVDL",
-  "fetched_at": "2026-09-18T23:34:32Z",
+  "fetched_at": "2026-09-21T22:24:26Z",
   "_schema": "v2",
-  "current_price": 34.869998931884766,
+  "current_price": 36.5,
   "info": {
-    "symbol": "NVDL",
-    "longName": "GraniteShares 2x Long NVDA Daily ETF",
+    "symbol": null,
+    "longName": null,
     "sector": null,
     "industry": null,
-    "exchange": "NGM",
+    "exchange": null,
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": 43.273335,
-    "fiftyTwoWeekLow": 21.536667,
-    "averageVolume": 13937172,
-    "averageVolume10days": 11409690,
+    "fiftyTwoWeekHigh": null,
+    "fiftyTwoWeekLow": null,
+    "averageVolume": null,
+    "averageVolume10days": null,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -48,7 +48,7 @@
     "low_price_target": null,
     "current_price": null
   },
-  "quarterly_asof": "2026-09-18T23:34:32Z",
+  "quarterly_asof": "2026-09-21T22:24:26Z",
   "news": [
     {
       "date": "2026-08-18T21:00:04Z",
@@ -111,38 +111,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.006595927933616608,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 34.15299997329712,
-    "ma50": 33.26179988861084,
-    "ma200": 30.76871669769287,
-    "rsi14": 52.81978481698151,
+    "ma20": 34.31349992752075,
+    "ma50": 33.3311999130249,
+    "ma200": 30.810300035476686,
+    "rsi14": 57.1377731749719,
     "high_20d": 39.119998931884766,
-    "low_5d": 30.93000030517578,
+    "low_5d": 31.59000015258789,
     "low_10d": 30.93000030517578,
     "high_52w": 43.27333450317383,
     "low_52w": 21.536666870117188,
-    "atr14": 1.8467858178274972,
-    "atr14_pct": 5.296202679658861,
-    "position_in_52w_range_pct": 61.34027665533489
+    "atr14": 1.8875000817435128,
+    "atr14_pct": 5.171233100667158,
+    "position_in_52w_range_pct": 68.83913110548238
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-19",
-      "open": 18.25,
-      "high": 18.9523,
-      "low": 18.21,
-      "close": 18.4367,
-      "volume": 56979300.0
-    },
-    {
-      "date": "2024-09-20",
-      "open": 18.12,
-      "high": 18.6153,
-      "low": 17.6167,
-      "close": 17.8333,
-      "volume": 45624000.0
-    },
     {
       "date": "2024-09-23",
       "open": 17.9633,
@@ -4129,22 +4113,22 @@
     },
     {
       "date": "2026-09-18",
-      "open": 33.88,
+      "open": 33.95,
       "high": 35.04,
       "low": 33.62,
       "close": 34.87,
-      "volume": 8223486.0
+      "volume": 8287500.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 35.1,
+      "high": 36.86,
+      "low": 34.71,
+      "close": 36.5,
+      "volume": 12982419.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-18",
-      "open": 27.3733,
-      "high": 28.31,
-      "low": 27.05,
-      "close": 28.0433,
-      "volume": 39546600.0
-    },
     {
       "date": "2025-09-19",
       "open": 27.915,
@@ -6147,11 +6131,19 @@
     },
     {
       "date": "2026-09-18",
-      "open": 33.88,
+      "open": 33.95,
       "high": 35.04,
       "low": 33.62,
       "close": 34.87,
-      "volume": 8223486.0
+      "volume": 8287500.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 35.1,
+      "high": 36.86,
+      "low": 34.71,
+      "close": 36.5,
+      "volume": 12982419.0
     }
   ],
   "ai_synthesis": null,

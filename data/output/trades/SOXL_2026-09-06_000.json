@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXL_2026-09-06_000",
-  "generated_at": "2026-09-18T23:35:48+00:00",
+  "generated_at": "2026-09-21T22:25:52+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXL",
@@ -8,7 +8,7 @@
     "sector": "Unknown",
     "entry_date": "2026-09-06",
     "entry_price": 114.28,
-    "stop_price": 105.0,
+    "stop_price": 114.0,
     "initial_stop": 105.0,
     "closed": false,
     "remaining_pct": 100.0,
@@ -27,7 +27,7 @@
     "ma20": 123.327,
     "ma50": 145.2082,
     "ma200": 108.8195,
-    "rsi14": 45.44506075938265,
+    "rsi14": 45.44506100638309,
     "atr14": 11.056428571428572,
     "atr14_pct": 9.427377704151239,
     "high_52w": 302.0,
@@ -39,22 +39,22 @@
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
   "path_analytics": {
-    "mfe_R": 1.530172413793102,
-    "mfe_date": "2026-09-09",
+    "mfe_R": 3.202586206896551,
+    "mfe_date": "2026-09-21",
     "mae_R": 1.5528017241379304,
     "mae_date": "2026-09-14",
-    "optimal_exit_price": 128.48,
-    "optimal_exit_date": "2026-09-09",
-    "optimal_R": 1.530172413793102,
-    "days_to_optimal": 3,
+    "optimal_exit_price": 144.0,
+    "optimal_exit_date": "2026-09-21",
+    "optimal_R": 3.202586206896551,
+    "days_to_optimal": 15,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 12
+    "hold_calendar_days": 15
   },
   "lesson": "In progress",
-  "narrative": "Entered **SOXL** long on 2026-09-06 at $114.28 with stop $105.00 (1R = $9.28/sh = 8.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($123.33), MA stack mixed, RSI 45, 33% through 52W range, ATR 9.4% of price. **In progress.** Peak so far +1.53R; worst drawdown -1.55R.",
+  "narrative": "Entered **SOXL** long on 2026-09-06 at $114.28 with stop $105.00 (currently trailed to $114.00) (1R = $9.28/sh = 8.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($123.33), MA stack mixed, RSI 45, 33% through 52W range, ATR 9.4% of price. **In progress.** Peak so far +3.20R; worst drawdown -1.55R.",
   "ohlc_window": [
     {
       "date": "2026-08-07",
@@ -291,10 +291,18 @@
     {
       "date": "2026-09-18",
       "open": 117.03,
-      "high": 123.86,
+      "high": 123.9,
       "low": 116.68,
       "close": 123.67,
-      "volume": 44207841.0
+      "volume": 44748100.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 132.065,
+      "high": 144.0,
+      "low": 129.62,
+      "close": 141.93,
+      "volume": 60567682.0
     }
   ]
 }

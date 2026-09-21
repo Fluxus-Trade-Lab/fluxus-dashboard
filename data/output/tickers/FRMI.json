@@ -1,80 +1,43 @@
 {
   "ticker": "FRMI",
-  "fetched_at": "2026-09-18T23:33:28Z",
+  "fetched_at": "2026-09-21T22:23:24Z",
   "_schema": "v2",
-  "current_price": 4.980000019073486,
+  "current_price": 5.059999942779541,
   "info": {
-    "symbol": "FRMI",
-    "longName": "Fermi Inc.",
-    "sector": "Real Estate",
-    "industry": "REIT - Specialty",
-    "exchange": "NMS",
-    "country": "United States",
-    "city": "Amarillo",
-    "website": "https://www.fermiamerica.com",
-    "fullTimeEmployees": 35,
-    "marketCap": 3189527296,
-    "enterpriseValue": 3684165376,
+    "symbol": null,
+    "longName": null,
+    "sector": null,
+    "industry": null,
+    "exchange": null,
+    "country": null,
+    "city": null,
+    "website": null,
+    "fullTimeEmployees": null,
+    "marketCap": null,
+    "enterpriseValue": null,
     "trailingPE": null,
-    "forwardPE": 38.340137,
+    "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 3.0797775,
-    "grossMargins": 0.0,
-    "operatingMargins": 0.0,
-    "profitMargins": 0.0,
+    "priceToBook": null,
+    "grossMargins": null,
+    "operatingMargins": null,
+    "profitMargins": null,
     "returnOnEquity": null,
-    "totalCash": 62536000,
-    "totalDebt": 576387968,
+    "totalCash": null,
+    "totalDebt": null,
     "totalRevenue": null,
     "freeCashflow": null,
-    "debtToEquity": 55.87,
-    "currentRatio": 1.102,
-    "fiftyTwoWeekHigh": 36.99,
-    "fiftyTwoWeekLow": 4.47,
-    "averageVolume": 18344154,
-    "averageVolume10days": 15667980,
+    "debtToEquity": null,
+    "currentRatio": null,
+    "fiftyTwoWeekHigh": null,
+    "fiftyTwoWeekLow": null,
+    "averageVolume": null,
+    "averageVolume10days": null,
     "beta": null,
-    "sharesOutstanding": 640467348,
-    "sharesFloat": 462475067,
-    "companyOfficers": [
-      {
-        "name": "Mr. Jacobo Ortiz Blanes",
-        "title": "Chief Operating Officer",
-        "age": 53,
-        "yearBorn": 1972
-      },
-      {
-        "name": "Mr. Charles Lynn Hamilton",
-        "title": "Chief Site Officer",
-        "age": 51,
-        "yearBorn": 1974
-      },
-      {
-        "name": "Mr. Lee Alan McIntire",
-        "title": "CEO & Director",
-        "age": 76,
-        "yearBorn": 1949
-      },
-      {
-        "name": "Mr. Robert L. Masson II",
-        "title": "Chief Financial Officer",
-        "age": 54,
-        "yearBorn": 1971
-      },
-      {
-        "name": "Mr. Barry  Sievert",
-        "title": "Vice President of Investor Relations",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Ms. Sezin  Uzman",
-        "title": "VP of Nuclear Supply Chain & Compliance",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
+    "sharesOutstanding": null,
+    "sharesFloat": null,
+    "companyOfficers": []
   },
   "earnings_history": [
     {
@@ -102,11 +65,7 @@
       "eps_surprise_pct": -33.1741
     }
   ],
-  "next_earnings": {
-    "date": "2026-11-09",
-    "revenue_low": 0,
-    "revenue_high": 11980000
-  },
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -250,6 +209,12 @@
   "quarterly_asof": "2026-09-14T21:42:09Z",
   "news": [
     {
+      "date": "2026-09-21T14:06:30Z",
+      "title": "Fermi delivers Siemens turbines with 780 MW combined capacity to Texas AI campus",
+      "url": "https://blockspace.media/insight/fermi-siemens-turbines-texas-ai-campus/",
+      "source": "Blockspace"
+    },
+    {
       "date": "2026-08-21T16:21:20Z",
       "title": "A Landmark Power Deal Puts Fermi\u2019s (FRMI) Big Bet to the Test",
       "url": "https://finance.yahoo.com/energy/articles/landmark-power-deal-puts-fermi-162120325.html",
@@ -302,28 +267,22 @@
       "title": "Why Fermi Stock Is Down 10% Today",
       "url": "https://www.fool.com/investing/2026/08/13/why-fermi-stock-is-down-10-today/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-13T16:04:41Z",
-      "title": "Fermi Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/fermi-q2-earnings-call-highlights-2026-08-13/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
     }
   ],
-  "options_implied_move": 0.01405622484576281,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 5.228999996185303,
-    "ma50": 5.908400001525879,
-    "ma200": 7.510475015640258,
-    "rsi14": 43.03850787591366,
-    "high_20d": 6.119999885559082,
+    "ma20": 5.1859999895095825,
+    "ma50": 5.877799997329712,
+    "ma200": 7.459625017642975,
+    "rsi14": 44.36915325120505,
+    "high_20d": 6.03000020980835,
     "low_5d": 4.679999828338623,
     "low_10d": 4.679999828338623,
     "high_52w": 36.9900016784668,
     "low_52w": 4.46999979019165,
-    "atr14": 0.34692849431719097,
-    "atr14_pct": 6.966435602177687,
-    "position_in_52w_range_pct": 1.5682662954140627
+    "atr14": 0.3529999256134033,
+    "atr14_pct": 6.976283193779932,
+    "position_in_52w_range_pct": 1.8142685065483066
   },
   "ohlc_2y": [
     {
@@ -2268,7 +2227,15 @@
       "high": 5.05,
       "low": 4.89,
       "close": 4.98,
-      "volume": 47316161.0
+      "volume": 47327700.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 5.16,
+      "high": 5.205,
+      "low": 5.02,
+      "close": 5.06,
+      "volume": 15167364.0
     }
   ],
   "ohlc_1y": [
@@ -4214,7 +4181,15 @@
       "high": 5.05,
       "low": 4.89,
       "close": 4.98,
-      "volume": 47316161.0
+      "volume": 47327700.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 5.16,
+      "high": 5.205,
+      "low": 5.02,
+      "close": 5.06,
+      "volume": 15167364.0
     }
   ],
   "ai_synthesis": null,

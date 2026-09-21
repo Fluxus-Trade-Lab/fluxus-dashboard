@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-09-18T23:13:52.521011+00:00",
+  "timestamp": "2026-09-21T22:06:12.504750+00:00",
   "SPY": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 761.6900024414062,
-    "ema8": 761.1177051788477,
-    "ema21": 762.8359796998676,
-    "sma50": 759.7309985351562,
-    "sma200": 714.2445825195313,
-    "sma20": 764.3034942626953,
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 773.5,
+    "ema8": 762.7290680936371,
+    "ema21": 762.2435649557075,
+    "sma50": 758.2952453613282,
+    "sma200": 712.9810202026367,
+    "sma20": 762.9884521484375,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
@@ -17,30 +17,88 @@
       "is_power_trend": false
     },
     "ma_structure": {
-      "3d_gt_50sma": false,
+      "3d_gt_50sma": true,
       "3d_gt_200sma": true,
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 0.04,
-      "21ema_dist": -0.15,
-      "50sma_dist": 0.26,
-      "200sma_dist": 6.23,
-      "52w_high_dist": -2.08
+      "9ema_dist": 1.41,
+      "21ema_dist": 1.46,
+      "50sma_dist": 1.97,
+      "200sma_dist": 7.82,
+      "52w_high_dist": -0.32
     }
   },
   "QQQ": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 721.4500122070312,
-    "ema8": 713.6549338745762,
-    "ema21": 713.409948722892,
-    "sma50": 709.9511975097656,
-    "sma200": 661.7729583740235,
-    "sma20": 713.2354949951172,
+    "close": 741.469970703125,
+    "ema8": 719.8360531698092,
+    "ema21": 715.9608598119506,
+    "sma50": 710.2703967285156,
+    "sma200": 662.3816244506836,
+    "sma20": 714.6369934082031,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
+      "sma50_rising": true,
+      "close_gt_open": true,
+      "is_power_trend": false
+    },
+    "ma_structure": {
+      "3d_gt_50sma": true,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": 3.01,
+      "21ema_dist": 3.44,
+      "50sma_dist": 4.21,
+      "200sma_dist": 10.67,
+      "52w_high_dist": -0.52
+    }
+  },
+  "IWM": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 285.5799865722656,
+    "ema8": 286.4475833563362,
+    "ema21": 290.20953107355984,
+    "sma50": 294.2405084228516,
+    "sma200": 273.7250397491455,
+    "sma20": 291.1944519042969,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": false,
+      "sma50_rising": false,
+      "close_gt_open": false,
+      "is_power_trend": false
+    },
+    "ma_structure": {
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -0.43,
+      "21ema_dist": -1.62,
+      "50sma_dist": -3.03,
+      "200sma_dist": 4.15,
+      "52w_high_dist": -6.15
+    }
+  },
+  "RSP": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 212.67999267578125,
+    "ema8": 213.7515630957431,
+    "ema21": 215.93529022621837,
+    "sma50": 217.21579864501953,
+    "sma200": 204.0587131500244,
+    "sma20": 217.07599868774415,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": false,
       "sma50_rising": false,
       "close_gt_open": true,
       "is_power_trend": false
@@ -51,109 +109,51 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 1.09,
-      "21ema_dist": 1.11,
-      "50sma_dist": 1.59,
-      "200sma_dist": 8.27,
-      "52w_high_dist": -3.21
-    }
-  },
-  "IWM": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 284.1000061035156,
-    "ema8": 286.6954681517849,
-    "ema21": 290.6724855237074,
-    "sma50": 294.43328735351565,
-    "sma200": 273.51066162109373,
-    "sma20": 291.8743835449219,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": false,
-      "sma50_rising": false,
-      "close_gt_open": false,
-      "is_power_trend": false
-    },
-    "ma_structure": {
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -1.06,
-      "21ema_dist": -2.31,
-      "50sma_dist": -3.64,
-      "200sma_dist": 3.73,
-      "52w_high_dist": -6.64
-    }
-  },
-  "RSP": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 212.2899932861328,
-    "ema8": 214.05772607287503,
-    "ema21": 216.2608199812621,
-    "sma50": 217.24819885253908,
-    "sma200": 203.9340791320801,
-    "sma20": 217.52549896240234,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": false,
-      "sma50_rising": false,
-      "close_gt_open": false,
-      "is_power_trend": false
-    },
-    "ma_structure": {
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -0.95,
-      "21ema_dist": -1.87,
-      "50sma_dist": -2.34,
-      "200sma_dist": 3.94,
-      "52w_high_dist": -4.7
+      "9ema_dist": -0.61,
+      "21ema_dist": -1.53,
+      "50sma_dist": -2.13,
+      "200sma_dist": 4.05,
+      "52w_high_dist": -4.53
     }
   },
   "^GSPC": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 7650.5,
-    "ema8": 7628.484387617829,
-    "ema21": 7645.123476847897,
-    "sma50": 7617.237392578125,
-    "sma200": 7183.05380859375,
-    "sma20": 7658.891015625,
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 7764.7001953125,
+    "ema8": 7658.754567105535,
+    "ema21": 7655.994087617406,
+    "sma50": 7621.02359375,
+    "sma200": 7187.730458984375,
+    "sma20": 7663.40751953125,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": false,
+      "close_gt_open": true,
       "is_power_trend": false
     },
     "ma_structure": {
-      "3d_gt_50sma": false,
+      "3d_gt_50sma": true,
       "3d_gt_200sma": true,
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 0.26,
-      "21ema_dist": 0.07,
-      "50sma_dist": 0.43,
-      "200sma_dist": 6.11,
-      "52w_high_dist": -1.9
+      "9ema_dist": 1.38,
+      "21ema_dist": 1.4,
+      "50sma_dist": 1.85,
+      "200sma_dist": 7.43,
+      "52w_high_dist": -0.44
     }
   },
   "BTC-USD": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 81045.546875,
-    "ema8": 77822.39664131266,
-    "ema21": 77153.63831174269,
-    "sma50": 72475.583828125,
-    "sma200": 70398.1750390625,
-    "sma20": 78153.898046875,
+    "close": 86555.1328125,
+    "ema8": 80780.38464180114,
+    "ema21": 78634.68494400021,
+    "sma50": 73670.14921875,
+    "sma200": 70582.8849609375,
+    "sma20": 78912.2734375,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
@@ -167,22 +167,22 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 4.01,
-      "21ema_dist": 4.8,
-      "50sma_dist": 10.57,
-      "200sma_dist": 13.14,
-      "52w_high_dist": -16.39
+      "9ema_dist": 6.99,
+      "21ema_dist": 9.15,
+      "50sma_dist": 14.89,
+      "200sma_dist": 18.45,
+      "52w_high_dist": -10.7
     }
   },
   "^VIX": {
     "signal": "RISK_OFF",
     "color": "red",
-    "close": 14.8100004196167,
-    "ema8": 16.071583974379394,
-    "ema21": 15.92975362238552,
-    "sma50": 16.17399995803833,
-    "sma200": 18.08930003643036,
-    "sma20": 15.70900001525879,
+    "close": 14.869999885559082,
+    "ema8": 15.80456528797488,
+    "ema21": 15.833412373583117,
+    "sma50": 16.128199958801268,
+    "sma200": 18.0847500371933,
+    "sma20": 15.659999990463257,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": false,
@@ -196,11 +196,11 @@
       "50sma_gt_200sma": false
     },
     "trend_status": {
-      "9ema_dist": -8.52,
-      "21ema_dist": -7.56,
-      "50sma_dist": -9.21,
-      "200sma_dist": -22.14,
-      "52w_high_dist": -52.3
+      "9ema_dist": -6.46,
+      "21ema_dist": -6.48,
+      "50sma_dist": -8.46,
+      "200sma_dist": -21.62,
+      "52w_high_dist": -52.11
     }
   }
 }
