@@ -102,6 +102,41 @@ def breakout_days(closes, volumes):
     return _np.nan_to_num(out, nan=False).astype(bool)
 
 
+# Stockbee "9 million EP" (2026-09-21, Andy 「B 照建议做」). Pradeep, Investors
+# Underground interview (YouTube A_0ep4ekGWM): Sugar Babies are "stocks which
+# have high number of 9 million EPs in a given period" -- 6 months or a year --
+# and he watches 25-30 of them. He gives no formula for one "9 million EP"; the
+# event here is his two written scans composed, and the composition is OURS:
+#   EP scan (2014-07, ep_stockbee): c/c1 > 1.04 and v > 3*avgv50.1
+#   9M scan (2019-09): v >= 8900000, in place of the EP scan's 300,000 floor.
+# The 3x-average leg is what keeps "neglected, then 9M" apart from names that
+# trade 9M every day: 98.8% of stocks averaging >9M carried a count under the
+# bare 9M rule (the 2026-09-03 measurement in breakout_days' docstring).
+EP9M_MIN_VOLUME = 8_900_000
+EP9M_AVG_WINDOW = 50
+
+
+def ep9m_days(closes, volumes):
+    """Boolean per bar (aligned to `closes`): a Stockbee 9M EP on that bar.
+
+    The first EP9M_AVG_WINDOW bars have no avgv50.1 and read False -- on the
+    one-year download that leaves ~200 measurable bars for the "1y" count.
+    """
+    import numpy as _np
+    from pipeline.screeners.ep_stockbee import C_OVER_C1, VOL_MULT
+    c = _np.asarray(closes, dtype=float)
+    v = _np.asarray(volumes, dtype=float)
+    out = _np.zeros(c.size, dtype=bool)
+    if c.size <= EP9M_AVG_WINDOW or v.size != c.size:
+        return out
+    avg_prev = pd.Series(v).rolling(EP9M_AVG_WINDOW).mean().shift(1).to_numpy()
+    with _np.errstate(divide="ignore", invalid="ignore"):
+        up = c[1:] / c[:-1] > C_OVER_C1
+    out[1:] = up
+    out &= (v > VOL_MULT * avg_prev) & (v >= EP9M_MIN_VOLUME)
+    return _np.nan_to_num(out, nan=False).astype(bool)
+
+
 def _flatten_yf_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Flatten yfinance MultiIndex columns for single-ticker downloads.
     yfinance >=0.2.31 returns MultiIndex columns like ('Close', 'SPY')
@@ -1264,6 +1299,9 @@ class YfinanceAdapter(BaseAdapter):
                     bo_6m = int(is_bo[-126:].sum()) if n - 1 >= 126 else bo_1y
                     bo_3m = int(is_bo[-63:].sum()) if n - 1 >= 63 else min(bo_1y, int(is_bo.sum()))
                     bo_1m = int(is_bo[-21:].sum()) if n - 1 >= 21 else min(bo_1y, int(is_bo.sum()))
+                is_ep9m = ep9m_days(closes, vols)
+                ep9m_6m = int(is_ep9m[-126:].sum()) if is_ep9m.size else 0
+                ep9m_1y = int(is_ep9m.sum()) if is_ep9m.size else 0
 
                 enriched[ticker] = {
                     # Belt for the Finviz 'Change %' rename: with a second
@@ -1378,6 +1416,9 @@ class YfinanceAdapter(BaseAdapter):
                     'wk_ema20': wk_ema20,
                     'bo_count_3m': bo_3m,
                     'bo_count_1y': bo_1y,
+                    # Stockbee 9M EP counts (Sugar Babies); see ep9m_days.
+                    'ep9m_count_6m': ep9m_6m,
+                    'ep9m_count_1y': ep9m_1y,
                 }
             except Exception as e:
                 logger.debug(f"  Enrich failed for {ticker}: {e}")

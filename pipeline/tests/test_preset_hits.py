@@ -17,7 +17,7 @@ def row(**kw):
             "adr_pct": 4.5, "trend_base": True, "pocket_pivot": True, "pp_count_30d": 3,
             "perf_1w": 0.12, "perf_1w_pctile": 0.98, "perf_3m_pctile": 0.9, "h_score": 90,
             "dcr_pct": 0.8, "ema21_atr_dist": 0.5, "atr_from_sma50": 1.5,
-            "bo_count_1y": 12, "bo_count_3m": 3, "volume": 20e6,
+            "bo_count_1y": 12, "bo_count_3m": 3, "volume": 20e6, "sugar_rank": 5,
             "sma50_atr_dist": 1.4, "sma50_dist": 0.05, "sma200_dist": 0.15}
     base.update(kw)
     return base
@@ -36,8 +36,9 @@ def test_presets_file_loads_and_slugs_are_stable():
 _FIT = {"Weekly 20%+ Gainers": {"perf_1w": 0.25}}
 # Author-named presets restored to the author's text on 2026-09-18 carry no
 # sector exclusion, because the author's scan has none: Stockbee 9M is
-# `v>=8900000` alone; Kacher's pocket pivot rules exclude no sector.
-_NO_SECTOR_RULE = {"Stockbee 9M Setup", "Pocket Pivot"}
+# `v>=8900000` alone; Kacher's pocket pivot rules exclude no sector; Pradeep's
+# Sugar Babies (2026-09-21, 9M EP ranking) is a list of names, not a sector cut.
+_NO_SECTOR_RULE = {"Stockbee 9M Setup", "Pocket Pivot", "Sugar Babies"}
 
 
 def test_every_shipped_preset_matches_a_strong_row_and_rejects_healthcare():

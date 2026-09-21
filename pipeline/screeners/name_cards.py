@@ -119,8 +119,6 @@ def verdict(r: Mapping[str, Any], state: Optional[str], tml: bool,
     chg = r.get("change_pct")
     if chg is not None and chg >= 0.15:
         parts.append("⚠当日≥15%不追")
-    if roster_streak >= 5:
-        parts.append(f"⚠Sugar Babies 名册 {roster_streak} 连(反指)")
     if "bar_date" in r and r.get("bar_date") is None:
         parts.append("⚠当晚无K线(429)")
     return " · ".join(parts)

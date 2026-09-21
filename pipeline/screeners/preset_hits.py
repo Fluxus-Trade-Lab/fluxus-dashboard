@@ -55,6 +55,7 @@ _RANGES: Dict[str, tuple] = {
     "high52wDist": ("high_52w_dist", 100.0),
     "boCount3m": ("bo_count_3m", 1.0),
     "boCount1y": ("bo_count_1y", 1.0),
+    "sugarRank": ("sugar_rank", 1.0),   # Sugar Babies top 30 (2026-09-21)
     "relVolume": ("rel_volume", 1.0),
 }
 

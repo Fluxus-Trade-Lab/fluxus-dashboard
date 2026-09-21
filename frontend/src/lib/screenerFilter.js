@@ -247,6 +247,7 @@ export function applyFilters(rows, filters, tickerSearch) {
     ['boCount3m', 'bo_count_3m'],
     ['boCount6m', 'bo_count_6m'],
     ['boCount1y', 'bo_count_1y'],
+    ['sugarRank', 'sugar_rank'],   // Sugar Babies top 30 (Stockbee 9M EPs, 2026-09-21)
   ]
   for (const [filterKey, dataKey] of boRanges) {
     const f = filters[filterKey]

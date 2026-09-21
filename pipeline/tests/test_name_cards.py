@@ -11,7 +11,9 @@ def test_verdict_is_a_template():
     v = NC.verdict(r, "Leading", True, ["episodic_pivot"], 0)
     assert v == "水域✓ · TML✓ · 建仓区(2.1 ATR) · 今日刀: episodic_pivot"
     v2 = NC.verdict({"atr_from_sma50": 9.6, "change_pct": 0.177}, "Improving", False, [], 6)
-    assert "减仓区(9.6 ATR)" in v2 and "⚠当日≥15%不追" in v2 and "名册 6 连" in v2
+    assert "减仓区(9.6 ATR)" in v2 and "⚠当日≥15%不追" in v2
+    # 2026-09-21: Sugar Babies is Pradeep's long watchlist -- a roster regular is not a contrarian sign
+    assert "反指" not in v2
     assert NC.verdict(r, "Leading", True, ["episodic_pivot"], 0) == v   # same input, same sentence
 
 

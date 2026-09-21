@@ -26,4 +26,13 @@ describe('author keys are applied, not skipped', () => {
     const withCap = rows.map((r) => ({ ...r, market_cap: 5e9 }))
     expect(applyFilters(withCap, nine.filters, '').map((r) => r.ticker)).toEqual(['BIG'])
   })
+
+  it('Sugar Babies keeps only the top-30 rank (Stockbee 9M EPs, 2026-09-21)', () => {
+    const sb = presets.find((p) => p.name === 'Sugar Babies')
+    const u = [
+      { ticker: 'IN', market_cap: 5e9, sugar_rank: 3 },
+      { ticker: 'OUT', market_cap: 5e9, sugar_rank: null },
+    ]
+    expect(applyFilters(u, sb.filters, '').map((r) => r.ticker)).toEqual(['IN'])
+  })
 })

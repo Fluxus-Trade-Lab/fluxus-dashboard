@@ -135,9 +135,9 @@ class TestSugarBabiesDocMatchesCode:
         return Path(self.MD).read_text()
 
     def test_doc_no_longer_claims_a_9m_volume_rule(self):
-        md = self._md()
-        for head in ("### `bo_count_1m/3m/6m/1y`", "**7 · Sugar Babies**"):
-            assert "9M" not in _section(md, head), head
+        # bo_count is the 4% breakout count; since 2026-09-21 Sugar Babies is
+        # the 9M-EP ranking and its section is SUPPOSED to say 9M.
+        assert "9M" not in _section(self._md(), "### `bo_count_1m/3m/6m/1y`")
 
     def test_doc_states_the_codes_breakout_conditions(self):
         from pipeline.adapters.yfinance_adapter import (BREAKOUT_MIN_CHANGE,
@@ -152,5 +152,5 @@ class TestSugarBabiesDocMatchesCode:
         """Positive control: the numbers the doc quotes are the preset's."""
         f = {p["name"]: p["filters"] for p in P.load_presets()}["Sugar Babies"]
         sec = _section(self._md(), "**7 · Sugar Babies**")
-        assert f"bo_count_1y ≥{int(f['boCount1y']['min'])}" in sec
-        assert f"bo_count_3m ≥{int(f['boCount3m']['min'])}" in sec
+        assert f"前 {int(f['sugarRank']['max'])}" in sec              # top 30
+        assert "8,900,000" in sec and "ep9m_count_6m" in sec

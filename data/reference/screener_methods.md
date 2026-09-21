@@ -194,10 +194,11 @@
 - **Python 兄弟 `episodic_pivot.py`**:跳空 ≥10% 且 RelVol ≥3 且市值 ≥$500M。
 - **组合**:EP 天然不配 VCS(它是扩张不是收缩);配的是 `sp_days`(是不是新结构)和主题四态(题材是不是 Leading)。
 
-**7 · Sugar Babies** —— bo_count_1y ≥10 且 bo_count_3m ≥2
-- **原型**:Pradeep(Stockbee)的 "sugar babies" —— **惯于放量大涨的体质股**。代码数的是 4% breakout 天数(c/c1 ≥4% ∧ v>v1 ∧ v ≥100k,见上面 `bo_count` 节);10/2 两个阈值是**自造**,原作者没给数字。
-- **在找什么**:不是今天,是**这只票的性格** —— 一年里有 10 天以上这种日子,近三个月还有。做爆发型交易时,先挑会爆发的票。
-- **组合**:× VCS = "会爆的票正在蓄";× 4% Bullish = "会爆的票今天爆了"。它是唯一一个"过去状态统计"型的强弱代理。
+**7 · Sugar Babies** —— Stockbee 9M EP 次数排名前 30（`sugar_rank` 1–30，2026-09-21 起）
+- **原型**：Pradeep（Stockbee）访谈（Investors Underground，YouTube `A_0ep4ekGWM`）——半年或一年里「9 million EP」次数多的票，他盯 25–30 只，这些票一突破常常 3–5 天走 40–50%；用 momentum burst / anticipation 两种入场做多。**是做多的盯盘池，不是信号。**
+- **代码**：一次 9M EP＝c/c1>1.04 ∧ v>3×avgv50.1 ∧ v≥8,900,000（`yfinance_adapter.ep9m_days`）；按 `ep9m_count_6m` 降序、并列看 `ep9m_count_1y`，$1B 以上取前 30（`pipeline/screeners/sugar_babies.py`）。
+- ⚠️ **自造部分**：9M EP 的公式（他两个成文扫描拼起来）、TOP_N=30、6 个月为主序（「1y」只覆盖约 200 个交易日）、$1B 闸。详见 METRIC_SOURCES。
+- 09-04 到 09-21 的旧版（`bo_count_1y≥10 ∧ bo_count_3m≥2`，数的是 4% breakout）已退役；`bo_count_*` 字段仍在，只是不再叫 Sugar Babies。
 
 **8 · Pocket Pivot** —— *态*:当日 PP · *强*:trend_base · ADR 3.5–6
 **9 · PP Count** —— *态*:30 日 PP ≥3 · trend_base · ADR 3.5–6
