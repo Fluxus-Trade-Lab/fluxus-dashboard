@@ -537,6 +537,8 @@
 - [2026-09-19] [编辑部] **发布节奏断档的双账对账** · 过去 7 天发 5 条（其中 09-13 三条含全库最高 2,275 曝光），末行停在 09-16；09-17~19 零发布。两本账互相佐证：`posts.csv` 末行 09-16 vs Growth Gary 的 `metrics.csv` 注作「09-15~20 未见新帖」。本周关卡 5 条还剩 1 天需补 3 条。可发方向：日常的发帖动作断了，不是「记账慢」或「有人忘了」——两个独立的信号源同时零新货，根因在排期、不在工人。出处 [data/research/repo_health/2026-09-19.md](../../../data/research/repo_health/2026-09-19.md) §零、零点五 · commit 49404348
 - [2026-09-19] [OPS] **分支堆积大扫除完成**：远端 33 条（09-16 前 61 条，一次削去 24 条已合并分支）。存活 5 条在 2 日内完成、25 条待清理已标记、3 条超期压在货架待裁决。worktree 整理机制确认可持续。出处 [data/research/repo_health/2026-09-19.md](../../../data/research/repo_health/2026-09-19.md) §一 · commit 49404348
 
+- [09-21] [OPS] **任务按项目归类 + 建单时 project 对得上项目**｜存量 162 个空项目通过规则分类到课程/市场营销/会员增长；建单闸加验证防止写错。有项目的任务从 15 件升到 41 件、数据不再指向虚空。出处 [tasks/T-0921-35.md](../../fluxus-ops/tasks/T-0921-35.md) · commit 03626dd
+
 - [09-21] [OPS] **Vercel 存储超限触发参数优化** · Hobby Plan 超限：部署存储 09-20 实测 114.79 GB / 10 GB，修法由 Andy 定（保留期 30→1 天、产物目标 ≤5 MB）；自然卸载速度 1.5 GB/日；本周周检确认生产站 HTTP 200 未暂停。可发角度：基础设施压力如何通过参数调优消解；周检流程驱动快速诊断。出处 ea336ab5 · [data/research/vercel_storage/weekly.csv](../../../data/research/vercel_storage/weekly.csv)
 
 - [2026-09-19] [DATA] 蹭位榜候选闸判据 A/B 并排评测完成：15 日重合 38/38、发现判据 B 边界歧义（GOOGL 换人不换数个案，该日人选完全不重叠但总人数相同），见 data/content/x_watch/scoring/2026-09-19_candidate_rule_compare.md · pending
