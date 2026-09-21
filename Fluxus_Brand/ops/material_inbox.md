@@ -212,6 +212,8 @@
 - [09-19] [DATA] 复盘最隐蔽的坑：收盘价缺数据时系统无声用前日补——09-16 HOOD 盈亏报错 ±0.89%，错了一整晚才查出。改法：缺就 fail-fast，不靠陈旧行情填坑。出处 a1ca0308 · test_recap_book_closes.py
 
 - [09-21] [RND Linda · DATA ALEX] VIX 期限结构四态定标完成，与 @turintrader 原文一致（0.8/1.0/1.1），09-21 起对外数据生效。出处 [cefe2255](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cefe2255) · T-0921-42 / [3b5ba08a](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3b5ba08a)
+
+- [09-21] [OPS · 数据验收] **功能在用，基线未追——无声的记账债。** watchlist.top20_industry 09-18 随 TML Moglen 重定义上线，已在数据生产链里运作 3 天，schema 基线却没注册，导致 --check 一直报"新增字段"。类似盲点：大改动发生时改单、改文档、改代码，唯独自动化的核验清单被遗漏。三管齐下的宿命是第三管最容易忘——生效时只检查一二管、三管在后台继续报不存在的故障，直到有人明确回来补这一笔。出处 [5d7e28b0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5d7e28b0) · T-0921-57
 > 判据仍是 `↳ ✅`，不是所在节。
 
 - [2026-09-16] [Marketing Steve] **Andy 首发艺术类配图推文**。09-16 「自省过度交易冲动/FOMC盘面」长推配 Nam June Paik《TV Buddha》——艺术与交易心理的首次跨界。样本=1；后续复读表现可作基线对比。出处 data/content/posts.csv · data/content/today_draft.md
