@@ -1,0 +1,364 @@
+{
+  "meta": {
+    "generated": "2026-09-21",
+    "claim": "指数收红那天守住前一天低点（或本周一低点）的票，之后 1/3 个月更可能跑赢、先创 52 周新高（801010athlete，X 2026-03/04/05）",
+    "standard_checked": "有公开口径：TraderLion / Deepvue 的 RS Day —— 「市场创新低而这只票没跌破自己前低」。照抄，未自造定义。Deepvue 另给「修正期 RS Day 占比 >60% 是潜在龙头」，一并测",
+    "self_made": [
+      "「难买」的三档阈值（收红 / 跌≥1% / 指数自己跌破前一日低点）",
+      "控制变量：63 日超额收益的当日横截面分位"
+    ],
+    "universe": "1826 只（今天 universe.json 里 close×avg_volume≥$20M 且 market_cap≥$2B 且 groups.json 有行业），日线 2010-01-01 起",
+    "survivorship": "今天还活着的名单；守住组与没守住组同源，水平值两边都偏高，差值受影响较小。水平值不要单独引用",
+    "nasdaq": "^IXIC（纳斯达克综合指数），不是 QQQ"
+  },
+  "tests": {
+    "red_any__A_prior_day_low": {
+      "n_days": 2442,
+      "h21": {
+        "held": {
+          "n": 1058087,
+          "median_excess_pct": -0.19,
+          "mean_excess_pct": 0.44,
+          "win_rate_pct": 48.9
+        },
+        "broke": {
+          "n": 1486093,
+          "median_excess_pct": -0.03,
+          "mean_excess_pct": 0.57,
+          "win_rate_pct": 49.8
+        },
+        "gap_median_pp": -0.16,
+        "gap_mean_pp": -0.14
+      },
+      "h63": {
+        "held": {
+          "n": 1033280,
+          "median_excess_pct": -0.46,
+          "mean_excess_pct": 1.52,
+          "win_rate_pct": 48.6
+        },
+        "broke": {
+          "n": 1465443,
+          "median_excess_pct": -0.2,
+          "mean_excess_pct": 1.59,
+          "win_rate_pct": 49.4
+        },
+        "gap_median_pp": -0.26,
+        "gap_mean_pp": -0.07
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 49.5,
+        "broke_pct": 41.3,
+        "n_held": 1033281,
+        "n_broke": 1465443,
+        "gap_pp": 8.2
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 235398,
+          "median_excess_pct": -0.87,
+          "mean_excess_pct": 1.57,
+          "win_rate_pct": 47.7
+        },
+        "broke": {
+          "n": 260893,
+          "median_excess_pct": -0.62,
+          "mean_excess_pct": 1.88,
+          "win_rate_pct": 48.4
+        },
+        "gap_median_pp": -0.25,
+        "gap_mean_pp": -0.32
+      }
+    },
+    "red_any__B_monday_low": {
+      "n_days": 2442,
+      "h21": {
+        "held": {
+          "n": 1429606,
+          "median_excess_pct": -0.14,
+          "mean_excess_pct": 0.5,
+          "win_rate_pct": 49.2
+        },
+        "broke": {
+          "n": 1114574,
+          "median_excess_pct": -0.04,
+          "mean_excess_pct": 0.54,
+          "win_rate_pct": 49.8
+        },
+        "gap_median_pp": -0.1,
+        "gap_mean_pp": -0.05
+      },
+      "h63": {
+        "held": {
+          "n": 1399377,
+          "median_excess_pct": -0.4,
+          "mean_excess_pct": 1.54,
+          "win_rate_pct": 48.8
+        },
+        "broke": {
+          "n": 1099346,
+          "median_excess_pct": -0.19,
+          "mean_excess_pct": 1.59,
+          "win_rate_pct": 49.4
+        },
+        "gap_median_pp": -0.21,
+        "gap_mean_pp": -0.04
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 48.3,
+        "broke_pct": 40.1,
+        "n_held": 1399378,
+        "n_broke": 1099346,
+        "gap_pp": 8.2
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 312487,
+          "median_excess_pct": -0.81,
+          "mean_excess_pct": 1.54,
+          "win_rate_pct": 47.9
+        },
+        "broke": {
+          "n": 183804,
+          "median_excess_pct": -0.6,
+          "mean_excess_pct": 2.06,
+          "win_rate_pct": 48.5
+        },
+        "gap_median_pp": -0.21,
+        "gap_mean_pp": -0.52
+      }
+    },
+    "red_1pct__A_prior_day_low": {
+      "n_days": 846,
+      "h21": {
+        "held": {
+          "n": 279026,
+          "median_excess_pct": -0.08,
+          "mean_excess_pct": 0.54,
+          "win_rate_pct": 49.6
+        },
+        "broke": {
+          "n": 600655,
+          "median_excess_pct": 0.11,
+          "mean_excess_pct": 0.82,
+          "win_rate_pct": 50.6
+        },
+        "gap_median_pp": -0.19,
+        "gap_mean_pp": -0.27
+      },
+      "h63": {
+        "held": {
+          "n": 271041,
+          "median_excess_pct": -0.26,
+          "mean_excess_pct": 2.2,
+          "win_rate_pct": 49.3
+        },
+        "broke": {
+          "n": 592286,
+          "median_excess_pct": 0.14,
+          "mean_excess_pct": 2.42,
+          "win_rate_pct": 50.4
+        },
+        "gap_median_pp": -0.4,
+        "gap_mean_pp": -0.23
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 44.6,
+        "broke_pct": 36.8,
+        "n_held": 271041,
+        "n_broke": 592286,
+        "gap_pp": 7.8
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 65299,
+          "median_excess_pct": -1.09,
+          "mean_excess_pct": 1.49,
+          "win_rate_pct": 47.2
+        },
+        "broke": {
+          "n": 106458,
+          "median_excess_pct": -0.52,
+          "mean_excess_pct": 2.1,
+          "win_rate_pct": 48.7
+        },
+        "gap_median_pp": -0.57,
+        "gap_mean_pp": -0.61
+      }
+    },
+    "red_1pct__B_monday_low": {
+      "n_days": 846,
+      "h21": {
+        "held": {
+          "n": 443731,
+          "median_excess_pct": 0.03,
+          "mean_excess_pct": 0.81,
+          "win_rate_pct": 50.2
+        },
+        "broke": {
+          "n": 435950,
+          "median_excess_pct": 0.08,
+          "mean_excess_pct": 0.65,
+          "win_rate_pct": 50.5
+        },
+        "gap_median_pp": -0.06,
+        "gap_mean_pp": 0.16
+      },
+      "h63": {
+        "held": {
+          "n": 433740,
+          "median_excess_pct": -0.12,
+          "mean_excess_pct": 2.38,
+          "win_rate_pct": 49.6
+        },
+        "broke": {
+          "n": 429587,
+          "median_excess_pct": 0.16,
+          "mean_excess_pct": 2.33,
+          "win_rate_pct": 50.5
+        },
+        "gap_median_pp": -0.28,
+        "gap_mean_pp": 0.05
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 42.7,
+        "broke_pct": 35.8,
+        "n_held": 433740,
+        "n_broke": 429587,
+        "gap_pp": 6.9
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 99294,
+          "median_excess_pct": -0.88,
+          "mean_excess_pct": 1.61,
+          "win_rate_pct": 47.8
+        },
+        "broke": {
+          "n": 72463,
+          "median_excess_pct": -0.52,
+          "mean_excess_pct": 2.22,
+          "win_rate_pct": 48.6
+        },
+        "gap_median_pp": -0.35,
+        "gap_mean_pp": -0.61
+      }
+    },
+    "red_and_index_broke_prior_low__A_prior_day_low": {
+      "n_days": 1824,
+      "h21": {
+        "held": {
+          "n": 674781,
+          "median_excess_pct": -0.25,
+          "mean_excess_pct": 0.36,
+          "win_rate_pct": 48.5
+        },
+        "broke": {
+          "n": 1236968,
+          "median_excess_pct": -0.01,
+          "mean_excess_pct": 0.57,
+          "win_rate_pct": 50.0
+        },
+        "gap_median_pp": -0.25,
+        "gap_mean_pp": -0.22
+      },
+      "h63": {
+        "held": {
+          "n": 656276,
+          "median_excess_pct": -0.52,
+          "mean_excess_pct": 1.48,
+          "win_rate_pct": 48.4
+        },
+        "broke": {
+          "n": 1220933,
+          "median_excess_pct": -0.14,
+          "mean_excess_pct": 1.64,
+          "win_rate_pct": 49.6
+        },
+        "gap_median_pp": -0.38,
+        "gap_mean_pp": -0.16
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 49.9,
+        "broke_pct": 41.1,
+        "n_held": 656277,
+        "n_broke": 1220933,
+        "gap_pp": 8.7
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 152804,
+          "median_excess_pct": -0.96,
+          "mean_excess_pct": 1.52,
+          "win_rate_pct": 47.5
+        },
+        "broke": {
+          "n": 220182,
+          "median_excess_pct": -0.58,
+          "mean_excess_pct": 1.88,
+          "win_rate_pct": 48.5
+        },
+        "gap_median_pp": -0.38,
+        "gap_mean_pp": -0.35
+      }
+    },
+    "red_and_index_broke_prior_low__B_monday_low": {
+      "n_days": 1824,
+      "h21": {
+        "held": {
+          "n": 1007945,
+          "median_excess_pct": -0.16,
+          "mean_excess_pct": 0.48,
+          "win_rate_pct": 49.1
+        },
+        "broke": {
+          "n": 903804,
+          "median_excess_pct": -0.02,
+          "mean_excess_pct": 0.52,
+          "win_rate_pct": 49.9
+        },
+        "gap_median_pp": -0.15,
+        "gap_mean_pp": -0.05
+      },
+      "h63": {
+        "held": {
+          "n": 985878,
+          "median_excess_pct": -0.41,
+          "mean_excess_pct": 1.56,
+          "win_rate_pct": 48.7
+        },
+        "broke": {
+          "n": 891331,
+          "median_excess_pct": -0.12,
+          "mean_excess_pct": 1.61,
+          "win_rate_pct": 49.6
+        },
+        "gap_median_pp": -0.29,
+        "gap_mean_pp": -0.05
+      },
+      "new_52w_high_within_63d": {
+        "held_pct": 48.0,
+        "broke_pct": 39.9,
+        "n_held": 985879,
+        "n_broke": 891331,
+        "gap_pp": 8.1
+      },
+      "h63_within_top_RS_quintile": {
+        "held": {
+          "n": 222183,
+          "median_excess_pct": -0.85,
+          "mean_excess_pct": 1.53,
+          "win_rate_pct": 47.8
+        },
+        "broke": {
+          "n": 150803,
+          "median_excess_pct": -0.56,
+          "mean_excess_pct": 2.02,
+          "win_rate_pct": 48.6
+        },
+        "gap_median_pp": -0.29,
+        "gap_mean_pp": -0.49
+      }
+    }
+  }
+}

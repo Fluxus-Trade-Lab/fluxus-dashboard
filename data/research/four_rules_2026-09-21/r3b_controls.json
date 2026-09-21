@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "generated": "2026-09-21",
+    "control_1": "按当天离 52 周高点的距离分十档，档内再比守住/没守住",
+    "control_2": "Deepvue「修正期 RS Day 占比 >60%」；修正识别照抄 SwingMasterclass _bench/appJ_correction_leaders.py（SPY 日内 52 周新高之间、跌幅 ≥10%）",
+    "survivorship": "今天还活着的 1826 只；两组同源"
+  },
+  "control_1_by_distance_to_52w_high": {
+    "[-101.0%,-50.0%)": {
+      "n_held": 48929,
+      "n_broke": 83982,
+      "nh63_held_pct": 4.2,
+      "nh63_broke_pct": 3.5,
+      "nh63_gap_pp": 0.7,
+      "exc63_held_median_pct": 0.53,
+      "exc63_broke_median_pct": 1.82
+    },
+    "[-50.0%,-35.0%)": {
+      "n_held": 72010,
+      "n_broke": 126533,
+      "nh63_held_pct": 8.1,
+      "nh63_broke_pct": 6.6,
+      "nh63_gap_pp": 1.5,
+      "exc63_held_median_pct": -0.16,
+      "exc63_broke_median_pct": 0.9
+    },
+    "[-35.0%,-25.0%)": {
+      "n_held": 95991,
+      "n_broke": 166873,
+      "nh63_held_pct": 12.2,
+      "nh63_broke_pct": 11.1,
+      "nh63_gap_pp": 1.1,
+      "exc63_held_median_pct": -0.44,
+      "exc63_broke_median_pct": 0.21
+    },
+    "[-25.0%,-18.0%)": {
+      "n_held": 106041,
+      "n_broke": 178736,
+      "nh63_held_pct": 19.6,
+      "nh63_broke_pct": 19.1,
+      "nh63_gap_pp": 0.5,
+      "exc63_held_median_pct": -0.46,
+      "exc63_broke_median_pct": -0.1
+    },
+    "[-18.0%,-13.0%)": {
+      "n_held": 105960,
+      "n_broke": 173988,
+      "nh63_held_pct": 29.9,
+      "nh63_broke_pct": 29.8,
+      "nh63_gap_pp": 0.1,
+      "exc63_held_median_pct": -0.48,
+      "exc63_broke_median_pct": -0.35
+    },
+    "[-13.0%,-9.0%)": {
+      "n_held": 109238,
+      "n_broke": 176273,
+      "nh63_held_pct": 42.4,
+      "nh63_broke_pct": 43.2,
+      "nh63_gap_pp": -0.7,
+      "exc63_held_median_pct": -0.6,
+      "exc63_broke_median_pct": -0.46
+    },
+    "[-9.0%,-6.0%)": {
+      "n_held": 100378,
+      "n_broke": 159703,
+      "nh63_held_pct": 56.9,
+      "nh63_broke_pct": 57.8,
+      "nh63_gap_pp": -0.8,
+      "exc63_held_median_pct": -0.5,
+      "exc63_broke_median_pct": -0.5
+    },
+    "[-6.0%,-3.5%)": {
+      "n_held": 99892,
+      "n_broke": 158187,
+      "nh63_held_pct": 70.8,
+      "nh63_broke_pct": 71.2,
+      "nh63_gap_pp": -0.4,
+      "exc63_held_median_pct": -0.48,
+      "exc63_broke_median_pct": -0.38
+    },
+    "[-3.5%,-1.5%)": {
+      "n_held": 99625,
+      "n_broke": 144941,
+      "nh63_held_pct": 82.9,
+      "nh63_broke_pct": 82.7,
+      "nh63_gap_pp": 0.2,
+      "exc63_held_median_pct": -0.3,
+      "exc63_broke_median_pct": -0.39
+    },
+    "[-1.5%,0.1%)": {
+      "n_held": 116452,
+      "n_broke": 84059,
+      "nh63_held_pct": 92.3,
+      "nh63_broke_pct": 91.2,
+      "nh63_gap_pp": 1.1,
+      "exc63_held_median_pct": -0.47,
+      "exc63_broke_median_pct": -0.39
+    }
+  },
+  "control_2_deepvue_rs_day_rate": {
+    "corrections": [
+      {
+        "peak_i": 891,
+        "trough_i": 911,
+        "peak": "2007-07-19",
+        "trough": "2007-08-16",
+        "dd_pct": -11.91
+      },
+      {
+        "peak_i": 950,
+        "trough_i": 1302,
+        "peak": "2007-10-11",
+        "trough": "2009-03-06",
+        "dd_pct": -56.15
+      },
+      {
+        "peak_i": 1588,
+        "trough_i": 1635,
+        "peak": "2010-04-26",
+        "trough": "2010-07-01",
+        "dd_pct": -16.79
+      },
+      {
+        "peak_i": 1845,
+        "trough_i": 1953,
+        "peak": "2011-05-02",
+        "trough": "2011-10-04",
+        "dd_pct": -20.89
+      },
+      {
+        "peak_i": 2077,
+        "trough_i": 2120,
+        "peak": "2012-04-02",
+        "trough": "2012-06-04",
+        "dd_pct": -10.6
+      },
+      {
+        "peak_i": 2905,
+        "trough_i": 2930,
+        "peak": "2015-07-20",
+        "trough": "2015-08-24",
+        "dd_pct": -14.44
+      },
+      {
+        "peak_i": 3541,
+        "trough_i": 3551,
+        "peak": "2018-01-26",
+        "trough": "2018-02-09",
+        "dd_pct": -11.76
+      },
+      {
+        "peak_i": 3706,
+        "trough_i": 3771,
+        "peak": "2018-09-21",
+        "trough": "2018-12-26",
+        "dd_pct": -19.81
+      },
+      {
+        "peak_i": 4059,
+        "trough_i": 4082,
+        "peak": "2020-02-19",
+        "trough": "2020-03-23",
+        "dd_pct": -35.25
+      },
+      {
+        "peak_i": 4196,
+        "trough_i": 4211,
+        "peak": "2020-09-02",
+        "trough": "2020-09-24",
+        "dd_pct": -10.5
+      },
+      {
+        "peak_i": 4533,
+        "trough_i": 4728,
+        "peak": "2022-01-04",
+        "trough": "2022-10-13",
+        "dd_pct": -26.63
+      },
+      {
+        "peak_i": 4924,
+        "trough_i": 4989,
+        "peak": "2023-07-27",
+        "trough": "2023-10-27",
+        "dd_pct": -10.62
+      },
+      {
+        "peak_i": 5316,
+        "trough_i": 5349,
+        "peak": "2025-02-19",
+        "trough": "2025-04-07",
+        "dd_pct": -21.2
+      }
+    ],
+    "cells": {
+      "exc63_from_trough": {
+        "rs_day_rate_gt60": {
+          "n": 365,
+          "median_pct": -12.49,
+          "mean_pct": -8.1
+        },
+        "rs_day_rate_le60": {
+          "n": 12942,
+          "median_pct": 2.08,
+          "mean_pct": 7.41
+        },
+        "gap_median_pp": -14.57
+      },
+      "exc126_from_trough": {
+        "rs_day_rate_gt60": {
+          "n": 365,
+          "median_pct": -11.97,
+          "mean_pct": -9.14
+        },
+        "rs_day_rate_le60": {
+          "n": 12942,
+          "median_pct": 0.95,
+          "mean_pct": 10.77
+        },
+        "gap_median_pp": -12.91
+      },
+      "new_52w_high_within_63d_from_trough": {
+        "gt60_pct": 47.7,
+        "le60_pct": 32.0,
+        "gap_pp": 15.7,
+        "n_gt60": 365,
+        "n_le60": 12942
+      }
+    }
+  }
+}

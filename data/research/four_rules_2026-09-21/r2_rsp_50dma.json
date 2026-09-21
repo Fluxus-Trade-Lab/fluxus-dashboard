@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "generated": "2026-09-21",
+    "claim": "RSP 跌破 50 日线＝轮动型名字的趋势改变（Shake Pryzby X 2026-09-15）",
+    "standard_checked": "RSP/SPY 比值是有出处的广度量（CXO Advisory）；「RSP 对自己的 50 日线」查无标准，是作者自造，照原话测",
+    "leading_definition": "pipeline/themes/rs_engine.py:181 classify 逐字照抄；perf_* 窗口由 Finviz 日历口径近似为交易日 5/21/63/126（自造近似）",
+    "survivorship": "代理 B 的成员是今天还活着的 1826 只；行业标签取 2026-09-18 一份，历史不重构。两侧（RSP 线上/线下）用同一套名单，偏差方向相同，但线下那一侧更可能少掉后来退市的输家 —— 若有偏，是把线下读得偏好。"
+  },
+  "proxy_A": {
+    "label": "A_sector_industry_etfs",
+    "n_groups": 40,
+    "leading_days": {
+      "above50": 26388,
+      "below50": 10229
+    },
+    "h21_above50": {
+      "n": 26388,
+      "median_excess_pct": -0.09,
+      "mean_excess_pct": -0.0,
+      "win_rate_pct": 49.0
+    },
+    "h21_below50": {
+      "n": 10229,
+      "median_excess_pct": 0.06,
+      "mean_excess_pct": 0.05,
+      "win_rate_pct": 50.8
+    },
+    "h21_gap_median_pp": 0.15,
+    "h63_above50": {
+      "n": 26098,
+      "median_excess_pct": -0.31,
+      "mean_excess_pct": -0.33,
+      "win_rate_pct": 47.8
+    },
+    "h63_below50": {
+      "n": 10229,
+      "median_excess_pct": 0.24,
+      "mean_excess_pct": 0.27,
+      "win_rate_pct": 51.3
+    },
+    "h63_gap_median_pp": 0.55
+  },
+  "proxy_B": {
+    "label": "B_equal_weight_industries",
+    "n_groups": 77,
+    "leading_days": {
+      "above50": 42733,
+      "below50": 14308
+    },
+    "h21_above50": {
+      "n": 42733,
+      "median_excess_pct": 0.13,
+      "mean_excess_pct": 0.42,
+      "win_rate_pct": 51.3
+    },
+    "h21_below50": {
+      "n": 14308,
+      "median_excess_pct": 0.12,
+      "mean_excess_pct": 0.22,
+      "win_rate_pct": 51.3
+    },
+    "h21_gap_median_pp": -0.01,
+    "h63_above50": {
+      "n": 41931,
+      "median_excess_pct": 0.8,
+      "mean_excess_pct": 1.45,
+      "win_rate_pct": 54.3
+    },
+    "h63_below50": {
+      "n": 14308,
+      "median_excess_pct": 0.73,
+      "mean_excess_pct": 1.25,
+      "win_rate_pct": 53.9
+    },
+    "h63_gap_median_pp": -0.06
+  },
+  "control_ratio": {
+    "label": "C_ratio_RSP_over_SPY_50dma",
+    "n_groups": 77,
+    "leading_days": {
+      "above50": 31861,
+      "below50": 25180
+    },
+    "h21_above50": {
+      "n": 31861,
+      "median_excess_pct": 0.29,
+      "mean_excess_pct": 0.44,
+      "win_rate_pct": 52.9
+    },
+    "h21_below50": {
+      "n": 25180,
+      "median_excess_pct": -0.07,
+      "mean_excess_pct": 0.28,
+      "win_rate_pct": 49.2
+    },
+    "h21_gap_median_pp": -0.36,
+    "h63_above50": {
+      "n": 31059,
+      "median_excess_pct": 1.02,
+      "mean_excess_pct": 1.55,
+      "win_rate_pct": 55.6
+    },
+    "h63_below50": {
+      "n": 25180,
+      "median_excess_pct": 0.47,
+      "mean_excess_pct": 1.21,
+      "win_rate_pct": 52.4
+    },
+    "h63_gap_median_pp": -0.55
+  },
+  "groups_archive": {
+    "window": "2026-08-07 .. 2026-09-18",
+    "n_rows": 3608,
+    "n_leading_rows": 381,
+    "usable_for_63d_forward": false,
+    "note": "只有 6 周，放不下 63 日远期窗口；不作证据，只记它存在"
+  },
+  "rsp_below_50_share_pct": 31.5,
+  "decomposition_2x2": {
+    "horizon_sessions": 63,
+    "note": "每格是 Leading 组的 63 日远期超额（减 SPY）。overlapping 是每天一行（n 虚高），non_overlapping 是每 63 个交易日取一天（真独立样本）。",
+    "overlapping": {
+      "rsp<50 / ratio<50": {
+        "n": 8029,
+        "median_excess_pct": 0.83,
+        "mean_excess_pct": 1.46
+      },
+      "rsp<50 / ratio>50": {
+        "n": 6279,
+        "median_excess_pct": 0.6,
+        "mean_excess_pct": 0.97
+      },
+      "rsp>50 / ratio<50": {
+        "n": 17151,
+        "median_excess_pct": 0.31,
+        "mean_excess_pct": 1.09
+      },
+      "rsp>50 / ratio>50": {
+        "n": 24780,
+        "median_excess_pct": 1.12,
+        "mean_excess_pct": 1.7
+      }
+    },
+    "non_overlapping": {
+      "rsp<50 / ratio<50": {
+        "n": 131,
+        "median_excess_pct": -0.07,
+        "mean_excess_pct": 1.43
+      },
+      "rsp<50 / ratio>50": {
+        "n": 98,
+        "median_excess_pct": 0.4,
+        "mean_excess_pct": 0.89
+      },
+      "rsp>50 / ratio<50": {
+        "n": 285,
+        "median_excess_pct": 0.31,
+        "mean_excess_pct": 0.82
+      },
+      "rsp>50 / ratio>50": {
+        "n": 313,
+        "median_excess_pct": 0.85,
+        "mean_excess_pct": 2.43
+      }
+    }
+  },
+  "block_bootstrap_h63": {
+    "rsp_vs_own_50dma": {
+      "gap_below_minus_above_pp": -0.06,
+      "ci90_pp": [
+        -0.91,
+        0.6
+      ],
+      "n_blocks": 65,
+      "n_boot": 600,
+      "crosses_zero": true
+    },
+    "rsp_over_spy_ratio_vs_50dma": {
+      "gap_below_minus_above_pp": -0.55,
+      "ci90_pp": [
+        -1.48,
+        0.23
+      ],
+      "n_blocks": 65,
+      "n_boot": 600,
+      "crosses_zero": true
+    }
+  }
+}
