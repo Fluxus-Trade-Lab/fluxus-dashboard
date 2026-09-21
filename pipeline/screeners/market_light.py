@@ -32,6 +32,13 @@ course repo 850690a8) and from the page; this file dropped it the same day.
 While it lived it reproduced all seven SPY and QQQ numbers of the course's
 cycle_bench.json exactly -- that ledger is gone from the course repo too.
 
+RETIRED 2026-09-20 (Andy "L6B.2 --L6B.6全部删除"): the course deleted L6B.2,
+the section the seven gears came from (DATA_CONTRACTS §七 2026-09-20, Studio Q
+-> UI Claire/DATA ALEX; METRIC_SOURCES marks the row 🗑). `instrument_block`
+stopped shipping `gear` the same day. `gear_series`/`GEARS` stay -- they are
+the replication proof against the course text (tests below) -- they just no
+longer feed the payload.
+
 The course reprinted Lesson 6 on the EMA spec (SwingMasterclass
 _bench/l6_light.json, `coverage_ema_spec`: EMA10/20 adjust=False, rising day
 over day): 56.5 green / 19.4 red / 24.0 mixed, longest green 2017-11-16 ->
@@ -158,7 +165,9 @@ def gear_series(df: pd.DataFrame, length: int = GEAR_LEN) -> pd.Series:
 
 
 def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dict[str, Any]]:
-    """One ticker's light + gear + 60-day strip. None if unusable."""
+    """One ticker's light + 60-day strip. None if unusable.
+
+    No longer carries `gear` (RETIRED 2026-09-20, module docstring)."""
     if df is None or len(df) < SLOW + 2 or 'Close' not in df:
         return None
     lf = light_frame(df['Close'].astype(float), light_ma)
@@ -175,17 +184,11 @@ def instrument_block(df: pd.DataFrame, light_ma: str = LIGHT_MA) -> Optional[Dic
          'a': round(float(today['slow']), 4), 'b': round(float(prev['slow']), 4)},
     ]
     passed = int(today['checks_passed'])
-    gear = None
-    if {'Open', 'High', 'Low'} <= set(df.columns):
-        gn = int(gear_series(df).iloc[-1])
-        gear = {'n': gn, 'label': GEARS[gn][0] if gn else None,
-                'label_zh': GEARS[gn][1] if gn else None}
     hist = lf.dropna(subset=['checks_passed']).tail(HISTORY_DAYS)
     return {
         'checks': checks,
         'checks_passed': passed,
         'light': 'green' if passed == 3 else 'red',
-        'gear': gear,
         'history': [
             {'date': d.strftime('%Y-%m-%d'), 'close': round(float(r['close']), 4),
              'fast': round(float(r['fast']), 4), 'slow': round(float(r['slow']), 4),

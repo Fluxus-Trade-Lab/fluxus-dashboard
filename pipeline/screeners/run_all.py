@@ -1359,12 +1359,14 @@ def main():
                        breadth=_read_out('breadth.json'))
         _emit(ledger, OUTPUT_DIR / 'market_light.json', json.dumps(_ml, indent=1))
         _spy = _ml.get('spy') or {}
+        # `gear` dropped 2026-09-20 (course deleted L6B.2) -- see
+        # audit_ledger.EVIDENCE['market_light'], which stopped requiring it
+        # the same day.
         ledger.note('market_light', 'ok' if _ml.get('spy') else 'degraded',
                     light=_spy.get('light'), checks=_spy.get('checks_passed'),
-                    gear=(_spy.get('gear') or {}).get('n'), verdict=_ml.get('verdict'))
-        logger.info("Saved market_light.json - SPY %s %s/3 gear %s verdict %s",
-                    _spy.get('light'), _spy.get('checks_passed'),
-                    (_spy.get('gear') or {}).get('n'), _ml.get('verdict'))
+                    verdict=_ml.get('verdict'))
+        logger.info("Saved market_light.json - SPY %s %s/3 verdict %s",
+                    _spy.get('light'), _spy.get('checks_passed'), _ml.get('verdict'))
     except Exception:
         logger.exception("market_light failed - market_light.json not updated")
         ledger.error('market_light', 'exception')

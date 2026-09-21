@@ -394,7 +394,7 @@ def test_payload_matches_the_consumer_contract():
         assert k in p
     spy = p['spy']
     assert {c['key'] for c in spy['checks']} == {'fast_above_slow', 'fast_rising', 'slow_rising'}
-    assert set(spy['gear']) >= {'n', 'label'}
+    assert 'gear' not in spy, "retired 2026-09-20 -- course deleted L6B.2"
     assert set(spy['history'][0]) == {'date', 'close', 'fast', 'slow', 'checks_passed'}
     assert p['qqq'] is None, "an absent ticker is None -- rendered 'not measured', never zeros"
 

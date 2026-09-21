@@ -172,13 +172,18 @@ def build_state_change_alert(
 ) -> dict[str, Any] | None:
     if prev_light is None or prev_light == current_light:
         return None
+    # `gear` retired from market_light.json 2026-09-20 (course deleted
+    # L6B.2) -- run_state() now always passes {}. Only print the suffix
+    # when a caller still has a real gear reading (e.g. old ledger replay).
+    gear_n = (current_gear or {}).get('n')
+    gear_suffix = (f"（gear {gear_n} · {current_gear.get('label_zh', '')}）"
+                   if gear_n is not None else "")
     return {
         "username": "Fluxus Data Desk",
         "embeds": [
             {
                 "title": f"状态变化 · Market Light ({symbol.upper()})",
-                "description": f"`{prev_light}` → `{current_light}`"
-                f"（gear {current_gear.get('n')} · {current_gear.get('label_zh', '')}）",
+                "description": f"`{prev_light}` → `{current_light}`" + gear_suffix,
                 "color": LIGHT_COLOR.get(current_light, 0x64748B),
                 "footer": {
                     "text": "出处 data/output/market_light.json .<symbol>.light · "
