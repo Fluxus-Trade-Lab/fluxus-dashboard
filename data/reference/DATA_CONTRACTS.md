@@ -595,6 +595,7 @@ JSON schema(所有 library 文章通用):
   ↳ [2026-08-30] Andy 已挑定标题：**《从一根K线到一整浪 / From One Candle to the Full Wave》**（题案 #1）。试读封面已换题重建（SwingMasterclass 仓），文件名暂不变。Substack 站台线发布时用此题。
   ↳ [2026-08-31] **标题改定**：《**从一根K线到一整个周期** / From One Candle to the Full Cycle》。原题里的「浪」是已废术语（全书统一为「周期/cycle」），标题跟着废词表走；合集文件已改名 `合集/从一根K线到一整个周期.md`，两版试读封面已重建核对。**站台线以此题为准。**
   ↳ [2026-08-30] **合集本体已交付**：`SwingMasterclass/合集/从一根K线到一整浪.md`（英文 8,230 词 · 中文 13,859 字）+ `合集/figs/` 34 张中文版图（L1-1.png…可直接嵌入）。打包不写作：现行精简后课文原样装配，去书籍脚手架、拉平内链、图占位换成图引用。待 Andy 过目。
+  ↳ ✅ [2026-09-21] Studio Q：(c) 已落地——试读合集按 08-30 定题《从一根K线到一整浪》建在 SwingMasterclass 仓（`_pdf/build_sample.py zh|en`）。09-25 发售后课程主体按 21 块＋「进步」重编，试读本届时是否换底稿另行登记。
 
 - [2026-09-01] **→ Marketing Steve：Growth Gary 核数回复（回你 [2026-09-01] 那行的 ①③⑦）。结论：你的基数错了，倒推出的差额是虚构的；但你的战略方向反而成立，而且比你算的更强。**
   - **① `$23,647` 这个基数已于 08-25 作废，不能再用。** 它出自 `08-24 baseline`，把 Whop 平台累计与 PayPal 直收**混算且未去重叠**（4 位终身会员同时是 Whop 用户，其 Masterclass 付款在两边各记一次）。
@@ -1254,6 +1255,7 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
     - **Andy「用EMA」**：EMA 即终态（改成课程规格 `adjust=False`，2009–2026 夹具上读数到百分位不变）。课程按 EMA 改印的两段最长连续（2017-11-16→2018-01-29 / 2026-02-27→03-30）在本页 `light_frame` 上**逐日复现**，测试已换成对新印数的复算。
     - **trend day 计数**：`plus_n` 相关字段**已全部摘掉**（照 fee34f26「可以下了」），另加一条测试：产出里任何位置出现 `plus_n` 即红。
     ⚠️ **裁三（Q1 校准）未完成，照实报，请 Studio Q 定方向**：`data/history/watchlist_hits.csv` 共 17 个交易日（08-18→09-10，13 红 / 4 绿，且该表未截断）。两个锚：红灯日中位数落 1–3、最强绿灯段到 10+。
+    ↳ [2026-09-21] **Studio Q 定方向：Q1 不向课文的 1–3／≥10 校准。** 那两个数数的是人判过之后留下的自选名单，扫描器吐的是门后池原始命中，两个量差一道人工判断，差距是定义上的不是参数上的。课文侧已改：CH07「漏斗吐出 40/3 个」→「你筛完留下 40/3 个」并加批注引本行（SwingMasterclass `ece6583`）。**数据端建议**：Q1 若保留，用它自己历史的分位数定档，页面上别标成课文那个数。
 
     | Q1 口径 | 红灯日中位（锚 1–3） | 绿灯日最大（锚 ≥10） | 09-10 |
     |---|---|---|---|
@@ -1326,3 +1328,4 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
     事实（课程仓 `SwingMasterclass`，本次提交见下）：L6B 只剩 L6B.1「三条线，三群人」一节；L6B.2（油门七档）、L6B.4（慢顶/派发日）、L6B.5（2022 熊市案例，含确认日 FTD 规格）、L6B.6 全部出书。L6.7 高阶训练也删了（原话「建议删除L6.7」）。另：L6 里「持币」一律改「持现金」；L6.6 改成只桥到 L7。
     按 09-11 立的原则（页面照课程排、课程是唯一内容源），建议：①页面主屏灯旁的「当前档」字与折叠里的七档全览撤掉；②`market_light.spy.gear` 停发。**⚠️ 停发字段要同步 `schema_snapshot` 基线，否则当晚被拦**（`python3 -m pipeline.tools.schema_snapshot --check`）；数据目录归 DATA ALEX，Claire 别自己动 `data/output/`。③`METRIC_SOURCES.md` 里 `gear` 那一行标 🗑（同 `plus_n` 的写法）；`light` 行与计划文档里的「`L6:183`」「`L6B:87`」这类**行号引用已作废**（课程改过），改成按小节名引。
     没有截止压力：页面上保留 gear 不会坏任何东西，只是它教的东西书里没有了。**若 Andy 想让页面留着它，是他改口，不是这行的意思。** 任务单：见 fluxus-ops 任务板 project=课程。
+- **[2026-09-21] Studio Q（课程整理和设计）→ DATA ALEX：课程要「按行业组排名」，请核我们手上的逐票行业分类够不够用、GICS 能不能合法拿到。**Andy 2026-09-21 原话「先用GICS，再用我们的etf分组当替补，找数据端alex核实，是否有区别。是否我可以把GICS内容挖出来」。**三问**：①我们 `data/output/`（`universe.json`、`groups.json`、`watchlist.json` 等 14 个文件）里的 `sector`／`industry` 字段来自哪家、完整取值清单（本线抽样两字段合计 161 个不同取值，取值形如 `Consumer Cyclical`／`Banks - Regional`／`Software - Application`，看着是 Finviz/Yahoo 系分类，不是 GICS）②它和 GICS 的 11 sector／子行业一级差在哪，粒度够不够支撑「按子行业排强弱」③GICS 有没有我们能合法用的来源（S&P 与 MSCI 共有、授权制）。**本线已判的一条**：`pipeline/constants/tickers.py` 那 144 只 ETF 的 6 组是可交易 ETF 的观察名单，不是逐票分类法，**替补不了 GICS**；真正的替补候选是上面那个逐票 `industry` 字段。答复写本行下 ↳ 即可，课程侧据此改 CH02／CH03。

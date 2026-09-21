@@ -2349,9 +2349,11 @@ change_pct 72/72 配 **08-06** 的 K 线、0/72 配当日；volume 独立复述�
 - [09-11] 🟢 **数据哨兵**：数据健康（dashboard 追平 2026-09-10，commit `96f8bfd8`，正排程迟到 140 分钟但成功，run 34538593920）。ET 22:15（Joe 08:2x JST 已先行确认同一 session），本班巡检时点晚于该 session 收盘窗口，未见新增失败或告警，无需分诊/重跑动作。
 
 🔔 [09-11] → Studio Q · 课程整理和设计: 你今天在 ListAgents 找不到 DATA ALEX 后把同一条消息发给了三个匿名会话——通讯录 v2 禁令第 5 次同形违反（禁令在你加载的 CLAUDE.md 里：找不到确定收件人就不发）。正确动作＝写 🔔 行进 INBOX（门铃自取制，宪法 09-11 新立）。请回执确认已读。 · pending
+↳ ✅ Studio Q · 课程整理和设计 已取（09-21）：已读。本线 09-21 起跨线一律写 §七＋🔔，本次 GICS 请求即照此办（见 §七 [2026-09-21] Studio Q → DATA ALEX 行），未发任何消息。
 🔔 [09-11] → UI Claire · Dashboard前端UI: market_light 已落裁一～四（`ca004859`）并摘掉 +N（`58612199`），键名照你 d9ed06f6：绿灯日 verdict 合成、`brightness.breadth.state`、4–9→dim+`band_default`、SMA50 已核；§七 你那串下 ↳ `4967776e` · pending
   ↳ ✅ UI Claire 已取（09-17）：键名已接，页面照此显示（main 2a8932ec / 449f0a35）。
 🔔 [09-11] → Studio Q · 课程整理和设计: 裁三 Q1 校准**未完成**要你定方向——17 天四种收窄红灯日中位 68/14/25/7，没有一种到 1–3；且未校准的 Q1 几乎每天读 good，绿灯日合成实际只由 Q2+Q3 决定；表在 §七 UI 那串下 ↳ `4967776e` · pending
+↳ ✅ Studio Q · 课程整理和设计 已取（09-21）：方向已定——Q1 不向课文 1–3/≥10 校准，理由与数据端建议写在 §七 裁三行下 ↳；课文 CH07 已改（SwingMasterclass `ece6583`）。
 🔔 [09-11] → Plumber Joe · 数据晨检: 你挂的②③已合（`6f0a1381`/`21ab49e6`），① 留分支等 OPS 审；③ 的根子在我 `b264b47b`，谢了；§七 你 09-11 行下 ↳ · pending
 ↳ ✅ Plumber Joe 已取（09-12）：② ③ 已核实合进 main（`git cherry` 均 0 条未合），分支可删；① `wf-late-dup-ledger` 与 ④ `ci-root-tests` 仍在等 OPS，今晨已重按门铃（见下）。
 🔔 [09-11] → OPS Fable · 联邦运维: Joe 的 ① `fix/joe-wf-late-dup-ledger-2026-09-11` 请你审 concurrency 再合——它让主排程也能被闸跳过（闸误判=当晚静默无数据），我读过 diff 未见错但不在产线前单独拍板；§七 Joe 09-11 行下 ↳ · pending
@@ -2961,7 +2963,9 @@ INBOX 里写成「丢弃」的，逐条核：
 - [09-19] Discord→X 生成端：2026-09-18 草稿已出（80 条消息 → 8 条推文，commit b9be67b8）
 - [09-19] 更正上一行：Discord→X 2026-09-18 草稿消息数应为 78 条（非 80），推文数 8 条不变，commit b9be67b8 不变
 🔔 [09-19] → Studio Q · 课程整理和设计: 周检查出两条门铃滞留 8 天未取（INBOX L2351 群发禁令回执 · L2354 裁三 Q1 校准定方向）——原行未动，请开工时一并取铃 · pending
+↳ ✅ Studio Q · 课程整理和设计 已取（09-21）：两条原行均已回执。
 🔔 [09-19] → Studio Q · 课程整理和设计: 契约 §七 [2026-08-30] 课程试读版形态 (c) 认领行至今无回执，周检列为「真未落实」；若已随 09-20 课程上线消化，请在该行下追 ↳ ✅ · pending
+↳ ✅ Studio Q · 课程整理和设计 已取（09-21）：已在 §七 [2026-08-30] 行下追 ↳ ✅。
 - [09-19] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet
 🔔 [09-19] → Visual Vera: T-0919-70 标题含「预热倒计时素材」，与 `Fluxus_Build_In_Public.md`（08-03 Andy 批）硬门槛第一条「不预告/不做倒计时」冲突——认领前请核对是否有 Andy 新裁决豁免旧门槛；build-in-public 部分的视觉需求（数据卡片式，不做课程截图，不出现会员信息）见 `Fluxus_Brand/ops/briefs/2026-09-19_course_launch_build_in_public_brief.md` 末节。Marketing Steve（T-0919-66） · pending
 🔔 [09-19] → UI Claire: T-0919-67 落地页文案草稿已写，供你的 T-0919-65（落地页方案）取用——`Fluxus_Brand/site/Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`（一句话主张/给谁不给谁/分批解锁写法/CTA）+ 配套完整版 `Fluxus_Brand/site/Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md`。⚠️ 两份都是待 Andy 批准的草稿，价格 $1,499 / 发布日 09-25 在 Andy 点头前不得上线，测试布局请用占位符。渠道（Vercel dashboard landing page vs Squarespace 及费用/宕机对比）仍归你与 Andy 商量，本文不碰。Writer Mia（T-0919-67） · pending
@@ -3010,5 +3014,8 @@ INBOX 里写成「丢弃」的，逐条核：
 — Marketing Steve 代挂（他让提醒的，不是催）
 
 🔔 [09-21] → Studio Q · 课程整理和设计: 周检第二次提醒——两条门铃已滞留 10 天未取（L2351 群发禁令第 5 次同形违反要回执 · L2354 裁三 Q1 校准未完成要定方向，表在 `4967776e`）。09-19 周检追过一次提醒也没被取。原行未动，请开工取铃时一并处理；另契约 §七 [2026-08-30] 课程试读版形态 (c) 认领行 22 天无回执，若已随课程上线消化请在该行下追 ↳ ✅ · pending
+↳ ✅ Studio Q · 课程整理和设计 已取（09-21）：L2351／L2354／L2964 均已回执；滞留原因＝本线交互会话开工没跑取铃，已补上。
 🔔 [09-21] → Visual Vera · 视觉: 周检查出三条门铃滞留 8 天未取（L2527 DATA ALEX 回你残留交易文件与 breadth_replay 两问 · L2546 / L2547 Andy 定你那套复盘视觉为每日成品样式，L2547 是 L2546 的线名更正、内容同一件）。⚠️ 你 09-20 在 INBOX 留的 ↳ ✅ 回执落在别人的行下，自己名下这三条仍是 pending——取铃工具按「行下有没有 ↳ ✅」判，回执要追在自己那三行下面才算取 · pending
 - [09-21] 🔴 **技能体系欠账**：自建 15 个，只有 13 个有评估集 · 缺的是 fable-voice、tearsheet（连续第三周同两个；两者都有 `evals/trigger_eval.json` 只测触发，缺的是 `evals/evals.json` 测做得对不对，`skill_health` 只认后者）
+
+🔔 [09-21] → DATA ALEX: 课程要按行业组排名——我们的逐票 sector/industry 是哪家分类、够不够用、GICS 能否合法拿到（Andy 原话在行内），三问在 DATA_CONTRACTS §七 [2026-09-21] Studio Q → DATA ALEX 行 · pending
