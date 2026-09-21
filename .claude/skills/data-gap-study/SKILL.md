@@ -23,7 +23,7 @@ owner: linda
 
 - **Fan-out**：4 个只读 agent 按批分工，然后**独立复核 3 个头条数字**，再动笔写。
 - **C 级文档在顶部加横幅注明**（banner），**永不改写原来的数字**。
-- 发现**未申报的污染** → 写 `DATA_CONTRACTS.md` §七 一行指名路由给该归档的 owner 线，并在任务板上开一件给他：`taskboard.py new --owner <名> --type data_gap_study --title "<一句话>"`。
+- 发现**未申报的污染** → 在任务板上开一件给该归档的 owner 线：`taskboard.py new --owner <名> --type data_gap_study --title "<一句话>"`，再在 `DATA_CONTRACTS.md` §七 记一行事实档案，行里带上这张单的任务号（契约行只是档案，派活靠开单）。
 
 ## 产出
 
