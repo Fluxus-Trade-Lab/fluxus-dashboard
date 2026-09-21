@@ -227,6 +227,8 @@
 - [09-19] [OPS] **内容产线从云端+本机二重管道统一到单一本机守护进程**｜Discord→X 数据生成端原本云端+本机并行，每晚一段时间两边产出不同步、队列互相打架、诊断难点指向「内容问题」而漏看「系统问题」。改派转成本机守护进程后，单一货源、任务板串联、错误即刻可见。09-19 冷启动试跑成功；云端 routine 已确认停用（trig_01UwhQA2SaEWSFEDkyK7dtTZ enabled:false）。故事素材：自动化编队如何把「两个都对但都不对」的诊断陷阱消灭掉。出处 data/research/night_reports/INBOX.md [09-18]→[09-19] 行 · T-0919-21 · commit 2cbc49d6
   ↳ ⏸ 08-30 W5 收割时**不做成推文**：它是标题级资产，拿去当一条推就消耗掉了。建议去处 **#002 的 DIAL 或课程章节标题**。
 
+- [09-21] [UI Claire · frontend] 百分位数据缺席时改显「攒历史中」不是空行｜Stockbee 五个排名指标（up_4pct/down_4pct/ratio_5d/nh_nl_net/qtr_spread）在数据积累不足前（MIN_STOCKBEE_RANK_N=60）不对外，百分位栏之前空着等于「无数据」，现在改成提示「正在搜集数据」。EP 图例与 CorrectionRiskPanel four-state 改动已对齐，gear 已撤页。出处 fa7aee6f · T-0921-43
+
 - [09-20] [steve] **两个大师级 setup 扫描器上线**：Stockbee（突破+成交量）、Qullamaggie（间隙跳空）新增入库；首晚各自产出互补——Stockbee 扫 15 笔，Qullamaggie 零匹配属常态（25 场历史中位 2 只、20% 场次印零）；新指标上线时发现三类陷阱（盘前时点错、字段缺失、旧行情误读）已修复，体现「淡季指标零行是特征不是故障」。出处 commit 7295e7aa · [data/output/ep_stockbee.json](../../../data/output/ep_stockbee.json) · [ep_qullamaggie 审计](../../../data/research/ep_qullamaggie_baserate_2026-09-20/README.md)
   ↳ 📌 本行原本只存在于主工作树的未提交区（其底本落后 origin/main 14 行），由 Steve 08-30 重放进权威版；主树那份副本请勿提交。
 
