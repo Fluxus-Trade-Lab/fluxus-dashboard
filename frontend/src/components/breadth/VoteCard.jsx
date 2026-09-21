@@ -31,6 +31,11 @@ const CTX_LABEL = {
   qtr_spread: 'qtr spread', t2108: 'T2108', mcclellan_osc: 'McClellan', nh_nl_net: 'NH−NL',
 }
 
+// These five rank only against their own Stockbee column and are omitted
+// from `context` until it has 60 sessions (breadth_signals.MIN_STOCKBEE_RANK_N,
+// 2026-09-21) — shown as "building history" so the gap isn't read as "no data".
+const STOCKBEE_PCT_KEYS = ['up_4pct', 'down_4pct', 'ratio_5d', 'nh_nl_net', 'qtr_spread']
+
 function Falsification({ votes, score, env }) {
   if (!votes || typeof score !== 'number') return null
   const entries = Object.entries(votes)
@@ -111,7 +116,11 @@ export default function VoteCard({ verdict, session, dataQuality, evidence = fal
   if (!verdict) return null
   const v = verdict
   const offSession = isWeekend(session)
-  const ctx = Object.entries(v.context ?? {})
+  const rawCtx = v.context ?? {}
+  const ctx = [
+    ...Object.entries(rawCtx),
+    ...STOCKBEE_PCT_KEYS.filter((k) => !(k in rawCtx)).map((k) => [k, null]),
+  ]
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-5 h-full flex flex-col">
@@ -190,7 +199,7 @@ export default function VoteCard({ verdict, session, dataQuality, evidence = fal
 
       {ctx.length > 0 && (
         <p className="text-[11px] font-mono text-[var(--color-text-muted)] mt-2 mb-0">
-          percentile · {ctx.map(([k, p]) => `${CTX_LABEL[k] ?? k} ${p}th`).join(' · ')}
+          percentile · {ctx.map(([k, p]) => `${CTX_LABEL[k] ?? k} ${p == null ? 'building history' : `${p}th`}`).join(' · ')}
         </p>
       )}
     </div>

@@ -20,6 +20,10 @@ const VOTE_WORD = { bull: 'bull', bear: 'bear', neutral: 'neutral' }
 
 export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
   if (!mm || !breadth || !verdict) return null
+  // down_4pct / ratio_5d / qtr_spread rank only against their own Stockbee
+  // column and are absent from `context` until it has 60 sessions
+  // (breadth_signals.MIN_STOCKBEE_RANK_N, 2026-09-21) — "building history",
+  // not the blank a reader would read as "no data".
   const ctx = verdict.context ?? {}
   const votes = verdict.votes ?? {}
 
@@ -61,7 +65,7 @@ export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
           label={hasSb ? 'Up 4% / Down 4% (Stockbee)' : 'Up 4% / Down 4% (price only)'}
           value={`${up ?? '—'} / ${down ?? '—'}`}
           note={thrustLabel}
-          pct={ctx.down_4pct != null ? `down-4% ${ctx.down_4pct}th pctile` : null}
+          pct={ctx.down_4pct != null ? `down-4% ${ctx.down_4pct}th pctile` : 'down-4% building history'}
         />
         <Tile
           label={`5-day / 10-day ratio${tag(r5, r10)}`}
@@ -69,13 +73,13 @@ export default function MarketStateSummary({ mm, breadth, verdict, lastRow }) {
           note={votes.ratio_5d && votes.ratio_10d
             ? (votes.ratio_5d === votes.ratio_10d ? `both vote ${VOTE_WORD[votes.ratio_5d]}` : `5D ${VOTE_WORD[votes.ratio_5d]} · 10D ${VOTE_WORD[votes.ratio_10d]}`)
             : '—'}
-          pct={ctx.ratio_5d != null ? `5D ${ctx.ratio_5d}th pctile` : null}
+          pct={ctx.ratio_5d != null ? `5D ${ctx.ratio_5d}th pctile` : '5D building history'}
         />
         <Tile
           label={`Quarterly breadth (25%+)${tag(qu, qd)}`}
           value={`${qu.v ?? '—'} / ${qd.v ?? '—'}`}
           note={votes.qtr_spread ? `votes ${VOTE_WORD[votes.qtr_spread]}` : '—'}
-          pct={ctx.qtr_spread != null ? `spread ${ctx.qtr_spread}th pctile` : null}
+          pct={ctx.qtr_spread != null ? `spread ${ctx.qtr_spread}th pctile` : 'spread building history'}
         />
         <Tile
           label="T2108"
