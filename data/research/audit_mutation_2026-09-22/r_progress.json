@@ -1,0 +1,362 @@
+{
+ "modules": [
+  {
+   "module": "audit_progress",
+   "mutants": 83,
+   "killed": 49,
+   "survived": 34,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 83,
+   "index_from": 0,
+   "index_to": 83,
+   "kill_rate": 0.59,
+   "survivors": [
+    {
+     "line": 274,
+     "kind": "number",
+     "change": "5 -> 6",
+     "source": "MIN_KEYS = 5            # \u5171\u540c\u952e\u592a\u5c11\u65f6\u5360\u6bd4\u662f\u566a\u58f0\uff0c\u4e0d\u8fdb\u6392\u884c",
+     "index": 0,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 111,
+     "kind": "number",
+     "change": "3 -> 4",
+     "source": "WINDOW = (3, 15)        # delayed_ep_scan \u7684 --min-days / --max-days \u9ed8\u8ba4\u503c",
+     "index": 2,
+     "seconds": [
+      4.6
+     ]
+    },
+    {
+     "line": 178,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "pairs = 0",
+     "index": 7,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 319,
+     "kind": "number",
+     "change": "8 -> 9",
+     "source": "def render_sweep(rows: List[Dict[str, Any]], top: int = 8) -> str:",
+     "index": 9,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 293,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if len(common) < MIN_KEYS:",
+     "index": 16,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 310,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "if not data or date_col not in data[0]:",
+     "index": 18,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 19,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "0.0 -> 1.0",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 20,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 181,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "pairs += 1",
+     "index": 29,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 182,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if float(b[NONDECREASING]) < float(a[NONDECREASING]) - 1e-9:",
+     "index": 30,
+     "seconds": [
+      4.3
+     ]
+    },
+    {
+     "line": 233,
+     "kind": "compare",
+     "change": "NotIn -> In",
+     "source": "partial = [s for s in res[\"p1\"] if s not in res[\"p2\"]]",
+     "index": 31,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 323,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "med = shares[len(shares) // 2]",
+     "index": 35,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 36,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 37,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 343,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "d = Path(argv[1]) if len(argv) > 1 else ARCHIVE.parent",
+     "index": 38,
+     "seconds": [
+      4.6
+     ]
+    },
+    {
+     "line": 102,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "ARCHIVE = Path(__file__).resolve().parents[2] / \"data\" / \"history\" / \"delayed_ep_log.csv\"",
+     "index": 39,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 286,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "cols = [c for c in rows[0] if c != date_col and c not in key_cols]",
+     "index": 46,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 341,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "argv = sys.argv[1:] if argv is None else list(argv)",
+     "index": 50,
+     "seconds": [
+      5.6
+     ]
+    },
+    {
+     "line": 343,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "d = Path(argv[1]) if len(argv) > 1 else ARCHIVE.parent",
+     "index": 52,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 174,
+     "kind": "compare",
+     "change": "LtE -> Lt",
+     "source": "\"ghost\": not (WINDOW[0] <= expected <= WINDOW[1]),",
+     "index": 56,
+     "seconds": [
+      4.3
+     ]
+    },
+    {
+     "line": 180,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "for a, b in zip(rs, rs[1:]):",
+     "index": 58,
+     "seconds": [
+      4.6
+     ]
+    },
+    {
+     "line": 182,
+     "kind": "number",
+     "change": "1e-09 -> 1.000000001",
+     "source": "if float(b[NONDECREASING]) < float(a[NONDECREASING]) - 1e-9:",
+     "index": 59,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 310,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if not data or date_col not in data[0]:",
+     "index": 61,
+     "seconds": [
+      4.3
+     ]
+    },
+    {
+     "line": 325,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "L.append(f\"  {len(rows)} \u4e2a\u76f8\u90bb\u573a\u5bf9 \u00b7 \u4e2d\u4f4d {100 * med:.1f}% \u00b7 \"",
+     "index": 62,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 326,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"P95 {100 * shares[int(.95 * len(shares))]:.1f}% \u00b7 \"",
+     "index": 63,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 327,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"\u6700\u5927 {100 * shares[-1]:.1f}%\")",
+     "index": 64,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 242,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "+ (\" \u2026\" if len(h) > 14 else \"\"))",
+     "index": 68,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 70,
+     "seconds": [
+      4.3
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "gap = 100 * (rows[0][\"share\"] - rows[1][\"share\"]) if len(rows) > 1 else 0.0",
+     "index": 71,
+     "seconds": [
+      4.3
+     ]
+    },
+    {
+     "line": 332,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "L.append(f\"  {100 * x['share']:>5.1f}%  {x['archive']:<22} {x['session']}  \"",
+     "index": 72,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 242,
+     "kind": "number",
+     "change": "14 -> 15",
+     "source": "+ (\" \u2026\" if len(h) > 14 else \"\"))",
+     "index": 77,
+     "seconds": [
+      4.5
+     ]
+    },
+    {
+     "line": 327,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "f\"\u6700\u5927 {100 * shares[-1]:.1f}%\")",
+     "index": 78,
+     "seconds": [
+      4.4
+     ]
+    },
+    {
+     "line": 208,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "f\"{WINDOW[0]}..{WINDOW[1]} \u4e4b\u5916 \u2014\u2014 \u90a3\u4e9b\u884c\u672c\u4e0d\u8be5\u5728\u5f52\u6863\u91cc\"",
+     "index": 80,
+     "seconds": [
+      4.6
+     ]
+    },
+    {
+     "line": 241,
+     "kind": "number",
+     "change": "14 -> 15",
+     "source": "+ \" \".join(x[\"ticker\"] for x in h[:14])",
+     "index": 82,
+     "seconds": [
+      5.0
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 290.1
+}

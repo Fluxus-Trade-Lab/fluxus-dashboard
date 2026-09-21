@@ -1,0 +1,339 @@
+{
+ "modules": [
+  {
+   "module": "audit_metric_names",
+   "mutants": 31,
+   "killed": 21,
+   "survived": 10,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 31,
+   "index_from": 0,
+   "index_to": 31,
+   "kill_rate": 0.677,
+   "survivors": [
+    {
+     "line": 151,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "if not cells or _is_divider(cells):",
+     "index": 8,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 163,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "out: Dict[str, object] = {\"violations\": list(errors), \"warnings\": [], \"checked_rows\": 0, \"ok\": True}",
+     "index": 11,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 208,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 17,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 208,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 18,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 130,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "if idx == -1:",
+     "index": 19,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 149,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "for line in lines[1:]:",
+     "index": 21,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 192,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return {\"ok\": False, \"violations\": [f\"{path} not found\"], \"warnings\": [], \"checked_rows\": 0}",
+     "index": 25,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 179,
+     "kind": "number",
+     "change": "60 -> 61",
+     "source": "msg = (f\"`{row['\u6211\u4eec\u53d1\u7684']}` reuses a standard token from \u6807\u51c6\u540d={row['\u6807\u51c6\u540d'][:60]!r} \"",
+     "index": 28,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 180,
+     "kind": "number",
+     "change": "60 -> 61",
+     "source": "f\"while \u72b6\u6001 declares \u81ea\u9020/\u5192\u5145: {status[:60]!r}\")",
+     "index": 29,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 154,
+     "kind": "number",
+     "change": "80 -> 81",
+     "source": "errors.append(f\"row has {len(cells)} cells, expected {len(EXPECTED_HEADER)}: {line[:80]!r}\")",
+     "index": 30,
+     "seconds": [
+      2.2
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  },
+  {
+   "module": "audit_tml",
+   "mutants": 44,
+   "killed": 24,
+   "survived": 20,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 44,
+   "index_from": 0,
+   "index_to": 44,
+   "kill_rate": 0.545,
+   "survivors": [
+    {
+     "line": 55,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "if not path.exists() or not date:",
+     "index": 2,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 83,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "consistent = count_match and ticker_match",
+     "index": 6,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 94,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not r[\"live\"]:",
+     "index": 7,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 104,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not r[\"consistent\"]:",
+     "index": 8,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 122,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not (out / \"watchlist.json\").exists():",
+     "index": 9,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 68,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "live = coverage[\"weinstein_stage\"][0] > 0",
+     "index": 14,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 82,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "ticker_match = truncated > 0 or set(panel_tickers) == set(log_tickers)",
+     "index": 17,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 119,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "argv = sys.argv[1:] if argv is None else argv",
+     "index": 21,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "hist = Path(argv[1]) if len(argv) > 1 else HISTORY",
+     "index": 22,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 124,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "return 2",
+     "index": 23,
+     "seconds": [
+      2.8
+     ]
+    },
+    {
+     "line": 71,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "count = int(panel.get(\"count\") or 0)",
+     "index": 26,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 73,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "truncated = int(panel.get(\"truncated\") or 0)",
+     "index": 27,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 75,
+     "kind": "number",
+     "change": "10 -> 11",
+     "source": "date = str(wl.get(\"date\") or \"\")[:10]",
+     "index": 29,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 82,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "ticker_match = truncated > 0 or set(panel_tickers) == set(log_tickers)",
+     "index": 30,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "hist = Path(argv[1]) if len(argv) > 1 else HISTORY",
+     "index": 33,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 93,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "L = [f\"TML check -- {r['date'] or '(no date)'}\"]",
+     "index": 36,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 119,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "argv = sys.argv[1:] if argv is None else argv",
+     "index": 37,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 120,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "out = Path(argv[0]) if argv else OUTPUT",
+     "index": 38,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "hist = Path(argv[1]) if len(argv) > 1 else HISTORY",
+     "index": 39,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 113,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "pct = f\"{n / d * 100:.0f}%\" if d else \"\u2014\"",
+     "index": 43,
+     "seconds": [
+      2.9
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 185.9
+}

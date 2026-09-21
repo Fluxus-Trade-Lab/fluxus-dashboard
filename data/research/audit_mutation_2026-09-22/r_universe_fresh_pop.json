@@ -1,0 +1,919 @@
+{
+ "modules": [
+  {
+   "module": "audit_universe_freshness",
+   "mutants": 56,
+   "killed": 21,
+   "survived": 35,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 56,
+   "index_from": 0,
+   "index_to": 56,
+   "kill_rate": 0.375,
+   "survivors": [
+    {
+     "line": 124,
+     "kind": "number",
+     "change": "3.0 -> 4.0",
+     "source": "HIGH = 3.0               # above this the denominator, not the market, moved",
+     "index": 1,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 125,
+     "kind": "number",
+     "change": "200 -> 201",
+     "source": "MIN_NAMES = 200          # below this a snapshot is a fragment, not a universe",
+     "index": 2,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 140,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "if dt.tzinfo is None:",
+     "index": 4,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 168,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if names < min_names:",
+     "index": 7,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 172,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if rvol < low:",
+     "index": 9,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 175,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if rvol > high:",
+     "index": 10,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 256,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not records:",
+     "index": 11,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 153,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "return 0.0 if f != f or f in (float('inf'), float('-inf')) else f",
+     "index": 14,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 153,
+     "kind": "number",
+     "change": "0.0 -> 1.0",
+     "source": "return 0.0 if f != f or f in (float('inf'), float('-inf')) else f",
+     "index": 15,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 160,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if usual <= 0:",
+     "index": 16,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 227,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not raw.strip():",
+     "index": 21,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 234,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not day:",
+     "index": 22,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 236,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "rows = payload.get('rows') or []",
+     "index": 23,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 258,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "return 2",
+     "index": 24,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 262,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if a.quiet and rec['kind'] is None:",
+     "index": 25,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 269,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "for line in result['warnings'] if not a.quiet else []:",
+     "index": 26,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 277,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if result['ok'] else 1",
+     "index": 27,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 277,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if result['ok'] else 1",
+     "index": 28,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 191,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "seen_by_session[day] = seen_by_session.get(day, 0) + 1",
+     "index": 32,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 194,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "clean_by_session[day] += 1",
+     "index": 34,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 205,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if clean_by_session[day] == 0 and seen_by_session[day] > 0:",
+     "index": 37,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 262,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "if a.quiet and rec['kind'] is None:",
+     "index": 38,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 264,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "rvol = '     -' if rec['rvol'] is None else f'{rec[\"rvol\"]:10.4f}'",
+     "index": 39,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 189,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "kind, why = classify(rec.get('rvol'), rec.get('names', 0), low, high, min_names)",
+     "index": 40,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 191,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "seen_by_session[day] = seen_by_session.get(day, 0) + 1",
+     "index": 41,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 198,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "where = f'{day} ({rec.get(\"snapshot\") or \"?\"})'",
+     "index": 42,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 205,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if clean_by_session[day] == 0 and seen_by_session[day] > 0:",
+     "index": 44,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 188,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "for rec in sorted(records, key=lambda r: (r['session'], r.get('snapshot') or '')):",
+     "index": 45,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 226,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout",
+     "index": 47,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 226,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout",
+     "index": 48,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 265,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "print(f'{rec[\"kind\"] or \"OK\":3s} {rec[\"session\"]}  {rec[\"snapshot\"]}  '",
+     "index": 49,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 273,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "json.dump(result, fh, indent=2)",
+     "index": 50,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 223,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout.split()",
+     "index": 53,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 223,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout.split()",
+     "index": 54,
+     "seconds": [
+      2.2
+     ]
+    },
+    {
+     "line": 237,
+     "kind": "number",
+     "change": "8 -> 9",
+     "source": "out.append({'session': day, 'snapshot': h[:8], 'names': len(rows),",
+     "index": 55,
+     "seconds": [
+      2.2
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  },
+  {
+   "module": "audit_universe_population",
+   "mutants": 67,
+   "killed": 14,
+   "survived": 53,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 67,
+   "index_from": 0,
+   "index_to": 67,
+   "kill_rate": 0.209,
+   "survivors": [
+    {
+     "line": 57,
+     "kind": "number",
+     "change": "1000000000.0 -> 1000000001.0",
+     "source": "SMALL_CAP = 1e9          # self-made line; see the warning above",
+     "index": 0,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 59,
+     "kind": "number",
+     "change": "1.5 -> 2.5",
+     "source": "FACTOR = 1.5             # median cap may move this far, either direction",
+     "index": 2,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 60,
+     "kind": "number",
+     "change": "20 -> 21",
+     "source": "WINDOW = 20",
+     "index": 3,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 61,
+     "kind": "number",
+     "change": "200 -> 201",
+     "source": "MIN_NAMES = 200          # below this a snapshot is a fragment, not a universe",
+     "index": 4,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 77,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "if dt.tzinfo is None:",
+     "index": 6,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 179,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not by:",
+     "index": 8,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 116,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if n < min_names:",
+     "index": 9,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 152,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not raw.strip():",
+     "index": 11,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 159,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not day:",
+     "index": 12,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 181,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "return 2",
+     "index": 13,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 185,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if a.quiet and rec['kind'] in (None, 'P3'):",
+     "index": 14,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 187,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "mark = rec['kind'] or 'OK'",
+     "index": 15,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 194,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "for line in result['warnings'] if not a.quiet else []:",
+     "index": 16,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 201,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if result['ok'] else 1",
+     "index": 17,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 201,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if result['ok'] else 1",
+     "index": 18,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 119,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "elif len(prior_sh) < 3 or base_sh is None or base_med is None:",
+     "index": 20,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 185,
+     "kind": "compare",
+     "change": "In -> NotIn",
+     "source": "if a.quiet and rec['kind'] in (None, 'P3'):",
+     "index": 21,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 188,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "share = '   -  ' if rec['share_small'] is None else f'{rec[\"share_small\"]:6.3f}'",
+     "index": 22,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 189,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "med = '        -' if rec['median_cap'] is None else f'{rec[\"median_cap\"]:9,.0f}'",
+     "index": 23,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 83,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "usable = [c for c in caps if c and c > 0]",
+     "index": 24,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 96,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "caps = [c for c in by_session[day] if c and c > 0]",
+     "index": 26,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 110,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "'share_small': None if sh is None else round(sh, 4),",
+     "index": 28,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 111,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "'median_cap': None if med is None else round(med, 1),",
+     "index": 29,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 119,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "elif len(prior_sh) < 3 or base_sh is None or base_med is None:",
+     "index": 32,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 125,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if moved > tolerance:",
+     "index": 35,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 161,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "out[day] = [float(r.get('market_cap') or 0) for r in payload.get('rows', [])]",
+     "index": 37,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 83,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "usable = [c for c in caps if c and c > 0]",
+     "index": 38,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 86,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "return sum(1 for c in usable if c < line) / len(usable)",
+     "index": 39,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 96,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "caps = [c for c in by_session[day] if c and c > 0]",
+     "index": 40,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 101,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "prior_days = sessions[max(0, i - window):i]",
+     "index": 41,
+     "seconds": [
+      2.6
+     ]
+    },
+    {
+     "line": 110,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "'share_small': None if sh is None else round(sh, 4),",
+     "index": 42,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 111,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "'median_cap': None if med is None else round(med, 1),",
+     "index": 43,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 112,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "'baseline_share': None if base_sh is None else round(base_sh, 4),",
+     "index": 44,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 113,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "'baseline_median': None if base_med is None else round(base_med, 1),",
+     "index": 45,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 119,
+     "kind": "number",
+     "change": "3 -> 4",
+     "source": "elif len(prior_sh) < 3 or base_sh is None or base_med is None:",
+     "index": 46,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 124,
+     "kind": "number",
+     "change": "1.0 -> 2.0",
+     "source": "ratio = (med / base_med) if base_med else 1.0",
+     "index": 47,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 131,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if ratio > factor or ratio < 1 / factor:",
+     "index": 48,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 131,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if ratio > factor or ratio < 1 / factor:",
+     "index": 49,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 151,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout",
+     "index": 50,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 151,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout",
+     "index": 51,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 161,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "out[day] = [float(r.get('market_cap') or 0) for r in payload.get('rows', [])]",
+     "index": 52,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 198,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "json.dump(result, fh, indent=2)",
+     "index": 53,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 96,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "caps = [c for c in by_session[day] if c and c > 0]",
+     "index": 54,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 104,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "prior_med = [statistics.median([c for c in by_session[p] if c and c > 0])",
+     "index": 55,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 105,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "for p in prior_days if any(c > 0 for c in by_session[p])]",
+     "index": 56,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 148,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout.split()",
+     "index": 58,
+     "seconds": [
+      2.4
+     ]
+    },
+    {
+     "line": 148,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout.split()",
+     "index": 59,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 104,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "prior_med = [statistics.median([c for c in by_session[p] if c and c > 0])",
+     "index": 60,
+     "seconds": [
+      2.7
+     ]
+    },
+    {
+     "line": 105,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "for p in prior_days if any(c > 0 for c in by_session[p])]",
+     "index": 61,
+     "seconds": [
+      2.3
+     ]
+    },
+    {
+     "line": 104,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "prior_med = [statistics.median([c for c in by_session[p] if c and c > 0])",
+     "index": 63,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 129,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f'median {base_sh:.2f} (moved {moved * 100:.0f}pp, tolerance '",
+     "index": 64,
+     "seconds": [
+      2.5
+     ]
+    },
+    {
+     "line": 130,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f'{tolerance * 100:.0f}pp) over {n} names')",
+     "index": 65,
+     "seconds": [
+      2.8
+     ]
+    },
+    {
+     "line": 135,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "f'{base_med:,.0f} (x{ratio:.2f}, band x{1 / factor:.2f}-x{factor:.2f})')",
+     "index": 66,
+     "seconds": [
+      2.8
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 299.4
+}
