@@ -75,3 +75,10 @@ def test_tie_breaks_on_the_most_recent_9m_ep_not_the_alphabet():
                      columns=["ticker", "market_cap", "ep9m_count_6m", "ep9m_count_1y", "ep9m_last"])
     r = ranks(u).set_axis(u["ticker"])
     assert r["ZZZ"] == 1 and r["AAA"] == 2
+
+
+def test_shell_companies_are_out():
+    u = pd.DataFrame([("LION", 5e9, 9, 9, "Shell Companies"), ("REAL", 5e9, 1, 1, "Semiconductors")],
+                     columns=["ticker", "market_cap", "ep9m_count_6m", "ep9m_count_1y", "industry"])
+    r = ranks(u).set_axis(u["ticker"])
+    assert pd.isna(r["LION"]) and r["REAL"] == 1

@@ -18,7 +18,8 @@ What is his and what is ours:
            ~200 bars of the one-year download, so it breaks ties only; then
            the most recent 9M EP -- a name still printing them ahead of one
            gone quiet since spring -- and only then the ticker), and the
-           $1B floor (the screener universe rule, Andy 09-18).
+           $1B floor (the screener universe rule, Andy 09-18), and no shell
+           companies (Andy 09-21 「排除」).
 This replaces the 09-04 preset `bo_count_1y >= 10 and bo_count_3m >= 2`, whose
 unit (4% breakouts) and both thresholds were ours.
 """
@@ -29,6 +30,7 @@ import pandas as pd
 from pipeline.screeners.universe_gate import cap_floor
 
 TOP_N = 30
+SHELL_INDUSTRY = "Shell Companies"
 
 
 def ranks(universe: pd.DataFrame) -> pd.Series:
@@ -37,6 +39,11 @@ def ranks(universe: pd.DataFrame) -> pd.Series:
     if universe is None or len(universe) == 0 or "ep9m_count_6m" not in universe:
         return out
     pool = cap_floor(universe)
+    # Shell companies (SPACs / blank checks, vendor industry "Shell Companies")
+    # are out -- Andy 2026-09-21 「排除」. Pradeep's words say nothing either way;
+    # this cut is ours.
+    if "industry" in pool:
+        pool = pool[pool["industry"].fillna("") != SHELL_INDUSTRY]
     c6 = pd.to_numeric(pool["ep9m_count_6m"], errors="coerce")
     c1 = pd.to_numeric(pool.get("ep9m_count_1y"), errors="coerce") if "ep9m_count_1y" in pool \
         else pd.Series(0.0, index=pool.index)
