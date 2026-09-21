@@ -23,6 +23,22 @@ python3 ~/Documents/fluxus-ops/tools/taskboard.py claim <id> --by chat
 
 `--by chat` 表示这件活由交互会话自己做，不是守护进程派给工人的。
 
+### ⚠️ 自己做或派子 agent 去做之前，**先 claim，再动手**（Andy 2026-09-22：「把这个 claim 规矩写进协议」）
+
+凡是交互会话决定接手任务板上的一件活——**自己做，或用 Agent 工具派一个子 agent 去做**——第一步都是：
+
+```bash
+python3 ~/Documents/fluxus-ops/tools/taskboard.py claim <id> --by chat
+```
+
+**然后**才开写、才派子 agent。顺序不能反。
+
+为什么：守护进程每 60 秒拉一次板，看到 `open` 的单就派工人。交互会话不 claim，守护进程就不知道已经有人在做，同一件活会被**两个写者**并行做完。09-21 连出两次：T-0921-32（主树提交钩子）和 T-0921-34（按类型复核）都被 OPS 派的子 agent 和守护进程的工人各做了一遍，第二次还在重启时被重新领走，只能靠关单止损。
+
+- `--by chat` 的领单**不会被 reap 收回**（Ruling 58），所以长时间的交互工作放心 claim，不用担心三小时后被转给工人。
+- 派子 agent 时，把任务号写进它的提示词，并让它**不要**再 claim / done——收尾由派它的交互会话来做（`done` 或 `close`），免得两边都去改同一张单的状态。
+- 做完一定要 `done` 或 `close`；claim 了不收尾，这张单会一直挂着 `claimed`，没人再碰它。
+
 ## 二、Andy 说「以后这样做」
 
 这是规矩，不是一次性的活。**逐字**写进自己的 `~/Documents/fluxus-ops/agents/<name>/ROLE.md`（或 `agents/<name>/memory/`），附他的原话与日期，每条末尾用括号注明出处，然后 push fluxus-ops。
