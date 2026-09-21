@@ -13,8 +13,12 @@ added, and is the one to read when you want the move to have a buyer behind
 it.
 
 Its real use is aggregate, not individual: the *count* of 4% gainers against
-the count of 4% losers is the input to the Stockbee breadth ratio, and that
-count says more about the tape than any single row in this list.
+the count of 4% losers says more about the tape than any single row in this
+list. This list is NOT the input of the Stockbee breadth ratio / 4% votes:
+those read breadth_metrics' `up_4pct_stockbee` / `down_4pct_stockbee`, which
+add Stockbee's other two conditions (volume > yesterday's, volume >= 100k)
+and drop non-common industries (breadth_signals THRUST_UP / RATIO_COLS).
+Comment corrected 2026-09-21.
 """
 
 from __future__ import annotations

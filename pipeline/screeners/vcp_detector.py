@@ -20,9 +20,9 @@ earnings date and one coiling on genuine accumulation look identical here.
 Two-layer architecture below.
 
 Layer 1 (``layer1_finviz_filter``):
-    Coarse filter on the Finviz universe.  Reduces ~2 400 stocks down to
-    ~100-200 candidates using price, market-cap, moving-average, and
-    performance criteria.
+    Minervini's Trend Template (7 of his 8 legs; leg 3, the 200-day slope,
+    is not on the row) plus our own price / market-cap / performance cuts,
+    each declared in the function docstring.
 
 Layer 2 (``layer2_detect_vcp``):
     Precise pattern detection on 90-day OHLCV history fetched via
@@ -60,10 +60,38 @@ RATIO_BAND = (0.30, 0.75)
 
 
 def layer1_finviz_filter(df: pd.DataFrame) -> pd.DataFrame:
-    """Coarse filter using Finviz data. ~2400 -> ~100-200 candidates."""
+    """Coarse filter: Minervini's Trend Template, plus our own liquidity cuts.
+
+    Source: Mark Minervini, *Trade Like a Stock Market Wizard* (2013), the
+    eight-point Trend Template. Leg by leg, as implemented:
+      1. price above the 150-day (30-week) and 200-day MA   -> wk_sma30_dist > 0, sma200_dist > 0
+      2. 150-day MA above the 200-day MA                     -> wk_sma30 > sma200
+      3. 200-day MA trending up for at least 1 month         -> NOT APPLIED (see below)
+      4. 50-day MA above both the 150-day and 200-day MA     -> sma50 > wk_sma30, sma50 > sma200
+      5. price above the 50-day MA                           -> sma50_dist > 0
+      6. price at least 30% above the 52-week low            -> low_52w >= 0.30
+      7. price within at least 25% of the 52-week high       -> high_52w >= -0.25
+      8. RS ranking no less than 70                          -> rs_rating >= 70
+    DECLARED deviations (2026-09-21, audit recheck; METRIC_SOURCES VCP-L1 row):
+      * 150-day MA is read as the 30-week SMA (wk_sma30, Friday closes,
+        stage_analysis.weinstein_fields). Minervini writes "150-day (30-week)"
+        himself; the row carries no daily 150-SMA.
+      * leg 3 is not applied: the row has no 200-day MA slope. Not replaced
+        by a proxy.
+      * leg 8 reads our rs_rating, an IBD-style community reconstruction
+        (METRIC_SOURCES rs_rating row), not IBD's own RS Rating.
+      * OURS, not his: close > $10, market cap >= $1B, perf_1m > 0 and
+        |perf_1w| < |perf_1m|. They cut the ~2,400 rows to a fetchable list
+        for Layer 2; they are not Trend Template legs.
+    Until 2026-09-21 legs 1/2/4 (150-day) and 8 (RS) were missing and the
+    extra cuts were undeclared (audit 09-18 C #43).
+    A column wholly absent (fallback universe) skips its leg with a warning;
+    a missing value on a row fails that row.
+    """
     # Ensure numeric types — scraped data may have None/object columns
     num_cols = ['close', 'market_cap', 'sma50_dist', 'sma200_dist',
-                'low_52w', 'high_52w', 'perf_1w', 'perf_1m']
+                'low_52w', 'high_52w', 'perf_1w', 'perf_1m',
+                'wk_sma30', 'wk_sma30_dist', 'rs_rating']
     df = df.copy()
     for col in num_cols:
         if col in df.columns:
@@ -73,16 +101,36 @@ def layer1_finviz_filter(df: pd.DataFrame) -> pd.DataFrame:
         df['close'].notna() &
         df['perf_1w'].notna() &
         df['perf_1m'].notna() &
+        # ours (liquidity / fetch-budget cuts)
         (df['close'] > 10) &
         (df['market_cap'] >= 1e9) &
+        (df['perf_1m'] > 0) &
+        (df['perf_1w'].abs() < df['perf_1m'].abs()) &
+        # Trend Template legs 1 (200 half), 5, 6, 7
         (df['sma50_dist'] > 0) &
         (df['sma200_dist'] > 0) &
         (df['low_52w'] >= 0.30) &
-        (df['high_52w'] >= -0.25) &
-        (df['perf_1m'] > 0) &
-        (df['perf_1w'].abs() < df['perf_1m'].abs())
+        (df['high_52w'] >= -0.25)
     )
-    return df[mask]
+
+    if {'wk_sma30', 'wk_sma30_dist'} <= set(df.columns):
+        sma50 = df['close'] / (1 + df['sma50_dist'])
+        sma200 = df['close'] / (1 + df['sma200_dist'])
+        ma150 = df['wk_sma30']
+        mask &= (
+            (df['wk_sma30_dist'] > 0) &          # leg 1: price above the 150-day
+            (ma150 > sma200) &                   # leg 2
+            (sma50 > ma150) & (sma50 > sma200)   # leg 4
+        )
+    else:
+        logger.warning("VCP L1: no wk_sma30 on the universe -- Trend Template 150-day legs skipped")
+
+    if 'rs_rating' in df.columns:
+        mask &= df['rs_rating'] >= 70            # leg 8: "no less than 70"
+    else:
+        logger.warning("VCP L1: no rs_rating on the universe -- Trend Template RS leg skipped")
+
+    return df[mask.fillna(False)]
 
 
 # =====================================================================

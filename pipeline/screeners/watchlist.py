@@ -66,7 +66,11 @@ MIN_CROSS_ZONES = 3
 # same-day move at/above which a 4% day is a chase, not an entry (2026-08-19)
 CHASE_PCT = 0.15
 PANEL_HITS_LOG = Path("data/history/watchlist_hits.csv")
-TOP_3M_PCTILE = 0.85          # 'top_3m' flag: oratnek's pool, fitted on 08-11/13/14
+# 'top_3m' flag: oratnek's pool, fitted on 08-11/13/14. SELF-MADE, and the fit
+# is already CONTRADICTED by later data: e3c046e3 (2026-08-25) measured that on
+# 08-24 this cut drops 11 of his 30 names. Kept only because it flags, never
+# filters (METRIC_SOURCES top_3m row).
+TOP_3M_PCTILE = 0.85
 
 
 def _f(r: Mapping[str, Any], k: str) -> Optional[float]:
@@ -133,8 +137,17 @@ def _le(r, k, x):
     return v is not None and v <= x
 
 
+def _gt(r, k, x):
+    v = _f(r, k)
+    return v is not None and v > x
+
+
 def _strong(r) -> bool:
-    return _ge(r, "ti65", 1.05) or _ge(r, "c_low52w", 1.8) or _ge(r, "mdt", 1.19)
+    """Stockbee's three anticipation strength legs, operators as he wrote them
+    (stockbee.blogspot.com/2016/04/how-to-find-bullish-anticipation-setups.html):
+    TI65 "avgc7/avgc65>1.05", MDT "c/avgc126>1.19" -- strict; Double Trouble
+    "c/minl252>=1.8" -- inclusive. Until 2026-09-21 all three used >=."""
+    return _gt(r, "ti65", 1.05) or _ge(r, "c_low52w", 1.8) or _gt(r, "mdt", 1.19)
 
 
 def _not_healthcare(r) -> bool:

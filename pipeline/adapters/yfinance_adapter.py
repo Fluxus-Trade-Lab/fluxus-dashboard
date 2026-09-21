@@ -1226,10 +1226,13 @@ class YfinanceAdapter(BaseAdapter):
                     v10_count_10 = vol10_green_count(closes, opens, vols, 10)
                     v10_count_30 = vol10_green_count(closes, opens, vols, 30)
 
-                # Trend Base: price > 50SMA AND 10WMA > 30WMA
+                # Trend Base: price > 50SMA AND weekly 10-SMA > weekly 30-SMA.
+                # "WMA" here means WEEKLY moving average, and it is SIMPLE
+                # (rolling().mean()), not a weighted MA (comment fixed
+                # 2026-09-21; METRIC_SOURCES trend_base row, self-made).
                 trend_base = False
                 if sma50 is not None and close > sma50:
-                    # Resample to weekly for WMA
+                    # Resample to weekly closes; simple 10/30-week means
                     weekly = hist['Close'].resample('W').last().dropna()
                     if len(weekly) >= 30:
                         wma10 = float(weekly.rolling(10).mean().iloc[-1])

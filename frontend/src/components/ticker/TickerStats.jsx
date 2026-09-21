@@ -25,8 +25,10 @@ export default function TickerStats({ universe }) {
     ['ADR%', u.adr_pct != null ? `${u.adr_pct.toFixed(1)}%` : '—'],
     ['ATR', u.atr ? fmtCur(u.atr) : '—'],
     ['Composite Score', u.h_score_pctl ?? '—'],
-    ['RS 21D', u.rs_21d ?? '—'],
-    ['RS 63D', u.rs_63d ?? '—'],
+    // rs_21d/rs_63d = aliases of rs_1m/rs_3m: calendar-month windows, so the
+    // label says 1M/3M (was "RS 21D/63D" until 2026-09-21)
+    ['RS 1M', u.rs_21d ?? '—'],
+    ['RS 3M', u.rs_63d ?? '—'],
     ['Perf 1W', u.perf_1w != null ? fmtPct(u.perf_1w * 100) : '—'],
     ['Perf 1M', u.perf_1m != null ? fmtPct(u.perf_1m * 100) : '—'],
     ['Perf 3M', u.perf_3m != null ? fmtPct(u.perf_3m * 100) : '—'],

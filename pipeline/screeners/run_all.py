@@ -901,7 +901,9 @@ def main():
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
         logger.info("Running VCP detection...")
-        results['vcp'] = run_vcp_pipeline(universe, yf_adapter)
+        # scored_universe, not universe: Trend Template leg 8 reads rs_rating,
+        # which compute_universe_scores adds (same rows, superset of columns).
+        results['vcp'] = run_vcp_pipeline(scored_universe, yf_adapter)
     else:
         logger.info("Skipping VCP (universe too small)")
         results['vcp'] = {'count': 0, 'results': []}

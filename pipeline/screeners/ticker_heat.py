@@ -34,9 +34,11 @@ import pandas as pd
 # The single source of truth for scoring weights.
 WEIGHTS: Dict[str, int] = {
     # setup quality
-    # EP, two authors (2026-09-18). Each carries the retired EP's weight; a
-    # name on BOTH on one day scores both -- the two definitions overlap by
-    # design (compare-and-test), so read a double EP hit as one event.
+    # EP, two authors (2026-09-18). Each carries the retired EP's weight. A
+    # name on BOTH on one day scores ONCE: FAMILY (below) folds the two lists
+    # and the retired episodic_pivot into one 'ep' family, which scores and
+    # counts toward confluence once. (Until 2026-09-21 this comment said the
+    # two scored separately -- true before FAMILY landed, not after.)
     'ep_stockbee': 3,
     'ep_qullamaggie': 3,
     # retired 2026-09-18: its archived rows (<= 09-17) still sit inside the

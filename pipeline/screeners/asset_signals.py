@@ -104,7 +104,13 @@ def compute_row(ticker: str, hist: pd.DataFrame, spy_close: Optional[pd.Series])
         # payload note claimed "same definitions" (audit 09-18 #35).
         "atr_from_sma50": _atr_matrix(close, atr, sma50),
         "hi20": bool(close >= float(c.iloc[-20:].max())),
-        "high_52w_dist": round(close / float(c.max()) - 1, 4),
+        # 52-week high = the highest INTRADAY high over the bars (fetch() pulls
+        # period="1y"), the same ruler as the stock layer: Finviz "52W High"
+        # and the yfinance fallback's hist['High'].max(). Until 2026-09-21
+        # this read the highest CLOSE (audit recheck 09-21). No High column
+        # -> None, never a silent fall back to closes.
+        "high_52w_dist": (round(close / float(hist["High"].max()) - 1, 4)
+                          if "High" in hist and hist["High"].notna().any() else None),
         "bar_date": str(hist.index[-1].date()),
     }
     for k in ("rs_line_pctl_21", "rs_line_pctl_63"):

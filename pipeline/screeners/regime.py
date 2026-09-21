@@ -110,8 +110,10 @@ from pipeline.screeners.state_board import LEVELS
 #              risk-budget work, anything statistical.
 #
 #   frontend/src/components/dashboard/RegimeBand.jsx
-#              Defence / Caution / Neutral / Constructive / Full, even cuts
-#              12 / 34 / 56 / 78. Position language -- what the state permits
+#              Defence / Caution / Neutral / Constructive / Euphoria, even cuts
+#              18 / 40 / 62 / 84 (shifted up from 12/34/56/78 on 2026-08-15,
+#              see bandFromScore there) over conditions.today, a different
+#              score (15 conditions) from this file's (9). Position language -- what the state permits
 #              you to hold. USE FOR DISPLAY: the dashboard's regime band.
 #              Even cuts on purpose; a fitted curve there would be a second,
 #              unvalidated model sitting on top of this one.
