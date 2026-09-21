@@ -249,6 +249,8 @@
 - [09-20] [steve] **两个大师级 setup 扫描器上线**：Stockbee（突破+成交量）、Qullamaggie（间隙跳空）新增入库；首晚各自产出互补——Stockbee 扫 15 笔，Qullamaggie 零匹配属常态（25 场历史中位 2 只、20% 场次印零）；新指标上线时发现三类陷阱（盘前时点错、字段缺失、旧行情误读）已修复，体现「淡季指标零行是特征不是故障」。出处 commit 7295e7aa · [data/output/ep_stockbee.json](../../../data/output/ep_stockbee.json) · [ep_qullamaggie 审计](../../../data/research/ep_qullamaggie_baserate_2026-09-20/README.md)
   ↳ 📌 本行原本只存在于主工作树的未提交区（其底本落后 origin/main 14 行），由 Steve 08-30 重放进权威版；主树那份副本请勿提交。
 
+- [09-16] [Marketing Steve] **FOMC 前的系统态度** · 技术确认不足 vs 资金面积累的分歧、Fed 转向纯通胀之战的含义、大事件前的风险管理逻辑。线程形式的完整思考范本。出处 T-0921-102 · 48589457
+
 - [2026-08-30] [Marketing Steve] **一个 append-only 的收集箱，把自己的东西藏了一个星期。** 规矩写的是「往下面追加一行」，八条线都照办 —— 追加到**文件末尾**。而文件末尾在 `## 已收割` 节里面。结果 08-24 之后投进来的 **31 行全部落进「已收割」、且一个 ✅ 都没有**：箱子看起来是空的，实际 43 行里 36 行没人收。逐条数是脚本数的，不是眼睛数的。**没人违反规矩，是规矩自己把东西吃了** —— 当归档位置和追加方向相反时，正确的操作会持续产生错误的状态。修法不是叫大家改习惯，是把正确的落点搬到末尾。出处：本文件 08-30 修订 + [weekly/2026-08-30_W5.md](weekly/2026-08-30_W5.md)
 
 - [08-31] [OPS Fable] 我们没装 Hermes——把 VibeMarketer 六角色模型的组织方式抄进了自己的产线：共享脑 BRAIN.md（每站先读的路由页）+ 六站五字段契约（owns/reads/returns/must-not/done-when，每站一个 md）；执行引擎全自有（会话联邦=bot mode、任务书=profiles、git+看板=kanban）。首件 campaign 08-29 已实战走完六站且 Gate 判退回不脑补。素材角度：「抄架构不抄软件」的 build-in-public 帖。出处：main d992a27d + Fluxus_Brand/BRAIN.md
