@@ -200,6 +200,8 @@
 
 ## 📥 追加到这里
 
+- [09-21] [steve] sugar_babies 字段新增流程检验：代码通过、契约落线、自动化基线漏一步 → 整班数据被拦。同样形状的「改动成功却因基线滞后被拦」已出现两次（09-18 watchlist.top20_industry、09-21 sugar_babies）——触发三次律，需要在管道里加自动同步机制。体系病源：新增字段时「改代码、改文档」两步对编码者成本很低，第三步（补基线）成本属于「等等再说」档，9 小时后就会把整班数据卡到 21:20 UTC。出处 [a1090655](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a1090655) · [T-0921-96](../../tasks/T-0921-96.md)
+
 - [09-21] [steve] EP 财报季轮动数据交付：Biotech 从 Q1 27 命中→Q2 16 命中、Semiconductors 季度间排名变化具体量化，直接用于课程《轮动》§5。[T-0921-92 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
 
 - [09-21] [steve] 回执写了「完成」，代码实测仍有问题——T-0921-70/71 的 EATZ 字段改动确实落地 main，但生产代码里仍在五个文件里。这说明：commit message 讲的故事 vs git diff 的现实，中间的鸿沟就是体系的故障源。不贯穿验实就填回执，下一个人接力时该信谁？出处 T-0921-83 · 提交 [38778ffd](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/38778ffd)
