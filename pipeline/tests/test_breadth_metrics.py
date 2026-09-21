@@ -443,6 +443,60 @@ class TestIndexScopedBreadth:
         assert r['sp500_members'] is None
 
 
+class TestSP500ScopedFourWeekExtremes:
+    """4-week new highs/lows on the S&P 500 constituent universe.
+
+    Andy 2026-09-21, verbatim: 「4周净新高新低是SP500的成分股。」Course book
+    §07.6 already states this. Same `in_sp500` mask as the pct_above_*_sp500
+    family, same 20-session window/threshold as the whole-universe
+    new_highs_4w/new_lows_4w pair -- only the universe changes.
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            'ticker': ['IN1', 'IN2', 'OUT1', 'OUT2'],
+            'close': [100.0] * 4,
+            'change_pct': [0.01, -0.01, 0.01, -0.01],
+            'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
+            'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
+            'sma50_dist': [0.0] * 4, 'sma200_dist': [0.0] * 4,
+            'high_52w': [-0.20] * 4, 'low_52w': [0.20] * 4,
+            # IN1 at its 20d high, OUT1 at its 20d low; IN2/OUT2 in the middle
+            'high_20d': [0.0, -0.15, -0.08, -0.09],
+            'low_20d': [0.30, 0.30, 0.0, 0.30],
+            'in_sp500': [True, True, False, False],
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_counts_only_members_at_their_4w_extreme(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_highs_4w_sp500'] == 1   # IN1 only -- OUT1's high doesn't count
+        assert r['new_lows_4w_sp500'] == 0     # OUT1 is at its low but is not a member
+        assert r['new_highs_4w'] == 1          # whole-universe pair unaffected
+        assert r['new_lows_4w'] == 1
+
+    def test_missing_membership_is_null_not_the_whole_universe(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni().drop(columns=['in_sp500']))
+        assert r['new_highs_4w_sp500'] is None
+        assert r['new_lows_4w_sp500'] is None
+
+    def test_missing_20d_columns_is_null(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni().drop(columns=['high_20d', 'low_20d']))
+        assert r['new_highs_4w_sp500'] is None
+        assert r['new_lows_4w_sp500'] is None
+
+    def test_an_empty_membership_set_is_also_null(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni(in_sp500=[False] * 4))
+        assert r['new_highs_4w_sp500'] is None
+        assert r['new_lows_4w_sp500'] is None
+
+
 class TestStockbeeBreadth:
     """`up_4pct` counts only the price leg of a three-condition scan.
 

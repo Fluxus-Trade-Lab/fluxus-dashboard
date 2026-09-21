@@ -34,6 +34,7 @@ BREADTH_COLUMNS = [
     't2108', 'pct_above_200sma', 'pct_above_50sma', 'pct_above_20sma',
     'advances', 'declines', 'new_highs', 'new_lows',
     'new_highs_4w', 'new_lows_4w',
+    'new_highs_4w_sp500', 'new_lows_4w_sp500',
     'new_highs_common', 'new_lows_common',
     'new_highs_4w_common', 'new_lows_4w_common',
     'common_universe', 'short_history_n',

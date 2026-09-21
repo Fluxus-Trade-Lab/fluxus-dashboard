@@ -285,6 +285,28 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     new_highs_4w = int((high_20d >= _NEW_HIGH_THRESHOLD).sum()) if have_20d[0] else None
     new_lows_4w = int((low_20d <= _NEW_LOW_THRESHOLD).sum()) if have_20d[1] else None
 
+    # --- S&P 500-scoped 4-week extremes (2026-09-21) -------------------------
+    # Andy 2026-09-21, verbatim: 「4周净新高新低是SP500的成分股。」Course book
+    # §07.6 already states this definition. Same `in_sp500` membership mask as
+    # the pct_above_*_sp500 family above, same 20-session window/threshold as
+    # the whole-universe new_highs_4w/new_lows_4w pair -- only the universe
+    # changes, from "everything Finviz carries" to "S&P 500 members". The
+    # 4-week window itself stays self-invented (METRIC_SOURCES: no standard
+    # found); NULL, not 0, when membership or the 20d columns are unavailable.
+    if in_idx is None or 'high_20d' not in universe.columns or 'low_20d' not in universe.columns:
+        sp500_4w_cols = {'new_highs_4w_sp500': None, 'new_lows_4w_sp500': None}
+    else:
+        sp500_mask = in_idx.fillna(False).astype(bool)
+        if int(sp500_mask.sum()) == 0:
+            sp500_4w_cols = {'new_highs_4w_sp500': None, 'new_lows_4w_sp500': None}
+        else:
+            hi_sp500 = high_20d[sp500_mask].dropna()
+            lo_sp500 = low_20d[sp500_mask].dropna()
+            sp500_4w_cols = {
+                'new_highs_4w_sp500': int((hi_sp500 >= _NEW_HIGH_THRESHOLD).sum()) if len(hi_sp500) else None,
+                'new_lows_4w_sp500': int((lo_sp500 <= _NEW_LOW_THRESHOLD).sum()) if len(lo_sp500) else None,
+            }
+
     # --- Standard common-stock universe (2026-08-31) -------------------------------------
     # On 2026-08-28, 88% of the 66 names counted as 52-week new highs sat in
     # the $9.50-11 SPAC trust band, 89% traded under 100k shares/day, and the
@@ -361,6 +383,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'new_lows': new_lows,
         'new_highs_4w': new_highs_4w,
         'new_lows_4w': new_lows_4w,
+        **sp500_4w_cols,
         'new_highs_common': new_highs_common,
         'new_lows_common': new_lows_common,
         'new_highs_4w_common': new_highs_4w_common,
