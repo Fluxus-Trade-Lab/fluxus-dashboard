@@ -134,3 +134,21 @@ Not every trade needs to be a big win. Needing to be right is just another false
 It's all about drawdown control, and laser focus when times are easier.
 
 (≈160 词)
+
+---
+
+## v6(09-22 15:4x JST,Andy 亲改:FOMC 句改成 clearing event/more bullish than others;删「only semis were strong」,减仓段以仓位原因开头并把行情句并进同段)
+
+We all want to buy the right stock, size it big, hold it for the whole move. Never sell early, never miss the rip.
+
+Traders fail for many reasons. False expectation is the root of all bad habits.
+
+Friday I bought $ARM on a VWAP reclaim, first 30-min pullback. Big size, $3 stop. AI agents make the CPU a bottleneck, and Arm builds CPUs for Meta and OpenAI. After a FOMC clearing event, you have to be more bullish than others.
+
+But I was already positioned heavy in AI, and I didn't want more risk on a new buy that might not gain traction. And I trade from Asia, the US afternoon happens while I sleep. So I trimmed a little before bed. Friday's last half hour ripped, Monday it's flying. I added back more.
+
+Not every trade needs to be a big win. Needing to be right is just another false expectation. It skews your risk reward heavily.
+
+It's all about drawdown control, and laser focus when times are easier.
+
+(≈161 词,全部句子为 Andy 定稿)
