@@ -245,7 +245,7 @@
 
 - [09-20] [Marketing Steve] **课程视觉预热工具包上线** · 数据卡生成脚本 + 示例卡（86% 信任背书）；落地页框架架构定稿，待文案补齐。每天套 `make_data_card.py` 生成一张新卡。出处 [Fluxus_Brand/visual/course_launch/README.md](Fluxus_Brand/visual/course_launch/README.md) · 12dc3910
 
-- [09-22] [DATA] **持仓日期系统早一天：云端表格的时区隐形转换** · GAS JSON.stringify 把 JST 本地时间当 UTC 处理，整份 portfolio 的 entry_date/exitDate 全部偏差（390 笔全中）；修复单点后级联修正了所有依赖（trade_postmortem/run_tickers/build_pack），新增 39 行测试覆盖。一个字段修复从源头蔓延的完整闭环是**系统自我诊断能力**的活证。[T-0922-43 · a24b5d1e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a24b5d1e)
+- [09-22] [DATA] **持仓日期系统早一天：云端表格的时区隐形转换** · GAS JSON.stringify 把 JST 本地时间当 UTC 处理，整份 portfolio 的 entry_date/exitDate 全部偏差（390 笔全中）；修复单点后级联修正了所有依赖（trade_postmortem/run_tickers/build_pack），新增 39 行测试覆盖。一个字段修复从源头蔓延的完整闭环是**系统自我诊断能力**的活证。[T-0922-46 · a24b5d1e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a24b5d1e)
 
 - [09-20] [Claire] **课程部署架构已就位、可随时上线** · Cloudflare Pages + Whop App 壳实现完成，权限校验双层验证（JWT 本地 + 远程访问检查）、单测 5/5 通过；iframe 兼容自检通过（localStorage/CSP 无卡点）；部署包 94 文件、5.4 MB 就位，仅待凭据填入后可上线。出处 [data/research/course_deployment_architecture.md](data/research/course_deployment_architecture.md) · T-0920-62
 
