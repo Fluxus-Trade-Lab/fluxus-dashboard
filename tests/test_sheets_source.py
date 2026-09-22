@@ -28,8 +28,10 @@ def one(**over):
 
 
 def test_a_row_becomes_a_trade():
+    """The Sheet's Date cell is a JST wall-clock day; '15:00:00.000Z' is JST
+    midnight, so the entry lands on the 6th, not the UTC day (the 5th)."""
     t, = one()
-    assert (t.ticker, t.direction, t.entry_date) == ('ABCD', 'long', date(2026, 1, 5))
+    assert (t.ticker, t.direction, t.entry_date) == ('ABCD', 'long', date(2026, 1, 6))
     assert (t.entry_price, t.stop_price, t.initial_stop) == (100.0, 95.0, 90.0)
     assert t.closed is False and len(t.trims) == 1
 
