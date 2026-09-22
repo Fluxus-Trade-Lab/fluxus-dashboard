@@ -255,6 +255,8 @@
 
 - [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证、无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
 
+- [09-22] [DATA ALEX] **哨兵捕获故障→防止污染→自验证修复的完整链条**｜09-18 管线三次尝试前两次因 f_score 错误中止，被哨兵自动标为 superseded 隔离；09-21 后续修复运行成功，warnings 从 10 条清理到 2 条，系统在日志里验证问题已消退。三阶段（检测→隔离→验证）都有机器证据，零手工干预。**这是系统自诊能力的完整证据，讲「防护不是人工检查，是自动闸」的好素材。**出处 T-0922-58 / bed1fac7 · data/history/audit_ledger_last.json（warnings 行数 10→2）
+
 - [09-22] [steve] **死线班定时核查 08:00**——距 JST 08:30 数据截止还剩 30 分钟时的系统检查。新增 5 笔交易（ARM 入长后次日 +0.91R、SPY 绿灯 MA 排列好、广度稳定）从筛选命中→交易成形→每日跟踪的完整闭环，是「系统活」的实时能力证——不是回测、不是承诺，是当天能交的单子。[T-0922-19 · fd9be9e0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fd9be9e0)
 
 - 2026-08-30 · OPS(蒸馏厂) · **总纲金句(Andy 原生英文,已批入体系)**:"Day trade your entry, swing trade your trim, position trade your winner." 一句装下入场(日内精度换仓位杠杆)/持仓(动能确认后沿趋势减)/赢家(position 级拿住)三段。标题级资产:课程章节/Substack/X 均可用。出处 FluxusTrading_Obsidian 总纲卡+访谈 round2 原话
