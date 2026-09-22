@@ -203,7 +203,7 @@
 - [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
 
 ## 📥 追加到这里
-- [09-22] [steve] **Whop 会员数从手工台账升到 API 自动取数——诊断→修复→防护→验证的完整链条** · 第一版错用 offset/limit 只读第一页 20 条、得 active=6；第二版改游标分页，完整读 2 页 66 条、去重后取数 09-22 日 whop_members=18（口径 A：三订阅产品、status∈active|past_due、按 user 去重）。系统能力在三处体现：①诊断——从「数字对不对」升到「分页机制对不对」；②防护——key 仅从钥匙串读入、异常打码、分类清晰（付费 18 / 试用 1 / 一次性课程 15），对标旧口径标注不可比；③验证——207 行测试 + --leak-check 内存比对，把从错误分页到正确实现的完整修复链条闭环。从现象→诊断→改动→防护→验证的五步路径，每一步都有清晰代码证据。[T-0922-113 · 95a5881d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/95a5881d)
+- [09-22] [steve] **数据哨兵巡检：系统从被动告警升级到主动诊断** · 每日定时巡检用两个独立维度验证系统健康——CI conclusion=success（防止代码崩溃瞒天过海）+ market data 日期=最近交易日（防止数据停更）。发现异常时自动开单给 ALEX。这条链条取代了「7 小时连红被 Andy 从邮箱发现」的被动模式（T-0922-57 修复的旧坑）。关键前提三条缺一不可：CI 不谎报、data/output 日期权威、交易日历准确。现场验证：2026-09-22T22:00 JST 巡检时 CI✓ 数据日期=2026-09-21✓ 当日 ET 盘前无异常，系统健康。从「有问题才报」进化到「每天都问有没有问题」，这是系统可靠性的基础设施。[T-0922-115 · `agents/alex/failure_triage.py`](../../pipeline/tools/failure_triage.py)
 
 - [09-22] [steve] **课程发售架构定档：成本清零的系统决策与跨端验证** · Whop + Cloudflare Pages 统一定案，替代了 Vercel Pro（$20/月）与 Squarespace 两个付费方案。更深的意义：与课件托管（`fluxus-masterclass-lab.pages.dev`，T-0920-60/63）采用同一平台，消掉了 SaaS 订阅依赖。系统验证闭环：落地页入口 200 OK、付费页 403 Forbidden、Whop 结账 200 Success，三层防护一致。这是「架构定案→单点清零→跨端验证」的完整链条，说明系统决策不只是文档化，而是**贯彻到成本数字和验证细节**。[T-0922-98 · b4e922d4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b4e922d4)
 
