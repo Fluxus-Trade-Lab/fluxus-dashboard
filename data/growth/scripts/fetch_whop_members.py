@@ -183,17 +183,39 @@ def market_date() -> str:
     return market_today().isoformat()
 
 
+def leak_count(key: str, texts: list[str]) -> int:
+    """key 在给定文本里出现的次数（只返回计数）。"""
+    return sum(t.count(key) for t in texts) if key else 0
+
+
+def leak_check(key: str, repo: Path = REPO, extra_paths: list[Path] | None = None) -> int:
+    """扫本分支相对 origin/main 的全部提交 + 工作区 diff + 额外日志文件。"""
+    run = lambda *a: subprocess.run(["git", "-C", str(repo), *a], capture_output=True, text=True).stdout
+    texts = [run("log", "-p", "origin/main..HEAD"), run("diff", "origin/main")]
+    for p in extra_paths or []:
+        for f in ([p] if p.is_file() else sorted(p.rglob("*")) if p.is_dir() else []):
+            if f.is_file():
+                texts.append(f.read_text(encoding="utf-8", errors="ignore"))
+    return leak_count(key, texts)
+
+
 def main(argv=None, session=None, key_getter=get_api_key) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--write", action="store_true", help="写进 metrics.csv（默认只打印聚合数）")
     ap.add_argument("--date", help="metrics.csv 行日期（默认 marketcal 今天）")
     ap.add_argument("--csv", type=Path, default=CSV_PATH)
+    ap.add_argument("--leak-check", nargs="*", type=Path, metavar="EXTRA",
+                    help="不取数；只打印 key 在本分支提交/工作区 diff/EXTRA 路径里的命中条数（应为 0）")
     a = ap.parse_args(argv)
 
     key = key_getter()
     if not key:
         print(KEY_UNAVAILABLE)
         return 0
+    if a.leak_check is not None:
+        n = leak_check(key, extra_paths=a.leak_check)
+        print(f"key 命中条数: {n}")
+        return 0 if n == 0 else 2
     if session is None:
         import requests
         session = requests.Session()

@@ -151,3 +151,19 @@ def test_write_appends_new_date_row(tmp_path):
             key_getter=lambda: FAKE_KEY)
     lines = csv_path.read_text().strip().split("\n")
     assert len(lines) == 3 and lines[1] == "2026-09-21,,old" and lines[2].startswith("2026-09-28,,")
+
+
+def test_leak_count_positive_and_negative():
+    # 先证检查能报阳性，再信它的阴性
+    assert fw.leak_count(FAKE_KEY, ["x", f"Bearer {FAKE_KEY}", FAKE_KEY]) == 2
+    assert fw.leak_count(FAKE_KEY, ["clean", "***"]) == 0
+    assert fw.leak_count("", ["anything"]) == 0
+
+
+def test_leak_check_scans_extra_log_file(tmp_path):
+    log = tmp_path / "runs"
+    log.mkdir()
+    (log / "a.log").write_text("ok")
+    assert fw.leak_check(FAKE_KEY, repo=tmp_path, extra_paths=[log]) == 0
+    (log / "b.log").write_text(f"oops {FAKE_KEY}")
+    assert fw.leak_check(FAKE_KEY, repo=tmp_path, extra_paths=[log]) == 1
