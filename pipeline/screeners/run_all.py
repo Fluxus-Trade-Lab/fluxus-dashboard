@@ -314,6 +314,64 @@ def attach_index_membership(universe: pd.DataFrame) -> None:
                 int(universe['in_sp500'].sum()), len(universe))
 
 
+def attach_ndx_membership(universe: pd.DataFrame) -> None:
+    """Tag Nasdaq-100 membership on the universe frame, IN PLACE.
+
+    T-0923-03: MCO's standard pool is NYSE (or Nasdaq-100) advance/decline
+    counts, not "every name Finviz carries" (5,600+ tickers, no published
+    index). NYSE daily advance/decline data has no free feed in our stack
+    (yfinance has no ^ADVN/^DECN-style tickers -- checked 2026-09-23), so
+    Nasdaq-100 is the fallback the task itself allows. Same failure-domain
+    and NULL-not-fallback shape as `attach_index_membership` above (S&P 500):
+    a fetch failure leaves `in_ndx` absent and every Nasdaq-100-scoped
+    reading (advances_ndx, mcclellan_osc_ndx, mcclellan_summation_ndx) ships
+    NULL rather than silently reverting to the full Finviz pool -- reverting
+    is exactly the substitution that made the old reading incomparable with
+    any published NYMO/NYSI number.
+
+    Membership tracking only starts the day this ships: there is no stored
+    Nasdaq-100 roster before today, so any pre-rollout archive row will read
+    NULL for the *_ndx columns, never a backfill computed off today's
+    constituents (that would be silent survivorship bias baked into history
+    instead of documented as a known gap -- see METRIC_SOURCES.md).
+    """
+    logger = logging.getLogger(__name__)
+    try:
+        from pipeline.adapters.finviz_adapter import FinvizAdapter as _FA  # noqa: PLC0415
+        members = _FA().fetch_index_members('ndx')
+    except Exception:  # noqa: BLE001 — own failure domain; never abort the run
+        logger.exception("Nasdaq-100 membership fetch failed - MCO/MCSI readings will be NULL")
+        return
+    if not members:
+        logger.warning("Nasdaq-100 membership empty - MCO/MCSI readings will be NULL")
+        return
+
+    from pipeline.adapters import index_members_store as _ims  # noqa: PLC0415
+    try:
+        summary = _ims.update(
+            set(members), _ims.today(),
+            roster_path=_ims.NDX_ROSTER, log_path=_ims.NDX_CHANGELOG,
+            min_members=_ims.NDX_MIN_PLAUSIBLE_MEMBERS,
+            max_daily_change=_ims.NDX_MAX_DAILY_CHANGE,
+        )
+        if summary['added'] or summary['dropped']:
+            logger.info("Nasdaq-100 membership changed: +%s -%s",
+                        summary['added'], summary['dropped'])
+    except _ims.MembershipRejected as e:
+        logger.warning("Nasdaq-100 membership rejected (%s) - falling back to stored roster", e)
+        stored = set(_ims.load_roster(_ims.NDX_ROSTER))
+        if not stored:
+            logger.warning("no stored Nasdaq-100 roster either - MCO/MCSI readings will be NULL")
+            return
+        members = stored
+    except Exception:  # noqa: BLE001 — 记账失败不许拖垮读数
+        logger.exception("Nasdaq-100 roster bookkeeping failed - readings continue on the fetched list")
+
+    universe['in_ndx'] = universe['ticker'].astype(str).str.upper().isin(members)
+    logger.info("Nasdaq-100 membership: %d of %d universe rows",
+                int(universe['in_ndx'].sum()), len(universe))
+
+
 def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     """Compute RS scores, composite metrics, and derived columns for the screener."""
     logger = logging.getLogger(__name__)
@@ -767,6 +825,7 @@ def main():
     # Index membership BEFORE scoring, so the column rides the copy into
     # universe.json *and* is present on `universe` when breadth reads it.
     attach_index_membership(universe)
+    attach_ndx_membership(universe)  # T-0923-03: MCO/MCSI's standard pool
 
     # Compute universe scores for screener page
     scored_universe = compute_universe_scores(universe)
@@ -1141,7 +1200,7 @@ def main():
         'cross_ema21_up', 'cross_sma50_up',
         'ti65', 'mdt', 'min_vol_3d', 'min_vol_3d_1', 'c_low52w', 'liquid_leader', 
         'bar_date', 'bars_stale', 'bar_scale_mismatch', 'bar_scale_jumps',
-        'in_sp500',
+        'in_sp500', 'in_ndx',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',

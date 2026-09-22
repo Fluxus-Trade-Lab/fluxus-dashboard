@@ -123,6 +123,84 @@ class TestDerive:
             assert list(prefix[col]) == list(full[col].iloc[:2]), col
 
 
+class TestNdxMcClellan:
+    """T-0923-03: MCO's standard pool is Nasdaq-100, not the full Finviz
+    universe — advances_ndx/declines_ndx are NULL until membership tracking
+    started, and mcclellan_osc_ndx/mcclellan_summation_ndx must never treat
+    that gap as zero advances (that would read as "flat breadth", not "we
+    don't have this pool for that date")."""
+
+    def _frame(self, n, ndx_start=None, adv_ndx=60, dec_ndx=40):
+        import pandas as pd
+        row = {
+            'date': [f'2026-01-{i+1:02d}' for i in range(n)],
+            'advances': [100] * n, 'declines': [80] * n,
+            'up_4pct': [0] * n, 'down_4pct': [0] * n,
+        }
+        if ndx_start is not None:
+            row['advances_ndx'] = [pd.NA] * ndx_start + [adv_ndx] * (n - ndx_start)
+            row['declines_ndx'] = [pd.NA] * ndx_start + [dec_ndx] * (n - ndx_start)
+        return pd.DataFrame(row)
+
+    def test_pre_tracking_rows_are_null_not_zero(self):
+        from pipeline.screeners.breadth_store import derive
+        frame = derive(self._frame(5, ndx_start=3))
+        assert frame['mcclellan_osc_ndx'].iloc[:3].isna().all()
+        assert frame['mcclellan_summation_ndx'].iloc[:3].isna().all()
+        assert frame['net_advances_ndx'].iloc[:3].isna().all()
+
+    def test_missing_column_entirely_stays_null(self):
+        """No advances_ndx/declines_ndx column at all (pre-2026-09-23 archive rows)."""
+        from pipeline.screeners.breadth_store import derive
+        frame = derive(self._frame(5, ndx_start=None))
+        assert frame['mcclellan_osc_ndx'].isna().all()
+        assert frame['mcclellan_summation_ndx'].isna().all()
+
+    def test_mcclellan_ndx_exact_value_after_step(self):
+        """Same step-response shape as the legacy mcclellan_osc test, scoped
+        to the Nasdaq-100 pool: 39 zero-rana days then a rana=1000 day."""
+        from pipeline.screeners.breadth_store import derive
+        n = 40
+        frame = self._frame(n, ndx_start=0, adv_ndx=0, dec_ndx=0)
+        frame.loc[n - 1, 'advances_ndx'] = 1000
+        frame.loc[n - 1, 'declines_ndx'] = 0
+        out = derive(frame)
+        assert out['mcclellan_osc_ndx'].iloc[-1] == pytest.approx(50.0, abs=0.01)
+        assert out['mcclellan_osc_ndx'].iloc[-2] == pytest.approx(0.0, abs=0.01)
+
+    def test_summation_is_cumulative_sum_of_the_oscillator_from_its_start(self):
+        """McClellan's own Ratio-Adjusted Summation Index: a running cumsum
+        of the oscillator, zeroed at the first day it has a value — not at
+        row 0 of the archive (mcoscillator.com ratio_adjusted_summation_index)."""
+        from pipeline.screeners.breadth_store import derive
+        frame = self._frame(6, ndx_start=2, adv_ndx=60, dec_ndx=40)
+        out = derive(frame)
+        osc = out['mcclellan_osc_ndx']
+        summ = out['mcclellan_summation_ndx']
+        assert summ.iloc[:2].isna().all()
+        running = 0.0
+        for i in range(2, 6):
+            running += float(osc.iloc[i])
+            assert summ.iloc[i] == pytest.approx(running, abs=0.01)
+
+    def test_summation_ma10_needs_ten_valid_sessions(self):
+        from pipeline.screeners.breadth_store import derive
+        frame = self._frame(15, ndx_start=0, adv_ndx=60, dec_ndx=40)
+        out = derive(frame)
+        assert out['mcclellan_summation_ndx_ma10'].iloc[:9].isna().all()
+        assert pd.notna(out['mcclellan_summation_ndx_ma10'].iloc[9])
+
+    def test_prefix_consistency_for_replay(self):
+        from pipeline.screeners.breadth_store import derive
+        frame = self._frame(6, ndx_start=1, adv_ndx=70, dec_ndx=30)
+        full = derive(frame)
+        prefix = derive(frame.iloc[:4].reset_index(drop=True))
+        for col in ('mcclellan_osc_ndx', 'mcclellan_summation_ndx', 'net_advances_ndx'):
+            a = prefix[col].astype('float64').tolist()
+            b = full[col].astype('float64').iloc[:4].tolist()
+            assert a == pytest.approx(b, nan_ok=True), col
+
+
 class TestUpsertAndWrite:
     def test_upsert_appends_new_date(self):
         from pipeline.screeners.breadth_store import load_archive, upsert_row

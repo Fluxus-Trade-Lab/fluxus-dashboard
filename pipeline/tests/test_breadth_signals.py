@@ -29,6 +29,11 @@ _AUTHOR_TWINS = (
     ('up_25pct_qtr', 'up_25pct_qtr_stockbee'), ('down_25pct_qtr', 'down_25pct_qtr_stockbee'),
     ('up_13pct_34d', 'up_13pct_34d_stockbee'), ('down_13pct_34d', 'down_13pct_34d_stockbee'),
     ('new_highs', 'new_highs_common'), ('new_lows', 'new_lows_common'),
+    # T-0923-03: the mcclellan vote reads the Nasdaq-100 pool
+    # (mcclellan_osc_ndx), not the legacy full-universe mcclellan_osc.
+    # These fixtures predate that split; mirror it like the other twins so
+    # existing `mcclellan_osc=...` kwargs keep driving the vote.
+    ('mcclellan_osc', 'mcclellan_osc_ndx'),
 )
 
 
@@ -313,6 +318,38 @@ class TestEvaluate:
         assert v['risk'] == 'High'          # 5 + 4 = 9 warnings
         assert v['spy_state'] == 'Downtrend'
         assert 'Confirmed bear' in v['confirmation']
+
+    def test_mcclellan_extreme_note_uses_the_ndx_pool_and_new_threshold(self):
+        """T-0923-03: the note reads mcclellan_osc_ndx and fires at +-100
+        (StockCharts ChartSchool), not the old, uncited +-70."""
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_row(mcclellan_osc_ndx=120.0)}])
+        v = evaluate(frame, _health_stub())
+        assert any('McClellan (NDX) at +120' in n for n in v['notes'])
+        # 80 is above the old 70 line but below the new 100 line -- must not fire.
+        frame80 = _frame([{'date': '2026-07-29', **_row(mcclellan_osc_ndx=80.0)}])
+        v80 = evaluate(frame80, _health_stub())
+        assert not any('McClellan' in n for n in v80['notes'])
+
+    def test_mcclellan_extreme_note_does_not_fall_back_to_the_legacy_pool(self):
+        """The legacy full-universe mcclellan_osc must not silently stand in
+        for mcclellan_osc_ndx when the Nasdaq-100 pool is unavailable --
+        that fallback is exactly the pool-mismatch defect being fixed."""
+        from pipeline.screeners.breadth_signals import evaluate
+        row = _row(mcclellan_osc=200.0)
+        row['mcclellan_osc_ndx'] = None
+        frame = _frame([{'date': '2026-07-29', **row}])
+        v = evaluate(frame, _health_stub())
+        assert not any('McClellan' in n for n in v['notes'])
+
+    def test_mcclellan_summation_extreme_note(self):
+        """McClellan's own RASI note: |value| >= 500 (mcoscillator.com)."""
+        from pipeline.screeners.breadth_signals import evaluate
+        row = _row(mcclellan_osc_ndx=10.0)
+        row['mcclellan_summation_ndx'] = 600.0
+        frame = _frame([{'date': '2026-07-29', **row}])
+        v = evaluate(frame, _health_stub())
+        assert any('Summation' in n and '+600' in n for n in v['notes'])
 
     def test_oversold_override_outranks_score(self):
         from pipeline.screeners.breadth_signals import evaluate

@@ -1,4 +1,9 @@
-"""S&P 500 成员台账 —— 存名单、记变动、挡抓漏。
+"""指数成员台账 —— 存名单、记变动、挡抓漏。
+
+**2026-09-23 泛化**（T-0923-03）：本模块原本专为 S&P 500 写，`vet()`/`update()`
+的 `min_members`/`max_daily_change` 现在可覆盖，供 Nasdaq-100（约 100 只，换手
+远低于标普）等其它指数复用同一套抓漏保护，而不必各写一份。默认值仍是
+S&P 500 的 480/15，调用方不传就是原行为。
 
 **为什么要存名单**(2026-09-10 Andy 问「成员是会变动的,有这样的机制吗」):
 在此之前我们每晚现抓 Finviz 的 idx_sp500,所以变动**跟得上**;但名单算完就扔,
@@ -34,6 +39,19 @@ logger = logging.getLogger(__name__)
 
 ROSTER = Path("data/reference/sp500_members.json")
 CHANGELOG = Path("data/reference/sp500_members_log.csv")
+
+# Nasdaq-100 台账,同一套 update()/vet() 逻辑,不同文件(T-0923-03:MCO 改用
+# Nasdaq-100 池子需要知道逐日成分股)。规模量级不同(~100 vs ~500),阈值由
+# 调用方通过 vet()/update() 的 min_members/max_daily_change 传入,不在这里写死。
+NDX_ROSTER = Path("data/reference/ndx_members.json")
+NDX_CHANGELOG = Path("data/reference/ndx_members_log.csv")
+
+# Nasdaq-100 规模远小于标普,480/15 那套阈值会让它永远建不起账或永远拒绝真实
+# 调仓。~100 只成分股,历史年换手个位数到十几只(多在 12 月的年度调整),此处
+# 给一个宽松但仍能挡住「翻页翻一半」的阈值:下限 90(留出统计与临时缺口余量),
+# 单晚变动上限 20(> Nasdaq-100 有记录以来任何一年的调整规模)。
+NDX_MIN_PLAUSIBLE_MEMBERS = 90
+NDX_MAX_DAILY_CHANGE = 20
 
 # 单晚允许的净变动上限。真实换手 ~22 次/年,一晚超过 15 只几乎一定是抓漏
 # 而不是市场事件 —— 即使是标普历史上最剧烈的 1976 年(全年换 60 只),
@@ -72,23 +90,31 @@ def diff(previous: Iterable[str], current: Iterable[str]) -> Tuple[List[str], Li
     return sorted(cur - prev), sorted(prev - cur)
 
 
-def vet(current: Set[str], previous: Dict[str, str]) -> None:
+def vet(
+    current: Set[str],
+    previous: Dict[str, str],
+    min_members: int = MIN_PLAUSIBLE_MEMBERS,
+    max_daily_change: int = MAX_DAILY_CHANGE,
+) -> None:
     """抓来的名单可信吗?不可信就抛 MembershipRejected。
 
     ⚠️ 首次建账(previous 为空)只查绝对规模,不查变动量 —— 否则第一晚
     503 只全是「新进」,必然超阈值,台账永远建不起来。
+
+    `min_members`/`max_daily_change` 可覆盖,给规模小得多的指数(如 Nasdaq-100
+    约 100 只)用——套用标普的 480/15 会让它永远建不起账。
     """
-    if len(current) < MIN_PLAUSIBLE_MEMBERS:
+    if len(current) < min_members:
         raise MembershipRejected(
-            f"只抓到 {len(current)} 只,低于 {MIN_PLAUSIBLE_MEMBERS} —— 判为抓漏,不是市场事件")
+            f"只抓到 {len(current)} 只,低于 {min_members} —— 判为抓漏,不是市场事件")
     if not previous:
         return
     added, dropped = diff(previous, current)
     churn = len(added) + len(dropped)
-    if churn > MAX_DAILY_CHANGE:
+    if churn > max_daily_change:
         raise MembershipRejected(
             f"单晚变动 {churn} 只(进 {len(added)} / 出 {len(dropped)}),"
-            f"超过上限 {MAX_DAILY_CHANGE} —— 判为抓漏,保留上一版名单")
+            f"超过上限 {max_daily_change} —— 判为抓漏,保留上一版名单")
 
 
 def update(
@@ -96,6 +122,8 @@ def update(
     as_of: str,
     roster_path: Optional[Path] = None,
     log_path: Optional[Path] = None,
+    min_members: int = MIN_PLAUSIBLE_MEMBERS,
+    max_daily_change: int = MAX_DAILY_CHANGE,
 ) -> Dict[str, object]:
     """核验 -> 写名单 -> 追加变动流水。返回本次的摘要。
 
@@ -104,7 +132,7 @@ def update(
     roster_path = roster_path or ROSTER
     log_path = log_path or CHANGELOG
     previous = load_roster(roster_path)
-    vet(current, previous)                      # 不可信直接抛,先于任何写入
+    vet(current, previous, min_members, max_daily_change)  # 不可信直接抛,先于任何写入
 
     added, dropped = diff(previous, current)
     roster = {t: (previous.get(t) or as_of) for t in sorted(current)}
