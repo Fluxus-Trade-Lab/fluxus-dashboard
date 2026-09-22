@@ -52,3 +52,23 @@ Not being able to watch the afternoon means I'll miss moves like this. It's also
 
 Not every trade needs to be a big win. When the opportunity shows up, catch one or two and let them run. The more you need to be right, the more it hurts your account.
 ```
+
+---
+
+## v2(09-22 15:0x JST,Andy:加 Friday + I added back more;结尾要呼应核心句,像 PrimeTrading 的 "comes with a price",我们的核心是 False expectation)
+
+We all want to buy the right stock, size it big, hold it for the whole move. Never sell early, never miss the rip.
+
+False expectation is the root of all bad habits.
+
+Friday I bought $ARM on a VWAP reclaim, first 30-min pullback. Big size, $3 stop. AI agents make the CPU a bottleneck, and Arm builds CPUs for Meta and OpenAI. After FOMC, you have to be long.
+
+But only semis were strong. I didn't want more risk on a trade that might not gain traction. Plus I was already positioned heavy in AI. And I trade from Asia, the US afternoon happens while I sleep. So I trimmed a little before bed.
+
+Friday's last half hour ripped, Monday it's flying. I added back more.
+
+Regret happens. Get out of it fast.
+
+Not every trade needs to be a big win. The more you need to be right, the more it hurts your account. Needing to be right is just another false expectation.
+
+(≈163 词;结构改动:「I trade from Asia」挪进减仓原因段;结尾新句只用他已有的两个词组拼成)
