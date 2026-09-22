@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from 'react'
 import { usePortfolio } from '../context/PortfolioContext'
 import { fmtCur, fmtPct, fmtPctSigned, clr, clrHex, todayStr, daysBetween, MASK, priv } from '../lib/portfolioFormat'
+import { toJstDate } from '../../../lib/tradingDate'
 import { downloadFile } from '../lib/csv'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
@@ -63,7 +64,7 @@ const SAMPLE_OPTIONS = [
 /* ── Format short date ── */
 function shortDate(d) {
   if (!d) return '—'
-  const [, m, day] = d.split('-')
+  const [, m, day] = toJstDate(d).split('-')
   return `${parseInt(m)}/${parseInt(day)}`
 }
 

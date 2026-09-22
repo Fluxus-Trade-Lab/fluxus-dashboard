@@ -3,6 +3,7 @@ import Empty from '../Empty'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
 import { analyzeTrades, computeDemonStats, getActiveCircuitBreakers, computeTacticalStats, DEMONS, DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
+import { toJstDate } from '../../../lib/tradingDate'
 import { Bar } from '../lib/MiniBars'
 import DemonRulesConfig from './DemonRulesConfig'
 
@@ -104,7 +105,7 @@ function TradeRow({ trade }) {
         <div className="flex items-center gap-2">
           <span className="font-mono text-[13px] font-medium text-[var(--color-text-bold)]">{trade.ticker}</span>
           <span className="text-[11px] text-[var(--color-text-muted)] uppercase">{trade.direction}</span>
-          <span className="text-[11px] text-[var(--color-text-muted)]">{trade.entryDate}</span>
+          <span className="text-[11px] text-[var(--color-text-muted)]">{toJstDate(trade.entryDate)}</span>
         </div>
         {/* Demon badges */}
         {demons.length > 0 && (

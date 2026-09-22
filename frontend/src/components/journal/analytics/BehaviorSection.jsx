@@ -3,6 +3,7 @@ import Empty from '../Empty'
 import TickerLink from '../../ticker/TickerLink'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { fmtCur, clr } from '../../portfolio/lib/portfolioFormat'
+import { toJstDate } from '../../../lib/tradingDate'
 import {
   computeRMultipleStats,
   computeExitStyleStats,
@@ -223,7 +224,7 @@ export default function BehaviorSection({ enriched }) {
                           <TickerLink symbol={x.ticker} />
                         </span>
                         <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-                          {x.entryDate?.slice(5, 10)}
+                          {toJstDate(x.entryDate).slice(5, 10)}
                         </span>
                         <span className="h-1.5 rounded-sm bg-[var(--color-signal-caution)]
                                          opacity-70"

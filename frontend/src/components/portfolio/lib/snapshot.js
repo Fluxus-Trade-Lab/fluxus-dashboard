@@ -106,7 +106,7 @@ export function suggestSplits(trades, dailyPrices, table = SPLIT_TABLE) {
 
     // A trade with fills on BOTH scales straddles an ex-date — flag, don't snap.
     if (ratios.some(r => r > 0.67 && r < 1.5)) {
-      straddles.push({ ticker: t.ticker, entryDate: t.entryDate, measured: med })
+      straddles.push({ ticker: t.ticker, entryDate: toJstDate(t.entryDate), measured: med })
       continue
     }
     const snapped = snapComposite(med)
