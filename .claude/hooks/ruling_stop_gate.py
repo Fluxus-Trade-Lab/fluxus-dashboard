@@ -7,9 +7,13 @@
 本 hook 只查**留没留痕**，不查记得对不对——那是 andy/review 的事。
 
 判定：
-1. 取本轮最后一条 Andy 的话（transcript 里最后一条 role=user 且内容是纯字符串的消息，
-   跳过 tool_result 注入的 user 消息）。
-2. 命中裁决词（保守词表，宁可漏判不可乱判）才继续查，否则直接放行。
+1. 从 transcript 尾部倒着找**最后一条真正由 Andy 亲手输入的话**（见 `_last_user_message`：
+   新条目认 `origin.kind == "human"`；没有 origin 字段的旧条目，跳过 isMeta/isCompactSummary、
+   跳过以 `<`/`Stop hook feedback`/`Another Claude` 开头的注入内容、跳过纯 tool_result 消息，
+   content 是 list 时把里面的 text 块拼起来再判断——这样带图的裁决不会因为 content 是 list
+   被整条跳过）。
+2. 命中裁决**正则**（带上下文，第 1 轮的单字词表 09-22 复核判 FAIL：10 句日常话全部误拦、
+   真裁决反而漏判，现在这版是复核员实测误拦 0/漏 0 的版本）才继续查，否则直接放行。
 3. 放行条件（任一即可）：
    - 本轮回复（last_assistant_message）末尾有 `ruling-recorded: <...>` 或 `ruling-none: <理由>`；
    - fluxus-ops origin/main 最近 30 分钟内有落盘裁决的提交（`memory: remember` / `andy ruled`）。
@@ -26,16 +30,29 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Iterator, Optional
 
 GIT_TIMEOUT_SEC = 5
 SINCE_MINUTES = 30
 FLUXUS_OPS = Path.home() / "Documents" / "fluxus-ops"
+REVERSE_READ_CHUNK = 1 << 20  # 1 MiB；真实 transcript 可到几百 MB，不整份读进内存
 
-# 保守词表：命中才继续查，宁可漏拦。
-RULING_WORDS = (
-    "以后", "今后", "都这样", "写进去", "记住", "定了", "不要再", "批", "不做",
-)
+# 09-22 复核第 1 轮 FAIL 后换成带上下文的正则（复核员实测：10 句日常话误拦 0，
+# 10 句真裁决漏判 0）。命中任一条才算「像裁决」。
+RULING_PATTERNS = tuple(re.compile(p) for p in (
+    r"(以后|今后)(都|就|一律|每次|统一|别|不要|不许)",
+    r"都这样",
+    r"写进(去|规矩|宪法|skill|记忆)",
+    r"记住(?!.{0,6}[吗么？?])",
+    r"(这个|就)定了",
+    r"不要再|别再",
+    r"(^|[，。\s])批(了|[，。！]|$)|都批|我批",
+    r"不做了|这个不做(?!空|多)",
+))
+
+# 没有 origin 字段的旧条目，靠内容前缀排除注入消息（Stop hook 反馈、跨会话消息、
+# <system-reminder>/<cross-session-message> 等 XML 包裹的合成内容）。
+INJECTED_PREFIXES = ("<", "Stop hook feedback", "Another Claude")
 
 RECORD_MARK = re.compile(r"^\s*(?:[-*>]\s*)?`?ruling-(recorded|none):", re.M)
 
@@ -46,45 +63,107 @@ REASON = (
 )
 
 
-def _last_user_message(transcript_path: Optional[str]) -> Optional[str]:
-    """从 transcript JSONL 里取本轮最后一条 Andy 亲手打的话。
+def _iter_lines_reverse(path: Path, chunk_size: int = REVERSE_READ_CHUNK) -> Iterator[str]:
+    """从文件尾部往前逐行 yield（不含结尾换行符），不整份读进内存。
 
-    跳过 tool_result 注入的 user 条目（那些 message.content 是 list，
-    不是 str）；跳过空行/坏 JSON。读不到就返回 None（放行）。
+    真实 transcript 可以到几百 MB；这条 hook 只需要「最后一条符合条件的消息」，
+    绝大多数时候离文件尾很近，倒着读能早退出，不用整份 decode 一遍。
+    """
+    with path.open("rb") as fh:
+        fh.seek(0, 2)
+        remaining = fh.tell()
+        tail = b""
+        while remaining > 0:
+            read_size = min(chunk_size, remaining)
+            remaining -= read_size
+            fh.seek(remaining)
+            chunk = fh.read(read_size)
+            tail = chunk + tail
+            parts = tail.split(b"\n")
+            tail = parts[0]  # 可能是被这次切断的半行，留给上一轮（更靠前的内容）拼接
+            for line in reversed(parts[1:]):
+                if line:
+                    yield line.decode("utf-8", errors="replace")
+        if tail:
+            yield tail.decode("utf-8", errors="replace")
+
+
+def _extract_human_text(entry: Dict) -> Optional[str]:
+    """从一条 user 条目里取「人打的文字」，content 是 list（带图/带 tool_result）也处理。
+
+    含 tool_result 块的 list → 不是人打的，返回 None（跳过，继续往前找）。
+    含 text 块的 list（比如带图裁决）→ 把 text 块拼起来。
+    """
+    message = entry.get("message")
+    if not isinstance(message, dict):
+        return None
+    content = message.get("content")
+    if isinstance(content, str):
+        text = content
+    elif isinstance(content, list):
+        if any(isinstance(b, dict) and b.get("type") == "tool_result" for b in content):
+            return None
+        texts = [b.get("text", "") for b in content
+                 if isinstance(b, dict) and b.get("type") == "text" and isinstance(b.get("text"), str)]
+        text = "\n".join(t for t in texts if t)
+    else:
+        return None
+    text = text.strip()
+    if not text:
+        return None
+    if text.startswith(INJECTED_PREFIXES):
+        return None
+    return text
+
+
+def _last_user_message(transcript_path: Optional[str]) -> Optional[str]:
+    """从 transcript 倒着找最后一条真正由 Andy 亲手输入的话。
+
+    - 有 `origin` 字段（新条目）：只认 `origin.kind == "human"`；peer/hook/其它一律跳过
+      （task-notification、Stop hook feedback、跨会话消息都走这条被过滤掉）。
+    - 没有 `origin` 字段（旧条目）：跳过 isMeta、isCompactSummary，跳过 `_extract_human_text`
+      判定为注入/空/纯 tool_result 的内容。
+    - isSidechain 一律跳过（子 agent 岔出去的分支，不是 Andy 本人在主线说的话）。
+    读不到 / 坏 JSON / 任何异常 → None（放行）。
     """
     if not transcript_path:
         return None
     p = Path(transcript_path)
     if not p.is_file():
         return None
-    last_text: Optional[str] = None
     try:
-        with p.open("r", encoding="utf-8", errors="replace") as fh:
-            for line in fh:
-                line = line.strip()
-                if not line:
+        for raw in _iter_lines_reverse(p):
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                entry = json.loads(raw)
+            except ValueError:
+                continue
+            if entry.get("type") != "user":
+                continue
+            if entry.get("isSidechain"):
+                continue
+
+            origin = entry.get("origin")
+            if origin is not None:
+                if not isinstance(origin, dict) or origin.get("kind") != "human":
                     continue
-                try:
-                    entry = json.loads(line)
-                except ValueError:
+            else:
+                if entry.get("isMeta") or entry.get("isCompactSummary"):
                     continue
-                if entry.get("type") != "user":
-                    continue
-                if entry.get("isSidechain"):
-                    continue
-                message = entry.get("message")
-                if not isinstance(message, dict):
-                    continue
-                content = message.get("content")
-                if isinstance(content, str) and content.strip():
-                    last_text = content
+
+            text = _extract_human_text(entry)
+            if text is None:
+                continue
+            return text
     except Exception:  # noqa: BLE001
         return None
-    return last_text
+    return None
 
 
 def _hits_ruling_word(text: str) -> bool:
-    return any(word in text for word in RULING_WORDS)
+    return any(p.search(text) for p in RULING_PATTERNS)
 
 
 def _recent_ruling_commit() -> bool:

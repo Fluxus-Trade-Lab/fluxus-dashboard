@@ -183,3 +183,199 @@ def test_any_unexpected_exception_passes(gate, monkeypatch):
         "last_assistant_message": "收工。",
     })
     assert v == {}
+
+
+# ================= 09-22 复核第 1 轮 FAIL 两条必修 =================
+
+# ---------- 必修①：词表换正则，误拦 0 / 漏判 0 ----------
+
+DAILY_SENTENCES_NOT_RULINGS = [
+    "批量改一下",
+    "以后再说吧",
+    "你记住这个链接了吗",
+    "批注版 PDF",
+    "这个不做空了",
+    "写进 word 里存着",
+    "这次就先这样吧",
+    "不要这么急",
+    "都不知道该怎么办",
+    "记着点这件事",
+]
+
+TRUE_RULINGS = [
+    "以后都这样做",
+    "都这样吧",
+    "写进规矩里",
+    "记住这个规则",
+    "这个就定了",
+    "不要再犯同样的错误",
+    "都批了，去合吧",
+    "这个不做了",
+    "今后一律先问我",
+    "别再问这个了",
+]
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_NOT_RULINGS)
+def test_daily_sentence_is_not_a_ruling_word_hit(gate, text):
+    assert gate._hits_ruling_word(text) is False
+
+
+@pytest.mark.parametrize("text", TRUE_RULINGS)
+def test_true_ruling_is_a_ruling_word_hit(gate, text):
+    assert gate._hits_ruling_word(text) is True
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_NOT_RULINGS)
+def test_daily_sentence_end_to_end_passes(gate, tmp_path, text):
+    tp = _write_transcript(tmp_path, [text])
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "好的。",
+    })
+    assert v == {}
+
+
+@pytest.mark.parametrize("text", TRUE_RULINGS)
+def test_true_ruling_end_to_end_blocks(gate, tmp_path, text):
+    tp = _write_transcript(tmp_path, [text])
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "好的，收工。",
+    })
+    assert v.get("decision") == "block"
+
+
+# ---------- 必修②：只认真人消息，跳过注入/合成消息；content 是 list 也要能读 ----------
+
+def _entry(**kw) -> str:
+    return json.dumps(kw, ensure_ascii=False)
+
+
+def _user_entry(content, origin=None, is_meta=None, is_compact=None, is_sidechain=False):
+    d = {"type": "user", "isSidechain": is_sidechain, "message": {"role": "user", "content": content}}
+    if origin is not None:
+        d["origin"] = origin
+    if is_meta is not None:
+        d["isMeta"] = is_meta
+    if is_compact is not None:
+        d["isCompactSummary"] = is_compact
+    return _entry(**d)
+
+
+def test_origin_human_is_used(gate, tmp_path):
+    tp = tmp_path / "t.jsonl"
+    tp.write_text(_user_entry("以后都这样办", origin={"kind": "human"}) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "以后都这样办"
+
+
+def test_origin_peer_is_skipped_even_though_it_hits_ruling_words(gate, tmp_path):
+    """跨会话消息 origin.kind=peer，即便文字命中裁决词也不能算 Andy 说的。"""
+    lines = [
+        _user_entry("以后都这样办，这是我真正说的话", origin={"kind": "human"}),
+        _user_entry(
+            "按错门了，这里不归我管，以后都这样处理吧",
+            origin={"kind": "peer", "from": "uds:/tmp/cc-socks/1.sock"},
+            is_meta=True,
+        ),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "以后都这样办，这是我真正说的话"
+
+
+def test_stop_hook_feedback_is_skipped_falls_back_to_real_message(gate, tmp_path):
+    lines = [
+        _user_entry("好，以后都这样，写进去", origin={"kind": "human"}),
+        _user_entry("Stop hook feedback:\n收工前补一行", is_meta=True),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "好，以后都这样，写进去"
+
+
+def test_another_claude_cross_session_message_is_skipped(gate, tmp_path):
+    lines = [
+        _user_entry("好，都定了", origin={"kind": "human"}),
+        _user_entry(
+            "Another Claude session sent a message:\n<cross-session-message>正文</cross-session-message>",
+            origin={"kind": "peer", "from": "x"},
+            is_meta=True,
+        ),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "好，都定了"
+
+
+def test_system_reminder_prefixed_content_is_skipped(gate, tmp_path):
+    lines = [
+        _user_entry("以后都这样", origin={"kind": "human"}),
+        _user_entry("<system-reminder>某某提醒</system-reminder>"),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "以后都这样"
+
+
+def test_compact_summary_is_skipped(gate, tmp_path):
+    lines = [
+        _user_entry("好，都这样定了", origin={"kind": "human"}),
+        _user_entry(
+            "This session is being continued from a previous conversation...",
+            is_compact=True,
+        ),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "好，都这样定了"
+
+
+def test_tool_result_list_content_is_skipped(gate, tmp_path):
+    """content 是 list 但里面全是 tool_result（工具回填），不是人打的字。"""
+    lines = [
+        _user_entry("这个就定了", origin={"kind": "human"}),
+        _user_entry([{"type": "tool_result", "tool_use_id": "x", "content": "42"}]),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "这个就定了"
+
+
+def test_image_plus_text_list_content_is_read_and_can_be_a_ruling(gate, tmp_path):
+    """带图说的裁决：content 是 [image块, text块]，之前整条被跳过，现在要能读出 text 块。"""
+    lines = [
+        _user_entry([
+            {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": "AAAA"}},
+            {"type": "text", "text": "这张图我看完了，以后都这样标注"},
+        ], origin={"kind": "human"}),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "这张图我看完了，以后都这样标注"
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "收工。",
+    })
+    assert v.get("decision") == "block"
+
+
+def test_sidechain_is_skipped(gate, tmp_path):
+    lines = [
+        _user_entry("这条不算裁决", origin={"kind": "human"}),
+        _user_entry("子 agent 岔出去说的：以后都这样", origin={"kind": "human"}, is_sidechain=True),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "这条不算裁决"
+
+
+def test_reverse_reader_matches_forward_line_order(gate, tmp_path):
+    """倒着读大文件时，行的相对顺序（哪条在后）不能错。"""
+    lines = [f"line-{i}" for i in range(50)]
+    tp = tmp_path / "big.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert list(gate._iter_lines_reverse(tp)) == list(reversed(lines))
