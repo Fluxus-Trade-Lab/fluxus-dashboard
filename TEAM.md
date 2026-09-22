@@ -65,6 +65,7 @@
   - **`Fluxus_Brand/voice/raw/`**（08-31 补）：目录归 Writer Mia，但它是 **Andy 的原料入口**——日推与任何会话都可**代录他的原话**（只追加、原样、不改写，commit message 注明「代录 Andy 原料」）。⚠️ 读它一律**读主树工作区**（他直接录进去不总 commit，权威版反而旧）。
   - **`Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md`**：Gate 唯一写入口（过闸追一行），Andy 批完自己追 ↳。
   - **`Fluxus_Brand/brain/hooks.md`「类型登记」节**：分发站首用新 hook 当晚可 append 一行 ⏳。
+  - **`data/reference/proposals/`**（2026-09-22 ops 裁 · T-0922-80/86 补，此前不在任何线的文件边界表内是遗漏不是新设——CLAUDE.md「改宪法的判据」一节本就要求豁免/开放类改动「写成提案放 `data/reference/proposals/` 等 Andy 裁」，即所有线共用）：登记为**公共提案区**——任何线可新增/编辑**自己署名**的提案文件，不得改别人署名的提案；gate=reviewer（治理文档类，无测试载体，走 `branch-review` skill Q2 替代证据②）。起因：T-0922-80（claire，落地页定档）把 T-0920-02 旧方案标作废时被判 ASK，卡在这条边界缺失，事实上未越界。
 - 每个数据文件只有一条线有写入权：
   - `data/output/`、`data/history/`（除 regime_ledger）→ DATA ALEX
   - `data/history/regime_ledger.csv` → RND Linda
