@@ -1,4 +1,5 @@
 import { rDenominatorStop } from './sizingStats'
+import { toJstDate } from '../../../lib/tradingDate'
 /**
  * Walk daily close prices to determine which stop levels were triggered.
  * Checks sequentially: stop k must trigger before stop k+1.
@@ -14,8 +15,8 @@ import { rDenominatorStop } from './sizingStats'
 function checkStopTriggers(ticker, entryDate, trims, stopLevels, dir, dailyPrices) {
   const N = stopLevels.length
   const lastExitDate = trims.length > 0 ? trims[trims.length - 1].date : entryDate
-  const start = new Date(entryDate)
-  const end = new Date(lastExitDate)
+  const start = new Date(toJstDate(entryDate))
+  const end = new Date(toJstDate(lastExitDate))
   const triggered = new Array(N).fill(false)
   let hasHistory = false
   let nextStop = 0  // which stop level to check next
