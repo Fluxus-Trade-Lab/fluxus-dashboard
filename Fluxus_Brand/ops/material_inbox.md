@@ -221,6 +221,8 @@
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
 - [09-19] [OPS] 课程定价页退款条款补完：两个行业标准选项（7 日无理由 / 3 日+已使用查证），建议优先 A——B 依赖后台日志能力待核实、成本不足；A 虽全额退款但课程分批解锁+社群粘性足以消化滥用风险，符合同类产品预期。09-25 前待 Andy 最终拍板。[Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md](Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md)
+
+- [09-22] [steve] **复盘内容的教学风格需要三轮裁决才能稳定**——从「全删个股」到「加回个股」再到「语域取中」，同一份材料的讲法经历三个极端。最后收敛点不是取中线而是「简洁+重点突出」——动态调整的标准比折中的标准更值钱。这说的是每一次内容迭代前都问自己「为谁讲、讲什么」，答案会自动塑造措辞。出处 [T-0922-45 · 5eacac5c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5eacac5c)
 - [09-21] [DATA] **schema 基线缺陷挖出自动化验收的三层差：表单、文档、基线** · watchlist.top20_industry 在 09-18 随 TML Moglen 重定义落地，DATA_CONTRACTS 与 METRIC_SOURCES 已文档化，但 schema_snapshot 基线未同步，导致 --check 误报「added」。修复只需补两条基线路径，但暴露了问题：自动化验收检查的三个维度必须都更新，缺一个就失效。可讲角度：系统健康检查的可信度，取决于它能扫到的盲区个数。出处 [5d7e28b0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5d7e28b0) · T-0921-57
 
 - [09-20] [OPS] **「任务完成」和「任务流程检测到完成」是两件事** —— 任务板巡逻发现 T-0919-74 实际处于 blocked 状态，但任务管理系统看不见它的环境故障（worker 进程未正常关闭）。这类技术层问题藏在既有检查之外，需要专门的环境哨兵。出处 T-0920-26 任务板巡逻日志
