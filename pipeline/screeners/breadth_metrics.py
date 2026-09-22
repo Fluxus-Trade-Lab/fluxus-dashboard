@@ -265,6 +265,31 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     advances = int((chg > 0).sum())
     declines = int((chg < 0).sum())
 
+    # --- Nasdaq-100-scoped advances/declines (2026-09-23, T-0923-03) --------
+    # MCO's standard pool is NYSE (or Nasdaq-100) advance/decline counts, not
+    # "every name Finviz carries" (5,600+ tickers matching no published
+    # index -- METRIC_SOURCES.md `mcclellan_osc` row, downgraded to a pool
+    # mismatch on 2026-09-18 audit). NYSE daily A/D has no free feed in this
+    # stack (yfinance has no ^ADVN/^DECN-style ticker -- checked 2026-09-23),
+    # so Nasdaq-100 is the fallback the task explicitly allows. Same
+    # membership-mask shape as `in_idx`/idx_cols above; NULL, not a fallback
+    # to the full universe, when membership is unavailable.
+    in_ndx = universe.get('in_ndx')
+    if in_ndx is None:
+        ndx_cols = {'advances_ndx': None, 'declines_ndx': None, 'ndx_members': None}
+    else:
+        ndx_mask = in_ndx.fillna(False).astype(bool)
+        n_ndx = int(ndx_mask.sum())
+        if n_ndx == 0:
+            ndx_cols = {'advances_ndx': None, 'declines_ndx': None, 'ndx_members': None}
+        else:
+            chg_ndx = chg[ndx_mask].dropna()
+            ndx_cols = {
+                'advances_ndx': int((chg_ndx > 0).sum()),
+                'declines_ndx': int((chg_ndx < 0).sum()),
+                'ndx_members': n_ndx,
+            }
+
     # New 52w highs / lows
     high_52w = pd.to_numeric(universe.get('high_52w', pd.Series(dtype=float)), errors='coerce')
     low_52w = pd.to_numeric(universe.get('low_52w', pd.Series(dtype=float)), errors='coerce')
@@ -379,6 +404,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'pct_above_20sma': pct_above_20,
         'advances': advances,
         'declines': declines,
+        **ndx_cols,
         'new_highs': new_highs,
         'new_lows': new_lows,
         'new_highs_4w': new_highs_4w,
@@ -496,7 +522,19 @@ def _build_output(
             'new_highs_common': last.get('new_highs_common'),
             'new_lows_common': last.get('new_lows_common'),
             'ad_line': last.get('ad_line'),
+            # Kept for archive continuity (574+ rows of history); no longer
+            # the standard reading -- pool is the full Finviz universe, which
+            # matches no published index (METRIC_SOURCES.md `mcclellan_osc`).
             'mcclellan_osc': last.get('mcclellan_osc'),
+            # Standard pool (Nasdaq-100 advance/decline) since 2026-09-23,
+            # T-0923-03. NULL until membership tracking has warmed up the
+            # 19/39-day EMA pair -- see breadth_store.derive().
+            'advances_ndx': last.get('advances_ndx'),
+            'declines_ndx': last.get('declines_ndx'),
+            'ndx_members': last.get('ndx_members'),
+            'mcclellan_osc_ndx': last.get('mcclellan_osc_ndx'),
+            'mcclellan_summation_ndx': last.get('mcclellan_summation_ndx'),
+            'mcclellan_summation_ndx_ma10': last.get('mcclellan_summation_ndx_ma10'),
         },
         'history': {
             'dates': _col('date'),
@@ -504,6 +542,9 @@ def _build_output(
             'pct_above_50sma': _col('pct_above_50sma'),
             'pct_above_20sma': _col('pct_above_20sma'),
             'mcclellan_osc': _col('mcclellan_osc'),
+            'mcclellan_osc_ndx': _col('mcclellan_osc_ndx'),
+            'mcclellan_summation_ndx': _col('mcclellan_summation_ndx'),
+            'mcclellan_summation_ndx_ma10': _col('mcclellan_summation_ndx_ma10'),
             'rows': rows,
         },
         'data_quality': quality,

@@ -59,7 +59,23 @@ THRESHOLDS: Dict[str, Dict[str, float]] = {
     # above). Counts are his scans (*_stockbee, SPREAD_COLS below).
     'qtr_spread':  {},              # sign-based
     'spread_13_34': {},             # sign-based
-    'mcclellan':   {'extreme': 70},
+    # Reads mcclellan_osc_ndx (Nasdaq-100 pool) since 2026-09-23, T-0923-03 --
+    # not the legacy mcclellan_osc column (full ~5,600-name Finviz universe,
+    # kept in the archive for continuity but no longer the standard reading;
+    # see METRIC_SOURCES.md). Extreme line is StockCharts ChartSchool's own
+    # published overbought/oversold band for the McClellan Oscillator, "+100
+    # and -100" (chartschool.stockcharts.com/.../mcclellan-oscillator,
+    # confirmed 2026-09-23). Replaces the old 70, which the 2026-09-18 audit
+    # (metric_audit_2026-09-18/B_market_layer.md, M12) traced to no first-hand
+    # source -- ChartSchool itself uses +-50/+-100, +-70 only appeared in a
+    # secondhand blog.
+    'mcclellan':   {'extreme': 100},
+    # McClellan's own Ratio-Adjusted Summation Index (RASI) note: "a strong
+    # uptrend can be signified by index values going from below -500 to well
+    # above +500" (mcoscillator.com/learning_center/kb/market_data/
+    # ratio_adjusted_summation_index/, confirmed 2026-09-23). Not a vote --
+    # same treatment as 'mcclellan.extreme', an annotation only.
+    'mcclellan_summation': {'extreme': 500},
     'nh_nl':       {},              # sign-based, common-stock counts (SPREAD_COLS)
     'pct200':      {'bull': 50, 'bear': 30},
     't2108_zone':  {'strong_lo': 60, 'weak_hi': 40, 'oversold': 20, 'overbought': 80},
@@ -185,7 +201,12 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     for key, (a, b) in SPREAD_COLS.items():
         votes[key] = _sign_vote(row.get(a), row.get(b))
 
-    mc = _num(row.get('mcclellan_osc'))
+    # Nasdaq-100 pool (T-0923-03) -- NULL, not a fallback to the legacy
+    # full-universe mcclellan_osc, when membership tracking has not warmed up
+    # the EMA pair yet. A silent fallback here would put two different pools
+    # inside one vote depending on the date, which is the exact defect this
+    # change is fixing.
+    mc = _num(row.get('mcclellan_osc_ndx'))
     votes['mcclellan'] = 'neutral' if mc is None else ('bull' if mc > 0 else 'bear' if mc < 0 else 'neutral')
 
     p200 = _num(row.get('pct_above_200sma'))
@@ -265,8 +286,8 @@ def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
         m, unit = diff(a, b, 'names')
         add(k, n(a), 0, m, unit, lbl)
 
-    mc = n('mcclellan_osc')
-    add('mcclellan', mc, 0, mc, 'points', 'McClellan')
+    mc = n('mcclellan_osc_ndx')  # T-0923-03: Nasdaq-100 pool, see votes above
+    add('mcclellan', mc, 0, mc, 'points', 'McClellan (NDX)')
 
     p200 = n('pct_above_200sma')
     line = THRESHOLDS['pct200']['bull']
@@ -757,9 +778,12 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
 
     if thrust_state(row) == 'churn':
         notes.append(f'Churn/volatile: back-to-back {n:.0f}+ stocks both up and down 4% — unresolved tape')
-    mc = _num(row.get('mcclellan_osc'))
+    mc = _num(row.get('mcclellan_osc_ndx'))
     if mc is not None and abs(mc) >= THRESHOLDS['mcclellan']['extreme']:
-        notes.append(f"McClellan at {mc:+.0f} — extreme reading")
+        notes.append(f"McClellan (NDX) at {mc:+.0f} — extreme reading")
+    msi = _num(row.get('mcclellan_summation_ndx'))
+    if msi is not None and abs(msi) >= THRESHOLDS['mcclellan_summation']['extreme']:
+        notes.append(f"McClellan Summation (NDX) at {msi:+.0f} — strong-trend reading")
     if health is None:
         notes.append('Price signals unavailable — breadth-only verdict')
 

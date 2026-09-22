@@ -50,6 +50,10 @@ BREADTH_COLUMNS = [
     'pct_above_20sma_sp500', 't2108_sp500',
     'pct_above_50sma_sp500', 'pct_above_200sma_sp500', 'sp500_members',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
+    # Nasdaq-100-scoped MCO/MCSI (2026-09-23, T-0923-03) -- see derive() below.
+    'advances_ndx', 'declines_ndx', 'ndx_members',
+    'net_advances_ndx', 'rana_ndx', 'mcclellan_osc_ndx',
+    'mcclellan_summation_ndx', 'mcclellan_summation_ndx_ma10',
 ]
 
 
@@ -105,6 +109,71 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
 
     out['ad_line'] = net.cumsum().astype(int)
 
+    def _numeric_col(name):
+        # out.get(name) returns a SCALAR nan when the column is absent, not an
+        # empty Series, so every downstream .notna() blows up on archives that
+        # predate the column. Build an index-aligned all-NA Series instead.
+        if name in out.columns:
+            return pd.to_numeric(out[name], errors='coerce')
+        return pd.Series(pd.NA, index=out.index, dtype='Float64')
+
+    # --- Nasdaq-100-scoped McClellan Oscillator + Summation Index -----------
+    # (2026-09-23, T-0923-03). MCO's standard pool is NYSE (or Nasdaq-100)
+    # advance/decline counts -- ours had been the full ~5,600-name Finviz
+    # screener, which matches no published index (METRIC_SOURCES.md
+    # `mcclellan_osc` row, downgraded 2026-09-18). `advances_ndx`/
+    # `declines_ndx` are NULL for every row before Nasdaq-100 membership
+    # tracking started (there is no historical Nasdaq-100 roster to replay,
+    # so there is no honest way to backfill this -- see
+    # `pipeline.screeners.run_all.attach_ndx_membership`), which is why this
+    # whole block must use the NULL-safe `_numeric_col` helper below rather
+    # than the `.fillna(0)` used for the legacy full-universe columns above:
+    # filling a pre-tracking gap with 0 would read as "net advances of zero"
+    # instead of "we don't have this pool for that date".
+    adv_n = _numeric_col('advances_ndx')
+    dec_n = _numeric_col('declines_ndx')
+    have_ndx = adv_n.notna() & dec_n.notna()
+    net_n = adv_n - dec_n
+    total_n = adv_n + dec_n
+    out['net_advances_ndx'] = net_n.where(have_ndx).round(0)
+
+    # Default 0.0 (a real, flat reading) on every day the pool is known but
+    # produced no net signal -- same convention as the legacy `rana` above.
+    # Only rows where the pool itself is unknown (pre-tracking) stay NA.
+    rana_n = pd.Series(pd.NA, index=out.index, dtype='Float64')
+    rana_n[have_ndx] = 0.0
+    nz_n = have_ndx & (total_n > 0)
+    rana_n[nz_n] = (net_n[nz_n] / total_n[nz_n] * 1000).round(2)
+    out['rana_ndx'] = rana_n
+
+    # ewm() over a series with leading NaNs (every row before tracking began)
+    # simply starts the average at the first non-NaN value -- it does not
+    # treat the gap as zeros. That is the behaviour this needs: the EMA pair
+    # should only warm up from the day Nasdaq-100 membership became known.
+    ema19_n = rana_n.astype('float64').ewm(span=19, adjust=False).mean()
+    ema39_n = rana_n.astype('float64').ewm(span=39, adjust=False).mean()
+    out['mcclellan_osc_ndx'] = (ema19_n - ema39_n).round(2)
+
+    # Summation Index (McClellan's own "Ratio-Adjusted Summation Index" --
+    # mcoscillator.com/learning_center/kb/market_data/ratio_adjusted_summation_index/):
+    # a running cumulative sum of the ratio-adjusted oscillator, zeroed at
+    # the first day the oscillator has a value -- not at row 0 of the archive,
+    # which would silently sum in ~39 days of NaN-derived noise before the
+    # EMA pair has actually warmed up.
+    mco_n = out['mcclellan_osc_ndx']
+    valid_n = mco_n.notna()
+    if valid_n.any():
+        start = valid_n.idxmax()
+        summation = pd.Series(pd.NA, index=out.index, dtype='Float64')
+        summation.loc[start:] = mco_n.loc[start:].fillna(0).cumsum()
+        out['mcclellan_summation_ndx'] = summation.round(2)
+        out['mcclellan_summation_ndx_ma10'] = (
+            summation.astype('float64').rolling(10).mean().round(2)
+        )
+    else:
+        out['mcclellan_summation_ndx'] = pd.Series(pd.NA, index=out.index, dtype='Float64')
+        out['mcclellan_summation_ndx_ma10'] = pd.Series(pd.NA, index=out.index, dtype='Float64')
+
     # Record High Percent and the High-Low Index (StockCharts ChartSchool).
     # Record High Percent = new highs / (new highs + new lows). The High-Low
     # Index is its 10-day simple average.
@@ -120,14 +189,8 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
     # built from a SPAC-contaminated numerator is still contaminated. NULL for
     # every row predating those columns rather than silently falling back to
     # the raw counts, which would put a definition change inside one series.
-    def _numeric_col(name):
-        # out.get(name) returns a SCALAR nan when the column is absent, not an
-        # empty Series, so every downstream .notna() blows up on archives that
-        # predate the column. Build an index-aligned all-NA Series instead.
-        if name in out.columns:
-            return pd.to_numeric(out[name], errors='coerce')
-        return pd.Series(pd.NA, index=out.index, dtype='Float64')
-
+    # (`_numeric_col` is defined above, ahead of the Nasdaq-100 block that
+    # needs it first.)
     nh_c = _numeric_col('new_highs_common')
     nl_c = _numeric_col('new_lows_common')
     denom = nh_c + nl_c

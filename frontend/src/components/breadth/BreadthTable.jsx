@@ -60,6 +60,8 @@ export default function BreadthTable({ data }) {
               <Th>NH</Th>
               <Th>NL</Th>
               <Th>McCl</Th>
+              <Th title="Nasdaq-100 pool, T-0923-03 -- the standard reading; McCl above is the legacy full-universe column, kept for archive continuity">McCl (NDX)</Th>
+              <Th title="McClellan Summation Index, Nasdaq-100 pool">MCSI</Th>
               <Th>A/D line</Th>
               <ThSep />
               <Th>SPX</Th>
@@ -98,6 +100,8 @@ export default function BreadthTable({ data }) {
                 <OTd row={row} k="new_highs" />
                 <OTd row={row} k="new_lows" />
                 <Td className={mcColor(row.mcclellan_osc, i === 0)}>{row.mcclellan_osc?.toFixed(1)}</Td>
+                <Td className={mcColor(row.mcclellan_osc_ndx, i === 0)}>{row.mcclellan_osc_ndx?.toFixed(1)}</Td>
+                <Td className={mcColor(row.mcclellan_summation_ndx, i === 0)}>{row.mcclellan_summation_ndx?.toFixed(0)}</Td>
                 <Td>{row.ad_line?.toLocaleString()}</Td>
                 <TdSep />
                 <Td>{row.spx_close?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '\u2014'}</Td>
