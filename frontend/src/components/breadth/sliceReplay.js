@@ -68,6 +68,11 @@ export function sliceToDate(replay, date) {
       advances: last.advances, declines: last.declines,
       new_highs: last.new_highs, new_lows: last.new_lows,
       ad_line: last.ad_line, mcclellan_osc: last.mcclellan_osc,
+      // Nasdaq-100 pool (T-0923-03) -- the standard reading; mcclellan_osc
+      // above is the legacy full-universe column, kept for continuity.
+      mcclellan_osc_ndx: last.mcclellan_osc_ndx,
+      mcclellan_summation_ndx: last.mcclellan_summation_ndx,
+      mcclellan_summation_ndx_ma10: last.mcclellan_summation_ndx_ma10,
     },
     history: {
       dates: windowDates,
@@ -75,6 +80,9 @@ export function sliceToDate(replay, date) {
       pct_above_50sma: rows.map((r) => r.pct_above_50sma),
       pct_above_20sma: rows.map((r) => r.pct_above_20sma),
       mcclellan_osc: rows.map((r) => r.mcclellan_osc),
+      mcclellan_osc_ndx: rows.map((r) => r.mcclellan_osc_ndx),
+      mcclellan_summation_ndx: rows.map((r) => r.mcclellan_summation_ndx),
+      mcclellan_summation_ndx_ma10: rows.map((r) => r.mcclellan_summation_ndx_ma10),
       rows,
     },
     data_quality: { stale: false },

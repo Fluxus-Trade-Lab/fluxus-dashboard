@@ -104,8 +104,8 @@ export default function BreadthPage({ data }) {
 
       {/* MASTERY — folded, present but out of the way (§五.6). */}
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
-        <Reference label="Breadth, advanced" count={4}
-                   note="% above the averages, McClellan, the up/down ratios and the quarterly spread (Lesson 7 mastery)">
+        <Reference label="Breadth, advanced" count={5}
+                   note="% above the averages, McClellan and its Summation Index (Nasdaq-100, T-0923-03), the up/down ratios and the quarterly spread">
           <BreadthCharts data={breadth} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             <RatioChart rows={rows} />
