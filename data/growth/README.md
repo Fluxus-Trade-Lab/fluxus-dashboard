@@ -17,7 +17,7 @@
 | 列 | 口径 | 备注 |
 |---|---|---|
 | `discord_members` | **真人数（不含 bot，不含 owner）** | 08-25 设置页全表实读：真人 34 · Bot/App 10 · Owner 1 · **总员额 45**。⚠️ **08-24 行的 39 是含 bot 的旧口径**（真人 30 + bot 9，且真人数是逐屏手数、后被证明少数了 4 人），该行 notes 已标注，**不要再拿它跟真人口径的行做 WoW**。引用「Discord 45 / 46」这类数时先问一句它是不是总员额——**总员额减 bot 减 owner 才是本列**。 |
-| `whop_members` | 真实人头（身份合并后） | 08-25 = 38。店面页显示的 "30 members" 是 Whop 店面口径（漏 PayPal-only、含非客户账号），**不入本列**。 |
+| `whop_members` | **09-22 起＝口径 A「在档订阅付费人」**：Whop API `/v1/memberships` 全量（游标分页），product ∈ {Premium `prod_JP6vlypnDQTNk`、Premium++ 新档 `prod_lqtg4j5LTtBVh`、Premium++ 旧档 `prod_0WddY2iwoTitp`}、status ∈ {active, past_due}、按 user 去重；试用（trialing）单列不计；到期不续（active + cancel_at_period_end）仍计入但在 notes 单列。取数脚本 `data/growth/scripts/fetch_whop_members.py`。**出处：Andy 2026-09-22 问卷原话「A 在档订阅付费人：18 (推荐)」**（T-0922-110）。 | ⚠️ **口径断点在 09-22**：09-13 及以前的值（08-25 = 38、09-13 = 41）是手工台账「身份合并真实人头」口径——members.csv 全部行，含 PayPal/支付宝渠道、终身、一次性课程、试用与已流失者；**与口径 A 不可比，不要跨 09-22 算 WoW**（41→18 不是流失 23 人）。手工台账口径仍在 `members.csv` 维护，需要时单独引用并写明口径。店面页的 "30 members" 是 Whop 店面口径，**不入本列**。 |
 | `mrr_usd` | **已测量**部分（后台可见产品实读） | 08-25 = $1,052。前瞻/反解值（$1,478 前瞻、$1,671 含 canceling）**只写进 notes 与周报，不入本列**——本列必须能一路追到后台读数。 |
 | `x_week_views` | **上一个完整 ISO 周（周一–周日）** 内 `data/content/posts.csv` 各帖 views 之和 | 周一记账时当周尚未开始，所以看上一周。notes 必须写「来源:posts.csv · 聚合日」。⚠️ 该列天然是**下限**：posts.csv 的 views 是每帖最后一次抄录的快照，抄录时点不一（有的帖子自注「基线 T+0」）。 |
 | `x_followers` | X 主页公开粉丝数 | **09-14 起读 Steve 日调研的 `data/content/x_watch/own_account.csv` 末行**（twitterapi.io `/twitter/user/info`，按 `date_et` upsert）；notes 必须带该行 `date_et`。公开页取不到（08-31 实测 HTTP 402），详见下方 SOP。 |
