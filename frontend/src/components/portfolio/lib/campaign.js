@@ -1,3 +1,5 @@
+import { toJstDate } from '../../../lib/tradingDate'
+
 /**
  * Group trades into pyramid campaigns.
  * Same (ticker, direction); consecutive entries within 60 business days.
@@ -61,8 +63,8 @@ function buildCampaign(layers) {
     totalCurrentQty,
     totalRDollars,
     openLayersCount,
-    firstEntry: first.entryDate,
-    lastEntry: layers[layers.length - 1].entryDate,
+    firstEntry: toJstDate(first.entryDate),
+    lastEntry: toJstDate(layers[layers.length - 1].entryDate),
   }
 }
 
