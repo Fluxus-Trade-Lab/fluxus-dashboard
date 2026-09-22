@@ -1,25 +1,25 @@
 {
   "trade_id": "ONDS_2026-04-29_000",
-  "generated_at": "2026-09-21T22:25:50+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ONDS",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-04-29",
-    "entry_price": 9.71,
-    "stop_price": 9.4,
-    "initial_stop": 9.4,
+    "entry_price": 9.62,
+    "stop_price": 9.42,
+    "initial_stop": 9.42,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-05-05",
-    "hold_business_days": 4,
-    "r_pct_of_entry": 3.192584963954691,
-    "realized_R": -1.129032258064519,
+    "exit_date": "2026-04-29",
+    "hold_business_days": 0,
+    "r_pct_of_entry": 2.079002079002072,
+    "realized_R": -0.5,
     "trims": [
       {
-        "date": "2026-05-05",
-        "price": 9.36,
+        "date": "2026-04-29",
+        "price": 9.52,
         "pct_of_position": 100.0,
         "type": "sell_rest"
       }
@@ -46,22 +46,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.741935483870962,
-    "mfe_date": "2026-05-01",
-    "mae_R": 1.7741935483870963,
-    "mae_date": "2026-05-05",
-    "optimal_exit_price": 10.56,
-    "optimal_exit_date": "2026-05-01",
-    "optimal_R": 2.741935483870962,
-    "days_to_optimal": 2,
-    "realized_R": -1.129032258064519,
-    "capture_pct": -41.17647058823548,
-    "missed_R": 3.8709677419354813,
-    "post_exit_R": 7.774193548387079,
-    "hold_calendar_days": 6
+    "mfe_R": 4.050000000000017,
+    "mfe_date": "2026-04-29",
+    "mae_R": 1.0499999999999992,
+    "mae_date": "2026-04-29",
+    "optimal_exit_price": 10.43,
+    "optimal_exit_date": "2026-04-29",
+    "optimal_R": 4.050000000000017,
+    "days_to_optimal": 0,
+    "realized_R": -0.5,
+    "capture_pct": -12.345679012345629,
+    "missed_R": 4.550000000000017,
+    "post_exit_R": 4.700000000000023,
+    "hold_calendar_days": 0
   },
-  "lesson": "Stopped too tight",
-  "narrative": "Entered **ONDS** long on 2026-04-29 at $9.71 with stop $9.40 (1R = $0.31/sh = 3.2% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($9.95), RSI 44, 44% through 52W range, ATR 8.2% of price. Realized **-1.13R**, peak was **+2.74R** on 2026-05-01 (day +2) \u2014 captured **-41%** of the move. **Lesson: Stopped too tight.**",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **ONDS** long on 2026-04-29 at $9.62 with stop $9.42 (1R = $0.20/sh = 2.1% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($9.95), RSI 44, 44% through 52W range, ATR 8.2% of price. Realized **-0.50R**, peak was **+4.05R** on 2026-04-29 (day +0) \u2014 captured **-12%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-03-30",
@@ -294,46 +294,6 @@
       "low": 8.65,
       "close": 9.06,
       "volume": 34078000.0
-    },
-    {
-      "date": "2026-05-11",
-      "open": 8.92,
-      "high": 9.65,
-      "low": 8.72,
-      "close": 9.42,
-      "volume": 44661900.0
-    },
-    {
-      "date": "2026-05-12",
-      "open": 9.235,
-      "high": 9.35,
-      "low": 8.8,
-      "close": 9.04,
-      "volume": 37093800.0
-    },
-    {
-      "date": "2026-05-13",
-      "open": 8.92,
-      "high": 9.18,
-      "low": 8.67,
-      "close": 8.86,
-      "volume": 50015000.0
-    },
-    {
-      "date": "2026-05-14",
-      "open": 9.99,
-      "high": 11.73,
-      "low": 9.6,
-      "close": 11.21,
-      "volume": 244801000.0
-    },
-    {
-      "date": "2026-05-15",
-      "open": 10.91,
-      "high": 12.12,
-      "low": 10.5,
-      "close": 10.62,
-      "volume": 140436900.0
     }
   ]
 }

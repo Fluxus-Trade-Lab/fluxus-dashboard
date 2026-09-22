@@ -1,38 +1,32 @@
 {
   "trade_id": "TQQQ_2026-06-11_000",
-  "generated_at": "2026-09-21T22:25:51+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TQQQ",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-06-11",
-    "entry_price": 76.25,
+    "entry_price": 74.78,
     "stop_price": 70.0,
     "initial_stop": 70.0,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-06-16",
-    "hold_business_days": 3,
-    "r_pct_of_entry": 8.19672131147541,
-    "realized_R": 1.0742118509468546,
+    "exit_date": "2026-06-17",
+    "hold_business_days": 4,
+    "r_pct_of_entry": 6.39208344477133,
+    "realized_R": 1.2311715481171541,
     "trims": [
       {
-        "date": "2026-06-15",
-        "price": 83.29,
-        "pct_of_position": 19.975565058032988,
-        "type": "trim_1_5"
+        "date": "2026-06-17",
+        "price": 81.21,
+        "pct_of_position": 50.0,
+        "type": "trim_1_2"
       },
       {
-        "date": "2026-06-15",
-        "price": 84.5,
-        "pct_of_position": 33.292608430054976,
-        "type": "trim_1_3"
-      },
-      {
-        "date": "2026-06-16",
-        "price": 81.73,
-        "pct_of_position": 46.73182651191203,
+        "date": "2026-06-17",
+        "price": 80.12,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -58,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 1.3735519999999997,
+    "mfe_R": 2.1034937238493714,
     "mfe_date": "2026-06-15",
-    "mae_R": 1.0911840000000006,
+    "mae_R": 1.119225941422595,
     "mae_date": "2026-06-11",
     "optimal_exit_price": 84.8347,
     "optimal_exit_date": "2026-06-15",
-    "optimal_R": 1.3735519999999997,
+    "optimal_R": 2.1034937238493714,
     "days_to_optimal": 4,
-    "realized_R": 1.0742118509468546,
-    "capture_pct": 78.20685718100624,
-    "missed_R": 0.2993401490531451,
-    "post_exit_R": 1.3863200000000007,
-    "hold_calendar_days": 5
+    "realized_R": 1.2311715481171541,
+    "capture_pct": 58.52984176554248,
+    "missed_R": 0.8723221757322173,
+    "post_exit_R": 2.1201882845188287,
+    "hold_calendar_days": 6
   },
   "lesson": "Good execution",
-  "narrative": "Entered **TQQQ** long on 2026-06-11 at $76.25 with stop $70.00 (1R = $6.25/sh = 8.2% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($78.72), RSI 51, 76% through 52W range, ATR 6.7% of price. Realized **+1.07R**, peak was **+1.37R** on 2026-06-15 (day +4) \u2014 captured **78%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **TQQQ** long on 2026-06-11 at $74.78 with stop $70.00 (1R = $4.78/sh = 6.4% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($78.72), RSI 51, 76% through 52W range, ATR 6.7% of price. Realized **+1.23R**, peak was **+2.10R** on 2026-06-15 (day +4) \u2014 captured **59%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-05-12",

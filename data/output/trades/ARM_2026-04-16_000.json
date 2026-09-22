@@ -1,0 +1,299 @@
+{
+  "trade_id": "ARM_2026-04-16_000",
+  "generated_at": "2026-09-22T22:25:43+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "ARM",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-04-16",
+    "entry_price": 162.78,
+    "stop_price": 148.0,
+    "initial_stop": 148.0,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-04-17",
+    "hold_business_days": 1,
+    "r_pct_of_entry": 9.079739525740264,
+    "realized_R": 0.09201623815967423,
+    "trims": [
+      {
+        "date": "2026-04-17",
+        "price": 164.14,
+        "pct_of_position": 100.0,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 162.33,
+    "open": 159.99,
+    "high": 166.09,
+    "low": 156.85,
+    "volume": 5748000.0,
+    "ma20": 148.15875,
+    "ma50": 132.8939,
+    "ma200": null,
+    "rsi14": 65.83362157606426,
+    "atr14": 9.218571428571426,
+    "atr14_pct": 5.678908044459697,
+    "high_52w": 183.16,
+    "low_52w": 100.02,
+    "position_in_52w_range_pct": 74.94587442867454,
+    "high_20d": 166.69,
+    "low_10d": 137.58,
+    "low_5d": 147.5
+  },
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 0.37686062246278706,
+    "mfe_date": "2026-04-17",
+    "mae_R": 0.4012178619756432,
+    "mae_date": "2026-04-16",
+    "optimal_exit_price": 168.35,
+    "optimal_exit_date": "2026-04-17",
+    "optimal_R": 0.37686062246278706,
+    "days_to_optimal": 1,
+    "realized_R": 0.09201623815967423,
+    "capture_pct": 24.41651705565506,
+    "missed_R": 0.2848443843031128,
+    "post_exit_R": 5.06765899864682,
+    "hold_calendar_days": 1
+  },
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **ARM** long on 2026-04-16 at $162.78 with stop $148.00 (1R = $14.78/sh = 9.1% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($148.16), RSI 66, 75% through 52W range, ATR 5.7% of price. Realized **+0.09R**, peak was **+0.38R** on 2026-04-17 (day +1) \u2014 captured **24%** of the move. **Lesson: Choppy / no edge.**",
+  "ohlc_window": [
+    {
+      "date": "2026-03-17",
+      "open": 125.17,
+      "high": 128.8,
+      "low": 124.8,
+      "close": 127.31,
+      "volume": 5890700.0
+    },
+    {
+      "date": "2026-03-18",
+      "open": 127.81,
+      "high": 130.88,
+      "low": 127.205,
+      "close": 128.36,
+      "volume": 4206900.0
+    },
+    {
+      "date": "2026-03-19",
+      "open": 125.0,
+      "high": 130.725,
+      "low": 124.5,
+      "close": 129.82,
+      "volume": 3497600.0
+    },
+    {
+      "date": "2026-03-20",
+      "open": 136.9,
+      "high": 139.95,
+      "low": 131.423,
+      "close": 132.35,
+      "volume": 12450800.0
+    },
+    {
+      "date": "2026-03-23",
+      "open": 133.43,
+      "high": 138.845,
+      "low": 133.12,
+      "close": 136.89,
+      "volume": 7959800.0
+    },
+    {
+      "date": "2026-03-24",
+      "open": 136.0,
+      "high": 140.58,
+      "low": 133.01,
+      "close": 134.96,
+      "volume": 10924900.0
+    },
+    {
+      "date": "2026-03-25",
+      "open": 148.255,
+      "high": 166.69,
+      "low": 148.25,
+      "close": 157.07,
+      "volume": 29579900.0
+    },
+    {
+      "date": "2026-03-26",
+      "open": 157.35,
+      "high": 163.53,
+      "low": 154.35,
+      "close": 154.8,
+      "volume": 15671600.0
+    },
+    {
+      "date": "2026-03-27",
+      "open": 151.53,
+      "high": 152.75,
+      "low": 142.21,
+      "close": 144.13,
+      "volume": 10269000.0
+    },
+    {
+      "date": "2026-03-30",
+      "open": 144.1,
+      "high": 145.75,
+      "low": 136.0,
+      "close": 136.96,
+      "volume": 8033600.0
+    },
+    {
+      "date": "2026-03-31",
+      "open": 139.9,
+      "high": 151.59,
+      "low": 139.9,
+      "close": 151.28,
+      "volume": 10203700.0
+    },
+    {
+      "date": "2026-04-01",
+      "open": 154.39,
+      "high": 158.37,
+      "low": 152.3,
+      "close": 155.07,
+      "volume": 8306300.0
+    },
+    {
+      "date": "2026-04-02",
+      "open": 149.77,
+      "high": 152.07,
+      "low": 145.82,
+      "close": 149.11,
+      "volume": 8183200.0
+    },
+    {
+      "date": "2026-04-06",
+      "open": 152.18,
+      "high": 153.68,
+      "low": 146.1,
+      "close": 148.77,
+      "volume": 4137600.0
+    },
+    {
+      "date": "2026-04-07",
+      "open": 143.815,
+      "high": 145.5,
+      "low": 137.58,
+      "close": 143.86,
+      "volume": 7071000.0
+    },
+    {
+      "date": "2026-04-08",
+      "open": 152.16,
+      "high": 153.42,
+      "low": 145.0,
+      "close": 148.91,
+      "volume": 6480300.0
+    },
+    {
+      "date": "2026-04-09",
+      "open": 148.23,
+      "high": 150.4,
+      "low": 145.27,
+      "close": 149.795,
+      "volume": 5325700.0
+    },
+    {
+      "date": "2026-04-10",
+      "open": 152.41,
+      "high": 159.29,
+      "low": 147.96,
+      "close": 148.93,
+      "volume": 7431600.0
+    },
+    {
+      "date": "2026-04-13",
+      "open": 147.78,
+      "high": 157.77,
+      "low": 147.5,
+      "close": 157.58,
+      "volume": 4900100.0
+    },
+    {
+      "date": "2026-04-14",
+      "open": 161.03,
+      "high": 163.5,
+      "low": 157.6,
+      "close": 161.22,
+      "volume": 6294200.0
+    },
+    {
+      "date": "2026-04-15",
+      "open": 161.22,
+      "high": 161.74,
+      "low": 156.21,
+      "close": 159.34,
+      "volume": 3650300.0
+    },
+    {
+      "date": "2026-04-16",
+      "open": 159.99,
+      "high": 166.09,
+      "low": 156.85,
+      "close": 162.33,
+      "volume": 5748000.0
+    },
+    {
+      "date": "2026-04-17",
+      "open": 167.34,
+      "high": 168.35,
+      "low": 162.728,
+      "close": 166.73,
+      "volume": 5092600.0
+    },
+    {
+      "date": "2026-04-20",
+      "open": 167.415,
+      "high": 175.315,
+      "low": 164.1,
+      "close": 175.1,
+      "volume": 8564000.0
+    },
+    {
+      "date": "2026-04-21",
+      "open": 175.37,
+      "high": 179.4,
+      "low": 173.3,
+      "close": 175.49,
+      "volume": 6479900.0
+    },
+    {
+      "date": "2026-04-22",
+      "open": 180.0,
+      "high": 196.66,
+      "low": 178.475,
+      "close": 196.57,
+      "volume": 13932300.0
+    },
+    {
+      "date": "2026-04-23",
+      "open": 194.42,
+      "high": 210.8,
+      "low": 192.18,
+      "close": 204.61,
+      "volume": 16854100.0
+    },
+    {
+      "date": "2026-04-24",
+      "open": 221.96,
+      "high": 237.68,
+      "low": 218.375,
+      "close": 234.81,
+      "volume": 20481700.0
+    },
+    {
+      "date": "2026-04-27",
+      "open": 224.49,
+      "high": 227.3,
+      "low": 210.0,
+      "close": 215.88,
+      "volume": 13922800.0
+    }
+  ]
+}

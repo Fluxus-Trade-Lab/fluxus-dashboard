@@ -1,26 +1,32 @@
 {
   "trade_id": "AXTI_2026-03-26_000",
-  "generated_at": "2026-09-21T22:25:50+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AXTI",
     "direction": "short",
     "sector": "Unknown",
     "entry_date": "2026-03-26",
-    "entry_price": 63.87,
-    "stop_price": 65.0,
-    "initial_stop": 65.0,
+    "entry_price": 64.6,
+    "stop_price": 66.5,
+    "initial_stop": 66.5,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-03-30",
-    "hold_business_days": 2,
-    "r_pct_of_entry": 1.7692187255362497,
-    "realized_R": 11.300884955752183,
+    "exit_date": "2026-03-31",
+    "hold_business_days": 3,
+    "r_pct_of_entry": 2.9411764705882444,
+    "realized_R": 5.1232857040281266,
     "trims": [
       {
-        "date": "2026-03-30",
-        "price": 51.1,
-        "pct_of_position": 100.0,
+        "date": "2026-03-31",
+        "price": 56.2,
+        "pct_of_position": 33.28785811732606,
+        "type": "trim_1_3"
+      },
+      {
+        "date": "2026-03-31",
+        "price": 54.2,
+        "pct_of_position": 66.71214188267395,
         "type": "sell_rest"
       }
     ]
@@ -46,22 +52,22 @@
   },
   "setup_type": "Short in mixed structure",
   "path_analytics": {
-    "mfe_R": 12.884955752212356,
+    "mfe_R": 8.047368421052603,
     "mfe_date": "2026-03-30",
-    "mae_R": 6.74336283185839,
+    "mae_R": 3.6263157894736735,
     "mae_date": "2026-03-30",
     "optimal_exit_price": 71.49,
     "optimal_exit_date": "2026-03-30",
-    "optimal_R": 12.884955752212356,
+    "optimal_R": 8.047368421052603,
     "days_to_optimal": 4,
-    "realized_R": 11.300884955752183,
-    "capture_pct": 87.70604395604396,
-    "missed_R": 1.584070796460173,
-    "post_exit_R": 21.389380530973398,
-    "hold_calendar_days": 4
+    "realized_R": 5.1232857040281266,
+    "capture_pct": 63.66411273808682,
+    "missed_R": 2.9240827170244765,
+    "post_exit_R": 13.105263157894694,
+    "hold_calendar_days": 5
   },
   "lesson": "Good execution",
-  "narrative": "Entered **AXTI** short on 2026-03-26 at $63.87 with stop $65.00 (1R = $1.13/sh = 1.8% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($48.73), RSI 61, 82% through 52W range, ATR 13.4% of price. Realized **+11.30R**, peak was **+12.88R** on 2026-03-30 (day +4) \u2014 captured **88%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **AXTI** short on 2026-03-26 at $64.60 with stop $66.50 (1R = $1.90/sh = 2.9% of entry). Setup: **Short in mixed structure** \u2014 price above MA20 ($48.73), RSI 61, 82% through 52W range, ATR 13.4% of price. Realized **+5.12R**, peak was **+8.05R** on 2026-03-30 (day +4) \u2014 captured **64%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-02-24",
@@ -318,6 +324,14 @@
       "low": 53.77,
       "close": 63.12,
       "volume": 15924900.0
+    },
+    {
+      "date": "2026-04-10",
+      "open": 66.0,
+      "high": 66.8,
+      "low": 59.0,
+      "close": 64.18,
+      "volume": 12835000.0
     }
   ]
 }

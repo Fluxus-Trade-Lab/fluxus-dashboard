@@ -1,26 +1,32 @@
 {
   "trade_id": "NOK_2026-04-30_000",
-  "generated_at": "2026-09-21T22:25:50+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NOK",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-04-30",
-    "entry_price": 12.4,
-    "stop_price": 12.25,
-    "initial_stop": 12.25,
+    "entry_price": 12.28,
+    "stop_price": 12.09,
+    "initial_stop": 12.09,
     "closed": true,
     "remaining_pct": 0.0,
     "exit_date": "2026-05-07",
     "hold_business_days": 5,
-    "r_pct_of_entry": 1.2096774193548416,
-    "realized_R": -0.6666666666666627,
+    "r_pct_of_entry": 1.5472312703583022,
+    "realized_R": 4.105263157894754,
     "trims": [
+      {
+        "date": "2026-05-05",
+        "price": 13.82,
+        "pct_of_position": 50.0,
+        "type": "trim_1_2"
+      },
       {
         "date": "2026-05-07",
         "price": 12.3,
-        "pct_of_position": 100.0,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -46,22 +52,22 @@
   },
   "setup_type": "Extended long \u2014 RSI overbought",
   "path_analytics": {
-    "mfe_R": 10.533333333333308,
+    "mfe_R": 8.94736842105266,
     "mfe_date": "2026-05-05",
-    "mae_R": 1.933333333333335,
+    "mae_R": 0.8947368421052652,
     "mae_date": "2026-04-30",
     "optimal_exit_price": 13.98,
     "optimal_exit_date": "2026-05-05",
-    "optimal_R": 10.533333333333308,
+    "optimal_R": 8.94736842105266,
     "days_to_optimal": 5,
-    "realized_R": -0.6666666666666627,
-    "capture_pct": -6.329113924050612,
-    "missed_R": 11.19999999999997,
-    "post_exit_R": 18.59999999999995,
+    "realized_R": 4.105263157894754,
+    "capture_pct": 45.882352941176514,
+    "missed_R": 4.842105263157906,
+    "post_exit_R": 15.315789473684251,
     "hold_calendar_days": 7
   },
-  "lesson": "Stopped too tight",
-  "narrative": "Entered **NOK** long on 2026-04-30 at $12.40 with stop $12.25 (1R = $0.15/sh = 1.2% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.27), RSI 82, 100% through 52W range, ATR 5.1% of price. Realized **-0.67R**, peak was **+10.53R** on 2026-05-05 (day +5) \u2014 captured **-6%** of the move. **Lesson: Stopped too tight.**",
+  "lesson": "Premature trim",
+  "narrative": "Entered **NOK** long on 2026-04-30 at $12.28 with stop $12.09 (1R = $0.19/sh = 1.5% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.27), RSI 82, 100% through 52W range, ATR 5.1% of price. Realized **+4.11R**, peak was **+8.95R** on 2026-05-05 (day +5) \u2014 captured **46%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-03-31",

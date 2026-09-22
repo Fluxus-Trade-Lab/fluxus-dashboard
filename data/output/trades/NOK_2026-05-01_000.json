@@ -1,0 +1,323 @@
+{
+  "trade_id": "NOK_2026-05-01_000",
+  "generated_at": "2026-09-22T22:25:43+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "NOK",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-05-01",
+    "entry_price": 12.4,
+    "stop_price": 12.25,
+    "initial_stop": 12.25,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-05-07",
+    "hold_business_days": 4,
+    "r_pct_of_entry": 1.2096774193548416,
+    "realized_R": -0.6666666666666627,
+    "trims": [
+      {
+        "date": "2026-05-07",
+        "price": 12.3,
+        "pct_of_position": 100.0,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 13.3,
+    "open": 13.05,
+    "high": 13.89,
+    "low": 12.87,
+    "volume": 148599600.0,
+    "ma20": 10.494,
+    "ma50": 9.029,
+    "ma200": null,
+    "rsi14": 82.97503535907782,
+    "atr14": 0.6578571428571429,
+    "atr14_pct": 4.946294307196563,
+    "high_52w": 13.89,
+    "low_52w": 4.63,
+    "position_in_52w_range_pct": 93.62850971922246,
+    "high_20d": 13.89,
+    "low_10d": 9.79,
+    "low_5d": 10.46
+  },
+  "setup_type": "Extended long \u2014 RSI overbought",
+  "path_analytics": {
+    "mfe_R": 10.533333333333308,
+    "mfe_date": "2026-05-05",
+    "mae_R": 1.799999999999993,
+    "mae_date": "2026-05-07",
+    "optimal_exit_price": 13.98,
+    "optimal_exit_date": "2026-05-05",
+    "optimal_R": 10.533333333333308,
+    "days_to_optimal": 4,
+    "realized_R": -0.6666666666666627,
+    "capture_pct": -6.329113924050612,
+    "missed_R": 11.19999999999997,
+    "post_exit_R": 18.59999999999995,
+    "hold_calendar_days": 6
+  },
+  "lesson": "Stopped too tight",
+  "narrative": "Entered **NOK** long on 2026-05-01 at $12.40 with stop $12.25 (1R = $0.15/sh = 1.2% of entry). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($10.49), RSI 83, 94% through 52W range, ATR 4.9% of price. Realized **-0.67R**, peak was **+10.53R** on 2026-05-05 (day +4) \u2014 captured **-6%** of the move. **Lesson: Stopped too tight.**",
+  "ohlc_window": [
+    {
+      "date": "2026-04-01",
+      "open": 8.13,
+      "high": 8.43,
+      "low": 8.08,
+      "close": 8.27,
+      "volume": 59809900.0
+    },
+    {
+      "date": "2026-04-02",
+      "open": 8.08,
+      "high": 8.84,
+      "low": 8.07,
+      "close": 8.82,
+      "volume": 92257600.0
+    },
+    {
+      "date": "2026-04-06",
+      "open": 9.15,
+      "high": 9.29,
+      "low": 8.84,
+      "close": 8.89,
+      "volume": 83637500.0
+    },
+    {
+      "date": "2026-04-07",
+      "open": 8.58,
+      "high": 8.92,
+      "low": 8.52,
+      "close": 8.85,
+      "volume": 78345300.0
+    },
+    {
+      "date": "2026-04-08",
+      "open": 9.18,
+      "high": 9.52,
+      "low": 9.1,
+      "close": 9.44,
+      "volume": 107640100.0
+    },
+    {
+      "date": "2026-04-09",
+      "open": 9.41,
+      "high": 9.68,
+      "low": 9.39,
+      "close": 9.55,
+      "volume": 92391800.0
+    },
+    {
+      "date": "2026-04-10",
+      "open": 9.73,
+      "high": 9.87,
+      "low": 9.36,
+      "close": 9.46,
+      "volume": 81032700.0
+    },
+    {
+      "date": "2026-04-13",
+      "open": 9.78,
+      "high": 10.48,
+      "low": 9.69,
+      "close": 10.37,
+      "volume": 153190900.0
+    },
+    {
+      "date": "2026-04-14",
+      "open": 10.34,
+      "high": 10.56,
+      "low": 10.14,
+      "close": 10.35,
+      "volume": 99606300.0
+    },
+    {
+      "date": "2026-04-15",
+      "open": 10.37,
+      "high": 10.37,
+      "low": 9.94,
+      "close": 9.99,
+      "volume": 74676500.0
+    },
+    {
+      "date": "2026-04-16",
+      "open": 10.08,
+      "high": 10.29,
+      "low": 9.94,
+      "close": 10.29,
+      "volume": 50131100.0
+    },
+    {
+      "date": "2026-04-17",
+      "open": 10.48,
+      "high": 10.49,
+      "low": 10.19,
+      "close": 10.31,
+      "volume": 48836300.0
+    },
+    {
+      "date": "2026-04-20",
+      "open": 10.44,
+      "high": 10.69,
+      "low": 10.44,
+      "close": 10.6,
+      "volume": 88700500.0
+    },
+    {
+      "date": "2026-04-21",
+      "open": 10.6,
+      "high": 10.67,
+      "low": 10.36,
+      "close": 10.4,
+      "volume": 61591000.0
+    },
+    {
+      "date": "2026-04-22",
+      "open": 10.29,
+      "high": 10.33,
+      "low": 9.79,
+      "close": 9.86,
+      "volume": 110701800.0
+    },
+    {
+      "date": "2026-04-23",
+      "open": 10.78,
+      "high": 10.86,
+      "low": 10.1,
+      "close": 10.33,
+      "volume": 176863900.0
+    },
+    {
+      "date": "2026-04-24",
+      "open": 10.65,
+      "high": 10.9,
+      "low": 10.31,
+      "close": 10.46,
+      "volume": 126574500.0
+    },
+    {
+      "date": "2026-04-27",
+      "open": 10.73,
+      "high": 11.3,
+      "low": 10.69,
+      "close": 10.76,
+      "volume": 141159900.0
+    },
+    {
+      "date": "2026-04-28",
+      "open": 10.62,
+      "high": 11.31,
+      "low": 10.46,
+      "close": 11.3,
+      "volume": 135363200.0
+    },
+    {
+      "date": "2026-04-29",
+      "open": 11.63,
+      "high": 12.6,
+      "low": 11.58,
+      "close": 12.46,
+      "volume": 159946000.0
+    },
+    {
+      "date": "2026-04-30",
+      "open": 12.3,
+      "high": 12.92,
+      "low": 12.11,
+      "close": 12.91,
+      "volume": 136493600.0
+    },
+    {
+      "date": "2026-05-01",
+      "open": 13.05,
+      "high": 13.89,
+      "low": 12.87,
+      "close": 13.3,
+      "volume": 148599600.0
+    },
+    {
+      "date": "2026-05-04",
+      "open": 13.38,
+      "high": 13.53,
+      "low": 13.02,
+      "close": 13.14,
+      "volume": 122095600.0
+    },
+    {
+      "date": "2026-05-05",
+      "open": 13.63,
+      "high": 13.98,
+      "low": 13.23,
+      "close": 13.42,
+      "volume": 95319000.0
+    },
+    {
+      "date": "2026-05-06",
+      "open": 13.35,
+      "high": 13.54,
+      "low": 13.01,
+      "close": 13.19,
+      "volume": 121621400.0
+    },
+    {
+      "date": "2026-05-07",
+      "open": 12.81,
+      "high": 12.84,
+      "low": 12.13,
+      "close": 12.35,
+      "volume": 128229200.0
+    },
+    {
+      "date": "2026-05-08",
+      "open": 12.35,
+      "high": 13.05,
+      "low": 12.35,
+      "close": 12.82,
+      "volume": 97077400.0
+    },
+    {
+      "date": "2026-05-11",
+      "open": 12.97,
+      "high": 14.05,
+      "low": 12.76,
+      "close": 13.92,
+      "volume": 143926900.0
+    },
+    {
+      "date": "2026-05-12",
+      "open": 13.5,
+      "high": 13.62,
+      "low": 12.83,
+      "close": 13.17,
+      "volume": 104242900.0
+    },
+    {
+      "date": "2026-05-13",
+      "open": 13.81,
+      "high": 14.83,
+      "low": 13.47,
+      "close": 14.71,
+      "volume": 151685500.0
+    },
+    {
+      "date": "2026-05-14",
+      "open": 15.15,
+      "high": 15.19,
+      "low": 14.3,
+      "close": 14.46,
+      "volume": 137481600.0
+    },
+    {
+      "date": "2026-05-15",
+      "open": 13.74,
+      "high": 14.06,
+      "low": 13.62,
+      "close": 13.95,
+      "volume": 109259600.0
+    }
+  ]
+}

@@ -1,26 +1,32 @@
 {
   "trade_id": "NOWL_2026-05-19_000",
-  "generated_at": "2026-09-21T22:25:51+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NOWL",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-05-19",
-    "entry_price": 5.06,
+    "entry_price": 5.08,
     "stop_price": 4.8,
     "initial_stop": 4.8,
     "closed": true,
     "remaining_pct": 0.0,
     "exit_date": "2026-05-21",
     "hold_business_days": 2,
-    "r_pct_of_entry": 5.138339920948613,
-    "realized_R": -1.3076923076923082,
+    "r_pct_of_entry": 5.511811023622052,
+    "realized_R": -1.1428571428571428,
     "trims": [
       {
+        "date": "2026-05-20",
+        "price": 4.76,
+        "pct_of_position": 50.0,
+        "type": "trim_1_2"
+      },
+      {
         "date": "2026-05-21",
-        "price": 4.72,
-        "pct_of_position": 100.0,
+        "price": 4.76,
+        "pct_of_position": 50.0,
         "type": "sell_rest"
       }
     ]
@@ -46,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 3.3076923076923115,
+    "mfe_R": 2.999999999999997,
     "mfe_date": "2026-05-19",
-    "mae_R": 1.7884615384615394,
+    "mae_R": 1.7321428571428568,
     "mae_date": "2026-05-20",
     "optimal_exit_price": 5.92,
     "optimal_exit_date": "2026-05-19",
-    "optimal_R": 3.3076923076923115,
+    "optimal_R": 2.999999999999997,
     "days_to_optimal": 0,
-    "realized_R": -1.3076923076923082,
-    "capture_pct": -39.5348837209302,
-    "missed_R": 4.615384615384619,
-    "post_exit_R": 8.692307692307702,
+    "realized_R": -1.1428571428571428,
+    "capture_pct": -38.09523809523813,
+    "missed_R": 4.14285714285714,
+    "post_exit_R": 7.999999999999994,
     "hold_calendar_days": 2
   },
   "lesson": "Stopped too tight",
-  "narrative": "Entered **NOWL** long on 2026-05-19 at $5.06 with stop $4.80 (1R = $0.26/sh = 5.1% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.22), RSI 56, 7% through 52W range, ATR 9.7% of price. Realized **-1.31R**, peak was **+3.31R** on 2026-05-19 (day +0) \u2014 captured **-40%** of the move. **Lesson: Stopped too tight.**",
+  "narrative": "Entered **NOWL** long on 2026-05-19 at $5.08 with stop $4.80 (1R = $0.28/sh = 5.5% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($4.22), RSI 56, 7% through 52W range, ATR 9.7% of price. Realized **-1.14R**, peak was **+3.00R** on 2026-05-19 (day +0) \u2014 captured **-38%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2026-04-20",

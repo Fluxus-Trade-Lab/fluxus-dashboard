@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-21T22:25:56.107670+00:00",
-  "as_of": "2026-09-21",
+  "timestamp": "2026-09-22T22:26:13.937063+00:00",
+  "as_of": "2026-09-22",
   "definition": "EP hit = ep_stockbee UNION ep_qullamaggie (author-verbatim, from 2026-09-18) UNION retired episodic_pivot (rows <= 2026-09-17, self-invented, kept for historical continuity only -- see METRIC_SOURCES.md). Used as a proxy for 'post-earnings gap', not filtered by an actual earnings date (none exists universe-wide).",
   "season_window_rule": "Earnings season has no SEC/exchange-official date range (only a 45-day filing deadline). We use the widely cited convention (FINRA / Yahoo Finance / CFI): quarter-end + ~2 weeks through the end of the following month. Self-invented operationalization of a descriptive convention -- see METRIC_SOURCES.md.",
   "industry_source": "Finviz industry field, data/output/universe.json (current snapshot; see module docstring)",

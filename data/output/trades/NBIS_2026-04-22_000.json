@@ -1,26 +1,32 @@
 {
   "trade_id": "NBIS_2026-04-22_000",
-  "generated_at": "2026-09-21T22:25:50+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NBIS",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-04-22",
-    "entry_price": 159.13,
+    "entry_price": 160.44,
     "stop_price": 155.0,
     "initial_stop": 155.0,
     "closed": true,
     "remaining_pct": 0.0,
     "exit_date": "2026-04-23",
     "hold_business_days": 1,
-    "r_pct_of_entry": 2.595362282410605,
-    "realized_R": -0.26876513317190953,
+    "r_pct_of_entry": 3.390675641984541,
+    "realized_R": -0.5118619544592027,
     "trims": [
+      {
+        "date": "2026-04-22",
+        "price": 157.29,
+        "pct_of_position": 49.93548387096774,
+        "type": "trim_1_2"
+      },
       {
         "date": "2026-04-23",
         "price": 158.02,
-        "pct_of_position": 100.0,
+        "pct_of_position": 50.064516129032256,
         "type": "sell_rest"
       }
     ]
@@ -46,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.009685230024218,
+    "mfe_R": 1.2849264705882375,
     "mfe_date": "2026-04-22",
-    "mae_R": 1.225181598062956,
+    "mae_R": 1.1709558823529425,
     "mae_date": "2026-04-23",
     "optimal_exit_price": 167.43,
     "optimal_exit_date": "2026-04-22",
-    "optimal_R": 2.009685230024218,
+    "optimal_R": 1.2849264705882375,
     "days_to_optimal": 0,
-    "realized_R": -0.26876513317190953,
-    "capture_pct": -13.373493975903417,
-    "missed_R": 2.2784503631961277,
-    "post_exit_R": 1.4818401937046033,
+    "realized_R": -0.5118619544592027,
+    "capture_pct": -39.835894595966494,
+    "missed_R": 1.7967884250474402,
+    "post_exit_R": 0.884191176470589,
     "hold_calendar_days": 1
   },
-  "lesson": "Choppy / no edge",
-  "narrative": "Entered **NBIS** long on 2026-04-22 at $159.13 with stop $155.00 (1R = $4.13/sh = 2.6% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($132.13), RSI 66, 87% through 52W range, ATR 6.9% of price. Realized **-0.27R**, peak was **+2.01R** on 2026-04-22 (day +0) \u2014 captured **-13%** of the move. **Lesson: Choppy / no edge.**",
+  "lesson": "Failed setup",
+  "narrative": "Entered **NBIS** long on 2026-04-22 at $160.44 with stop $155.00 (1R = $5.44/sh = 3.4% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($132.13), RSI 66, 87% through 52W range, ATR 6.9% of price. Realized **-0.51R**, peak was **+1.28R** on 2026-04-22 (day +0) \u2014 captured **-40%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-03-23",

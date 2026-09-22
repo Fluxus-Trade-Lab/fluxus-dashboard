@@ -1,25 +1,25 @@
 {
   "trade_id": "ARM_2026-08-04_000",
-  "generated_at": "2026-09-21T22:25:51+00:00",
+  "generated_at": "2026-09-22T22:25:44+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-08-04",
-    "entry_price": 277.12,
-    "stop_price": 272.0,
-    "initial_stop": 272.0,
+    "entry_price": 264.49,
+    "stop_price": 255.0,
+    "initial_stop": 255.0,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-08-05",
-    "hold_business_days": 1,
-    "r_pct_of_entry": 1.8475750577367223,
-    "realized_R": -0.33398437499999567,
+    "exit_date": "2026-08-07",
+    "hold_business_days": 3,
+    "r_pct_of_entry": 3.588037354909452,
+    "realized_R": 3.225500526870388,
     "trims": [
       {
-        "date": "2026-08-05",
-        "price": 275.41,
+        "date": "2026-08-07",
+        "price": 295.1,
         "pct_of_position": 100.0,
         "type": "sell_rest"
       }
@@ -46,22 +46,22 @@
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
   "path_analytics": {
-    "mfe_R": 1.200976562499999,
-    "mfe_date": "2026-08-04",
-    "mae_R": 5.082031249999997,
+    "mfe_R": 3.66649104320337,
+    "mfe_date": "2026-08-07",
+    "mae_R": 1.4109589041095894,
     "mae_date": "2026-08-04",
-    "optimal_exit_price": 283.269,
-    "optimal_exit_date": "2026-08-04",
-    "optimal_R": 1.200976562499999,
-    "days_to_optimal": 0,
-    "realized_R": -0.33398437499999567,
-    "capture_pct": -27.809399902422822,
-    "missed_R": 1.5349609374999948,
-    "post_exit_R": 4.3291015625,
-    "hold_calendar_days": 1
+    "optimal_exit_price": 299.285,
+    "optimal_exit_date": "2026-08-07",
+    "optimal_R": 3.66649104320337,
+    "days_to_optimal": 3,
+    "realized_R": 3.225500526870388,
+    "capture_pct": 87.97240982899842,
+    "missed_R": 0.4409905163329819,
+    "post_exit_R": 2.7102212855637458,
+    "hold_calendar_days": 3
   },
-  "lesson": "Choppy / no edge",
-  "narrative": "Entered **ARM** long on 2026-08-04 at $277.12 with stop $272.00 (1R = $5.12/sh = 1.8% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($273.02), MA stack mixed, RSI 50, 51% through 52W range, ATR 8.6% of price. Realized **-0.33R**, peak was **+1.20R** on 2026-08-04 (day +0) \u2014 captured **-28%** of the move. **Lesson: Choppy / no edge.**",
+  "lesson": "Good execution",
+  "narrative": "Entered **ARM** long on 2026-08-04 at $264.49 with stop $255.00 (1R = $9.49/sh = 3.6% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($273.02), MA stack mixed, RSI 50, 51% through 52W range, ATR 8.6% of price. Realized **+3.23R**, peak was **+3.67R** on 2026-08-07 (day +3) \u2014 captured **88%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-06",
@@ -302,6 +302,14 @@
       "low": 274.455,
       "close": 279.44,
       "volume": 2102000.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 285.0,
+      "high": 287.15,
+      "low": 271.28,
+      "close": 271.43,
+      "volume": 3713800.0
     }
   ]
 }

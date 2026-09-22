@@ -1,6 +1,6 @@
 {
   "trade_id": "SLV_2026-06-24_000",
-  "generated_at": "2026-09-21T22:25:51+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SLV",
@@ -8,25 +8,31 @@
     "sector": "Unknown",
     "entry_date": "2026-06-24",
     "entry_price": 53.0,
-    "stop_price": 50.0,
-    "initial_stop": 50.0,
+    "stop_price": 51.0,
+    "initial_stop": 51.0,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-07-08",
-    "hold_business_days": 10,
-    "r_pct_of_entry": 5.660377358490567,
-    "realized_R": -0.22671971066907767,
+    "exit_date": "2026-07-13",
+    "hold_business_days": 13,
+    "r_pct_of_entry": 3.7735849056603774,
+    "realized_R": -0.22340672074159906,
     "trims": [
       {
         "date": "2026-06-25",
         "price": 52.76,
-        "pct_of_position": 49.98191681735985,
+        "pct_of_position": 33.31402085747393,
+        "type": "trim_1_3"
+      },
+      {
+        "date": "2026-07-13",
+        "price": 52.6,
+        "pct_of_position": 50.0,
         "type": "trim_1_2"
       },
       {
-        "date": "2026-07-08",
-        "price": 51.88,
-        "pct_of_position": 50.01808318264015,
+        "date": "2026-07-13",
+        "price": 52.0,
+        "pct_of_position": 16.685979142526072,
         "type": "sell_rest"
       }
     ]
@@ -52,22 +58,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 1.1233333333333324,
+    "mfe_R": 1.6849999999999987,
     "mfe_date": "2026-07-06",
-    "mae_R": 0.896666666666666,
+    "mae_R": 1.3449999999999989,
     "mae_date": "2026-06-24",
     "optimal_exit_price": 56.37,
     "optimal_exit_date": "2026-07-06",
-    "optimal_R": 1.1233333333333324,
+    "optimal_R": 1.6849999999999987,
     "days_to_optimal": 12,
-    "realized_R": -0.22671971066907767,
-    "capture_pct": -20.18276356104551,
-    "missed_R": 1.35005304400241,
-    "post_exit_R": 0.5933333333333337,
-    "hold_calendar_days": 14
+    "realized_R": -0.22340672074159906,
+    "capture_pct": -13.25855909445693,
+    "missed_R": 1.9084067207415978,
+    "post_exit_R": 1.0399999999999991,
+    "hold_calendar_days": 19
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **SLV** long on 2026-06-24 at $53.00 with stop $50.00 (1R = $3.00/sh = 5.7% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($62.42), RSI 27, 19% through 52W range, ATR 5.7% of price. Realized **-0.23R**, peak was **+1.12R** on 2026-07-06 (day +12) \u2014 captured **-20%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **SLV** long on 2026-06-24 at $53.00 with stop $51.00 (1R = $2.00/sh = 3.8% of entry). Setup: **Long in mixed structure** \u2014 price below MA20 ($62.42), RSI 27, 19% through 52W range, ATR 5.7% of price. Realized **-0.22R**, peak was **+1.68R** on 2026-07-06 (day +12) \u2014 captured **-13%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-05-26",
@@ -364,6 +370,38 @@
       "low": 49.61,
       "close": 50.78,
       "volume": 15482000.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 51.2,
+      "high": 51.7,
+      "low": 50.95,
+      "close": 50.98,
+      "volume": 12897600.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 52.86,
+      "high": 53.52,
+      "low": 52.66,
+      "close": 53.08,
+      "volume": 12776300.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 53.78,
+      "high": 55.08,
+      "low": 53.78,
+      "close": 53.92,
+      "volume": 13925300.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 52.09,
+      "high": 52.46,
+      "low": 51.77,
+      "close": 52.06,
+      "volume": 13725000.0
     }
   ]
 }

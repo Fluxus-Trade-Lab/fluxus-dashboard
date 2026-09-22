@@ -1,26 +1,32 @@
 {
   "trade_id": "VG_2026-03-19_000",
-  "generated_at": "2026-09-21T22:25:50+00:00",
+  "generated_at": "2026-09-22T22:25:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "VG",
     "direction": "long",
     "sector": "Unknown",
     "entry_date": "2026-03-19",
-    "entry_price": 14.9,
-    "stop_price": 13.8,
-    "initial_stop": 13.8,
+    "entry_price": 15.6,
+    "stop_price": 15.1,
+    "initial_stop": 15.1,
     "closed": true,
     "remaining_pct": 0.0,
-    "exit_date": "2026-03-31",
-    "hold_business_days": 8,
-    "r_pct_of_entry": 7.382550335570468,
-    "realized_R": -0.2545454545454557,
+    "exit_date": "2026-03-19",
+    "hold_business_days": 0,
+    "r_pct_of_entry": 3.2051282051282057,
+    "realized_R": 1.199935390082377,
     "trims": [
       {
-        "date": "2026-03-31",
-        "price": 14.62,
-        "pct_of_position": 100.0,
+        "date": "2026-03-19",
+        "price": 16.4,
+        "pct_of_position": 49.991923760297205,
+        "type": "trim_1_2"
+      },
+      {
+        "date": "2026-03-19",
+        "price": 16.0,
+        "pct_of_position": 50.008076239702795,
         "type": "sell_rest"
       }
     ]
@@ -46,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.4088181818181837,
-    "mfe_date": "2026-03-24",
-    "mae_R": 1.0229090909090908,
+    "mfe_R": 2.2857999999999983,
+    "mfe_date": "2026-03-19",
+    "mae_R": 3.6503999999999976,
     "mae_date": "2026-03-19",
-    "optimal_exit_price": 17.5497,
-    "optimal_exit_date": "2026-03-24",
-    "optimal_R": 2.4088181818181837,
-    "days_to_optimal": 5,
-    "realized_R": -0.2545454545454557,
-    "capture_pct": -10.567234026493603,
-    "missed_R": 2.6633636363636395,
-    "post_exit_R": 1.7387272727272727,
-    "hold_calendar_days": 12
+    "optimal_exit_price": 16.7429,
+    "optimal_exit_date": "2026-03-19",
+    "optimal_R": 2.2857999999999983,
+    "days_to_optimal": 0,
+    "realized_R": 1.199935390082377,
+    "capture_pct": 52.49520474592606,
+    "missed_R": 1.0858646099176212,
+    "post_exit_R": 3.8994000000000035,
+    "hold_calendar_days": 0
   },
-  "lesson": "Choppy / no edge",
-  "narrative": "Entered **VG** long on 2026-03-19 at $14.90 with stop $13.80 (1R = $1.10/sh = 7.4% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($11.51), RSI 68, 77% through 52W range, ATR 10.1% of price. Realized **-0.25R**, peak was **+2.41R** on 2026-03-24 (day +5) \u2014 captured **-11%** of the move. **Lesson: Choppy / no edge.**",
+  "lesson": "Good execution",
+  "narrative": "Entered **VG** long on 2026-03-19 at $15.60 with stop $15.10 (1R = $0.50/sh = 3.2% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($11.51), RSI 68, 77% through 52W range, ATR 10.1% of price. Realized **+1.20R**, peak was **+2.29R** on 2026-03-19 (day +0) \u2014 captured **52%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-02-17",
@@ -294,78 +300,6 @@
       "low": 16.5935,
       "close": 17.46,
       "volume": 27180900.0
-    },
-    {
-      "date": "2026-03-30",
-      "open": 17.2309,
-      "high": 17.5397,
-      "low": 16.5935,
-      "close": 16.8226,
-      "volume": 23209900.0
-    },
-    {
-      "date": "2026-03-31",
-      "open": 15.956,
-      "high": 16.3744,
-      "low": 15.2887,
-      "close": 15.6971,
-      "volume": 44639200.0
-    },
-    {
-      "date": "2026-04-01",
-      "open": 15.0796,
-      "high": 15.6473,
-      "low": 14.1632,
-      "close": 14.6214,
-      "volume": 38368300.0
-    },
-    {
-      "date": "2026-04-02",
-      "open": 15.6871,
-      "high": 15.7369,
-      "low": 14.3525,
-      "close": 14.5816,
-      "volume": 32333700.0
-    },
-    {
-      "date": "2026-04-06",
-      "open": 14.472,
-      "high": 15.956,
-      "low": 14.3226,
-      "close": 15.8764,
-      "volume": 24975600.0
-    },
-    {
-      "date": "2026-04-07",
-      "open": 15.6373,
-      "high": 16.8126,
-      "low": 15.5875,
-      "close": 15.9262,
-      "volume": 23741400.0
-    },
-    {
-      "date": "2026-04-08",
-      "open": 13.2569,
-      "high": 14.5517,
-      "low": 12.9979,
-      "close": 14.3824,
-      "volume": 44913800.0
-    },
-    {
-      "date": "2026-04-09",
-      "open": 14.4421,
-      "high": 14.5716,
-      "low": 12.5597,
-      "close": 12.9381,
-      "volume": 39311300.0
-    },
-    {
-      "date": "2026-04-10",
-      "open": 12.9182,
-      "high": 13.1274,
-      "low": 12.4601,
-      "close": 12.9182,
-      "volume": 24787100.0
     }
   ]
 }
