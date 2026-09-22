@@ -12,48 +12,49 @@
    跳过以 `<`/`Stop hook feedback`/`Another Claude` 开头的注入内容、跳过纯 tool_result 消息，
    content 是 list 时把里面的 text 块拼起来再判断——这样带图的裁决不会因为 content 是 list
    被整条跳过）。
-2. 命中裁决**正则**（带上下文，09-22 复核两轮收紧：第 1 轮把单字词表换成带上下文正则，
+2. 命中裁决**正则**（带上下文，09-22 复核三轮收紧：第 1 轮把单字词表换成带上下文正则，
    第 2 轮再排除「你记住了吗」「这个定了多少钱？」「别再下雨」「他们都这样说」
-   「以后就知道了」这类句式）才继续查，否则直接放行。
-3. 放行条件（任一即可）：
-   - 本轮回复（last_assistant_message）末尾有 `ruling-recorded: <...>` 或 `ruling-none: <理由>`；
-   - fluxus-ops origin/main 最近 30 分钟内有落盘裁决的提交（`memory: remember` / `andy ruled`）。
+   「以后就知道了」这类句式，第 3 轮再排除问句结尾、「他/她/他们/它以后」、
+   「就定了个大概」这类、并去掉 `> ` 引用行再判）才继续查，否则直接放行。
+3. 放行条件：本轮回复（last_assistant_message）末尾有 `ruling-recorded: <...>` 或
+   `ruling-none: <理由>`。
+   09-22 复核第 3 轮删掉了「fluxus-ops 30 分钟内有 remember/andy 提交就放行」这条——
+   它看的是整个仓库，任何一条线记一次，所有会话接下来 30 分钟都会被放行（真事故：
+   Growth Gary 记账顺带放行了 Andy 窗口里的真裁决），而且让测试依赖真实仓库路径。
 4. 都没有 → 拦一次。
 
-放行是默认失败模式：stop_hook_active、字段缺失、transcript 读不到、git 读不到、
-读 git 超时（5 秒）、任何异常——一律放行。这个 hook 拦的是所有交互会话（含 Andy
-自己在用的那个），卡死它比漏拦一次贵得多。
+放行是默认失败模式：stop_hook_active、字段缺失、transcript 读不到、任何异常——
+一律放行。这个 hook 拦的是所有交互会话（含 Andy 自己在用的那个），卡死它比漏拦一次贵得多。
 """
 from __future__ import annotations
 
 import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, Iterator, Optional
 
-GIT_TIMEOUT_SEC = 5
-SINCE_MINUTES = 30
-FLUXUS_OPS = Path.home() / "Documents" / "fluxus-ops"
 REVERSE_READ_CHUNK = 1 << 20  # 1 MiB；真实 transcript 可到几百 MB，不整份读进内存
 
-# 09-22 复核第 2 轮再收紧（复核员实测：新增 5 句日常话不再误拦，第 1 轮那 20 句结果不变）：
-#   - 「记住」只认句首 `记住[:：，]`（「你记住…了吗」「我记住了」这类不再命中）
-#   - 「定了」排除后面紧跟问句（「这个定了多少价格？」不再命中）
-#   - 「别再」只认后面紧跟具体动词（「别再下雨就好了」不再命中）
-#   - 「都这样」要求带出具体动作（「他们都这样说」不再命中）
-#   - 「以后就」排除「以后就知道/明白/懂了」这类
+# 09-22 复核三轮收紧：
+#   第 1 轮：单字词表 → 带上下文正则。
+#   第 2 轮：「记住」只认句首 `记住[:：，]`；「定了」排除紧跟问句；「别再」只认后面紧跟
+#            具体动词；「都这样」要求带出具体动作；「以后就」排除「以后就知道/明白/懂」。
+#   第 3 轮：「不要再」和「别再」一样只认具体动词；「以后/今后」前面是「他/她/他们/它」时
+#            不判；「就定了」排除后面紧跟「个/了个/大概」；判断前先去掉 `> ` 引用行、
+#            整句以问号（？/?）结尾时不判。
 RULING_PATTERNS = tuple(re.compile(p) for p in (
-    r"(以后|今后)(都|一律|每次|统一|别|不要|不许|就(?!(知道|明白|懂)))",
+    r"(?<!他)(?<!她)(?<!它)(?<!他们)(以后|今后)(都|一律|每次|统一|别|不要|不许|就(?!(知道|明白|懂)))",
     r"都这样(做|办|写|画|弄|来)",
     r"写进(去|规矩|宪法|skill|记忆)",
     r"^记住[:：，]",
-    r"(这个|就)定了(?!.{0,6}[？?])",
-    r"不要再|别再(给|用|发|做|让|写|加)",
+    r"(这个|就)定了(?!.{0,6}[？?])(?!(个|了个|大概))",
+    r"(不要再|别再)(给|用|发|做|让|写|加)",
     r"(^|[，。\s])批(了|[，。！]|$)|都批|我批",
     r"不做了|这个不做(?!空|多)",
 ))
+
+QUOTE_LINE = re.compile(r"^>\s")
 
 # 没有 origin 字段的旧条目，靠内容前缀排除注入消息（Stop hook 反馈、跨会话消息、
 # <system-reminder>/<cross-session-message> 等 XML 包裹的合成内容）。
@@ -184,37 +185,18 @@ def _last_user_message(transcript_path: Optional[str]) -> Optional[str]:
     return None
 
 
+def _strip_quote_lines(text: str) -> str:
+    """去掉以 `> ` 开头的引用行——被引用/转述的话不算 Andy 现在自己说的。"""
+    return "\n".join(line for line in text.splitlines() if not QUOTE_LINE.match(line))
+
+
 def _hits_ruling_word(text: str) -> bool:
+    text = _strip_quote_lines(text).strip()
+    if not text:
+        return False
+    if text.endswith(("？", "?")):
+        return False
     return any(p.search(text) for p in RULING_PATTERNS)
-
-
-def _recent_ruling_commit() -> bool:
-    """fluxus-ops origin/main 过去 30 分钟内有没有落盘裁决的提交。
-
-    读不到仓库/网络、超时、任何异常 → False（不代表拦，只是这一条放行理由不成立，
-    还有 ruling-recorded/ruling-none 那条路）。
-    """
-    if not FLUXUS_OPS.is_dir():
-        return False
-    try:
-        result = subprocess.run(
-            [
-                "git", "-C", str(FLUXUS_OPS), "log",
-                "origin/main", f"--since={SINCE_MINUTES}.minutes",
-                "--pretty=%s",
-            ],
-            capture_output=True,
-            text=True,
-            timeout=GIT_TIMEOUT_SEC,
-        )
-    except Exception:  # noqa: BLE001 -- 超时/找不到 git 都算读不到
-        return False
-    if result.returncode != 0:
-        return False
-    for subject in result.stdout.splitlines():
-        if "memory: remember" in subject or "andy ruled" in subject:
-            return True
-    return False
 
 
 def verdict(payload: Dict) -> Dict:
@@ -230,9 +212,6 @@ def verdict(payload: Dict) -> Dict:
 
         assistant_text = payload.get("last_assistant_message")
         if isinstance(assistant_text, str) and RECORD_MARK.search(assistant_text):
-            return {}
-
-        if _recent_ruling_commit():
             return {}
 
         return {"decision": "block", "reason": REASON}

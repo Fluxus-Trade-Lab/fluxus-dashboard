@@ -5,7 +5,6 @@
 """
 import importlib.util
 import json
-import subprocess
 from pathlib import Path
 
 import pytest
@@ -20,6 +19,18 @@ def gate():
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m
+
+
+@pytest.fixture(autouse=True)
+def _no_real_paths(monkeypatch, tmp_path):
+    """09-22 复核第 3 轮点名：测试不许依赖本机真实路径（fluxus-ops 等）——fresh clone 里
+    跑这份测试必须全绿。把 HOME/Path.home() 都钉死在一次性的空目录上，任何意外引用
+    真实用户目录的代码路径都会立刻在 fresh clone / CI 里暴露，而不是「本机凑巧能跑」。
+    """
+    fake_home = tmp_path / "fake-home"
+    fake_home.mkdir(exist_ok=True)
+    monkeypatch.setenv("HOME", str(fake_home))
+    monkeypatch.setattr(Path, "home", lambda: fake_home)
 
 
 def _write_transcript(tmp_path: Path, user_texts, assistant_text="ok") -> Path:
@@ -111,64 +122,12 @@ def test_receipt_line_passes(gate, tmp_path, line):
     assert v == {}
 
 
-# ---------- fluxus-ops 30 分钟内有 remember 提交 → 放行 ----------
-
-def _init_fake_fluxus_ops(tmp_path: Path, subject: str) -> Path:
-    repo = tmp_path / "fluxus-ops"
-    bare = tmp_path / "fluxus-ops-bare.git"
-    subprocess.run(["git", "init", "-q", "-b", "main", str(repo)], check=True)
-    subprocess.run(["git", "-C", str(repo), "config", "user.email", "t@example.com"], check=True)
-    subprocess.run(["git", "-C", str(repo), "config", "user.name", "t"], check=True)
-    (repo / "f.txt").write_text("x", encoding="utf-8")
-    subprocess.run(["git", "-C", str(repo), "add", "f.txt"], check=True)
-    subprocess.run(["git", "-C", str(repo), "commit", "-q", "-m", subject], check=True)
-    subprocess.run(["git", "init", "-q", "--bare", str(bare)], check=True)
-    subprocess.run(["git", "-C", str(repo), "remote", "add", "origin", str(bare)], check=True)
-    subprocess.run(["git", "-C", str(repo), "push", "-q", "origin", "main"], check=True)
-    subprocess.run(["git", "-C", str(repo), "fetch", "-q", "origin"], check=True)
-    return repo
-
-
-def test_recent_remember_commit_passes(gate, tmp_path, monkeypatch):
-    repo = _init_fake_fluxus_ops(tmp_path, "memory: remember Andy 说以后都这样")
-    monkeypatch.setattr(gate, "FLUXUS_OPS", repo)
-    tp = _write_transcript(tmp_path, ["以后都这样办"])
-    v = gate.verdict({
-        "stop_hook_active": False,
-        "transcript_path": str(tp),
-        "last_assistant_message": "已处理，没写留痕行也行因为有 commit。",
-    })
-    assert v == {}
-
-
-def test_missing_fluxus_ops_dir_passes_to_block(gate, tmp_path, monkeypatch):
-    """读不到 fluxus-ops：这一条放行理由不成立，但仍要拦（没有别的放行理由）。"""
-    monkeypatch.setattr(gate, "FLUXUS_OPS", tmp_path / "does-not-exist")
-    tp = _write_transcript(tmp_path, ["以后都这样办"])
-    v = gate.verdict({
-        "stop_hook_active": False,
-        "transcript_path": str(tp),
-        "last_assistant_message": "收工。",
-    })
-    assert v.get("decision") == "block"
-
-
-def test_git_timeout_passes_gate_check_but_still_blocks_without_receipt(gate, tmp_path, monkeypatch):
-    """git 超时只影响这一条放行理由，不代表整个 hook 放行——总耗时仍在 5 秒超时内返回。"""
-    def _boom(*a, **k):
-        raise subprocess.TimeoutExpired(cmd="git", timeout=5)
-
-    monkeypatch.setattr(subprocess, "run", _boom)
-    repo_dir = tmp_path / "fluxus-ops"
-    repo_dir.mkdir()
-    monkeypatch.setattr(gate, "FLUXUS_OPS", repo_dir)
-    tp = _write_transcript(tmp_path, ["以后都这样办"])
-    v = gate.verdict({
-        "stop_hook_active": False,
-        "transcript_path": str(tp),
-        "last_assistant_message": "收工。",
-    })
-    assert v.get("decision") == "block"
+def test_fluxus_ops_recency_check_removed(gate):
+    """09-22 复核第 3 轮：删掉「fluxus-ops 30 分钟内有 remember/andy 提交就放行」——
+    它看的是整个仓库，任何一条线记一次就顺带放行所有会话，且让测试依赖真实仓库路径。
+    放行现在只认 ruling-recorded/ruling-none 这一条路。"""
+    assert not hasattr(gate, "_recent_ruling_commit")
+    assert not hasattr(gate, "FLUXUS_OPS")
 
 
 def test_any_unexpected_exception_passes(gate, monkeypatch):
@@ -208,7 +167,7 @@ TRUE_RULINGS = [
     "写进规矩里",
     "记住，以后都要这样",  # 09-22 第 2 轮：「记住」收紧为句首 `记住[:：，]`，原「记住这个规则」不再命中，换用例
     "这个就定了",
-    "不要再犯同样的错误",
+    "不要再做这个了",  # 09-22 第 3 轮：「不要再」也要求跟具体动词，原「不要再犯同样的错误」不再命中，换用例
     "都批了，去合吧",
     "这个不做了",
     "今后一律先问我",
@@ -457,3 +416,52 @@ def test_block_reason_tells_user_ruling_none_escape_hatch(gate, tmp_path):
     assert v.get("decision") == "block"
     assert "ruling-none" in v["reason"]
     assert "不是裁决" in v["reason"]
+
+
+# ================= 09-22 复核第 3 轮 FAIL 两条必修 =================
+
+# ---------- 必修②续：问句结尾不判 / 不要再也要跟具体动词 / 他人以后不判 /
+# 就定了个大概不判 / 判断前去掉 `> ` 引用行 ----------
+
+DAILY_SENTENCES_ROUND3 = [
+    "以后每次开盘前你会提醒我吗？",
+    "不要再犹豫了，NVDA 该止损",
+    "他以后都会用这个指标吗",
+    "这事儿就定了个大概",
+]
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_ROUND3)
+def test_daily_sentence_round3_is_not_a_ruling_word_hit(gate, text):
+    assert gate._hits_ruling_word(text) is False
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_ROUND3)
+def test_daily_sentence_round3_end_to_end_passes(gate, tmp_path, text):
+    tp = _write_transcript(tmp_path, [text])
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "好的。",
+    })
+    assert v == {}
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("这句以问号结尾吗？", False),
+    ("这句以半角问号结尾吗?", False),
+    ("以后都这样做？", False),  # 即便正文本身像裁决，整句以问号收尾也不判
+])
+def test_question_mark_ending_is_never_a_ruling(gate, text, expected):
+    assert gate._hits_ruling_word(text) is expected
+
+
+def test_quote_line_is_stripped_before_matching_so_quoted_ruling_does_not_hit(gate):
+    """引用行（`> ` 开头）里的裁决词不算 Andy 现在自己说的。"""
+    text = "> 以后都这样做\n只是引用一下参考，不代表现在要这样"
+    assert gate._hits_ruling_word(text) is False
+
+
+def test_quote_line_stripped_real_ruling_outside_quote_still_hits(gate):
+    text = "> 之前你说过这个\n好，以后都这样做"
+    assert gate._hits_ruling_word(text) is True
