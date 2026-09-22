@@ -70,6 +70,15 @@ python3 ~/Documents/fluxus-ops/tools/taskboard.py new --owner <该线> --type <t
 
 **当场落盘**，并在回复里一句话确认「已转给〔线名〕」。永不叫 Andy 去别的会话说——让他换窗口＝事故。
 
+## 四之五、裁决留痕行（Stop hook `ruling_stop_gate.py`，spec §6.3）
+
+Andy 说了像「以后这样做 / 不要再 / 定了」这类裁决话，按上面「二」落盘后，回复末行加一行：
+
+- 记了：`ruling-recorded: <任务号或 remember>`
+- 判断这句不算裁决：`ruling-none: <一句话理由>`
+
+没写会被 Stop hook 拦一次（同一轮第二次自动放行，不会卡死）；这条只查「记没记」，不查记得对不对。
+
 ## 五、收工自查
 
 ```bash
