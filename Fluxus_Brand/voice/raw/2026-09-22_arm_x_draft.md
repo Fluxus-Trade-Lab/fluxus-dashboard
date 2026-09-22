@@ -114,3 +114,23 @@ Not every trade needs to be a big win. Needing to be right is just another false
 It's all about drawdown control, and laser focus when times are easier.
 
 (≈167 词)
+
+---
+
+## v5(09-22 15:3x JST,Andy:删「Regret happens. Get out of it fast.」)
+
+We all want to buy the right stock, size it big, hold it for the whole move. Never sell early, never miss the rip.
+
+Traders fail for many reasons. False expectation is the root of all bad habits.
+
+Friday I bought $ARM on a VWAP reclaim, first 30-min pullback. Big size, $3 stop. AI agents make the CPU a bottleneck, and Arm builds CPUs for Meta and OpenAI. After FOMC, you have to be long.
+
+But only semis were strong. I didn't want more risk on a trade that might not gain traction. Plus I was already positioned heavy in AI. And I trade from Asia, the US afternoon happens while I sleep. So I trimmed a little before bed.
+
+Friday's last half hour ripped, Monday it's flying. I added back more.
+
+Not every trade needs to be a big win. Needing to be right is just another false expectation. It skews your risk reward heavily.
+
+It's all about drawdown control, and laser focus when times are easier.
+
+(≈160 词)
