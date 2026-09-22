@@ -287,6 +287,8 @@
   修法不是补一条规则，是**换一个量**：新闸量的是「首字母在 L 之后的占比」——**一个行数完全不动也会动的量**。
   真实历史上双向对照：在**首个受影响的那一天**就报，健康期 74 个 session 零误报。
   出处：[`incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md`](../../data/reference/incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md)
+
+- [09-22] [steve] **持仓首进/末进日期：三个消费端的日期修复闭环** · campaign（金字塔进出分组）的 firstEntry/lastEntry 从 GAS 云端来、写成 UTC 时间戳，前端直接渲染成完整 ISO 格式（如 2026-09-20T15:00:00.000Z）而非干净日期。T-0922-44 的 grep 抓了 slice(0,10) 的三处，这里没有切片、只是裸渲，本应一起抓却漏了。从现象（显示错日）→ 根源（云端时区混淆）→ 修复广度（import toJstDate() 同步三个消费端）——这是系统自诊的证据：修一处后主动巡查并找齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-48 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
   · 闸 `pipeline/tools/audit_universe_shape.py` · commit `95c82aff`
   **可发布角度**：这是「建造过程当内容」的标准形状——一个 NULL（六周的数据不能用）+ 一个可复述的判据
   （行数正常不代表宇宙正常）+ 一个真实的自我打脸（我先报了错的机制，被自己派的验证者推翻三处）。
