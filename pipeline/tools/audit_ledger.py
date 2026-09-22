@@ -76,6 +76,16 @@ EVIDENCE: Dict[str, List[tuple]] = {
     # shipping the same day (market_light.py RETIRED note) and run_all.py
     # stopped logging it -- leaving it here would fail L3 every night.
     "market_light":     [("checks", "num0+")],
+    # universe_freshness joined 2026-09-22 (T-0922-60): the guard landed
+    # 2026-09-20 (23b44f95) writing only {"status", "why"} -- "why" is the
+    # empty string on the ok path, so the line carried zero evidence, exactly
+    # the 08-19 breadth shape this file exists to catch. run_all.py now also
+    # logs the aggregate RVOL and row count that
+    # `audit_universe_freshness.classify()` already computed to reach "ok"
+    # (see pipeline/tools/audit_universe_freshness.py); num+ because both are
+    # guaranteed positive on the ok path (rvol in [LOW, HIGH], names >=
+    # MIN_NAMES) -- see pipeline/tests/test_universe_freshness_is_wired.py.
+    "universe_freshness": [("rvol", "num+"), ("names", "num+")],
 }
 BREADTH_BLOCKS = {"conditions", "regime", "state_board", "verdict"}
 OK_WORDS = {"ok", "OK", True}
