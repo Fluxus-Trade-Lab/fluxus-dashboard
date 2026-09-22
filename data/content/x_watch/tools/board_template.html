@@ -234,29 +234,46 @@ function wallCell(t){
   return `<span class="wallmark" title="@jfsrev 墙后 ${esc(last.d)}">${esc(kinds||"墙后")}</span>`;
 }
 
+/* 搜索词归一：去掉用户顺手打的 $ # @，统一小写。
+   有搜索词时「只看 $」「含指数」「只看墙后」三个筛选一律让路——
+   搜 $XLK 却因为它被归进指数而空表，是 09-22 Andy 撞上的那个 bug。 */
+const normQ = q => q.trim().replace(/^[$#@]+/, "").toLowerCase();
+const textHit = (t, q) => {
+  const re = new RegExp("(^|[^a-z0-9])[$#]?" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "([^a-z0-9]|$)", "i");
+  return t.m.some(m => re.test(m.txt));
+};
+let SEARCH_MODE = "";
 function tickers(){
-  let r = D.tickers.filter(t => {
-    if (S.cash && !t.cash) return false;
-    if (!S.idx && t.idx) return false;
-    if (S.wallonly && !t.wall.length) return false;
-    if (S.date !== "all" && !t.days[S.date]) return false;
-    if (S.q){
-      const q = S.q.toLowerCase();
-      if (!t.sym.toLowerCase().includes(q) && !t.m.some(m => m.h.toLowerCase().includes(q))) return false;
+  const q = normQ(S.q);
+  SEARCH_MODE = "";
+  const passes = t => !(S.cash && !t.cash) && !(!S.idx && t.idx) && !(S.wallonly && !t.wall.length);
+  const base = D.tickers.filter(t => S.date === "all" || t.days[S.date]);
+  let r = base.filter(passes);
+  if (q){
+    /* 代码命中：筛选让路。只按人名命中：筛选照旧，否则裸码噪声全放出来。 */
+    r = base.filter(t => t.sym.toLowerCase().includes(q) ||
+                         (passes(t) && t.m.some(m => m.h.toLowerCase().includes(q))));
+    SEARCH_MODE = "sym";
+    if (!r.length && q.length >= 2){
+      r = base.filter(t => textHit(t, q));
+      SEARCH_MODE = "text";
     }
-    return true;
-  });
+  }
   const key = S.date === "all" ? LAST : S.date;
   const cmp = { today:(a,b)=>np(b,key)-np(a,key)||b.tv-a.tv, total:(a,b)=>b.tn-a.tn,
                 views:(a,b)=>b.tv-a.tv, sym:(a,b)=>a.sym.localeCompare(b.sym) }[S.sort];
-  return r.sort(cmp);
+  r.sort(cmp);
+  if (q) r.sort((a,b) => (b.sym.toLowerCase()===q) - (a.sym.toLowerCase()===q));
+  return r;
 }
 
 function render(){
   const th = $("#thead"), tb = $("#tbody");
   if (S.v === "t"){
     const rows = tickers();
-    $("#count").textContent = rows.length + " 个代码";
+    $("#count").textContent = rows.length + " 个代码" +
+      (SEARCH_MODE === "sym" ? " · 搜索中，筛选已让路" :
+       SEARCH_MODE === "text" && rows.length ? " · 代码里没有「" + normQ(S.q).toUpperCase() + "」，下面是帖子正文提到它的票" : "");
     th.innerHTML = `<tr><th>代码</th><th>墙后</th><th>${DATES.map(d=>d.slice(8)).join("·")} 人数</th>
       <th class="num">${LAST.slice(5)}</th><th class="num">对比前日</th><th>立场</th>
       <th class="num">提及</th><th class="num">曝光</th><th>谁在说</th></tr>`;
@@ -272,12 +289,12 @@ function render(){
         <td>${stanceCells(t)}</td><td class="num">${t.tn}</td><td class="num">${nf(t.tv)}</td>
         <td class="who">${esc(who.slice(0,4).join(" "))}${who.length>4?` +${who.length-4}`:""}</td></tr>` +
         (open ? `<tr class="detail"><td colspan="9"><div class="posts">${detail(t)}</div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="9" class="empty">没有符合的代码。试试关掉「只看 $ 标记」，或清空搜索。</td></tr>`;
+    }).join("") : `<tr><td colspan="9" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
     $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
       所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
       「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光是抓取当时的快照。`;
   } else if (S.v === "p"){
-    const q = S.q.toLowerCase();
+    const q = normQ(S.q);
     const rows = D.people.filter(p => !q || p.h.toLowerCase().includes(q) || p.syms.some(s => s.toLowerCase().includes(q)));
     $("#count").textContent = rows.length + " 人";
     th.innerHTML = `<tr><th>Handle</th><th class="num">帖数</th><th class="num">出现天数</th>
@@ -289,7 +306,7 @@ function render(){
     $("#note").innerHTML = `曝光中位是该账号窗口内所有帖的中位数，用来判「这条帖是不是他的异常值」。
       名单 34 人，这里只列窗口内真的发过帖的。`;
   } else {
-    const q = S.q.toLowerCase();
+    const q = normQ(S.q);
     const rows = D.wall.filter(w => !q || w.tickers.some(s => s.toLowerCase().includes(q)) || "jfsrev".includes(q));
     $("#count").textContent = rows.length + " 条";
     th.innerHTML = `<tr><th>日期 (ET)</th><th>类型</th><th>票</th><th>代理 / 杠杆</th>
