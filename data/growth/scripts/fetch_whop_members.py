@@ -9,9 +9,9 @@
   一次性课程买断后是 completed；订阅「到期不续」仍是 active + cancel_at_period_end=true。
 - 默认不按产品过滤；实际返回是扁平的 product_id / plan_id / user_id（与文档的嵌套写法不同）。
 
-⚠️ `whop_members` 列的 README 口径是「身份合并后的真实人头」（含 PayPal/支付宝渠道），API 只看得到
-Whop 渠道，不能直接替代。所以本脚本**只写 notes，不填 whop_members**，直到 Andy 定口径
-（候选见 notes）。定了之后把 COLUMN_CANDIDATE 设成对应键即可。
+`whop_members` 列口径＝**口径 A**（Andy 2026-09-22 问卷原话：「A 在档订阅付费人：18 (推荐)」）：
+三个订阅产品、status∈{active, past_due}、按 user 去重；试用单列不计付费。
+09-13 及以前的值（41 等）是手工台账「身份合并真实人头」口径，与口径 A 不可比，见 README。
 
 key 只从钥匙串读进内存：不打印、不落盘；所有异常信息先打码。仓库公开：只输出计数，不输出姓名/邮箱/id。
 """
@@ -41,8 +41,8 @@ SUBSCRIPTION_PRODUCTS = {
 MASTERCLASS_PRODUCT = "prod_dTRZGYQvAc0pe"  # Swing Trade Masterclass（一次性）
 PAID_STATUSES = {"active", "past_due"}
 
-# Andy 未定口径前为 None → whop_members 列留空
-COLUMN_CANDIDATE: str | None = None
+# whop_members 列取哪个聚合键（None＝留空）
+COLUMN_CANDIDATE: str | None = "cand_A_paid_sub_users"  # 口径 A，Andy 09-22 定
 
 REPO = Path(__file__).resolve().parents[3]
 CSV_PATH = REPO / "data" / "growth" / "metrics.csv"
@@ -137,14 +137,14 @@ def format_note(s: dict, fetched: str, pages: int) -> str:
         f"Whop API /v1/memberships 游标分页{pages}页共{s['rows']}条(按user去重{s['users_all']}人)",
         f"取数 {fetched}",
         f"status: {st}",
-        f"候选A 订阅在档付费人(status∈active|past_due·Premium与Premium++新旧三产品·按user去重)={s['cand_A_paid_sub_users']}"
+        f"whop_members=口径A 在档订阅付费人(status∈active|past_due·Premium与Premium++新旧三产品·按user去重·Andy 09-22定)={s['cand_A_paid_sub_users']}"
         f"(其中到期不续{s['cand_A_of_which_cancel_at_period_end']})",
         f"试用trialing={s['trialing_users']}人(单列不计付费)",
         f"一次性课程completed={s['masterclass_completed_users']}人",
     ]
     if "cand_B_customer_joined" in s:
         parts.append(f"候选B /v1/members customer且joined={s['cand_B_customer_joined']}")
-    parts.append("whop_members列留空:README列口径=身份合并真实人头(含PayPal/支付宝)·API只见Whop渠道·口径待Andy定")
+    parts.append("与09-13及以前的手工台账口径(身份合并真实人头·41)不可比·见README")
     note = "；".join(parts)
     return note.replace(",", "，")
 

@@ -127,7 +127,7 @@ def test_keychain_failure_returns_none():
     assert fw.get_api_key(runner=lambda *a, **k: R()) is None
 
 
-def test_write_leaves_whop_members_blank_and_no_key_or_comma(tmp_path, capsys):
+def test_write_fills_whop_members_with_A_and_no_key_or_comma(tmp_path, capsys):
     csv_path = tmp_path / "metrics.csv"
     csv_path.write_text("date,x_followers,whop_members,notes\n2026-09-21,285,,old\n")
     sess = FakeSession({"memberships": THREE_PAGES, "members": MEMBERS})
@@ -138,8 +138,8 @@ def test_write_leaves_whop_members_blank_and_no_key_or_comma(tmp_path, capsys):
     lines = text.strip().split("\n")
     assert len(lines) == 2
     row = lines[1].split(",")
-    assert row[:3] == ["2026-09-21", "285", ""] and len(row) == 4  # notes 无半角逗号
-    assert "候选A" in row[3] and "=4" in row[3]
+    assert row[:3] == ["2026-09-21", "285", "4"] and len(row) == 4  # 口径A=4；notes 无半角逗号
+    assert "口径A" in row[3] and "=4" in row[3] and "试用trialing=1" in row[3] and "到期不续1" in row[3]
     assert FAKE_KEY not in text and FAKE_KEY not in out
 
 
@@ -150,7 +150,7 @@ def test_write_appends_new_date_row(tmp_path):
             session=FakeSession({"memberships": THREE_PAGES, "members": MEMBERS}),
             key_getter=lambda: FAKE_KEY)
     lines = csv_path.read_text().strip().split("\n")
-    assert len(lines) == 3 and lines[1] == "2026-09-21,,old" and lines[2].startswith("2026-09-28,,")
+    assert len(lines) == 3 and lines[1] == "2026-09-21,,old" and lines[2].startswith("2026-09-28,4,")
 
 
 def test_leak_count_positive_and_negative():
@@ -167,3 +167,7 @@ def test_leak_check_scans_extra_log_file(tmp_path):
     assert fw.leak_check(FAKE_KEY, repo=tmp_path, extra_paths=[log]) == 0
     (log / "b.log").write_text(f"oops {FAKE_KEY}")
     assert fw.leak_check(FAKE_KEY, repo=tmp_path, extra_paths=[log]) == 1
+
+
+def test_column_candidate_is_A():
+    assert fw.COLUMN_CANDIDATE == "cand_A_paid_sub_users"
