@@ -1222,7 +1222,12 @@ def main():
         logger.info("Saved universe.json")
 
         fresh_kind, fresh_why = _freshness_check(rows_out)
-        ledger.note('universe_freshness', fresh_kind or 'ok', why=fresh_why)
+        # rvol/names: the same numbers classify() used to reach fresh_kind,
+        # logged alongside it so an "ok" line carries evidence and not just
+        # the word (audit_ledger.EVIDENCE['universe_freshness'], T-0922-60).
+        from pipeline.tools.audit_universe_freshness import aggregate_rvol
+        ledger.note('universe_freshness', fresh_kind or 'ok', why=fresh_why,
+                    rvol=aggregate_rvol(rows_out), names=len(rows_out))
         if fresh_kind in ('F1', 'F2'):
             logger.warning("universe_freshness: %s", fresh_why)
 
