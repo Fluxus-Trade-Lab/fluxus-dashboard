@@ -16,6 +16,8 @@
 | 开放日期 | 「Enrollment opens August 7」 | **发布日 09-25**（Andy 只说「9/25」未注明时区，按 JST 排；若他改期顺延） | Andy 原话「发布时间推迟到9/25日」 |
 | 渠道 | 未指定 / 站内 | **Whop**（不变） | Andy 原话「销售渠道还是用whop」 |
 | 章节/页数细节 | 无 | **不写死**——PDF 仍在 Andy手上校对，内容可能还有改动 | task「已定事实」末行 |
+| 退款政策 | 7 天无理由退款（T-0919-71 草案） | **购买后不退款**，对价是 L1–5 免费试学 | Andy 2026-09-22 原话（T-0922-81 引）「购买后不退款（内容特性），L1–L5 免费试学作为对价」；本次 T-0922-79 |
+| L1–5 交互课件 | 付费 bundle 当天解锁 | **免费，购买前即可试学**；付费栏只剩 L6 起 | 同上，T-0922-79 |
 
 ---
 
@@ -40,14 +42,19 @@ If you've traded 1–3 years, taken real losses, and you're done chasing signals
 
 > *大多数交易课在卖战法——突破、VCP、EP。那部分到处都有，只让你站到起跑线。这门课把战法讲透，但核心是真正区分"第二年"和"第五年"交易者的四门主观功夫：**仓位、风控、渐进敞口、情境感知。**如果你交易了 1–3 年、亏过真钱、不想再追信号——这就是从"第二年"通往"第五年"的桥。*
 
-### What you get / 你会得到
+### Try before you buy / 先免费试学
+
+**Lessons 1–5 interactive courseware, free — no purchase, no signup.** Go see the system and the four disciplines for yourself before you decide.
+*交互课件 Lesson 1–5，免费开放——不用购买，不用注册。买之前先自己去看系统和那四门功夫讲的是什么。*
+
+### What you get with the bundle / 购买后你会得到
 
 - **The full written system + operations manual** — built into the lessons, always the latest version *（整套系统 + 操作手册，内建在课程里，永远最新）*
-- **Bilingual PDF (EN / 中文)** — the written reference, done *（中英文 PDF，已成）*
-- **Interactive courseware** — Lessons 1–5 plus the first appendix are ready now; the rest unlocks as it's finished *（交互课件——L1–L5 + 首个附录已做好，其余随进度分批放出）*
+- **Bilingual PDF (EN / 中文)** — the written reference, done, yours from day one *（中英文 PDF，已成，购买当天就有）*
+- **The rest of the interactive courseware** — Lesson 6 onward, unlocking as it's finished (L1–5 you've already tried, free) *（交互课件 Lesson 6 及以后，随进度陆续解锁——L1–5 你已经免费试过了）*
 - **10+ recorded video lessons**, released in batches as they're finished *（10+ 录播视频，分批放出）*
 - **Full written notes inside every lesson** *（每课完整讲义，都在课程页内）*
-- **One printable one-page checklist** — the 60-second pre-trade self-check, yours to keep and pin above your desk *（一页可打印清单：60 秒交易前自检）*
+- **One printable one-page checklist** — the 60-second pre-trade self-check, yours to keep and pin above your desk *（一页可打印清单：60 秒交易前自检，购买当天就有）*
 - **Optional weekly homework** *（每周作业，选做）*
 - **Self-paced** — watch on your own schedule *（自定进度）*
 - **Live streams, held as needed** — not on a fixed calendar *（不定期直播手把手）*
@@ -69,9 +76,11 @@ No signals to copy. No holy grail. No get-rich promise. Year 5 is called Year 5 
 Everything, one price. The complete course is sold as a single bundle — lessons are not available individually.
 *全部内容，一个价格。整套课程按 bundle 出售——不单独售卖单节。*
 
-Included / 包含：
+**Try Lessons 1–5 free, first — no purchase needed.** *（Lesson 1–5 免费先试，不用购买。）*
+
+Included with the bundle / 购买后包含：
 - Bilingual written system + operations manual, inside the lessons
-- Interactive courseware (L1–5 + first appendix live now; rest unlocks as it's finished)
+- The rest of the interactive courseware — Lesson 6 onward, unlocking as it's finished (L1–5 you've already tried, free)
 - 10+ video lessons with full written notes on-page, released in batches
 - One printable pre-trade checklist (the only download — pin it above your desk)
 - Optional weekly homework
@@ -80,9 +89,9 @@ Included / 包含：
 
 > Enrollment opens **September 25, 2026**. *报名 2026 年 9 月 25 日开放。*
 
-> Refund policy: full refund within 7 days, no questions asked. Full terms → see `Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md`.
-> 退款政策：7 天内无理由全额退款。完整条款见〈退款政策与服务条款〉。
-*(T-0919-71 补的草稿，天数待 Andy 拍板——上面写的 7 天是 Mia 的建议选项，不是定案)*
+> No refunds after purchase — try Lessons 1–5 free before you buy. Full terms → see `Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md`.
+> 购买后不退款——因为买前你可以先免费试学 Lesson 1–5。完整条款见〈退款政策与服务条款〉。
+*(T-0922-79 改：Andy 09-22 定案，取代 T-0919-71 的 7 天窗口草案)*
 
 ---
 
@@ -98,7 +107,7 @@ You're in. Welcome to the Fluxus Swing Trading Masterclass.
 
 Here's how to start:
 1. **Sign in** to your member account and open the Masterclass area.
-2. **Open the member area** — start with the bilingual PDF and the interactive courseware for Lessons 1–5. More unlocks as it's finished; you won't need to ask, it'll just show up.
+2. **Open the member area** — start with the bilingual PDF (Lessons 1–5 you've already tried free; Lesson 6 onward unlocks here). More unlocks as it's finished; you won't need to ask, it'll just show up.
 3. **Start with Module 1, Lesson 1.** Do the drills. Don't rush ahead — everything builds on the basics.
 4. Watch for **live-stream announcements** by email — those happen as needed, not on a fixed schedule.
 
@@ -120,7 +129,7 @@ Tom · Fluxus Trade Lab
 
 开始方式：
 1. 登录会员账号，打开 Masterclass 区域。
-2. **进入会员区**——先看中英文 PDF 和 L1–L5 的交互课件。后面的内容会随进度陆续解锁，不用你去问。
+2. **进入会员区**——先看中英文 PDF（L1–L5 你已经免费试过了；Lesson 6 起从这里解锁）。后面的内容会随进度陆续解锁，不用你去问。
 3. **从模块一 Lesson 1 开始**，把 drill 做了。别急着往后跳——一切都建在基础上。
 4. 留意邮件里的**直播通知**——直播不定期，看需要开。
 
