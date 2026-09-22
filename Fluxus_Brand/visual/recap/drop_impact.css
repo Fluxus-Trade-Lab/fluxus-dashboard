@@ -1,0 +1,12 @@
+/* drop impact — the landing mark of the drop line (geometry: drop_impact.js). Visual line source, 2026-09-13.
+   Append after the .drop rules of recap_visual.css. The line keeps its own rule; orange stays on the line
+   unless tone "accent" is chosen. */
+.drop .impact{transform-box:view-box}
+.drop .impact path{fill:none;stroke:var(--ink2);stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.drop .impact .shard{fill:var(--ink2);stroke:none}
+.drop .impact.hot path{stroke:var(--accent)}
+.drop .impact.hot .shard{fill:var(--accent);stroke:none}
+@media screen and (prefers-reduced-motion:no-preference){
+  .drop .impact.play{animation:impact-in .26s cubic-bezier(.2,1.4,.4,1) both}
+}
+@keyframes impact-in{from{transform:scale(.15);opacity:0}to{transform:scale(1);opacity:1}}
