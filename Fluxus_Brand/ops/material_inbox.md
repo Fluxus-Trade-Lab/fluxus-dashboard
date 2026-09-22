@@ -200,6 +200,8 @@
 
 - [09-21] [steve] 市场数据停留 09-18 已 3 天无更新——dashboard 是每日页的数据源，它的延迟直接中断了「今天完成什么」的完整性。出处: git log origin/main --grep="market data" · chore: market data 2026-09-18
 
+- [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
+
 ## 📥 追加到这里
 
 - [09-22] [steve] **前端持仓日期从 UTC 秒杀到 JST 再秒杀到消费端** · 持仓活动（campaign）的首进/末进日期从 GAS 云端来、写成 UTC 时间戳，前端 slice(0,10) 截日期时截的是 UTC 日而非 JST 日。修复路径横跨三个层级：①URL 参数层用 toJstDate()、②portfolio 列表层用、③campaign 活动头用。一个日期类型的修复单，最后触碰了三个消费端；从现象（显示错日）→ 根源（跨时区时间戳混淆）→ 修复广度（三处同步）——这是系统自诊的证据，改一处后主动查齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-44 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
