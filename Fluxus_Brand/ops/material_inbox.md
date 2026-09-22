@@ -204,6 +204,8 @@
 
 ## 📥 追加到这里
 
+- [09-22] [steve] **无证据的「ok」会溜进来——从诊断→补证→验证一步走** · universe_freshness 在 ok 路径只写了状态词不写证据，导致坏数据进了 ledger；test_no_new_guard_slips_in_without_evidence 当时抓到了它，说明闸在那儿，但供给侧的「ok」没有证据（RVOL + 行数）。修复路径：run_all.py 现在补齐那些数，audit_ledger.EVIDENCE 改成「不齐全不信任」。一个从「发现缺什么」→「补上去」→「闸认证」的完整三步，说明系统有自诊能力：被卡住时知道卡在哪、补什么、怎么验。[T-0922-60 · c6461e3b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c6461e3b)
+
 - [09-22] [steve] **前端持仓日期从 UTC 秒杀到 JST 再秒杀到消费端** · 持仓活动（campaign）的首进/末进日期从 GAS 云端来、写成 UTC 时间戳，前端 slice(0,10) 截日期时截的是 UTC 日而非 JST 日。修复路径横跨三个层级：①URL 参数层用 toJstDate()、②portfolio 列表层用、③campaign 活动头用。一个日期类型的修复单，最后触碰了三个消费端；从现象（显示错日）→ 根源（跨时区时间戳混淆）→ 修复广度（三处同步）——这是系统自诊的证据，改一处后主动查齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-44 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
 
 - [09-22] [OPS] 部署存储瓶颈突破：data/output 从产物拷贝改为 rewrite 代理到 GitHub raw，单次产物 119MB → 47MB（-61%），月度费用从超 10GB 降至预算内，数据更新反而加快到 5 分钟内。配置优化证明系统架构有弹性。[T-0920-55 · 98aa81df]
@@ -705,3 +707,5 @@
 - [09-22] [Marketing Steve] **持仓日期时戳泄露：从现象到级联修复** · campaign header 把 GAS 的原始 ISO 时戳直接渲染（2026-09-20T15:00:00.000Z 格式），而不是日期。根源追溯：entryDate 在三处消费端的解析分散（campaign.js 这处 + T-0922-44 已修的两处 .slice(0,10)），本次补回遗漏的一处原始渲染。完整链条示范：现象→分布诊断→统一修复→测试覆盖跨端点。系统自诊能力证据。出处 a584337c · [T-0922-55](../../../../../../Documents/fluxus-ops/tasks/T-0922-55.md)
 
 - [09-22] [Marketing Steve] **整行全大写帖暴露的故障检测链条**｜09-19 主班测试发现 RealJGBanks 全大写周末帖被误标 6 个代码词，代码计数因此虚报 31→37。根源：文本处理器把「无小写=代码」当同义，缺乏「这条线太长且一个小写都没有」的排除。改法：逐行扫、>25字且无小写的行跳过裸大写词分支。防护：注入两个方向的阳性对照（漏改→2红、改了但接错→1红），分支 24 通过。**这是「从故障现象→根源诊断→修复→双向验证」的完整系统自诊链条**。出处 T-0922-63 / 69e12992 · [Fluxus_Brand/ops/tools/x_watch/fetch.py](../../../Fluxus_Brand/ops/tools/x_watch/fetch.py)
+
+- [09-22] [OPS · 数据哨兵] **CI 故障要我们先发现——监测加第 11 项 + 自动 P0 路由** · 09-22 main 上 CI 连红 7 小时，是 Andy 从邮箱里发现的，不是巡检发现的。盲点诊断完毕。系统改进：tools/monitor.py 加第 11 项 check_ci_status，每 2 小时查一次 main 上 tests.yml 最新运行（gh run list 获得 run id + conclusion + headSha；失败时追加 gh run view --log-failed 的前 3 行定位是哪个测试红的）。alex-sentinel 哨兵同步加这一条检查，CI 不绿立刻按标题「CI 红：main tests.yml 失败」去重开 P0 单给 alex——不再等 Andy 的邮箱。**诊断→改动→防护**完整链条：从「邮件才知道」升级到「2 小时自察」。系统能检测自己的故障，证明从被动应急升级到主动诊断。测试 8 条全绿；生产环节每 2 小时一班、单班执行数秒。出处 T-0922-61 / 967a643 · [tools/monitor.py](../../tools/monitor.py) · [schedule.json](../../schedule.json)
