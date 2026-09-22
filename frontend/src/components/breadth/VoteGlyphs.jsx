@@ -35,7 +35,12 @@ export const ON_THE_LINE = 0.08
 const RANGE = {
   ratio_5d: 1.5, ratio_10d: 1.5, thrust: 300,
   qtr_spread: 400, spread_13_34: 400, nh_nl: 200,
-  mcclellan: 70, pct200: 20, t2108_zone: 20,
+  // 100, not the old 70: matches breadth_signals.py THRESHOLDS['mcclellan']
+  // ['extreme'] (T-0923-03 -- StockCharts ChartSchool's own +-100 band,
+  // replacing an uncited 70). The vote itself is Nasdaq-100-pool since the
+  // same change; this is only the plotting half-range, kept equal to the
+  // engine's line so an "extreme" reading also pegs the glyph's edge.
+  mcclellan: 100, pct200: 20, t2108_zone: 20,
   spy_danger: 5, qqq_danger: 5, bench_trend: 1,
 }
 
@@ -167,7 +172,7 @@ function fmt(v) {
 const VOTE_LABEL = {
   ratio_5d: '5D ratio', ratio_10d: '10D ratio', thrust: 'Thrust',
   qtr_spread: 'Qtr spread', spread_13_34: '13/34', nh_nl: 'NH/NL',
-  mcclellan: 'McClellan', pct200: '%>200d', t2108_zone: 'T2108',
+  mcclellan: 'McClellan (NDX)', pct200: '%>200d', t2108_zone: 'T2108',
   spy_danger: 'SPY risk regime', qqq_danger: 'QQQ risk regime', bench_trend: 'Bench trend',
 }
 

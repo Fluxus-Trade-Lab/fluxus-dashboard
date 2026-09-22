@@ -22,7 +22,7 @@ const ENV_LABEL = {
 const VOTE_LABEL = {
   ratio_5d: '5-day ratio', ratio_10d: '10-day ratio', thrust: 'Thrust',
   qtr_spread: 'Quarterly spread', spread_13_34: '13%/34d spread', nh_nl: 'New highs vs lows',
-  mcclellan: 'McClellan', pct200: '% above 200-day', t2108_zone: 'T2108 zone (our 40/60 bands)',
+  mcclellan: 'McClellan (NDX)', pct200: '% above 200-day', t2108_zone: 'T2108 zone (our 40/60 bands)',
   spy_danger: 'SPY warnings', qqq_danger: 'QQQ warnings', bench_trend: 'Benchmark trend',
 }
 

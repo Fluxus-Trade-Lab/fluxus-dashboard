@@ -47,6 +47,13 @@ def _store_in_tmp(tmp_path, monkeypatch):
     from pipeline.adapters import index_members_store as ims
     monkeypatch.setattr(ims, "ROSTER", tmp_path / "roster.json")
     monkeypatch.setattr(ims, "CHANGELOG", tmp_path / "log.csv")
+    monkeypatch.setattr(ims, "NDX_ROSTER", tmp_path / "ndx_roster.json")
+    monkeypatch.setattr(ims, "NDX_CHANGELOG", tmp_path / "ndx_log.csv")
+
+
+def _plausible_ndx(*tickers: str) -> set[str]:
+    """Nasdaq-100 台账的抓漏闸下限是 90,不是标普的 480。"""
+    return set(tickers) | {f"NPAD{i:04d}" for i in range(90)}
 
 
 def test_membership_lands_on_the_frame_breadth_reads(monkeypatch):
@@ -175,3 +182,96 @@ def test_no_stored_roster_and_a_bad_scrape_still_ships_null(monkeypatch):
     uni = UNI.copy()
     run_all.attach_index_membership(uni)
     assert 'in_sp500' not in uni.columns
+
+
+# ── Nasdaq-100 (T-0923-03: MCO/MCSI's standard pool) ─────────────────────
+#
+# Same shape as the S&P 500 tests above -- `attach_ndx_membership` is a
+# separate function so these cannot regress the sp500 wiring, but the
+# failure-domain and NULL-not-fallback guarantees must hold for it too.
+
+def test_ndx_membership_lands_on_the_frame_breadth_reads(monkeypatch):
+    monkeypatch.setattr('pipeline.adapters.finviz_adapter.FinvizAdapter',
+                        _fake_adapter(_plausible_ndx('AAPL', 'MSFT')))
+    uni = UNI.copy()
+    run_all.attach_ndx_membership(uni)
+    assert 'in_ndx' in uni.columns
+    assert uni['in_ndx'].tolist() == [True, True, False]
+
+
+def test_ndx_breadth_produces_ndx_columns_from_that_frame(monkeypatch):
+    from pipeline.screeners import breadth_metrics
+
+    monkeypatch.setattr('pipeline.adapters.finviz_adapter.FinvizAdapter',
+                        _fake_adapter(_plausible_ndx('AAPL', 'MSFT')))
+    uni = pd.DataFrame({
+        'ticker': ['AAPL', 'MSFT', 'PENNY'],
+        'change_pct': [1.0, -1.0, 0.5],
+        'sma20_dist': [3.0, -2.0, 9.0],
+        'sma40_dist': [3.0, -2.0, 9.0],
+        'sma50_dist': [3.0, -2.0, 9.0],
+        'sma200_dist': [3.0, 2.0, -9.0],
+    })
+    run_all.attach_ndx_membership(uni)
+    snap = breadth_metrics.compute_snapshot(uni)
+
+    assert snap['ndx_members'] == 2, "PENNY 不是 Nasdaq-100 成分股,不该进分母"
+    assert snap['advances_ndx'] == 1   # AAPL up, MSFT down
+    assert snap['declines_ndx'] == 1
+
+
+def test_ndx_missing_column_ships_null_not_the_full_universe(monkeypatch):
+    """反向对照:没有 in_ndx 列时必须 NULL,不能退回全池。"""
+    from pipeline.screeners import breadth_metrics
+
+    uni = pd.DataFrame({
+        'ticker': ['AAPL', 'MSFT', 'PENNY'],
+        'change_pct': [1.0, -1.0, 0.5],
+        'sma20_dist': [3.0, -2.0, 9.0],
+        'sma40_dist': [3.0, -2.0, 9.0],
+        'sma50_dist': [3.0, -2.0, 9.0],
+        'sma200_dist': [3.0, 2.0, -9.0],
+    })
+    snap = breadth_metrics.compute_snapshot(uni)
+    for k in ('advances_ndx', 'declines_ndx', 'ndx_members'):
+        assert snap[k] is None, f"{k} 应为 NULL,不是全池读数"
+
+
+def test_ndx_fetch_failure_is_its_own_failure_domain(monkeypatch):
+    class _Boom:
+        def fetch_index_members(self, index):        # noqa: D102, ARG002
+            raise RuntimeError("finviz down")
+    monkeypatch.setattr('pipeline.adapters.finviz_adapter.FinvizAdapter', _Boom)
+    uni = UNI.copy()
+    run_all.attach_ndx_membership(uni)      # 不抛
+    assert 'in_ndx' not in uni.columns
+
+
+def test_ndx_empty_membership_leaves_the_column_absent(monkeypatch):
+    monkeypatch.setattr('pipeline.adapters.finviz_adapter.FinvizAdapter',
+                        _fake_adapter(set()))
+    uni = UNI.copy()
+    run_all.attach_ndx_membership(uni)
+    assert 'in_ndx' not in uni.columns
+
+
+def test_ndx_sp500_are_independent_columns(monkeypatch):
+    """两条指数各自的失败域互不影响 —— 一个抓失败,另一个照样有值。"""
+    calls = {}
+
+    def _adapter(members_by_index):
+        class _FA:
+            def fetch_index_members(self, index):
+                calls[index] = calls.get(index, 0) + 1
+                return members_by_index[index]
+        return _FA
+
+    monkeypatch.setattr(
+        'pipeline.adapters.finviz_adapter.FinvizAdapter',
+        _adapter({'sp500': _plausible('AAPL'), 'ndx': _plausible_ndx('MSFT')}),
+    )
+    uni = UNI.copy()
+    run_all.attach_index_membership(uni)
+    run_all.attach_ndx_membership(uni)
+    assert uni['in_sp500'].tolist() == [True, False, False]
+    assert uni['in_ndx'].tolist() == [False, True, False]
