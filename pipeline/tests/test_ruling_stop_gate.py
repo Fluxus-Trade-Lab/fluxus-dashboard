@@ -465,3 +465,12 @@ def test_quote_line_is_stripped_before_matching_so_quoted_ruling_does_not_hit(ga
 def test_quote_line_stripped_real_ruling_outside_quote_still_hits(gate):
     text = "> 之前你说过这个\n好，以后都这样做"
     assert gate._hits_ruling_word(text) is True
+
+
+# ================= Andy 09-22 拍板：接受误拦，上线 =================
+# 问卷原话「接受误拦，上线 (推荐)」——宁可多拦也不能漏裁决，误拦代价只是多写一行
+# ruling-none。此后不再为减少误拦收紧规则；这里只补一处漏匹配：「就这么定了」。
+
+def test_zheme_zheyang_between_jiu_and_dingle_is_a_ruling(gate):
+    assert gate._hits_ruling_word("就这么定了") is True
+    assert gate._hits_ruling_word("这个这样定了") is True
