@@ -204,6 +204,8 @@
 
 ## 📥 追加到这里
 
+- [09-22] [steve] **购买后不退款的系统一致性** · 结账页和 Whop 后台「Refund policy」设置必须对齐，防平台默认政策打架。内容课程的不退款不只是文案，更是系统设计的诚实——从用户清晰期待（免费试学 L1–L5 再决定）→ 系统验证一致 → 防护双层。[T-0922-81 · 97b41ac2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/97b41ac2)
+
 - [09-22] [steve] **无证据的「ok」会溜进来——从诊断→补证→验证一步走** · universe_freshness 在 ok 路径只写了状态词不写证据，导致坏数据进了 ledger；test_no_new_guard_slips_in_without_evidence 当时抓到了它，说明闸在那儿，但供给侧的「ok」没有证据（RVOL + 行数）。修复路径：run_all.py 现在补齐那些数，audit_ledger.EVIDENCE 改成「不齐全不信任」。一个从「发现缺什么」→「补上去」→「闸认证」的完整三步，说明系统有自诊能力：被卡住时知道卡在哪、补什么、怎么验。[T-0922-60 · c6461e3b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c6461e3b)
 
 - [09-22] [steve] **前端持仓日期从 UTC 秒杀到 JST 再秒杀到消费端** · 持仓活动（campaign）的首进/末进日期从 GAS 云端来、写成 UTC 时间戳，前端 slice(0,10) 截日期时截的是 UTC 日而非 JST 日。修复路径横跨三个层级：①URL 参数层用 toJstDate()、②portfolio 列表层用、③campaign 活动头用。一个日期类型的修复单，最后触碰了三个消费端；从现象（显示错日）→ 根源（跨时区时间戳混淆）→ 修复广度（三处同步）——这是系统自诊的证据，改一处后主动查齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-44 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
