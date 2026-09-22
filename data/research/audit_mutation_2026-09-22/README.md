@@ -11,13 +11,15 @@ Growth Gary 2026-08-25 那句总纲：**没有先验证一个检查能报出阳�
 这条规矩一直是人手一条条执行的。这把尺子把它批量化了——
 它回答的不是「闸对不对」，是「**闸坏了的时候，我们会不会知道**」。
 
-## 二、普查进度（11/20 → 12/20 有读数）
+## 二、普查进度（11 道 → 13 道有读数，共 19 道真闸）
 
 | 模块 | killed/总 | 杀死率 | 读数出处 |
 |---|---|---|---|
 | `audit_regression_gate` | 119/123 | **97%** | 09-02 |
 | **`audit_universe_population`** | **55/67** | **82%** | **09-23（本夜，repeat=3）** |
 | `audit_metric_names` | 21/31 | 68% | 09-22 |
+| `audit_reads_declarations` | 34/52 | 65% | **09-23（本夜首测）** |
+| `audit_event_agreement` | 54/83 | 65% | **09-23（本夜首测）** |
 | `audit_universe_shape` | 31/49 | 63% | 09-02 |
 | `audit_calendar_gaps` | 57/94 | 61% | 09-02 |
 | `audit_progress` | 49/83 | 59% | 09-22 |
@@ -27,9 +29,11 @@ Growth Gary 2026-08-25 那句总纲：**没有先验证一个检查能报出阳�
 | `audit_unpushed` | 14/30 | 47% | 09-02 |
 | `audit_universe_freshness` | 21/56 | **38%** | 09-22 |
 
-**还没量过的 8 道**：`audit_ci_test_coverage` · `audit_deploy_cost` · `audit_event_agreement` ·
-`audit_events_vs_bars` · `audit_reads_declarations` · `audit_schedule_windows` · `audit_stranded` · `audit_wiring`
-（第 20 个是尺子自己 `audit_mutation_sweep`，量它得先有别的尺子，不列入）。
+**还没量过的 6 道**：`audit_ci_test_coverage`（162 个变异点）· `audit_deploy_cost`（101）·
+`audit_events_vs_bars`（129）· `audit_schedule_windows`（85）· `audit_stranded`（84）· `audit_wiring`（83）
+（`audit_*` 一共 20 个文件，第 20 个是尺子自己 `audit_mutation_sweep`——量它得先有别的尺子，不列入分母）。
+本夜新量的两道明细在 [`r_reads_event_agreement.json`](r_reads_event_agreement.json)，单次跑（`repeat=1`），
+按这把尺子的历史漂移，**它们的读数带 ±6pp 的不确定度，别拿去和 82% 那个三试读数并排比**。
 
 ## 三、本夜做的：把全库最低的那道闸补上
 
@@ -86,6 +90,8 @@ Growth Gary 2026-08-25 那句总纲：**没有先验证一个检查能报出阳�
 ## 四、下一步
 
 1. **`audit_universe_freshness` 38%（21/56）是现在最低的一道**，同一套做法可以照搬。
-2. 还有 8 道从没量过。按本夜的耗时估：一道 67 个变异点、`--repeat 3`、切两半跑，约 11 分钟。
+2. 还有 6 道从没量过（`audit_ci_test_coverage` 162 个变异点是最大的一道）。
+   按本夜实测的耗时估：单次跑每个变异点 2.5–7.3 秒（取决于那道闸自己的测试多慢），
+   `--repeat 3` 要乘三；前台单次上限 10 分钟，**超过约 80 个变异点就得切片续跑**。
 3. 这把尺子**不是闸**（退出码恒为 0），也暂时不该变成闸——变成闸要先有存活预算，
    而我们现在只有 12 个模块的读数，定不出预算。先把 20 道都量完。

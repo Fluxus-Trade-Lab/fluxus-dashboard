@@ -1,0 +1,514 @@
+{
+  "modules": [
+    {
+      "module": "audit_reads_declarations",
+      "mutants": 52,
+      "killed": 34,
+      "survived": 18,
+      "skipped": 0,
+      "unstable": 0,
+      "no_verdict": 0,
+      "repeat": 1,
+      "total_sites": 52,
+      "index_from": 0,
+      "index_to": 52,
+      "kill_rate": 0.654,
+      "survivors": [
+        {
+          "line": 33,
+          "kind": "number",
+          "change": "10 -> 11",
+          "source": "HEADER_LINES = 10          # \u53ea\u8ba4\u5934\u90e8\u58f0\u660e\uff1b\u6b63\u6587\u91cc\u8ba8\u8bba\u8fd9\u4e2a\u89c4\u77e9\u7684\u4e0d\u7b97",
+          "index": 0,
+          "seconds": [
+            10.0
+          ]
+        },
+        {
+          "line": 158,
+          "kind": "compare",
+          "change": "GtE -> Gt",
+          "source": "if len(parts) >= 2:",
+          "index": 4,
+          "seconds": [
+            9.7
+          ]
+        },
+        {
+          "line": 248,
+          "kind": "drop_not",
+          "change": "drop `not`",
+          "source": "if not total:",
+          "index": 6,
+          "seconds": [
+            10.9
+          ]
+        },
+        {
+          "line": 109,
+          "kind": "boolop",
+          "change": "Or -> And",
+          "source": "m = re.search(r\"([\u4e00-\u9fff]+\u7ad9)\", first) or re.search(r\"#\\s*[\u2460-\u2473]?\\s*([\u4e00-\u9fff]+)\", first)",
+          "index": 9,
+          "seconds": [
+            8.9
+          ]
+        },
+        {
+          "line": 158,
+          "kind": "number",
+          "change": "2 -> 3",
+          "source": "if len(parts) >= 2:",
+          "index": 12,
+          "seconds": [
+            9.5
+          ]
+        },
+        {
+          "line": 238,
+          "kind": "drop_not",
+          "change": "drop `not`",
+          "source": "if not group:",
+          "index": 14,
+          "seconds": [
+            9.6
+          ]
+        },
+        {
+          "line": 250,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "return 1 if broken else 0",
+          "index": 15,
+          "seconds": [
+            23.7
+          ]
+        },
+        {
+          "line": 250,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "return 1 if broken else 0",
+          "index": 16,
+          "seconds": [
+            9.1
+          ]
+        },
+        {
+          "line": 231,
+          "kind": "compare",
+          "change": "Eq -> NotEq",
+          "source": "broken = [f for f in findings if f.kind == \"broken\"]",
+          "index": 26,
+          "seconds": [
+            9.1
+          ]
+        },
+        {
+          "line": 232,
+          "kind": "compare",
+          "change": "Eq -> NotEq",
+          "source": "weak = [f for f in findings if f.kind == \"weak\"]",
+          "index": 27,
+          "seconds": [
+            9.4
+          ]
+        },
+        {
+          "line": 233,
+          "kind": "compare",
+          "change": "Eq -> NotEq",
+          "source": "unchk = [f for f in findings if f.kind == \"uncheckable\"]",
+          "index": 28,
+          "seconds": [
+            23.2
+          ]
+        },
+        {
+          "line": 91,
+          "kind": "bool",
+          "change": "True -> False",
+          "source": "capture_output=True, text=True, check=True,",
+          "index": 31,
+          "seconds": [
+            8.9
+          ]
+        },
+        {
+          "line": 214,
+          "kind": "boolop",
+          "change": "And -> Or",
+          "source": "elif hit != declarer and hit == Path(declarer).name:",
+          "index": 36,
+          "seconds": [
+            9.9
+          ]
+        },
+        {
+          "line": 73,
+          "kind": "bool",
+          "change": "True -> False",
+          "source": "capture_output=True, text=True, check=True,",
+          "index": 39,
+          "seconds": [
+            9.4
+          ]
+        },
+        {
+          "line": 85,
+          "kind": "bool",
+          "change": "True -> False",
+          "source": "capture_output=True, text=True, check=True,",
+          "index": 42,
+          "seconds": [
+            9.0
+          ]
+        },
+        {
+          "line": 88,
+          "kind": "boolop",
+          "change": "And -> Or",
+          "source": "if p.endswith(\".md\") and (root / p).is_file()})",
+          "index": 43,
+          "seconds": [
+            9.0
+          ]
+        },
+        {
+          "line": 246,
+          "kind": "number",
+          "change": "60 -> 61",
+          "source": "print(f\"\\n{'\u2014' * 60}\")",
+          "index": 47,
+          "seconds": [
+            9.0
+          ]
+        },
+        {
+          "line": 159,
+          "kind": "number",
+          "change": "2 -> 3",
+          "source": "forms.append(\"/\".join(parts[-2:]))",
+          "index": 51,
+          "seconds": [
+            8.8
+          ]
+        }
+      ],
+      "unstable_mutants": []
+    },
+    {
+      "module": "audit_event_agreement",
+      "repeat": 1,
+      "mutants": 83,
+      "killed": 54,
+      "survived": 29,
+      "unstable": 0,
+      "no_verdict": 0,
+      "survivors": [
+        {
+          "line": 135,
+          "kind": "number",
+          "change": "6 -> 7",
+          "source": "_PLACES = 6",
+          "index": 0,
+          "seconds": [
+            24.0
+          ]
+        },
+        {
+          "line": 172,
+          "kind": "boolop",
+          "change": "Or -> And",
+          "source": "if not ra or not rb:",
+          "index": 5,
+          "seconds": [
+            6.1
+          ]
+        },
+        {
+          "line": 196,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "return len(raw.split(\".\", 1)[1]) if \".\" in raw else 0",
+          "index": 7,
+          "seconds": [
+            6.7
+          ]
+        },
+        {
+          "line": 260,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "all_dates, seen_dates, rows_total, rows_seen = set(), set(), 0, 0",
+          "index": 13,
+          "seconds": [
+            6.0
+          ]
+        },
+        {
+          "line": 262,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "rows_total += 1",
+          "index": 14,
+          "seconds": [
+            6.0
+          ]
+        },
+        {
+          "line": 353,
+          "kind": "compare",
+          "change": "Gt -> GtE",
+          "source": "if n > 3:",
+          "index": 21,
+          "seconds": [
+            7.6
+          ]
+        },
+        {
+          "line": 360,
+          "kind": "drop_not",
+          "change": "drop `not`",
+          "source": "elif not cross:",
+          "index": 22,
+          "seconds": [
+            10.7
+          ]
+        },
+        {
+          "line": 265,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "rows_seen += 1",
+          "index": 33,
+          "seconds": [
+            6.8
+          ]
+        },
+        {
+          "line": 277,
+          "kind": "compare",
+          "change": "Eq -> NotEq",
+          "source": "cross_root = (HISTORY if path == ARCHIVE else path.parent) if cross_root is None else cross_root",
+          "index": 34,
+          "seconds": [
+            22.7
+          ]
+        },
+        {
+          "line": 313,
+          "kind": "boolop",
+          "change": "Or -> And",
+          "source": "if len(entry) != 3 or not entry[0] or not entry[2]:",
+          "index": 41,
+          "seconds": [
+            6.4
+          ]
+        },
+        {
+          "line": 353,
+          "kind": "number",
+          "change": "3 -> 4",
+          "source": "if n > 3:",
+          "index": 42,
+          "seconds": [
+            6.2
+          ]
+        },
+        {
+          "line": 237,
+          "kind": "compare",
+          "change": "IsNot -> Is",
+          "source": "for (field, date, ticker), vals in (_read if _read is not None else readings(path, fields)).items():",
+          "index": 46,
+          "seconds": [
+            8.1
+          ]
+        },
+        {
+          "line": 252,
+          "kind": "compare",
+          "change": "IsNot -> Is",
+          "source": "for (_, date, _), vals in (_read if _read is not None else readings(path, fields)).items():",
+          "index": 47,
+          "seconds": [
+            8.0
+          ]
+        },
+        {
+          "line": 345,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "n, t = len(bad[d]), den.get(d, 0)",
+          "index": 53,
+          "seconds": [
+            6.5
+          ]
+        },
+        {
+          "line": 350,
+          "kind": "number",
+          "change": "3 -> 4",
+          "source": "for x in bad[d][:3]:",
+          "index": 54,
+          "seconds": [
+            6.0
+          ]
+        },
+        {
+          "line": 368,
+          "kind": "number",
+          "change": "3 -> 4",
+          "source": "for x in cross[d][:3]:",
+          "index": 55,
+          "seconds": [
+            5.8
+          ]
+        },
+        {
+          "line": 383,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "argv = sys.argv[1:] if argv is None else argv",
+          "index": 56,
+          "seconds": [
+            5.9
+          ]
+        },
+        {
+          "line": 178,
+          "kind": "boolop",
+          "change": "And -> Or",
+          "source": "for r in rb if col in r and (r.get(col) or \"\").strip()}",
+          "index": 59,
+          "seconds": [
+            6.2
+          ]
+        },
+        {
+          "line": 196,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "return len(raw.split(\".\", 1)[1]) if \".\" in raw else 0",
+          "index": 60,
+          "seconds": [
+            6.5
+          ]
+        },
+        {
+          "line": 313,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "if len(entry) != 3 or not entry[0] or not entry[2]:",
+          "index": 68,
+          "seconds": [
+            6.2
+          ]
+        },
+        {
+          "line": 348,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "L.append(f\"      owner: {entry[0]}  (\u53d1\u73b0\u4e8e {entry[1]})\")",
+          "index": 70,
+          "seconds": [
+            6.3
+          ]
+        },
+        {
+          "line": 348,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "L.append(f\"      owner: {entry[0]}  (\u53d1\u73b0\u4e8e {entry[1]})\")",
+          "index": 71,
+          "seconds": [
+            6.9
+          ]
+        },
+        {
+          "line": 349,
+          "kind": "number",
+          "change": "2 -> 3",
+          "source": "L.append(f\"      why:   {entry[2]}\")",
+          "index": 72,
+          "seconds": [
+            6.6
+          ]
+        },
+        {
+          "line": 354,
+          "kind": "number",
+          "change": "3 -> 4",
+          "source": "L.append(f\"      ... \u53e6\u6709 {n - 3} \u4e2a\")",
+          "index": 73,
+          "seconds": [
+            5.9
+          ]
+        },
+        {
+          "line": 366,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "L.append(f\"        owner: {entry[0]}  (\u53d1\u73b0\u4e8e {entry[1]})\")",
+          "index": 74,
+          "seconds": [
+            5.9
+          ]
+        },
+        {
+          "line": 366,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "L.append(f\"        owner: {entry[0]}  (\u53d1\u73b0\u4e8e {entry[1]})\")",
+          "index": 75,
+          "seconds": [
+            6.1
+          ]
+        },
+        {
+          "line": 367,
+          "kind": "number",
+          "change": "2 -> 3",
+          "source": "L.append(f\"        why:   {entry[2]}\")",
+          "index": 76,
+          "seconds": [
+            6.1
+          ]
+        },
+        {
+          "line": 289,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "f\"\uff08\u8be5\u65e5 {denom.get(d, 0)} \u53ea\u88ab\u591a\u7b5b\u8bb0\u5f55\uff09\uff0c\u4e14\u6ca1\u6709\u58f0\u660e\"))",
+          "index": 80,
+          "seconds": [
+            6.7
+          ]
+        },
+        {
+          "line": 241,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "\"readings\": {v: sorted(s) for v, s in sorted(vals.items(), key=lambda kv: str(kv[0]))},",
+          "index": 82,
+          "seconds": [
+            5.9
+          ]
+        }
+      ],
+      "slices": [
+        {
+          "index_from": 0,
+          "index_to": 42
+        },
+        {
+          "index_from": 42,
+          "index_to": 83
+        }
+      ],
+      "kill_rate": 0.6506024096385542
+    }
+  ],
+  "note": "2026-09-23 \u9996\u6b21\u91cf\u8fd9\u4e24\u9053\uff1bevent_agreement \u5207\u7247\u7eed\u8dd1\u4e24\u534a\u5408\u5e76\uff1brepeat=1"
+}
