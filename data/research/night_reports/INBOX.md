@@ -3025,3 +3025,4 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-21] → RND Linda: 分支 feat/linda-regime-caveat-0918（regime 文案「只有 Damaged 分得开」）自 09-18 未合进 main，已滞留 >48h，请合或说明 · pending
 - [2026-09-21] Discord→X 生成端（steve, T-0922-10）：今天没有新 Discord 消息可生成草稿——`data/output/threads/` 下最新文件夹仍是 2026-09-18（已有 draft.txt）；`daily-content-threads` 当天 20:00 UTC 抓取按历史延迟（2–2.75h）尚未产出新文件夹，核对时仅过 42 分钟，属正常范围，非故障。正常结束，无 draft 产出。
 - [09-22] 📰 每日复盘 2026-09-21：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿（T-0922-22；递送单 T-0922-37）
+- [2026-09-23] Discord→X 生成端（steve, T-0923-14）：2026-09-21 草稿已出（85 条消息 → 8 条推文，commit 1d5d65a1）
