@@ -204,16 +204,44 @@ DAILY_SENTENCES_NOT_RULINGS = [
 
 TRUE_RULINGS = [
     "以后都这样做",
-    "都这样吧",
+    "都这样办",  # 09-22 第 2 轮：「都这样」要求带具体动作，原「都这样吧」不再命中，换用例
     "写进规矩里",
-    "记住这个规则",
+    "记住，以后都要这样",  # 09-22 第 2 轮：「记住」收紧为句首 `记住[:：，]`，原「记住这个规则」不再命中，换用例
     "这个就定了",
     "不要再犯同样的错误",
     "都批了，去合吧",
     "这个不做了",
     "今后一律先问我",
-    "别再问这个了",
+    "别再写这个了",  # 09-22 第 2 轮：「别再」要求跟具体动词，原「别再问这个了」不再命中，换用例
 ]
+
+# ================= 09-22 复核第 2 轮 FAIL 两条必修 =================
+
+# ---------- 必修①续：复核员新造的 5 句日常话，全部要求放行；第 1 轮那 20 句结果不变 ----------
+
+DAILY_SENTENCES_ROUND2 = [
+    "以后就知道了，先看看",
+    "别再下雨就好了",
+    "这个定了多少价格？",
+    "我记住了，不用再说",
+    "他们都这样说，不一定对",
+]
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_ROUND2)
+def test_daily_sentence_round2_is_not_a_ruling_word_hit(gate, text):
+    assert gate._hits_ruling_word(text) is False
+
+
+@pytest.mark.parametrize("text", DAILY_SENTENCES_ROUND2)
+def test_daily_sentence_round2_end_to_end_passes(gate, tmp_path, text):
+    tp = _write_transcript(tmp_path, [text])
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "好的。",
+    })
+    assert v == {}
 
 
 @pytest.mark.parametrize("text", DAILY_SENTENCES_NOT_RULINGS)
@@ -379,3 +407,53 @@ def test_reverse_reader_matches_forward_line_order(gate, tmp_path):
     tp = tmp_path / "big.jsonl"
     tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
     assert list(gate._iter_lines_reverse(tp)) == list(reversed(lines))
+
+
+# ---------- 必修②续：origin.kind=="human" 的真消息不做 INJECTED_PREFIXES 排除，
+# 只剥附件/引用标记再判断；判的必须是最新一条，不能退回上一条 ----------
+
+def test_human_message_with_attach_marker_is_a_ruling_and_blocks(gate, tmp_path):
+    lines = [
+        _user_entry("<!-- attach -->以后都这样画", origin={"kind": "human"}),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "以后都这样画"
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "收工。",
+    })
+    assert v.get("decision") == "block"
+
+
+def test_human_message_with_attach_marker_non_ruling_passes_and_judges_latest_not_prior(gate, tmp_path):
+    """上一句是真裁决「以后都这样做」，这一句带附件标记但不是裁决——必须放行，
+    且判的是这一句（最新），不能退回去判上一句。"""
+    lines = [
+        _user_entry("以后都这样做", origin={"kind": "human"}),
+        _user_entry("<!-- reply -->这是今天的截图，你看一下", origin={"kind": "human"}),
+    ]
+    tp = tmp_path / "t.jsonl"
+    tp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert gate._last_user_message(str(tp)) == "这是今天的截图，你看一下"
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "好的。",
+    })
+    assert v == {}
+
+
+# ---------- 必修③：拦截提示语必须写清楚「不是裁决就写 ruling-none」这条安全阀 ----------
+
+def test_block_reason_tells_user_ruling_none_escape_hatch(gate, tmp_path):
+    tp = _write_transcript(tmp_path, ["以后都这样做"])
+    v = gate.verdict({
+        "stop_hook_active": False,
+        "transcript_path": str(tp),
+        "last_assistant_message": "收工。",
+    })
+    assert v.get("decision") == "block"
+    assert "ruling-none" in v["reason"]
+    assert "不是裁决" in v["reason"]

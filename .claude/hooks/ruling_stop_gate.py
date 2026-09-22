@@ -12,8 +12,9 @@
    跳过以 `<`/`Stop hook feedback`/`Another Claude` 开头的注入内容、跳过纯 tool_result 消息，
    content 是 list 时把里面的 text 块拼起来再判断——这样带图的裁决不会因为 content 是 list
    被整条跳过）。
-2. 命中裁决**正则**（带上下文，第 1 轮的单字词表 09-22 复核判 FAIL：10 句日常话全部误拦、
-   真裁决反而漏判，现在这版是复核员实测误拦 0/漏 0 的版本）才继续查，否则直接放行。
+2. 命中裁决**正则**（带上下文，09-22 复核两轮收紧：第 1 轮把单字词表换成带上下文正则，
+   第 2 轮再排除「你记住了吗」「这个定了多少钱？」「别再下雨」「他们都这样说」
+   「以后就知道了」这类句式）才继续查，否则直接放行。
 3. 放行条件（任一即可）：
    - 本轮回复（last_assistant_message）末尾有 `ruling-recorded: <...>` 或 `ruling-none: <理由>`；
    - fluxus-ops origin/main 最近 30 分钟内有落盘裁决的提交（`memory: remember` / `andy ruled`）。
@@ -37,15 +38,19 @@ SINCE_MINUTES = 30
 FLUXUS_OPS = Path.home() / "Documents" / "fluxus-ops"
 REVERSE_READ_CHUNK = 1 << 20  # 1 MiB；真实 transcript 可到几百 MB，不整份读进内存
 
-# 09-22 复核第 1 轮 FAIL 后换成带上下文的正则（复核员实测：10 句日常话误拦 0，
-# 10 句真裁决漏判 0）。命中任一条才算「像裁决」。
+# 09-22 复核第 2 轮再收紧（复核员实测：新增 5 句日常话不再误拦，第 1 轮那 20 句结果不变）：
+#   - 「记住」只认句首 `记住[:：，]`（「你记住…了吗」「我记住了」这类不再命中）
+#   - 「定了」排除后面紧跟问句（「这个定了多少价格？」不再命中）
+#   - 「别再」只认后面紧跟具体动词（「别再下雨就好了」不再命中）
+#   - 「都这样」要求带出具体动作（「他们都这样说」不再命中）
+#   - 「以后就」排除「以后就知道/明白/懂了」这类
 RULING_PATTERNS = tuple(re.compile(p) for p in (
-    r"(以后|今后)(都|就|一律|每次|统一|别|不要|不许)",
-    r"都这样",
+    r"(以后|今后)(都|一律|每次|统一|别|不要|不许|就(?!(知道|明白|懂)))",
+    r"都这样(做|办|写|画|弄|来)",
     r"写进(去|规矩|宪法|skill|记忆)",
-    r"记住(?!.{0,6}[吗么？?])",
-    r"(这个|就)定了",
-    r"不要再|别再",
+    r"^记住[:：，]",
+    r"(这个|就)定了(?!.{0,6}[？?])",
+    r"不要再|别再(给|用|发|做|让|写|加)",
     r"(^|[，。\s])批(了|[，。！]|$)|都批|我批",
     r"不做了|这个不做(?!空|多)",
 ))
@@ -54,12 +59,18 @@ RULING_PATTERNS = tuple(re.compile(p) for p in (
 # <system-reminder>/<cross-session-message> 等 XML 包裹的合成内容）。
 INJECTED_PREFIXES = ("<", "Stop hook feedback", "Another Claude")
 
+# Andy 真消息（origin.kind=="human"）可能带附件/引用标记，不算内容本身，判裁决词之前
+# 先剥掉；这类消息**不**套用 INJECTED_PREFIXES（那条是给「不确定是不是人」的旧条目用的，
+# 09-22 复核第 2 轮点名：human 来源的消息不该因为前缀像 `<` 就被整条跳过）。
+ATTACH_MARKER = re.compile(r"^(?:\s*<!--\s*(?:attach|reply)\s*-->\s*)+")
+
 RECORD_MARK = re.compile(r"^\s*(?:[-*>]\s*)?`?ruling-(recorded|none):", re.M)
 
 REASON = (
     "Andy 这句像裁决：用 `taskboard.py remember`（或对应任务）记下，"
     "并在收尾正文末行写 `ruling-recorded: <任务号或 remember>`；"
-    "不算裁决就写 `ruling-none: <理由>`。"
+    "不算裁决就写 `ruling-none: <理由>`；"
+    "判断这句不是裁决，末行写 `ruling-none: 不是裁决` 即可放行——误拦的代价只是多写一行。"
 )
 
 
@@ -88,11 +99,15 @@ def _iter_lines_reverse(path: Path, chunk_size: int = REVERSE_READ_CHUNK) -> Ite
             yield tail.decode("utf-8", errors="replace")
 
 
-def _extract_human_text(entry: Dict) -> Optional[str]:
+def _extract_human_text(entry: Dict, origin_is_human: bool) -> Optional[str]:
     """从一条 user 条目里取「人打的文字」，content 是 list（带图/带 tool_result）也处理。
 
     含 tool_result 块的 list → 不是人打的，返回 None（跳过，继续往前找）。
     含 text 块的 list（比如带图裁决）→ 把 text 块拼起来。
+
+    `origin_is_human`（即 `origin.kind == "human"`）时：先剥掉开头的附件/引用标记
+    （`<!-- attach -->` / `<!-- reply -->`），剩下的原样当正文用，**不**做 INJECTED_PREFIXES
+    排除——那条前缀过滤是给「不确定是不是人」的旧条目防注入用的，会误伤真消息。
     """
     message = entry.get("message")
     if not isinstance(message, dict):
@@ -111,6 +126,11 @@ def _extract_human_text(entry: Dict) -> Optional[str]:
     text = text.strip()
     if not text:
         return None
+
+    if origin_is_human:
+        text = ATTACH_MARKER.sub("", text).strip()
+        return text or None
+
     if text.startswith(INJECTED_PREFIXES):
         return None
     return text
@@ -146,14 +166,16 @@ def _last_user_message(transcript_path: Optional[str]) -> Optional[str]:
                 continue
 
             origin = entry.get("origin")
+            origin_is_human = False
             if origin is not None:
                 if not isinstance(origin, dict) or origin.get("kind") != "human":
                     continue
+                origin_is_human = True
             else:
                 if entry.get("isMeta") or entry.get("isCompactSummary"):
                     continue
 
-            text = _extract_human_text(entry)
+            text = _extract_human_text(entry, origin_is_human)
             if text is None:
                 continue
             return text
