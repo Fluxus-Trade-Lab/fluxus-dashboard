@@ -80,6 +80,6 @@ git -C ~/Documents/fluxus-ops diff --stat HEAD~5
 
 ## 附：审核与合并相关
 
-`gate <id> --worktree <路径>` 算这件改动该走哪道闸（none / reviewer / andy）；`review <id> --verdict PASS|FAIL --evidence-file <文件>` 写审核结论（判词按 `branch-review` skill 出）；`reap --max-hours <N>` 回收挂死的认领。
+`gate <id> --worktree <路径>` 算这件改动该走哪道闸（none / reviewer / andy）；`review <id> --verdict PASS|FAIL --evidence-file <文件>` 写审核结论（判词按 `branch-review` skill 出）；`reap --max-hours <N>` 回收挂死的认领。交互会话派聊天复核员时，每轮判词用 `taskboard.py review <id> --verdict <PASS|FAIL> --record-only --evidence-file <文件>` 登记（T-0922-34：只写 `review_log` + 一条 commit，不改 status/attempts/claimed_at，metrics 否决率照样计入）。
 
 - 任务板命令在工作树有未提交改动或未推送提交时会拒绝执行（DirtyTree）；先提交推送或丢弃再用。
