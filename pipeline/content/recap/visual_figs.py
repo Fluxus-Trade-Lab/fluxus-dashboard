@@ -404,7 +404,7 @@ def three_tight_closes(lang):
 def pocket_pivot(lang):
     T = {"EN": ["base high", "biggest down-volume day", "pocket pivot: up-volume clears it",
                 "still under the high", "VOLUME"],
-         "ZH": ["箱体高点", "此前最大跌量日", "凹槽支点：涨量超过它", "仍在高点下方", "成交量"]}[lang]
+         "ZH": ["箱体高点", "此前最大跌量日", "口袋支点：涨量超过它", "仍在高点下方", "成交量"]}[lang]
     HIGH = 44.0
     px = _lin(4, 96, 12)
     py = [36, 34.5, 37, 33.8, 38.2, 35.0, 39.5, 36.8, 41.0, 38.5, 42.6, 40.0]
