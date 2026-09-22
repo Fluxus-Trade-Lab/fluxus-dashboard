@@ -1,6 +1,8 @@
 # 课程落地页 + 会员门禁：三方案对比（待 Andy 拍板）
 
-**状态**：待裁。任务 T-0920-02（claire）。09-25 课程发售前需要定。
+**状态：A（Vercel Pro）与 B（Squarespace）两选项已作废（Andy 2026-09-22 定案，T-0922-80）**——落地页渠道定为 **Whop + Cloudflare Pages**，与课件托管（T-0920-60/63，已上线 `fluxus-masterclass-lab.pages.dev`）同一条技术路线：静态站部署在 Cloudflare Pages，Whop 只管收款与会员权限，不需要 Vercel Pro 的 $20/月，也不需要 Squarespace 的会员区。落地页本体见 `fluxus-masterclass-landing.fluxus-capital2023.workers.dev`（T-0922-80）。方案 C（Whop 原生 Course/Experience）此前已因「装不下交互课件」被 T-0920-60 的实验否掉，与本次定案殊途同归——不用它是同一个原因：交互课件需要自己托管，Whop 只提供 App 壳与门禁。
+
+**状态（原文，存档）**：待裁。任务 T-0920-02（claire）。09-25 课程发售前需要定。
 **背景**：Module 1 交互课件（`~/Documents/SwingMasterclass/_web/dist/`）已由 Q 线交付，静态站、无后端。Andy 09-19 定课程走 Whop 卖，$1,499，按环节 unlock。当前 dashboard（frontend/）是纯静态 SPA，部署在 Vercel，**没有任何账号/会员系统**——`PricingPage.jsx` 只是外链到 Whop 结账页，不做门禁。
 
 ## 三个方案
