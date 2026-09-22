@@ -1,3 +1,5 @@
+import { toJstDate } from '../../../lib/tradingDate'
+
 /**
  * Capital efficiency — return on deployed capital.
  *
@@ -14,8 +16,8 @@ export function computeReturnOnDeployed(trades, startingCapital) {
     const dir = t.direction === 'long' ? 1 : -1
     for (const tr of t.trims || []) totalPnl += dir * (tr.price - t.entryPrice) * tr.qty
 
-    const entry = (t.entryDate || '').slice(0, 10)
-    const exit = t.trims?.length ? t.trims[t.trims.length - 1].date.slice(0, 10) : entry
+    const entry = toJstDate(t.entryDate)
+    const exit = t.trims?.length ? toJstDate(t.trims[t.trims.length - 1].date) : entry
     const d = new Date(entry)
     const end = new Date(exit)
     while (d <= end) {

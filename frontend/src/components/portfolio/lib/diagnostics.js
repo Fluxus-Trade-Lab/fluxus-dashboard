@@ -1,5 +1,6 @@
 import { lookupPrice } from './calculations'
 import { todayStr } from './portfolioFormat'
+import { toJstDate } from '../../../lib/tradingDate'
 
 /**
  * Compute 60-day rolling beta for a ticker vs SPY.
@@ -92,7 +93,7 @@ export function computeTrimAnalysis(closedTrades, dailyPrices, lookAheadDays = 1
     const dir = t.direction === 'long' ? 1 : -1
 
     trims.forEach((trim, idx) => {
-      const trimDate = trim.date?.slice(0, 10)
+      const trimDate = toJstDate(trim.date)
       if (!trimDate) return
 
       // Find peak price in lookAheadDays after trim
@@ -157,7 +158,7 @@ export function computeStopAnalysis(closedTrades, dailyPrices, lookAheadDays = 1
 
     const lastTrim = trims[trims.length - 1]
     const exitPrice = lastTrim.price
-    const exitDate = lastTrim.date?.slice(0, 10)
+    const exitDate = toJstDate(lastTrim.date)
     if (!exitDate) return
 
     const dir = t.direction === 'long' ? 1 : -1

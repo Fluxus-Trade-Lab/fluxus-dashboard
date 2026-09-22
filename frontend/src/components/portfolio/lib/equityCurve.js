@@ -1,6 +1,7 @@
 import { todayStr, RISK_FREE_RATE } from './portfolioFormat'
 import { lookupPrice, rejectRevertingSpikes } from './calculations'
 import { unadjustClose } from './splitTable'
+import { toJstDate } from '../../../lib/tradingDate'
 
 const _median = (a) => {
   const s = [...a].sort((x, y) => x - y)
@@ -28,8 +29,8 @@ const _median = (a) => {
 export function buildFillAnchoredCorrections(trades, dailyPrices) {
   const fills = {}
   for (const t of trades) {
-    const pts = [[(t.entryDate || '').slice(0, 10), t.entryPrice],
-      ...(t.trims || []).map(tr => [(tr.date || '').slice(0, 10), tr.price])]
+    const pts = [[toJstDate(t.entryDate), t.entryPrice],
+      ...(t.trims || []).map(tr => [toJstDate(tr.date), tr.price])]
     for (const [d, px] of pts) {
       const f = lookupPrice(t.ticker, d, dailyPrices, null)
       if (f != null && f > 0 && px > 0) (fills[t.ticker] ||= []).push([d, px / f])
@@ -107,7 +108,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
 
   // 1. Find date range
   const firstEntry = trades.reduce(
-    (min, t) => (t.entryDate < min ? t.entryDate : min),
+    (min, t) => { const d = toJstDate(t.entryDate); return d < min ? d : min },
     todayStr()
   )
   const lastDate = todayStr()
@@ -144,7 +145,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
     let grossExposure = 0 // |long| + |short| — capital at risk
 
     trades.forEach(t => {
-      if (t.entryDate.slice(0, 10) > date) return // Trade not yet open
+      if (toJstDate(t.entryDate) > date) return // Trade not yet open
 
       const dir = t.direction === 'long' ? 1 : -1
 
@@ -222,7 +223,7 @@ export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, daily
   let mktVal = 0
 
   trades.forEach(t => {
-    if (t.entryDate.slice(0, 10) > asOfDate) return
+    if (toJstDate(t.entryDate) > asOfDate) return
 
     const dir = t.direction === 'long' ? 1 : -1
     const trimsBeforeDate = (t.trims || []).filter(tr => new Date(tr.date) <= new Date(asOfDate))

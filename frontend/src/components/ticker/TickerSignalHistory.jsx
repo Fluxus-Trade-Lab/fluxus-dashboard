@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTickerEvents } from '../../hooks/useTickerEvents'
+import { toJstDate } from '../../lib/tradingDate'
 
 /**
  * Signal history — the v2 ticker object.
@@ -115,7 +116,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
   const fills = useMemo(() => (trades ?? [])
     .filter((t) => t.ticker === symbol && t.entryDate)
     .map((t) => ({
-      date: String(t.entryDate).slice(0, 10),
+      date: toJstDate(t.entryDate),
       direction: t.direction,
       price: t.entryPrice,
       qty: t.originalQty ?? t.currentQty,

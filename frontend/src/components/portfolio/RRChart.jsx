@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, Cell, ResponsiveContainer } from 'recharts'
 import { rMultiple } from './lib/diagnosticsR'
+import { toJstDate } from '../../lib/tradingDate'
 
 /**
  * RR chart — every closed trade by its R-multiple (realizedPL ÷ initial risk).
@@ -12,8 +13,8 @@ export default function RRChart({ enrichedTrades }) {
     const rows = (enrichedTrades || [])
       .filter(t => t.isClosed)
       .map(t => {
-        const exit = (t.trims?.length ? t.trims[t.trims.length - 1].date : t.entryDate) || ''
-        return { r: rMultiple(t), ticker: t.ticker, exit: exit.slice(0, 10) }
+        const exit = t.trims?.length ? t.trims[t.trims.length - 1].date : t.entryDate
+        return { r: rMultiple(t), ticker: t.ticker, exit: toJstDate(exit) }
       })
       .filter(d => d.r != null)
       .sort((a, b) => (a.exit < b.exit ? -1 : 1))

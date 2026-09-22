@@ -1,4 +1,5 @@
 import { rMultiple } from './diagnosticsR'
+import { toJstDate } from '../../../lib/tradingDate'
 
 /**
  * Position size per trade, and whether size predicts anything.
@@ -17,7 +18,7 @@ import { rMultiple } from './diagnosticsR'
 export function positionSizeStats(enrichedTrades, performanceData, startingCapital) {
   const eq = performanceData || []
   const equityAt = (date) => {
-    const d = (date || '').slice(0, 10)
+    const d = toJstDate(date)
     let v = startingCapital
     for (const p of eq) { if (p.date <= d) v = p.value; else break }
     return v || startingCapital
@@ -34,7 +35,7 @@ export function positionSizeStats(enrichedTrades, performanceData, startingCapit
         r: rMultiple(t),
         pl: t.realizedPL ?? t.totalPL ?? 0,
         ticker: t.ticker,
-        exit: exit.slice(0, 10),
+        exit: toJstDate(exit),
       }
     })
     .filter((d) => d.size > 0)

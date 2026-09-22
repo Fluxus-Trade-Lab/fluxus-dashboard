@@ -131,18 +131,21 @@ describe('buildEquityCurve — split-table un-adjust kills the reverse-split pha
   for (let day = 4; day <= 9; day++) {
     dailyPrices[`SOXS:2026-06-0${day}`] = 5.91 * 90 // feed inflated 90× by later reverse splits
   }
+  // entryDate is a GAS timestamp (midnight JST restated in UTC), so the trade's
+  // actual entry day is 2026-06-05 JST, not the 2026-06-04 the raw UTC date would
+  // suggest (T-0922-44).
   it('stays flat by default — fill-anchored, no split table needed', () => {
     // entry $5.91 vs feed $531.9 → ratio 1/90 → feed marked back to ~$5.91.
     const curve = buildEquityCurve(trades, startingCapital, dailyPrices)
-    const pt = curve.find(p => p.date === '2026-06-04')
+    const pt = curve.find(p => p.date === '2026-06-05')
     expect(pt.returnPct).toBeGreaterThan(-2)
     expect(pt.returnPct).toBeLessThan(2)
   })
 
   it('prefers the frozen snapshot over the feed', () => {
-    const frozenPrices = { 'SOXS:2026-06-04': 5.91 }
+    const frozenPrices = { 'SOXS:2026-06-05': 5.91 }
     const curve = buildEquityCurve(trades, startingCapital, dailyPrices, null, { frozenPrices })
-    const pt = curve.find(p => p.date === '2026-06-04')
+    const pt = curve.find(p => p.date === '2026-06-05')
     expect(pt.returnPct).toBeGreaterThan(-2)
     expect(pt.returnPct).toBeLessThan(2)
   })

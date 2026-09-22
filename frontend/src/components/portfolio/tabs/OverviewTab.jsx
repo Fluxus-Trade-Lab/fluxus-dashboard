@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
-import { todayET, isoDaysAgo } from '../../../lib/tradingDate'
+import { todayET, isoDaysAgo, toJstDate } from '../../../lib/tradingDate'
 import { usePrices } from '../hooks/usePrices'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
@@ -280,7 +280,7 @@ export default function OverviewTab({
                       <LegStateBadge state={legState} />
                     )}
                   </td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[11px] text-[var(--color-text-secondary)]">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[11px] text-[var(--color-text-secondary)]">{toJstDate(t.entryDate).replace(/-/g, '/')}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
                     {pm ? MASK : (
                       <>

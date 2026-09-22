@@ -1,5 +1,5 @@
 import { daysBetween, todayStr, RISK_FREE_RATE } from './portfolioFormat'
-import { isoDaysAgo } from '../../../lib/tradingDate'
+import { isoDaysAgo, toJstDate } from '../../../lib/tradingDate'
 
 /**
  * Look up the best available price for a ticker on a date, AND say which day
@@ -145,7 +145,7 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
      * entry price. So does the equity curve. Only these two columns were wrong,
      * and nothing cumulative was ever built on them.
      */
-    const openedToday = String(t.entryDate ?? '').slice(0, 10) >= today
+    const openedToday = toJstDate(t.entryDate) >= today
 
     /* AND IT IS "NOT MEASURED", NEVER ZERO, WHEN TODAY HAS NO PRICE.
      *

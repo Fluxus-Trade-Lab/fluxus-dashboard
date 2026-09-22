@@ -5,6 +5,7 @@ import { chips as proximityChipsFn } from '../portfolio/lib/emaProximity'
 import LegStateBadge from '../portfolio/ui/LegStateBadge'
 import ProximityChips from '../portfolio/ui/ProximityChips'
 import { fmtCur } from '../portfolio/lib/portfolioFormat'
+import { toJstDate } from '../../lib/tradingDate'
 
 /**
  * Status Panel — for the most-recent open layer of this ticker (if any),
@@ -28,7 +29,7 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
         <div className="font-semibold mb-3 text-[13px]">Status</div>
         <div className="text-[13px]">No open position.</div>
         <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-          Last trade: {lastClosed.entryDate?.slice(0, 10)} @ {fmtCur(lastClosed.entryPrice)}
+          Last trade: {toJstDate(lastClosed.entryDate)} @ {fmtCur(lastClosed.entryPrice)}
         </div>
       </div>
     )

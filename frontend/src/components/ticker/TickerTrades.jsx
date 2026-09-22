@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { groupByCampaigns } from '../portfolio/lib/campaign'
 import { fmtCur, fmtPct } from '../portfolio/lib/portfolioFormat'
+import { toJstDate } from '../../lib/tradingDate'
 
 /**
  * All user trades on this ticker, grouped by campaign with aggregate stats.
@@ -91,7 +92,7 @@ function CampaignRows({ campaign }) {
           key={t.id}
           className={`${t.isClosed ? 'opacity-60' : ''} ${idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'} border-b border-[var(--color-border-light)]`}
         >
-          <td className="px-2 py-1.5 whitespace-nowrap">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
+          <td className="px-2 py-1.5 whitespace-nowrap">{toJstDate(t.entryDate).replace(/-/g, '/')}</td>
           <td className="px-2 py-1.5">
             <span className={'text-[var(--color-text-secondary)]'}>
               {t.direction === 'long' ? 'LONG' : 'SHORT'}

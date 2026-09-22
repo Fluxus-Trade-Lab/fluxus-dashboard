@@ -3,6 +3,7 @@ import Empty from '../Empty'
 import { rMultiple, rRisk } from '../../portfolio/lib/diagnosticsR'
 import { DivergingBars } from '../lib/MiniBars'
 import TradeCaseStudies from './TradeCaseStudies'
+import { toJstDate } from '../../../lib/tradingDate'
 
 const mean = a => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0)
 const money = v => (v < 0 ? '-$' : '$') + Math.abs(Math.round(v)).toLocaleString()
@@ -83,10 +84,10 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
     }
     const riskPctOf = t => {
       const r = rRisk(t)
-      return r ? (r / equityAt(t.entryDate.slice(0, 10))) * 100 : null
+      return r ? (r / equityAt(toJstDate(t.entryDate))) * 100 : null
     }
-    const rDD = closed.map(t => inDD(t.entryDate.slice(0, 10)) ? riskPctOf(t) : null).filter(Boolean)
-    const rOK = closed.map(t => !inDD(t.entryDate.slice(0, 10)) ? riskPctOf(t) : null).filter(Boolean)
+    const rDD = closed.map(t => inDD(toJstDate(t.entryDate)) ? riskPctOf(t) : null).filter(Boolean)
+    const rOK = closed.map(t => !inDD(toJstDate(t.entryDate)) ? riskPctOf(t) : null).filter(Boolean)
 
     // trims / stops
     const scaled = closed.filter(t => (t.trims?.length || 0) >= 2)

@@ -1,5 +1,6 @@
 import { lookupPrice } from './calculations'
 import { SPLIT_TABLE, unadjustClose } from './splitTable'
+import { toJstDate } from '../../../lib/tradingDate'
 
 /**
  * Frozen daily-price snapshot + split suggester.
@@ -87,7 +88,7 @@ const ratioLabel = f => (f >= 1 ? `${Math.round(f)}:1` : `1:${Math.round(1 / f)}
  * @returns {{ suggestions: object[], perTrade: object[], straddles: object[] }}
  */
 export function suggestSplits(trades, dailyPrices, table = SPLIT_TABLE) {
-  const feedAt = (tk, d) => lookupPrice(tk, (d || '').slice(0, 10), dailyPrices, null)
+  const feedAt = (tk, d) => lookupPrice(tk, toJstDate(d), dailyPrices, null)
 
   // 1. Per-trade cumulative factor (snapped), skipping non-split (~1) trades.
   const perTrade = []
@@ -111,7 +112,7 @@ export function suggestSplits(trades, dailyPrices, table = SPLIT_TABLE) {
     const snapped = snapComposite(med)
     perTrade.push({
       ticker: t.ticker,
-      entryDate: (t.entryDate || '').slice(0, 10),
+      entryDate: toJstDate(t.entryDate),
       measured: med,
       cumFactor: snapped ?? med,
       snapped: snapped != null,

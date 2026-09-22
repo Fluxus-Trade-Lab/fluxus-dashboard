@@ -7,6 +7,8 @@
  * trade was put on, not today. All pure functions; no fetching, no lookahead.
  */
 
+import { toJstDate } from '../../../../lib/tradingDate'
+
 const val = b => (typeof b === 'number' ? b : b?.close)
 
 /** Simple moving average of the last `n` closes ending at index `end` (inclusive). */
@@ -56,7 +58,7 @@ function indexAsOf(bars, dateStr) {
  */
 export function computeTradeTechnicals(bars, trade) {
   if (!Array.isArray(bars) || bars.length < 20) return null
-  const entryDate = (trade.entryDate || '').slice(0, 10)
+  const entryDate = toJstDate(trade.entryDate)
   const idx = indexAsOf(bars, entryDate)
   if (idx < 20) return null // not enough history before the entry
   const closes = bars.map(val)

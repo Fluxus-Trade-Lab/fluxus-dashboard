@@ -1,4 +1,5 @@
 import { lookupPrice } from './calculations'
+import { toJstDate } from '../../../lib/tradingDate'
 
 /**
  * Auto-detecting split adjustment.
@@ -72,7 +73,7 @@ const median = arr => {
  *          factor === 1 means "no adjustment".
  */
 export function detectSplitFactor(trade, dailyPrices) {
-  const feedAt = d => lookupPrice(trade.ticker, (d || '').slice(0, 10), dailyPrices, null)
+  const feedAt = d => lookupPrice(trade.ticker, toJstDate(d), dailyPrices, null)
 
   const fills = [[trade.entryPrice, trade.entryDate], ...(trade.trims || []).map(tr => [tr.price, tr.date])]
   const ratios = []

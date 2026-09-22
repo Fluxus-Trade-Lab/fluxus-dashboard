@@ -30,6 +30,27 @@ export function todayET(now = new Date()) {
 }
 
 /**
+ * Portfolio trade dates as the Sheet's owner actually meant them.
+ *
+ * GAS returns a Sheet Date cell as `getValues()` → `JSON.stringify`, which
+ * comes back `YYYY-MM-DDT15:00:00.000Z` — midnight JST, restated in UTC. Every
+ * `entryDate.slice(0, 10)` in this codebase used to read that as the UTC date,
+ * one calendar day earlier than what was typed into the Sheet (T-0922-44,
+ * sibling of the pipeline-side fix in trade_parser._parse_date, T-0922-43).
+ * A plain `YYYY-MM-DD` (trims are stored as text, never as a Date cell) has no
+ * time component and passes through unchanged.
+ */
+export function toJstDate(iso) {
+  const s = String(iso ?? '')
+  if (!s.includes('T')) return s.slice(0, 10)
+  const d = new Date(s)
+  if (Number.isNaN(d.getTime())) return s.slice(0, 10)
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(d)
+}
+
+/**
  * `n` calendar days before an ISO date. Calendar, not trading — callers that
  * need the previous SESSION walk back from here until a price exists, which is
  * what `lookupPriceAt` already does.
