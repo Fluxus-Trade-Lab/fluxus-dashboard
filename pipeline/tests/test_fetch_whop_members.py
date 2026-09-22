@@ -127,12 +127,16 @@ def test_keychain_failure_returns_none():
     assert fw.get_api_key(runner=lambda *a, **k: R()) is None
 
 
+def _run_write(csv_path, date):
+    return fw.main(["--write", "--csv", str(csv_path), "--date", date],
+                   session=FakeSession({"memberships": THREE_PAGES, "members": MEMBERS}),
+                   key_getter=lambda: FAKE_KEY)
+
+
 def test_write_fills_whop_members_with_A_and_no_key_or_comma(tmp_path, capsys):
     csv_path = tmp_path / "metrics.csv"
-    csv_path.write_text("date,x_followers,whop_members,notes\n2026-09-21,285,,old\n")
-    sess = FakeSession({"memberships": THREE_PAGES, "members": MEMBERS})
-    assert fw.main(["--write", "--csv", str(csv_path), "--date", "2026-09-21"],
-                   session=sess, key_getter=lambda: FAKE_KEY) == 0
+    csv_path.write_text("date,x_followers,whop_members,notes\n2026-09-21,285,,x_followers=285(来源 own_account.csv)\n")
+    assert _run_write(csv_path, "2026-09-21") == 0
     out = capsys.readouterr().out
     text = csv_path.read_text()
     lines = text.strip().split("\n")
@@ -141,6 +145,36 @@ def test_write_fills_whop_members_with_A_and_no_key_or_comma(tmp_path, capsys):
     assert row[:3] == ["2026-09-21", "285", "4"] and len(row) == 4  # 口径A=4；notes 无半角逗号
     assert "口径A" in row[3] and "=4" in row[3] and "试用trialing=1" in row[3] and "到期不续1" in row[3]
     assert FAKE_KEY not in text and FAKE_KEY not in out
+
+
+def test_existing_notes_kept_and_whop_segment_appended(tmp_path):
+    csv_path = tmp_path / "metrics.csv"
+    old = "x_followers=285(来源 own_account.csv·date_et 2026-09-20)；x_week_views=44(posts.csv)"
+    csv_path.write_text(f"date,x_followers,whop_members,notes\n2026-09-21,285,,{old}\n")
+    _run_write(csv_path, "2026-09-21")
+    notes = csv_path.read_text().strip().split("\n")[1].split(",", 3)[3]
+    assert notes.startswith(old + "；" + fw.SEG_START)
+    assert notes.endswith(fw.SEG_END) and "口径A" in notes
+
+
+def test_rerun_same_day_replaces_own_segment_not_duplicate(tmp_path):
+    csv_path = tmp_path / "metrics.csv"
+    csv_path.write_text("date,x_followers,whop_members,notes\n2026-09-21,285,,old notes\n")
+    _run_write(csv_path, "2026-09-21")
+    first = csv_path.read_text()
+    _run_write(csv_path, "2026-09-21")
+    second = csv_path.read_text()
+    notes = second.strip().split("\n")[1].split(",", 3)[3]
+    assert notes.count(fw.SEG_START) == 1 and notes.count(fw.SEG_END) == 1
+    assert notes.startswith("old notes；") and notes.count("口径A") == 1
+    # 取数时刻同分钟内两次结果一致；跨分钟也只替换段内
+    assert len(second) - len(first) in range(-2, 3)
+
+
+def test_merge_note_keeps_text_after_segment():
+    s = fw.merge_note("a；" + fw.SEG_START + "old" + fw.SEG_END + "；b", "new")
+    assert s == "a；" + fw.SEG_START + "new" + fw.SEG_END + "；b"
+    assert fw.merge_note("", "x") == fw.SEG_START + "x" + fw.SEG_END
 
 
 def test_write_appends_new_date_row(tmp_path):

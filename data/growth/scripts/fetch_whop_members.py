@@ -149,8 +149,22 @@ def format_note(s: dict, fetched: str, pages: int) -> str:
     return note.replace(",", "，")
 
 
+SEG_START, SEG_END = "【Whop脚本段】", "【/Whop脚本段】"
+
+
+def merge_note(old: str, seg: str) -> str:
+    """把 Whop 段追加到原 notes 后；原 notes 里已有自己上次的段就原位替换（不叠加）。"""
+    import re
+    block = f"{SEG_START}{seg}{SEG_END}"
+    pat = re.compile(re.escape(SEG_START) + ".*?" + re.escape(SEG_END), re.S)
+    if pat.search(old or ""):
+        return pat.sub(lambda _m: block, old, count=1)
+    return f"{old}；{block}" if old else block
+
+
 def update_row(csv_path: Path, date: str, note: str, value: str = "") -> None:
-    """同日行存在则只改该行的 whop_members 与 notes；否则追加新行。其余行逐字节不动。"""
+    """同日行存在则只改该行的 whop_members，并把 Whop 段并入 notes（保留别人写的部分）；
+    否则追加新行。其余行逐字节不动。"""
     import io
     lines = csv_path.read_text(encoding="utf-8").splitlines(keepends=True)
     header = next(csv.reader([lines[0]]))
@@ -165,14 +179,14 @@ def update_row(csv_path: Path, date: str, note: str, value: str = "") -> None:
         if line.startswith(date + ","):
             row = next(csv.reader([line]))
             row += [""] * (len(header) - len(row))
-            row[i_w], row[i_n] = value, note
+            row[i_w], row[i_n] = value, merge_note(row[i_n], note)
             lines[i] = dump(row)
             break
     else:
         if lines and not lines[-1].endswith("\n"):
             lines[-1] += "\n"
         new = [""] * len(header)
-        new[0], new[i_w], new[i_n] = date, value, note
+        new[0], new[i_w], new[i_n] = date, value, merge_note("", note)
         lines.append(dump(new))
     csv_path.write_text("".join(lines), encoding="utf-8")
 
