@@ -203,6 +203,8 @@
 - [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
 
 ## 📥 追加到这里
+- [09-22] [steve] **不退款对价的完整链条** — L1-5 免费试作为不退款政策的对价，系统从销售文案、落地页、结账页、Whop 后台四个环节同步落地，防止用户在某一步「不知道能先试」。系统的诚实度在于对价在每一环都能被验证到。[T-0922-94 · 9c1910c9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9c1910c9)
+
 
 - [09-22] [steve] **购买后不退款的系统一致性** · 结账页和 Whop 后台「Refund policy」设置必须对齐，防平台默认政策打架。内容课程的不退款不只是文案，更是系统设计的诚实——从用户清晰期待（免费试学 L1–L5 再决定）→ 系统验证一致 → 防护双层。[T-0922-81 · 97b41ac2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/97b41ac2)
 
