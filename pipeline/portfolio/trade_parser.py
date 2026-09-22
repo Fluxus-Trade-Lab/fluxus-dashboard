@@ -23,11 +23,14 @@ from __future__ import annotations
 import csv
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from pathlib import Path
 from typing import Optional
+from zoneinfo import ZoneInfo
 
 logger = logging.getLogger(__name__)
+
+_JST = ZoneInfo('Asia/Tokyo')
 
 
 @dataclass(frozen=True)
@@ -130,20 +133,39 @@ class Trade:
 
 
 def _parse_date(s: str) -> Optional[date]:
-    """Parse an ISO datetime string like '2026-01-05T15:00:00.000Z' → date."""
+    """Parse an ISO datetime string like '2026-01-05T15:00:00.000Z' → date.
+
+    The Sheet's Date cells are entered as a JST wall-clock day, then
+    `getValues()` + `JSON.stringify` round-trips them through UTC (JST
+    midnight = 15:00 UTC the day before). Taking the date straight off a
+    timestamped string is therefore taking the *UTC* day, which reads one
+    day early for every entry made before 09:00 JST. Convert to Asia/Tokyo
+    before taking the date. Bare 'YYYY-MM-DD' strings (trim dates) have no
+    time component and no timezone to convert.
+    """
     if not s:
         return None
     s = s.strip()
     if not s:
         return None
     # The CSV uses '2026-01-05T15:00:00.000Z' or '2026-01-05' for trim dates
-    for fmt in ('%Y-%m-%dT%H:%M:%S.%fZ', '%Y-%m-%dT%H:%M:%SZ', '%Y-%m-%d'):
+    for fmt in ('%Y-%m-%dT%H:%M:%S.%fZ', '%Y-%m-%dT%H:%M:%SZ'):
         try:
-            return datetime.strptime(s, fmt).date()
+            dt = datetime.strptime(s, fmt).replace(tzinfo=timezone.utc)
+            return dt.astimezone(_JST).date()
         except ValueError:
             continue
-    logger.warning(f"Could not parse date: {s!r}")
-    return None
+    try:
+        return datetime.strptime(s, '%Y-%m-%d').date()
+    except ValueError:
+        pass
+    # Any other timezone-aware ISO timestamp (e.g. a '+09:00' offset).
+    try:
+        dt = datetime.fromisoformat(s)
+    except ValueError:
+        logger.warning(f"Could not parse date: {s!r}")
+        return None
+    return dt.astimezone(_JST).date() if dt.tzinfo is not None else dt.date()
 
 
 def _parse_float(s: str) -> Optional[float]:
