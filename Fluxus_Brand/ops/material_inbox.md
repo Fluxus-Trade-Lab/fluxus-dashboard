@@ -203,6 +203,8 @@
 - [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
 
 ## 📥 追加到这里
+- [09-22] [steve] **课程发售架构从「待定」→「定档」→「实装验证」的完整链条** · Whop + Cloudflare Pages 定案，与交互课件（T-0920-60/63 已上线）同一技术路线，消掉 Vercel Pro 与 Squarespace 的 SaaS 订阅依赖。技术栈的一致性和成本精细度，体现系统化决策能有效向下贯彻到可验的实装环节。[T-0922-80 · b4e922d4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b4e922d4)
+
 - [09-22] [steve] **不退款对价的完整链条** — L1-5 免费试作为不退款政策的对价，系统从销售文案、落地页、结账页、Whop 后台四个环节同步落地，防止用户在某一步「不知道能先试」。系统的诚实度在于对价在每一环都能被验证到。[T-0922-94 · 9c1910c9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9c1910c9)
 
 
