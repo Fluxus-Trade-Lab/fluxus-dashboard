@@ -45,9 +45,28 @@ STANCES = ["long", "watching", "short", "exited", "recap", "mention"]
 
 # 指数与宽基 ETF：它们属于日报第 3 节「走势」，不是第 1 节的候选票。
 # 分开标，不从表里删。
-INDEX = {"SPY", "QQQ", "VIX", "SPX", "NDX", "IWM", "DIA", "SMH", "IWF", "IWD",
-         "QQQE", "RSP", "TLT", "GLD", "SLV", "USO", "XLK", "XLF", "XLE", "XLV",
-         "XLI", "XLY", "XLP", "XLU", "XLB", "XLRE", "XLC", "ETH", "BTC"}
+#
+# ⚠️ 这张表同时决定看板上「RS 评级 / 距 50 日线 / ETF 篮子」三列的空格子怎么读
+# （T-0923-127）。那三列的源（universe.json 的个股宇宙、groups.json 的 etf 篮子成分）
+# **本来就只收个股**，所以 ETF / 指数 / 加密 / 宽度指标在这三列上是「不适用」，不是
+# 「缺数据」——看板据 idx 标记把它们画成淡色「—」并挂 title，个股的真空缺画「·」。
+# 09-23 实测：≥2 人说过的带 $ 的票 189 只，缺 RS 的 45 只**全部**落在下面这几行里，
+# 个股一只不缺。所以这里把原来漏掉的 28 个补齐，分组写明白，方便下次核。
+INDEX = {
+    # 大盘指数与宽基 ETF
+    "SPY", "QQQ", "IWM", "DIA", "RSP", "QQQE", "SPX", "NDX", "VIX", "MAGS",
+    # 行业 / 主题 ETF（SPDR 板块 + 半导体 + 网络安全 + 软件 + 生物 + 能源 + 金属 + 航运…）
+    "XLK", "XLF", "XLE", "XLV", "XLI", "XLY", "XLP", "XLU", "XLB", "XLRE", "XLC",
+    "IWF", "IWD", "SMH", "SOXX", "SOXL", "XBI", "XOP", "OIH", "CRAK", "IGV",
+    "HACK", "BUG", "CIBR", "GDX", "COPX", "REMX", "PEJ", "ARKG", "BOAT", "BWET",
+    "WGMI", "DRAM",
+    # 商品 / 利率 / 期货
+    "GLD", "SLV", "USO", "TLT", "TNX", "NQ",
+    # 加密（现货与 ETF）
+    "BTC", "ETH", "SOL", "IBIT", "ETHA",
+    # 宽度指标（McClellan 系与交易所代码，本来就不是可买的票）
+    "NYSE", "NYMO", "NYSI",
+}
 
 
 def load_posts() -> list[dict]:
