@@ -23,10 +23,59 @@
 # CI covers the YAML branch. Removing it here would leave the YAML branch
 # with no coverage anywhere -- which is exactly the state the compact-step
 # hole survived in.
+# TRIGGER NARROWING (T-0923-121, 2026-09-23): `push:` used to fire on any
+# branch + any path. Andy's inbox took two spam waves in two days from it --
+# 25 runs in one hour on 09-23 (agent branches pushing, and pure-content
+# commits like `Fluxus_Brand/ops/material_inbox.md` / taskboard files / the
+# vault-question and board-patrol skill migrations), plus a 43-minute red
+# window (09-23 15:02-15:45 JST, 6b6676a9 -> 22eb7017) where every push in
+# between mailed another failure.
+#
+# Fix: `push:` only fires on main (agent branches merge in via the taskboard
+# gate/reviewer flow, not by pushing here -- see CLAUDE.md safe-merge rules),
+# and `paths-ignore` skips commits that touch only directories `git grep`
+# confirmed pipeline/tests and tests/ never read as data:
+#   Fluxus_Brand/**, Fluxus_Substack/**, docs/**, .claude/**,
+#   data/content/**, data/research/**.
+# Each of those four has a real exception carved back in with `!` (order
+# matters -- a later positive pattern re-includes what an earlier `!`
+# excluded), because the naive "whole directory is docs" read from the task
+# brief was wrong:
+#   - Fluxus_Brand/ops/tools/x_watch/fetch.py is imported by
+#     test_x_watch_fetch.py (its own docstring explains why: this file is
+#     the only thing that runs it, since CI only used to cover pipeline/tests).
+#   - data/content/x_watch/tools/**.py and scoring/mood_index.py are
+#     imported the same way by the other test_x_watch_*.py files.
+#   - data/research/claims/claims.jsonl is read live by
+#     test_claim_registry.py::TestLiveRegistry.
+# `data/reference/**` was proposed too but dropped entirely (not narrowed):
+# schema_snapshot.json, screener_methods.md and METRIC_SOURCES.md are all
+# read for real content by test_output_shape_guards.py / test_ep_screeners.py
+# / test_audit_fix_0921.py / test_audit_metric_names.py, and it's already
+# excluded from ALEX's own auto-merge whitelist (CLAUDE.md safe-merge) as
+# too load-bearing to treat as inert docs. `**/*.md` (blanket, repo-wide)
+# was dropped for the same reason -- this repo's test suite exists
+# specifically to audit .md contract files as semi-code.
+#
+# Who notices a real red now that pushes don't self-report as fast: T-0922-61
+# (alex-sentinel checks main's CI status every 2 hours, opens a P0 to alex on
+# red) -- not "wait for the next person to push".
 name: tests
 
 on:
   push:
+    branches: [main]
+    paths-ignore:
+      - 'Fluxus_Brand/**'
+      - '!Fluxus_Brand/ops/tools/x_watch/**'
+      - 'Fluxus_Substack/**'
+      - 'docs/**'
+      - '.claude/**'
+      - 'data/content/**'
+      - '!data/content/x_watch/tools/**'
+      - '!data/content/x_watch/scoring/**'
+      - 'data/research/**'
+      - '!data/research/claims/**'
   pull_request:
   workflow_dispatch:
 
