@@ -1,0 +1,3738 @@
+{
+ "window_days": 7,
+ "window": {
+  "start": "2026-09-16",
+  "end": "2026-09-22"
+ },
+ "count": 414,
+ "source": "data/content/x_watch/posts/*.jsonl（同 ticker_daily.csv），由 data/content/x_watch/tools/build_board.py 生成",
+ "note": "people_7d = 窗口内不重复提及人数（跨日去重，非日人数相加）；peak_day = 单日人数最高的 ET 日，并列取最早；只含帖子原文带 $ 的 cashtag。这是「有多少人在说」，不是情绪、不是看多看空。",
+ "rows": [
+  {
+   "ticker": "MU",
+   "people_7d": 22,
+   "posts_7d": 74,
+   "days_7d": 7,
+   "peak_day": "2026-09-22",
+   "peak_people": 13,
+   "is_index": false
+  },
+  {
+   "ticker": "INTC",
+   "people_7d": 19,
+   "posts_7d": 62,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 11,
+   "is_index": false
+  },
+  {
+   "ticker": "SNDK",
+   "people_7d": 17,
+   "posts_7d": 62,
+   "days_7d": 7,
+   "peak_day": "2026-09-20",
+   "peak_people": 9,
+   "is_index": false
+  },
+  {
+   "ticker": "AMD",
+   "people_7d": 17,
+   "posts_7d": 57,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 12,
+   "is_index": false
+  },
+  {
+   "ticker": "ARM",
+   "people_7d": 17,
+   "posts_7d": 39,
+   "days_7d": 6,
+   "peak_day": "2026-09-21",
+   "peak_people": 10,
+   "is_index": false
+  },
+  {
+   "ticker": "QQQ",
+   "people_7d": 16,
+   "posts_7d": 46,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 8,
+   "is_index": true
+  },
+  {
+   "ticker": "LITE",
+   "people_7d": 14,
+   "posts_7d": 45,
+   "days_7d": 7,
+   "peak_day": "2026-09-16",
+   "peak_people": 5,
+   "is_index": false
+  },
+  {
+   "ticker": "SPY",
+   "people_7d": 14,
+   "posts_7d": 45,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 7,
+   "is_index": true
+  },
+  {
+   "ticker": "MRVL",
+   "people_7d": 14,
+   "posts_7d": 37,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 9,
+   "is_index": false
+  },
+  {
+   "ticker": "CRWD",
+   "people_7d": 14,
+   "posts_7d": 33,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 8,
+   "is_index": false
+  },
+  {
+   "ticker": "META",
+   "people_7d": 14,
+   "posts_7d": 30,
+   "days_7d": 5,
+   "peak_day": "2026-09-21",
+   "peak_people": 8,
+   "is_index": false
+  },
+  {
+   "ticker": "DELL",
+   "people_7d": 13,
+   "posts_7d": 36,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 8,
+   "is_index": false
+  },
+  {
+   "ticker": "SPCX",
+   "people_7d": 12,
+   "posts_7d": 23,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 7,
+   "is_index": false
+  },
+  {
+   "ticker": "NBIS",
+   "people_7d": 11,
+   "posts_7d": 45,
+   "days_7d": 7,
+   "peak_day": "2026-09-20",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "SKHY",
+   "people_7d": 11,
+   "posts_7d": 19,
+   "days_7d": 7,
+   "peak_day": "2026-09-20",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "PLTR",
+   "people_7d": 10,
+   "posts_7d": 32,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "SMTC",
+   "people_7d": 10,
+   "posts_7d": 32,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 7,
+   "is_index": false
+  },
+  {
+   "ticker": "HOOD",
+   "people_7d": 10,
+   "posts_7d": 28,
+   "days_7d": 7,
+   "peak_day": "2026-09-18",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "HPE",
+   "people_7d": 10,
+   "posts_7d": 27,
+   "days_7d": 7,
+   "peak_day": "2026-09-20",
+   "peak_people": 5,
+   "is_index": false
+  },
+  {
+   "ticker": "BE",
+   "people_7d": 10,
+   "posts_7d": 25,
+   "days_7d": 6,
+   "peak_day": "2026-09-17",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "RBRK",
+   "people_7d": 10,
+   "posts_7d": 24,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "BTC",
+   "people_7d": 10,
+   "posts_7d": 22,
+   "days_7d": 6,
+   "peak_day": "2026-09-21",
+   "peak_people": 6,
+   "is_index": true
+  },
+  {
+   "ticker": "NET",
+   "people_7d": 10,
+   "posts_7d": 21,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "MSTR",
+   "people_7d": 10,
+   "posts_7d": 20,
+   "days_7d": 6,
+   "peak_day": "2026-09-18",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "SPX",
+   "people_7d": 9,
+   "posts_7d": 30,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 5,
+   "is_index": true
+  },
+  {
+   "ticker": "NVDA",
+   "people_7d": 9,
+   "posts_7d": 21,
+   "days_7d": 6,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "OKTA",
+   "people_7d": 9,
+   "posts_7d": 20,
+   "days_7d": 6,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "COIN",
+   "people_7d": 9,
+   "posts_7d": 18,
+   "days_7d": 5,
+   "peak_day": "2026-09-21",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "SMCI",
+   "people_7d": 9,
+   "posts_7d": 14,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "PURR",
+   "people_7d": 9,
+   "posts_7d": 12,
+   "days_7d": 5,
+   "peak_day": "2026-09-18",
+   "peak_people": 5,
+   "is_index": false
+  },
+  {
+   "ticker": "IREN",
+   "people_7d": 9,
+   "posts_7d": 10,
+   "days_7d": 6,
+   "peak_day": "2026-09-20",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "FTNT",
+   "people_7d": 8,
+   "posts_7d": 24,
+   "days_7d": 7,
+   "peak_day": "2026-09-22",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "IWM",
+   "people_7d": 8,
+   "posts_7d": 14,
+   "days_7d": 6,
+   "peak_day": "2026-09-22",
+   "peak_people": 4,
+   "is_index": true
+  },
+  {
+   "ticker": "DOCN",
+   "people_7d": 8,
+   "posts_7d": 11,
+   "days_7d": 7,
+   "peak_day": "2026-09-21",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "PANW",
+   "people_7d": 7,
+   "posts_7d": 29,
+   "days_7d": 7,
+   "peak_day": "2026-09-16",
+   "peak_people": 5,
+   "is_index": false
+  },
+  {
+   "ticker": "NOW",
+   "people_7d": 7,
+   "posts_7d": 21,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "SMH",
+   "people_7d": 7,
+   "posts_7d": 21,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": true
+  },
+  {
+   "ticker": "TEM",
+   "people_7d": 7,
+   "posts_7d": 17,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 5,
+   "is_index": false
+  },
+  {
+   "ticker": "FSLY",
+   "people_7d": 7,
+   "posts_7d": 16,
+   "days_7d": 6,
+   "peak_day": "2026-09-21",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "MRNA",
+   "people_7d": 7,
+   "posts_7d": 16,
+   "days_7d": 5,
+   "peak_day": "2026-09-22",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "ETH",
+   "people_7d": 7,
+   "posts_7d": 13,
+   "days_7d": 6,
+   "peak_day": "2026-09-18",
+   "peak_people": 3,
+   "is_index": true
+  },
+  {
+   "ticker": "IBIT",
+   "people_7d": 7,
+   "posts_7d": 13,
+   "days_7d": 5,
+   "peak_day": "2026-09-18",
+   "peak_people": 6,
+   "is_index": false
+  },
+  {
+   "ticker": "ALAB",
+   "people_7d": 7,
+   "posts_7d": 11,
+   "days_7d": 4,
+   "peak_day": "2026-09-22",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "DRAM",
+   "people_7d": 7,
+   "posts_7d": 9,
+   "days_7d": 4,
+   "peak_day": "2026-09-22",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "SNOW",
+   "people_7d": 6,
+   "posts_7d": 34,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "AXTI",
+   "people_7d": 6,
+   "posts_7d": 20,
+   "days_7d": 6,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CRCL",
+   "people_7d": 6,
+   "posts_7d": 15,
+   "days_7d": 6,
+   "peak_day": "2026-09-19",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "GOOGL",
+   "people_7d": 6,
+   "posts_7d": 10,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "ETHA",
+   "people_7d": 6,
+   "posts_7d": 9,
+   "days_7d": 5,
+   "peak_day": "2026-09-18",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "COHR",
+   "people_7d": 6,
+   "posts_7d": 8,
+   "days_7d": 6,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ZS",
+   "people_7d": 6,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-19",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "DE",
+   "people_7d": 6,
+   "posts_7d": 6,
+   "days_7d": 5,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CRDO",
+   "people_7d": 5,
+   "posts_7d": 21,
+   "days_7d": 6,
+   "peak_day": "2026-09-20",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "TWLO",
+   "people_7d": 5,
+   "posts_7d": 18,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "MAGS",
+   "people_7d": 5,
+   "posts_7d": 15,
+   "days_7d": 5,
+   "peak_day": "2026-09-21",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "AVGO",
+   "people_7d": 5,
+   "posts_7d": 11,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "MPC",
+   "people_7d": 5,
+   "posts_7d": 9,
+   "days_7d": 6,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "MSFT",
+   "people_7d": 5,
+   "posts_7d": 9,
+   "days_7d": 6,
+   "peak_day": "2026-09-19",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "MXL",
+   "people_7d": 5,
+   "posts_7d": 9,
+   "days_7d": 5,
+   "peak_day": "2026-09-18",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "BMNR",
+   "people_7d": 5,
+   "posts_7d": 8,
+   "days_7d": 3,
+   "peak_day": "2026-09-19",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "NYSE",
+   "people_7d": 5,
+   "posts_7d": 8,
+   "days_7d": 7,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "NTAP",
+   "people_7d": 4,
+   "posts_7d": 23,
+   "days_7d": 7,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "AMZN",
+   "people_7d": 4,
+   "posts_7d": 16,
+   "days_7d": 6,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CBRS",
+   "people_7d": 4,
+   "posts_7d": 13,
+   "days_7d": 6,
+   "peak_day": "2026-09-21",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "IGV",
+   "people_7d": 4,
+   "posts_7d": 12,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "P",
+   "people_7d": 4,
+   "posts_7d": 11,
+   "days_7d": 6,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "VLO",
+   "people_7d": 4,
+   "posts_7d": 11,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "TWST",
+   "people_7d": 4,
+   "posts_7d": 10,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "VIX",
+   "people_7d": 4,
+   "posts_7d": 10,
+   "days_7d": 5,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": true
+  },
+  {
+   "ticker": "SOXX",
+   "people_7d": 4,
+   "posts_7d": 9,
+   "days_7d": 5,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "DINO",
+   "people_7d": 4,
+   "posts_7d": 8,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GH",
+   "people_7d": 4,
+   "posts_7d": 8,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "PBF",
+   "people_7d": 4,
+   "posts_7d": 8,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "XLF",
+   "people_7d": 4,
+   "posts_7d": 8,
+   "days_7d": 3,
+   "peak_day": "2026-09-22",
+   "peak_people": 3,
+   "is_index": true
+  },
+  {
+   "ticker": "HUT",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ILMN",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 4,
+   "is_index": false
+  },
+  {
+   "ticker": "TEAM",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "TSLA",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 5,
+   "peak_day": "2026-09-18",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "TXG",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "XBI",
+   "people_7d": 4,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ASX",
+   "people_7d": 4,
+   "posts_7d": 6,
+   "days_7d": 4,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "NQ",
+   "people_7d": 4,
+   "posts_7d": 6,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "XLE",
+   "people_7d": 4,
+   "posts_7d": 6,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "AAOI",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "AAPL",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FORM",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "JPM",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 2,
+   "peak_day": "2026-09-22",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "QCOM",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TSM",
+   "people_7d": 4,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CRM",
+   "people_7d": 4,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GEV",
+   "people_7d": 4,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ANET",
+   "people_7d": 3,
+   "posts_7d": 15,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "CIBR",
+   "people_7d": 3,
+   "posts_7d": 13,
+   "days_7d": 6,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ARKG",
+   "people_7d": 3,
+   "posts_7d": 12,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "RNG",
+   "people_7d": 3,
+   "posts_7d": 11,
+   "days_7d": 6,
+   "peak_day": "2026-09-21",
+   "peak_people": 3,
+   "is_index": false
+  },
+  {
+   "ticker": "WGMI",
+   "people_7d": 3,
+   "posts_7d": 11,
+   "days_7d": 7,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FROG",
+   "people_7d": 3,
+   "posts_7d": 10,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "HL",
+   "people_7d": 3,
+   "posts_7d": 9,
+   "days_7d": 7,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "HNGE",
+   "people_7d": 3,
+   "posts_7d": 9,
+   "days_7d": 6,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "BRKR",
+   "people_7d": 3,
+   "posts_7d": 8,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "COHU",
+   "people_7d": 3,
+   "posts_7d": 7,
+   "days_7d": 6,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "INFQ",
+   "people_7d": 3,
+   "posts_7d": 7,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PSX",
+   "people_7d": 3,
+   "posts_7d": 7,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "U",
+   "people_7d": 3,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GNRC",
+   "people_7d": 3,
+   "posts_7d": 6,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "NTRA",
+   "people_7d": 3,
+   "posts_7d": 6,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ONDS",
+   "people_7d": 3,
+   "posts_7d": 6,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SOXL",
+   "people_7d": 3,
+   "posts_7d": 6,
+   "days_7d": 4,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CAT",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FIVN",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "FPS",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "RKLB",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TLT",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": true
+  },
+  {
+   "ticker": "TNX",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "WDAY",
+   "people_7d": 3,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CIFR",
+   "people_7d": 3,
+   "posts_7d": 4,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GLD",
+   "people_7d": 3,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": true
+  },
+  {
+   "ticker": "MARA",
+   "people_7d": 3,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "NTSK",
+   "people_7d": 3,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "SWKS",
+   "people_7d": 3,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AKAM",
+   "people_7d": 3,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "NDX",
+   "people_7d": 3,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": true
+  },
+  {
+   "ticker": "SHY",
+   "people_7d": 3,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SIMO",
+   "people_7d": 3,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TSEM",
+   "people_7d": 3,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ORCL",
+   "people_7d": 2,
+   "posts_7d": 9,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XOP",
+   "people_7d": 2,
+   "posts_7d": 9,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "DDOG",
+   "people_7d": 2,
+   "posts_7d": 7,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MDB",
+   "people_7d": 2,
+   "posts_7d": 7,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "VICR",
+   "people_7d": 2,
+   "posts_7d": 7,
+   "days_7d": 3,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "CF",
+   "people_7d": 2,
+   "posts_7d": 6,
+   "days_7d": 5,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "REMX",
+   "people_7d": 2,
+   "posts_7d": 6,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AEHR",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GOOG",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "SOL",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "STX",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TER",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "VSAT",
+   "people_7d": 2,
+   "posts_7d": 5,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "FRO",
+   "people_7d": 2,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "INSW",
+   "people_7d": 2,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "S",
+   "people_7d": 2,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XLK",
+   "people_7d": 2,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "AMC",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "APH",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ASAN",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CIEN",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "COPX",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CORT",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GLW",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "HPQ",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MOS",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NYSI",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "PR",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "QRVO",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "QTUM",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RIOT",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SAIL",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SK",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SLV",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "TGTX",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "W",
+   "people_7d": 2,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ALB",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AMAT",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "APLD",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "ASML",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ASTS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AVAV",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BTDR",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "C",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CVX",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FCX",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GEN",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GFS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "GS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "HBM",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "IONQ",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "JBHT",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "JETS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KTOS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MP",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NEM",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NFLX",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "QUBT",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SDGR",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SEI",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SHOP",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SOLD",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TENB",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "VKTX",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 2,
+   "is_index": false
+  },
+  {
+   "ticker": "VRNS",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WPM",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XLI",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "XLV",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "XOM",
+   "people_7d": 2,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AVT",
+   "people_7d": 1,
+   "posts_7d": 11,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ESTC",
+   "people_7d": 1,
+   "posts_7d": 10,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "URA",
+   "people_7d": 1,
+   "posts_7d": 8,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "VEEV",
+   "people_7d": 1,
+   "posts_7d": 8,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BOAT",
+   "people_7d": 1,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KEYS",
+   "people_7d": 1,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "QQQE",
+   "people_7d": 1,
+   "posts_7d": 7,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "XRT",
+   "people_7d": 1,
+   "posts_7d": 7,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CDW",
+   "people_7d": 1,
+   "posts_7d": 6,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BLOK",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DT",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FINX",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IAI",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IPAY",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KIE",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 5,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OSCR",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SFTBY",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "USO",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "WOOD",
+   "people_7d": 1,
+   "posts_7d": 5,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AMZU",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CD",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ECO",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ITA",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IYT",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KRE",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MOO",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MTSI",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PAYP",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PEJ",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SIL",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WQTM",
+   "people_7d": 1,
+   "posts_7d": 4,
+   "days_7d": 4,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ACVA",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BBY",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DBX",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FLNC",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FTRE",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GTLB",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IPO",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ITB",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KARS",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KWEB",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NVAX",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PGEN",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "POWR",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RXRX",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SLX",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TAN",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TNK",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WAY",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ZEC",
+   "people_7d": 1,
+   "posts_7d": 3,
+   "days_7d": 3,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ADM",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ADPT",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AI",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AMDL",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "APP",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ARQT",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ASO",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AVTR",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BA",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BABA",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BAC",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BG",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BILL",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BOX",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CLF",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CMPS",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "COMPQ",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DK",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GDX",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ICLN",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NASI",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NUE",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OIH",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OMER",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OPK",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "STNG",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 2,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WFC",
+   "people_7d": 1,
+   "posts_7d": 2,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AAL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ABCL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ABSI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ACHR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ADI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AEM",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AMGN",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AMPL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ANF",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ARKF",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ARKX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ASST",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "AUGO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BB",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BEWT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BFLY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BHYP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BLSH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BOTZ",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BUG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BWET",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "BWIN",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CCJ",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CDE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CDNA",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CEG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CELC",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CERT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CGNX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CLOU",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CLS",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CLSK",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "COP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CPCE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CRAK",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CRML",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CRSP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CRWV",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CVE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "CYPH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DAL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DLXY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DOCU",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DTCR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DUOL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "DXCM",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ENTG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "EOSE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "EQIX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "EWT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "EWTX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "EWY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "FANG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GENB",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GILD",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GME",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GRAB",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GRAL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "GRID",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "HG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "HTFL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IAG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IBB",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IBKR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IBRX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IEF",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IEI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IHI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "INOD",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IOT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "IVW",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "JOBY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KBE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KBH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KEEL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KLIC",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "KOS",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LCID",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LEN",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LIT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LLY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LPLA",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LQDA",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "LRCX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "MANH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "METU",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NCLH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NEE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NIO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NIQ",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NLR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NVT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "NXPI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OKLO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "OXY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PSTG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PTEN",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "PWR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RDW",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RGTI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RIG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RMBS",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RSP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": true
+  },
+  {
+   "ticker": "RTX",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RUM",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "RVTY",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SBET",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-21",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SCCO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SCHW",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SECZ",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SM",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SMR",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-17",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SNPS",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SOFI",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SONO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SPOT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "SYM",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TEVA",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TOTAL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TQQQ",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TSLL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "TXN",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "UAL",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "UCTT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "UFO",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "UMC",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "USDE",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "UUUU",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "VOYG",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "VRT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "VSH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-20",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WDC",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WOLF",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "WT",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XERS",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-18",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "XXRP",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-19",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ZCSH",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-16",
+   "peak_people": 1,
+   "is_index": false
+  },
+  {
+   "ticker": "ZETA",
+   "people_7d": 1,
+   "posts_7d": 1,
+   "days_7d": 1,
+   "peak_day": "2026-09-22",
+   "peak_people": 1,
+   "is_index": false
+  }
+ ]
+}
