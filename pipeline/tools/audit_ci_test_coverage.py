@@ -171,33 +171,17 @@ DECLARED: dict[str, tuple[str, str, str]] = {
 # known, dated, owned choice, not an accident nobody noticed". See the T7/T8
 # codes above and the 2026-09-23 note for why T5 could not just accept these
 # the way it accepts markers.
-DECLARED_TRIGGERS: dict[str, tuple[str, str, str]] = {
-    "branches: [main]": (
-        "DATA ALEX / whoever owns .github/workflows",
-        "agent-branch and topic-branch pushes flooded Andy's inbox with "
-        "tests.yml run emails -- 30 runs in 113 minutes measured right "
-        "before this change (2026-09-23 07:06-08:59Z), most of them "
-        "agent/* pushes or a main push cancelled by the next one. No "
-        "coverage is lost: branch-review already runs pytest in the "
-        "worktree before a branch is allowed to merge, so the same run "
-        "moves earlier, off email, not away (T-0923-121).",
-        "2026-09-23",
-    ),
-    "paths:": (
-        "DATA ALEX / whoever owns .github/workflows",
-        "trims pure-content pushes to main (Fluxus_Brand/, data/content/, "
-        "data/research/, Fluxus_Substack/, docs/) that carry no pytest "
-        "coverage and no 谁读/**reads** declaration audit_reads_declarations.py "
-        "checks -- every excluded path was git-grep-verified against "
-        "pipeline/tests, tests/ and 谁读 headers before being added, and the "
-        "directories that had either are carved back in with a later "
-        "positive pattern in the same `paths:` list (`paths:`, not "
-        "`paths-ignore:`, because `paths-ignore` has no documented `!` "
-        "re-include). See the comment above `on:` in tests.yml for the "
-        "full accounting (T-0923-121).",
-        "2026-09-23",
-    ),
-}
+#
+# Ships empty on purpose (T-0923-134): the mechanism landed ahead of the
+# tests.yml change it was built for. Populating this with an entry for a
+# filter line that is not on the real workflow yet would trip T7 the moment
+# this file merges -- `test_the_real_repository_is_green_on_its_declared_set`
+# reads the real .github/workflows/tests.yml, not a fixture. Whoever adds
+# `branches: [main]` / `paths:` to tests.yml (T-0923-121, currently staged on
+# agent/alex/T-0923-121-v2) must add the matching entry here in that SAME
+# commit -- both files move together or the real-repo check goes red for one
+# of the two reasons this table exists to prevent.
+DECLARED_TRIGGERS: dict[str, tuple[str, str, str]] = {}
 
 # Options we model. Anything else in a pytest command trips T5.
 _MODELLED = {
