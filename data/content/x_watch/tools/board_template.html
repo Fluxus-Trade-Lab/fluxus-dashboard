@@ -179,13 +179,17 @@ select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
    ① scrollbar-width / ::-webkit-scrollbar 两套都写 —— 只要写了 ::-webkit-scrollbar，
       Chromium 就把 overlay 条换成常驻的经典条，不滚动时截图里也看得见。
    ② 表头正上方再放一条同样宽的空条，拖它等于拖表。
-   ⚠️ 实测（headless Chromium 145 / macOS）：①那两套声明在 macOS 上**都不生效** ——
-   系统用 overlay 滚动条，`offsetHeight − clientHeight` 恒为 0（五种写法全试过：只写
-   ::-webkit-scrollbar、加 scrollbar-color、加 scrollbar-width:thin/auto，都是 0），
-   条平时根本不占位也不画。声明留着（Windows/Linux 与开了「总是显示滚动条」的 macOS
-   吃这一套，颜色也才走 token），但**「不滚动时看得见」这件事不能指望它**。
-   所以顶部这条自己画滑块：.xtop 仍是真的滚动容器（触控板横扫、scrollLeft 双向同步都靠它），
-   .xbar/.xthumb 是盖在它上面的可见把手 —— 任何平台、任何时刻都画得出来。 */
+   ⚠️ 这两套 CSS **不能写在同一个元素上**（09-23 实测，Chromium 145 / macOS）：
+   只写 ::-webkit-scrollbar 时，macOS Chrome 把 overlay 条换成常驻经典条，
+   `offsetHeight − clientHeight` = 13px（条）+ 2px（边框）= 15，截图里看得见；
+   一旦同一元素上再写 scrollbar-width / scrollbar-color，**标准属性接管、webkit 伪元素失效**，
+   读数立刻掉回 0（又变回平时不画的 overlay 条）。所以 .scroll 只留 webkit 那套。
+   ⚠️ 量这件事的时候注意 headless 的 `--hide-scrollbars`（Playwright 默认带）：
+   带上它六种写法一律读 0，会让人得出「macOS 上都不生效」的错误结论 —— 本轮我先栽了一次，
+   复核在真页面量出 15px 才纠回来。跑之前确认参数里没有它。
+   顶部那条则相反：.xtop 的原生条要藏掉（scrollbar-width:none + height:0），
+   因为它上面盖着我们自己画的把手 .xbar/.xthumb，留着原生条就成了两条叠在 16px 里。
+   于是表头上下各一条：上面是自绘把手（任何平台都画得出来），下面是常驻的经典条。 */
 .xtop{overflow-x:auto;overflow-y:hidden;height:16px;
   background:var(--surface2);border:1px solid var(--rule);border-bottom:0;
   border-radius:2px 2px 0 0}
@@ -196,18 +200,20 @@ select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
   background:var(--muted);border-radius:5px;cursor:grab}
 .xbar:hover .xthumb{background:var(--ink2)}
 .xthumb.drag{cursor:grabbing;background:var(--ink)}
-.scroll,.xtop,.seg{scrollbar-width:thin;scrollbar-color:var(--muted) var(--surface2)}
-.scroll::-webkit-scrollbar,.xtop::-webkit-scrollbar{height:13px;width:13px;background:var(--surface2)}
-.scroll::-webkit-scrollbar-track,.xtop::-webkit-scrollbar-track{background:var(--surface2)}
-.scroll::-webkit-scrollbar-thumb,.xtop::-webkit-scrollbar-thumb{background:var(--muted);
-  border-radius:7px;border:3px solid var(--surface2)}
-.scroll::-webkit-scrollbar-thumb:hover,.xtop::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
+.seg{scrollbar-width:thin;scrollbar-color:var(--muted) var(--surface2)}
+.xtop{scrollbar-width:none}
+.xtop::-webkit-scrollbar{height:0;width:0}
+.scroll::-webkit-scrollbar{height:13px;width:13px;background:var(--surface2)}
+.scroll::-webkit-scrollbar-track{background:var(--surface2)}
+.scroll::-webkit-scrollbar-thumb{background:var(--muted);border-radius:7px;
+  border:3px solid var(--surface2)}
+.scroll::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
 .scroll::-webkit-scrollbar-corner{background:var(--surface2)}
 
 /* 边缘渐隐：只是「那边还有列」的提示，永不吃点击（pointer-events:none）。
    左侧那道从首列右缘开始画 —— 首列是 sticky 的，永远在，压它没意义。
    --c1w 由 updateFades() 现场量首列实宽写入。 */
-.fade{position:absolute;top:16px;bottom:1px;width:30px;pointer-events:none;
+.fade{position:absolute;top:16px;bottom:15px;width:30px;pointer-events:none;
   z-index:14;opacity:0;transition:opacity .12s}
 .fade.on{opacity:1}
 .fade.fr{right:1px;background:linear-gradient(to right,rgba(0,0,0,0),var(--surface))}
@@ -848,10 +854,11 @@ const SC = $("#scroll"), XT = $("#xtop"), XTI = $("#xtopin");
 /* 两条互相 set scrollLeft，天然有回声。重入保护三层，缺一都可能抖：
    ① lock：正在同步时进来的 scroll 事件直接返回，不再回写；
    ② 差值门槛：只有相差 ≥1px 才写，子像素差不触发下一轮；
-   ③ 等长：把顶部条的内容宽设成「表宽 − 盒可视宽 + 条可视宽」，
-      让两边的 maxScrollLeft 完全相等 —— 否则滚到最右时一边会被 clamp 成
-      另一个值，两边互相往回拽，那才是真正会自激的形状（盒子有 13px 纵向
-      滚动条，可视宽本来就比顶条窄）。
+   ③ 等长 + 末端对齐：把顶部条的内容宽设成「表宽 − 盒可视宽 + 条可视宽」，
+      让两边的 maxScrollLeft 尽量相等（子像素取整后仍可能差 1–3px，做不到恒等）；
+      **真正兜住的是末端对齐** —— 一边已经到自己的最右时，另一边直接写它自己的最右，
+      不照抄那个对不上的数。否则滚到最右时一边会被 clamp 成另一个值，两边互相往回拽，
+      那才是真正会自激的形状（盒子有纵向滚动条，可视宽本来就比顶条窄）。
    XSYNC 计数供验收数事件次数：top/box = 收到的 scroll 事件，applied = 真正写回的次数。 */
 const XSYNC = { lock:false, top:0, box:0, applied:0, wheel:0, key:0 };
 window.__xsync = XSYNC;
@@ -865,7 +872,7 @@ function syncScrollGeom(){
     const d = (SC.scrollWidth - SC.clientWidth) - (XT.scrollWidth - XT.clientWidth);
     if (!d) break;
     cur = Math.max(0, cur + d);
-    XTI.style.width = Math.round(cur) + "px";
+    XTI.style.width = cur + "px";
   }
   layoutThumb(); updateFades();
 }
@@ -913,7 +920,9 @@ function mirror(from, to, key){
   XSYNC[key]++;
   if (XSYNC.lock) return;
   XSYNC.lock = true;
-  if (Math.abs(to.scrollLeft - from.scrollLeft) >= 1){ to.scrollLeft = from.scrollLeft; XSYNC.applied++; }
+  const fMax = from.scrollWidth - from.clientWidth, tMax = to.scrollWidth - to.clientWidth;
+  const want = from.scrollLeft >= fMax - 1 ? tMax : from.scrollLeft;
+  if (Math.abs(to.scrollLeft - want) >= 1){ to.scrollLeft = want; XSYNC.applied++; }
   XSYNC.lock = false;
   layoutThumb(); updateFades();
 }
