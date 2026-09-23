@@ -825,6 +825,7 @@ def main():
     spx_close = signals.get('^GSPC', {}).get('close')
     market_health_payload = None
     replay_payload = None
+    panes_payload = None
     try:
         breadth_result = run_breadth_metrics(
             universe,
@@ -897,6 +898,20 @@ def main():
                     "breadth.json and market_health.json are unaffected"
                 )
                 replay_payload = None
+
+            # Panes is its own failure domain, same reasoning as replay above:
+            # a crash here must not cost the (much larger) replay file or
+            # breadth.json anything. Worst case: the index-over-breadth panes
+            # fall back to breadth_replay.json client-side (T-0923-82).
+            try:
+                from pipeline.screeners.breadth_signals import build_panes
+                panes_payload = build_panes(breadth_frame)
+            except Exception:  # noqa: BLE001
+                logger.exception(
+                    "Panes build failed — breadth_panes.json not written; "
+                    "breadth_replay.json still ships"
+                )
+                panes_payload = None
 
     if breadth_result is not None:
         ledger.note('breadth', 'stale' if (breadth_result.get('data_quality') or {}).get('stale') else 'ok',
@@ -1069,6 +1084,15 @@ def main():
                          separators=(',', ':'), default=_json_serializer),
               encoding='utf-8')
         logger.info("Saved breadth_replay.json")
+
+    # Save breadth panes (skipped when the panes step failed — client falls
+    # back to breadth_replay.json, see useBreadthReplay.js)
+    if panes_payload is not None:
+        _emit(ledger, OUTPUT_DIR / 'breadth_panes.json',
+              json.dumps({'timestamp': timestamp, **panes_payload},
+                         separators=(',', ':'), default=_json_serializer),
+              encoding='utf-8')
+        logger.info("Saved breadth_panes.json")
 
     if heating_up_payload is not None:
         _emit(ledger, OUTPUT_DIR / 'heating_up.json',

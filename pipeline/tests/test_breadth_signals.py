@@ -643,6 +643,57 @@ class TestBuildReplay:
         assert len(r['health']['spy']['signals_history']) == len(spy)
 
 
+class TestBuildPanes:
+    def _frame(self, n=12):
+        rows = []
+        for i in range(n):
+            body = _bull_row() if i % 2 == 0 else _bear_row()
+            rows.append({'date': f'2026-07-{i + 1:02d}', **body})
+        return _frame(rows)
+
+    def test_shape_matches_full_history(self):
+        from pipeline.screeners.breadth_signals import build_panes, PANES_COLUMNS
+        frame = self._frame()
+        p = build_panes(frame)
+        assert p['dates'] == list(frame['date'])
+        # only columns actually present in the archive frame are emitted
+        assert set(p) - {'dates'} <= set(PANES_COLUMNS)
+        assert set(p) - {'dates'} == set(PANES_COLUMNS) & set(frame.columns)
+        for col in set(p) - {'dates'}:
+            assert len(p[col]) == len(frame)
+
+    def test_ndx_columns_skipped_when_absent(self):
+        from pipeline.screeners.breadth_signals import build_panes
+        frame = self._frame()
+        assert 'mcclellan_osc_ndx' not in frame.columns
+        p = build_panes(frame)
+        assert 'mcclellan_osc_ndx' not in p
+
+    def test_ndx_columns_included_when_present(self):
+        from pipeline.screeners.breadth_signals import build_panes
+        frame = self._frame()
+        frame['mcclellan_osc_ndx'] = [1.5] * len(frame)
+        p = build_panes(frame)
+        assert p['mcclellan_osc_ndx'] == [1.5] * len(frame)
+
+    def test_nan_becomes_none_and_json_safe(self):
+        import json
+        import numpy as np
+        from pipeline.screeners.breadth_signals import build_panes
+        frame = self._frame()
+        frame.loc[0, 'mcclellan_osc'] = np.nan
+        p = build_panes(frame)
+        assert p['mcclellan_osc'][0] is None
+        json.dumps(p, default=str)  # must not raise
+
+    def test_empty_frame_does_not_throw(self):
+        from pipeline.screeners.breadth_store import BREADTH_COLUMNS
+        from pipeline.screeners.breadth_signals import build_panes
+        frame = pd.DataFrame(columns=BREADTH_COLUMNS)  # load_archive()'s empty shape
+        p = build_panes(frame)
+        assert p['dates'] == []
+
+
 class TestConditionsSeries:
     """Market Conditions 0-100: the share of measurements that are positive."""
 

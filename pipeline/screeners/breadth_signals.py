@@ -963,3 +963,29 @@ def build_replay(frame: pd.DataFrame,
         }
 
     return {'dates': dates, 'rows': rows, 'verdicts': verdicts, 'health': health_out}
+
+
+# Columns the index-over-breadth panes actually read (breadthPanesMath.js
+# INDICATORS), plus the pending Nasdaq-100 series (T-0923-03) picked up once
+# they exist. breadth_replay.json carries the full point-in-time verdict/
+# health book for the Time Machine — ~1.4MB for 8 columns' worth of panes.
+PANES_COLUMNS = [
+    'spx_close', 'new_highs', 'new_lows', 'new_highs_common', 'new_lows_common',
+    'mcclellan_osc', 'pct_above_20sma', 'pct_above_20sma_sp500', 't2108', 't2108_sp500',
+    'up_4pct_stockbee', 'down_4pct_stockbee', 'up_4pct', 'down_4pct',
+    'net_advances', 'ad_line',
+    'mcclellan_osc_ndx', 'mcclellan_summation_ndx', 'new_highs_ndx', 'new_lows_ndx',
+]
+
+
+def build_panes(frame: pd.DataFrame) -> Dict[str, Any]:
+    """Slim column-oriented file for the panes: full history, only the raw
+    series they chart. Columns not yet in the archive (the NDX series) are
+    skipped rather than emitted as all-null. Pure — no I/O, no clock.
+    """
+    dates = [str(d) for d in frame['date']]
+    out: Dict[str, Any] = {'dates': dates}
+    for col in PANES_COLUMNS:
+        if col in frame.columns:
+            out[col] = [None if pd.isna(v) else v for v in frame[col]]
+    return out
