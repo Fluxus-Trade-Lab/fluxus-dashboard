@@ -287,6 +287,19 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     on_disk = {f.name for f in out.rglob("*.json")}
     assert set(wrote) <= on_disk, f"ledger claims files nothing wrote: {set(wrote) - on_disk}"
 
+    # 3e. T-0923-63: SPY's ema5 + prior-day value, and etf_data's UUP row --
+    # both had zero test coverage before this (branch-review caught it: the
+    # smoke test only asserted the files existed, not that these fields were
+    # in them, so either could be silently removed and this test would stay
+    # green). fake_yf_download makes synthetic OHLCV for any ticker string,
+    # so this needs no network.
+    sig = json.loads((out / "signals.json").read_text())
+    spy_sig = sig["SPY"]
+    assert "ema5" in spy_sig and "ema5_prev" in spy_sig, "SPY block lost ema5/ema5_prev"
+    assert spy_sig["ema5"] != spy_sig["ema5_prev"], "ema5 vs ema5_prev look like the same value"
+    etf = json.loads((out / "etf_data.json").read_text())
+    assert any(row["ticker"] == "UUP" for row in etf), "etf_data.json is missing its UUP row"
+
     # 3c. Every screener answers with a number. `stockbee_ratio` read `null`
     # for eight nights while its output file was healthy, because the payload
     # had no `count` key -- indistinguishable from a screener that died.

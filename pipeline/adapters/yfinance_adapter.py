@@ -1486,7 +1486,7 @@ class YfinanceAdapter(BaseAdapter):
 
                 ema5_series = hist['Close'].ewm(span=5).mean()
                 ema5 = float(ema5_series.iloc[-1])
-                ema5_prev = float(ema5_series.iloc[-2]) if len(hist) >= 2 else None
+                ema5_prev = float(ema5_series.iloc[-2])
                 ema8 = float(hist['Close'].ewm(span=8).mean().iloc[-1])
                 ema21 = float(hist['Close'].ewm(span=21).mean().iloc[-1])
                 sma50 = float(hist['Close'].rolling(50).mean().iloc[-1])
@@ -1517,8 +1517,9 @@ class YfinanceAdapter(BaseAdapter):
                     'color': color,
                     'close': close,
                     # T-0923-63: 5-day EMA + its prior-day value, so the
-                    # frontend can read "today > yesterday" -- same
-                    # operationalization as market_light.json's rising_rule.
+                    # frontend can read "today > yesterday" -- same rising
+                    # rule as market_light.json's rising_rule, not the same
+                    # moving average (that one is a 10/20 EMA pair, adjust=False).
                     'ema5': ema5,
                     'ema5_prev': ema5_prev,
                     'ema8': ema8,
