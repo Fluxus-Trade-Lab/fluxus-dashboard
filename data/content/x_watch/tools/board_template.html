@@ -122,7 +122,11 @@ a{color:var(--brass)}
 .search input::placeholder{color:var(--faint);font-weight:400}
 .search svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);
   width:13px;height:13px;stroke:var(--faint);fill:none;stroke-width:1.8}
-.seg{display:flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface)}
+/* ⚠️ 这里不能用 overflow:hidden —— 375px 下日期钮有 20 个，hidden 会把 09-12
+   之后的直接裁掉，点都点不到（main 同病）。改成自己横滚。 */
+.seg{display:flex;border:1px solid var(--rule);border-radius:2px;background:var(--surface);
+  overflow-x:auto;overflow-y:hidden;max-width:100%;scrollbar-width:thin}
+.seg button{flex:none}
 .seg button{font:500 12px var(--sans);padding:7px 11px;background:none;border:0;
   color:var(--muted);cursor:pointer;border-right:1px solid var(--rule2)}
 .seg button:last-child{border-right:0}
@@ -134,10 +138,18 @@ select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
   color:var(--ink);border:1px solid var(--rule);border-radius:2px;max-width:100%}
 
 /* ── 表 ── */
-.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:2px}
+/* ⚠️ 表头吸顶的坑：.scroll 只写 overflow-x:auto 时，overflow-y 的 visible 会被
+   计算成 auto —— 它就成了纵向滚动容器，而它自己没有纵向溢出，于是 thead 的
+   position:sticky 永远贴在一个不滚的盒子上，页面一滚列名就没了（main 同病，
+   那边还硬编码 top:44px 去躲工具条，而 .bar 实测 133px 高，反把第一行压住）。
+   修法：让 .scroll 真的接管纵向滚动，高度跟着视口减去工具条实高（--barh 由
+   ResizeObserver 现场量），thead 贴 top:0 —— 不再有任何写死的 px。 */
+.scroll{overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 26px);
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  overscroll-behavior:contain}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 table.wide{min-width:1180px}
-thead th{position:sticky;top:44px;z-index:10;background:var(--surface2);
+thead th{position:sticky;top:0;z-index:10;background:var(--surface2);
   font:600 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);text-align:left;padding:0;white-space:nowrap;
   border-bottom:1px solid var(--rule)}
@@ -173,18 +185,26 @@ tbody tr.row.open td{background:var(--surface2)}
   border-radius:2px;padding:1px 5px;white-space:nowrap}
 .wallmark::before{content:"";width:5px;height:5px;background:var(--brass);border-radius:50%}
 
-/* 立场:颜色只编「跑没跑」,词本身照写 */
-.st{display:inline-flex;gap:3px;flex-wrap:wrap}
+/* 立场:颜色只编「跑没跑」,词本身照写。
+   ⚠️ 表里只显人数最高的 2 个 + 「+N」,一行放平不换行 —— 平均 4.3 个 chip 竖排
+   才是行高的真正驱动,Andy 那句「占的空间太大」指的就是这个。全部立场在展开处。 */
+.st{display:inline-flex;gap:3px;flex-wrap:nowrap;white-space:nowrap;align-items:baseline}
+.st i.more{color:var(--faint);border:0;padding:0 1px}
+.bask{display:block;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .st i{font:600 10.5px var(--mono);font-style:normal;padding:1px 5px;border-radius:2px;white-space:nowrap}
 .st i.f{color:var(--fwd);background:var(--fwd-soft);border:1px solid var(--fwd)}
 .st i.d{color:var(--ink2);background:var(--raise);border:1px solid var(--rule)}
 .st i.n{color:var(--faint);border:1px solid var(--rule)}
 
-/* 人数条 —— 单序列,量的是当日提及人数。默认只画近 10 天,全序列在悬停与展开处 */
+/* 人数条 —— 单序列,量的是当日提及人数。默认只画近 10 天,全序列在悬停与展开处。
+   ⚠️ 条色不能用 --rule：那是分隔线的灰，实测对深浅两版的行底色只有 1.38:1 / 1.22:1,
+   3px 宽压下去除最后一天那根就肉眼不可见了。条色走 --muted(正文级)、宽度 5px,
+   10 根 59px 仍比 main 的 19 根 169px 省掉三分之二。零值那根保持 --rule2 的细线,
+   它要的就是「这天没人说」的留白,不参与可读性判据。 */
 .spark{display:flex;align-items:flex-end;gap:1px;height:18px}
-.spark span{width:3px;background:var(--rule);border-radius:1px 1px 0 0;min-height:2px}
+.spark span{width:5px;background:var(--muted);border-radius:1px 1px 0 0;min-height:3px}
 .spark span.last{background:var(--ink)}
-.spark span.zero{background:var(--rule2);height:2px}
+.spark span.zero{background:var(--rule2);height:2px;min-height:2px}
 .delta{font-family:var(--mono);font-size:11.5px;white-space:nowrap}
 .delta.up::before{content:"▲ ";font-size:8px;vertical-align:1px}
 .delta.dn::before{content:"▼ ";font-size:8px;vertical-align:1px}
@@ -221,7 +241,6 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
   .wrap{padding:16px 12px 56px}
   .post{grid-template-columns:1fr;gap:3px}
   .who{max-width:150px}
-  thead th{top:76px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -338,8 +357,7 @@ const d50Cell = t => isNil(t.d50) ? naCell(t)
 const baskCell = t => {
   const b = t.bask || [];
   if (!b.length) return naCell(t);
-  const head = b.slice(0,2).map(esc).join(" / ");
-  return `<span title="${esc(b.join(" / "))}">${head}${b.length>2?` +${b.length-2}`:""}</span>`;
+  return `<span class="bask" title="${esc(b.join(" / "))}">${esc(b[0])}${b.length>1?` +${b.length-1}`:""}</span>`;
 };
 
 /* 两边都没读数 → 0（交给后面的次级判据）；一边没有 → 它排最后。都有 → null，由调用方比大小 */
@@ -470,12 +488,14 @@ function spark(t){
     ` aria-label="近 ${vals.length} 天提及人数 ${vals.join("、")}；全 ${DATES.length} 天 ${esc(full)}">` +
     vals.map((v,i) => `<span class="${v===0?"zero":""}${i===vals.length-1&&v>0?" last":""}" style="height:${v?Math.round(3+v/mx*15):2}px" title="${SPARK_DATES[i]}：${v} 人"></span>`).join("") + `</div>`;
 }
+const stChip = ([k,n]) => `<i class="${FWD.has(k)?"f":DONE.has(k)?"d":"n"}">${esc(k)} ${n}</i>`;
+const stSorted = t => Object.entries(t.st).sort((a,b) => b[1]-a[1]);
 function stanceCells(t){
-  const e = Object.entries(t.st);
+  const e = stSorted(t);
   if (!e.length) return `<span class="st"><i class="n">未标</i></span>`;
-  e.sort((a,b) => b[1]-a[1]);
-  return `<span class="st">` + e.map(([k,n]) =>
-    `<i class="${FWD.has(k)?"f":DONE.has(k)?"d":"n"}">${esc(k)} ${n}</i>`).join("") + `</span>`;
+  const full = e.map(([k,n]) => `${k} ${n}`).join(" · ");
+  return `<span class="st" title="${esc(full)}">` + e.slice(0,2).map(stChip).join("") +
+    (e.length > 2 ? `<i class="more">+${e.length-2}</i>` : "") + `</span>`;
 }
 function wallCell(t){
   if (!t.wall.length) return "";
@@ -686,7 +706,10 @@ function detail(t){
   const ms = t.m.filter(m => S.date === "all" || m.d === S.date);
   const who = whoOf(t);
   const seq = DATES.map(d => `${d.slice(5)} ${np(t,d)}`).join("　");
+  const st = stSorted(t);
   const head = `<div class="full"><b>全 ${DATES.length} 天人数</b> <span class="seq">${esc(seq)}</span>
+    <br><b>全部立场（${st.length}）</b> ${st.length ? `<span class="st" style="flex-wrap:wrap;white-space:normal">${st.map(stChip).join("")}</span>` : "未标"}
+    <br><b>ETF 篮子</b> ${(t.bask||[]).length ? esc(t.bask.join(" / ")) : (t.idx ? "不适用（ETF/指数）" : "无读数")}
     <br><b>谁在说（${who.length}）</b> ${who.map(h => `${starBtn(h)}@${esc(h)}`).join(" ") || "—"}</div>`;
   const wall = t.wall.map(w => `<div class="post wallp">
       <span class="d mono">${esc(w.d)}</span><span class="h">@jfsrev · 墙后</span>
@@ -768,5 +791,14 @@ $("#tbody").addEventListener("keydown", e => {
   const r = e.target.closest("tr.row"); if (r){ e.preventDefault(); toggle(r); }
 });
 
-renderCurated(); renderRoster(); syncSelect(); render();
+/* 工具条高度随换行（窄屏日期钮/筛选钮会多占几行）而变，写死任何一个 px 都会错。
+   现场量，写进 --barh，表格容器的最大高度与表头吸顶都读它。 */
+function syncBarHeight(){
+  const h = Math.ceil($(".bar").getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--barh", h + "px");
+}
+if (window.ResizeObserver) new ResizeObserver(syncBarHeight).observe($(".bar"));
+addEventListener("resize", syncBarHeight);
+
+renderCurated(); renderRoster(); syncSelect(); render(); syncBarHeight();
 </script>
