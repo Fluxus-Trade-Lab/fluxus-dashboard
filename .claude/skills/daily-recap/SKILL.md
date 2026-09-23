@@ -43,7 +43,7 @@ owner: ops
 9. **Session Commentary（盘中评论，2026-09-15 立）**：Discord 里当天盘中说的话——被拒的反弹、守住的位置、"卖方控盘"这类实时判断、点名某只票——放这里，不进 Tomorrow。`content_*.json` 字段 `session_commentary`（数组，可省略），中性口吻不署名，同三条法 C
 10. **Tomorrow**：加速度排名在这儿用——他的口径是**为明天做准备**，不是描述昨天，只写下一交易日的关键位/事件/待验证问题；写成「看什么」清单。**盘中已经发生的观察不放这里**（见第 9 条）
 11. **The Rules**：他的七条，固定文本照抄
-12. **Portfolio Update**：指标条+截图+一句中性点评；依赖他先更新 tracker（人肉前置，堵了就留占位）
+12. **Portfolio Update**：指标条+截图+一句中性点评；依赖他先更新 tracker（人肉前置，堵了就留占位）；**cost / stop / TRIM / CLOSE 改成 R 阶梯，见裁决记录 [2026-09-23]**
 
 ## 工作流
 
@@ -236,6 +236,22 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 **三条约束都不应该让段落变长**——加了尺子、反事实、止损之后，字数还应该持平或变少；变长了就是写成了解释。
 
 **不让的部分**（对照组没有、我们保留）：广度读数是量出来的、能追到字段（09-22 的 324/170、McClellan −22.3 → −10.8、T2108 31.6 → 33.4）；What Led/Lagged 每行点名驱动的 ticker。**两边数字冲突以我方字段为准，并写清是哪一种口径**——对照组说的多是指数/ETF，我方常是成分组内均值（09-22 半导体 +0.8% vs Semiconductors Broad +2.25%、Mag 7 −0.55% vs Tech Mega Caps 9 只 −0.63% 都是这个差，不是错）。
+
+
+### [2026-09-23] Portfolio Update 改成 R 阶梯：cost / stop / TRIM / CLOSE 全上页（Andy 原话两句）
+
+> 「下个版本把 portfolio的cost和stop写进去，TRIM和CLOSE position也写进入。」
+> 「以多少R的形式，不出现美元数值。」
+
+第二句是口径：**页上不出现任何每股价格、美元金额、股数**，全部用 R 与 %。
+entry 就是 R 的零点，所以一个仓位在页上是一条三点阶梯：
+`cost = 0R` · `stop = (stop_price − entry_price) / R_dollars`（初始止损定义上就是 −1.0R，trail 过的会是正数）· `now = open_R`。
+- **印的是当前 stop**（他 trail 止损，2026-08-17 裁决，`sheets_source.py:31-33`）；`initial_stop` 只当 R 的分母，不单独上页。
+  `initial_stop` 缺失时 `unknown_r=True`，该仓位 stop 栏留空，不猜。
+- **TRIM / CLOSE** 走 `trims[]`（`type` 能分两者）：每条腿印「日期 · TRIM 掉 <占原仓位 %> · 该腿 +X.XXR」或「日期 · CLOSE · 全笔合计 +X.XXR」；
+  每腿 R 沿用 `build_pack.py` 里已有的那行，**不另算一套**；占比用 `qty / original_qty`（百分比，不是股数）；窗口是 `period_start`→D。
+- 这条**不推翻** 2026-09-13 的「只用 R 与 %」，是它的展开：cost 与 stop 化成 R 之后不含账户规模信息，也推不出股数。
+- 落地单 `T-0923-51`（fluxus-ops，P1），含要改的五处与验收；**money 闸要跟着收紧**，并按两个失效方向各造一个阳性对照（漏改 / 改了但接错），两边都判红才算闸有效。
 
 
 ---
