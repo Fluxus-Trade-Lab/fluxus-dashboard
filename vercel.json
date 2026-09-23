@@ -3,6 +3,11 @@
   "ignoreCommand": "bash scripts/vercel_ignore_build.sh",
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  },
   "framework": "vite",
   "rewrites": [
     {
