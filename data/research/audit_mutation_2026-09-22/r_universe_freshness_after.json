@@ -1,0 +1,70 @@
+{
+ "modules": [
+  {
+   "module": "audit_universe_freshness",
+   "mutants": 56,
+   "killed": 52,
+   "survived": 4,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 3,
+   "total_sites": 56,
+   "index_from": 0,
+   "index_to": 56,
+   "kill_rate": 0.929,
+   "survivors": [
+    {
+     "line": 194,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "clean_by_session[day] += 1",
+     "index": 34,
+     "seconds": [
+      3.4,
+      3.2,
+      3.2
+     ]
+    },
+    {
+     "line": 205,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if clean_by_session[day] == 0 and seen_by_session[day] > 0:",
+     "index": 37,
+     "seconds": [
+      3.5,
+      3.5,
+      3.4
+     ]
+    },
+    {
+     "line": 226,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "capture_output=True, text=True).stdout",
+     "index": 48,
+     "seconds": [
+      3.3,
+      3.3,
+      3.3
+     ]
+    },
+    {
+     "line": 273,
+     "kind": "number",
+     "change": "2 -> 3",
+     "source": "json.dump(result, fh, indent=2)",
+     "index": 50,
+     "seconds": [
+      3.2,
+      3.3,
+      3.4
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 430.3
+}
