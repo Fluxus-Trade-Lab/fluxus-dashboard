@@ -79,13 +79,13 @@ function McClellanChart({ history }) {
   useBreadthChart(containerRef, chartRef, history, (chart, hist) => {
     const dates = hist.dates
     // Nasdaq-100 pool (T-0923-03) -- rows before the rollout have no value
-    // yet (membership tracking + the 19/39-day EMA warm-up), so those plot
-    // as a flat 0 rather than a fabricated reading; the line only becomes
-    // meaningful from the first real value forward.
-    const mcData = dates.map((d, i) => ({
-      time: d,
-      value: hist.mcclellan_osc_ndx?.[i] ?? 0,
-    }))
+    // yet (membership tracking + the 19/39-day EMA warm-up). 0 is a real
+    // McClellan reading (net advances == net declines), so a missing value
+    // is dropped rather than filled with 0 -- the line only starts from the
+    // first real value, same pattern as RatioChart.jsx.
+    const mcData = dates
+      .map((d, i) => ({ time: d, value: hist.mcclellan_osc_ndx?.[i] }))
+      .filter((p) => p.value != null)
 
     const mcSeries = chart.addSeries(LineSeries, {
       color: chartTokens().muted,
@@ -131,14 +131,14 @@ function McSummationChart({ history }) {
 
   useBreadthChart(containerRef, chartRef, history, (chart, hist) => {
     const dates = hist.dates
-    const msiData = dates.map((d, i) => ({
-      time: d,
-      value: hist.mcclellan_summation_ndx?.[i] ?? 0,
-    }))
-    const ma10Data = dates.map((d, i) => ({
-      time: d,
-      value: hist.mcclellan_summation_ndx_ma10?.[i] ?? 0,
-    }))
+    // Same null-vs-zero distinction as McClellanChart above: a missing
+    // Summation Index value is dropped, not filled with 0.
+    const msiData = dates
+      .map((d, i) => ({ time: d, value: hist.mcclellan_summation_ndx?.[i] }))
+      .filter((p) => p.value != null)
+    const ma10Data = dates
+      .map((d, i) => ({ time: d, value: hist.mcclellan_summation_ndx_ma10?.[i] }))
+      .filter((p) => p.value != null)
 
     const msiSeries = chart.addSeries(LineSeries, {
       color: chartTokens().inkBold,
