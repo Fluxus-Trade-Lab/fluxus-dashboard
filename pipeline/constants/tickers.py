@@ -1,6 +1,6 @@
 """
 Cherry-picked from traderwillhu/market_dashboard — scripts/build_data.py lines 40-55.
-144 ETFs organized into 6 groups for the macro/equities dashboard.
+172 ETFs organized into 7 groups for the macro/equities dashboard.
 """
 
 STOCK_GROUPS = {
@@ -18,6 +18,15 @@ STOCK_GROUPS = {
         # to republish, but the fund that tracks it is a tradeable instrument
         # with public daily pricing.
         "FFTY"
+    ],
+    # Thematic proxies — one liquid ETF per theme, so the theme layer can read a
+    # single clean price series instead of rebuilding a basket from constituents.
+    # Keyed by ticker, never by fund name: several of these funds are listed under
+    # different display names in different places.
+    "Theme Proxies": [
+        "XSW", "HACK", "XSD", "XAR", "PBW", "THNQ", "MAGS", "IPO", "UFO", "FINX",
+        "REXC", "SIL", "DTCR", "BATT", "BITQ", "DRNZ", "IWO", "MOO", "XTL", "COPX",
+        "IWC", "DRAM", "VOLT", "RPV", "SPHB", "WQTM", "KOID", "LYTE"
     ],
     "Countries": [
         "EZA", "ARGT", "EWA", "THD", "EIDO", "EWC", "GREK", "EWP", "EWG", "EWL", "EUFN", "EWY", "IEUR", "EFA", "ACWI",

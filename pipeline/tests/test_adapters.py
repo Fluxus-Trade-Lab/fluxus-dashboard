@@ -19,11 +19,12 @@ from pipeline.adapters.utils import parse_pct_string, parse_market_cap
 # ── Constants tests ──────────────────────────────────────────────────────────
 
 class TestConstants:
-    def test_stock_groups_has_6_groups(self):
-        assert len(STOCK_GROUPS) == 6
+    def test_stock_groups_has_7_groups(self):
+        assert len(STOCK_GROUPS) == 7
 
     def test_stock_groups_expected_keys(self):
-        expected = {"Indices", "S&P Style ETFs", "Sel Sectors", "EW Sectors", "Industries", "Countries"}
+        expected = {"Indices", "S&P Style ETFs", "Sel Sectors", "EW Sectors", "Industries",
+                    "Theme Proxies", "Countries"}
         assert set(STOCK_GROUPS.keys()) == expected
 
     def test_all_tickers_count(self):
