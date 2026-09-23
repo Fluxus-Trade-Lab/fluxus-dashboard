@@ -1,0 +1,62 @@
+# Deploy the dashboard only when the dashboard changed.
+#
+# Why this exists (2026-09-23, Andy: 「ok 同意」 to option 1 + 2):
+# Vercel's Git integration opens a deployment for EVERY push and Hobby allows
+# 100 a day. main took 121 pushes on 09-21, 108 on 09-22, 92 by mid-afternoon
+# on 09-23 — and only 7 of those 92 touched `frontend/`. The rest were the ops
+# daemon's task, material and contract commits. The quota ran out and three
+# merged front-end commits (6b6676a9, 86d84154, d6a48817) came back
+# "Deployment rate limited — retry in 24 hours", leaving the live site a
+# version behind. `scripts/vercel_ignore_build.sh` cannot help: it skips the
+# BUILD, while the deployment itself is already created and counted.
+#
+# So the trigger moves here. Vercel's own Git auto-deploy is switched off, and
+# this workflow POSTs a Deploy Hook only when a push actually touches what the
+# site is made of. That takes the daily count from ~100 to single digits.
+#
+# Until the repository has the `VERCEL_DEPLOY_HOOK_URL` secret this job is a
+# no-op, so merging it changes nothing on its own — it cannot double up with
+# the Git integration while that is still on.
+
+name: Vercel deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - 'data/output/**'
+      - 'vercel.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/vercel-deploy.yml'
+  workflow_dispatch:          # a manual "ship it" when something else is wrong
+
+concurrency:
+  # One in flight, and a newer push wins: Vercel builds HEAD either way, so a
+  # queue of hooks would spend the quota on builds nobody waits for.
+  group: vercel-deploy
+  cancel-in-progress: true
+
+jobs:
+  hook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST the Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          set -uo pipefail
+          if [ -z "${HOOK}" ]; then
+            echo "::notice title=No hook configured::VERCEL_DEPLOY_HOOK_URL is not set — skipping. Add it in Settings → Secrets → Actions, and turn Vercel's Git auto-deploy off, to make this workflow the trigger."
+            exit 0
+          fi
+          code=$(curl -sS -o /tmp/hook.out -w '%{http_code}' -X POST "${HOOK}")
+          echo "hook returned ${code}"
+          head -c 400 /tmp/hook.out || true
+          echo
+          case "${code}" in
+            200|201) echo "::notice title=Deployment queued::Vercel accepted the hook." ;;
+            429)     echo "::error title=Rate limited::Vercel is still rate limiting deployments (Hobby is 100/day)."; exit 1 ;;
+            *)       echo "::error title=Hook failed::Vercel returned ${code}."; exit 1 ;;
+          esac
