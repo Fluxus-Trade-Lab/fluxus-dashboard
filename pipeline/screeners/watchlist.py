@@ -247,25 +247,27 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     # 2026-09-23 (Andy: "收盘用大于 20%，其他是 A 版本" / "喜欢 ATR" / "不愿意
     # 放弃那 20 只贴着 21 日线的回踩"): dcr_pct floor moved 0.10 -> 0.20, this
     # is Andy's final call, not a backtested winner -- trading performance
-    # across versions has NOT been measured. Four versions compared on the
-    # 2026-09-22 session before he picked this one (closing-range floor is
-    # the only lever that changed; the 0-1 ATR 21EMA band is what actually
-    # sets list length: 94 -> 40 names on the upstream units, 77 -> 24 on the
-    # ADR/EMA units):
+    # across versions has NOT been measured. Four versions were compared
+    # before he picked this one (closing-range floor is the only lever that
+    # changed; the 0-1 ATR 21EMA band is what mostly sets list length):
     #   upstream original (Alex Desjardins, TradersLab): dcr > 10%,
-    #     perf_1w < 15%, 0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA ->
-    #     39/115-name pool, 41/120-name pool hits.
+    #     perf_1w < 15%, 0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA.
     #   draft v1 (dropped word, retired): "daily range > 20%" -- a
     #     mistranscription of "closing range"; perf_1w < 12%, 0.5-1 ADR from
     #     21EMA, 0-3 ADR from 50EMA.
     #   draft v2 (ADR/EMA units, 0.5 floor): dcr > 20%, perf_1w < 12%,
-    #     0.5-1 ADR from 21EMA, 0-3 ADR from 50EMA -> 22 hits.
+    #     0.5-1 ADR from 21EMA, 0-3 ADR from 50EMA.
     #   THIS VERSION (Andy's 09-23 final): dcr > 20%, perf_1w < 15%,
-    #     0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA -> 37 hits.
-    # (all hit counts on the 2026-09-22 session.) A closing-range-floor-only
-    # scan on the same day (rest of the rule held, wider 188-name pool) gave
-    # 60/55/42/34/33/28 hits at 10/20/35/50/60/75% -- confirms the floor is a
-    # coarse knob, not the driver of list length.
+    #     0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA.
+    # Hit counts above are from the chat scratchpad (`pullback_ab/`) that
+    # produced Andy's decision and were NOT independently re-run here.
+    # VERIFIED instead on the panel's actual pool (panel_pool(rows,
+    # "entries"), gate + ADR floor applied, 769 names) against the
+    # 2026-09-22 session (data/output/universe.json): upstream (dcr > 10%)
+    # 39 hits -- matches that night's main watchlist.json count exactly --
+    # -> this version (dcr > 20%) 36 hits, losing ANF/DINO/MPC (dcr_pct
+    # 0.189/0.196/0.154: inside the old 10% floor, outside the new 20% one).
+    # No other names moved; the 21EMA/50SMA bands were untouched.
     Panel("liquid_leader_pullback", "Liquid Leader Pullback",
           "liquid_leader; daily closing range > 20%; weekly return < 15%; 0 to 1 x ATR from the 21EMA; "
           "-0.5 to 4 x ATR from the 50SMA (Andy's 2026-09-23 final call, over Alex Desjardins's TradersLab "
