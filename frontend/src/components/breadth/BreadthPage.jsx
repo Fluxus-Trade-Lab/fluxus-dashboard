@@ -21,6 +21,7 @@ import { useGroups } from '../../hooks/useGroups'
 import { useGroupsHistory } from '../../hooks/useGroupsHistory'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import { useCorrectionRisk } from '../../hooks/useCorrectionRisk'
+import { useBreadthReplay } from '../../hooks/useBreadthReplay'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
@@ -46,6 +47,7 @@ export default function BreadthPage({ data }) {
   const gh = useGroupsHistory()
   const { data: watchlist } = useWatchlist()
   const { data: correctionRisk } = useCorrectionRisk()
+  const replay = useBreadthReplay()
   const liveBreadth = data?.breadth
   const breadth = (tm.active && tm.sliced) ? tm.sliced.breadth : liveBreadth
   const mh = (tm.active && tm.sliced) ? tm.sliced.marketHealth : data?.market_health
@@ -85,7 +87,8 @@ export default function BreadthPage({ data }) {
       {/* CORE — the morning walk, ch.7 §7.2's order. */}
       <MorningRead ml={ml} signals={data?.signals} rows={liveBreadth.history?.rows}
                    themes={groups.themes} groupsHistory={gh.data} watchlist={watchlist}
-                   etfs={data?.etf_data} correctionRisk={correctionRisk} />
+                   etfs={data?.etf_data} correctionRisk={correctionRisk}
+                   paneRows={replay.rows ?? liveBreadth.history?.rows} loadingFull={replay.loading} />
 
       <HowToRead>
         <p>

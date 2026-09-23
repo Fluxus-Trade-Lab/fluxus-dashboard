@@ -1,4 +1,5 @@
 import Spark from './Spark'
+import BreadthPanes from './BreadthPanes'
 import { LightChart } from './CourseRead'
 import { fourQuestions, greenStreak, negativeStreak, breadthReads, themeTransitions, sentinels, pct } from './morningReadMath'
 
@@ -218,7 +219,7 @@ export function StepIndex({ ml, signals, rows }) {
 
 /* ── ② breadth ─────────────────────────────────────────────────────────── */
 
-export function StepBreadth({ reads, faded, w52 }) {
+export function StepBreadth({ reads, faded, w52, paneRows, loadingFull }) {
   const r = reads
   const changed = (
     <>
@@ -228,29 +229,25 @@ export function StepBreadth({ reads, faded, w52 }) {
         {w52 != null ? ` — with the index ${Math.abs(w52).toFixed(1)}% from its 52-week high` : ''}.
       </p>
       {r.gainers20 != null && (
-        <p className="m-0 mt-1.5">{r.gainers20} names up 20%+ in five days{r.gainers20 < 20 ? ' — under 20, the lesson’s "washed out" mark' : r.gainers20 > 100 ? ' — over 100, the lesson’s "overheated" mark' : ' — between the lesson’s marks, nothing to act on'}.</p>
+        <p className="m-0 mt-1.5">{r.gainers20} names up 20%+ in five days{r.gainers20 < 20 ? ' — under 20, the lesson\u2019s "washed out" mark' : r.gainers20 > 100 ? ' — over 100, the lesson\u2019s "overheated" mark' : ' — between the lesson\u2019s marks, nothing to act on'}.</p>
       )}
+      <p className="m-0 mt-1.5">Net advances {r.net_advances != null ? (r.net_advances > 0 ? '+' : '') + r.net_advances.toLocaleString() : '—'} · prior session {r.net_advances_prev != null ? (r.net_advances_prev > 0 ? '+' : '') + r.net_advances_prev.toLocaleString() : '—'}.</p>
     </>
   )
   return (
     <Step n="②" source="Foundations ch.7 · §7.6" title="Breadth" ask="How many soldiers march with the general?" changed={changed} faded={faded}>
-      <div className="flex flex-wrap gap-x-6 gap-y-4">
-        <Reading label="Advance / decline line" note={<>Net {r.net_advances != null ? (r.net_advances > 0 ? '+' : '') + r.net_advances.toLocaleString() : '—'} · prior session {r.net_advances_prev != null ? (r.net_advances_prev > 0 ? '+' : '') + r.net_advances_prev.toLocaleString() : '—'}</>}>
-          <Spark values={r.ad_line} width={220} height={44} title="A/D line, 60 sessions" />
-        </Reading>
-        <Reading label="McClellan oscillator" chip={<Chip tone="wait">all-market · Nasdaq-100 version pending</Chip>}
-                 note={<>{r.mco != null ? r.mco.toFixed(1) : '—'} · σ bands pending</>}>
-          <Spark values={r.mco_series} width={220} height={44} title="McClellan oscillator, 60 sessions" />
-        </Reading>
-        <Reading label="McClellan summation" note="the 10-day-line read needs it"><Missing what="MCSI" why="not in the pipeline" /></Reading>
-        <Reading label="52-week highs − lows (common stocks)"
-                 note={<>{r.nhnl != null ? `${(r.nhnl > 0 ? '+' : '')}${r.nhnl}` : '—'}</>}>
-          <Spark values={r.nhnl_series} width={220} height={44} title="Net new highs, 60 sessions" />
-        </Reading>
+      {/* the chart: index over one breadth line, read against its own history */}
+      <BreadthPanes rows={paneRows} loadingFull={loadingFull} />
+      {/* the two counts the lesson adds under the four lines, and the two lines the chart cannot draw yet */}
+      <div className="flex flex-wrap gap-x-6 gap-y-3 mt-4">
         <Reading label="Width · themes by state" value={r.width.Leading} unit="Leading"
                  note={`Improving ${r.width.Improving} · Weakening ${r.width.Weakening} · Lagging ${r.width.Lagging} · of ${r.width_n}`} />
         <Reading label="Up 20%+ in five days" value={r.gainers20 ?? '—'} unit={r.gainers20 != null ? 'names' : ''}
                  note="<20 washed out · >100 overheated · in between, ignore" />
+        <Reading label="McClellan summation" note="the 10-day-line read needs it"><Missing what="MCSI" why="not in the pipeline" /></Reading>
+        <Reading label="Advance / decline line" note={<>cumulative; net {r.net_advances != null ? (r.net_advances > 0 ? '+' : '') + r.net_advances.toLocaleString() : '—'} today</>}>
+          <Spark values={r.ad_line} width={220} height={44} title="A/D line, 60 sessions" />
+        </Reading>
       </div>
     </Step>
   )
@@ -375,7 +372,7 @@ export function StepBook({ stopHit, faded }) {
 
 /* ── the whole read ────────────────────────────────────────────────────── */
 
-export default function MorningRead({ ml, signals, rows, themes, groupsHistory, watchlist, etfs, correctionRisk }) {
+export default function MorningRead({ ml, signals, rows, themes, groupsHistory, watchlist, etfs, correctionRisk, paneRows, loadingFull }) {
   const reads = breadthReads({ rows, themes, watchlist })
   const transitions = themeTransitions(groupsHistory)
   const s = sentinels({ etfs, signals, correctionRisk })
@@ -391,7 +388,7 @@ export default function MorningRead({ ml, signals, rows, themes, groupsHistory, 
             Light is red — the course says skip the rest today. Shown faded for context.
           </p>
         )}
-        <StepBreadth reads={reads} faded={red} w52={w52} />
+        <StepBreadth reads={reads} faded={red} w52={w52} paneRows={paneRows ?? rows} loadingFull={loadingFull} />
         <StepLeaders ml={ml} faded={red} />
         <StepThemes transitions={transitions} faded={red} />
         <StepNews s={s} faded={red} />
