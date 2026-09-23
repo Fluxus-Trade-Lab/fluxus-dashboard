@@ -22,6 +22,7 @@ import { useGroupsHistory } from '../../hooks/useGroupsHistory'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import { useCorrectionRisk } from '../../hooks/useCorrectionRisk'
 import { useBreadthReplay } from '../../hooks/useBreadthReplay'
+import { useUniverse } from '../../hooks/useUniverse'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
@@ -48,9 +49,16 @@ export default function BreadthPage({ data }) {
   const { data: watchlist } = useWatchlist()
   const { data: correctionRisk } = useCorrectionRisk()
   const replay = useBreadthReplay()
+  const { universe } = useUniverse()
   const liveBreadth = data?.breadth
   const breadth = (tm.active && tm.sliced) ? tm.sliced.breadth : liveBreadth
   const mh = (tm.active && tm.sliced) ? tm.sliced.marketHealth : data?.market_health
+
+  // The leader table joins market_light's ten names to their universe rows.
+  const universeByTicker = useMemo(
+    () => Object.fromEntries((universe ?? []).map((r) => [r.ticker, r])),
+    [universe],
+  )
 
   // Memoised so the HealthChart setup closure (and therefore the chart redraw
   // effect) only sees a new overlay when the underlying history actually
@@ -89,7 +97,7 @@ export default function BreadthPage({ data }) {
                    themes={groups.themes} groupsHistory={gh.data} watchlist={watchlist}
                    etfs={data?.etf_data} correctionRisk={correctionRisk}
                    paneRows={replay.rows ?? liveBreadth.history?.rows} loadingFull={replay.loading}
-                   votes={verdict?.votes} />
+                   votes={verdict?.votes} universe={universeByTicker} />
 
       <HowToRead>
         <p>

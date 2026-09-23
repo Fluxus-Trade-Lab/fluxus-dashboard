@@ -78,8 +78,12 @@ describe('BreadthPage — the morning walk (09-23)', () => {
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
     expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
-    // the in-between days stay visible (Studio Q: don't hide the 24.8%) — now on the light tile
-    expect(screen.getByText(/in-between counts as red/)).toBeInTheDocument()
+    // the in-between state stays legible (Studio Q: don't hide the 24.8%) — the
+    // light tile prints the count itself, and says "red" beside it
+    const lightTile = screen.getByText(/The light · 10\/20/).closest('div').parentElement
+    expect(lightTile.textContent).toContain('1/3')
+    expect(lightTile.textContent).toContain('red')
+    expect(lightTile.getAttribute('title')).toMatch(/in-between counts as red/)
     expect(screen.getByText(/the course says skip the rest today/)).toBeInTheDocument()
     // the trend-day count is off the main screen (course marks it for deletion)
     expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
@@ -263,15 +267,17 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     // step ③ is tiles now: the count and its denominator sit in the "Holding the 50-day" tile
-    const tile = screen.getByText('Holding the 50-day').closest('div').parentElement
-    expect(tile.textContent).toContain(String(held))
-    expect(tile.textContent).toContain(`of ${real.brightness.leaders.length}`)
+    // step ③ is a table now: one row per leader, with its 50-day state
+    for (const l of real.brightness.leaders) expect(screen.getByText(l.ticker)).toBeInTheDocument()
+    expect(screen.getAllByText(/^holding/).length).toBe(held)
+    expect(screen.getAllByText(/^broken/).length).toBe(real.brightness.leaders.length - held)
     // only the leaders list carries `provisional`; Q1's scan count is named as such in the verdict line
     // the list still says it is the pipeline's, not hand-ranked (now a line under the roster)
-    expect(screen.getByText(/provisional — the pipeline/)).toBeInTheDocument()
+    // the list still says it is the pipeline's, not hand-ranked (the table's caption)
+    expect(screen.getByText(/the pipeline’s \(members of 2-week Leading themes\), provisional/)).toBeInTheDocument()
     expect(screen.queryByText(/10\+ bright/)).not.toBeInTheDocument()
     // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
-    expect(screen.queryByText(/synthetic — combined from Q2 and Q3/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/combined from Q2 and Q3, not a rule in the lesson text/)).not.toBeInTheDocument()
     // the four-question table is on the page, with the questions the pipeline cannot answer marked
     expect(screen.getByText('New highs − lows')).toBeInTheDocument()
     expect(screen.getByText(/5 EMA is not in the pipeline/)).toBeInTheDocument()
@@ -298,7 +304,10 @@ describe('Studio Q rulings on the page', () => {
     withFetch({ market_light: green })
     renderPage()
     expect((await screen.findAllByText('DIM')).length).toBeGreaterThan(0)
-    expect(screen.getByText(/synthetic — combined from Q2 and Q3/)).toBeInTheDocument()
+    // the word stays on the page; its full rule moved to the tooltip (09-23 prose trim)
+    const syn = screen.getByText(/combined from Q2 and Q3, not a rule in the lesson text/)
+    expect(syn).toBeInTheDocument()
+    expect(syn.getAttribute('title')).toMatch(/either bad → avoid, both good → full/)
     // the verdict line says what the word rests on
     expect(screen.getByText(/a scan count, not the lesson/)).toBeInTheDocument()
     vi.unstubAllGlobals()

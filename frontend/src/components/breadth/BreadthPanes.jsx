@@ -163,10 +163,13 @@ export default function BreadthPanes({ rows, loadingFull }) {
           </div>
         )}
       </div>
-      <p className="m-0 mt-1.5 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-        {p.poolNote ? `${p.poolNote} ` : ''}{p.indicator.note}. {p.rule}
-        {' '}Grey bands = oversold episodes; the accent band = the last 15 sessions. Hover for true values.
-        {loadingFull ? ' Loading the full archive — showing the last 100 sessions meanwhile.' : ''}
+      {/* the long form of all this lives on the tooltip — the page keeps one line
+          (Andy 09-23: 「你的文字太多了」), but nothing self-made goes unstated */}
+      <p className="m-0 mt-1.5 text-[11px] text-[var(--color-text-muted)]"
+         title={`${p.poolNote ? p.poolNote + ' ' : ''}${p.indicator.note}. ${p.rule}`}>
+        Grey = oversold episodes · accent = last 15 sessions · hover for values
+        {p.poolNote ? ' · pool note ↑' : ''}{loadingFull ? ' · loading the full archive' : ''}
+        <span className="ml-1 underline decoration-dotted cursor-help">how this is cut</span>
       </p>
 
       {p.episodes.length > 0 && (

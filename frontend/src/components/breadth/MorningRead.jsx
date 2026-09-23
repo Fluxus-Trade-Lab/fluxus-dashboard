@@ -1,7 +1,8 @@
 import Spark from './Spark'
 import BreadthPanes from './BreadthPanes'
 import { LightChart } from './CourseRead'
-import { fourQuestions, greenStreak, negativeStreak, breadthReads, themeTransitions, sentinels, pct, voteFor, vsPrior, vsPriorSpread } from './morningReadMath'
+import ReadTable, { signTint, bandTint, fmtPct, fmtNum } from './ReadTable'
+import { fourQuestions, greenStreak, negativeStreak, breadthReads, themeTransitions, sentinels, voteFor, vsPrior, vsPriorSpread, leaderRows, themeRows, sentinelRows } from './morningReadMath'
 
 /**
  * Market State's main screen since 2026-09-23 — the course's morning walk.
@@ -45,19 +46,43 @@ function Chip({ tone = 'muted', children }) {
 
 /** One step: the course's question on the left, readings in the middle,
  *  what changed on the right. Stacks on narrow screens. */
-function Step({ n, source, title, ask, changed, faded, children }) {
+/** One step. `wide` gives the content the full width and moves "what changed"
+ *  above it as a single line — a table squeezed into two-thirds of the row
+ *  loses its right-hand columns, and the tables are the point now (Andy
+ *  09-23: 「走的是卡片+表格。数据信息要多。」). */
+function Step({ n, source, title, ask, changed, faded, wide, children }) {
+  const head = (
+    <div>
+      <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">{source}</div>
+      <h2 className="m-0 mt-0.5 text-[17px] font-semibold text-[var(--color-text)]">{n} · {title}</h2>
+      <div className="text-[13px] text-[var(--color-text-secondary)]">{ask}</div>
+    </div>
+  )
+  const label = <span className="text-[11px] font-mono uppercase tracking-[.12em] text-[var(--color-accent)]">What changed</span>
+  if (wide) {
+    return (
+      <section className={`grid grid-cols-1 lg:grid-cols-[150px_minmax(0,1fr)] gap-x-5 gap-y-2 py-5
+                           border-t border-[var(--color-border-light)] ${faded ? 'opacity-45' : ''}`}
+               aria-label={`Step ${n} · ${title}`}>
+        {head}
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mb-2 text-[13px] text-[var(--color-text-secondary)]
+                          border-l-2 border-[var(--color-accent)] pl-3">
+            {label}{changed}
+          </div>
+          {children}
+        </div>
+      </section>
+    )
+  }
   return (
     <section className={`grid grid-cols-1 lg:grid-cols-[150px_1fr_240px] gap-x-5 gap-y-3 py-5
                          border-t border-[var(--color-border-light)] ${faded ? 'opacity-45' : ''}`}
              aria-label={`Step ${n} · ${title}`}>
-      <div>
-        <div className="text-[11px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">{source}</div>
-        <h2 className="m-0 mt-0.5 text-[17px] font-semibold text-[var(--color-text)]">{n} · {title}</h2>
-        <div className="text-[13px] text-[var(--color-text-secondary)]">{ask}</div>
-      </div>
+      {head}
       <div className="min-w-0">{children}</div>
       <aside className="border-l-2 border-[var(--color-accent)] pl-3 text-[13px] text-[var(--color-text-secondary)]">
-        <div className="text-[11px] font-mono uppercase tracking-[.12em] text-[var(--color-accent)] mb-1">What changed</div>
+        <div className="mb-1">{label}</div>
         {changed}
       </aside>
     </section>
@@ -116,9 +141,12 @@ function Delta({ d, digits = 0, unit = '' }) {
   )
 }
 
+/** A tile is four data points and no sentence: label, the engine's word, the
+ *  value with its change, and — on hover — where the reading comes from. The
+ *  source line used to print under every tile; Andy 09-23: 「你的文字太多了」. */
 function Tile({ label, vote, value, unit, delta, deltaDigits = 0, source, muted, children }) {
   return (
-    <div className="bg-[var(--color-surface)] rounded-xl px-3 py-2.5 min-w-0">
+    <div className="bg-[var(--color-surface)] rounded-xl px-3 py-2 min-w-0" title={source || undefined}>
       <div className="flex items-center justify-between gap-2">
         <span className="text-[11px] font-mono uppercase tracking-[.08em] text-[var(--color-text-muted)] truncate">{label}</span>
         <VotePill vote={vote} />
@@ -130,7 +158,6 @@ function Tile({ label, vote, value, unit, delta, deltaDigits = 0, source, muted,
           <Delta d={delta} digits={deltaDigits} />
         </div>
       )}
-      {source && <div className="text-[11px] text-[var(--color-text-muted)] mt-0.5">{source}</div>}
     </div>
   )
 }
@@ -211,9 +238,9 @@ export function Verdict({ ml, reads }) {
               </p>
             )}
             {ml?.verdict_synthetic && (
-              <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
-                synthetic — combined from Q2 and Q3 (either bad → avoid, both good → full, otherwise dim), a rule set
-                with the course on 09-11, not in the lesson text. Q1 is shown but does not vote.
+              <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]"
+                 title="combined from Q2 and Q3 (either bad → avoid, both good → full, otherwise dim), a rule set with the course on 09-11, not in the lesson text. Q1 is shown but does not vote.">
+                <span className="underline decoration-dotted cursor-help">synthetic</span> — combined from Q2 and Q3, not a rule in the lesson text
               </p>
             )}
             <div className="flex gap-1.5 mt-3" aria-hidden="true">
@@ -243,14 +270,13 @@ export function StepIndex({ ml, signals, rows, votes }) {
   const nh = vsPriorSpread(rows, 'new_highs_common', 'new_lows_common')
   const changed = !spy?.checks ? <span>The light is not measured.</span> : (
     <>
-      <p className="m-0"><B>{on} of {answered} answered questions on the risk-on side</B>{answered < 4 ? `; ${4 - answered} not measured` : ''}.</p>
-      {spy.light === 'green' && streak > 0 && (
-        <p className="m-0 mt-1.5">New green light, day <B>{streak}</B>. The lesson&rsquo;s tally (§1.5, 166 new greens): still positive after 60 sessions 79.9%, an 8%+ run in weeks 6–12 39.6%, dead within two weeks 30.1%.</p>
-      )}
+      <p className="m-0">
+        <B>{on} of {answered}</B> questions on the risk-on side{answered < 4 ? `, ${4 - answered} not measured` : ''}
+        {spy.light === 'green' && streak > 0 ? <> · green light day <B>{streak}</B></> : null}
+      </p>
       {neg > 0 && (
-        <p className="m-0 mt-1.5">
-          Net new highs negative <B>{neg} sessions running</B>
-          {fq.items[3].state === 'on' ? ', but above where they were five sessions ago — the slowest question is turning.' : ' — the slowest question is still off while the fastest is on.'}
+        <p className="m-0 mt-1">
+          Net new highs negative <B>{neg} sessions</B>{fq.items[3].state === 'on' ? ', but turning up' : ' — the slowest question is still off'}
         </p>
       )}
     </>
@@ -263,19 +289,23 @@ export function StepIndex({ ml, signals, rows, votes }) {
             chart={
               <div className="bg-[var(--color-surface)] rounded-xl p-3">
                 <LightChart history={spy.history} />
-                <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-                  SPY close with the 10 / 20 {ma}. Strip: ink = all three checks yes, red = all three no,
-                  hatched = the in-between days the course counts as red (§1.4).
+                <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]"
+                   title={`SPY close with the 10 / 20 ${ma}. Strip: ink = all three checks yes, red = all three no, hatched = the in-between days the course counts as red (§1.4).`}>
+                  SPY · 10/20 {ma} · one cell per session
                 </p>
               </div>
             }
             tiles={[
               <Tile key="light" label={`The light · 10/20 ${ma}`} value={`${spy.checks_passed}/3`}
                     unit={spy.light === 'green' ? 'green' : 'red'}
-                    source={streak > 0 && spy.light === 'green' ? `day ${streak} of this green light` : spy.checks_passed > 0 && spy.checks_passed < 3 ? 'in-between counts as red' : 'SPY daily, the course’s light'} />,
+                    source={[
+                      spy.checks_passed > 0 && spy.checks_passed < 3 ? 'in-between counts as red' : 'SPY daily, the course’s light',
+                      streak > 0 && spy.light === 'green' ? `day ${streak} of this green light` : null,
+                      '§1.5, 166 new greens: +60 sessions positive 79.9%, an 8%+ run in weeks 6–12 39.6%, dead inside two weeks 30.1%',
+                    ].filter(Boolean).join(' · ')} />,
               <Tile key="weekly" label="Weekly · 50 over 200" value={fq.items[1].state === 'on' ? 'yes' : fq.items[1].state === 'off' ? 'no' : '—'}
                     source={fq.items[1].read ?? 'not measured'} />,
-              <Tile key="nhnl" label="Net new highs · 52w" vote={voteFor(votes, 'nhnl')}
+              <Tile key="nhnl" label="Net new highs" vote={voteFor(votes, 'nhnl')}
                     value={nh ? `${nh.now > 0 ? '+' : ''}${nh.now}` : '—'} delta={nh}
                     source={nh ? `${rows.at(-1).new_highs_common} highs / ${rows.at(-1).new_lows_common} lows · common stocks${neg > 0 ? ` · ${neg} sessions negative` : ''}` : 'common-stock counts not measured'} />,
             ]}
@@ -331,16 +361,11 @@ export function StepBreadth({ reads, faded, w52, paneRows, loadingFull, rows, vo
   const t2108 = vsPrior(rows, 't2108')
   const adv = vsPrior(rows, 'net_advances')
   const changed = (
-    <>
-      <p className="m-0">
-        <B>{r.pct20 != null ? `${r.pct20.toFixed(0)}%` : '—'} above the 20-day</B>, McClellan {r.mco != null ? r.mco.toFixed(1) : '—'},
-        NH−NL {r.nhnl != null ? (r.nhnl > 0 ? '+' : '') + r.nhnl : '—'}, {r.width.Leading} of {r.width_n} themes Leading
-        {w52 != null ? ` — with the index ${Math.abs(w52).toFixed(1)}% from its 52-week high` : ''}.
-      </p>
-      {r.gainers20 != null && (
-        <p className="m-0 mt-1.5">{r.gainers20} names up 20%+ in five days{r.gainers20 < 20 ? ' — under 20, the lesson\u2019s "washed out" mark' : r.gainers20 > 100 ? ' — over 100, the lesson\u2019s "overheated" mark' : ' — between the lesson\u2019s marks, nothing to act on'}.</p>
-      )}
-    </>
+    <p className="m-0">
+      <B>{r.pct20 != null ? `${r.pct20.toFixed(0)}%` : '—'}</B> above the 20-day · {r.width.Leading} of {r.width_n} themes Leading
+      {w52 != null ? <> · index <B>{Math.abs(w52).toFixed(1)}%</B> from its 52-week high</> : null}
+      {r.gainers20 != null ? ` · ${r.gainers20} up 20%+ in five days${r.gainers20 < 20 ? ' (washed out)' : r.gainers20 > 100 ? ' (overheated)' : ''}` : ''}
+    </p>
   )
   return (
     <Step n="②" source="Foundations ch.7 · §7.6" title="Breadth" ask="How many soldiers march with the general?" changed={changed} faded={faded}>
@@ -386,119 +411,93 @@ export function StepBreadth({ reads, faded, w52, paneRows, loadingFull, rows, vo
 
 const LEADER_INK = { holding: 'var(--color-took)', extending: 'var(--color-took)', basing: 'var(--color-took)', broken: 'var(--color-refused)' }
 
-export function StepLeaders({ ml, faded }) {
-  const b = ml?.brightness
-  const leaders = b?.leaders ?? []
-  const broken = leaders.filter((l) => l.status === 'broken').length
-  const themes = b?.leaders_meta?.themes ?? []
-  const changed = !leaders.length ? <span>Leaders not measured.</span> : (
-    <>
-      <p className="m-0"><B>{broken} of {leaders.length} broken</B> below the 50-day.</p>
-      <p className="m-0 mt-1.5">Ch.4&rsquo;s early warning is the weakest name in each group breaking first — a column this step does not have yet.</p>
-    </>
+export function StepLeaders({ ml, universe, faded }) {
+  const rows = leaderRows(ml, universe)
+  const broken = rows.filter((r) => r.status === 'broken').length
+  const changed = !rows.length ? <span>Leaders not measured.</span> : (
+    <p className="m-0"><B>{broken} of {rows.length}</B> below the 50-day. Ch.4&rsquo;s tell — the weakest name in a group breaking first — is not a column here yet.</p>
   )
+  const cols = [
+    { key: 'ticker', label: 'Ticker', get: (r) => r.ticker, cls: 'font-mono font-semibold' },
+    { key: 'theme', label: 'Theme', get: (r) => r.theme, cls: 'text-[var(--color-text-secondary)]' },
+    { key: 'rs', label: 'RS', title: 'the pipeline’s RS rating for this leader', align: 'right', get: (r) => r.rs_rating, fmt: (v) => fmtNum(v), tint: (v) => bandTint(v, 50, 50) },
+    { key: 'rs1m', label: 'RS 1M', align: 'right', get: (r) => r.rs_1m, fmt: (v) => fmtNum(v), tint: (v) => bandTint(v, 50, 50) },
+    { key: 'rs3m', label: 'RS 3M', align: 'right', get: (r) => r.rs_3m, fmt: (v) => fmtNum(v), tint: (v) => bandTint(v, 50, 50) },
+    { key: 'line', label: 'RS line', title: 'where today’s RS line sits in its own last 21 readings', align: 'right', get: (r) => r.rs_line, fmt: (v) => fmtNum(v), tint: (v) => bandTint(v, 50, 50) },
+    { key: 'd1', label: '1D', align: 'right', get: (r) => r.chg, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.05) },
+    { key: 'w1', label: '1W', align: 'right', get: (r) => r.w1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.12) },
+    { key: 'atr', label: 'ATR from 50', title: '0–4 build, 5–7 hold, ≥7 extended', align: 'right', get: (r) => r.atr50, fmt: (v) => fmtNum(v, 1), tint: (v) => signTint(v == null ? null : -(v - 5), 5) },
+    { key: 'high', label: 'From high', align: 'right', get: (r) => r.from_high, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.15) },
+    { key: 'st', label: '50-day', get: (r) => r.status,
+      fmt: (v, r) => <span className="font-mono text-[11px]">{v === 'broken' ? 'broken' : 'holding'}{r.above_ema21 === false ? ' · under 21' : ''}</span>,
+      tint: (v) => signTint(v === 'broken' ? -1 : 1, 1) },
+  ]
   return (
-    <Step n="③" source="Foundations ch.7 · §7.2 (3) · ch.4" title="RS leadership" ask="Are the strongest 5–10 still standing?" changed={changed} faded={faded}>
-      {!leaders.length ? <Missing what="Leaders" /> : (
-        <>
-          <Tiles>
-            <Tile label="Holding the 50-day" value={leaders.length - broken} unit={`of ${leaders.length}`}
-                  source="closed above the 50 SMA — the line the course gives to institutions" />
-            <Tile label="Broken" value={broken} unit={broken === 1 ? 'name' : 'names'}
-                  source={broken ? leaders.filter((l) => l.status === 'broken').map((l) => l.ticker).join(' · ') : 'none below the 50-day today'} />
-            <Tile label="Themes represented" value={themes.length} unit={themes.length === 1 ? 'theme' : 'themes'}
-                  source={themes.join(' · ') || 'not measured'} />
-          </Tiles>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-2.5 items-baseline">
-            {leaders.map((l) => (
-              <span key={l.ticker} className="flex items-baseline gap-1.5 text-[13px] font-mono" title={`${l.theme ?? ''} · ${l.status}`}>
-                <i className="w-2.5 h-2.5 rounded-full inline-block self-center" style={{ background: LEADER_INK[l.status] ?? 'var(--color-text-muted)' }} />
-                {l.ticker}{l.theme && <small className="text-[11px] text-[var(--color-text-muted)]">{l.theme}</small>}
-              </span>
-            ))}
-            {b?.leaders_meta?.provisional !== false && (
-              <span className="text-[11px] text-[var(--color-text-muted)]">
-                provisional — the pipeline&rsquo;s list (members of 2-week Leading themes), not hand-ranked
-              </span>
-            )}
-          </div>
-        </>
-      )}
+    <Step wide n="③" source="Foundations ch.7 · §7.2 (3) · ch.4" title="RS leadership" ask="Are the strongest 5–10 still standing?" changed={changed} faded={faded}>
+      <ReadTable columns={cols} rows={rows} rowKey={(r) => r.ticker} dense
+                 empty="Leaders — not measured."
+                 caption={`Holding = closed above the 50 SMA. The list is the pipeline’s (members of 2-week Leading themes)${ml?.brightness?.leaders_meta?.provisional !== false ? ', provisional' : ''}.`} />
     </Step>
   )
 }
 
 /* ── ④ themes ──────────────────────────────────────────────────────────── */
 
-export function StepThemes({ transitions, faded }) {
+export function StepThemes({ transitions, themes, faded }) {
   const t = transitions
-  const Row = ({ x }) => (
-    <div className="flex justify-between gap-3 border-b border-dotted border-[var(--color-border-light)] py-0.5 break-inside-avoid">
-      <span className="text-[var(--color-text)]">{x.name}</span>
-      <span className={`font-mono text-[11px] whitespace-nowrap ${x.dir === 'up' ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>{x.from} → {x.to}</span>
-    </div>
-  )
+  const rows = themeRows(t, themes)
   const changed = !t || !t.sessions ? <span>Theme history not loaded.</span> : (
-    <>
-      <p className="m-0"><B>{t.up.length} themes moved up, {t.down.length} moved down</B> over the last {t.lag} sessions.</p>
-      {t.up.length > 0 && <p className="m-0 mt-1.5">Taking the lead: {t.up.slice(0, 4).map((x) => x.name).join(', ')}{t.up.length > 4 ? '…' : ''}.</p>}
-      {t.down.length > 0 && <p className="m-0 mt-1.5">Losing it: {t.down.slice(0, 4).map((x) => x.name).join(', ')}{t.down.length > 4 ? '…' : ''}.</p>}
-    </>
+    <p className="m-0"><B>{t.up.length} up, {t.down.length} down</B> over {t.lag} sessions.{t.up.length ? ` Taking the lead: ${t.up.slice(0, 3).map((x) => x.name).join(', ')}.` : ''}</p>
   )
+  const STATE_RANK = { Leading: 3, Improving: 2, Weakening: 1, Lagging: 0 }
+  const cols = [
+    { key: 'name', label: 'Theme', get: (r) => r.name },
+    { key: 'move', label: 'State', get: (r) => r,
+      fmt: (r) => <span className="font-mono text-[11px]">{r.from} → <b className="font-semibold">{r.to}</b></span>,
+      tint: (r) => signTint(STATE_RANK[r.to] - STATE_RANK[r.from], 3) },
+    { key: 'accel', label: 'RS accel', title: 'this week against the prior three weeks', align: 'right', get: (r) => r.accel, fmt: (v) => fmtNum(v, 2), tint: (v) => signTint(v, 0.4) },
+    { key: 'd1', label: '1D', align: 'right', get: (r) => r.d1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.03) },
+    { key: 'w1', label: '1W', align: 'right', get: (r) => r.w1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.08) },
+    { key: 'm1', label: '1M', align: 'right', get: (r) => r.m1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.15) },
+    { key: 'm3', label: '3M', align: 'right', get: (r) => r.m3, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.3) },
+    { key: 'mem', label: 'Members', align: 'right', get: (r) => r.members, fmt: (v) => fmtNum(v) },
+    { key: 'pers', label: 'Persist', title: 'how many of the five RS windows this theme leads', align: 'right', get: (r) => r,
+      fmt: (r) => (r.persistence == null ? '—' : `${r.persistence}/${r.persistence_of ?? 5}`),
+      tint: (r) => bandTint(r.persistence == null ? null : (r.persistence / (r.persistence_of || 5)) * 100, 50, 50) },
+  ]
   return (
-    <Step n="④" source="Foundations ch.7 · §7.2 (4) · ch.2" title="RS themes" ask="Who just took the lead, who just lost it?" changed={changed} faded={faded}>
-      {!t || !t.sessions ? <Missing what="Theme history" /> : (
-        <>
-          <Tiles>
-            <Tile label={`Moved up · last ${t.lag}`} value={t.up.length} unit={t.up.length === 1 ? 'theme' : 'themes'}
-                  source={t.up.slice(0, 3).map((x) => x.name).join(' · ') || 'none'} />
-            <Tile label={`Moved down · last ${t.lag}`} value={t.down.length} unit={t.down.length === 1 ? 'theme' : 'themes'}
-                  source={t.down.slice(0, 3).map((x) => x.name).join(' · ') || 'none'} />
-            <Tile label="History depth" value={t.sessions} unit="sessions"
-                  source="one row per theme per session since 2026-08-07" />
-          </Tiles>
-          {(t.up.length + t.down.length) > 0 && (
-            <details className="mt-2 text-[13px]">
-              <summary className="cursor-pointer text-[var(--color-text-secondary)]">
-                Every theme that changed state <span className="font-mono text-[var(--color-text-muted)]">{t.up.length + t.down.length}</span>
-              </summary>
-              <div className="columns-1 md:columns-2 gap-6 text-[13px] mt-2">
-                {t.up.map((x) => <Row key={x.name} x={x} />)}
-                {t.down.map((x) => <Row key={x.name} x={x} />)}
-              </div>
-              <p className="m-0 mt-2 text-[11px] text-[var(--color-text-muted)]">Four states from the Themes page, compared with {t.lag} sessions ago.</p>
-            </details>
-          )}
-        </>
-      )}
+    <Step wide n="④" source="Foundations ch.7 · §7.2 (4) · ch.2" title="RS themes" ask="Who just took the lead, who just lost it?" changed={changed} faded={faded}>
+      <ReadTable columns={cols} rows={rows} rowKey={(r) => r.name} dense maxHeight="min(60vh, 430px)"
+                 empty="Theme history — not loaded."
+                 caption={`States from the Themes page, compared with ${t?.lag ?? 5} sessions ago · ${t?.sessions ?? 0} sessions of history.`} />
     </Step>
   )
 }
 
 /* ── ⑤ news & sentinels ───────────────────────────────────────────────── */
 
-export function StepNews({ s, faded }) {
+export function StepNews({ s, etfs, signals, faded }) {
+  const rows = sentinelRows({ etfs, signals })
   const changed = (
-    <>
-      <p className="m-0">The lesson&rsquo;s use: these set size and the setup bar, never which name to buy.</p>
-      <p className="m-0 mt-1.5">Of the four sentinels the dollar has no data; oil, Korea and the defensives read every session.</p>
-    </>
+    <p className="m-0">
+      Defensives leading: <B>{s.defense_leading == null ? '—' : s.defense_leading ? 'yes' : 'no'}</B>. These set size and the setup bar, never which name to buy.
+    </p>
   )
+  const cols = [
+    { key: 'ticker', label: 'Sentinel', get: (r) => r.ticker, cls: 'font-mono font-semibold' },
+    { key: 'role', label: 'Reads', get: (r) => r.role, cls: 'text-[var(--color-text-secondary)]' },
+    { key: 'last', label: 'Last', align: 'right', get: (r) => r.last, fmt: (v, r) => (r.missing ? '—' : fmtNum(v, v != null && v < 100 ? 2 : 0)) },
+    { key: 'd1', label: '1D', align: 'right', get: (r) => r.d1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.03) },
+    { key: 'w1', label: '1W', align: 'right', get: (r) => r.w1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.08) },
+    { key: 'm1', label: '1M', align: 'right', get: (r) => r.m1, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.15) },
+    { key: 'vs', label: 'vs SPY 1W', title: 'this week against SPY — leading or lagging the tape', align: 'right', get: (r) => r.vs_spy, fmt: (v) => fmtPct(v), tint: (v) => signTint(v, 0.06) },
+    { key: 'note', label: 'Read', get: (r) => r, cls: 'text-[var(--color-text-secondary)] text-[11px] whitespace-normal',
+      fmt: (r) => (r.band ? r.band : r.missing ? 'not in the pipeline' : <span title={r.note}>{r.note.split('（')[0].split(' (')[0]}</span>) },
+  ]
   return (
-    <Step n="⑤" source="Foundations ch.7 · §7.4 / §7.5 / §7.7" title="News & events" ask="Doubt or noise; is there follow-through?" changed={changed} faded={faded}>
-      <Tiles>
-        <Tile label="Oil · USO" value={pct(s.oil)} unit="1w" source="oil not rising, rates not rising — stocks find it easier" />
-        <Tile label="Korea · EWY" value={pct(s.korea)} unit="1w" source="the Nasdaq-100's levered twin; Asia sees it first" />
-        <Tile label="Defensives leading?" value={s.defense_leading == null ? '—' : s.defense_leading ? 'yes' : 'no'}
-              source={`week: XLP ${pct(s.defense_reads.XLP)} · XLU ${pct(s.defense_reads.XLU)} · SPY ${pct(s.defense_reads.SPY)}`} />
-        <Tile label="Offense · SMH" value={pct(s.offense.SMH)} unit="1w" source={`IGV ${pct(s.offense.IGV)} on the week`} />
-        <Tile label="VIX" value={s.vix != null ? s.vix.toFixed(1) : '—'} unit={s.vix_band ?? ''}
-              source={`under 15 raises the setup bar, it is not a sell signal (§7.7)${s.ts ? ` · VIX/VIX3M ${s.ts.value?.toFixed(2)} ${s.ts.label}` : ''}`} />
-        <Tile label="Dollar" value="—" muted source="§7.4's first sentinel — not in the pipeline" />
-        <Tile label="Follow-through" value="hand-noted" muted
-              source="good news, high open, low close — no machine rule for it" />
-      </Tiles>
-      <p className="m-0 mt-2 text-[11px] text-[var(--color-text-muted)]">{s.rule}</p>
+    <Step wide n="⑤" source="Foundations ch.7 · §7.4 / §7.5 / §7.7" title="News & events" ask="Doubt or noise; is there follow-through?" changed={changed} faded={faded}>
+      <ReadTable columns={cols} rows={rows} rowKey={(r) => r.ticker} dense
+                 caption="Defensives leading = XLP and XLU both beat SPY on the week (ours). News failure / follow-through has no machine rule — hand-noted." />
     </Step>
   )
 }
@@ -510,7 +509,7 @@ export function StepBook({ stopHit, faded }) {
     <p className="m-0">The public page can only carry a stand-in — the watchlist&rsquo;s stop-hit count. The real reading lives in the private tracker.</p>
   )
   return (
-    <Step n="⑥" source="Foundations ch.7 · §7.2 (6) / §7.5 (3)" title="Your book" ask="Which of your trades are working, which are not?" changed={changed} faded={faded}>
+    <Step wide n="⑥" source="Foundations ch.7 · §7.2 (6) / §7.5 (3)" title="Your book" ask="Which of your trades are working, which are not?" changed={changed} faded={faded}>
       <Tiles>
         <Tile label="Your recent trades" value="private" muted
               source="“strong when bought, stopped one after another” is the earliest read there is — and this repository is public" />
@@ -523,7 +522,7 @@ export function StepBook({ stopHit, faded }) {
 
 /* ── the whole read ────────────────────────────────────────────────────── */
 
-export default function MorningRead({ ml, signals, rows, themes, groupsHistory, watchlist, etfs, correctionRisk, paneRows, loadingFull, votes }) {
+export default function MorningRead({ ml, signals, rows, themes, groupsHistory, watchlist, etfs, correctionRisk, paneRows, loadingFull, votes, universe }) {
   const reads = breadthReads({ rows, themes, watchlist })
   const transitions = themeTransitions(groupsHistory)
   const s = sentinels({ etfs, signals, correctionRisk })
@@ -540,9 +539,9 @@ export default function MorningRead({ ml, signals, rows, themes, groupsHistory, 
           </p>
         )}
         <StepBreadth reads={reads} faded={red} w52={w52} paneRows={paneRows ?? rows} loadingFull={loadingFull} rows={rows} votes={votes} />
-        <StepLeaders ml={ml} faded={red} />
-        <StepThemes transitions={transitions} faded={red} />
-        <StepNews s={s} faded={red} />
+        <StepLeaders ml={ml} universe={universe} faded={red} />
+        <StepThemes transitions={transitions} themes={themes} faded={red} />
+        <StepNews s={s} etfs={etfs} signals={signals} faded={red} />
         <StepBook stopHit={reads.stop_hit} faded={red} />
       </div>
     </div>

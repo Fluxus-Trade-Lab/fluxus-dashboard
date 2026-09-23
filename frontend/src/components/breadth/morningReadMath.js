@@ -174,5 +174,65 @@ export function vsPriorSpread(rows, upKey, downKey) {
   return { now, was, delta: now - was }
 }
 
+/* ── table rows (Andy 2026-09-23: 「卡片+表格。数据信息要多。」) ──────────── */
+
+/** ③ — the leaders, joined to their universe row so the table can carry RS. */
+export function leaderRows(ml, universe) {
+  const by = universe ?? {}
+  return (ml?.brightness?.leaders ?? []).map((l) => {
+    const u = by[l.ticker] ?? {}
+    return {
+      ticker: l.ticker, theme: l.theme ?? null, status: l.status,
+      above_ema21: l.above_ema21 ?? null,
+      rs_rating: num(l.rs_rating), rs_1m: num(u.rs_1m), rs_3m: num(u.rs_3m),
+      rs_line: num(u.rs_line_pctl_21), chg: num(u.change_pct), w1: num(u.perf_1w),
+      atr50: num(u.atr_from_sma50), from_high: num(u.high_52w_dist),
+    }
+  })
+}
+
+/** ④ — themes that changed state, joined to their current group reading. */
+export function themeRows(transitions, themes) {
+  const by = Object.fromEntries((themes ?? []).map((t) => [t.group, t]))
+  const all = [...(transitions?.up ?? []), ...(transitions?.down ?? [])]
+  return all.map((t) => {
+    const g = by[t.name] ?? {}
+    return {
+      name: t.name, from: t.from, to: t.to, dir: t.dir,
+      accel: num(g.rs_accel), d1: num(g.perf_1d), w1: num(g.perf_1w),
+      m1: num(g.perf_1m), m3: num(g.perf_3m),
+      members: num(g.members), persistence: num(g.persistence), persistence_of: num(g.persistence_of),
+    }
+  })
+}
+
+/** ⑤ — one row per sentinel, ch.7 §7.4 / §7.7. */
+export function sentinelRows({ etfs, signals }) {
+  const by = Object.fromEntries((etfs ?? []).map((e) => [e.ticker, e]))
+  const spyW = num(by.SPY?.perf_1w)
+  const row = (ticker, role, note) => {
+    const e = by[ticker]
+    if (!e) return { ticker, role, note, missing: true }
+    return {
+      ticker, role, note,
+      last: num(e.close), d1: num(e.change_pct), w1: num(e.perf_1w), m1: num(e.perf_1m),
+      vs_spy: num(e.perf_1w) != null && spyW != null ? e.perf_1w - spyW : null,
+    }
+  }
+  const vix = signals?.['^VIX']
+  return [
+    row('USO', 'oil', 'rising oil with rising rates makes stocks hard work (§7.4)'),
+    row('EWY', 'Korea', 'the Nasdaq-100 levered; Asia prints it first (§7.4)'),
+    row('SMH', 'offense', 'semis lead the risk-on side (§1.7)'),
+    row('IGV', 'offense', 'software, the other attack end (§1.7)'),
+    row('XLP', 'defense', 'staples leading is a risk-off tell (§1.7)'),
+    row('XLU', 'defense', 'utilities leading is a risk-off tell (§1.7)'),
+    { ticker: 'VIX', role: 'sentiment', note: 'under 15 raises the setup bar; it is not a sell signal (§7.7)',
+      last: num(vix?.close), d1: null, w1: null, m1: null, vs_spy: null,
+      band: num(vix?.close) == null ? null : vix.close < 15 ? 'complacent' : vix.close < 20 ? 'neutral' : vix.close < 25 ? 'wary' : 'fear' },
+    { ticker: 'DXY', role: 'dollar', note: '§7.4\'s first sentinel — not in the pipeline', missing: true },
+  ]
+}
+
 const pct = (v, d = 1) => (v == null ? '—' : `${v >= 0 ? '+' : ''}${(v * 100).toFixed(d)}%`)
 export { pct }
