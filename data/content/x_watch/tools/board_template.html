@@ -143,10 +143,16 @@ select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
    position:sticky 永远贴在一个不滚的盒子上，页面一滚列名就没了（main 同病，
    那边还硬编码 top:44px 去躲工具条，而 .bar 实测 133px 高，反把第一行压住）。
    修法：让 .scroll 真的接管纵向滚动，高度跟着视口减去工具条实高（--barh 由
-   ResizeObserver 现场量），thead 贴 top:0 —— 不再有任何写死的 px。 */
-.scroll{overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 26px);
-  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
-  overscroll-behavior:contain}
+   ResizeObserver 现场量），thead 贴 top:0 —— 不再有任何写死的 px。
+   ⚠️ 光给 max-height 不够：盒顶恒在 curated + 今日变动 + 工具条之下（实测 y=519），
+   一个 100vh−barh−26 高的盒子从那儿往下画，盒底永远掉出视口 359px，而且每个视口
+   高度都一样多 —— 780px 的屏（MBP 14"）一屏只读得到 6 行，600px 只剩 1 行。
+   所以盒子自己也要 sticky：页面一滚它就贴在工具条下沿，整只盒子回到视口里。
+   ⚠️ 也不能 overscroll-behavior:contain —— 那会让鼠标停在表上时页面完全不滚，
+   掉出去的那截够都够不着。默认的滚动链接（表滚到底 → 继续滚页面）就是对的。 */
+.scroll{position:sticky;top:calc(var(--barh, 140px) + 8px);z-index:1;
+  overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 26px);
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 table.wide{min-width:1180px}
 thead th{position:sticky;top:0;z-index:10;background:var(--surface2);
