@@ -303,7 +303,9 @@ def bask_cell(v) -> str:
 #    RS/EMA/WHAT 这类假代码，README 口径一），但一只票进表之后，它的 people_7d **把带 $ 和
 #    不带 $ 的写法合并去重**——因为 days[] 就是这么聚合的，与 ticker_daily.csv 的日人数
 #    完全同口径（一个量一个家，不另立第二本账）。09-23 实测 414 只票里有 89 只两种口径不同，
-#    最大一只差 1 人（$MU 合并 22 / 纯 cashtag 21）。给 Claire 的契约行照此写实。
+#    最大差 5 人（$NYSE 合并 5 / 纯 cashtag 0）；差 >=3 的 7 只里 $SPX 9/5、$BTC 10/6、
+#    $VIX 4/1、$NYSE 5/0 是指数与宽基代码，$META 14/11、$LITE 14/11、$DE 6/3 是个股。
+#    给 Claire 的契约行照此写实。
 # ─────────────────────────────────────────────────────────────────────────────
 
 def x_heat(data: dict, window: int = HEAT_WINDOW) -> dict:
