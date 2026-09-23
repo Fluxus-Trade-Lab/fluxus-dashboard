@@ -505,6 +505,8 @@ REQUIRED_BLOCKS: Dict[str, List[str]] = {
     "shortlist.json": ["cards", "seats", "date"],
     "signals.json": [],
     "etf_data.json": [],
+    # 主题板：整块没了要当故障报出来（08-19 breadth 整页变黑就是这个形状）
+    "theme_board.json": ["themes", "asof"],
 }
 
 

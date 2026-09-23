@@ -27,6 +27,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from pipeline.adapters.finviz_adapter import FinvizAdapter
 from pipeline.adapters.yfinance_adapter import YfinanceAdapter
 from pipeline.constants.tickers import ALL_TICKERS
+
+# 主题板并排期：这一天之前两套读数同屏，之后前端撤掉旧列。
+# Andy 2026-09-23 裁决「并排两周」。改这个日期＝改撤列的日子。
+PARALLEL_UNTIL = '2026-10-08'
 from pipeline.screeners.momentum_97 import run as run_momentum_97
 from pipeline.screeners.gainers_4pct import run as run_gainers_4pct
 from pipeline.screeners.vol_up_gainers import run as run_vol_up_gainers
@@ -1404,6 +1408,28 @@ def main():
                     len(_payload.get('rungs', {})), len(_payload.get('themes', {})), _n)
     except Exception:
         logger.exception("theme ladder failed - theme_ladder.json not updated")
+
+    # 主题四态板：代理 ETF + 两周桶（口径见 pipeline/themes/proxy_board.py）。
+    # 并排期内 `state_prev` 带着旧读数一起发，到期撤掉。自己的失败域 ——
+    # 板子出不来不能让 groups/ladder 看起来是坏的。
+    try:
+        import datetime as _dt
+        from pipeline.constants.theme_proxies import PROXY_MAP_DATE, THEME_PROXIES
+        from pipeline.themes import proxy_board as _PB
+        _g2 = json.loads((OUTPUT_DIR / 'groups.json').read_text())
+        _mem = {t['group']: t.get('tickers') or [] for t in _g2.get('themes', [])}
+        _old = {t['group']: t.get('state') for t in _g2.get('themes', [])}
+        _etfs = sorted(set(THEME_PROXIES.values()) | {_PB.BENCH})
+        _ebars = _PB.fetch_bars(_etfs)
+        _board = _PB.build(THEME_PROXIES, _ebars, _bars, _mem, _old,
+                           parallel_until=PARALLEL_UNTIL,
+                           proxy_map_date=PROXY_MAP_DATE)
+        _emit(ledger, OUTPUT_DIR / 'theme_board.json',
+              json.dumps(_board, separators=(',', ':')))
+        logger.info("Saved theme_board.json - %d themes, asof %s, counts %s",
+                    len(_board['themes']), _board['asof'], _board['counts'])
+    except Exception:
+        logger.exception("theme board failed - theme_board.json not updated")
 
     # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
     # the Watchlist page renders instead of filtering. Own failure domain.
