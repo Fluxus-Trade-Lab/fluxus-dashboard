@@ -33,14 +33,23 @@
 #
 # Fix: `push:` only fires on main (agent branches merge in via the taskboard
 # gate/reviewer flow, not by pushing here -- see CLAUDE.md safe-merge rules),
-# and `paths-ignore` skips commits that touch only directories `git grep`
-# confirmed pipeline/tests and tests/ never read as data:
-#   Fluxus_Brand/**, Fluxus_Substack/**, docs/**, .claude/**,
-#   data/content/**, data/research/**.
-# Each of those four has a real exception carved back in with `!` (order
-# matters -- a later positive pattern re-includes what an earlier `!`
-# excluded), because the naive "whole directory is docs" read from the task
-# brief was wrong:
+# and `paths:` skips commits that touch only directories `git grep` confirmed
+# pipeline/tests and tests/ never read as data: Fluxus_Brand/**,
+# Fluxus_Substack/**, docs/**, .claude/**, data/content/**, data/research/**.
+#
+# `paths:` (not `paths-ignore:`) ON PURPOSE: `paths-ignore` does not accept
+# `!` negation, and every one of the six directories above has at least one
+# real exception -- a `paths-ignore` version either fails workflow validation
+# outright or silently drops the `!` lines and swallows the exceptions along
+# with the rest of the directory. `paths:` + `!` is the documented way to say
+# "ignore this except that" (a branch-review pass on 2026-09-23 caught this
+# before merge). Starting from `'**'` keeps every path not explicitly negated
+# in scope by default, so a brand-new top-level directory is covered without
+# anyone remembering to add it here.
+#
+# Six real exceptions, each carved back in with a later positive pattern
+# (order matters -- the LAST matching line wins, so a positive line after a
+# `!` re-includes what the `!` excluded):
 #   - Fluxus_Brand/ops/tools/x_watch/fetch.py is imported by
 #     test_x_watch_fetch.py (its own docstring explains why: this file is
 #     the only thing that runs it, since CI only used to cover pipeline/tests).
@@ -48,6 +57,14 @@
 #     imported the same way by the other test_x_watch_*.py files.
 #   - data/research/claims/claims.jsonl is read live by
 #     test_claim_registry.py::TestLiveRegistry.
+#   - data/research/what_changed_2026-08/what_changed.py is imported live by
+#     test_what_changed.py, same pattern as the x_watch tools.
+#   - .claude/hooks/*.py (ruling_stop_gate.py, task_test_gate.py,
+#     skill_stop_gate.py) are each spec_from_file_location-loaded and
+#     exec'd by their matching test_*_gate.py.
+#   - .claude/skills/daily-recap/SKILL.md is content-asserted by
+#     test_daily_recap_skill_dryrun_guard.py ("this convention only lives in
+#     markdown, nothing stops the next edit from quietly changing it").
 # `data/reference/**` was proposed too but dropped entirely (not narrowed):
 # schema_snapshot.json, screener_methods.md and METRIC_SOURCES.md are all
 # read for real content by test_output_shape_guards.py / test_ep_screeners.py
@@ -60,22 +77,37 @@
 # Who notices a real red now that pushes don't self-report as fast: T-0922-61
 # (alex-sentinel checks main's CI status every 2 hours, opens a P0 to alex on
 # red) -- not "wait for the next person to push".
+#
+# KNOWN OPEN ISSUE (T-0923-121 branch review, 2026-09-23): this trigger
+# narrowing permanently trips
+# pipeline/tests/test_audit_ci_test_coverage.py::test_the_real_repository_is_green_on_its_declared_set.
+# That audit (pipeline/tools/audit_ci_test_coverage.py, owned by RND Linda's
+# audit_* domain) treats ANY `branches:`/`paths:` trigger filter as
+# uncertifiable (T5) with no DECLARED escape hatch -- confirmed intentional
+# by its own pinned test_a_paths_filtered_trigger_is_not_certifiable. Fixing
+# that needs a decision in Linda's audit tool (add a scoped exception) or an
+# explicit Andy tradeoff, tracked separately; it is not something this line
+# patches unilaterally inside a P1 CI-noise fix.
 name: tests
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'Fluxus_Brand/**'
-      - '!Fluxus_Brand/ops/tools/x_watch/**'
-      - 'Fluxus_Substack/**'
-      - 'docs/**'
-      - '.claude/**'
-      - 'data/content/**'
-      - '!data/content/x_watch/tools/**'
-      - '!data/content/x_watch/scoring/**'
-      - 'data/research/**'
-      - '!data/research/claims/**'
+    paths:
+      - '**'
+      - '!Fluxus_Brand/**'
+      - 'Fluxus_Brand/ops/tools/x_watch/**'
+      - '!Fluxus_Substack/**'
+      - '!docs/**'
+      - '!.claude/**'
+      - '.claude/hooks/**'
+      - '.claude/skills/daily-recap/SKILL.md'
+      - '!data/content/**'
+      - 'data/content/x_watch/tools/**'
+      - 'data/content/x_watch/scoring/**'
+      - '!data/research/**'
+      - 'data/research/claims/**'
+      - 'data/research/what_changed_2026-08/**'
   pull_request:
   workflow_dispatch:
 
