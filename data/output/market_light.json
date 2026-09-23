@@ -1,5 +1,5 @@
 {
- "date": "2026-09-22",
+ "date": "2026-09-23",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,32 +7,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 764.4746,
-    "b": 763.3549
+    "a": 765.081,
+    "b": 763.7792
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 764.4746,
-    "b": 762.4956
+    "a": 765.081,
+    "b": 764.4746
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 763.3549,
-    "b": 762.2997
+    "a": 763.7792,
+    "b": 763.3549
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-06-29",
-    "close": 739.1645,
-    "fast": 736.0785,
-    "slow": 737.0027,
-    "checks_passed": 2
-   },
    {
     "date": "2026-06-30",
     "close": 744.9202,
@@ -445,6 +438,13 @@
     "fast": 764.4746,
     "slow": 763.3549,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-23",
+    "close": 767.81,
+    "fast": 765.081,
+    "slow": 763.7792,
+    "checks_passed": 3
    }
   ]
  },
@@ -453,32 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 723.3491,
-    "b": 718.48
+    "a": 726.5965,
+    "b": 720.6448
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 723.3491,
-    "b": 717.9911
+    "a": 726.5965,
+    "b": 723.3491
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 718.48,
-    "b": 715.4295
+    "a": 720.6448,
+    "b": 718.48
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-06-29",
-    "close": 723.3263,
-    "fast": 719.1314,
-    "slow": 718.5307,
-    "checks_passed": 3
-   },
    {
     "date": "2026-06-30",
     "close": 735.6335,
@@ -891,30 +884,34 @@
     "fast": 723.3491,
     "slow": 718.48,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-23",
+    "close": 741.21,
+    "fast": 726.5965,
+    "slow": 720.6448,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 13,
+   "count": 20,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 87,
-   "count_is_floor": true,
+   "pool_count": 63,
+   "count_is_floor": false,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 7,
-    "ep_qullamaggie": 1,
-    "ll_hl_1st": 18,
-    "ll_hl_2nd": 17,
-    "ll_hl_trend_break": 32,
-    "liquid_leader_pullback": 39
+    "ep_stockbee": 4,
+    "ep_qullamaggie": 6,
+    "ll_hl_1st": 6,
+    "ll_hl_2nd": 16,
+    "ll_hl_trend_break": 11,
+    "liquid_leader_pullback": 24
    },
-   "capped_panels": [
-    "ll_hl_trend_break",
-    "liquid_leader_pullback"
-   ],
+   "capped_panels": [],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -951,6 +948,13 @@
     "rs_rating": 99
    },
    {
+    "ticker": "MXL",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
     "ticker": "MU",
     "theme": "Semiconductors Large Caps",
     "status": "holding",
@@ -958,10 +962,10 @@
     "rs_rating": 99
    },
    {
-    "ticker": "MXL",
-    "theme": "Semiconductors Broad",
-    "status": "holding",
-    "above_ema21": true,
+    "ticker": "DUKR",
+    "theme": "Defense",
+    "status": "broken",
+    "above_ema21": false,
     "rs_rating": 99
    },
    {
@@ -972,22 +976,15 @@
     "rs_rating": 99
    },
    {
+    "ticker": "PLSE",
+    "theme": "Medical Devices",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
     "ticker": "CDNA",
     "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "PURR",
-    "theme": "Crypto Equities",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "AMD",
-    "theme": "Semiconductors Large Caps",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
@@ -995,8 +992,9 @@
   ],
   "leaders_meta": {
    "themes": [
-    "Crypto Equities",
+    "Defense",
     "Genomics",
+    "Medical Devices",
     "Memory & Storage",
     "Semiconductors Broad",
     "Semiconductors Large Caps"
@@ -1008,7 +1006,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": 1
+   "score": 0
   }
  },
  "verdict": "dim",

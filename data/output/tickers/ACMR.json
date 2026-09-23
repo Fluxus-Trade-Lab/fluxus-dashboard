@@ -1,8 +1,8 @@
 {
   "ticker": "ACMR",
-  "fetched_at": "2026-09-21T22:19:44Z",
+  "fetched_at": "2026-09-23T23:18:26Z",
   "_schema": "v2",
-  "current_price": 72.7699966430664,
+  "current_price": 80.66999816894531,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.61,
-      "eps_estimate": 0.33667,
-      "eps_surprise_pct": 0.8119
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.34,
-      "eps_estimate": 0.19667,
-      "eps_surprise_pct": 0.7288
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.25,
-      "eps_estimate": 0.4,
-      "eps_surprise_pct": -0.375
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.36,
-      "eps_estimate": 0.5325,
-      "eps_surprise_pct": -0.32389998
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,90 +99,19 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 8,
-    "bullish": 7,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 117.75,
-    "high_price_target": 166.0,
-    "low_price_target": 75.0,
-    "current_price": 63.94,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-26T11:32:39",
-        "firm": "Daiwa Capital",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-24T12:43:16",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-18T17:56:44",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-05T10:04:07",
-        "firm": "Seaport Global",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-09-30T18:00:26",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-02-28T16:45:20",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-02-27T13:26:54",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "reit"
-      },
-      {
-        "date": "2024-12-05T17:53:59",
-        "firm": "Craig-Hallum",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-12-04T10:01:37",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-10-01T10:26:30",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-15T23:12:48Z",
+  "quarterly_asof": "2026-09-23T23:18:26Z",
   "news": [
+    {
+      "date": "2026-09-22T08:19:00Z",
+      "title": "Is ACM Research (ACMR) Undervalued After Its Recent Share Price Swings?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/acm-research-acmr-undervalued-recent-081900404.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-09-21T13:40:03Z",
       "title": "Are Computer and Technology Stocks Lagging  Amkor Technology (AMKR) This Year?",
@@ -261,38 +165,24 @@
       "title": "Earnings Estimates Rising for ACM Research (ACMR): Will It Gain?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/earnings-estimates-rising-acm-research-162001950.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-26T13:30:04Z",
-      "title": "Wall Street Analysts See ACM Research (ACMR) as a Buy: Should You Invest?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-see-acm-133004635.html",
-      "source": "Zacks"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 72.37774982452393,
-    "ma50": 78.53019996643066,
-    "ma200": 65.15147487640381,
-    "rsi14": 48.58781354008351,
+    "ma20": 72.54399967193604,
+    "ma50": 78.26199989318847,
+    "ma200": 65.385124874115,
+    "rsi14": 58.194243058223215,
     "high_20d": 83.5,
-    "low_5d": 62.779998779296875,
+    "low_5d": 63.40999984741211,
     "low_10d": 62.779998779296875,
     "high_52w": 127.19000244140625,
     "low_52w": 28.459999084472656,
-    "atr14": 4.188929694039481,
-    "atr14_pct": 5.756396711938843,
-    "position_in_52w_range_pct": 44.87997169249762
+    "atr14": 4.669643674577985,
+    "atr14_pct": 5.788575406681501,
+    "position_in_52w_range_pct": 52.88159354732369
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-23",
-      "open": 17.14,
-      "high": 17.21,
-      "low": 16.732,
-      "close": 17.07,
-      "volume": 630200.0
-    },
     {
       "date": "2024-09-24",
       "open": 17.72,
@@ -4279,22 +4169,22 @@
     },
     {
       "date": "2026-09-21",
-      "open": 71.54,
+      "open": 71.455,
       "high": 73.4,
       "low": 70.61,
       "close": 72.77,
-      "volume": 1417623.0
+      "volume": 1564400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 74.99,
+      "high": 82.78,
+      "low": 72.4,
+      "close": 80.67,
+      "volume": 2774148.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 35.75,
-      "high": 36.299,
-      "low": 34.923,
-      "close": 35.89,
-      "volume": 1789400.0
-    },
     {
       "date": "2025-09-22",
       "open": 36.0,
@@ -6297,11 +6187,19 @@
     },
     {
       "date": "2026-09-21",
-      "open": 71.54,
+      "open": 71.455,
       "high": 73.4,
       "low": 70.61,
       "close": 72.77,
-      "volume": 1417623.0
+      "volume": 1564400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 74.99,
+      "high": 82.78,
+      "low": 72.4,
+      "close": 80.67,
+      "volume": 2774148.0
     }
   ],
   "ai_synthesis": null,

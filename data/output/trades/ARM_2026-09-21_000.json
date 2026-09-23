@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-09-21_000",
-  "generated_at": "2026-09-22T22:25:44+00:00",
+  "generated_at": "2026-09-23T23:22:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -27,14 +27,14 @@
   },
   "entry_snapshot": {
     "close": 322.9,
-    "open": 294.22,
+    "open": 294.36,
     "high": 324.16,
     "low": 293.08,
-    "volume": 12889775.0,
+    "volume": 13009900.0,
     "ma20": 253.24450000000002,
-    "ma50": 261.05120000000005,
+    "ma50": 261.0512,
     "ma200": 208.222575,
-    "rsi14": 69.48876126081264,
+    "rsi14": 69.48876131970849,
     "atr14": 17.653785714285718,
     "atr14_pct": 5.467260983055349,
     "high_52w": 452.7,
@@ -46,22 +46,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 0.9062499999999997,
-    "mfe_date": "2026-09-21",
+    "mfe_R": 1.6216462053571399,
+    "mfe_date": "2026-09-23",
     "mae_R": 0.828125000000001,
     "mae_date": "2026-09-21",
-    "optimal_exit_price": 324.16,
-    "optimal_exit_date": "2026-09-21",
-    "optimal_R": 0.9062499999999997,
-    "days_to_optimal": 0,
+    "optimal_exit_price": 336.9799,
+    "optimal_exit_date": "2026-09-23",
+    "optimal_R": 1.6216462053571399,
+    "days_to_optimal": 2,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 2
   },
   "lesson": "In progress",
-  "narrative": "Entered **ARM** long on 2026-09-21 at $307.92 with stop $290.00 (currently trailed to $307.92) (1R = $17.92/sh = 5.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($253.24), MA stack mixed, RSI 69, 63% through 52W range, ATR 5.5% of price. **In progress.** Peak so far +0.91R; worst drawdown -0.83R.",
+  "narrative": "Entered **ARM** long on 2026-09-21 at $307.92 with stop $290.00 (currently trailed to $307.92) (1R = $17.92/sh = 5.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($253.24), MA stack mixed, RSI 69, 63% through 52W range, ATR 5.5% of price. **In progress.** Peak so far +1.62R; worst drawdown -0.83R.",
   "ohlc_window": [
     {
       "date": "2026-08-24",
@@ -213,15 +213,31 @@
       "high": 275.78,
       "low": 261.655,
       "close": 275.61,
-      "volume": 6943100.0
+      "volume": 6963100.0
     },
     {
       "date": "2026-09-21",
-      "open": 294.22,
+      "open": 294.36,
       "high": 324.16,
       "low": 293.08,
       "close": 322.9,
-      "volume": 12889775.0
+      "volume": 13009900.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 319.41,
+      "high": 334.66,
+      "low": 318.685,
+      "close": 333.2,
+      "volume": 7409800.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 331.72,
+      "high": 336.9799,
+      "low": 324.56,
+      "close": 332.56,
+      "volume": 6946312.0
     }
   ]
 }

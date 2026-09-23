@@ -1,8 +1,8 @@
 {
   "ticker": "FIG",
-  "fetched_at": "2026-09-21T22:20:07Z",
+  "fetched_at": "2026-09-23T23:18:51Z",
   "_schema": "v2",
-  "current_price": 22.329999923706055,
+  "current_price": 21.760000228881836,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.08,
-      "eps_estimate": 0.04083,
-      "eps_surprise_pct": 0.9593
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.1,
-      "eps_estimate": 0.06212,
-      "eps_surprise_pct": 0.6098
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.08,
-      "eps_estimate": 0.06469,
-      "eps_surprise_pct": 0.2367
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.132,
-      "eps_estimate": 0.04676,
-      "eps_surprise_pct": 1.8228999
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,90 +99,43 @@
     }
   ],
   "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 13,
-    "bullish": 4,
-    "neutral": 9,
-    "bearish": 0,
-    "avg_price_target": 30.8,
-    "high_price_target": 37.0,
-    "low_price_target": 25.0,
-    "current_price": 23.91,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-19T16:59:29",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T21:48:46",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T19:32:33",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-26T19:07:09",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-25T15:11:25",
-        "firm": "RBC Capital",
-        "to_grade": "Sector Perform",
-        "from_grade": "Sector Perform",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-25T09:09:41",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-17T14:13:46",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-05-15T16:07:41",
-        "firm": "JP Morgan",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T13:27:49",
-        "firm": "RBC Capital",
-        "to_grade": "Sector Perform",
-        "from_grade": "Sector Perform",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T11:02:25",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:14Z",
+  "quarterly_asof": "2026-09-23T23:18:51Z",
   "news": [
+    {
+      "date": "2026-09-23T17:16:08Z",
+      "title": "Figma (FIG) Could Be 3% Undervalued Following Its Recent Pullback",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/figma-fig-could-3-undervalued-171608163.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-22T23:24:58Z",
+      "title": "Figma (FIG) Stock May Be Near Fair Value On Cash Flow",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/figma-fig-stock-may-near-232458664.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-22T19:08:18Z",
+      "title": "Update: Market Chatter: Big Software Firms Offer AI Discounts in Bid to Counter Anthropic, OpenAI",
+      "url": "https://finance.yahoo.com/technology/ai/articles/market-chatter-big-software-firms-190818572.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-22T15:34:36Z",
+      "title": "Handshake COO Jon Stull Explains How Job Seekers Will Benefit from AI Skills Studio",
+      "url": "https://finance.yahoo.com/video/handshake-coo-jon-stull-explains-153436522.html",
+      "source": "NYSE"
+    },
+    {
+      "date": "2026-09-22T14:20:42Z",
+      "title": "Market Chatter: Big Software Firms Offer AI Discounts in Bid to Counter Anthropic, OpenAI",
+      "url": "https://finance.yahoo.com/technology/ai/articles/market-chatter-big-software-firms-142042928.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-09-16T19:56:17Z",
       "title": "Salesforce vs. Figma: Evaluating the Better High-Growth Software Stock to Buy in 2026",
@@ -237,52 +165,22 @@
       "title": "Adobe stock drops on surprise CEO transition",
       "url": "https://www.proactiveinvestors.com/companies/news/1098131/adobe-stock-drops-on-surprise-ceo-transition-1098131.html",
       "source": "Proactive"
-    },
-    {
-      "date": "2026-09-04T15:30:30Z",
-      "title": "Figma, Inc. (FIG) Up 5.2% Since Last Earnings Report: Can It Continue?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/figma-inc-fig-5-2-153030228.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-03T01:35:00Z",
-      "title": "Why Figma Stock Climbed 13% in August",
-      "url": "https://www.fool.com/investing/2026/09/02/why-figma-stock-climbed-13-in-august/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-02T18:20:01Z",
-      "title": "Figma General Counsel Sells 211,599 Shares for $6.3 Million",
-      "url": "https://www.fool.com/coverage/filings/2026/09/02/figma-general-counsel-sells-211-599-shares-for-usd6-3-million/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T21:31:02Z",
-      "title": "Figma Stock Rose With Its Peers, Not On Its Own News",
-      "url": "https://www.trefis.com/articles/613545/figma-stock-rose-with-its-peers-not-on-its-own-news/2026-08-28",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-28T12:25:53Z",
-      "title": "Analysts Have a Wall of Holds on Figma, UiPath and GitLab but Institutions Are Quietly Loading Up",
-      "url": "https://247wallst.com/investing/2026/08/28/analysts-have-a-wall-of-holds-on-figma-uipath-and-gitlab-but-institutions-are-quietly-loading-up/",
-      "source": "24/7 Wall St."
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 25.010000133514403,
-    "ma50": 24.654000129699707,
-    "ma200": 25.299900102615357,
-    "rsi14": 40.60150537980133,
+    "ma20": 24.45250005722046,
+    "ma50": 24.57500011444092,
+    "ma200": 25.137300109863283,
+    "rsi14": 38.504136952696726,
     "high_20d": 31.219999313354492,
-    "low_5d": 22.235000610351562,
-    "low_10d": 21.6200008392334,
+    "low_5d": 21.06999969482422,
+    "low_10d": 21.06999969482422,
     "high_52w": 71.4800033569336,
     "low_52w": 16.600000381469727,
-    "atr14": 1.2869928904942103,
-    "atr14_pct": 5.763514979361501,
-    "position_in_52w_range_pct": 10.440960698923679
+    "atr14": 1.2552144186837333,
+    "atr14_pct": 5.768448554599275,
+    "position_in_52w_range_pct": 9.402331573704684
   },
   "ohlc_2y": [
     {
@@ -2571,34 +2469,34 @@
       "high": 23.59,
       "low": 22.556,
       "close": 22.69,
-      "volume": 33900900.0
+      "volume": 33913600.0
     },
     {
       "date": "2026-09-21",
       "open": 22.85,
-      "high": 22.9849,
+      "high": 22.99,
       "low": 22.235,
       "close": 22.33,
-      "volume": 10791839.0
+      "volume": 10842700.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 23.17,
+      "high": 23.19,
+      "low": 21.07,
+      "close": 21.8,
+      "volume": 18423900.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 21.77,
+      "high": 22.48,
+      "low": 21.67,
+      "close": 21.76,
+      "volume": 8888466.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 59.37,
-      "high": 59.49,
-      "low": 55.24,
-      "close": 56.81,
-      "volume": 10658500.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 56.3,
-      "high": 59.689,
-      "low": 55.363,
-      "close": 58.79,
-      "volume": 9769200.0
-    },
     {
       "date": "2025-09-23",
       "open": 59.59,
@@ -4589,15 +4487,31 @@
       "high": 23.59,
       "low": 22.556,
       "close": 22.69,
-      "volume": 33900900.0
+      "volume": 33913600.0
     },
     {
       "date": "2026-09-21",
       "open": 22.85,
-      "high": 22.9849,
+      "high": 22.99,
       "low": 22.235,
       "close": 22.33,
-      "volume": 10791839.0
+      "volume": 10842700.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 23.17,
+      "high": 23.19,
+      "low": 21.07,
+      "close": 21.8,
+      "volume": 18423900.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 21.77,
+      "high": 22.48,
+      "low": 21.67,
+      "close": 21.76,
+      "volume": 8888466.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-09-21T22:20:28Z",
+  "fetched_at": "2026-09-23T23:19:15Z",
   "_schema": "v2",
-  "current_price": 232.8000030517578,
+  "current_price": 226.61000061035156,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.68,
-      "eps_estimate": -0.86333,
-      "eps_surprise_pct": 0.2124
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 2.11,
-      "eps_estimate": -0.7125,
-      "eps_surprise_pct": 3.9614
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -0.9865,
-      "eps_estimate": -0.605,
-      "eps_surprise_pct": -0.63060004
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.475,
-      "eps_estimate": -0.395,
-      "eps_surprise_pct": -0.2025
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,165 +99,88 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 15,
-    "bullish": 8,
-    "neutral": 6,
-    "bearish": 1,
-    "avg_price_target": 290.70587,
-    "high_price_target": 415.0,
-    "low_price_target": 144.0,
-    "current_price": 212.19,
-    "recent_rating_changes": [
-      {
-        "date": "2026-09-09T20:10:07",
-        "firm": "Truist Securities",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-08-18T15:23:15",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-14T18:05:04",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-13T12:43:55",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-13T10:48:55",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-08T00:48:40",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T19:24:50",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-03T20:12:17",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-22T09:06:04",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-20T13:08:11",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:49Z",
+  "quarterly_asof": "2026-09-23T23:19:15Z",
   "news": [
     {
-      "date": "2026-09-21T19:50:00Z",
-      "title": "Better AI Data Center Stock: Nebius vs. CoreWeave",
-      "url": "https://www.fool.com/investing/2026/09/21/better-data-center-stock-nebius-vs-coreweave/",
-      "source": "Motley Fool"
+      "date": "2026-09-23T19:15:30Z",
+      "title": "Nebius Group Heads 3 Top Insider Growth Stocks",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-group-heads-3-top-191530170.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-09-21T18:56:19Z",
-      "title": "Rothschild Redburn Downgrades Nebius, CoreWeave to Sell on Lower GPU Prices",
-      "url": "https://247wallst.com/investing/2026/09/21/rothschild-redburn-downgrades-nebius-coreweave-to-sell-on-lower-gpu-prices/",
+      "date": "2026-09-23T18:59:13Z",
+      "title": "CoreWeave and Nebius Just Got Sell Ratings. Can Their AI Economics Hold Up?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-just-got-sell-185913300.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-23T16:45:46Z",
+      "title": "The One Neocloud I Keep Buying Again and Again Has a Secret",
+      "url": "https://247wallst.com/investing/2026/09/23/the-one-neocloud-i-keep-buying-again-and-again-has-a-secret/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-21T16:16:13Z",
-      "title": "Nebius Stock Is Down Over 20% From Its High. Is Now the Time to Buy?",
-      "url": "https://www.fool.com/investing/2026/09/21/nebius-stock-is-down-over-20-from-its-high-is-now-the-time-to-buy/",
-      "source": "Motley Fool"
+      "date": "2026-09-23T15:34:31Z",
+      "title": "Michael Burry Doubles Down Against Micron Stock",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/michael-burry-doubles-down-against-153431481.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-21T15:47:59Z",
-      "title": "Neocloud Nscale, Rival Of CoreWeave And Nebius, Files For IPO",
-      "url": "https://www.investors.com/news/technology/nscale-rival-of-coreweave-nebius-files-for-ipo/?src=A00220&yptr=yahoo",
+      "date": "2026-09-23T15:20:36Z",
+      "title": "3 AI Stocks With Revenue Growth Up To 50%",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-ai-stocks-revenue-growth-152036912.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-23T15:18:48Z",
+      "title": "Michael Burry Shorts Micron, Palantir; Famed Investor Expects Chip 'Down Cycle'",
+      "url": "https://www.investors.com/news/micron-technology-michael-burry-palantir-semiconductors-ai-stocks-nebius/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-09-21T15:38:07Z",
-      "title": "Nebius, CoreWeave Get Sell Calls as Credit Flashes Warning",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-coreweave-sell-calls-credit-153807539.html",
-      "source": "GuruFocus.com"
+      "date": "2026-09-23T15:17:01Z",
+      "title": "Cerebras Systems vs. Nebius Group N.V.: Which AI Hardware Stock Is a Better Buy in 2026?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/09/23/cerebras-systems-vs-nebius-group-nv-which-technology-stock-is-a-better-buy-in-2026/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-09-21T15:35:44Z",
-      "title": "AMD Stock Jumps. Record Chip Exports Point to Strong AI Demand",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/amd-stock-jumps-record-chip-153544439.html",
-      "source": "GuruFocus.com"
+      "date": "2026-09-23T14:30:41Z",
+      "title": "CoreWeave Stock Has a Massive AI Catalyst. We See 94% Upside",
+      "url": "https://247wallst.com/investing/2026/09/23/coreweave-stock-has-a-massive-ai-catalyst-heres-our-price-target/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-21T14:49:00Z",
-      "title": "Nebius vs. CoreWeave: Which AI Cloud Stock Is the Better Buy?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-vs-coreweave-ai-cloud-144900272.html",
-      "source": "Zacks"
+      "date": "2026-09-23T14:16:00Z",
+      "title": "Michael Burry expands short bets on Micron, Palantir and semiconductor stocks",
+      "url": "https://www.proactiveinvestors.com/companies/news/1098985/michael-burry-expands-short-bets-on-micron-palantir-and-semiconductor-stocks-1098985.html",
+      "source": "Proactive"
     },
     {
-      "date": "2026-09-21T13:47:10Z",
-      "title": "Ciena upgraded, Flutter downgraded: Wall Street's top analyst calls",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ciena-upgraded-flutter-downgraded-wall-134710881.html",
-      "source": "The Fly"
-    },
-    {
-      "date": "2026-09-21T12:06:53Z",
-      "title": "CRWV, NBIS Stocks Get \u2018Sell\u2019 Ratings, AI-Pivoting Bitcoin Miners Get \u2018Neutral\u2019 Calls: Rothschild Says Credit Market Is \u2018Sending The More Important Signal\u2019",
-      "url": "https://stocktwits.com/news-articles/markets/equity/crwv-nbis-corz-wulf-stock-get-sell-ratings-rothschild-credit-market-warning/cZMRLruRB4v",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-21T01:12:00Z",
-      "title": "Palantir Technologies (PLTR) Unveils Alliance Push Across AI Supply Chains And Cyber Defense",
-      "url": "https://finance.yahoo.com/technology/ai/articles/palantir-technologies-pltr-unveils-alliance-011200856.html",
-      "source": "Simply Wall St."
+      "date": "2026-09-23T14:12:27Z",
+      "title": "Palantir Gains 2%, Nebius Pulls Back, Micron Barely Budges as Michael Burry Adds to Shorts in All Three",
+      "url": "https://247wallst.com/investing/2026/09/23/palantir-gains-2-nebius-pulls-back-micron-barely-budges-as-michael-burry-adds-to-shorts-in-all-three/",
+      "source": "24/7 Wall St."
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 218.07949981689453,
-    "ma50": 212.2218002319336,
-    "ma200": 161.38682537078859,
-    "rsi14": 55.37009489648739,
+    "ma20": 219.57199935913087,
+    "ma50": 213.38440032958985,
+    "ma200": 162.69187534332275,
+    "rsi14": 52.2768179861547,
     "high_20d": 254.74000549316406,
-    "low_5d": 206.8470001220703,
+    "low_5d": 209.64999389648438,
     "low_10d": 203.8699951171875,
     "high_52w": 299.8599853515625,
     "low_52w": 73.5199966430664,
-    "atr14": 15.411431448800224,
-    "atr14_pct": 6.620030604283901,
-    "position_in_52w_range_pct": 70.37201305767871
+    "atr14": 15.664901733398438,
+    "atr14_pct": 6.912714218792894,
+    "position_in_52w_range_pct": 67.63718812606737
   },
   "ohlc_2y": [
     {
@@ -4115,34 +4013,34 @@
       "high": 224.65,
       "low": 210.3,
       "close": 223.54,
-      "volume": 21284200.0
+      "volume": 21347700.0
     },
     {
       "date": "2026-09-21",
-      "open": 225.99,
+      "open": 225.96,
       "high": 237.96,
       "low": 221.3,
       "close": 232.8,
-      "volume": 17440094.0
+      "volume": 17531100.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 233.24,
+      "high": 246.61,
+      "low": 231.66,
+      "close": 236.12,
+      "volume": 15389000.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 235.16,
+      "high": 236.5686,
+      "low": 226.39,
+      "close": 226.61,
+      "volume": 10887468.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 94.14,
-      "high": 99.55,
-      "low": 93.25,
-      "close": 99.31,
-      "volume": 18649300.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 101.95,
-      "high": 108.58,
-      "low": 98.52,
-      "close": 106.6,
-      "volume": 24365200.0
-    },
     {
       "date": "2025-09-23",
       "open": 108.04,
@@ -6133,15 +6031,31 @@
       "high": 224.65,
       "low": 210.3,
       "close": 223.54,
-      "volume": 21284200.0
+      "volume": 21347700.0
     },
     {
       "date": "2026-09-21",
-      "open": 225.99,
+      "open": 225.96,
       "high": 237.96,
       "low": 221.3,
       "close": 232.8,
-      "volume": 17440094.0
+      "volume": 17531100.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 233.24,
+      "high": 246.61,
+      "low": 231.66,
+      "close": 236.12,
+      "volume": 15389000.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 235.16,
+      "high": 236.5686,
+      "low": 226.39,
+      "close": 226.61,
+      "volume": 10887468.0
     }
   ],
   "ai_synthesis": null,

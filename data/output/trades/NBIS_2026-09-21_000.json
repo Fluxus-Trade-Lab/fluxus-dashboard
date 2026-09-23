@@ -1,6 +1,6 @@
 {
   "trade_id": "NBIS_2026-09-21_000",
-  "generated_at": "2026-09-22T22:25:44+00:00",
+  "generated_at": "2026-09-23T23:22:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NBIS",
@@ -10,10 +10,10 @@
     "entry_price": 229.34,
     "stop_price": 229.34,
     "initial_stop": 223.0,
-    "closed": false,
-    "remaining_pct": 50.056497175141246,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-23",
+    "hold_business_days": 2,
     "r_pct_of_entry": 2.764454521670883,
     "realized_R": 0.5017982854800478,
     "trims": [
@@ -22,19 +22,25 @@
         "price": 235.71,
         "pct_of_position": 49.94350282485876,
         "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-23",
+        "price": 229.34,
+        "pct_of_position": 50.056497175141246,
+        "type": "sell_rest"
       }
     ]
   },
   "entry_snapshot": {
     "close": 232.8,
-    "open": 225.99,
+    "open": 225.96,
     "high": 237.96,
     "low": 221.3,
-    "volume": 17440094.0,
+    "volume": 17531100.0,
     "ma20": 218.0795,
     "ma50": 212.2218,
     "ma200": 161.38682500000002,
-    "rsi14": 55.37009473182997,
+    "rsi14": 55.370094666135564,
     "atr14": 15.411428571428571,
     "atr14_pct": 6.620029455081002,
     "high_52w": 299.86,
@@ -46,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 1.359621451104101,
-    "mfe_date": "2026-09-21",
+    "mfe_R": 2.72397476340694,
+    "mfe_date": "2026-09-22",
     "mae_R": 1.2681388012618278,
     "mae_date": "2026-09-21",
-    "optimal_exit_price": 237.96,
-    "optimal_exit_date": "2026-09-21",
-    "optimal_R": 1.359621451104101,
-    "days_to_optimal": 0,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "optimal_exit_price": 246.61,
+    "optimal_exit_date": "2026-09-22",
+    "optimal_R": 2.72397476340694,
+    "days_to_optimal": 1,
+    "realized_R": 0.5017982854800478,
+    "capture_pct": 18.421546786007546,
+    "missed_R": 2.222176477926892,
     "post_exit_R": null,
-    "hold_calendar_days": 1
+    "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **NBIS** long on 2026-09-21 at $229.34 with stop $223.00 (currently trailed to $229.34) (1R = $6.34/sh = 2.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($218.08), MA20 > MA50 > MA200 (golden alignment), RSI 55, 70% through 52W range, ATR 6.6% of price. **In progress.** Peak so far +1.36R; worst drawdown -1.27R.",
+  "lesson": "Premature trim",
+  "narrative": "Entered **NBIS** long on 2026-09-21 at $229.34 with stop $223.00 (currently trailed to $229.34) (1R = $6.34/sh = 2.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($218.08), MA20 > MA50 > MA200 (golden alignment), RSI 55, 70% through 52W range, ATR 6.6% of price. Realized **+0.50R**, peak was **+2.72R** on 2026-09-22 (day +1) \u2014 captured **18%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-08-24",
@@ -213,15 +219,31 @@
       "high": 224.65,
       "low": 210.3,
       "close": 223.54,
-      "volume": 21284200.0
+      "volume": 21347700.0
     },
     {
       "date": "2026-09-21",
-      "open": 225.99,
+      "open": 225.96,
       "high": 237.96,
       "low": 221.3,
       "close": 232.8,
-      "volume": 17440094.0
+      "volume": 17531100.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 233.24,
+      "high": 246.61,
+      "low": 231.66,
+      "close": 236.12,
+      "volume": 15389000.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 235.16,
+      "high": 236.5686,
+      "low": 226.39,
+      "close": 226.61,
+      "volume": 10887468.0
     }
   ]
 }

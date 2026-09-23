@@ -1,8 +1,8 @@
 {
   "ticker": "FPS",
-  "fetched_at": "2026-09-21T22:20:10Z",
+  "fetched_at": "2026-09-23T23:18:54Z",
   "_schema": "v2",
-  "current_price": 37.75,
+  "current_price": 39.880001068115234,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,18 +39,20 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_estimate": 0.16643
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_estimate": 0.11502
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 461672000.0,
+      "gross_profit": 166696000.0,
+      "operating_income": 91900000.0,
+      "eps": 0.21,
+      "cash": 97477000.0,
+      "operating_cashflow": 73901000.0,
+      "gross_margin_pct": 36.10701970229947,
+      "yoy_pct": 94.29576664576433
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 378709000.0,
@@ -60,7 +62,7 @@
       "cash": 93831000.0,
       "operating_cashflow": 29173000.0,
       "gross_margin_pct": 34.642958049584244,
-      "yoy_pct": 103.36208007560788
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -94,104 +96,28 @@
       "operating_cashflow": -7209000.0,
       "gross_margin_pct": 33.54235668923838,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 186224000.0,
-      "gross_profit": 68165000.0,
-      "operating_income": 22400000.0,
-      "eps": 0.029773,
-      "cash": null,
-      "operating_cashflow": -7482000.0,
-      "gross_margin_pct": 36.60376750579947,
-      "yoy_pct": null
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 8,
-    "bullish": 7,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 59.9,
-    "high_price_target": 73.0,
-    "low_price_target": 51.0,
-    "current_price": 28.64,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-16T09:36:04",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-22T16:39:07",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-18T12:20:15",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T15:28:04",
-        "firm": "Goldman Sachs",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T14:01:18",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T13:22:53",
-        "firm": "Oppenheimer",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-15T12:04:20",
-        "firm": "Keybanc",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-17T16:19:40",
-        "firm": "Oppenheimer",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-02T19:01:04",
-        "firm": "Wolfe Research",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-03-02T13:37:14",
-        "firm": "Oppenheimer",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:19Z",
+  "quarterly_asof": "2026-09-23T23:18:54Z",
   "news": [
+    {
+      "date": "2026-09-23T14:18:00Z",
+      "title": "Should ALNT Stock Be in Your Portfolio After a 143% Surge in a Year?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/alnt-stock-portfolio-143-surge-141800094.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-22T11:20:16Z",
+      "title": "Data Center Firm Accelevation, Backer Seek $720 Million in IPO",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/data-center-firm-accelevation-backer-112016784.html",
+      "source": "Bloomberg"
+    },
     {
       "date": "2026-09-20T18:30:08Z",
       "title": "Forgent Power (FPS) Reports $3B Backlog. Can Manufacturing Keep Up?",
@@ -239,33 +165,21 @@
       "title": "FPS Stock\u2019s Recent Correction Is \u2018Overdone,\u2019 JPMorgan Says \u2014 FY27 Outlook Implies 80%-Plus Organic Growth",
       "url": "https://stocktwits.com/news-articles/markets/equity/fps-stock-s-recent-correction-is-overdone-jp-morgan-says-fy-27-outlook-implies-more-than-80-plus-organic-growth/cZtYZvJRBPf",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-09-16T14:02:00Z",
-      "title": "FPS Q4 Earnings Beat Estimates on Powertrain Solutions Growth",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/fps-q4-earnings-beat-estimates-140200723.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-16T13:43:01Z",
-      "title": "Forgent Power Solutions (FPS) Q4 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/09/16/forgent-power-solutions-fps-q4-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 32.21000003814697,
-    "ma50": 35.287200164794925,
-    "rsi14": 58.01413556408245,
-    "high_20d": 40.029998779296875,
-    "low_5d": 29.5,
+    "ma20": 32.91100025177002,
+    "ma50": 35.17960021972656,
+    "rsi14": 61.883708541434785,
+    "high_20d": 40.06999969482422,
+    "low_5d": 36.310001373291016,
     "low_10d": 27.989999771118164,
     "high_52w": 66.0,
     "low_52w": 25.950000762939453,
-    "atr14": 2.5671422140938893,
-    "atr14_pct": 6.800376726076528,
-    "position_in_52w_range_pct": 29.463169692501108
+    "atr14": 2.724778311593192,
+    "atr14_pct": 6.832442925313009,
+    "position_in_52w_range_pct": 34.781524520693516
   },
   "ohlc_2y": [
     {
@@ -1514,15 +1428,31 @@
       "high": 39.94,
       "low": 37.85,
       "close": 39.44,
-      "volume": 20531200.0
+      "volume": 20549800.0
     },
     {
       "date": "2026-09-21",
       "open": 40.03,
-      "high": 40.03,
+      "high": 40.07,
       "low": 37.15,
       "close": 37.75,
-      "volume": 12630710.0
+      "volume": 12659000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 37.41,
+      "high": 38.99,
+      "low": 37.19,
+      "close": 38.52,
+      "volume": 9077400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 38.0,
+      "high": 39.9269,
+      "low": 37.0,
+      "close": 39.88,
+      "volume": 7925582.0
     }
   ],
   "ohlc_1y": [
@@ -2772,15 +2702,31 @@
       "high": 39.94,
       "low": 37.85,
       "close": 39.44,
-      "volume": 20531200.0
+      "volume": 20549800.0
     },
     {
       "date": "2026-09-21",
       "open": 40.03,
-      "high": 40.03,
+      "high": 40.07,
       "low": 37.15,
       "close": 37.75,
-      "volume": 12630710.0
+      "volume": 12659000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 37.41,
+      "high": 38.99,
+      "low": 37.19,
+      "close": 38.52,
+      "volume": 9077400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 38.0,
+      "high": 39.9269,
+      "low": 37.0,
+      "close": 39.88,
+      "volume": 7925582.0
     }
   ],
   "ai_synthesis": null,

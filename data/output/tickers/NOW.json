@@ -1,8 +1,8 @@
 {
   "ticker": "NOW",
-  "fetched_at": "2026-09-21T22:20:29Z",
+  "fetched_at": "2026-09-23T23:19:17Z",
   "_schema": "v2",
-  "current_price": 137.67999267578125,
+  "current_price": 140.77999877929688,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.9,
-      "eps_estimate": 0.85672,
-      "eps_surprise_pct": 0.0505
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.97,
-      "eps_estimate": 0.96655,
-      "eps_surprise_pct": 0.0036000002
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.92,
-      "eps_estimate": 0.88508,
-      "eps_surprise_pct": 0.0395
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.964,
-      "eps_estimate": 0.85308,
-      "eps_surprise_pct": 0.13
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,175 +99,90 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 48,
-    "bullish": 43,
-    "neutral": 4,
-    "bearish": 1,
-    "avg_price_target": 143.84042,
-    "high_price_target": 248.0,
-    "low_price_target": 72.0,
-    "current_price": 142.35,
-    "recent_rating_changes": [
-      {
-        "date": "2026-09-11T10:20:28",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-08T10:36:38",
-        "firm": "BTIG",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T17:00:58",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-17T15:27:54",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-12T12:26:26",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-23T20:12:43",
-        "firm": "Macquarie",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-23T19:16:23",
-        "firm": "Bernstein",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-23T18:23:52",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-23T17:10:24",
-        "firm": "BMO Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-23T16:58:55",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:51Z",
+  "quarterly_asof": "2026-09-23T23:19:17Z",
   "news": [
     {
-      "date": "2026-09-21T15:40:05Z",
-      "title": "SNX vs. NOW: Which Stock Is the Better Value Option?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/snx-vs-now-stock-better-154005949.html",
-      "source": "Zacks"
+      "date": "2026-09-23T21:59:00Z",
+      "title": "Wells Fargo Raises Salesforce\u2019s Price Target. Can $1.5 Billion Agentforce ARR Drive Growth?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/wells-fargo-raises-salesforce-price-215900311.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-09-21T14:41:00Z",
-      "title": "NOW Rides on Strong Workflow Demand: Can It Outpace CRM & MSFT?",
-      "url": "https://finance.yahoo.com/technology/articles/now-rides-strong-workflow-demand-144100921.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-21T14:38:00Z",
-      "title": "Can Strong Cloud Growth Sustain Atlassian's Revenue Momentum?",
-      "url": "https://finance.yahoo.com/technology/articles/strong-cloud-growth-sustain-atlassians-143800090.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-19T12:35:00Z",
-      "title": "These 3 Agentic AI Stocks Have More Than Hype Behind Their Growth Stories",
-      "url": "https://www.marketbeat.com/articles/these-3-agentic-ai-stocks-have-more-than-hype-behind-their-growth-stories/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-18T22:06:26Z",
-      "title": "How Low Can UiPath Stock Go When Its Numbers Are Not The Problem?",
-      "url": "https://www.trefis.com/articles/615833/how-low-can-uipath-stock-go-when-its-numbers-are-not-the-problem/2026-09-18",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-09-18T21:45:03Z",
-      "title": "ServiceNow (NOW) Stock Falls Amid Market Uptick: What Investors Need to Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-now-stock-falls-amid-214503145.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-09-18T19:03:51Z",
-      "title": "Why Salesforce\u2019s Homegrown AI Model Won\u2019t Move the Stock Until 2027",
-      "url": "https://247wallst.com/investing/2026/09/18/why-salesforces-homegrown-ai-model-wont-move-the-stock-until-2027/",
+      "date": "2026-09-23T18:04:16Z",
+      "title": "Enterprise Software Stocks Rally as Tech Tape Slides: Atlassian Corporation, Monday.com and Salesforce Climb 3%, ServiceNow Nudges Higher",
+      "url": "https://247wallst.com/investing/2026/09/23/enterprise-software-stocks-rally-as-tech-tape-slides-atlassian-corporation-monday-com-and-salesforce-climb-3-servicenow-nudges-higher/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-18T16:14:26Z",
-      "title": "ServiceNow Stock Leads 3 Large Cap Growth Names Facing Higher Rate Pressure",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-stock-leads-3-large-161426966.html",
-      "source": "Simply Wall St."
+      "date": "2026-09-23T13:30:02Z",
+      "title": "Wall Street Analysts Think ServiceNow (NOW) Is a Good Investment: Is It?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-think-servicenow-133002474.html",
+      "source": "Zacks"
     },
     {
-      "date": "2026-09-17T18:06:45Z",
-      "title": "Would You Want CRM Stock Back At The Price It Just Left?",
-      "url": "https://www.trefis.com/articles/615696/would-you-want-crm-stock-back-at-the-price-it-just-left/2026-09-17",
+      "date": "2026-09-23T11:20:39Z",
+      "title": "Salesforce Remains Down Over 12 Months: This Wall Street Firm Doubled Down On Its Belief That 70% Returns Await Investors",
+      "url": "https://247wallst.com/investing/2026/09/23/salesforce-remains-down-over-12-months-this-wall-street-firm-doubled-down-on-its-belief-that-70-returns-await-investors/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-22T20:57:37Z",
+      "title": "How Far Could CRM Stock Swing In A Year?",
+      "url": "https://www.trefis.com/articles/616138/how-far-could-crm-stock-swing-in-a-year/2026-09-22",
       "source": "Trefis"
     },
     {
-      "date": "2026-09-17T17:58:05Z",
-      "title": "This ServiceNow Bear Signal Has Never Been Wrong",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/servicenow-bear-signal-never-wrong-175805864.html",
-      "source": "Schaeffer's Investment Research"
+      "date": "2026-09-22T19:18:53Z",
+      "title": "Is UiPath Stock Cheap Because Of What AI Might Do?",
+      "url": "https://www.trefis.com/articles/616151/is-uipath-stock-cheap-because-of-what-ai-might-do/2026-09-22",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-22T18:13:34Z",
+      "title": "Salesforce vs. ServiceNow: Which Technology Stock Is a Better Buy in 2026?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/09/22/salesforce-vs-servicenow-which-technology-stock-is-a-better-buy-in-2026/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-22T17:30:10Z",
+      "title": "The AI Software Story Wall Street Is Underrating",
+      "url": "https://247wallst.com/investing/2026/09/22/the-ai-software-story-wall-street-is-underrating/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-22T15:18:02Z",
+      "title": "AI Alliances And Raised Targets Could Be A Game Changer For ServiceNow (NOW)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-alliances-raised-targets-could-151802107.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-22T13:58:00Z",
+      "title": "Can Guidewire Software Maintain Its Robust ARR Growth Momentum?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/guidewire-software-maintain-robust-arr-135800786.html",
+      "source": "Zacks"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 137.15800018310546,
-    "ma50": 123.26,
-    "ma200": 117.25568000793457,
-    "rsi14": 54.98481236682253,
+    "ma20": 138.29449996948242,
+    "ma50": 124.4933999633789,
+    "ma200": 116.97280998229981,
+    "rsi14": 57.832312950659414,
     "high_20d": 149.60000610351562,
     "low_5d": 135.07000732421875,
     "low_10d": 130.38999938964844,
     "high_52w": 194.7259979248047,
     "low_52w": 81.23999786376953,
-    "atr14": 6.219282967703683,
-    "atr14_pct": 4.517201698542575,
-    "position_in_52w_range_pct": 49.73300211625848
+    "atr14": 6.205712454659598,
+    "atr14_pct": 4.4080924197111235,
+    "position_in_52w_range_pct": 52.46462196526927
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-23",
-      "open": 187.376,
-      "high": 189.092,
-      "low": 184.584,
-      "close": 185.11,
-      "volume": 6065000.0
-    },
     {
       "date": "2024-09-24",
       "open": 185.11,
@@ -4275,7 +4165,7 @@
       "high": 139.94,
       "low": 135.07,
       "close": 135.47,
-      "volume": 19230200.0
+      "volume": 19250600.0
     },
     {
       "date": "2026-09-21",
@@ -4283,26 +4173,26 @@
       "high": 140.16,
       "low": 135.62,
       "close": 137.68,
-      "volume": 10742542.0
+      "volume": 10893000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 141.83,
+      "high": 142.1,
+      "low": 135.23,
+      "close": 137.0,
+      "volume": 12580700.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 137.22,
+      "high": 141.54,
+      "low": 136.15,
+      "close": 140.78,
+      "volume": 10770338.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 190.37,
-      "high": 193.148,
-      "low": 190.0,
-      "close": 192.23,
-      "volume": 14036000.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 190.778,
-      "high": 191.35,
-      "low": 186.182,
-      "close": 189.556,
-      "volume": 6039500.0
-    },
     {
       "date": "2025-09-23",
       "open": 189.512,
@@ -6293,7 +6183,7 @@
       "high": 139.94,
       "low": 135.07,
       "close": 135.47,
-      "volume": 19230200.0
+      "volume": 19250600.0
     },
     {
       "date": "2026-09-21",
@@ -6301,7 +6191,23 @@
       "high": 140.16,
       "low": 135.62,
       "close": 137.68,
-      "volume": 10742542.0
+      "volume": 10893000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 141.83,
+      "high": 142.1,
+      "low": 135.23,
+      "close": 137.0,
+      "volume": 12580700.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 137.22,
+      "high": 141.54,
+      "low": 136.15,
+      "close": 140.78,
+      "volume": 10770338.0
     }
   ],
   "ai_synthesis": null,

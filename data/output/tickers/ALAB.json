@@ -1,8 +1,8 @@
 {
   "ticker": "ALAB",
-  "fetched_at": "2026-09-21T22:19:45Z",
+  "fetched_at": "2026-09-23T23:18:28Z",
   "_schema": "v2",
-  "current_price": 340.739990234375,
+  "current_price": 360.4599914550781,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.8,
-      "eps_estimate": 0.69195,
-      "eps_surprise_pct": 0.15619999
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.61,
-      "eps_estimate": 0.53761,
-      "eps_surprise_pct": 0.1347
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.58,
-      "eps_estimate": 0.51492,
-      "eps_surprise_pct": 0.12640001
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.49,
-      "eps_estimate": 0.39014,
-      "eps_surprise_pct": 0.256
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,90 +99,37 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 26,
-    "bullish": 18,
-    "neutral": 8,
-    "bearish": 0,
-    "avg_price_target": 389.9527,
-    "high_price_target": 500.0,
-    "low_price_target": 190.0,
-    "current_price": 252.54,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-17T10:55:59",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Market Perform",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-05T19:53:16",
-        "firm": "TD Cowen",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T18:27:44",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T15:41:26",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T13:55:25",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T11:54:09",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T10:17:24",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-31T12:29:29",
-        "firm": "Susquehanna",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T18:03:45",
-        "firm": "Barclays",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-13T18:04:11",
-        "firm": "TD Cowen",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-15T23:12:50Z",
+  "quarterly_asof": "2026-09-23T23:18:28Z",
   "news": [
+    {
+      "date": "2026-09-23T13:05:00Z",
+      "title": "Zacks Investment Ideas feature highlights: Astera Labs, SpaceX, Cloudflare, NVIDIA and Meta Platforms",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-130500116.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-22T17:26:00Z",
+      "title": "Why Zacks Rank #1 Astera Labs is Primed for Growth",
+      "url": "https://finance.yahoo.com/technology/ai/articles/why-zacks-rank-1-astera-172600940.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-22T16:05:00Z",
+      "title": "Broadcom CEO Holds $350B Outlook Strong Amid Calls to Slow Froniter AI Development",
+      "url": "https://www.marketbeat.com/articles/broadcom-ceo-holds-350b-outlook-strong-amid-calls-to-slow-froniter-ai-development/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-22T06:18:21Z",
+      "title": "Astera Labs Stock Jumped 12% Yesterday. The Street Sees 14% More Upside, Here\u2019s Why.",
+      "url": "https://www.tikr.com/blog/astera-labs-stock-jumped-12-yesterday-the-street-sees-14-more-upside-heres-why?ref=yahoofinance",
+      "source": "TIKR"
+    },
     {
       "date": "2026-09-21T18:03:00Z",
       "title": "Tech Stocks Break Out: The Next Leg of the Bull Market",
@@ -243,56 +165,24 @@
       "title": "Chip Stocks Break Through Ceiling As Sector Rebounds. Macom Is A Standout.",
       "url": "https://www.investors.com/news/technology/chip-stocks-hit-ceiling-macom-technology-solutions-mtsi/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-09-18T17:32:02Z",
-      "title": "Astera Labs vs. Arm: Which AI-Driven Tech Stock Is a Better Buy in 2026?",
-      "url": "https://www.fool.com/coverage/better-buy/2026/09/18/astera-labs-vs-arm-which-ai-driven-tech-stock-is-a-better-buy-in-2026/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-17T20:21:59Z",
-      "title": "AMD Leads Chip Stocks Higher Amid Sector Rebound",
-      "url": "https://www.investors.com/news/technology/amd-stock-leads-chip-stocks-sox-index-higher-amid-sector-rebound/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-09-17T16:13:30Z",
-      "title": "Why Is Astera Labs (ALAB) Expanding Leo Memory Controllers For AI And Cloud?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/why-astera-labs-alab-expanding-161330814.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-09-17T16:03:00Z",
-      "title": "Grab Cheers Investors With Share Repurchase Completion Plans",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/grab-cheers-investors-share-repurchase-160300691.html",
-      "source": "Zacks"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 288.48649978637695,
-    "ma50": 303.93249877929685,
-    "ma200": 232.17584972381593,
-    "rsi14": 60.63096073094301,
-    "high_20d": 343.0,
-    "low_5d": 251.625,
+    "ma20": 296.6734992980957,
+    "ma50": 303.9342987060547,
+    "ma200": 234.2703996658325,
+    "rsi14": 63.60357784898704,
+    "high_20d": 369.1499938964844,
+    "low_5d": 278.25,
     "low_10d": 251.625,
     "high_52w": 499.47601318359375,
     "low_52w": 97.88999938964844,
-    "atr14": 22.551288059779576,
-    "atr14_pct": 6.618327377502087,
-    "position_in_52w_range_pct": 60.47272128588956
+    "atr14": 23.79708753313337,
+    "atr14_pct": 6.601866530893222,
+    "position_in_52w_range_pct": 65.38325117073299
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-23",
-      "open": 50.62,
-      "high": 51.3,
-      "low": 49.5,
-      "close": 50.7,
-      "volume": 2710400.0
-    },
     {
       "date": "2024-09-24",
       "open": 51.27,
@@ -4279,30 +4169,30 @@
     },
     {
       "date": "2026-09-21",
-      "open": 309.0,
+      "open": 309.2,
       "high": 343.0,
       "low": 308.34,
       "close": 340.74,
-      "volume": 6115209.0
+      "volume": 6146000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 335.0,
+      "high": 369.15,
+      "low": 335.0,
+      "close": 363.46,
+      "volume": 5460000.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 363.74,
+      "high": 367.8698,
+      "low": 351.3786,
+      "close": 360.46,
+      "volume": 3301865.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 245.31,
-      "high": 249.61,
-      "low": 231.18,
-      "close": 245.2,
-      "volume": 22438600.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 239.875,
-      "high": 243.2,
-      "low": 232.0,
-      "close": 237.3,
-      "volume": 6360500.0
-    },
     {
       "date": "2025-09-23",
       "open": 236.49,
@@ -6297,11 +6187,27 @@
     },
     {
       "date": "2026-09-21",
-      "open": 309.0,
+      "open": 309.2,
       "high": 343.0,
       "low": 308.34,
       "close": 340.74,
-      "volume": 6115209.0
+      "volume": 6146000.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 335.0,
+      "high": 369.15,
+      "low": 335.0,
+      "close": 363.46,
+      "volume": 5460000.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 363.74,
+      "high": 367.8698,
+      "low": 351.3786,
+      "close": 360.46,
+      "volume": 3301865.0
     }
   ],
   "ai_synthesis": null,

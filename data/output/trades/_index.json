@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T22:25:44.298663+00:00",
+  "generated_at": "2026-09-23T23:22:43.684404+00:00",
   "trades": [
     {
       "trade_id": "PLTR_2026-09-21_000",
@@ -9,25 +9,25 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.0,
-      "optimal_R": 1.9185185185185292,
+      "optimal_R": 5.7740740740740994,
       "capture_pct": null,
       "setup_type": "Pullback in uptrend",
       "lesson": "In progress",
-      "hold_days": 1
+      "hold_days": 2
     },
     {
       "trade_id": "NBIS_2026-09-21_000",
       "ticker": "NBIS",
       "direction": "long",
       "entry_date": "2026-09-21",
-      "exit_date": null,
-      "closed": false,
+      "exit_date": "2026-09-23",
+      "closed": true,
       "realized_R": 0.5017982854800478,
-      "optimal_R": 1.359621451104101,
-      "capture_pct": null,
+      "optimal_R": 2.72397476340694,
+      "capture_pct": 18.421546786007546,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 1
+      "lesson": "Premature trim",
+      "hold_days": 2
     },
     {
       "trade_id": "FSLY_2026-09-21_000",
@@ -37,10 +37,10 @@
       "exit_date": "2026-09-22",
       "closed": true,
       "realized_R": 1.2250315243788514,
-      "optimal_R": 2.1796874999999973,
-      "capture_pct": 56.20216312562479,
+      "optimal_R": 2.7773437499999973,
+      "capture_pct": 44.10802675681945,
       "setup_type": "Long in mixed structure",
-      "lesson": "Good execution",
+      "lesson": "Premature trim",
       "hold_days": 1
     },
     {
@@ -51,11 +51,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.44210654671580235,
-      "optimal_R": 0.9062499999999997,
+      "optimal_R": 1.6216462053571399,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 1
+      "hold_days": 2
     },
     {
       "trade_id": "ARM_2026-09-18_000",
@@ -65,11 +65,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": -0.119020159251772,
-      "optimal_R": 11.140624999999995,
+      "optimal_R": 13.644511718749984,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 4
+      "hold_days": 5
     },
     {
       "trade_id": "SWKS_2026-09-11_000",
@@ -107,11 +107,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.3730979403110545,
-      "optimal_R": 3.584916666666661,
+      "optimal_R": 3.8939999999999926,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 12
+      "hold_days": 13
     },
     {
       "trade_id": "TZA_2026-09-09_000",
@@ -135,8 +135,8 @@
       "exit_date": "2026-09-10",
       "closed": true,
       "realized_R": -1.0657944348673427,
-      "optimal_R": 0.43570057581573873,
-      "capture_pct": -244.61625575589684,
+      "optimal_R": 0.4195393474088325,
+      "capture_pct": -254.03920787166308,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "Failed setup",
       "hold_days": 1
@@ -176,12 +176,12 @@
       "entry_date": "2026-09-07",
       "exit_date": null,
       "closed": false,
-      "realized_R": 0.0,
-      "optimal_R": 3.202586206896551,
+      "realized_R": 0.9942528735632186,
+      "optimal_R": 4.13362068965517,
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 15
+      "hold_days": 16
     },
     {
       "trade_id": "XXRP_2026-09-03_000",
@@ -345,11 +345,11 @@
       "exit_date": null,
       "closed": false,
       "realized_R": 0.9124355065666054,
-      "optimal_R": 5.441463414634154,
+      "optimal_R": 5.519512195121961,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 32
+      "hold_days": 33
     },
     {
       "trade_id": "SOXL_2026-08-20_000",
@@ -414,12 +414,12 @@
       "entry_date": "2026-08-20",
       "exit_date": null,
       "closed": false,
-      "realized_R": 0.0,
-      "optimal_R": 7.981182795698927,
+      "realized_R": 1.4814814814814814,
+      "optimal_R": 8.067204301075273,
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 33
+      "hold_days": 34
     },
     {
       "trade_id": "NOW_2026-08-19_000",
@@ -681,8 +681,8 @@
       "exit_date": "2026-08-11",
       "closed": true,
       "realized_R": -0.30879298886857964,
-      "optimal_R": 3.5604166666666965,
-      "capture_pct": -8.672945269567991,
+      "optimal_R": 3.0843750000000334,
+      "capture_pct": -10.011525474969039,
       "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 4
@@ -849,8 +849,8 @@
       "exit_date": "2026-07-22",
       "closed": true,
       "realized_R": -0.2799999999999987,
-      "optimal_R": 1.2916666666666667,
-      "capture_pct": -21.677419354838605,
+      "optimal_R": 1.2735666666666674,
+      "capture_pct": -21.985500039259705,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "Choppy / no edge",
       "hold_days": 1
@@ -975,7 +975,7 @@
       "exit_date": "2026-07-15",
       "closed": true,
       "realized_R": -0.5181107713217808,
-      "optimal_R": 0.029357798165136974,
+      "optimal_R": -0.004197247706421849,
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "Failed setup",
@@ -991,7 +991,7 @@
       "realized_R": -1.0,
       "optimal_R": 1.7081944444444481,
       "capture_pct": -58.541344824782385,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 1
     },
@@ -1005,7 +1005,7 @@
       "realized_R": -0.3398926654740616,
       "optimal_R": 0.7440966010733437,
       "capture_pct": -45.678567135473216,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 0
     },
@@ -1031,9 +1031,9 @@
       "exit_date": "2026-07-08",
       "closed": true,
       "realized_R": 0.0,
-      "optimal_R": 4.122324159021391,
+      "optimal_R": 4.086911314984691,
       "capture_pct": 0.0,
-      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 0
     },
@@ -1213,8 +1213,8 @@
       "exit_date": "2026-07-07",
       "closed": true,
       "realized_R": 0.9033075794369428,
-      "optimal_R": 2.7849462365591418,
-      "capture_pct": 32.4353686824848,
+      "optimal_R": 2.706917562724016,
+      "capture_pct": 33.370339454590905,
       "setup_type": "Long in mixed structure",
       "lesson": "Premature trim",
       "hold_days": 13
@@ -1311,8 +1311,8 @@
       "exit_date": "2026-06-23",
       "closed": true,
       "realized_R": -0.5240820219361003,
-      "optimal_R": 1.1287553648068636,
-      "capture_pct": -46.43008027038469,
+      "optimal_R": 1.0928183118741022,
+      "capture_pct": -47.95692168054346,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 6
@@ -1927,8 +1927,8 @@
       "exit_date": "2026-06-01",
       "closed": true,
       "realized_R": 0.03466009103123255,
-      "optimal_R": 2.1093283582089466,
-      "capture_pct": 1.6431813897700975,
+      "optimal_R": 1.935074626865664,
+      "capture_pct": 1.791150095713529,
       "setup_type": "Long in mixed structure",
       "lesson": "Choppy / no edge",
       "hold_days": 11
@@ -3873,8 +3873,8 @@
       "exit_date": "2026-03-25",
       "closed": true,
       "realized_R": -1.0,
-      "optimal_R": 0.708333333333337,
-      "capture_pct": -141.17647058823454,
+      "optimal_R": 0.6765000000000008,
+      "capture_pct": -147.8196600147818,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 0
@@ -4489,7 +4489,7 @@
       "exit_date": "2026-03-02",
       "closed": true,
       "realized_R": -0.6672131147540983,
-      "optimal_R": 0.14967914438502958,
+      "optimal_R": 0.08021390374331866,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
@@ -4867,8 +4867,8 @@
       "exit_date": "2026-02-12",
       "closed": true,
       "realized_R": 1.674854865021212,
-      "optimal_R": 1.9890358126721746,
-      "capture_pct": 84.20435943640072,
+      "optimal_R": 1.9453994490358109,
+      "capture_pct": 86.0931088394886,
       "setup_type": "Long in mixed structure",
       "lesson": "Good execution",
       "hold_days": 9

@@ -1,16 +1,16 @@
 {
-  "date": "2026-09-22",
+  "date": "2026-09-23",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
   "prob": 0.086,
   "base_rate": 0.1659,
   "today": {
-    "date": "2026-09-22",
-    "spx_close": 7764.64,
-    "vix": 14.21,
+    "date": "2026-09-23",
+    "spx_close": 7706.03,
+    "vix": 15.18,
     "vix_quintile": 2,
     "above_200dma": true,
-    "d200": 0.0796,
+    "d200": 0.0715,
     "prob": 0.086,
     "n_cell": 1733,
     "prob_vix_only": 0.081,
@@ -355,8 +355,8 @@
       }
     },
     "today": {
-      "date": "2026-09-22",
-      "ts_ema": 0.818,
+      "date": "2026-09-23",
+      "ts_ema": 0.834,
       "ts_state": 2,
       "ts_label": "neutral(0.8-1.0)",
       "prob_3d": 0.1084,
@@ -370,8 +370,8 @@
   "side_readings": {
     "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
     "nhnl": {
-      "date": "2026-09-21",
-      "ratio_10ema": 0.352,
+      "date": "2026-09-22",
+      "ratio_10ema": 0.35,
       "state": "mid",
       "hist_rate_e1": 0.194,
       "today_state": "2",
@@ -401,8 +401,8 @@
       }
     },
     "gex": {
-      "date": "2026-09-21",
-      "pct_rank_252d": 0.667,
+      "date": "2026-09-22",
+      "pct_rank_252d": 0.694,
       "quintile": 4,
       "hist_rate_e1": 0.105,
       "today_state": "4",

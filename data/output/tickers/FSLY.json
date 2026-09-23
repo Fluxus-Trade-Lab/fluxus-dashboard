@@ -1,8 +1,8 @@
 {
   "ticker": "FSLY",
-  "fetched_at": "2026-09-21T22:20:11Z",
+  "fetched_at": "2026-09-23T23:18:56Z",
   "_schema": "v2",
-  "current_price": 27.420000076293945,
+  "current_price": 29.649999618530273,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.15,
-      "eps_estimate": 0.06628,
-      "eps_surprise_pct": 1.2631
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.13,
-      "eps_estimate": 0.08654,
-      "eps_surprise_pct": 0.5022
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.12,
-      "eps_estimate": 0.05736,
-      "eps_surprise_pct": 1.0921
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.07,
-      "eps_estimate": 0.00017,
-      "eps_surprise_pct": 410.76468
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,175 +99,90 @@
     }
   ],
   "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 11,
-    "bullish": 4,
-    "neutral": 6,
-    "bearish": 1,
-    "avg_price_target": 27.0,
-    "high_price_target": 32.0,
-    "low_price_target": 20.0,
-    "current_price": 24.86,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-06T17:22:38",
-        "firm": "RBC Capital",
-        "to_grade": "Sector Perform",
-        "from_grade": "Sector Perform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-06T16:59:09",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-06T14:34:20",
-        "firm": "Keybanc",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-17T17:53:10",
-        "firm": "Freedom Broker",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-17T10:37:46",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-05-07T21:54:21",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T17:36:45",
-        "firm": "RBC Capital",
-        "to_grade": "Sector Perform",
-        "from_grade": "Sector Perform",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T14:02:54",
-        "firm": "Keybanc",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T13:29:30",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-14T11:06:11",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:42:11Z",
+  "quarterly_asof": "2026-09-23T23:18:56Z",
   "news": [
     {
-      "date": "2026-09-21T21:12:09Z",
-      "title": "Fastly's CTO Sells Over 33,000 Shares for $825,000 After the Stock Rose 177% Over the Past Year",
-      "url": "https://www.fool.com/coverage/filings/2026/09/21/fastly-s-cto-sells-over-33-000-shares-for-usd825-000-after-the-stock-rose-177-over-the-past-year/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-09-21T18:04:07Z",
-      "title": "Fastly Soars 14% on AI Firewall Launch; Cloudflare Climbs 7%, Datadog Rises 5%",
-      "url": "https://247wallst.com/investing/2026/09/21/fastly-soars-14-on-ai-firewall-launch-cloudflare-climbs-7-datadog-rises-5/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-21T13:17:46Z",
-      "title": "Should You Be Bullish on Fastly (FSLY)?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/bullish-fastly-fsly-131746101.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-09-19T05:11:49Z",
-      "title": "Fastly (FSLY) Lands Comcast Partnership, Is The Stock Still Below Fair Value?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/fastly-fsly-lands-comcast-partnership-051149426.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-09-18T23:36:40Z",
-      "title": "Sprinklr and Fastly Stocks Trade Down, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sprinklr-fastly-stocks-trade-down-233640835.html",
+      "date": "2026-09-23T21:14:05Z",
+      "title": "Why Fastly (FSLY) Stock Is Up Today",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-fastly-fsly-stock-today-211405572.html",
       "source": "StockStory"
     },
     {
-      "date": "2026-09-17T21:06:17Z",
-      "title": "Fastly and Oracle Stocks Trade Up, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/fastly-oracle-stocks-trade-know-210617235.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-17T14:02:06Z",
-      "title": "Fastly Highlights 43% Security Growth as AI Traffic Fuels Edge Opportunity",
-      "url": "https://www.marketbeat.com/instant-alerts/event-fastly-highlights-43-security-growth-as-ai-traffic-fuels-edge-opportunity-2026-09-17/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-09-17T12:02:17Z",
-      "title": "3 Unprofitable Stocks We Steer Clear Of",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-unprofitable-stocks-steer-clear-120217253.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-09-15T21:57:27Z",
-      "title": "What Are You Actually Buying In Cloudflare Stock?",
-      "url": "https://www.trefis.com/articles/615402/what-are-you-actually-buying-in-cloudflare-stock/2026-09-15",
+      "date": "2026-09-23T17:28:19Z",
+      "title": "Should You Trim Or Add To Your BlackBerry Position Now?",
+      "url": "https://www.trefis.com/articles/616267/should-you-trim-or-add-to-your-blackberry-position-now/2026-09-23",
       "source": "Trefis"
     },
     {
-      "date": "2026-09-15T11:20:02Z",
-      "title": "Fastly CTO Artur Bergman Sells 8,960 Shares for $203,571",
-      "url": "https://www.fool.com/coverage/filings/2026/09/15/fastly-cto-artur-bergman-sells-8-960-shares-for-usd203-571/",
-      "source": "Motley Fool"
+      "date": "2026-09-23T14:54:42Z",
+      "title": "Fastly Expands Edge Platform, AI Opportunity Remains Uncertain, BofA Says",
+      "url": "https://finance.yahoo.com/technology/ai/articles/fastly-expands-edge-platform-ai-145442291.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-23T14:05:38Z",
+      "title": "Fastly Just Ripped 138% This Year but It\u2019s Now Falling. Is It Time to Sell?",
+      "url": "https://247wallst.com/investing/2026/09/23/fastly-just-ripped-138-this-year-but-its-now-falling-is-it-time-to-sell/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-22T23:02:20Z",
+      "title": "Fastly Targets Up to $1.3B Revenue by 2029 as AI Traffic Surges",
+      "url": "https://www.marketbeat.com/instant-alerts/event-fastly-targets-up-to-13b-revenue-by-2029-as-ai-traffic-surges-2026-09-22/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-22T20:01:35Z",
+      "title": "What Happens To Cloudflare Stock If Its Growth Cools?",
+      "url": "https://www.trefis.com/articles/616148/what-happens-to-cloudflare-stock-if-its-growth-cools/2026-09-22",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-22T17:57:31Z",
+      "title": "Fastly Tumbles 7% as Investor Day Meets Profit Taking; Cloudflare and Akamai Edge Higher",
+      "url": "https://247wallst.com/investing/2026/09/22/fastly-tumbles-7-as-investor-day-meets-profit-taking-cloudflare-and-akamai-edge-higher/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-22T11:36:52Z",
+      "title": "Fastly\u2019s AI Security Push Adds Heat Ahead Of Investor Day",
+      "url": "https://finance.yahoo.com/technology/ai/articles/fastly-ai-security-push-adds-113652327.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-22T07:09:38Z",
+      "title": "Fastly Stock Jumped 15% Yesterday on an AI Security Launch. Insiders Sold Millions First.",
+      "url": "https://www.tikr.com/blog/fastly-stock-jumped-15-yesterday-on-an-ai-security-launch-insiders-sold-millions-first?ref=yahoofinance",
+      "source": "TIKR"
+    },
+    {
+      "date": "2026-09-22T01:16:03Z",
+      "title": "Fastly Inc. (FSLY) Jumps 15% Ahead of Tuesday\u2019s Key Business Updates; Hedge Fund Conviction Weak",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fastly-inc-fsly-jumps-15-011603186.html",
+      "source": "Insider Monkey"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 23.06150016784668,
-    "ma50": 23.23760009765625,
-    "ma200": 19.270674996376037,
-    "rsi14": 62.859585560365176,
-    "high_20d": 28.06999969482422,
+    "ma20": 23.551000118255615,
+    "ma50": 23.53360008239746,
+    "ma200": 19.43302499294281,
+    "rsi14": 65.78747792120885,
+    "high_20d": 31.329999923706055,
     "low_5d": 22.899999618530273,
-    "low_10d": 19.920000076293945,
+    "low_10d": 21.81999969482422,
     "high_52w": 34.81999969482422,
     "low_52w": 7.735000133514404,
-    "atr14": 2.063500131879534,
-    "atr14_pct": 7.525529271108719,
-    "position_in_52w_range_pct": 72.67860535947369
+    "atr14": 2.672785758972168,
+    "atr14_pct": 9.014454615040753,
+    "position_in_52w_range_pct": 80.91194328952787
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-23",
-      "open": 7.33,
-      "high": 7.343,
-      "low": 7.16,
-      "close": 7.27,
-      "volume": 2254300.0
-    },
     {
       "date": "2024-09-24",
       "open": 7.33,
@@ -4283,26 +4173,26 @@
       "high": 28.07,
       "low": 23.705,
       "close": 27.42,
-      "volume": 9780317.0
+      "volume": 9874200.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 28.02,
+      "high": 28.835,
+      "low": 24.66,
+      "close": 26.08,
+      "volume": 14968100.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 25.9,
+      "high": 31.33,
+      "low": 24.04,
+      "close": 29.65,
+      "volume": 29906950.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 8.93,
-      "high": 8.95,
-      "low": 8.51,
-      "close": 8.63,
-      "volume": 14508500.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 8.54,
-      "high": 8.805,
-      "low": 8.41,
-      "close": 8.76,
-      "volume": 2345500.0
-    },
     {
       "date": "2025-09-23",
       "open": 8.79,
@@ -6301,7 +6191,23 @@
       "high": 28.07,
       "low": 23.705,
       "close": 27.42,
-      "volume": 9780317.0
+      "volume": 9874200.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 28.02,
+      "high": 28.835,
+      "low": 24.66,
+      "close": 26.08,
+      "volume": 14968100.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 25.9,
+      "high": 31.33,
+      "low": 24.04,
+      "close": 29.65,
+      "volume": 29906950.0
     }
   ],
   "ai_synthesis": null,

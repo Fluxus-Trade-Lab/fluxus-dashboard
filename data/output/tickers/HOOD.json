@@ -1,8 +1,8 @@
 {
   "ticker": "HOOD",
-  "fetched_at": "2026-09-21T22:20:14Z",
+  "fetched_at": "2026-09-23T23:18:59Z",
   "_schema": "v2",
-  "current_price": 123.30000305175781,
+  "current_price": 122.69999694824219,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.62,
-      "eps_estimate": 0.43141,
-      "eps_surprise_pct": 0.4371
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.38,
-      "eps_estimate": 0.38768,
-      "eps_surprise_pct": -0.0198
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.66,
-      "eps_estimate": 0.63585,
-      "eps_surprise_pct": 0.038
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.61,
-      "eps_estimate": 0.5443,
-      "eps_surprise_pct": 0.120699994
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,175 +99,90 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 27,
-    "bullish": 21,
-    "neutral": 4,
-    "bearish": 2,
-    "avg_price_target": 129.26443,
-    "high_price_target": 170.0,
-    "low_price_target": 57.0,
-    "current_price": 114.33,
-    "recent_rating_changes": [
-      {
-        "date": "2026-09-11T11:42:55",
-        "firm": "Citizens",
-        "to_grade": "Market Outperform",
-        "from_grade": "Market Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-09T14:12:33",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-09T09:43:04",
-        "firm": "Bernstein",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2026-09-09T09:38:20",
-        "firm": "StoneX",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-09-08T15:42:40",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-08T14:14:02",
-        "firm": "Goldman Sachs",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-08T11:00:22",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-02T18:57:41",
-        "firm": "Scotiabank",
-        "to_grade": "Sector Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-09-02T16:26:34",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-09-01T12:45:31",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Equal-Weight",
-        "action": "up"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:37:23Z",
+  "quarterly_asof": "2026-09-23T23:18:59Z",
   "news": [
     {
-      "date": "2026-09-21T21:46:03Z",
-      "title": "Robinhood CEO Says Crypto Will Beat Sports at Prediction Markets' Own Game",
-      "url": "https://decrypt.co/378889/robinhood-ceo-crypto-will-beat-sports-prediction-markets",
-      "source": "decrypt"
-    },
-    {
-      "date": "2026-09-21T16:50:48Z",
-      "title": "Cathie Wood Dumps $60 Million in Crypto Stocks Days Before SEC\u2019s Game-Changing Exemption",
-      "url": "https://247wallst.com/investing/2026/09/21/cathie-wood-dumps-60-million-in-crypto-stocks-days-before-secs-game-changing-exemption/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-21T15:48:45Z",
-      "title": "Is Coinbase's Steadier Side Really A Cushion?",
-      "url": "https://www.trefis.com/articles/616004/is-coinbases-steadier-side-really-a-cushion/2026-09-21",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-09-21T14:47:27Z",
-      "title": "Robinhood\u2019s Vlad Tenev: Trump Accounts Could Become \u201cThe Biggest Element of Long-Term Saving and Investing in This Country Within Possibly Even a Decade\u201d",
-      "url": "https://247wallst.com/investing/2026/09/21/robinhoods-vlad-tenev-trump-accounts-could-become-the-biggest-element-of-long-term-saving-and-investing-in-this-country-within-possibly-even-a-decade/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-09-21T14:04:00Z",
-      "title": "Bitcoin Is at Its Highest Price Since January. Strategy Buys the Cryptocurrency.",
-      "url": "https://www.barrons.com/articles/bitcoin-prices-coinbase-strategy-robinhood-stocks-81bef9f7?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-09-21T13:35:02Z",
-      "title": "Robinhood Markets, Inc. (HOOD) Recently Broke Out Above the 20-Day Moving Average",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/robinhood-markets-inc-hood-recently-133502805.html",
+      "date": "2026-09-23T21:45:05Z",
+      "title": "Robinhood Markets, Inc. (HOOD) Sees a More Significant Dip Than Broader Market: Some Facts to Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/robinhood-markets-inc-hood-sees-214505013.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-09-21T12:37:02Z",
-      "title": "Prediction: Robinhood Will Launch Tokenized Stock Trading in the U.S. Before the End of 2027",
-      "url": "https://www.fool.com/investing/2026/09/21/prediction-robinhood-will-launch-tokenized-stock-trading-in-the-u-s-before-the-end-of-2027/",
-      "source": "Motley Fool"
+      "date": "2026-09-23T19:36:00Z",
+      "title": "Meta\u2019s Muse AI Agent Triggers Worries About Brokerage Stocks",
+      "url": "https://www.barrons.com/advisor/articles/meta-muse-ai-agent-brokerage-stocks-37d46fcc?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-09-21T11:38:21Z",
-      "title": "Oura seeks to raise up to $2.2 billion in Nasdaq IPO",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/oura-seeks-raise-2-2-113821438.html",
-      "source": "Investing.com"
+      "date": "2026-09-23T16:55:00Z",
+      "title": "Securitize Stock Jumps 12% as Cantor Bets on a Tokenization Boom",
+      "url": "https://www.barrons.com/articles/securitize-stock-price-cantor-tokenization-1bff8d31?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-09-21T11:30:59Z",
-      "title": "Why Is Crypto Up Today? Oil Prices Drop, Short Sellers Squeezed, and Bitcoin Reclaims Key Level After 45 Weeks",
-      "url": "https://247wallst.com/investing/cryptocurrency/2026/09/21/why-is-crypto-up-today-oil-prices-drop-short-sellers-squeezed-and-bitcoin-reclaims-key-level-after-45-weeks/",
+      "date": "2026-09-23T16:52:57Z",
+      "title": "DraftKings Drops 4% as Prediction-Market Spending Plans Stir Margin Doubts; Flutter Entertainment Slips, Robinhood Ticks Up",
+      "url": "https://247wallst.com/investing/2026/09/23/draftkings-drops-4-as-prediction-market-spending-plans-stir-margin-doubts-flutter-entertainment-slips-robinhood-ticks-up/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-09-21T06:50:00Z",
-      "title": "These Recent Moves Are Brilliant. Here's Why Robinhood Is the Most Important Player in Crypto Right Now.",
-      "url": "https://www.fool.com/investing/2026/09/21/these-recent-moves-are-brilliant-heres-why-robinho/",
-      "source": "Motley Fool"
+      "date": "2026-09-23T14:17:00Z",
+      "title": "Robinhood's Prediction Markets Move Beyond Sports: Why It Matters",
+      "url": "https://finance.yahoo.com/markets/options/articles/robinhoods-prediction-markets-move-beyond-141700660.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-23T09:01:02Z",
+      "title": "3 Market-Beating Stocks with Promising Prospects",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-market-beating-stocks-promising-090102938.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-23T07:17:53Z",
+      "title": "Elon Musk Ally Jason Calacanis Bets These 4 Autonomy Stocks Will Be Bought Within 2 Years \u2014 And Double His Money",
+      "url": "https://stocktwits.com/news-articles/markets/equity/elon-musk-ally-jason-calacanis-bets-4-autonomy-stocks-bought-2-years-double-money/cZMEVQ4RB7w",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-23T07:15:32Z",
+      "title": "Is Robinhood Markets Stock Underperforming the Nasdaq?",
+      "url": "https://www.barchart.com/story/news/4748221/is-robinhood-markets-stock-underperforming-the-nasdaq",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-09-22T21:11:15Z",
+      "title": "Robinhood Has Quietly Become a Real Business. Does HOOD Stock Have Room to Run?",
+      "url": "https://www.tikr.com/blog/robinhood-has-quietly-become-a-real-business-does-hood-stock-have-room-to-run?ref=yahoofinance",
+      "source": "TIKR"
+    },
+    {
+      "date": "2026-09-22T18:25:00Z",
+      "title": "Oura\u2019s $15.6 Billion IPO Is Betting Investors See More Than a Smart Ring",
+      "url": "https://www.marketbeat.com/articles/ouras-156-billion-ipo-is-betting-investors-see-more-than-a-smart-ring/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 112.0529998779297,
-    "ma50": 103.40159973144532,
-    "ma200": 94.88742496490478,
-    "rsi14": 62.3130958294667,
-    "high_20d": 126.41000366210938,
-    "low_5d": 101.70500183105469,
+    "ma20": 113.61499977111816,
+    "ma50": 103.87439971923828,
+    "ma200": 94.76857494354248,
+    "rsi14": 61.15013805974349,
+    "high_20d": 126.7300033569336,
+    "low_5d": 106.08000183105469,
     "low_10d": 101.70500183105469,
     "high_52w": 153.86000061035156,
     "low_52w": 63.51499938964844,
-    "atr14": 7.3415020533970425,
-    "atr14_pct": 5.954178322538476,
-    "position_in_52w_range_pct": 66.17411351410692
+    "atr14": 7.203645433698382,
+    "atr14_pct": 5.870941819776126,
+    "position_in_52w_range_pct": 65.50998589729515
   },
   "ohlc_2y": [
-    {
-      "date": "2024-09-23",
-      "open": 22.782,
-      "high": 23.325,
-      "low": 22.623,
-      "close": 22.7,
-      "volume": 11694200.0
-    },
     {
       "date": "2024-09-24",
       "open": 22.68,
@@ -4275,34 +4165,34 @@
       "high": 120.57,
       "low": 111.06,
       "close": 119.82,
-      "volume": 39224600.0
+      "volume": 39358800.0
     },
     {
       "date": "2026-09-21",
-      "open": 125.09,
+      "open": 125.045,
       "high": 126.41,
-      "low": 121.51,
+      "low": 121.505,
       "close": 123.3,
-      "volume": 28051623.0
+      "volume": 28301500.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 123.0,
+      "high": 126.16,
+      "low": 122.46,
+      "close": 124.25,
+      "volume": 16047600.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 122.574,
+      "high": 126.73,
+      "low": 122.28,
+      "close": 122.7,
+      "volume": 19001709.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 121.7,
-      "high": 125.18,
-      "low": 121.0,
-      "close": 124.78,
-      "volume": 202388400.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 123.625,
-      "high": 126.64,
-      "low": 122.2,
-      "close": 124.89,
-      "volume": 33482600.0
-    },
     {
       "date": "2025-09-23",
       "open": 125.41,
@@ -6293,15 +6183,31 @@
       "high": 120.57,
       "low": 111.06,
       "close": 119.82,
-      "volume": 39224600.0
+      "volume": 39358800.0
     },
     {
       "date": "2026-09-21",
-      "open": 125.09,
+      "open": 125.045,
       "high": 126.41,
-      "low": 121.51,
+      "low": 121.505,
       "close": 123.3,
-      "volume": 28051623.0
+      "volume": 28301500.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 123.0,
+      "high": 126.16,
+      "low": 122.46,
+      "close": 124.25,
+      "volume": 16047600.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 122.574,
+      "high": 126.73,
+      "low": 122.28,
+      "close": 122.7,
+      "volume": 19001709.0
     }
   ],
   "ai_synthesis": null,

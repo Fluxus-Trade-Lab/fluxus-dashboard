@@ -1,8 +1,8 @@
 {
   "ticker": "SAIL",
-  "fetched_at": "2026-09-21T22:20:35Z",
+  "fetched_at": "2026-09-23T23:19:25Z",
   "_schema": "v2",
-  "current_price": 20.31999969482422,
+  "current_price": 21.40999984741211,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-07-31T00:00:00",
-      "eps_actual": 0.09,
-      "eps_estimate": 0.07907,
-      "eps_surprise_pct": 0.1382
-    },
-    {
-      "period_end": "2026-01-31T00:00:00",
-      "eps_actual": 0.08,
-      "eps_estimate": 0.07996,
-      "eps_surprise_pct": 0.0005
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": -0.06,
-      "eps_estimate": -0.05817,
-      "eps_surprise_pct": -0.0315
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 0.07,
-      "eps_estimate": 0.04397,
-      "eps_surprise_pct": 0.592
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,89 +99,12 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 23,
-    "bullish": 19,
-    "neutral": 3,
-    "bearish": 1,
-    "avg_price_target": 20.84,
-    "high_price_target": 25.0,
-    "low_price_target": 10.0,
-    "current_price": 19.88,
-    "recent_rating_changes": [
-      {
-        "date": "2026-09-10T18:44:53",
-        "firm": "Scotiabank",
-        "to_grade": "Sector Outperform",
-        "from_grade": "Sector Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-10T17:12:47",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-09-10T15:53:21",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-10T14:05:01",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-10T13:15:44",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-10T11:50:44",
-        "firm": "Rosenblatt",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-09T17:51:31",
-        "firm": "BTIG",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-09-01T18:45:37",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-09-01T11:04:01",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-20T17:44:06",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:38:02Z",
+  "quarterly_asof": "2026-09-23T23:19:25Z",
   "news": [
     {
       "date": "2026-09-18T18:31:01Z",
@@ -271,18 +169,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 19.080999851226807,
-    "ma50": 17.822299976348877,
-    "ma200": 16.041324973106384,
-    "rsi14": 58.93511267406702,
-    "high_20d": 21.364999771118164,
-    "low_5d": 19.1200008392334,
+    "ma20": 19.419999885559083,
+    "ma50": 18.093699989318846,
+    "ma200": 16.058874974250795,
+    "rsi14": 63.802834633823586,
+    "high_20d": 21.860000610351562,
+    "low_5d": 19.3700008392334,
     "low_10d": 16.6200008392334,
     "high_52w": 24.0,
     "low_52w": 10.300000190734863,
-    "atr14": 1.2953499385288783,
-    "atr14_pct": 6.374753730231706,
-    "position_in_52w_range_pct": 73.13868352985638
+    "atr14": 1.3211071831839425,
+    "atr14_pct": 6.170514678184964,
+    "position_in_52w_range_pct": 81.09488913396696
   },
   "ohlc_2y": [
     {
@@ -3495,30 +3393,30 @@
     },
     {
       "date": "2026-09-21",
-      "open": 19.875,
+      "open": 19.97,
       "high": 20.59,
-      "low": 19.7301,
+      "low": 19.73,
       "close": 20.32,
-      "volume": 4977320.0
+      "volume": 5755300.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 21.15,
+      "high": 21.86,
+      "low": 19.93,
+      "close": 21.37,
+      "volume": 9042400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 21.51,
+      "high": 21.76,
+      "low": 20.5605,
+      "close": 21.41,
+      "volume": 6749369.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-09-19",
-      "open": 22.581,
-      "high": 22.88,
-      "low": 21.962,
-      "close": 22.74,
-      "volume": 6029800.0
-    },
-    {
-      "date": "2025-09-22",
-      "open": 22.715,
-      "high": 23.39,
-      "low": 22.38,
-      "close": 23.11,
-      "volume": 2453500.0
-    },
     {
       "date": "2025-09-23",
       "open": 23.27,
@@ -5513,11 +5411,27 @@
     },
     {
       "date": "2026-09-21",
-      "open": 19.875,
+      "open": 19.97,
       "high": 20.59,
-      "low": 19.7301,
+      "low": 19.73,
       "close": 20.32,
-      "volume": 4977320.0
+      "volume": 5755300.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 21.15,
+      "high": 21.86,
+      "low": 19.93,
+      "close": 21.37,
+      "volume": 9042400.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 21.51,
+      "high": 21.76,
+      "low": 20.5605,
+      "close": 21.41,
+      "volume": 6749369.0
     }
   ],
   "ai_synthesis": null,

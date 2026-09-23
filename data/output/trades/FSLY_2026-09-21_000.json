@@ -1,6 +1,6 @@
 {
   "trade_id": "FSLY_2026-09-21_000",
-  "generated_at": "2026-09-22T22:25:44+00:00",
+  "generated_at": "2026-09-23T23:22:43+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FSLY",
@@ -42,11 +42,11 @@
     "open": 24.22,
     "high": 28.07,
     "low": 23.705,
-    "volume": 9780317.0,
-    "ma20": 23.061500000000002,
-    "ma50": 23.2376,
+    "volume": 9874200.0,
+    "ma20": 23.0615,
+    "ma50": 23.237599999999997,
     "ma200": 19.270674999999997,
-    "rsi14": 62.85958415063442,
+    "rsi14": 62.85958406676348,
     "atr14": 2.0635000000000012,
     "atr14_pct": 7.525528811086801,
     "high_52w": 34.82,
@@ -58,22 +58,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.1796874999999973,
-    "mfe_date": "2026-09-21",
+    "mfe_R": 2.7773437499999973,
+    "mfe_date": "2026-09-22",
     "mae_R": 1.230468750000001,
     "mae_date": "2026-09-21",
-    "optimal_exit_price": 28.07,
-    "optimal_exit_date": "2026-09-21",
-    "optimal_R": 2.1796874999999973,
-    "days_to_optimal": 0,
+    "optimal_exit_price": 28.835,
+    "optimal_exit_date": "2026-09-22",
+    "optimal_R": 2.7773437499999973,
+    "days_to_optimal": 1,
     "realized_R": 1.2250315243788514,
-    "capture_pct": 56.20216312562479,
-    "missed_R": 0.9546559756211459,
-    "post_exit_R": null,
+    "capture_pct": 44.10802675681945,
+    "missed_R": 1.552312225621146,
+    "post_exit_R": 4.726562499999994,
     "hold_calendar_days": 1
   },
-  "lesson": "Good execution",
-  "narrative": "Entered **FSLY** long on 2026-09-21 at $25.28 with stop $24.00 (currently trailed to $25.28) (1R = $1.28/sh = 5.1% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($23.06), MA stack mixed, RSI 63, 73% through 52W range, ATR 7.5% of price. Realized **+1.23R**, peak was **+2.18R** on 2026-09-21 (day +0) \u2014 captured **56%** of the move. **Lesson: Good execution.**",
+  "lesson": "Premature trim",
+  "narrative": "Entered **FSLY** long on 2026-09-21 at $25.28 with stop $24.00 (currently trailed to $25.28) (1R = $1.28/sh = 5.1% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($23.06), MA stack mixed, RSI 63, 73% through 52W range, ATR 7.5% of price. Realized **+1.23R**, peak was **+2.78R** on 2026-09-22 (day +1) \u2014 captured **44%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-08-24",
@@ -233,7 +233,23 @@
       "high": 28.07,
       "low": 23.705,
       "close": 27.42,
-      "volume": 9780317.0
+      "volume": 9874200.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 28.02,
+      "high": 28.835,
+      "low": 24.66,
+      "close": 26.08,
+      "volume": 14968100.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 25.9,
+      "high": 31.33,
+      "low": 24.04,
+      "close": 29.65,
+      "volume": 29906950.0
     }
   ]
 }
