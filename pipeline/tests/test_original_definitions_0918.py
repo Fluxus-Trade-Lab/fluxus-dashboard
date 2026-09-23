@@ -92,18 +92,23 @@ class TestLiquidLeaderPullbackAlex:
     """traderslab.gitbook.io/primetrading/alexs-scans-and-workflow-traderslab,
     'Liquid Leaders 21dma-structure Pullback scan': Daily closing range > 10%,
     Weekly return < 15%, 0 to 1 x ATR from the 21ema, -0.5 to 4 x ATR from
-    the 50sma, Advancing 21ema."""
+    the 50sma, Advancing 21ema. 2026-09-23 (Andy: "收盘用大于 20%，其他是 A
+    版本"): the closing-range clause was moved from Alex's own > 10% to
+    Andy's > 20% after comparing four versions on the 2026-09-22 session (see
+    pipeline/screeners/watchlist.py comment above the panel); the other four
+    clauses are still his own text, unchanged."""
 
     P = staticmethod(lambda r: W.PANELS["liquid_leader_pullback"].test(r))
 
     def test_positive_inside_alex_bands_outside_the_old_ones(self):
         # 0.2 ATR over the 21EMA (old floor was 0.5), 3.8 ATR over the 50SMA
-        # (old cap 3, and read in B/A units), week +14% (old cap 12%)
-        good = wrow(ema21_atr_dist=0.2, sma50_atr_dist=3.8, atr_from_sma50=4.3, perf_1w=0.14, dcr_pct=0.11)
+        # (old cap 3, and read in B/A units), week +14% (old cap 12%),
+        # dcr 21% (Andy's 09-23 floor, > 20%)
+        good = wrow(ema21_atr_dist=0.2, sma50_atr_dist=3.8, atr_from_sma50=4.3, perf_1w=0.14, dcr_pct=0.21)
         assert self.P(good)
 
     @pytest.mark.parametrize("kw", [
-        {"dcr_pct": 0.10},            # > 10%, strict
+        {"dcr_pct": 0.20},            # > 20% (Andy 09-23), strict
         {"perf_1w": 0.15},            # < 15%, strict
         {"ema21_atr_dist": -0.01},    # under the 21EMA
         {"ema21_atr_dist": 1.01},
