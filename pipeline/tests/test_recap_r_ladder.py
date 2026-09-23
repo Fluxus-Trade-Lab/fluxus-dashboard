@@ -12,11 +12,15 @@ the next person from re-adding entry_price to the row and shipping it.
 from __future__ import annotations
 
 import datetime as dt
+import re
+from pathlib import Path
 
 import pytest
 
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.visual import book_out
+from pipeline.content.recap.visual import _book_money_gate, book_out
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 # ---------- A. the text gate must redden on both leak shapes ----------
@@ -168,6 +172,17 @@ def test_M1_still_reddens_a_non_breakeven_stop_gapped_through():
     b["positions"][0]["open_R"] = -1.5
     with pytest.raises(SystemExit, match="above the mark"):
         book_out(b, "2026-09-22")
+
+
+def test_M1_residual_risk_pointer_resolves_to_a_real_file():
+    """The non-breakeven-stop residual risk this docstring names must point to
+    a file that actually exists — T-0923-61's docstring pointed at an ops run
+    log that was never in the repo, so the next reader chasing it hit a dead
+    end. T-0923-70 replaced it with a data/reference/incidents/ record; this
+    guards the replacement against rotting the same way."""
+    m = re.search(r"data/reference/incidents/\S+\.md", _book_money_gate.__doc__)
+    assert m, "_book_money_gate's docstring must name an incidents/ record for this residual risk"
+    assert (REPO_ROOT / m.group(0)).is_file(), f"{m.group(0)} named in the docstring but not in the repo"
 
 
 # ---------- the cost point and the holding period ----------
