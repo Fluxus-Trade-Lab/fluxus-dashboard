@@ -2,10 +2,12 @@ import { useMemo } from 'react'
 import { PortfolioProvider, usePortfolio } from '../portfolio/context/PortfolioContext'
 import { useUniverse } from '../../hooks/useUniverse'
 import { useTickerData } from '../../hooks/useTickerData'
+import { useXHeat } from '../../hooks/useXHeat'
 import TickerProvenance from './TickerProvenance'
 import { enrichTrades } from '../portfolio/lib/calculations'
 import TickerHeader from './TickerHeader'
 import TickerQuickStats from './TickerQuickStats'
+import TickerXHeat from './TickerXHeat'
 import TickerChart from './TickerChart'
 import TickerStatusPanel from './TickerStatusPanel'
 import TickerTrades from './TickerTrades'
@@ -46,6 +48,7 @@ function TickerPageBody({ symbol }) {
   // floor must still open when he types it.
   const { all: universe } = useUniverse()
   const { data: tickerData } = useTickerData(symbol)
+  const { xHeat } = useXHeat()
 
   const universeRow = useMemo(() => {
     if (!universe) return null
@@ -90,6 +93,8 @@ function TickerPageBody({ symbol }) {
       <TickerProvenance universe={universeRow} tickerData={tickerData} />
 
       <TickerQuickStats tickerData={tickerData} universe={universeRow} />
+
+      <TickerXHeat symbol={symbol} xHeat={xHeat} />
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-4">
         <TickerChart symbol={symbol} />
