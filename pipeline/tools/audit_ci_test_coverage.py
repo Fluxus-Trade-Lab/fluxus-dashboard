@@ -63,6 +63,23 @@ It goes RED when the situation CHANGES:
       under-reads says nothing is wrong, which is the one direction that
       hurts (`audit_wiring._run_blocks_regex` learned this the same way)
   T6  no automatically triggered workflow runs pytest at all
+  T7  a declared trigger filter (DECLARED_TRIGGERS) is not on any workflow's
+      trigger now -- delete the entry (T2's anti-rot half, for filters)
+  T8  a declared trigger filter carries no owner or no reason (T4's half,
+      for filters)
+
+2026-09-23 (T-0923-121): T5 used to have no way out for `paths:`/`branches:`
+style trigger filters, on purpose -- unlike a marker or a checkout depth, the
+tool cannot enumerate WHICH tests a trigger filter excludes (that depends on
+which files a future commit touches, and this tool reads the workflow
+statically, never a diff). Declaring "these tests are excluded" would have
+been a claim it cannot back up. What it CAN own is the filter LINE itself:
+someone added `branches: [main]` or `paths:` to tests.yml on a
+specific date for a specific reason, and DECLARED_TRIGGERS records exactly
+that choice -- not a false certificate about its blast radius. A declared
+filter still prints in `render()`; it just stops being a T5 violation. An
+UNDECLARED filter (the `test_a_paths_filtered_trigger_is_not_certifiable`
+case) still blocks exactly as before.
 
 ⚠️ What this tool does NOT do: it does not run pytest. It reads the workflow
 and the test sources. That is deliberate -- a tool that had to execute the
@@ -143,6 +160,42 @@ DECLARED: dict[str, tuple[str, str, str]] = {
         "actions/checkout with no fetch-depth is depth 1; the 4 tests that "
         "replay the 08-27 overwrite against its real numbers skip there",
         "2026-09-05",
+    ),
+}
+
+# Declared narrowings of the tests.yml TRIGGER itself -- `branches:` /
+# `paths:` lines under `on:`. Keyed on the exact stripped line text
+# `trigger_filters()` extracts, mapped to (owner, reason, date), same shape
+# as DECLARED. Kept as a separate table because it answers a different
+# question: DECLARED says "these tests don't run", this says "this line is a
+# known, dated, owned choice, not an accident nobody noticed". See the T7/T8
+# codes above and the 2026-09-23 note for why T5 could not just accept these
+# the way it accepts markers.
+DECLARED_TRIGGERS: dict[str, tuple[str, str, str]] = {
+    "branches: [main]": (
+        "DATA ALEX / whoever owns .github/workflows",
+        "agent-branch and topic-branch pushes flooded Andy's inbox with "
+        "tests.yml run emails -- 30 runs in 113 minutes measured right "
+        "before this change (2026-09-23 07:06-08:59Z), most of them "
+        "agent/* pushes or a main push cancelled by the next one. No "
+        "coverage is lost: branch-review already runs pytest in the "
+        "worktree before a branch is allowed to merge, so the same run "
+        "moves earlier, off email, not away (T-0923-121).",
+        "2026-09-23",
+    ),
+    "paths:": (
+        "DATA ALEX / whoever owns .github/workflows",
+        "trims pure-content pushes to main (Fluxus_Brand/, data/content/, "
+        "data/research/, Fluxus_Substack/, docs/) that carry no pytest "
+        "coverage and no 谁读/**reads** declaration audit_reads_declarations.py "
+        "checks -- every excluded path was git-grep-verified against "
+        "pipeline/tests, tests/ and 谁读 headers before being added, and the "
+        "directories that had either are carved back in with a later "
+        "positive pattern in the same `paths:` list (`paths:`, not "
+        "`paths-ignore:`, because `paths-ignore` has no documented `!` "
+        "re-include). See the comment above `on:` in tests.yml for the "
+        "full accounting (T-0923-121).",
+        "2026-09-23",
     ),
 }
 
@@ -390,13 +443,14 @@ def pytest_steps(workflows: Path) -> list[dict]:
                     if "$" in t:
                         caveats.append(f"argument {t!r} is built at runtime -- "
                                        f"what it hides cannot be read here")
-                for f in filters:
-                    caveats.append(f"trigger is narrowed by {f!r} -- it may "
-                                   f"never fire for a change to these tests")
+                # Trigger filters are NOT folded into `caveats` here -- unlike
+                # an `if:` or a runtime arg, a filter line CAN be a declared,
+                # owned choice (DECLARED_TRIGGERS), so whether it counts as a
+                # violation is `check()`'s call, not this function's.
                 steps.append({"workflow": wf.name, "command": line.strip(),
                               "depth": depth, "targets": targets,
                               "markers": markers, "unmodelled": unmodelled,
-                              "caveats": caveats})
+                              "caveats": caveats, "trigger_filters": filters})
     return steps
 
 
@@ -532,8 +586,11 @@ def excluded_tests(tests: list[dict], steps: list[dict]) -> dict[str, list[dict]
 
 
 def check(tests: list[dict], steps: list[dict],
-          declared: Optional[dict] = None, repo: Optional[Path] = None) -> dict:
+          declared: Optional[dict] = None, repo: Optional[Path] = None,
+          declared_triggers: Optional[dict] = None) -> dict:
     declared = DECLARED if declared is None else declared
+    declared_triggers = (DECLARED_TRIGGERS if declared_triggers is None
+                          else declared_triggers)
     repo = ROOT if repo is None else repo
     buckets = excluded_tests(tests, steps)
     v: list[tuple[str, str]] = []
@@ -541,12 +598,19 @@ def check(tests: list[dict], steps: list[dict],
     if not steps:
         v.append(("T6", "no automatically triggered workflow runs pytest"))
 
+    present_filters: set[str] = set()
     for s in steps:
         for opt in s["unmodelled"]:
             v.append(("T5", f"{s['workflow']}: pytest option {opt} is not "
                             f"modelled -- refusing to report coverage"))
         for c in s.get("caveats", ()):
             v.append(("T5", f"{s['workflow']}: {c}"))
+        for f in s.get("trigger_filters", ()):
+            present_filters.add(f)
+            if f in declared_triggers:
+                continue           # a known, owned, dated choice -- not a T5
+            v.append(("T5", f"{s['workflow']}: trigger is narrowed by {f!r} "
+                            f"-- it may never fire for a change to these tests"))
 
     for key, items in sorted(buckets.items()):
         if key not in declared:
@@ -568,12 +632,21 @@ def check(tests: list[dict], steps: list[dict],
         elif key != "shallow-checkout" and not (repo / key).exists():
             v.append(("T3", f"declared path {key!r} does not exist"))
 
+    for key, entry in sorted(declared_triggers.items()):
+        if key not in present_filters:
+            v.append(("T7", f"declared trigger filter {key!r} is not on any "
+                            f"workflow's trigger now -- delete the entry"))
+        if len(entry) != 3 or not entry[0] or not entry[1]:
+            v.append(("T8", f"declared trigger filter {key!r} has no owner "
+                            f"or reason"))
+
     # A T5 does not merely add a line: it means the exclusion set below was
     # computed from a command whose effect we could not read. The first
     # version printed the numbers anyway, which is the opposite of what its
     # own docstring promised ("refuse to report a green we cannot justify").
     certified = not any(code == "T5" for code, _ in v)
     return {"steps": steps, "buckets": buckets, "declared": declared,
+            "declared_triggers": declared_triggers,
             "violations": v, "total": len(tests), "certified": certified}
 
 
@@ -593,6 +666,15 @@ def render(res: dict) -> str:
                  + (f" | -m excludes {sorted(s['markers'])}" if s["markers"] else ""))
         for c in s.get("caveats", ()):
             L.append(f"      ⚠️  {c}")
+        declared_triggers = res.get("declared_triggers", {})
+        for f in s.get("trigger_filters", ()):
+            if f in declared_triggers:
+                owner, reason, found = declared_triggers[f]
+                L.append(f"      [declared trigger] {f}: {reason} "
+                         f"(claimed by {owner}, found {found})")
+            else:
+                L.append(f"      ⚠️  trigger is narrowed by {f!r} -- it may "
+                         f"never fire for a change to these tests")
     excluded = sum(len(v) for v in res["buckets"].values())
     L += ["", f"tests in the repository: {res['total']}"
               f"  (test functions, counted by ast -- not pytest's collection"
