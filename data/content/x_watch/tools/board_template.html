@@ -33,7 +33,16 @@
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--sans);
   font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;margin:0}
-.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 72px}
+/* ⚠️ 底部留白只有 14px，是**算出来的**，不是手感（09-23）。
+   表格盒现在是 .wrap 的最后一个子元素，sticky 的行程上限＝它自己的下边缘，
+   也就是说它**没有行程可走**（实测：滚到底时 box.bottom 恰好等于 .wrap 的内容框底）。
+   于是页面能多滚的那点距离全部由 padding-bottom 提供，而多滚多少，表头就往
+   工具条底下钻多少（72px 时实测表头顶 104 < 工具条底 134，列名被盖住）。
+   不让它钻的充要条件：maxScrollY ≤ boxDocTop − stickyTop，代入
+   boxH = 100vh − barh − 24 与 stickyTop = barh + 8，两边的 barh 与 vh 全约掉，
+   只剩 **padding-bottom ≤ 16px**。取 14px，留 2px 余量。
+   改这个数之前先把上面这条不等式重算一遍。 */
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 14px}
 h1{font-size:21px;font-weight:700;letter-spacing:-.015em;margin:0;text-wrap:balance}
 a{color:var(--brass)}
 :focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:3px}
@@ -83,7 +92,11 @@ a{color:var(--brass)}
 .fold[open]>summary::before{content:"▾ "}
 .fold>summary:hover{color:var(--ink)}
 .foldbody{padding:0 0 12px}
-#rosterbox{margin-top:14px}
+/* 口径说明与人员名单并排一行，收起时只占一条 —— 它们从表格下方挪到了上方
+   （见下面 .tblbox 那段的说明），并排是为了别把表格又往下推一整行。 */
+.foldrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+.foldrow>.fold{margin:0;min-width:0}
+@media (max-width:720px){.foldrow{grid-template-columns:1fr}}
 
 /* ── 重点卡（收进折叠块） ── */
 .flags{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:8px}
@@ -308,18 +321,20 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
 .post.wallp{background:var(--brass-soft);border-left:3px solid var(--brass)}
 
 .empty{padding:34px 16px;text-align:center;color:var(--muted);font-size:13px}
-/* ⚠️ .scroll 是 sticky 的，它的包含块是 .wrap —— 一直延伸到脚注和人员名单之下。
-   滚到页底时那只盒子会压在它们上面（实测 #note 被盖 175px、手机 397px，
-   人员名单的 summary 用原始鼠标坐标点下去 details.open 仍是 false，等于名单
-   根本打不开）。所以这两块要自己抬到 sticky 盒之上，并且背景必须是实色，
-   不然盒子里的表格文字会透上来。 */
-#note,#rosterbox{position:relative;z-index:2}
-#note{background:var(--ground);padding-top:8px}
-.note{font-size:11.5px;color:var(--muted);margin:10px 2px 0;line-height:1.6}
+/* ⚠️ 遮挡这件事的账（09-23，Andy：「最下方有问题」）——
+   .tblbox 是 sticky 的，它的包含块是 .wrap，一直延伸到脚注和人员名单之下，
+   滚到页底时盒子会压在它们上面（实测 #note 被盖 175px、手机 397px，名单点不开）。
+   上一轮的修法是给 #note/#rosterbox 加 position:relative;z-index:2 把它们抬到盒子之上
+   —— 点是点得开了，但**变成它们反过来盖住表格行**：整段口径说明压在 $PANW/$HPE 上，
+   名单那条夹在 $HPE 和 $CRDO 中间。两个东西抢同一块屏幕，谁盖谁都难看。
+   现在的修法是结构上不再重叠：**把这两块挪到表格之前**（工具条上方，和「今日变动」
+   同一组折叠块）。sticky 盒后面再没有兄弟节点，遮挡从根上消失，
+   那两条 z-index/background 补丁一并删掉 —— 不用 z-index 互相盖。 */
+.note{font-size:11.5px;color:var(--muted);margin:0 2px 2px;line-height:1.6}
 .note code{font-family:var(--mono);font-size:11px;background:var(--raise);padding:1px 4px;border-radius:2px}
 .count{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:0 2px}
 @media (max-width:720px){
-  .wrap{padding:16px 12px 56px}
+  .wrap{padding:16px 12px 14px}   /* 底部同上：必须 ≤16px，见 .wrap 那条注释 */
   .post{grid-template-columns:1fr;gap:3px}
   .who{max-width:150px}
 }
@@ -339,6 +354,17 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
     <summary id="flagsum">今日变动</summary>
     <div class="foldbody"><div class="flags" id="flags"></div></div>
   </details>
+
+  <div class="foldrow">
+    <details class="fold" id="notebox">
+      <summary id="notesum">口径说明</summary>
+      <div class="foldbody"><p class="note" id="note"></p></div>
+    </details>
+    <details class="fold" id="rosterbox">
+      <summary id="rostersum">人员名单</summary>
+      <div class="foldbody"><div class="roster" id="roster"></div></div>
+    </details>
+  </div>
 
   <div class="bar">
     <label class="search">
@@ -381,12 +407,6 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
          aria-label="台账表格，可左右滚动：Shift+滚轮、← →、Home/End"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
     <span class="fade fl" id="fadeL"></span><span class="fade fr" id="fadeR"></span>
   </div>
-  <p class="note" id="note"></p>
-
-  <details class="fold" id="rosterbox">
-    <summary id="rostersum">人员名单</summary>
-    <div class="foldbody"><div class="roster" id="roster"></div></div>
-  </details>
 </div>
 
 <script>
@@ -840,8 +860,13 @@ function syncScrollGeom(){
   XTI.style.width = Math.round(w) + "px";
   /* 一次性校正：边框/子像素会让两边的 maxScrollLeft 差几 px，差多少就把空条加长/缩短多少。
      校正后两边完全等长，滚到最右时谁都不会被 clamp 成另一个值（那才是会自激的形状）。 */
-  const d = (SC.scrollWidth - SC.clientWidth) - (XT.scrollWidth - XT.clientWidth);
-  if (d) XTI.style.width = Math.max(0, Math.round(w + d)) + "px";
+  let cur = w;
+  for (let i = 0; i < 3; i++){
+    const d = (SC.scrollWidth - SC.clientWidth) - (XT.scrollWidth - XT.clientWidth);
+    if (!d) break;
+    cur = Math.max(0, cur + d);
+    XTI.style.width = Math.round(cur) + "px";
+  }
   layoutThumb(); updateFades();
 }
 
