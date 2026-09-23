@@ -74,7 +74,7 @@ tool cannot enumerate WHICH tests a trigger filter excludes (that depends on
 which files a future commit touches, and this tool reads the workflow
 statically, never a diff). Declaring "these tests are excluded" would have
 been a claim it cannot back up. What it CAN own is the filter LINE itself:
-someone added `branches: [main]` or `paths-ignore:` to tests.yml on a
+someone added `branches: [main]` or `paths:` to tests.yml on a
 specific date for a specific reason, and DECLARED_TRIGGERS records exactly
 that choice -- not a false certificate about its blast radius. A declared
 filter still prints in `render()`; it just stops being a T5 violation. An
@@ -164,7 +164,7 @@ DECLARED: dict[str, tuple[str, str, str]] = {
 }
 
 # Declared narrowings of the tests.yml TRIGGER itself -- `branches:` /
-# `paths-ignore:` lines under `on:`. Keyed on the exact stripped line text
+# `paths:` lines under `on:`. Keyed on the exact stripped line text
 # `trigger_filters()` extracts, mapped to (owner, reason, date), same shape
 # as DECLARED. Kept as a separate table because it answers a different
 # question: DECLARED says "these tests don't run", this says "this line is a
@@ -183,16 +183,18 @@ DECLARED_TRIGGERS: dict[str, tuple[str, str, str]] = {
         "moves earlier, off email, not away (T-0923-121).",
         "2026-09-23",
     ),
-    "paths-ignore:": (
+    "paths:": (
         "DATA ALEX / whoever owns .github/workflows",
         "trims pure-content pushes to main (Fluxus_Brand/, data/content/, "
         "data/research/, Fluxus_Substack/, docs/) that carry no pytest "
         "coverage and no 谁读/**reads** declaration audit_reads_declarations.py "
-        "checks -- every ignored path was git-grep-verified against "
+        "checks -- every excluded path was git-grep-verified against "
         "pipeline/tests, tests/ and 谁读 headers before being added, and the "
-        "directories that had either are carved back in with a `!` "
-        "negation in the same paths-ignore list. See the comment above "
-        "`on:` in tests.yml for the full accounting (T-0923-121).",
+        "directories that had either are carved back in with a later "
+        "positive pattern in the same `paths:` list (`paths:`, not "
+        "`paths-ignore:`, because `paths-ignore` has no documented `!` "
+        "re-include). See the comment above `on:` in tests.yml for the "
+        "full accounting (T-0923-121).",
         "2026-09-23",
     ),
 }
