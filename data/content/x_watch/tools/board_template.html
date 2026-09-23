@@ -121,6 +121,8 @@ tbody tr.row.open td{background:var(--surface2)}
 .delta.up::before{content:"▲ ";font-size:8px;vertical-align:1px}
 .delta.dn::before{content:"▼ ";font-size:8px;vertical-align:1px}
 .delta.flat{color:var(--faint)}
+.rel{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rel.na{color:var(--faint);font-size:11px}
 
 /* 展开的帖 */
 tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--rule)}
@@ -171,11 +173,13 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
     <button class="chip" id="cash" aria-pressed="true">只看 $ 标记</button>
     <button class="chip" id="idx" aria-pressed="false">含指数</button>
     <button class="chip" id="wallonly" aria-pressed="false">只看墙后碰过的</button>
+    <button class="chip" id="solo" aria-pressed="false">含只有 1 人说过的</button>
     <select id="sort" aria-label="排序">
       <option value="today">按当日人数</option>
       <option value="total">按总提及</option>
       <option value="views">按总曝光</option>
       <option value="sym">按代码</option>
+      <option value="t5">按 T+5 相对基准</option>
     </select>
     <span class="count" id="count"></span>
   </div>
@@ -192,7 +196,18 @@ const nf = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(1
 const FWD = new Set(["long","watching","short"]), DONE = new Set(["recap","exited"]);
 const DATES = D.dates, LAST = DATES[DATES.length-1], PREV = DATES[DATES.length-2] || null;
 
-const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, sort:"today", open:new Set() };
+const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, solo:false,
+            sort:"today", open:new Set() };
+
+/* 相对表现单元格：[值, 原因]。没有值时照写原因，不写 0、不留空——
+   「无价格」和「0%」是两件完全不同的事。 */
+const relv = (t,k) => (t.rel && t.rel[k]) ? t.rel[k][0] : null;
+const relCell = (t,k) => {
+  const c = t.rel && t.rel[k];
+  if (!c) return `<span class="rel na">—</span>`;
+  if (c[0] === null) return `<span class="rel na">${esc(c[1])}</span>`;
+  return `<span class="rel ${c[0]>0?"up":c[0]<0?"dn":""}">${c[0]>0?"+":""}${c[0].toFixed(2)}%</span>`;
+};
 
 const np = (t,d) => d && t.days[d] ? t.days[d].p.length : 0;
 
@@ -246,7 +261,8 @@ let SEARCH_MODE = "";
 function tickers(){
   const q = normQ(S.q);
   SEARCH_MODE = "";
-  const passes = t => !(S.cash && !t.cash) && !(!S.idx && t.idx) && !(S.wallonly && !t.wall.length);
+  const passes = t => !(S.cash && !t.cash) && !(!S.idx && t.idx) &&
+                      !(S.wallonly && !t.wall.length) && !(!S.solo && (t.mx||0) < 2);
   const base = D.tickers.filter(t => S.date === "all" || t.days[S.date]);
   let r = base.filter(passes);
   if (q){
@@ -261,7 +277,11 @@ function tickers(){
   }
   const key = S.date === "all" ? LAST : S.date;
   const cmp = { today:(a,b)=>np(b,key)-np(a,key)||b.tv-a.tv, total:(a,b)=>b.tn-a.tn,
-                views:(a,b)=>b.tv-a.tv, sym:(a,b)=>a.sym.localeCompare(b.sym) }[S.sort];
+                views:(a,b)=>b.tv-a.tv, sym:(a,b)=>a.sym.localeCompare(b.sym),
+                /* 没读数的票排在最后，不混进排序里假装是 0 */
+                t5:(a,b)=>{const x=relv(a,5),y=relv(b,5);
+                           if (x===null&&y===null) return b.tv-a.tv;
+                           if (x===null) return 1; if (y===null) return -1; return y-x;} }[S.sort];
   r.sort(cmp);
   if (q) r.sort((a,b) => (b.sym.toLowerCase()===q) - (a.sym.toLowerCase()===q));
   return r;
@@ -271,12 +291,17 @@ function render(){
   const th = $("#thead"), tb = $("#tbody");
   if (S.v === "t"){
     const rows = tickers();
+    const hidden = S.solo || SEARCH_MODE ? 0 :
+      D.tickers.filter(t => (t.mx||0) < 2 && (!S.cash || t.cash) && (S.idx || !t.idx)).length;
     $("#count").textContent = rows.length + " 个代码" +
+      (hidden ? ` · 折叠了 ${hidden} 个只有 1 人说过的` : "") +
       (SEARCH_MODE === "sym" ? " · 搜索中，筛选已让路" :
        SEARCH_MODE === "text" && rows.length ? " · 代码里没有「" + normQ(S.q).toUpperCase() + "」，下面是帖子正文提到它的票" : "");
     th.innerHTML = `<tr><th>代码</th><th>墙后</th><th>${DATES.map(d=>d.slice(8)).join("·")} 人数</th>
       <th class="num">${LAST.slice(5)}</th><th class="num">对比前日</th><th>立场</th>
-      <th class="num">提及</th><th class="num">曝光</th><th>谁在说</th></tr>`;
+      <th class="num">提及</th><th class="num">曝光</th>
+      <th class="num">峰值日</th><th class="num">T+1 vs ${esc(D.bench||"SPY")}</th>
+      <th class="num">T+5 vs ${esc(D.bench||"SPY")}</th><th>谁在说</th></tr>`;
     tb.innerHTML = rows.length ? rows.map(t => {
       const n = np(t,LAST), o = np(t,PREV), d = n-o;
       const who = [...new Set(t.m.filter(m => S.date==="all" || m.d===S.date).map(m => "@"+m.h))];
@@ -287,12 +312,19 @@ function render(){
         <td class="num" style="font-size:15px;font-weight:600">${n||"—"}</td>
         <td class="num"><span class="delta ${d>0?"up":d<0?"dn":"flat"}">${d>0?"+"+d:d<0?d:"持平"}</span></td>
         <td>${stanceCells(t)}</td><td class="num">${t.tn}</td><td class="num">${nf(t.tv)}</td>
+        <td class="num" style="color:var(--faint);font-size:11.5px">${esc(t.peak ? t.peak.slice(5) : "—")}</td>
+        <td class="num">${relCell(t,1)}</td><td class="num">${relCell(t,5)}</td>
         <td class="who">${esc(who.slice(0,4).join(" "))}${who.length>4?` +${who.length-4}`:""}</td></tr>` +
-        (open ? `<tr class="detail"><td colspan="9"><div class="posts">${detail(t)}</div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="9" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
+        (open ? `<tr class="detail"><td colspan="12"><div class="posts">${detail(t)}</div></td></tr>` : "");
+    }).join("") : `<tr><td colspan="12" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
     $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
       所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
-      「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光是抓取当时的快照。`;
+      「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光读 <code>posts/*.jsonl</code> 的最新值（重抓会更新），不是 <code>mentions.csv</code> 的首次快照。
+      默认<b>折叠只有 1 人说过的票</b>——按「含只有 1 人说过的」全都在。
+      <b>T+k vs ${esc(D.bench||"SPY")}</b>：峰值日（窗口内提及人数最高的 ET 日，并列取最早）当天或之前
+      最后一个收盘为锚，往后数 k 个交易日，个股收益减 ${esc(D.bench||"SPY")} 同期收益（event study 的
+      market-adjusted model，AR=R_i−R_m）。<code>无价格</code>＝本地没有这只票的行情，不外抓；
+      <code>未到期</code>＝T+k 那天还没收盘。口径见 <code>data/reference/METRIC_SOURCES.md</code>。`;
   } else if (S.v === "p"){
     const q = normQ(S.q);
     const rows = D.people.filter(p => !q || p.h.toLowerCase().includes(q) || p.syms.some(s => s.toLowerCase().includes(q)));
@@ -357,7 +389,7 @@ $("#dates").addEventListener("click", e => {
   [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x === b));
   render();
 });
-for (const [id, key] of [["#cash","cash"],["#idx","idx"],["#wallonly","wallonly"]]){
+for (const [id, key] of [["#cash","cash"],["#idx","idx"],["#wallonly","wallonly"],["#solo","solo"]]){
   $(id).addEventListener("click", e => {
     S[key] = !S[key]; e.currentTarget.setAttribute("aria-pressed", S[key]); render();
   });
@@ -365,7 +397,8 @@ for (const [id, key] of [["#cash","cash"],["#idx","idx"],["#wallonly","wallonly"
 $("#sort").addEventListener("change", e => { S.sort = e.target.value; render(); });
 $("#flags").addEventListener("click", e => {
   const b = e.target.closest(".flag"); if (!b || !b.dataset.sym) return;
-  S.v = "t"; S.q = b.dataset.sym; S.idx = true; S.date = "all";
+  S.v = "t"; S.q = b.dataset.sym; S.idx = true; S.date = "all"; S.solo = true;
+  $("#solo").setAttribute("aria-pressed", true);
   $("#q").value = b.dataset.sym; $("#idx").setAttribute("aria-pressed", true);
   [...$("#views").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.v === "t"));
   [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.d === "all"));
