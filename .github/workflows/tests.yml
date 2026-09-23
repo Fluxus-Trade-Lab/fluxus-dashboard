@@ -25,8 +25,65 @@
 # hole survived in.
 name: tests
 
+# 2026-09-23 (T-0923-121): trigger narrowed after two inbox-flood incidents in
+# one week. Old `on: push:` fired on ANY branch, ANY path -- so every agent
+# worktree push (agent/*, feat/*, chore/*) and every pure-docs/material commit
+# to main queued a run and mailed Andy. 30 runs landed in 113 minutes right
+# before this change (08:59Z window; `gh run list --workflow tests.yml -L 30`),
+# most of them agent-branch pushes or a cancelled-by-the-next-push main commit.
+# 09-22 was universe_freshness; 09-23 15:02-15:45 JST was
+# test_frontend_count_thresholds red for 43 minutes on a Claire commit
+# (6b6676a9..22eb7017) -- a real red run, but the volume around it was noise.
+#
+# `push.branches: [main]` alone kills the agent-branch flood: those pushes
+# never reach GitHub Actions for this workflow anymore. branch-review (the
+# reviewer skill) already runs pytest locally in the worktree before a branch
+# is allowed to merge, so agent branches losing their own CI run is not a
+# coverage loss -- it moves the same pytest run earlier, off email.
+#
+# `paths-ignore` below trims pure-content pushes to main. Every entry was
+# checked against `git grep` for two things before being added: (a) does
+# pipeline/tests or tests load a real file from this path by path (not a
+# tmp_path fixture)? (b) does anything under it carry a 谁读/**reads**
+# declaration that audit_reads_declarations.py depends on? A path is only
+# ignored outright if both answers are no. Where a directory is mostly
+# content but has a real exception, the exception is carved back in with a
+# `!` negation (order matters: later patterns win) instead of dropping the
+# whole directory from the ignore list. `data/reference/` and `.claude/`
+# are deliberately NOT in this list at all: data/reference/schema_snapshot.json
+# and data/reference/tape_SPX_20260807_sample.json are read directly by
+# test_ep_screeners.py / test_output_shape_guards.py / tests/flow/test_block.py,
+# and .claude/hooks/*.py (ruling_stop_gate, skill_stop_gate, task_test_gate)
+# plus .claude/skills/daily-recap/SKILL.md are loaded by path in
+# test_ruling_stop_gate.py / test_skill_stop_gate.py / test_task_test_gate.py /
+# test_daily_recap_skill_dryrun_guard.py -- carving safe exceptions out of
+# those two would have left more surface than it saved. If you add new
+# tooling under Fluxus_Brand/, data/content/, or data/research/, re-run the
+# same two grep checks before assuming it's covered by an existing `!` line.
+#
+# 谁发现红了：the suite is loud-not-blocking (see SEVERITY note below) --
+# nothing here gates the nightly pipeline. A red run here surfaces at the
+# next morning check (failure-triage skill, T-0922-61) or whenever a human
+# next opens the Actions tab; it does not page anyone by itself.
 on:
   push:
+    branches: [main]
+    paths-ignore:
+      - 'Fluxus_Substack/**'
+      - 'docs/**'
+      - 'Fluxus_Brand/**'
+      - '!Fluxus_Brand/brain/**'
+      - '!Fluxus_Brand/ops/campaigns/MAINTENANCE_2026-09-10.md'
+      - '!Fluxus_Brand/ops/campaigns/PIPELINE.md'
+      - '!Fluxus_Brand/ops/campaigns/roles/**'
+      - '!Fluxus_Brand/ops/tools/x_watch/**'
+      - 'data/content/**'
+      - '!data/content/x_watch/**'
+      - 'data/research/**'
+      - '!data/research/what_changed_2026-08/**'
+      - '!data/research/night_reports/INBOX.md'
+      - '!data/research/repo_health/2026-09-11_board_consumers.md'
+      - '!data/research/system_audit_2026-08/PLAN.md'
   pull_request:
   workflow_dispatch:
 
