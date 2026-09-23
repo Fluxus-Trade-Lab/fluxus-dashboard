@@ -33,7 +33,7 @@ owner: ops
 ## 结构（对齐他的 PDF 规格 `Daily_Recap_Workflow_Spec.md`，每节一句话职责）
 
 1. **标题**：paraphrase 当天性格 + 谁领涨 + 谁是问题；基调色 涨绿/跌红/震荡蓝
-2. **The Big Picture**：一段。骨架用他当天 Discord 的句子（例：「QQQ starts acting strong while SPY weaker now. since semi and mags are stronger」），每句挂上量化它的读数
+2. **The Big Picture**：一段，两拍（见裁决记录 [2026-09-19]），写法约束见 [2026-09-22] 与 [2026-09-23]（判据前置 / 反事实 / 判断带风险条款）。骨架用他当天 Discord 的句子（例：「QQQ starts acting strong while SPY weaker now. since semi and mags are stronger」），每句挂上量化它的读数
 3. **Index Action**：三列等宽表 `% | 技术变化（事件！）| 关键位/备注`；关键位是判断 → `⟨Andy⟩`
 4. **Founders Note**：他手写的，Sheet 里取；取不到留白，永不代笔
 5. **What Led**：按板块分组，个股一行＝名字+%+RS+事件；**他点过名的票必须在**（Top watch / 论点股 / doing good 的全算）；**领涨落后每行必须写出驱动的 ticker**（Andy 2026-09-15），只有真正无单票可指的整组状态变化才允许没有 ticker
@@ -210,6 +210,26 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
 - **◇ 要能指到出处**：09-21 Big Picture 把「AMD–Meta 扩大合作 ◇」写成跳空的原因，字幕里没有，材料包里也只有 Discord 一句「OPEN AI and META are big customers」。指不到出处的事件不进 Big Picture。
 - **Big Picture 学对照组的写法**（「没讲清楚我的要求，中文版也按教材语气改，big picture学习字幕参照组。1999的案例今天不用写进去」；前一轮他的读法：「文风字幕好很多。传达的大方向信息和我们一样」）：短句，一句只讲一件事；领涨按组写，每组挂 1–2 只代表个股和涨幅（v3 全删个股被他打回：「个股你去掉了，我觉得去掉的太多」），其余进表格；分化写完立即给「因为」（09-21：美元）；最后一句换尺度（周线 / 季节性 / 历史），但不是每个字幕素材都要用——09-21 的 1929/1999 罕见统计他裁定不写。09-21 v3 样本：定性句 → 趋势线与底部 → 窄领涨（大市值、CPU、AI 存储）→ 分化 + 美元原因 → 新低 16:1 → 季节性收尾，全段 4 个数。ZH 全文（含教育、纪律、盘中评论、表格备注）都按教材语气改，改长了就删例子，不降字号。**语域取中**（「在之前口语化的版本和现在的教材版本之间找到一个平衡，语言简洁的平衡，和突出重点信息。另外标题也是要改的内容之一。口语化不行」）：不用俚语动词（捅开/扛着/接走），也不堆「位于…之上」「由…降至…」这类公文腔；短句、主谓直给，标题同样适用（EN 也不用 never showed up 这类口语）。v4 样本：「指数突破上周的整理区间，重回上升趋势；但推动突破的是大市值股票，不是整个市场。」
 - **教育题术语用标准中文译名，并附英文原名**（「凹槽支点 英文也给出」「也确认中文专业术语是不是凹槽支点」）：写之前先查原书中文版或主流中文社区的译法，标题和正文第一次出现时写成「中文（English）」。09-21 例：pocket pivot 的标准译名是「口袋支点」（Kacher & Morales《像欧奈尔信徒一样交易》中文版），我们原先写的「凹槽支点」是自造的；示意图标注在 `visual_figs.py` 里同步改（已合 main `ef9707a6`）。
+
+### [2026-09-23] 对照组三条差距入规（Andy 原话「把这三条差距写进复盘的写作规则里，你改进学习」；来源 09-22 对照组 `writing_note_2026-09-22.md`）
+
+三条都是**写法约束，不是造判断**——素材（字幕叙事 / 他的话）里有就写出来，没有就整句不写，三条法 C 不变。适用于 Big Picture 两拍与纪律 1–6，日刊周刊通用。
+
+1. **判据前置，结论后置。** 先写「这种局面接下来要求什么」，再写它发生了没有；不许把判词甩在最前面，让读者只能接受、无法自己复核。
+   - ✗ 09-22 我们：「Monday's breakout passed its first test: the gap was not given back.」
+   - ✓ 对照组：「What a strong Monday asks for on Tuesday is that nothing be given back, and nothing was.」
+   - 人工自检：Big Picture 第一拍出现 passed / failed / confirmed / held 这类判词时，它前面必须已经有一把尺子。
+
+2. **至少一句反事实**——写出「本来不想看到什么，而它没发生」。信号常常是某样东西的缺席；不写出来，发生了的事就没有重量。
+   - ✓ 对照组：「What was wanted after that was the absence of a hard reversal of the kind the tape kept producing between August 4th and last Wednesday.」
+   - 素材里找不到「没发生的那件事」就不写，不许编一个出来凑。
+
+3. **进攻性判断自带风险条款。** 凡是指向「该站在哪边、该拿什么」的句子，同一句或下一句必须交代错了怎么办（止损方式或失效条件），出处同判断本身。
+   - ✗ 09-22 我们：「the position belongs where relative strength already is.」后面没有下文，判断是悬空的。
+   - ✓ 对照组讲小盘超卖：「the discipline is a tight stop rather than a moving-average confirmation… If it fails, it fails.」
+
+**不让的部分**（对照组没有、我们保留）：广度读数是量出来的、能追到字段（09-22 的 324/170、McClellan −22.3 → −10.8、T2108 31.6 → 33.4）；What Led/Lagged 每行点名驱动的 ticker。**两边数字冲突以我方字段为准，并写清是哪一种口径**——对照组说的多是指数/ETF，我方常是成分组内均值（09-22 半导体 +0.8% vs Semiconductors Broad +2.25%、Mag 7 −0.55% vs Tech Mega Caps 9 只 −0.63% 都是这个差，不是错）。
+
 
 ---
 
