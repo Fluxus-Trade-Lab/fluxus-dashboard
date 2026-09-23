@@ -180,6 +180,9 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
       <option value="views">按总曝光</option>
       <option value="sym">按代码</option>
       <option value="t5">按 T+5 相对基准</option>
+      <option value="rs">按 RS 评级</option>
+      <option value="d50">按距 50 日线</option>
+      <option value="bask">按篮子数</option>
     </select>
     <span class="count" id="count"></span>
   </div>
@@ -207,6 +210,29 @@ const relCell = (t,k) => {
   if (!c) return `<span class="rel na">—</span>`;
   if (c[0] === null) return `<span class="rel na">${esc(c[1])}</span>`;
   return `<span class="rel ${c[0]>0?"up":c[0]<0?"dn":""}">${c[0]>0?"+":""}${c[0].toFixed(2)}%</span>`;
+};
+
+/* 结构三列（RS 评级 · 距 50 日线% · ETF 篮子）：读 data/output 的现成字段，
+   查不到就是「无」——不写 0、不留空。0 分的 RS 和「没查到这只票」是两件事。 */
+const naCell = () => `<span class="rel na">无</span>`;
+const rsCell = t => (t.rs === null || t.rs === undefined) ? naCell()
+  : `<span class="rel${t.rs >= 80 ? " up" : ""}">${Math.round(t.rs)}</span>`;
+const d50Cell = t => (t.d50 === null || t.d50 === undefined) ? naCell()
+  : `<span class="rel ${t.d50>0?"up":t.d50<0?"dn":""}">${t.d50>0?"+":""}${(t.d50*100).toFixed(2)}%</span>`;
+const baskCell = t => {
+  const b = t.bask || [];
+  if (!b.length) return naCell();
+  const head = b.slice(0,2).map(esc).join(" / ");
+  return `<span title="${esc(b.join(" / "))}">${head}${b.length>2?` +${b.length-2}`:""}</span>`;
+};
+
+/* 两边都没读数 → 0（交给后面的次级判据）；一边没有 → 它排最后。都有 → null，由调用方比大小 */
+const nullLast = (x,y) => {
+  const nx = (x===null||x===undefined), ny = (y===null||y===undefined);
+  if (nx && ny) return 0;
+  if (nx) return 1;
+  if (ny) return -1;
+  return null;
 };
 
 const np = (t,d) => d && t.days[d] ? t.days[d].p.length : 0;
@@ -281,7 +307,11 @@ function tickers(){
                 /* 没读数的票排在最后，不混进排序里假装是 0 */
                 t5:(a,b)=>{const x=relv(a,5),y=relv(b,5);
                            if (x===null&&y===null) return b.tv-a.tv;
-                           if (x===null) return 1; if (y===null) return -1; return y-x;} }[S.sort];
+                           if (x===null) return 1; if (y===null) return -1; return y-x;},
+                /* 同上：没读数的排最后，不当 0 混进排序 */
+                rs:(a,b)=>nullLast(a.rs,b.rs)??(b.rs-a.rs),
+                d50:(a,b)=>nullLast(a.d50,b.d50)??(b.d50-a.d50),
+                bask:(a,b)=>((b.bask||[]).length-(a.bask||[]).length)||b.tv-a.tv }[S.sort];
   r.sort(cmp);
   if (q) r.sort((a,b) => (b.sym.toLowerCase()===q) - (a.sym.toLowerCase()===q));
   return r;
@@ -301,7 +331,9 @@ function render(){
       <th class="num">${LAST.slice(5)}</th><th class="num">对比前日</th><th>立场</th>
       <th class="num">提及</th><th class="num">曝光</th>
       <th class="num">峰值日</th><th class="num">T+1 vs ${esc(D.bench||"SPY")}</th>
-      <th class="num">T+5 vs ${esc(D.bench||"SPY")}</th><th>谁在说</th></tr>`;
+      <th class="num">T+5 vs ${esc(D.bench||"SPY")}</th>
+      <th class="num">RS 评级</th><th class="num">距 50 日线</th><th>ETF 篮子</th>
+      <th>谁在说</th></tr>`;
     tb.innerHTML = rows.length ? rows.map(t => {
       const n = np(t,LAST), o = np(t,PREV), d = n-o;
       const who = [...new Set(t.m.filter(m => S.date==="all" || m.d===S.date).map(m => "@"+m.h))];
@@ -314,9 +346,11 @@ function render(){
         <td>${stanceCells(t)}</td><td class="num">${t.tn}</td><td class="num">${nf(t.tv)}</td>
         <td class="num" style="color:var(--faint);font-size:11.5px">${esc(t.peak ? t.peak.slice(5) : "—")}</td>
         <td class="num">${relCell(t,1)}</td><td class="num">${relCell(t,5)}</td>
+        <td class="num">${rsCell(t)}</td><td class="num">${d50Cell(t)}</td>
+        <td style="font-size:11.5px;color:var(--faint)">${baskCell(t)}</td>
         <td class="who">${esc(who.slice(0,4).join(" "))}${who.length>4?` +${who.length-4}`:""}</td></tr>` +
-        (open ? `<tr class="detail"><td colspan="12"><div class="posts">${detail(t)}</div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="12" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
+        (open ? `<tr class="detail"><td colspan="15"><div class="posts">${detail(t)}</div></td></tr>` : "");
+    }).join("") : `<tr><td colspan="15" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
     $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
       所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
       「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光读 <code>posts/*.jsonl</code> 的最新值（重抓会更新），不是 <code>mentions.csv</code> 的首次快照。
@@ -324,7 +358,11 @@ function render(){
       <b>T+k vs ${esc(D.bench||"SPY")}</b>：峰值日（窗口内提及人数最高的 ET 日，并列取最早）当天或之前
       最后一个收盘为锚，往后数 k 个交易日，个股收益减 ${esc(D.bench||"SPY")} 同期收益（event study 的
       market-adjusted model，AR=R_i−R_m）。<code>无价格</code>＝本地没有这只票的行情，不外抓；
-      <code>未到期</code>＝T+k 那天还没收盘。口径见 <code>data/reference/METRIC_SOURCES.md</code>。`;
+      <code>未到期</code>＝T+k 那天还没收盘。口径见 <code>data/reference/METRIC_SOURCES.md</code>。
+      <b>RS 评级 · 距 50 日线 · ETF 篮子</b>：直接读 dashboard 管线已算好的 <code>data/output/</code> 字段
+      （<code>universe.json</code> 的 <code>rs_rating</code> / <code>sma50_dist</code>，
+      <code>groups.json</code> 里 <code>method=="etf"</code> 的篮子成分），<b>没有新算任何指标</b>；
+      查不到这只票就写<code>无</code>，不写 0。一只票可以同时属于多个篮子，全留（悬停看全部）。`;
   } else if (S.v === "p"){
     const q = normQ(S.q);
     const rows = D.people.filter(p => !q || p.h.toLowerCase().includes(q) || p.syms.some(s => s.toLowerCase().includes(q)));

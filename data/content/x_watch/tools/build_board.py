@@ -28,6 +28,19 @@ BASKETS_DIR = ROOT / "data/output/baskets"
 BENCH = "SPY"          # 基准单独取、单独验，缺了抛错（method_denominator_is_not_optional）
 HORIZONS = (1, 5)      # T+k，交易日
 
+# 结构三列（T-0923-88）：**全部读 data/output 现成字段，一个都不新算**。
+#   universe.json rows[]  → rs_rating（IBD 式 1–99 相对强弱评级）· sma50_dist（距 50 日线，小数）
+#   asset_signals.json rows[] → sma50_dist（指数/宽基 ETF 那 26 行，universe 里没有它们）
+#   groups.json themes[]  → method=="etf" 的篮子，group 是篮子名、tickers 是成分
+# 取不到就是「无」，不猜不补不折算。
+UNIVERSE_PATH = ROOT / "data/output/universe.json"
+SIGNALS_PATH = ROOT / "data/output/asset_signals.json"
+GROUPS_PATH = ROOT / "data/output/groups.json"
+
+# X 热度（给 dashboard 的数据文件，前端归 UI Claire）
+X_HEAT_PATH = ROOT / "data/output/x_heat.json"
+HEAT_WINDOW = 7        # 近 N 个有数据的 ET 日
+
 STANCES = ["long", "watching", "short", "exited", "recap", "mention"]
 
 # 指数与宽基 ETF：它们属于日报第 3 节「走势」，不是第 1 节的候选票。
@@ -179,6 +192,158 @@ def attach_prices(tickers: list[dict], tickers_dir: Path = None,
                 t["rel"][k] = rel_vs_bench(closes, bench, cal, t["peak"], k)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 结构三列：RS 评级 · 距 50 日线% · 所属 ETF 篮子（T-0923-88）
+#
+# 三列全部是 **dashboard 管线已经算好、落在 data/output 里的字段**，这里只做一次
+# join 和一次反向索引，**不新算任何指标**：
+#   RS 评级      = universe.json rows[].rs_rating   （缺 → 无）
+#   距 50 日线%  = universe.json rows[].sma50_dist  （小数，×100 才是 %；缺 → 无）
+#                  指数/宽基 ETF 不在 universe 里，回落到 asset_signals.json 同名字段
+#   所属 ETF 篮子 = groups.json themes[] 里 method=="etf" 那批的 tickers 反查
+#
+# ⚠️ 一只票可以同时属于多个篮子（09-23 实测最多 4 个：$TSLA —— method=="etf" 口径下的实测上限，
+#    全 data/output 与本台账内都是 4。把 industry / rule 那两类组也算进来时 $BAND 有 8 个，
+#    但那些不是 ETF 篮子，不进这一列）。**全留，不取第一个** ——
+#    「它在几个篮子里」本身就是读数；取第一个会让同一只票在不同跑次里换篮子。
+# ⚠️ 取不到一律写「无」，不写 0、不写空字符串：0 分的 RS 和「没查到这只票」是两件事。
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _json_rows(path: Path, key: str = "rows") -> list[dict]:
+    """读 data/output 的某个 JSON 的行数组。文件不在/坏了就当没有，不让看板挂掉。"""
+    if not path.exists():
+        return []
+    try:
+        d = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError, UnicodeDecodeError):
+        return []
+    if isinstance(d, dict):
+        rows = d.get(key)
+        return rows if isinstance(rows, list) else []
+    return d if isinstance(d, list) else []
+
+
+def load_structure(universe_path: Path = None, signals_path: Path = None,
+                   groups_path: Path = None) -> dict[str, dict]:
+    """{SYM: {"rs": int|None, "d50": float|None, "bask": [篮子名…]}}。"""
+    universe_path = UNIVERSE_PATH if universe_path is None else universe_path
+    signals_path = SIGNALS_PATH if signals_path is None else signals_path
+    groups_path = GROUPS_PATH if groups_path is None else groups_path
+
+    out: dict[str, dict] = {}
+
+    def slot(sym: str) -> dict:
+        return out.setdefault(sym, {"rs": None, "d50": None, "bask": []})
+
+    for r in _json_rows(universe_path):
+        sym = (r.get("ticker") or "").upper()
+        if not sym:
+            continue
+        s = slot(sym)
+        s["rs"] = r.get("rs_rating")
+        s["d50"] = r.get("sma50_dist")
+
+    # 指数/宽基 ETF 走这份；只回填 universe 里没给到的格，不覆盖个股读数
+    for r in _json_rows(signals_path):
+        sym = (r.get("ticker") or "").upper()
+        if not sym:
+            continue
+        s = slot(sym)
+        if s["d50"] is None:
+            s["d50"] = r.get("sma50_dist")
+        if s["rs"] is None:
+            s["rs"] = r.get("rs_rating")          # 这份目前没有这个字段 → 仍是 None＝无
+
+    for th in _json_rows(groups_path, "themes"):
+        if th.get("method") != "etf":
+            continue
+        name = th.get("group")
+        if not name:
+            continue
+        for sym in th.get("tickers") or []:
+            b = slot(str(sym).upper())["bask"]
+            if name not in b:
+                b.append(name)
+    for s in out.values():
+        s["bask"].sort()
+    return out
+
+
+def attach_structure(tickers: list[dict], universe_path: Path = None,
+                     signals_path: Path = None, groups_path: Path = None) -> None:
+    """就地给每只票挂 rs / d50 / bask。查不到的票三个键都在，值是 None / []。"""
+    idx = load_structure(universe_path, signals_path, groups_path)
+    for t in tickers:
+        s = idx.get(t["sym"].upper(), {})
+        t["rs"] = s.get("rs")
+        t["d50"] = s.get("d50")
+        t["bask"] = list(s.get("bask") or [])
+
+
+def rs_cell(v) -> str:
+    return "无" if v is None else str(int(v))
+
+
+def d50_cell(v) -> str:
+    """小数 → 百分比字符串。0.1406 → +14.06%。"""
+    return "无" if v is None else f"{v * 100:+.2f}%"
+
+
+def bask_cell(v) -> str:
+    return " / ".join(v) if v else "无"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# X 热度（给 dashboard 个股页的数据文件；前端归 UI Claire）
+#
+# 与 ticker_daily.csv 同源同口径：**人数不是帖数**，一条清单帖提十个代码只算一个人。
+#   people_7d  = 窗口内提到这只票的**不重复 handle 数**（跨日去重，不是日人数相加）
+#   peak_day   = 窗口内单日提及人数最高的 ET 日，**并列取最早**（与峰值日列同一函数）
+# ⚠️ **人数的写实口径**：进表的票必须在窗口内至少出现过一次带 $ 的写法（裸代码那半边全是
+#    RS/EMA/WHAT 这类假代码，README 口径一），但一只票进表之后，它的 people_7d **把带 $ 和
+#    不带 $ 的写法合并去重**——因为 days[] 就是这么聚合的，与 ticker_daily.csv 的日人数
+#    完全同口径（一个量一个家，不另立第二本账）。09-23 实测 414 只票里有 89 只两种口径不同，
+#    最大差 5 人（$NYSE 合并 5 / 纯 cashtag 0）；差 >=3 的 7 只里 $SPX 9/5、$BTC 10/6、
+#    $VIX 4/1、$NYSE 5/0 是指数与宽基代码，$META 14/11、$LITE 14/11、$DE 6/3 是个股。
+#    给 Claire 的契约行照此写实。
+# ─────────────────────────────────────────────────────────────────────────────
+
+def x_heat(data: dict, window: int = HEAT_WINDOW) -> dict:
+    dates = data["dates"][-window:] if data["dates"] else []
+    rows = []
+    for t in data["tickers"]:
+        if not t.get("cash"):
+            continue
+        days = {d: v for d, v in (t.get("days") or {}).items() if d in dates}
+        people = {h for v in days.values() for h in (v.get("p") or [])}
+        if not people:
+            continue
+        rows.append({
+            "ticker": t["sym"],
+            "people_7d": len(people),
+            "posts_7d": sum(v.get("n") or 0 for v in days.values()),
+            "days_7d": sum(1 for v in days.values() if v.get("p")),
+            "peak_day": peak_day(days),
+            "peak_people": max((len(v.get("p") or []) for v in days.values()), default=0),
+            "is_index": bool(t.get("idx")),
+        })
+    rows.sort(key=lambda r: (-r["people_7d"], -r["posts_7d"], r["ticker"]))
+    return {
+        "window_days": window,
+        "window": {"start": dates[0] if dates else None,
+                   "end": dates[-1] if dates else None},
+        "count": len(rows),
+        "source": "data/content/x_watch/posts/*.jsonl（同 ticker_daily.csv），"
+                  "由 data/content/x_watch/tools/build_board.py 生成",
+        "note": "people_7d = 窗口内不重复提及人数（跨日去重，非日人数相加）；"
+                "peak_day = 单日人数最高的 ET 日，并列取最早。"
+                "进表的票必须在窗口内至少出现过一次带 $ 的写法，但人数把带 $ 与不带 $ 的"
+                "写法合并去重（与 ticker_daily.csv 日人数同口径）。"
+                "这是「有多少人在说」，不是情绪、不是看多看空。",
+        "rows": rows,
+    }
+
+
 def build() -> dict:
     posts, stance, wall = load_posts(), load_stance(), load_wall()
     dates = sorted({p["et_date"] for p in posts})
@@ -235,6 +400,7 @@ def build() -> dict:
         })
     out_t.sort(key=lambda t: (-len(t["days"].get(dates[-1], {}).get("p", [])), -t["tv"]))
     attach_prices(out_t)
+    attach_structure(out_t)
 
     # 按人
     ppl = defaultdict(lambda: {"posts": 0, "syms": set(), "views": [], "bk": 0, "days": set()})
@@ -318,7 +484,8 @@ def main() -> None:
     with (BASE / "ticker_daily.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         w = csv.writer(fh)
         w.writerow(["ticker", *data["dates"], "总提及", "总曝光", "墙后", "立场",
-                    "峰值日", f"T+1 vs {BENCH}", f"T+5 vs {BENCH}"])
+                    "峰值日", f"T+1 vs {BENCH}", f"T+5 vs {BENCH}",
+                    "RS 评级", "距 50 日线%", "ETF 篮子"])
         for t in data["tickers"]:
             if not t["cash"]:
                 continue
@@ -330,7 +497,16 @@ def main() -> None:
                 " ".join(f"{k}:{v}" for k, v in sorted(t["st"].items())),
                 t.get("peak") or "",
                 *[price_cell(*t["rel"][k]) for k in HORIZONS],
+                rs_cell(t.get("rs")), d50_cell(t.get("d50")), bask_cell(t.get("bask")),
             ])
+
+    # 给 dashboard 个股页的「X 热度」列(前端归 UI Claire)。这是本工具唯一写进
+    # data/output/ 的文件,只新增,不碰任何既有 output。
+    heat = x_heat(data)
+    X_HEAT_PATH.write_text(
+        json.dumps(heat, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"x_heat.json ← {heat['count']} 只票 / 窗口 "
+          f"{heat['window']['start']}→{heat['window']['end']}")
 
     if TPL.exists():
         html = TPL.read_text(encoding="utf-8").replace(
