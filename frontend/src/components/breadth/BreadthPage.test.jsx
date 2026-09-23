@@ -53,16 +53,16 @@ const withFetch = (payloads) => { resetMarketLightCache(); return vi.stubGlobal(
   return Promise.resolve({ ok: !!hit, json: () => Promise.resolve(hit ? hit[1] : null) })
 }) }
 
-describe('BreadthPage — in the course\'s order (09-11)', () => {
+describe('BreadthPage — the morning walk (09-23)', () => {
   it('mounts on the real file without throwing', () => {
     expect(() => renderPage()).not.toThrow()
   })
 
-  it('leads with the course\'s Core: verdict, the light, brightness', () => {
+  it('leads with the verdict, then ch.7 §7.2\'s six steps in order', () => {
     renderPage()
     expect(screen.getByText('Today')).toBeInTheDocument()
-    expect(screen.getByText('Step 1 · The light')).toBeInTheDocument()
-    expect(screen.getByText('Step 2 · Brightness')).toBeInTheDocument()
+    const steps = [...document.querySelectorAll('section[aria-label^="Step"] h2')].map((h) => h.textContent)
+    expect(steps).toEqual(['① · Index', '② · Breadth', '③ · RS leadership', '④ · RS themes', '⑤ · News & events', '⑥ · Your book'])
     // the old second verdict is gone from the page
     expect(screen.queryByText(/signals say no/)).not.toBeInTheDocument()
   })
@@ -73,13 +73,13 @@ describe('BreadthPage — in the course\'s order (09-11)', () => {
     expect(screen.getByText(/The light — not measured/)).toBeInTheDocument()
   })
 
-  it('reads a red light as AVOID and fades step 2, from a contract-shaped file', async () => {
+  it('reads a red light as AVOID and fades steps ②–⑥, from a contract-shaped file', async () => {
     withFetch({ market_light: ML })
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
     expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
-    expect(screen.getByText('in-between: counts as red')).toBeInTheDocument()
-    expect(screen.getByText(/the course says skip this step today/)).toBeInTheDocument()
+    expect(screen.getByText(/In-between days count as red/)).toBeInTheDocument()
+    expect(screen.getByText(/the course says skip the rest today/)).toBeInTheDocument()
     // the trend-day count is off the main screen (course marks it for deletion)
     expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
     // L6B.2 (the seven-gear throttle) left the course on 09-20 — Andy: 「L6B.2 --L6B.6全部删除」 — and left the page with it
@@ -148,7 +148,7 @@ describe('BreadthPage — in the course\'s order (09-11)', () => {
   it('pins today as the archive\'s first row, bold, with the A/D line the tiles used to carry', () => {
     renderPage()
     fireEvent.click(screen.getByText('Archive').closest('button'))
-    const today = document.querySelector('tbody tr')
+    const today = document.querySelector('tr.today')
     expect(today.className).toMatch(/\btoday\b/)
     expect(today.className).toMatch(/sticky/)
     expect(today.className).toMatch(/font-semibold/)
@@ -217,9 +217,9 @@ describe('nothing the old verdict banner printed is lost', () => {
 /* Andy 09-11: 「如果是有内容被删除了, 那我希望被删除的内容先放在折叠页里面」 — every
    item the rebuild had deleted is back, in a fold. One assertion per item. */
 describe('deleted content is back, in the folds', () => {
-  it('summary tiles: the four readings in words, with percentiles', () => {
+  it('Stockbee rulers: the four readings in words, with percentiles', () => {
     renderPage()
-    fireEvent.click(screen.getByText('Summary tiles').closest('button'))
+    fireEvent.click(screen.getByText('Stockbee rulers').closest('button'))
     for (const l of [/^Up 4% \/ Down 4%/, /^5-day \/ 10-day ratio/, /^Quarterly breadth \(25%\+\)/, 'T2108']) {
       expect(screen.getAllByText(l).length).toBeGreaterThan(0)
     }
@@ -258,16 +258,14 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
     expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
-    // Q1 is shown but does not vote (Studio Q 09-13); only Q2 carries `provisional`
+    // only the leaders list carries `provisional`; Q1's scan count is named as such in the verdict line
     expect(screen.getAllByText('provisional').length).toBe(1)
-    expect(screen.getByText('shown, does not vote')).toBeInTheDocument()
-    expect(screen.getByText(real.brightness.setups.label)).toBeInTheDocument()
     expect(screen.queryByText(/10\+ bright/)).not.toBeInTheDocument()
     // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
     expect(screen.queryByText(/synthetic — combined from Q2 and Q3/)).not.toBeInTheDocument()
-    const q3 = { confirm: 'Confirming', mixed: 'Mixed', negate: 'Not confirming' }[real.brightness.breadth.state]
-    expect(screen.getByText(q3)).toBeInTheDocument()
-    expect(screen.getByText(/no scan yet for BO \/ HTF/)).toBeInTheDocument()
+    // the four-question table is on the page, with the questions the pipeline cannot answer marked
+    expect(screen.getByText('New highs − lows')).toBeInTheDocument()
+    expect(screen.getByText(/5 EMA is not in the pipeline/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 })
@@ -284,7 +282,7 @@ describe('Studio Q rulings on the page', () => {
     vi.unstubAllGlobals()
   })
 
-  it('tags a green-day verdict as synthetic, and shows breadth\'s three-valued answer', async () => {
+  it('tags a green-day verdict as synthetic, and says what it rests on', async () => {
     const green = { ...real, verdict: 'dim', verdict_pending: null, verdict_synthetic: true,
       spy: { ...real.spy, light: 'green', checks_passed: 3 },
       brightness: { ...real.brightness, breadth: { state: 'mixed' } } }
@@ -292,7 +290,8 @@ describe('Studio Q rulings on the page', () => {
     renderPage()
     expect((await screen.findAllByText('DIM')).length).toBeGreaterThan(0)
     expect(screen.getByText(/synthetic — combined from Q2 and Q3/)).toBeInTheDocument()
-    expect(screen.getByText('Mixed')).toBeInTheDocument()
+    // the verdict line says what the word rests on
+    expect(screen.getByText(/a scan count, not the lesson/)).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 })

@@ -15,31 +15,36 @@ import BreadthTable from './BreadthTable'
 import TimeMachineBar from './TimeMachineBar'
 import { useTimeMachine } from './useTimeMachine'
 import { useMarketLight } from '../../hooks/useMarketLight'
-import { VerdictCard, LightStep, BrightnessStep } from './CourseRead'
+import MorningRead from './MorningRead'
+import { useGroups } from '../../hooks/useGroups'
+import { useGroupsHistory } from '../../hooks/useGroupsHistory'
+import { useWatchlist } from '../../hooks/useWatchlist'
+import { useCorrectionRisk } from '../../hooks/useCorrectionRisk'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
 /**
- * Market State, in the course's order (2026-09-11).
+ * Market State — the course's morning walk (2026-09-23).
  *
- * Andy: 「market state页面还是非常奇怪。是整个组织架构出现了一些问题。」 The page's
- * two subjects — the nine-condition board and the propagation chain — came
- * from a member's review framework and a TSF teardown, not from the course,
- * and the course's own first two steps were nowhere on it. Studio Q ruled
- * (docs/plans/2026-09-11-market-state-by-the-course.md §五) and Andy picked the
- * layout (§六):
+ * 09-11 put the old course's Core (light → brightness) on top and folded the
+ * rest. Then the course was rewritten as 地基篇 ch.1–7, and Andy (09-23):
+ * 「整个页面包括折叠的部分，形式太乱，内容没有逻辑和思考脉络」. Two previews later he
+ * picked the skeleton: 「A 的骨架，把B它的「四问对照表」搬进 A 的第①段当指数那格的正文」.
  *
- *   main screen = the course's Core — one verdict, Lesson 6's light, Lesson 7's
- *                 brightness (faded when the light is red)
- *   folds       = the course's Mastery — and everything that was never the
- *                 course's, labelled as such
- *
- * The old one-line reading at the top ("5 signals say no…") is gone: a second
- * verdict on the same page is the page arguing with itself (§五.2).
+ *   main screen = MorningRead: verdict, then ch.7 §7.2's six steps in its
+ *                 fixed order, each with a "what changed" column
+ *   folds       = ch.1 §1.10's advanced read — the nine-row board and the
+ *                 fifteen conditions (awaiting Andy's cut), Stockbee's rulers,
+ *                 the engine's votes, Correction risk, rotation, benchmarks,
+ *                 and the archive
  */
 export default function BreadthPage({ data }) {
   const tm = useTimeMachine()
   const { data: ml } = useMarketLight()
+  const groups = useGroups()
+  const gh = useGroupsHistory()
+  const { data: watchlist } = useWatchlist()
+  const { data: correctionRisk } = useCorrectionRisk()
   const liveBreadth = data?.breadth
   const breadth = (tm.active && tm.sliced) ? tm.sliced.breadth : liveBreadth
   const mh = (tm.active && tm.sliced) ? tm.sliced.marketHealth : data?.market_health
@@ -76,36 +81,35 @@ export default function BreadthPage({ data }) {
       <PageHeader group="market" title="Market State"
         meta={[<DataFreshnessBadge key="fresh" sessionDate={session} />]} />
 
-      {/* CORE — the course's morning read, in Lesson 16 Block 1's order. The
-          verdict sits on top because it is the result of reading the two
-          steps under it (Lesson 7's IMG-2 draws it the same way). */}
-      <VerdictCard ml={ml} />
-      <LightStep ml={ml} />
-      <BrightnessStep ml={ml} breadthRows={liveBreadth.history?.rows} />
+      {/* CORE — the morning walk, ch.7 §7.2's order. */}
+      <MorningRead ml={ml} signals={data?.signals} rows={liveBreadth.history?.rows}
+                   themes={groups.themes} groupsHistory={gh.data} watchlist={watchlist}
+                   etfs={data?.etf_data} correctionRisk={correctionRisk} />
 
       <HowToRead>
         <p>
-          Read top to bottom, the way Lesson 16 reads the morning. <b>Step 1</b> is Lesson 6&rsquo;s traffic
-          light: three checks on SPY&rsquo;s 10- and 20-day lines — all three yes is green, anything else is red.
+          Read top to bottom, in the order Foundations ch.7 §7.2 fixes for the morning: index, breadth, RS
+          leadership, RS themes, news, your own book. The one word on top is the answer — full, dim or avoid. It
+          sets how aggressive to be; it never says which way the market goes.
         </p>
         <p>
-          <b>Step 2</b> is Lesson 7&rsquo;s brightness — only read when the light is green: how many quality
-          setups, whether the leaders are leading, whether breadth confirms. The one word on top is the answer:
-          full, dim or avoid. It sets how aggressive to be; it never says which way the market goes.
+          <b>Step ①</b> is ch.1&rsquo;s four questions on one table (daily, weekly, last week, new highs − lows) with
+          the light&rsquo;s own history under it. <b>Steps ②–⑥</b> are the rest of the walk; the column on the right
+          of each says what changed, because that is what a morning read is for.
         </p>
         <p>
-          Everything below is the Mastery half — the deeper reads, and two frameworks that are not the
-          course&rsquo;s (the board and the chain), kept and labelled as such.
+          Below the walk is ch.1 §1.10&rsquo;s advanced read, folded: the nine-row board and the fifteen conditions
+          (awaiting Andy&rsquo;s cut), Stockbee&rsquo;s rulers, the engine&rsquo;s votes, and the research panels.
         </p>
       </HowToRead>
 
       {/* Replay slices breadth only — it sits with the folds it replays. */}
       <TimeMachineBar tm={tm} />
 
-      {/* MASTERY — folded, present but out of the way (§五.6). */}
+      {/* ADVANCED — ch.1 §1.10, folded: present but out of the way. */}
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
         <Reference label="Breadth, advanced" count={4}
-                   note="% above the averages, McClellan, the up/down ratios and the quarterly spread (Lesson 7 mastery)">
+                   note="% above the averages, McClellan, the up/down ratios and the quarterly spread (§7.6 rulers, as charts)">
           <BreadthCharts data={breadth} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             <RatioChart rows={rows} />
@@ -114,13 +118,14 @@ export default function BreadthPage({ data }) {
         </Reference>
 
         <Reference label="Votes" count={1}
-                   note="twelve breadth and benchmark votes — evidence for Q3, no longer a verdict">
+                   note="the engine's twelve votes — evidence for step ②, never a verdict">
           <VoteCard verdict={verdict} session={session} dataQuality={breadth.data_quality} evidence />
         </Reference>
 
-        {/* Not the course's (§五.3): kept, never the subject, source named. */}
+        {/* ch.1 §1.10 lists this board's nine rows and the fifteen conditions as the
+            advanced read — pending Andy's cut (09-21: 「先放上去，然后我们做筛选」). */}
         <Reference label="Board & chain" count={2}
-                   note="nine-condition ladder and propagation — a member's review framework, not the course's">
+                   note="the nine-row board and its chain — ch.1 §1.10's advanced read, awaiting Andy's cut">
           <div className="space-y-3">
             <BoardCard board={breadth.state_board} history={breadth.history} session={session} />
             <ChainCard chain={breadth.state_board?.chain} />
@@ -143,8 +148,8 @@ export default function BreadthPage({ data }) {
         </Reference>
 
         {/* Restored 09-11 (Andy: deleted content goes back into a fold first). */}
-        <Reference label="Summary tiles" count={4}
-                   note="the old four-tile summary — ±4% thrust, 5/10-day ratio, quarterly 25%, T2108, with their words and percentiles">
+        <Reference label="Stockbee rulers" count={4}
+                   note="±4% thrust, 5/10-day ratio, quarterly 25%, T2108 — §7.6's count-based rulers, with their votes and percentiles">
           <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} lastRow={rows[rows.length - 1]} />
         </Reference>
 
