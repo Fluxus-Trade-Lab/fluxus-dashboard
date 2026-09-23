@@ -4,6 +4,7 @@ import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import BoardCard from './BoardCard'
 import MarketStateSummary from './MarketStateSummary'
 import ChainCard from './ChainCard'
+import ConditionsCatalog from './ConditionsCatalog'
 import VoteCard from './VoteCard'
 import RotationPanel from './RotationPanel'
 import BenchmarkPanel from './BenchmarkPanel'
@@ -120,6 +121,15 @@ export default function BreadthPage({ data }) {
         <Reference label="Votes" count={1}
                    note="the engine's twelve votes — evidence for step ②, never a verdict">
           <VoteCard verdict={verdict} session={session} dataQuality={breadth.data_quality} evidence />
+        </Reference>
+
+        {/* T-0923-60: the one screen Andy's cut reads from — what each of the board's
+            nine rows and the score's fifteen conditions measures, where the cut comes
+            from, standard or ours. Whatever he drops here comes off Board & chain and
+            Votes too (task's step 2). */}
+        <Reference label="Conditions catalog" count={24}
+                   note="what's measured, where the cut comes from, standard or ours — one screen for Andy's cut">
+          <ConditionsCatalog />
         </Reference>
 
         {/* ch.1 §1.10 lists this board's nine rows and the fifteen conditions as the
