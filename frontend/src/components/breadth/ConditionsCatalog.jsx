@@ -89,8 +89,10 @@ const CONDITIONS = [
     source: 'Stockbee 13%/34d scan — standard since 2026-09-18',
     status: 'standard' },
   { key: 'net_4pct', measures: "Today's 4% up minus down count, sign vs. 0",
-    source: 'Stockbee 4% breadth count — standard since 2026-09-05',
-    status: 'standard' },
+    source: 'Stockbee 4% counts (input, standard) — the net-against-zero condition itself has no '
+      + "Stockbee definition; renamed off 'thrust' because it shares none with his back-to-back "
+      + '300+ rule',
+    status: 'mixed' },
   { key: 'px_1m', measures: 'SPX trailing return over 21 sessions, sign vs. 0',
     source: 'No published source — 21 sessions is our stand-in for a month',
     status: 'custom' },
