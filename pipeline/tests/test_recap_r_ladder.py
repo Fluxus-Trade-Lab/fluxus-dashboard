@@ -141,6 +141,31 @@ def test_M1_does_not_fire_on_a_position_with_no_R():
     assert book_out(b, "2026-09-22")["pos"][0][3] is None
 
 
+def test_M1_lets_a_breakeven_stop_through_when_open_R_wobbles_near_zero():
+    """T-0923-58's review of the real 09-22 book: NBIS carried stop_R=0.00,
+    open_R=+0.54 — a stop trailed to breakeven on a name that hasn't run far
+    yet. If open_R drifts a little further down (or negative) before the stop
+    is hit or the sheet is updated, that is still real price action, not a
+    price leak, and must not SystemExit the whole PDF (T-0923-61)."""
+    b = _book()
+    b["positions"][0]["stop_R"] = 0.0
+    for orr in (0.54, 0.0, -0.3, 0.6, -0.6):
+        b["positions"][0]["open_R"] = orr
+        assert book_out(b, "2026-09-22")["pos"][0][3] == 0.0
+
+
+def test_M1_still_reddens_a_breakeven_stop_far_past_the_band():
+    """The exemption is a narrow band, not a blank check: a breakeven stop
+    against an open_R that has run far past it is exactly the kind of gap the
+    gate exists to catch (either a stale stop that should have fired, or a
+    genuine price leak), so it must still raise."""
+    b = _book()
+    b["positions"][0]["stop_R"] = 0.0
+    b["positions"][0]["open_R"] = -2.0
+    with pytest.raises(SystemExit, match="above the mark"):
+        book_out(b, "2026-09-22")
+
+
 # ---------- the cost point and the holding period ----------
 
 def test_the_page_draws_all_three_points_of_the_ladder():

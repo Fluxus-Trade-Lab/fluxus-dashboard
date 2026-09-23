@@ -238,10 +238,20 @@ def _book_money_gate(bkk: dict, D: str) -> None:
     cannot make. It is an exact relation between two numbers that are both
     already in R: a stop is never above the mark. A long trailed to +2.3R with
     the position at +7.4R is legal; a "stop" of 142.5 against +7.4R is a price.
+
+    One legal position looks like a violation of that relation: a stop
+    trailed to breakeven (stop_R == 0) on a name that has drifted back down
+    to near its entry (open_R a few tenths of an R either side of 0 — the
+    stop hasn't triggered yet, or the sheet hasn't caught up). That is real
+    price action, not a leak, so it is exempted rather than raised (T-0923-61,
+    found in T-0923-58's own review: NBIS 09-22 carried stop_R=0, open_R=0.54).
     """
+    BREAKEVEN_BAND_R = 0.6
     for p in bkk.get("positions") or []:
         sr, orr = p.get("stop_R"), p.get("open_R")
         if sr is not None and orr is not None and sr > orr + 1e-6:
+            if abs(sr) < 1e-6 and abs(orr) <= BREAKEVEN_BAND_R:
+                continue
             raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {sr} is above the mark {orr} — "
                              "that column is carrying a price, not an R")
     for leg in bkk.get("legs") or []:
