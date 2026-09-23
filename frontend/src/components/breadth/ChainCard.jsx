@@ -64,8 +64,11 @@ function LinkRow({ l }) {
   )
 }
 
-export default function ChainCard({ chain }) {
-  if (!chain?.length) return null
+export default function ChainCard({ chain: fullChain }) {
+  // 「指数修复」 left the board on 2026-09-23 (Andy's §1.10 cut); the chain now
+  // starts at thrust. Carrying values are the pipeline's and unchanged.
+  const chain = (fullChain ?? []).filter((l) => l.key !== 'index repair')
+  if (!chain.length) return null
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-5 h-full flex flex-col">
       <div className="flex items-baseline justify-between pb-3 mb-3

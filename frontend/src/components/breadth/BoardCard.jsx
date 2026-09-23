@@ -100,9 +100,17 @@ function Row({ row, levelCount, spark }) {
   )
 }
 
+/** Rows Andy cut from ch.1 §1.10 on 2026-09-23 (checklist artifact, T-0923-60):
+ *  「抛压」 and 「指数修复」. The pipeline still computes them (the regime score
+ *  and the chain read all nine); the page and the course stop showing them. */
+export const CUT_ROWS = new Set(['selling pressure', 'index repair'])
+
 export default function BoardCard({ board, history, session }) {
   if (!board?.rows?.length) return null
-  const { rows, levels, measured, total } = board
+  const { levels } = board
+  const rows = (board.rows ?? []).filter((r) => !CUT_ROWS.has(r.key))
+  const measured = rows.filter((r) => r.level != null).length
+  const total = rows.length
   const offSession = isWeekend(session)
   const win = (history?.rows ?? []).slice(-SPARK_WINDOW)
 

@@ -92,7 +92,10 @@ describe('BreadthPage — the morning walk (09-23)', () => {
     renderPage()
     fireEvent.click(screen.getByText('Board & chain').closest('button'))
     for (const row of breadth.state_board.rows) {
-      expect(screen.getAllByText(new RegExp(`^${row.key}$`, 'i')).length).toBeGreaterThan(0)
+      const n = screen.queryAllByText(new RegExp(`^${row.key}$`, 'i')).length
+      // Andy's §1.10 cut (09-23): these two rows stay computed, not shown
+      if (['selling pressure', 'index repair'].includes(row.key)) expect(n).toBe(0)
+      else expect(n).toBeGreaterThan(0)
     }
   })
 
@@ -229,6 +232,7 @@ describe('deleted content is back, in the folds', () => {
     renderPage()
     fireEvent.click(screen.getByText('Board & chain').closest('button'))
     for (const l of breadth.state_board.chain) {
+      if (l.key === 'index repair') continue   // cut from the page 09-23 (Andy's §1.10 cut)
       if (l.evidence) expect(screen.getAllByText(l.evidence).length).toBeGreaterThan(0)
     }
   })
