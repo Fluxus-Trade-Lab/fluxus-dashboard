@@ -97,7 +97,12 @@ def test_render_passes_through_a_clean_book():
            "open_R_total": 2.1, "realized_R_period": 0.5,
            "positions": [{"ticker": "HOOD", "direction": "long", "entry_date": "2026-09-10", "open_R": 0.8}]}
     out = book_out(bkk, T)
-    assert out["pos"] == [["HOOD", "long", "2026-09-10", 0.8]]
+    # ticker / side / entry / stop_R / open_R (Andy 2026-09-23 R ladder). A pack
+    # built before stop_R existed degrades to a blank stop rather than a guess,
+    # which is the same behaviour as a position whose entry stop was never
+    # recorded 「initialStop 缺失的仓位 stop 栏留空不猜」.
+    assert out["pos"] == [["HOOD", "long", "2026-09-10", None, 0.8]]
+    assert out["legs"] == []
 
 
 def test_render_returns_none_when_there_is_no_book_yet():

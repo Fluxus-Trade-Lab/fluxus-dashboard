@@ -252,6 +252,9 @@ entry 就是 R 的零点，所以一个仓位在页上是一条三点阶梯：
   每腿 R 沿用 `build_pack.py` 里已有的那行，**不另算一套**；占比用 `qty / original_qty`（百分比，不是股数）；窗口是 `period_start`→D。
 - 这条**不推翻** 2026-09-13 的「只用 R 与 %」，是它的展开：cost 与 stop 化成 R 之后不含账户规模信息，也推不出股数。
 - 落地单 `T-0923-51`（fluxus-ops，P1），含要改的五处与验收；**money 闸要跟着收紧**，并按两个失效方向各造一个阳性对照（漏改 / 改了但接错），两边都判红才算闸有效。
+↳ ✅ **已落地（同日）**：Andy 确认「明天的复盘直接按新的R阶梯出。印的是当前的stop。initialStop 缺失的仓位 stop 栏留空不猜。」
+  字段与渲染规格看 `CONTENT_SCHEMA.md` 〈Portfolio: the R ladder〉；标签要补 `pos_stop` 与 `legs_title`（缺了会按语言兑底，不会在中文页印英文）。
+  实测：09-22 真书干跑，8 个仓位的 stop_R 从 −1.00R（PLTR 新仓）到 +1.96R（HOOD 锁利），TRIM/CLOSE 三行合计 +2.17R，与 `realized_R_period` 逐字对上；ZH 全闸绿，L1 不受影响。
 
 
 ---

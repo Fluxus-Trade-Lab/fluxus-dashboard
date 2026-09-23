@@ -106,7 +106,9 @@ def test_the_drop_line_caption_names_the_week_on_weeklies_and_the_day_on_dailies
     css = (pathlib.Path(visual.__file__).with_name("visual_assets") / "recap_visual.css").read_text()
     assert ".drop.thin{margin:18px auto 0;width:84%;height:auto;max-height:160px}" in css
     book = js[js.index("function book(is, c, V)"):]
-    assert 'class="legal"' in book[:2000]  # the legal line rides the book section
+    # the legal line rides the book section (window widened 2000->3600 when the
+    # R ladder added the stop column and the trims/exits list, 2026-09-23)
+    assert 'class="legal"' in book[:3600]
 
 
 def test_l3_goes_red_when_the_state_row_breaks_across_pages():

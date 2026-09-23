@@ -593,18 +593,34 @@
     var m = '<div class="metrics six">' + cells.map(function (x) {
       return "<div><span>" + esc(x[0]) + "</span><b>" + esc(x[1]) + "</b></div>";
     }).join("") + "</div>";
-    var head = list(L.pos_cols).map(function (h, i) {
-      return "<th" + (i === 3 ? ' class="rn"' : "") + ">" + esc(h) + "</th>";
+    /* cost is the zero point, so a row reads 0R -> stop -> now; the stop is the
+       live trailed one, blank when the entry stop was never recorded and there is
+       therefore no R scale to state it on (Andy 2026-09-23) */
+    var zh = (c.lang || "").toUpperCase() === "ZH";
+    var cols = list(L.pos_cols);
+    if (cols.length < 5) {
+      cols = [cols[0], cols[1], cols[2], L.pos_stop || (zh ? "\u6b62\u635f R" : "Stop R"), cols[3]];
+    }
+    var head = cols.map(function (h, i) {
+      return "<th" + (i >= 3 ? ' class="rn"' : "") + ">" + esc(h) + "</th>";
     }).join("");
     var rows = list(b.pos).map(function (p) {
       return '<tr><td class="t">' + esc(p[0]) + "</td><td>" + esc(p[1] === "long" ? L.long : L.short) +
-        "</td><td>" + esc(p[2]) + '</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) + "</td></tr>";
+        "</td><td>" + esc(p[2]) + '</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) +
+        '</td><td class="n ' + cls(p[4]) + '">' + sR(p[4]) + "</td></tr>";
     }).join("");
+    var legs = list(b.legs).map(function (g) {
+      var pct = isNum(g[3]) ? g[3].toFixed(1) + "%" : DASH;
+      return '<li><span class="t">' + esc(g[1]) + "</span> \u00b7 " + esc(g[0].slice(5)) + " \u00b7 " +
+        esc(g[2]) + " " + esc(pct) + ' \u00b7 <b class="' + cls(g[4]) + '">' + sR(g[4]) + "</b></li>";
+    }).join("");
+    var legBlock = legs ? '<div class="kicker sp">' + esc(L.legs_title || (zh ? "\u51cf\u4ed3\u4e0e\u5e73\u4ed3" : "Trims & exits")) +
+      '</div><ul class="legs">' + legs + "</ul>" : "";
     /* the legal line rides the book section, so it always prints at the foot of the last page */
     var legal = V && V.legal ? '<p class="legal">' + esc(V.legal) + ' <span class="m">' + esc(V.handle) +
       "</span> · " + esc(V.site) + "</p>" : "";
     return m + '<div class="scroll"><table class="book"><thead><tr>' + head + "</tr></thead><tbody>" + rows +
-      '</tbody></table></div><p class="prose">' + rich(c.portfolio_note) + "</p>" + legal;
+      "</tbody></table></div>" + legBlock + '<p class="prose">' + rich(c.portfolio_note) + "</p>" + legal;
   }
 
   function boardRows(is, V) {

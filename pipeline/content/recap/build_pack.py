@@ -523,8 +523,44 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
             no_r += 1
         else:
             open_r += r
+        # Andy 2026-09-23「以多少R的形式，不出现美元数值」: entry is the zero point,
+        # so a position prints as cost 0R / stop ±X.XR / now +Y.YR. The stop shown is
+        # the LIVE trailed stop ("印的是当前的stop") measured in R off entry; the initial
+        # stop is only ever the denominator. No stop_R when R is unknown — a position
+        # sized against an unrecorded stop has no R scale to express it on
+        # ("initialStop 缺失的仓位 stop 栏留空不猜").
+        stop_r = None
+        if t.has_R and t.R_dollars:
+            r_per_share = t.R_dollars / t.original_qty
+            if r_per_share:
+                stop_r = round(sgn(t) * (t.stop_price - t.entry_price) / r_per_share, 2)
         positions.append({"ticker": t.ticker, "direction": t.direction,
-                          "entry_date": t.entry_date.isoformat(), "open_R": None if r is None else round(r, 2)})
+                          "entry_date": t.entry_date.isoformat(), "open_R": None if r is None else round(r, 2),
+                          "stop_R": stop_r})
+    # TRIM / CLOSE legs inside the reporting window, in R and % of the original
+    # position — never share counts (Andy 2026-09-23). Same R arithmetic as
+    # realized_between() below; do not grow a second formula for it.
+    legs = []
+    for t in live:
+        leg_R = lambda x: (sgn(t) * (x.price - t.entry_price) * x.qty / t.R_dollars) if t.has_R else None
+        ex = t.exit_date
+        # Trims before the exit are their own rows; the exit itself is ONE row
+        # carrying the whole trade's realized R ("CLOSE · 全笔合计"), however many
+        # tranches it was sold in — 09-22's FSLY went out in three on one day and
+        # printed as three CLOSE lines before this.
+        for x in t.trims:
+            if (p0 <= x.date <= d) and not (ex is not None and x.date == ex):
+                legs.append({"date": x.date.isoformat(), "ticker": t.ticker, "type": "TRIM",
+                             "pct_of_position": round(x.qty / t.original_qty * 100, 1) if t.original_qty else None,
+                             "R": None if leg_R(x) is None else round(leg_R(x), 2), "R_scope": "leg"})
+        if ex is not None and p0 <= ex <= d:
+            out_qty = sum(x.qty for x in t.trims if x.date == ex)
+            whole = [leg_R(x) for x in t.trims]
+            legs.append({"date": ex.isoformat(), "ticker": t.ticker, "type": "CLOSE",
+                         "pct_of_position": round(out_qty / t.original_qty * 100, 1) if t.original_qty else None,
+                         "R": None if any(v is None for v in whole) else round(sum(whole), 2),
+                         "R_scope": "trade"})
+    legs.sort(key=lambda L: (L["date"], L["ticker"], L["type"]))
     realized_all = sum(sgn(t) * (x.price - t.entry_price) * x.qty for t in live for x in t.trims if x.date <= d)
     r_per, n_per = realized_between(p0, d)
     r_wtd, n_wtd = realized_between(week0, d)
@@ -539,7 +575,7 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
         "open_R_total": round(open_r, 2), "open_positions_without_R": no_r,
         "realized_R_period": round(r_per, 2), "realized_legs_period": n_per,
         "realized_R_week_to_date": round(r_wtd, 2), "realized_legs_wtd": n_wtd,
-        "positions": sorted(positions, key=lambda p: p["entry_date"]), "missing_close": missing_px,
+        "positions": sorted(positions, key=lambda p: p["entry_date"]), "legs": legs, "missing_close": missing_px,
         "closes_stale": bool(stale_close),
     }
     if stale_close:

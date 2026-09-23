@@ -228,7 +228,10 @@ def book_out(bkk: dict, D: str) -> Optional[dict]:
         return None
     return {"ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
             "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
-            "pos": [[p["ticker"], p["direction"], p["entry_date"], p["open_R"]] for p in bkk["positions"]]}
+            "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("stop_R"), p["open_R"]]
+                    for p in bkk["positions"]],
+            "legs": [[L["date"], L["ticker"], L["type"], L.get("pct_of_position"), L.get("R")]
+                     for L in bkk.get("legs") or []]}
 
 
 def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
