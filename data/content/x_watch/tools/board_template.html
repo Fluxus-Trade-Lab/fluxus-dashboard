@@ -150,9 +150,77 @@ select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
    所以盒子自己也要 sticky：页面一滚它就贴在工具条下沿，整只盒子回到视口里。
    ⚠️ 也不能 overscroll-behavior:contain —— 那会让鼠标停在表上时页面完全不滚，
    掉出去的那截够都够不着。默认的滚动链接（表滚到底 → 继续滚页面）就是对的。 */
-.scroll{position:sticky;top:calc(var(--barh, 140px) + 8px);z-index:1;
-  overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 26px);
-  background:var(--surface);border:1px solid var(--rule);border-radius:2px}
+/* ⚠️ T-0923-136：sticky 从 .scroll 挪到外壳 .tblbox —— 渐隐提示要 position:absolute
+   叠在滚动盒之上，而 absolute 元素放进 overflow:auto 的盒子里会跟着内容一起横滚。
+   壳负责 sticky（原来的行为一字不变：页面一滚整只盒回到工具条下沿），盒负责滚动。
+   max-height 从 −26px 改成 −40px，是把顶部那条 14px 的同步滚动条让出来 ——
+   盒底在视口里的落点（100vh−18px）与改动前完全一致。 */
+.tblbox{position:sticky;top:calc(var(--barh, 140px) + 8px);z-index:1}
+.scroll{overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 40px);
+  background:var(--surface);border:1px solid var(--rule);border-radius:0 0 2px 2px}
+
+/* ── 横滚条常驻 + 顶部同步条 ──
+   Andy 09-23：「目前我只能看到这里 / 所以需要一个左右的scroll 更方便的」。
+   表能滚，但 macOS 的 overlay 滚动条平时隐藏、且只长在盒底（盒高近一屏，
+   他看着表头时那条在 700px 以外）。两件事一起治：
+   ① scrollbar-width / ::-webkit-scrollbar 两套都写 —— 只要写了 ::-webkit-scrollbar，
+      Chromium 就把 overlay 条换成常驻的经典条，不滚动时截图里也看得见。
+   ② 表头正上方再放一条同样宽的空条，拖它等于拖表。
+   ⚠️ 实测（headless Chromium 145 / macOS）：①那两套声明在 macOS 上**都不生效** ——
+   系统用 overlay 滚动条，`offsetHeight − clientHeight` 恒为 0（五种写法全试过：只写
+   ::-webkit-scrollbar、加 scrollbar-color、加 scrollbar-width:thin/auto，都是 0），
+   条平时根本不占位也不画。声明留着（Windows/Linux 与开了「总是显示滚动条」的 macOS
+   吃这一套，颜色也才走 token），但**「不滚动时看得见」这件事不能指望它**。
+   所以顶部这条自己画滑块：.xtop 仍是真的滚动容器（触控板横扫、scrollLeft 双向同步都靠它），
+   .xbar/.xthumb 是盖在它上面的可见把手 —— 任何平台、任何时刻都画得出来。 */
+.xtop{overflow-x:auto;overflow-y:hidden;height:16px;
+  background:var(--surface2);border:1px solid var(--rule);border-bottom:0;
+  border-radius:2px 2px 0 0}
+.xtop>div{height:1px}
+.xbar{position:absolute;top:0;left:0;right:0;height:16px;z-index:15;background:none}
+.xbar.off{display:none}
+.xthumb{position:absolute;top:3px;bottom:3px;left:0;min-width:32px;
+  background:var(--muted);border-radius:5px;cursor:grab}
+.xbar:hover .xthumb{background:var(--ink2)}
+.xthumb.drag{cursor:grabbing;background:var(--ink)}
+.scroll,.xtop,.seg{scrollbar-width:thin;scrollbar-color:var(--muted) var(--surface2)}
+.scroll::-webkit-scrollbar,.xtop::-webkit-scrollbar{height:13px;width:13px;background:var(--surface2)}
+.scroll::-webkit-scrollbar-track,.xtop::-webkit-scrollbar-track{background:var(--surface2)}
+.scroll::-webkit-scrollbar-thumb,.xtop::-webkit-scrollbar-thumb{background:var(--muted);
+  border-radius:7px;border:3px solid var(--surface2)}
+.scroll::-webkit-scrollbar-thumb:hover,.xtop::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
+.scroll::-webkit-scrollbar-corner{background:var(--surface2)}
+
+/* 边缘渐隐：只是「那边还有列」的提示，永不吃点击（pointer-events:none）。
+   左侧那道从首列右缘开始画 —— 首列是 sticky 的，永远在，压它没意义。
+   --c1w 由 updateFades() 现场量首列实宽写入。 */
+.fade{position:absolute;top:16px;bottom:1px;width:30px;pointer-events:none;
+  z-index:14;opacity:0;transition:opacity .12s}
+.fade.on{opacity:1}
+.fade.fr{right:1px;background:linear-gradient(to right,rgba(0,0,0,0),var(--surface))}
+.fade.fl{left:var(--c1w, 1px);background:linear-gradient(to left,rgba(0,0,0,0),var(--surface))}
+
+/* 列开关（治本：关掉几列表就窄了，可能根本不用横滚） */
+.colmenu{position:relative}
+.colmenu>summary{font:500 12px var(--sans);padding:7px 10px;border:1px solid var(--rule);
+  border-radius:2px;background:var(--surface);color:var(--muted);cursor:pointer;
+  list-style:none;white-space:nowrap}
+.colmenu>summary::-webkit-details-marker{display:none}
+.colmenu>summary::after{content:" ▾";color:var(--faint)}
+.colmenu[open]>summary{border-color:var(--brass);color:var(--brass)}
+.colpop{position:absolute;top:calc(100% + 4px);right:0;z-index:30;min-width:186px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  box-shadow:var(--shadow);padding:7px 4px 5px;max-height:62vh;overflow:auto}
+.colopt{display:flex;align-items:center;gap:7px;font:500 12px var(--sans);
+  color:var(--ink2);padding:4px 8px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.colopt:hover{background:var(--surface2)}
+.colopt input{margin:0;accent-color:var(--brass)}
+.colopt input:disabled{opacity:.55}
+.colopt input:disabled+span{color:var(--faint)}
+.colact{display:flex;gap:6px;padding:6px 8px 1px;margin-top:4px;border-top:1px solid var(--rule2)}
+.colact button{flex:1;font:500 11px var(--sans);padding:5px 6px;border:1px solid var(--rule);
+  border-radius:2px;background:var(--surface2);color:var(--muted);cursor:pointer;white-space:nowrap}
+.colact button:hover{color:var(--ink);border-color:var(--ink2)}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 table.wide{min-width:1180px}
 thead th{position:sticky;top:0;z-index:10;background:var(--surface2);
@@ -298,10 +366,21 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
       <option value="bask">按篮子数</option>
       <option value="__col" id="optcol">（点表头排的）</option>
     </select>
+    <details class="colmenu" id="colmenu">
+      <summary id="colsum">列</summary>
+      <div class="colpop" id="colpop"></div>
+    </details>
     <span class="count" id="count"></span>
   </div>
 
-  <div class="scroll"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+  <div class="tblbox" id="tblbox">
+    <div class="xtop" id="xtop" aria-hidden="true"><div id="xtopin"></div></div>
+    <div class="xbar" id="xbar" role="scrollbar" aria-controls="scroll" aria-orientation="horizontal"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="表格左右滚动"><div class="xthumb" id="xthumb"></div></div>
+    <div class="scroll" id="scroll" tabindex="0" role="region"
+         aria-label="台账表格，可左右滚动：Shift+滚轮、← →、Home/End"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <span class="fade fl" id="fadeL"></span><span class="fade fr" id="fadeR"></span>
+  </div>
   <p class="note" id="note"></p>
 
   <details class="fold" id="rosterbox">
@@ -523,24 +602,39 @@ function wallCell(t){
 const stTotal = t => Object.values(t.st || {}).reduce((a,b) => a+b, 0);
 const COLS = {
   t: [
-    {k:"sym",   label:"代码", val:t=>t.sym, dir0:1},
-    {k:"wall",  label:"墙后", val:t=>t.wall.length, dir0:-1},
-    {k:"spark", label:`近 ${SPARK_N} 日人数`, dir0:-1,
+    {k:"sym",   label:"代码", val:t=>t.sym, dir0:1, w:88,
+     cell:t=>`<td class="sym"><span class="cur">$</span>${esc(t.sym)}${t.idx?'<span class="tagi">指数</span>':""}${t.cash?"":'<span class="tagi">裸码</span>'}</td>`},
+    {k:"wall",  label:"墙后", val:t=>t.wall.length, dir0:-1, w:64,
+     cell:t=>`<td>${wallCell(t)}</td>`},
+    {k:"spark", label:`近 ${SPARK_N} 日人数`, dir0:-1, w:74,
      val:t=>SPARK_DATES.reduce((s,d)=>s+np(t,d),0),
-     title:`只画 ${esc(SPARK_DATES[0])} → ${esc(LAST)}；全 ${DATES.length} 天悬停条形图或展开看`},
-    {k:"today", label:LAST.slice(5), cls:"num", dir0:-1,
-     val:t=>np(t, S.date==="all"?LAST:S.date), tie:(a,b)=>b.tv-a.tv},
-    {k:"delta", label:"对比前日", cls:"num", dir0:-1, val:t=>np(t,LAST)-np(t,PREV)},
-    {k:"st",    label:"立场", dir0:-1, val:stTotal},
-    {k:"total", label:"提及", cls:"num", dir0:-1, val:t=>t.tn},
-    {k:"views", label:"曝光", cls:"num", dir0:-1, val:t=>t.tv},
-    {k:"peak",  label:"峰值日", cls:"num", dir0:-1, val:t=>t.peak ?? null},
-    {k:"t1",    label:`T+1 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,1), tie:(a,b)=>b.tv-a.tv},
-    {k:"t5",    label:`T+5 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,5), tie:(a,b)=>b.tv-a.tv},
-    {k:"rs",    label:"RS 评级", cls:"num", dir0:-1, val:t=>isNil(t.rs)?null:t.rs},
-    {k:"d50",   label:"距 50 日线", cls:"num", dir0:-1, val:t=>isNil(t.d50)?null:t.d50},
-    {k:"bask",  label:"ETF 篮子", dir0:-1, val:t=>(t.bask||[]).length, tie:(a,b)=>b.tv-a.tv},
-    {k:"who",   label:"谁在说", dir0:-1, val:t=>whoOf(t).length},
+     title:`只画 ${esc(SPARK_DATES[0])} → ${esc(LAST)}；全 ${DATES.length} 天悬停条形图或展开看`,
+     cell:t=>`<td>${spark(t)}</td>`},
+    {k:"today", label:LAST.slice(5), cls:"num", dir0:-1, w:58,
+     val:t=>np(t, S.date==="all"?LAST:S.date), tie:(a,b)=>b.tv-a.tv,
+     cell:(t,R)=>`<td class="num" style="font-size:15px;font-weight:600">${R.n||"—"}</td>`},
+    {k:"delta", label:"对比前日", cls:"num", dir0:-1, val:t=>np(t,LAST)-np(t,PREV), w:74,
+     cell:(t,R)=>`<td class="num"><span class="delta ${R.d>0?"up":R.d<0?"dn":"flat"}">${R.d>0?"+"+R.d:R.d<0?R.d:"持平"}</span></td>`},
+    {k:"st",    label:"立场", dir0:-1, val:stTotal, w:122,
+     cell:t=>`<td>${stanceCells(t)}</td>`},
+    {k:"total", label:"提及", cls:"num", dir0:-1, val:t=>t.tn, w:58,
+     cell:t=>`<td class="num">${t.tn}</td>`},
+    {k:"views", label:"曝光", cls:"num", dir0:-1, val:t=>t.tv, w:58,
+     cell:t=>`<td class="num">${nf(t.tv)}</td>`},
+    {k:"peak",  label:"峰值日", cls:"num", dir0:-1, val:t=>t.peak ?? null, w:68,
+     cell:t=>`<td class="num" style="color:var(--faint);font-size:11.5px">${esc(t.peak ? t.peak.slice(5) : "—")}</td>`},
+    {k:"t1",    label:`T+1 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,1), tie:(a,b)=>b.tv-a.tv, w:88,
+     cell:t=>`<td class="num">${relCell(t,1)}</td>`},
+    {k:"t5",    label:`T+5 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,5), tie:(a,b)=>b.tv-a.tv, w:88,
+     cell:t=>`<td class="num">${relCell(t,5)}</td>`},
+    {k:"rs",    label:"RS 评级", cls:"num", dir0:-1, val:t=>isNil(t.rs)?null:t.rs, w:72,
+     cell:t=>`<td class="num">${rsCell(t)}</td>`},
+    {k:"d50",   label:"距 50 日线", cls:"num", dir0:-1, val:t=>isNil(t.d50)?null:t.d50, w:84,
+     cell:t=>`<td class="num">${d50Cell(t)}</td>`},
+    {k:"bask",  label:"ETF 篮子", dir0:-1, val:t=>(t.bask||[]).length, tie:(a,b)=>b.tv-a.tv, w:90,
+     cell:t=>`<td style="font-size:11.5px;color:var(--faint)">${baskCell(t)}</td>`},
+    {k:"who",   label:"谁在说", dir0:-1, val:t=>whoOf(t).length, w:94,
+     cell:(t,R)=>`<td class="who" title="${esc(R.who.map(h=>"@"+h).join(" "))}">${R.whoCell}</td>`},
   ],
   p: [
     {k:"h",     label:"Handle", val:p=>p.h, dir0:1},
@@ -561,6 +655,25 @@ const COLS = {
 };
 const colOf = (v,k) => COLS[v].find(c => c.k === k) || COLS[v][0];
 
+/* ── 列开关 ──
+   「代码」列不可关（它是 sticky 首列，也是唯一的身份列）。
+   选择存这台浏览器的 localStorage；和 ⭐ 一样，读写各包一层 try——
+   隐私窗口 / 站点数据被清 / 策略禁用时抛出，就当「全开」，页面照常渲染。 */
+const COL_KEY = "xboard.cols.v1";
+const COL_LOCKED = new Set(["sym"]);
+const COL_KEEP = new Set(["sym","today","delta","st","t5","who"]);   // 「只留常用」留下的
+function loadCols(){
+  try{
+    const a = JSON.parse(window.localStorage.getItem(COL_KEY) || "[]");
+    return new Set(Array.isArray(a) ? a.filter(x => typeof x === "string" && !COL_LOCKED.has(x)) : []);
+  }catch(e){ return new Set(); }
+}
+function saveCols(){
+  try{ window.localStorage.setItem(COL_KEY, JSON.stringify([...HIDDEN])); }catch(e){}
+}
+let HIDDEN = loadCols();
+const visCols = v => v === "t" ? COLS.t.filter(c => !HIDDEN.has(c.k)) : COLS[v];
+
 function sorter(v){
   const o = S.ord[v], c = colOf(v, o.k), dir = o.dir;
   return (a,b) => {
@@ -573,7 +686,7 @@ function sorter(v){
 }
 function headRow(v){
   const o = S.ord[v];
-  return "<tr>" + COLS[v].map(c => {
+  return "<tr>" + visCols(v).map(c => {
     const on = c.k === o.k;
     const aria = on ? (o.dir === 1 ? "ascending" : "descending") : "none";
     const arrow = on ? `<span class="dir">${o.dir === 1 ? "▲" : "▼"}</span>` : "";
@@ -639,6 +752,7 @@ function wallPub(w){
 function render(){
   const th = $("#thead"), tb = $("#tbody"), tbl = $("#tbl");
   tbl.className = S.v === "t" ? "wide" : "";
+  tbl.style.minWidth = S.v === "t" ? visCols("t").reduce((a,c) => a + (c.w || 90), 0) + "px" : "";
   th.innerHTML = headRow(S.v);
   if (S.v === "t"){
     const rows = tickers();
@@ -648,25 +762,18 @@ function render(){
       (hidden ? ` · 折叠了 ${hidden} 个只有 1 人说过的` : "") +
       (SEARCH_MODE === "sym" ? " · 搜索中，筛选已让路" :
        SEARCH_MODE === "text" && rows.length ? " · 代码里没有「" + normQ(S.q).toUpperCase() + "」，下面是帖子正文提到它的票" : "");
+    const cols = visCols("t"), span = cols.length;
     tb.innerHTML = rows.length ? rows.map(t => {
       const n = np(t,LAST), o = np(t,PREV), d = n-o;
       const who = whoOf(t);
       const open = S.open.has(t.sym);
       const whoCell = who.slice(0,3).map(h => `${starBtn(h)}@${esc(h)}`).join(" ") +
         (who.length>3 ? ` <span style="color:var(--faint)">+${who.length-3}</span>` : "");
-      return `<tr class="row${open?" open":""}" data-sym="${esc(t.sym)}" tabindex="0" aria-expanded="${open}">
-        <td class="sym"><span class="cur">$</span>${esc(t.sym)}${t.idx?'<span class="tagi">指数</span>':""}${t.cash?"":'<span class="tagi">裸码</span>'}</td>
-        <td>${wallCell(t)}</td><td>${spark(t)}</td>
-        <td class="num" style="font-size:15px;font-weight:600">${n||"—"}</td>
-        <td class="num"><span class="delta ${d>0?"up":d<0?"dn":"flat"}">${d>0?"+"+d:d<0?d:"持平"}</span></td>
-        <td>${stanceCells(t)}</td><td class="num">${t.tn}</td><td class="num">${nf(t.tv)}</td>
-        <td class="num" style="color:var(--faint);font-size:11.5px">${esc(t.peak ? t.peak.slice(5) : "—")}</td>
-        <td class="num">${relCell(t,1)}</td><td class="num">${relCell(t,5)}</td>
-        <td class="num">${rsCell(t)}</td><td class="num">${d50Cell(t)}</td>
-        <td style="font-size:11.5px;color:var(--faint)">${baskCell(t)}</td>
-        <td class="who" title="${esc(who.map(h=>"@"+h).join(" "))}">${whoCell}</td></tr>` +
-        (open ? `<tr class="detail"><td colspan="15"><div class="posts">${detail(t)}</div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="15" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
+      const R = { n, o, d, who, whoCell };
+      return `<tr class="row${open?" open":""}" data-sym="${esc(t.sym)}" tabindex="0" aria-expanded="${open}">` +
+        cols.map(c => c.cell(t, R)).join("") + `</tr>` +
+        (open ? `<tr class="detail"><td colspan="${span}"><div class="posts">${detail(t)}</div></td></tr>` : "");
+    }).join("") : `<tr><td colspan="${span}" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
     $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
       所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
       「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光读 <code>posts/*.jsonl</code> 的最新值（重抓会更新），不是 <code>mentions.csv</code> 的首次快照。
@@ -713,7 +820,137 @@ function render(){
       这一栏在页面上只显示他用的那个词（Stalk / Focus / Update / Groups）、票、代理和杠杆，不显示正文。
       「公开区当天人数」是 <b>0</b> 时标成铜色——那就是墙的代价：只看公开区的人看不见这一格。`;
   }
+  syncScrollGeom();
 }
+
+/* ── 横滚三件套：顶部同步条 · Shift+滚轮/键盘 · 边缘渐隐 ── */
+const SC = $("#scroll"), XT = $("#xtop"), XTI = $("#xtopin");
+/* 两条互相 set scrollLeft，天然有回声。重入保护三层，缺一都可能抖：
+   ① lock：正在同步时进来的 scroll 事件直接返回，不再回写；
+   ② 差值门槛：只有相差 ≥1px 才写，子像素差不触发下一轮；
+   ③ 等长：把顶部条的内容宽设成「表宽 − 盒可视宽 + 条可视宽」，
+      让两边的 maxScrollLeft 完全相等 —— 否则滚到最右时一边会被 clamp 成
+      另一个值，两边互相往回拽，那才是真正会自激的形状（盒子有 13px 纵向
+      滚动条，可视宽本来就比顶条窄）。
+   XSYNC 计数供验收数事件次数：top/box = 收到的 scroll 事件，applied = 真正写回的次数。 */
+const XSYNC = { lock:false, top:0, box:0, applied:0, wheel:0, key:0 };
+window.__xsync = XSYNC;
+function syncScrollGeom(){
+  const w = Math.max(0, $("#tbl").scrollWidth - SC.clientWidth) + XT.clientWidth;
+  XTI.style.width = Math.round(w) + "px";
+  /* 一次性校正：边框/子像素会让两边的 maxScrollLeft 差几 px，差多少就把空条加长/缩短多少。
+     校正后两边完全等长，滚到最右时谁都不会被 clamp 成另一个值（那才是会自激的形状）。 */
+  const d = (SC.scrollWidth - SC.clientWidth) - (XT.scrollWidth - XT.clientWidth);
+  if (d) XTI.style.width = Math.max(0, Math.round(w + d)) + "px";
+  layoutThumb(); updateFades();
+}
+
+/* 顶部把手：位置/宽度只读 SC 的三个数，自己从不写 SC —— 写只发生在用户拖它的时候，
+   那一路走 XT.scrollLeft，再由上面那条 mirror 同步到 SC。 */
+function layoutThumb(){
+  const max = SC.scrollWidth - SC.clientWidth;
+  const bar = $("#xbar"), th = $("#xthumb");
+  bar.classList.toggle("off", max <= 0);
+  if (max <= 0) return;
+  const track = bar.clientWidth;
+  const tw = Math.max(32, Math.round(track * SC.clientWidth / SC.scrollWidth));
+  th.style.width = tw + "px";
+  th.style.left = Math.round((SC.scrollLeft / max) * (track - tw)) + "px";
+  bar.setAttribute("aria-valuenow", Math.round(SC.scrollLeft / max * 100));
+}
+/* 拖把手 / 点轨道。两者都只 set XT.scrollLeft，走同一条同步路径。 */
+(function thumbDrag(){
+  const bar = $("#xbar"), th = $("#xthumb");
+  let from = 0, at = 0;
+  const geo = () => {
+    const max = SC.scrollWidth - SC.clientWidth, track = bar.clientWidth;
+    return { max, track, tw: th.offsetWidth, run: Math.max(1, track - th.offsetWidth) };
+  };
+  const moveTo = px => { const g = geo();
+    XT.scrollLeft = Math.max(0, Math.min(g.max, px / g.run * g.max)); };
+  th.addEventListener("pointerdown", e => {
+    e.preventDefault(); th.classList.add("drag"); th.setPointerCapture(e.pointerId);
+    from = e.clientX; at = parseFloat(th.style.left) || 0;
+  });
+  th.addEventListener("pointermove", e => {
+    if (!th.classList.contains("drag")) return;
+    moveTo(at + (e.clientX - from));
+  });
+  for (const ev of ["pointerup","pointercancel"])
+    th.addEventListener(ev, e => { th.classList.remove("drag"); try{ th.releasePointerCapture(e.pointerId); }catch(_){} });
+  bar.addEventListener("pointerdown", e => {
+    if (e.target === th) return;
+    const g = geo(), x = e.clientX - bar.getBoundingClientRect().left;
+    moveTo(x - g.tw / 2);
+  });
+})();
+function mirror(from, to, key){
+  XSYNC[key]++;
+  if (XSYNC.lock) return;
+  XSYNC.lock = true;
+  if (Math.abs(to.scrollLeft - from.scrollLeft) >= 1){ to.scrollLeft = from.scrollLeft; XSYNC.applied++; }
+  XSYNC.lock = false;
+  layoutThumb(); updateFades();
+}
+XT.addEventListener("scroll", () => mirror(XT, SC, "top"));
+SC.addEventListener("scroll", () => mirror(SC, XT, "box"));
+
+/* 渐隐：右边还有列 → 右侧一道；已经滚出去了 → 左侧一道。
+   左侧那道从首列右缘起画（首列 sticky，永远在，压它没意义）。 */
+function updateFades(){
+  const max = SC.scrollWidth - SC.clientWidth, x = SC.scrollLeft;
+  $("#fadeL").classList.toggle("on", x > 1);
+  $("#fadeR").classList.toggle("on", x < max - 1);
+  const c1 = SC.querySelector("tbody td:first-child") || SC.querySelector("thead th:first-child");
+  const w = c1 ? Math.round(c1.getBoundingClientRect().width) : 0;
+  document.documentElement.style.setProperty("--c1w", (w + 1) + "px");
+}
+
+/* Shift + 滚轮 = 横滚（触控板双指横扫本来就走 deltaX，这条是给鼠标用户的）。 */
+SC.addEventListener("wheel", e => {
+  if (!e.shiftKey) return;
+  const d = e.deltaX || e.deltaY;
+  if (!d || SC.scrollWidth - SC.clientWidth <= 0) return;
+  SC.scrollLeft += d; XSYNC.wheel++; e.preventDefault();
+}, {passive:false});
+
+/* 键盘：← → 一屏的 80%，Home/End 到两端。输入框/下拉里的按键不抢。 */
+SC.addEventListener("keydown", e => {
+  if (e.target.closest("input,select,textarea")) return;
+  const max = SC.scrollWidth - SC.clientWidth;
+  const page = Math.max(60, Math.round(SC.clientWidth * 0.8));
+  let to = null;
+  if (e.key === "ArrowRight") to = Math.min(max, SC.scrollLeft + page);
+  else if (e.key === "ArrowLeft") to = Math.max(0, SC.scrollLeft - page);
+  else if (e.key === "Home") to = 0;
+  else if (e.key === "End") to = max;
+  if (to === null) return;
+  e.preventDefault(); SC.scrollLeft = to; XSYNC.key++;
+});
+
+/* ── 列菜单 ── */
+function renderColMenu(){
+  const on = COLS.t.length - HIDDEN.size;
+  $("#colsum").textContent = `列 ${on}/${COLS.t.length}`;
+  $("#colpop").innerHTML = COLS.t.map(c =>
+    `<label class="colopt"><input type="checkbox" data-k="${c.k}"` +
+    `${HIDDEN.has(c.k) ? "" : " checked"}${COL_LOCKED.has(c.k) ? " disabled" : ""}>` +
+    `<span>${c.label}${COL_LOCKED.has(c.k) ? "（固定）" : ""}</span></label>`).join("") +
+    `<div class="colact"><button type="button" data-act="all">全开</button>` +
+    `<button type="button" data-act="min">只留常用</button></div>`;
+}
+$("#colpop").addEventListener("change", e => {
+  const cb = e.target.closest("input[type=checkbox]"); if (!cb) return;
+  const k = cb.dataset.k; if (COL_LOCKED.has(k)) return;
+  cb.checked ? HIDDEN.delete(k) : HIDDEN.add(k);
+  saveCols(); renderColMenu(); render();
+});
+$("#colpop").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if (!b) return;
+  HIDDEN = b.dataset.act === "all" ? new Set()
+         : new Set(COLS.t.filter(c => !COL_KEEP.has(c.k)).map(c => c.k));
+  saveCols(); renderColMenu(); render();
+});
 
 function detail(t){
   const ms = t.m.filter(m => S.date === "all" || m.d === S.date);
@@ -811,7 +1048,8 @@ function syncBarHeight(){
   document.documentElement.style.setProperty("--barh", h + "px");
 }
 if (window.ResizeObserver) new ResizeObserver(syncBarHeight).observe($(".bar"));
-addEventListener("resize", syncBarHeight);
+addEventListener("resize", () => { syncBarHeight(); syncScrollGeom(); });
+if (window.ResizeObserver) new ResizeObserver(syncScrollGeom).observe($("#scroll"));
 
-renderCurated(); renderRoster(); syncSelect(); render(); syncBarHeight();
+renderCurated(); renderRoster(); renderColMenu(); syncSelect(); render(); syncBarHeight(); syncScrollGeom();
 </script>
