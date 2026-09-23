@@ -210,6 +210,8 @@
 
 - [2026-09-24] [OPS] 滞留分支诊断追踪配置一致性缺陷：`tests.yml` 收窄 `branches:[main]` + `paths:` 过滤器后，如果 `pipeline/tools/audit_ci_test_coverage.py` 的 `DECLARED_TRIGGERS` 表漏配同一套声明，系统测试闸（T5）会立刻给出真红（未声明的过滤器）。这里的诊断链条是**表面症状→根本机制问题→闸的有效性验证**：T5 红不是阻碍，而是系统自诊精度的直接证据，它正确地挡住了配置不一致会导致的虚假绿灯。从现象→诊断→防护三环闭合，体现了系统级防护机制的成熟度。[T-0924-25 · 63728c83](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/63728c83)
 
+- [2026-09-24] [OPS/DATA] 邮件泛滥（30 runs in 113 分钟）暴露的不是 YAML 错，而是**触发配置机制的不完整**。诊断链条：任意分支推送 → 触发 tests.yml → 无人筛选 → 邮件满屏。防护设计四层：① `branches: [main]` 只让主线触发（分支测试已在 branch-review 阶段完成），② `paths:` 而非 `paths-ignore:` 来排除内容目录（安全的设计：新目录默认检查），③ git-grep 逐条验证每个排除目录是否真的无测试依赖，④ DECLARED_TRIGGERS 机制补全配置（之前表是空的）。三轮验证（pipeline/tests 73/73、full suite 3477/3477、baseline 一致）闭环。从「任何推送都跑」升级到「精准路由验证」，系统诊断精度的进阶实装。[T-0923-121 · 64c51907](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/64c51907)
+
 ## 📥 追加到这里
 - [09-23] [OPS] **滞留分支诊断的完整闭环：将问题精确路由到真实卡点，无需反复问** · agent/claire/T-0923-07 分支滞留，诊断过程揭示真根源不在分支本身，而在上游数据字段任务 T-0923-03（MCO/MCSI 成分台账）处于 blocked+无人认领状态。系统诊断的完整链条：分支改动本身无问题（仅 6 个前端文件）→ 找到对应数据字段 → 验证字段在 origin/main 上不存在 → 回溯上游任务状态（T-0923-03: blocked, released_at 03:23 后无人认领）。诊断精度从「为什么分支卡了」升到「卡在哪条链、谁那一段无人接」。防护机制：分支任务文件里已写清「等 T-0923-03 落地后复用分支」，无需 Andy 反复点头——问题的答复已经清晰完整。这体现系统有能力从『发现滞留』→『诊断根源』→『路由清晰』的三段诊断链条，把关键决策信息完整交付，在问题仍开放状态就能避免沟通成本。[T-0923-109 · 713d4630](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/713d4630)
 
