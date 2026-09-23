@@ -141,27 +141,31 @@ def test_M1_does_not_fire_on_a_position_with_no_R():
     assert book_out(b, "2026-09-22")["pos"][0][3] is None
 
 
-def test_M1_lets_a_breakeven_stop_through_when_open_R_wobbles_near_zero():
-    """T-0923-58's review of the real 09-22 book: NBIS carried stop_R=0.00,
-    open_R=+0.54 — a stop trailed to breakeven on a name that hasn't run far
-    yet. If open_R drifts a little further down (or negative) before the stop
-    is hit or the sheet is updated, that is still real price action, not a
-    price leak, and must not SystemExit the whole PDF (T-0923-61)."""
+def test_M1_lets_a_breakeven_stop_through_no_matter_how_far_open_R_has_moved():
+    """T-0923-58's review of the real 09-22 book: five positions carried
+    stop_R=0.00 (breakeven), from NBIS +0.54 to ARM +6.46. A price is never
+    exactly $0.00, so stop_R==0 can never be a misrouted price — a gap
+    through a breakeven stop, or the sheet lagging a close, is real price
+    action at any distance, not a price leak, and must not SystemExit the
+    whole PDF (T-0923-61; first fix band-limited this to open_R within
+    ±0.6R, which the real book's other four stop_R=0 positions would still
+    have tripped on a routine gap — widened to unconditional)."""
     b = _book()
     b["positions"][0]["stop_R"] = 0.0
-    for orr in (0.54, 0.0, -0.3, 0.6, -0.6):
+    for orr in (0.54, 6.46, 0.0, -0.3, -2.0, -20.0):
         b["positions"][0]["open_R"] = orr
         assert book_out(b, "2026-09-22")["pos"][0][3] == 0.0
 
 
-def test_M1_still_reddens_a_breakeven_stop_far_past_the_band():
-    """The exemption is a narrow band, not a blank check: a breakeven stop
-    against an open_R that has run far past it is exactly the kind of gap the
-    gate exists to catch (either a stale stop that should have fired, or a
-    genuine price leak), so it must still raise."""
+def test_M1_still_reddens_a_non_breakeven_stop_gapped_through():
+    """The exemption is for stop_R==0 specifically, not any stop above the
+    mark: a stop trailed to a non-zero R (the real book's PLTR, at −1.0R)
+    could in principle still be a misrouted price, so a gap through it must
+    keep raising — this is the residual risk noted in T-0923-61's run log,
+    left for a follow-up rather than folded into this fix."""
     b = _book()
-    b["positions"][0]["stop_R"] = 0.0
-    b["positions"][0]["open_R"] = -2.0
+    b["positions"][0]["stop_R"] = -1.0
+    b["positions"][0]["open_R"] = -1.5
     with pytest.raises(SystemExit, match="above the mark"):
         book_out(b, "2026-09-22")
 

@@ -76,8 +76,12 @@ A trade sold out in several tranches on one day is **one** CLOSE row, not one pe
 a price landing in a column that already exists (`stop_R` wired to `stop_price`). As page text that is a
 bare number under a header on another line — no regex separates it from the index closes the page prints
 on purpose. M1 instead checks the relation a price cannot satisfy: `stop_R ≤ open_R` (a stop is never
-above the mark) and `0 < pct_of_position ≤ 100`. The prose half stays in `gates.MONEY_SHARES`, which also
-flags a labelled price (`stop 142.50`, `成本 98.10`) while letting an index level (`stop under 7,580`) pass.
+above the mark) and `0 < pct_of_position ≤ 100`, **except when `stop_R == 0`** (a stop trailed to
+breakeven) — a price is never exactly $0.00, so that relation is exempted rather than raised no matter
+how far `open_R` has since moved (T-0923-61: a gap through a breakeven stop is real price action, not a
+leak). A stop trailed to a non-zero R is not covered by that exemption and still raises. The prose half
+stays in `gates.MONEY_SHARES`, which also flags a labelled price (`stop 142.50`, `成本 98.10`) while
+letting an index level (`stop under 7,580`) pass.
 
 Guarded by `pipeline/tests/test_recap_r_ladder.py`, whose positive controls were each proven to redden before their green was trusted.
 

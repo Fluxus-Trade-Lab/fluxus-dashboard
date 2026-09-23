@@ -240,17 +240,23 @@ def _book_money_gate(bkk: dict, D: str) -> None:
     the position at +7.4R is legal; a "stop" of 142.5 against +7.4R is a price.
 
     One legal position looks like a violation of that relation: a stop
-    trailed to breakeven (stop_R == 0) on a name that has drifted back down
-    to near its entry (open_R a few tenths of an R either side of 0 — the
-    stop hasn't triggered yet, or the sheet hasn't caught up). That is real
-    price action, not a leak, so it is exempted rather than raised (T-0923-61,
-    found in T-0923-58's own review: NBIS 09-22 carried stop_R=0, open_R=0.54).
+    trailed to breakeven (stop_R == 0). A price can be $142.50; it is never
+    exactly $0.00, so a breakeven stop can never be a misrouted price no
+    matter how far open_R has since moved — a gap through it, or the sheet
+    lagging a close, is real price action, not a leak. Exempted rather than
+    raised (T-0923-61, found in T-0923-58's own review: the 09-22 book
+    carries five positions with stop_R=0, from NBIS +0.54 to ARM +6.46).
+
+    A stop trailed to a *non-zero* R (that same book's PLTR, at −1.0R) is
+    not covered — it can in principle still be a misrouted price, so a gap
+    through it keeps raising. That is a real, narrower residual risk (a
+    non-breakeven stop gapped through) this fix leaves open; see the
+    T-0923-61 run log for why it wasn't folded in here.
     """
-    BREAKEVEN_BAND_R = 0.6
     for p in bkk.get("positions") or []:
         sr, orr = p.get("stop_R"), p.get("open_R")
         if sr is not None and orr is not None and sr > orr + 1e-6:
-            if abs(sr) < 1e-6 and abs(orr) <= BREAKEVEN_BAND_R:
+            if abs(sr) < 1e-6:
                 continue
             raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {sr} is above the mark {orr} — "
                              "that column is carrying a price, not an R")
