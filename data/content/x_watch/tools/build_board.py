@@ -12,13 +12,21 @@
    **不删任何数据,只是默认不显示。**
 """
 from __future__ import annotations
-import csv, json, re, sys
+import bisect, csv, json, re, sys
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 BASE = ROOT / "data/content/x_watch"
 TPL = Path(__file__).with_name("board_template.html")
+
+# 行情：本地已有的两份，不新抓（memory feedback_reuse_local_ohlc）。
+#   tickers/<SYM>.json  → ohlc_2y[{date,open,high,low,close,volume}]  个股
+#   baskets/<SYM>.json  → bars[{date,close}]                          宽基/ETF，SPY 在这里
+TICKERS_DIR = ROOT / "data/output/tickers"
+BASKETS_DIR = ROOT / "data/output/baskets"
+BENCH = "SPY"          # 基准单独取、单独验，缺了抛错（method_denominator_is_not_optional）
+HORIZONS = (1, 5)      # T+k，交易日
 
 STANCES = ["long", "watching", "short", "exited", "recap", "mention"]
 
@@ -79,6 +87,98 @@ def load_wall() -> list[dict]:
     return sorted(uniq, key=lambda r: (r["d"], r["kind"]))
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 提及峰值日之后的相对 SPY 表现（事件研究 · market-adjusted model）
+#
+# 口径登记在 data/reference/METRIC_SOURCES.md「x_watch 提及后 T+k 相对 SPY」那行。
+# 照抄的部分：abnormal return 的 market-adjusted model —— AR_it = R_it − R_mt，
+#   即 β=1 / α=0、不估计参数、直接减基准（EventStudyTools, Expected Return Models）。
+#   事件日落在非交易日/盘后时，以「下一个能交易的 session」为反应起点，是事件研究
+#   的通行处理（announcement after close → day 0 是次日）。
+# 自造并写明的部分：
+#   ① 锚点 A = 峰值日当天或之前最后一个 **已收盘** 交易日的收盘价。提及帖散落在
+#      ET 日历日的各个时刻，我们没有逐帖时间戳对齐盘中，取当日收盘 = 把整个提及日
+#      当信息日，避免把提及之前就已经走完的当日行情算进「提及之后」。周末提及
+#      因此锚在上周五收盘，T+1 是下周一。
+#   ② 用持有期差（BHAR 形状：R_i − R_m 各自按 A→A+k 的简单收益）而不是逐日 AR
+#      累加（CAR）。k=1/5 这两个窗口本身也不是标准，是这条台账要回答的问题决定的。
+#   ③ 不做显著性检验、不设估计窗 —— 样本量和用途都不支持，读数只当描述统计。
+# ─────────────────────────────────────────────────────────────────────────────
+
+def load_closes(sym: str, tickers_dir: Path = None, baskets_dir: Path = None
+                ) -> dict[str, float] | None:
+    """本地收盘价序列 {ET日期: close}。两个目录都没有这只票就返回 None（＝无价格）。"""
+    tickers_dir = TICKERS_DIR if tickers_dir is None else tickers_dir
+    baskets_dir = BASKETS_DIR if baskets_dir is None else baskets_dir
+    for d, key in ((tickers_dir, "ohlc_2y"), (baskets_dir, "bars")):
+        f = d / f"{sym}.json"
+        if not f.exists():
+            continue
+        bars = json.loads(f.read_text()).get(key) or []
+        out = {b["date"][:10]: float(b["close"]) for b in bars
+               if b.get("date") and b.get("close") is not None}
+        if out:
+            return out
+    return None
+
+
+def peak_day(days: dict[str, dict]) -> str | None:
+    """提及人数最高的 ET 日；**并列取最早**（窗口左端优先，不许随字典序漂）。"""
+    best, best_n = None, 0
+    for d in sorted(days):
+        n = len(days[d].get("p") or [])
+        if n > best_n:                       # 严格大于 → 并列时保留先到的那天
+            best, best_n = d, n
+    return best
+
+
+def rel_vs_bench(closes: dict[str, float], bench: dict[str, float],
+                 cal: list[str], peak: str, k: int) -> tuple[float | None, str]:
+    """峰值日后 T+k 的相对 SPY 表现。返回 (值, 原因码)；值为 None 时原因码说明为什么。
+
+    cal 是基准的交易日历（SPY 有 bar 的日子），T+k 数的是交易日不是日历日。
+    """
+    i = bisect.bisect_right(cal, peak) - 1
+    if i < 0:
+        return None, "无基准日"
+    j = i + k
+    if j >= len(cal):
+        return None, "未到期"
+    a, b = cal[i], cal[j]
+    if a not in closes or b not in closes:
+        return None, "缺K线"
+    r = closes[b] / closes[a] - 1.0
+    m = bench[b] / bench[a] - 1.0
+    return (r - m) * 100.0, "ok"
+
+
+def price_cell(v: float | None, why: str) -> str:
+    return f"{v:+.2f}%" if v is not None else why
+
+
+def attach_prices(tickers: list[dict], tickers_dir: Path = None,
+                  baskets_dir: Path = None) -> None:
+    """就地给每只票挂 peak / relk。**基准缺失直接抛错，绝不静默当 0。**"""
+    bench = load_closes(BENCH, tickers_dir, baskets_dir)
+    if not bench:
+        raise RuntimeError(
+            f"基准 {BENCH} 的本地行情取不到（找过 {tickers_dir or TICKERS_DIR} 与 "
+            f"{baskets_dir or BASKETS_DIR}）。相对表现没有分母就不是相对表现——"
+            "宁可不出这两列，也不拿 0 顶替。")
+    cal = sorted(bench)
+    for t in tickers:
+        t["peak"] = peak_day(t.get("days") or {})
+        closes = load_closes(t["sym"], tickers_dir, baskets_dir)
+        t["rel"] = {}
+        for k in HORIZONS:
+            if t["peak"] is None:
+                t["rel"][k] = (None, "无提及日")
+            elif closes is None:
+                t["rel"][k] = (None, "无价格")
+            else:
+                t["rel"][k] = rel_vs_bench(closes, bench, cal, t["peak"], k)
+
+
 def build() -> dict:
     posts, stance, wall = load_posts(), load_stance(), load_wall()
     dates = sorted({p["et_date"] for p in posts})
@@ -129,8 +229,12 @@ def build() -> dict:
             "st": dict(st), "wall": wall_by_sym.get(sym, []),
             "m": sorted(t["m"], key=lambda m: (m["d"], -m["v"])),
             "tv": sum(m["v"] for m in t["m"]), "tn": len(t["m"]),
+            # 窗口内单日最高提及人数。看板默认折叠 mx<2 的票：一个人说过一次的
+            # 代码占了大半张表，而「有第二个人也在说」才是这张台账的最低信号。
+            "mx": max([len(v["p"]) for v in days.values()] or [0]),
         })
     out_t.sort(key=lambda t: (-len(t["days"].get(dates[-1], {}).get("p", [])), -t["tv"]))
+    attach_prices(out_t)
 
     # 按人
     ppl = defaultdict(lambda: {"posts": 0, "syms": set(), "views": [], "bk": 0, "days": set()})
@@ -150,7 +254,7 @@ def build() -> dict:
         key=lambda a: -a["posts"])
 
     return {"dates": dates, "tickers": out_t, "people": out_p, "wall": wall,
-            "stances": STANCES,
+            "stances": STANCES, "horizons": list(HORIZONS), "bench": BENCH,
             "counts": {"posts": len(posts), "people": len(ppl), "syms": len(out_t),
                        "cash": sum(1 for t in out_t if t["cash"])}}
 
@@ -213,7 +317,8 @@ def main() -> None:
     # 宽表给 Excel:只出 cashtag 的,行 = ticker,列 = 日期,值 = 当日提及人数
     with (BASE / "ticker_daily.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         w = csv.writer(fh)
-        w.writerow(["ticker", *data["dates"], "总提及", "总曝光", "墙后", "立场"])
+        w.writerow(["ticker", *data["dates"], "总提及", "总曝光", "墙后", "立场",
+                    "峰值日", f"T+1 vs {BENCH}", f"T+5 vs {BENCH}"])
         for t in data["tickers"]:
             if not t["cash"]:
                 continue
@@ -223,6 +328,8 @@ def main() -> None:
                 t["tn"], t["tv"],
                 "/".join(sorted({x["kind"] for x in t["wall"] if x["kind"]})),
                 " ".join(f"{k}:{v}" for k, v in sorted(t["st"].items())),
+                t.get("peak") or "",
+                *[price_cell(*t["rel"][k]) for k in HORIZONS],
             ])
 
     if TPL.exists():

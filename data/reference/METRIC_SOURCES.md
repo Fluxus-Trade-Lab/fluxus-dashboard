@@ -329,3 +329,15 @@ Andy 09-21「四条交给 Linda 测」。四条来自 X 上两位外部交易者
 | RSP 广度读数 | **RSP/SPY 比值**（[CXO Advisory](https://www.cxoadvisory.com/technical-trading/rspspy-as-a-stock-market-breadth-indicator/)）；标准的均线广度量是 %above-50MA | 等权除市值加权的比值；或成分股在 50 日线上方的占比 | ⚠️ **原规则「RSP 对它自己的 50 日线」查无标准，是外部作者自造**——它测的是方向不是广度。我们照原话测了（gap −0.06pp，90% 区间跨 0），并把有出处的比值版一起报（−0.55pp，同样跨 0） |
 | 「动能趋势里第一次回踩 20 日线」 | 形状有公开原型：TradingView 开源脚本 *Optimized 1st Touch 10SMA After Run*、Bulls on Wall Street *First Pullback* | 各家的「一段拉升」定义不同，无统一口径；**「动能趋势」查过，无标准定义** | ⚠️ **自造**：gate = 20MA>50MA 且 20MA 十日前上行；RUN ≥15 日未碰 20MA。六个变体全跑，结论不随参数变。不得上页冒充标准读数 |
 | 「族群里谁先回 52 周新高」 | 「买新高」有一手出处：O'Neil 1959 原始研究；[O'Neil Global Advisors 量化复核](https://www.oneilglobaladvisors.com/documents/FG/oneil/research/617948_OGA_Breakouts-OGA.pdf)（breakout 3M +1.1% alpha / +3.2% 收益） | 52 周新高本身有标准；**「组内谁先回新高」这个排序器查无标准** | ⚠️ **排序器自造**；52 周新高与修正识别**照抄** SwingMasterclass `_bench/appJ_correction_leaders.py`（收盘 ≥ 过去 252 根最大值；SPY 日内 52 周新高之间跌幅 ≥10%）。appJ 那 11 次修正与我们逐条一致 |
+
+## X 台账「提及峰值日后 T+k 相对 SPY」（2026-09-23，T-0923-86，Steve）
+
+动手前查过：事件研究（event study）里「事件后 T+k 相对基准的表现」**有标准口径，照抄**；
+k 取 1 和 5、以及把 X 提及当事件日这两件事**没有标准，是自造，下面逐条写明**。
+
+| 我们发的 | 标准名 / 一手出处 | 标准口径 | 状态 |
+|---|---|---|---|
+| `ticker_daily.csv` 的 `T+1 vs SPY` / `T+5 vs SPY`（`build_board.py:rel_vs_bench`） | **Market-adjusted (return) model**，事件研究四种期望收益模型之一（[EventStudyTools · Expected Return Models](https://www.eventstudytools.com/expected-return-models)；框架见 MacKinlay 1997，[方法论综述](https://www.eventstudytools.com/introduction-event-study-methodology)） | `AR_it = R_it − R_mt` —— 令 β=1、α=0，不设估计窗、不做 OLS，直接用个股收益减基准指数同期收益 | ✅ **公式照抄**（基准 = SPY，取自 `data/output/baskets/SPY.json`，缺了抛错不补 0） |
+| 事件日锚点 = 峰值日当天或之前最后一个已收盘交易日的收盘 | 盘后/非交易时段发生的事件，day 0 记到**下一个可交易 session**，是文献通行处理（同上综述） | 标准只规定「信息进入市场后的第一个可交易时点」 | ⚠️ **自造的部分**：X 提及散落在 ET 日历日各个时刻，我们没有做逐帖时间戳对齐，一律取**提及日收盘**为锚——把整个提及日当信息日，避免把提及之前就已走完的当日行情算成「提及之后」。周末提及因此锚在上周五收盘 |
+| 累计方式与窗口长度 | 标准是 `CAR = Σ AR_t`（逐日 AR 相加），或 BHAR（持有期收益差） | 窗口长度由研究问题定，文献常见 (−1,+1)、(0,+5) 等 | ⚠️ **自造**：用持有期差（BHAR 形状，`R_i` 与 `R_m` 各自按 A→A+k 的简单收益相减），不是逐日 AR 累加；k=1/5 是这条台账要回答的问题定的，不是标准值。**不做显著性检验、不设估计窗**——样本量与用途都不支持，读数只当描述统计，不得上页冒充标准事件研究结论 |
+| 峰值日定义 | 查过，无标准 | —— | ⚠️ **自造**：窗口内提及**人数**最高的 ET 日，**并列取最早**。用人数不用帖数，因为一条清单帖能一口气提十个代码（见 x_watch README「共识轴要的是几个人同时提」） |
