@@ -48,6 +48,8 @@
 - Discord 两个付费角色回收 —— 08-28 否决暂缓（「否定。还不做这件事。」），重开前先重查成员状态，见 `data/growth/weekly/2026-08-25-paypal-reconcile.md` T1
 - safe-merge 白名单与外部动作边界的报告（OPS 欠，提案存档 `data/reference/proposals/2026-08-31_safe_merge_boundary.md`）
 - [09-17] **个股盘中 mean reversion 入场指标**（RND Linda）：开盘下杀后出现 doji/hammer 作为衰竭标记，再用 Gil Morales 6/20（5 分钟 EMA6/20 + MACD 6,20,9 + VWAP）触发入场，放 TradingView 用。Andy 原话「9/20之后再说」。设计在 RND Linda 09-17 的会话里，到时候落 `data/research/`。
+- [09-23] **X 台账接自家数据**（Steve）：每只票带 RS 评级、距 50 日线、ETF 篮子；dashboard 个股页加「X 热度」列。触发条件＝T-0923-86（接价格）跑出 n≥30，且课程 09-25 发售之后。Andy 原话「做 1，剩下两个方向如何处理」——方向 2 存此。
+- [09-23] **X 台账滚动 30 天归档**（Steve）：`ticker_daily.csv` 超 60 列或看板打开明显变慢时再做；默认视图只留 ≥2 人日、曝光读最新值这两条已并入 T-0923-86。
 - [09-17] **SPX GEX 管线暂时退役**（RND Linda）：Andy 原话「SPX GEX暂时退役」。gex-daily/skew-daily 已停用，数据停在 08-20；复活条件＝TWS 常驻登录。
 
 ## 规则备忘
