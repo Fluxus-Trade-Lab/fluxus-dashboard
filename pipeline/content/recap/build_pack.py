@@ -422,6 +422,28 @@ def _last_close(rows: list[tuple[dt.date, float]], d: dt.date) -> tuple[Optional
     return latest_close, latest_date != d
 
 
+def _closes_override(T: str) -> tuple[dict[str, float], str]:
+    """Secondary-source closes for a session the primary vendor has not published.
+
+    Read from RECAP_ROOT/<YYYY-MM>/<T>/pack/closes_override.json:
+        {"source": "<where each number came from>", "asof": "<ET timestamp>",
+         "closes": {"ARM": 333.20, ...}}
+    This never overrides a close the primary vendor DID publish, and it never
+    supplies a prior session's number — the file is written by hand from a named
+    second source, and its provenance is copied into book["source"] so the PDF's
+    numbers stay traceable (09-16: a silent prior-session fallback printed the
+    wrong day's close, INBOX L2803)."""
+    from . import RECAP_ROOT
+    p = RECAP_ROOT / T[:7] / T / "pack" / "closes_override.json"
+    if not p.exists():
+        return {}, ""
+    blob = json.loads(p.read_text())
+    px = {k: float(v) for k, v in (blob.get("closes") or {}).items()}
+    src = str(blob.get("source") or "unnamed secondary source")
+    asof = str(blob.get("asof") or "")
+    return px, (f"{src}{' @ ' + asof if asof else ''}" if px else "")
+
+
 def _closes(tickers: list[str], T: str) -> tuple[dict[str, float], list[str]]:
     """(ticker -> close on T, tickers whose T-day bar is not published yet).
     Stale tickers are never returned in the price dict — the caller must treat
@@ -446,6 +468,14 @@ def _closes(tickers: list[str], T: str) -> tuple[dict[str, float], list[str]]:
             stale.append(tk)
         else:
             out[tk] = px
+    if stale:
+        ovr, src = _closes_override(T)
+        taken = [tk for tk in stale if tk in ovr]
+        if taken:
+            for tk in taken:
+                out[tk] = ovr[tk]
+            stale = [tk for tk in stale if tk not in taken]
+            _closes.override_note = f"{', '.join(sorted(taken))} via {src}"
     return out, stale
 
 
@@ -499,7 +529,9 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     r_per, n_per = realized_between(p0, d)
     r_wtd, n_wtd = realized_between(week0, d)
     out = {
-        "source": "GAS stockTrades (live Sheet) · closes via yfinance at the session close · options book not included",
+        "source": "GAS stockTrades (live Sheet) · closes via yfinance at the session close"
+                  + (" · " + _closes.override_note if getattr(_closes, "override_note", "") else "")
+                  + " · options book not included",
         "as_of": T, "period_start": p0.isoformat(),
         "open_positions": len(open_), "open_names": len({t.ticker for t in open_}), "closed_trades": len(closed),
         "opened_in_period": sum(1 for t in live if p0 <= t.entry_date <= d),
