@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from pipeline.adapters.finviz_adapter import FinvizAdapter
 from pipeline.adapters.yfinance_adapter import YfinanceAdapter
+from pipeline.constants.tickers import ALL_TICKERS
 from pipeline.screeners.momentum_97 import run as run_momentum_97
 from pipeline.screeners.gainers_4pct import run as run_gainers_4pct
 from pipeline.screeners.vol_up_gainers import run as run_vol_up_gainers
@@ -773,7 +774,12 @@ def main():
 
     # 2. Fetch ETF data
     logger.info("Fetching ETF data...")
-    etf_data = yf_adapter.fetch_etf_data()
+    # UUP (US Dollar) added T-0923-63 for the morning-walk §7.4 dollar
+    # sentinel -- it isn't a member of any STOCK_GROUPS group (it's not a
+    # sector/country/industry fund), so it rides in as an explicit extra
+    # ticker rather than joining a group and picking up that group's theme
+    # semantics.
+    etf_data = yf_adapter.fetch_etf_data(tickers=ALL_TICKERS + ['UUP'])
     logger.info(f"Got {len(etf_data)} ETFs from yfinance")
 
     # 3. Fetch MA signals
