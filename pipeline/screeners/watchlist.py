@@ -243,14 +243,39 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     # NOT applied, and why: "Price contraction (last 5 days)" gives no number;
     # "Earnings in 7+ days" -- no calendar in the row; the base is our course
     # liquid_leader (Andy chose the course for #9), not his Liquid Leaders scan.
+    #
+    # 2026-09-23 (Andy: "收盘用大于 20%，其他是 A 版本" / "喜欢 ATR" / "不愿意
+    # 放弃那 20 只贴着 21 日线的回踩"): dcr_pct floor moved 0.10 -> 0.20, this
+    # is Andy's final call, not a backtested winner -- trading performance
+    # across versions has NOT been measured. Four versions compared on the
+    # 2026-09-22 session before he picked this one (closing-range floor is
+    # the only lever that changed; the 0-1 ATR 21EMA band is what actually
+    # sets list length: 94 -> 40 names on the upstream units, 77 -> 24 on the
+    # ADR/EMA units):
+    #   upstream original (Alex Desjardins, TradersLab): dcr > 10%,
+    #     perf_1w < 15%, 0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA ->
+    #     39/115-name pool, 41/120-name pool hits.
+    #   draft v1 (dropped word, retired): "daily range > 20%" -- a
+    #     mistranscription of "closing range"; perf_1w < 12%, 0.5-1 ADR from
+    #     21EMA, 0-3 ADR from 50EMA.
+    #   draft v2 (ADR/EMA units, 0.5 floor): dcr > 20%, perf_1w < 12%,
+    #     0.5-1 ADR from 21EMA, 0-3 ADR from 50EMA -> 22 hits.
+    #   THIS VERSION (Andy's 09-23 final): dcr > 20%, perf_1w < 15%,
+    #     0-1 ATR from 21EMA, -0.5-4 ATR from 50SMA -> 37 hits.
+    # (all hit counts on the 2026-09-22 session.) A closing-range-floor-only
+    # scan on the same day (rest of the rule held, wider 188-name pool) gave
+    # 60/55/42/34/33/28 hits at 10/20/35/50/60/75% -- confirms the floor is a
+    # coarse knob, not the driver of list length.
     Panel("liquid_leader_pullback", "Liquid Leader Pullback",
-          "liquid_leader; daily closing range > 10%; weekly return < 15%; 0 to 1 x ATR from the 21EMA; "
-          "-0.5 to 4 x ATR from the 50SMA (Alex Desjardins, TradersLab 21dma-structure Pullback scan; "
-          "'advancing 21ema' is implied by the 0 floor. Not applied: 5-day price contraction (no number given), "
-          "earnings 7+ days out (no data); base list is the course Liquid Leaders, not his)",
+          "liquid_leader; daily closing range > 20%; weekly return < 15%; 0 to 1 x ATR from the 21EMA; "
+          "-0.5 to 4 x ATR from the 50SMA (Andy's 2026-09-23 final call, over Alex Desjardins's TradersLab "
+          "21dma-structure Pullback scan which reads > 10%; see comment above for the four versions "
+          "compared and why the closing-range floor moved -- trading performance across versions not "
+          "measured. 'advancing 21ema' is implied by the 0 floor. Not applied: 5-day price contraction "
+          "(no number given), earnings 7+ days out (no data); base list is the course Liquid Leaders, not his)",
           ["liquid_leader", "ema21_atr_dist", "sma50_atr_dist", "dcr_pct"],
           lambda r: r.get("liquid_leader") is True
-          and _f(r, "dcr_pct") is not None and _f(r, "dcr_pct") > 0.10
+          and _f(r, "dcr_pct") is not None and _f(r, "dcr_pct") > 0.20
           and _f(r, "perf_1w") is not None and _f(r, "perf_1w") < 0.15
           and _ge(r, "ema21_atr_dist", 0.0) and _le(r, "ema21_atr_dist", 1.0)
           and _ge(r, "sma50_atr_dist", -0.5) and _le(r, "sma50_atr_dist", 4.0)),
