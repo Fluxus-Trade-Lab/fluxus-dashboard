@@ -70,11 +70,22 @@ def _key(line: str) -> str:
     return re.sub(r'\s+', '', line)
 
 
+# JSX 的文字节点不是代码。`MorningRead.jsx` 里有一句说明写着「…… net advances
+# ……」，同一行还排着一个 `<span>4</span>`，于是这道闸把一句给人读的话判成了
+# 前端拿 4 去比 net_advances（2026-09-23 实际把 main 判红）。先剥文字节点再扫：
+# 标签之间的内容删掉，属性（className=…、value={…}）与纯表达式留着。
+_JSX_TEXT = re.compile(r'>[^<>{}]*<')
+
+
+def _strip_jsx_text(line: str) -> str:
+    return _JSX_TEXT.sub('><', line)
+
+
 def scan_text(text: str) -> List[Tuple[int, str]]:
     """返回 (行号, 原行) —— 拿裸数字去比较家数类字段的那些行。"""
     hits = []
     for i, line in enumerate(text.splitlines(), 1):
-        code = line.split('//')[0]
+        code = _strip_jsx_text(line.split('//')[0])
         if not any(f in code for f in COUNT_FIELDS):
             continue
         if _thresholds_in(code):
@@ -82,10 +93,18 @@ def scan_text(text: str) -> List[Tuple[int, str]]:
     return hits
 
 
+# 前端自己的测试夹具不是产品代码：`breadthPanes.test.js` 造了 300 行假数据
+# （`new_lows: i % 50 === 0 ? 60 : …`、`i > 290 ? 60 : null`），那是被测对象的
+# 输入，不是拿常数判家数的判定。闸只扫会上线的代码。
+_TEST_FILE = re.compile(r'\.test\.[jt]sx?$')
+
+
 def scan_frontend() -> List[Tuple[str, int, str]]:
     out = []
     for path in sorted(FRONTEND.rglob('*.js*')):
         rel = path.relative_to(FRONTEND).as_posix()
+        if _TEST_FILE.search(rel):
+            continue
         for lineno, line in scan_text(path.read_text(encoding='utf-8')):
             out.append((rel, lineno, line))
     return out
@@ -97,6 +116,24 @@ def test_scanner_flags_a_count_threshold():
     """阳性对照：正是把 MarketStateSummary 那一行改瘦了也照样命中。"""
     hits = scan_text("const x = (mm.up_4pct ?? 0) >= 300 ? 'thrust' : 'no'\n")
     assert len(hits) == 1, hits
+
+
+def test_scanner_still_flags_code_next_to_jsx_text():
+    """阳性对照：剥文字节点不能把真判定一起剥掉。"""
+    line = "<span>{mm.up_4pct >= 300 ? 'thrust' : 'no'}</span>\n"
+    assert len(scan_text(line)) == 1, scan_text(line)
+
+
+def test_scanner_ignores_prose_in_jsx_text_nodes():
+    """给人读的句子里出现字段名和数字，不是拿常数判家数（2026-09-23 误报实例）。"""
+    line = ("<p>The rest of the rulers <span className=\"font-mono\">4</span> — "
+            "T2108, net advances, the A/D line</p>\n")
+    assert scan_text(line) == [], scan_text(line)
+
+
+def test_frontend_test_fixtures_are_out_of_scope():
+    assert _TEST_FILE.search('components/breadth/breadthPanes.test.js')
+    assert not _TEST_FILE.search('components/breadth/MarketStateSummary.jsx')
 
 
 def test_scanner_ignores_ratio_fields_and_comments():
