@@ -25,8 +25,104 @@
 # hole survived in.
 name: tests
 
+# TRIGGER NARROWING (T-0923-121, 2026-09-23): `push:` used to fire on ANY
+# branch, ANY path -- two inbox-flood incidents in one week from it (09-22
+# universe_freshness; 09-23 test_frontend_count_thresholds red 43 minutes,
+# 6b6676a9..22eb7017, mailing a failure on every push in between). 30 runs
+# in 113 minutes measured right before this change (07:06-08:59Z;
+# `gh run list --workflow tests.yml -L 30`), most of them agent/* branch
+# pushes or a main push cancelled by the next one.
+#
+# `branches: [main]` alone kills the agent-branch flood: those pushes never
+# reach this workflow anymore. No coverage is lost -- branch-review already
+# runs pytest in the worktree before a branch is allowed to merge, so the
+# same run moves earlier, off email, not away.
+#
+# `paths:` (NOT `paths-ignore:`) ON PURPOSE: `paths-ignore` has no documented
+# `!` re-include semantics (GitHub's own docs: use `paths` with `!` when you
+# need both include and exclude on one event; `paths-ignore` is exclude-only).
+# Every content directory below has at least one real exception, so
+# `paths-ignore` + `!` risks silently keeping the whole directory ignored.
+# `paths:` starting from `'**'` keeps everything in scope by default (a new
+# top-level directory is covered without anyone remembering to add it here),
+# then narrows with `!dir/**` and re-widens with a later positive pattern --
+# order matters, the LAST matching pattern wins.
+#
+# Every excluded directory was checked two ways before being added: (a) does
+# `git grep` show pipeline/tests or tests/ loading a real file from it by path
+# (not a tmp_path fixture)? (b) does anything under it carry a 谁读/**reads**
+# declaration audit_reads_declarations.py depends on, or a path a non-test
+# module hardcodes and a test imports live (e.g. claim_registry.REGISTRY)?
+# Both "no" is required to ignore a directory outright; either "yes" gets a
+# `!`-carved exception instead:
+#   - Fluxus_Brand/brain/** and Fluxus_Brand/ops/campaigns/roles/** (plus
+#     MAINTENANCE_2026-09-10.md, PIPELINE.md) carry the 谁读/**reads** pairs
+#     audit_reads_declarations.py checks.
+#   - Fluxus_Brand/ops/tools/x_watch/** (fetch.py) is imported by path in
+#     test_x_watch_fetch.py.
+#   - data/content/x_watch/** (tools/*.py, scoring/mood_index.py, plus its
+#     own 谁读-bearing README.md) is imported by path in the other
+#     test_x_watch_*.py files.
+#   - data/research/claims/** (claims.jsonl) is read live by
+#     pipeline/tools/claim_registry.REGISTRY, which test_claim_registry.py's
+#     TestLiveRegistry and test_claims_null_resolution.py both import and load.
+#   - data/research/what_changed_2026-08/** (what_changed.py) is imported by
+#     path in test_what_changed.py.
+#   - data/research/night_reports/INBOX.md, data/research/repo_health/
+#     2026-09-11_board_consumers.md and data/research/system_audit_2026-08/
+#     PLAN.md carry 谁读 headers.
+# `.claude/` and `data/reference/` are NOT in this filter at all (not even as
+# an ignored-then-reincluded directory): `.claude/hooks/*.py`
+# (ruling_stop_gate, skill_stop_gate, task_test_gate) and
+# `.claude/skills/daily-recap/SKILL.md` are loaded by path in their matching
+# test_*.py; `data/reference/schema_snapshot.json`,
+# `data/reference/tape_SPX_20260807_sample.json` and
+# `data/reference/screener_methods.md` are read for real content by
+# test_ep_screeners.py / test_output_shape_guards.py / tests/flow/test_block.py
+# / test_audit_fix_0921.py, and the whole directory is already carved out of
+# ALEX's own safe-merge whitelist (CLAUDE.md) as too load-bearing to treat as
+# inert docs. `Fluxus_Substack/` and `docs/` have zero hits on both checks and
+# are excluded with no exceptions. `**/*.md` (repo-wide) was considered and
+# dropped: this suite exists specifically to audit .md contract files as
+# semi-code (audit_reads_declarations.py), so a blanket markdown exclusion
+# would gut the thing it's supposed to protect.
+#
+# T5 fallout, and why it's declared rather than dodged: adding ANY
+# `branches:`/`paths:` filter here trips
+# pipeline/tests/test_audit_ci_test_coverage.py's T5 check, which by design
+# has no way to enumerate what a diff-dependent filter excludes (unlike a
+# marker or a checkout depth, it would need this commit's changed-file list,
+# which the tool never reads). Rather than weaken that refusal for everyone,
+# pipeline/tools/audit_ci_test_coverage.py now has a parallel
+# DECLARED_TRIGGERS table (T-0923-121) that records `branches: [main]` and
+# `paths:` as owned, dated, printed choices -- an UNDECLARED trigger filter
+# still trips T5 exactly as before.
+#
+# 谁发现红了：the suite is loud-not-blocking (see SEVERITY note above) --
+# nothing here gates the nightly pipeline. A red run here surfaces at the
+# next morning check (failure-triage skill, T-0922-61) or whenever a human
+# next opens the Actions tab; it does not page anyone by itself.
 on:
   push:
+    branches: [main]
+    paths:
+      - '**'
+      - '!Fluxus_Brand/**'
+      - 'Fluxus_Brand/brain/**'
+      - 'Fluxus_Brand/ops/campaigns/MAINTENANCE_2026-09-10.md'
+      - 'Fluxus_Brand/ops/campaigns/PIPELINE.md'
+      - 'Fluxus_Brand/ops/campaigns/roles/**'
+      - 'Fluxus_Brand/ops/tools/x_watch/**'
+      - '!Fluxus_Substack/**'
+      - '!docs/**'
+      - '!data/content/**'
+      - 'data/content/x_watch/**'
+      - '!data/research/**'
+      - 'data/research/claims/**'
+      - 'data/research/what_changed_2026-08/**'
+      - 'data/research/night_reports/INBOX.md'
+      - 'data/research/repo_health/2026-09-11_board_consumers.md'
+      - 'data/research/system_audit_2026-08/PLAN.md'
   pull_request:
   workflow_dispatch:
 
