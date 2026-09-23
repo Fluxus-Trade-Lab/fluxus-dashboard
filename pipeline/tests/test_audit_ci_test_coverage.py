@@ -306,21 +306,21 @@ DECL = {"tests": ("owner", "reason", "2026-09-05")}
 def test_t1_fires_when_an_exclusion_is_undeclared():
     t = _tests(("tests/test_x.py", "test_a", (), False))
     t[0]["root"] = "tests"
-    res = cov.check(t, [_step()], declared={})
+    res = cov.check(t, [_step()], declared={}, declared_triggers={})
     assert [c for c, _ in res["violations"]] == ["T1"]
 
 
 def test_t1_is_silent_once_that_exclusion_is_declared():
     t = _tests(("tests/test_x.py", "test_a", (), False))
     t[0]["root"] = "tests"
-    res = cov.check(t, [_step()], declared=DECL)
+    res = cov.check(t, [_step()], declared=DECL, declared_triggers={})
     assert res["violations"] == []
 
 
 def test_t2_fires_when_a_declared_exclusion_no_longer_excludes_anything():
     """The anti-rot half: fixing it forces you to delete the excuse."""
     t = _tests(("pipeline/tests/test_x.py", "test_a", (), False))
-    res = cov.check(t, [_step()], declared=DECL)
+    res = cov.check(t, [_step()], declared=DECL, declared_triggers={})
     assert ("T2", "declared exclusion 'tests' excludes nothing now "
                   "-- delete the entry") in res["violations"]
 
@@ -328,15 +328,51 @@ def test_t2_fires_when_a_declared_exclusion_no_longer_excludes_anything():
 def test_t3_fires_when_a_declared_marker_is_on_no_test():
     t = _tests(("pipeline/tests/test_x.py", "test_a", ("slow",), False))
     decl = {"marker:slow": ("o", "r", "d"), "marker:ghost": ("o", "r", "d")}
-    res = cov.check(t, [_step(markers=("slow",))], declared=decl)
+    res = cov.check(t, [_step(markers=("slow",))], declared=decl,
+                     declared_triggers={})
     assert any(c == "T3" and "ghost" in m for c, m in res["violations"])
 
 
 def test_t4_fires_when_a_declared_entry_has_no_owner():
     t = _tests(("tests/test_x.py", "test_a", (), False))
     t[0]["root"] = "tests"
-    res = cov.check(t, [_step()], declared={"tests": ("", "reason", "d")})
+    res = cov.check(t, [_step()], declared={"tests": ("", "reason", "d")},
+                     declared_triggers={})
     assert any(c == "T4" for c, _ in res["violations"])
+
+
+def test_t7_fires_when_a_declared_trigger_filter_no_longer_narrows_anything():
+    """T2's anti-rot half, for trigger filters."""
+    decl_t = {"branches: [main]": ("o", "r", "d")}
+    res = cov.check([], [_step()], declared={}, declared_triggers=decl_t)
+    assert ("T7", "declared trigger filter 'branches: [main]' is not on any "
+                  "workflow's trigger now -- delete the entry") in res["violations"]
+
+
+def test_t7_is_silent_once_the_filter_is_still_on_the_trigger():
+    step = _step()
+    step["trigger_filters"] = ["branches: [main]"]
+    decl_t = {"branches: [main]": ("o", "r", "d")}
+    res = cov.check([], [step], declared={}, declared_triggers=decl_t)
+    assert res["violations"] == []
+    assert res["certified"]
+
+
+def test_t8_fires_when_a_declared_trigger_filter_has_no_owner():
+    step = _step()
+    step["trigger_filters"] = ["branches: [main]"]
+    decl_t = {"branches: [main]": ("", "r", "d")}
+    res = cov.check([], [step], declared={}, declared_triggers=decl_t)
+    assert any(c == "T8" for c, _ in res["violations"])
+
+
+def test_an_undeclared_trigger_filter_still_trips_t5():
+    """The escape hatch is per-line, not a blanket amnesty for narrowing."""
+    step = _step()
+    step["trigger_filters"] = ["paths: ['frontend/**']"]
+    res = cov.check([], [step], declared={}, declared_triggers={})
+    assert any(c == "T5" for c, _ in res["violations"])
+    assert not res["certified"]
 
 
 def test_t5_fires_on_an_option_the_parser_does_not_model():
@@ -599,7 +635,7 @@ def test_the_fixed_workflow_leaves_nothing_excluded(tmp_path):
     tests = cov.suite_tests(cov.ROOT)
     assert cov.excluded_tests(tests, steps) == {}
 
-    res = cov.check(tests, steps)
+    res = cov.check(tests, steps, declared_triggers={})
     codes = sorted({c for c, _ in res["violations"]})
     assert codes == ["T2"], cov.render(res)
     assert len(res["violations"]) == len(cov.DECLARED)
