@@ -1,0 +1,182 @@
+{
+ "modules": [
+  {
+   "module": "audit_unpushed",
+   "mutants": 30,
+   "killed": 14,
+   "survived": 16,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "total_sites": 30,
+   "index_from": 0,
+   "index_to": 30,
+   "kill_rate": 0.467,
+   "survivors": [
+    {
+     "line": 45,
+     "kind": "number",
+     "change": "20 -> 21",
+     "source": "def _git(repo: Path, *args: str, timeout: int = 20) -> str:",
+     "index": 1,
+     "seconds": [
+      9.1
+     ]
+    },
+    {
+     "line": 70,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "rep[\"upstream\"] = upstream or None",
+     "index": 4,
+     "seconds": [
+      8.8
+     ]
+    },
+    {
+     "line": 60,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"worktree\": str(wt), \"branch\": None, \"ahead\": 0,",
+     "index": 6,
+     "seconds": [
+      9.1
+     ]
+    },
+    {
+     "line": 74,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "n = int(off) if off.isdigit() else 0",
+     "index": 7,
+     "seconds": [
+      9.4
+     ]
+    },
+    {
+     "line": 83,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if a and not n:",
+     "index": 8,
+     "seconds": [
+      9.0
+     ]
+    },
+    {
+     "line": 101,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "out: Dict[str, Any] = {\"worktrees\": [], \"violations\": 0, \"warnings\": 0}",
+     "index": 12,
+     "seconds": [
+      8.7
+     ]
+    },
+    {
+     "line": 127,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 14,
+     "seconds": [
+      9.1
+     ]
+    },
+    {
+     "line": 127,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 15,
+     "seconds": [
+      9.2
+     ]
+    },
+    {
+     "line": 81,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "a = int(ahead) if ahead.isdigit() else 0",
+     "index": 17,
+     "seconds": [
+      8.7
+     ]
+    },
+    {
+     "line": 83,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if a and not n:",
+     "index": 18,
+     "seconds": [
+      8.6
+     ]
+    },
+    {
+     "line": 120,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "flag = \"OK \" if not rep[\"violations\"] else \"BAD\"",
+     "index": 20,
+     "seconds": [
+      8.7
+     ]
+    },
+    {
+     "line": 91,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if l and not l.startswith(\"??\")]",
+     "index": 25,
+     "seconds": [
+      9.1
+     ]
+    },
+    {
+     "line": 56,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return [Path(l.split(\" \", 1)[1]) for l in out.splitlines() if l.startswith(\"worktree \")]",
+     "index": 26,
+     "seconds": [
+      9.2
+     ]
+    },
+    {
+     "line": 122,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "print(f\"{flag} {rep['branch'] or '?':34s} {detail or 'clean'}   [{rep['worktree']}]\")",
+     "index": 27,
+     "seconds": [
+      9.2
+     ]
+    },
+    {
+     "line": 122,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "print(f\"{flag} {rep['branch'] or '?':34s} {detail or 'clean'}   [{rep['worktree']}]\")",
+     "index": 28,
+     "seconds": [
+      8.9
+     ]
+    },
+    {
+     "line": 126,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))",
+     "index": 29,
+     "seconds": [
+      9.1
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 228.8
+}

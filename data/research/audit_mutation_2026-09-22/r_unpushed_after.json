@@ -1,0 +1,69 @@
+{
+  "modules": [
+    {
+      "module": "audit_unpushed",
+      "mutants": 30,
+      "killed": 27,
+      "survived": 3,
+      "skipped": 0,
+      "unstable": 0,
+      "no_verdict": 0,
+      "repeat": 3,
+      "total_sites": 30,
+      "slices": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          20
+        ],
+        [
+          20,
+          30
+        ]
+      ],
+      "survivors": [
+        {
+          "line": 45,
+          "kind": "number",
+          "change": "20 -> 21",
+          "source": "def _git(repo: Path, *args: str, timeout: int = 20) -> str:",
+          "index": 1,
+          "seconds": [
+            18.0,
+            18.3,
+            18.7
+          ]
+        },
+        {
+          "line": 81,
+          "kind": "number",
+          "change": "0 -> 1",
+          "source": "a = int(ahead) if ahead.isdigit() else 0",
+          "index": 17,
+          "seconds": [
+            18.8,
+            18.8,
+            18.8
+          ]
+        },
+        {
+          "line": 126,
+          "kind": "number",
+          "change": "1 -> 2",
+          "source": "Path(args.json).write_text(json.dumps(out, indent=1))",
+          "index": 29,
+          "seconds": [
+            19.3,
+            18.7,
+            19.3
+          ]
+        }
+      ],
+      "kill_rate": 0.9
+    }
+  ],
+  "seconds": 1023.2
+}
