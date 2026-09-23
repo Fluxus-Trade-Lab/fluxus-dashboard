@@ -3026,3 +3026,4 @@ INBOX 里写成「丢弃」的，逐条核：
 - [2026-09-21] Discord→X 生成端（steve, T-0922-10）：今天没有新 Discord 消息可生成草稿——`data/output/threads/` 下最新文件夹仍是 2026-09-18（已有 draft.txt）；`daily-content-threads` 当天 20:00 UTC 抓取按历史延迟（2–2.75h）尚未产出新文件夹，核对时仅过 42 分钟，属正常范围，非故障。正常结束，无 draft 产出。
 - [09-22] 📰 每日复盘 2026-09-21：已出（中英 PDF · Substack 逐页图 · X 素材）· 闸全绿（T-0922-22；递送单 T-0922-37）
 - [2026-09-23] Discord→X 生成端（steve, T-0923-14）：2026-09-21 草稿已出（85 条消息 → 8 条推文，commit 1d5d65a1）
+- [09-23] 📰 每日复盘 2026-09-22：未出 —— 组合收盘价供应商（yfinance）到 10:24 JST 仍未发布 09-22 日线，render 的 closes_stale 闸拦下；内容文件已写好并过 check 全绿，对照组 EN PDF 与写作建议已出，供应商补齐后只需重跑 build_pack + render
