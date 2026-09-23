@@ -686,7 +686,12 @@ class TestBuildPanes:
         for i in range(n):
             body = _bull_row() if i % 2 == 0 else _bear_row()
             rows.append({'date': f'2026-07-{i + 1:02d}', **body})
-        return _frame(rows)
+        frame = _frame(rows)
+        # _bull_row/_bear_row mirror mcclellan_osc -> mcclellan_osc_ndx
+        # (T-0923-03's _AUTHOR_TWINS) so old vote fixtures keep working; this
+        # class simulates the pre-Nasdaq-100 archive, where the ndx column
+        # is genuinely absent, so drop the mirrored twin here.
+        return frame.drop(columns=['mcclellan_osc_ndx'])
 
     def test_shape_matches_full_history(self):
         from pipeline.screeners.breadth_signals import build_panes, PANES_COLUMNS
