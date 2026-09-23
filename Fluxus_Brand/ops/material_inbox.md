@@ -203,6 +203,8 @@
 - [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
 
 ## 📥 追加到这里
+- [09-23] [steve] **术语精度的迭代诊断：从分类混淆到自洽标记** · net_4pct 条件被审核员（branch-review T-0923-60）指出分类混淆——虽然 4% 计数源自 Stockbee（标准输入），但「net-against-zero」条件本身没有 Stockbee 定义，却被整体标记为「standard」。修复从标签分类（standard → mixed）和源注明（明确说「Stockbee 4% counts (input, standard) — the condition itself has no Stockbee definition」），让使用者一眼看出哪部分来自标准、哪部分是自造。防护机制：通过分类和文案的自洽性，防止未来再混淆术语来源。这体现系统有能力不只修一个标签，而是**从分类混淆诊断为术语不自洽、设计改进为双维度对齐（分类+文案）、验证通过 METRIC_SOURCES.md 口径基线**。[T-0923-73 · ab9080d6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ab9080d6)
+
 
 - [09-23] [steve] **保本止损防护从「条件覆盖」升级到「诊断驱动修复」** · 原设计用 open_R 范围限制来防止止损在跳空时假死（只豁免窄带内的仓位），但实际验证发现四个风险仓位被这个条件漏掉——HOOD/ARM 等票的 open_R 在 ±0.6R 带外，仍会跳空穿保本。根源诊断：$0.00 从不是真实股价，所以 stop_R==0 本身就不可能是价格泄漏，条件限制基于错误前提。修复是从条件豁免（范围有限）→ 无条件豁免（完全覆盖），扩大防护范围。防护验证：测试新增对照，留痕已知残余风险（非保本止损情况），展示系统有能力从「假设失败」诊断为「设计前提错」、而不只是打补丁。**这是系统主动验证现有防护、精确诊断盲点、根据诊断重新设计的完整证据**。[T-0923-61 · bc4debc4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bc4debc4)
 
