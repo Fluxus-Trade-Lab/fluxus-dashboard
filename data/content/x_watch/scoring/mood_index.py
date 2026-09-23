@@ -18,7 +18,7 @@
      "帖数 1081 vs 1512" 是覆盖差异不是活跃度差异。）
 """
 from __future__ import annotations
-import argparse, csv, json, re, sys, collections, statistics as st
+import argparse, csv, importlib.util, json, re, sys, collections, statistics as st
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -36,6 +36,16 @@ OUT_THEME = {
     "fx_rates":({"TLT","IEF","DXY","UUP","US10Y","TNX","JPY","EUR","FXY"}, "TLT"),
 }
 INDEX = {"SPY","QQQ","IWM","DIA","SPX","NDX","RSP","QQQE","VIX","UVIX","VXX"}
+
+# 「这条帖该不该算进主题人数」的判据**只有一份**，在 tools/theme_count.py（睡前速报
+# 09-20 升的闸）。这里 import 它，不重抄一份 —— 同一条规则写在两处，改了一处另一处
+# 会静默漂走。各自保留自己的主题匹配：速报用宽词表，本脚本用 OUT_THEME 的代码集合。
+_TC = importlib.util.module_from_spec(
+    importlib.util.spec_from_file_location(
+        "x_watch_theme_count", OUT / "tools" / "theme_count.py"))
+_TC.__spec__.loader.exec_module(_TC)
+drop_reason = _TC.drop_reason        # (post, list_tickers) -> 理由 | None
+LIST_TICKERS = _TC.LIST_TICKERS
 
 # 只数词，不判谁对谁错
 DEF = re.compile(r"(?i)\b(cash|sidelines?|risk[ -]?off|stopped out|stop(?:ped)? me out|"
@@ -60,7 +70,7 @@ def tickers(text: str) -> set[str]:
             if len(m) <= 5}
 
 
-def metrics(rows: list[dict]) -> tuple[dict, dict]:
+def metrics(rows: list[dict]) -> tuple[dict, dict, dict]:
     n = len(rows) or 1
     ppl = collections.defaultdict(set)
     for r in rows:
@@ -70,9 +80,19 @@ def metrics(rows: list[dict]) -> tuple[dict, dict]:
     top3 = sorted(ppl.items(), key=lambda x: -len(x[1]))[:3]
     d = sum(1 for r in rows if DEF.search(r.get("text") or ""))
     o = sum(1 for r in rows if OFF.search(r.get("text") or ""))
-    theme_people = {}
+    # 剔清单帖/回复帖之后的第二本人名册。**只用来报数和拉警报，不改判定** ——
+    # out_* 四列和过闸条件一个字没动，CALC 不升版，老行仍然可比。治的是
+    # 「读表的人看不见这 4 个人里有 3 个只出现在扫描表里」（取件账 09-18·1 第 3 次）。
+    solo = collections.defaultdict(set)
+    for r in rows:
+        if drop_reason(r, LIST_TICKERS) is not None:
+            continue
+        for t in tickers(r.get("text") or ""):
+            solo[t].add(r["h"])
+    theme_people, theme_solo = {}, {}
     for g, (syms, _) in OUT_THEME.items():
         theme_people[g] = {h for t in syms & set(ppl) for h in ppl[t]}
+        theme_solo[g] = {h for t in syms & set(solo) for h in solo[t]}
     m = {
         "posts": len(rows),
         "people": len({r["h"] for r in rows}),
@@ -87,7 +107,7 @@ def metrics(rows: list[dict]) -> tuple[dict, dict]:
         "out_fx": len(theme_people["fx_rates"]),
         "index_people": len({h for t in INDEX & set(ppl) for h in ppl[t]}),
     }
-    return m, theme_people
+    return m, theme_people, theme_solo
 
 
 def coverage(date: str) -> str:
@@ -172,7 +192,7 @@ def main() -> None:
     if not rows:
         sys.exit(f"{src} 是空的 —— 不写 mood_daily.csv")
 
-    m, theme_people = metrics(rows)
+    m, theme_people, theme_solo = metrics(rows)
     cov = coverage(a.date)
     upsert(OUT / "scoring" / "mood_daily.csv", COLS, "date",
            {"date": a.date, **m, "coverage": cov, "calc": CALC})
@@ -195,21 +215,35 @@ def main() -> None:
             print(f"  ⚠️ {g}: {len(who)} 人，但 {proxy} 当日 α {da:+.1%} 超闸 "
                   f"→ **庆功不是起量**，写进第 2 节「已经跑完的」，不记事件")
             continue
-        fired.append((g, who, proxy, da))
+        solo = theme_solo.get(g, set())
+        fired.append((g, who, proxy, da, solo))
+        notes = []
+        if da is None:
+            notes.append("day_alpha 取不到，未过庆功闸")
+        if len(solo) < a.min_people:
+            notes.append(f"剔清单/回复帖后只剩 {len(solo)} 人，不足 {a.min_people} 人闸")
         upsert(OUT / "scoring" / "theme_events.csv",
-               ["date","theme","n_people","handles","proxy","day_alpha",
+               ["date","theme","n_people","n_people_solo","handles","proxy","day_alpha",
                 "fwd5_alpha","fwd21_alpha","note"], ("date", "theme"),
                {"date": a.date, "theme": g, "n_people": len(who),
+                "n_people_solo": len(solo),
                 "handles": "|".join(sorted(who)), "proxy": proxy,
                 "day_alpha": "" if da is None else f"{da:.4f}",
-                "note": "day_alpha 取不到，未过庆功闸" if da is None else ""})
+                "note": " · ".join(notes)})
     if fired:
-        for g, who, proxy, da in fired:
+        for g, who, proxy, da, solo in fired:
             d = "—" if da is None else f"{da:+.1%}"
-            print(f"  ⭐ 圈外主题起量: {g} · {len(who)} 人 · {proxy} 当日 α {d}")
-            print(f"     → 置顶第 3 节；已记进 theme_events.csv（fwd5/fwd21 过 5/21 个交易日回填）")
+            print(f"  ⭐ 圈外主题起量: {g} · {len(who)} 人（剔清单/回复帖 {len(solo)} 人）· "
+                  f"{proxy} 当日 α {d}")
+            if len(solo) < a.min_people:
+                print(f"     ⚠️ 剔掉回复帖与挂 >= {LIST_TICKERS} 个代码的清单帖后只剩 "
+                      f"{len(solo)} 人，够不上 {a.min_people} 人闸 —— **这条读数不成立**，"
+                      f"第 3a 节写明理由，别置顶。")
+                print(f"        只在清单/回复里的人：{'|'.join(sorted(who - solo)) or '—'}")
+            else:
+                print(f"     → 置顶第 3 节；已记进 theme_events.csv（fwd5/fwd21 过 5/21 个交易日回填）")
     else:
-        print("  圈外主题:无起量（这是常态 —— 基线三天里贵金属/能源/债汇的提及人数是 0）")
+        print(f"  圈外主题:无起量（人数闸 {a.min_people} 人，按剔清单前的人数判）")
 
 
 if __name__ == "__main__":
