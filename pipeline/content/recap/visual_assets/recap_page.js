@@ -601,18 +601,24 @@
     if (cols.length < 5) {
       cols = [cols[0], cols[1], cols[2], L.pos_stop || (zh ? "\u6b62\u635f R" : "Stop R"), cols[3]];
     }
+    /* cost is drawn, not carried: it is 0R for every row, so it comes from the chrome
+       and sits between the entry date and the stop, making the ladder readable left to
+       right (Andy 2026-09-23:「把 portfolio的cost和stop写进去」) */
+    cols = [cols[0], cols[1], cols[2], V.p_cost, cols[3], cols[4]];
     var head = cols.map(function (h, i) {
       return "<th" + (i >= 3 ? ' class="rn"' : "") + ">" + esc(h) + "</th>";
     }).join("");
     var rows = list(b.pos).map(function (p) {
       return '<tr><td class="t">' + esc(p[0]) + "</td><td>" + esc(p[1] === "long" ? L.long : L.short) +
-        "</td><td>" + esc(p[2]) + '</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) +
+        "</td><td>" + esc(p[2]) + '</td><td class="n">0R</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) +
         '</td><td class="n ' + cls(p[4]) + '">' + sR(p[4]) + "</td></tr>";
     }).join("");
     var legs = list(b.legs).map(function (g) {
       var pct = isNum(g[3]) ? g[3].toFixed(1) + "%" : DASH;
+      /* a CLOSE also says how long the trade was carried — 「持有 N 个交易日」 */
+      var held = isNum(g[5]) ? " \u00b7 " + esc(fill(V.leg_held, {n: g[5]})) : "";
       return '<li><span class="t">' + esc(g[1]) + "</span> \u00b7 " + esc(g[0].slice(5)) + " \u00b7 " +
-        esc(g[2]) + " " + esc(pct) + ' \u00b7 <b class="' + cls(g[4]) + '">' + sR(g[4]) + "</b></li>";
+        esc(g[2]) + " " + esc(pct) + ' \u00b7 <b class="' + cls(g[4]) + '">' + sR(g[4]) + "</b>" + held + "</li>";
     }).join("");
     var legBlock = legs ? '<div class="kicker sp">' + esc(L.legs_title || (zh ? "\u51cf\u4ed3\u4e0e\u5e73\u4ed3" : "Trims & exits")) +
       '</div><ul class="legs">' + legs + "</ul>" : "";

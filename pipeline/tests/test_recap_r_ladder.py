@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import datetime as dt
 
+import pytest
+
 from pipeline.content.recap.gates import run_gates
 from pipeline.content.recap.visual import book_out
 
@@ -52,7 +54,7 @@ def _book(**over):
          "positions": [{"ticker": "HOOD", "direction": "long", "entry_date": "2026-08-20",
                         "open_R": 7.4, "stop_R": 1.96}],
          "legs": [{"date": "2026-09-22", "ticker": "FSLY", "type": "CLOSE",
-                   "pct_of_position": 100.0, "R": 1.23, "R_scope": "trade"}]}
+                   "pct_of_position": 100.0, "R": 1.23, "R_scope": "trade", "held_sessions": 9}]}
     b.update(over)
     return b
 
@@ -60,7 +62,7 @@ def _book(**over):
 def test_book_out_emits_the_ladder():
     out = book_out(_book(), "2026-09-22")
     assert out["pos"] == [["HOOD", "long", "2026-08-20", 1.96, 7.4]]
-    assert out["legs"] == [["2026-09-22", "FSLY", "CLOSE", 100.0, 1.23]]
+    assert out["legs"] == [["2026-09-22", "FSLY", "CLOSE", 100.0, 1.23, 9]]
 
 
 def test_book_out_carries_no_price_or_share_field():
@@ -77,7 +79,7 @@ def test_book_out_carries_no_price_or_share_field():
     for row in out["pos"]:
         assert len(row) == 5, f"position row is ticker/side/entry/stopR/openR, got {row}"
     for row in out["legs"]:
-        assert len(row) == 5, f"leg row is date/ticker/type/pct/R, got {row}"
+        assert len(row) == 6, f"leg row is date/ticker/type/pct/R/held, got {row}"
     assert PRICE_FIELDS.isdisjoint(out.keys())
 
 
@@ -96,3 +98,73 @@ def test_close_is_one_row_per_trade_not_one_per_tranche():
     out = book_out(_book(), "2026-09-22")
     closes = [L for L in out["legs"] if L[2] == "CLOSE"]
     assert len(closes) == 1 and closes[0][3] == 100.0
+
+
+# ---------- M1 · the one leak the row shape cannot catch ----------
+# The shape guard above closes "a price arrives under a new field". What it
+# cannot close is "a price arrives in a column that exists" — stop_R wired to
+# stop_price. By the time that is page text it is a bare number under a header
+# on another line, which reads exactly like the index closes the page prints on
+# purpose. So it is checked where the numbers still have names, against the one
+# relation a price cannot satisfy.
+
+def test_M1_reddens_when_the_stop_column_holds_a_price():
+    """漏改: the stop column was never converted, so the raw stop price is in it."""
+    b = _book()
+    b["positions"][0]["stop_R"] = 142.50   # the live stop, in dollars
+    with pytest.raises(SystemExit, match="above the mark"):
+        book_out(b, "2026-09-22")
+
+
+def test_M1_reddens_when_a_leg_percent_holds_a_quantity():
+    """改了但接错: pct_of_position wired to qty instead of qty/original_qty."""
+    b = _book()
+    b["legs"][0]["pct_of_position"] = 300
+    with pytest.raises(SystemExit, match="not a share of the position"):
+        book_out(b, "2026-09-22")
+
+
+def test_M1_lets_a_stop_trailed_up_to_the_mark_through():
+    """The negative half: a stop trailed right to the close is legal, and a
+    position at 100% out is a legal percent. A gate that reddens on these would
+    block the 09:00 出片班 for nothing."""
+    b = _book()
+    b["positions"][0]["stop_R"] = b["positions"][0]["open_R"]
+    assert book_out(b, "2026-09-22")["pos"][0][3] == 7.4
+    assert book_out(_book(), "2026-09-22")["legs"][0][3] == 100.0
+
+
+def test_M1_does_not_fire_on_a_position_with_no_R():
+    b = _book()
+    b["positions"][0]["stop_R"] = None
+    b["positions"][0]["open_R"] = None
+    assert book_out(b, "2026-09-22")["pos"][0][3] is None
+
+
+# ---------- the cost point and the holding period ----------
+
+def test_the_page_draws_all_three_points_of_the_ladder():
+    """Andy 2026-09-23:「把 portfolio的cost和stop写进去」— cost 0R, stop, now.
+    cost is 0R for every row, so it is drawn by the renderer rather than carried
+    in the payload; this checks the renderer actually draws it."""
+    import pathlib as _p
+    from pipeline.content.recap import visual
+    js = (_p.Path(visual.__file__).with_name("visual_assets") / "recap_page.js").read_text()
+    book = js[js.index("function book(is, c, V)"):]
+    book = book[:book.index("\n  function ", 1)]
+    assert "V.p_cost" in book, "the cost header is not in the position table"
+    assert '<td class="n">0R</td>' in book, "the cost cell is not drawn"
+    assert "V.leg_held" in book, "a CLOSE line does not say how long the trade was held"
+    for lang in ("EN", "ZH"):
+        assert visual.CHROME_LABELS[lang]["p_cost"]
+        assert "{n}" in visual.CHROME_LABELS[lang]["leg_held"]
+
+
+def test_held_sessions_counts_both_ends_and_skips_non_sessions():
+    from pipeline.content.recap.build_pack import _held_sessions
+    # 2026-09-14 Mon .. 2026-09-16 Wed
+    assert _held_sessions(dt.date(2026, 9, 14), dt.date(2026, 9, 16)) == 3
+    # entered and closed the same session
+    assert _held_sessions(dt.date(2026, 9, 16), dt.date(2026, 9, 16)) == 1
+    # Fri .. Mon: the weekend is not held sessions
+    assert _held_sessions(dt.date(2026, 9, 11), dt.date(2026, 9, 14)) == 2

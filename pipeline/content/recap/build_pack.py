@@ -48,7 +48,7 @@ from zoneinfo import ZoneInfo
 
 from pipeline.content.recap import month_dir, pack_dir
 from pipeline.content.recap.weeks import prior_week_close, week_sessions
-from pipeline.marketcal import last_trading_day
+from pipeline.marketcal import is_trading_day, last_trading_day
 
 REPO = Path(__file__).resolve().parents[3]
 ET = ZoneInfo("America/New_York")
@@ -479,6 +479,13 @@ def _closes(tickers: list[str], T: str) -> tuple[dict[str, float], list[str]]:
     return out, stale
 
 
+def _held_sessions(a: dt.date, b: dt.date) -> int:
+    """NYSE sessions from entry through exit, both ends counted, for the CLOSE
+    line's 「持有 N 个交易日」 (Andy 2026-09-23). Opened and closed in one session
+    reads as 1, not 0."""
+    return sum(1 for i in range((b - a).days + 1) if is_trading_day(a + dt.timedelta(days=i)))
+
+
 def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     """Everything returned is R, %, or a count. Nothing in $ or shares."""
     from pipeline.portfolio.sheets_source import to_trades
@@ -559,7 +566,7 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
             legs.append({"date": ex.isoformat(), "ticker": t.ticker, "type": "CLOSE",
                          "pct_of_position": round(out_qty / t.original_qty * 100, 1) if t.original_qty else None,
                          "R": None if any(v is None for v in whole) else round(sum(whole), 2),
-                         "R_scope": "trade"})
+                         "R_scope": "trade", "held_sessions": _held_sessions(t.entry_date, ex)})
     legs.sort(key=lambda L: (L["date"], L["ticker"], L["type"]))
     realized_all = sum(sgn(t) * (x.price - t.entry_price) * x.qty for t in live for x in t.trims if x.date <= d)
     r_per, n_per = realized_between(p0, d)

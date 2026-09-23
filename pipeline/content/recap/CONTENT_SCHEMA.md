@@ -52,7 +52,10 @@ A red `check` means rewrite, not force. `render` runs `check` again and refuses 
 | `rules` | array of 7 strings | 1–6 written for this issue; 7 **must start with** `Never serious trouble until S&P breaks the 200-day` / `标普不破 200 日线，谈不上真正的麻烦`, followed by the issue's read. 1–6 may not repeat the 09-04 set (stale gate) and are checked by R2 |
 | `education` | object | see below |
 | `portfolio_note` | string | one neutral sentence; R and % only |
-| `labels` | object | section and column labels for this language (copy from the previous issue). Since 2026-09-23 the Portfolio table has five columns, so `labels.pos_cols` needs a 5th entry — or leave `pos_cols` at four and add `labels.pos_stop` (EN `Stop R` / ZH `止损 R`); the renderer splices it in as column 4. `labels.legs_title` names the trims/exits list (EN `Trims & exits` / ZH `减仓与平仓`); both fall back to the right language when absent, so a missing label degrades rather than printing English on the ZH page |
+| `labels` | object | section and column labels for this language (copy from the previous issue). Since 2026-09-23 the Portfolio table has five columns, so `labels.pos_cols` needs a 5th entry — or leave `pos_cols` at four and add `labels.pos_stop` (EN `Stop R` / ZH `止损 R`); the renderer splices it in as column 4. `labels.legs_title` names the trims/exits list (EN `Trims & exits` / ZH `减仓与平仓`); both fall back to the right language when absent, so a missing label degrades rather than printing English on the ZH page. The **cost** header and the CLOSE line's 「持有 N 个交易日」 are never in `labels` — they come from `visual.CHROME_LABELS`, so an issue written before the ladder existed still renders them |
+| `x_posts` | object | **EN dailies only** (Andy 09-13: long post = structure sentence + Big Picture): `{"lead": string \| null, "cashtags": ["HPE", …], "why": "one-line reason (optional)"}`. The post is `lead` (if any), then `big_picture` verbatim with `<b></b>` and ` ◇` stripped, then 2–4 cashtags. **Cashtags are names that appear in this issue** — each must be a stand-alone word in `big_picture` / `index_notes` / `led` / `lagged` / `session_commentary` / `tomorrow` / `rules` (gate P3); book tickers are not avoided (Andy 09-13). No Substack link or pointer at the end (P1 flags the word). `lead` is **null when Big Picture's first sentence already states the day's main structural event** (which average was reclaimed / lost, which index split from which); otherwise one structure sentence that only restates this file — no new judgment. The body is never rewritten. Gates in `xpost.py`: P1 (≤ 1,500 X characters, no proprietary names / Andy / first person / dollar amounts / hashtags / emoji / links / calls to action, every number in the file, no leftover `<b>` or ◇, 2–4 cashtags) and P2 (lead vs Big Picture's first sentence, SequenceMatcher ≥ 0.4 → red, set lead to null). Missing → Big Picture only, marked `auto` |
+| `weekly_k_names` | array | weekly only: tickers for the weekly-close table, in order |
+| `weekly_k_line` | string | weekly only: one sentence under that table |
 
 ### Portfolio: the R ladder (Andy 2026-09-23「以多少R的形式，不出现美元数值」)
 
@@ -61,15 +64,22 @@ entry is the zero point, so a position reads `cost 0R → stop ±X.XR → now +Y
 
 | field | meaning |
 |---|---|
+| cost | not a field — `0R` for every row by definition, so the renderer draws it (header `CHROME_LABELS[lang]["p_cost"]`) |
 | `positions[].stop_R` | the **live trailed** stop in R off entry — `sgn · (stop_price − entry_price) / (R_dollars / original_qty)`. The initial stop is `−1.0R` by definition and is only ever the denominator. `null` when `initial_stop` was never recorded (no R scale to state it on) → the cell prints blank, never a guess |
-| `legs[]` | TRIM / CLOSE events between `period_start` and D: `{date, ticker, type, pct_of_position, R, R_scope}` |
+| `legs[]` | TRIM / CLOSE events between `period_start` and D: `{date, ticker, type, pct_of_position, R, R_scope}`, plus `held_sessions` on a CLOSE |
 | `legs[].R_scope` | `leg` for a TRIM (that tranche's R) · `trade` for a CLOSE (the **whole trade's** realized R) |
+| `legs[].held_sessions` | CLOSE only: NYSE sessions from entry through exit, both ends counted → 「持有 N 个交易日」 |
 
 A trade sold out in several tranches on one day is **one** CLOSE row, not one per tranche (09-22's FSLY went out in three). `pct_of_position` is `qty / original_qty` — a percentage, never a share count.
-Guarded by `pipeline/tests/test_recap_r_ladder.py`, whose direction-B control was proven to redden before its green was trusted.
-| `x_posts` | object | **EN dailies only** (Andy 09-13: long post = structure sentence + Big Picture): `{"lead": string \| null, "cashtags": ["HPE", …], "why": "one-line reason (optional)"}`. The post is `lead` (if any), then `big_picture` verbatim with `<b></b>` and ` ◇` stripped, then 2–4 cashtags. **Cashtags are names that appear in this issue** — each must be a stand-alone word in `big_picture` / `index_notes` / `led` / `lagged` / `session_commentary` / `tomorrow` / `rules` (gate P3); book tickers are not avoided (Andy 09-13). No Substack link or pointer at the end (P1 flags the word). `lead` is **null when Big Picture's first sentence already states the day's main structural event** (which average was reclaimed / lost, which index split from which); otherwise one structure sentence that only restates this file — no new judgment. The body is never rewritten. Gates in `xpost.py`: P1 (≤ 1,500 X characters, no proprietary names / Andy / first person / dollar amounts / hashtags / emoji / links / calls to action, every number in the file, no leftover `<b>` or ◇, 2–4 cashtags) and P2 (lead vs Big Picture's first sentence, SequenceMatcher ≥ 0.4 → red, set lead to null). Missing → Big Picture only, marked `auto` |
-| `weekly_k_names` | array | weekly only: tickers for the weekly-close table, in order |
-| `weekly_k_line` | string | weekly only: one sentence under that table |
+
+**Gate M1** (`visual._book_money_gate`) runs at render time and covers the one leak the row shape cannot:
+a price landing in a column that already exists (`stop_R` wired to `stop_price`). As page text that is a
+bare number under a header on another line — no regex separates it from the index closes the page prints
+on purpose. M1 instead checks the relation a price cannot satisfy: `stop_R ≤ open_R` (a stop is never
+above the mark) and `0 < pct_of_position ≤ 100`. The prose half stays in `gates.MONEY_SHARES`, which also
+flags a labelled price (`stop 142.50`, `成本 98.10`) while letting an index level (`stop under 7,580`) pass.
+
+Guarded by `pipeline/tests/test_recap_r_ladder.py`, whose positive controls were each proven to redden before their green was trusted.
 
 ## `education`
 

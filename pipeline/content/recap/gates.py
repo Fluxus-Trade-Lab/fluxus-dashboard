@@ -4,7 +4,7 @@ Three gates (Daily_Recap_Workflow_Spec §4/§8 + Andy 2026-09-13 privacy ruling
 「管线只做R 和%, 不写股数和美元」):
   1. banned   — source-proprietary names (channel, products, hosts, contacts)
   2. leadership_zh — 「领导力」 (leadership → 龙头)
-  3. money_shares  — any dollar amount or share count
+  3. money_shares  — any dollar amount, share count, or labelled price
 
 Pure functions, no I/O, so each gate can be proven red on an injected positive
 (pipeline/tests/test_recap_gates.py) before its green is trusted.
@@ -51,12 +51,30 @@ BANNED: dict[str, re.Pattern] = {
 
 LEADERSHIP_ZH = "领导力"
 
+# A per-share price carries no account size, but Andy's 2026-09-23 ruling on the
+# book ladder is 「不出现美元数值」 in the portfolio section, and the shape that
+# leaks there is a *labelled* price: the cost or the stop printed as the number
+# it is instead of as an R. Adjacency is the whole gate — `stop 142.50` is the
+# leak, `stop under 7,580` is an index level in prose and must still pass, and a
+# number already wearing R / % / -day is by definition not a price.
+#
+# This only reaches prose. A price that leaks into a *table cell* arrives in
+# pdftotext as a bare number under a header on another line, which no regex can
+# tell from the index closes the page prints on purpose — that shape is gated at
+# the data seam instead, by `visual._book_money_gate` (M1).
+# `(?![\d,.])` first: without it the number backtracks a digit at a time until
+# the exemption lookahead happens to pass, which reads "entry 2026-09-10" as a
+# price of 202. `-\d` then exempts the ISO date itself.
+_PRICE_TAIL = r"\d[\d,]*(?:\.\d+)?(?![\d,.])(?!\s*(?:[R%]|-day|-\d|日线|日))"
+
 MONEY_SHARES: dict[str, re.Pattern] = {
     "dollar sign amount": re.compile(r"(?:US)?[$＄]\s?\d"),
     "amount + currency word": re.compile(
         r"\d[\d,.]*\s?(?:[kKmMbB万千亿]\s?)?(?:USD|美元|美金|美刀|dollars?(?![A-Za-z])|bucks(?![A-Za-z]))", re.I),
     "share count (en)": re.compile(r"(?<![\w.])\d[\d,]*\s?(?:shares?|shs|sh)(?![A-Za-z])", re.I),
     "share count (zh)": re.compile(r"\d[\d,]*\s?股(?![票价指市本份东息权利])"),
+    "labelled price (en)": re.compile(rf"(?<![A-Za-z])(?:cost|entry|stop)s?\s*[:：]?\s*{_PRICE_TAIL}", re.I),
+    "labelled price (zh)": re.compile(rf"(?:成本|进场价|入场价|止损)\s*[:：]?\s*{_PRICE_TAIL}"),
 }
 
 

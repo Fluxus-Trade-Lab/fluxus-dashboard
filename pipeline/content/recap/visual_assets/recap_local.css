@@ -326,6 +326,7 @@ table.idx.wk td:nth-child(4) {
   .sec h3 { font-size: 9.24pt; padding-top: 7px; margin-bottom: 7px; }
   .prose { font-size: 10.5pt; line-height: 1.45; max-width: none; }
   table.idx, table.led, table.book { font-size: 9.5pt; }
+  ul.legs { font-size: 9.5pt; }
   table.idx th, table.book th { font-size: 8.4pt; }
   table.lt { font-size: 9.66pt; }
   table.lt td.gname { font-size: 10.08pt; }
@@ -362,6 +363,7 @@ table.idx.wk td:nth-child(4) {
 
   /* ---- air (line-height, paragraph, cell and figure spacing) */
   table.idx td, table.led td, table.book td, table.lt td { padding-top: 3.5px; padding-bottom: 3.5px; line-height: 1.4; }
+  ul.legs li { padding-top: 3px; padding-bottom: 3px; line-height: 1.4; }
   table.idx th, table.book th { padding-bottom: 5px; }
   .lwrap, .lgrid { gap: 18px; }
   .statebar > div, .metrics > div { padding-top: 9px; padding-bottom: 9px; }
