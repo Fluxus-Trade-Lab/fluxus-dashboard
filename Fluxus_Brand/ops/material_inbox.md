@@ -276,6 +276,8 @@
 
 - [09-21] [steve] 财报季行业轮动实证交付——两个季度的 EP 跳空数据按 Finviz 行业分族统计：Biotech 从 Q1 的 27 命中跌到 Q2 的 16，Semiconductors 直接掉出 top3。季度间谁在衰落、谁在上升，一组数字讲清楚。课程《轮动》§5 可直接用。[T-0921-89 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
 
+- [09-24] [OPS · 数据哨兵] **worktree 级孤儿检测——从分支滞留闸升级到全扫描的诊断精度** · 三棵 worker 临时树压着 5 个未推 commit，既不在任何分支上、也不会被主要检测工具（滞留闸）发现，只有专门的 `audit_unpushed` 能扫出 worktree 内所有离线工作。系统诊断链条：①`audit_unpushed` 自动发现 3 处 U1 违规（commit 只在本地盘存在）；②逐棵核实发现全部已被 main 上的其他 commit 取代，无一需要 cherry-pick；③验证机制：删树后再跑 `audit_unpushed` 确认回到 0 violation。**这体现系统从「单维检测」（分支视角）升到「多维诊断」（worktree 扫描）的自诊能力升级**——原本看不见的状态漂移（工人离线干活、main 同时更新、孤儿 commit 堆积但无人发现），现在能被机器自动捕获。系统活能力：不是补一道新闸，而是在诊断维度升级后，让防护保护更多你之前看不见的地方。[T-0924-12 · e6dbfa4b](https://github.com/Fluxus-Trade-Lab/fluxus-ops/tasks/T-0924-12.md)
+
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
 - [09-19] [OPS] 课程定价页退款条款补完：两个行业标准选项（7 日无理由 / 3 日+已使用查证），建议优先 A——B 依赖后台日志能力待核实、成本不足；A 虽全额退款但课程分批解锁+社群粘性足以消化滥用风险，符合同类产品预期。09-25 前待 Andy 最终拍板。[Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md](Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md)
