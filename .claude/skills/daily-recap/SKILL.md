@@ -228,6 +228,13 @@ Andy 原话「可以放行 这个五档是可以用的」——自家五档（De
    - ✗ 09-22 我们：「the position belongs where relative strength already is.」后面没有下文，判断是悬空的。
    - ✓ 对照组讲小盘超卖：「the discipline is a tight stop rather than a moving-average confirmation… If it fails, it fails.」
 
+↳ **当天就踩的坑（Andy 贴回改写的开头，原话「写的很 ai 就是废话多。没有了以前的简练」）**：
+**判据前置 ≠ 加一句解释。** 尺子可以只有半句，不要把它讲清楚。
+- ✗ 我第一版：「A gap that closes at the top of its range asks one thing of the next session: give nothing back. Tuesday gave nothing back — and the choppy tape that produced a hard reversal every few days from early August through last Wednesday did not come back with it ◇.」——定语、从句、同位语全堆上，比它要替掉的那句还长
+- ✓ 改完：「Monday's gap asked one thing of Tuesday: give nothing back. Nothing was. The hard reversals that ran through August did not come ◇.」——三句短句，三条约束全在，比原版还短
+- 风险条款同理：`carried on tight stops and abandoned quickly if the tape stops cooperating` → `on tight stops, out quickly if it stops working`。
+**三条约束都不应该让段落变长**——加了尺子、反事实、止损之后，字数还应该持平或变少；变长了就是写成了解释。
+
 **不让的部分**（对照组没有、我们保留）：广度读数是量出来的、能追到字段（09-22 的 324/170、McClellan −22.3 → −10.8、T2108 31.6 → 33.4）；What Led/Lagged 每行点名驱动的 ticker。**两边数字冲突以我方字段为准，并写清是哪一种口径**——对照组说的多是指数/ETF，我方常是成分组内均值（09-22 半导体 +0.8% vs Semiconductors Broad +2.25%、Mag 7 −0.55% vs Tech Mega Caps 9 只 −0.63% 都是这个差，不是错）。
 
 
