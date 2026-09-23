@@ -170,10 +170,18 @@ ol.rules li{font-size:14.5px;color:var(--ink)}
 .pull{border-bottom:1.5px solid var(--ink);padding-bottom:26px;margin-bottom:6px}
 @media(max-width:560px){.sheet.a,.sheet.b{padding:30px 22px 22px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .metrics i.src{font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-table.book{font-size:12px;margin:4px 0 12px;max-width:480px}
+/* six columns since the cost point landed (Andy 2026-09-23); at 480px the EN entry dates
+   wrap and each row reads as two. Still far inside the 703px type area, so Chrome does
+   not shrink the page (the 09-11 / W37 failure mode). */
+table.book{font-size:12px;margin:4px 0 12px;max-width:560px}
 table.book th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 16px 6px 0;border-bottom:1px solid var(--rule)}
 table.book th.rn,table.book td.n{text-align:right}
-table.book td{padding:6px 16px 6px 0;border-bottom:1px solid var(--soft);color:var(--ink2)}
+table.book td{padding:6px 16px 6px 0;border-bottom:1px solid var(--soft);color:var(--ink2);white-space:nowrap}
+/* TRIM / CLOSE legs under the ladder: same mono and rules as the book table. Without this
+   they print as a default browser bullet list, which nothing else on the page does. */
+ul.legs{list-style:none;margin:0 0 12px;padding:0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink2);max-width:560px}
+ul.legs li{padding:5px 0;border-bottom:1px solid var(--soft)}
+ul.legs .t{color:var(--ink);font-weight:500;letter-spacing:.05em}
 
 .bigidx.seven{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
 .bigidx.seven>.bi:first-child{grid-column:span 2}

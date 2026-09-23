@@ -76,3 +76,28 @@ def test_grow_gate_spares_ordinary_growth_words():
 
 def test_dont_is_not_the_host_name():
     assert run_gates("Don't chase. Don’t chase.")["banned"] == []
+
+
+# ------------------------------------------------------------------ labelled price (Andy 2026-09-23)
+# The book ladder prints cost and stop in R. The prose half of that ruling is a
+# labelled price — the number printed as the price it is instead of as an R.
+@pytest.mark.parametrize("inject", [
+    "stop 142.50", "Stop: 142.50", "cost 98.10", "entry 142.5", "stops 142.50",
+    "止损 142.50", "成本 98.10", "进场价 142.50", "入场价：98.1",
+])
+def test_labelled_price_goes_red(inject):
+    r = run_gates(CLEAN_EN + " " + inject)
+    assert r["money_shares"], inject
+    assert not r["ok"]
+
+
+@pytest.mark.parametrize("keep", [
+    # index and stock levels in prose are printed on purpose — adjacency is the gate
+    "a stop under 7,580", "stop above 7620 must hold", "QQQ 714.88", "stops stay tight",
+    # the ladder itself: cost 0R, a trailed stop in R, an open R, a trim percent
+    "cost 0R", "stop +2.30R", "止损 +2.30R", "成本 0R", "TRIM 25.0% of the position",
+    "止损 −1.0R", "entry 2026-09-10", "the 50-day",
+])
+def test_labelled_price_lets_the_r_ladder_and_levels_through(keep):
+    r = run_gates(CLEAN_EN + " " + keep)
+    assert not r["money_shares"], (keep, r["money_shares"])

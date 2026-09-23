@@ -61,6 +61,10 @@ CHROME_LABELS = {
            "cond_aria": "Market Conditions score by session",
            "legal": "Nothing here is advice or a recommendation to buy or sell anything. Measure your own water.",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
+           # the ladder's cost column and the CLOSE line's holding period (Andy 2026-09-23).
+           # These live here, not in the issue's own `labels`, so an issue written before the
+           # ladder existed still renders it.
+           "p_cost": "cost", "leg_held": "held {n} sessions",
            "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "vlabels": {}},
     "ZH": {"legend": ["计入看多", "计入看空", "在线内", "未计入", "数字 = 离各自那条线的距离"],
            "units": {"ratio": "比值", "names": "只", "points": "点", "warnings": "条", "": ""},
@@ -74,6 +78,7 @@ CHROME_LABELS = {
            "cond_aria": "市场状况分，逐日", "months": [f"{i}月" for i in range(1, 13)],
            "legal": "这里不给建议，也不劝人买卖。量好自己的水。",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
+           "p_cost": "成本", "leg_held": "持有 {n} 个交易日",
            "vlabels": {"5-day ratio": "5 日比", "10-day ratio": "10 日比", "Thrust": "推力", "Quarterly spread": "季度差",
                        "13%/34d spread": "13%/34 日差", "New highs vs lows": "新高对新低", "McClellan": "McClellan",
                        "% above 200-day": "站上 200 日线占比", "T2108 zone": "T2108 区间", "SPY warnings": "SPY 警示",
@@ -218,6 +223,34 @@ def pick_edu(education: dict, key: str) -> dict:
             "options": [{"key": o["key"], "title": o["title"], "why": o.get("why", "")} for o in opts]}
 
 
+def _book_money_gate(bkk: dict, D: str) -> None:
+    """M1 · the one money check that has to run at render time, not in a test.
+
+    `book_out` builds its rows positionally, so an extra *field* on a position
+    can never reach the page — that direction is already closed by construction
+    and asserted in test_recap_r_ladder. What is still open is a price landing
+    in a column that exists: `stop_R` wired to `stop_price` prints 142.50 in the
+    stop column, and by the time it is text it is a bare number under a header
+    on another line — indistinguishable to any regex from the index closes the
+    page prints on purpose (QQQ 714.88).
+
+    The check is not "is this number too big", which is a judgement the ladder
+    cannot make. It is an exact relation between two numbers that are both
+    already in R: a stop is never above the mark. A long trailed to +2.3R with
+    the position at +7.4R is legal; a "stop" of 142.5 against +7.4R is a price.
+    """
+    for p in bkk.get("positions") or []:
+        sr, orr = p.get("stop_R"), p.get("open_R")
+        if sr is not None and orr is not None and sr > orr + 1e-6:
+            raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {sr} is above the mark {orr} — "
+                             "that column is carrying a price, not an R")
+    for leg in bkk.get("legs") or []:
+        pct = leg.get("pct_of_position")
+        if pct is not None and not 0 < pct <= 100:
+            raise SystemExit(f"book leg {leg.get('ticker')} {leg.get('date')}: {pct} is not a share of the "
+                             "position — that field is carrying a quantity, not a percent")
+
+
 def book_out(bkk: dict, D: str) -> Optional[dict]:
     """Render-time gate on the portfolio block: a stale T-day close must never
     reach the page (09-16: pack.json printed 09-15's close as 09-16's, INBOX L2803)."""
@@ -226,11 +259,15 @@ def book_out(bkk: dict, D: str) -> Optional[dict]:
                           f"rerun build_pack after the vendor publishes {D}'s bar, don't print a prior close as {D}'s")
     if "open_names" not in bkk:
         return None
+    _book_money_gate(bkk, D)
+    # Cost is 0R by definition, so the page draws it rather than carrying it —
+    # the ladder each row prints is [0R, stop_R, open_R] (Andy 2026-09-23:
+    # 「把 portfolio的cost和stop写进去」).
     return {"ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
             "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
             "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("stop_R"), p["open_R"]]
                     for p in bkk["positions"]],
-            "legs": [[L["date"], L["ticker"], L["type"], L.get("pct_of_position"), L.get("R")]
+            "legs": [[L["date"], L["ticker"], L["type"], L.get("pct_of_position"), L.get("R"), L.get("held_sessions")]
                      for L in bkk.get("legs") or []]}
 
 
