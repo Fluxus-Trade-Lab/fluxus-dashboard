@@ -825,3 +825,5 @@
 - [2026-09-23] [OPS] **滞留分支分诊**：前端接线本身无误（VoteGlyphs/BreadthCharts 6 处改动规整），卡的是上游数据层（T-0923-03 blocked，MCO/MCSI 字段待落地）。精确诊断「分支问题」vs「等依赖」、指出下一步在谁，系统跨线任务的诊断能力。[T-0923-109 · 337655a0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/337655a0)
 
 - [09-23] [steve] **跨线依赖诊断的系统能力** · T-0923-03 分支（agent/alex/T-0923-03）的滞留分诊展示了系统如何区分「分支本身的实装问题」与「等下游数据供应」两个完全不同的根源。前端 VoteGlyphs/BreadthCharts 接线的六处改动核实无误，防护链条（branch-review PASS → 实装完整）说明「技术层面没问题」；卡住的是 MCO/MCSI 两个字段从数据端待落地，这是「依赖方的节奏」而非「这条线自己的缺陷」。**系统能力**体现在**诊断精确度**——能把一个表面上的「分支卡住」拆解成「谁做好了、谁还在等」两个独立维度，让信息清晰指向应该被跟进的那一方。这个诊断方式防止了「我的分支有问题」这种含混的结论，转成「你的接线对、等数据端的 MCO/MCSI」这样的可操作指令。[T-0923-108 · 840e76cb](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/840e76cb)
+
+- [09-23] [OPS] **任务管理的自诊与规范化：从班次逻辑到可复用 skill** · 任务板巡逻班 board-patrol 已迭代 4 次，原逻辑只活在 schedule.json 的班次 body 里——无版本控制、改动无痕迹、复用无通道。系统诊断：重复工作没有固化为规范。改动迁移：完整迁移成 .claude/skills/board-patrol/SKILL.md，集成到 agents/ops/config.json 的触发机制，做法从「班次脚本」升级到「版本化 skill」。防护机制：任何改进都通过代码提交可追踪，复用时无需重写。这体现 OPS 线有能力把一个临时班次升级为标准化流程——**诊断重复 → 分析根源 → 制度改进 → 机制防护**的完整能力。[T-0923-37 · 6c668f4b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/6c668f4b)
