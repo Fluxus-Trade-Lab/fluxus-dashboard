@@ -100,8 +100,11 @@ def is_tradeable(row) -> bool:
 # The shell exclusion stays: of the 352 seats he carries that we do not, ZERO
 # are `industry == "Shell Companies"` -- he excludes them too.
 #
-# OFF until Andy adopts it (2026-09-23 「最后采纳不采纳我来确定。所以别直接给改了」).
-FULL_CONTENT_BASKETS = False
+# ADOPTED 2026-09-23, Andy: 「主题篮子放开市值闸，采纳，但交易 screener 和实际
+# 操作我们会有市值的 filter。」 The trading gates are untouched: `is_tradeable`
+# still defines the scoring field in run_all, and `universe_gate.cap_floor`
+# still gates every screener list.
+FULL_CONTENT_BASKETS = True
 
 
 def in_theme_content(row) -> bool:
