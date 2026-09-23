@@ -250,8 +250,11 @@ def _book_money_gate(bkk: dict, D: str) -> None:
     A stop trailed to a *non-zero* R (that same book's PLTR, at −1.0R) is
     not covered — it can in principle still be a misrouted price, so a gap
     through it keeps raising. That is a real, narrower residual risk (a
-    non-breakeven stop gapped through) this fix leaves open; see the
-    T-0923-61 run log for why it wasn't folded in here.
+    non-breakeven stop gapped through) this fix leaves open. T-0923-70
+    weighed reopening a magnitude judgement for it against leaving it as a
+    known, unexercised risk and chose to leave it — see
+    data/reference/incidents/2026-09-23_m1_gate_accepts_non_breakeven_stop_gap_risk.md
+    for the reasoning and the three-strikes trigger for revisiting it.
     """
     for p in bkk.get("positions") or []:
         sr, orr = p.get("stop_R"), p.get("open_R")
