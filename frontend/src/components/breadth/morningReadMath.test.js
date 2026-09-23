@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { fourQuestions, greenStreak, negativeStreak, breadthReads, themeTransitions, sentinels } from './morningReadMath'
+import { fourQuestions, greenStreak, negativeStreak, breadthReads, themeTransitions, sentinels, voteFor, vsPrior, vsPriorSpread, VOTE_OF } from './morningReadMath'
 
 // The morning walk's arithmetic, on hand-made fixtures shaped like the real
 // files (breadth.json rows, market_light.json, groups_history.json,
@@ -100,5 +100,48 @@ describe('sentinels — ch.7 §7.4 / §7.7', () => {
     expect(s.defense_leading).toBe(true)
     expect(s.vix).toBeNull()
     expect(s.ts).toBeNull()
+  })
+})
+
+/* Andy 2026-09-23: 「「问什么」和「读数」两栏 看不清楚」. Two mechanical rules
+   came out of the clean-up, and both are the kind that rot silently. */
+describe('only the engine may name a state', () => {
+  const votes = { nh_nl: 'bear', t2108_zone: 'bear', mcclellan: 'bear', pct200: 'neutral', ratio_5d: 'bull' }
+  it('gives the engine word for a reading the engine votes on', () => {
+    expect(voteFor(votes, 'nhnl')).toBe('bear')
+    expect(voteFor(votes, 'mco')).toBe('bear')
+    expect(voteFor(votes, 'pct200')).toBe('neutral')
+  })
+  it('gives nothing for a reading the engine does not vote on', () => {
+    for (const k of ['p20', 'net_advances', 'width', 'gainers20', 'leaders', 'vix', 'oil']) {
+      expect(voteFor(votes, k)).toBeNull()
+    }
+  })
+  it('gives nothing when the vote is absent or not one of the three words', () => {
+    expect(voteFor({}, 'nhnl')).toBeNull()
+    expect(voteFor({ nh_nl: 'mixed' }, 'nhnl')).toBeNull()
+    expect(voteFor(undefined, 'nhnl')).toBeNull()
+  })
+  it('every mapped vote key is one the engine actually publishes', () => {
+    const engineKeys = ['ratio_5d', 'ratio_10d', 'thrust', 'qtr_spread', 'spread_13_34', 'nh_nl',
+      'mcclellan', 'pct200', 't2108_zone', 'spy_danger', 'qqq_danger', 'bench_trend']
+    for (const k of Object.values(VOTE_OF)) expect(engineKeys).toContain(k)
+  })
+})
+
+describe('a change is printed only when there is a prior session', () => {
+  it('reads today against the session before it', () => {
+    const d = vsPrior([{ t2108: 30 }, { t2108: 33.4 }], 't2108')
+    expect([d.now, d.was]).toEqual([33.4, 30])
+    expect(d.delta).toBeCloseTo(3.4, 6)
+    expect(vsPriorSpread([{ new_highs_common: 4, new_lows_common: 20 }, { new_highs_common: 7, new_lows_common: 15 }],
+      'new_highs_common', 'new_lows_common')).toEqual({ now: -8, was: -16, delta: 8 })
+  })
+  it('is null — never a zero — with one row, no rows, or a hole', () => {
+    expect(vsPrior([{ t2108: 33 }], 't2108')).toBeNull()
+    expect(vsPrior([], 't2108')).toBeNull()
+    expect(vsPrior([{ t2108: null }, { t2108: 33 }], 't2108')).toBeNull()
+    expect(vsPriorSpread([{ new_highs_common: null, new_lows_common: 2 }, { new_highs_common: 7, new_lows_common: 15 }],
+      'new_highs_common', 'new_lows_common')).toBeNull()
   })
 })

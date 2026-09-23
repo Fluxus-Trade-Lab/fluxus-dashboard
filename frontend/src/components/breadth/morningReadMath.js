@@ -125,5 +125,54 @@ export function sentinels({ etfs, signals, correctionRisk }) {
   }
 }
 
+/* ── the two rules that keep the readings honest (Andy 2026-09-23) ────────
+ * 「「问什么」和「读数」两栏 看不清楚」. Two fixes, both mechanical:
+ *   1. every reading that has a prior session prints its change; one that has
+ *      no history prints nothing — never an invented "flat".
+ *   2. the only state word a reading may wear is the ENGINE's vote. A reading
+ *      the engine does not vote on gets no word (the mock-up gave 站上20日线
+ *      and 净涨跌 words I had written myself — that is the bug, not the fix).
+ */
+
+/** Reading key → the vote key in `verdict.votes` that judges it. */
+export const VOTE_OF = {
+  nhnl: 'nh_nl',
+  t2108: 't2108_zone',
+  mco: 'mcclellan',
+  pct200: 'pct200',
+  ratio5: 'ratio_5d',
+  ratio10: 'ratio_10d',
+  qtr: 'qtr_spread',
+  s1334: 'spread_13_34',
+  thrust: 'thrust',
+}
+
+/** The engine's word for a reading, or null when the engine has no vote on it. */
+export function voteFor(votes, readingKey) {
+  const k = VOTE_OF[readingKey]
+  if (!k) return null
+  const v = votes?.[k]
+  return v === 'bull' || v === 'bear' || v === 'neutral' ? v : null
+}
+
+/** Today minus the prior session for one archive column, or null without one. */
+export function vsPrior(rows, key) {
+  const r = rows ?? []
+  if (r.length < 2) return null
+  const now = num(r.at(-1)?.[key]), was = num(r.at(-2)?.[key])
+  if (now == null || was == null) return null
+  return { now, was, delta: now - was }
+}
+
+/** Same, for a reading built from two columns (highs − lows). */
+export function vsPriorSpread(rows, upKey, downKey) {
+  const r = rows ?? []
+  if (r.length < 2) return null
+  const net = (x) => (num(x?.[upKey]) != null && num(x?.[downKey]) != null ? x[upKey] - x[downKey] : null)
+  const now = net(r.at(-1)), was = net(r.at(-2))
+  if (now == null || was == null) return null
+  return { now, was, delta: now - was }
+}
+
 const pct = (v, d = 1) => (v == null ? '—' : `${v >= 0 ? '+' : ''}${(v * 100).toFixed(d)}%`)
 export { pct }

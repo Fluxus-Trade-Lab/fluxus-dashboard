@@ -88,7 +88,8 @@ export default function BreadthPage({ data }) {
       <MorningRead ml={ml} signals={data?.signals} rows={liveBreadth.history?.rows}
                    themes={groups.themes} groupsHistory={gh.data} watchlist={watchlist}
                    etfs={data?.etf_data} correctionRisk={correctionRisk}
-                   paneRows={replay.rows ?? liveBreadth.history?.rows} loadingFull={replay.loading} />
+                   paneRows={replay.rows ?? liveBreadth.history?.rows} loadingFull={replay.loading}
+                   votes={verdict?.votes} />
 
       <HowToRead>
         <p>

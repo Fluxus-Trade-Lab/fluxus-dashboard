@@ -78,7 +78,8 @@ describe('BreadthPage — the morning walk (09-23)', () => {
     renderPage()
     expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
     expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
-    expect(screen.getByText(/In-between days count as red/)).toBeInTheDocument()
+    // the in-between days stay visible (Studio Q: don't hide the 24.8%) — now on the light tile
+    expect(screen.getByText(/in-between counts as red/)).toBeInTheDocument()
     expect(screen.getByText(/the course says skip the rest today/)).toBeInTheDocument()
     // the trend-day count is off the main screen (course marks it for deletion)
     expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
@@ -261,9 +262,13 @@ describe('the course read on DATA ALEX\'s real market_light.json', () => {
     expect(screen.queryByText(`${real.spy.gear.n} / 7`)).not.toBeInTheDocument()
     expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
     const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
-    expect(screen.getByText(new RegExp(`${held} of ${real.brightness.leaders.length} above the 50-day`))).toBeInTheDocument()
+    // step ③ is tiles now: the count and its denominator sit in the "Holding the 50-day" tile
+    const tile = screen.getByText('Holding the 50-day').closest('div').parentElement
+    expect(tile.textContent).toContain(String(held))
+    expect(tile.textContent).toContain(`of ${real.brightness.leaders.length}`)
     // only the leaders list carries `provisional`; Q1's scan count is named as such in the verdict line
-    expect(screen.getAllByText('provisional').length).toBe(1)
+    // the list still says it is the pipeline's, not hand-ranked (now a line under the roster)
+    expect(screen.getByText(/provisional — the pipeline/)).toBeInTheDocument()
     expect(screen.queryByText(/10\+ bright/)).not.toBeInTheDocument()
     // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
     expect(screen.queryByText(/synthetic — combined from Q2 and Q3/)).not.toBeInTheDocument()
