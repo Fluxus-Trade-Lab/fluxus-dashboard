@@ -240,6 +240,13 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
 .post.wallp{background:var(--brass-soft);border-left:3px solid var(--brass)}
 
 .empty{padding:34px 16px;text-align:center;color:var(--muted);font-size:13px}
+/* ⚠️ .scroll 是 sticky 的，它的包含块是 .wrap —— 一直延伸到脚注和人员名单之下。
+   滚到页底时那只盒子会压在它们上面（实测 #note 被盖 175px、手机 397px，
+   人员名单的 summary 用原始鼠标坐标点下去 details.open 仍是 false，等于名单
+   根本打不开）。所以这两块要自己抬到 sticky 盒之上，并且背景必须是实色，
+   不然盒子里的表格文字会透上来。 */
+#note,#rosterbox{position:relative;z-index:2}
+#note{background:var(--ground);padding-top:8px}
 .note{font-size:11.5px;color:var(--muted);margin:10px 2px 0;line-height:1.6}
 .note code{font-family:var(--mono);font-size:11px;background:var(--raise);padding:1px 4px;border-radius:2px}
 .count{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:0 2px}
