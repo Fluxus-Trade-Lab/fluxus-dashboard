@@ -202,7 +202,9 @@ def attach_prices(tickers: list[dict], tickers_dir: Path = None,
 #                  指数/宽基 ETF 不在 universe 里，回落到 asset_signals.json 同名字段
 #   所属 ETF 篮子 = groups.json themes[] 里 method=="etf" 那批的 tickers 反查
 #
-# ⚠️ 一只票可以同时属于多个篮子（09-23 实测最多 8 个：$BAND）。**全留，不取第一个** ——
+# ⚠️ 一只票可以同时属于多个篮子（09-23 实测最多 4 个：$TSLA —— method=="etf" 口径下的实测上限，
+#    全 data/output 与本台账内都是 4。把 industry / rule 那两类组也算进来时 $BAND 有 8 个，
+#    但那些不是 ETF 篮子，不进这一列）。**全留，不取第一个** ——
 #    「它在几个篮子里」本身就是读数；取第一个会让同一只票在不同跑次里换篮子。
 # ⚠️ 取不到一律写「无」，不写 0、不写空字符串：0 分的 RS 和「没查到这只票」是两件事。
 # ─────────────────────────────────────────────────────────────────────────────
@@ -297,7 +299,11 @@ def bask_cell(v) -> str:
 # 与 ticker_daily.csv 同源同口径：**人数不是帖数**，一条清单帖提十个代码只算一个人。
 #   people_7d  = 窗口内提到这只票的**不重复 handle 数**（跨日去重，不是日人数相加）
 #   peak_day   = 窗口内单日提及人数最高的 ET 日，**并列取最早**（与峰值日列同一函数）
-# 只出带 $ 的 cashtag：裸代码那半边全是 RS/EMA/WHAT 这类假代码（README 口径一）。
+# ⚠️ **人数的写实口径**：进表的票必须在窗口内至少出现过一次带 $ 的写法（裸代码那半边全是
+#    RS/EMA/WHAT 这类假代码，README 口径一），但一只票进表之后，它的 people_7d **把带 $ 和
+#    不带 $ 的写法合并去重**——因为 days[] 就是这么聚合的，与 ticker_daily.csv 的日人数
+#    完全同口径（一个量一个家，不另立第二本账）。09-23 实测 414 只票里有 89 只两种口径不同，
+#    最大一只差 1 人（$MU 合并 22 / 纯 cashtag 21）。给 Claire 的契约行照此写实。
 # ─────────────────────────────────────────────────────────────────────────────
 
 def x_heat(data: dict, window: int = HEAT_WINDOW) -> dict:
@@ -328,7 +334,9 @@ def x_heat(data: dict, window: int = HEAT_WINDOW) -> dict:
         "source": "data/content/x_watch/posts/*.jsonl（同 ticker_daily.csv），"
                   "由 data/content/x_watch/tools/build_board.py 生成",
         "note": "people_7d = 窗口内不重复提及人数（跨日去重，非日人数相加）；"
-                "peak_day = 单日人数最高的 ET 日，并列取最早；只含帖子原文带 $ 的 cashtag。"
+                "peak_day = 单日人数最高的 ET 日，并列取最早。"
+                "进表的票必须在窗口内至少出现过一次带 $ 的写法，但人数把带 $ 与不带 $ 的"
+                "写法合并去重（与 ticker_daily.csv 日人数同口径）。"
                 "这是「有多少人在说」，不是情绪、不是看多看空。",
         "rows": rows,
     }
