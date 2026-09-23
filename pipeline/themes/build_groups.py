@@ -25,7 +25,8 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from pipeline.marketcal import last_completed_session
-from pipeline.themes import is_tradeable, rs_engine, taxonomy
+from pipeline.themes import (FULL_CONTENT_BASKETS, in_theme_content,
+                             is_tradeable, rs_engine, taxonomy)
 from pipeline.themes.etf_holdings import load_holdings
 
 logger = logging.getLogger(__name__)
@@ -61,7 +62,8 @@ def is_foreign_listing(symbol: str) -> bool:
 
 
 def load_universe(path: Path = UNIVERSE_PATH,
-                  tradeable_only: bool = True) -> List[Dict[str, Any]]:
+                  tradeable_only: bool = True,
+                  content_gate: bool = False) -> List[Dict[str, Any]]:
     """Universe rows, filtered to the tradeable set by default.
 
     Themes are aggregated over names you could actually take a position in.
@@ -73,7 +75,10 @@ def load_universe(path: Path = UNIVERSE_PATH,
     payload = json.loads(path.read_text())
     rows = payload.get("rows", payload if isinstance(payload, list) else [])
     total = len(rows)
-    if tradeable_only:
+    if content_gate:
+        # Full content: everything but shells (pipeline/themes.in_theme_content)
+        rows = [r for r in rows if in_theme_content(r)]
+    elif tradeable_only:
         rows = [r for r in rows if is_tradeable(r)]
     logger.info("Loaded %d universe rows (%d tradeable of %d)",
                 len(rows), len(rows), total)
@@ -627,7 +632,7 @@ def state_counts(groups: Sequence[Mapping[str, Any]]) -> Dict[str, int]:
 
 
 def run() -> Dict[str, Any]:
-    universe = load_universe()
+    universe = load_universe(content_gate=FULL_CONTENT_BASKETS)
     full_universe = load_universe(tradeable_only=False)     # for per-theme floors
     benchmark = load_benchmark()
     holdings = load_holdings()

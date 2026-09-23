@@ -47,6 +47,27 @@ WINDOWS: Dict[str, tuple] = {
     "3m": (63, 21),      # the validated, position-sizing board (rs_engine)
 }
 LADDER = ("2w", "4w", "6w", "8w", "10w")   # the trajectory, near -> far
+
+# TSF-replication mode (2026-09-23, branch work; Andy 09-22 「我们是要去靠近复刻它」).
+# TSF's own board is FIVE NON-OVERLAPPING TWO-WEEK BUCKETS -- his Market
+# Overview dropdown reads "Last 2w / 2-4w ago / 4-6w ago / 6-8w ago / 8-10w
+# ago", the same shape as his screener's `RS 0-2W / 0-4W / 0-10W` + `RS Accel`
+# columns. Fitted against 144 of his labels captured 2026-09-22 (three
+# buckets x 48 themes, private fluxus-ops/data/tsf_labels_2026-09-22.csv):
+#
+#   level    = cumulative excess over the bucket (L sessions)
+#   momentum = excess over the last k sessions MINUS the k before them
+#
+#   L=10,k=10 -> 65% exact agreement (last2w 58% / 2-4w 67% / 4-6w 69%)
+#   our shipping parameters (L=10, first-order momentum over 5) -> 43%
+#
+# Kept behind a flag: Andy decides adoption (2026-09-23 「最后采纳不采纳我来
+# 确定。所以别直接给改了」). OFF = today's shipping behaviour.
+BUCKET_MODE = False
+BUCKET_WINDOWS: Dict[str, tuple] = {   # (level lookback, half-bucket k)
+    "2w": (10, 10), "4w": (20, 10), "6w": (30, 15), "8w": (40, 20), "10w": (50, 25),
+    "1m": (21, 10), "3m": (63, 21),
+}
 STATES = ("Leading", "Weakening", "Improving", "Lagging")
 
 
@@ -104,15 +125,26 @@ def state_series(nav: pd.Series, bench: pd.Series, window: str) -> pd.Series:
     number and the board collapses to Leading/Lagging with nothing in the
     transition quadrants (measured: 31/0/0/25).
     """
-    L, M = WINDOWS[window]
+    L, M = (BUCKET_WINDOWS if BUCKET_MODE else WINDOWS)[window]
     idx = nav.index.intersection(bench.index)
     nav, bench = nav.reindex(idx), bench.reindex(idx)
     out: List[Optional[str]] = []
+    need = L + M if not BUCKET_MODE else max(L, 2 * M)
     for i in range(len(idx)):
-        if i < L + M:
+        if i < need:
             out.append(None)
             continue
-        out.append(classify(_excess(nav, bench, i, L), _excess(nav, bench, i, M)))
+        level = _excess(nav, bench, i, L)
+        if BUCKET_MODE:
+            # TSF's two-bucket read: this bucket's excess minus the one before
+            # it (his "RS Last 2w" vs "RS 2-4w ago"), not the plain recent
+            # excess. See BUCKET_MODE.
+            near = _excess(nav, bench, i, M)
+            prior = _excess(nav, bench, i - M, M)
+            momentum = near - prior
+        else:
+            momentum = _excess(nav, bench, i, M)
+        out.append(classify(level, momentum))
     return pd.Series(out, index=idx, name=window)
 
 

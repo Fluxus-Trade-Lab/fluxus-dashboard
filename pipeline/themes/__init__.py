@@ -87,6 +87,35 @@ def is_tradeable(row) -> bool:
     return cap >= MIN_MARKET_CAP and dollar_vol >= MIN_DOLLAR_VOLUME
 
 
+# ── Content gate: what a theme's BASKET contains ─────────────────────────
+#
+# Andy 2026-09-23: 「内容上主题篮子放开市值闸，即内容要全，趋势和变化要对。但实际
+# 交易使用上我们有自己的对待。」 Measured against TSF's own 26 same-named
+# themes (2026-09-22 snapshot, private fluxus-ops/data/tsf_members/):
+# our tickers are 96% inside his baskets, but his are only 72% inside ours --
+# we are not holding the wrong names, we are missing 28% of his, and 95% of
+# those sit below the $1B floor (median cap $0.40B). So the floor, not the
+# taxonomy, is what makes our theme readings drift from his.
+#
+# The shell exclusion stays: of the 352 seats he carries that we do not, ZERO
+# are `industry == "Shell Companies"` -- he excludes them too.
+#
+# OFF until Andy adopts it (2026-09-23 「最后采纳不采纳我来确定。所以别直接给改了」).
+FULL_CONTENT_BASKETS = False
+
+
+def in_theme_content(row) -> bool:
+    """Membership for theme AGGREGATION when FULL_CONTENT_BASKETS is on.
+
+    No cap floor and no dollar-volume floor -- the basket is a claim about the
+    theme, and leaving its small names out biases every reading of it toward
+    the megacaps. The trading layer keeps its own gate (`is_tradeable`,
+    `universe_gate.cap_floor`): what we MEASURE and what we would BUY are two
+    different questions.
+    """
+    return row.get("industry") not in EXCLUDED_INDUSTRIES
+
+
 def falr(row, sessions_per_year: int = 252) -> float | None:
     """S&P's Float-Adjusted Liquidity Ratio, REPORTED not enforced.
 
