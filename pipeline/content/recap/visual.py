@@ -64,7 +64,7 @@ CHROME_LABELS = {
            # the ladder's cost column and the CLOSE line's holding period (Andy 2026-09-23).
            # These live here, not in the issue's own `labels`, so an issue written before the
            # ladder existed still renders it.
-           "p_cost": "cost", "leg_held": "held {n} sessions",
+           "p_cost": "Cost", "leg_held": "held {n} sessions",
            "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "vlabels": {}},
     "ZH": {"legend": ["计入看多", "计入看空", "在线内", "未计入", "数字 = 离各自那条线的距离"],
            "units": {"ratio": "比值", "names": "只", "points": "点", "warnings": "条", "": ""},
@@ -227,42 +227,43 @@ def _book_money_gate(bkk: dict, D: str) -> None:
     """M1 · the one money check that has to run at render time, not in a test.
 
     `book_out` builds its rows positionally, so an extra *field* on a position
-    can never reach the page — that direction is already closed by construction
-    and asserted in test_recap_r_ladder. What is still open is a price landing
-    in a column that exists: `stop_R` wired to `stop_price` prints 142.50 in the
-    stop column, and by the time it is text it is a bare number under a header
-    on another line — indistinguishable to any regex from the index closes the
-    page prints on purpose (QQQ 714.88).
+    can never reach the page — that direction is closed by construction and
+    asserted in test_recap_r_ladder. What stays open is a value landing in a
+    column that exists, where it is just a bare number under a header on
+    another line.
 
-    The check is not "is this number too big", which is a judgement the ladder
-    cannot make. It is an exact relation between two numbers that are both
-    already in R: a stop is never above the mark. A long trailed to +2.3R with
-    the position at +7.4R is legal; a "stop" of 142.5 against +7.4R is a price.
+    Andy 2026-09-24 reversed which columns hold what: cost and stop are prices
+    now, only open_R and the legs are R. So the relation this gate checks
+    inverts with them. It is still not "is this number too big" — that is a
+    judgement neither prices nor R can support — but an exact relation each
+    column's own contents must satisfy:
 
-    One legal position looks like a violation of that relation: a stop
-    trailed to breakeven (stop_R == 0). A price can be $142.50; it is never
-    exactly $0.00, so a breakeven stop can never be a misrouted price no
-    matter how far open_R has since moved — a gap through it, or the sheet
-    lagging a close, is real price action, not a leak. Exempted rather than
-    raised (T-0923-61, found in T-0923-58's own review: the 09-22 book
-    carries five positions with stop_R=0, from NBIS +0.54 to ARM +6.46).
+      * cost and stop are two prices of the same instrument, so their ratio is
+        bounded. An R wired into the stop column (−1.0, or 0.0 for a breakeven
+        trail) collapses that ratio; a price never can.
+      * a leg's share of the position is a percent, never a quantity.
 
-    A stop trailed to a *non-zero* R (that same book's PLTR, at −1.0R) is
-    not covered — it can in principle still be a misrouted price, so a gap
-    through it keeps raising. That is a real, narrower residual risk (a
-    non-breakeven stop gapped through) this fix leaves open. T-0923-70
-    weighed reopening a magnitude judgement for it against leaving it as a
-    known, unexercised risk and chose to leave it — see
-    data/reference/incidents/2026-09-23_m1_gate_accepts_non_breakeven_stop_gap_risk.md
-    for the reasoning and the three-strikes trigger for revisiting it.
+    The 09-23 version of this gate read `stop_R <= open_R` and had to exempt
+    breakeven stops (stop_R == 0) to avoid firing on five legal positions. The
+    ratio form needs no exemption: a stop of 0.00 is caught, which is correct
+    now, because a stop price is never zero.
     """
+    # A pack built before 2026-09-24 has no cost/stop at all. That is an old
+    # schema, not a leak: the cells render blank and the gate has nothing to
+    # check. A cost that is *present* and not a positive number is a real fault
+    # — including 0, which is what the 09-23 ladder printed there.
     for p in bkk.get("positions") or []:
-        sr, orr = p.get("stop_R"), p.get("open_R")
-        if sr is not None and orr is not None and sr > orr + 1e-6:
-            if abs(sr) < 1e-6:
-                continue
-            raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {sr} is above the mark {orr} — "
-                             "that column is carrying a price, not an R")
+        if "cost" not in p:
+            continue
+        cost, stop = p.get("cost"), p.get("stop")
+        if cost is None or not cost > 0:
+            raise SystemExit(f"book position {p.get('ticker')} for {D}: cost {cost!r} is not a price")
+        if stop is None:
+            continue
+        ratio = stop / cost
+        if not 0.2 <= ratio <= 5.0:
+            raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {stop} against cost {cost} "
+                             f"(ratio {ratio:.3f}) — that column is carrying an R, not a price")
     for leg in bkk.get("legs") or []:
         pct = leg.get("pct_of_position")
         if pct is not None and not 0 < pct <= 100:
@@ -279,12 +280,12 @@ def book_out(bkk: dict, D: str) -> Optional[dict]:
     if "open_names" not in bkk:
         return None
     _book_money_gate(bkk, D)
-    # Cost is 0R by definition, so the page draws it rather than carrying it —
-    # the ladder each row prints is [0R, stop_R, open_R] (Andy 2026-09-23:
-    # 「把 portfolio的cost和stop写进去」).
+    # cost and stop are prices, open_R is an R (Andy 2026-09-24:「成本和止损要展示
+    # 的是价格，而不是R，只有浮盈浮亏和实现的盈亏是R」). The 0R cost column it
+    # replaces was constant on every row and therefore said nothing.
     return {"ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
             "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
-            "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("stop_R"), p["open_R"]]
+            "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("cost"), p.get("stop"), p["open_R"]]
                     for p in bkk["positions"]],
             "legs": [[L["date"], L["ticker"], L["type"], L.get("pct_of_position"), L.get("R"), L.get("held_sessions")]
                      for L in bkk.get("legs") or []]}

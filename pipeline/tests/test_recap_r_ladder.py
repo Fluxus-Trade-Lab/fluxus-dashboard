@@ -1,214 +1,155 @@
-"""The R ladder (Andy 2026-09-23「以多少R的形式，不出现美元数值」).
+"""The portfolio book's columns (Andy 2026-09-23, reversed and settled 2026-09-24).
 
-Positive controls come in the two shapes this can actually fail in
+Settled shape — 「成本和止损要展示的是价格，而不是R，只有浮盈浮亏和实现的盈亏是R」:
+
+    ticker · side · entry date · cost (price) · stop (price) · open R
+    TRIM/CLOSE legs: date · ticker · type · % of position · R · held sessions
+
+The 09-23 version printed cost as a constant 0R and the stop as an R. Andy killed
+it the next morning ("上成本 0R 显然是愚蠢的"), and these tests were rewritten
+rather than patched — every one of them had encoded the old premise.
+
+Positive controls come in the two shapes this can fail in
 (method_positive_controls_by_failure_mode):
-  A. 漏改 — a per-share price or share count reaches the page text
-  B. 改了但接错 — the payload carries a raw price field even though the
-     current template happens not to print it
-
-A green money gate on today's PDF only means "no leak today"; B is what keeps
-the next person from re-adding entry_price to the row and shipping it.
+  A. 漏改 — a dollar amount or share count reaches the page text
+  B. 改了但接错 — a value lands in a column that exists, where pdftotext leaves it
+     a bare number under a header and no regex can see it. That direction is M1's,
+     and each control below is proven red before its green is trusted.
 """
 from __future__ import annotations
 
 import datetime as dt
-import re
-from pathlib import Path
 
 import pytest
 
 from pipeline.content.recap.gates import run_gates
-from pipeline.content.recap.visual import _book_money_gate, book_out
-
-REPO_ROOT = Path(__file__).resolve().parents[2]
+from pipeline.content.recap.visual import book_out
 
 
-# ---------- A. the text gate must redden on both leak shapes ----------
+# ---------- A. the text gate, on the two shapes that are still banned ----------
 
-def test_money_gate_reddens_on_a_dollar_price():
-    g = run_gates("Open position ARM entry $333.20 stop $310.00")
-    assert g["money_shares"], "a $-prefixed per-share price must be caught"
-    assert not g["ok"]
+def test_money_gate_reddens_on_a_dollar_amount():
+    g = run_gates("realised $12,400 on the trade")
+    assert g["money_shares"] and not g["ok"]
 
 
 def test_money_gate_reddens_on_share_counts():
     for leak in ("sold 1,200 shares", "减仓 1,200 股"):
-        g = run_gates(leak)
-        assert g["money_shares"], f"share count not caught: {leak}"
+        assert run_gates(leak)["money_shares"], leak
 
 
-def test_money_gate_is_green_on_the_r_ladder_itself():
-    """The ladder's own vocabulary must not trip the gate, or it is useless."""
-    page = ("Open position  Side  Entry  Stop R  Open R\n"
-            "HOOD long 2026-08-20 +1.96R +7.40R\n"
-            "ARM · 09-22 · TRIM 33.2% · +0.44R\n"
-            "FSLY · 09-22 · CLOSE 100.0% · +1.23R\n")
+def test_money_gate_is_green_on_the_book_as_it_now_prints():
+    page = ("Open position  Side  Entry  Cost  Stop  Open R\n"
+            "HOOD long 2026-08-20 96.72 104.00 +5.59R\n"
+            "ARM · 09-23 · TRIM 33.2% · +0.44R\n"
+            "FSLY · 09-23 · CLOSE 100.0% · +1.23R · held 3 sessions\n")
     assert run_gates(page)["money_shares"] == []
 
 
-# ---------- B. the payload must not carry raw prices ----------
-
-PRICE_FIELDS = {"entry_price", "stop_price", "initial_stop", "price",
-                "qty", "original_qty", "current_qty", "R_dollars"}
-
+# ---------- the payload ----------
 
 def _book(**over):
     b = {"return_pct": 1.0, "cash_pct": 50.0, "open_names": 1, "closed_trades": 0,
          "open_R_total": 7.4, "realized_R_period": 2.17, "closes_stale": False,
          "positions": [{"ticker": "HOOD", "direction": "long", "entry_date": "2026-08-20",
-                        "open_R": 7.4, "stop_R": 1.96}],
-         "legs": [{"date": "2026-09-22", "ticker": "FSLY", "type": "CLOSE",
-                   "pct_of_position": 100.0, "R": 1.23, "R_scope": "trade", "held_sessions": 9}]}
+                        "open_R": 7.4, "cost": 96.72, "stop": 104.00}],
+         "legs": [{"date": "2026-09-23", "ticker": "FSLY", "type": "CLOSE",
+                   "pct_of_position": 100.0, "R": 1.23, "R_scope": "trade",
+                   "held_sessions": 3}]}
     b.update(over)
     return b
 
 
-def test_book_out_emits_the_ladder():
-    out = book_out(_book(), "2026-09-22")
-    assert out["pos"] == [["HOOD", "long", "2026-08-20", 1.96, 7.4]]
-    assert out["legs"] == [["2026-09-22", "FSLY", "CLOSE", 100.0, 1.23, 9]]
+def test_book_out_emits_price_cost_price_stop_and_an_R():
+    out = book_out(_book(), "2026-09-23")
+    assert out["pos"] == [["HOOD", "long", "2026-08-20", 96.72, 104.00, 7.4]]
+    assert out["legs"] == [["2026-09-23", "FSLY", "CLOSE", 100.0, 1.23, 3]]
 
 
-def test_book_out_carries_no_price_or_share_field():
-    """Guards the 改了但接错 direction: if someone re-adds a price to a row,
-    this fails here rather than on a member's PDF.
-
-    The guard is the row SHAPE, not the magnitude of the numbers in it — a
-    percent legitimately reaches 100.0, so "any value above N is a price" is
-    not a judgement this can make.
-    """
-    out = book_out(_book(), "2026-09-22")
-    assert set(out) == {"ret", "cash", "open", "closed", "openR", "realR", "pos", "legs"}, \
-        f"book payload grew a field: {sorted(set(out))}"
+def test_book_payload_shape_is_fixed():
+    """Direction B, structural half: the row SHAPE is the guard, not the size of
+    the numbers in it — a percent legitimately reaches 100.0 and a price legitimately
+    reaches four figures, so "any value above N" is not a judgement this can make."""
+    out = book_out(_book(), "2026-09-23")
+    assert set(out) == {"ret", "cash", "open", "closed", "openR", "realR", "pos", "legs"}
     for row in out["pos"]:
-        assert len(row) == 5, f"position row is ticker/side/entry/stopR/openR, got {row}"
+        assert len(row) == 6, f"position row is ticker/side/entry/cost/stop/openR, got {row}"
     for row in out["legs"]:
         assert len(row) == 6, f"leg row is date/ticker/type/pct/R/held, got {row}"
-    assert PRICE_FIELDS.isdisjoint(out.keys())
 
 
-def test_stop_R_is_none_when_the_entry_stop_was_never_recorded():
-    """Andy 2026-09-23「initialStop 缺失的仓位 stop 栏留空不猜」."""
+def test_a_position_with_no_stop_on_the_sheet_prints_blank():
+    """Andy 2026-09-23「initialStop 缺失的仓位 stop 栏留空不猜」— the same refusal to
+    guess applies to a missing live stop."""
     b = _book()
-    b["positions"][0]["stop_R"] = None
-    out = book_out(b, "2026-09-22")
-    assert out["pos"][0][3] is None
+    b["positions"][0]["stop"] = None
+    assert book_out(b, "2026-09-23")["pos"][0][4] is None
 
 
 def test_close_is_one_row_per_trade_not_one_per_tranche():
     """09-22's FSLY went out in three tranches on one day; it must print once."""
-    from pipeline.content.recap.build_pack import book_block  # import-time guard only
-    assert callable(book_block)
-    out = book_out(_book(), "2026-09-22")
+    out = book_out(_book(), "2026-09-23")
     closes = [L for L in out["legs"] if L[2] == "CLOSE"]
     assert len(closes) == 1 and closes[0][3] == 100.0
 
 
-# ---------- M1 · the one leak the row shape cannot catch ----------
-# The shape guard above closes "a price arrives under a new field". What it
-# cannot close is "a price arrives in a column that exists" — stop_R wired to
-# stop_price. By the time that is page text it is a bare number under a header
-# on another line, which reads exactly like the index closes the page prints on
-# purpose. So it is checked where the numbers still have names, against the one
-# relation a price cannot satisfy.
+# ---------- B. M1, the render-time gate, each control proven red ----------
 
-def test_M1_reddens_when_the_stop_column_holds_a_price():
-    """漏改: the stop column was never converted, so the raw stop price is in it."""
+def _m1_raises(book):
+    with pytest.raises(SystemExit) as e:
+        book_out(book, "2026-09-23")
+    return str(e.value)
+
+
+@pytest.mark.parametrize("bad_stop", [-1.0, 0.0, 2.3])
+def test_M1_reddens_when_an_R_is_wired_into_the_stop_column(bad_stop):
+    """The 09-23 miswire, inverted: stop_R (−1.0 at entry, 0.0 trailed to
+    breakeven, or a positive trail) reaching the column that now holds a price.
+    All three collapse stop/cost far below the band; a price never can."""
     b = _book()
-    b["positions"][0]["stop_R"] = 142.50   # the live stop, in dollars
-    with pytest.raises(SystemExit, match="above the mark"):
-        book_out(b, "2026-09-22")
+    b["positions"][0]["stop"] = bad_stop
+    assert "carrying an R, not a price" in _m1_raises(b)
+
+
+def test_M1_reddens_when_the_cost_column_is_empty_or_zero():
+    for bad in (None, 0.0):
+        b = _book()
+        b["positions"][0]["cost"] = bad
+        assert "is not a price" in _m1_raises(b)
 
 
 def test_M1_reddens_when_a_leg_percent_holds_a_quantity():
-    """改了但接错: pct_of_position wired to qty instead of qty/original_qty."""
     b = _book()
-    b["legs"][0]["pct_of_position"] = 300
-    with pytest.raises(SystemExit, match="not a share of the position"):
-        book_out(b, "2026-09-22")
+    b["legs"][0]["pct_of_position"] = 1772
+    assert "not a share of the position" in _m1_raises(b)
 
 
-def test_M1_lets_a_stop_trailed_up_to_the_mark_through():
-    """The negative half: a stop trailed right to the close is legal, and a
-    position at 100% out is a legal percent. A gate that reddens on these would
-    block the 09:00 出片班 for nothing."""
+@pytest.mark.parametrize("stop", [104.00, 93.00, 175.50, 307.92])
+def test_M1_lets_real_stops_through(stop):
+    """Real 09-22/09-23 book values: stops below cost (fresh), at cost (breakeven
+    trail) and above it (locked in). The ratio band has to admit all of them —
+    unlike the 09-23 relation, which needed a breakeven exemption."""
     b = _book()
-    b["positions"][0]["stop_R"] = b["positions"][0]["open_R"]
-    assert book_out(b, "2026-09-22")["pos"][0][3] == 7.4
-    assert book_out(_book(), "2026-09-22")["legs"][0][3] == 100.0
+    b["positions"][0].update(cost=178.20, stop=stop)
+    assert book_out(b, "2026-09-23")["pos"][0][4] == stop
 
 
-def test_M1_does_not_fire_on_a_position_with_no_R():
+def test_M1_does_not_fire_when_there_is_no_stop_to_check():
     b = _book()
-    b["positions"][0]["stop_R"] = None
-    b["positions"][0]["open_R"] = None
-    assert book_out(b, "2026-09-22")["pos"][0][3] is None
+    b["positions"][0]["stop"] = None
+    assert book_out(b, "2026-09-23") is not None
 
 
-def test_M1_lets_a_breakeven_stop_through_no_matter_how_far_open_R_has_moved():
-    """T-0923-58's review of the real 09-22 book: five positions carried
-    stop_R=0.00 (breakeven), from NBIS +0.54 to ARM +6.46. A price is never
-    exactly $0.00, so stop_R==0 can never be a misrouted price — a gap
-    through a breakeven stop, or the sheet lagging a close, is real price
-    action at any distance, not a price leak, and must not SystemExit the
-    whole PDF (T-0923-61; first fix band-limited this to open_R within
-    ±0.6R, which the real book's other four stop_R=0 positions would still
-    have tripped on a routine gap — widened to unconditional)."""
-    b = _book()
-    b["positions"][0]["stop_R"] = 0.0
-    for orr in (0.54, 6.46, 0.0, -0.3, -2.0, -20.0):
-        b["positions"][0]["open_R"] = orr
-        assert book_out(b, "2026-09-22")["pos"][0][3] == 0.0
+# ---------- the page draws what the payload carries ----------
 
-
-def test_M1_still_reddens_a_non_breakeven_stop_gapped_through():
-    """The exemption is for stop_R==0 specifically, not any stop above the
-    mark: a stop trailed to a non-zero R (the real book's PLTR, at −1.0R)
-    could in principle still be a misrouted price, so a gap through it must
-    keep raising — this is the residual risk noted in T-0923-61's run log,
-    left for a follow-up rather than folded into this fix."""
-    b = _book()
-    b["positions"][0]["stop_R"] = -1.0
-    b["positions"][0]["open_R"] = -1.5
-    with pytest.raises(SystemExit, match="above the mark"):
-        book_out(b, "2026-09-22")
-
-
-def test_M1_residual_risk_pointer_resolves_to_a_real_file():
-    """The non-breakeven-stop residual risk this docstring names must point to
-    a file that actually exists — T-0923-61's docstring pointed at an ops run
-    log that was never in the repo, so the next reader chasing it hit a dead
-    end. T-0923-70 replaced it with a data/reference/incidents/ record; this
-    guards the replacement against rotting the same way."""
-    m = re.search(r"data/reference/incidents/\S+\.md", _book_money_gate.__doc__)
-    assert m, "_book_money_gate's docstring must name an incidents/ record for this residual risk"
-    assert (REPO_ROOT / m.group(0)).is_file(), f"{m.group(0)} named in the docstring but not in the repo"
-
-
-# ---------- the cost point and the holding period ----------
-
-def test_the_page_draws_all_three_points_of_the_ladder():
-    """Andy 2026-09-23:「把 portfolio的cost和stop写进去」— cost 0R, stop, now.
-    cost is 0R for every row, so it is drawn by the renderer rather than carried
-    in the payload; this checks the renderer actually draws it."""
-    import pathlib as _p
-    from pipeline.content.recap import visual
-    js = (_p.Path(visual.__file__).with_name("visual_assets") / "recap_page.js").read_text()
+def test_the_page_prints_cost_and_stop_as_two_decimal_prices():
+    from pathlib import Path
+    js = Path("pipeline/content/recap/visual_assets/recap_page.js").read_text()
     book = js[js.index("function book(is, c, V)"):]
-    book = book[:book.index("\n  function ", 1)]
-    assert "V.p_cost" in book, "the cost header is not in the position table"
-    assert '<td class="n">0R</td>' in book, "the cost cell is not drawn"
-    assert "V.leg_held" in book, "a CLOSE line does not say how long the trade was held"
-    for lang in ("EN", "ZH"):
-        assert visual.CHROME_LABELS[lang]["p_cost"]
-        assert "{n}" in visual.CHROME_LABELS[lang]["leg_held"]
+    assert "toFixed(2)" in book[:3000], "cost/stop must render as prices, not R"
+    assert '<td class="n">0R</td>' not in book, "the constant 0R cost column is gone"
 
 
-def test_held_sessions_counts_both_ends_and_skips_non_sessions():
-    from pipeline.content.recap.build_pack import _held_sessions
-    # 2026-09-14 Mon .. 2026-09-16 Wed
-    assert _held_sessions(dt.date(2026, 9, 14), dt.date(2026, 9, 16)) == 3
-    # entered and closed the same session
-    assert _held_sessions(dt.date(2026, 9, 16), dt.date(2026, 9, 16)) == 1
-    # Fri .. Mon: the weekend is not held sessions
-    assert _held_sessions(dt.date(2026, 9, 11), dt.date(2026, 9, 14)) == 2
+def test_held_sessions_reaches_the_leg_row():
+    out = book_out(_book(), "2026-09-23")
+    assert out["legs"][0][5] == 3

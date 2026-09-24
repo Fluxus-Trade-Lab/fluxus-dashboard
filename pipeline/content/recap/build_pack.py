@@ -530,20 +530,16 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
             no_r += 1
         else:
             open_r += r
-        # Andy 2026-09-23「以多少R的形式，不出现美元数值」: entry is the zero point,
-        # so a position prints as cost 0R / stop ±X.XR / now +Y.YR. The stop shown is
-        # the LIVE trailed stop ("印的是当前的stop") measured in R off entry; the initial
-        # stop is only ever the denominator. No stop_R when R is unknown — a position
-        # sized against an unrecorded stop has no R scale to express it on
-        # ("initialStop 缺失的仓位 stop 栏留空不猜").
-        stop_r = None
-        if t.has_R and t.R_dollars:
-            r_per_share = t.R_dollars / t.original_qty
-            if r_per_share:
-                stop_r = round(sgn(t) * (t.stop_price - t.entry_price) / r_per_share, 2)
+        # Andy 2026-09-24「成本和止损要展示的是价格，而不是R，只有浮盈浮亏和实现的
+        # 盈亏是R」— this reverses the 09-23 ladder, where cost was a constant 0R
+        # (a column that says the same thing on every row says nothing) and the
+        # stop was an R. cost/stop are prices; open_R and the legs stay in R.
+        # The stop printed is the LIVE trailed one; initial_stop remains only the
+        # R denominator and is never shown.
         positions.append({"ticker": t.ticker, "direction": t.direction,
                           "entry_date": t.entry_date.isoformat(), "open_R": None if r is None else round(r, 2),
-                          "stop_R": stop_r})
+                          "cost": round(t.entry_price, 2),
+                          "stop": None if t.stop_price is None else round(t.stop_price, 2)})
     # TRIM / CLOSE legs inside the reporting window, in R and % of the original
     # position — never share counts (Andy 2026-09-23). Same R arithmetic as
     # realized_between() below; do not grow a second formula for it.

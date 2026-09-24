@@ -81,23 +81,21 @@ def test_dont_is_not_the_host_name():
 # ------------------------------------------------------------------ labelled price (Andy 2026-09-23)
 # The book ladder prints cost and stop in R. The prose half of that ruling is a
 # labelled price — the number printed as the price it is instead of as an R.
-@pytest.mark.parametrize("inject", [
-    "stop 142.50", "Stop: 142.50", "cost 98.10", "entry 142.5", "stops 142.50",
-    "止损 142.50", "成本 98.10", "进场价 142.50", "入场价：98.1",
-])
-def test_labelled_price_goes_red(inject):
-    r = run_gates(CLEAN_EN + " " + inject)
-    assert r["money_shares"], inject
-    assert not r["ok"]
-
-
 @pytest.mark.parametrize("keep", [
-    # index and stock levels in prose are printed on purpose — adjacency is the gate
+    # Andy 2026-09-24 reversed 09-23: the portfolio table prints cost and stop as
+    # PRICES now, so the "labelled price" rules that used to redden these are gone.
+    # Only R and % stayed in R, and none of this may trip the money gate.
+    "cost 98.10", "stop 142.50", "Stop: 142.50", "止损 142.50", "成本 98.10",
+    "进场价 142.50", "入场价：98.1",
+    # levels in prose were always legal and stay legal
     "a stop under 7,580", "stop above 7620 must hold", "QQQ 714.88", "stops stay tight",
-    # the ladder itself: cost 0R, a trailed stop in R, an open R, a trim percent
-    "cost 0R", "stop +2.30R", "止损 +2.30R", "成本 0R", "TRIM 25.0% of the position",
-    "止损 −1.0R", "entry 2026-09-10", "the 50-day",
+    "entry 2026-09-10", "the 50-day",
+    # the parts that are still R / %
+    "+5.59R", "TRIM 25.0% of the position", "CLOSE 100.0% · +1.23R",
 ])
-def test_labelled_price_lets_the_r_ladder_and_levels_through(keep):
+def test_money_gate_lets_prices_levels_and_r_through(keep):
+    """The book's own vocabulary must pass, or the gate is useless on the one
+    section it is supposed to watch. Dollar signs and share counts are what is
+    still banned — those have their own tests above."""
     r = run_gates(CLEAN_EN + " " + keep)
     assert not r["money_shares"], (keep, r["money_shares"])

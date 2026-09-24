@@ -599,19 +599,22 @@
     var zh = (c.lang || "").toUpperCase() === "ZH";
     var cols = list(L.pos_cols);
     if (cols.length < 5) {
-      cols = [cols[0], cols[1], cols[2], L.pos_stop || (zh ? "\u6b62\u635f R" : "Stop R"), cols[3]];
+      cols = [cols[0], cols[1], cols[2], L.pos_stop || (zh ? "\u6b62\u635f" : "Stop"), cols[3]];
     }
-    /* cost is drawn, not carried: it is 0R for every row, so it comes from the chrome
-       and sits between the entry date and the stop, making the ladder readable left to
-       right (Andy 2026-09-23:「把 portfolio的cost和stop写进去」) */
+    /* cost and stop are PRICES, open_R is an R (Andy 2026-09-24:「成本和止损要展示的
+       是价格，而不是R，只有浮盈浮亏和实现的盈亏是R」). This replaced a cost column that
+       printed 0R on every row. The stop is the live trailed one; blank when the sheet
+       has none. */
     cols = [cols[0], cols[1], cols[2], V.p_cost, cols[3], cols[4]];
     var head = cols.map(function (h, i) {
       return "<th" + (i >= 3 ? ' class="rn"' : "") + ">" + esc(h) + "</th>";
     }).join("");
+    var money = function (v) { return isNum(v) ? v.toFixed(2) : DASH; };
     var rows = list(b.pos).map(function (p) {
       return '<tr><td class="t">' + esc(p[0]) + "</td><td>" + esc(p[1] === "long" ? L.long : L.short) +
-        "</td><td>" + esc(p[2]) + '</td><td class="n">0R</td><td class="n ' + cls(p[3]) + '">' + sR(p[3]) +
-        '</td><td class="n ' + cls(p[4]) + '">' + sR(p[4]) + "</td></tr>";
+        "</td><td>" + esc(p[2]) + '</td><td class="n">' + esc(money(p[3])) +
+        '</td><td class="n">' + esc(money(p[4])) +
+        '</td><td class="n ' + cls(p[5]) + '">' + sR(p[5]) + "</td></tr>";
     }).join("");
     var legs = list(b.legs).map(function (g) {
       var pct = isNum(g[3]) ? g[3].toFixed(1) + "%" : DASH;
