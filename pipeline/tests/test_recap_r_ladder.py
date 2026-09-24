@@ -52,7 +52,7 @@ def _book(**over):
     b = {"return_pct": 1.0, "cash_pct": 50.0, "open_names": 1, "closed_trades": 0,
          "open_R_total": 7.4, "realized_R_period": 2.17, "closes_stale": False,
          "positions": [{"ticker": "HOOD", "direction": "long", "entry_date": "2026-08-20",
-                        "open_R": 7.4, "cost": 96.72, "stop": 104.00}],
+                        "open_R": 7.4, "cost": 96.72, "size_pct": 2.6, "stop": 104.00}],
          "legs": [{"date": "2026-09-23", "ticker": "FSLY", "type": "CLOSE",
                    "pct_of_position": 100.0, "R": 1.23, "R_scope": "trade",
                    "held_sessions": 3}]}
@@ -62,7 +62,7 @@ def _book(**over):
 
 def test_book_out_emits_price_cost_price_stop_and_an_R():
     out = book_out(_book(), "2026-09-23")
-    assert out["pos"] == [["HOOD", "long", "2026-08-20", 96.72, 104.00, 7.4]]
+    assert out["pos"] == [["HOOD", "long", "2026-08-20", 96.72, 2.6, 104.00, 7.4]]
     assert out["legs"] == [["2026-09-23", "FSLY", "CLOSE", 100.0, 1.23, 3]]
 
 
@@ -73,7 +73,7 @@ def test_book_payload_shape_is_fixed():
     out = book_out(_book(), "2026-09-23")
     assert set(out) == {"ret", "cash", "open", "closed", "openR", "realR", "pos", "legs"}
     for row in out["pos"]:
-        assert len(row) == 6, f"position row is ticker/side/entry/cost/stop/openR, got {row}"
+        assert len(row) == 7, f"position row is ticker/side/entry/cost/size/stop/openR, got {row}"
     for row in out["legs"]:
         assert len(row) == 6, f"leg row is date/ticker/type/pct/R/held, got {row}"
 
@@ -83,7 +83,7 @@ def test_a_position_with_no_stop_on_the_sheet_prints_blank():
     guess applies to a missing live stop."""
     b = _book()
     b["positions"][0]["stop"] = None
-    assert book_out(b, "2026-09-23")["pos"][0][4] is None
+    assert book_out(b, "2026-09-23")["pos"][0][5] is None
 
 
 def test_close_is_one_row_per_trade_not_one_per_tranche():
@@ -131,7 +131,7 @@ def test_M1_lets_real_stops_through(stop):
     unlike the 09-23 relation, which needed a breakeven exemption."""
     b = _book()
     b["positions"][0].update(cost=178.20, stop=stop)
-    assert book_out(b, "2026-09-23")["pos"][0][4] == stop
+    assert book_out(b, "2026-09-23")["pos"][0][5] == stop
 
 
 def test_M1_does_not_fire_when_there_is_no_stop_to_check():
@@ -141,6 +141,15 @@ def test_M1_does_not_fire_when_there_is_no_stop_to_check():
 
 
 # ---------- the page draws what the payload carries ----------
+
+def test_size_percent_reddens_when_it_is_not_a_share_of_the_book():
+    """Andy 2026-09-24 added the column; M1 guards it the same way it guards a leg's
+    percent — a quantity or a price landing there is out of range."""
+    for bad in (0, -3.0, 1772):
+        b = _book()
+        b["positions"][0]["size_pct"] = bad
+        assert "not a share of the book" in _m1_raises(b), bad
+
 
 def test_the_page_prints_cost_and_stop_as_two_decimal_prices():
     from pathlib import Path

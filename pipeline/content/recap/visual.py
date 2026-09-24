@@ -64,7 +64,7 @@ CHROME_LABELS = {
            # the ladder's cost column and the CLOSE line's holding period (Andy 2026-09-23).
            # These live here, not in the issue's own `labels`, so an issue written before the
            # ladder existed still renders it.
-           "p_cost": "Cost", "leg_held": "held {n} sessions",
+           "p_cost": "Cost", "p_industries": "Industries", "p_sectors": "Sectors", "p_themes": "Themes", "leg_held": "held {n} sessions",
            "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "vlabels": {}},
     "ZH": {"legend": ["计入看多", "计入看空", "在线内", "未计入", "数字 = 离各自那条线的距离"],
            "units": {"ratio": "比值", "names": "只", "points": "点", "warnings": "条", "": ""},
@@ -78,7 +78,7 @@ CHROME_LABELS = {
            "cond_aria": "市场状况分，逐日", "months": [f"{i}月" for i in range(1, 13)],
            "legal": "这里不给建议，也不劝人买卖。量好自己的水。",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
-           "p_cost": "成本", "leg_held": "持有 {n} 个交易日",
+           "p_cost": "成本", "p_industries": "行业", "p_sectors": "板块", "p_themes": "主题", "leg_held": "持有 {n} 个交易日",
            "vlabels": {"5-day ratio": "5 日比", "10-day ratio": "10 日比", "Thrust": "推力", "Quarterly spread": "季度差",
                        "13%/34d spread": "13%/34 日差", "New highs vs lows": "新高对新低", "McClellan": "McClellan",
                        "% above 200-day": "站上 200 日线占比", "T2108 zone": "T2108 区间", "SPY warnings": "SPY 警示",
@@ -260,6 +260,10 @@ def _book_money_gate(bkk: dict, D: str) -> None:
             raise SystemExit(f"book position {p.get('ticker')} for {D}: cost {cost!r} is not a price")
         if stop is None:
             continue
+        size = p.get("size_pct")
+        if size is not None and not 0 < size <= 100:
+            raise SystemExit(f"book position {p.get('ticker')} for {D}: size {size} is not a share of the "
+                             "book — that column is carrying a quantity or a price, not a percent")
         ratio = stop / cost
         if not 0.2 <= ratio <= 5.0:
             raise SystemExit(f"book position {p.get('ticker')} for {D}: stop {stop} against cost {cost} "
@@ -285,8 +289,8 @@ def book_out(bkk: dict, D: str) -> Optional[dict]:
     # replaces was constant on every row and therefore said nothing.
     return {"ret": bkk["return_pct"], "cash": bkk["cash_pct"], "open": bkk["open_names"], "closed": bkk["closed_trades"],
             "openR": bkk["open_R_total"], "realR": bkk["realized_R_period"],
-            "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("cost"), p.get("stop"), p["open_R"]]
-                    for p in bkk["positions"]],
+            "pos": [[p["ticker"], p["direction"], p["entry_date"], p.get("cost"), p.get("size_pct"),
+                     p.get("stop"), p["open_R"]] for p in bkk["positions"]],
             "legs": [[L["date"], L["ticker"], L["type"], L.get("pct_of_position"), L.get("R"), L.get("held_sessions")]
                      for L in bkk.get("legs") or []]}
 
@@ -372,7 +376,8 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
                         "up4": b["up_4pct_stockbee"], "down4": b["down_4pct_stockbee"], "net": b["net_advances"]}
     out["book"] = book_out(pack.get("book") or {}, D)
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
-            "led", "lagged", "sentiment", "session_commentary", "tomorrow", "rules", "portfolio_note", "weekly_k_line", "labels")
+            "led", "lagged", "movers", "cross_assets", "sentiment", "session_commentary", "tomorrow", "rules",
+            "portfolio_note", "weekly_k_line", "labels")
     out["V"] = {}
     out["fig"] = {}
     for lang in ("EN", "ZH"):

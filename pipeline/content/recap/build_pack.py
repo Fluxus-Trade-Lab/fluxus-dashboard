@@ -539,7 +539,8 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
         positions.append({"ticker": t.ticker, "direction": t.direction,
                           "entry_date": t.entry_date.isoformat(), "open_R": None if r is None else round(r, 2),
                           "cost": round(t.entry_price, 2),
-                          "stop": None if t.stop_price is None else round(t.stop_price, 2)})
+                          "stop": None if t.stop_price is None else round(t.stop_price, 2),
+                          "_mv": c * q})
     # TRIM / CLOSE legs inside the reporting window, in R and % of the original
     # position — never share counts (Andy 2026-09-23). Same R arithmetic as
     # realized_between() below; do not grow a second formula for it.
@@ -583,8 +584,18 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     }
     if stale_close:
         out["stale_close"] = sorted(stale_close)
+    if not start_cap:
+        for row in out["positions"]:
+            row.pop("_mv", None)
+            row["size_pct"] = None
     if start_cap:
         equity = start_cap + realized_all + unreal
+        # size % of the book, same definition the dashboard uses for `weight`
+        # (frontend/src/components/portfolio/lib/calculations.js:166):
+        # market value of the leg over total portfolio value. Andy 2026-09-24.
+        for row in out["positions"]:
+            mv = row.pop("_mv", None)
+            row["size_pct"] = round(mv / equity * 100, 1) if (mv is not None and equity) else None
         out["return_pct"] = round((equity / start_cap - 1) * 100, 2)
         out["long_exposure_pct"] = round(long_mv / equity * 100, 1)
         out["short_exposure_pct"] = round(short_mv / equity * 100, 1)

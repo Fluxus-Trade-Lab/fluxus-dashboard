@@ -325,7 +325,28 @@ table.idx.wk td:nth-child(4) {
   .byline { font-size: 9.24pt; }
   .sec h3 { font-size: 9.24pt; padding-top: 7px; margin-bottom: 7px; }
   .prose { font-size: 10.5pt; line-height: 1.45; max-width: none; }
+  /* ---- ONE type rule for the whole sheet (Andy 2026-09-24:「应该是全文都有一套规则，
+     所以我们现在还没有」). Everything is IBM Plex Mono; only the headline keeps the
+     condensed face. Four sizes, and nothing else:
+        prose / list item .................. 10.5pt   (his number, 09-13)
+        table cell, panel row, leg ......... 9.5pt    (his number, 09-13)
+        secondary — notes, sub-names ....... 9.5pt    muted COLOUR, not a smaller size
+        column label, unit, legend ......... 8.4pt    uppercase, letterspaced, muted
+     Hierarchy below 9.5pt is carried by colour and weight, never by size: gate L2
+     reads the real glyph sizes back out of the PDF and reds anything in a table
+     under 9.5pt, so a "slightly smaller" secondary line fails the sheet.
+     Numbers are tabular everywhere and right-aligned in every table; the name or
+     ticker column is 600 in ink. The Leaders and Laggards panel was the only block
+     already following this, which is why it read differently from the rest. */
   table.idx, table.led, table.book { font-size: 9.5pt; }
+  table.idx td.t, table.led td.nm, table.book td.t, .mv-t { font-weight: 600; color: var(--ink); }
+  table.idx td:last-child, table.led td:last-child { color: var(--muted); }
+  .mv-t, .mv-n, .mv-r b { font-size: 9.5pt; }
+  .mv-n { color: var(--muted); }
+  .mv-wl { font-size: 8.4pt; }
+  p.prose.xa { font-size: 9.5pt; }
+  /* education always opens its own page (Andy 2026-09-24:「Education 应该是一直在第5页」) */
+  .sec.edu { break-before: page; page-break-before: always; }
   ul.legs { font-size: 9.5pt; }
   table.idx th, table.book th { font-size: 8.4pt; }
   table.lt { font-size: 9.66pt; }

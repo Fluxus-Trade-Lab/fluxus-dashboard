@@ -369,6 +369,56 @@ leaders went last感觉是盘面要完蛋了。参照文写的是"A RED DAY THE 
 与 note 列复述同表列同一个病。Sentiment 该装的是**情绪计量与催化剂**（VIX、F&G、日程），不是广度。
 
 
+### [2026-09-24] 09-23 重出的整轮改动（Andy 逐条原话；本节是当前版面的权威描述）
+
+**节的顺序**（他：「把cross assets放到 index action之后」；第一次我放到了 Market State 之后，被打回）：
+Big Picture → Index Action → **Across Assets** → Market State → Conditions → Leaders and Laggards →
+What's Working → What's Not Working → Sentiment → Session Commentary → Tomorrow → The Rules →
+Education（独占一页）→ Portfolio Update（独占末页）。
+
+| 节 | 09-24 定的样子 | 他的原话 |
+|---|---|---|
+| **Index Action** | 去掉 Vol 栏；事件列填字幕的读法；note 不复述同表的 close/change% | 「index action的vol栏去掉」 |
+| **Across Assets** | 新增；美元 · 债券 · 十年期 · 金银 · 原油 · 比特币，一资产一段写读法 | 「cross assets这次要写，按照它的搬过来就行」 |
+| **Leaders and Laggards** | 换成 dashboard 三分栏：Industries / Sectors / Themes，各含 1 DAY 与 1 WEEK；ticker + 小字全名 + 涨跌幅；**不写四态** | 「按照dashboard的写法 出industries, SECTORS, 和themes 这三类…不写四态」 |
+| **What's Working / What's Not Working** | 个股点评，两列：**名字 \| 读法**，去掉百分比列（百分比在上面三分栏里） | 「laggards…改成what's not working」「可以更好的是文字点评，而不是仅仅列出数据…照他的改，精简起来」 |
+| **Sentiment** | 4 句：5 日线占比 · VIX · Fear & Greed · 催化剂。**广度让给 Market State**，不在这里重报 | 「别人的sentiment写的更加简洁」 |
+| **Market State** | 12 格 vote 从 4 行压到 2 行（圆点/数字/单位共基线，标签在下） | 「格式太疏散了，紧凑一些」 |
+| **Education** | **强制独占一页**（`break-before: page`） | 「Education 应该是一直在第5页的」 |
+| **Portfolio Update** | 四项：**COST · SIZE % · STOP · OPEN R**。cost/stop 是价格，size% 与 dashboard 的 `weight` 同口径（市值/组合总值，`frontend/.../calculations.js:166`），open_R 是 R。指标条「收益」改「YTD 收益」 | 「COST后面加一个是size%」「应该是COST STOP OPEN R这样的三项」 |
+
+**⭐ 全文一套字号规则**（他：「应该是全文都有一套规则，所以我们现在还没有」）。写在
+`visual_assets/recap_local.css` 的打印块里，**那里才是真正生效的地方**：
+```
+prose / 列表项 ........ 10.5pt      表格单元 / 面板行 / 腿 ..... 9.5pt
+次级（备注、副名）..... 9.5pt 灰色   列标签 / 单位 / 图例 ....... 8.4pt 大写加字距
+数字一律等宽，表内右对齐；名字/代码列 600 粗、墨色
+```
+- **层级用颜色和字重，永远不用更小的字号**：L2 实测 PDF 里的真字形，表格内任何低于 9.5pt 的东西判红。
+- **⚠️ 改版面只改 px 样式表是无效的**：`recap_local.css` 的 `@media print` 用 pt 重写了每一处字号，
+  px 只影响屏幕。09-24 我「统一字体」改了一整轮 px，PDF 里一个字没变——**Leaders and Laggards
+  之所以长得不一样、正好是 Andy 喜欢的那个，是因为它是新块、不在那张 pt 表里，漏网了。**
+- **正文是否也用 mono：试过，否**。mono 比 sans 宽，英文正文直接多出一页，且 L2 读不到 10.5pt 的正文档。
+  他原话是问句（「正文段落也用IBM PLEX MONO.」），代价报给他之后选了不动正文。
+
+**⭐ L1 页数预算改成分语言**（他：「A」——被告知英文装不下 Across Assets 时的裁决）：
+`CONTENT_PAGES_BY_LANG = {"EN": 5, "ZH": 4}`。同样的字号下汉字更密，中文 4 页装得下、英文装不下；
+**页数涨是新增一节的成本，不该由字号或内容来还**。教育独占一页对两种语言都成立。
+
+**⭐ L2 正文字号的量法修了一个真毛病**：它取「正文字体里出现最多的字号」，而中文表格里的汉字
+和正文共用 PingFang——表格文字一多就把 9.5pt 当成正文判红。加了下限（两档中点 10.0pt）。
+**第一版下限有洞，被既有测试抓住**：只按字号过滤没看计数，一个计数为 0 的档位仍被选中、报回 10.5 判绿。
+补 `n > 0`。同一条老教训：**没验证过能报阳性的检查，它的阴性不算数。**
+
+**这一轮踩的三个坑（都进了 gotcha，别重犯）**：
+1. **改错布局**：`recap_page.js` 有 A/B 两套，**生产只出 A**（09-15 那条早写着）。三分栏和 Across Assets
+   第一次全没出现，因为我改的是 B。
+2. **放错格子**：三分栏该替换的是 **Leaders and Laggards**（原来那两张带四态的 boardTable），
+   不是 What's Working——后者是个股点评，一直都是。
+3. **旧 pack 不会自己跟上写入端**：Portfolio 三栏空着，是因为 dry-run 里的 pack 由出片班在
+   「成本/止损改价格」合并**之前**生成，只有 `stop_R`。**改了 build_pack 就要重建 pack，不能只重 render。**
+
+
 ---
 
 ## 试跑铁律（ops 自修，源于 T-0919-24 事故：试跑吃掉了 W38 正班；不是口径/判断改动，不需要 Andy 点头）

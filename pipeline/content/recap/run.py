@@ -288,7 +288,7 @@ def cmd_render(a) -> int:
         # owns the last page, the lesson may spill onto page 5, and no page opens mid-sentence
         book_h = content["labels"]["portfolio"]
         edu_h = next((h for k, h in hmap if k == "education"), "")
-        l1 = check_layout(text, sections, edu_h, book_h, iss.weekly)
+        l1 = check_layout(text, sections, edu_h, book_h, iss.weekly, lang)
         l3 = check_state_row(text)  # L3: the state row may not break across pages
         layout_ok = l1["ok"] and l3["ok"]
         ok = g["ok"] and pg["ok"] and mg["ok"] and xg["ok"] and not cards and not mixed and not bad_rules and layout_ok and l2["ok"]

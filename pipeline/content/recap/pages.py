@@ -108,6 +108,12 @@ def page_sections(text: str, headings: list[str]) -> list[list[str]]:
 # sits between them and may run onto page 5 — a daily is 5 pages (lesson fitted) or 6 (lesson spilled).
 # The one hard line on the spill: a break may not fall inside a sentence, because X image 4 is EN page 4.
 CONTENT_PAGES = 4
+# Andy 2026-09-24 chose "A" when told that English could not hold the new Across
+# Assets section and still end the body on page 4 at his 10.5pt / 9.5pt sizes:
+# the English sheet runs a page longer rather than losing content or shrinking
+# type. Chinese is denser and still clears 4. The lesson keeps its own page
+# either way (「Education 应该是一直在第5页的」), so the budget is per language.
+CONTENT_PAGES_BY_LANG = {"EN": 5, "ZH": 4}
 _SENT_END = re.compile(r"[.!?:;。！？：；”\"')）\]】…·%]$|[0-9]$|^$")
 _CONT_START = re.compile(r"^[a-z(\[]|^[，。、；：）】]")
 
@@ -147,9 +153,11 @@ def _opens_with_heading(page_text: str, starts: list[str]) -> bool:
     return re.sub(r"\s+", "", lines[0]).startswith(re.sub(r"\s+", "", starts[0]).upper())
 
 
-def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_heading: str, weekly: bool = False) -> dict:
-    """L1: non-lesson, non-book content ends by page CONTENT_PAGES; the book owns the last page alone;
-    the lesson may span pages 4–5; no page may open mid-sentence."""
+def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_heading: str,
+                 weekly: bool = False, lang: str = "ZH") -> dict:
+    """L1: non-lesson, non-book content ends by the language's page budget; the book owns the last page
+    alone; the lesson opens its own page; no page may open mid-sentence."""
+    budget = CONTENT_PAGES_BY_LANG.get(lang, CONTENT_PAGES)
     hits, pages = [], len(sections)
     if not sections:
         return {"ok": False, "pages": 0, "hits": ["no pages"], "book_page": None, "edu_pages": []}
@@ -169,13 +177,13 @@ def check_layout(text: str, sections: list[list[str]], edu_heading: str, book_he
             active = starts[-1]
     if not weekly:  # the weekly has no page budget; only the daily must clear pages 5+
         for i, here in enumerate(present[:-1], start=1):  # every page but the book's
-            if i <= CONTENT_PAGES:
+            if i <= budget:
                 continue
             stray = [h for h in here if h not in (edu_heading, book_heading)]
             if stray:
                 hits.append(f"page {i} still carries {stray}")
-        if pages not in (CONTENT_PAGES + 1, CONTENT_PAGES + 2):
-            hits.append(f"{pages} pages (want {CONTENT_PAGES + 1} or {CONTENT_PAGES + 2})")
+        if pages not in (budget + 1, budget + 2):
+            hits.append(f"{pages} pages (want {budget + 1} or {budget + 2})")
     continued = [i + 1 for i, s in enumerate(sections) if i and not s]
     split = sentence_split_breaks(text, continued)
     if split:
@@ -218,15 +226,23 @@ def size_tiers(pdf_path, max_pages: int = 2) -> dict:
     return dict(tiers)
 
 
-def _top_size(tiers: dict, font: str):
-    sizes = {sz: n for (fn, sz), n in tiers.items() if fn == font}
+def _top_size(tiers: dict, font: str, min_size: float = 0.0):
+    """Most common glyph size in `font`, ignoring anything under `min_size`.
+
+    The floor exists for the body tier only: table cells are set in the body face
+    as well (every Chinese character in a table is PingFang), so once a sheet
+    carries more table text than prose the unfiltered maximum reports the table
+    size as the body size. A body that really shrank still reds — the whole tier
+    moves below the floor and this returns None."""
+    sizes = {sz: n for (fn, sz), n in tiers.items() if fn == font and sz >= min_size and n > 0}
     return max(sizes, key=sizes.get) if sizes else None
 
 
 def check_true_size(tiers: dict, lang: str) -> dict:
     """L2: body tier (most glyphs of the body font) must be 12.0±0.1pt; table tier (most glyphs of the
     mono figures) must not be under 10.5pt."""
-    body, table = _top_size(tiers, BODY_FONT[lang]), _top_size(tiers, TABLE_FONT)
+    body = _top_size(tiers, BODY_FONT[lang], min_size=(BODY_PT + TABLE_MIN_PT) / 2)
+    table = _top_size(tiers, TABLE_FONT)
     hits = []
     if body is None or abs(body - BODY_PT) > BODY_TOL:
         hits.append(f"body {body}pt (want {BODY_PT}±{BODY_TOL})")

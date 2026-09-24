@@ -49,6 +49,10 @@
     return esc(v).replace(/&lt;(\/?)b&gt;/g, "<$1b>");
   }
 
+  function zhDoc(c) {
+    return ((c && c.lang) || "").toUpperCase() === "ZH";
+  }
+
   function isNum(x) {
     return typeof x === "number" && isFinite(x);
   }
@@ -385,11 +389,49 @@
   }
 
   /* ---------------------------------------------------------------- generic blocks */
+  /* Two shapes. [name, pct, note] is the old data ledger. [name, read] is the
+     commentary form Andy asked for on 2026-09-24 —「可以更好的是文字点评，而不是
+     仅仅列出数据…照他的改，精简起来」— a name and what its chart is doing, no
+     percent column, because the percentages already live in Leaders and Laggards. */
   function ledger(rows) {
     return '<div class="scroll"><table class="led">' + list(rows).map(function (r) {
+      if (r.length === 2) {
+        return '<tr><td class="t nm">' + rich(r[0]) + "</td><td>" + rich(r[1]) + "</td></tr>";
+      }
       return '<tr><td class="t">' + rich(r[0]) + '</td><td class="n ' + signCls(r[1]) + '">' + rich(r[1]) +
         "</td><td>" + rich(r[2]) + "</td></tr>";
     }).join("") + "</table></div>";
+  }
+
+  /* Andy 2026-09-24:「LEADERS and laggards 我们按照dashboard的写法 出industries,
+     SECTORS, 和themes 这三类。然后写ticker，全名用小字。和dashboard上一样。所以就是
+     ticker，名字，涨跌幅。不写四态。」 Three panels, each leaders over laggards.
+     A theme has no ticker, so its row carries the name alone. */
+  function moverRows(rows) {
+    return list(rows).map(function (r) {
+      var tkr = r[0], nm = r[1], p = r[2];
+      var head = tkr ? '<span class="mv-t">' + esc(tkr) + "</span>" : '<span class="mv-t wide">' + esc(nm) + "</span>";
+      var sub = (tkr && nm) ? '<span class="mv-n">' + esc(nm) + "</span>" : "";
+      return '<div class="mv-r"><span class="mv-l">' + head + sub + '</span><b class="' + signCls(p) + '">' +
+        esc(p) + "</b></div>";
+    }).join("");
+  }
+
+  function moversPanel(m, V, L) {
+    if (!m) { return ""; }
+    var groups = [["industries", L.industries || V.p_industries], ["sectors", L.sectors || V.p_sectors],
+                  ["themes", L.themes || V.p_themes]];
+    return '<div class="movers">' + groups.map(function (g) {
+      var blk = m[g[0]];
+      if (!blk) { return ""; }
+      var spans = [["d1", V.d1], ["w1", V.w1]].map(function (w) {
+        var b = blk[w[0]];
+        if (!b) { return ""; }
+        return '<div class="mv-w"><div class="mv-wl">' + esc(w[1]) + "</div>" +
+          moverRows(b.up) + '<div class="mv-gap"></div>' + moverRows(b.down) + "</div>";
+      }).join("");
+      return '<div class="mv-col"><div class="kicker">' + esc(g[1]) + "</div>" + spans + "</div>";
+    }).join("") + "</div>";
   }
 
   function olist(items, klass) {
@@ -506,25 +548,25 @@
   function indexTable(is, c) {
     var rows = list(is.idx).map(function (a) {
       var n = (c.index_notes || {})[a.t] || ["", ""];
-      var mid;
-      if (is.weekly) {
-        mid = Array.isArray(a.days) ? a.days.map(function (d) {
-          return isNum(d) ? plus(d * 100, 1) : DASH;
-        }).join(" ") : DASH;
-      } else {
-        mid = isNum(a.vol) ? a.vol.toFixed(2) + "×" : DASH;
-      }
+      /* Andy 2026-09-24:「index action的vol栏去掉」 — the daily table is
+         index / close / chg / event / note. The weekly one keeps its per-day cell. */
+      var mid = is.weekly
+        ? (Array.isArray(a.days) ? a.days.map(function (d) { return isNum(d) ? plus(d * 100, 1) : DASH; }).join(" ") : DASH)
+        : null;
       return '<tr><td class="t">' + esc(a.t) + '</td><td class="n">' + grouped(a.last, 2) +
-        '</td><td class="n ' + cls(a.chg) + '">' + pct(a.chg) + '</td><td class="n">' + mid +
-        "</td><td>" + rich(n[0]) + "</td><td>" + rich(n[1]) + "</td></tr>";
+        '</td><td class="n ' + cls(a.chg) + '">' + pct(a.chg) + "</td>" +
+        (mid === null ? "" : '<td class="n">' + mid + "</td>") +
+        "<td>" + rich(n[0]) + "</td><td>" + rich(n[1]) + "</td></tr>";
     });
     list(c.extra_index_rows).forEach(function (r) {
+      var extra = r.length > 5 ? '<td class="n">' + rich(r[3]) + "</td>" : "";
+      var ev = r.length > 5 ? r[4] : r[3];
+      var nt = r.length > 5 ? r[5] : r[4];
       rows.push('<tr><td class="t">' + rich(r[0]) + '</td><td class="n">' + rich(r[1]) + '</td><td class="n">' +
-        rich(r[2]) + '</td><td class="n">' + rich(r[3]) + "</td><td>" + rich(r[4]) + "</td><td>" +
-        rich(r[5]) + "</td></tr>");
+        rich(r[2]) + "</td>" + extra + "<td>" + rich(ev) + "</td><td>" + rich(nt) + "</td></tr>");
     });
     var head = is.weekly ? c.labels.week_index_cols : c.labels.index_cols;
-    return tableIdx(head, rows.join(""), [1, 2, 3], is.weekly ? "wk" : "");
+    return tableIdx(head, rows.join(""), is.weekly ? [1, 2, 3] : [1, 2], is.weekly ? "wk" : "");
   }
 
   function tiles(is, c) {
@@ -602,13 +644,14 @@
     var zh = (c.lang || "").toUpperCase() === "ZH";
     var cols = list(L.pos_cols);
     if (cols.length < 5) {
-      cols = [cols[0], cols[1], cols[2], L.pos_stop || (zh ? "\u6b62\u635f" : "Stop"), cols[3]];
+      cols = [cols[0], cols[1], cols[2], L.pos_size || (zh ? "\u4ed3\u4f4d%" : "Size %"),
+              L.pos_stop || (zh ? "\u6b62\u635f" : "Stop"), cols[3]];
     }
     /* cost and stop are PRICES, open_R is an R (Andy 2026-09-24:「成本和止损要展示的
        是价格，而不是R，只有浮盈浮亏和实现的盈亏是R」). This replaced a cost column that
        printed 0R on every row. The stop is the live trailed one; blank when the sheet
        has none. */
-    cols = [cols[0], cols[1], cols[2], V.p_cost, cols[3], cols[4]];
+    cols = [cols[0], cols[1], cols[2], V.p_cost, cols[3], cols[4], cols[5]];
     var head = cols.map(function (h, i) {
       return "<th" + (i >= 3 ? ' class="rn"' : "") + ">" + esc(h) + "</th>";
     }).join("");
@@ -616,8 +659,9 @@
     var rows = list(b.pos).map(function (p) {
       return '<tr><td class="t">' + esc(p[0]) + "</td><td>" + esc(p[1] === "long" ? L.long : L.short) +
         "</td><td>" + esc(p[2]) + '</td><td class="n">' + esc(money(p[3])) +
-        '</td><td class="n">' + esc(money(p[4])) +
-        '</td><td class="n ' + cls(p[5]) + '">' + sR(p[5]) + "</td></tr>";
+        '</td><td class="n">' + esc(isNum(p[4]) ? p[4].toFixed(1) + "%" : DASH) +
+        '</td><td class="n">' + esc(money(p[5])) +
+        '</td><td class="n ' + cls(p[6]) + '">' + sR(p[6]) + "</td></tr>";
     }).join("");
     var legs = list(b.legs).map(function (g) {
       var pct = isNum(g[3]) ? g[3].toFixed(1) + "%" : DASH;
@@ -694,6 +738,10 @@
       '<h2 class="hl-a">' + titleHtml(c.title) + "</h2>" +
       sec(false, L.big_picture, "", '<p class="prose">' + rich(c.big_picture) + "</p>") +
       sec(false, L.index_action, "", safe(function () { return indexTable(is, c); })) +
+      (c.cross_assets && c.cross_assets.length
+        ? sec(false, L.cross_assets || (zhDoc(c) ? "\u8de8\u8d44\u4ea7" : "Across assets"), "",
+              '<div class="xa-wrap">' + list(c.cross_assets).map(function (x) { return '<p class="prose xa">' + rich(x) + "</p>"; }).join("") + "</div>")
+        : "") +
       (is.weekly ? sec(false, V.score, "", safe(function () { return scorecard(is); })) : "") +
       folio(is, V, 1, false, dl) + "</article>";
     var fn = c.founders_note ? sec(false, V.founders, "", '<p class="prose">' + rich(c.founders_note) + "</p>", "note-blk") : "";
@@ -708,8 +756,12 @@
       sec(false, L.conditions, (isNum(s.cond) ? s.cond : DASH) + " / 100", safe(function () { return condChart(is.cond, V); })) +
       fn +
       sec(false, V.ll, V.top3, safe(function () {
-        return '<div class="lwrap">' + boardTable(is.groups.industry, L.industries, V) +
-          boardTable(is.groups.theme, L.themes, V) + "</div>";
+        /* Andy 2026-09-24: this section becomes the dashboard's three panels —
+           industries, sectors, themes; ticker, small full name, pct; no four-state.
+           What's Working / Laggards stays what it was: per-stock commentary. */
+        return c.movers ? moversPanel(c.movers, V, L)
+          : '<div class="lwrap">' + boardTable(is.groups.industry, L.industries, V) +
+            boardTable(is.groups.theme, L.themes, V) + "</div>";
       })) +
       folio(is, V, 2, false, dl) + "</article>";
     var wk = is.weekly ? safe(function () { return weeklyK(is, c); }) : "";
@@ -761,15 +813,18 @@
     var g = is.groups || {};
     var s3 = '<article class="sheet b"><div class="split-b"><div><div class="kicker">' + esc(L.working) + "</div>" +
       ledger(c.led) + '</div><div><div class="kicker">' + esc(L.laggards) + "</div>" + ledger(c.lagged) + "</div></div>" +
+      (c.cross_assets && c.cross_assets.length
+        ? '<div class="kicker sp">' + esc(L.cross_assets || (zhDoc(c) ? "\u8de8\u8d44\u4ea7" : "Across assets")) +
+          "</div>" + '<div class="xa-wrap">' + list(c.cross_assets).map(function (x) { return '<p class="prose xa">' + rich(x) + "</p>"; }).join("") + "</div>"
+        : "") +
       (c.sentiment ? '<div class="kicker sp">' + esc(L.sentiment) + '</div><p class="prose">' + rich(c.sentiment) + "</p>" : "") +
       (c.session_commentary && c.session_commentary.length ? '<div class="kicker sp">' + esc(L.session_commentary) +
         "</div>" + olist(c.session_commentary, "ol-b") : "") +
       '<div class="kicker sp">' + esc(V.rot_d) + '</div><div class="bars2">' +
       safe(function () { return barsPanel(g.industry && g.industry.d1, L.industries, V.d1); }) +
       safe(function () { return barsPanel(g.theme && g.theme.d1, L.themes, V.d1); }) + "</div>" +
-      '<div class="kicker sp">' + esc(V.rot_w) + '</div><div class="bars2">' +
-      safe(function () { return barsPanel(g.industry && g.industry.w1, L.industries, V.w1); }) +
-      safe(function () { return barsPanel(g.theme && g.theme.w1, L.themes, V.w1); }) + "</div>" +
+      (c.movers ? '<div class="kicker sp">' + esc(V.ll) + "</div>" +
+        safe(function () { return moversPanel(c.movers, V, L); }) : "") +
       (wk ? '<div class="kicker sp">' + esc(L.weekly_k) + "</div>" + wk : "") + folio(is, V, 3, true, dl) + "</article>";
     var edu = c.education || {};
     var bk = safe(function () { return book(is, c, V); });

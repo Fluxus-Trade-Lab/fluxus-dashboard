@@ -61,17 +61,37 @@ hr.r.ink{border-top:1.5px solid var(--ink)}
 .prose b{color:var(--ink);font-weight:600}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-family:var(--mono);font-variant-numeric:tabular-nums}
-table.idx{font-size:12px}
+table.idx{font-size:11.5px;font-family:var(--mono);font-variant-numeric:tabular-nums}
 table.idx th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 14px 7px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
 table.idx th.rn{text-align:right}
-table.idx td{padding:7px 14px 7px 0;border-bottom:1px solid var(--soft);color:var(--ink2);vertical-align:top}
+table.idx td{padding:5px 14px 5px 0;border-bottom:1px solid var(--soft);color:var(--ink2);vertical-align:top}
+table.idx td.t{font-weight:600;color:var(--ink);white-space:nowrap}
+table.idx td:last-child{color:var(--muted)}
 td.t{color:var(--ink);font-weight:500;letter-spacing:.05em;white-space:nowrap}
 td.n{text-align:right;white-space:nowrap;color:var(--ink)}
 .up{color:var(--up)} .dn{color:var(--dn)}
 td.n.up{color:var(--up)} td.n.dn{color:var(--dn)}
-table.led{font-size:12px}
-table.led td{padding:6px 14px 6px 0;border-bottom:1px solid var(--soft);color:var(--ink2);vertical-align:top}
+/* three movers panels, laid out like the dashboard: ticker, small full name, pct */
+.movers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;margin-top:4px}
+@media(max-width:720px){.movers{grid-template-columns:1fr;gap:16px 0}}
+.mv-col .kicker{margin-bottom:4px}
+.mv-r{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+      padding:3px 0;border-bottom:1px solid var(--soft)}
+.mv-l{display:flex;align-items:baseline;gap:6px;min-width:0}
+.mv-t{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+.mv-t.wide{white-space:normal;font-family:inherit;font-weight:500}
+.mv-n{font-size:9.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mv-r b{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mv-gap{height:9px}
+.mv-w{margin-top:6px}
+.mv-wl{font-family:var(--mono);font-size:9px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+p.prose.xa{margin:0 0 5px;break-inside:avoid}
+.xa-wrap{column-count:2;column-gap:26px}
+@media(max-width:640px){.xa-wrap{column-count:1}}
+table.led{font-size:11.5px}
+table.led td{padding:5px 14px 5px 0;border-bottom:1px solid var(--soft);color:var(--ink2);vertical-align:top}
 table.led td.n{min-width:78px}
+table.led td.nm{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap;width:1%;padding-right:18px}
 
 .state-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}
 .env{font-family:var(--cond);font-weight:700;font-size:40px;line-height:1;letter-spacing:-.01em}
@@ -174,7 +194,8 @@ ol.rules li{font-size:14.5px;color:var(--ink)}
 /* six columns since the cost point landed (Andy 2026-09-23); at 480px the EN entry dates
    wrap and each row reads as two. Still far inside the 703px type area, so Chrome does
    not shrink the page (the 09-11 / W37 failure mode). */
-table.book{font-size:12px;margin:4px 0 12px;max-width:560px}
+table.book{font-size:11.5px;font-family:var(--mono);font-variant-numeric:tabular-nums;margin:4px 0 12px;max-width:560px}
+table.book td.t{font-weight:600;color:var(--ink)}
 table.book th{text-align:left;font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 16px 6px 0;border-bottom:1px solid var(--rule)}
 table.book th.rn,table.book td.n{text-align:right}
 table.book td{padding:6px 16px 6px 0;border-bottom:1px solid var(--soft);color:var(--ink2);white-space:nowrap}

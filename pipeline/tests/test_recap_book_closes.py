@@ -104,7 +104,7 @@ def test_render_passes_through_a_clean_book():
     # ticker / side / entry / cost / stop / open_R (Andy 2026-09-24: cost and stop
     # are prices). This fixture is a pre-2026-09-24 pack, which has neither — the
     # cells degrade to blank rather than blocking a re-render of an old issue.
-    assert out["pos"] == [["HOOD", "long", "2026-09-10", None, None, 0.8]]
+    assert out["pos"] == [["HOOD", "long", "2026-09-10", None, None, None, 0.8]]
     assert out["legs"] == []
 
 
