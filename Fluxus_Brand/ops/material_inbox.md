@@ -198,6 +198,8 @@
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
+- [09-24] [DATA ALEX] **复盘主题四态从等权篮子升级为市值加权代理 ETF**｜诊断精度升级（人工推断→市场权重），口径变更透明化（并排期到 10-08、新旧读数对标、明确标注切点），诚实度约束（四个不可用主题明确撤下）。新增字段集（state/state_prev/members_asof）让消费端追踪转换。**从「改了什么」升到「系统如何负责任地管理口径变迁」的治理能力体现。** 分支 feat/theme-board（T-0924-89，未合） · 出处 ae8841e
+
 - [09-24] [DATA ALEX] **供应商掉线的双维诊断与分层防护**｜Yahoo 丢了 2026-09-22 的 ACMR/AMBA/MXL 日线数据，被两个独立测试从不同维度捕捉（bar 级百分比计算误判 vs days_since 日期低估）。两个不相关的监测点各红一次，指向同一个供应商级根本原因——多维自诊的有效性。修复分三层：前向防护（yfinance repair=True 从 intraday 重建）、历史补齐（26 行 delayed_ep_log 纠正、三股票 bar 补齐）、完整审计记录。**诊断清晰→分层防护→可复现的自诊链条。** 出处 51c945f1 · T-0924-79 · [incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md](../../../data/reference/incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md)
 
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
