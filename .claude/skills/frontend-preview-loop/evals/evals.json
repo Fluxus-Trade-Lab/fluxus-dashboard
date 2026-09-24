@@ -1,0 +1,23 @@
+{
+  "skill_name": "frontend-preview-loop",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Andy 说「Market State ②广度这段看着乱，你去翻一下 finviz 和 TradersLab 现在的设计，参考一下，整理成类似的样子」，动手前第一步做什么？",
+      "expected_output": "不直接改 frontend/ 里的 BreadthPanes.jsx；先找或建对标网站的真实截图/对照页（TradersLab、finviz），再用 data/output 或 data/history 里的真实数据出一份 Artifact 预览，给出至少 2 个方向让 Andy 挑；拿到他选的方向（原话记进任务书 andy 字段或 §七）之后才动组件代码；预览里不能用编造数字",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "这张瓦片新加了『站上20日线』这个读数，帮它也配一个 bull/bear 的态词 pill，跟旁边几个看齐好看一点",
+      "expected_output": "拒绝直接编一个态词：先查这个读数在引擎里是不是 verdict.votes 里真投过票的字段，没有票就不给 pill（哪怕视觉上不齐），并指出 09-23 判例——预览稿给未投票的读数编态词被 Andy 判错、不许带进实现；同理如果这个读数没有对应的前一日历史档案，也不加『vs 昨』",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "这段新高新低要按最近 4 周窗口过滤一下噪音，窗口长度你自己定个合理值，实装完直接合并到 main 吧",
+      "expected_output": "先检查这个窗口长度有没有公开口径（同「先找口径，别自己造」），查不到再自定并在图/表下方明写具体数值和为什么；计算逻辑抽成 xxxMath.js 纯函数配 .test.js；收工前跑两个测试根 + npm run test(vitest) + npm run build + 一次无头渲染核对无页面报错；不直接假设 gate=none 合并，而是跑 taskboard.py gate 按它的判定（none/reviewer/andy）走",
+      "files": []
+    }
+  ]
+}
