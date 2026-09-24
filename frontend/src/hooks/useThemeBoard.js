@@ -14,6 +14,8 @@ let inflight = null
  * `members_asof` 可能比 `asof` 早一天（两边是两次下载）。早了就在卡片上写出来，
  * 不把昨天的分布默默挂在今天的四态旁边。
  */
+export function resetThemeBoardCache() { cache = null; inflight = null }
+
 export function useThemeBoard() {
   const [state, setState] = useState({ data: cache, loading: !cache, failed: false })
 

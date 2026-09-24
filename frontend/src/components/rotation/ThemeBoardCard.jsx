@@ -65,14 +65,14 @@ function Row({ row, parallel }) {
       <Mark state={row.state} />
       {parallel && (
         <span className="flex items-center gap-1 shrink-0" title={`旧读数：${row.state_prev ?? '—'}`}>
-          <span className="text-[10px] text-[var(--color-text-muted)]">was</span>
+          <span className="text-[11px] text-[var(--color-text-muted)]">was</span>
           <Mark state={String(row.state_prev ?? '').toLowerCase()} dim />
         </span>
       )}
       <span className="min-w-0 flex-1 truncate text-[13px] font-medium
                        text-[var(--color-text-bold)]" title={`${row.theme} · ${row.etf}`}>
         {row.theme}
-        {changed && <span className="ml-1.5 text-[10px] text-[var(--color-text-muted)]">changed</span>}
+        {changed && <span className="ml-1.5 text-[11px] text-[var(--color-text-muted)]">changed</span>}
       </span>
       <MemberBar dist={row.members} count={row.member_count} />
       <span className="shrink-0 w-[58px] text-right text-[13px] font-mono tabular-nums font-medium"
