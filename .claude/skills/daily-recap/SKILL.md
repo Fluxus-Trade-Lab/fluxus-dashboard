@@ -309,6 +309,51 @@ leaders went last感觉是盘面要完蛋了。参照文写的是"A RED DAY THE 
 ②note 的前 20 个字符里出现本行 close / change% / volume 中任意两个的数值＝红。
 
 
+### [2026-09-24] 09-23 复盘验收五条（Andy 逐条原话；09-23 那期改完一次性重出）
+
+> 1. 教育选题 给我看A/B的另一个，还有参照文的选题不错。
+> 2. LEADERS and laggards 我们按照dashboard的写法 出industries, SECTORS, 和themes 这三类。然后写ticker，全名用小字。和dashboard上一样。所以就是ticker，名字，涨跌幅。不写四态。
+> 3. index action notes学习参照文的read
+> 4. cross assets这次要写，按照它的搬过来就行。
+> 5. 你看看别人的sentiment写的更加简洁。
+
+**① 教育段**：每期交付说明里要**把 B 的标题与 why 一起给他看**，不是只报 A。
+对照组的 `LESSON` 另有一种写法值得学：它不讲通用形态，而是**讲今天这个局面下该做的区分**
+（09-23：「广度在恶化时你想看到什么——如果龙头同时在崩，那才可怕；实际是龙头守住窄幅、
+指数在跌。指数的数字告诉你跌了多少，龙头告诉你性质」）。它还有一节 `LESSONS FROM THE TAPE`，
+六条当天提炼的要点。**我们的教育段偏教科书，它的偏当天**——两者可以并存，别把当天那层丢了。
+
+**② Leaders / Laggards 改成 dashboard 的三分栏**（取代原来 themes+industries 混排的一张表）：
+| 栏 | 数据源 | 行内容 |
+|---|---|---|
+| Industries | `data/output/etf_data.json` 的 `change_pct`（**ETF 代码**） | ticker · 全名（小字）· 涨跌幅 |
+| Sectors | 同上，11 只 SPDR（XLB/XLE/XLP/XLK/XLI/XLV/XLU/XLC/XLRE/XLF/XLY） | 同上 |
+| Themes | `data/output/groups.json` 的 `themes` 的 `perf_1d` | 名字 · 涨跌幅（主题没有 ticker） |
+- **全名取 `frontend/src/lib/etfNames.json`**——那正是 dashboard 用的那份（09-24 逐字核过截图：
+  MSOS「Pure US Cannabis」· BOAT「Global Shipping」· XLB「Materials」）。**不要另建一份名字表。**
+- **不写四态**（Leading / Weakening / Improving / Lagging 全部去掉）。
+- 每栏各取前三后三，**按 perf 排序取，不按「哪个有故事」挑**——09-23 的 lagged 漏了
+  Genomics −4.03% 与 Rare Earth Metals −4.45%，两个都比印上去的 Tech Mega Caps −1.47%、
+  Memory & Storage −1.43% 更差，就是靠编辑判断挑行挑出来的。
+- 这条同时解释了 09-24 Andy 说的「和前端不一样」：从前复盘读的是 `groups.json` 的 **139 个 Finviz 行业**
+  （成分股均值），dashboard 的 Industries 栏读的是 **ETF**，两个池子，数字当然对不上。
+
+**③ Index Action 的 note 学对照文的 read**：接 同日「Index Action 两列填法」那条。
+对照文给的是**读法**不是读数——「跌破后回到下降趋势线、再次突破」「这个位置成了要看的支撑」。
+我方的 note 从前一半在复述同表已有的 close/change%/volume（见上条）。
+
+**④ Cross Assets 独立成节**（09-23 没写，Andy「这次要写，按照它的搬过来就行」）：
+对照组的 `ACROSS ASSETS` 一资产一段，覆盖**美元 · 债券与十年期 · 黄金白银 · 原油 · 比特币**，
+每段是读法不是报价（例：「十年期比长债更要紧，因为它定的是实体经济的借贷成本」）。
+我方的这些资产此前散在 `extra_index_rows`（TLT/UUP/GDX/USO 四行），要收成一节。
+
+**⑤ Sentiment 要短**（Andy「你看看别人的sentiment写的更加简洁」）：
+对照组 4 句约 70 词：5 日线上方占比（SPX/NDX）· VIX 读数与涨幅 · Fear & Greed · 当天 PMI · 明天的日程。
+我方 09-23 那段 401 字符，全是广度内部数（涨跌家数、4% 家数、T2108、McClellan、Record High Percent）。
+**两个毛病**：太长；而且**广度已经有整块 Market State 的 12 格投票在讲**，Sentiment 再报一遍是复述——
+与 note 列复述同表列同一个病。Sentiment 该装的是**情绪计量与催化剂**（VIX、F&G、日程），不是广度。
+
+
 ---
 
 ## 试跑铁律（ops 自修，源于 T-0919-24 事故：试跑吃掉了 W38 正班；不是口径/判断改动，不需要 Andy 点头）
