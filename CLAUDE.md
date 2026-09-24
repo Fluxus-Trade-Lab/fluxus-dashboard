@@ -168,7 +168,7 @@ Stop hook（`.claude/hooks/skill_stop_gate.py`）会查这一行，没有就退�
 
 **收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是夜间研究班的活（现为 fluxus-ops `schedule.json` 的 `linda-night-research`；原 Nighty Zac 夜班，2026-09-19 编队 v2 并入 RND Linda），判定结果在当晚晨报里。
 
-**直推 main 的标准动作（08-23 v2，审计后修订）**：守护进程工人不用本节，走任务板 gate（fluxus-ops `agents/_worker_protocol.md` 第 5–6 步）；本节给交互会话用。任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
+**直推 main 的标准动作（08-23 v2，审计后修订；09-22 T-0922-03 改首句，与下面白名单段的判据对齐）**：**本节只给没有任务号的交互会话用**——有任务号时一律以 gate 判定为准（守护进程工人走任务板 gate，fluxus-ops `agents/_worker_protocol.md` 第 5–6 步；交互会话领了任务号同样走 gate，见 task-protocol skill）。任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
 ```bash
 export WT=$(mktemp -d)/wt-docs   # export 开头,配合权限 allowlist 的首 token 匹配
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
