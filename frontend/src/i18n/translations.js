@@ -332,6 +332,12 @@ export const translations = {
     'pf.closed': 'Closed',
     'pf.hint.editPrice': 'Click Last Price or Stop to edit. Hit Refresh to auto-fetch.',
 
+    // Portfolio — qty/trim-log reconciliation warning (T-0924-103)
+    'pf.qtyMismatch.title': "don't reconcile with the trim log",
+    'pf.qtyMismatch.moreHeld': 'Sheet shows more held than the trims imply',
+    'pf.qtyMismatch.lessHeld': 'Sheet shows less held than the trims imply',
+    'pf.qtyMismatch.ofPosition': 'of position',
+
     // Portfolio — intro / empty state
     'pf.intro.subtitle': 'Enter starting capital, or upload an existing trade log',
     'pf.intro.capitalLabel': 'Starting Capital ($)',
@@ -726,6 +732,12 @@ export const translations = {
     'pf.closedCount': '已平仓',
     'pf.closed': '已平仓',
     'pf.hint.editPrice': '点击最新价或止损可编辑，点击刷新自动获取。',
+
+    // Portfolio — qty/trim-log reconciliation warning (T-0924-103)
+    'pf.qtyMismatch.title': '笔持仓量与减仓记录对不上',
+    'pf.qtyMismatch.moreHeld': 'Sheet 记的比减仓记录推算的多',
+    'pf.qtyMismatch.lessHeld': 'Sheet 记的比减仓记录推算的少',
+    'pf.qtyMismatch.ofPosition': '占仓位',
 
     // Portfolio — intro / empty state
     'pf.intro.subtitle': '输入起始资金，或上传已有的交易记录',

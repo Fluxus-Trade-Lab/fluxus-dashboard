@@ -19,7 +19,7 @@ import { useLanguage } from '../../../i18n/LanguageContext'
 export default function OverviewTab({
   performanceData, totalReturnPct,
   monthlyStats, ytdStats,
-  enrichedTrades, onTrim,
+  enrichedTrades, qtyMismatches = [], onTrim,
 }) {
   const { state, dispatch } = usePortfolio()
   const { fetchFullHistory } = usePrices()
@@ -74,6 +74,13 @@ export default function OverviewTab({
   // --- P/L section ---
   const closedCount = enrichedTrades.filter(t => t.isClosed).length
   const filtered = state.showClosed ? enrichedTrades : enrichedTrades.filter(t => !t.isClosed)
+
+  // Keyed by trade id so the per-row badge below is a lookup, not a re-scan.
+  const qtyMismatchById = useMemo(() => {
+    const m = new Map()
+    ;(qtyMismatches || []).forEach(r => m.set(r.id, r))
+    return m
+  }, [qtyMismatches])
 
   const updatePrice = (id, price) => {
     const today = todayStr()
@@ -203,6 +210,33 @@ export default function OverviewTab({
 
   return (
     <div className="overflow-x-hidden">
+      {/* ── Qty/trim-log reconciliation warning (T-0924-103) ──
+          currentQty is hand-kept in the Sheet and nothing in GAS checks it
+          against originalQty − Σtrims; when the two disagree, this page and
+          the recap PDF silently print two different return% off one book
+          (incident 2026-09-24_one_sheet_two_return_pcts.md). Always expanded
+          when non-empty — unlike the split banner below, this is a
+          data-integrity flag, not routine housekeeping. Never a share count
+          (Andy 2026-09-13): every number here is a % of the original position. */}
+      {qtyMismatches.length > 0 && (
+        <div data-testid="qty-mismatch-banner" className="mb-3 px-3 py-2 rounded-3xl text-[13px] bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)]">
+          <div className="font-semibold mb-1">
+            ⚠ {qtyMismatches.length} {tr('pf.qtyMismatch.title')}
+          </div>
+          <div className="leading-6">
+            {qtyMismatches.map(m => (
+              <span key={m.id} className="mr-4 inline-block">
+                {m.ticker} · {m.entryDate} · {m.sheetSays === 'more held than the trim log implies'
+                  ? tr('pf.qtyMismatch.moreHeld') : tr('pf.qtyMismatch.lessHeld')}
+                {m.gapPctOfPosition != null && (
+                  <> · {m.gapPctOfPosition > 0 ? '+' : ''}{m.gapPctOfPosition}% {tr('pf.qtyMismatch.ofPosition')}</>
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── Trade Detail (top) ── */}
       {enrichedTrades.length > 0 && (
         <div className="overflow-x-auto">
@@ -286,6 +320,14 @@ export default function OverviewTab({
                       <>
                         {t.currentQty}
                         {t.currentQty !== t.originalQty && <span className="text-[var(--color-text-muted)] text-[11px]">/{t.originalQty}</span>}
+                        {qtyMismatchById.has(t.id) && (
+                          <span
+                            className="ml-1 text-[var(--color-loss)]"
+                            title={`${t.ticker} ${t.entryDate}: ${qtyMismatchById.get(t.id).sheetSays === 'more held than the trim log implies' ? tr('pf.qtyMismatch.moreHeld') : tr('pf.qtyMismatch.lessHeld')} · ${qtyMismatchById.get(t.id).gapPctOfPosition}% ${tr('pf.qtyMismatch.ofPosition')}`}
+                          >
+                            ⚠
+                          </span>
+                        )}
                       </>
                     )}
                   </td>

@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
 import { computePortfolioHeat } from './lib/diagnostics'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
+import { computeQtyMismatches } from './lib/qtyMismatch'
 import { buildEquityCurve } from './lib/equityCurve'
 import { computeReturnOnDeployed } from './lib/capitalEfficiency'
 import { adjustTradesForSplits } from './lib/splits'
@@ -109,6 +110,14 @@ export default function Layout() {
     [adjTrades, totalPortfolioValue, state.dailyPrices]
   )
   const openTrades = useMemo(() => enrichedTrades.filter(t => !t.isClosed), [enrichedTrades])
+
+  // Checked against the raw Sheet rows (state.trades), not adjTrades — this is
+  // an identity on the source data (T-0924-100/103), not a valuation, so the
+  // split-adjustment scale factor should never enter it either way.
+  const qtyMismatches = useMemo(
+    () => computeQtyMismatches(state.trades),
+    [state.trades]
+  )
 
   // Curve values RAW trades (never mutated) — buildEquityCurve applies a robust
   // fill-anchored split correction internally, so it needs the as-traded fills.
@@ -364,7 +373,7 @@ export default function Layout() {
             rather than dispatched during render (a side effect in render) or
             migrated in storage (the tab may come back, and a migration would
             forget where they were). */}
-        {tabIx === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
+        {tabIx === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} qtyMismatches={qtyMismatches} onTrim={setTrimModal} />}
         {tabIx === 1 && <ExposureTab openTrades={openTrades} enriched={enrichedTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} dailyPrices={state.dailyPrices} spyHistory={state.benchmarkHistories?.SPY || []} portfolioValue={totalPortfolioValue} heatData={heatData} />}
 
         {/* Split-adjustment notices — collapsed by default at the bottom of the
