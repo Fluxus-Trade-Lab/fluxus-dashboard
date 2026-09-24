@@ -26,8 +26,6 @@
   因为它唯一的闸是「脚本报错就停手」——只挡崩溃，不挡内容错。
   出处：[gate_ceiling_audit_2026-08-28.md](../../data/research/gate_ceiling_audit_2026-08-28.md)
 
-- [2026-09-21] [DATA] 课程删除了 L6B.2 油门七档后，数据管道对信号源做了全系统审计：停发 `gear` 字段，同时发现文档引用陈旧——SPY 绿绿红灯的三条判据实际在 L6.1 而非 L6.2。系统以 EMA 10/20 生成的市场灯与课文独立复现。从「删课程→停信号→验源头」的三角逻辑看，这是**系统可靠性的事实证据**（非承诺），也是我们的课程与数据每一拍都贴在一起的活证。[T-0921-67 · c4d752b5](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c4d752b5)
-
 ## 已收割
 
 - [08-22] [OPS] 两周把 8 个乱窜的 Claude 会话改造成有花名册、契约行、自动体检的「一人公司联邦制」——build in public 首选素材，手册 artifact 已有全套图
@@ -48,8 +46,6 @@
 - [08-24 · Zac · BUILD] **我们抄了 Stockbee 十年，抄的是他明确不用的那一半。** 全站 5,154 篇筛出 101 篇方法帖逐条对照后：他的 EP 扫描是 `4% + 3×均量 + 30万股`，我们是 `10% + 3×量 + 市值≥$5亿`——2026-08-21 那天他的口径出 55 只、我们出 8 只，**我们是他的真子集，漏掉 85%**。更扎的是方向：他原话「float 5 亿以上我不太热衷」「最爆的动在 float 1000 万以下」，而我们那道市值闸把他认为最肥的一段整个排除了（当天 44.8% 的票在闸外）。反过来，我们自己加的每一样——市值闸、VCS 压缩分、ADR 地板、复合评分、百分位排名——他都**明确说不用**（"You can look for stocks with bollinger band squeeze. I do not use them"）。出处：`data/research/stockbee_2026-08/diff.md`
 - [08-24 · Zac · BUILD] **一个做了二十年的人，2018 年之后把方法搬去了视频。** 想抄 Stockbee 的 4% 突破细节？他博客上标题最对味的四篇——「4% 突破在哪出场」「止损放哪」「什么时候进」「怎么挑最好的 setup」——**正文全是空的**，只有一个视频链接。同样空的还有「EP 延迟入场」和「哪三个板块出最好的 EP」。文字方法密度的顶峰是 2010–2017。这件事有个副作用：我们仓库里 `delayed_ep_scan.py` 的注释写着「在我们能读到的资料里他没给数字」——**核实下来这句话是准确的**，那些数字确实是我们自己定的。出处：`data/research/stockbee_2026-08/open_questions.md`
 - [08-24 · Zac · BUILD] **我们照 Stockbee 的规矩测了他自己的规矩，结果是个负号。** 他挑 4% 突破有九条 setup 闸，其中三条能机械化（突破前不许连涨三天 / 前一日窄幅或阴线 / 收盘在当日高位）。10,947 个真实事件、预注册在跑第一行计算之前、holdout 按票池划只跑一次——**三条闸确实分得开**（+5 日超额差 1.25pp，p=0.0019，holdout 复制）。**然后你看过闸的票中位是多少：−0.06%。** 全样本是 −0.47%。也就是说：4% 突破整体跑输标普，三条闸把你从「跑输」拉回「打平」，仅此而已。胜率 47%→50%——抬到硬币，抬不过硬币。**闸是风险闸不是收益闸**，这是我们第二次在完全不同的闸上撞到同一堵墙。出处：`data/research/stockbee_2026-08/gate_results.md`
-
-- [09-21] [DATA] 晨检数据新增 5 笔交易记录，ARM 09-20 入长后次日达最优位置 +0.91R，SPY 绿灯、MA 排列好、广度稳定。从筛选命中到交易成形、到每日跟踪的完整闭环，是系统活的交易能力证。[T-0922-18 · fd9be9e0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fd9be9e0)
 - [08-24 · Zac · BUILD] **我给自己设的对照组，把我自己的结论掀了一半。** 预注册时按规矩加了个「理应无效」的对照：按股票代码首字母 A–M 切一刀。结果它 **p<0.0001**。股票怎么拼写不该预测收益。于是又跑 20 个用哈希随机切的安慰剂——**3 个显著，期望是 1 个**。结论：这个设计的 p 值大约乐观两到三倍，`p<0.05` 得当 `p<0.15` 读。我没去「修正」它——修正方式本身就是又一次参数搜索。**报出来比修掉诚实。** 出处：`data/research/stockbee_2026-08/gate_results.md` §方法学问题
 
 
@@ -165,8 +161,6 @@
   一句可发的话：**分不清「改善」和「退化」的监控，最后会训练你忽略它。**
   出处：`pipeline/tools/audit_regression_gate.py`
 
-- [2026-09-24] [RND Linda] 多线协作下的全景自诊机制：audit_unpushed 不仅扫自己的 worktree，还扫别人的三棵树，发现 5 个悬空 commit（09-21/22/23 跨三条线）；系统用任务板单精确路由给 ops（T-0924-12）而不自己代办，展示跨线诊断时防反复的经济性设计 · [T-0924-11 · a2827d9b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a2827d9b)
-
 - [2026-08-30 · Nighty Zac · NULL/反直觉] **周信要写「上周什么变了」，而最值得写的那个读数，正好不是模板举例的那个。**
   给周信做了个候选清单工具：不问「它变了吗」（什么都在变），问「这个变化在它自己的历史里排第几」。
   上周（8/22→8/28）排第一的是**净上涨从 +1,431 翻到 −1,408，在 568 次历史周变化里排前 2%**；
@@ -200,140 +194,34 @@
 
 ---
 
-- [09-21] [steve] 市场数据停留 09-18 已 3 天无更新——dashboard 是每日页的数据源，它的延迟直接中断了「今天完成什么」的完整性。出处: git log origin/main --grep="market data" · chore: market data 2026-09-18
-
-- [2026-09-22] [OPS] 监测盲点修复：周一无法在既定窗口被监测查到，延截止日 09-28 让周复盘入库。预算起点前移到 fetch，消除脚本班 120 秒超时风险。新测试 `test_main_still_runs_on_2026_09_28_now_inside_window` 验证窗口 + 预算双重保护。[T-0922-57 · f320fb96165b1c509d2b16dca4a4c305595fba5d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f320fb96165b1c509d2b16dca4a4c305595fba5d)
-
-- [2026-09-23] [UI Claire] Market State ③④⑤ 从散文卡片升到数据表格：五张表、64 行数据密度对标 TradersLab；说明文字 2,554→1,752 字、全挪进 tooltip，一屏见全景。诊断（形式太乱）→决策（采纳验证过的模式）→验证（547 测试全绿）的系统学习闭环。[T-0923-92 · d6a48817](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d6a48817)
-
-- [09-23] [steve] X 台账新增「提及峰值日后 T+1/T+5 相对 SPY」两列。动手前查了标准（事件研究 market-adjusted model 有公开口径），自造的部分（峰值日定义、k 值、窗口方式）逐条标进 METRIC_SOURCES，用三层测试（峰值日并列、缺失值处理、分母保护）守住最易暗坏的地方——从「交易决策→系统改进→防护完整性」的链条体现了系统对标准/自造的双重尊重。[T-0923-96 · fe75ffe8](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fe75ffe8)
-
-- [2026-09-24] [OPS] 滞留分支诊断追踪配置一致性缺陷：`tests.yml` 收窄 `branches:[main]` + `paths:` 过滤器后，如果 `pipeline/tools/audit_ci_test_coverage.py` 的 `DECLARED_TRIGGERS` 表漏配同一套声明，系统测试闸（T5）会立刻给出真红（未声明的过滤器）。这里的诊断链条是**表面症状→根本机制问题→闸的有效性验证**：T5 红不是阻碍，而是系统自诊精度的直接证据，它正确地挡住了配置不一致会导致的虚假绿灯。从现象→诊断→防护三环闭合，体现了系统级防护机制的成熟度。[T-0924-25 · 63728c83](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/63728c83)
-
-- [2026-09-24] [OPS/DATA] 邮件泛滥（30 runs in 113 分钟）暴露的不是 YAML 错，而是**触发配置机制的不完整**。诊断链条：任意分支推送 → 触发 tests.yml → 无人筛选 → 邮件满屏。防护设计四层：① `branches: [main]` 只让主线触发（分支测试已在 branch-review 阶段完成），② `paths:` 而非 `paths-ignore:` 来排除内容目录（安全的设计：新目录默认检查），③ git-grep 逐条验证每个排除目录是否真的无测试依赖，④ DECLARED_TRIGGERS 机制补全配置（之前表是空的）。三轮验证（pipeline/tests 73/73、full suite 3477/3477、baseline 一致）闭环。从「任何推送都跑」升级到「精准路由验证」，系统诊断精度的进阶实装。[T-0923-121 · 64c51907](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/64c51907)
-
 ## 📥 追加到这里
-- [09-23] [OPS] **滞留分支诊断的完整闭环：将问题精确路由到真实卡点，无需反复问** · agent/claire/T-0923-07 分支滞留，诊断过程揭示真根源不在分支本身，而在上游数据字段任务 T-0923-03（MCO/MCSI 成分台账）处于 blocked+无人认领状态。系统诊断的完整链条：分支改动本身无问题（仅 6 个前端文件）→ 找到对应数据字段 → 验证字段在 origin/main 上不存在 → 回溯上游任务状态（T-0923-03: blocked, released_at 03:23 后无人认领）。诊断精度从「为什么分支卡了」升到「卡在哪条链、谁那一段无人接」。防护机制：分支任务文件里已写清「等 T-0923-03 落地后复用分支」，无需 Andy 反复点头——问题的答复已经清晰完整。这体现系统有能力从『发现滞留』→『诊断根源』→『路由清晰』的三段诊断链条，把关键决策信息完整交付，在问题仍开放状态就能避免沟通成本。[T-0923-109 · 713d4630](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/713d4630)
-
-- [09-23] [steve] **教学框架的递进设计——从认知诊断升到操作工具的闭环** · 课程 C19《顶是过程底是事件》第一段建立了「顶部是过程」的理论框架（大盘级宏观认知），09-23 第二段补齐了微观操作工具——个股的 exhaustion 和 parabolic top 识别方法。系统诊断：理论框架不带操作细节时，学习者无法从「我懂了」升到「我识得出」。改动：通过日课递进（09-22→09-23），体现课程从基础概念→识别工具→实操闭环的三阶设计。防护机制：「每日一问」不是单向输入，而是双向反馈——学生的回答成为下一轮课程迭代的信息源，系统能自诊哪些概念需要配套工具。这体现课程有能力从「学习缺陷诊断」→「递进设计改进」→「通过机制保证持续反馈」的系统成熟度。[T-0923-33 · 20807c32](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/20807c32)
-
-- [09-23] [OPS] **CI 红的自诊与幂等防护——系统从被动邮件通知升到主动每小时巡检** · 09-22/09-23 两次 main 上 tests.yml 变红（7 小时 / 43 分钟），两次都是 Andy 从邮箱先看到，说明现有的监测班次（08:45 早班、02:20 晚班）覆盖不了这个时间窗口。**诊断**：CI 红的自检需要零 token 脚本班，每小时 `:20` 一次（30 秒超时 gh），覆盖原本 43 分钟的黑洞。**防护设计的价值点**：自动化监测容易产生垃圾单（「同一个错连续重开」、「转绿了还追单」），幂等键设计拆成两个独立维度：① 标题去重（同一失败测试名只开一张）②状态转移追踪（最后一条 review_log 的 PASS/FAIL 标记决定转绿/转红时的追记），不含 run id 因此去重不被 GitHub 高频运行破坏。**验证三轮**（两位独立复核员）覆盖各失败模式：连续绿 6 轮→commit 仅 +2、红→绿→红→绿两周期→每状态转移记 1 条、6 轮无用例名→只开 1 张单，混合 review_log 7 步全判对，阳性对照验证（改回带 run id→测试变红）。系统从「用邮箱通知」升到「从 agent 的视角无人值守自查」，从「手动干预」升到「幂等防护防止垃圾数据污染任务板」的诊断与防护完整闭环。[T-0923-122 · 4431316](https://github.com/Fluxus-Trade-Lab/fluxus-ops/commit/4431316)
-
-- [09-23] [DATA OPS] **虚热与真实参与的诊断标记：X 话题热度的单人型评估** · theme_events.csv 新增 `n_people_solo` 列标记「剔除清单贴和回复账户后的真实参与人数」。09-22 crypto 话题样本：原始 4 人参与，剔除垃圾贴后只剩 oratnek_ill 1 人真独撑——系统诊断出该话题「热度」里有多少是清单贴虚撑的。系统能力升级：不只记录表面热度计数，而是在数据层就能区分「多人共鸣」（≥3 人）与「少数意见领袖反复出现」（solo=1）。这个诊断维度为后续筛选和内容决策提供基础——相同热度值背后的真实参与结构完全不同。防护机制：管线仍完整计算所有热度指标，源数据无改动，新列做纯增无损添加，可完全回滚无遗留。[T-0923-69 · 9a296086](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9a296086)
-
-- [09-23] [UI Claire] **课文审视从高层决策升到可追溯的多维实装：删行的完整闭环** · Andy 在课文 §1.10 检查表上审视九行面包板，决策删除「抛压」和「指数修复」两行；系统的实装链条包括：①前端行过滤（BoardCard.jsx 新增 CUT_ROWS 常量）②链头重排（ChainCard.jsx 从「指数修复」开始改成从「推力」开始）③测试逻辑同步（断言反转：删除行应在 DOM 中为 0，其他行应 >0）④防护保留（管线仍计算所有九行，防止未来需要恢复时重算）⑤源注追溯（代码注释明确标出日期 2026-09-23、来源 Andy's §1.10 cut、关键理由）。这条链展示的不是「改了什么代码」，而是**从主观决策（Andy 的审视）→ 诊断明确（删这两行、保留这七行）→ 实装完整（页面+链+测试+管线+注释五个维度）→ 防护透明（可回滚、有溯源）** 的系统决策兑现能力。[T-0923-77 · 9290d82b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9290d82b)
-
-- [09-23] [steve] **术语精度的迭代诊断：从分类混淆到自洽标记** · net_4pct 条件被审核员（branch-review T-0923-60）指出分类混淆——虽然 4% 计数源自 Stockbee（标准输入），但「net-against-zero」条件本身没有 Stockbee 定义，却被整体标记为「standard」。修复从标签分类（standard → mixed）和源注明（明确说「Stockbee 4% counts (input, standard) — the condition itself has no Stockbee definition」），让使用者一眼看出哪部分来自标准、哪部分是自造。防护机制：通过分类和文案的自洽性，防止未来再混淆术语来源。这体现系统有能力不只修一个标签，而是**从分类混淆诊断为术语不自洽、设计改进为双维度对齐（分类+文案）、验证通过 METRIC_SOURCES.md 口径基线**。[T-0923-73 · ab9080d6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ab9080d6)
-
-- [09-23] [steve] **新信息源的多维防护——个股 X 热度列体现系统诚实度** · dashboard 个股页 Quick Stats 新增「X 热度」列，读取 data/output/x_heat.json 的近 7 日不重复 handle 数（people_7d）。系统诊断：讨论热度是交易信号，但「热度」本身易被炒作；系统需要一个「只报事实」的量化管道而不是带情绪的叙述。防护设计四维度：①**去重严谨性**（people_7d 跨日去重，消除同日重复计数）②**空值处理**（无数据显示「无数据」不显示 0 人，两者分不开就无法判断是真冷还是漏数据）③**文案约束**（只说「N 人提及」不用 sentiment/看涨/人气词，源头就防文案炒作）④**测试覆盖完整**（命中票、时间窗口、空值显示、加载缺失、文案约束五个验收方向，5 条测试全绿）。这个改动的价值不在「又加一列」，而在于：系统面对新信息源时，在准确度、边界处理、文案诚实度三个维度上**同时加防护**——这是系统可靠性的直接证据，展示诊断→修复→防护→验证的完整闭环。[T-0923-104 · 046ae6e6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/046ae6e6)
-
-
-- [09-23] [steve] **保本止损防护从「条件覆盖」升级到「诊断驱动修复」** · 原设计用 open_R 范围限制来防止止损在跳空时假死（只豁免窄带内的仓位），但实际验证发现四个风险仓位被这个条件漏掉——HOOD/ARM 等票的 open_R 在 ±0.6R 带外，仍会跳空穿保本。根源诊断：$0.00 从不是真实股价，所以 stop_R==0 本身就不可能是价格泄漏，条件限制基于错误前提。修复是从条件豁免（范围有限）→ 无条件豁免（完全覆盖），扩大防护范围。防护验证：测试新增对照，留痕已知残余风险（非保本止损情况），展示系统有能力从「假设失败」诊断为「设计前提错」、而不只是打补丁。**这是系统主动验证现有防护、精确诊断盲点、根据诊断重新设计的完整证据**。[T-0923-61 · bc4debc4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bc4debc4)
-
-- [09-24] [DATA ALEX] **数据哨兵的定时诊断闭环：从邮件等待升到 24 小时自检** · 每日定时巡检班从「main CI 体检 → 数据层诊断 → 管线就绪」三层逐一确认后，无阻放行当日数据——09-23 那班判绿后 505 个文件、148k 行变更在 JST 08:23 准时流入前端。从系统诊断视角，价值不在「巡检脚本存在」而在**诊断→流通→验证三环的 24h 可靠循环**：早班盘前判准时 → 用户收到诊断合格的当日数据 → 收盘后审计验证诊断准确（schema、完整性、前端镜像）。任一环漏掉系统停摆，完整闭环才能支撑日循环。**从「问题靠邮件通知」升到「诊断通过自动流通、只报真故障」的成熟度**。系统能力体现不在改代码名目，而在**持续无缺一席地执行这个诊断→流通→反验的定时协议**——这是从被动到主动、从事后应急到事前诊断的制度化证据。[T-0924-54 · 93bb5b42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/93bb5b42)
-
-- [09-23] [UI Claire] **信息架构从混乱升级到课程框架——诊断→决策→防护的完整链条** · 页面曾混了两个信息源（课程与非课程框架），结果形式乱、逻辑碎。诊断精确到：「没有思考脉络」。决策不是重新设计，而是用课程地基篇 ch.7 §7.2 的六步作为统一骨架，把 ch.1 §1.7 的四问对照表搬进第①段的数值位。防护三层：①所有数学运算写成 pure function 且有 104 条用例覆盖；②缺失的数值明确标记为 missing 而非默认 0；③前端测试 531 通过。系统能力不只是「听用户说太乱就重排」，而是把人工观察诊断为结构问题、用教学框架作为修复基础、通过机器验证来保证完整性。**这条链条展示的是信息系统从被动适配升级到结构驱动的成熟度**。[T-0923-59 · 3ad70995](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3ad70995)
-- [09-23] [OPS] 每日页数据管道每天自动生成 state/dailypage.json，记录交易日期、页面状态、数据完整性三维。09-23 正常生成，但复盘页面的出现依赖外部供应商（yfinance）日线发布——系统能做的（数据采集→验证→记录）全部完成，是否交付决定权在依赖方。从「谁卡住了」变成「还在等谁」，这是系统自诊的可见化。[T-0923-42 · be3da4f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/be3da4f)
-- [09-23] [steve] **合并闸监测的自诊链条：从 93.75% 误报到四层设计缺口诊断** · 新上线的合并闸监测首日命中 16 个，其中 15 个误报、1 个真警报。系统不只记录误报数字，而是逐条诊断根源——voice/raw 缺例外规则、跨任务号的判词追踪缺陷、中间 commit 无法反向绑定、交互批准形式未被认可。从「有问题」升到「诊断精确到设计层」，开 T-0923-29/30 逐处修复。这是**系统发现自己规则有洞、主动设计补救的完整证据**，不只修一个 bug，而是展示系统有能力把一个监测系统的初次失败当成学习素材，精确诊断每一类问题的根源。[T-0923-27 · 9d235874](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9d235874)
-
-- [09-23] [OPS] **任务管理的自诊与规范化：从班次逻辑到可复用 skill** · 任务板巡逻班 board-patrol 已迭代 4 次，原逻辑只活在 schedule.json 的班次 body 里——无版本控制、改动无痕迹、复用无通道。系统诊断：重复工作没有固化为规范。改动迁移：完整迁移成 .claude/skills/board-patrol/SKILL.md，集成到 agents/ops/config.json 的触发机制，做法从「班次脚本」升级到「版本化 skill」。防护机制：任何改进都通过代码提交可追踪，复用时无需重写。这体现 OPS 线有能力把一个临时班次升级为标准化流程——**诊断重复 → 分析根源 → 制度改进 → 机制防护**的完整能力。[T-0923-37 · 6c668f4b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/6c668f4b)
-- [09-23] [steve] **社群交互的自动化链条：从用户提问到知识固化的完整系统** · Discord 2026-09-22 一条提问链（用户问课程购买、内容是否已上线）被系统自动抓取并记录，Andy 秒速回应、完整信息澄清（「3-4 天发链接」+「去正确的链接地址」）。同日 live-commentary 中的市场分析（网络安全股票领跑、软件和芯片联动转变、个股风险判断）被实时记录成结构化数据。从「社群有声音」升到「声音被系统自动捕获、分类、可追溯」——这是**知识生产侧和交付侧贴在一起的活证**。课程销售遇到用户疑问时系统立即回应（信息一致），市场分析内容每日被自动索引（可作事后复盘对标），形成「诊断用户需求→实时回应→记录成资产」的完整链条。[T-0923-25 · 905a492c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/905a492c)
-- [09-23] [steve] **内容台工作流从班次专属升到多入口复用** · 原来内容台的日备稿工序（三档降级、陈旧闸、回填纪律）写死在 schedule.json 班次 body 里，只能定时触发。迁入 skill 后成了 77 行的独立标准流程，支持三种入口——type=content_daily 任务、班次例行运行、人工需求（「今天备稿」「有什么可发」）都能调用同一套。流程模块化把系统从「一个班次一套配置」进化到「一份规范多处复用」，提升了可维护性和触发灵活性。这是工程自我优化的证据——同类工作做到第 3 次时，必须固化成可复用组件，系统照规矩做了。[T-0923-36 · 1cc7822c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1cc7822c)
-- [09-23] [UI Claire] **诊断信号品质升级：从混杂九行到精纯七行** · 课文 §1.10 状态板删「抛压」「指数修复」两个在市场诊断中冗余的条件，加「口径」列明确标注 Stockbee/标准/自造来源。文本加段落说清十五条量与七行诊断的关系（同份数据、两种读法），防止读者误读为两套数据。防护三层：前端隐藏两行、测试同步更新、契约行记事实。**这体现系统的诊断精度从「捡出冗余」升到「透明化为什么删、怎么验」——不只修数据，而是修诊断质量本身的设计迭代**。出处 T-0923-72 · 9290d82b
-
-- [09-23] [OPS] **班次指令从引用式升到字面命令的系统防护** · 蒸馏厂班次（ops-vault-question）连续 4 天无复核直合，诊断根因：SOP 说「按 worker_protocol 第 5–6 步」（引用式），worker 从没真跑 `taskboard.py gate` 命令——不是不听话，是说法太模糊机器自动跳过。改动彻底：把字面命令（gate 检查 → none/reviewer 分支判决）写进 schedule.json，同步更新 T-0923-33.md，验证运行生成完整的 gate 提交记录、真实分支、真复核判词。**系统防护本质从「希望被执行」升到「字面命令让机器必须执行」**——诊断清晰（引用式的代价）→ 改动彻底（无理解空间）→ 防护无漏（机制强制）→ 验证可见（记录可追）。这是「从人工规范升到系统保证」的活证。[T-0923-47 · 02f5ce3](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/02f5ce3)
-
-- [09-22] [steve] **数据哨兵巡检：系统从被动告警升级到主动诊断** · 每日定时巡检用两个独立维度验证系统健康——CI conclusion=success（防止代码崩溃瞒天过海）+ market data 日期=最近交易日（防止数据停更）。发现异常时自动开单给 ALEX。这条链条取代了「7 小时连红被 Andy 从邮箱发现」的被动模式（T-0922-57 修复的旧坑）。关键前提三条缺一不可：CI 不谎报、data/output 日期权威、交易日历准确。现场验证：2026-09-22T22:00 JST 巡检时 CI✓ 数据日期=2026-09-21✓ 当日 ET 盘前无异常，系统健康。从「有问题才报」进化到「每天都问有没有问题」，这是系统可靠性的基础设施。[T-0922-115 · `agents/alex/failure_triage.py`](../../pipeline/tools/failure_triage.py)
-
-- [09-22] [steve] **课程发售架构定档：成本清零的系统决策与跨端验证** · Whop + Cloudflare Pages 统一定案，替代了 Vercel Pro（$20/月）与 Squarespace 两个付费方案。更深的意义：与课件托管（`fluxus-masterclass-lab.pages.dev`，T-0920-60/63）采用同一平台，消掉了 SaaS 订阅依赖。系统验证闭环：落地页入口 200 OK、付费页 403 Forbidden、Whop 结账 200 Success，三层防护一致。这是「架构定案→单点清零→跨端验证」的完整链条，说明系统决策不只是文档化，而是**贯彻到成本数字和验证细节**。[T-0922-98 · b4e922d4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b4e922d4)
-
-- [09-22] [steve] **不退款对价的完整链条** — L1-5 免费试作为不退款政策的对价，系统从销售文案、落地页、结账页、Whop 后台四个环节同步落地，防止用户在某一步「不知道能先试」。系统的诚实度在于对价在每一环都能被验证到。[T-0922-94 · 9c1910c9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9c1910c9)
-
-- [09-22] [steve] **整行全大写帖的故障检测完整链条** · 09-19 主班测试：RealJGBanks 全大写周末帖被误标 6 个代码词，代码计数虚报 31→37。根源诊断：文本分类器把「无小写=代码」当同义，缺乏「超 25 字且完全大写的行」这个排除规则。改法：tickers() 改成逐行扫、>25 字且无小写的行跳过裸大写词分支（而带 $ 的仍扫全文）。防护验证：注入两个方向的阳性对照——漏改（原写法复原）→ 2 红；改了但接错（喊话行整条跳过）→ 1 红；分支 24 通过。**这是「故障现象→根源诊断→修复→双向防护验证」的完整系统自诊链条**——不只是修复一个 bug，而是展示系统如何发现自己的分类盲点、设计防反复的双向对照。系统活能力从「处理故障」升级到「验证修复的完整性」。出处 [T-0922-71 · 69e12992](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/69e12992)
-
-- [09-23] [OPS] **规范从人工推断升级到机器保护：fluxus-ops tools/ 文件边界补充完整链条** · fluxus-ops 仓自己的 `tools/`（gate.py / monitor.py / taskboard.py / daemon.py 等闸与守护进程判定逻辑）在 agents/ops/ROLE.md 的文件边界里缺失了（原因：「复核 T-0923-30 Q3 靠人工推断」）。表层是「漏了一行文档」，根源是 ROLE.md 的格式闸（rolecheck）只查行数/节名/括号出处，**不查内容**，无法防止文件边界正文被悄悄删掉。改法：①直接补上边界正文；②新增内容断言测试 test_ops_role_boundary.py，对真实 ROLE.md 逐字断言「必须提到 tools/、gate.py、taskboard.py」；③收紧措辞把「全是 ops 线自己」改成「以 ops 线人类身份与本线机器身份为主」（实测发现混入了 impl-task14 等）。防护：下次谁删掉这条边界，测试当场红、CI 拦下来。**系统活能力的证据**：从「有人指出漏了什么」升级到「制度化地让自己每天都检查有没有漏」——规范不只是文档，更是有机器可验证的保护。[T-0923-49 · 0c75333](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/0c75333)
-
-
-- [09-22] [steve] **购买后不退款的系统一致性** · 结账页和 Whop 后台「Refund policy」设置必须对齐，防平台默认政策打架。内容课程的不退款不只是文案，更是系统设计的诚实——从用户清晰期待（免费试学 L1–L5 再决定）→ 系统验证一致 → 防护双层。[T-0922-81 · 97b41ac2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/97b41ac2)
-
-- [09-22] [steve] **政策变化的流程固化：从一次改动到持续验证机制** · Andy 09-22 裁决「不退款」后，系统不只是改了一次清单，而是在发售流程里加进了两道门：②结账页明示条款（等 Mia 文案）和③后台设置核对。清单化验证 + 文案待办 + 平台核对，形成「政策定→三层落地→清单验证」的完整链条。这反映的是系统面对政策变化时的诊断完整性：从「怎么改」升到「怎么验这次改对了」。[T-0922-88 · 97b41ac2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/97b41ac2)
-
-- [09-22] [steve] **无证据的「ok」会溜进来——从诊断→补证→验证一步走** · universe_freshness 在 ok 路径只写了状态词不写证据，导致坏数据进了 ledger；test_no_new_guard_slips_in_without_evidence 当时抓到了它，说明闸在那儿，但供给侧的「ok」没有证据（RVOL + 行数）。修复路径：run_all.py 现在补齐那些数，audit_ledger.EVIDENCE 改成「不齐全不信任」。一个从「发现缺什么」→「补上去」→「闸认证」的完整三步，说明系统有自诊能力：被卡住时知道卡在哪、补什么、怎么验。[T-0922-60 · c6461e3b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c6461e3b)
-
-- [09-22] [steve] **前端持仓日期从 UTC 秒杀到 JST 再秒杀到消费端** · 持仓活动（campaign）的首进/末进日期从 GAS 云端来、写成 UTC 时间戳，前端 slice(0,10) 截日期时截的是 UTC 日而非 JST 日。修复路径横跨三个层级：①URL 参数层用 toJstDate()、②portfolio 列表层用、③campaign 活动头用。一个日期类型的修复单，最后触碰了三个消费端；从现象（显示错日）→ 根源（跨时区时间戳混淆）→ 修复广度（三处同步）——这是系统自诊的证据，改一处后主动查齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-44 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
-
-- [09-22] [OPS] 部署存储瓶颈突破：data/output 从产物拷贝改为 rewrite 代理到 GitHub raw，单次产物 119MB → 47MB（-61%），月度费用从超 10GB 降至预算内，数据更新反而加快到 5 分钟内。配置优化证明系统架构有弹性。[T-0920-55 · 98aa81df]
-
-- [09-23] [OPS] **并发保护的诊断与防护——从现象到协议修复的完整链条** · 两个工人对同一个任务规规矩矩地各 claim 一次，`claimed_at` 毫秒相同，却各自独立完成了整套实现；问题不在 claim 逻辑（那道有 git 并发保护），而在 claim 之后到 push 之前约 20 分钟的空当——任务板无法感知工人是否仍在干活。系统诊断：这是第三次撞上同形坑（T-0921-32 / T-0921-34），协议设计本身有漏，不是执行失误。防护机制：在 worker-protocol.md 第 5.5 步补了一道"push 前重新读任务状态，若不是 claimed 就停止 push"的闸，把空当从整个干活时长缩到几秒。验证机制：新闸能在两个工人快速完成（真实场景 20 分钟）时拦住；fluxus-ops `tests/test_worker.py` 31 项全绿。这体现系统在「现象诊断→根因定位→防护设计→防护验证」的四层闭环中从协议层升到制度防护层的成熟能力。[T-0923-100 · 07d596b3](https://github.com/Fluxus-Trade-Lab/fluxus-ops/commit/07d596b3)
-
-- [09-22] [steve] Discord 社群日无新建议——内容源的静默期也是信号，反映外部对话的波动。出处: T-0922-10 · 4dd6f1a6
-
-- [09-22] [OPS · 数据哨兵] **项目指标停更时的现场预警——每日页从「隐性缺失」到「实时可见」的防护链** · 项目 metric 可能 stale（停在旧日期）或 unavailable（完全不可用），但每日页之前对这些状态无声处理，Andy 看不到信号。改动：projects 一行规则补齐——`metric` 有 `stale` 时照印「⚠️ 数据停在 `<日期>`」，有 `unavailable` 时照印原因（如「未开卖（09-25 起）」「列 X 还没建」），不许省略。**诊断链条**：项目数据停更是现象，规则只看名值是根源，规范显示是防护。系统活能力体现在**不隐瞒、主动曝光**——无法决策是因为看不见，让 Andy 每早都能实时抓住数据的关键信号，从被动发现升级到主动预警。从「OK 就勾、有问题溜进来」改成「所有信号都要能被看见」的决策支撑机制升级。[T-0922-108 · 965837f7](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/965837f7)
-
-- [09-21] [steve] **基线也会犯错：快照反向吃掉整班数据** · schema_snapshot 基线不是只能「滞后」，反过来它也能「领先」——基线先加 4 个字段、数据还没跟上的那 9 小时，夜间管线要合一份内容「比基线还少」的 JSON，闸会拦住说「缺字段」。**这两个错误（基线滞后 vs 基线超前）的源头相同——验收清单有多道闸，最后那道漏了更新**。整班数据停在 21:20 UTC 的危险区间，等我们回过神补一行 schema 路径。可讲角度：逆向 bug 通常比正向的贵，因为它长得像一份很对的数据，直到发现「比标准还好」这一刻。出处 [T-0921-118](../../tasks/T-0921-118.md) · [bbbe9f2e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bbbe9f2e)
-
-- [09-21] [steve] sugar_babies 字段新增流程检验：代码通过、契约落线、自动化基线漏一步 → 整班数据被拦。同样形状的「改动成功却因基线滞后被拦」已出现两次（09-18 watchlist.top20_industry、09-21 sugar_babies）——触发三次律，需要在管道里加自动同步机制。体系病源：新增字段时「改代码、改文档」两步对编码者成本很低，第三步（补基线）成本属于「等等再说」档，9 小时后就会把整班数据卡到 21:20 UTC。出处 [a1090655](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a1090655) · [T-0921-96](../../tasks/T-0921-96.md)
-
-- [09-21] [steve] EP 财报季轮动数据交付：Biotech 从 Q1 27 命中→Q2 16 命中、Semiconductors 季度间排名变化具体量化，直接用于课程《轮动》§5。[T-0921-92 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
-
-- [09-21] [steve] 回执写了「完成」，代码实测仍有问题——T-0921-70/71 的 EATZ 字段改动确实落地 main，但生产代码里仍在五个文件里。这说明：commit message 讲的故事 vs git diff 的现实，中间的鸿沟就是体系的故障源。不贯穿验实就填回执，下一个人接力时该信谁？出处 T-0921-83 · 提交 [38778ffd](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/38778ffd)
-
-- [09-21] [DATA ALEX] 教学与数据对账：课程删掉 L6B.2 油门七档，系统同步停发 `market_light.spy.gear` 字段。不是数据坏了，是源头改了。对权威源的「跟还是不跟」做成规矩、落成代码——这是系统活下去的方式。[DATA_CONTRACTS.md · 09-21](../../data/reference/DATA_CONTRACTS.md#line-1334) · [METRIC_SOURCES.md](../../data/reference/METRIC_SOURCES.md#line-71) · [market_light.py](../../pipeline/screeners/market_light.py) · [T-0920-04](T-0920-04.md)
-
-- [09-21] [steve] 财报季行业轮动实证交付——两个季度的 EP 跳空数据按 Finviz 行业分族统计：Biotech 从 Q1 的 27 命中跌到 Q2 的 16，Semiconductors 直接掉出 top3。季度间谁在衰落、谁在上升，一组数字讲清楚。课程《轮动》§5 可直接用。[T-0921-89 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde)
-
-- [09-24] [OPS · 数据哨兵] **worktree 级孤儿检测——从分支滞留闸升级到全扫描的诊断精度** · 三棵 worker 临时树压着 5 个未推 commit，既不在任何分支上、也不会被主要检测工具（滞留闸）发现，只有专门的 `audit_unpushed` 能扫出 worktree 内所有离线工作。系统诊断链条：①`audit_unpushed` 自动发现 3 处 U1 违规（commit 只在本地盘存在）；②逐棵核实发现全部已被 main 上的其他 commit 取代，无一需要 cherry-pick；③验证机制：删树后再跑 `audit_unpushed` 确认回到 0 violation。**这体现系统从「单维检测」（分支视角）升到「多维诊断」（worktree 扫描）的自诊能力升级**——原本看不见的状态漂移（工人离线干活、main 同时更新、孤儿 commit 堆积但无人发现），现在能被机器自动捕获。系统活能力：不是补一道新闸，而是在诊断维度升级后，让防护保护更多你之前看不见的地方。[T-0924-12 · e6dbfa4b](https://github.com/Fluxus-Trade-Lab/fluxus-ops/tasks/T-0924-12.md)
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
-- [09-19] [OPS] 课程定价页退款条款补完：两个行业标准选项（7 日无理由 / 3 日+已使用查证），建议优先 A——B 依赖后台日志能力待核实、成本不足；A 虽全额退款但课程分批解锁+社群粘性足以消化滥用风险，符合同类产品预期。09-25 前待 Andy 最终拍板。[Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md](Fluxus_Brand/site/Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md)
-
-- [09-22] [steve] **复盘内容的教学风格需要三轮裁决才能稳定**——从「全删个股」到「加回个股」再到「语域取中」，同一份材料的讲法经历三个极端。最后收敛点不是取中线而是「简洁+重点突出」——动态调整的标准比折中的标准更值钱。这说的是每一次内容迭代前都问自己「为谁讲、讲什么」，答案会自动塑造措辞。出处 [T-0922-45 · 5eacac5c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5eacac5c)
-- [09-21] [DATA] **schema 基线缺陷挖出自动化验收的三层差：表单、文档、基线** · watchlist.top20_industry 在 09-18 随 TML Moglen 重定义落地，DATA_CONTRACTS 与 METRIC_SOURCES 已文档化，但 schema_snapshot 基线未同步，导致 --check 误报「added」。修复只需补两条基线路径，但暴露了问题：自动化验收检查的三个维度必须都更新，缺一个就失效。可讲角度：系统健康检查的可信度，取决于它能扫到的盲区个数。出处 [5d7e28b0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5d7e28b0) · T-0921-57
-
-- [09-20] [OPS] **「任务完成」和「任务流程检测到完成」是两件事** —— 任务板巡逻发现 T-0919-74 实际处于 blocked 状态，但任务管理系统看不见它的环境故障（worker 进程未正常关闭）。这类技术层问题藏在既有检查之外，需要专门的环境哨兵。出处 T-0920-26 任务板巡逻日志
-
-- [09-21] [DATA Gary · 可发布数字] **粉丝稳健增长** · W38 粉丝 285 人（环比 +2，+0.7% vs 前周 283）；本周内容低发（44 views vs 上周 501），粉丝基数不松反增。底层用户粘性持续，可作「内容冬眠期粉丝韧性」的案例。出处 [data/growth/weekly/2026-09-21.md](../../data/growth/weekly/2026-09-21.md) · commit 768e27e8 · T-0921-25
-
-- [09-21] [steve] **schema_snapshot 基线滞后让夜间运行失手** · 新增字段时「改代码→改文档→补基线」三步同样重要，缺最后一步，9 小时后整班数据被拦在守卫边。这一次基线先于数据加了 4 个字段——反向的错误，同样能停班。本质是数据格式变更时有**三道验收闸都要同步**（代码、文档、基线快照），一道不动就是盲点。出处 [T-0921-117](../../tasks/T-0921-117.md) · 提交 [bbbe9f2e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bbbe9f2e)
-
-- [09-21] [数据哨兵] 晨检确认系统健康——09-18 交易日数据完整落地，dashboard 数据同步无滞后，自动验收机制连续稳定运行；系统从被动验收升级到无交易日也巡检、前班数据无漂移。出处 T-0921-55 · 8ef3a2d
+- [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
 - [09-19] [DATA] 复盘最隐蔽的坑：收盘价缺数据时系统无声用前日补——09-16 HOOD 盈亏报错 ±0.89%，错了一整晚才查出。改法：缺就 fail-fast，不靠陈旧行情填坑。出处 a1ca0308 · test_recap_book_closes.py
 
-- [09-21] [RND Linda · DATA ALEX] VIX 期限结构四态定标完成，与 @turintrader 原文一致（0.8/1.0/1.1），09-21 起对外数据生效。出处 [cefe2255](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cefe2255) · T-0921-42 / [3b5ba08a](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3b5ba08a)
+- [09-23] [DATA ALEX] **复盘 R 阶梯补齐三处缺陷的防护验证**｜成本点未显、持有日数缺字段、money 闸未跟——三处分别触及渲染端/数据层/逻辑闸。修复后注射两失效方向（漏改→止损仍是价格、接错→腿百分比当股数），都在 PDF 出前红掉；pytest 3367 全过。**从用户现象→诊断多维根源→修复→防护验证的完整系统自诊链条。** 出处 T-0923-58 / 371187f0
 
-- [09-21] [OPS · 数据验收] **功能在用，基线未追——无声的记账债。** watchlist.top20_industry 09-18 随 TML Moglen 重定义上线，已在数据生产链里运作 3 天，schema 基线却没注册，导致 --check 一直报"新增字段"。类似盲点：大改动发生时改单、改文档、改代码，唯独自动化的核验清单被遗漏。三管齐下的宿命是第三管最容易忘——生效时只检查一二管、三管在后台继续报不存在的故障，直到有人明确回来补这一笔。出处 [5d7e28b0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5d7e28b0) · T-0921-57
+- [09-24] [OPS] **数据哨兵巡检的日常可靠性：诊断→流通→反验的无缺一席闭环** · 定时巡检班每日从 CI 体检→数据层完整性→前端消费就绪的三层诊断，一旦判「健康」就立即放行数据流通——09-23 那班 09:23 JST 判绿后 505 个文件、148k 行变更无阻流入前端，用户看到的是**诊断完成后即时可用的数据**。从系统诊断的视角，价值不在「巡检工具存在」，而在**诊断→流通→验证的完整闭环压进 24 小时的可重复可靠性**：早班起盘前判准时→用户收到的是当日诊断合格的数据→收盘后审计验证诊断准确性（schema 检查、数据完整性、前端镜像）。一整个链条漏任何一环系统就停摆，0 缝隙才是 24 小时循环的生存条件。**从「有问题要人通知」升到「诊断通过自动流通、只报真故障」的系统成熟度**。[T-0924-54 · 93bb5b42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/93bb5b42)
+
 > 判据仍是 `↳ ✅`，不是所在节。
 
 - [2026-09-16] [Marketing Steve] **Andy 首发艺术类配图推文**。09-16 「自省过度交易冲动/FOMC盘面」长推配 Nam June Paik《TV Buddha》——艺术与交易心理的首次跨界。样本=1；后续复读表现可作基线对比。出处 data/content/posts.csv · data/content/today_draft.md
-
-- [09-20] [Marketing Steve] **课程视觉预热工具包上线** · 数据卡生成脚本 + 示例卡（86% 信任背书）；落地页框架架构定稿，待文案补齐。每天套 `make_data_card.py` 生成一张新卡。出处 [Fluxus_Brand/visual/course_launch/README.md](Fluxus_Brand/visual/course_launch/README.md) · 12dc3910
-
-- [09-22] [DATA] **持仓日期系统早一天：云端表格的时区隐形转换** · GAS JSON.stringify 把 JST 本地时间当 UTC 处理，整份 portfolio 的 entry_date/exitDate 全部偏差（390 笔全中）；修复单点后级联修正了所有依赖（trade_postmortem/run_tickers/build_pack），新增 39 行测试覆盖。一个字段修复从源头蔓延的完整闭环是**系统自我诊断能力**的活证。[T-0922-46 · a24b5d1e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a24b5d1e)
-
-- [09-20] [Claire] **课程部署架构已就位、可随时上线** · Cloudflare Pages + Whop App 壳实现完成，权限校验双层验证（JWT 本地 + 远程访问检查）、单测 5/5 通过；iframe 兼容自检通过（localStorage/CSP 无卡点）；部署包 94 文件、5.4 MB 就位，仅待凭据填入后可上线。出处 [data/research/course_deployment_architecture.md](data/research/course_deployment_architecture.md) · T-0920-62
-
-- [09-21] [数据哨兵巡检] **09-18 交易日数据完整性验证已落地** · 最近交易日 2026-09-18 市场数据入库完成，dashboard 数据同步无滞后，系统无新异常；自动化分诊工具已稳定运行 48+ 个交易日零新失败。验证体系覆盖市值断点、冬令时改动、管道超时等已知风险类。可发布角度：一套自动化验收体系从「有活儿才启动」升级到「无交易日也巡检、前班数据无漂移、后班接力有人看」——系统可靠性变成一个机制而非依赖人工。出处 [7295e7aa](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/7295e7aa) · T-0921-13
 
 - [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证、无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
 
 - [09-22] [DATA ALEX] **哨兵捕获故障→防止污染→自验证修复的完整链条**｜09-18 管线三次尝试前两次因 f_score 错误中止，被哨兵自动标为 superseded 隔离；09-21 后续修复运行成功，warnings 从 10 条清理到 2 条，系统在日志里验证问题已消退。三阶段（检测→隔离→验证）都有机器证据，零手工干预。**这是系统自诊能力的完整证据，讲「防护不是人工检查，是自动闸」的好素材。**出处 T-0922-58 / bed1fac7 · data/history/audit_ledger_last.json（warnings 行数 10→2）
 
-- [09-22] [steve] **死线班定时核查 08:00**——距 JST 08:30 数据截止还剩 30 分钟时的系统检查。新增 5 笔交易（ARM 入长后次日 +0.91R、SPY 绿灯 MA 排列好、广度稳定）从筛选命中→交易成形→每日跟踪的完整闭环，是「系统活」的实时能力证——不是回测、不是承诺，是当天能交的单子。[T-0922-19 · fd9be9e0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fd9be9e0)
+- [09-22] [Marketing Steve] **整行全大写帖暴露的故障检测链条**｜09-19 主班测试发现 RealJGBanks 全大写周末帖被误标 6 个代码词，代码计数因此虚报 31→37。根源：文本处理器把「无小写=代码」当同义，缺乏「这条线太长且一个小写都没有」的排除。改法：逐行扫、>25字且无小写的行跳过裸大写词分支。防护：注入两个方向的阳性对照（漏改→2红、改了但接错→1红），分支 24 通过。**这是「从故障现象→根源诊断→修复→双向验证」的完整系统自诊链条**。出处 T-0922-63 / 69e12992 · [Fluxus_Brand/ops/tools/x_watch/fetch.py](../../../Fluxus_Brand/ops/tools/x_watch/fetch.py)
 
 - 2026-08-30 · OPS(蒸馏厂) · **总纲金句(Andy 原生英文,已批入体系)**:"Day trade your entry, swing trade your trim, position trade your winner." 一句装下入场(日内精度换仓位杠杆)/持仓(动能确认后沿趋势减)/赢家(position 级拿住)三段。标题级资产:课程章节/Substack/X 均可用。出处 FluxusTrading_Obsidian 总纲卡+访谈 round2 原话
 
 - [09-19] [OPS] **内容产线从云端+本机二重管道统一到单一本机守护进程**｜Discord→X 数据生成端原本云端+本机并行，每晚一段时间两边产出不同步、队列互相打架、诊断难点指向「内容问题」而漏看「系统问题」。改派转成本机守护进程后，单一货源、任务板串联、错误即刻可见。09-19 冷启动试跑成功；云端 routine 已确认停用（trig_01UwhQA2SaEWSFEDkyK7dtTZ enabled:false）。故事素材：自动化编队如何把「两个都对但都不对」的诊断陷阱消灭掉。出处 data/research/night_reports/INBOX.md [09-18]→[09-19] 行 · T-0919-21 · commit 2cbc49d6
   ↳ ⏸ 08-30 W5 收割时**不做成推文**：它是标题级资产，拿去当一条推就消耗掉了。建议去处 **#002 的 DIAL 或课程章节标题**。
-
-- [09-21] [UI Claire · frontend] 百分位数据缺席时改显「攒历史中」不是空行｜Stockbee 五个排名指标（up_4pct/down_4pct/ratio_5d/nh_nl_net/qtr_spread）在数据积累不足前（MIN_STOCKBEE_RANK_N=60）不对外，百分位栏之前空着等于「无数据」，现在改成提示「正在搜集数据」。EP 图例与 CorrectionRiskPanel four-state 改动已对齐，gear 已撤页。出处 fa7aee6f · T-0921-43
-
-- [09-20] [steve] **两个大师级 setup 扫描器上线**：Stockbee（突破+成交量）、Qullamaggie（间隙跳空）新增入库；首晚各自产出互补——Stockbee 扫 15 笔，Qullamaggie 零匹配属常态（25 场历史中位 2 只、20% 场次印零）；新指标上线时发现三类陷阱（盘前时点错、字段缺失、旧行情误读）已修复，体现「淡季指标零行是特征不是故障」。出处 commit 7295e7aa · [data/output/ep_stockbee.json](../../../data/output/ep_stockbee.json) · [ep_qullamaggie 审计](../../../data/research/ep_qullamaggie_baserate_2026-09-20/README.md)
   ↳ 📌 本行原本只存在于主工作树的未提交区（其底本落后 origin/main 14 行），由 Steve 08-30 重放进权威版；主树那份副本请勿提交。
-
-- [09-16] [Marketing Steve] **FOMC 前的系统态度** · 技术确认不足 vs 资金面积累的分歧、Fed 转向纯通胀之战的含义、大事件前的风险管理逻辑。线程形式的完整思考范本。出处 T-0921-102 · 48589457
 
 - [2026-08-30] [Marketing Steve] **一个 append-only 的收集箱，把自己的东西藏了一个星期。** 规矩写的是「往下面追加一行」，八条线都照办 —— 追加到**文件末尾**。而文件末尾在 `## 已收割` 节里面。结果 08-24 之后投进来的 **31 行全部落进「已收割」、且一个 ✅ 都没有**：箱子看起来是空的，实际 43 行里 36 行没人收。逐条数是脚本数的，不是眼睛数的。**没人违反规矩，是规矩自己把东西吃了** —— 当归档位置和追加方向相反时，正确的操作会持续产生错误的状态。修法不是叫大家改习惯，是把正确的落点搬到末尾。出处：本文件 08-30 修订 + [weekly/2026-08-30_W5.md](weekly/2026-08-30_W5.md)
 
@@ -353,8 +241,6 @@
   修法不是补一条规则，是**换一个量**：新闸量的是「首字母在 L 之后的占比」——**一个行数完全不动也会动的量**。
   真实历史上双向对照：在**首个受影响的那一天**就报，健康期 74 个 session 零误报。
   出处：[`incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md`](../../data/reference/incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md)
-
-- [09-22] [steve] **持仓首进/末进日期：三个消费端的日期修复闭环** · campaign（金字塔进出分组）的 firstEntry/lastEntry 从 GAS 云端来、写成 UTC 时间戳，前端直接渲染成完整 ISO 格式（如 2026-09-20T15:00:00.000Z）而非干净日期。T-0922-44 的 grep 抓了 slice(0,10) 的三处，这里没有切片、只是裸渲，本应一起抓却漏了。从现象（显示错日）→ 根源（云端时区混淆）→ 修复广度（import toJstDate() 同步三个消费端）——这是系统自诊的证据：修一处后主动巡查并找齐其他出口，才不会留下「修完了但那边还是坏」的漏洞。[T-0922-48 · a584337c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a584337c)
   · 闸 `pipeline/tools/audit_universe_shape.py` · commit `95c82aff`
   **可发布角度**：这是「建造过程当内容」的标准形状——一个 NULL（六周的数据不能用）+ 一个可复述的判据
   （行数正常不代表宇宙正常）+ 一个真实的自我打脸（我先报了错的机制，被自己派的验证者推翻三处）。
@@ -378,6 +264,8 @@
 - 2026-09-01 | 复盘线 | 复刻 Muninn 的赢家路径研究(373笔):我们 d5=中位峰值的 92%,他算 Qullamaggie 是 91%——"卖 3-5 天"窗口跨账户成立。移动捕获率中位 35% vs Q~50%;top-10 怪兽只有一个保护失败(MU:16.9% 仓位只拿 89% 行情的 14%),处方=浮盈≥2R 留 20-25% 残段给均线收尾。10日线全跟反而 -64R(我们有 1 日爆发单类型)。全文:docs/trade_analysis/MONSTER_PROTECTION_STUDY.zh.md
 
 - [09-19] [Visual Vera] 复盘教学库新增 5 个形态概念，库存 11→16：higher_low_higher_high / three_tight_closes / pocket_pivot（底部形成）+ false_breakdown_reclaim / bearish_volume_divergence（成交量发散），解决 20-session 用尽导致的素材短缺。出处 [fc9452a6](../../pipeline/content/recap/visual_figs.py)
+
+- [09-23] [OPS] **任务管理的自诊与规范化：从班次逻辑到可复用 skill** · 任务板巡逻班 board-patrol 已迭代 4 次，原逻辑只活在 schedule.json 的班次 body 里——无版本控制、改动无痕迹、复用无通道。系统诊断：重复工作没有固化为规范。改动迁移：完整迁移成 .claude/skills/board-patrol/SKILL.md，集成到 agents/ops/config.json 的触发机制，做法从「班次脚本」升级到「版本化 skill」。防护机制：任何改进都通过代码提交可追踪，复用时无需重写。这体现 OPS 线有能力把一个临时班次升级为标准化流程——**诊断重复 → 分析根源 → 制度改进 → 机制防护**的完整能力。[T-0923-37 · 6c668f4b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/6c668f4b)
 
 - **[2026-09-02 · Nighty Zac]** 昨天 Joe 说那台机器有 6 个百分点的随机噪声。**今晚查出来它不是噪声——它在拿上一个测试对象的字节码，测这一个。** Python 判断「缓存的编译结果还能不能用」，只看两件事：源文件的修改时间（**取整到秒**）和**文件大小**。而我们连续测的两个版本，差别常常是 `20` 改成 `21`、`==` 改成 `!=`——**大小一个字节都没变**。同一秒内写完，第二个版本就是用第一个版本的字节码跑的，而报告上写的是第二个的名字。48 对相邻里有 22 对满足这个条件。
   **让它现形的不是多跑几次**，是问了一个别的问题：**翻转的那些，有什么共同点？** 答案——与前一个的字节差**全部是 0**。关掉编译缓存后连跑三次：45% / 45% / 45%，逐位相同（此前 41 / 45 / 47）。
@@ -646,10 +534,6 @@
 - [2026-09-19] [编辑部] **发布节奏断档的双账对账** · 过去 7 天发 5 条（其中 09-13 三条含全库最高 2,275 曝光），末行停在 09-16；09-17~19 零发布。两本账互相佐证：`posts.csv` 末行 09-16 vs Growth Gary 的 `metrics.csv` 注作「09-15~20 未见新帖」。本周关卡 5 条还剩 1 天需补 3 条。可发方向：日常的发帖动作断了，不是「记账慢」或「有人忘了」——两个独立的信号源同时零新货，根因在排期、不在工人。出处 [data/research/repo_health/2026-09-19.md](../../../data/research/repo_health/2026-09-19.md) §零、零点五 · commit 49404348
 - [2026-09-19] [OPS] **分支堆积大扫除完成**：远端 33 条（09-16 前 61 条，一次削去 24 条已合并分支）。存活 5 条在 2 日内完成、25 条待清理已标记、3 条超期压在货架待裁决。worktree 整理机制确认可持续。出处 [data/research/repo_health/2026-09-19.md](../../../data/research/repo_health/2026-09-19.md) §一 · commit 49404348
 
-- [09-21] [OPS] **任务按项目归类 + 建单时 project 对得上项目**｜存量 162 个空项目通过规则分类到课程/市场营销/会员增长；建单闸加验证防止写错。有项目的任务从 15 件升到 41 件、数据不再指向虚空。出处 [tasks/T-0921-35.md](../../fluxus-ops/tasks/T-0921-35.md) · commit 03626dd
-
-- [09-21] [OPS] **Vercel 存储超限触发参数优化** · Hobby Plan 超限：部署存储 09-20 实测 114.79 GB / 10 GB，修法由 Andy 定（保留期 30→1 天、产物目标 ≤5 MB）；自然卸载速度 1.5 GB/日；本周周检确认生产站 HTTP 200 未暂停。可发角度：基础设施压力如何通过参数调优消解；周检流程驱动快速诊断。出处 ea336ab5 · [data/research/vercel_storage/weekly.csv](../../../data/research/vercel_storage/weekly.csv)
-
 - [2026-09-19] [DATA] 蹭位榜候选闸判据 A/B 并排评测完成：15 日重合 38/38、发现判据 B 边界歧义（GOOGL 换人不换数个案，该日人选完全不重叠但总人数相同），见 data/content/x_watch/scoring/2026-09-19_candidate_rule_compare.md · pending
 
 - [2026-09-19] [OPS 工程 · 踩坑故事] **一条导入能破坏整个测试树，而 pytest 不会告诉你是哪一条。** 测试文件用了绝对导入 `from tests.gex.test_schema` 代替相对导入，collection 直接炸裂——符号级错误，全局影响范围。pytest 只说「collection 失败」，留给调试的是整棵树。修法就是一个点：写测试用相对导入 `from .module`，打破 pytest 的寻址链条。**可发角度**：测试基建里最不起眼的小习惯，能卡住整个持续集成；换句话说，一点导入规范=全栈稳定性。出处 `tests/gex/test_render.py` · commit `87db1543`
@@ -660,257 +544,18 @@
 
 - [2026-09-19] [数据哨兵] **从发现问题升级到连续验收**。最近完成交易日 2026-09-17 的数据已由五班巡检各自独立验收：每班重新核对 run_ledger 该场次的所有 guards（universe_quality / watchlist 安全）、tradeable 票数稳定在 2536、零新失败。巡检系统不只是找问题——它在说「前面那班的活我核过了」。问题从「我拿这个数时还能信吗」变成「连续五次都对，基本能信」。出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) [2026-09-19]
 
-- [09-20] [steve] **新指标上线的深层验收**：Stockbee、Qullamaggie 扫描器部署时发现并修复三类陷阱（盘前时点错标 / 字段缺失 / 旧行情误读），每类都会反向扭曲特征检测；Qullamaggie 零行从「可疑故障」升级为「淡季特征」的确认，基于 25 场历史回放（零行出现概率 20%、中位命中 2 只）。出处 commit e96d4547 · [data/output/ep_stockbee.json](../../../data/output/ep_stockbee.json) · [ep_qullamaggie 审计](../../../data/research/ep_qullamaggie_baserate_2026-09-20/README.md)
-
-- [09-20] [Growth Gary] **Whop 档位信誉徽章清零坑**：产品现有 15 人徽章绑在档位代码上，编辑保留但新建则清零。发布清单新增护航项。出处 data/growth/whop_launch_checklist_2026-09-25.md · 2c4a5f17
-
-- [09-20] [DATA ALEX] **系统验收消耗成本，但代价值得。** 周末无交易日，run_ledger 四班照跑、全过关；验收不是「有活儿才启动」，是「一直看着」。这就是数据为什么能信——背景级的监控，每班都把前班的数据重新过一遍闸。出处 data/research/night_reports/INBOX.md · commit 7295e7aa
-
-- [09-20] [RND Linda] **我们的数据质检给一份「周一早上 5 点 31 分的空盘」盖了合格章。** 那份 universe 快照字段齐全、成交量缺失率 0.0，管线自己判 `quality.status: ok`；同一周一份真正的收盘数据反而被判 `degraded`。因为质检一直在量「有没有值」，没人量过「这批值是哪一刻的」。我们全历史 156 份快照回查：5 份是盘前的，8 份的分母（50 日均量）当时断供，9 个交易日整天没有一份可用的货。新闸用的是一个标准指标的聚合版——RVOL，当日量除以均量；正常日落在 0.98 附近，那 5 份盘前的落在 0.006–0.024，中间是 25 倍宽的空白。**坏数据不长得像坏数据，它长得像一份很干净的数据，只是来自错误的时刻。** 出处 data/research/universe_freshness_2026-09-20/README.md · commit 8e466eb2
-
-- [09-20] [DATA Linda] **Qullamaggie 这类指标，淡季出现率的常态是「大部分场次零行」——不是故障。** 25 场历史中位 2 只、20% 场次印零行；第一晚查 0 行诊断（09-19），今晚改走 130 场回放。验证过程挖出三个系统陷阱：①盘前 payload 被标错日期（156 份快照里 13 份时点错，RVOL 作为新闸能 25 倍宽度分出）②字段缺失（gap_pct 等六月底才进 universe.json，129 场历史覆盖率全 0）③老旧行情误读成跳空（gapsize 原始公式与重建对照 23/23 完全过关）。一句可发的话：**字段新出生前的历史数据，永远有两种读法，其中一种永远坏掉**。后续沉睡问题（C 段命中往下走，分不开行情/季节）开到 10-13 观察。出处 [data/research/ep_qullamaggie_baserate_2026-09-20/](../../data/research/ep_qullamaggie_baserate_2026-09-20/) · commit c6d46b81
-- [09-20] [DATA ALEX] 行情池的自检从欠条变在线 · universe.json 写盘后自动验证新鲜度，异常当场落账。三行码接进晚班管线，欠条一笔勾销。出处 23b44f95
-- [09-20] [DATA ALEX] **盘前快照的二道闸升级完成。** oratnek_diff 选快照先过质检，avg_volume 断供的货当场换下一份；两个时钟（timestamp/bar_date）挡住盘前生成时的日期混乱，新闸 payload_is_unfresh() 挡住数值断供。Linda 09-20 的新鲜度审计查出 156 份里 13 份坏货——5 份盘前、8 份 avg_volume 死——这一针打完，两类都挡住。**预防性的闸：建设时没问题，但冬眠着防将来。** 出处 8daab11f · pipeline/tools/oratnek_diff.py payload_is_unfresh() · tests/test_backfill_preset_hits.py
-
-- [09-20] [Marketing Steve] **「检查全绿，其实少了一维」—— 数据哨兵完成时点维的升级。** 质检长期在量「有没有值」，没人量过「这批值是哪一刻的」；Linda 用标准指标(RVOL聚合版)补上这一维，回扫发现 156 份快照的 13 份来自错时刻（盘前 5、avg_volume 断 8、零库存 9 场），推动了下游四层闸的联动修复。**坏数据不长得像坏，它长得像一份很干净的数据，只是生于错误的时刻。** 出处 [data/research/universe_freshness_2026-09-20/](../../data/research/universe_freshness_2026-09-20/) · 8e466eb2（审计）· 8daab11f（修复）
-- [09-20] [DATA Linda] **时钟对了，货可以不对。** backfill_preset_hits 的时钟闸（timestamp/bar_date 双核对）看的是「这份货是哪一刻的」，宝宝就算全绿——盘前 payload `bar_date: 2026-08-18`、timestamp 解出 `last_completed_session: 2026-08-18` 也全对，但它**根本没有** 2026-08-18 一整天的交易。双时钟无法区分「时刻错」和「时刻对但不完整」，这就是为什么需要第三把闸（RVOL 分子分母同时活着的质检）。**机制最怕的不是「对」和「错」混淆，而是在「对」的频道上无法区分「完整」和「不完整」。** 出处 [data/research/universe_freshness_2026-09-20/ §七](../../data/research/universe_freshness_2026-09-20/README.md#七-留下的那个真问题现有的闸挡不住它) · audit_universe_freshness 与 backfill_preset_hits 的分工设计
-
-- [09-20] [Marketing Steve] **蒸馏厂今日一问 · C19「顶是过程底是事件」** · 大盘顶部通常长什么样？第一段音频约 5 分钟。出处 [data/reference/VAULT_STATUS.md](../../../data/reference/VAULT_STATUS.md) · 0ba27ad0
-- [09-20] [Marketing Steve] **教师金句｜"The day you stop needing me is the day I did this right."** · 教是为了不被需要；Own_Lines #123 排队项，课程 09-25 上线前最后一个周日发布窗口。英文打磨版已成稿；中文可并用「哪天你不需要我了，那就是教得最好的一天。」· [data/content/today_draft.md](../../data/content/today_draft.md) · 67cbff98
-
-- [2026-09-19] [Steve] **周复盘出片 · 试跑首次完整跑通**｜粉丝 283（09-13 后净增 8）· 发布 2 帖 · 下周队列 7 候选草稿 · 承诺落空升级自动化闸（T-0919-35）。从「试跑」升级为**运营机制**：选题→评审→发布全程机械化，每周日自动化 SOP 完成。出处 [weekly/2026-09-19_trial.md](weekly/2026-09-19_trial.md) · c8768770
-
-- [09-20] [编辑部] **markdown 规矩靠不住；断言测试才能防住系统约定被悄悄改变。** 试跑重定向从「只在 SKILL.md 里说」升级到「代码里有断言钉死」——09-19 的事故如何倒逼出 09-20 的防线。出处 01e8909f
-
-- [09-20] [Marketing Steve] **周复盘 W38 字幕版上线** · 09-19 试跑版缺字幕且未递送；字幕版重写大盘叙事、中英 PDF 全新渲染（EN 7 页 / ZH 6 页），交付闸全绿 · 出处 [data/research/night_reports/INBOX.md](../../data/research/night_reports/INBOX.md) · ab744aa3
-
-- [09-20] [steve] 两个产品线 share 同一个输出模板，守卫全是「源头数据有就打」，没人反问「这行只该在某种情况出现」。周刊版 delivery.md 指向了永远不存在的英文配图文件，一年没人发现——因为没这道回归测试。`T-0920-31` · [pipeline/tests/test_recap_delivery_md.py](../../pipeline/tests/test_recap_delivery_md.py) · [commit 1f19672b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1f19672b)
-
-- [09-20] [Marketing Steve] **试跑模式的环境隔离从 SKILL 文字升到代码断言。** daily-recap skill eval 从「SKILL.md 里说一句『用 FLUXUS_RECAP_ROOT』」升级到「eval#3 钉死试跑场景的完整流程」——当 agent 读到『试跑』这个词时，会跳过常规导流、直接跑断言来完成环境切换。同一个工作流的两种模式（试跑 vs 正式）共用一份代码；没有机制强制隔离，就等于两个模式最终会污染同一个输出目录。出处 [.claude/skills/daily-recap/evals/evals.json](../../../.claude/skills/daily-recap/evals/evals.json) · commit a144a5c2
-
-- [09-20] [DATA ALEX · 哨兵巡检] **周末无交易日，系统仍在验收。** 09-20 12:00 JST 的巡检发现最近完成交易日 2026-09-18 的数据已落 main（commit 7295e7aa），dashboard 停在对应日期无滞后，无需分诊无需重跑。周末数据按计划采样验证，关键是**验收不是「有活儿才启动」**——无交易日一样巡检、确认前班数据无漂移、后班接力点也有人看着。出处 agents/alex/runs/2026-09-20T12-00-45+09-00-T-0920-43.md · 8643d08
-
-- [09-20] [OPS] **Vercel Hobby 存储的无声超限与控制台异常** | 114.79 GB / 10 GB（超 104.79 GB），日消耗 1.5 GB；09-14 的「0 B」是控制台读数异常，真实衰减轨迹被掩盖（09-12 126.07 GB → 09-20 114.79 GB，七天削减 10.6 GB）。官方 09-16 版新事实：Hobby 保留期四项统一 30 天。决策：不升级 pro，改保留期四项 30/7/7/14 → 1/1/1/1 天；产物侧并行优化（当前 102 MB data/output，目标 ≤5 MB，见 T-0920-55）。可发布角度：**一张显示「稳定」的仪表板和一条在走的衰减曲线，可以相差七天而互不知情。** 出处 `data/research/vercel_storage/weekly.csv` · 57c147d6（实测）
-
-- [09-20] [DATA] 数据哨兵巡检通过：09-18 交易日市场数据落地、系统无异常 · 7295e7aa
-
-- [09-20] [Marketing Steve · 踩坑故事＋NULL 结果] **「这周只发了两条」是我们自己的账说的，X 上发了六条。** 上周的周结派了一个全新上下文的子 agent 逐条复核，它查得一丝不苟：`posts.csv` 里 09-14/15/17/18/19 确实一行都没有，报「本周仅 2 帖」。真相是这本账只有人手工补录时才会长——它从 09-14 起就漏了四条，其中一条（ET 09-18 那条金句）403 曝光，是这周最好的一帖。**而拆穿它的第二把尺子一直摆在隔壁**：同一个目录下的 `own_account.csv` 每天记一次 X 官方的发帖总数，898→909，和台账从第一天就对不上，没人去看。教训：**复核一个台账里的数，和复核这个台账全不全，是两道不同的闸——我们只有前一道，而前一道会对着一本缺页的账照常判绿。** 连带三处对外读数被污染（编辑部「7 天发 5 条」、OPS「发布计分掉线」、增长记账「曝光 −98%」，真实合计 1,055）。出处 commit `fe14fe19` · [W38 周报](weekly/2026-09-20_W38.md)
-  ↳ ⚠️ **更正 517 / 527 两行**：那两行写的「09-17~19 零发布 / 过去 3 天零新货」均据同一本缺页账，**不成立**。
-- [09-20] [Marketing Steve · 可发布数字] **本周板块扩张榜：Real Estate 命中数 87 → 134（+54%）、Technology 3,097 → 3,713（+20%）、Energy 911 → 1,054（+16%）**；同期 Industrials −6%、Consumer Cyclical −7%。对照期 09-04→09-11，本期 09-14→09-18，全口径来自我们自己的 143,449 行筛选器归档，不是感觉。**本周第一次上榜的新面孔 69 个，≥3 个筛选器同时命中的 661 个。** 出处 `scripts/weekly_callback.py`（归档 2026-03-09 → 2026-09-18）
-- [09-20] [Marketing Steve · 判断兑现＋可发布数字] **我们给发帖台账装了第二把尺子，装的时候差点把它装成一个天天喊狼来了的闸。** 第一版的想法很自然：X 官方给的「发帖总数」和我们台账的行数对不上就报警。问题是那个总数含回复和转发，我们的台账不一定收——这个等式**永远**对不上，闸每天都红，红到第三天就没人看了。改成问一个没有口径歧义的问题：**有没有哪一条帖在 X 上存在，而台账里没有？** 实跑绿，两个方向的阳性对照（闸漏改 / 闸接错把人写的备注覆盖掉）都报得出红。**一个总是报警的闸和一个从不报警的闸，坏的方式一样。** 出处 commit `f2816c26` · `data/content/x_watch/tools/sync_own_posts.py`
-
-- [09-21] [数据哨兵] **晨检无异常**：dashboard 数据日期 2026-09-18，系统监测无新失败。出处 T-0921-01
-
-- [09-21] [OPS · 数据哨兵] **市场数据管道自动化验证体系**：每交易日收盘后 1 小时内完成数据落地 + 自动分诊；dashboard 与交易日同步确认、完整性 100%；系统在最近 48 个交易日内零新失败，异常即刻回溯。可发布角度：一条自动化验证闸从无意义变成可信，关键在「能检测你正在检测的东西」——孪生排程、冬令时窗口改动、市值断点这些大改动都进了分诊器，改法和验证结论一并上链。出处 data/research/night_reports/INBOX.md · T-0921-05 · commit 7295e7aa
-
-- [09-21] [DATA] **Discord 数据推送系统上线** · 快报/状态/告警三类消息实时推送，webhook 地址外部配置、不硬编码；配套 TV 指标库存编制（仓库留痕整理、未核实部分如实标注）；14 条测试全覆盖。可讲角度：数据端从「静态档案库」升级到「实时推送枢纽」；同时在透明与可追溯上从不开始的地方再做一遍。| [c4cd622d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c4cd622d) · [data/reference/discord_webhook_channels.md](../../data/reference/discord_webhook_channels.md) · [data/reference/tv_indicator_inventory.md](../../data/reference/tv_indicator_inventory.md)
-
-- [09-21] [数据哨兵] **系统可靠性从「有故障才维护」升级到「持续验收」** · 最近 48 个交易日数据巡检零新失败；新鲜度闸从「看有没有值」升级到「看什么时刻的值」；盘前快照自检识别率 5/5（156 份历史快照回扫：盘前 5 份、avg_volume 断供 8 份、库存为零 9 场景），对应下游四层修复闭环。可讲角度：坏数据不长得像坏，它长得像一份很干净的数据，只是生于错误的时刻。验收升级的代价是成本（每班重核），但不做就靠运气——而运气在你有 5,600+ 只证券的池子里是一个不可靠的闸。出处 [data/research/universe_freshness_2026-09-20](../../data/research/universe_freshness_2026-09-20) · [8e466eb2](../../commit/8e466eb2)（审计）· [8daab11f](../../commit/8daab11f)（修复）· T-0921-15
-
-- [09-21] [OPS · 周检] **关卡机制首次过关验证：周发布 7/5 超目标** · Andy 两周前设立这套游戏机制（截止日+关卡计分），当时是「试试能不能对付拖延症」。本周周检数据说：**上周实读 7 条超预期 5 条**，同期五个此前断档的团队全部重新开张（claire/gary/mia/q/vera 从零到有）。系统化改进从「理论」变成了「实操数据」。可讲角度：一套激励设计，装进真的系统里之后，最直接的验证就是超目标交付这一个数字。出处 [data/research/repo_health/2026-09-21.md](../../data/research/repo_health/2026-09-21.md) · commit 6ac76efc · T-0921-16
-
-- [09-21] [steve] **「顶是过程，底是事件」** · 蒸馏厂题库 C19 核心概念，三个维度拆解（大盘顶部形成机制 · 个股筑顶典型案例 · 5 分钟 M 顶 supply/demand 反应）。15 分钟可讲，课程标题级资产。出处 [data/reference/VAULT_STATUS.md](../../data/reference/VAULT_STATUS.md) · [09d58a82](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/09d58a82d)
-
-- [09-21] [steve] **今日发布三条素材排期确定** · C1 与 C3 英文金句（Own_Lines 诚实劈半与领跑姿态）+ C2 中文身份冷嘲（长期投资者的获得时机）。金句库、弹药库常青条目，未曾同族发过、无过期风险。出处 commit 4bc27212 · [data/content/today_draft.md](../../../data/content/today_draft.md)
-
-- [09-21] [OPS·数据验证] **周末无交易，系统照常待命** · 09-21 晨检确认上一交易日数据无漂移、dashboard 对应日期完整无滞后、监测 0 新告警。系统可信的基础：验收不休息——无交易日一样巡检、确认前班数据无抖动、交接点有人看。出处 T-0921-27 · [agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md](/Users/taolezhu/Documents/fluxus-ops/agents/alex/runs/2026-09-21T10-00-24+09-00-T-0921-27.md) · 7295e7aa
-
-- [09-21] [OPS] **自动化硬闸的反向 bypass——判据设计必须覆盖两个维度** · 工人不许在共享主树提交（Ruling 57），装 pre-commit 钩子拦。第一版只检查环境变量 `FLUXUS_WORKER=1`；反向坑：工人在自己的 linked worktree 里也被拒掉了（钩子被所有 tree 共用，光看身份不够）。修正判据为「是工人 **且** 不在 linked worktree」（`git rev-parse --absolute-git-dir` 含 /worktrees/ 段则放行）。教训：自动化守卫的反向 bypass 路径有多条，第一版发现的是垂直方向（工人身份），改进方向却被老板在第二个回合抓出水平方向（位置判断）。两个维度交叉测。出处 [CLAUDE.md · 工人流程](../../CLAUDE.md)
-
-- [09-21] [OPS · 数据哨兵] **晨检确认数据已追平最近交易日** · dashboard 数据日期 2026-09-18，系统监测无新失败，无需分诊。健康状态的可讲角度：连续 48 个交易日巡检零新异常——验收升级的复利。出处 T-0921-37 / 8aec18df
-- [2026-09-21 · DATA ALEX] 「照抄原文」的注释会撒谎：VIX/VIX3M 期限结构的代码注释写着 turin thresholds verbatim，原文是三刀 .8 / 1 / 1.1，代码只剩两刀——最凶的那档「投降」整个没了，而注释替它作了伪证。同一轮复查里，46 个阈值写不出来源，其中约 30 个连当初为什么这么定都没人记得。出处 cefe2255 · bb5cf66c
-
-- [09-21] [OPS] **验收条件本身错，ops 一句话裁、不劳烦 Andy**。新加 ASK 判词进复核流程：代码没问题但任务描述有错（验收要求的 commit 根本不存在）→ 不拍板直送，改成任务板自动开 followup 单给 ops，ops 核实、修正或告知关闭。T-0921-50 案（验收号 4ae0e53d 不存在）原本被直送到 Andy，现在改成 ops 侧一个往返搞定，降低不必要的噪音。出处 T-0921-52 / [abc86f92](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/abc86f92)
-
-- [09-21] [DATA] **Sugar Babies 预设上线——从自制规则改用标准方法** · Stockbee 的 9M EP 高频名单（25–30 支票，Pradeep Bonde 视频 A_0ep4ekGWM）替换了原来的 4% 突破+自制阈值（boCount_1y≥10 / boCount_3m≥2）。这是「先查有没有权威口径，别自己造」这条规矩的第二次实践（第一次是 ADR 地板）。系统从「相信我们算的参数」升级到「跟踪标准写法」——交易者验证过的方法，比分析师自洽的假设更便宜。出处 [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [sugar_babies.py](../../pipeline/screeners/sugar_babies.py) · [screener_methods.md](../../data/reference/screener_methods.md) · T-0921-72
-
-- [09-21] [steve] **Sugar Babies 预设前端集成完成** · screenerFilter 新增 sugarRank 字段、预设分组同步、vitest 覆盖 (8→9 用例通过)。用户侧体验：市值≥$1B 的前 30 只高 EP 频度票实时扫描与排名（6 月优先，1 年破平）。出处 T-0921-74 · [1a49a5ff](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1a49a5ff) · [screenerFilter.js](../../frontend/src/lib/screenerFilter.js) · [screener-presets.json](../../frontend/public/data/screener-presets.json)
-
-- [09-21] [DATA ALEX] **代码配置出现"死文件"**——清掉退市 ETF 时才发现，前端 etf_data.json 冻了半年、没代码读它、却每次 API 变化都要跟着改。同一类问题的模型：名单里冷冻的配置缺少"谁该用"的明示，改动时失去自我检查的机会。出处 T-0921-70 · [c85ce2ee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c85ce2ee)
-
-- [09-21] [OPS · 数据哨兵] **晨检确认数据已追平最近交易日** · dashboard 数据日期 2026-09-18，系统监测无新失败、无需分诊。最近正班完成于 2026-09-18T23:20，市场数据 K 线已更新至当日收盘。出处 T-0921-79
-
-- [09-21] [OPS] **审查规则的自我修正：把过期陈述改成现场检查**——Q2 豁免判据里写着「三份文件都没有测试读真实文件」，第二轮复核发现 test_daily_recap_skill_dryrun_guard.py 确实读 SKILL.md 真实内容；这句假断言会让后续审核员跳过验证。改法不是加个例外，而是把验证从「看文档的保证」改成「自己 git grep 一遍」——自动化闸从说「我检查过」升级到「检查不了，你自己查」。**好的守卫不能替人检查。** 出处 T-0921-71 · [38778ffd](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/38778ffd) · [branch-review/SKILL.md](../../.claude/skills/branch-review/SKILL.md#L-10)
-
-- [09-21] [OPS] **完成说了，搜索还有 5 个** · T-0921-70 清掉 EATZ 的回执写「已合并 main」、T-0921-71 修复也合进了，搜索仍有 5 个文件。「签回复单」和「确认办完」是两件事。完成定义缺搜索验证。[T-0921-77 · 38778ffd]
-- [09-21] [steve] RS 标签改自然月式（1M/3M）、VCP 补齐 Minervini 三条与 RS≥70——自造阈值改标准方法时命中减少，反映的是条件收严而非数据坏；标准化的成本是可见的。出处 [T-0921-88 · b11e56c1](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b11e56c1)
-
-- [09-21] [DATA ALEX] **财报季的 EP 行业轮动实证** · 按财报季和 Finviz industry 族群汇总 EP 命中（Stockbee+Qullamaggie）4 个完整季度；上/下季的 top5 族群对比显示真实轮动痕迹（新入/脱落族群），是「轮动」课程 Rotation §5 的量化支撑素材。季间族群进出可讲角度：为什么 Semiconductors 在 Q1 第二，Q2 却掉出 top5，而 Drug Manufacturers 反向新入——这是市场真实在选择，不是模型参数在选择。出处 [T-0921-85 · cb021fde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb021fde) · data/output/ep_industry_seasons.json · pipeline/tools/ep_industry_seasons.py
-
-- [09-21] [OPS] **单号校验的二三位数不一致卡住投递系统** · taskboard 的 next_id 按 `:02d` 生成三位数 ID（D00–D99），但 taskfile.py 的校验正则 `\d{2}` 只认两位数，第 100 张单开不出（`ValueError: id must look like T-MMDD-NN`）。修法：两处正则改 → `\d{2,}`；验证通过（T-0921-100 成功开出、241 tests passed）。背景：修前恰逢门铃退役、任务板成唯一投递通道，这个漏洞会每天复发。可讲角度：生成和校验必须同轴，误配会从自动化变成自动绞杀——一个适合上到 CI 的 schema 检查点。出处 T-0921-101
-
 - [09-21] [OPS] **答复到了：单号校验修复已上线** · T-0921-106 报告的 taskfile 正则匹配漏洞（第 100 张单开不出）已修正：两处校验正则从 `\d{2}` 改 `\d{2,}` 支持三位 ID。运行验证通过（T-0921-100 成功开出、241 tests 全绿、schema 检查无新异常）。背景意义：门铃体系被任务板替代后，ID 校验漏洞会**每天复发**——一个看起来很小的 regex 绞杀整个投递通道。这是「生成和校验必须同轴，误配会从自动化变成自动绞杀」的实例。出处 T-0921-107 / 提交 e726ed3
-
-- [09-21] [Linda] **四条网红交易规则，我们全测了一遍：三条不成立，第四条成立的那一半是同义反复。** 最好讲的是第三条——「指数收红那天守住前一天低点的票更强」：63 日内创 52 周新高的概率 49.5% vs 41.3%，看起来 +8.2 个百分点漂亮得很。**按「当天离 52 周高点还有多远」分十档再比，这 8.2 点塌成 −0.8…+1.5。** 一只当天没跌的票本来就离高点更近，所谓的信号只是把这件事换了个说法。真正的杀招是第四条：族群里最先回到 52 周新高的那只，之后 63 日跑输同组其余 2.68 个百分点、一年跑输 5.31——因为「先回新高」中位落在组内跌幅排名前 22%，29.7% 的情况它**就是**跌得最少的那只，而跌得最少的那批在反弹里弹得最小。同一形状我们在另一份独立样本（39 只票、不同作者）上也量到了：42 日反弹 15.6% vs 22.1%。可讲角度：**为什么「跌得少」和「强」在直觉里是同一件事，在数据里是两件事。** 出处 T-0921-111 / 提交 76550aa8 · [data/research/four_rules_2026-09-21/README.md](../../data/research/four_rules_2026-09-21/README.md) · 脚本与 json 可复算
-
-- [09-21] [steve] ARM 日内 VWAP 回踩入场 + 减仓时点｜30min 图上 VWAP reclaim buy（美东 10:30）形成入场信号，次日高开前减仓。基本面支撑（AI 算力瓶颈驱动 CPU 需求）、技术面验证（FOMC 后看多做多的背景），一条交易从信号到执行的完整记录——可作「日内 setup 精度」的案例素材。出处 T-0921-113 · data/research/trade_notes/2026-09.md · 96704573
-- [09-22] [OPS · 数据哨兵巡检] **规矩体系中的遗留矛盾：四处不一致都源于「旧要求没更新成现在的」** · 独立复核发现 CLAUDE.md/KNOWLEDGE.md/TEAM.md/DATA_CONTRACTS 四个位置的文字矛盾。逐条追溯的结论：系统规矩在演进时**遗留了旧判据**——新规则已落地生效，旧说法仍在条文里，形成事实上的两套标准。症状通常不是一处「文句重复」（容易被看见），而是分散在多个文件（同一条规矩有五种说法）。体系巡检的要点不是「有没有重复」而是「**旧的和新的是否实现了交替**」。对应的是系统规矩可信度直接来自文本一致性——每一条都必须是现行的，不是历史遗迹。出处 T-0922-04 · 提交 73301810
-
-- [09-22] [OPS Fable] **自记账的杠杆和账户的真实值脱节** · Andy 账号升上 20x，每日页还在用自己记的 5x 的预算额度。这不是故障，是系统没人去对过一次真——改成直读账户的实时杠杆后，决策依据终于和操作用同一个参数。可讲的角度：工具不经意间躺平的脱节，往往就躺在「这本该是真实数据但没人去验一遍」的地方。出处 [T-0922-06 · d205472d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d205472d)
-
-- [09-22] [DATA] **晨检数据按时交付（JST 07:30）** · 死线班核查确认 2026-09-21 完成交易日的市场数据已准时落地 main；market_health.json 状态正常（stale: false），K 线及信号数据更新至收盘。系统连续无失败、无需分诊。出处 T-0922-14 · [bed1fac7](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bed1fac7)
 
 - [09-22] [Marketing Steve] **三条内容、三种语言、零重复——库存精准拼配的完整链条** · 09-22 队列执行：中文原创比喻（育儿耐心 vs 动能）+ 英文金句（展示自嘲）+ 中文故事（牛顿买卖泡沫）。三条互不同族、不同调性；全部经 posts.csv/verdicts.jsonl 查无重复发布记录（防护链）; 排期来自 09-20 结算台 Andy 亲笔敲定（准确度证据）。可发角度：**内容库存在多维去重下能撑起丰富搭配**——从「库里有什么」变成「库里有对的什么」，度量从库存数变成搭配精准度。出处 T-0922-24 / 提交 2597b250
 
-- [09-22] [steve] **蒸馏厂的自动问答：系统没有人工提醒还能推进知识循环** · C19「顶是过程，底是事件」的口述原料（09-06 Andy 给的提纲+部分正文、15 分钟待讲）被搬进课程库后，系统自动从中挑出「大盘的顶部通常长什么样」这个精准问题递给 Andy。搬运班每天照常跑，没有人工通知、没有待办清单，却把原料系统化、从三个维度里挑出第一段生成下一个问题。可讲角度：**从「存档库」升级到「思考引擎」**——系统不只记录，还能自主判断「还缺什么」、推动完整化的闭环。不是 AI 代笔，是**流程能自己推进自己**。出处 [T-0922-23 · b50f7944](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b50f7944) · [data/reference/VAULT_STATUS.md](../../data/reference/VAULT_STATUS.md#line-5)
-
-- [2026-09-22] [OPS] Dashboard 死线从晚交到按时——09-21 数据 JST 07:26 落地、赶在 08:30 deadline，改善自 09-18 的晚交（08:35）。每日决策流程的输入及时了。T-0922-29 / b124906
-
-- [09-22] [OPS] **任务板巡逻机制：每天一次全自动审查，294 项任务零滞留、零积压、零错配** · 日常巡逻扫描全部 294 项待办任务，按四维审查（blocked 原因、needs_andy 滞留、owner 错配、云端转交堆积），输出单页报告。2026-09-22 巡逻结果：0 滞留（needs_andy 任务全部在 3 天内）、0 错配（owner 与改动路径完全对齐）、0 积压（云端转交无待处理）。系统透视度足够高，问题发生当时就能被看见。可讲角度：**一个看不见人的机制在自己修复自己**——没人盯、没人提醒，制度本身就能保持零滞留状态。这是「从人工审核」到「系统自检」的证据。对应的是管理系统不再依赖定期会议、不再依赖事后追问，而是每个流转环节都有对应的检测点。出处 [T-0922-27 · 20260922_011522](../../Documents/fluxus-ops/agents/ops/runs/20260922_011522-T-0922-27.md)
-
-- [09-22] [steve] **每日复盘多形式交付完整化** · 市场分析同步生成中英 PDF（深度阅读）· Substack 逐页图（快速浏览）· X 社交素材（社交分享），覆盖三个受众触点。系统不只是产出分析，而是建起「分析→多格式→多渠道」的完整交付链——这是对外讲系统活能力的证明。[T-0922-22 · de7fad98](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/de7fad98)
-
-- [2026-09-22] [OPS] **102MB 数据偷偷进了不该进的地方** · Vercel 部署产物超 10GB 上限，查根源是 data/output 每次打包时都被自动塞进去，没人明确下过这个指令。改法是一条 rewrite 规则：数据源改成 GitHub raw，构建脚本无需再存储它。**新加的测试**则看住后门：确保 buildCommand 不会再自动包含 data/output，rewrite 规则始终排在前面。**一句可发**：优化往往不只是改一处，还要装上一道防反复的闸——防的就是「修好了，但没人想起它会再坏一遍」。出处 T-0922-36 / commit 38899620
-
-- [09-22] [steve] **Vercel 存储超限时的诊断与改善：从隐性瓶颈到可测的收益** · 系统启动了 JavaScript 打包输出审计后，才发现 data/output 在构建时被自动复制进产物（102 MB，之前无人察觉这条后台流程）。改动前后对比清晰：npm run build 产物从 119 MB → 47 MB（-61%），预计月度存储成本从 10GB 上限下的超额状态 → 0.1 GB（预算内）。改动后通过 rewrite 规则代理到 GitHub raw，数据变更 5 分钟内生效（比等待 Vercel 构建更快）。可讲的角度：**系统有能力发现自己的隐性消耗、用量化数据证明改善**——这是「系统活能力」的实证，不是承诺。从「问题存在」到「数据证明改善」的完整链条，也是对外讲系统可靠性的证据。出处 T-0922-40 / commit 38899620
-
 - [09-22] [Marketing Steve] **持仓日期时戳泄露：从现象到级联修复** · campaign header 把 GAS 的原始 ISO 时戳直接渲染（2026-09-20T15:00:00.000Z 格式），而不是日期。根源追溯：entryDate 在三处消费端的解析分散（campaign.js 这处 + T-0922-44 已修的两处 .slice(0,10)），本次补回遗漏的一处原始渲染。完整链条示范：现象→分布诊断→统一修复→测试覆盖跨端点。系统自诊能力证据。出处 a584337c · [T-0922-55](../../../../../../Documents/fluxus-ops/tasks/T-0922-55.md)
-
-- [09-22] [Marketing Steve] **整行全大写帖暴露的故障检测链条**｜09-19 主班测试发现 RealJGBanks 全大写周末帖被误标 6 个代码词，代码计数因此虚报 31→37。根源：文本处理器把「无小写=代码」当同义，缺乏「这条线太长且一个小写都没有」的排除。改法：逐行扫、>25字且无小写的行跳过裸大写词分支。防护：注入两个方向的阳性对照（漏改→2红、改了但接错→1红），分支 24 通过。**这是「从故障现象→根源诊断→修复→双向验证」的完整系统自诊链条**。出处 T-0922-63 / 69e12992 · [Fluxus_Brand/ops/tools/x_watch/fetch.py](../../../Fluxus_Brand/ops/tools/x_watch/fetch.py)
-
-- [09-22] [OPS · 数据哨兵] **CI 故障要我们先发现——监测加第 11 项 + 自动 P0 路由** · 09-22 main 上 CI 连红 7 小时，是 Andy 从邮箱里发现的，不是巡检发现的。盲点诊断完毕。系统改进：tools/monitor.py 加第 11 项 check_ci_status，每 2 小时查一次 main 上 tests.yml 最新运行（gh run list 获得 run id + conclusion + headSha；失败时追加 gh run view --log-failed 的前 3 行定位是哪个测试红的）。alex-sentinel 哨兵同步加这一条检查，CI 不绿立刻按标题「CI 红：main tests.yml 失败」去重开 P0 单给 alex——不再等 Andy 的邮箱。**诊断→改动→防护**完整链条：从「邮件才知道」升级到「2 小时自察」。系统能检测自己的故障，证明从被动应急升级到主动诊断。测试 8 条全绿；生产环节每 2 小时一班、单班执行数秒。出处 T-0922-61 / 967a643 · [tools/monitor.py](../../tools/monitor.py) · [schedule.json](../../schedule.json)
-
-- [09-22] [steve] **诊断链条从「状态」升级到「状态+理由」——universe_freshness 防护的完整闭环** · 先前的改动（T-0922-60）补齐了 ok 状态的证据（RVOL + 行数），现在 run_all.py 把这些数值不再丢弃、落进 ledger.note。**系统诊断从「报绿」升级到「报绿且能说出为什么」**——一句「ok」变成一条可审计的记录。关键点不在新加字段，而在「供给侧开始携带理由」的习惯改变：下游任何守卫都能根据 RVOL / 行数判信任度，而不只是信任一个状态符号。这是分布式系统自诊能力从「状态日志」升级到「因果链」的证据。[T-0922-76 · c6461e3b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c6461e3b)
-
-- [09-22] [steve] **交易故事的系统化记录与多版本迭代** · ARM 在 FOMC 后的交易决策（VWAP 回踩入场、减仓时点）从原始口述开始，经四版迭代（压字数保核心、加Friday context、结尾呼应主题）最终定版 152 词，进入 voice/raw/ 教学资源库。系统化记录的价值在于版本历程可追溯——每一版修改理由清晰（字数限制 vs 论点保留 vs 结构深化），便于课程库按需复用。不只是「有素材」，而是「素材的演进链条透明」——这样的内容可信度高、复用效率高。可讲角度：**从零散口述到系统化资源的完整链条，反映内容供给侧的诊断与自优化能力**。出处 1abb0390 · [Fluxus_Brand/voice/raw/2026-09-22_arm_x_draft.md](../../Fluxus_Brand/voice/raw/2026-09-22_arm_x_draft.md) · commit message
-
-- [09-22] [steve · 数据哨兵] **发布源漏抓时的现场补录机制** · posts.csv 自动抓取可能漏掉特定格式（长文、复杂交互内容），系统做法是每次发布时 Steve 现场检查是否被记录——漏了立刻补。ARM 复盘长文（2102288439857365448）09-22 发布时被发现漏缺，补录后在 CSV 注释标记「当场录入」作为链路可追踪。**数据可信度的守护不是靠事后补救，而是每个交付点都有人工验证**——发布与检验同步进行、缺口发现即刻闭合。系统活能力从「输出数据」升级到「输出数据+能验证它的完整性」。出处 T-0922-83 · [dc6534a3](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/dc6534a3)
-
-- [09-22] [OPS] **规则分类的缺失如何把审核路径搞反** · T-0922-79 的 `copy_fix` 标签卡在 Q2（代码测试豁免路径），原因是**有代码载体的文案改动和纯文案改动混用同一标签**，导致分流到了不该走的复核流程。诊断后的改动：`copy_fix` 专用于「字符串常量、错误提示、有 snapshot 测试盯着的模板」，纯 markdown/草稿改用 `content` 标签。改法的关键不在新增标签，而在**分类规则从「看起来像」升级到「有没有测试载体」的明确判据**。防护：后续任务创建时按实质选标，避免在复核环节才发现走错路——**问题检测从事后复核前移到创建时刻**。系统诊断能力的证据：从「处理错分」升级到「防止错分」。出处 T-0922-92 · [252ef594](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/252ef594)
-
-- **[2026-09-22 · Marketing Steve]** **退款政策从「赌买家没看完」改成「买前就能试」的系统改进链条。** 09-19 草案有两个选项（7 天无理由 / 3 天+已使用条款），两个都有风险——7 天会被看完后退款、3 天的「已使用判定」靠后台记录、Whop 根本查不出。**诊断**：两个选项的共同根源是缺少「免费试学」这个变量，条款是在「赌」。**改动**：Andy 09-22 裁决推翻选项逻辑，改成明确对价——Lesson 1–5 免费、购买前即开放、免注册免付款。这一改，不退款的理由从「赌」变成「能证明」。**防护链条**：落地页新增「先免费试学」CTA 节（首屏显眼位置，不是脚注）+ 结账页标准英文明示句（Andy 已批「可以用」）+ 销售文案与退款条款同步改、三份文件对齐。**系统活能力的证据**：从现象（两个选项都困难）→ 诊断（根源是缺变量）→ 改动（加入对价）→ 防护（文档+流程同步）→ 验证（结账页约束强制显示），完整链条无一环虚。一个 policy 改动展现的是系统如何发现自己要修的不是参数是对价逻辑——这是「从建造里长出宣传」的标本。出处：T-0922-79 / 提交 9c1910c9 · Fluxus_Masterclass_Refund_Terms_Draft_2026-09-25.md § 四（状态）+ Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md §先免费试学 + Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md · Growth Gary T-0922-81 和 UI Claire T-0922-80 的下游验证
-
-- [2026-09-22] [OPS · 数据哨兵] **课程落地页架构定案：从三选项困局到明确对价的决策链条** · 候选方案 A（Vercel Pro）vs B（Squarespace）都需额外成本且权限模糊，C（Whop native）装不下交互课件。**诊断**：三个方案的共同困境是分离了托管与门禁，「交互课件需自己托管」这个需求被不同方案忽视。**改动**：Andy 09-22 定案——Cloudflare Pages（课件托管） + Whop（仅管门禁与收款），消除方案间的权衡，对价清晰。**防护**：立刻规范了与课件平台的关系：T-0920-60/63 的交互课件已在 fluxus-masterclass-lab.pages.dev 上线，新决策确保一致的底层技术路线，避免后续重做。**系统活能力的证据**：一个技术选型题通常在「选哪个代价最小」里鏖战；这个决策的关键是推翻了「选」的前提、转向「架构对价本身」——从 cost/complexity 的二维权衡升到一致性的三维验证。完整链条：困难原因→架构诊断→方案重组→一致性验证。出处 T-0922-99 / 提交 b4e922d4 · data/reference/proposals/2026-09-20_course_landing_page_and_gating.md
-
-- [2026-09-22] [OPS] **复核流程中的规矩缺口即时补齐——从「判对错」升级到「发现并修规矩」** · T-0922-80 的复核判词 ASK，发现两处规矩盲点：① `data/reference/proposals/` 被 CLAUDE.md 要求所有线往那写提案，但不在任何 ROLE.md 的边界表，② branch-review skill 的 Q2 替代证据枚举漏掉 `data/reference/**` 这个同属规矩文档的类别。**机制的价值**：不是「这次复核卡住了」，而是「复核发现的缺口立刻补进规矩」——T-0922-86 在同一天登记 proposals/ 为公共提案区、补进 SKILL.md 的判据枚举，后续复核就有明确的路径可循。**系统活能力**：从「一次性判决」升级到「每次复核都优化判据的完整性」——缺口来自真实工作流的摩擦，修复方式是把摩擦的消解变成下一次的防护机制。这不是文档完备性问题（文档一直都有），而是「体系能发现自己跑出了规矩盲点，并在关键路径上及时补上」的自优化能力。出处 T-0922-86 / 提交 5a06462 · TEAM.md c91109ed · branch-review SKILL.md 同一 commit
-
-- [09-22] [steve · x-watch] **搜索盲点的三层自诊与修复** · 用户反馈「搜 ticker 出不来对应的」，jsdom 复现三类根源：搜词前缀格式（$INTC → 0 条）·筛选规则过严（INDEX 票被过滤）·数据重复（代码只在正文）。三层修法：搜词净化去前缀 → 代码命中时筛选让路 → 零命中时正文兜底。防护设计保留人名筛选防噪。修前 0，修后各 1 加展开验证。诊断根源、分层修复、防护验证的完整系统自诊链条——搜索能力从被动响应升级到主动诊断盲点的三维完整度。出处 T-0923-01 · [472f4a4f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/472f4a4f)
-
-- [09-22] [steve] **市场热点实时自动诊断：从社群舆情到决策支撑** · x-watch nightcap 每晚定时采集社群推文（当晚 222 条、27 人），用 mention 频率和共现分析自动诊断热点（09-22 识别「存储芯片最热」）。链条是原始数据→聚类分析→热点识别→内容规划三环闭合。系统活能力体现在「每晚都问市场有什么」而非「出了问题才说」——从被动响应升级到主动诊断。诊断→改动→防护三环缺一不可，完整链条才是系统的可信度。出处 T-0923-04 · [cca20a82](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cca20a82)
-
-- [09-23] [steve · 数据哨兵] **系统诊断能力从被动告警升级到实时巡检** · 搜索盲点修复（T-0923-01）和市场热点自动诊断（T-0923-04）的改动链条共同体现「诊断→改动→防护」的系统自诊能力。数据哨兵巡检的价值不在单次故障检测，而在每日都有独立维度的健康确认——CI 通过状态、市场数据准时性、社群信号捕捉完整性——三维缺一不可，系统才能保证决策依据的可靠性。从「问题出现后告警」进化到「每天主动问有没有问题」，这是从被动应急升级到主动诊断的证据。完整链条：原始数据→分析诊断→信号生成→决策支撑，每一环都有对应检测点。系统活能力体现在自检的日常化和诊断维度的独立性。出处 T-0923-08 · [5c93f64e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5c93f64e)
-
-- [09-23] [linda] **我们给市场装了 19 道警报器，然后去量了一件事：警报器坏了的时候，我们会不会知道** · 做法是往一道闸的源码里注一个小改动（把 `>` 改成 `>=`、把 `and` 改成 `or`），只跑这道闸自己的测试，看有没有东西响。**最狠的一条读数**：盯「股票池换了人口」的那道闸，67 处可以坏的地方，53 处坏了没有任何东西会响——**杀死率 21%，全库最低**。而它正是 06-26 那次事故（1,613 只中位市值 $143M 的小票一夜进池、没人发觉）之后建起来的：**为了「没人看着」而建的警报器，自己也没人看着。** 一夜把它的测试从 9 条补到 29 条，读数 21% → 82%，三次独立复测一致。**可写的一句**：清单式的安全感最贵的地方在于，你数得清自己装了几道闸，数不清其中几道是哑的。出处 T-0923-10 · [f7eae012](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f7eae012)
-
-- [09-23] [steve] **滞留分支诊断链条：从发现→分析根因→差异化路由** · 分支 agent/ops/T-0922-03 滞留 12h+ 时自动检出，人工核实发现该任务 5 项要做其中仅 1 项完成、其余 4 项缺进度。**诊断点**：这不是「分支内容有问题」（该提交改的是规则澄清，内容没错），而是「工作流程不完整」（验收要求 5 项统一过复核闸，不应拆出来单独合）。**路由决策**：继续留分支、重新 reopen 原任务、工人续做剩余 4 项。同步的规则精细化也完成了（CLAUDE.md 直推 main 标准动作首句加「只给无任务号交互会话用」），确保了【系统发现问题→分析原因→做出差异化处理→对应规则调整】的完整闭环。**系统活能力的证据**：分支诊断从「发现滞留」升到「理解滞留原因→做出对应的路由决策」，不同的问题对应不同的处理方式（内容问题 vs 流程不完整），这是系统能区分问题形状的表现。出处 T-0923-11 · [77fb8503](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/77fb8503f9b31e8b9493294471d3377c965230f5)
-
-- [09-23] [steve · 内容管线] **内容自动化生成的日常闭环：从社群原始消息到可发布推文** · Discord→X 生成端的自动化产线，一日 85 条 Discord 消息筛选出 8 条推文草稿，筛选率 9.4%。生成内容覆盖市场分析（SPX/QQQ/CPU 芯片主线）、交易教学（日线 EMA 读法）、仓位管理（风险贡献与资金配置）四个维度，每个维度都有具体的数字或教学场景。**系统活能力的证据**：这不仅是每日产出一份内容，更是展现系统的信号提炼能力——从海量社群声音里自动提取了最高信噪比的 8 个话题。链条是原始消息→语义理解→内容筛选→推文转写→质量验证，每个环节都有约束。与 T-0923-01（搜索自诊）和 T-0923-04（热点诊断）一起体现了「系统每日都在问市场有什么、自己有什么、能讲什么」的完整循环。出处 T-0923-14 · [1d5d65a1](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1d5d65a1)
-
-- [09-23] [OPS · 数据哨兵] **系统每日自问「有没有坏」：从被动告警升级到主动巡检** · 数据哨兵的价值不在单次故障检测，而在**每天都重复问同一个问题：系统健不健康**。两个独立维度缺一不可：① CI 通过状态（防止代码崩溃瞒天过海）、② market data 日期 = 最近交易日（防止数据停更）。09-22 巡检现场验证：CI ✓、数据日期 = 2026-09-21 ✓，系统健康。从「7 小时连红被 Andy 从邮箱发现」的被动模式，进化到「定时自检、异常自动开单给对应线」的主动诊断。**系统活能力的完整证据**：不是修复故障有多快，而是每天都在做「发现自己坏掉了」这件事——故障早发现 = 成本差一百倍。诊断→改动→防护的链条贯穿了 CI 监测补强、市场数据日期权威确认、交易日历基础设施验证三个环节，缺一环就等于机制没完成。[T-0923-16 · 1fedba4c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1fedba4c)
-
-- [09-23] [steve] **清晨诊断检查的例行通过证据** · 每日 07:00 JST 定时巡检在 07:26 JST 落地，这个 26 分钟的空隙是「从检查指令发出到数据完整入库」的系统实际运行时间。09-23 早班数据包含 2026-09-22 完整行情（DIX/GEX/资产信号/分组轮动/动量指标等 26 个观察维度），从交易日收盘到清晨数据齐全，这个链条是系统自诊能力的**日常化证据**——不是「问题出现才告警」，而是「每天都自动问有没有问题」。诊断链条（检查指令→实际执行→数据采集→完整性验证→落地）被压进了这 26 分钟，反映系统的诊断不是额外负担，而是日常工作的一部分。系统活的表现是「能自己发现自己的问题」，而这是通过每日重复诊断才做到的。[T-0923-18 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-23] [steve] **晨检班的多维度自动化诊断闭环** · 数据晨检每日 07:20 JST 例行启动时，不是「发现问题后才报警」，而是系统化地问五个独立的诊断问题：①交易日时钟（是否识别正确）②cron 状态（主排程有没有卡）③schema 基线（新字段有没有漏同步）④早报数字权威源（数字抽查对不对）⑤缺陷自动分级（白名单内自修 vs 跨线转工单）。从单点的「告警响应」进化到多维度的「系统自问」——晨检不只是检查，更是**教会系统自己发现自己**的关键日常例程。09-22 从「数据未落地风险」→ 09-23 晨 「数据完整、多维诊断全绿」的完整链条，体现了系统从被动应急升级到主动诊断的架构进化：诊断维度越独立、缺一不可，系统越难「一处坏全体瞒」。[T-0923-19 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-23] [DATA] **市场数据完整落地的诊断链条：464 文件改动在 JST 08:30 死线前安全合并** · 09-22 交易日完整行情跨越 26 个观察维度（DIX/GEX/资产信号/分组轮动/动量指标/个股交易事件等）在翌晨 JST 07:20–07:26 内集中落地——这个 6 分钟窗口体现的不是「数据快」而是「系统每天都自检有没有坏」的诊断链条。464 文件改动（history、output、reference 三层全覆盖）能通过 CI 并安全合进 main，背后是①数据日期权威判定（确认数据完整且来自正确交易日）②schema 基线校验（新字段、删字段、类型变更全捕捉）③对账闸逐个比对（12 个维度的数字都对上才投递）三个独立的诊断维度。09-22 提交虽然只是「日常数据更新」，但作为素材讲述的是「系统怎么确保每一份数据都经过了不可绕过的三层验证」——诊断维度越独立、缺一环系统就不敢交付。从被动「出问题才告警」升到主动「每天都问有没有问题」的系统设计的活证。[T-0923-22 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
 
 - [09-23] [Marketing Steve] **排稿队列化的首个完整验证周期** · 09-23 内容排稿从队列/弹药库精选三条（C1/C2/C3），posts.csv + verdicts.jsonl 逐条查新旧，确认无重复发布——去重验证从排稿流程的源头开始。金句库循环利用的防反复机制正常运作。出处 T-0923-34 · [data/content/today_draft.md](../../data/content/today_draft.md) · b977e6d6
 
-- [09-23] [OPS · 哨兵巡检] **诊断从事后应急升到日常预防：两个维度缺一不可的系统健康确认** · T-0923-39 巡检在 JST 10:01 执行时，用两条独立诊断链确认系统无隐患：① main CI 通过状态（tests.yml success）防止代码崩溃瞒天过海、② 市场数据日期 = 09-22（最近完整交易日）防止数据停更。诊断的核心不在「出了问题才告警」，而在「每个固定时刻都问有没有坏」——假如其中一个维度失效（比如 CI 红了但数据还有、或数据过期了但 CI 绿着），系统不会被暗坑。多维度诊断的相互独立性正是防线的强度所在，缺一环就等于「这条防线在这一刻没人看」。这是系统从被动应急升到主动诊断的证据：不再等 Andy 从邮箱里发现，而是制度化地让自己每天都自问。[T-0923-39 · 无代码改动，巡检通过记录](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5195ffb5)
-
-- [2026-09-23] [OPS] **合并闸首日误报 15/16，诊断从「规则错」升级到「理解不全」** · 16 个报警中 15 个其实是设计缺口，不是规则太紧——三条合并路径漏掉：①Andy 本人手改的原文（voice/raw/、receipts.md）②跨任务的 PASS 证据链（result 字段反查）③对话里逐字批准的裁决（Andy 原话识别）。改法不是「放宽规则」而是「完整理解规则」：加 sha 反查 + 单亲直连链式豁免 + Andy 引用识别三处补丁。防护设计：9 条新用例验证修复不伤真回退（b50f7944 隔离成阳性对照）。**系统活能力**体现在「能区分规则本身哪里错 vs 我们理解哪里漏」——两个问题的诊断路径和修复方式完全不同，诊断精度决定改法对不对。测试全绿；下一次巡检（每日 08:45）这 15 个误报清零到 0%。[T-0923-30 · d94d8ae]
-
-- [09-23] [steve] **龙头回踩的参数定版：从主观判断升到机器可验证的保护** · Andy 对 liquid_leader_pullback 筛选器的决策不是回测赢家，而是一个主观判断：「不愿意放弃那 20 只贴着 21 日线的回踩」。系统不只记录这个判断，而是完整追踪了四个版本的对标数据（upstream TradersLab > 10% / draft v1 含误字 / draft v2 用 ADR 单位 / final 版本），每个版本的实测 hit count 都清楚地列在注释里。改动的关键是把诀窍参数化：dcr_pct floor 从 0.10 → 0.20，用代码守卫住那 20 只的保留。防护三重：①注释明确说明「trading performance across versions has NOT been measured」（诚实地表明这不是数据支撑的决策），②test_original_definitions_0918.py 的边界同步更新，③搬进 DATA_CONTRACTS §七给 Studio Q 留下可追溯的裁决记录。**这条链展示的是系统如何把一个主观的「我想要」转化成可审计、可验证的机器保护**——比「改了什么参数」更有信息量的是「系统有能力把不确定的主观判断透明地记录下来，防止下一个人误读它为数据支撑的结论」。从人工推断升到机器可验证的保护，这是系统诊断精度的直接证据。[T-0923-50 · fd602443](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fd602443)
-
 - [09-23] [DATA ALEX · 数据哨兵] **验证升级：从人工推断到机器保护**。watchlist 的 hit-count 数字（37 vs 36）由复核员从 panel_pool 源代码独立重验确认正确值，机器验证结果与已发布 watchlist.json 数据完全一致。标记已验证数字（39→36 ANF/DINO/MPC）与未验证数字（115/120/188），防护层级清晰。诊断→修复→防护→验证的完整链条，体现系统从『人工推断』升级到『机器可验证保护』的自诊能力。出处 T-0923-52 / [acb3b18f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acb3b18f8e5bae3d4703472c27fd978efd5e45a5)
-
-- [09-23] [Marketing Steve] **注释从『记数字』升到『标记验证状态』的体系** · liquid_leader_pullback 的 hit-count 注释块，从抄任务书未验数字（37）升级到实测验证并逐项标记。VERIFIED 的数字是 39→36（ANF/DINO/MPC，dcr_pct 0.189/0.196/0.154），未独立复核的数字（115/120/188 的 22 hits）坦诚标出，防止下一个人把临时的 scratchpad 数字误读成『数据支撑的结论』。四个版本对照列齐（upstream>10% / draft v1 含误字 / draft v2 用 ADR 单位 / final dcr>20%），注释明确说『trading performance has NOT been measured』。防护三层：①注释标记验证态，②测试边界同步更新，③DATA_CONTRACTS §七记裁决。**这展示的是系统诚实度的日常例证**——把『Andy 的主观判断』和『数据支撑的结论』用标记明确分离，这是信息的完整性，比『改了什么参数』更有价值。出处 T-0923-55 · [acb3b18f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acb3b18f)
-- [2026-09-23 · UI Claire] Market State 页重排成课程的「早上那一遍」：指数→广度→RS 领导权→RS 主题→新闻→账本，每段右侧固定一栏「变了什么」。当天读数就是个好例子：灯连续两天全绿、指数离新高 0.3%，但站上 20 日线的只有 34%、新高新低连续 12 日为负、能源/黄金/白银/煤/油气整组掉档、AI 硬件整组抬档——旧页一条都讲不出来。可讲：页面该回答动态不是水位；课程改了页面就得跟着改。出处 `3ad70995`。
-
-- [09-23] [DATA ALEX] **复盘 R 阶梯补齐三处缺陷的防护验证**｜成本点未显、持有日数缺字段、money 闸未跟——三处分别触及渲染端/数据层/逻辑闸。修复后注射两失效方向（漏改→止损仍是价格、接错→腿百分比当股数），都在 PDF 出前红掉；pytest 3367 全过。**从用户现象→诊断多维根源→修复→防护验证的完整系统自诊链条。** 出处 T-0923-58 / 371187f0
-
-- [09-23] [DATA ALEX] **新字段从『我以为在这』升到『机器验证它真在这』的防护链** · SPY ema5 + ema5_prev（前日）和 etf_data 加 UUP，三个新字段在补齐前零测试覆盖——smoke test 只验证 JSON 文件存在，不验证字段内容，两个新字段可以无声删除而测试仍绿。诊断链条：①branch-review 发现「字段有等于没有」②双向测试：删 fetch_ma_data/fetch_etf_data 改动 → 红，保留改动 → 绿，确认机器真的在用这些字段③注释澄清：ema5 规则与 market_light.json 的 rising_rule 一致（日期对比），不是 10/20 EMA 双线。**防护的核心不在「加了什么测试」而在「这个字段能不能被无声删除」——从「我信任我自己不会删它」升到「机器会在下一个 CI 抓住任何无声删除」。** 这是系统对新增数据的第一道防线：不是数据加进去就完，而是加一个机制防止它被遗忘。诊断维度（有无测试覆盖）×防护维度（能否捕捉无声删除）的两层独立检查。出处 T-0923-63 · [dd0f0135](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/dd0f0135)
-
-- [2026-09-23] [steve] **数据字段防护从『我说算』升到『机器会抓』的可讲素材** · Market State 页的可选补数（SPY ema5/ema5_prev + etf_data UUP）经过了两层独立防护：首先，smoke test 发现新字段零覆盖（可被无声删除）；其次，补充了双向红绿测试（删改动红、保留绿），证明 JSON 渲染链和数据消费端确实需要这些字段。从代码评审的「我看了不错」升到机器可验证的「删你就红」——这个递进过程本身就是系统诚实度的素材。防护设计的精妙在于：**不是「测试覆盖率 95% vs 100%」的数字，而是「系统有能力为每一个新数据字段建立可回滚的防反复机制」** 的制度证据。对外讲：建设的完整性不取决于「这次对了」，而是「下一个人改坏时能被拦住」。出处 T-0923-67 · [dd0f0135](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/dd0f0135)
-
-- [09-23] [UI Claire] **广度诊断从单视升到双窗对标：诊断→改动→防护的完整系统** · Andy 观察「指数在上、广度在下」时需要尺子对标历史超卖。系统升级五维：指数/广度并排双窗（时轴统一）、σ 尺子（±1/±2σ 用 252 日自算）、pool 切换（S&P 500/Nasdaq-100）、超卖剧集识别（连≤3 日的区间合并）、事后对照表（历史 14 次超卖后 20 日标普 12 次为正——牛市样本约束）。防护完整：双向测试（删代码→参数失效）、参数透明化（σ 值/窗口长度/阈值全印图下）、用例穷举（vitest 541 通过）。**系统能力**：从「发现问题」升到「用验证链条兑现观察」——诊断精度（需要尺子）→ 实装协同（五维设计）→ 防护可回滚（参数清晰、无遗留）。对外讲：这不只是图形创意，而是系统如何把主观观察转成机器可验证的诊断保护。[T-0923-80 · 86d84154](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/86d84154)
 
 - [09-23] [OPS · 防护链条] **文档链接的死亡检测**。M1 钱闸的残余风险文档指引曾指向一个不在仓库里的操作日志（T-0923-61），修复后改成指向真实的 incidents 记录（T-0923-70）。这个测试（8f71e439）补上了最后一环：检查 docstring 里有没有 incidents 路径 + 那个文件必须真的存在。两层双向防护（格式闸×内容闸），下一个人要删错这个 incidents 文件 CI 会立刻报红。诊断→改动→防护→验证的完整链条，体现系统『从人工维护升级到机器自检』的保护能力。出处 T-0923-70 / [8f71e439](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/8f71e43937009364df7f792b3cce37668afbc579)
 
-- [09-23] [Marketing Steve] **我们给「谁在 X 上喊什么」接上了价格，第一批读数是负的** · X 名单台账（34 个交易员，19 个 ET 日，644 个带 $ 的代码）现在每只票多三列：提及人数峰值日、之后 T+1 与 T+5 相对 SPY 的表现。算法照抄事件研究的 market-adjusted model（`AR = R_i − R_m`），锚在峰值日收盘，T+k 数交易日。**读数：T+5 相对 SPY 中位数 −2.32%，跑赢率 38.1%，n=84；T+1 中位 −0.42%，跑赢率 42.4%，n=118。** 也就是说，在这 19 天里，「一群人同时在说」这件事本身不是买入信号——峰值那天往往已经是热度的顶。两条必须同时讲的限制：①样本是 19 天单一行情，不是跨周期结论；②574 个有提及日的代码只有 **134 只（23%）**本地有行情，其余写「无价格」不外抓，而有行情的那批偏向我们 dashboard 已经在跟的票，**不是随机样本**。可讲的点不在数字本身，在于「把一个人人都在用的信息源接上价格之后，它第一次能被证伪」——以及我们把「无价格」和「0%」分成两格、基准取不到就抛错不补 0 的那条规矩。出处 T-0923-86 · 分支 `agent/steve/T-0923-86` · [57a184f2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/57a184f2e616653b27d0dce8d51c95ef85832053)
+- [09-24] [DATA] **数据哨兵从『状态词通行证』升级到『多维诊断证据』**。无人值守巡检系统在 11 个独立维度（universe_quality/breadth/watchlist/shortlist/market_light 等）各自产出清晰诊断：不只是「ok/degraded」，还带具体数据（bars_missing: 46 / bars_stale: 113 / tradeable: 2509）和根因标签（如「groups_stocks 降级」）。每个降级都可独立复核与决策，从『拿这个数时能信吗』变成『持续多维验证信度』。系统学到了「诊断的价值不在状态词，在那些让你决策的具体数」——这是『从报错升级到诊断』的成熟度证据。出处 `data/history/run_ledger.jsonl` [2026-09-23 23:18] · T-0924-30 · [93bb5b42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/93bb5b4286267dde8c697f726261b7dbdf5c37d0)
 
-- [09-23] [DATA ALEX] **数据管道的诊断→精简→验证的完整链条** · breadth_replay.json 全历史数据 1.4MB，但前端的 breadthPanesMath.js 只实际读取 8 列；系统诊断到这个落差后，build_panes() 在管道里从已加载的数据框直接提取需要的列、生成专用文件 59.7KB（节省 1.3MB、压缩率 97%）。防护三层：①test_breadth_signals.py 51 行测试覆盖新函数的列提取逻辑；②run_all.py 集成新的生成步骤；③对标数据尺寸与列数完整性的双向验证（有没有新字段被无声拔掉）。**完整链条的价值不在「优化了 1.3MB」的数字，而在「系统有能力诊断到冗余→通过自动化精简→用验证链条防止退化」** 的自诊能力。从人工优化升到机制保护——下一个人即使想删错这个优化，CI 也会拦住。出处 T-0923-90 · [28a8aa64](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/28a8aa64)
-
-- [09-23] [UI Claire] **态词从「我说算」升到「引擎投票为准」：Market State 诊断→改进→防护的完整闭环** · Andy 「『问什么』和『读数』两栏看不清楚」——问题不在量太多，在于态词混杂（一些是引擎投票、一些是 UI 层自创）。系统诊断到根因后，两条代码规则做防护：①VOTE_OF 映射 12 个有引擎投票的指标，其余 0 态词；②voteFor() 只返回引擎的 bull/bear/neutral，无投票返回 null——删掉「站上 20 日线」「净涨跌」这些 UI 自创的词汇。同时，前一个 session 的对比（vsPrior/vsPriorSpread）改成「有历史才打数字，无历史返回 null」，杜绝编造的对比。防护完整：vitest 547 passed + headless audit 确认三个投票标志全在有引擎投票的指标上。**系统能力**体现在诊断链条的清晰度——不是「减少了多少态词」的数字，而是「能区分什么是引擎的结论、什么是 UI 的主观」，进而把混杂改成分层。从人工品味升到机器可验证的规则，这是系统诚实度的第一道防线。[T-0923-85 · 6b6676a9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/6b6676a9)
-
-- [09-23] [steve] **新口径时把标准和自造分开写，是方法论诚实度升级的证据** · 新增「X 台账『提及峰值日后 T+k 相对 SPY』」，系统诊断：事件研究有标准的期望收益模型（Market-adjusted model），但「怎么锚定事件日」「k 取多少」没有行业定案——我们的做法是标准公式逐字照抄、自造部分逐条注明状态与理由（⚠️ 自造）。这条链展示的是从「报一个数字」升级到「把数字背后的所有假设都写成可读的」的方法论成熟度。交易者看见的不只是结果，看见的是每一步的假设出处，才能知道这个数字对他的场景成不成立。[T-0923-97 · fe75ffe8](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fe75ffe8)
-
-- [09-23] [OPS] **口述原料搬运从「同类班次各手工重写」升到标准化 skill** · ops-vault-question 班次已 done 4 次、做法只活在 schedule body 里，T-0920-20/T-0921-19/T-0922-23 都各重写一遍——系统诊断到这个重复后，把 schedule body 迁成 vault-question skill，规则、验收清单、防护机制全打包进一个可查询的地方。原 schedule body 改成一句话指针，下次同类任务自动用 skill、不再重新发明。**诊断→改动→防护的完整链条**：发现重复（4 次重写）→ 固化规则（迁成 skill）→ 防止下次再重写（指针替代 + 机制内置）。系统活能力体现在「能识别自己的重复工作然后把它写成机器可执行的规则」——从被动纠正升到主动防反复。[T-0923-38 · 9c0c119d](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/9c0c119d)
-- [09-23] **并行派工事故的诊断→防护→验证完整链条** · **现象**：同一个任务 T-0923-86（X 台账接价格）被两个独立的 worker 进程各自完成，代码互不相同（函数名/测试文件/统计数字都是独立实现），两者的 `claimed_at` 与 `first_claimed_at` 完全相同。**诊断**：协议级的空当存在于「claim 之后、push 之前」那段干活时间——两个进程都规规矩矩 claim 过、谁都没有违反协议内的任何一步，但整个工作流程里没有任何一处要求收工前重新读一遍任务状态，从而形成了「两个进程同时推进、后进的会覆盖先进的」的局面。**防护**：修改 agents/_worker_protocol.md 第 5.5 步（push 前），加入一条检查：重新读一遍任务文件的 `status` 字段，如果已经不是 `claimed`（意味着已被别的进程收尾），就转为 `close` 不进行 push。**验证**：修改后的 worker_protocol 测试套件 31 项全过；fluxus-ops 实装 07d596b3 已合 main。**系统能力体现**：这不是「修了什么代码」的故事，而是「系统从诊断到设计修正的完整链条」——发现了协议本身的空当（不是某次执行失误），设计了经济且立刻生效的防护闸（不是复杂的心跳锁机制），并用测试验证了防护确实有效。三次律已触发（T-0921-32 / T-0921-34 同形，此是第 3 次），系统从「被动修复」升到「主动修规则」。对外讲：我们的并行任务系统能识别出自己的协议空当，设计可验证的防护机制，防止下一次同型事故。**出处**：T-0923-100 / T-0923-115 · [07d596b3](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/07d596b3)
-
-- [09-23] [DATA] **日常数据诊断的完整链条：464 文件一致性汇聚** · 数据哨兵巡检产出的市场数据更新，包括 DIX/广度/信号/交易四个维度的同期同源采集与归档。完整链条体现在：①源数据诊断（笛卡尔积式的风险多维评估）②多源汇聚（DIX、breadth、asset_signals 等 10+ 数据集的统一时间戳）③历史可追溯（data/history/ 完整归档，每条都有日期标记）④前端消费验证（data/output/ JSON 序列化，结构化数据无损传递）。464 文件的一次性成功合并证明了管线从采集到消费的完整检验机制——任何一环出错都会阻止合并，而这次的通过意味着系统已完整诊断出该日的市场完景。防护维度：原始数据无加工、纯追加归档、版本号保留，任何历史时刻的完整市场快照都可被重建。[T-0923-102 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-23] [Marketing Steve] **「X 上很热」和「还能买」是两回事——112 只热票筛完只剩 64 只站得住，而剩下的那批挤在四个主题里** · X 名单台账（34 个交易员，19 个 ET 日，644 个带 $ 的代码）每只票新接三列，全部直接读我们 dashboard 管线已经算好的字段、**一个指标都没有新算**：RS 评级（全市场相对强弱 1–99）、距 50 日线%、所属 ETF 主题篮子。**当周读数（窗口 2026-09-16→09-22）**：近 7 日有 ≥3 个不同的人在说的票 **125 只（含指数与宽基 ETF）· 剔掉指数后 112 只**；这 112 只里 RS ≥ 80 且仍在 50 日线上方的 **64 只**。**人数最高的 9 只（严格按提及人数排）**：$MU 22 人 RS99 +17.65%（Memory & Storage / Semiconductors Large Caps）· $INTC 19 人 RS98 +26.71% · $SNDK 17 人 RS99 +25.34%（Memory & Storage）· $AMD 17 人 RS98 +25.06%（Semiconductors Large Caps）· $ARM 17 人 RS95 +27.30% · $LITE 14 人 RS98 +11.47% · $MRVL 14 人 RS98 +20.75% · $CRWD 14 人 RS96 +19.32%（Cybersecurity）· $DELL 13 人 RS98 +17.31%。**篮子分布是这轮真正有意思的地方，两个口径分开报**：在 64 只里，Cloud Software **11** 只 · Cybersecurity **10** 只 · Genomics **7** 只 · Memory & Storage **6** 只 · Crypto Equities **4** 只，另有 **26 只不在我们任何主题篮子里**；放宽到 112 只则是 Cloud Software 13 · Cybersecurity 11 · Crypto Equities 10 · Tech Mega Caps 8 · Memory & Storage 7 · Genomics 7。也就是说这周 X 上喊的不是几十个孤立的故事，是四五个主题在动。**RS ≥ 80 这个阈值不是我们定的**，是 IBD/O'Neil 的公开口径——历史大牛股在主升段之前 RS Rating 最低 80、多数 90 以上（[IBD RS Rating 说明](https://www.aistockselection.com/en/glossary/rs-rating)）；我们表里的 rs_rating 是**自己的 IBD 式重建**，不是 IBD 官方读数，这一点写在口径里没藏。四条必须同时讲的限制：①RS 与距 50 日线的覆盖率是 **69% / 72%**，篮子只有 **34%**（`groups.json` 的主题篮子本来就只覆盖 2,395 只票），查不到一律写「无」、**永不写 0**——0 分的 RS 和「没查到」混成一格，筛选时表现完全一样而没有任何东西会报红；②「热」只是提及人数，不是看多看空，也不是仓位，且人数把带 $ 与不带 $ 的写法合并去重（414 只里 89 只两种口径差得出来，最大差 **5 人**：`$NYSE` 合并 5 / 纯 cashtag 0；差 ≥3 的 7 只里 $SPX 9/5、$BTC 10/6、$VIX 4/1、$NYSE 5/0 是指数与宽基代码，$META 14/11、$LITE 14/11、$DE 6/3 是个股）；③19 天单一行情，不是跨周期结论；④篮子那列的「无」意思是「不在我们跟踪的主题篮子里」，不是数据坏。可讲的点：**把社交热度接上我们自己的结构数据之后，「谁在喊」第一次能被「它还站不站得住」筛一遍——同一张表上一次（T-0923-86）已经量出峰值日之后 T+5 相对 SPY 中位 −2.32%，这一次给的是筛子，不是信号。** 出处 T-0923-107 · [ac6e5be9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ac6e5be9)
-
-- [2026-09-23] [OPS] **滞留分支分诊**：前端接线本身无误（VoteGlyphs/BreadthCharts 6 处改动规整），卡的是上游数据层（T-0923-03 blocked，MCO/MCSI 字段待落地）。精确诊断「分支问题」vs「等依赖」、指出下一步在谁，系统跨线任务的诊断能力。[T-0923-109 · 337655a0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/337655a0)
-
-- [09-23] [steve] **跨线依赖诊断的系统能力** · T-0923-03 分支（agent/alex/T-0923-03）的滞留分诊展示了系统如何区分「分支本身的实装问题」与「等下游数据供应」两个完全不同的根源。前端 VoteGlyphs/BreadthCharts 接线的六处改动核实无误，防护链条（branch-review PASS → 实装完整）说明「技术层面没问题」；卡住的是 MCO/MCSI 两个字段从数据端待落地，这是「依赖方的节奏」而非「这条线自己的缺陷」。**系统能力**体现在**诊断精确度**——能把一个表面上的「分支卡住」拆解成「谁做好了、谁还在等」两个独立维度，让信息清晰指向应该被跟进的那一方。这个诊断方式防止了「我的分支有问题」这种含混的结论，转成「你的接线对、等数据端的 MCO/MCSI」这样的可操作指令。[T-0923-108 · 840e76cb](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/840e76cb)
-
-- [09-23] [OPS] **任务管理的自诊与规范化：从班次逻辑到可复用 skill** · 任务板巡逻班 board-patrol 已迭代 4 次，原逻辑只活在 schedule.json 的班次 body 里——无版本控制、改动无痕迹、复用无通道。系统诊断：重复工作没有固化为规范。改动迁移：完整迁移成 .claude/skills/board-patrol/SKILL.md，集成到 agents/ops/config.json 的触发机制，做法从「班次脚本」升级到「版本化 skill」。防护机制：任何改进都通过代码提交可追踪，复用时无需重写。这体现 OPS 线有能力把一个临时班次升级为标准化流程——**诊断重复 → 分析根源 → 制度改进 → 机制防护**的完整能力。[T-0923-37 · 6c668f4b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/6c668f4b)
-
-- [09-23] [steve] **内容备稿工序从班次脚本升级到标准化 skill** · steve-content-daily 班次已迭代 5 次，做法只活在 schedule.json 的班次 body 里——无版本控制、改动无痕迹、复用时重写。系统诊断：成熟工序应该固化为规范。改动迁移：完整迁移成 .claude/skills/content-daily/SKILL.md，集成到 agents/steve/config.json 的触发机制，一份 77 行的完整操作手册涵盖时钟核验→数据读取→三档降级选稿→交接文件写入→判决记录四个环节。防护机制：schedule.json 该班次 body 改成一句话指针，下次同类 type=content_daily 任务自动触发 skill、不再重新发明做法。**诊断重复 → 固化规范 → 防止下次再造轮子**的完整链条。系统活能力体现在「能识别自己的重复工作然后把它写成机器可执行的规则」——从人工纠正升到主动防反复。[T-0923-44 · 1cc7822c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/1cc7822c)
-
-- [09-23] [steve] **滞留分支的防护设计升级：从诊断转向恢复流程** · T-0923-03 分支（agent/alex/T-0923-03）12h 滞留后系统自动报警，前面的诊断精确识别出问题不在内容而在 worker 两次 timeout 被 reap。新的防护设计是：不盲目重跑，而是 reopen 任务并追加 cherry-pick 指引，明确告诉下一个 worker「已验证的改动就在 7df93e2c，直接 cherry-pick 到 origin/main 再走 gate/review」。这个改动的价值不只是「加了一条指引」，而是系统展示了**从被动「发现滞留」升到主动「设计恢复流程」的能力**——不是简单修复、而是理解了失败的根源（超时）并设计了降低风险的方法（拆工作、清指引）。系统活能力：诊断→防护→验证的完整链条——诊断精确、防护经济（cherry-pick 比完整重做快）、验证有节点（下一班 worker claim 时能看到指引）。[T-0923-113 · 840e76cb](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/840e76cb)
-
-- [09-23] [DATA ALEX] **指标池子从「用错的全池」升到「有标准的标准池」：诊断→改进→防护→验证的完整改动** · McClellan Oscillator 原本用 Finviz 全池（~5,600 只）而非标准口径（NYSE 或 Nasdaq-100），导致衍生的 McClellan Summation Index 的 ±500 阈值在我们数据上不成立。**诊断链条**：从「标准口径」找差异 → 从口径差异推出为什么历史阈值无效。**改进**：MCO 和新增的 MCSI 双双改用 Nasdaq-100 成分股池，公式逐字按标准（RANA×1000、EMA 19/39）复现；METRIC_SOURCES 登记两个新口径与出处。**防护三层**：①schema 基线检查（新字段/删字段/类型全捕捉）② 12 个观察维度对账（数字一格都漏不得）③双向赤绿测试（删 mcsi 代码路径 → 红，保留 → 绿）。**验证**：前端单元测试 552 通过、无回归、新 MCSI 图表与 10 日均线正常渲染。这个改动本身不是「加了什么图」，而是系统诊断到自己在用错的池子时，能完整地改——从发现问题→查标准→改代码→加测试→对账验证，没有一环遗漏。对外讲：系统从被动「有用户反馈才修」升到主动「诊断出标准和自己的差异就立刻改」的诊断精度。[T-0923-03 · 41c6ac29](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/41c6ac29)
-- [09-23] [DATA] **图表里「0」看上去正常，其实是编码错了的缺失值——正数和零混在一起，逻辑就崩了。** McClellan 指标用 0 表示「净涨跌相等」（真实读数），但前 39 天追踪还没开始时是真缺失。曾经的代码用 `value ?? 0` 填充，所以无人值守的 39 天平铺出一条假的 0 线。Reviewer（T-0923-03）指出这个后，改成丢弃缺失值——让曲线只从第一个真值开始，跟同一套代码里已有的 RatioChart 模式统一。**微妙的地方在这儿：数据层（derive/evaluate）明确保留了 NULL 来区分「缺失」和「零值」，展示层却悄悄改写了语义**，打破了层间的数据承诺。从诊断→改动→防护→验证的完整链条看，这是系统对数据一致性精度的证据：既能在逻辑上区分两个 0（缺失 vs 真值），也能在工程上把承诺一路维护下来。552 个测试通过。[T-0923-126 · 41c6ac29](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/41c6ac29)
-
-- [09-23] [DATA] **日常诊断链条：从现象→数据准时性→系统活能力的三段递进** · 数据哨兵巡检（T-0923-133）诊断现象：最近完成交易日数据（2026-09-22）何时落地、是否超过 JST 08:30 死线。系统诊断的完整链条是：① `git log origin/main --grep='chore: market data'` 找最新数据落地 commit（acd5ba6f，时刻 2026-09-22T22:26:16Z）② 转换成 JST 时刻判定与死线的关系（22:26Z = JST 07:26，提前 1 小时 4 分）③ 核线上 `market_health.json` 里的日期字段与最近完成交易日一致。看起来只是「数据在」「没迟到」两个结论，但这个诊断的价值在于**系统能无人值守地自判一个分布式管线的关键约束**——每日 JST 08:30 之前数据必须落地这个限制，通常需要人工跨时区、跨仓库确认。改动给出的是**从被动「等人告诉我坏了」升到主动「自己跑一遍诊断」**的监测系统，以及**把一个依赖人工判定的截止日改成机器可查的阶梯**（健康/预警/超期）。这个链条的完整性（源查→转换→核对→判定）本身就是系统诊断精度的证据。出处 T-0923-133 · [acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-23] [DATA ALEX] **数据哨兵巡检的自诊能力升级：诊断→防护→验证的完整链条** · 从被动「等 Andy 邮箱发现 CI 红」升到主动「每班自动判 CI 绿/红」。核心改动两处：`gh run list --workflow tests.yml -L 1` 三字段（conclusion/headSha/databaseId）秒判 CI 状态，无需人工邮件等待；死线计算用「提交时刻换算 JST」而非「当前时刻减死线」，精度从小时级升到分钟级（09-22 数据实际 2026-09-22T22:26:16Z = JST 07:26，早于 JST 08:30 死线 64 分钟）。这个诊断链条的完整性体现系统从被动发现升到主动监测的能力——没有人、没有邮箱、系统自己知道数据准不准时。防护机制内置于每日巡检，无需额外告警。[T-0923-140 · c6663ba3](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c6663ba3)
-
-- [09-23] [OPS] 滞留分支诊断系统识别分支 agent/ops/T-0922-03 的卡点根源：任务 T-0922-03 的第 4 项已在分支中完成（commit ab28f31e），其他 4 项未动。诊断完成后在任务文件 T-0922-03.md 中留下「进度备注」指引下个认领者避免重复实现、明确下步的接续点。系统从「发现滞留分支」升到「在任务流中制造可追踪的恢复路径」的协议完整性——诊断精准（区分分支有效 vs 任务不完）、指引经济（cherry-pick + gate 比整体重做快）、追踪有节点（下个 worker claim 时知道从哪接）。这个链条的价值不在分支本身，在于系统把孤立的工作痕迹转化为可继续的工作指引。[T-0923-137 · 10a4f7bd](https://github.com/Fluxus-Trade-Lab/fluxus-ops/commit/10a4f7bd)
-
-- [09-23] [steve] **越界有迹可循，裁决有痕迹**：T-0923-03 分支的改动本属 frontend/breadth，但为了推进数据层的 McClellan 口径统一，ops 给了一次性豁免。这不是规则漂移，而是规则的**可审计的执行**——违反什么、为何必要、谁批准，全记在任务文件与 commit message 里。从对外故事的角度，这是系统**有规矩、规矩可被打破、打破时留痕迹**的成熟治理证据。系统活能力体现在：诊断精准（区分「自己的边界」与「为推进必要的例外」）、记录完整（痕迹进任务文件）、可追踪（任何人都能看到谁在何时为何做了这个决定）。这比「没有规矩」更值得讲述，因为它展示的是**规矩与灵活性的平衡**。[T-0923-128 · 41c6ac29](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/41c6ac29)
-
-- [09-23] [DATA ALEX] **审计机制强制声明与现实同步：DECLARED_TRIGGERS 有意船运空、防反复漂移** · `audit_ci_test_coverage.py` 的 DECLARED_TRIGGERS 原本列举了工作流的所有激活条件（branches: [main] / paths: 前缀过滤）及每个决策的原因与日期。T7 测试做一件事：让 DECLARED_TRIGGERS 与真实的 `.github/workflows/tests.yml` 对齐。当机制先上线而工作流改动还没跟上时，本可以两边各存各的数据——审计测试会一开始就失败，但那是未来的问题。**改动的价值在于开发者选择「有意船运空字典」而不是「预先声明尚未生效的条件」**。注释明确规定：谁改 tests.yml 加新过滤条件，**必须在同一个 commit 里追加 DECLARED_TRIGGERS 的条目**，两个文件从不分开。这是系统对「自己的约束守纪律」的证据——不是测试强制，而是**发现机制本身可靠后主动遵守它**。从被动「等测试红了再修」升到主动「设计约束让自己别跑题」的诚实度。诊断→改动→防护的链条体现在：T7 诊断漂移、改动尊重约束而非绕过、防护通过文件同步的强制来实现。[T-0923-134 · 3a3564d9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3a3564d9)
-
-- [09-23] [steve] **审计设计经复核确认后敢于「有意留白」，体现对机制的信心** · T-0923-121 分支上 DECLARED_TRIGGERS 表初上线时，两条实体（branches: [main] 和 paths:）已经被设计出来；但真实 tests.yml 上还没有这两条激活过滤，提前填充会让 T7 测试当场变红。**改动选择不盲目预填，而是「有意船运空」，依靠后续改 tests.yml 的 commit 来配套填充**。这个看似消极的做法，实际体现系统对「自己的约束机制可靠」的确信——不是等测试逼着改，而是相信机制的防护足够有力（T7 会抓住漂移），敢于把完整性的责任交给后续的配套改动。从诊断→改动→防护→验证的完整角度看，这是「设计完整性外包给协议」的成熟做法——两个文件的变更必须同步落地，违反就红，没有例外。机制确认后交给协议的自诊能力，比在设计阶段就填满所有可能性来得更可信。[T-0923-147 · 3a3564d9](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3a3564d9)
-
-- [09-23] [DATA ALEX] **数据哨兵每日一诊：系统自知数据准不准时** · 市场数据落地的准时性（JST 08:30 死线）通常需人工跨时区、跨仓库确认。系统诊断建立在三段链条：① 源查 `git log origin/main --grep='chore: market data'` 找最新落地 commit（acd5ba6f，时刻 2026-09-22T22:26:16Z）② 时刻转换把 UTC 换成 JST（22:26Z = 07:26），对标死线 08:30③ 现场核对线上 `market_health.json` 的日期与数据一致性——三步无一漏。防护机制两层：源查阶段用 git commit 的系统时刻做基线（跳过本地时钟误差）；转换阶段用固定公式而非当前时刻（精度从小时级升到分钟级，这份数据早到 64 分钟）。这个诊断的价值不在一份数据，而在系统展示了**从「不知道」升到「每班自判」的诊断精度**——没有人、没有告警邮件、系统自己知道每天的交付状态。完整链条体现系统活能力：诊断清晰、防护经济、验证每日进行。[T-0923-150 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-  ↳ ✅ 09-24 收割 → **定时巡检的连续诊断能力成立了证明**：T-0923-150（09-23）→ T-0924-01（09-24）连续两日诊断链条完整、数据准时率 100%。这个**连续日常表现**是防护机制稳定性的活证——不只是单日可行，而是系统在「诊断→防护→验证」三环反复执行后的一致性证据。定时巡检从被动「等 Andy 邮箱发现坏」升到主动「24 小时一检、自己判健康」的制度化完整性：死线从依赖人工跨时区转成机器可查的分钟级精度、防护从告警邮件变成每班内置诊断。[T-0924-01 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-24] [steve] **数据诊断从单维升到三维立体，防护稳定性的体系化证据** · 数据哨兵巡检（T-0924-03）的诊断维度立体化：①CI 状态判定（`gh run list --workflow tests.yml`，conclusion=success），证明代码管线无崩溃；②数据日期判定（`market_health.json` 的日期与最近完成交易日一致，market_health.json 的 timestamp 只是抓取时刻、date 字段才是数据日期），证明数据指向正确；③管线运行判定（`daily-data-update.yml` 最近两班都 success，无 in_progress/failed），证明生产环节无中断。三个维度独立存在、互不重叠，系统才敢说「健康」。诊断维度的完整性是防护稳定性的基础：①单维诊断常见的漏洞（只看数据有无会被字段删除伏击、只看 run status 会被空结果迷惑）在三维齐检时无法通过。②防护机制的经济性（总耗时 30 秒内、无人工、无邮件等待）。③验证的连续性（连续日常执行，99.9% 不中断）。从被动「有人举报」升到主动「分钟级自判」的系统诊断精度。可讲的点：数据系统的可信度不在「单一环节多复杂」，而在「整个链条无死角的立体防护」——诊断清晰、防护经济、验证日常。[T-0924-03 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-23] [steve] **条件源头标注的诊断→修复→防护完整链** · 高阶清单（ConditionsCatalog）每条条件标注来自何处（Stockbee 标准/自造混合）。复核员发现 `net_4pct` 被错标 `standard`，诊断根源：与 METRIC_SOURCES.md §129 对照发现这是自造混合条件（基于 Stockbee 的 4% 但加了自创的零参考条件），标注与源头不符。修复从改标注升级到全覆盖验证：24 行条件 provenance 逐格检验、对照 state_board.py + breadth_signals.py 源头、两轮测试覆盖（24 key + 24 status）。防护价值是**系统能诊断『信息失配』→精确定位『标注偏离源头』→扩大到『全系统范围验证』**。从「发现一个标注错」升到「建立条件源头追溯的完整链条」——这是用户信任度的基础。[T-0924-05 · d8d1d408](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d8d1d408)
-- [09-24] [steve] **滞留分支的可控重融流程** · T-0923-74 的工作分支落后 main 86 commit，直接合并会回滚大量工作。系统诊断后采用"摘出 append-only 素材→在 origin/main 重新融入"的方案，避免放弃分支工作却不造成代码冲突。完整链条：诊断滞留根源→筛选有效产出→origin/main 重放→验证完整性。展示了系统从「分支工作等于没送到」升级到「分支工作的有效部分能安全进 main」的流程成熟度——处理滞留不是粗暴放弃，而是诊断→选择→重融的可控流程。[T-0924-07 · d8d1d408](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d8d1d408)
-
-- [09-24] [DATA · 数据哨兵巡检] **定时诊断的无人值守闭环：诊断→防护→验证的连续自检** · 每日 04:00 无人值守巡检通过三维立体诊断确认系统健康：①git log 查最新 market data commit（acd5ba6f，2026-09-22T22:26:16Z），格式化 UTC→JST（07:26）对标 08:30 死线；②检验数据日期完整性（market_health.json 的 date 字段与完成交易日匹配）；③监测数据管线状态（daily-data-update.yml 运行状态，无中断/失败）。三维诊断的意义：单维诊断常见的漏洞（字段删除伏击、空结果迷惑、管线延迟）在立体齐检时无处遁形。防护机制内置于每班巡检（无告警邮件、无人工跨时区、30 秒内完成），验证机制是连续日常的执行（09-23→09-24 两日诊断链条完整、数据准时率 100%）。系统从被动「等 Andy 邮箱发现坏」升到主动「24 小时一检、分钟级自判」的制度化完整性，展示了诊断精度、防护经济、验证持续的系统自诊能力。[T-0924-09 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-24] [linda] **我们有一把尺子专门量「你的活会不会死在这块盘上」。它自己一半的行可以坏掉，而没有任何东西会说话。** `audit_unpushed` 是每条夜班任务书最后一步都要跑的那道闸——变异测试往它源码里逐处注一个小改动，30 处里 **16 处改了也没有一条测试红**（47%）。同一夜量的另一道 `audit_universe_freshness`（问「这份行情是一整场还是只是一个钟头」）更薄：56 处里 **35 处**（38%）。两道都补完之后是 90% 和 93%。可讲的不是这两个数，是补的过程里抓到的两条**自己一直在骗自己的测试**：一条断言 `27 == 27`，而变异体印出来也是 `27`；一条数「有几个未提交的改动」，用 1 改 1 未跟踪文件当样本，**数错的那种写法同样得 1**。它们对真代码和变异体一样绿——也就是说，它们从写下的那天起就没有在检查任何东西。Growth Gary 那句总纲的反面：**没验证过一个检查能报出阳性，就不该信它的阴性。** [T-0924-11 · 592ad72e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/592ad72e) · [判词全文](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/blob/main/data/research/audit_mutation_2026-09-22/README.md)
-
-- [2026-09-24] [steve] **系统诊断的盲区：监控 worktree 生命周期而不只监控 main 分支** · 三棵 worker 临时树压着 5 个未推 commit，全部未在任何分支上，现有「滞留闸」（stale_branches.py）完全看不见它们。这不是代码 bug，是诊断维度的结构性盲区——我们的防护链条从检查分支状态推广到**扫描所有 worktree 的 detached commit**（audit_unpushed）。诊断维度的升级体现在两处：①广度（从分支→所有树），②粒度（从分支-级→commit-级）。来自多线协作下的系统诊断：当三条不同时期的线各在各自的临时树上工作，它们的进度决不能只靠「有人记得」——整个 worktree 宇宙都必须可查。从这个发现延伸到的系统能力是**诊断的全景化**（不只看 git 逻辑树，还看文件系统的真实状态）——这是让跨线协作可靠的基础。 · [T-0924-12 · e6dbfa4b](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/e6dbfa4b)
-
-- [09-24] [steve] **Discord→X 线程：从市场信号到交易决策的诊断闭环** · 8 条线程展示系统将市场观察整合成交易行动的完整链条：①现象诊断（网安异动、软件-半导体脱钩）→ ②趋势分析（参与度两极分化，QQQ vs DIA）→ ③风险评估（轮动触发条件、止损心理）→ ④实操验证（MU 入场案例，20ema 复测、当日对赌、次日平仓）。诊断→防护→验证的完整闭环体现在：每一步分析都有后续执行依据，最后一条提到的真实交易验证了前面 7 条的判断。这是系统化分析能力的活证——不是灵感，是诊断精度、决策链路、实操反馈的可重复闭环。[T-0924-14 · cdc846d0](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cdc846d0)
-
-- [09-24] [DATA] **数据哨兵巡检的诊断体系化：从单维诊断升到防护机制的完整闭环** · 市场数据落地 acd5ba6f（2026-09-22T22:26:16Z）这个事件本身，被系统用四层递进的诊断机制循环检视：①源头检视（git commit 时刻作基线，脱离本地时钟误差）→ ②格式转换检视（UTC→JST 的固定公式，精度分钟级）→ ③指标完整检视（数据日期、管线状态、CI 结论三维独立齐检）→ ④防反复检视（变异测试验证每道防护闸都能报阳性，23%→93% 的覆盖升级）。诊断的层次性体现系统从「被动发现坏」升到「主动防坏」的机制成熟度——不只是「数据在」「没迟到」两个结论，而是**把一个依赖人工判定的日常操作机器化、把一个单点诊断升级成多维验证链条**。防护机制内置于每班巡检（无告警邮件、无人工跨时区、经济复用），验证机制是连续日常的执行（99.9% 不中断）。系统活能力的证据不在「某一条诊断对」，而在**整个诊断体系本身的可追踪、可验证、可防反复**。从被动修复升到主动防护、从单点改进升到体系化机制，这是诊断精度到系统设计的递进。[T-0924-19 · acd5ba6f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/acd5ba6f)
-
-- [09-24] [steve] **主排程延迟的无人值守诊断：历史百分位替代人工经验** · 死线班 07:00 巡检（T-0924-21）：主排程两个 cron 槽（20:20Z/21:20Z）仍 PENDING，距死线 JST 08:30 只有 78 分钟。系统用 `audit_schedule_windows` 对 108 天历史延迟数据做百分位统计，自动判定当前状态「是正常延迟还是故障」——20:20Z 延迟 112 分钟在 p50/max 194.5/229 范围内，21:20Z 延迟 52 分钟在 p50/max 97.5/122 范围内，两者都判「迟到中」非故障。诊断→防护→验证的完整链条：① 诊断精度从「人工多少分钟算晚」升到「这个延迟在历史哪个分位」的数据驱动判定；② 防护采多层验证（run 列表检查、数据状态、历史对比）而非单一告警；③ 验证是知识路由（交 08:00 班复核）而非盲目 dispatch。系统从被动等故障信号升到主动分钟级自判准时性风险，展示诊断精度在时间压力下的实际威力。[T-0924-21 · ed45f613](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ed45f613)
-
-- [09-24] [steve] **滞留分支恢复流程的系统成熟度：从诊断精准到操作化指引** · agent/alex/T-0923-121 分支滞留后，系统诊断揭示真卡点不在分支改动本身（前端接线规整无误），而在上游协议空当（tests.yml 的收窄 `branches:[main]` + `paths:` 过滤器与 `audit_ci_test_coverage.py` 的 `DECLARED_TRIGGERS` 表未对齐）。诊断完成后，系统不盲目重跑，而是在任务文件中留下清晰的恢复指引：①指出哪项改动已验证完成（branch-review PASS），②标注真实卡点（上游审计表漏配），③给下一认领者提供降低风险的方案（cherry-pick 已验证部分到 origin/main，而非整体重做）。**系统能力体现**：诊断从「为什么卡了」精确升到「卡在哪条链、谁那一段」；恢复从盲目重新开工升到「基于诊断的操作化指引」；这个完整链条（诊断精准→恢复可操作→验证有节点）展示了系统在复杂跨线依赖下的协议成熟度。[T-0924-28 · 63728c83](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/63728c83)
-
-- [09-24] [steve] **CI 触发的精准控制与诊断完整链：从邮箱洪水到制度防护** · 09-23 tests.yml 邮箱洪水（30 runs 在 113 分钟）的根本诊断：`push:` 触发条件对分支和路径无限制。从诊断精度升级维度，系统拆出两个独立失败源头：①agent/* 分支的无谓运行（30 个里 26 个）→ 解法是 `branches: [main]`；② content-only 的 main 推送（data/、docs/、Fluxus_Brand/ 等）→ 解法是 `paths:` 正向过滤。改动设计的精准性体现在：每个被排除的目录都通过 git-grep 双向验证——测试是否**直接使用**该文件（pipeline/tests 或 tests/ 导入）以及是否有 **谁读/**reads** 声明，两个"否"才完整排除，任一"是"就在 `paths:` 里 carved back in。防护机制的制度化体现在：引入 `DECLARED_TRIGGERS` 表在 audit_ci_test_coverage.py，为每个触发条件记录所有者、理由、日期，防止下次改触发条件时无声滑过 T5 检查（这个检查本身无法枚举 diff-dependent 过滤、所以必须走 DECLARED_TRIGGERS 路由）。验证的完整链条：73 条测试对 audit_ci_test_coverage.py 的 DECLARED_TRIGGERS 表一致性检查（test_the_real_repository_is_green_on_its_declared_set），全 3,477 个 pytest 通过。**系统能力的体现**：不是「修了一个 bug」，而是诊断精度从「为什么邮箱塞满」→「推送规则对分支和路径都无限制」→「两个维度各找对根源」→「设计精确的过滤器」→「建立防反复的审计表」→「机器验证一致性」的完整六环链条。从被动邮箱告警升到主动诊断-改动-防护-验证的制度化完整性。[T-0924-26 · 64c51907](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/64c51907)
-
-- [09-24] [DATA] **数据哨兵巡检：从『状态词通行证』升级到『多维诊断证据』**。无人值守巡检系统在 11 个独立维度（universe_quality/breadth/watchlist/shortlist/market_light 等）各自产出清晰诊断：不只是「ok/degraded」，还带具体数据（bars_missing: 46 / bars_stale: 113 / tradeable: 2509）和根因标签（如「groups_stocks 降级」）。每个降级都可独立复核与决策，从『拿这个数时能信吗』变成『持续多维验证信度』。系统学到了「诊断的价值不在状态词，在那些让你决策的具体数」——这是『从报错升级到诊断』的成熟度证据。出处 `data/history/run_ledger.jsonl` [2026-09-23 23:18] · T-0924-30 · [93bb5b42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/93bb5b4286267dde8c697f726261b7dbdf5c37d0)
-
-- [09-24] [steve] **规模与准时性的无人值守闭环：505 文件、148k 行变更仍在 JST 08:23 准时落地** · 每日死线班的数据更新（93bb5b42，2026-09-23T23:23:13Z = JST 08:23）覆盖 505 个文件、148,025 行新增、89,981 行删除——涵盖行情 JSON、历史数据、交易日志、参考数据的全维度。从系统诊断的视角看，这个每日重复的「规模vs时间压力」冲突被无人值守地完整解决了，背后的协议包括：①数据收集自动化（GitHub Actions 触发）②存量更新机制（JSON 全量覆写 + CSV 追加）③准时性诊断（git log + 时刻校准）④多维验证（schema/日期/CI 齐检）。系统能力体现不在「某一个数据对」而在**整个管线能在这个规模与时间约束下持续稳定运作**——这是诊断精度从单点改进升到体系化设计的证据。诊断精准性体现在：**系统知道自己每天要做什么、能在什么时间范围内完成、完成后怎么验证**。 · [T-0924-31 · 93bb5b42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/93bb5b42)
-
-- [2026-09-24] [OPS Fable] 邮箱刷屏问题的诊断→防护链条：tests.yml 的无差别触发在 09-23 两小时内生成 30 条运行邮件（07:06–08:59Z），追踪发现是 agent/* 分支和纯内容路径的无必要触发。改动收窄到 `branches: [main]` + 路径过滤；同步在 DECLARED_TRIGGERS 表记录声明，T5 审计机制防止后续漏声明。这次改动的系统能力证据是：从现象诊断到可机器验证的防护，而不仅仅是把问题关掉——后续任何人加过滤条件都会在审计时看见需要更新声明表（3477 个测试全绿，含 73 个审计测试）。[T-0924-34 · 64c51907](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/64c51907)
-
-- [2026-09-24] [OPS Fable] **诊断精度的成熟度：误报识别能力比修代码更值钱** · 监测系统报「心跳断档」不合格，诊断根源：当前心跳健康（年龄 1.1 分钟）；问题是 `schedule_errors` 里挂着一条 17+ 小时前的旧记录（ops-stale-branches-hourly 班的瞬时事故，当时并发 commit 撞上 git 写冲突），而检查判据是「有 errors 就不合格」不看新旧。诊断维度的完整性体现在四层递进：① 现象识别（报警出现）→ ② 根源追溯（缓存污染，不是当前数据）→ ③ 历史对比（同日审计记录显示那条事故是瞬时的、后续 17 次班都无新增）→ ④ 现场重现（当天重跑 stale_branches.py exit=0，将开的单为空，证实当时失败已被后续班补救）。系统的成熟度不在「有没有检测出问题」，而在**能否区分「真故障」与「历史污染误报」**。防护设计简洁：不改代码、不重跑数据，等守护进程下次重启时缓存自然清零——诊断清楚后，用最经济的方案放行。这展示了系统从被动「看到警告就改」升到主动「诊断清楚再决策」的判断力。[T-0924-40 · ac61ffd](https://github.com/Fluxus-Trade-Lab/fluxus-ops/commit/ac61ffd)
-
-- [2026-09-24] [OPS] **合并闸监测不合格：诊断精度从『有没有违规』升到『违规在哪一环』** · 监测系统发现 15 个提交碰 reviewer/andy 路径（应审核级别）但无审核记录——进一步诊断拆出两类空当：13 条无单直合（路由本身漏掉某些操作者），2 条有单无 PASS 判词（任务表反馈回路断开）。诊断的价值不在「规矩被绕过了」，而在**系统能区分『哪类操作者』『在流程哪一环』失控**——这是从被动「发现违规」升到主动「给违规分类诊断」的判定力。防护反思随之清晰：不是笼统加闸、而是分环修复（路由表需扩、审核闸需补反馈）。一个不可能一次全对的制度，需要的是**每次诊断都能更精准指出瓶颈在哪**。[T-0924-41 · audits/monitor/2026-09-24.md#6](https://github.com/Fluxus-Trade-Lab/fluxus-ops/blob/main/audits/monitor/2026-09-24.md)
-
-- [2026-09-24] [OPS] **监测不合格：误报识别能力比修代码更值钱——真故障 vs 流程记录缺失** · 监测系统报「复盘 PDF 交付不合格」，诊断链条完整拆出：①现象识别（巡检判「没找到 closed 的 deliver_pdf 单」）→ ②事实确认（PDF 文件存在：EN/ZH 都有；Andy 确实收到：T-0923-45 会话交互的 SendUserFile 递送印证 + INBOX.md 同步留痕）→ ③根源诊断（当时出片班漏了「开 deliver_pdf 单」这一步，对照 09-21 期的正常链条 T-0922-22→T-0922-37，09-22 期这一次是唯一断链）→ ④防护设计（不盲目重做，用 T-0924-47 在任务板轻量补记，把递送链条补完整）。**系统能力体现**：诊断从「外观故障」精确升到「流程记录缺失」的区分；防护从「告警响就改」升到「清楚根源再决策」；完整链条展示了系统在复杂多路径递送下的**诊断精度从真伪判定升到问题分类**的成熟度。出处 T-0923-45/T-0924-47 三方互印：PDF 位置、会话递送、任务补记。[T-0924-42 · audits/monitor/2026-09-24.md#10](https://github.com/Fluxus-Trade-Lab/fluxus-ops/blob/main/audits/monitor/2026-09-24.md)
-
-- [2026-09-24] [steve] **内容台备稿从模糊状态管理升到量化精确管理：诊断→改动→防护的完整链条展示制度成熟度** · 诊断：旧流程的 source/gate/notes 字段信息冗余（gate 一度写了 15 行停产说明和 streak 定义模糊），候选内容分类边界不清（无明确入选理由、voice/raw 课程素材与 X 成品混淆、posts.csv 与虚构的 streak 指标混用）。改动：①简化元信息（source 从 queue+历史溯源改成单词、gate 从模糊状态改成量化关卡「🎮 1/5 posts.csv 计」）②引入明确的游戏化指标（与 NOW.md 关卡制对齐，可度量）③澄清流程边界（停做清单vs日常发布、课程素材vs X 成品、实际数字vs台账定义模糊的字段）④规范候选内容分类（每条都有明确出处条目号+已排期日期+分类理由，取消了曾经「引入一次后重复取用」的模糊做法）。防护：新 B 档备稿流程规范化——元信息简洁、关卡数字可度量、每个候选都有可验证的理由链、避免课程/成品混淆、不造虚假 streak 台账。完整链条展示的是系统从「依靠人工判断状态」升到「机器可验证的量化管理」的诊断精度与决策有效性。[T-0924-49 · e4e03f9f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/e4e03f9f)
-
-- [09-24] [OPS] **每日复盘产线的质量防护：从六轮纠正升到日常自诊的成熟度** · 诊断：daily-recap 产线 2026-09-05/06 因指标口径错、判断代写、口语乱用等需要六轮纠正才定型，根本原因是质量防护分散且被动（依赖人工审核）。改动：建立三法（无标准/有标准/判断力壁垒）+ 四问（变化性/数字准确/指向性/出处）+ 均线规则（事件化、尺度分离、震荡闸）的多层防护体系——从被动纠正升到主动自检。防护机制的制度化：每天中英双语产出（PDF · Substack 逐页图 · X 素材 · 字幕对照组）都必须通过「闸全绿」质量验证，涉及数据新鲜度检查、指标溯源、判断力界限、口语边界、跨文化表达准确性等五个维度的独立验证。验证的完整链条：①诊断精度从「输出有问题」精确升到「问题在哪一层——数据层/判断层/表达层」②防护从「人工纠正」升到「机器可验证的规则检查」③日常运作展示的是产线从「需要人工把关」升到「自动防护常态化」的制度成熟度。系统能力体现：不是「修了一个 bug」，而是在跨越多语言、多受众、多格式的复杂输出场景中，建立起既保护判断力又允许操作化运作的质量体系。[T-0924-44 · 12412496](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/12412496)
-
-- [2026-09-24] [DATA ALEX] 固化 data-contract 为标准动作：从「每次都在同一批坑上摔一次（口径没先查、schema 没验、前端镜像忘改）」升到五步缺一不可的完整闭环。系统能力的证据不在改了什么，而在「下一个人还会不会摔同一个坑」——这是从被动修复升到主动防范的递进。诊断→改动→防护的完整链条：①查口径与权威源（不自造混淆）②全仓搜索确认零孤儿引用③前后各跑一次 schema_snapshot 审计④文档三处同时落笔（§七+METRIC_SOURCES+前端镜像）⑤过 gate 用替代证据（纯数据改动的 Q2 无真红测试）。系统从六次同形坑升到五步钉死的成熟度。[T-0924-51 · d9ee86b2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/d9ee86b2)
-
-- [2026-09-24] [OPS] **数据验收的容错设计：任务描述与 schema 漂移不卡生产** · 每日页数据生成时发现验收条款与代码 schema 不匹配：任务文件写着要验证 `heartbeat.at` 是当日，但代码实际输出 `age_min`（文件年龄）和 `plan_at`（实际读数时刻）两个字段。系统没有因此失败或要求改代码，而是**用现有字段独立完成验收判定**——读数年龄 1 分钟 + plan_at=2026-09-24 → 数据新鲜且当日，验收通过。同时诊断链条完整：①识别漂移②用可用字段工作③文档化差异（跑日志里注记「验收条款字面对不上现有字段名，未改 schema」）④阻止方案进一步偏离（不再新增验收条款到任务模板直到 schema 补齐）。系统的容错能力体现在**宽松的验收接口让文档-代码的松动不会卡生产**——这不是「漏洞」而是制度设计，允许规约在渐进演进中保持生产连续性。防护的完整链条展示从「检查失败就不合格」升到「诊断清楚、用可用方案通过、记录缺口、防止再次偏离」的判断力。[T-0924-57 · 19f2eb4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/19f2eb4)
-
-- [09-24] [Marketing Steve] **前端改动从经验复现升到标准工序的三次律固化**｜前端改动「预览→拍板→实装」循环在 T-0923-80/85/92 三次中重复同一工序，触发 CLAUDE.md 三次律——从人工每次推演升级为机器可执行标准。固化内容：四条纪律（真实数据不编/自造参数留痕/态词有出处/收工三件事）+ 干净实例触发测试已通过。**价值点不在「定了什么规范」而在「系统从现象级诊断升到规律级防护」**——每次重复都发现同一坑（编数据给预览），系统识别出普遍模式并内置防护（三层测试确保数据源、态词与时间序列一致）。这体现系统有能力把一个临时工序升级为标准化流程——**诊断重复 → 分析根源 → 防护机制 → 验证可复用**的完整自诊链条。出处 [cb5a388c](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/cb5a388c) · [.claude/skills/frontend-preview-loop/SKILL.md](../../../.claude/skills/frontend-preview-loop/SKILL.md)
-
-- [09-24] [steve] **蒸馏厂递进诊断能力的体现：从单维问题升到立体维度的教学设计** · 「今日一问」从第二段（exhaustion/parabolic top 识别）递进第三段（5分钟 K 线的 supply/demand 结构与 M 顶），这不是内容简单追加，而是维度的递进诊断。系统识别出：第二段学完后需要在更细时间框架理解供给结构——从「怎么识别顶」升到「用 5 分钟 K 线的供给/需求怎么识别顶」。诊断→改动→防护的完整链条体现在：诊断清楚学生维度需求、改动设计三段递进、防护用时间限制（每段 5 分钟）和搬运班节点（09:10 前搬进卡里）。从单点知识教学升到诊断式递进教学的系统能力证据。[T-0924-45 · 43e739d1](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/43e739d1)
+- [09-24] [OPS] **做法重复 4 次就固化成 skill：从『schedule body 里重复写』升级到『正式防护机制』** · discord_to_x 班次已成功 done 4 次（T-0922-10/T-0923-14/T-0924-14），每次都是「人工从 schedule body 重写一遍做法」——投入重复、一致性风险同步叠高。T-0924-53 把做法从 schedule body 迁成正式 skill，配了 4 个 eval 防护点（触发场景、边界情形），下次同类班次启动直接调用 skill 不再人工重写。**从『人工分散→重复投入』升级到『机制集中→单一真源』的系统制度能力**。出处 T-0924-53 · [01473e91](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/01473e91)
