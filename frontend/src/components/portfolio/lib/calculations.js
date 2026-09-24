@@ -261,24 +261,67 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
   })
 }
 
-export function computeYtdStats(enrichedTrades, totalReturnPct) {
-  const allExits = enrichedTrades.filter(t => t.isClosed).map(t => ({
-    retPct: t.totalReturnPct || 0,
-    holdingDays: t.holdingDays || 0,
-  }))
-  if (!allExits.length) return null
-  const wins = allExits.filter(x => x.retPct > 0)
-  const losses = allExits.filter(x => x.retPct <= 0)
+/**
+ * The year-to-date row under the monthly table.
+ *
+ * It used to be YTD in name only: `returnPct` was handed `totalReturnPct`
+ * (inception-to-date, the same number the row's first column already showed)
+ * and the trade statistics counted EVERY closed trade ever. Andy, 2026-09-24:
+ * 「YTD那栏改成真的年初至今」.
+ *
+ * Now:
+ *   · portfolioRetPct — the equity curve chained from the last close of the
+ *     PREVIOUS year to the latest point, the same construction the monthly
+ *     rows use. When the curve does not reach back that far (the account
+ *     started inside this year) it falls back to inception and says so in
+ *     `basis`, because a YTD label over an inception number is the bug being
+ *     fixed here.
+ *   · every trade statistic counts only trades closed in that year, dated by
+ *     their last trim — the rule computeMonthlyStats already uses.
+ *
+ * The year is taken from the curve's own last point, not the wall clock, so a
+ * replayed or stale book reports the year it is actually showing.
+ */
+export function computeYtdStats(enrichedTrades, totalReturnPct, performanceData) {
+  const pd = (performanceData ?? []).filter((p) => p?.date)
+  const closedAll = (enrichedTrades ?? []).filter((t) => t.isClosed)
+  if (!pd.length && !closedAll.length) return null
+
+  const asOf = pd.length ? pd[pd.length - 1].date : null
+  const year = (asOf ?? closedAll.map((t) => (t.trims?.[t.trims.length - 1]?.date) || '').sort().at(-1) ?? '').slice(0, 4)
+    || String(new Date().getFullYear())
+
+  // Portfolio return, chained off the prior year's last close.
+  let portfolioRetPct = totalReturnPct ?? 0
+  let basis = 'inception'
+  if (pd.length) {
+    const prior = [...pd].reverse().find((p) => p.date < `${year}-01-01`)
+    if (prior) {
+      const endF = 1 + (pd[pd.length - 1].returnPct ?? 0) / 100
+      const prevF = 1 + (prior.returnPct ?? 0) / 100
+      portfolioRetPct = prevF > 0 ? (endF / prevF - 1) * 100 : 0
+      basis = 'ytd'
+    }
+  }
+
+  const exits = closedAll
+    .filter((t) => ((t.trims?.[t.trims.length - 1]?.date) || '').slice(0, 4) === year)
+    .map((t) => ({ retPct: t.totalReturnPct || 0, holdingDays: t.holdingDays || 0 }))
+  const wins = exits.filter((x) => x.retPct > 0)
+  const losses = exits.filter((x) => x.retPct <= 0)
+  const mean = (xs, f) => (xs.length ? xs.reduce((s, x) => s + f(x), 0) / xs.length : 0)
+
   return {
-    totalTrades: allExits.length,
-    returnPct: totalReturnPct,
-    winPct: (wins.length / allExits.length) * 100,
-    avgGain: wins.length ? wins.reduce((s, x) => s + x.retPct, 0) / wins.length : 0,
-    avgLoss: losses.length ? losses.reduce((s, x) => s + x.retPct, 0) / losses.length : 0,
-    largestGain: wins.length ? Math.max(...wins.map(x => x.retPct)) : 0,
-    largestLoss: losses.length ? Math.min(...losses.map(x => x.retPct)) : 0,
-    avgHoldWin: wins.length ? wins.reduce((s, x) => s + x.holdingDays, 0) / wins.length : 0,
-    avgHoldLoss: losses.length ? losses.reduce((s, x) => s + x.holdingDays, 0) / losses.length : 0,
+    year, basis, portfolioRetPct,
+    totalTrades: exits.length,
+    returnPct: mean(exits, (x) => x.retPct),
+    winPct: exits.length ? (wins.length / exits.length) * 100 : 0,
+    avgGain: mean(wins, (x) => x.retPct),
+    avgLoss: mean(losses, (x) => x.retPct),
+    largestGain: wins.length ? Math.max(...wins.map((x) => x.retPct)) : 0,
+    largestLoss: losses.length ? Math.min(...losses.map((x) => x.retPct)) : 0,
+    avgHoldWin: mean(wins, (x) => x.holdingDays),
+    avgHoldLoss: mean(losses, (x) => x.holdingDays),
   }
 }
 

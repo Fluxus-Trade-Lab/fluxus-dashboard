@@ -465,8 +465,13 @@ export default function OverviewTab({
                   ))}
                   {ytdStats && (
                     <tr className="font-bold border-t-2 border-[var(--color-border)]">
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)]">YTD</td>
-                      <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(totalReturnPct)}`}>{fmtPct(totalReturnPct)}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)]"
+                          title={ytdStats.basis === 'ytd'
+                            ? `${ytdStats.year} year to date — the equity curve chained from the last close of ${Number(ytdStats.year) - 1}; trades closed in ${ytdStats.year} only`
+                            : `The curve does not reach back to ${Number(ytdStats.year) - 1}, so this is inception to date`}>
+                        {ytdStats.basis === 'ytd' ? `${ytdStats.year} YTD` : 'Since start'}
+                      </td>
+                      <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(ytdStats.portfolioRetPct)}`}>{fmtPct(ytdStats.portfolioRetPct)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{ytdStats.totalTrades}</td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(ytdStats.returnPct)}`}>{fmtPct(ytdStats.returnPct)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{fmtPct(ytdStats.winPct)}</td>

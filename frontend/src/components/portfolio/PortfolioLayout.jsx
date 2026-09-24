@@ -128,8 +128,8 @@ export default function Layout() {
     [enrichedTrades, performanceData]
   )
   const ytdStats = useMemo(
-    () => computeYtdStats(enrichedTrades, totalReturnPct),
-    [enrichedTrades, totalReturnPct]
+    () => computeYtdStats(enrichedTrades, totalReturnPct, performanceData),
+    [enrichedTrades, totalReturnPct, performanceData]
   )
   // Arrived with the beta-weighted exposure section from Review, which reads
   // both. Computed here rather than inside ExposureTab so the tab stays a view.
