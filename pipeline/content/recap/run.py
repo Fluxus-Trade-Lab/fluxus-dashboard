@@ -129,8 +129,14 @@ def run_check(iss: Issue) -> dict:
     r2 = dedupe.r2(contents, iss.weekly, week_priors(iss))
     from pipeline.content.recap.wording import w1_hits
     w1 = w1_hits(contents["EN"])
-    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2, "w1": w1,
-           "ok": not any(rules.values()) and not r1 and not r2 and not w1}
+    from pipeline.content.recap.index_checks import i1_placeholder_hits, i2_restatement_hits
+    pack_path = iss.src / "pack.json"
+    pack = json.loads(pack_path.read_text()) if pack_path.exists() else {}
+    i1 = {lang: i1_placeholder_hits(contents[lang]) for lang in ("EN", "ZH")}
+    i2 = {lang: i2_restatement_hits(contents[lang], pack, iss.weekly) for lang in ("EN", "ZH")}
+    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2, "w1": w1, "i1": i1, "i2": i2,
+           "ok": (not any(rules.values()) and not r1 and not r2 and not w1
+                  and not any(i1.values()) and not any(i2.values()))}
     iss.dir.mkdir(parents=True, exist_ok=True)
     (iss.dir / "check.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1))
     return rep
@@ -148,6 +154,12 @@ def print_check(rep: dict) -> None:
         print(f"  R2 {h['lang']} {h['item']} ~ {h['vs_issue']} {h['vs_item']} = {h['similarity']} (≥{h['threshold']}): {h['text'][:70]!r}")
     for h in rep.get("w1", []):
         print(f"  W1 {h['matches']} in {h['text'][:80]!r}")
+    for lang, hits in rep.get("i1", {}).items():
+        for h in hits:
+            print(f"  I1 {lang} {h['row']}: placeholder event {h['text']!r}")
+    for lang, hits in rep.get("i2", {}).items():
+        for h in hits:
+            print(f"  I2 {lang} {h['row']}: note restates {h['matched']} in {h['text'][:40]!r}")
 
 
 def cmd_check(a) -> int:
