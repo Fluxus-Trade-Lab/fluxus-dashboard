@@ -261,6 +261,8 @@
   是检验的性质，不是数据的性质。另外那 223 个「观测」其实是 37 只票 × 8 个重叠日，
   换成一票一观测就是 **21/41——掷硬币**。
   出处：[`delayed_ep_review_2026-09/results.md`](../../data/research/delayed_ep_review_2026-09/results.md) · commit `1e9090e8`
+
+- [09-24] [DATA ALEX] **X 社交热度从监测数据→实时排名的完整链条** · X Watch 日班扫 492 条/32 人，build_board.py 生成前端消费的 x_heat.json（7 日热度排名）；双重校验（SHA-256 前缀+字符数）保证每日原文完整性，schema_snapshot --check 拦截变形。从原始观测到前端展示的完整自动化路径，体现系统对数据诚实度的多层防护。出处 T-0923-105 · 31efde0d · [frontend/src/components/ticker/TickerXHeat.jsx](../../../frontend/src/components/ticker/TickerXHeat.jsx)
   **可发布角度**：和 08-31 那条「阴性没有分辨率」是同一族的另一半——**先算你这个检验的最小可能 p，
   再决定要不要跑它。** 一句话版：*在看结果之前，先问这个检验有没有能力给你一个「是」。*
 
