@@ -17,13 +17,20 @@ import re
 
 INDEX_TICKERS = ("SPY", "QQQ", "RSP", "DIA", "IWM")
 
-# "no new ..." anywhere in the sentence, or 无/没有 within a few characters of 事件
-# (real production wording varies — 无事件/没有事件/无新均线事件/无新的均线事件/均线无新事件
-# all showed up across 2026-09; branch-review on T-0924-85 caught the first cut only
-# matching the literal substring "无事件", which missed all 18 of the "无新...事件" cells
-# in that month), or the whole cell being nothing but a lone dash —
-# SKILL.md [2026-09-24]: 「事件列出现 no new/无事件/— 这类占位＝红」
-_PLACEHOLDER_SUBSTRING = re.compile(r"no\s+new\b|(?:无|没有).{0,6}?事件", re.I)
+# "no [new] [average/moving-average/ma] event" anywhere in the sentence, or 无/没[有]
+# within a few characters of 事件, or the whole cell being nothing but a lone dash —
+# SKILL.md [2026-09-24]: 「事件列出现 no new/无事件/— 这类占位＝红」.
+#
+# Real production wording turned out wider than the ruling's own examples — branch-review
+# on T-0924-85 caught two rounds of misses by running this gate against a full season of
+# real content_{EN,ZH}.json instead of the one issue the ruling quoted:
+#   round 1: literal "无事件" missed 无新均线事件/无新的均线事件/均线无新事件 (18 cells/month)
+#   round 2: requiring "无"/"没有" and "new" missed 均线没新事件/均线没事件/无均线事件 (ZH,
+#            "没" without "有") and "no average event" (EN, no "new") — 25 more cells
+# Verified 0 false positives against every real event cell in every issue on disk
+# (2025-10 through 2026-09, 210 non-blank event cells) before and after each widening.
+_PLACEHOLDER_SUBSTRING = re.compile(
+    r"no\s+(?:new\s+)?(?:average|moving-average|ma)?\s*event|(?:无|没有?).{0,6}?事件", re.I)
 _BARE_DASH = re.compile(r"^[—-]$")
 _TAGS = re.compile(r"<[^>]+>")
 
