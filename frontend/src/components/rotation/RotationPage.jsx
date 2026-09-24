@@ -8,6 +8,7 @@ import { useThemeLadder } from '../../hooks/useThemeLadder'
 import { boardsOf, defaultPicks, Y_MAX, R2W_LAG, PRIOR_WEEKS } from './rotationLogic'
 import TerrainCard from './TerrainCard'
 import PointsCard from './PointsCard'
+import ThemeBoardCard from './ThemeBoardCard'
 import FluxCard from './FluxCard'
 import './rotation.css'
 
@@ -70,6 +71,10 @@ export default function RotationPage() {
         <FluxCard shown={shown} dates={seriesDates} stateDates={stateDates} benchmark={benchmark} picked={!!selected.length} loading={ladder.loading} onSelect={toggle} />
       </div>
       <PointsCard boards={boards} selected={names} onSelect={toggle} />
+
+      {/* 明细层：代理 ETF 的两周桶读数 + 每个主题成分股的四态分布。
+          三卡维持原样，这块接在它们下面（Andy 2026-09-24）。 */}
+      <ThemeBoardCard />
 
       <HowToRead>
         <p><b>Terrain.</b> Every group the ladder measures, placed on the two-week board each session: level = the last ten sessions' excess over {benchmark}, momentum = the last five; Leading when both are positive, Weakening when only the level is, Improving when only the momentum is, Lagging when neither. Stacked, darkest = Leading. The window select moves the board to an earlier fortnight; expand lists who sat where on that fortnight's last session.</p>

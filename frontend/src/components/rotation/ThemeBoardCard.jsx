@@ -5,6 +5,11 @@ import { barStyle } from '../groups/ThemeBars'
 /**
  * 主题四态板 —— 50 个主题，每个读一只代理 ETF 的两周桶。
  *
+ * 落在 Rotation 页（本来就是主题四态的明细页），不在 dashboard。
+ * Andy 2026-09-24 原话：「不 设计上用原来的，不能改。你展现的成员分布是细节，
+ * 需要在另外的页面上去展现。」—— dashboard 版面一个像素不动，三卡也不动，
+ * 这块接在三卡下面。
+ *
  * 三件事按 Andy 2026-09-23/24 的裁决排：
  *  · 并排两周：新读数在前、旧读数跟在后面，`parallel_until` 到了前端就不画旧列。
  *  · 成员分布常驻：不折叠、不用点开。代理是市值加权的，09-21 实测 Cloud
@@ -79,7 +84,7 @@ function Row({ row, parallel }) {
   )
 }
 
-export default function ThemeBoard() {
+export default function ThemeBoardCard() {
   const { data, loading, failed } = useThemeBoard()
   const [open, setOpen] = useState(false)
 
@@ -100,8 +105,8 @@ export default function ThemeBoard() {
   return (
     <div className="flex flex-col min-w-0">
       <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]
-                      mt-4 mb-3 px-1">
-        Theme Board
+                      mb-3 px-1">
+        Proxy Board
       </div>
       <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden
                           flex flex-col flex-1 pt-4">
