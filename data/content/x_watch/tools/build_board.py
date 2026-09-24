@@ -385,8 +385,13 @@ def build() -> dict:
     wall_by_sym: dict[str, list[dict]] = defaultdict(list)
     for w in wall:
         for sym in w["tickers"]:
+            # id 是给页面回查正文用的（Andy 2026-09-24：「jeff原话只存不引的规则取消，
+            # 我要在ticker台账上直接能看到」）。正文不在这里重复存一份 ——
+            # 一条 Groups 帖挂 46 只票，正文逐票复制会把页面吹大几十倍；
+            # data["wall"] 里每条已经带全文，页面按 id 查。
             wall_by_sym[sym].append({"d": w["d"], "kind": w["kind"],
-                                     "proxy": w.get("proxy"), "url": w["url"]})
+                                     "proxy": w.get("proxy"), "url": w["url"],
+                                     "id": w.get("id"), "v": w.get("views")})
 
     # ⭐ 墙后点过、公开区一次没出现的票也要进表 —— 否则它们在页面上根本搜不到,
     #    而那正好是墙的代价所在(基线:墙后 11 只有 7 只公开区零提及)。

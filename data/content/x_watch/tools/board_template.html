@@ -325,6 +325,22 @@ tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--
 .post .t a{text-decoration:none;border-bottom:1px solid var(--brass-line)}
 .post .v{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
 .post.wallp{background:var(--brass-soft);border-left:3px solid var(--brass)}
+/* 墙后正文（09-24 起直接上页）。正文列在表里只给一行，点开才铺全文 ——
+   Jeff 的帖中位 260 字，整段铺进单元格会把行高顶成四五行，表就没法扫了。 */
+/* ⚠️ max-width 写在 <td> 上不生效（table-layout 是 auto，td 会被内容撑开，
+   整张表跟着被顶到一千多 px 宽，正文列反而滚到屏幕外——09-24 第一版就是这么栽的）。
+   必须套一层 display:block 的 span，宽度才收得住。 */
+.wprev{display:block;width:420px;max-width:420px;font-size:11.5px;color:var(--ink2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* ⚠️ 同一个「max-width 在 td 上不生效」的坑，墙后视图里还有两格：
+   一条 Groups 帖挂 46 只票、46 个当日人数，把表顶到 4462px 宽（视口 1138），
+   正文列被推到 x=2613 —— 页面上根本看不到。两格都套 block span 收住，
+   全量放进展开行（挂 5 只票以上才印）。 */
+.wclip{display:block;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wclip.pub{max-width:150px}
+.wbody{margin-top:4px;font-size:12.5px;line-height:1.6;color:var(--ink2);
+  white-space:normal;overflow-wrap:anywhere}
+tr.detail .full.wbody{padding:10px 14px;border-bottom:0;color:var(--ink2)}
 
 .empty{padding:34px 16px;text-align:center;color:var(--muted);font-size:13px}
 /* ⚠️ 遮挡这件事的账（09-23，Andy：「最下方有问题」）——
@@ -420,13 +436,18 @@ const D = /*__DATA__*/null;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 const nf = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(1)+"k" : String(n||0);
+/* 墙后正文：Andy 2026-09-24 取消「只存不引」——「我要在ticker台账上直接能看到」。
+   正文只在 D.wall 里存一份，按 post id 查；票视图那边只带 id，不复制正文。 */
+const WALLTXT = new Map((D.wall||[]).map(w => [w.id, w.text || ""]));
+const wtxt = w => (w && (w.txt || WALLTXT.get(w.id))) || "";
+const lines = s => esc(s).replace(/\n/g, "<br>");
 const FWD = new Set(["long","watching","short"]), DONE = new Set(["recap","exited"]);
 const DATES = D.dates, LAST = DATES[DATES.length-1], PREV = DATES[DATES.length-2] || null;
 const SPARK_N = 10;                       // 默认只画近 10 天；全序列在悬停与展开处
 const SPARK_DATES = DATES.slice(-SPARK_N);
 
 /* 三个视图各自记住自己的排序列与方向。dir: 1 升序 / -1 降序。 */
-const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, solo:false,
+const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, solo:false, openw:new Set(),
             sort:"today", open:new Set(),
             ord:{ t:{k:"today",dir:-1}, p:{k:"posts",dir:-1}, w:{k:"d",dir:-1} } };
 
@@ -674,6 +695,7 @@ const COLS = {
     {k:"d",     label:"日期 (ET)", val:w=>w.d, dir0:-1},
     {k:"kind",  label:"类型", val:w=>w.kind || "", dir0:1},
     {k:"tk",    label:"票", val:w=>w.tickers.join(" "), dir0:1},
+    {k:"txt",   label:"正文（点行展开）", val:w=>w.text || "", dir0:1},
     {k:"proxy", label:"代理 / 杠杆", val:w=>w.proxy || "", dir0:1},
     {k:"pub",   label:"公开区当天人数", cls:"num", dir0:-1, val:w=>wallPub(w).reduce((a,b)=>a+b,0)},
     {k:"views", label:"曝光", cls:"num", dir0:-1, val:w=>w.views || 0},
@@ -835,15 +857,24 @@ function render(){
     tb.innerHTML = rows.length ? rows.map(w => {
       const pub = wallPub(w);
       const zero = w.tickers.length && pub.every(n => n === 0);
-      return `<tr><td class="mono" style="color:var(--muted)">${esc(w.d)}</td>
+      const body = w.text || "";
+      const open = S.openw.has(w.id);
+      return `<tr class="row${open?" open":""}" data-wid="${esc(w.id)}" tabindex="0" aria-expanded="${open}">
+        <td class="mono" style="color:var(--muted)">${esc(w.d)}</td>
         <td><span class="wallmark">${esc(w.kind || "—")}</span></td>
-        <td class="sym">${w.tickers.length ? w.tickers.map(s => "$"+esc(s)).join(" ") : "—"}</td>
+        <td class="sym"><span class="wclip">${w.tickers.length ? w.tickers.map(s => "$"+esc(s)).join(" ") : "—"}</span></td>
+        <td><span class="wprev">${body ? esc(body.replace(/\n+/g, " ")) : "—"}</span></td>
         <td class="mono" style="font-size:11.5px;color:var(--muted)">${esc(w.proxy || "—")}</td>
-        <td class="num" style="${zero?"color:var(--brass);font-weight:600":""}">${w.tickers.length ? pub.join(" / ") : "—"}</td>
-        <td class="num">${nf(w.views)}</td></tr>`;
-    }).join("") : `<tr><td colspan="6" class="empty">没有符合的条目。</td></tr>`;
-    $("#note").innerHTML = `⛔ <b>付费订阅内容，原话只存不引，永不进任何对外文案。</b>
-      这一栏在页面上只显示他用的那个词（Stalk / Focus / Update / Groups）、票、代理和杠杆，不显示正文。
+        <td class="num" style="${zero?"color:var(--brass);font-weight:600":""}"><span class="wclip pub">${w.tickers.length ? pub.join(" / ") : "—"}</span></td>
+        <td class="num">${nf(w.views)}</td></tr>` +
+        (open ? `<tr class="detail"><td colspan="7"><div class="posts"><div class="full wbody">${
+          w.tickers.length > 4 ? `<b>全部 ${w.tickers.length} 只</b> ${w.tickers.map(s=>"$"+esc(s)).join(" ")}<br><b>公开区当天人数</b> ${pub.join(" / ")}<br><br>` : ""}${
+          body ? lines(body) : "（这条没有正文，只有图）"}${
+          w.url ? `<br><a href="${esc(w.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</div></div></td></tr>` : "");
+    }).join("") : `<tr><td colspan="7" class="empty">没有符合的条目。</td></tr>`;
+    $("#note").innerHTML = `付费订阅内容，<b>看板上直接显示正文</b>（Andy 2026-09-24 取消「只存不引」）——
+      正文列点一下展开全文，票视图里展开任何一只票也能读到铜色那几条。
+      <b>这页是私有 Artifact，仍然不往对外文案里贴他的原话。</b>
       「公开区当天人数」是 <b>0</b> 时标成铜色——那就是墙的代价：只看公开区的人看不见这一格。`;
   }
   syncScrollGeom();
@@ -995,10 +1026,15 @@ function detail(t){
     <br><b>全部立场（${st.length}）</b> ${st.length ? `<span class="st" style="flex-wrap:wrap;white-space:normal">${st.map(stChip).join("")}</span>` : "未标"}
     <br><b>ETF 篮子</b> ${(t.bask||[]).length ? esc(t.bask.join(" / ")) : (t.idx ? "不适用（ETF/指数）" : "无读数")}
     <br><b>谁在说（${who.length}）</b> ${who.map(h => `${starBtn(h)}@${esc(h)}`).join(" ") || "—"}</div>`;
-  const wall = t.wall.map(w => `<div class="post wallp">
+  const wall = t.wall.map(w => {
+    const body = wtxt(w);
+    return `<div class="post wallp">
       <span class="d mono">${esc(w.d)}</span><span class="h">@jfsrev · 墙后</span>
-      <span class="t"><b>${esc(w.kind)}</b>${w.proxy ? " · 代理 "+esc(w.proxy) : ""} —— 原话只存不引，见仓库 <code>subs/jfsrev/</code></span>
-      <span class="v">—</span></div>`).join("");
+      <span class="t"><b>${esc(w.kind)}</b>${w.proxy ? " · 代理 "+esc(w.proxy) : ""}${
+        body ? `<div class="wbody">${lines(body)}</div>` : ""}${
+        w.url ? ` <a href="${esc(w.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</span>
+      <span class="v">${w.v ? nf(w.v)+" 曝光" : "—"}</span></div>`;
+  }).join("");
   return head + wall + (ms.map(m => `<div class="post">
       <span class="d mono">${esc(m.d.slice(5))}${m.rep ? " · 回复" : ""}</span>
       <span class="h">${starBtn(m.h)}@${esc(m.h)}${m.st ? ` <i class="st"><i class="${FWD.has(m.st)?"f":DONE.has(m.st)?"d":"n"}">${esc(m.st)}</i></i>` : ""}</span>
@@ -1060,6 +1096,8 @@ $("#roster").addEventListener("click", e => {
   const b = e.target.closest(".star"); if (b) toggleStar(b.dataset.h);
 });
 function toggle(el){
+  const wid = el.dataset.wid;
+  if (wid){ S.openw.has(wid) ? S.openw.delete(wid) : S.openw.add(wid); render(); return; }
   const sym = el.dataset.sym; if (!sym) return;
   S.open.has(sym) ? S.open.delete(sym) : S.open.add(sym); render();
 }
