@@ -324,8 +324,11 @@
         note = (V.units && V.units[unit] !== undefined) ? V.units[unit] : unit;
       }
       var lab = (V.vlabels && V.vlabels[label]) || label;
-      return '<div class="vote"><div><span class="g ' + g + '" aria-hidden="true"></span></div>' +
-        '<div class="vnum">' + num + '</div><div class="vunit">' + esc(note) + "</div>" +
+      /* two lines, not four: the dot, the number and its unit share a baseline,
+         the label sits under them (Andy 2026-09-24:「Market State 这段，格式太疏散
+         了，紧凑一些…cell 现在是4行，变成1-2行就可以了」) */
+      return '<div class="vote"><div class="vtop"><span class="g ' + g + '" aria-hidden="true"></span>' +
+        '<b class="vnum">' + num + '</b><span class="vunit">' + esc(note) + "</span></div>" +
         '<div class="vlab">' + esc(lab) + "</div></div>";
     });
     return '<div class="votes' + (big ? " big" : "") + '">' + cells.join("") + "</div>";
@@ -747,9 +750,9 @@
       (is.weekly ? '<div class="kicker sp">' + esc(V.score) + "</div>" + safe(function () { return scorecard(is); }) : "") +
       '<div class="kicker sp">' + esc(L.market_state) + "</div>" +
       safe(function () {
-        return statebar(stateCells(is, c), true) + '<div class="state-b" style="margin-top:16px"><span class="env-b">' +
+        return statebar(stateCells(is, c), true) + '<div class="state-b" style="margin-top:9px"><span class="env-b">' +
           esc(s.env) + '</span><span class="score-b">' + scoreTxt(s.score) + "<small>/ " + nVotes + "</small></span></div>" +
-          voteStrip(is.verd, V, true) + legend(V) + '<p class="prose" style="margin-top:12px">' + rich(c.state_line) + "</p>";
+          voteStrip(is.verd, V, true) + legend(V) + '<p class="prose" style="margin-top:8px">' + rich(c.state_line) + "</p>";
       }) +
       (is.weekly ? '<div class="kicker sp">' + esc(V.sessions) + "</div>" + safe(function () { return daysTable(is, c); }) : "") +
       '<div class="kicker sp">' + esc(L.conditions) + " · <b>" + (isNum(s.cond) ? s.cond : DASH) + " / 100</b></div>" +
