@@ -28,7 +28,6 @@ import LeadersLaggards from './dashboard/LeadersLaggards'
 import VerdictCard from './dashboard/VerdictCard'
 import DataFreshnessBadge from './shared/DataFreshnessBadge'
 import ThemeMovers from './dashboard/ThemeMovers'
-import ThemeBoard from './dashboard/ThemeBoard'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
 import WatchlistPage from './watchlist/WatchlistPage'
@@ -278,10 +277,6 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   windows={['1D', '1W']} limit={3} />
                 <ThemeMovers limit={3} />
               </div>
-
-              {/* 主题四态板自己一整行：50 行在三列网格的一格里会被挤成一座塔，
-                  名字还会截断——这张卡的读法是横着扫一行（态 / 名 / 成员分布 / 超额）。 */}
-              <ThemeBoard />
             </div>
           </div>
 
