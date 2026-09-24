@@ -10,7 +10,7 @@
 | 名字（新会话用 `claude -n "<名字>"` 启动） | 职责 | 文件边界（只在边界内写） | 分支习惯 |
 |---|---|---|---|
 | **UI Claire** | Dashboard 前端 UI | `frontend/` | `feat/*` 短分支，合并即删 |
-| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters\|constants\|portfolio/`（09-21 补 `constants/`、09-22 补 `portfolio/`，见下方裁决行）、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
+| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters\|constants\|portfolio\|themes/`、`pipeline/quality.py`（09-21 补 `constants/`、09-22 补 `portfolio/`、09-24 补 `themes/`+`quality.py`，见下方裁决行）、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
 | **Studio Q** | **课程线**（08-31 拆分后瘦身）：课程整理与设计、视频生成工作流、试读本 | 课程仓库（`~/Documents/SwingMasterclass`）、vault `FluxusTrading_Obsidian/20_Course/` | 成稿小改直推 main；大改 `feat/*` |
 | **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
@@ -23,6 +23,11 @@
 **[2026-09-21 ops 裁 · T-0921-70/71]** `pipeline/constants/`（`tickers.py`/`colors.py`，细分行业名单与配色）补进 DATA ALEX 边界——它是与 `pipeline/screeners|tickers|adapters/` 并列的数据契约物，此前不在任何人边界内是遗漏，不是新设。**并给一条窄口子标准授权**：数据契约改动（如清掉一只已确认退市/停止交易的 ticker）需要同步镜像它的三个前端文件（`frontend/src/lib/etfGroups.js`、`etfNames.json`、`frontend/public/data/etf_data.json` 快照）时，ALEX 可在同一提交里直接同步，不需要每次转交 UI Claire 或另开单——`frontend/` 其余部分仍是 Claire 的边界，这条只管「保持三份镜像与 `pipeline/constants/` 一致」。起因：T-0921-70（清 EATZ）审核判 ASK，见 branch-review skill Q2 补丁同批裁决。
 
 **[2026-09-22 ops 裁 · T-0922-46]** `pipeline/portfolio/`（`trade_parser.py` 等持仓/交易解析代码）补进 DATA ALEX 边界——判例同上一条：它是 `pipeline/` 下的数据解析代码，与 `screeners|tickers|adapters|constants/` 同一层级，此前不在任何人边界内是遗漏，不是新设；T-0922-43（`_parse_date` 取 UTC 日期而非 JST 日期的修复）本就由 ALEX 领单干完，边界补齐只是把既成事实写清楚。**不含前端**：`frontend/` 里对 GAS 原始 `entryDate` 做 `.slice(0, 10)` 的私有 tracker 三处（`TickerTrades.jsx`、`portfolio/lib/calculations.js`、`lib/capitalEfficiency.js`）仍是 UI Claire 的边界，同一批裁决另开单转交，不随这条一起给 ALEX。起因：T-0922-43 分支审核（`agent/alex/T-0922-43`）判 ASK，Q1/Q2/Q4 均已通过，唯独卡在 `pipeline/portfolio/` 不在任何人边界内；该分支单一提交（`160d04c5`）原样合并进 main，见下方 T-0922-43 收尾记录。
+
+**[2026-09-24 ops 裁 · T-0924-90/94]** 分支 `feat/theme-board` 的 ASK 裁两件事：
+1. **`pipeline/themes/`（新增 `proxy_board.py`）与 `pipeline/quality.py` 补进 DATA ALEX 边界**——判例同上两条：与 `screeners|tickers|adapters|constants|portfolio/` 同一层级的数据计算代码，此前不在任何人边界内是遗漏；`pipeline/quality.py` 本身是既有的全局质量闸（被 `pipeline/screeners/run_all.py` 引用，已在 ALEX 边界内的模块消费），本分支只加两行把 `theme_board.json` 注册进 `REQUIRED_BLOCKS`，划给 ALEX 合理。`pipeline/constants/theme_proxies.py` 已落在既有 `constants/` 边界内，不需要新裁。前端三文件（`ThemeBoardCard.jsx`/`.test.jsx`、`useThemeBoard.js`）不受影响，仍是 UI Claire 的边界，本次裁决不改这一半。
+2. **验收「版式定稿给 Andy 看过一次预览」改为合并后置验收项**：原验收要求预览先于合并，但 `data/output/theme_board.json` 在分支上尚未落地（夜间 cron 没跑过 `proxy_board.py`），此刻预览只会显示 "did not load"，走一遍假流程。改为——**合并进 main、`theme_board.json` 首次由夜间管线落地后，由 UI Claire 出一次真实渲染预览给 Andy**，此前不再卡本分支合并。
+起因：T-0924-90（ALEX 把越界写的 `frontend/` 三文件交还 Claire）审核判 ASK，Q1/Q2 通过、Q3 边界缺口同上两条判例、Q4 第 3 条卡在验收时序而非真实缺失。见 T-0924-94 判词。
 
 ## 一条线可以有多个会话
 
