@@ -134,9 +134,15 @@ def run_check(iss: Issue) -> dict:
     pack = json.loads(pack_path.read_text()) if pack_path.exists() else {}
     i1 = {lang: i1_placeholder_hits(contents[lang]) for lang in ("EN", "ZH")}
     i2 = {lang: i2_restatement_hits(contents[lang], pack, iss.weekly) for lang in ("EN", "ZH")}
-    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2, "w1": w1, "i1": i1, "i2": i2,
+    # Q1: the book's two share counts must agree (build_pack._qty_mismatch). A
+    # split row makes this recap and the dashboard print two different return%
+    # off one Sheet, and neither product can tell — so the issue does not render
+    # until the Sheet is self-consistent again. Packs built before the field
+    # existed have no key and stay green, so old issues still re-render.
+    q1 = list((pack.get("book") or {}).get("qty_mismatch") or [])
+    rep = {"issue": iss.label, "rules": rules, "r1": r1, "r2": r2, "w1": w1, "i1": i1, "i2": i2, "q1": q1,
            "ok": (not any(rules.values()) and not r1 and not r2 and not w1
-                  and not any(i1.values()) and not any(i2.values()))}
+                  and not any(i1.values()) and not any(i2.values()) and not q1)}
     iss.dir.mkdir(parents=True, exist_ok=True)
     (iss.dir / "check.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1))
     return rep
@@ -160,6 +166,10 @@ def print_check(rep: dict) -> None:
     for lang, hits in rep.get("i2", {}).items():
         for h in hits:
             print(f"  I2 {lang} {h['row']}: note restates {h['matched']} in {h['text'][:40]!r}")
+    for h in rep.get("q1", []):
+        print(f"  Q1 {h['ticker']} ({h['entry_date']}): Sheet currentQty vs originalQty-trims differ by "
+              f"{h['gap_pct_of_position']}% of the position ({h['sheet_says']}) — recap and dashboard would "
+              f"print different return%")
 
 
 def cmd_check(a) -> int:
@@ -376,6 +386,12 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
     lines.append(f"- W1 week 缩写：{'通过' if not rep.get('w1') else '报红'}")
     for h in rep.get("w1", []):
         lines.append(f"  - {h['matches']}：{h['text']}")
+    lines.append(f"- Q1 持仓数量自洽（表里数量 vs 原始数量−减仓记录）：{'通过' if not rep.get('q1') else '报红'}")
+    for h in rep.get("q1", []):
+        lines.append(f"  - **{h['ticker']}**（{h['entry_date']} 入场）：两个数量差 {h['gap_pct_of_position']}% 的仓位"
+                     f"（表里比减仓记录{'多' if (h['gap_pct_of_position'] or 0) > 0 else '少'}）。"
+                     "复盘按减仓记录算持仓，dashboard 按表里数量算，这一笔会让两边的 return% 对不上——"
+                     "去 GAS 里把这笔改回自洽再重出（T-0924-100）")
     ww = state.get("week_weak")
     if ww:
         lines.append("")

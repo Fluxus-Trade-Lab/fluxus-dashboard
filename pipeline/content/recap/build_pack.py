@@ -486,6 +486,40 @@ def _held_sessions(a: dt.date, b: dt.date) -> int:
     return sum(1 for i in range((b - a).days + 1) if is_trading_day(a + dt.timedelta(days=i)))
 
 
+def _qty_mismatch(trades) -> list[dict]:
+    """Rows whose two share counts disagree — the seam that makes this recap and
+    the dashboard print two different return% off one Sheet (T-0924-100).
+
+    The Sheet keeps ``currentQty`` by hand and derives nothing; the trim log
+    gives ``originalQty − Σtrims``. Nothing in GAS checks that the two agree, so
+    one hand edit to either splits them silently: this pack reads the derived
+    count, ``PortfolioLayout`` reads ``currentQty``, and the two products then
+    disagree while both look healthy. 2026-09-24, ARM's 09-17 entry: 1 row out of
+    390, 0.86pp apart on YTD return.
+
+    All trims count, not only those on or before T: ``currentQty`` is a live
+    number with every logged trim already taken out of it, so the identity is
+    date-independent and comparing against a window would invent mismatches on
+    any back-dated re-run.
+
+    Never a share count (Andy 2026-09-13「管线只做 R 和 %, 不写股数和美元」): the
+    gap is reported as a percent of the original position, like every other size
+    in this block.
+    """
+    out = []
+    for t in trades:
+        derived = t.original_qty - sum(x.qty for x in t.trims)
+        if t.current_qty == derived:
+            continue
+        out.append({"ticker": t.ticker, "direction": t.direction,
+                    "entry_date": t.entry_date.isoformat(),
+                    "gap_pct_of_position": round((t.current_qty - derived) / t.original_qty * 100, 1)
+                    if t.original_qty else None,
+                    "sheet_says": "more held than the trim log implies"
+                    if t.current_qty > derived else "less held than the trim log implies"})
+    return sorted(out, key=lambda r: (r["entry_date"], r["ticker"]))
+
+
 def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     """Everything returned is R, %, or a count. Nothing in $ or shares."""
     from pipeline.portfolio.sheets_source import to_trades
@@ -497,6 +531,7 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
 
     held_at = lambda t: t.original_qty - sum(x.qty for x in t.trims if x.date <= d)
     live = [t for t in trades if t.entry_date <= d]
+    qty_mismatch = _qty_mismatch(trades)
     open_ = [t for t in live if held_at(t) > 0]
     closed = [t for t in live if held_at(t) <= 0]
     px, stale_close = _closes(sorted({t.ticker for t in open_}), T)
@@ -580,7 +615,7 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
         "realized_R_period": round(r_per, 2), "realized_legs_period": n_per,
         "realized_R_week_to_date": round(r_wtd, 2), "realized_legs_wtd": n_wtd,
         "positions": sorted(positions, key=lambda p: p["entry_date"]), "legs": legs, "missing_close": missing_px,
-        "closes_stale": bool(stale_close),
+        "closes_stale": bool(stale_close), "qty_mismatch": qty_mismatch,
     }
     if stale_close:
         out["stale_close"] = sorted(stale_close)
