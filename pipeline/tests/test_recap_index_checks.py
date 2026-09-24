@@ -115,8 +115,11 @@ def test_i1_green_on_real_events_and_blank(event):
 
 def test_i1_only_checks_the_event_column_not_the_note_column():
     """A wiring bug that read the note column for I1 would false-positive here: the
-    placeholder phrase sits in the note, the event column is a real event."""
-    content = {"index_notes": {"SPY": ["reclaimed 50-day", "no new levels to watch ◇"]}}
+    placeholder phrase sits in the note, the event column is a real event. The note must
+    itself match `_PLACEHOLDER_SUBSTRING` (branch-review 2026-09-24: an earlier fixture,
+    "no new levels to watch ◇", never contained "event" and so passed even with the
+    columns swapped — it had no chance to catch the bug it claimed to guard against)."""
+    content = {"index_notes": {"SPY": ["reclaimed 50-day", "no new average event to watch ◇"]}}
     assert i1_placeholder_hits(content) == []
 
 
