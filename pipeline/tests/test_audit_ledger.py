@@ -394,3 +394,210 @@ class TestEveryLedgerGuardIsCovered:
         row2 = _row("2026-08-21", guards=_guards(shortlist={"status": "ok"}))
         rep2 = L.audit_run(row2)
         assert [v for v in rep2["violations"] if v.startswith("L3 shortlist")], rep2["violations"]
+
+
+# --------------------------------------------------------------- 2026-09-25
+# 09-24's report carried this guard at 42/80 = 53%; that is the number from the
+# 09-02 sweep, BEFORE 09-03 補ed it (776a7c6f, "audit_ledger 52->66%"). The
+# real reading tonight is 53/80 = 66%, with 27 survivors. What they have in
+# common is the shape this file has never asked about: not "does it catch the
+# bad line" -- that is well covered -- but "what does it do when a line is
+# shaped in a way nobody wrote down". Five of the 27 are `and` -> `or` or
+# `or` -> `and` on exactly the guards that keep a malformed ledger line from
+# crashing the auditor. An auditor that raises is an auditor that does not
+# report, and this one runs inside the nightly gate.
+# ---------------------------------------------------------------------------
+
+
+class TestAMalformedLineMustNotCrashTheAuditor:
+    """Every one of these is a real ledger shape (a guard written as a bare
+    word, a guard that did not run) and every one of them turns a mutated
+    boolean into an AttributeError/TypeError instead of a report."""
+
+    def test_a_guard_recorded_as_a_bare_word_instead_of_a_block(self, tmp_path):
+        """`status = g.get("status") if isinstance(g, dict) else g` already
+        allows it; the warning line then has to survive `g.get("reason")`."""
+        row = _row("2026-08-21", guards={**_guards(), "legacy_stage": "degraded"})
+        out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+        w = out["runs"][0]["warnings"]
+        assert "L2 legacy_stage degraded" in w, w
+        assert out["ok"]
+
+    def test_a_fundamentals_block_with_no_due_field(self, tmp_path):
+        """L6 divides `failed / due`. A block that never got as far as counting
+        what was due must be skipped, not divided by."""
+        row = _row("2026-08-21", guards=_guards(
+            fundamentals={"status": "skipped", "failed": 3}))
+        out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+        rep = out["runs"][0]
+        assert "fund_fail_rate" not in rep
+        assert any(x.startswith("L2 fundamentals skipped") for x in rep["warnings"]), rep
+
+    def test_a_night_with_no_universe_quality_guard_at_all(self, tmp_path):
+        """`guards.get("universe_quality") or {}` -- the `or` is what makes the
+        next line safe when the stage never reported."""
+        g = _guards()
+        del g["universe_quality"]
+        out = L.run(_write(tmp_path, [_row("2026-08-21", guards=g)]), window=0, last_done=LAST)
+        assert out["ok"], out["runs"]
+        assert "universe_rows" not in out["runs"][0]
+
+    def test_drift_skips_the_runs_that_never_reported_a_row_count(self, tmp_path):
+        """`if n and med and ...` -- three sessions carry row counts, the fourth
+        does not. Dropping the `n and` divides None by the median."""
+        rows = [_row(s, guards=_guards(universe_quality={"status": "ok", "rows": 5000}))
+                for s in ("2026-08-17", "2026-08-18", "2026-08-19")]
+        rows.append(_row("2026-08-21", guards=_guards(
+            universe_quality={"status": "skipped", "reason": "no scrape"})))
+        out = L.run(_write(tmp_path, rows), window=0, last_done=LAST)
+        assert out["ok"], out["runs"]
+        assert [r.get("universe_rows") for r in out["runs"]] == [5000, 5000, 5000, None]
+
+
+class TestL6DriftAndFailureRateThresholds:
+    """Both L6 thresholds (10% universe drift, 20% fundamentals failure) and
+    the 3-session minimum were unpinned in every direction."""
+
+    def _sizes(self, tmp_path, sizes, sessions=("2026-08-17", "2026-08-18", "2026-08-19", "2026-08-21")):
+        rows = [_row(s, guards=_guards(universe_quality={"status": "ok", "rows": n}))
+                for s, n in zip(sessions, sizes)]
+        out = L.run(_write(tmp_path, rows), window=0, last_done=LAST)
+        return [w for r in out["runs"] for w in r["warnings"] if w.startswith("L6 universe")], out
+
+    def test_exactly_ten_percent_off_the_median_is_not_drift(self, tmp_path):
+        w, out = self._sizes(tmp_path, [5000, 5000, 5000, 5500])
+        assert w == [], w
+        assert out["warnings"] == 0, out["runs"]
+
+    def test_fourteen_percent_off_the_median_is_drift(self, tmp_path):
+        w, out = self._sizes(tmp_path, [5000, 5000, 5000, 5700])
+        assert w == ["L6 universe 5700 vs window median 5000"], w
+        assert out["warnings"] == 1, out["warnings"]        # counted once, not twice
+        assert out["ok"]                                    # drift never blocks the night
+
+    def test_three_sessions_is_enough_history_to_call_drift(self, tmp_path):
+        w, _ = self._sizes(tmp_path, [5000, 5000, 5700],
+                           sessions=("2026-08-18", "2026-08-19", "2026-08-21"))
+        assert w == ["L6 universe 5700 vs window median 5000"], w
+
+    def test_two_sessions_is_not_enough(self, tmp_path):
+        w, _ = self._sizes(tmp_path, [5000, 5700], sessions=("2026-08-19", "2026-08-21"))
+        assert w == [], w
+
+    def test_exactly_twenty_percent_of_fundamentals_failing_is_not_a_warning(self, tmp_path):
+        row = _row("2026-08-21", guards=_guards(
+            fundamentals={"status": "ok", "due": 400, "ok": 320, "failed": 80, "store": 5630}))
+        out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+        rep = out["runs"][0]
+        assert rep["fund_fail_rate"] == 0.2
+        assert [x for x in rep["warnings"] if x.startswith("L6 fundamentals")] == [], rep["warnings"]
+
+
+class TestWhichSessionsAreJudged:
+    def test_the_oldest_audited_session_has_nothing_to_compare_against(self, tmp_path):
+        """`prev = ... if idx > 0 else None`. With `idx >= 0` the first session
+        compares itself against `sessions[-1]` -- the NEWEST one -- so L5
+        reports 'a guard disappeared' about a guard added later."""
+        older = _guards()
+        del older["shortlist"]
+        rows = [_row("2026-08-20", guards=older), _row("2026-08-21")]
+        out = L.run(_write(tmp_path, rows), window=0, last_done=LAST)
+        assert [w for r in out["runs"] for w in r["warnings"] if w.startswith("L5")] == [], out["runs"]
+
+    def test_one_line_per_session_is_not_reported_as_a_re_run(self, tmp_path):
+        """`if len(same) > 1`. At `>= 1` every normal night prints a re-run
+        note, and the note that means 'this session was run twice' stops
+        meaning anything."""
+        out = L.run(_write(tmp_path, [_row("2026-08-20"), _row("2026-08-21")]),
+                    window=0, last_done=LAST)
+        assert [t for t in out["top"] if t.startswith("L6")] == [], out["top"]
+
+    def test_the_default_window_is_one_session(self, tmp_path):
+        """Not passing --window must audit exactly the last session. A default
+        of 2 would quietly re-judge yesterday every night."""
+        out = L.run(_write(tmp_path, [_row("2026-08-19"), _row("2026-08-20"), _row("2026-08-21")]),
+                    last_done=LAST)
+        assert [r["session"] for r in out["runs"]] == ["2026-08-21"]
+
+
+class TestCountsAreExact:
+    def test_a_healthy_night_reports_zero_warnings_as_well_as_zero_violations(self, tmp_path):
+        out = L.run(_write(tmp_path, [_row("2026-08-20"), _row("2026-08-21")]), window=0, last_done=LAST)
+        assert out["violations"] == 0 and out["warnings"] == 0, out["runs"]
+
+    def test_an_empty_ledger_counts_exactly_one_violation(self, tmp_path):
+        p = tmp_path / "run_ledger.jsonl"
+        p.write_text("", encoding="utf-8")
+        out = L.run(p, window=0, last_done=LAST)
+        assert out["violations"] == 1 and not out["ok"], out
+
+    def test_a_missing_session_counts_exactly_one_violation(self, tmp_path):
+        """The run itself is clean; the only thing wrong is that the last
+        completed session has no line. Counting it twice inflates every
+        headline that quotes this number."""
+        out = L.run(_write(tmp_path, [_row("2026-08-20")]), window=0, last_done=LAST)
+        assert out["violations"] == 1, out
+        assert any(t.startswith("L1 no run recorded") for t in out["top"]), out["top"]
+
+
+class TestTheExcerptLengths:
+    """Three `[:N]` truncations feed straight into what a human reads in the
+    CI log. None of them was pinned, so any of them could have been off."""
+
+    def test_an_unparsable_line_is_excerpted_to_120_characters(self, tmp_path):
+        p = tmp_path / "run_ledger.jsonl"
+        p.write_text("{" + "z" * 400 + "\n", encoding="utf-8")
+        rows = L._load(p)
+        assert len(rows) == 1 and len(rows[0]["_unparsable"]) == 120
+
+    def test_an_L3_message_excerpts_the_evidence_to_60_characters(self, tmp_path):
+        row = _row("2026-08-21", guards=_guards(
+            breadth={"status": "ok", "regime_score": "x" * 200,
+                     "enriched": ["conditions", "regime", "state_board", "verdict"]}))
+        out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+        v = [x for x in out["runs"][0]["violations"] if x.startswith("L3 breadth")]
+        assert len(v) == 1, v
+        assert v[0] == "L3 breadth says ok but regime_score=" + json.dumps("x" * 200)[:60]
+
+    def test_an_L4_error_message_is_excerpted_to_80_characters(self, tmp_path):
+        row = _row("2026-08-21", errors=[{"where": "screeners", "msg": "e" * 300}])
+        out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+        v = [x for x in out["runs"][0]["violations"] if x.startswith("L4")]
+        assert v == ["L4 error in screeners: " + "e" * 80], v
+
+
+class TestTheCLIIsWhatCIReads:
+    """main()'s exit code and its OK/BAD column. The violation path had no
+    test at all, so `return 1 if ok` -- fail every clean night -- was free,
+    and so was printing '?' in place of the trigger that tells you which
+    schedule wrote the line."""
+
+    def test_the_exit_code_is_zero_when_ok_and_one_when_not(self, tmp_path, monkeypatch, capsys):
+        """Pin both ends against a fixed last_done, so the real calendar cannot
+        decide the answer. The clean end is the one that was missing: the only
+        CLI test on this guard fed it a violation."""
+        import pipeline.tools.audit_ledger as mod
+        monkeypatch.setattr(mod, "last_completed_session", lambda: dt.date(2026, 8, 21))
+        clean = _write(tmp_path, [_row("2026-08-21")])
+        assert mod.main(["--ledger", str(clean), "--window", "0"]) == 0
+        good = [ln for ln in capsys.readouterr().out.splitlines()
+                if ln.startswith(("OK ", "BAD"))]
+        assert len(good) == 1 and good[0].startswith("OK "), good
+        # the trigger and the sha are how you find which schedule wrote a line;
+        # `rep['trigger'] or '?'` turning into `and` prints '?' for every run
+        assert "schedule" in good[0] and "c637fe1" in good[0], good[0]
+
+        dirty = _write(tmp_path, [_row("2026-08-21", guards=_guards(
+            breadth={"status": "ok", "regime_score": None}))])
+        assert mod.main(["--ledger", str(dirty), "--window", "0"]) == 1
+        bad = [ln for ln in capsys.readouterr().out.splitlines()
+               if ln.startswith("BAD") and "2026-08-21" in ln]
+        assert bad, "the BAD column is the only thing a human reads in the CI log"
+
+    def test_the_cli_window_default_is_one_session(self, tmp_path, monkeypatch, capsys):
+        import pipeline.tools.audit_ledger as mod
+        monkeypatch.setattr(mod, "last_completed_session", lambda: dt.date(2026, 8, 21))
+        p = _write(tmp_path, [_row("2026-08-19"), _row("2026-08-20"), _row("2026-08-21")])
+        mod.main(["--ledger", str(p)])
+        printed = capsys.readouterr().out
+        assert "over 1 run(s)" in printed, printed

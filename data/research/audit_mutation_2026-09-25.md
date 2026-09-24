@@ -1,4 +1,4 @@
-# 一道闸的杀死率，和一张写死的对照表 — `audit_archives` 57% → 97%
+# 两道闸，和一张写死的对照表 — `audit_archives` 57%→97% · `audit_ledger` 66%→98%
 
 **2026-09-25（JST）· linda 夜间研究班 · `T-0925-11`**
 ET now 2026-09-24 15:31 | last completed session **2026-09-23**
@@ -117,10 +117,66 @@ assert bool(w) is bool(spec["counts"])        # ← spec 取自被变异的那�
 python3 -m pipeline.tools.audit_mutation_sweep --module audit_archives --index-from 0   --index-to 50  --json a.json
 python3 -m pipeline.tools.audit_mutation_sweep --module audit_archives --index-from 50  --index-to 101 --json b.json
 python3 -m pytest pipeline/tests/test_audit_archives.py -q      # 75 passed
+
+# audit_ledger 同法，80 个变异点两段
+python3 -m pipeline.tools.audit_mutation_sweep --module audit_ledger --index-from 0  --index-to 40 --json c.json
+python3 -m pipeline.tools.audit_mutation_sweep --module audit_ledger --index-from 40 --index-to 80 --json d.json
+python3 -m pytest pipeline/tests/test_audit_ledger.py -q        # 48 passed
 ```
 
-**下轮第一件事**：`audit_ledger`（53/80，**66%**——今晚复算出来的真值）现在是量过的六道闸里最低的。
-它的 27 个存活点里，L54–L70 那一段同样是一张**注册表**（`GUARDS` 的 EVIDENCE 字段），
-形状大概率和今晚这 19 个一样——**但别照抄结论，照抄的是先复算那一步。**
-⚠️ 另有 `audit_ci_test_coverage`（162 个变异点，全库最大）从没量过；
-「全库最低」这句话在它量出来之前都只是「量过的里面最低」。
+---
+
+## 七、第二件：`audit_ledger` 66% → 98%
+
+复算出来的 66% 是量过的六道闸里最低的，所以同一晚接着打。
+**27 个存活点的形状和 archives 完全不同**——不是「注册表被翻转」，而是
+**「一条没人写过的账本行递进来时，它做什么」**。
+
+27 个里有 5 个是 `and`↔`or`，全长在让审计器**不崩**的那几处判断上：
+
+| 变异 | 递进去一条什么样的行，它就崩 |
+|---|---|
+| L182 `and` → `or` | 某个 guard 被写成一个**裸词**（`"legacy_stage": "degraded"`）而不是一个块 → `str.get` AttributeError |
+| L199 `and` → `or` | `fundamentals` 块有 `failed` 没 `due` → `failed / None` TypeError |
+| L204 `or` → `and` | 整夜**没有** `universe_quality` 这个 guard → `None.get("rows")` AttributeError |
+| L269 `and` → `or` | 三场有 universe 行数、第四场没有 → `abs(None - med)` TypeError |
+| L289 `or` → `and` ×2 | 不崩，但每一行都把 trigger 与 code_sha 印成 `?` 和 `-`——**那两列是你找「哪个排程写的这一行」的唯一线索** |
+
+> **一个会抛异常的审计器等于不报告**，而这一个跑在夜间闸里面。
+> 这五处此前没有任何测试递过一条畸形的账本行。
+
+其余 22 个：L6 两个阈值的边界（universe 漂移 10%、fundamentals 失败率 20%）与 3 场最小历史 ·
+`window` 的两个默认值（函数签名与 argparse，**默认 2 就等于每晚重判昨天**）·
+四处计数的精确性（空账本必须正好 1 条违规，不是 2 条）·
+三处 `[:N]` 摘录长度（120/60/80）· `main()` 干净时的退出码（**`return 1 if ok` = 每个好夜晚都拦着 commit**）·
+L5 比对的是「前一场」而不是 `sessions[-1]`（`idx > 0` 翻成 `>= 0`，最老那场会拿**最新**那场当前一场比，
+于是报「有个 guard 消失了」，而那个 guard 是后来才加的）。
+
+| | killed/总 | 杀死率 | 存活 |
+|---|---|---|---|
+| 补测试前（今晚现场复算） | 53/80 | **66%** | 27 |
+| 补测试后 | **78/80** | **98%** | **2** |
+
+测试 **28 → 48 条**。剩下 2 个：
+
+| 存活点 | 判 | 证据 |
+|---|---|---|
+| L230 `window > 0` → `>= 0` | **等价** | `window == 0` 时 `sessions[-0:]` 就是 `sessions[0:]`，即整份。实跑 5 种场次数 × `window ∈ [-3, 5]` 全部逐位相同 |
+| L295 `json.dumps(indent=1)` → `2` | **化妆** | 同 archives 的 L269 |
+
+## 八、两道闸放在一起看，欠的是两笔不同的账
+
+| | `audit_archives` | `audit_ledger` |
+|---|---|---|
+| 主要漏洞 | **配置**：注册表里哪份归档被谁看着 | **鲁棒**：递进来一条畸形行会不会崩 |
+| 补法 | 写死一张对照表，逐行签名 | 逐个造一条「没人写过的形状」的账本行 |
+| 共同点 | 都在**边界**（阈值正好卡线）和 **`main()` 干净时的退出码**上欠账 | 同 |
+
+⚠️ **两道闸的 `main()` 都只测过报错那一路**，`return 0 if ok` 的 `0 -> 1` 在两处都活着——
+一个会让 CI 每个干净的夜晚都 exit 1 的变异，在两道闸上各免费活了三周。
+**「测过 main()」和「测过 main() 的两条路」不是一件事。**
+
+**下轮第一件事**：`audit_ci_test_coverage`（**162 个变异点，全库最大，从没量过**）。
+⚠️ 「全库最低」这句话在它量出来之前，都只是「量过的里面最低」——
+今晚两次复算已经说明，转抄的排名比转抄的数字更容易过期。
+切片建议：162 个按 `0:55` / `55:110` / `110:162` 三段，每段约 2.5–3 分钟。
