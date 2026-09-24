@@ -225,6 +225,8 @@ class TestTickerShellsI7:
     def test_missing_directory_is_a_warning(self, tmp_path):
         r = A.ticker_shells(tmp_path / "nope")
         assert r["warnings"] == ["I7 skipped: no tickers dir"] and r["violations"] == []
+        # a shell count it never took must read as zero, not as one (2026-09-25)
+        assert r["rows"] == 0 and r["drop_dupes"] == 0
 
 
 def test_main_prints_bad_for_the_archives_that_have_violations(tmp_path, capsys, monkeypatch):
@@ -438,3 +440,279 @@ class TestSessionClassification:
         by = {r.date: r for r in info.itertuples()}
         assert bool(by["2026-08-18"].future) is False
         assert bool(by["2026-08-19"].future) is True
+
+
+# --------------------------------------------------------------- 2026-09-25
+# The registry at the top of audit_archives.py is not a list of names: the two
+# booleans on each line decide WHICH checks that archive gets. Flip
+# `"nightly": True` to False on ticker_events.csv and I5 quietly stops asking
+# whether a writer died -- which is the single reason I5 exists (08-18,
+# delayed_ep archived 0 rows on a throttled download). The mutation sweep
+# found 19 survivors on those eleven lines: every flag except leaders_log's,
+# which the fixtures above happen to lean on.
+#
+# Pinning them by reading the dict back (`assert spec["nightly"] is True`)
+# would be the "read your own constant" test that has now been caught three
+# times in this suite (09-23 pp, 09-24 U3, 09-24 HIGH). So each flag is asked
+# behaviourally instead: build the archive that WOULD trip the check, and
+# assert the warning appears exactly when the flag says it should.
+# ---------------------------------------------------------------------------
+
+import pytest                                                     # noqa: E402
+
+KEY_COLUMNS = ["ticker", "panel", "screener", "kind", "group", "recipe", "seat"]
+
+
+def _rows_for(spec, dates_and_counts):
+    """Rows for any registered archive: the date column it declares, plus a
+    unique value in every key column any archive uses, so I2 never fires."""
+    rows, i = [], 0
+    for d, n in dates_and_counts:
+        for _ in range(n):
+            i += 1
+            rows.append({spec["date"]: d, **{c: f"{c[0].upper()}{i}" for c in KEY_COLUMNS}})
+    return rows
+
+
+def _warnings_for(tmp_path, name, rows, prefix):
+    _write(tmp_path, name, rows)
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    rep = {r["archive"]: r for r in out["archives"]}[name]
+    # the fixture must not be tripping a DIFFERENT invariant: every date is a
+    # real past session and no spx_close repeats. I2 is allowed through -- the
+    # three archives keyed on date alone (breadth, universe_quality,
+    # regime_ledger) are one row per session by construction, so a fixture
+    # with ten rows a day IS a duplicate there. I2 and I4 read different
+    # fields; it cannot lend or take away an I4 warning.
+    assert [v for v in rep["violations"] if v[:2] in ("I1", "I3")] == [], rep["violations"]
+    return [w for w in rep["warnings"] if w.startswith(prefix)]
+
+
+# ⚠️ The expected flags live HERE, written out, not read back off A.ARCHIVES.
+# First draft of these tests did `assert bool(w) is bool(spec["counts"])` --
+# which is green for the real code AND for every mutant, because flipping the
+# flag moves the expectation with it. 19 survivors, zero of them killed. It is
+# the same defect as 09-23's `f'{0.2692*100:.0f}'` and 09-24's `dirty == 1`,
+# wearing a parametrize decorator. A test that fetches its own answer from the
+# thing under test is not asking a question.
+#
+# The cost of writing them out is that changing a flag now means editing this
+# table. That cost is the feature: turning a check off for an archive is a
+# decision (09-18: a check that stopped applying, and nobody logged it), and
+# this is where it gets signed.
+WATCHED_ON_2026_09_25 = {
+    # archive                 (counts -> I4 applies, nightly -> I5 applies)
+    "breadth_archive.csv":    (False, True),
+    "ticker_events.csv":      (True,  True),
+    "watchlist_hits.csv":     (True,  True),
+    "leaders_log.csv":        (True,  True),
+    "groups_archive.csv":     (True,  True),
+    "momentum97_shadow.csv":  (False, True),
+    "universe_quality.csv":   (False, True),
+    "asset_signals.csv":      (True,  True),
+    "shortlist_log.csv":      (False, True),
+    "regime_ledger.csv":      (False, True),
+    "delayed_ep_log.csv":     (True,  True),
+}
+
+
+def test_the_flag_table_in_this_file_covers_every_registered_archive():
+    """Anti-rot: a newly registered archive must be signed into the table
+    above, not inherit whatever the two tests below happen to assert."""
+    assert set(WATCHED_ON_2026_09_25) == set(A.ARCHIVES), (
+        f"only in ARCHIVES: {sorted(set(A.ARCHIVES) - set(WATCHED_ON_2026_09_25))}; "
+        f"only in the table: {sorted(set(WATCHED_ON_2026_09_25) - set(A.ARCHIVES))}")
+
+
+@pytest.mark.parametrize("name,counts", [(n, v[0]) for n, v in sorted(WATCHED_ON_2026_09_25.items())])
+def test_only_the_archives_this_file_says_are_counted_can_raise_I4(tmp_path, name, counts):
+    """A collapse day (1 row where the median is 10) raises I4 on exactly the
+    archives this file lists as counted."""
+    rows = _rows_for(A.ARCHIVES[name], list(zip(SESSIONS[:5], [10] * 5)) + [(SESSIONS[5], 1)])
+    w = _warnings_for(tmp_path, name, rows, "I4")
+    assert bool(w) is counts, f"{name}: this file says counts={counts}, I4 said {w}"
+
+
+@pytest.mark.parametrize("name,nightly", [(n, v[1]) for n, v in sorted(WATCHED_ON_2026_09_25.items())])
+def test_only_the_archives_this_file_says_are_nightly_can_raise_I5(tmp_path, name, nightly):
+    """An archive whose newest row is a session old raises I5 on exactly the
+    archives this file lists as nightly -- all eleven today, i.e. every one of
+    them still gets its clock read."""
+    rows = _rows_for(A.ARCHIVES[name], [("2026-08-17", 1)])
+    w = _warnings_for(tmp_path, name, rows, "I5")
+    assert bool(w) is nightly, f"{name}: this file says nightly={nightly}, I5 said {w}"
+
+
+# --------------------------------------------------------------------------
+# I4's trailing window: `per.iloc[-21:-1] if len(per) > 21 else per.iloc[:-1]`.
+# Five mutants on that one line survived. Medians are immune to a single
+# outlier (09-02), so a lopsided day cannot separate the windows -- the
+# fixtures below are bimodal instead: ten 10s and ten 30s, where dropping or
+# adding ONE session moves the median from 20 to 10 and flips the verdict.
+# --------------------------------------------------------------------------
+
+def _sessions_back(n, last=LAST):
+    """The n trading sessions ending at `last`, oldest first."""
+    from pipeline.marketcal import is_trading_day
+    out, d = [], last
+    while len(out) < n:
+        if is_trading_day(d):
+            out.append(d.isoformat())
+        d -= dt.timedelta(days=1)
+    return list(reversed(out))
+
+
+class TestI4TrailingWindowShape:
+    def test_the_median_skips_only_the_newest_session(self, tmp_path):
+        """`per.iloc[:-1]` -- dropping two sessions instead of one takes the
+        median from 10 to 6, and 2 rows stops being a collapse (floor 1.8)."""
+        counts = [2, 2, 10, 10, 10, 2]
+        rows = _rows_for(A.ARCHIVES["leaders_log.csv"], list(zip(SESSIONS, counts)))
+        w = _warnings_for(tmp_path, "leaders_log.csv", rows, "I4")
+        assert w and "2 rows vs trailing median 10" in w[0], w
+
+    def test_past_21_sessions_the_median_is_the_trailing_20_not_everything(self, tmp_path):
+        """With 22 sessions the real window is the 20 before the newest
+        (median 20); reaching back one further, or falling through to
+        `[:-1]`, makes it 21 sessions (median 10) and the collapse vanishes."""
+        sess = _sessions_back(22)
+        counts = [10] + [10] * 10 + [30] * 10 + [5]
+        rows = _rows_for(A.ARCHIVES["leaders_log.csv"], list(zip(sess, counts)))
+        w = _warnings_for(tmp_path, "leaders_log.csv", rows, "I4")
+        assert w and "5 rows vs trailing median 20" in w[0], w
+
+    def test_the_window_stops_one_short_of_the_newest_not_two(self, tmp_path):
+        """`[-21:-1]` -- ending the window at -2 drops a 30 and the median
+        falls to 10, which is the same disappearing-collapse as above but
+        from the other end of the slice."""
+        sess = _sessions_back(22)
+        counts = [30] + [10] * 10 + [30] * 10 + [5]
+        rows = _rows_for(A.ARCHIVES["leaders_log.csv"], list(zip(sess, counts)))
+        w = _warnings_for(tmp_path, "leaders_log.csv", rows, "I4")
+        assert w and "5 rows vs trailing median 20" in w[0], w
+
+
+# --------------------------------------------------------------------------
+# --repair writes over a production archive. Nothing was checking WHAT shape
+# it writes back: `to_csv(index=False)` flipping to True adds an unnamed index
+# column -- and a second repair pass would add another one on top. The tests
+# above read `.date` off the repaired file, which keeps working with the extra
+# column, which is why the mutant lived.
+# --------------------------------------------------------------------------
+
+def test_repair_writes_back_the_same_columns_it_read(tmp_path):
+    p = _write(tmp_path, "leaders_log.csv", [
+        {"date": "2026-08-18", "ticker": "A"},
+        {"date": "2026-08-18", "ticker": "A"},           # dup -> repaired away
+        {"date": "2026-08-16", "ticker": "B"}])           # Sunday -> repaired away
+    before = list(pd.read_csv(p).columns)
+    A.run(tmp_path, do_repair=True, last_done=LAST, output=None)
+    after = list(pd.read_csv(p).columns)
+    assert after == before == ["date", "ticker"], after
+    assert list(pd.read_csv(tmp_path / "leaders_log.csv.bak").columns) == before
+
+
+def test_a_clean_run_reports_zero_pending_dupes_on_every_archive(tmp_path):
+    """`drop_dupes` is what --repair acts on. Initialising it to 1 makes every
+    archive look like it has a duplicate waiting, and makes --repair open and
+    re-dedupe files that were fine."""
+    _write(tmp_path, "leaders_log.csv", [{"date": "2026-08-18", "ticker": "A"}])
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    assert all(r["drop_dupes"] == 0 for r in out["archives"]), out["archives"]
+
+
+def test_an_archive_that_is_not_there_yet_reports_zero_rows(tmp_path):
+    """The `missing (not yet created)` branch: rows must be 0, not 1. A phantom
+    row count is how a never-written archive passes for a thin one."""
+    _write(tmp_path, "leaders_log.csv", [{"date": "2026-08-18", "ticker": "A"}])
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    missing = _rep(out, "ticker_events.csv")
+    assert missing["warnings"] == ["missing (not yet created)"]
+    assert missing["rows"] == 0 and missing["drop_dupes"] == 0
+    assert missing["violations"] == []
+
+
+def test_an_unreadable_archive_is_a_violation_with_zero_rows(tmp_path):
+    """A zero-byte archive -- a writer killed between open and flush. pandas
+    raises, and the report must say so instead of counting rows it never read."""
+    (tmp_path / "leaders_log.csv").write_bytes(b"")
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    r = _rep(out, "leaders_log.csv")
+    assert r["rows"] == 0 and r["drop_dupes"] == 0
+    assert r["violations"] and r["violations"][0].startswith("unreadable:"), r
+    assert not out["ok"]
+
+
+def test_a_ticker_literally_named_NA_is_not_read_as_a_missing_value(tmp_path):
+    """`keep_default_na=False`. pandas' default NA words include 'NA' and
+    'NULL'; with them enabled, two different tickers both become NaN and I2
+    reports a duplicate that does not exist -- and --repair would then delete a
+    real row. The archives are read as text on purpose."""
+    _write(tmp_path, "leaders_log.csv", [
+        {"date": "2026-08-18", "ticker": "NA"},
+        {"date": "2026-08-18", "ticker": "NULL"}])
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    r = _rep(out, "leaders_log.csv")
+    assert r["violations"] == [], r["violations"]
+    assert r["rows"] == 2 and out["ok"]
+
+
+def test_a_clean_repo_exits_zero(tmp_path, capsys, monkeypatch):
+    """main()'s exit code is the whole CI contract: 1 blocks the commit. The
+    violation case was pinned; the clean case was not, so `return 1 if ok`
+    -- which fails every good night -- was invisible."""
+    _write(tmp_path, "breadth_archive.csv", [
+        {"date": "2026-08-17", "spx_close": 7745.06}, {"date": "2026-08-18", "spx_close": 7691.76}])
+    monkeypatch.chdir(tmp_path)
+    assert A.main(["--history", str(tmp_path)]) == 0
+    assert "OK:" in capsys.readouterr().out
+
+
+class TestReconcileReportShape:
+    def test_the_reconcile_report_counts_no_rows_of_its_own(self, tmp_path):
+        """reconcile() compares other people's rows; its own `rows` is 0 and
+        it can never have a dupe to repair. Both were unpinned."""
+        _write(tmp_path, "watchlist_hits.csv", [{"date": DATE, "panel": "vcs", "ticker": "T"}])
+        out = A.run(tmp_path, last_done=LAST,
+                    output=_out(tmp_path, watchlist=_wl([{"key": "vcs", "measured": True, "count": 1}])))
+        r = _rep(out, "reconcile(I6)")
+        assert r["rows"] == 0 and r["drop_dupes"] == 0
+
+    def test_a_panel_with_no_archived_rows_at_all_still_disagrees(self, tmp_path):
+        """The default in `per.get(key, 0)`. Defaulting to 1 instead means a
+        panel that printed `1` on the page while archiving NOTHING reads as
+        agreement -- the one count where a silent writer is most likely."""
+        _write(tmp_path, "watchlist_hits.csv", [{"date": DATE, "panel": "other", "ticker": "T"}])
+        out = A.run(tmp_path, last_done=LAST,
+                    output=_out(tmp_path, watchlist=_wl([{"key": "vcs", "measured": True, "count": 1}])))
+        v = _rep(out, "reconcile(I6)")["violations"]
+        assert v and v[0] == (f"I6a {DATE} vcs: watchlist.json count 1 vs watchlist_hits 0"), v
+
+
+class TestTickerShellsMessageTruncation:
+    """The I7 line is read by a human deciding whether to keep yesterday's
+    tickers. `shells[:12]` and `> 12` decide what that human sees; all three
+    mutants on them survived."""
+
+    def _msg(self, tmp_path, n_shell, n_full):
+        d = tmp_path / "output" / "tickers"
+        d.mkdir(parents=True, exist_ok=True)
+        for i in range(n_full):
+            (d / f"F{i}.json").write_text(json.dumps({"ohlc_2y": [{"c": 1}]}))
+        for i in range(n_shell):
+            (d / f"S{i:02d}.json").write_text(json.dumps({"ohlc_2y": []}))
+        r = A.ticker_shells(tmp_path / "output", max_rate=0.0)
+        assert len(r["violations"]) == 1, r
+        return r["violations"][0]
+
+    def test_twelve_shells_are_all_named_with_no_ellipsis(self, tmp_path):
+        msg = self._msg(tmp_path, 12, 88)
+        names = msg.split(": ", 1)[1]
+        assert "…" not in msg, msg
+        assert len(names.split(", ")) == 12, names
+
+    def test_the_thirteenth_shell_becomes_an_ellipsis(self, tmp_path):
+        msg = self._msg(tmp_path, 13, 87)
+        names = msg.split(": ", 1)[1]
+        assert msg.endswith("…"), msg
+        assert len(names.rstrip("…").split(", ")) == 12, names
