@@ -1,0 +1,8 @@
+[
+  {"prompt": "任务 type=data_contract：EATZ 已退市，清掉细分行业名单、配色和前端三处镜像", "should_trigger": true, "skill": "data-contract"},
+  {"prompt": "market_light.spy.gear 课程那节删了，字段要停发，schema 基线要不要一起改", "should_trigger": true, "skill": "data-contract"},
+  {"prompt": "signals.json 要新增一个 ema5 字段，METRIC_SOURCES 要不要登记口径", "should_trigger": true, "skill": "data-contract"},
+  {"prompt": "schema_snapshot --check 在 origin/main 上报 watchlist.json 多了个没登记的字段", "should_trigger": true, "skill": "data-contract"},
+  {"prompt": "dashboard 今天停在前一天的数据，cron 是不是又挂了", "should_trigger": false, "skill": "data-contract"},
+  {"prompt": "今天内容台备稿三档降级怎么选", "should_trigger": false, "skill": "data-contract"}
+]
