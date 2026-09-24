@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-09-23T23:01:00.006151+00:00",
+  "timestamp": "2026-09-24T23:16:34.722824+00:00",
   "SPY": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 767.8099975585938,
-    "ema5": 767.3642948598253,
-    "ema5_prev": 767.141443510441,
-    "ema8": 765.6990661852135,
-    "ema21": 763.6699712193669,
-    "sma50": 759.1734057617188,
-    "sma200": 713.9185913085937,
-    "sma20": 763.7683746337891,
+    "close": 767.1799926757812,
+    "ema5": 767.3028607984774,
+    "ema5_prev": 767.3642948598253,
+    "ema8": 766.0281609608952,
+    "ema21": 763.9890640798326,
+    "sma50": 759.4581994628907,
+    "sma200": 714.3626342773438,
+    "sma20": 763.9182556152343,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": false,
+      "close_gt_open": true,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -24,29 +24,29 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 0.32,
-      "21ema_dist": 0.54,
-      "50sma_dist": 1.12,
-      "200sma_dist": 7.02,
-      "52w_high_dist": -1.05
+      "9ema_dist": 0.19,
+      "21ema_dist": 0.42,
+      "50sma_dist": 1.01,
+      "200sma_dist": 6.88,
+      "52w_high_dist": -1.13
     }
   },
   "QQQ": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 741.2100219726562,
-    "ema5": 734.5118755676027,
-    "ema5_prev": 731.1628023650761,
-    "ema8": 729.0108108055305,
-    "ema21": 720.3015384528736,
-    "sma50": 710.7210913085937,
-    "sma200": 662.9361868286132,
-    "sma20": 717.5869506835937,
+    "close": 741.0999755859375,
+    "ema5": 736.7079089070476,
+    "ema5_prev": 734.5118755676027,
+    "ema8": 731.6972918678432,
+    "ema21": 722.1923054649578,
+    "sma50": 711.2032336425781,
+    "sma200": 663.528913269043,
+    "sma20": 719.1104736328125,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": false,
+      "close_gt_open": true,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -55,148 +55,24 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 1.82,
-      "21ema_dist": 2.82,
-      "50sma_dist": 4.11,
-      "200sma_dist": 10.56,
-      "52w_high_dist": -0.84
+      "9ema_dist": 1.45,
+      "21ema_dist": 2.55,
+      "50sma_dist": 4.03,
+      "200sma_dist": 10.47,
+      "52w_high_dist": -0.85
     }
   },
   "IWM": {
     "signal": "WARNING",
     "color": "orange",
-    "close": 281.9200134277344,
-    "ema5": 284.6811718453146,
-    "ema5_prev": 286.0617510541047,
-    "ema8": 285.5732309448246,
-    "ema21": 289.208042722379,
-    "sma50": 293.8939416503906,
-    "sma200": 274.0886562347412,
-    "sma20": 289.86873626708984,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": false,
-      "sma50_rising": false,
-      "close_gt_open": false,
-      "is_power_trend": false
-    },
-    "ma_structure": {
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -1.41,
-      "21ema_dist": -2.59,
-      "50sma_dist": -4.25,
-      "200sma_dist": 2.78,
-      "52w_high_dist": -7.35
-    }
-  },
-  "RSP": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 211.30999755859375,
-    "ema5": 212.1376180607947,
-    "ema5_prev": 212.55142831189514,
-    "ema8": 212.72406034934835,
-    "ema21": 214.84549122656747,
-    "sma50": 216.37592163085938,
-    "sma200": 203.41268013000487,
-    "sma20": 215.81344985961914,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": false,
-      "sma50_rising": false,
-      "close_gt_open": false,
-      "is_power_trend": false
-    },
-    "ma_structure": {
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -0.77,
-      "21ema_dist": -1.67,
-      "50sma_dist": -2.4,
-      "200sma_dist": 3.74,
-      "52w_high_dist": -4.79
-    }
-  },
-  "^GSPC": {
-    "signal": "POWER_3",
-    "color": "green",
-    "close": 7706.02978515625,
-    "ema5": 7682.888539974192,
-    "ema5_prev": 7671.317917383162,
-    "ema8": 7669.2601711168045,
-    "ema21": 7660.542787393664,
-    "sma50": 7624.837392578125,
-    "sma200": 7192.012006835937,
-    "sma20": 7666.066015625,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": true,
-      "sma50_rising": true,
-      "close_gt_open": false,
-      "is_power_trend": false
-    },
-    "ma_structure": {
-      "3d_gt_50sma": true,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": 0.5,
-      "21ema_dist": 0.59,
-      "50sma_dist": 1.05,
-      "200sma_dist": 6.67,
-      "52w_high_dist": -1.19
-    }
-  },
-  "BTC-USD": {
-    "signal": "POWER_3",
-    "color": "green",
-    "close": 84527.2578125,
-    "ema5": 83793.37550812181,
-    "ema5_prev": 83426.43435593272,
-    "ema8": 82551.37913945038,
-    "ema21": 79796.90510609522,
-    "sma50": 74534.75859375,
-    "sma200": 70759.5761328125,
-    "sma20": 79521.028515625,
-    "power_trend": {
-      "low_gt_ema21_10d": false,
-      "ema21_gt_sma50_5d": true,
-      "sma50_rising": true,
-      "close_gt_open": false,
-      "is_power_trend": true
-    },
-    "ma_structure": {
-      "3d_gt_50sma": true,
-      "3d_gt_200sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": 2.72,
-      "21ema_dist": 5.6,
-      "50sma_dist": 11.82,
-      "200sma_dist": 16.29,
-      "52w_high_dist": -11.54
-    }
-  },
-  "^VIX": {
-    "signal": "RISK_OFF",
-    "color": "red",
-    "close": 15.180000305175781,
-    "ema5": 15.452891023744774,
-    "ema5_prev": 15.589336383029268,
-    "ema8": 15.665773069575083,
-    "ema21": 15.774011276455179,
-    "sma50": 16.101799964904785,
-    "sma200": 18.083600039482118,
-    "sma20": 15.64650001525879,
+    "close": 281.6600036621094,
+    "ema5": 283.6741157842462,
+    "ema5_prev": 284.6811718453146,
+    "ema8": 284.703624881999,
+    "ema21": 288.52185735326555,
+    "sma50": 293.6271514892578,
+    "sma200": 274.2557174682617,
+    "sma20": 289.04417114257814,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": false,
@@ -206,15 +82,139 @@
     },
     "ma_structure": {
       "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -1.2,
+      "21ema_dist": -2.44,
+      "50sma_dist": -4.25,
+      "200sma_dist": 2.63,
+      "52w_high_dist": -7.44
+    }
+  },
+  "RSP": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 210.25999450683594,
+    "ema5": 211.51174354280843,
+    "ema5_prev": 212.1376180607947,
+    "ema8": 212.17649016212332,
+    "ema21": 214.42862788693293,
+    "sma50": 216.3281085205078,
+    "sma200": 203.52129776000976,
+    "sma20": 215.27947463989258,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": false,
+      "sma50_rising": false,
+      "close_gt_open": false,
+      "is_power_trend": false
+    },
+    "ma_structure": {
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -1.02,
+      "21ema_dist": -1.98,
+      "50sma_dist": -2.89,
+      "200sma_dist": 3.2,
+      "52w_high_dist": -5.26
+    }
+  },
+  "^GSPC": {
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 7704.1298828125,
+    "ema5": 7689.968987586962,
+    "ema5_prev": 7682.888539974192,
+    "ema8": 7677.008995938071,
+    "ema21": 7664.505250613558,
+    "sma50": 7628.048193359375,
+    "sma200": 7196.247055664063,
+    "sma20": 7667.408520507813,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": true,
+      "sma50_rising": true,
+      "close_gt_open": true,
+      "is_power_trend": false
+    },
+    "ma_structure": {
+      "3d_gt_50sma": true,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": 0.38,
+      "21ema_dist": 0.51,
+      "50sma_dist": 0.99,
+      "200sma_dist": 6.59,
+      "52w_high_dist": -1.22
+    }
+  },
+  "BTC-USD": {
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 84395.15625,
+    "ema5": 83961.91353319232,
+    "ema5_prev": 83745.29217478848,
+    "ema8": 82936.17528747376,
+    "ema21": 80203.00644975598,
+    "sma50": 74927.82671875,
+    "sma200": 70850.9817578125,
+    "sma20": 79749.975390625,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": true,
+      "sma50_rising": true,
+      "close_gt_open": true,
+      "is_power_trend": true
+    },
+    "ma_structure": {
+      "3d_gt_50sma": true,
+      "3d_gt_200sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": 2.08,
+      "21ema_dist": 4.97,
+      "50sma_dist": 11.22,
+      "200sma_dist": 16.05,
+      "52w_high_dist": -11.65
+    }
+  },
+  "^VIX": {
+    "signal": "RISK_OFF",
+    "color": "red",
+    "close": 15.670000076293945,
+    "ema5": 15.525260707927833,
+    "ema5_prev": 15.452891023744774,
+    "ema8": 15.6667124044015,
+    "ema21": 15.764555712804157,
+    "sma50": 16.101799964904785,
+    "sma200": 18.078650040626528,
+    "sma20": 15.669500017166138,
+    "power_trend": {
+      "low_gt_ema21_10d": false,
+      "ema21_gt_sma50_5d": false,
+      "sma50_rising": false,
+      "close_gt_open": false,
+      "is_power_trend": false
+    },
+    "ma_structure": {
+      "3d_gt_50sma": false,
       "3d_gt_200sma": false,
       "50sma_gt_200sma": false
     },
     "trend_status": {
-      "9ema_dist": -3.43,
-      "21ema_dist": -3.91,
-      "50sma_dist": -6.07,
-      "200sma_dist": -19.13,
-      "52w_high_dist": -51.11
+      "9ema_dist": -0.16,
+      "21ema_dist": -0.6,
+      "50sma_dist": -2.76,
+      "200sma_dist": -15.37,
+      "52w_high_dist": -49.53
     }
   }
 }

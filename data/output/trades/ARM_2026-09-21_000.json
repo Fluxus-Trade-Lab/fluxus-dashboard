@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-09-21_000",
-  "generated_at": "2026-09-23T23:22:43+00:00",
+  "generated_at": "2026-09-24T23:34:32+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -10,18 +10,24 @@
     "entry_price": 307.92,
     "stop_price": 307.92,
     "initial_stop": 290.0,
-    "closed": false,
-    "remaining_pct": 66.76783004552352,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-24",
+    "hold_business_days": 3,
     "r_pct_of_entry": 5.819693426864125,
-    "realized_R": 0.44210654671580235,
+    "realized_R": 0.7058990895295886,
     "trims": [
       {
         "date": "2026-09-22",
         "price": 331.76,
         "pct_of_position": 33.23216995447648,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-24",
+        "price": 315.0,
+        "pct_of_position": 66.76783004552352,
+        "type": "sell_rest"
       }
     ]
   },
@@ -54,14 +60,14 @@
     "optimal_exit_date": "2026-09-23",
     "optimal_R": 1.6216462053571399,
     "days_to_optimal": 2,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 0.7058990895295886,
+    "capture_pct": 43.52978394409565,
+    "missed_R": 0.9157471158275513,
     "post_exit_R": null,
-    "hold_calendar_days": 2
+    "hold_calendar_days": 3
   },
-  "lesson": "In progress",
-  "narrative": "Entered **ARM** long on 2026-09-21 at $307.92 with stop $290.00 (currently trailed to $307.92) (1R = $17.92/sh = 5.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($253.24), MA stack mixed, RSI 69, 63% through 52W range, ATR 5.5% of price. **In progress.** Peak so far +1.62R; worst drawdown -0.83R.",
+  "lesson": "Premature trim",
+  "narrative": "Entered **ARM** long on 2026-09-21 at $307.92 with stop $290.00 (currently trailed to $307.92) (1R = $17.92/sh = 5.8% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($253.24), MA stack mixed, RSI 69, 63% through 52W range, ATR 5.5% of price. Realized **+0.71R**, peak was **+1.62R** on 2026-09-23 (day +2) \u2014 captured **44%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-08-24",

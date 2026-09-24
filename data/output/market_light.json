@@ -1,5 +1,5 @@
 {
- "date": "2026-09-23",
+ "date": "2026-09-24",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,32 +7,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 765.081,
-    "b": 763.7792
+    "a": 765.4626,
+    "b": 764.1031
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 765.081,
-    "b": 764.4746
+    "a": 765.4626,
+    "b": 765.081
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 763.7792,
-    "b": 763.3549
+    "a": 764.1031,
+    "b": 763.7792
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-06-30",
-    "close": 744.9202,
-    "fast": 737.6861,
-    "slow": 737.7567,
-    "checks_passed": 2
-   },
    {
     "date": "2026-07-01",
     "close": 743.9127,
@@ -445,6 +438,13 @@
     "fast": 765.081,
     "slow": 763.7792,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-24",
+    "close": 767.18,
+    "fast": 765.4626,
+    "slow": 764.1031,
+    "checks_passed": 3
    }
   ]
  },
@@ -453,32 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 726.5965,
-    "b": 720.6448
+    "a": 729.2335,
+    "b": 722.5929
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 726.5965,
-    "b": 723.3491
+    "a": 729.2335,
+    "b": 726.5965
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 720.6448,
-    "b": 718.48
+    "a": 722.5929,
+    "b": 720.6448
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-06-30",
-    "close": 735.6335,
-    "fast": 722.1318,
-    "slow": 720.1595,
-    "checks_passed": 3
-   },
    {
     "date": "2026-07-01",
     "close": 724.4151,
@@ -891,27 +884,36 @@
     "fast": 726.5965,
     "slow": 720.6448,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-24",
+    "close": 741.1,
+    "fast": 729.2335,
+    "slow": 722.5929,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 20,
+   "count": 11,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 63,
-   "count_is_floor": false,
+   "pool_count": 50,
+   "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 4,
-    "ep_qullamaggie": 6,
+    "ep_stockbee": 6,
+    "ep_qullamaggie": 1,
     "ll_hl_1st": 6,
-    "ll_hl_2nd": 16,
-    "ll_hl_trend_break": 11,
-    "liquid_leader_pullback": 24
+    "ll_hl_2nd": 8,
+    "ll_hl_trend_break": 6,
+    "liquid_leader_pullback": 30
    },
-   "capped_panels": [],
+   "capped_panels": [
+    "liquid_leader_pullback"
+   ],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -920,35 +922,14 @@
   },
   "leaders": [
    {
-    "ticker": "MRNA",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TXG",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TWST",
-    "theme": "Genomics",
+    "ticker": "QMCO",
+    "theme": "Quantum Computing",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
    },
    {
     "ticker": "AXTI",
-    "theme": "Semiconductors Broad",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "MXL",
     "theme": "Semiconductors Broad",
     "status": "holding",
     "above_ema21": true,
@@ -962,10 +943,10 @@
     "rs_rating": 99
    },
    {
-    "ticker": "DUKR",
-    "theme": "Defense",
-    "status": "broken",
-    "above_ema21": false,
+    "ticker": "MXL",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
     "rs_rating": 99
    },
    {
@@ -983,8 +964,29 @@
     "rs_rating": 98
    },
    {
-    "ticker": "CDNA",
-    "theme": "Genomics",
+    "ticker": "PURR",
+    "theme": "Crypto Equities",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "AMD",
+    "theme": "Semiconductors Large Caps",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "BFLY",
+    "theme": "Medical Devices",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "INTC",
+    "theme": "Semiconductors Broad",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
@@ -992,10 +994,10 @@
   ],
   "leaders_meta": {
    "themes": [
-    "Defense",
-    "Genomics",
+    "Crypto Equities",
     "Medical Devices",
     "Memory & Storage",
+    "Quantum Computing",
     "Semiconductors Broad",
     "Semiconductors Large Caps"
    ],
@@ -1006,7 +1008,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": 0
+   "score": -2
   }
  },
  "verdict": "dim",

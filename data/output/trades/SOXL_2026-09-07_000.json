@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXL_2026-09-07_000",
-  "generated_at": "2026-09-23T23:22:43+00:00",
+  "generated_at": "2026-09-24T23:34:32+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXL",
@@ -11,17 +11,23 @@
     "stop_price": 114.0,
     "initial_stop": 105.0,
     "closed": false,
-    "remaining_pct": 66.66666666666666,
+    "remaining_pct": 46.71781756180734,
     "exit_date": null,
     "hold_business_days": null,
     "r_pct_of_entry": 8.120406020301015,
-    "realized_R": 0.9942528735632186,
+    "realized_R": 1.5675673192815356,
     "trims": [
       {
         "date": "2026-09-23",
         "price": 141.96,
         "pct_of_position": 33.33333333333333,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-24",
+        "price": 140.95,
+        "pct_of_position": 19.948849104859335,
+        "type": "trim_1_5"
       }
     ]
   },
@@ -58,7 +64,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 16
+    "hold_calendar_days": 17
   },
   "lesson": "In progress",
   "narrative": "Entered **SOXL** long on 2026-09-07 at $114.28 with stop $105.00 (currently trailed to $114.00) (1R = $9.28/sh = 8.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($123.25), MA stack mixed, RSI 45, 33% through 52W range, ATR 9.4% of price. **In progress.** Peak so far +4.13R; worst drawdown -1.56R.",

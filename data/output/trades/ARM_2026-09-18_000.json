@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-09-18_000",
-  "generated_at": "2026-09-23T23:22:43+00:00",
+  "generated_at": "2026-09-24T23:34:32+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -11,17 +11,23 @@
     "stop_price": 267.12,
     "initial_stop": 262.0,
     "closed": false,
-    "remaining_pct": 36.70374115267948,
+    "remaining_pct": 30.1314459049545,
     "exit_date": null,
     "hold_business_days": null,
     "r_pct_of_entry": 1.9167415393830507,
-    "realized_R": -0.119020159251772,
+    "realized_R": 2.043292625126385,
     "trims": [
       {
         "date": "2026-09-18",
         "price": 265.9,
         "pct_of_position": 49.94944388270981,
         "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-24",
+        "price": 322.7,
+        "pct_of_position": 19.919110212335692,
+        "type": "trim_1_5"
       }
     ]
   },
@@ -58,7 +64,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 5
+    "hold_calendar_days": 6
   },
   "lesson": "In progress",
   "narrative": "Entered **ARM** long on 2026-09-18 at $267.12 with stop $262.00 (currently trailed to $267.12) (1R = $5.12/sh = 1.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($249.27), MA stack mixed, RSI 58, 50% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +13.64R; worst drawdown -1.07R.",
