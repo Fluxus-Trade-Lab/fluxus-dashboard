@@ -1,0 +1,7 @@
+[
+  {"prompt": "任务 type=discord_to_x：data/output/threads/ 下今天有个新文件夹只有 messages.json，没有 draft.txt", "should_trigger": true, "skill": "discord-to-x"},
+  {"prompt": "班次 steve-discord-to-x 触发了，把今天的 Discord 消息写成 X thread 草稿", "should_trigger": true, "skill": "discord-to-x"},
+  {"prompt": "今天 threads 目录有没有新草稿，Discord→X 生成端跑了吗", "should_trigger": true, "skill": "discord-to-x"},
+  {"prompt": "今天内容台备稿三档降级怎么选", "should_trigger": false, "skill": "discord-to-x"},
+  {"prompt": "帮我看一下 X 上蹭位榜今天出了没有", "should_trigger": false, "skill": "discord-to-x"}
+]
