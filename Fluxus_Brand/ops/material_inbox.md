@@ -621,4 +621,4 @@
   - **好故事①（我自己栽的）**：第一版测试写成「逐个归档问它该不该被检查」，参数化扫十一行，看起来滴水不漏——**结果一个洞都没堵**。因为期望值是从被测的那张表里读出来的，表一改，期望值跟着改，对真代码绿、对坏代码也绿。判据可以给读者带走：**把断言里期望值那一侧遮住，它还说得出话吗？** 说不出就是在自问自答。
   - **好故事②**：两道闸都只测过「报错时退出码是 1」，没人测过「一切正常时退出码是 0」。于是一个能让 CI **每个干净的夜晚都拦着提交**的改动，在两处各免费活了三周。「测过 main()」和「测过 main() 的两条路」不是一件事。
   - **NULL 的那一半**：70 个新堵住的洞里，3 个判为等价、2 个判为化妆——都实跑验过，不是嘴上说。数出来的 100% 从来不是目标。
-  - 出处：[`data/research/audit_mutation_2026-09-25.md`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/blob/main/data/research/audit_mutation_2026-09-25.md) · commit `beecb9da`（archives）、`d8e70930`（ledger）
+  - 出处：T-0925-11 · b0e88bdd · [晨报补五节](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b0e88bdd659da7814efbef3d3bdb7f177fd28e24) · [`data/research/audit_mutation_2026-09-25.md`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/blob/main/data/research/audit_mutation_2026-09-25.md) · commit `beecb9da`（archives）、`d8e70930`（ledger）
