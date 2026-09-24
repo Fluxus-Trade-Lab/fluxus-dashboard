@@ -198,6 +198,8 @@
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
+- [09-24] [DATA ALEX] **供应商掉线的双维诊断与分层防护**｜Yahoo 丢了 2026-09-22 的 ACMR/AMBA/MXL 日线数据，被两个独立测试从不同维度捕捉（bar 级百分比计算误判 vs days_since 日期低估）。两个不相关的监测点各红一次，指向同一个供应商级根本原因——多维自诊的有效性。修复分三层：前向防护（yfinance repair=True 从 intraday 重建）、历史补齐（26 行 delayed_ep_log 纠正、三股票 bar 补齐）、完整审计记录。**诊断清晰→分层防护→可复现的自诊链条。** 出处 f737b231 · T-0924-64 · [incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md](../../../data/reference/incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md)
+
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
