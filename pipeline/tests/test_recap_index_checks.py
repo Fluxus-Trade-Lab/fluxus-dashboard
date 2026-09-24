@@ -56,9 +56,49 @@ def test_i1_green_on_09_23_extra_rows_real_events(content):
     assert {h["row"] for h in hits}.isdisjoint({"TLT", "GDX", "USO"})
 
 
+# EN and ZH event columns for four more real issues, chosen because branch-review's second
+# pass on T-0924-85 found the two languages disagreeing on exactly these rows: EN's "no
+# average event" (no "new") and ZH's "均线没事件" / "均线没新事件" / "无均线事件" all landed
+# outside the round-1 fix, so SPY/RSP/etc. read red in one language and green in the other
+# on the same day for the same fact.
+CROSS_DAY_EVENTS = {
+    "2026-09-16": {"EN": {"SPY": "no new average event", "DIA": "broke the 100-day ◇"},
+                   "ZH": {"SPY": "均线没新事件", "DIA": "跌破 100 日线 ◇"}},
+    "2026-09-17": {"EN": {"RSP": "no new average event", "QQQ": "reclaimed the 21EMA and the 50-day"},
+                   "ZH": {"RSP": "均线没新事件", "QQQ": "21EMA 和 50 日线一起收回"}},
+    "2026-09-18": {"EN": {"SPY": "no new average event", "TLT": "lost the 21EMA"},
+                   "ZH": {"SPY": "均线没新事件", "TLT": "跌破 21EMA"}},
+    "2026-09-14": {"EN": {"DIA": "no average event · chop"},
+                   "ZH": {"DIA": "均线没事件 · 来回拉锯"}},
+    "2026-W38":   {"EN": {"RSP": "no average event · under both all week"},
+                   "ZH": {"RSP": "无均线事件 · 整周压在两条均线下"}},
+}
+
+
+@pytest.mark.parametrize("issue", sorted(CROSS_DAY_EVENTS))
+def test_i1_agrees_across_en_zh_on_real_cross_day_rows(issue):
+    """EN and ZH must call the same row the same way — a per-language regex is a trap:
+    it can pass every EN case and every ZH case in isolation while still disagreeing
+    with itself on the one fact both languages are describing."""
+    days = CROSS_DAY_EVENTS[issue]
+    for row in days["EN"]:
+        en_hit = bool(i1_placeholder_hits({"index_notes": {row: [days["EN"][row], "note"]}}))
+        zh_hit = bool(i1_placeholder_hits({"index_notes": {row: [days["ZH"][row], "note"]}}))
+        assert en_hit == zh_hit, (issue, row, days["EN"][row], days["ZH"][row])
+
+
+# Every one of these is a real event-column string pulled from a real issue on disk
+# (2025-10 through 2026-09) — not invented. Two rounds of branch-review on T-0924-85 each
+# caught the gate missing a wording family that only showed up once the check ran against
+# real content instead of the ruling's single quoted example, so this list stays anchored
+# to what actually got written, not to what seemed like a reasonable guess at phrasing.
 @pytest.mark.parametrize("event", [
     "no new average event", "No new event", "no new moving-average event",
-    "无事件", "没有事件", "无新均线事件", "无新的均线事件", "均线无新事件", "—", "-",
+    "no average event",                                  # 09-14/09-15/W38 EN — no "new"
+    "无事件", "没有事件",
+    "无新均线事件", "无新的均线事件", "均线无新事件",       # round-1 miss (09-23 family)
+    "均线没新事件", "均线没事件", "无均线事件",             # round-2 miss (09-16/17/18, W38)
+    "—", "-",
 ])
 def test_i1_red_on_placeholder_variants(event):
     hits = i1_placeholder_hits({"index_notes": {"SPY": [event, "still under the high ◇"]}})
