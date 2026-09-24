@@ -27,7 +27,8 @@
 **恒等式 `currentQty == originalQty − Σtrims` 不在任何闸的眼里。**
 
 GAS 把两份数量各自维护：`currentQty` 是表里手记的一个数，`originalQty − Σtrims` 是从减仓记录派生的。
-复盘 [`build_pack.py:534`](../../../pipeline/content/recap/build_pack.py) 读派生的那份，dashboard `PortfolioLayout.jsx:103-105` + `calculations.js:67` 读手记的那份。
+复盘 [`build_pack.py:534`](../../../pipeline/content/recap/build_pack.py) 读派生的那份，dashboard [`PortfolioLayout.jsx:103-105`](../../../frontend/src/components/portfolio/PortfolioLayout.jsx)（`(cash + openMV − start)/start`）+ [`calculations.js:132/167`](../../../frontend/src/components/portfolio/lib/calculations.js)（`enrichTrades` 的 `marketVal` 与 `unrealizedPL` 都乘 `t.currentQty`）读手记的那份。
+（Claire 契约行 `e0e7f3c9` 原引的是 `calculations.js:67`；09-24 当天 `cd1c408c` 改了同一个文件的 YTD 口径，行号已漂，这里改成点名函数——**同一条规则写在两处时，行号会漂，函数名不会**。）
 两份一致时两条产线逐项相同；**一次手改只改一份，两份就分叉，而两边都没有第二个量可以对账**——每条产线内部自洽，各自的闸（`closes_stale`、`M1`、`schema_snapshot`）全绿。
 
 再往下一层：**这是一个只有跨产线才能看见的缺陷**。任何单产线的测试都测不出它——因为单产线读一份数量，一份数量永远自洽。
