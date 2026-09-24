@@ -378,7 +378,13 @@ def fetch_ohlc_and_technicals(tk: yf.Ticker) -> dict:
         # Fetch 2y so point-in-time 200-SMA is computable at entries up to ~1y old
         # (powers the Diagnosis case-study cards). Technical *fields* below are still
         # computed on the trailing ~1y so 52w-range / MA / ATR semantics are unchanged.
-        hist = tk.history(period='2y', auto_adjust=True)
+        # repair=True: 2026-09-22 Yahoo silently dropped that session for a handful of
+        # actively-traded tickers (ACMR/AMBA/MXL — confirmed still trading via Finviz
+        # that day, not halted); without repair the next available bar's prev-close
+        # fallback skips the gap and understates/overstates the following day's return
+        # by a full session (same shape as incidents/2026-09-01_vendor_dropped_a_completed_session.md).
+        # yfinance's own repair reconstructs the missing daily bar from intraday data.
+        hist = tk.history(period='2y', auto_adjust=True, repair=True)
         if hist is None or hist.empty:
             return out
         # Full 2y OHLC records (rounded to keep files compact)
