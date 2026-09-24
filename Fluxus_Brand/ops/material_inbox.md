@@ -624,3 +624,5 @@
   - **好故事②**：两道闸都只测过「报错时退出码是 1」，没人测过「一切正常时退出码是 0」。于是一个能让 CI **每个干净的夜晚都拦着提交**的改动，在两处各免费活了三周。「测过 main()」和「测过 main() 的两条路」不是一件事。
   - **NULL 的那一半**：70 个新堵住的洞里，3 个判为等价、2 个判为化妆——都实跑验过，不是嘴上说。数出来的 100% 从来不是目标。
   - 出处：T-0925-11 · b0e88bdd · [晨报补五节](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/b0e88bdd659da7814efbef3d3bdb7f177fd28e24) · [`data/research/audit_mutation_2026-09-25.md`](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/blob/main/data/research/audit_mutation_2026-09-25.md) · commit `beecb9da`（archives）、`d8e70930`（ledger）
+
+- [09-25] [UI/Frontend] **滞留分支诊断：从自动检测→跨线核对→内容递进确认→资产清理的完整闭环** · audit_unpushed 捕捉本地分支 feat/theme-board（4 提交、未推 origin）后，ops 逐文件 blob sha 对比诊断：8 个碰及文件中 6 个字节相同（已被 main 吸收），2 个与 main 不同且被新版本覆盖（ThemeBoardCard.jsx、useThemeBoard.js）。前端 UI 行（claire）在跨线诊断基础上确认：main 的 eb346fec/2b89ce7b 与分支对应 commit 改动逐字相同，后续 39de84ae（T-0924-90）将字号 10px 统一改成 11px 是同一份工作的后续修订；useThemeBoard.js 的 resetThemeBoardCache 是 main 之后为新增测试加的、不是分支有 main 缺的。**从「检测异常」精确诊断到「这是旧版本被覆盖还是无关改动」的递进级诊断精度**——这是资产管理中最容易出错的判断。**从「发现滞留」升到「诊断无遗漏」再到「有把握清理」的系统诊断完整链条**。出处 T-0925-16 · df4f0f8
