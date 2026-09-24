@@ -226,7 +226,11 @@ export default function OverviewTab({
           <div className="leading-6">
             {qtyMismatches.map(m => (
               <span key={m.id} className="mr-4 inline-block">
-                {m.ticker} · {m.entryDate} · {m.sheetSays === 'more held than the trim log implies'
+                {/* GAS entryDate is a Date cell (e.g. "2026-09-17T15:00:00.000Z");
+                    toJstDate matches the Qty column's own date cell so the
+                    warning names the same calendar day, not a UTC timestamp
+                    a day behind it (the T-0922-44 bug class). */}
+                {m.ticker} · {toJstDate(m.entryDate)} · {m.sheetSays === 'more held than the trim log implies'
                   ? tr('pf.qtyMismatch.moreHeld') : tr('pf.qtyMismatch.lessHeld')}
                 {m.gapPctOfPosition != null && (
                   <> · {m.gapPctOfPosition > 0 ? '+' : ''}{m.gapPctOfPosition}% {tr('pf.qtyMismatch.ofPosition')}</>
@@ -320,14 +324,18 @@ export default function OverviewTab({
                       <>
                         {t.currentQty}
                         {t.currentQty !== t.originalQty && <span className="text-[var(--color-text-muted)] text-[11px]">/{t.originalQty}</span>}
-                        {qtyMismatchById.has(t.id) && (
-                          <span
-                            className="ml-1 text-[var(--color-loss)]"
-                            title={`${t.ticker} ${t.entryDate}: ${qtyMismatchById.get(t.id).sheetSays === 'more held than the trim log implies' ? tr('pf.qtyMismatch.moreHeld') : tr('pf.qtyMismatch.lessHeld')} · ${qtyMismatchById.get(t.id).gapPctOfPosition}% ${tr('pf.qtyMismatch.ofPosition')}`}
-                          >
-                            ⚠
-                          </span>
-                        )}
+                        {qtyMismatchById.has(t.id) && (() => {
+                          const mm = qtyMismatchById.get(t.id)
+                          const gapStr = mm.gapPctOfPosition != null ? `${mm.gapPctOfPosition}% ${tr('pf.qtyMismatch.ofPosition')}` : ''
+                          return (
+                            <span
+                              className="ml-1 text-[var(--color-loss)]"
+                              title={`${t.ticker} ${toJstDate(t.entryDate)}: ${mm.sheetSays === 'more held than the trim log implies' ? tr('pf.qtyMismatch.moreHeld') : tr('pf.qtyMismatch.lessHeld')}${gapStr ? ' · ' + gapStr : ''}`}
+                            >
+                              ⚠
+                            </span>
+                          )
+                        })()}
                       </>
                     )}
                   </td>
