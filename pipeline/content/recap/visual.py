@@ -219,6 +219,16 @@ def pick_edu(education: dict, key: str) -> dict:
     sel = next((o for o in opts if o.get("key") == key), None)
     if sel is None or not sel.get("body") or not sel.get("figure"):
         raise SystemExit(f"education option {key} is missing title/body/figure — see CONTENT_SCHEMA.md")
+    # A lesson gets its own picture. Reusing another concept's builder is allowed but
+    # never silent: 2026-09-23 shipped `leaders_vs_index_on_a_red_day` drawing
+    # `equal_weight_split`, whose four labels (cap-weighted, equal-weight, 50-day,
+    # first close under the 50-day) appear nowhere in that lesson — a reuse justified
+    # in a commit message that nobody re-read against the text.
+    if sel["figure"] != sel.get("concept") and not sel.get("figure_reuse_reason"):
+        raise SystemExit(
+            f"education option {key}: figure {sel['figure']!r} is not this concept's "
+            f"({sel.get('concept')!r}). Write the builder, or state figure_reuse_reason "
+            f"naming which of the lesson's own words the borrowed labels carry.")
     return {"chosen": key, "title": sel["title"], "body": sel["body"], "figure": sel["figure"],
             "options": [{"key": o["key"], "title": o["title"], "why": o.get("why", "")} for o in opts]}
 

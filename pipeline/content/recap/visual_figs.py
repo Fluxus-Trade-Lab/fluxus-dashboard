@@ -197,6 +197,44 @@ def shallow_pullback(lang):
 
 
 # ================================================================== B topics (samples)
+def leaders_vs_index_on_a_red_day(lang):
+    """The index fell; a leader did not come with it, on drying volume.
+
+    Drawn for the 2026-09-23 lesson. It replaces a reuse of equal_weight_split,
+    which drew cap-weighted against equal-weight breaking a 50-day — a different
+    claim, over weeks rather than a session, whose four labels appear nowhere in
+    that lesson's text.
+    """
+    T = {"EN": ["THE INDEX", "A LEADER", "the index fell", "narrow range, held",
+                "VOLUME", "volume drying up after the surge"],
+         "ZH": ["\u6307\u6570", "\u4e00\u53ea\u9f99\u5934", "\u6307\u6570\u5728\u8dcc", "\u7a84\u5e45\uff0c\u5b88\u4f4f\u4e86",
+                "\u6210\u4ea4\u91cf", "\u51b2\u91cf\u4e4b\u540e\uff0c\u91cf\u5728\u7f29"]}[lang]
+    ix = _lin(4, 44, 12)
+    iy = [47, 46.2, 44.4, 44.9, 42.6, 41.2, 41.8, 39.4, 37.6, 36.9, 35.2, 33.8]
+    lx = _lin(56, 96, 12)
+    ly = [43.2, 43.9, 43.4, 44.1, 43.6, 44.0, 43.5, 43.8, 43.3, 43.7, 43.4, 43.6]
+    vol = [12.5, 11.0, 9.4, 8.6, 7.5, 6.8, 6.0, 5.4, 4.9, 4.4, 4.0, 3.6]
+    band = max(ly) - min(ly)
+    assert iy[-1] < iy[0] - 8, "the index fell over the window"
+    assert band < 1.5, "the leader held a narrow range"
+    assert min(ly) > iy[-1], "the leader did not come down with the index"
+    assert vol[-1] < vol[0] / 2, "volume dried up after the surge"
+    assert all(b <= a for a, b in zip(vol, vol[1:])), "volume declines monotonically"
+    c = Canvas(ylim=(0, 60))
+    c.vline(50, "guide")
+    c.text(4, 56, T[0], "small")
+    c.text(56, 56, T[1], "small")
+    c.path(ix, iy, "trend")
+    c.path(lx, ly, "trend")
+    for x, v in zip(lx, vol):
+        c.rect(x - 1.5, 2, x + 1.5, 2 + v, "volbar")
+    c.text(56, 18, T[4], "small")
+    c.callout(ix[-1], iy[-1], ix[-1] - 16, 27, T[2], "lab-dn")
+    c.callout(lx[6], ly[6], lx[6] - 6, 52, T[3], "lab-up")
+    c.callout(lx[-2], 2 + vol[-2], lx[-2] - 26, 21, T[5], "lab-acc")
+    return c.svg(T[3])
+
+
 def low_volume_breakout(lang):
     T = {"EN": ["pivot", "breakout on light volume", "back under the pivot", "VOLUME", "average", "breakout bar under average"],
          "ZH": ["突破位", "缩量突破", "又跌回突破位下", "成交量", "均量", "突破日量低于均量"]}[lang]
@@ -477,6 +515,7 @@ FIGS = {
     "rs_before_price": rs_before_price,
     "bull_bear_line": bull_bear_line,
     "equal_weight_split": equal_weight_split,
+    "leaders_vs_index_on_a_red_day": leaders_vs_index_on_a_red_day,
     "shallow_pullback": shallow_pullback,
     "low_volume_breakout": low_volume_breakout,
     "gap_down_first_bar": gap_down_first_bar,
