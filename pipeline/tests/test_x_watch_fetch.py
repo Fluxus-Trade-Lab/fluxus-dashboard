@@ -135,3 +135,49 @@ def test_only_the_shouting_line_is_skipped():
     """多行帖里只跳过喊话那一行，同帖其它行照常。"""
     text = _SHOUT + "\nStill watching NVDA here."
     assert fx.tickers(text) == {"NVDA"}
+
+
+# --- 大写强调词混在正常句子里，不是整行喊话（取件账 09-24，T-0924-104）--------
+#
+# 09-23 RealJGBanks 三行都把强调词当成了裸代码，且都不满足 shouting() 的
+# 「整行全大写」条件（行里混着小写词），调 shouting() 的行长阈值挡不住这类行。
+
+_EMPHASIS_POST = (
+    "I’M LITERALLY SHOWING YOU HOW TO MAKE THOUSANDS TRADING\n\n"
+    "$SPY +230% BANGER\n\nSPY broke the DAILY LOW.\n\n"
+    "That was the signal to look for shorts.\n\n8/21 bearish trend.\n"
+    "Daily low breaks.\nRetest rejects.\n\nMultiple bear flags to get short\n\n"
+    "Stop guessing direction. Follow the 8/21 EMA."
+)
+
+_EMPHASIS_POST_2 = (
+    "HOW TO STOP LOSING AT TRADING\n\nWatch this before  your next trade\n\n"
+    "$SPY 230% PUT TRADE\n\nHow I knew the sell was coming today BEFORE the Sell off.\n\n"
+    "My entire trade came down to 3 things:\n\n1. 8/21 cross\n2. Key level\n"
+    "3. BANKS Break. Retest. Enter\n\nI break down the exact setup Below"
+)
+
+
+def test_emphasis_words_in_mixed_case_lines_are_not_tickers():
+    """漏改方向：DAILY/LOW/PUT/TRADE/BANKS 不是整行喊话，之前会当裸代码进榜。"""
+    assert fx.tickers(_EMPHASIS_POST) & {"DAILY", "LOW"} == set()
+    assert fx.tickers(_EMPHASIS_POST_2) & {"PUT", "TRADE", "BANKS"} == set()
+
+
+def test_emphasis_words_dont_swallow_the_real_ticker():
+    """改了但接错方向：同一帖里的真代码 $SPY / 裸 SPY 不能被一起过滤掉。"""
+    assert "SPY" in fx.tickers(_EMPHASIS_POST)
+    assert "SPY" in fx.tickers(_EMPHASIS_POST_2)
+
+
+def test_mtf_bare_is_jargon_not_a_ticker():
+    """ripster47「MTF clouds, Ripster Labels, MTF scannser」——多周期黑话，不是代码。"""
+    assert "MTF" not in fx.tickers("MTF clouds, Ripster Labels, MTF scannser")
+
+
+@pytest.mark.parametrize("text,sym", [
+    ("$DT breaking out today", "DT"), ("watching $PUT flow on this one", "PUT"),
+])
+def test_dollar_prefixed_emphasis_lookalikes_still_count(text, sym):
+    """STOPWORDS/INDICATOR_BARE 只拦裸词，带 $ 的照认（同 RS/SMA 的既有约定）。"""
+    assert sym in fx.tickers(text)

@@ -38,13 +38,21 @@ STOPWORDS = {
     "CPI","DD","DO","EOD","EPS","ER","ETF","FED","FOR","FOMC","GDP","GO","HAS","HE","IF","IN",
     "IPO","IS","IT","ITM","IV","LOL","ME","MY","NO","NOT","OF","OK","ON","OR","OTM","PT","QQQ",
     "RE","RSI","SO","TA","THE","TO","TP","UP","US","USA","VS","WE","WTF","YOY","YTD",
+    # 大写强调词，非整行喊话（shouting() 抓不到——行里混着小写词，不满足
+    # 「整行无小写」）：09-23 RealJGBanks「SPY broke the DAILY LOW.」「$SPY 230%
+    # PUT TRADE」「BANKS Break. Retest. Enter」三行都把强调词当成了裸代码。
+    # 这不是 shouting() 的行长阈值问题——这些行本身就不是全大写行，调阈值挡不住。
+    # 取件账 09-24（T-0924-104）。
+    "DAILY","LOW","PUT","TRADE","BANKS","MTF",
 }
 
-# 指标名 / 经济数据名：只在「裸大写词」分支拦，带 $ 的照认。
+# 指标名 / 经济数据名 / 真代码同名缩写：只在「裸大写词」分支拦，带 $ 的照认。
 # RS（Reliance Steel）、SMA（Summit Materials）、MA（Mastercard）是真代码，所以不能进
 # STOPWORDS。09-11 主班实测：人数榜上 $RS 4 人、$SMA 3 人，全部来自「50 SMA」
-# 「RS line」这类正文，没有一条带 $。
-INDICATOR_BARE = {"SMA","EMA","RS","PPI","MA","VWAP","ATR","MACD","PCE"}
+# 「RS line」这类正文，没有一条带 $。DT（Dynatrace）09-24 加入同理——库里现存的
+# $DT 全部带 $（PrimeTrading_/cfromhertz 的清单帖），但「DT」也是常见大写强调词
+# （如「DT Break」句式），裸词先拦，真要认某票就带 $（T-0924-104）。
+INDICATOR_BARE = {"SMA","EMA","RS","PPI","MA","VWAP","ATR","MACD","PCE","DT"}
 
 
 def key() -> str:
