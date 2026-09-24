@@ -19,19 +19,50 @@ let doc = null
 try { doc = JSON.parse(readFileSync(FILE, 'utf8')) } catch { /* not built yet */ }
 
 describe.skipIf(!doc)('the two scales, against the real file', () => {
+  // A handful of small caps drop individual bars from yfinance (ABSI/ANDG/DBA/
+  // HPQ/ILMN/LUXE/NFG/PSNL/STX/TENB missed 2026-09-22 — confirmed against a
+  // fresh `yf.download`, not our fetch code). `move()` diffs adjacent array
+  // slots, so a single-ticker gap makes it compute a multi-day compound move
+  // and compare that against a single day's reading. A real market closure
+  // shows up as every card sharing the same from->to jump; a data gap doesn't.
+  const isMarketClosedGap = (from, to) => {
+    let has = 0, matches = 0
+    for (const card of doc.cards) {
+      const d = card.series.d
+      const i = d.indexOf(from)
+      if (i < 0) continue
+      has++
+      if (d[i + 1] === to) matches++
+    }
+    return has > 0 && matches === has
+  }
+
   const move = (series, date) => {
     const i = series.d.indexOf(date)
-    return i > 0 ? (series.c[i] / series.c[i - 1] - 1) * 100 : null
+    if (i <= 0) return null
+    const from = series.d[i - 1], to = series.d[i]
+    if (!isMarketClosedGap(from, to)) return null
+    return (series.c[i] / series.c[i - 1] - 1) * 100
   }
 
   it('readings.change_pct is a fraction', () => {
+    let checked = 0
     for (const card of doc.cards) {
       const truth = move(card.series, card.series.d[card.series.d.length - 1])
+      if (truth == null) continue
+      checked++
       expect(pctFromReading(card.readings.change_pct)).toBeCloseTo(truth, 1)
     }
+    // A gap that swallows every card would silently drop this to zero
+    // assertions and pass for the wrong reason.
+    expect(checked).toBeGreaterThan(0)
   })
 
   it('marks[].chg is already a percent', () => {
+    // series.c is auto_adjust=True, re-pulled at build time; marks[].chg was
+    // stored the night of, off the raw close — dividend-day drift between
+    // the two, measured at up to 0.103pp across the file, stays inside the
+    // existing 0.5pp tolerance.
     for (const card of doc.cards) {
       for (const m of card.marks) {
         const truth = move(card.series, m.d)
@@ -42,11 +73,14 @@ describe.skipIf(!doc)('the two scales, against the real file', () => {
   })
 
   it('panels[].chg_pct is already a percent', () => {
+    // Same raw-close-vs-adjusted-close drift as marks[].chg, but measured up
+    // to 1.02pp (HPQ 2026-09-09) — wider than marks, still far short of a
+    // real x10/x100 unit mismatch. 2pp covers the measured drift with room.
     for (const card of doc.cards) {
       for (const p of card.panels) {
         const truth = move(card.series, p.date)
         if (truth == null) continue
-        expect(pctFromMark(p.chg_pct)).toBeCloseTo(truth, 0)
+        expect(Math.abs(pctFromMark(p.chg_pct) - truth)).toBeLessThan(2)
       }
     }
   })
