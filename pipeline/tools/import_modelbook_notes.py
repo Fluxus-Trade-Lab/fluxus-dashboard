@@ -65,12 +65,17 @@ MONTHS = {m: i for i, m in enumerate(
     ["January", "February", "March", "April", "May", "June", "July",
      "August", "September", "October", "November", "December"], start=1)}
 
-# "broke out through $1,933.02 on April 6th"
+# The 2018-2020 books date without a year ("on April 6th") and mean the book's
+# year; the 2023/2024 books spell it out ("on November 16, 2023") and often mean
+# the year BEFORE the book's. Read the year when it is written and only fall
+# back to the file's when it is not — assuming it cost ISRG, SPOT and RNA a
+# breakout each, all filed twelve months late.
 RE_BREAKOUT = re.compile(
-    r"broke out (?:through|above|of)\s+\$?([\d,]+\.?\d*)\s+on\s+([A-Z][a-z]+)\s+(\d{1,2})", re.I)
-# "all-time high of $3,552.25 on September 2nd"
+    r"broke out (?:through|above|of)\s+\$?([\d,]+\.?\d*)\s+on\s+"
+    r"([A-Z][a-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(\d{4}))?", re.I)
 RE_HIGH = re.compile(
-    r"(?:all-time high|high) of \$?([\d,]+\.?\d*)\s+on\s+([A-Z][a-z]+)\s+(\d{1,2})", re.I)
+    r"(?:all-time high|high) of \$?([\d,]+\.?\d*)\s+on\s+"
+    r"([A-Z][a-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(\d{4}))?", re.I)
 # "for a gain of 84% in 20 weeks"
 RE_GAIN = re.compile(r"(?:gain|move|rise) of ([\d.]+)%\s+in\s+(\d+)\s+weeks?", re.I)
 # The PDF lays sector and industry out as a two-column header with the two
@@ -82,6 +87,11 @@ RE_LABELS = re.compile(r"\*\*图上标注\*\*：(.+)")
 # "## p108 · TSLA 2020 DAILY 1/2" and "## NVDA 2024 Daily Base Breakout - 180% ..."
 RE_MOGLEN_HEAD = re.compile(r"^p(\d+)\s*·\s*([A-Z][A-Z0-9.\-]{0,6})\s+(\d{4})\b(.*)")
 RE_TL_HEAD = re.compile(r"^([A-Z][A-Z0-9.\-]{0,6})[\s　]*（PDF p([\d\-]+)）")
+
+# A few chart pages are headed with the company name rather than its symbol.
+# Mapping them keeps the note attached to the entry it describes instead of
+# floating off as a ticker that does not exist.
+NAME_TO_TICKER = {"GOOGLE": "GOOG"}
 
 
 def _iso(year: int, month_name: str, day: str) -> str | None:
@@ -140,17 +150,22 @@ def parse_traderlion(path: Path, with_prose: bool) -> list[dict]:
         flat = " ".join(sec.split())
         b = RE_BREAKOUT.search(flat)
         if b and file_year:
-            d = _iso(file_year, b.group(2), b.group(3))
+            d = _iso(int(b.group(4)) if b.group(4) else file_year, b.group(2), b.group(3))
             if d:
                 rec["facts"]["breakout_date"] = d
                 rec["facts"]["breakout_price"] = float(b.group(1).replace(",", ""))
         h = RE_HIGH.search(flat)
         if h and file_year:
-            # a high stated in January most often belongs to the following year
-            d = _iso(file_year, h.group(2), h.group(3))
             bo = rec["facts"].get("breakout_date")
-            if d and bo and d < bo:
-                d = _iso(file_year + 1, h.group(2), h.group(3))
+            if h.group(4):
+                d = _iso(int(h.group(4)), h.group(2), h.group(3))
+            else:
+                # no year written: it is the breakout's year, or the next one
+                # when the high reads as falling before the breakout
+                base = int(bo[:4]) if bo else file_year
+                d = _iso(base, h.group(2), h.group(3))
+                if d and bo and d < bo:
+                    d = _iso(base + 1, h.group(2), h.group(3))
             if d:
                 rec["facts"]["peak_date"] = d
                 rec["facts"]["peak_price"] = float(h.group(1).replace(",", ""))
@@ -182,6 +197,7 @@ def parse_moglen(path: Path, with_prose: bool = True) -> list[dict]:
         if not m:
             continue
         page, ticker, year, tail = m.group(1), m.group(2), int(m.group(3)), m.group(4)
+        ticker = NAME_TO_TICKER.get(ticker, ticker)
         labels = []
         lm = RE_LABELS.search(sec)
         if lm:
@@ -204,6 +220,42 @@ def parse_moglen(path: Path, with_prose: bool = True) -> list[dict]:
         }
         out.append(rec)
     return out
+
+
+def check_facts(entries: dict, weeks_tol: float = 3.0, gain_tol: float = 0.15) -> list[str]:
+    """Audit each card against itself.
+
+    A model book sentence states four things at once — two prices, two dates and
+    a duration — so any three of them check the fourth for free. Worth running
+    every import for two different reasons:
+
+    · IT CATCHES OUR PARSING. Reading the month and day but assuming the file's
+      year filed ISRG, SPOT and RNA's breakouts twelve months late; all three
+      surfaced here as ~52-week errors and were fixed.
+    · IT CATCHES THE BOOKS. What is left over after that fix is the source's
+      own drift, and it is not noise worth hiding. Most entries are off by
+      three to seven weeks, which reads as the author rounding to the week the
+      high printed in. HOOD 2024 is a genuine contradiction: $11.33 on
+      2024-09-02 to $42.76 on 2024-12-05 is +277% over 13 weeks, and the same
+      sentence calls it "138% in 31 weeks". Our dates and prices are quoted as
+      printed; the disagreement is the book's, and the page shows both numbers
+      rather than silently picking one.
+    """
+    bad = []
+    for key, e in entries.items():
+        bo = (e.get("breakout") or {})
+        pk = (e.get("peak") or {})
+        weeks, gain = e.get("weeks"), e.get("gain_pct")
+        if weeks and bo.get("date") and pk.get("date"):
+            actual = (date.fromisoformat(pk["date"]) - date.fromisoformat(bo["date"])).days / 7
+            if abs(actual - weeks) > weeks_tol:
+                bad.append(f"{key}: dates span {actual:.0f}w, the book says {weeks}w")
+        if gain and bo.get("price") and pk.get("price") and bo["price"] > 0:
+            implied = (pk["price"] / bo["price"] - 1) * 100
+            if abs(implied - gain) > max(gain_tol * abs(gain), 2):
+                bad.append(f"{key}: ${bo['price']}→${pk['price']} is +{implied:.0f}%, "
+                           f"the book says +{gain:.0f}%")
+    return bad
 
 
 def check_credit(entries: dict) -> None:
@@ -265,6 +317,7 @@ def main() -> int:
         return 1
     entries = collect(a.vault, not a.no_prose)
     check_credit(entries)
+    drift = check_facts(entries)
     payload = {
         "generated_at": date.today().isoformat(),
         "vault": str(a.vault.relative_to(REPO)),
@@ -279,6 +332,11 @@ def main() -> int:
     logger.info("%d ticker-years · %d carry a TraderLion card · %d state a breakout · "
                 "%d chart labels%s", len(entries), tl, withb, labels,
                 "" if a.no_prose else " · with the authors' paragraphs")
+    for line in drift:
+        logger.warning("  ⚠ %s", line)
+    if drift:
+        logger.warning("  %d card%s disagree with themselves — see check_facts()",
+                       len(drift), "" if len(drift) == 1 else "s")
     return 0
 
 
