@@ -151,7 +151,7 @@
    ],
    "before": "2026-08-25..2026-09-17: group Leading and rs_1m >= 80, WITHOUT the ADR floor -- so it disagrees with the page's True Market Leaders panel (09-15: 39 logged vs 10 on the panel; 09-17: MSFT True vs False in shortlist_log)",
    "after": "the panel's own answer: in panel_pool(rows, 'leaders') (ADR >= 3.5, universe-wide since Andy 2026-08-25) and PANELS['true_market_leaders'].test",
-   "note": "Before 2026-08-25 the two definitions coincided (no ADR floor yet). Not recomputed: leaders_log does not store adr_pct. For TML forward-return research use watchlist_hits panel=true_market_leaders across the break, or leaders_log.tml only from the change date on.",
+   "note": "Before 2026-08-25 the two definitions coincided (no ADR floor yet). Not recomputed: leaders_log does not store adr_pct. For TML forward-return research use watchlist_hits panel=true_market_leaders across the break, or leaders_log.tml only from the change date on. ⚠️ 2026-09-26: this advice predates the 2026-09-18 Moglen redefinition (definition_breaks[8]) and only bridges THIS break — watchlist_hits panel=true_market_leaders is itself defined by the pre-Moglen test. Across 2026-09-18 nothing is comparable: read the Moglen entry and treat pre/post as two different populations. Reading this line alone will send you across a break it does not cover.",
    "declared": "2026-09-18 DATA ALEX"
   },
   {
