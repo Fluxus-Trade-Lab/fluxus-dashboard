@@ -50,6 +50,7 @@
 
 ## 📥 追加到这里
 
+- [09-25] [steve] 系统自诊从「依赖外部数据何时就绪」升级到「纯日历逻辑自检」：delayed_ep_log 的 days_since 连续三次因 Yahoo 延迟发布而出错，根本原因是向下游供应商问时间点而不是用自己的日历。改用 `_sessions_between` 的纯交易日计数替代价格查询；防护脱离厂商风险、逻辑无歧义；CI 双向测试验证链条（红→绿），诊断精度升级体现在「从猜测时间点到用可验证的日历」。出处：[T-0925-35 · 09ab04a7](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/09ab04a7) · [2026-09-24_vendor_dropped_a_session_for_specific_tickers.md](../../data/reference/incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md)
 - [09-25] [steve] 内容库查询验证机制（首发库存检查→出处双重验证→排期迭代诊断），全套可审计链路展示系统对自己数据边界的诚实度；课程发售日的管道透明性（文案卡在 needs_andy→购买链路验证中→明确标注而非假装就绪），体现从「什么时候该发」升级到「系统如何证明该发什么」的诊断精度。出处：[T-0925-33 · c2dcff3f](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/c2dcff3f0352b578a496340fac720df13cfb5e5d) · [data/content/today_draft.md](../../data/content/today_draft.md)
 
 
