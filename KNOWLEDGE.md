@@ -51,6 +51,7 @@
 | 对外已实现口径（备用） | `data/portfolio/reviews/monthly_*.json` 的 `overall.return_pct`（H1=90.53%）· 或从 `portfolio_*.csv` 的 trim 腿累加 |
 | 交易绩效 | `data/portfolio/` performance_review 产物 | ⚠️ 本地目录（gitignored），`git show` 不适用——只能本机读；H1 +90.5% 等口径以此为准 |
 | 关卡进度 | 日推第一行 / NOW.md 🎮 节 | |
+| **波段大师课 ver1 封版范围 · 两份 PDF 的页数/字节/md5 · 线上部署 id** | `data/content/RELEASE_ver1.md`（全文：发了什么/没发什么/买家入口）· 契约行 `data/reference/DATA_CONTRACTS.md` §七 [2026-09-25] 封版行 | 定版是 **b5**：中 **194 页** / 13,568,448 B / md5 `c7302ad14f7a84d00dcd7d9f80e17b6e`；英 **210 页** / 12,390,358 B / md5 `6c56c6f22c19e738601132edafd03f40`。⚠️ **「中文全本 390 页」与「中 199 页 / 英 213 页」都是已作废的旧数**（同一个数作废过两次），见到就按本行更正。**附录 I/J/K 不在 ver1 内，走 2026-09-27**。PDF 本体只在本机 `~/Documents/SwingMasterclass/_pdf/release_2026-09-25/`（该仓无 git remote，`git show` 不适用）——要重新量：`md5 -q <文件>` 与 `mdls -name kMDItemNumberOfPages -raw <文件>` |
 
 ## SOP 登记处（三次律①的家；成功 ≥3 次的方法固化于此，照抄不重新发明）
 | SOP | 全文在 | 登记日 |
