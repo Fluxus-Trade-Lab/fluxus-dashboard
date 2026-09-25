@@ -2,6 +2,47 @@ import { useState, useEffect } from 'react'
 import HeroField from './HeroField'
 import { PUBLIC_STATS } from './publicStats'
 
+/* The four parts of the tool, named by Andy on 2026-09-25:
+   "dashboard是工具，这个工具分几个部分，一个是市场观察 market state, themes,
+   screener. 二是portfolio管理和review 三是education，其中modelbook免费。
+   四是每日复盘pdf". Kept in that order and that grouping so the page and the
+   product cannot drift apart. */
+const PILLARS = [
+  {
+    title: 'Read the market',
+    what: 'Is today tradable, and where is the money going.',
+    pages: [
+      { name: 'Market State', hash: '#/breadth', line: 'The morning read, six steps.' },
+      { name: 'Themes', hash: '#/rotation', line: 'What is leading, and what just turned.' },
+      { name: 'Screener', hash: '#/screener', line: 'Eight thousand tickers down to a handful.' },
+    ],
+  },
+  {
+    title: 'Your own book',
+    what: 'The account as one object, and where its money actually goes.',
+    pages: [
+      { name: 'Portfolio', hash: '#/portfolio', line: 'Open risk and exposure, every position in R.' },
+      { name: 'Review', hash: '#/review', line: 'Your leaks, measured rather than remembered.' },
+    ],
+  },
+  {
+    title: 'Learn the pattern',
+    what: 'The part that makes you not need the signal.',
+    pages: [
+      { name: 'Model Books', hash: '#/modelbooks', free: true,
+        line: '1,400 past leaders, replayed one bar at a time.' },
+      { name: 'Masterclass', hash: '#/masterclass', line: 'The whole method, start to finish.' },
+    ],
+  },
+  {
+    title: 'The daily recap',
+    what: 'The session written up, every trading day.',
+    pages: [
+      { name: 'Daily Recap', hash: '#/briefing', line: 'English and Chinese, the same evening.' },
+    ],
+  },
+]
+
 export default function LandingPage({ onNavigate }) {
   // Same source as ResultsPage, so the two can never disagree again. Until
   // 2026-08-31 this page showed 72% / 2.1R / 340+ — invented placeholders that
@@ -53,28 +94,101 @@ export default function LandingPage({ onNavigate }) {
             Fluxus is a trading community for traders who want to get better, not just get lucky.
           </p>
           <div className="mt-9">
+            {/* The primary action is now INTO the product, not at the track
+                record. Both TSF and PrimeTrading put "Launch app" / "Join" here;
+                "See the results" sends a visitor to a page of numbers about a
+                person, which is the pitch a personal brand makes, not a
+                platform. Model Books is the one section open to everyone, so
+                it is what the button can honestly promise. */}
             <button
-              onClick={() => onNavigate('#/results')}
+              onClick={() => onNavigate('#/modelbooks')}
               className="public-cta"
             >
-              See the results
+              Open Model Books — free
             </button>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-[540px] mt-12">
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>+{stats.h1Return}%</div>
-              <div className="public-label mt-1">H1 2026 Return</div>
-            </div>
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.payoff}&times;</div>
-              <div className="public-label mt-1">Payoff Ratio</div>
-            </div>
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.profitFactor}</div>
-              <div className="public-label mt-1">Profit Factor</div>
-            </div>
+          {/* The record, one line instead of three billboards. Andy,
+              2026-09-25: "业绩这个卖点不会持久。持久的是平台和每日的更新."
+              A number that headlines a page has to be re-earned every quarter;
+              this one is dated, cited and one click from its own page. */}
+          <p className="text-[13px] mt-10 mb-0" style={{ color: '#8a8580' }}>
+            <span style={{ color: 'var(--color-poster-blue)' }}>+{stats.h1Return}%</span>
+            {' '}H1 2026 · {stats.payoff}&times; payoff · {stats.profitFactor} profit factor ·{' '}
+            <button onClick={() => onNavigate('#/results')}
+                    className="underline cursor-pointer bg-transparent border-0 p-0 text-[13px]"
+                    style={{ color: 'inherit', font: 'inherit' }}>
+              every trade
+            </button>
+          </p>
+        </div>
+      </section>
+
+      {/* What a member actually gets, in the four parts Andy named on
+          2026-09-25: market read / your own book / education / the daily recap.
+          Every row links to the real page. The locked ones render for real and
+          then blur, so clicking is the proof — a visitor sees this site's own
+          dashboard with today's date in it, which is the one thing a
+          competitor's marketing screenshot cannot fake. */}
+      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+        <div className="public-section public-section-wide py-16">
+          <h2 className="public-h2">What you get</h2>
+          <p className="public-body mt-3 max-w-[560px]" style={{ color: 'var(--color-text-secondary)' }}>
+            A tool you open every morning, not a signal you wait for.
+            Everything below is live — click any of it and you will see the real
+            page, today's data included.
+          </p>
+
+          <div className="grid gap-4 mt-9"
+               style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
+            {PILLARS.map((pillar) => (
+              <div key={pillar.title}
+                   className="rounded-2xl p-5"
+                   style={{ background: 'var(--color-bg)',
+                            border: '1px solid var(--color-border)' }}>
+                <h3 className="text-[17px] font-semibold m-0"
+                    style={{ color: 'var(--color-text-bold)' }}>{pillar.title}</h3>
+                <p className="text-[13px] mt-1.5 mb-4"
+                   style={{ color: 'var(--color-text-muted)' }}>{pillar.what}</p>
+                <ul className="list-none p-0 m-0 flex flex-col gap-2.5">
+                  {pillar.pages.map((pg) => (
+                    <li key={pg.hash}>
+                      <button onClick={() => onNavigate(pg.hash)}
+                              className="text-left bg-transparent border-0 p-0 cursor-pointer w-full">
+                        <span className="text-[13px] font-medium inline-flex items-center gap-1.5"
+                              style={{ color: 'var(--color-text)' }}>
+                          {pg.name}
+                          {/* The same drawn lock the rail uses. The emoji
+                              version rendered as a colour illustration next to
+                              a page of outline type — one visual language per
+                              page. */}
+                          {pg.free
+                            ? <span className="text-[11px] px-1.5 py-0.5 rounded"
+                                    style={{ background: 'var(--color-poster-blue)', color: '#fff' }}>FREE</span>
+                            : <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                   aria-label="members only" role="img"
+                                   className="shrink-0 opacity-55"
+                                   style={{ color: 'var(--color-text-muted)' }}>
+                                <rect x="4.5" y="10.5" width="15" height="10" rx="2.5"
+                                      stroke="currentColor" strokeWidth="2.2" />
+                                <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" stroke="currentColor"
+                                      strokeWidth="2.2" strokeLinecap="round" />
+                              </svg>}
+                        </span>
+                        <span className="block text-[13px] mt-0.5"
+                              style={{ color: 'var(--color-text-muted)' }}>{pg.line}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+
+          <p className="text-[13px] mt-8 mb-0" style={{ color: 'var(--color-text-muted)' }}>
+            Sections still being finished are closed rather than shown half-built.
+            Model Books is open to everyone, in full.
+          </p>
         </div>
       </section>
 
