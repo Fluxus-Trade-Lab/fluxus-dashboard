@@ -29,7 +29,6 @@ import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import VerdictCard from './dashboard/VerdictCard'
 import DataFreshnessBadge from './shared/DataFreshnessBadge'
-import BetaLock from './shared/BetaLock'
 import ThemeMovers from './dashboard/ThemeMovers'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
@@ -355,11 +354,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               management itself (#/portfolio, below) stays open; only the
               Review sub-block does not. Un-wrapping either is a one-line
               revert once Andy signs off on that board. */}
-          {current === 'review' && (
-            <BetaLock label="Portfolio Review">
-              <JournalPage stage={subRoute} />
-            </BetaLock>
-          )}
+          {/* No wrapper here any more: `access.js` marks review BETA and the
+              one <Locked> below renders it. Two wrappers on one page produced
+              a card inside a card, and — worse — the two tables could disagree
+              about the same route, which is exactly how Model Books ended up
+              locked in production on 2026-09-25. */}
+          {current === 'review' && <JournalPage stage={subRoute} />}
           {current === 'journal' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}

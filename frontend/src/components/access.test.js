@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { isLocked, FREE_PAGES, LOCKED_BLURB } from './access'
+import { isLocked, accessOf, PAGE_ACCESS, BLURB, FREE, MEMBERS, BETA } from './access'
 import { translations } from '../i18n/translations'
 
 describe('isLocked', () => {
@@ -41,24 +41,27 @@ describe('isLocked', () => {
     expect(isLocked(null)).toBe(false)
   })
 
-  it('never has a page in both tables', () => {
-    for (const free of FREE_PAGES) {
-      expect(Object.prototype.hasOwnProperty.call(LOCKED_BLURB, free), free).toBe(false)
+  it('never gives a free page a blurb — the card would never show it', () => {
+    for (const [page, state] of Object.entries(PAGE_ACCESS)) {
+      if (state === FREE) {
+        expect(Object.prototype.hasOwnProperty.call(BLURB, page), page).toBe(false)
+      }
     }
   })
 })
 
 describe('every locked page says what it is', () => {
   it('has a blurb key for each locked page', () => {
-    for (const page of Object.keys(LOCKED_BLURB)) {
-      expect(LOCKED_BLURB[page], page).toMatch(/^locked\.blurb\./)
+    for (const page of Object.keys(BLURB)) {
+      expect(BLURB[page], page).toMatch(/^locked\.blurb\./)
     }
   })
 
   it('has real English and Chinese for every key the card can show', () => {
     const keys = [
       'locked.title', 'locked.freeHint', 'locked.ctaFree', 'locked.ctaJoin', 'locked.beta',
-      ...Object.values(LOCKED_BLURB),
+      'beta.title', 'beta.note',
+      ...Object.values(BLURB),
     ]
     const missing = []
     for (const k of new Set(keys)) {
@@ -72,7 +75,7 @@ describe('every locked page says what it is', () => {
   it('does not leave the Chinese as a copy of the English', () => {
     // The blur card is the first thing a Chinese-reading visitor meets on a
     // locked page. Untranslated English there reads as an unfinished site.
-    const same = Object.values(LOCKED_BLURB)
+    const same = Object.values(BLURB)
       .filter(k => translations.en[k] && translations.en[k] === translations.zh[k])
     expect(same).toEqual([])
   })
@@ -109,5 +112,63 @@ describe('Model Books stays open — the regression that reached production', ()
     const closes = (window.match(/<\/BetaLock>/g) || []).length
     expect(opens, 'a BetaLock opens right before the Model Books route').toBe(0)
     expect(closes, 'a BetaLock closes right after the Model Books route').toBe(0)
+  })
+})
+
+
+describe('three states, not two', () => {
+  it('has exactly one free page and it is Model Books', () => {
+    const free = Object.entries(PAGE_ACCESS).filter(([, v]) => v === FREE).map(([k]) => k)
+    expect(free).toEqual(['modelbooks'])
+  })
+
+  it('only ever returns one of the three', () => {
+    for (const [page, state] of Object.entries(PAGE_ACCESS)) {
+      expect([FREE, MEMBERS, BETA], page).toContain(state)
+      expect(accessOf(page)).toBe(state)
+    }
+  })
+
+  it('treats an unknown route as free rather than guessing', () => {
+    expect(accessOf('a-page-added-next-week')).toBe(FREE)
+    expect(isLocked('a-page-added-next-week')).toBe(false)
+  })
+
+  it('locks both members and beta, but they are not the same state', () => {
+    expect(isLocked('dashboard')).toBe(true)
+    expect(isLocked('review')).toBe(true)
+    expect(accessOf('dashboard')).toBe(MEMBERS)
+    expect(accessOf('review')).toBe(BETA)
+  })
+
+  it('every closed page still says what it is', () => {
+    for (const [page, state] of Object.entries(PAGE_ACCESS)) {
+      if (state === FREE) continue
+      expect(BLURB[page], `${page} is closed with nothing on the card`).toBeTruthy()
+    }
+  })
+
+  it('keeps the one library shelf that has an article out of beta', () => {
+    // offense had 1 article on 2026-09-25, the other four shelves had 0.
+    // If this flips, the evidence in access.js needs re-checking, not the test.
+    expect(accessOf('offense')).toBe(MEMBERS)
+    for (const empty of ['defense', 'psychology', 'portfolio-management', 'news']) {
+      expect(accessOf(empty), empty).toBe(BETA)
+    }
+  })
+})
+
+describe('one lock system, not two', () => {
+  it('has no BetaLock left wrapping anything in Layout', async () => {
+    // 2026-09-25: two lock systems shipped the same day from the same lane and
+    // disagreed about Model Books; production showed the locked one. One table
+    // is the fix, and a second wrapper reappearing is how it would come back.
+    const { readFileSync } = await import('node:fs')
+    const { fileURLToPath } = await import('node:url')
+    const { dirname, join } = await import('node:path')
+    const layout = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), 'Layout.jsx'), 'utf8')
+    expect(layout).not.toMatch(/<BetaLock/)
+    expect(layout).not.toMatch(/import BetaLock/)
   })
 })

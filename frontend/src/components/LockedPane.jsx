@@ -1,5 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
-import { LOCKED_BLURB } from './access'
+import { BLURB, accessOf, BETA } from './access'
 
 /* The shop window: the real page renders, then goes soft behind a card that
    says what it is.
@@ -38,7 +38,13 @@ function LockGlyph({ size = 22 }) {
 
 export default function LockedPane({ page, children }) {
   const { t } = useLanguage()
-  const blurbKey = LOCKED_BLURB[page]
+  const blurbKey = BLURB[page]
+  /* Two closed states, and the card must not blur them together. A members
+     page is finished and one purchase away; a beta page is not finished and
+     nobody is getting in, members included (Andy: "我没有再完成确认审核的板块
+     那现在只是不对他们开放 只是写这是一个Beta"). Offering "see membership" on
+     a beta page would be selling something that does not exist yet. */
+  const beta = accessOf(page) === BETA
 
   return (
     <div className="relative">
@@ -75,7 +81,7 @@ export default function LockedPane({ page, children }) {
           </div>
 
           <p className="text-[17px] font-semibold m-0" style={{ color: 'var(--color-text-bold)' }}>
-            {t('locked.title')}
+            {t(beta ? 'beta.title' : 'locked.title')}
           </p>
 
           {blurbKey && (
@@ -87,7 +93,7 @@ export default function LockedPane({ page, children }) {
 
           <p className="text-[13px] leading-relaxed mt-4 mb-0"
              style={{ color: 'var(--color-text-muted)' }}>
-            {t('locked.freeHint')}
+            {t(beta ? 'beta.note' : 'locked.freeHint')}
           </p>
 
           <div className="flex items-center justify-center gap-2 mt-5 flex-wrap">
@@ -96,15 +102,17 @@ export default function LockedPane({ page, children }) {
                style={{ background: 'var(--color-text-bold)', color: 'var(--color-bg)' }}>
               {t('locked.ctaFree')}
             </a>
-            <a href="#/pricing"
-               className="text-[13px] font-medium px-4 py-2 rounded-lg no-underline"
-               style={{ background: 'var(--color-surface-raised)', color: 'var(--color-text-secondary)' }}>
-              {t('locked.ctaJoin')}
-            </a>
+            {!beta && (
+              <a href="#/pricing"
+                 className="text-[13px] font-medium px-4 py-2 rounded-lg no-underline"
+                 style={{ background: 'var(--color-surface-raised)', color: 'var(--color-text-secondary)' }}>
+                {t('locked.ctaJoin')}
+              </a>
+            )}
           </div>
 
           <p className="text-[11px] mt-4 mb-0" style={{ color: 'var(--color-text-muted)' }}>
-            {t('locked.beta')}
+            {beta ? '' : t('locked.beta')}
           </p>
         </div>
       </div>

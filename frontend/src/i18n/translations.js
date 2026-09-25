@@ -241,6 +241,8 @@ export const translations = {
     'rot.noSeries': 'The ten-week series arrives with the next nightly run of the ladder.',
     'rot.nothingSelected': 'Nothing selected has a series yet.',
     // --- Locked pages (Andy 2026-09-25: click through, see it blurred) ---
+    'beta.title': 'Not finished yet',
+    'beta.note': 'This section is still being built, so it is closed to everyone — members included. It opens when it is done, not before.',
     'locked.title': 'Members only, for now',
     'locked.freeHint': 'Model Books is open to everyone — the full library of past leaders, with the bar-by-bar replay.',
     'locked.ctaFree': 'Open Model Books',
@@ -666,6 +668,8 @@ export const translations = {
     'rot.noSeries': '十周序列等下一次夜间产线。',
     'rot.nothingSelected': '选中的主题还没有序列。',
     // --- 锁住的页（Andy 2026-09-25：点得进去，看得见，是糊的）---
+    'beta.title': '这块还没做完',
+    'beta.note': '还在建，所以对谁都没开——会员也一样。做完才开，不提前。',
     'locked.title': '这页暂时只给会员',
     'locked.freeHint': '标杆案例整页免费——历年领涨股的完整库，带逐根回放。',
     'locked.ctaFree': '去看标杆案例',
