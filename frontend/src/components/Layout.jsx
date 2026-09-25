@@ -1,6 +1,8 @@
 import { useHash } from '../hooks/useHash'
 import Header from './Header'
 import Rail from './Rail'
+import LockedPane from './LockedPane'
+import { isLocked } from './access'
 import PageHeader from './PageHeader'
 import WritingSlot from './WritingSlot'
 import useWritingSync from '../hooks/useWritingSync'
@@ -97,6 +99,12 @@ function pageKey(hash) {
   return { key: key || '', sub: sub || null }
 }
 
+/** Wraps a page in the blur only when `access.js` says that page is locked. */
+function Locked({ page, children }) {
+  if (!isLocked(page)) return children
+  return <LockedPane page={page}>{children}</LockedPane>
+}
+
 export default function Layout({ data, lastUpdated, isOffline }) {
   // Mirror the handwritten slots to the Sheet. Mounted here, once, because
   // they live on three different pages and a per-slot sync would pull on
@@ -134,6 +142,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         onNavigate={navigate}
       />
 
+      {/* The shop window. Everything but Model Books renders and then goes
+          soft behind a card naming what it is (Andy 2026-09-25). `locked` is
+          read once here so the rail and the body can never disagree about
+          which pages are open. NOT access control — see access.js. */}
+      <Locked page={current}>
       {current === 'dashboard' ? (
         /* Page 1 of the morning's three, and the three share one skeleton:
            a matrix of cards whose inside always reads change → strength →
@@ -420,6 +433,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                        'Drafted in full 2026-07-12; lives in ~/Documents/SwingMasterclass']} />}
         </main>
       )}
+
+      </Locked>
 
       <Footer lastUpdated={lastUpdated} isOffline={isOffline} />
       </div>

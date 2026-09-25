@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { isLocked } from './access'
 
 /**
  * The left rail — four layers, and inside MARKET, three functions.
@@ -185,7 +186,25 @@ export default function Rail({ currentPage, onNavigate }) {
                                       ${on
                                         ? 'border-[var(--color-accent)] text-[var(--color-text-bold)] font-semibold bg-[var(--color-hover-bg)]'
                                         : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-                    {collapsed ? short : t(`nav.${key}`)}
+                    {/* A small lock beside the name, so the rail says which
+                        pages are open BEFORE the click rather than after it.
+                        Collapsed the row is three characters wide and a glyph
+                        would crowd the code out, so there it lives in the
+                        tooltip instead. */}
+                    {collapsed ? short : (
+                      <span className="inline-flex items-center gap-1.5">
+                        {t(`nav.${key}`)}
+                        {isLocked(key) && (
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                               aria-hidden="true" className="shrink-0 opacity-55">
+                            <rect x="4.5" y="10.5" width="15" height="10" rx="2.5"
+                                  stroke="currentColor" strokeWidth="2.2" />
+                            <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" stroke="currentColor"
+                                  strokeWidth="2.2" strokeLinecap="round" />
+                          </svg>
+                        )}
+                      </span>
+                    )}
                     {collapsed && (
                       // The codes are declared, not derived, which makes them
                       // exact but unlearnable — nobody arrives knowing that THM
@@ -198,7 +217,7 @@ export default function Rail({ currentPage, onNavigate }) {
                                        px-2 py-1 text-[11px] font-sans font-normal tracking-normal
                                        normal-case text-[var(--color-text)] shadow-lg
                                        group-hover:block group-focus-visible:block">
-                        {t(`nav.${key}`)}
+                        {t(`nav.${key}`)}{isLocked(key) ? ' 🔒' : ''}
                       </span>
                     )}
                   </button>
