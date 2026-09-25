@@ -68,6 +68,9 @@ ALLOWED_KEYS = [
     # Stockbee's liquidity column: the stock's 20-day average dollar volume
     # (whole market, close x volume) -- market data, not an account amount.
     ('data/output/universe.json', r'\.sb_avg_dollar_vol_20$'),
+    # Model Books outlier screen: a whole-market liquidity floor (min average
+    # dollar volume traded in the stock), same category as watchlist above.
+    ('frontend/public/data/modelbooks/excluded.json', r'^\.thresholds\.dollar_vol_min$'),
 ]
 
 # Dollar totals and share counts hiding inside prose (the trade narrative said
@@ -82,6 +85,12 @@ BANNED_VALUE_PATTERNS = [
 # synthesis of public filings) legitimately quotes "$10,000" and "$1,200M".
 ALLOWED_VALUES = [
     ('data/output/tickers/*.json', r'^\.(news|ai_synthesis)'),
+    # Model Books outlier screen: the "why" note quotes the whole market's
+    # average dollar volume in the excluded name, not an account amount.
+    ('frontend/public/data/modelbooks/excluded.json', r'^\.entries\.[^.]+\.why$'),
+    # Model Books notes: prose lifted verbatim from third-party TraderLion PDF
+    # pages (stock prices, company facts) -- same category as news/ai_synthesis.
+    ('frontend/public/data/modelbooks/notes.json', r'^\.entries\.[^.]+\.sources\[\]\.prose$'),
 ]
 
 

@@ -319,7 +319,7 @@ def main() -> int:
     check_credit(entries)
     drift = check_facts(entries)
     payload = {
-        "generated_at": date.today().isoformat(),
+        "generated_at": date.today().isoformat(),  # localtime-ok: import-tool run timestamp, not a trading date
         "vault": str(a.vault.relative_to(REPO)),
         "prose_included": not a.no_prose,
         "entries": entries,
