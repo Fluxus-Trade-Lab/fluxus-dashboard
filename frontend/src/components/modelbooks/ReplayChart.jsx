@@ -9,15 +9,51 @@ import { ema, sma, viewport, priceRange } from './replayMath'
    pen. Semi-log is the default because O'Neil and IBD model books are drawn
    semi-log, and a 10x advance on a linear axis is a line lying along the floor. */
 
+/* Four lines have to be told apart at a glance, and the candles already own
+   blue and red — so the ladder cannot lean on hue alone. Each line differs from
+   its neighbours on TWO channels (weight and dash), with one chromatic line to
+   anchor the eye:
+
+     10E   lightest, thin, dashed      the noisy one; it is meant to recede
+     21E   accent, thickest, solid     the one coloured line — 强势股生命线，
+                                       and the thickest because it is the one you trade off
+     50    mid ink, medium, solid
+     200   full ink, long dash         牛熊界; brightest, but kept thin so a long
+                                       flat line does not out-shout the candles
+
+   Andy, 2026-09-25: "均线颜色稍微要有区分 10E和21E没太多差别" — in dark mode
+   the old pair resolved to #b0aaa2 and #979594, two greys a few points apart.
+   Weight and dash carry the distinction even where colour cannot (print,
+   colour-blindness), which is why they are not decoration here. */
 const MA_LINES = [
-  { period: 10, type: 'ema', tone: '--color-untested', width: 1, label: '10E' },
-  { period: 21, type: 'ema', tone: '--color-text-muted', width: 1.3, label: '21E' },
-  { period: 50, type: 'sma', tone: '--color-accent', width: 1.4, label: '50' },
-  { period: 200, type: 'sma', tone: '--color-text-bold', width: 1.4, label: '200' },
+  { period: 10, type: 'ema', tone: '--color-untested', width: 1, dash: [3, 3], label: '10E' },
+  { period: 21, type: 'ema', tone: '--color-accent', width: 1.9, dash: null, label: '21E' },
+  { period: 50, type: 'sma', tone: '--color-text-secondary', width: 1.4, dash: null, label: '50' },
+  { period: 200, type: 'sma', tone: '--color-text-bold', width: 1.4, dash: [9, 4], label: '200' },
 ]
 
 const token = name =>
   getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+
+/* The legend lives in the header row, not floating over the canvas: overlaid on
+   the top right it sat on top of the price scale's own labels, which is how
+   "50" and "200" ended up reading as "50 1→200". */
+export function MaLegend() {
+  return (
+    <span className="flex items-center gap-2.5 flex-wrap">
+      {MA_LINES.map(ma => (
+        <span key={ma.label} className="flex items-center gap-1">
+          <svg width="16" height="6" aria-hidden="true" className="shrink-0">
+            <line x1="0" y1="3" x2="16" y2="3"
+                  stroke={`var(${ma.tone})`} strokeWidth={ma.width}
+                  strokeDasharray={ma.dash ? ma.dash.join(' ') : undefined} />
+          </svg>
+          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">{ma.label}</span>
+        </span>
+      ))}
+    </span>
+  )
+}
 
 export default function ReplayChart({
   bars, cursor, windowSize, logScale = true, acts = [], height = 420, lowres = false,
@@ -131,6 +167,7 @@ export default function ReplayChart({
       const values = ma.type === 'ema' ? ema(closes, ma.period) : sma(closes, ma.period)
       ctx.strokeStyle = token(ma.tone) || muted
       ctx.lineWidth = ma.width
+      ctx.setLineDash(ma.dash || [])
       ctx.beginPath()
       let started = false
       for (let i = Math.max(from - 1, 0); i <= to; i++) {
@@ -140,6 +177,7 @@ export default function ReplayChart({
         else { ctx.moveTo(x, y); started = true }
       }
       ctx.stroke()
+      ctx.setLineDash([])
     }
 
     // acts — only the ones already walked past and inside the window
@@ -209,15 +247,6 @@ export default function ReplayChart({
       onPointerMove={e => { if (e.buttons) scrubTo(e.clientX) }}
     >
       <canvas ref={canvasRef} className="block w-full" />
-      <div className="absolute top-2 right-3 flex gap-2.5 pointer-events-none">
-        {MA_LINES.map(ma => (
-          <span key={ma.label} className="flex items-center gap-1">
-            <span className="inline-block w-3 h-0.5 rounded-full"
-                  style={{ backgroundColor: `var(${ma.tone})` }} />
-            <span className="text-[11px] font-mono text-[var(--color-text-muted)]">{ma.label}</span>
-          </span>
-        ))}
-      </div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
-import ReplayChart from './ReplayChart'
+import ReplayChart, { MaLegend } from './ReplayChart'
 import ReplayTransport from './ReplayTransport'
 import NotesRail from './NotesRail'
 import { patternTag, formatPattern } from './patternTag'
@@ -268,8 +268,9 @@ export default function LibraryView({ cards, noteCount }) {
                 )}
               </span>
             )}
+            {bars?.length > 0 && <span className="ml-auto"><MaLegend /></span>}
             <button onClick={() => setLogScale(s => !s)}
-                    className="ml-auto text-[11px] font-mono px-2 py-1 rounded cursor-pointer
+                    className="text-[11px] font-mono px-2 py-1 rounded cursor-pointer
                                bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]">
               {logScale ? 'LOG' : 'LIN'}
             </button>
