@@ -66,6 +66,12 @@ owner: vera
 
 **"突然加速"不要标记。** 涂色段、空心圈、线加粗、小竖线——四种都做过，他四种都否了，最后定的是**不标，让悬停承担**。下次遇到「想在线上标出某个事件」，先默认不标。
 
+## 取数的坑（踩一次就够了）
+
+- **日内线要用 `period=`，不要用 `start`/`end`。** yfinance 的 5 分钟线只给最近 60 天，而给定起止日期时**只要跨度超过 60 天，Yahoo 整单拒绝、返回空表**，报的是「possibly delisted; no price data found」——长得像这只票退市了，不像窗口越界。`period='60d'` 拿得到完整 60 天。（09-25 实测，52 只票各踩一次；错误原文里那句 "The requested range must be within the last 60 days." 才是真因。）
+- **拿不到就是拿不到，别把限制说成 bug**：4 月的 5 分钟线在 Yahoo 这条路上不存在，要更早的日内线只有 IBKR（`pipeline/ibkr.py`，需要本机 Gateway／TWS 在跑）。
+- **图要能重跑，就把 CSV 冻进仓库**（`_pdf/.chartcache/` + `git add -f`）。窗口过期之后，脚本仍然出得来同一张图——这是"以后还能改这张图"的唯一保证。
+
 ## 交付面
 
 需要他挑的，出**渲染件**让他挑一个 token（用他的真实数据画，确定的部分先做掉再给预览）。`SendUserFile` 的 HTML 不跑脚本，要交互必须走 Artifact。
