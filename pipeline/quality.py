@@ -123,6 +123,22 @@ def is_retired(field: str) -> bool:
 # outnumber the old ones -- a permanently lit "degraded" that leaves the
 # universe status no resolution to show a real one.
 #
+# groups_stocks fields, rebased 2026-09-26 (T-0926-29 morning check): 7077f78d
+# (2026-09-23 JST, "主题篮子放开市值闸，采纳" -- Andy) dropped the $1B/$2M
+# market-cap/dollar-volume floor that used to gate membership in
+# groups.json's `stocks` block, so its size jumped 2,524 -> 5,280 rows in one
+# commit. The ~2,756 newly admitted names are small/micro caps that were
+# already missing perf_1m/perf_3m in universe.json before the change (sampled
+# AEHL/AIIO/AIXI/AMCI/AMPG: market caps $240k-$170M, perf_1m already None;
+# universe.json's own perf_1m null rate held 5.2-5.4% across 09-22/23/24, no
+# jump there -- the gap is old, only newly visible to this guard). Every
+# field below derives from those same perf_* columns, so all jumped together
+# in the groups_stocks.csv row dated 2026-09-23, the first to carry the wider
+# membership. Comparing tonight's rate against the pre-09-23 (narrower,
+# cleaner) history reads as a false "degraded" that would not clear until the
+# post-change rows outnumber the pre-change ones -- the same i_score failure
+# mode below, caused by a different deliberate coverage change.
+#
 # Admission rule: an entry here must cite a commit that made the change on
 # purpose. A coverage shift nobody can point to a commit for is exactly what
 # this guard exists to report, and must not be rebased away. The entry is safe
@@ -130,6 +146,18 @@ def is_retired(field: str) -> bool:
 # check() still records every day, bad ones included.
 REBASED_FIELDS: Dict[str, str] = {
     "i_score": "2026-09-04",
+    "excess_1m": "2026-09-23",
+    "excess_3m": "2026-09-23",
+    "group_pctile": "2026-09-23",
+    "persistence": "2026-09-23",
+    "persistence_of": "2026-09-23",
+    "rs_0_1w": "2026-09-23",
+    "rs_1m_3m": "2026-09-23",
+    "rs_1w_1m": "2026-09-23",
+    "rs_accel": "2026-09-23",
+    "rs_accel_rate": "2026-09-23",
+    "state": "2026-09-23",
+    "top_quartile": "2026-09-23",
 }
 
 

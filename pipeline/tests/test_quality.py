@@ -417,7 +417,21 @@ class TestRebasedFields:
     def test_the_registered_date_is_the_first_ledger_row_with_the_new_coverage(self):
         """Pinned literal on purpose: the date is a fact about the ledger
         (first 6.x% row = 2026-09-04, written by 2e75f20d), not a knob."""
-        assert Q.REBASED_FIELDS == {"i_score": "2026-09-04"}
+        assert Q.REBASED_FIELDS == {
+            "i_score": "2026-09-04",
+            "excess_1m": "2026-09-23",
+            "excess_3m": "2026-09-23",
+            "group_pctile": "2026-09-23",
+            "persistence": "2026-09-23",
+            "persistence_of": "2026-09-23",
+            "rs_0_1w": "2026-09-23",
+            "rs_1m_3m": "2026-09-23",
+            "rs_1w_1m": "2026-09-23",
+            "rs_accel": "2026-09-23",
+            "rs_accel_rate": "2026-09-23",
+            "state": "2026-09-23",
+            "top_quartile": "2026-09-23",
+        }
 
     def test_new_coverage_with_its_own_baseline_is_ok(self):
         """(1) 16 runs at 0.2% before the rebase, 7 at 6% after: tonight's
@@ -492,6 +506,38 @@ class TestRebasedFields:
         dates = [r["date"] for r in Q.read_history(p)]
         assert dates == ["2026-08-01", "2026-08-02", "2026-09-10"]
         assert Q.read_history(p)[-1]["i_score"] == "0.06"
+
+
+class TestGroupsStocksRebase:
+    """2026-09-26 (T-0926-29 morning check): groups_stocks read "degraded"
+    two nights running (09-23, 09-24) on excess_1m/rs_accel/persistence/...
+    -- this is the reproduction of that live false alarm. 7077f78d
+    (2026-09-23) dropped groups.json's stocks membership floor, 2,524 -> 5,280
+    rows; the ~2,756 newly admitted small/micro caps were already missing
+    perf_1m in universe.json (sampled market caps $240k-$170M), so every
+    field derived from perf_* jumped together in the same commit -- the
+    i_score failure mode above, a different trigger."""
+
+    @staticmethod
+    def ledger(before=6, after=2, old="0.007132", new="0.040333",
+               field="rs_accel"):
+        """Mirrors the real data/history/quality/groups_stocks.csv shape:
+        ~0.7% missing through 09-22, ~4.0% from 09-23 on."""
+        rows_ = [{"date": f"2026-09-{i+15:02d}", field: old} for i in range(before)]
+        rows_ += [{"date": f"2026-09-{i+23:02d}", field: new} for i in range(after)]
+        return rows_
+
+    def test_the_post_widening_rate_is_ok_against_its_own_baseline(self):
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger())
+        f = v["fields"]["rs_accel"]
+        assert f["status"] == "ok", f["evidence"]
+
+    def test_without_the_rebase_the_same_ledger_reads_degraded(self, monkeypatch):
+        """Negative control: this is the false alarm that was actually live
+        on origin/main for 09-23/09-24 before this entry existed."""
+        monkeypatch.setattr(Q, "REBASED_FIELDS", {"i_score": "2026-09-04"})
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger())
+        assert v["fields"]["rs_accel"]["status"] == "degraded"
 
 
 class TestRequiredBlocks:
