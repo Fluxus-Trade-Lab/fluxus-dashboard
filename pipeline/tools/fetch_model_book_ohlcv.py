@@ -39,23 +39,22 @@ TICKER_MAP: dict[str, str | None] = {
     # Modern tickers map to themselves
 }
 
-# T-0925-63: entries whose default (auto_adjust=True, 2dp) fetch collapses
-# into flat_share > 50% bars — decades of splits back-adjust their 1980s-era
-# cent-level prices into sub-penny noise that rounds to a single value on
-# most sessions (see flag-modelbook-outliers.mjs LOW RESOLUTION rule).
-# auto_adjust=False (nominal traded price, no dividend/split back-adjustment)
-# plus 4dp instead of 2dp recovers real intraday range for both — verified
-# against yfinance directly: MSFT 1986 and CSCO 1990 go from 67-82% flat to
-# 0% flat. HD 1982 improves (92% -> 79%) but stays above the threshold even
-# at full float precision — its 1981-82 Yahoo bars record O=H=L=C on most
-# sessions regardless of adjustment or rounding, which is a genuine gap in
-# the underlying source for that era, not a rounding artifact.
-# NOT the default for every entry: a ticker with a real split *inside* its
-# fetch window would show a fake price-cliff under auto_adjust=False (a stock
-# doesn't 10x jump — the JUMP_MAX rule would wrongly exclude it). HD/MSFT/CSCO
-# have no splits inside their 18-month windows (first splits: HD 1983-08,
-# MSFT 1987-09, CSCO 1991) so this is safe for exactly these three.
-UNADJUSTED_PRECISE_IDS: set[str] = {"oneil-home-1982", "oneil-msft-1986", "oneil-csco-1990"}
+# T-0925-63: entries whose default 2dp rounding collapses into flat_share
+# > 50% bars — decades of splits back-adjust their 1980s-era cent-level
+# prices down near zero, and 2 decimal places isn't enough resolution to
+# tell two nearby sub-cent prices apart (see flag-modelbook-outliers.mjs
+# LOW RESOLUTION rule). Rounding to 4dp instead of 2dp recovers real
+# intraday range: MSFT 1986 and CSCO 1990 go from 87%/72% flat to 0% flat.
+# HD 1982 improves (91% -> 79%) but stays above the threshold at any
+# precision — its 1981-82 Yahoo bars record O=H=L=C on most sessions in the
+# raw feed itself, a genuine gap in that era's source data, not a rounding
+# artifact.
+# NOTE: this is *not* switching to split-unadjusted data — yfinance keeps
+# splits applied to Open/High/Low/Close regardless of the `auto_adjust` flag
+# (that flag only toggles dividend adjustment); there is no way to get a
+# stock's actual nominal 1980s traded price out of yfinance at all, only a
+# continuous, split-adjusted-to-today series. The fix here is precision only.
+HIGHER_PRECISION_IDS: set[str] = {"oneil-home-1982", "oneil-msft-1986", "oneil-csco-1990"}
 
 
 def _yf_symbol(ticker: str) -> str | None:
@@ -72,10 +71,10 @@ def _flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _fetch_ohlcv(symbol: str, start: str, end: str, auto_adjust: bool = True) -> pd.DataFrame | None:
+def _fetch_ohlcv(symbol: str, start: str, end: str) -> pd.DataFrame | None:
     """Download OHLCV from yfinance. Returns a cleaned DataFrame or None."""
     try:
-        df = yf.download(symbol, start=start, end=end, auto_adjust=auto_adjust, progress=False)
+        df = yf.download(symbol, start=start, end=end, progress=False)
         if df is None or df.empty:
             return None
         df = _flatten_columns(df)
@@ -196,10 +195,10 @@ def main() -> None:
             continue
 
         start, end = _date_range_for_year(year)
-        precise = entry_id in UNADJUSTED_PRECISE_IDS
-        logger.info(f"  FETCH {entry_id}: {symbol} {start} → {end}" + ("  [unadjusted/4dp]" if precise else ""))
+        precise = entry_id in HIGHER_PRECISION_IDS
+        logger.info(f"  FETCH {entry_id}: {symbol} {start} → {end}" + ("  [4dp]" if precise else ""))
 
-        df = _fetch_ohlcv(symbol, start, end, auto_adjust=not precise)
+        df = _fetch_ohlcv(symbol, start, end)
         if df is None:
             logger.warning(f"  FAIL {entry_id} — no data returned for {symbol}")
             continue

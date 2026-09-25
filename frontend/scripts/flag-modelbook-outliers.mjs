@@ -84,21 +84,24 @@
  * at 92% / 82% / 75% / 58% flat, dividend/split-adjusted down to $0.02–$0.07
  * and then rounded to the cent. Those charts were step functions, not charts.
  *
- * T-0925-63 (2026-09-25) re-fetched the O'Neil three unadjusted (raw traded
- * price, no split/dividend back-adjustment) at 4dp instead of 2dp — see
- * `UNADJUSTED_PRECISE_IDS` in `pipeline/tools/fetch_model_book_ohlcv.py`.
- * MSFT 1986 and CSCO 1990 went to 0% flat and dropped off this rule; neither
- * had a split inside its fetch window so unadjusted data has no fake
- * discontinuity. HD 1982 improved (92% -> 79%) but stays above the 50%
- * threshold at any precision or adjustment mode — verified directly against
- * yfinance that its 1981-82 bars record O=H=L=C on most sessions in the raw
- * feed itself, a gap in that era's source data, not a rounding artifact.
+ * T-0925-63 (2026-09-25) re-fetched the O'Neil three at 4dp instead of 2dp
+ * — see `HIGHER_PRECISION_IDS` in `pipeline/tools/fetch_model_book_ohlcv.py`.
+ * The 2dp rounding, not the split-adjustment, was the collapse: yfinance
+ * keeps splits applied to Open/High/Low/Close no matter what `auto_adjust`
+ * is set to (that flag only toggles dividend adjustment) — there is no way
+ * to pull a stock's actual nominal 1980s traded price out of it, only a
+ * continuous, split-adjusted-to-today series, so "re-fetch unadjusted" was
+ * never on the table. MSFT 1986 and CSCO 1990 went to 0% flat at 4dp and
+ * dropped off this rule. HD 1982 improved (92% -> 79%) but stays above the
+ * 50% threshold at any precision — verified directly against yfinance that
+ * its 1981-82 bars record O=H=L=C on most sessions in the raw feed itself,
+ * a gap in that era's source data, not a rounding artifact.
  * SSC 2004 (`bigmovers-ssc-2004`, ticker also seen as WCST) is unfixed: SSC
  * and WCST both 404 on yfinance (delisted, no historical series left), and
  * the only other source on file — the third-party `willhjw/big_movers`
  * GitHub CSV that `import_big_movers.py` reads — already carries the same
  * reverse-split-inflated, sparsely-dated bars ($10k+/share, non-trading-day
- * gaps) baked in at the source; no free unadjusted feed for it was found.
+ * gaps) baked in at the source; no free higher-fidelity feed for it was found.
  * Two entries trip this rule now. HD and SSC still say so on the chart
  * rather than pretending; MSFT and CSCO no longer need to.
  *
