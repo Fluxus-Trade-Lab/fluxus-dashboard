@@ -205,6 +205,8 @@
 
 - [09-24] [DATA ALEX] **复盘主题四态从等权篮子升级为市值加权代理 ETF**｜诊断精度升级（人工推断→市场权重），口径变更透明化（并排期到 10-08、新旧读数对标、明确标注切点），诚实度约束（四个不可用主题明确撤下）。新增字段集（state/state_prev/members_asof）让消费端追踪转换。**从「改了什么」升到「系统如何负责任地管理口径变迁」的治理能力体现。** 分支 feat/theme-board（T-0924-89，未合） · 出处 ae8841e
 
+- [09-25] [steve] **Model Books 补全数据的诊断→防护完整链条** · 69 条仅注释条目中 65 条成功补全 K 线（标准化窗口 prior_year-07-01 → next_year-03-31，验证通过四道闸），4 条数据源缺口精确诊断（并购除牌/ticker 被回收/历史线丢失/免费源清除）而非删除。从「缺数据」诊断到「为什么缺」再到「怎么展示」的完整链条，体现系统对数据边界的诚实度——orphans 逻辑保持透明，让用户知道哪些是补全的、哪些是已知缺失的。诊断的经济性在于分类清晰（四维独立诊断），防护有力（多端对齐），用户信心建立在透明展示而非隐瞒缺陷。出处 T-0925-61 · [2a225293a](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/2a225293aead51b10145062db24ebea78e10240a) · [f8dd5f14](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/f8dd5f149)
+
 - [09-24] [DATA ALEX] **供应商掉线的双维诊断与分层防护**｜Yahoo 丢了 2026-09-22 的 ACMR/AMBA/MXL 日线数据，被两个独立测试从不同维度捕捉（bar 级百分比计算误判 vs days_since 日期低估）。两个不相关的监测点各红一次，指向同一个供应商级根本原因——多维自诊的有效性。修复分三层：前向防护（yfinance repair=True 从 intraday 重建）、历史补齐（26 行 delayed_ep_log 纠正、三股票 bar 补齐）、完整审计记录。**诊断清晰→分层防护→可复现的自诊链条。** 出处 51c945f1 · T-0924-79 · [incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md](../../../data/reference/incidents/2026-09-24_vendor_dropped_a_session_for_specific_tickers.md)
 
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
