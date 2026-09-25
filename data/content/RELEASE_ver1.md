@@ -92,3 +92,33 @@
 ---
 
 *落账任务 T-0925-56 · 契约行见 `data/reference/DATA_CONTRACTS.md` §七 [2026-09-25] 封版行 · 数字权威源登记见 `KNOWLEDGE.md` 数字权威表。*
+
+---
+
+## 六、2026-09-26 修订（取代上面「一/二/三」节的部分内容，本节之前的正文不改一个字）
+
+> 契约行见 `data/reference/DATA_CONTRACTS.md` §七 [2026-09-26] 修订行 · 落账任务 T-0926-05。
+
+09-25 当天晚些时候 Andy 又定了三件事，上面的「一、发了什么」「三、买家的入口在哪」两节已与事实不符——**不改那两节，本节说明改在哪、为什么**。
+
+1. **PDF 退居二线，不再对外提供**（书线 `SwingMasterclass` commit `d6f4e33`，Andy 原话「让pdf退居二线，不提供了。做1」「但我们内部保留pdf」）。
+   两份 PDF 文件本体没变，仍是上面「一、发了什么」登记的 `ver1-b5`（中 194 页 / 英 210 页，md5 不变），**只是从「买家下载路径」降级为内部留档**——不进 `/paid/downloads/`，不在商品页承诺。
+2. **交互课件扩到全集**：范围从「CH00–CH07（地基篇八章）」扩到 **CH00–CH11（十二章）**，其余不变（前言/目录/模块一五课+MU/尾声/附录 A–H、L）。中英各 **26 页**，合计 **52 页**（书线 commit `d4c6e58`，T-0925-10）。**附录 I、J、K 仍不在内，仍走 2026-09-27——这条没变。**
+3. **落地页重构为三块**（书线 commit `743f07e`／`846847f`，Andy 原话「介绍+预期更新通告 → 免费的裸k训练 → 查看完整课程购买链接」），另加深浅切换钮（commit `127f5ae`，三态 auto/light/dark）。
+
+**买家入口现只剩两个**（取代上面「三、买家的入口在哪」表格里 PDF 下载那两行）：
+
+| 入口 | 地址 | 说明 |
+|---|---|---|
+| 免费试读 | `https://fluxus-masterclass-lab.pages.dev/`（落地页，点「裸K训练」进 `/lessons.html`） | 五课，无需登录 |
+| 付费区（交互网页，全集） | `https://fluxus-masterclass-lab.pages.dev/paid/` | 走 JWT + Whop 会员资格门禁；内容即上面「二」的全集范围 |
+
+~~PDF 下载（中/英）~~ —— **已撤**，PDF 不再是买家可达的入口。
+
+**线上实测（2026-09-26，本单现场 curl 验证）**：`https://fluxus-masterclass-lab.pages.dev/` 返回 200，footer 印 `由课文源文件生成 · e8f0676 · 2026-09-26`（`e8f0676` = 书线 `feat/T-0925-49-paid-pdf` 分支 HEAD，本次上线的部署源 commit），正文文案已是新的三块结构与全集范围。
+
+⚠️ **两处缺口，本单未补**：
+- **Cloudflare Pages 部署 hash 未取到**——原 2026-09-25 记的「生产部署 `bbb882b4`」是 CF 自己的部署号，要 `wrangler pages deployment list` 才能查；本机未装 `wrangler` CLI，本单未展开。下一个碰这条线的会话在 `~/Documents/SwingMasterclass/_web/cf_pages_deploy` 目录跑 `npx wrangler pages deployment list --project-name fluxus-masterclass-lab` 补上。
+- **门禁文件数「80 个文件 / 92 个文件」已作废，未重测**——那是 2026-09-25 旧范围（CH00–07）下测的，范围扩到 CH00–11 后文件数必然变了；本单未重新实测，需要另开任务补。
+
+*落账任务 T-0926-05。*
