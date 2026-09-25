@@ -39,6 +39,24 @@ TICKER_MAP: dict[str, str | None] = {
     # Modern tickers map to themselves
 }
 
+# T-0925-63: entries whose default (auto_adjust=True, 2dp) fetch collapses
+# into flat_share > 50% bars — decades of splits back-adjust their 1980s-era
+# cent-level prices into sub-penny noise that rounds to a single value on
+# most sessions (see flag-modelbook-outliers.mjs LOW RESOLUTION rule).
+# auto_adjust=False (nominal traded price, no dividend/split back-adjustment)
+# plus 4dp instead of 2dp recovers real intraday range for both — verified
+# against yfinance directly: MSFT 1986 and CSCO 1990 go from 67-82% flat to
+# 0% flat. HD 1982 improves (92% -> 79%) but stays above the threshold even
+# at full float precision — its 1981-82 Yahoo bars record O=H=L=C on most
+# sessions regardless of adjustment or rounding, which is a genuine gap in
+# the underlying source for that era, not a rounding artifact.
+# NOT the default for every entry: a ticker with a real split *inside* its
+# fetch window would show a fake price-cliff under auto_adjust=False (a stock
+# doesn't 10x jump — the JUMP_MAX rule would wrongly exclude it). HD/MSFT/CSCO
+# have no splits inside their 18-month windows (first splits: HD 1983-08,
+# MSFT 1987-09, CSCO 1991) so this is safe for exactly these three.
+UNADJUSTED_PRECISE_IDS: set[str] = {"oneil-home-1982", "oneil-msft-1986", "oneil-csco-1990"}
+
 
 def _yf_symbol(ticker: str) -> str | None:
     """Return the yfinance-downloadable symbol, or None if unavailable."""
@@ -54,10 +72,10 @@ def _flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _fetch_ohlcv(symbol: str, start: str, end: str) -> pd.DataFrame | None:
+def _fetch_ohlcv(symbol: str, start: str, end: str, auto_adjust: bool = True) -> pd.DataFrame | None:
     """Download OHLCV from yfinance. Returns a cleaned DataFrame or None."""
     try:
-        df = yf.download(symbol, start=start, end=end, progress=False)
+        df = yf.download(symbol, start=start, end=end, auto_adjust=auto_adjust, progress=False)
         if df is None or df.empty:
             return None
         df = _flatten_columns(df)
@@ -70,16 +88,16 @@ def _fetch_ohlcv(symbol: str, start: str, end: str) -> pd.DataFrame | None:
         return None
 
 
-def _df_to_lw_records(df: pd.DataFrame) -> list[dict]:
+def _df_to_lw_records(df: pd.DataFrame, precision: int = 2) -> list[dict]:
     """Convert OHLCV DataFrame to lightweight-charts format."""
     records = []
     for ts, row in df.iterrows():
         records.append({
             "time": ts.strftime("%Y-%m-%d"),
-            "open": round(float(row["Open"]), 2),
-            "high": round(float(row["High"]), 2),
-            "low": round(float(row["Low"]), 2),
-            "close": round(float(row["Close"]), 2),
+            "open": round(float(row["Open"]), precision),
+            "high": round(float(row["High"]), precision),
+            "low": round(float(row["Low"]), precision),
+            "close": round(float(row["Close"]), precision),
             "volume": int(row["Volume"]),
         })
     return records
@@ -178,14 +196,15 @@ def main() -> None:
             continue
 
         start, end = _date_range_for_year(year)
-        logger.info(f"  FETCH {entry_id}: {symbol} {start} → {end}")
+        precise = entry_id in UNADJUSTED_PRECISE_IDS
+        logger.info(f"  FETCH {entry_id}: {symbol} {start} → {end}" + ("  [unadjusted/4dp]" if precise else ""))
 
-        df = _fetch_ohlcv(symbol, start, end)
+        df = _fetch_ohlcv(symbol, start, end, auto_adjust=not precise)
         if df is None:
             logger.warning(f"  FAIL {entry_id} — no data returned for {symbol}")
             continue
 
-        records = _df_to_lw_records(df)
+        records = _df_to_lw_records(df, precision=4 if precise else 2)
         with open(ohlcv_path, "w") as f:
             json.dump(records, f, separators=(",", ":"))
         logger.info(f"  SAVED {entry_id}: {len(records)} bars → {ohlcv_path.name}")
