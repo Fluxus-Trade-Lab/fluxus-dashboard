@@ -27,6 +27,7 @@ import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import VerdictCard from './dashboard/VerdictCard'
 import DataFreshnessBadge from './shared/DataFreshnessBadge'
+import BetaLock from './shared/BetaLock'
 import ThemeMovers from './dashboard/ThemeMovers'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
@@ -334,14 +335,29 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               keep a retired route resolving so sent links still land, and that
               habit is worth breaking when the reader is the only sender and
               says so. */}
-          {current === 'review' && <JournalPage stage={subRoute} />}
+          {/* Beta-locked for everyone, Andy included (T-0925-75/T-0925-77,
+              CLAUDE.md 2026-09-25 定案): these are the two boards T-0925-73
+              named as "未完成确认审核" — Review within the Portfolio product
+              block, and Model Books as today's Education content. Portfolio
+              management itself (#/portfolio, below) stays open; only the
+              Review sub-block does not. Un-wrapping either is a one-line
+              revert once Andy signs off on that board. */}
+          {current === 'review' && (
+            <BetaLock label="Portfolio Review">
+              <JournalPage stage={subRoute} />
+            </BetaLock>
+          )}
           {current === 'journal' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
           {current === 'correction' && <CorrectionRiskPage />}
           {current === 'groups' && <GroupsPage />}
           {current === 'rotation' && <RotationPage />}
-          {current === 'modelbooks' && <ModelBooksPage />}
+          {current === 'modelbooks' && (
+            <BetaLock label="Education — Model Books">
+              <ModelBooksPage />
+            </BetaLock>
+          )}
 
           {/* Reserved. The rail entry, the title and the frame are real from day
               one; a slot that appears only once it is full was never reserved.

@@ -21,8 +21,9 @@ const NAV_ITEMS = [
  * "会员登录" — Whop OAuth (PKCE), no backend needed (see lib/whopAuth.js).
  * Three states, none of them faked: not configured yet (VITE_WHOP_CLIENT_ID
  * unset today — button says so instead of pretending to work), logged out
- * (redirects to Whop), logged in (shows the verified email). Doesn't gate
- * anything — CLAUDE.md 2026-09-25 定案: 登录只标"已验证会员"状态，不挡内容。
+ * (redirects to Whop), logged in (shows the verified email, or "Fluxus 会员"
+ * once has_access confirms an access pass — T-0925-75/T-0925-77). Doesn't
+ * gate anything — CLAUDE.md 2026-09-25 定案: 登录只标"已验证会员"状态，不挡内容。
  */
 function MemberLoginButton({ compact }) {
   const { isAuthenticated, isConfigured, session, status, login, logout } = useWhopSession()
@@ -31,13 +32,16 @@ function MemberLoginButton({ compact }) {
     : 'px-3 py-1.5 text-sm'
 
   if (isAuthenticated) {
+    const label = session.access?.has_access
+      ? 'Fluxus 会员'
+      : session.user?.email ?? '已验证会员'
     return (
       <button
         onClick={logout}
         title="点击退出会员登录"
         className={`${sizeClasses} rounded border border-[var(--color-border)] bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)] cursor-pointer transition-colors`}
       >
-        {session.user?.email ?? '已验证会员'}
+        {label}
       </button>
     )
   }
