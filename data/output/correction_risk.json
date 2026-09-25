@@ -1,35 +1,35 @@
 {
-  "date": "2026-09-24",
+  "date": "2026-09-25",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
-  "prob": 0.085,
-  "base_rate": 0.1659,
+  "prob": 0.0849,
+  "base_rate": 0.1658,
   "today": {
-    "date": "2026-09-24",
-    "spx_close": 7704.13,
-    "vix": 15.67,
+    "date": "2026-09-25",
+    "spx_close": 7743.41,
+    "vix": 14.87,
     "vix_quintile": 2,
     "above_200dma": true,
-    "d200": 0.0706,
-    "prob": 0.085,
-    "n_cell": 1729,
-    "prob_vix_only": 0.0801,
-    "n_vix_only": 1847,
-    "base_rate": 0.1659
+    "d200": 0.0747,
+    "prob": 0.0849,
+    "n_cell": 1731,
+    "prob_vix_only": 0.08,
+    "n_vix_only": 1849,
+    "base_rate": 0.1658
   },
   "table": {
     "sample": {
       "from": "1990-01-02",
-      "to": "2026-09-23",
-      "sessions": 9248,
+      "to": "2026-09-24",
+      "sessions": 9250,
       "episodes": 199,
-      "half_split": "2008-05-06"
+      "half_split": "2008-05-07"
     },
-    "base_rate": 0.1659,
+    "base_rate": 0.1658,
     "vix_edges": [
       8.14,
       13.34,
-      16.14,
+      16.13,
       19.43,
       24.17,
       83.69
@@ -41,8 +41,8 @@
           "n": 1852
         },
         "2": {
-          "rate": 0.0801,
-          "n": 1847
+          "rate": 0.08,
+          "n": 1849
         },
         "3": {
           "rate": 0.1383,
@@ -67,8 +67,8 @@
           "n": 805
         },
         "3": {
-          "rate": 0.1191,
-          "n": 823
+          "rate": 0.1189,
+          "n": 824
         },
         "4": {
           "rate": 0.2767,
@@ -85,12 +85,12 @@
           "n": 831
         },
         "2": {
-          "rate": 0.0988,
-          "n": 1042
+          "rate": 0.0987,
+          "n": 1044
         },
         "3": {
-          "rate": 0.1537,
-          "n": 1028
+          "rate": 0.1538,
+          "n": 1027
         },
         "4": {
           "rate": 0.2332,
@@ -121,8 +121,8 @@
         "n": 118
       },
       "Q2_above200": {
-        "rate": 0.085,
-        "n": 1729
+        "rate": 0.0849,
+        "n": 1731
       },
       "Q3_below200": {
         "rate": 0.2475,
@@ -171,14 +171,14 @@
     "table": {
       "sample": {
         "from": "2006-07-17",
-        "to": "2026-09-23",
-        "sessions": 5078,
+        "to": "2026-09-24",
+        "sessions": 5080,
         "episodes": 115,
-        "base_rate": 0.1796
+        "base_rate": 0.1795
       },
       "vix_edges_this_sample": [
         8.14,
-        13.38,
+        13.39,
         15.95,
         18.89,
         24.11,
@@ -197,8 +197,8 @@
             "n": 224
           },
           "2": {
-            "rate": 0.1697,
-            "n": 4356
+            "rate": 0.1696,
+            "n": 4358
           },
           "3": {
             "rate": 0.2455,
@@ -212,7 +212,7 @@
         "first_half": {
           "1": {
             "rate": 0.0,
-            "n": 48
+            "n": 49
           },
           "2": {
             "rate": 0.1837,
@@ -229,12 +229,12 @@
         },
         "second_half": {
           "1": {
-            "rate": 0.0739,
-            "n": 176
+            "rate": 0.0743,
+            "n": 175
           },
           "2": {
-            "rate": 0.1558,
-            "n": 2195
+            "rate": 0.1557,
+            "n": 2197
           },
           "3": {
             "rate": 0.184,
@@ -277,8 +277,8 @@
           "n": 41
         },
         "Q2_above200_ts2": {
-          "rate": 0.1083,
-          "n": 951
+          "rate": 0.1081,
+          "n": 953
         },
         "Q2_above200_ts3": {
           "rate": 0.0,
@@ -355,13 +355,13 @@
       }
     },
     "today": {
-      "date": "2026-09-24",
-      "ts_ema": 0.842,
+      "date": "2026-09-25",
+      "ts_ema": 0.834,
       "ts_state": 2,
       "ts_label": "neutral(0.8-1.0)",
-      "prob_3d": 0.1083,
-      "n_cell_3d": 951,
-      "prob_ts_only": 0.1697,
+      "prob_3d": 0.1081,
+      "n_cell_3d": 953,
+      "prob_ts_only": 0.1696,
       "input_staleness_days": 0,
       "stale_warning": false
     },
@@ -370,11 +370,11 @@
   "side_readings": {
     "note": "annotations only; not part of prob. Historical rates from scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)",
     "nhnl": {
-      "date": "2026-09-23",
-      "ratio_10ema": 0.318,
-      "state": "mid",
-      "hist_rate_e1": 0.194,
-      "today_state": "2",
+      "date": "2026-09-24",
+      "ratio_10ema": 0.282,
+      "state": "oversold(<0.30)",
+      "hist_rate_e1": 0.372,
+      "today_state": "1",
       "table": {
         "1": {
           "rate": 0.3718,
@@ -401,8 +401,8 @@
       }
     },
     "gex": {
-      "date": "2026-09-23",
-      "pct_rank_252d": 0.413,
+      "date": "2026-09-24",
+      "pct_rank_252d": 0.452,
       "quintile": 3,
       "hist_rate_e1": 0.114,
       "today_state": "3",

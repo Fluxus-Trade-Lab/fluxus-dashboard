@@ -1,0 +1,190 @@
+{
+  "trade_id": "DELL_2026-09-25_000",
+  "generated_at": "2026-09-25T23:48:37+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "DELL",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-09-25",
+    "entry_price": 545.64,
+    "stop_price": 540.0,
+    "initial_stop": 540.0,
+    "closed": false,
+    "remaining_pct": 100.0,
+    "exit_date": null,
+    "hold_business_days": null,
+    "r_pct_of_entry": 1.033648559489771,
+    "realized_R": 0.0,
+    "trims": []
+  },
+  "entry_snapshot": {
+    "close": 575.31,
+    "open": 586.77,
+    "high": 592.44,
+    "low": 567.435,
+    "volume": 7599722.0,
+    "ma20": 510.332,
+    "ma50": 465.461404,
+    "ma200": 274.111879,
+    "rsi14": 62.802441546651536,
+    "atr14": 37.661785714285735,
+    "atr14_pct": 6.546346441794118,
+    "high_52w": 595.51,
+    "low_52w": 109.6987,
+    "position_in_52w_range_pct": 95.8420069685493,
+    "high_20d": 595.51,
+    "low_10d": 506.25,
+    "low_5d": 539.0
+  },
+  "setup_type": "Breakout / near 52W high",
+  "path_analytics": {},
+  "lesson": "In progress",
+  "narrative": "Entered **DELL** long on 2026-09-25 at $545.64 with stop $540.00 (1R = $5.64/sh = 1.0% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($510.33), MA20 > MA50 > MA200 (golden alignment), RSI 63, 96% through 52W range, ATR 6.5% of price. **In progress.**",
+  "ohlc_window": [
+    {
+      "date": "2026-08-26",
+      "open": 449.58,
+      "high": 469.4,
+      "low": 449.58,
+      "close": 463.82,
+      "volume": 4459600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 466.68,
+      "high": 472.5,
+      "low": 459.13,
+      "close": 472.26,
+      "volume": 4642600.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 467.58,
+      "high": 474.74,
+      "low": 452.9,
+      "close": 456.24,
+      "volume": 3954900.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 459.85,
+      "high": 474.49,
+      "low": 456.01,
+      "close": 456.01,
+      "volume": 7686500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 455.69,
+      "high": 463.0,
+      "low": 421.89,
+      "close": 425.0,
+      "volume": 15948000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 462.05,
+      "high": 497.99,
+      "low": 432.27,
+      "close": 492.2,
+      "volume": 36720200.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 486.31,
+      "high": 530.78,
+      "low": 478.31,
+      "close": 516.39,
+      "volume": 20328000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 513.78,
+      "high": 534.99,
+      "low": 510.15,
+      "close": 524.14,
+      "volume": 11118700.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 521.15,
+      "high": 538.47,
+      "low": 515.56,
+      "close": 533.88,
+      "volume": 6662500.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 538.47,
+      "high": 562.99,
+      "low": 532.39,
+      "close": 535.25,
+      "volume": 7282300.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 523.83,
+      "high": 530.51,
+      "low": 506.25,
+      "close": 506.62,
+      "volume": 5917200.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 518.07,
+      "high": 567.75,
+      "low": 517.52,
+      "close": 567.29,
+      "volume": 14473500.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 538.57,
+      "high": 546.29,
+      "low": 525.85,
+      "close": 534.28,
+      "volume": 9173800.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 541.55,
+      "high": 568.67,
+      "low": 539.0,
+      "close": 543.51,
+      "volume": 9830600.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 553.63,
+      "high": 576.75,
+      "low": 550.09,
+      "close": 563.29,
+      "volume": 13108100.0
+    },
+    {
+      "date": "2026-09-17",
+      "open": 570.4,
+      "high": 593.98,
+      "low": 565.5,
+      "close": 588.4,
+      "volume": 9350700.0
+    },
+    {
+      "date": "2026-09-18",
+      "open": 593.15,
+      "high": 595.51,
+      "low": 568.06,
+      "close": 568.06,
+      "volume": 11709400.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 586.77,
+      "high": 592.44,
+      "low": 567.435,
+      "close": 575.31,
+      "volume": 7599722.0
+    }
+  ]
+}

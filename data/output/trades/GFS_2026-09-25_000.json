@@ -1,0 +1,190 @@
+{
+  "trade_id": "GFS_2026-09-25_000",
+  "generated_at": "2026-09-25T23:48:37+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "GFS",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-09-25",
+    "entry_price": 47.87,
+    "stop_price": 46.8,
+    "initial_stop": 46.8,
+    "closed": false,
+    "remaining_pct": 100.0,
+    "exit_date": null,
+    "hold_business_days": null,
+    "r_pct_of_entry": 2.23522038855233,
+    "realized_R": 0.0,
+    "trims": []
+  },
+  "entry_snapshot": {
+    "close": 48.57,
+    "open": 49.03,
+    "high": 49.18,
+    "low": 47.87,
+    "volume": 3957730.0,
+    "ma20": 45.3235,
+    "ma50": 50.1922,
+    "ma200": 53.786617,
+    "rsi14": 53.42060489749707,
+    "atr14": 1.9444285714285705,
+    "atr14_pct": 4.003353039795286,
+    "high_52w": 92.4168,
+    "low_52w": 31.9739,
+    "position_in_52w_range_pct": 27.4574846673472,
+    "high_20d": 49.18,
+    "low_10d": 42.15,
+    "low_5d": 42.15
+  },
+  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "path_analytics": {},
+  "lesson": "In progress",
+  "narrative": "Entered **GFS** long on 2026-09-25 at $47.87 with stop $46.80 (1R = $1.07/sh = 2.2% of entry). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($45.32), MA20 < MA50 < MA200 (death alignment), RSI 53, 27% through 52W range, ATR 4.0% of price. **In progress.**",
+  "ohlc_window": [
+    {
+      "date": "2026-08-26",
+      "open": 45.705,
+      "high": 46.04,
+      "low": 45.11,
+      "close": 45.67,
+      "volume": 4575700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 46.75,
+      "high": 47.12,
+      "low": 45.62,
+      "close": 46.34,
+      "volume": 5076000.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 46.34,
+      "high": 46.45,
+      "low": 44.531,
+      "close": 44.76,
+      "volume": 3307400.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 44.98,
+      "high": 45.42,
+      "low": 44.39,
+      "close": 44.69,
+      "volume": 3384000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 43.88,
+      "high": 44.47,
+      "low": 43.258,
+      "close": 43.93,
+      "volume": 4060400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 44.42,
+      "high": 44.53,
+      "low": 43.17,
+      "close": 43.97,
+      "volume": 3413300.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 43.24,
+      "high": 44.53,
+      "low": 42.7,
+      "close": 44.53,
+      "volume": 4321000.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 44.88,
+      "high": 45.62,
+      "low": 44.53,
+      "close": 45.21,
+      "volume": 2631300.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 46.3,
+      "high": 46.69,
+      "low": 44.9,
+      "close": 45.09,
+      "volume": 5471400.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 45.09,
+      "high": 46.34,
+      "low": 45.0,
+      "close": 45.95,
+      "volume": 3281700.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 44.83,
+      "high": 46.3,
+      "low": 44.64,
+      "close": 45.96,
+      "volume": 3028700.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 46.44,
+      "high": 47.33,
+      "low": 46.03,
+      "close": 46.95,
+      "volume": 3695500.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 44.37,
+      "high": 45.365,
+      "low": 43.51,
+      "close": 43.54,
+      "volume": 3994800.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 43.58,
+      "high": 44.41,
+      "low": 42.15,
+      "close": 42.75,
+      "volume": 3909700.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 43.91,
+      "high": 44.16,
+      "low": 42.555,
+      "close": 43.03,
+      "volume": 2752500.0
+    },
+    {
+      "date": "2026-09-17",
+      "open": 44.87,
+      "high": 47.1,
+      "low": 44.56,
+      "close": 45.84,
+      "volume": 6381200.0
+    },
+    {
+      "date": "2026-09-18",
+      "open": 46.2,
+      "high": 47.865,
+      "low": 45.25,
+      "close": 47.82,
+      "volume": 6568300.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 49.03,
+      "high": 49.18,
+      "low": 47.87,
+      "close": 48.57,
+      "volume": 3957730.0
+    }
+  ]
+}

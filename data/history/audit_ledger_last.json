@@ -1,19 +1,19 @@
 {
- "as_of_session": "2026-09-24",
+ "as_of_session": "2026-09-25",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 52,
+ "lines": 53,
  "runs": [
   {
-   "session": "2026-09-24",
-   "code_sha": "b46eb7a",
+   "session": "2026-09-25",
+   "code_sha": "26a3393",
    "trigger": "schedule",
    "violations": [],
    "warnings": [
-    "L2 no_downgrade no-baseline (stored copy is session 2026-09-23, candidate is 2026-09-24 -- a different day is the market moving, not the pipeline)",
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-24, candidate is 2026-09-25 -- a different day is the market moving, not the pipeline)",
     "L2 site_quality degraded"
    ],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5607
+   "universe_rows": 5611
   }
  ],
  "violations": 0,
