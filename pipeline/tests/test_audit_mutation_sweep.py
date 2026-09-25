@@ -310,3 +310,41 @@ def test_workspace_carries_github_so_workflow_reading_guards_can_be_swept(
     r = sweep_mod.sweep(name, verbose=False)
     assert not r.get("error"), r
     assert r["mutants"] > 0, r
+
+
+def test_workspace_carries_the_second_test_root_so_guards_that_read_it_sweep(
+        tmp_path, point_sweep_at):
+    """A guard that reads the repo's other test root (`tests/`) must be sweepable.
+
+    Same shape as the `.github` test above, found five days later on a
+    different guard. Until 2026-09-26 the workspace copied `pipeline/`,
+    `.github/` and the config files, so `audit_ci_test_coverage` came back
+    "baseline is already red; refusing to sweep" -- and the test that was red
+    was its own T3, "declared path 'tests' does not exist". Nothing was wrong
+    with its tests: 174 mutants, sweepable as soon as the workspace stopped
+    being incomplete. Two instances make it a rule: whatever a guard READS
+    from outside `pipeline/` has to be in the workspace, or the sweep accuses
+    the tests of a hole the sweep itself dug."""
+    name = make_repo(tmp_path, '''
+        from pathlib import Path
+
+        ROOT = Path(__file__).resolve().parents[2]
+        LIMIT = 10
+
+        def second_root_files():
+            return sorted(p.name for p in (ROOT / "tests").glob("test_*.py"))
+    ''', """
+        from pipeline.tools.fake_guard import second_root_files, LIMIT
+
+        def test_reads_the_second_root():
+            assert second_root_files() == ["test_alpha.py", "test_beta.py"]
+            assert LIMIT == 10
+    """)
+    second = tmp_path / "tests"
+    second.mkdir()
+    (second / "test_alpha.py").write_text("def test_a():\n    assert True\n")
+    (second / "test_beta.py").write_text("def test_b():\n    assert True\n")
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep(name, verbose=False)
+    assert not r.get("error"), r
+    assert r["mutants"] > 0, r
