@@ -20,9 +20,15 @@ function Credit({ source }) {
   // Refusing to render is the point: an uncredited quotation must not reach the
   // page just because a parser lost a field.
   if (!source?.book || !source?.author) return null
+  /* The vault's front matter writes the author into the book title, so the
+     line came out "Richard Moglen · 10 Years of Market Leaders（Richard
+     Moglen）". Drop the parenthetical when it is only repeating the name we
+     are already printing — never drop the name itself. */
+  const book = source.book.replace(/[（(][^）)]*[）)]\s*$/, m =>
+    m.includes(source.author) ? '' : m).trim()
   return (
     <p className="text-[11px] text-[var(--color-text-muted)] m-0">
-      {source.author} · {source.book}
+      {source.author} · {book || source.book}
       {source.page ? ` · p${source.page}` : ''}
     </p>
   )
