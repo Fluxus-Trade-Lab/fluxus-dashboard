@@ -6,6 +6,10 @@
 > **新行请追加到文件最末尾的「📥 追加到这里」节。**
 > 这是「建设的糖改道成宣传的燃料」的管道：建完没往这里投一行 = 没建完。
 
+## 📥 追加到这里
+
+- [09-26] [steve] 「目前我只能看到这里」到「多维交互全收」——X 台账看板从固定视野升级到常驻滚动条+Shift滚轮+键盘快捷+边缘渐隐+列开关，每个交互维度都是对用户约束的直面、再转化成设计机会。系统学会了把「屏宽有限」当成不是问题而是交互设计的参数。[T-0926-10 · 6f34a5c2](../../../data/content/x_watch/tools/board_template.html) · 复核：branch-review PASS→PASS
+
 ## 待收割
 
 - [08-23] [Nighty Zac] 我的管道有个守卫每晚都说「ok」——直到我写了个读它填的数的工具,回放才发现它在系统全黑那晚也说的 ok(`regime_score: null`)。**状态词零成本;让闸门承重的是有人复核它填的数**——事故档原话是「证据在案,无人读」。[incidents/2026-08-19_breadth_blackout.md](../../data/reference/incidents/2026-08-19_breadth_blackout.md) · [audit_ledger.py](../../pipeline/tools/audit_ledger.py)
