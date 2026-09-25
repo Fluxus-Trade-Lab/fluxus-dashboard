@@ -155,6 +155,18 @@ class Workspace:
         # the tests.
         if (ROOT / ".github").exists():
             shutil.copytree(ROOT / ".github", self.dir / ".github")
+        # `tests/` is the repository's SECOND test root and is copied for the
+        # same reason as `.github`, found the same way: on 2026-09-26
+        # `audit_ci_test_coverage` -- whose entire subject is that this root
+        # exists and CI does not run it -- reported "baseline is already red",
+        # and its own T3 ("a declared path no longer exists") was the thing
+        # firing, on the path `tests`. The guard was right; the workspace was
+        # missing what it reads. Second instance of one shape, so the rule is
+        # written here rather than in another one-off branch: anything a guard
+        # READS lives outside `pipeline/`, and a workspace that omits it
+        # produces a diagnosis pointing at the tests instead of at itself.
+        if (ROOT / "tests").exists():
+            shutil.copytree(ROOT / "tests", self.dir / "tests")
         for name in ("pytest.ini", "setup.cfg", "pyproject.toml", "conftest.py"):
             if (ROOT / name).exists():
                 shutil.copy2(ROOT / name, self.dir / name)
