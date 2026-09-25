@@ -29,6 +29,8 @@
 2. **验收「版式定稿给 Andy 看过一次预览」改为合并后置验收项**：原验收要求预览先于合并，但 `data/output/theme_board.json` 在分支上尚未落地（夜间 cron 没跑过 `proxy_board.py`），此刻预览只会显示 "did not load"，走一遍假流程。改为——**合并进 main、`theme_board.json` 首次由夜间管线落地后，由 UI Claire 出一次真实渲染预览给 Andy**，此前不再卡本分支合并。
 起因：T-0924-90（ALEX 把越界写的 `frontend/` 三文件交还 Claire）审核判 ASK，Q1/Q2 通过、Q3 边界缺口同上两条判例、Q4 第 3 条卡在验收时序而非真实缺失。见 T-0924-94 判词。
 
+**[2026-09-25 ops 裁 · T-0925-78]** `frontend/public/data/modelbooks/**`（OHLCV/`index.json`/`analysis.json`/`excluded.json`，Model Books 页的静态数据镜像）与 colocate 的 `frontend/src/components/modelbooks/*.test.js`（校验该数据完整性的测试）以**窄口子**补进 DATA ALEX 边界——判例是 T-0921-70 的 `etf_data.json` 快照窄口子：这批文件物理上放在 `frontend/` 下是 Vite 静态资源服务的位置约定，性质是数据（K 线、注释索引），不是 UI 代码，与 `data/output/`、`data/history/` 同类。**不含前端组件**：`frontend/src/components/modelbooks/` 下非 `.test.js` 的组件文件（渲染卡片、侧栏等）仍是 UI Claire 的边界，本次裁决不碰。按 CLAUDE.md「跨线≠跨授权」二选一的第①种（自己修完，通知该线），不要求 Claire 会签，分支原样合并进 main；已给 Claire 开一张知悉单（T-0925-78 收尾时开）记这条边界变化。起因：T-0925-61（抓 69 条只有注释没有 K 线的模型册）分支审核判 ASK，Q1/Q2/Q4 均已通过，唯独卡在这两处路径不在 ALEX 边界内；该分支两个提交（`e21c34e6e`+`dd7108837`）原样合并进 main，见下方 T-0925-61 收尾记录。
+
 ## 一条线可以有多个会话
 
 线 = 职责 + 文件边界；会话 = 这条线上的工人，可以有好几个。唯一的铁规矩：
