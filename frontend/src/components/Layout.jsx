@@ -366,11 +366,16 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {current === 'correction' && <CorrectionRiskPage />}
           {current === 'groups' && <GroupsPage />}
           {current === 'rotation' && <RotationPage />}
-          {current === 'modelbooks' && (
-            <BetaLock label="Education — Model Books">
-              <ModelBooksPage />
-            </BetaLock>
-          )}
+          {/* NOT BetaLock'd, on purpose. T-0925-75 wrapped this page reading
+              ops's ruling "BetaLock 应用到 ... Education 未搬完部分" — but Andy
+              had already said the opposite about THIS page, specifically, the
+              same day: "公开展示ModelBook。那一页是可以免费使用的." His word is
+              later and names the page; ops's ruling names a category and was
+              never meant to overturn it. `access.js` also lists modelbooks as
+              the one free page, so leaving the wrapper here made the site say
+              two different things at once — and what a visitor actually saw was
+              the locked one. */}
+          {current === 'modelbooks' && <ModelBooksPage />}
 
           {/* Reserved. The rail entry, the title and the frame are real from day
               one; a slot that appears only once it is full was never reserved.
