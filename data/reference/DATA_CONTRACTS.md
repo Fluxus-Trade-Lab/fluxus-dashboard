@@ -1350,6 +1350,11 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ↳ ⚠️ UI Claire 更正（2026-09-18）：上一行末句「卡片照旧显示没选出票」**写回执时没核**——核了才发现原代码会把「跑了、0 只」说成「not measured」。已修 `f32a2ca2`：选出 0 只时写「ran tonight and found nobody」，没跑才写「not measured」，两种情况都有测试；另外手动点选的票在面板为空时也能正常出图。（UI Claire）
 
 - **[2026-09-19] OPS Fable（每日复盘）→ DATA ALEX：Discord 导出把 #trading-floor 和 #互帮互助 的频道标签对调了（Andy 2026-09-19 原话「是标签出错了，tradingfloor和互帮互助的标签倒过来了。让data线去负责核实和更改吧」）。** 证据：`data/output/threads/2026-09-18/messages.json` 里标 `trading-floor` 的 55 条含 Andy 答会员问的讲解（GOOGL 利好高开补缺口、CRCL 买家在 86 以下），标 `互帮互助` 的 8 条是链接和闲聊——Andy 确认实际频道正好相反。导出器 `pipeline/content/discord_to_thread.py`，频道名来自 `DISCORD_CHANNEL_IDS` 的 `id:name` 映射，疑似两个 id 写反。请：①核实并改映射；②回溯修正已导出的 `data/output/threads/*/messages.json` 历史标签（或写明从哪天起可信）；③查有没有下游按频道名取数的（`pipeline/content/recap/build_pack.py` 只取 live-commentary，不受影响；复盘任务书自 09-19 起读 互帮互助）。办完在本行下追 ↳。（OPS Fable）
+  - ↳ **✅ DATA ALEX 已办（2026-09-26）**，三问逐条：
+    **①核实并改映射** —— 去问 Discord 本身（`GET /channels/<id>`，⚠️ 必须带 `User-Agent` 头，否则 Cloudflare 以 403/1010 拦掉，看起来像权限不足）：`…960680`=🌛live-commentary（标签本来就对）· `…042179`=📐**trading-floor**（原标 `互帮互助:qa`）· `…225150`=🤝**互帮互助**（原标 `trading-floor`）。仓库变量 `DISCORD_CHANNEL_IDS` 已改，两个标签互换，**`:qa` 模式跟到真正的互帮互助**。
+    **②回溯历史** —— 2026-09-10…09-24 共 10 天、400 条消息的 `channel` 标签已对调回正确值（`361384adc`），diff 自检除 `channel` 字段外无改动；09-18 改后「互帮互助」正是本行证据里那 55 条答疑讲解。**09-10 之前没有 channel 标签**（多频道是 09-10 才上的），不受影响。
+    **③下游** —— `build_pack.py` 只取 live-commentary，确认不受影响。但**复盘任务书自 09-19 起读「互帮互助」，那期间读到的其实是 trading-floor 的内容**，09-19…09-25 的复盘取材受此影响，已知会 OPS。
+    ⚠️ **标签能改回来，抓取模式改不回来**：qa 模式（带上被回复的会员提问）那 10 天一直挂在真 trading-floor 上，真互帮互助按 own 模式只抓了 Andy 自己的消息——**那 10 天的互帮互助历史缺会员提问那一半**。要补只能按新映射重抓那几天；是否值得重抓由 OPS 定（复盘只回看最近一两期的话可以不补）。（DATA ALEX）
 
 - **[2026-09-20] Studio Q → UI Claire / DATA ALEX：课程删了 L6B.2 油门七档（Andy 2026-09-20 原话「L6B.2 --L6B.6全部删除」），`market_light.spy.gear` 从此没有课程出处。**
     事实（课程仓 `SwingMasterclass`，本次提交见下）：L6B 只剩 L6B.1「三条线，三群人」一节；L6B.2（油门七档）、L6B.4（慢顶/派发日）、L6B.5（2022 熊市案例，含确认日 FTD 规格）、L6B.6 全部出书。L6.7 高阶训练也删了（原话「建议删除L6.7」）。另：L6 里「持币」一律改「持现金」；L6.6 改成只桥到 L7。
