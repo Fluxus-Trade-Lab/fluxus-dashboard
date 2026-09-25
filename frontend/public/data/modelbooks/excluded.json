@@ -1,0 +1,432 @@
+{
+  "generated_at": "2026-09-25T06:02:45.721Z",
+  "thresholds": {
+    "range_max": 500,
+    "jump_max": 10,
+    "price_max": 100000,
+    "dollar_vol_min": 250000
+  },
+  "checked": 1504,
+  "entries": {
+    "bigmovers-saf-2016": {
+      "rule": "broken_bars",
+      "why": "close range 4782x"
+    },
+    "bigmovers-saf-2014": {
+      "rule": "broken_bars",
+      "why": "close range 4845x"
+    },
+    "bigmovers-chk-2020": {
+      "rule": "broken_bars",
+      "why": "close range 533x"
+    },
+    "bigmovers-dday-2011": {
+      "rule": "broken_bars",
+      "why": "close range 563x"
+    },
+    "bigmovers-asst-2025": {
+      "rule": "broken_bars",
+      "why": "one-day jump 19.1x"
+    },
+    "bigmovers-uaua-2006": {
+      "rule": "broken_bars",
+      "why": "one-day jump 406.9x"
+    },
+    "bigmovers-gnus-2020": {
+      "rule": "untradable",
+      "why": "pre-advance median $137,323/day"
+    },
+    "bigmovers-toon-2020": {
+      "rule": "untradable",
+      "why": "pre-advance median $138,247/day"
+    },
+    "bigmovers-dwacw-2021": {
+      "rule": "broken_bars",
+      "why": "one-day jump 22.1x"
+    },
+    "bigmovers-wolf-2025": {
+      "rule": "broken_bars",
+      "why": "close range 742x"
+    },
+    "bigmovers-orbs-2025": {
+      "rule": "broken_bars",
+      "why": "stated gain 85x exceeds its bars' 8.4x"
+    },
+    "bigmovers-tlry-2025": {
+      "rule": "broken_bars",
+      "why": "one-day jump 10.6x"
+    },
+    "bigmovers-holo-2024": {
+      "rule": "broken_bars",
+      "why": "one-day jump 11.9x"
+    },
+    "bigmovers-sbet-2025": {
+      "rule": "untradable",
+      "why": "pre-advance median $156,173/day"
+    },
+    "bigmovers-koss-2021": {
+      "rule": "untradable",
+      "why": "pre-advance median $14,301/day"
+    },
+    "bigmovers-disca-2008": {
+      "rule": "broken_bars",
+      "why": "one-day jump 37.9x"
+    },
+    "bigmovers-nakd-2021": {
+      "rule": "broken_bars",
+      "why": "one-day jump 13.0x"
+    },
+    "bigmovers-indo-2022": {
+      "rule": "untradable",
+      "why": "pre-advance median $136,870/day"
+    },
+    "bigmovers-drys-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.5e+6"
+    },
+    "bigmovers-pmcb-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.4e+6"
+    },
+    "bigmovers-lvlt-2011": {
+      "rule": "broken_bars",
+      "why": "one-day jump 14.8x"
+    },
+    "bigmovers-batl-2026": {
+      "rule": "untradable",
+      "why": "pre-advance median $197,991/day"
+    },
+    "bigmovers-scon-2000": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.1e+7"
+    },
+    "bigmovers-canb-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $6.5e+7"
+    },
+    "bigmovers-osat-2009": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.1e+7"
+    },
+    "bigmovers-mrin-2021": {
+      "rule": "untradable",
+      "why": "pre-advance median $230,206/day"
+    },
+    "bigmovers-inpx-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.2e+8"
+    },
+    "bigmovers-evtv-2026": {
+      "rule": "untradable",
+      "why": "pre-advance median $125,758/day"
+    },
+    "bigmovers-wcst-2000": {
+      "rule": "duplicate",
+      "why": "same bars as SSC 2000"
+    },
+    "bigmovers-canb-2018": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.7e+6"
+    },
+    "bigmovers-byu-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $5.0e+6"
+    },
+    "bigmovers-apt-2020": {
+      "rule": "untradable",
+      "why": "pre-advance median $64,925/day"
+    },
+    "bigmovers-edu-2021": {
+      "rule": "broken_bars",
+      "why": "one-day jump 10.5x"
+    },
+    "bigmovers-dwdp-2007": {
+      "rule": "broken_bars",
+      "why": "one-day jump 10.7x"
+    },
+    "bigmovers-dd-2007": {
+      "rule": "broken_bars",
+      "why": "one-day jump 10.7x"
+    },
+    "bigmovers-canb-2012": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.5e+8"
+    },
+    "bigmovers-scon-2003": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.4e+6"
+    },
+    "bigmovers-canb-2011": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.0e+9"
+    },
+    "bigmovers-scon-2007": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.5e+5"
+    },
+    "bigmovers-poai-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.3e+8"
+    },
+    "bigmovers-osat-2010": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $6.7e+5"
+    },
+    "bigmovers-pmcb-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $5.1e+5"
+    },
+    "bigmovers-bull-2025": {
+      "rule": "untradable",
+      "why": "pre-advance median $92,128/day"
+    },
+    "bigmovers-lehmq-2008": {
+      "rule": "broken_bars",
+      "why": "close range 1898x"
+    },
+    "bigmovers-pmcb-2011": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.4e+5"
+    },
+    "bigmovers-fnm-2008": {
+      "rule": "broken_bars",
+      "why": "one-day jump 10.1x"
+    },
+    "bigmovers-drys-2007": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.5e+9"
+    },
+    "bigmovers-nbis-2025": {
+      "rule": "broken_bars",
+      "why": "stated gain 8x exceeds its bars' 1.9x"
+    },
+    "bigmovers-pmcb-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.9e+5"
+    },
+    "bigmovers-osat-2007": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.0e+8"
+    },
+    "bigmovers-cenn-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.7e+7"
+    },
+    "bigmovers-nuwe-2017": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+13"
+    },
+    "bigmovers-domh-2009": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.0e+11"
+    },
+    "bigmovers-osat-2003": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $7.0e+9"
+    },
+    "bigmovers-glxy-2025": {
+      "rule": "broken_bars",
+      "why": "stated gain 6x exceeds its bars' 2.1x"
+    },
+    "bigmovers-osat-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+5"
+    },
+    "bigmovers-yrcw-2008": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.7e+5"
+    },
+    "bigmovers-osat-2011": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $8.4e+5"
+    },
+    "bigmovers-inpx-2018": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.2e+6"
+    },
+    "bigmovers-inpx-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.5e+7"
+    },
+    "bigmovers-drys-2008": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+9"
+    },
+    "bigmovers-byu-2017": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $6.3e+6"
+    },
+    "bigmovers-wcst-2004": {
+      "rule": "duplicate",
+      "why": "same bars as SSC 2004"
+    },
+    "bigmovers-inpx-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+9"
+    },
+    "bigmovers-rcat-2007": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.3e+10"
+    },
+    "bigmovers-nviv-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.7e+5"
+    },
+    "bigmovers-canb-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.0e+6"
+    },
+    "bigmovers-canb-2019": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+6"
+    },
+    "bigmovers-tlgt-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.2e+6"
+    },
+    "bigmovers-trnx-2012": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+5"
+    },
+    "bigmovers-osat-2001": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.8e+10"
+    },
+    "bigmovers-scon-2001": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $6.3e+6"
+    },
+    "bigmovers-drys-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $8.7e+6"
+    },
+    "bigmovers-tlgt-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.4e+5"
+    },
+    "bigmovers-inpx-2017": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.5e+7"
+    },
+    "bigmovers-byu-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.0e+7"
+    },
+    "bigmovers-thmo-2014": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $5.8e+6"
+    },
+    "bigmovers-b-2016": {
+      "rule": "broken_bars",
+      "why": "stated gain 3x exceeds its bars' 1.4x"
+    },
+    "bigmovers-drys-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $5.9e+7"
+    },
+    "bigmovers-osat-2002": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.5e+9"
+    },
+    "bigmovers-osat-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.0e+5"
+    },
+    "bigmovers-cenn-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.1e+7"
+    },
+    "bigmovers-nviv-2016": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.4e+5"
+    },
+    "bigmovers-scon-2005": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $3.0e+5"
+    },
+    "bigmovers-inpx-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.4e+8"
+    },
+    "bigmovers-osat-2006": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $4.9e+8"
+    },
+    "bigmovers-chfs-2013": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.2e+5"
+    },
+    "bigmovers-pmcb-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $7.0e+5"
+    },
+    "bigmovers-tlgt-2019": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.9e+5"
+    },
+    "bigmovers-osat-2012": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.2e+5"
+    },
+    "bigmovers-scon-2006": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.1e+5"
+    },
+    "bigmovers-dffn-2010": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.5e+6"
+    },
+    "bigmovers-pmcb-2017": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.2e+5"
+    },
+    "bigmovers-pmcb-2018": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.4e+5"
+    },
+    "bigmovers-byu-2018": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.6e+6"
+    },
+    "bigmovers-osat-2005": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.7e+9"
+    },
+    "bigmovers-pmcb-2019": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.6e+5"
+    },
+    "bigmovers-wfr-2006": {
+      "rule": "duplicate",
+      "why": "same bars as SUNE 2006"
+    },
+    "bigmovers-drys-2006": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $2.7e+8"
+    },
+    "bigmovers-cenn-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $5.3e+6"
+    },
+    "bigmovers-hlss-2015": {
+      "rule": "broken_bars",
+      "why": "one-day jump 25.3x"
+    },
+    "bigmovers-fsto-2011": {
+      "rule": "duplicate",
+      "why": "same bars as FST 2011"
+    },
+    "bigmovers-tlgt-2015": {
+      "rule": "impossible_price",
+      "why": "a bar priced at $1.2e+6"
+    },
+    "bigmovers-sols-2026": {
+      "rule": "broken_bars",
+      "why": "stated gain 2x exceeds its bars' 1.3x"
+    },
+    "tl-jdsu-1998": {
+      "rule": "duplicate",
+      "why": "same bars as JDSU 1998"
+    }
+  }
+}
