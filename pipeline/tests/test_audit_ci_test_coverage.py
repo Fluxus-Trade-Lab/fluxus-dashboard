@@ -639,3 +639,347 @@ def test_the_fixed_workflow_leaves_nothing_excluded(tmp_path):
     codes = sorted({c for c, _ in res["violations"]})
     assert codes == ["T2"], cov.render(res)
     assert len(res["violations"]) == len(cov.DECLARED)
+
+
+# ==========================================================================
+# 2026-09-26 (T-0926-21) -- the holes the first mutation sweep of this file
+# found. It is the largest guard in the repo (174 mutation sites) and had
+# never been swept: `audit_mutation_sweep`'s workspace did not copy `tests/`,
+# so the sweep's own baseline went red on this file's T3 ("declared path
+# 'tests' does not exist") and it refused to run. Fixed in the same task.
+#
+# First reading: 126/174 killed (72%). 48 survivors, and they clustered in
+# three places -- the `-m` parser (the guard's central input), `render()`
+# (13 survivors, two tests), and `main()`'s exit code.
+# ==========================================================================
+
+# ---------- the exit code (third repository-wide instance) ----------
+
+def _mini_repo(tmp_path, workflow, marked=False):
+    """A whole repo the tool can be pointed at: two test roots, one workflow."""
+    for rel in ("pipeline/tests", "tests"):
+        d = tmp_path / rel
+        d.mkdir(parents=True)
+        body = ("import pytest\n\n@pytest.mark.slow\ndef test_a():\n    pass\n"
+                if marked else "def test_a():\n    pass\n")
+        (d / "test_x.py").write_text(body)
+    wf = tmp_path / ".github" / "workflows"
+    wf.mkdir(parents=True)
+    (wf / "tests.yml").write_text(textwrap.dedent(workflow))
+    return tmp_path
+
+
+_CLEAN_WF = """\
+    name: tests
+    on:
+      push:
+    jobs:
+      t:
+        steps:
+          - uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+          - run: python -m pytest pipeline/tests tests -q
+"""
+
+_HOLED_WF = _CLEAN_WF.replace('pipeline/tests tests -q',
+                              'pipeline/tests tests -q -m "not slow"')
+
+
+def test_main_exits_zero_on_a_clean_repo_and_one_when_it_finds_a_hole(
+        tmp_path, monkeypatch, capsys):
+    """`return 1 if violations else 0` -- both branches, not just the loud one.
+
+    The `0 -> 1` mutant on that line is the THIRD instance of one shape in
+    this repository: it lived three weeks in `audit_archives` and in
+    `audit_ledger` (both closed 2026-09-25, T-0925-11) and it was still open
+    here. It is the worst-behaved mutant we know of, because what it breaks
+    is the QUIET path: every clean night exits 1, CI goes red on a repo with
+    nothing wrong with it, and the fix people reach for is to stop reading
+    the check. "We tested main()" and "we tested both of main()'s exits" are
+    not the same sentence -- three guards in a row proved it.
+    """
+    monkeypatch.setattr(cov, "DECLARED", {})
+    monkeypatch.setattr(cov, "DECLARED_TRIGGERS", {})
+
+    clean = _mini_repo(tmp_path / "clean", _CLEAN_WF)
+    assert cov.main(["--repo", str(clean)]) == 0, capsys.readouterr().out
+
+    holed = _mini_repo(tmp_path / "holed", _HOLED_WF, marked=True)
+    assert cov.main(["--repo", str(holed)]) == 1, capsys.readouterr().out
+
+
+# ---------- the `-m` parser: the guard's central input ----------
+
+def test_the_marker_value_is_found_when_dash_m_is_the_last_flag():
+    """`["-m", "not slow"]` with nothing after it.
+
+    The one existing test of the real command puts `--tb=short` after the
+    marker, which leaves `i + 1 < len(rest)` true under BOTH the real bound
+    and the off-by-one. With `-m` second-to-last they disagree: the mutant
+    reads no value at all and the excluded marker silently becomes the empty
+    set -- a guard that reports "this run excludes nothing".
+    """
+    targets, markers, unmodelled = cov.parse_pytest_args(["-m", "not slow"])
+    assert targets == [] and markers == {"slow"} and unmodelled == []
+
+
+def test_the_marker_value_is_found_in_the_attached_spelling():
+    """`-mnot slow`, which is what `-m"not slow"` becomes after shlex."""
+    targets, markers, unmodelled = cov.parse_pytest_args(["-mnot slow", "tests"])
+    assert targets == ["tests"] and markers == {"slow"} and unmodelled == []
+
+
+def test_a_trailing_dash_m_with_no_value_is_reported_not_crashed_on():
+    """A malformed command must go to T5, not to IndexError.
+
+    An auditor that raises is an auditor that reports nothing, and this one
+    runs inside the nightly gate.
+    """
+    targets, markers, unmodelled = cov.parse_pytest_args(["tests", "-m"])
+    assert targets == ["tests"] and markers == set()
+    assert unmodelled == ["-m ''"]
+
+
+def test_a_token_that_only_starts_with_dash_m_is_not_read_as_a_marker():
+    """`-mfoo=bar` is not `-m foo=bar`; the `=` is what tells them apart."""
+    _, markers, unmodelled = cov.parse_pytest_args(["-mnot slow=1"])
+    assert markers == set() and unmodelled == ["-mnot slow=1"]
+
+
+def test_an_option_we_model_only_by_its_head_does_not_become_unmodelled():
+    """`--maxfail=2`: the head is modelled, the whole token is not.
+
+    Reading only the whole token makes every `=`-form option an unmodelled
+    option, which trips T5 and makes the tool refuse to certify a run it
+    understands perfectly well.
+    """
+    targets, _, unmodelled = cov.parse_pytest_args(["--maxfail=2", "tests"])
+    assert targets == ["tests"] and unmodelled == []
+
+
+def test_an_option_in_neither_table_is_still_reported():
+    """The other direction of the same line: unknown means unknown."""
+    targets, _, unmodelled = cov.parse_pytest_args(["--boom", "tests"])
+    assert targets == ["tests"] and unmodelled == ["--boom"]
+
+
+def test_an_inline_ignore_does_not_also_eat_the_next_token():
+    """`--ignore=tests pipeline/tests` runs pipeline/tests -- it is a target.
+
+    The separated spelling (`--ignore tests`) consumes its argument; the
+    inline one already carries it. Swallowing one more token drops a whole
+    test root out of the audit's view of the run.
+    """
+    targets, _, unmodelled = cov.parse_pytest_args(
+        ["--ignore=tests", "pipeline/tests"])
+    assert targets == ["pipeline/tests"] and unmodelled == ["--ignore=tests"]
+
+
+def test_a_separated_modelled_option_does_eat_its_argument():
+    """`-p no:cacheprovider tests` has exactly one target."""
+    targets, _, unmodelled = cov.parse_pytest_args(
+        ["-p", "no:cacheprovider", "tests"])
+    assert targets == ["tests"] and unmodelled == []
+
+
+def test_python_dash_m_something_else_is_not_a_pytest_run():
+    """`python -X dev -m pytest` is a run; `python -m mypy` is not.
+
+    The line names pytest either way, so `\\bpytest\\b` cannot tell them
+    apart -- only the position of `-m pytest` can.
+    """
+    assert cov._invocation("python -X dev -m pytest tests") is None
+    assert cov._invocation("python -m pytest tests") == ["tests"]
+
+
+# ---------- the trigger block boundary ----------
+
+def test_a_filter_outside_the_on_block_is_not_a_trigger_filter():
+    """`branches:` under `jobs:` is a job's business, not the trigger's.
+
+    Reporting it is a T5 on a workflow that has no trigger narrowing at all,
+    and T5 blocks certification -- the audit would refuse to certify a run
+    it had no complaint about.
+    """
+    text = ("  branches: [before]\n"
+            "on:\n"
+            "  push:\n"
+            "    paths: ['pipeline/**']\n"
+            "jobs:\n"
+            "  t:\n"
+            "    branches: [after]\n")
+    assert cov.trigger_filters(text) == ["paths: ['pipeline/**']"]
+
+
+def test_the_yaml_true_spelling_of_on_is_still_the_trigger_block():
+    """YAML 1.1 reads a bare `on` key as the boolean true.
+
+    A workflow round-tripped through a YAML writer comes back with `True:`
+    where `on:` was, and a reader that only knows `on:` sees no trigger
+    block at all -- and therefore no filters, which reads as full coverage.
+    """
+    text = "True:\n  push:\n    branches: [main]\njobs:\n  t:\n"
+    assert cov.trigger_filters(text) == ["branches: [main]"]
+
+
+# ---------- the checkout depth default ----------
+
+def test_a_runtime_fetch_depth_expression_is_read_as_the_shallow_default():
+    """`fetch-depth: ${{ inputs.depth }}` is unknowable statically.
+
+    It is assumed to be 1 -- the checkout action's own default, and the
+    direction that over-reports. Assuming anything deeper certifies history
+    the job may not have.
+    """
+    text = ("jobs:\n  t:\n    steps:\n      - uses: actions/checkout@v4\n"
+            "        with:\n          fetch-depth: ${{ inputs.depth }}\n")
+    assert cov.checkout_depth(text) == 1
+
+
+# ---------- the declared tables: T4 and T8 ----------
+
+def test_t4_fires_on_a_missing_reason_and_not_on_a_missing_date():
+    """The IOU must name an owner and a reason. The date it may forget.
+
+    `not entry[1]` and `not entry[2]` are one character apart and the tests
+    pinned neither: a table full of `("DATA ALEX", "", "2026-09-05")` -- an
+    owner and no reason, which is the exact shape of an excuse nobody has to
+    justify -- passed T4 unremarked.
+    """
+    t = _tests(("tests/test_x.py", "test_a", ("slow",), False))
+    step = [_step(markers=("slow",))]
+    no_reason = {"marker:slow": ("DATA ALEX", "", "2026-09-05")}
+    codes = [c for c, _ in cov.check(t, step, declared=no_reason,
+                                     declared_triggers={})["violations"]]
+    assert "T4" in codes
+
+    no_date = {"marker:slow": ("DATA ALEX", "because", "")}
+    codes = [c for c, _ in cov.check(t, step, declared=no_date,
+                                     declared_triggers={})["violations"]]
+    assert "T4" not in codes
+
+
+def test_t8_fires_on_a_missing_reason_and_not_on_a_missing_date():
+    """T4's half for the trigger table, pinned the same way."""
+    t = _tests(("tests/test_x.py", "test_a", (), False))
+    step = [_step()]
+    step[0]["trigger_filters"] = ["branches: [main]"]
+    no_reason = {"branches: [main]": ("DATA ALEX", "", "2026-09-23")}
+    codes = [c for c, _ in cov.check(t, step, declared={},
+                                     declared_triggers=no_reason)["violations"]]
+    assert "T8" in codes
+
+    no_date = {"branches: [main]": ("DATA ALEX", "because", "")}
+    codes = [c for c, _ in cov.check(t, step, declared={},
+                                     declared_triggers=no_date)["violations"]]
+    assert "T8" not in codes
+
+
+# ---------- render(): 13 of the 48 survivors lived here ----------
+#
+# Two tests covered this function, and they asserted on one line each. The
+# report is the entire product -- nothing else leaves this tool -- and its
+# truncation arithmetic, its depth wording and its declared/UNDECLARED label
+# were all free to be wrong.
+
+def _res(**over):
+    base = {"steps": [], "buckets": {}, "declared": {}, "declared_triggers": {},
+            "violations": [], "total": 0, "certified": True}
+    base.update(over)
+    return base
+
+
+def _bucket_items(n):
+    return [{"file": f"tests/test_{i}.py", "name": f"test_{i}"} for i in range(n)]
+
+
+def test_render_prints_three_examples_and_counts_the_rest():
+    """`items[:3]` and `len(items) - 3` are the same 3 and must stay the same 3.
+
+    The failure this pins is a report that says "... and 3 more" under four
+    printed examples: the reader adds them up, gets a number that is not the
+    bucket size, and stops trusting the page. Seven tests excluded, three
+    shown, four more.
+    """
+    text = cov.render(_res(buckets={"marker:slow": _bucket_items(7)}, total=7))
+    assert text.count("      e.g.   ") == 3
+    assert "... and 4 more" in text
+
+
+def test_render_does_not_say_and_zero_more_when_the_bucket_is_exactly_three():
+    """The boundary of the same line: 3 printed, nothing left over."""
+    text = cov.render(_res(buckets={"marker:slow": _bucket_items(3)}, total=3))
+    assert text.count("      e.g.   ") == 3
+    assert "more" not in text
+
+
+@pytest.mark.parametrize("depth,expected", [
+    (None, "no checkout"),
+    (0, "full history"),
+    (1, "depth 1 (shallow)"),
+    (2, "depth 2 (shallow)"),
+])
+def test_render_words_the_checkout_depth_by_what_it_means(depth, expected):
+    """0 is full history; None is no checkout at all; everything else is shallow.
+
+    Three separate survivors sat on this one expression -- `is None` vs
+    `is not None`, `== 0` vs `!= 0`, and the 0 itself. Getting it wrong
+    prints "full history" over a depth-1 clone, which is the precise lie
+    this whole guard was written to stop telling.
+    """
+    step = {"workflow": "tests.yml", "command": "pytest tests",
+            "depth": depth, "markers": set(), "caveats": (),
+            "trigger_filters": ()}
+    assert f"checkout: {expected}" in cov.render(_res(steps=[step]))
+
+
+def test_render_says_so_when_no_automatic_run_exists_at_all():
+    """T6's shape, in the report. An empty step list is not an empty page."""
+    assert "(no automatically triggered workflow runs pytest)" in \
+        cov.render(_res())
+
+
+def test_render_labels_declared_and_undeclared_buckets_differently():
+    """The label is the whole point of the bucket list.
+
+    Flipping it prints every open hole as `[declared]` -- a report in which
+    an undeclared exclusion is indistinguishable from an owned one, which is
+    the state this tool exists to end.
+    """
+    text = cov.render(_res(
+        buckets={"marker:slow": _bucket_items(1), "tests": _bucket_items(1)},
+        declared={"marker:slow": ("DATA ALEX", "because", "2026-09-05")},
+        total=2))
+    assert "[declared] marker:slow" in text
+    assert "[UNDECLARED] tests" in text
+    assert "owner: DATA ALEX" in text and "owner: ?" in text
+
+
+def test_render_marks_a_declared_trigger_filter_as_claimed_not_as_a_warning():
+    """And the undeclared one the other way round.
+
+    Same line, both directions: a declared filter must stop shouting, and an
+    undeclared one must not go quiet. Only the second half was tested.
+    """
+    step = {"workflow": "tests.yml", "command": "pytest tests", "depth": 0,
+            "markers": set(), "caveats": (),
+            "trigger_filters": ["branches: [main]", "paths:"]}
+    text = cov.render(_res(steps=[step], declared_triggers={
+        "branches: [main]": ("DATA ALEX", "email flood", "2026-09-23")}))
+    assert "[declared trigger] branches: [main]: email flood" in text
+    assert "trigger is narrowed by 'paths:'" in text
+    assert "trigger is narrowed by 'branches: [main]'" not in text
+
+
+def test_render_only_shouts_not_certified_when_it_was_told_it_was_not():
+    """`res.get("certified", True)` -- the default is the load-bearing half.
+
+    A res dict from an older caller has no `certified` key. Defaulting it to
+    False stamps NOT CERTIFIED on every report, and a banner that is always
+    on carries no information.
+    """
+    stale = _res()
+    del stale["certified"]
+    assert "NOT CERTIFIED" not in cov.render(stale)
+    assert "NOT CERTIFIED" in cov.render(_res(certified=False))

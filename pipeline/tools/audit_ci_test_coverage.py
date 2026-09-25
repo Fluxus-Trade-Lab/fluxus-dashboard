@@ -275,13 +275,16 @@ def checkout_depth(text: str) -> Optional[int]:
     return min(shallow) if shallow else 0
 
 
-def _marker_expr(tokens: list[str]) -> Optional[str]:
-    for i, t in enumerate(tokens):
-        if t == "-m" and i + 1 < len(tokens):
-            return tokens[i + 1]
-        if t.startswith("-m") and len(t) > 2:
-            return t[2:]
-    return None
+# `_marker_expr()` lived here until 2026-09-26 (T-0926-21) and nothing in the
+# repository called it: `parse_pytest_args` grew its own inline copy of the
+# same two spellings and this one was left behind. The first mutation sweep of
+# this file is what surfaced it -- NINE of its twenty remaining survivors sat
+# on these six lines, because an unreachable line cannot be killed by any
+# test that could ever be written. Worth naming as a reading rule: a mutation
+# survivor list does not distinguish "untested" from "unreachable", and a
+# cluster of survivors on one small function is the second one until proven
+# otherwise. Deleted rather than tested -- pinning dead code down is how it
+# stops looking dead.
 
 
 def negated_markers(expr: str) -> tuple[set[str], bool]:
