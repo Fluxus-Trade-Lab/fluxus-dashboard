@@ -85,13 +85,22 @@ export default function LandingPage({ onNavigate }) {
 
       <section className="public-hero-dark">
         <div className="public-section public-section-wide pt-14 sm:pt-20 pb-16 sm:pb-20 relative z-10">
-          <h1 className="public-h1 max-w-[600px]">
-            No 10-baggers. No YOLO plays.
+          {/* Andy's own words, lifted from fluxus-capital.com on 2026-09-26
+              ("对要换标题。用FLUXUS-CAPITAL.COM上的一些内容"). The old headline
+              — "No 10-baggers. No YOLO plays." — described a STYLE: what we
+              refuse to do. This one describes the JOB, and it is the sentence
+              the official site already leads with, so the two fronts finally
+              say the same thing. */}
+          <h1 className="public-h1 max-w-[620px]">
+            The market is a game.
             <br />
-            <span style={{ color: 'var(--color-poster-red)' }}>Just systematic trading</span> that compounds.
+            Most people play it with{' '}
+            <span style={{ color: 'var(--color-poster-red)' }}>their feelings</span>.
           </h1>
-          <p className="public-body mt-6 max-w-[540px]" style={{ color: '#a8a29e' }}>
-            Fluxus is a trading community for traders who want to get better, not just get lucky.
+          <p className="public-body mt-6 max-w-[560px]" style={{ color: '#a8a29e' }}>
+            Fluxus is where you learn to play it with measurements instead.
+            No hype, no alerts, no lambos — just the system that keeps you alive
+            and the trained read that puts the odds on your side.
           </p>
           <div className="mt-9">
             {/* The primary action is now INTO the product, not at the track
@@ -228,17 +237,29 @@ export default function LandingPage({ onNavigate }) {
       {/* Who is Fluxus */}
       <section className="border-t border-[var(--color-border)]">
         <div className="public-section public-section-prose py-16">
+          {/* Also from fluxus-capital.com, same day, same instruction. The
+              version this replaces was a paraphrase written for this app and
+              had drifted into adjectives ("a sharp discretionary swing
+              strategist"); the official one says what he does and what it cost
+              him, which is the part a reader believes. */}
           <h2 className="public-h2">Who is Fluxus?</h2>
           <p className="public-body mt-4 text-[var(--color-text-secondary)]">
-            A seasoned trader — once a fierce day trader, now a sharp discretionary
-            swing strategist. Trained under a hedge fund manager who navigated every
-            major bear market since the 1980s. He approaches the market as a game of
-            numbers and probability — always an apprentice of mathematics and an ally
-            of volatility.
+            Fluxus started as a day trader, got humbled, and grew into a
+            discretionary swing trader — he hunts leaders when momentum is loud
+            and trades ES/NQ futures when it isn't. He learned the trade under a
+            hedge fund manager who had navigated every bear market since the
+            1980s, which is a long way of saying he learned defense first.
+          </p>
+          <p className="public-body mt-4 text-[var(--color-text-secondary)]">
+            He doesn't treat the market as the world. He treats it as a game. He
+            holds no strong opinions about where it's going — he holds
+            measurements. His only edge is being the calm one in the room who did
+            the arithmetic before he felt anything.
           </p>
           <p className="public-body mt-4 text-[var(--color-text-muted)] text-sm italic">
-            The name pays tribute to the 60s-70s Fluxus art movement — a radical
-            attitude and desire for continuous change.
+            The name pays tribute to Fluxus, the 1960s–70s art movement that
+            prized the event over the object, chance over control, and dry wit
+            over spectacle. A trade plan, it turns out, is just an event score.
           </p>
         </div>
       </section>
