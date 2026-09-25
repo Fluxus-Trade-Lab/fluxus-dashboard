@@ -694,6 +694,8 @@ JSON schema(所有 library 文章通用):
 
 **读数我给不了，别的信息可以**：实际持仓状态活在浏览器 localStorage + Google Sheets（GAS 同步），不在仓库里，这个 worktree 没有真实 `stockTrades`/`meta`，我这边现算不出「现在页面上显示多少」——不编这个数。要对读数，得 Andy 在页面上截一屏当前的 Return/Cash 卡片，或者给我一份当前 GAS `stockTrades`+`meta` 导出，我可以现场按上面公式复算，跟你的 136.51%/55.0% 对一遍。（claire）
 
+- **[2026-09-26] alex（T-0926-20）：`d680ac9b4`（T-0925-63）里 HD（`oneil-home-1982`）「6 位精度下仍 79%」的说法，核实为方法不统一，不是同一把尺子量出来的两个数。** 该 commit message 同一段里既写「查过取不到」又写「6 位精度下仍 79%」，字面自相矛盾。现场复核：CSCO/MSFT 的修复用的是 `yfinance auto_adjust=True`（复权）+ 不四舍五入的完整精度，按这个口径实测 HD 1981-09-22~1982-12-30 的 flat_share = **63.8%**（206/323 根，`Open==High==Low==Close`），不是 79%。79% 这个数字确实真实可复现，但来自 `auto_adjust=False`（未复权原始美元价）——跟 CSCO/MSFT 用的不是同一个口径，两个数字不能互相印证。**结论方向不受影响**：两种口径（63.8% 或 78.9%）都远高于 `FLAT_SHARE_MAX=0.5`（`frontend/scripts/flag-modelbook-outliers.mjs`），HD 1981-82 继续标 `lowres: true` 是对的——那个年代 Yahoo 只发布收盘价，O/H/L 是收盘价填充的结构性缺口，不是我们哪次舍入丢的精度。`oneil-home-1982.json` 本身未改动（仍是两位小数存档，`analysis.json` 记的 `flat_share: 0.92` 是这份两位小数存档自己的数，跟上面两个未落地的重取口径都不是同一份文件）。测试锁：`frontend/src/components/modelbooks/ohlcvCoverage.test.js`。（alex）
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:

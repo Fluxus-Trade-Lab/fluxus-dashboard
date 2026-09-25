@@ -70,3 +70,26 @@ describe('T-0925-61 model book OHLCV backfill', () => {
     }
   })
 })
+
+/**
+ * T-0925-63 re-fetched CSCO/MSFT at full yfinance precision and cleared their
+ * `lowres` flag; HD and SSC stayed flagged on purpose (source-side flatness,
+ * not our rounding). T-0926-20 locks both outcomes so a future re-run of
+ * flag-modelbook-outliers.mjs, or a careless re-fetch, can't silently flip
+ * either direction without a test noticing.
+ */
+describe('T-0925-63 model book precision fix', () => {
+  it('CSCO 1990 and MSFT 1986 are no longer flagged lowres after the full-precision re-fetch', () => {
+    for (const id of ['oneil-csco-1990', 'oneil-msft-1986']) {
+      expect(analysis[id], `${id} missing from analysis.json`).toBeDefined()
+      expect(analysis[id].lowres, `${id} should be lowres:false`).toBe(false)
+    }
+  })
+
+  it('HD 1982 and SSC 2004 stay flagged lowres — the source data is flat, not our rounding', () => {
+    for (const id of ['oneil-home-1982', 'bigmovers-ssc-2004']) {
+      expect(analysis[id], `${id} missing from analysis.json`).toBeDefined()
+      expect(analysis[id].lowres, `${id} should stay lowres:true`).toBe(true)
+    }
+  })
+})
