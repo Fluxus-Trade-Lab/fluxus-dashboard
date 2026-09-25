@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTheme } from '../../hooks/useTheme'
+import { useWhopSession } from '../../hooks/useWhopSession'
 
 // 'brief' is intentionally absent, 2026-08-31. The page advertises "recent
 // briefs" and renders five entries dated 2026-03-17..03-21 — invented samples
@@ -15,6 +16,54 @@ const NAV_ITEMS = [
   { key: 'results', label: 'Results', hash: '#/results' },
   { key: 'pricing', label: 'Pricing', hash: '#/pricing' },
 ]
+
+/**
+ * "会员登录" — Whop OAuth (PKCE), no backend needed (see lib/whopAuth.js).
+ * Three states, none of them faked: not configured yet (VITE_WHOP_CLIENT_ID
+ * unset today — button says so instead of pretending to work), logged out
+ * (redirects to Whop), logged in (shows the verified email). Doesn't gate
+ * anything — CLAUDE.md 2026-09-25 定案: 登录只标"已验证会员"状态，不挡内容。
+ */
+function MemberLoginButton({ compact }) {
+  const { isAuthenticated, isConfigured, session, status, login, logout } = useWhopSession()
+  const sizeClasses = compact
+    ? 'px-3 py-1.5 text-xs'
+    : 'px-3 py-1.5 text-sm'
+
+  if (isAuthenticated) {
+    return (
+      <button
+        onClick={logout}
+        title="点击退出会员登录"
+        className={`${sizeClasses} rounded border border-[var(--color-border)] bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)] cursor-pointer transition-colors`}
+      >
+        {session.user?.email ?? '已验证会员'}
+      </button>
+    )
+  }
+
+  if (!isConfigured) {
+    return (
+      <button
+        disabled
+        title="会员登录配置中——需要在 Whop Developer Dashboard 注册 OAuth app 并设置 VITE_WHOP_CLIENT_ID"
+        className={`${sizeClasses} rounded border border-[var(--color-border)] bg-transparent text-[var(--color-text-muted)] cursor-not-allowed`}
+      >
+        会员登录
+      </button>
+    )
+  }
+
+  return (
+    <button
+      onClick={login}
+      disabled={status === 'exchanging'}
+      className={`${sizeClasses} rounded border border-[var(--color-border)] bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)] cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-wait`}
+    >
+      {status === 'exchanging' ? '登录中…' : '会员登录'}
+    </button>
+  )
+}
 
 export default function PublicHeader({ currentPage, onNavigate }) {
   const { theme, toggle } = useTheme()
@@ -52,6 +101,7 @@ export default function PublicHeader({ currentPage, onNavigate }) {
           >
             Join
           </button>
+          <MemberLoginButton />
           <button
             onClick={toggle}
             className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors cursor-pointer border-none text-sm"
@@ -101,6 +151,7 @@ export default function PublicHeader({ currentPage, onNavigate }) {
           >
             {theme === 'dark' ? 'Light mode' : 'Dark mode'}
           </button>
+          <MemberLoginButton compact />
         </nav>
       )}
     </header>
