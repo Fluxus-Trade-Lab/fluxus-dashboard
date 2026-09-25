@@ -5,6 +5,9 @@
 **Git 三铁律**：
 1. Commit 后立刻 push；会话结束前手上不留未 push 的 commit（没合进 main 的工作＝随时会死的工作）。
 2. 永不使用 `git stash`；需要切分支先 commit。永不在别人的 worktree 里工作。
+2b. **共享主树上一切会丢弃未提交改动的命令与 `stash` 同罪**（Andy 2026-09-26 批）：`reset --hard` · `checkout -- <file>` · `checkout/switch <branch>` · `clean -fd` · `restore` 无 `--staged`。**判据不是命令名，是「这条命令会不会让别人未提交的改动消失」**——第 2 条按命令名写，于是同一形状换个命令连栽三次：08-19 `stash` 收走前端未提交文件 · 08-24 `checkout origin/main -- <文件>` 同罪 · 09-25 `reset --hard` 清掉 ops 工人四个文件（T-0925-74 只能重做，事故档 fluxus-ops `audits/2026-09-25_alex_reset_hard_wiped_daemon_edits.md`）。
+   **唯一例外**：先 `git status` 看清每一个将被丢弃的文件，**确认每一个都是自己这一轮改的**才许执行；有一个说不清来历——不跑。（09-25 那次 `git status` 看过、四个文件明明在列，没认领就跑了。）
+   **正路，条文直接给**：要对齐 origin/main、要提交、要回退，在临时树里做——`export WT=$(mktemp -d)/wt-x && git -C <repo> worktree add "$WT" origin/main`；fluxus-ops 的任务板在临时树里要显式 `--repo "$WT"`。**堵动作必须同时指路**：09-25 那次是「主树脏→DirtyTree 拒绝」与「临时树→taskboard 崩」两条路同时堵死，没有可用通道时人就会去清主树（OPS T-0925-79 在修工具层）。
 3. 更新数据文件用外科手术式拉取：`git fetch origin && git checkout origin/main -- data/output/ data/history/`，不要 stash+pull。
 
 **⭐ 通信＝任务板（Andy 2026-09-22 原话「退门铃 补回程 都做」；本条取代下面所有门铃相关条文）**：
