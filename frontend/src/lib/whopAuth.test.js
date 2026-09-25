@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { deriveCodeChallenge, generateCodeVerifier, isConfigured } from './whopAuth'
+import { deriveCodeChallenge, generateCodeVerifier, isConfigured, hasAccessPassConfigured } from './whopAuth'
 
 describe('whopAuth PKCE', () => {
   // RFC 7636 Appendix B test vector — the one place this SHA-256 + base64url
@@ -26,5 +26,11 @@ describe('whopAuth PKCE', () => {
     // client_id — the env var only becomes non-empty once ops wires a real
     // Whop OAuth app, which is outside this task's reach.
     expect(isConfigured()).toBe(!!import.meta.env.VITE_WHOP_CLIENT_ID)
+  })
+
+  it('reports the access-pass lookup unconfigured when VITE_WHOP_ACCESS_PASS_ID is unset (true today)', () => {
+    // T-0925-75/T-0925-77: same shape as isConfigured() above — the display
+    // -only has_access call only fires once ops fills in a real access pass id.
+    expect(hasAccessPassConfigured()).toBe(!!import.meta.env.VITE_WHOP_ACCESS_PASS_ID)
   })
 })

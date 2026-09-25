@@ -10,9 +10,14 @@
  * (redirect URI = this site's origin, exact match) — that's a Whop-account
  * action only Andy/ops can do, not something this code can supply.
  *
- * has_access endpoint's version prefix (search hits disagree: v1 vs v5)
- * isn't pinned here with confidence — confirm at docs.whop.com/api-reference
- * before relying on fetchHasAccess in production.
+ * has_access endpoint (2026-09-25 再次检索，T-0925-75): docs.whop.com/
+ * api-reference confirms the SDK's `checkAccess(resourceId, { id: userId })`
+ * returns `{ has_access: boolean, access_level: "customer"|"admin"|"no_access" }`
+ * — snake_case, not `hasAccess`. The exact raw REST path this client-side
+ * call hits (`/me/has_access/:id`, mirroring the confirmed `/accounts/me`
+ * shape for "the OAuth-authenticated caller") still isn't pinned to a page
+ * that spells it out byte-for-byte; if it 404s once real credentials exist,
+ * check docs.whop.com/api-reference/users/check-access first.
  */
 
 const OAUTH_BASE = 'https://api.whop.com/oauth'
@@ -28,6 +33,20 @@ export function getClientId() {
 
 export function isConfigured() {
   return getClientId().length > 0
+}
+
+// The access pass / experience ID whose has_access result the login button
+// shows (T-0925-75 verdict, T-0925-77: display-only, never a content gate).
+// Unset today alongside VITE_WHOP_CLIENT_ID — same "someone with Whop account
+// access has to look this up" gap, not a code gap. When it's unset the
+// button falls back to the plain "已验证会员" label instead of calling an
+// endpoint with an empty resourceId.
+export function getAccessPassId() {
+  return import.meta.env.VITE_WHOP_ACCESS_PASS_ID || ''
+}
+
+export function hasAccessPassConfigured() {
+  return getAccessPassId().length > 0
 }
 
 function base64UrlEncode(bytes) {
