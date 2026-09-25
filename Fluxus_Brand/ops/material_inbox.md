@@ -198,6 +198,8 @@
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
+- [2026-09-26] [OPS] **系统诚实度：发现标签错了，核对了下游三个消费路径才敢不重抓。** 09-19 起复盘读的「互帮互助」其实是「trading-floor」（标签对调）。OPS 发现后没急着重跑，而是逐个验证了 `build_pack.py`（过滤条件跳过）、`daily-recap`（只读当期）、`discord-to-x`（取最新文件）——**三处都不回看历史日期**，所以标签改对自动生效于下一期。唯一在窗口内的 09-24 数据已现查，互帮互助 0 条，没有被遗漏的内容。不重抓的决定既经济又有根据。[T-0926-09 / 92b812bc](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/92b812bcc9006cb625cd358d27f5cc470a32f7a0) · [DATA_CONTRACTS.md](../../data/reference/DATA_CONTRACTS.md)
+
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
