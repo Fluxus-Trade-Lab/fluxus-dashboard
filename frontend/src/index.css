@@ -146,7 +146,12 @@
   --color-loss-solid: #cc3c2f;
 
   /* Poster palette — from the Masterclass poster */
-  --color-poster-bg: #0a0a0a;
+  /* The landing hero's ground. Was #0a0a0a, a pure neutral, while the
+     dashboard's ground was warm #12110F — the two blacks Andy pointed at on
+     2026-09-26. Moved onto the same cool near-black the dark theme now uses,
+     so the site has ONE black. The poster's red/blue/green are untouched:
+     they are the brand's own marks, not part of the neutral family. */
+  --color-poster-bg: #0b0c0f;
   --color-poster-red: #d94032;
   --color-poster-blue: #3b82c4;
   /* the poster's accent green — the day labels, and the triangle marking the
@@ -230,27 +235,62 @@ html.dark {
      Ground drops to 8.0 and the card rises to 14.5: 1.16:1, and every text
      tier gains rather than loses (text 12.3 on card, secondary 6.8, muted
      5.3, bold 14.7). */
-  --color-bg: #12110F;
-  --color-surface: #232120;
-  --color-surface-alt: #1b1a19;
-  --color-surface-raised: #32302f;
-  --color-border: #423f3e;
-  --color-border-light: #2b2a29;
-  --color-text: #e6e5e5;
-  --color-text-secondary: #b7b6b5;
+  /* Re-hued cool 2026-09-26 (Andy: 一部分黑一部分棕黑，很脏的感觉 …
+     我们去按照行业标准去做). The dirt was measurable, in two parts:
+
+     1. TWO BLACKS. The dashboard ground was #12110F — hue 40°, saturation
+        9.1%, the most saturated colour in the whole neutral family and also
+        the largest area on screen — while the landing hero used
+        --color-poster-bg #0a0a0a, a pure neutral. Literally one part black
+        and one part brown-black, as he said.
+     2. THE GROUND FOUGHT THE DATA. Every surface sat at hue 15–40° (warm)
+        while took/accent/poster-blue sit at 207–212° (cool). ~170° apart,
+        almost opposite: the warm ground makes the blue look grey and the
+        blue makes the ground look muddy.
+
+     So the neutral family moves to hue 220° at low chroma — the cool near
+     black TradingView (#131722) and GitHub (#0d1117) use, and the same
+     temperature as the data colours we already have. THE DATA COLOURS ARE
+     NOT TOUCHED: took, refused, profit, loss and the poster set all keep
+     their values, because they carry meaning and re-hueing them would be a
+     different decision.
+
+     Every separation the 2026-08-11 and 08-16 rounds measured was re-solved
+     rather than re-eyeballed, and none of them lost ground:
+
+       surface on bg           1.18 -> 1.18    cards still lift off the page
+       raised on surface       1.22 -> 1.23
+       border on surface       1.54 -> 1.56    structure lines still read
+       border-light on surface 1.12 -> 1.13
+       text on bg             15.01 -> 16.37
+       text on surface        12.75 -> 13.81
+       secondary on surface    7.92 -> 8.57
+       muted on bg             6.33 -> 6.57
+       muted on surface        5.38 -> 5.55
+
+     The light theme is untouched and stays warm paper. That is a choice, not
+     an oversight: light is a page, dark is a screen. */
+  --color-bg: #0b0c0f;
+  --color-surface: #1c1f25;
+  --color-surface-alt: #101216;
+  --color-surface-raised: #2b2f36;
+  --color-border: #393f4b;
+  --color-border-light: #252930;
+  --color-text: #e8ebf0;
+  --color-text-secondary: #b5bbc7;
   /* 4.52 -> 5.72 on the lifted ground: it was clearing the 4.5 bar by 0.02,
      and that bar assumes body type, not the 9px labels this token paints.
      2026-08-16: still 4.09 on surface-raised, the ground the chips use.
      bg 6.73 · surface 5.80 · raised 4.51. */
-  --color-text-muted: #979594;
+  --color-text-muted: #8f96a3;
   --color-text-bold: #ffffff;
 
-  --color-active-tab-bg: #fafaf9;
-  --color-active-tab-text: #1c1917;
-  --color-hover-bg: #32302f;
-  --color-input-bg: #1b1a19;
-  --color-input-border: #565353;
-  --color-closed-row: #4a4540;
+  --color-active-tab-bg: #e8ebf0;
+  --color-active-tab-text: #0b0c0f;
+  --color-hover-bg: #2b2f36;
+  --color-input-bg: #101216;
+  --color-input-border: #424957;
+  --color-closed-row: #3a404a;
 
   /* Never had a dark value, so it inherited the light one and sat at 2.46:1 on
      the lifted ground — under the 3:1 floor a UI component needs, which is why
