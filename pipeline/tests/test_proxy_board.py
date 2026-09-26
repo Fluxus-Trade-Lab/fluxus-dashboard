@@ -91,3 +91,53 @@ def test_proxy_map_covers_the_taxonomy_exactly():
 def test_retired_themes_are_not_on_the_board():
     for name in list(RETIRED_FROM_BOARD) + list(SCREEN_ONLY):
         assert name not in THEME_PROXIES
+
+
+# ---- screener 层：个股对自己主题代理的相对强弱（只发原料，页面做减法）----
+
+def test_plain_return_does_not_subtract_any_benchmark():
+    idx = pd.to_datetime(["2026-09-08", "2026-09-22"])
+    s = pd.Series([100.0, 110.0], index=idx)
+    got = PB.plain_return(s, dt.date(2026, 9, 22), dt.date(2026, 9, 8))
+    assert got == pytest.approx(10.0)          # 不是超额，是涨幅本身
+
+
+def test_member_returns_are_keyed_by_ticker_not_by_theme_pair():
+    """同一只票属于两个主题时只存一份——这正是不发 9,674 组配对的理由。"""
+    idx = pd.to_datetime(["2026-08-25", "2026-09-08", "2026-09-22"])
+    bench = pd.Series([100.0, 100.0, 100.0], index=idx)
+    etf = pd.Series([100.0, 100.0, 105.0], index=idx)
+    dual = pd.Series([100.0, 100.0, 120.0], index=idx)
+    out = PB.build({"T1": "E", "T2": "E"}, {"E": etf, "SPY": bench},
+                   {"DUAL": dual, "SPY": bench},
+                   {"T1": ["DUAL"], "T2": ["DUAL"]}, {},
+                   anchor=dt.date(2026, 9, 22))
+    assert list(out["member_returns"]) == ["DUAL"]          # 一份，不是两份
+    assert out["member_returns"]["DUAL"][0] == pytest.approx(20.0)
+    for row in out["themes"]:
+        assert row["proxy_ret"][0] == pytest.approx(5.0)    # 两个主题各自带代理涨幅
+
+
+def test_the_two_primitives_reproduce_the_relative_reading():
+    """页面那一次减法：票 20% − 代理 5% = 对主题超额 15pp。"""
+    idx = pd.to_datetime(["2026-08-25", "2026-09-08", "2026-09-22"])
+    bench = pd.Series([100.0, 100.0, 100.0], index=idx)
+    etf = pd.Series([100.0, 102.0, 107.1], index=idx)     # 本桶 +5%，前桶 +2%
+    stock = pd.Series([100.0, 101.0, 121.2], index=idx)   # 本桶 +20%，前桶 +1%
+    out = PB.build({"T": "E"}, {"E": etf, "SPY": bench}, {"S": stock, "SPY": bench},
+                   {"T": ["S"]}, {}, anchor=dt.date(2026, 9, 22))
+    row = out["themes"][0]
+    mr = out["member_returns"]["S"]
+    excess_now = mr[0] - row["proxy_ret"][0]
+    excess_prev = mr[1] - row["proxy_ret"][1]
+    assert excess_now == pytest.approx(15.0, abs=0.02)
+    assert PB.classify(excess_now, excess_now - excess_prev) == "leading"
+
+
+def test_a_member_with_no_price_is_left_out_not_zero_filled():
+    idx = pd.to_datetime(["2026-08-25", "2026-09-08", "2026-09-22"])
+    bench = pd.Series([100.0, 100.0, 100.0], index=idx)
+    etf = pd.Series([100.0, 100.0, 105.0], index=idx)
+    out = PB.build({"T": "E"}, {"E": etf, "SPY": bench}, {"SPY": bench},
+                   {"T": ["GHOST"]}, {}, anchor=dt.date(2026, 9, 22))
+    assert "GHOST" not in out["member_returns"]   # 缺价的票不许以 0 出现在排名里

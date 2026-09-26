@@ -72,6 +72,28 @@ def excess(series: pd.Series, bench: pd.Series,
     return (a[1] / b[1] - 1) * 100 - (q[1] / p[1] - 1) * 100
 
 
+def plain_return(series: pd.Series, newer: Optional[dt.date],
+                 older: Optional[dt.date]) -> Optional[float]:
+    """一段窗口内的涨幅（%），**不减任何基准**。
+
+    screener 层要的是「个股相对自己主题代理 ETF」的强弱。若在这里把 9,674 组
+    (主题,票) 配对逐个算好发出去，payload 要多约 520KB，其中大量是同一只票在
+    不同主题下的重复计算。改为**只发原料**：每只票两段涨幅 + 每个主题代理两段涨幅，
+    页面一次减法就得到相对读数：
+
+        个股对主题的超额(本桶) = ret[0](票) − ret[0](代理)
+        动能                   = (ret[0]−ret[1])(票) − (ret[0]−ret[1])(代理)
+
+    票在几个主题里就减几次，原料只存一份。
+    """
+    if newer is None or older is None or newer == older:
+        return None
+    a, b = close_on_or_before(series, newer), close_on_or_before(series, older)
+    if not (a and b) or b[1] == 0:
+        return None
+    return (a[1] / b[1] - 1) * 100
+
+
 def series_for(bars: Mapping[str, object], ticker: str) -> Optional[pd.Series]:
     """bars 既接受 {ticker: DataFrame(有 Close 列)} 也接受 {ticker: Series}。"""
     obj = bars.get(ticker)
@@ -154,9 +176,13 @@ def build(proxies: Mapping[str, str],
             })
         if not buckets:
             continue
+        # 代理自己的涨幅（不减 SPY）——与 member_returns 配对做减法用
+        proxy_ret = [plain_return(s, edges[k], edges[k + 1]) for k in range(2)]
         rows.append({
             "theme": theme,
             "etf": etf,
+            # [本桶, 前一桶] 的代理涨幅，%，未复权；screener 的减法用这两个数
+            "proxy_ret": [None if x is None else round(x, 2) for x in proxy_ret],
             "state": buckets[0]["state"],
             "state_prev": old_states.get(theme),   # 并排期的旧读数
             "rs": buckets[0]["rs"],
@@ -166,6 +192,21 @@ def build(proxies: Mapping[str, str],
                                            mem_bench, edges),
             "member_count": len(members.get(theme, ())),
         })
+
+    # 成员的两段涨幅，按 ticker 去重存一份（一只票可能属于多个主题）。
+    # ⚠️ 用的是 member_bars（ladder 那次下载的**复权**收盘），而代理与主题读数用未复权：
+    # 两周尺度上股息影响在 0.1pp 量级，对「谁比主题强」这个排序无碍；但它不是
+    # 与主题读数逐位可比的量，别拿它去复算主题四态。
+    wanted = sorted({t for ts in members.values() for t in ts})
+    member_returns = {}
+    for t in wanted:
+        ms = series_for(member_bars, t)
+        if ms is None:
+            continue
+        pair = [plain_return(ms, edges[k], edges[k + 1]) for k in range(2)]
+        if pair[0] is None:
+            continue
+        member_returns[t] = [None if x is None else round(x, 2) for x in pair]
 
     counts = {s: sum(1 for r in rows if r["state"] == s) for s in STATES}
     _ml = mem_bench.index[-1]
@@ -182,6 +223,7 @@ def build(proxies: Mapping[str, str],
         "proxy_map_date": proxy_map_date,
         "parallel_until": parallel_until,   # 并排期结束日，到期撤 state_prev
         "counts": counts,
+        "member_returns": member_returns,
         "themes": rows,
     }
 
