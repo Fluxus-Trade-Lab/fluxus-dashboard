@@ -12,6 +12,7 @@ wrong in exactly one way.
 from __future__ import annotations
 
 import datetime as dt
+import textwrap
 
 import pytest
 
@@ -458,3 +459,236 @@ class TestClassifyBar:
                     _bar(10.0, 10.0, 9.0, 10.0, 0),     # low differs
                     _bar(10.0, 10.0, 10.0, 9.0, 0)):    # close differs
             assert classify_bar(bar) == "good", bar
+
+
+# ----------------------------------------------------------- 2026-09-27
+# `read_archive_dates` and `main` had no tests at all. 19 of this module's 37
+# surviving mutants sat on those two functions -- the whole `--archive` entry
+# path and the exit code. Each test below names the mutant it kills, and each
+# one was run against that mutant before it was written down.
+
+from pipeline.tools import audit_calendar_gaps as acg   # noqa: E402
+
+
+def _csv(tmp_path, text, name="a.csv"):
+    p = tmp_path / name
+    p.write_text(textwrap.dedent(text))
+    return p
+
+
+class TestReadArchiveDates:
+    """The function that turns one of our CSV archives into a set of sessions.
+
+    It is the only thing standing between `--archive` and a three-way
+    reconcile built on the wrong column. Reading zero dates out of a healthy
+    archive does not look like a crash -- it looks like D1 firing on every
+    session we ever wrote.
+    """
+
+    def test_it_finds_the_as_of_column(self, tmp_path):
+        """The ordinary case, and the one that pins `column or next(...)`.
+
+        `or` -> `and` turns a call with no explicit column into `None`, and
+        then into SystemExit "cannot find a date column" on a file that has
+        one. Kills L358 `Or -> And`.
+        """
+        p = _csv(tmp_path, """\
+            as_of,ticker
+            2026-08-24,SPY
+            2026-08-25,SPY
+            """)
+        assert acg.read_archive_dates(p) == {"2026-08-24", "2026-08-25"}
+
+    def test_it_falls_through_to_the_next_candidate_column(self, tmp_path):
+        """No `as_of`, but a `date`. `if c in rows[0]` is what walks the list.
+
+        Flip it to `not in` and the first candidate always wins, so `col`
+        becomes a column the file does not have -- and then `r.get(col)` is
+        None for every row and the archive reads as EMPTY, silently.
+        Kills L359 `In -> NotIn`.
+        """
+        p = _csv(tmp_path, """\
+            date,close
+            2026-08-26,1
+            """)
+        assert acg.read_archive_dates(p) == {"2026-08-26"}
+
+    @pytest.mark.parametrize("col", ["as_of", "date", "session", "Date"])
+    def test_all_four_declared_candidates_are_really_tried(self, tmp_path, col):
+        p = _csv(tmp_path, f"{col},x\n2026-08-27,1\n")
+        assert acg.read_archive_dates(p) == {"2026-08-27"}
+
+    def test_a_single_row_archive_is_read_not_indexed_past(self, tmp_path):
+        """Header detection reads `rows[0]`; `rows[1]` on a one-row file is an
+        IndexError. Kills L359 `0 -> 1`."""
+        p = _csv(tmp_path, "as_of\n2026-08-24\n")
+        assert acg.read_archive_dates(p) == {"2026-08-24"}
+
+    def test_a_findable_column_does_not_raise(self, tmp_path):
+        """`if col is None: raise`. Flip it to `is not None` and every healthy
+        archive exits with "cannot find a date column". Kills L360
+        `Is -> IsNot`."""
+        p = _csv(tmp_path, "session\n2026-08-24\n")
+        acg.read_archive_dates(p)          # must not raise
+
+    def test_an_unnameable_column_raises_instead_of_guessing(self, tmp_path):
+        """The other side of the same line: positive control on the SystemExit."""
+        p = _csv(tmp_path, "when,x\n2026-08-24,1\n")
+        with pytest.raises(SystemExit):
+            acg.read_archive_dates(p)
+
+    def test_an_explicit_column_overrides_the_candidates(self, tmp_path):
+        """Both `as_of` and `stamp` are present; `--date-col stamp` must win."""
+        p = _csv(tmp_path, "as_of,stamp\n2026-08-24,2026-08-30\n")
+        assert acg.read_archive_dates(p, "stamp") == {"2026-08-30"}
+
+    def test_an_empty_archive_is_empty_not_an_indexerror(self, tmp_path):
+        """`if not rows: return set()`. Drop the `not` and a healthy archive
+        returns nothing while an empty one crashes on `rows[0]` -- both
+        directions wrong. Kills L356 `drop not`."""
+        assert acg.read_archive_dates(_csv(tmp_path, "as_of\n")) == set()
+
+    def test_a_timestamp_is_truncated_to_the_session_date(self, tmp_path):
+        """`[:10]`, not `[:11]`. An 11-character slice keeps the `T` and every
+        date stops matching the calendar grid, so D1 fires on all of them.
+        Kills L362 `10 -> 11`."""
+        p = _csv(tmp_path, "as_of\n2026-08-24T09:30:00-04:00\n")
+        assert acg.read_archive_dates(p) == {"2026-08-24"}
+
+    def test_a_blank_cell_is_skipped_not_sliced(self, tmp_path):
+        p = _csv(tmp_path, "as_of,x\n2026-08-24,1\n,2\n")
+        assert acg.read_archive_dates(p) == {"2026-08-24"}
+
+
+class TestMain:
+    """The entry point: exit code, window wording, and the `--archive` branch.
+
+    `main` had no test of any kind. The one that matters most is the exit
+    code: `return 0 if out["ok"] else 1` inverted is a guard that goes red on
+    every clean night, and the thing people learn from a check that is always
+    red is to stop reading it. That shape has now been found in
+    `audit_archives`, `audit_ledger`, `audit_ci_test_coverage` and here --
+    fourth time, so it gets pinned rather than noted.
+    """
+
+    def _run(self, monkeypatch, capsys, argv=("--days", "4"), dates=WEEK,
+             degenerate=None, last=END, tickers=("A", "B")):
+        seen = {}
+
+        def fake_fetch(names, start, end):
+            seen["call"] = (list(names), start, end)
+            per = dates if isinstance(dates, dict) else {t: set(dates) for t in names}
+            return per, (degenerate or {})
+
+        monkeypatch.setattr(acg, "fetch", fake_fetch)
+        monkeypatch.setattr(acg, "last_completed_session", lambda *a, **k: last)
+        monkeypatch.setattr(acg, "session_in_progress", lambda *a, **k: None)
+        code = acg.main(["--tickers", ",".join(tickers), *argv])
+        return code, capsys.readouterr().out, seen
+
+    def test_a_clean_feed_exits_zero(self, monkeypatch, capsys):
+        """Kills L423 `0 -> 1`: the always-red guard nobody reads."""
+        code, out, _ = self._run(monkeypatch, capsys)
+        assert code == 0
+        assert "OK: 0 violations" in out
+
+    def test_a_lost_session_exits_one(self, monkeypatch, capsys):
+        """Positive control on the same line, in the direction it is for."""
+        code, out, _ = self._run(monkeypatch, capsys,
+                                 dates=[d for d in WEEK if d != "2026-08-26"])
+        assert code == 1
+        assert "VIOLATIONS" in out and "C1 2026-08-26" in out
+
+    def test_a_feed_that_returns_nothing_says_so_before_auditing(
+            self, monkeypatch, capsys):
+        """`if not present` guards the whole audit. Kills L393 `drop not`
+        (which turns every healthy feed into "returned nothing") and L395
+        `1 -> 2` (the exit code for it)."""
+        code, out, _ = self._run(monkeypatch, capsys, dates={})
+        assert code == 1
+        assert "feed returned nothing at all" in out
+        # and the audit itself never ran, so no C-code is reported
+        assert "C0" not in out and "C1" not in out
+
+    def test_the_window_is_printed_start_then_end(self, monkeypatch, capsys):
+        """`out['window'][0]` is the start. Printing [1]..[0] reverses the
+        window on every line of every report. Kills L407 `0 -> 1` / `1 -> 2`."""
+        _, out, _ = self._run(monkeypatch, capsys)
+        assert "window 2026-08-24..2026-08-28" in out
+
+    def test_the_archive_branch_prints_the_same_window_the_same_way(
+            self, monkeypatch, capsys, tmp_path):
+        """The `--archive` path has its own copy of that line. Kills L401
+        `0 -> 1` / `1 -> 2`."""
+        arc = tmp_path / "a.csv"
+        arc.write_text("as_of\n" + "\n".join(WEEK) + "\n")
+        code, out, _ = self._run(monkeypatch, capsys,
+                                 argv=("--days", "4", "--archive", str(arc)))
+        assert "window 2026-08-24..2026-08-28" in out
+        assert str(arc) in out and code == 0
+
+    def test_the_default_window_is_thirty_days(self, monkeypatch, capsys):
+        """`--days` default 30, not 31. Kills L368 `30 -> 31`.
+
+        Asserted through the printed window rather than the parser's default,
+        so it still says something if the arithmetic moves.
+        """
+        _, out, _ = self._run(monkeypatch, capsys, argv=())
+        assert f"window {END - dt.timedelta(days=30)}..{END}" in out
+
+    def test_the_feed_is_asked_three_days_past_the_window(
+            self, monkeypatch, capsys):
+        """C2 can only see a bar past the last session if the fetch reached
+        past it. Kills L392 `3 -> 4` -- and a 4th day would put a Tuesday bar
+        inside the sample that C3 then reports as a calendar disagreement."""
+        _, _, seen = self._run(monkeypatch, capsys)
+        assert seen["call"][2] == END + dt.timedelta(days=3)
+
+    def test_the_c5_hint_is_only_printed_under_a_universal_gap(
+            self, monkeypatch, capsys):
+        """`g["universal"] and g["still_present"]`. Under `or`, every sporadic
+        gap gets the "check C5 before calling these survivors" line appended to
+        a warning that has no survivors to check. Kills L415 `And -> Or`."""
+        names = [f"T{i}" for i in range(10)]
+        dates = {t: set(WEEK) for t in names}
+        dates["T0"] = set(WEEK) - {"2026-08-26"}       # 1/10 -> sporadic
+        code, out, _ = self._run(monkeypatch, capsys, dates=dates,
+                                 tickers=tuple(names))
+        assert "sporadic" in out                        # the gap was reported
+        assert "check C5" not in out                    # but not as a survivor list
+        assert code == 0
+
+    def test_a_universal_gap_with_survivors_does_get_the_hint(
+            self, monkeypatch, capsys):
+        """The other side: 9/10 missing is universal, and the 10th is exactly
+        the FBRX shape this hint exists to warn about."""
+        names = [f"T{i}" for i in range(10)]
+        dates = {t: set(WEEK) - {"2026-08-26"} for t in names}
+        dates["T9"] = set(WEEK)
+        _, out, _ = self._run(monkeypatch, capsys, dates=dates,
+                              tickers=tuple(names))
+        assert "2026-08-26 still has a bar for: T9" in out
+        assert "check C5" in out
+
+    def test_the_grace_window_is_one_session_not_two(
+            self, monkeypatch, capsys, tmp_path):
+        """`--grace-sessions` default 1: the nightly writer runs after the
+        close, so today's absence from the archive is normal and yesterday's
+        is not. Kills L381 `1 -> 2`, which would swallow a real missed night.
+        """
+        arc = tmp_path / "a.csv"
+        arc.write_text("as_of\n" + "\n".join(WEEK[:-2]) + "\n")   # 08-27/28 absent
+        code, out, _ = self._run(monkeypatch, capsys,
+                                 argv=("--days", "4", "--archive", str(arc)))
+        assert code == 1
+        assert "2026-08-27" in out                  # not exempt
+        assert "D1 2026-08-28" not in out           # exempt by the grace window
+
+    def test_the_json_report_is_the_report(self, monkeypatch, capsys, tmp_path):
+        out_path = tmp_path / "r.json"
+        code, _, _ = self._run(monkeypatch, capsys,
+                               argv=("--days", "4", "--json", str(out_path)))
+        import json as _json
+        got = _json.loads(out_path.read_text())
+        assert got["window"] == ["2026-08-24", "2026-08-28"]
+        assert got["ok"] is True and code == 0
