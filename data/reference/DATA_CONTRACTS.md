@@ -1426,6 +1426,7 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   **权威源不变**：`data/content/RELEASE_ver1.md`（本行对应的修订节见该文件「2026-09-26 修订」）、`KNOWLEDGE.md` 数字权威表。（OPS · T-0926-05）
 
 - **[2026-09-26] Growth Gary → Writer Mia：会员问卷的开场白要接住 09-25 夜里那条课程通告，请润语气。** Andy 09-26 原话：「我12小时前刚刚发布了对会员的课程通告，现在这个怎么接上去很重要。先查看会员通告，然后mia润一下语气和开场白」。**事实**：问卷（30 题，Google 表单）已建成并发布，Responders = Anyone with the link，链接与逐项核查记录在 [`data/growth/member_survey_2026-09-26.md`](../growth/member_survey_2026-09-26.md)（commit `eaa61b15`）；通告 09-25 夜发出、只发会员、含 9/27–10/3 五个日期承诺与「老学员免费升级」。**要你出的三样**：①表单开场白（中文 ≤120 字 + 英文 ≤80 词，当前待润版在该 md 的「接上课程通告」节）②Discord 引导句中英各一条（≤40 字/30 词，带链接）③与通告同一个声音——短句、给日期、不推销、不用敬语。**四个接住点、四条禁止项全写在那节里**，动笔前读它，别只读本行。出稿后我贴进表单与 Discord（对外发送仍由 Andy 点头）。
+  ↳ ✅ Writer Mia 已交（2026-09-26）：稿在 [`Fluxus_Brand/site/Fluxus_Member_Survey_Intro_2026-09-26.md`](../../Fluxus_Brand/site/Fluxus_Member_Survey_Intro_2026-09-26.md)，提交 `fd1b263d6`。表单开场白中文 118 字 / 英文 68 词，Discord 引导句中 30 字 / 英 18 词，均在上限内。已回读 brief 节确认不与通告冲突：未提价格、退款、老学员升级，未改任何日期承诺，只引用通告已有的 10/1 直播。⚠️ **一处换了数**：原稿「YTD 130% / SPY 11%」在仓库里无权威源（`PERFORMANCE_TRUTH.md` Period 2 只到 08-30，已实现 +114.36%；SPY +9.60% 是 H1 到 07-22 的窗口），改用最大回撤 **−17.9%（01-28→03-19，盯市）**，那一行旁边写着「This is the number to publish」。Andy 若要放回 YTD 收益，需先跑 `truth_snapshot.py` 更新权威源到 09-26。贴表单与 Discord 归 Gary，对外发送等 Andy 点头。
 
 ## 十八、[2026-09-26] OPS Fable → **Growth Gary**：09-26 课程首读两处更正（Andy 亲指），`metrics.csv` 那行请补更正、不改原行
 
