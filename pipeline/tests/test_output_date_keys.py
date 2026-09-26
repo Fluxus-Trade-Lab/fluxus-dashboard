@@ -13,10 +13,12 @@ in EXEMPT_FILES instead, see below).
 
 Canonical key going forward is `as_of` (YYYY-MM-DD, ET trading day --
 `pipeline.marketcal.last_completed_session().isoformat()`, the same source
-`timestamp`/`date` fields already use throughout run_all.py). Existing files
-keep their legacy key rather than being rewritten wholesale; a genuinely new
-file that lacks both `as_of` and every legacy name fails this test loudly
-instead of silently joining an unrecognized 8th name.
+run_all.py's `date`/`event_date` fields already use -- NOT the same source as
+the 15 `timestamp` fields, which are `datetime.now(timezone.utc).isoformat()`,
+the fetch instant). Existing files keep their legacy key rather than being
+rewritten wholesale; a genuinely new file that lacks both `as_of` and every
+legacy name fails this test loudly instead of silently joining an
+unrecognized 8th name.
 
 See data/reference/DATA_CONTRACTS.md §十九 for the decision and
 data/output/theme_board.json's `proxy_map_date` note for why that file has

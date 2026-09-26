@@ -861,9 +861,11 @@ class YfinanceAdapter(BaseAdapter):
 
         # T-0926-56: this was the one data/output file with no date key at
         # all -- a bare JSON list, so nothing (human or gate) could tell it
-        # apart from a stale copy. `as_of` is the ET trading day, same
-        # `last_completed_session()` source every other file's date field
-        # already uses in run_all.py, not the fetch instant.
+        # apart from a stale copy. `as_of` is the ET trading day, the same
+        # `last_completed_session()` source run_all.py's `event_date`/
+        # `asset_payload`/quality-check calls already use -- NOT the same
+        # source as the 15 `timestamp` fields, which are
+        # `datetime.now(timezone.utc).isoformat()` (the fetch instant).
         as_of = last_completed_session().isoformat()
 
         spy_hist = None
