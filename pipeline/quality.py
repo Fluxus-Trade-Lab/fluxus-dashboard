@@ -464,7 +464,11 @@ def site_rows(name: str, payload: Any) -> Optional[List[Mapping[str, Any]]]:
     """
     try:
         if name == "etf_data":
-            return payload if isinstance(payload, list) else None
+            # etf_data.json wraps its rows behind `as_of` (T-0926-56); it used
+            # to be a bare list, so accept that shape too rather than break
+            # grading on whatever old snapshot happens to be on disk.
+            rows = payload.get("data") if isinstance(payload, dict) else payload
+            return rows if isinstance(rows, list) else None
         if name == "groups_themes":
             return payload.get("themes")
         if name == "groups_stocks":
@@ -504,7 +508,7 @@ REQUIRED_BLOCKS: Dict[str, List[str]] = {
     "asset_signals.json": ["rows", "date"],
     "shortlist.json": ["cards", "seats", "date"],
     "signals.json": [],
-    "etf_data.json": [],
+    "etf_data.json": ["as_of", "data"],  # T-0926-56: was a bare list, no date anywhere
     # 主题板：整块没了要当故障报出来（08-19 breadth 整页变黑就是这个形状）
     "theme_board.json": ["themes", "asof"],
 }

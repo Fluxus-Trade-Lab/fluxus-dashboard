@@ -343,3 +343,38 @@ k 取 1 和 5、以及把 X 提及当事件日这两件事**没有标准，是�
 | 事件日锚点 = 峰值日当天或之前最后一个已收盘交易日的收盘 | 盘后/非交易时段发生的事件，day 0 记到**下一个可交易 session**，是文献通行处理（同上综述） | 标准只规定「信息进入市场后的第一个可交易时点」 | ⚠️ **自造的部分**：X 提及散落在 ET 日历日各个时刻，我们没有做逐帖时间戳对齐，一律取**提及日收盘**为锚——把整个提及日当信息日，避免把提及之前就已走完的当日行情算成「提及之后」。周末提及因此锚在上周五收盘 |
 | 累计方式与窗口长度 | 标准是 `CAR = Σ AR_t`（逐日 AR 相加），或 BHAR（持有期收益差） | 窗口长度由研究问题定，文献常见 (−1,+1)、(0,+5) 等 | ⚠️ **自造**：用持有期差（BHAR 形状，`R_i` 与 `R_m` 各自按 A→A+k 的简单收益相减），不是逐日 AR 累加；k=1/5 是这条台账要回答的问题定的，不是标准值。**不做显著性检验、不设估计窗**——样本量与用途都不支持，读数只当描述统计，不得上页冒充标准事件研究结论 |
 | 峰值日定义 | 查过，无标准 | —— | ⚠️ **自造**：窗口内提及**人数**最高的 ET 日，**并列取最早**。用人数不用帖数，因为一条清单帖能一口气提十个代码（见 x_watch README「共识轴要的是几个人同时提」） |
+
+## data/output 顶层日期键口径（2026-09-26，T-0926-56，alex）
+
+Andy 09-26 开单让核 `data/output/` 24 个主文件的口径日期，查出两个真问题：`etf_data.json`
+顶层完全没有日期串；剩下的文件里，同一个「这份数据是几号的」意思分散在 7 个不同的键名下
+（`timestamp`/`date`/`as_of`/`asof`/`members_asof`/`proxy_map_date`/`parallel_until`），
+新文件用第 8 个名字会被任何只认识部分名字的检查静默漏掉——审计自己的第一版扫描就因此把
+11 个其实有日期的文件误报成「没有日期」。**这不是一个有公开行业标准的量，是内部工程约定**，
+所以没有外部出处可查，登记的是我们自己定的规范，供以后新增输出文件时照抄。
+
+**规范键名 = `as_of`**，值是 ET 交易日 `YYYY-MM-DD`（不是抓取时刻的 UTC 时间戳）。
+**唯一权威定义在代码里**：`pipeline/reference/output_date_keys.py`
+（`CANONICAL_DATE_KEY`/`RECOGNIZED_DATE_KEYS`/`EXEMPT_FILES`），
+`pipeline/tests/test_output_date_keys.py` 读同一份注册表强制执行——本行只解释判断，
+不重复列常量,免得两处各写一份将来漂开(参见 `method_find_the_drifted_copy_from_the_fix_commit`)。
+
+- **`RECOGNIZED_DATE_KEYS` 只收真正的新鲜度信号**（`as_of`/`timestamp`/`date`/`asof`/
+  `members_asof`），**故意不收 `proxy_map_date` 与 `parallel_until`**——这两个是日期，
+  但回答的不是「这份数据是几号的」：`proxy_map_date`（`theme_board.json`）是
+  `pipeline/constants/theme_proxies.py` 里主题→代理 ETF 映射表自己的版本日期，只在有人
+  编辑那张表时才变；`parallel_until` 是并排期的到期日，指向未来。把它们当新鲜度键会漏判——
+  一个文件可能只带这两个日期而完全没告诉你数据本身是哪天的。
+- **旧文件不批量改名**：15+ 个既有写点已经在用 `timestamp`/`date`/`asof` 之一，判定为
+  已有可用的新鲜度信号，批量改名对死线管线（JST 08:30）是不成比例的风险，本次没有做；
+  只补了确实一个都没有的 `etf_data.json`，并给 `theme_board.json` 加了 `as_of` 别名
+  （与已有 `asof` 同值，因为它是这次审计点名的文件）。**新文件起必须用 `as_of`**——
+  这条由测试强制，不是君子协定。
+- **`EXEMPT_FILES`**（`briefs.json`/`h1_2026_stats.json`/`performance.json`/
+  `portfolio_backtest.json`/`x_heat.json`）是结构上确实不带按日刷新语义的文件（一次性回测、
+  研究窗口快照、种子/演示数据），逐条理由写在该模块里，不在此重复。
+- **`etf_data.json` 的形状变了**（裸数组 → `{"as_of": ..., "data": [...]}`），是唯一一次
+  真正的结构改动，因为它原来没有任何顶层对象可以挂键。已同步三处直接读裸数组的 Python
+  消费方（`pipeline/themes/build_groups.py`、`export_review.py`、`pipeline/quality.py`）
+  与两处独立 fetch 它的前端点（`useMarketData.js`、`useSpyRow.js`，均在取到后立即解出
+  `.data` 还原成裸数组，其余组件读到的形状不变）。详见 `DATA_CONTRACTS.md` §七 本日条目。

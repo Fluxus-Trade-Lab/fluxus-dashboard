@@ -173,12 +173,21 @@ def build(proxies: Mapping[str, str],
 
     return {
         "asof": anchor.isoformat(),
+        # 规范键名的别名（T-0926-56，data-contract skill）：`asof` 是这个文件
+        # 自己的历史键名，保留不改；`as_of` 是全仓统一的规范键，两者同值。
+        "as_of": anchor.isoformat(),
         # 成员那份行情的最后一天。和 asof 不同 = 分布比主题读数旧一天
         # （两边是两次下载，一边先落一边后落时会这样）。宁可发出来让人看见，
         # 也不要静默地把昨天的分布挂在今天的四态旁边。
         "members_asof": members_asof,
         "benchmark": BENCH,
         "bucket_days": BUCKET_DAYS,
+        # proxy_map_date 不是行情新鲜度字段 —— 它是 THEME_PROXIES 那张映射表
+        # 自己的版本日期（pipeline/constants/theme_proxies.py 顶部注释：「改这张
+        # 表时一起改」），只在有人编辑映射表时才变。它比 asof 差一天是巧合，不是
+        # 设计出来的固定滞后：等下次编表，这个数会跳到编表那天，而不是继续跟着
+        # asof 走（T-0926-56 核实，Andy 09-26：「宇宙闸不是bug，是真的设计」问的
+        # 是 Today's List/Screener 两页宇宙闸不同，不是这个字段）。
         "proxy_map_date": proxy_map_date,
         "parallel_until": parallel_until,   # 并排期结束日，到期撤 state_prev
         "counts": counts,

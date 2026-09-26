@@ -153,7 +153,8 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     universe = load_universe(UNIVERSE_PATH)
     holdings = load_holdings()
-    etf_rows = {r["ticker"]: r for r in json.loads(ETF_PATH.read_text())}
+    # etf_data.json wraps its rows behind `as_of` (T-0926-56)
+    etf_rows = {r["ticker"]: r for r in json.loads(ETF_PATH.read_text())["data"]}
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(render(universe, holdings, etf_rows))

@@ -771,6 +771,11 @@ def main():
     logger = logging.getLogger(__name__)
 
     timestamp = datetime.now(timezone.utc).isoformat()
+    # Canonical freshness key (T-0926-56, data-contract skill): the ET trading
+    # day this run's outputs are for, not the UTC wall-clock `timestamp` above.
+    # New data/output files must carry this under `as_of`; see
+    # pipeline/reference/output_date_keys.py for the full registry.
+    session_date = last_completed_session().isoformat()
     # 2026-08-19: a workflow_dispatch at 05:18 ET pulled Finviz's PREMARKET
     # quotes (P 115.33 against a 117.06 close), filed a breadth row under a
     # session that had not traded yet, and overwrote the previous session's
@@ -1171,9 +1176,14 @@ def main():
               encoding='utf-8')
         logger.info("Saved ticker_events.json")
 
-    # Save ETF data
+    # Save ETF data. Wrapped behind `as_of` (T-0926-56) -- the bare list this
+    # used to be had no date anywhere, so nothing could tell it was stale.
+    # `to_json` first (not `to_dict` + `json.dumps`) because pandas turns
+    # NaN into JSON `null`; Python's json module would emit a bare `NaN`
+    # token instead, which the frontend's JSON.parse rejects.
+    etf_rows = json.loads(etf_data.to_json(orient='records'))
     _emit(ledger, OUTPUT_DIR / 'etf_data.json',
-          etf_data.to_json(orient='records', indent=2))
+          json.dumps({'as_of': session_date, 'data': etf_rows}, indent=2))
     logger.info("Saved etf_data.json")
 
     # Asset-layer signals: the same knives (RS line, MA reclaim, ATR

@@ -42,34 +42,69 @@
   "history{}[]": [
    "ad_line",
    "advances",
+   "advances_ndx",
+   "common_universe",
    "date",
    "declines",
+   "declines_ndx",
    "down_13pct_34d",
+   "down_13pct_34d_stockbee",
    "down_25pct_month",
+   "down_25pct_month_stockbee",
    "down_25pct_qtr",
+   "down_25pct_qtr_stockbee",
    "down_4pct",
+   "down_4pct_stockbee",
    "down_50pct_month",
+   "down_50pct_month_stockbee",
+   "high_low_index",
    "mcclellan_osc",
+   "mcclellan_osc_ndx",
+   "mcclellan_summation_ndx",
+   "mcclellan_summation_ndx_ma10",
+   "ndx_members",
    "net_advances",
+   "net_advances_ndx",
    "new_highs",
+   "new_highs_4w",
+   "new_highs_4w_common",
    "new_highs_4w_sp500",
+   "new_highs_common",
    "new_lows",
+   "new_lows_4w",
+   "new_lows_4w_common",
    "new_lows_4w_sp500",
+   "new_lows_common",
    "pct_above_200sma",
+   "pct_above_200sma_sp500",
    "pct_above_20sma",
+   "pct_above_20sma_sp500",
    "pct_above_50sma",
+   "pct_above_50sma_sp500",
    "rana",
+   "rana_ndx",
    "ratio_10d",
+   "ratio_10d_stockbee",
    "ratio_5d",
+   "ratio_5d_stockbee",
+   "record_high_pct",
+   "short_history_n",
    "source",
+   "sp500_members",
    "spx_close",
    "t2108",
+   "t2108_sp500",
    "universe_size",
    "up_13pct_34d",
+   "up_13pct_34d_stockbee",
    "up_25pct_month",
+   "up_25pct_month_stockbee",
    "up_25pct_qtr",
+   "up_25pct_qtr_stockbee",
    "up_4pct",
+   "up_4pct_stockbee",
    "up_50pct_month",
+   "up_50pct_month_stockbee",
    "v"
   ],
   "regime.bands[]": [
@@ -108,6 +143,7 @@
    "universe_size",
    "verdict"
   ],
+  "verdict.notes[]": null,
   "verdict.vote_detail[]": [
    "key",
    "label",
@@ -117,6 +153,30 @@
    "side",
    "unit",
    "value"
+  ]
+ },
+ "breadth_panes.json": {
+  "top": [
+   "ad_line",
+   "dates",
+   "down_4pct",
+   "down_4pct_stockbee",
+   "mcclellan_osc",
+   "mcclellan_osc_ndx",
+   "mcclellan_summation_ndx",
+   "net_advances",
+   "new_highs",
+   "new_highs_common",
+   "new_lows",
+   "new_lows_common",
+   "pct_above_20sma",
+   "pct_above_20sma_sp500",
+   "spx_close",
+   "t2108",
+   "t2108_sp500",
+   "timestamp",
+   "up_4pct",
+   "up_4pct_stockbee"
   ]
  },
  "breadth_replay.json": {
@@ -141,32 +201,69 @@
   "rows{}": [
    "ad_line",
    "advances",
+   "advances_ndx",
+   "common_universe",
    "date",
    "declines",
+   "declines_ndx",
    "down_13pct_34d",
+   "down_13pct_34d_stockbee",
    "down_25pct_month",
+   "down_25pct_month_stockbee",
    "down_25pct_qtr",
+   "down_25pct_qtr_stockbee",
    "down_4pct",
+   "down_4pct_stockbee",
    "down_50pct_month",
+   "down_50pct_month_stockbee",
+   "high_low_index",
    "mcclellan_osc",
+   "mcclellan_osc_ndx",
+   "mcclellan_summation_ndx",
+   "mcclellan_summation_ndx_ma10",
+   "ndx_members",
    "net_advances",
+   "net_advances_ndx",
    "new_highs",
+   "new_highs_4w",
+   "new_highs_4w_common",
+   "new_highs_4w_sp500",
+   "new_highs_common",
    "new_lows",
+   "new_lows_4w",
+   "new_lows_4w_common",
+   "new_lows_4w_sp500",
+   "new_lows_common",
    "pct_above_200sma",
+   "pct_above_200sma_sp500",
    "pct_above_20sma",
+   "pct_above_20sma_sp500",
    "pct_above_50sma",
+   "pct_above_50sma_sp500",
    "rana",
+   "rana_ndx",
    "ratio_10d",
+   "ratio_10d_stockbee",
    "ratio_5d",
+   "ratio_5d_stockbee",
+   "record_high_pct",
+   "short_history_n",
    "source",
+   "sp500_members",
    "spx_close",
    "t2108",
+   "t2108_sp500",
    "universe_size",
    "up_13pct_34d",
+   "up_13pct_34d_stockbee",
    "up_25pct_month",
+   "up_25pct_month_stockbee",
    "up_25pct_qtr",
+   "up_25pct_qtr_stockbee",
    "up_4pct",
-   "up_50pct_month"
+   "up_4pct_stockbee",
+   "up_50pct_month",
+   "up_50pct_month_stockbee"
   ],
   "top": [
    "dates",
@@ -179,6 +276,7 @@
    "alignment",
    "confirmation",
    "context",
+   "context_basis",
    "env",
    "exposure",
    "guidance",
@@ -194,6 +292,7 @@
    "votes",
    "warn_total"
   ],
+  "verdicts{}.notes[]": null,
   "verdicts{}.vote_detail[]": [
    "key",
    "label",
@@ -217,6 +316,10 @@
   ]
  },
  "correction_risk.json": {
+  "side_readings.gex.table{}": [
+   "n",
+   "rate"
+  ],
   "table.by_vix_quintile.first_half{}": [
    "n",
    "rate"
@@ -247,6 +350,18 @@
    "table",
    "today",
    "ts_dimension"
+  ],
+  "ts_dimension.table.by_ts_state.first_half{}": [
+   "n",
+   "rate"
+  ],
+  "ts_dimension.table.by_ts_state.full{}": [
+   "n",
+   "rate"
+  ],
+  "ts_dimension.table.by_ts_state.second_half{}": [
+   "n",
+   "rate"
   ],
   "ts_dimension.table.by_vix_quintile_x_200dma_x_ts{}": [
    "n",
@@ -293,8 +408,49 @@
    "timestamp"
   ]
  },
+ "ep_qullamaggie.json": {
+  "tickers[]": [
+   "atr_color",
+   "atr_ext",
+   "change_pct",
+   "gap_pct",
+   "market_cap",
+   "rel_volume",
+   "sector",
+   "ticker",
+   "vol_x_avg50",
+   "volume"
+  ],
+  "top": [
+   "count",
+   "definition",
+   "tickers",
+   "timestamp",
+   "unmeasured"
+  ]
+ },
+ "ep_stockbee.json": {
+  "tickers[]": [
+   "atr_color",
+   "atr_ext",
+   "change_pct",
+   "market_cap",
+   "rel_volume",
+   "sector",
+   "ticker",
+   "vol_x_avg50",
+   "volume"
+  ],
+  "top": [
+   "count",
+   "definition",
+   "tickers",
+   "timestamp",
+   "unmeasured"
+  ]
+ },
  "etf_data.json": {
-  "[]": [
+  "data[]": [
    "abc",
    "atr_pct",
    "change_pct",
@@ -314,8 +470,10 @@
    "sparkline",
    "ticker"
   ],
+  "data[].short_etfs[]": null,
   "top": [
-   "<list>"
+   "as_of",
+   "data"
   ]
  },
  "gainers_4pct.json": {
@@ -338,10 +496,12 @@
    "etf",
    "theme"
   ],
+  "audit.proxy_etf_not_in_etf_data[]": null,
   "audit.unknown_extra_tickers[]": [
    "theme",
    "ticker"
   ],
+  "audit.unknown_industries[]": null,
   "industries[]": [
    "excess_1m",
    "excess_3m",
@@ -359,6 +519,8 @@
    "perf_6m",
    "persistence",
    "persistence_of",
+   "ribbon",
+   "ribbon_source",
    "rs_0_1w",
    "rs_1m_3m",
    "rs_1w_1m",
@@ -367,6 +529,11 @@
    "rs_accel_rate",
    "state",
    "tickers"
+  ],
+  "industries[].ribbon[]": [
+   "accel",
+   "level",
+   "state"
   ],
   "stocks{}": [
    "excess_1m",
@@ -409,6 +576,8 @@
    "persistence",
    "persistence_of",
    "publish",
+   "ribbon",
+   "ribbon_source",
    "rs_0_1w",
    "rs_1m_3m",
    "rs_1w_1m",
@@ -421,6 +590,12 @@
    "validation",
    "validation_excess"
   ],
+  "themes[].ribbon[]": [
+   "accel",
+   "level",
+   "state"
+  ],
+  "themes_skipped[]": null,
   "top": [
    "audit",
    "benchmark",
@@ -437,6 +612,7 @@
   "groups{}": [
    "excess",
    "kind",
+   "rs_accel",
    "state"
   ],
   "top": [
@@ -649,6 +825,54 @@
    "timestamp"
   ]
  },
+ "market_light.json": {
+  "brightness.leaders[]": [
+   "above_ema21",
+   "rs_rating",
+   "status",
+   "theme",
+   "ticker"
+  ],
+  "brightness.setups.capped_panels[]": null,
+  "qqq.checks[]": [
+   "a",
+   "b",
+   "key",
+   "pass"
+  ],
+  "qqq.history[]": [
+   "checks_passed",
+   "close",
+   "date",
+   "fast",
+   "slow"
+  ],
+  "spy.checks[]": [
+   "a",
+   "b",
+   "key",
+   "pass"
+  ],
+  "spy.history[]": [
+   "checks_passed",
+   "close",
+   "date",
+   "fast",
+   "slow"
+  ],
+  "top": [
+   "brightness",
+   "date",
+   "ma_type",
+   "qqq",
+   "rising_rule",
+   "spy",
+   "verdict",
+   "verdict_basis",
+   "verdict_pending",
+   "verdict_synthetic"
+  ]
+ },
  "momentum_97.json": {
   "buckets{}[]": [
    "atr_color",
@@ -769,6 +993,7 @@
    "level",
    "state"
   ],
+  "coverage.missing[]": null,
   "cuts[]": [
    "delta",
    "key",
@@ -827,6 +1052,7 @@
    "date",
    "panel"
   ],
+  "cards[].series{}[]": null,
   "seats[]": [
    "seat",
    "ticker",
@@ -855,6 +1081,7 @@
  },
  "stockbee_ratio.json": {
   "top": [
+   "count",
    "gainers_5d",
    "gainers_today",
    "losers_5d",
@@ -862,6 +1089,98 @@
    "ratio_5d",
    "signal",
    "timestamp"
+  ]
+ },
+ "theme_board.json": {
+  "themes[]": [
+   "buckets",
+   "etf",
+   "member_count",
+   "members",
+   "momentum",
+   "rs",
+   "state",
+   "state_prev",
+   "theme"
+  ],
+  "themes[].buckets[]": [
+   "from",
+   "momentum",
+   "rs",
+   "state",
+   "to",
+   "weeks"
+  ],
+  "top": [
+   "asof",
+   "benchmark",
+   "bucket_days",
+   "counts",
+   "members_asof",
+   "parallel_until",
+   "proxy_map_date",
+   "themes"
+  ]
+ },
+ "theme_ladder.json": {
+  "history{}": [
+   "Improving",
+   "Lagging",
+   "Leading",
+   "Weakening",
+   "dates",
+   "delta",
+   "measurable"
+  ],
+  "history{}{}[]": null,
+  "rungs{}": [
+   "Improving",
+   "Lagging",
+   "Leading",
+   "Weakening",
+   "lagging_share",
+   "lagging_share_d5",
+   "measurable"
+  ],
+  "series{}": [
+   "rel",
+   "states_2w"
+  ],
+  "themes{}": [
+   "10w",
+   "2w",
+   "4w",
+   "6w",
+   "8w"
+  ],
+  "top": [
+   "as_of",
+   "benchmark",
+   "flux_days",
+   "history",
+   "ladder",
+   "note",
+   "r2w_lag",
+   "rungs",
+   "series",
+   "series_dates",
+   "themes"
+  ]
+ },
+ "tick_cycle.json": {
+  "top": [
+   "as_of",
+   "band",
+   "band_since",
+   "evidence",
+   "ma_close",
+   "ma_high",
+   "ma_low",
+   "note",
+   "reading",
+   "source",
+   "spread_rank252",
+   "stale_days"
   ]
  },
  "ticker_events.json": {
@@ -895,6 +1214,7 @@
    "atr_from_sma50",
    "atr_pct",
    "atr_pct_pctl_252",
+   "avg_vol50_prev",
    "avg_volume",
    "bar_date",
    "bar_scale_jumps",
@@ -923,20 +1243,26 @@
    "from_open_pct",
    "fund_asof",
    "fund_source",
+   "gap_pct",
    "growth_score",
    "h_score",
    "h_score_pctl",
    "high_52w",
    "high_52w_dist",
    "i_score",
+   "in_ndx",
    "in_sp500",
    "industry",
+   "industry_rank",
    "liquid_leader",
    "low_52w",
    "market_cap",
    "mdt",
    "min_vol_3d",
+   "min_vol_3d_1",
    "momentum_97",
+   "oops_buy",
+   "oops_sell",
    "perf_1m",
    "perf_1w",
    "perf_1w_pctile",
@@ -951,10 +1277,12 @@
    "pp_count_10d",
    "pp_count_30d",
    "prev_volume",
+   "profit_margin",
    "range5_pct",
    "range5_pct_pctl_252",
    "rel_volume",
    "revenue_growth",
+   "roe",
    "rs_1m",
    "rs_21d",
    "rs_3m",
@@ -964,10 +1292,12 @@
    "rs_line_pctl_21",
    "rs_line_pctl_63",
    "rs_rating",
+   "sb_avg_dollar_vol_20",
    "sector",
    "sma200_dist",
    "sma20_dist",
    "sma40_dist",
+   "sma50_atr_dist",
    "sma50_dist",
    "sp_1st",
    "sp_2nd",
@@ -992,14 +1322,19 @@
    "tradeable",
    "trend_base",
    "twt_buy_point",
+   "ud_vol_ratio_50",
    "vcs",
    "vol10_green",
    "vol10_green_count_10d",
    "vol_5d_50d",
    "volume",
+   "weinstein_stage",
    "wk_band_3",
    "wk_ema10",
-   "wk_ema20"
+   "wk_ema20",
+   "wk_sma30",
+   "wk_sma30_dist",
+   "wk_sma30_rising"
   ],
   "top": [
    "count",
@@ -1107,6 +1442,25 @@
    "ticker",
    "top20_industry",
    "top_3m"
+  ]
+ },
+ "x_heat.json": {
+  "rows[]": [
+   "days_7d",
+   "is_index",
+   "peak_day",
+   "peak_people",
+   "people_7d",
+   "posts_7d",
+   "ticker"
+  ],
+  "top": [
+   "count",
+   "note",
+   "rows",
+   "source",
+   "window",
+   "window_days"
   ]
  }
 }

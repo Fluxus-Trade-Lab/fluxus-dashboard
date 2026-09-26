@@ -201,7 +201,8 @@ def load_benchmark(path: Path = ETF_PATH, ticker: str = BENCHMARK,
     disagree by more than a rounding difference, the series is not the same
     series and the far bucket stays None rather than being silently mixed.
     """
-    rows = json.loads(path.read_text())
+    # etf_data.json wraps its rows behind `as_of` (T-0926-56)
+    rows = json.loads(path.read_text())["data"]
     row = next((r for r in rows if r.get("ticker") == ticker), None)
     if row is None:
         raise ValueError(f"Benchmark {ticker} not found in {path}")
@@ -636,7 +637,8 @@ def run() -> Dict[str, Any]:
     full_universe = load_universe(tradeable_only=False)     # for per-theme floors
     benchmark = load_benchmark()
     holdings = load_holdings()
-    etf_rows = {r["ticker"]: r for r in json.loads(ETF_PATH.read_text())}
+    # etf_data.json wraps its rows behind `as_of` (T-0926-56)
+    etf_rows = {r["ticker"]: r for r in json.loads(ETF_PATH.read_text())["data"]}
 
     verdicts = load_verdicts()
     industries = build_industries(universe, benchmark)

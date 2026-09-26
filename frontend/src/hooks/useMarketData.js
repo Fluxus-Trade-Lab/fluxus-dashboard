@@ -27,7 +27,11 @@ export function useMarketData() {
         FILES.map(async (name) => {
           const res = await fetch(`${BASE}/${name}.json`)
           if (!res.ok) throw new Error(`Failed to fetch ${name}`)
-          return [name, await res.json()]
+          const json = await res.json()
+          // etf_data.json wraps its rows behind `as_of` so the file's own
+          // freshness date is checkable (T-0926-56); unwrap here so the rest
+          // of the app keeps reading a bare array, same as before.
+          return [name, name === 'etf_data' ? (json.data ?? []) : json]
         })
       )
       const obj = Object.fromEntries(results)

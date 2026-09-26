@@ -297,7 +297,9 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     spy_sig = sig["SPY"]
     assert "ema5" in spy_sig and "ema5_prev" in spy_sig, "SPY block lost ema5/ema5_prev"
     assert spy_sig["ema5"] != spy_sig["ema5_prev"], "ema5 vs ema5_prev look like the same value"
-    etf = json.loads((out / "etf_data.json").read_text())
+    etf_payload = json.loads((out / "etf_data.json").read_text())
+    assert "as_of" in etf_payload, "etf_data.json lost its as_of date (T-0926-56)"
+    etf = etf_payload["data"]
     assert any(row["ticker"] == "UUP" for row in etf), "etf_data.json is missing its UUP row"
 
     # 3c. Every screener answers with a number. `stockbee_ratio` read `null`

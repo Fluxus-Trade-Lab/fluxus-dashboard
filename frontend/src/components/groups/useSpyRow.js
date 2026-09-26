@@ -20,7 +20,9 @@ export function useSpyRow() {
     let dead = false
     fetch('/data/output/etf_data.json')
       .then((r) => (r.ok ? r.json() : null))
-      .then((rows) => {
+      .then((payload) => {
+        // etf_data.json wraps its rows behind `as_of` (T-0926-56)
+        const rows = payload?.data
         if (dead || !Array.isArray(rows)) return
         setSpy(rows.find((e) => e.ticker === 'SPY') ?? null)
       })
