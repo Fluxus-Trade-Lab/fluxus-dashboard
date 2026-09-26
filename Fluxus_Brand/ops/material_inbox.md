@@ -210,6 +210,8 @@
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
+- [2026-09-26] [steve] **课程首单：从「产品化」到「市场验证」的第一个客观证据。** 09-26 CH00–07 成交 2 笔 $2,998，买家都是存量会员——这不是预报、不是预约、不是试单，是真实的「有陌生人掏钱了」的第一个统计样本。系统从「我们自己相信这个定价」升级到「市场用脚投票了」。诊断链条的递进：产品录制 → 定价测试 → 文案锁定 → 支付链路验证 → 成交落地，完整的五环。最要紧的不是金额数字本身，而是这个数字的来源链条每一环都是可审计的——会员名单 → Whop 后台 → 交易账本，三处一致。存量会员首批认可从「社群信任的定性观感」升级到「可验证的商业信号」。这个点素材化的价值是「build-in-public 不预告数字、只报过去式成交」的实践证明——不是「我们预期」而是「市场已验证」。[T-0926-41 · 170d7753](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/170d77536) · data/content/today_draft.md notes 段
+
 - [2026-09-26] [OPS] **系统诚实度：发现标签错了，核对了下游三个消费路径才敢不重抓。** 09-19 起复盘读的「互帮互助」其实是「trading-floor」（标签对调）。OPS 发现后没急着重跑，而是逐个验证了 `build_pack.py`（过滤条件跳过）、`daily-recap`（只读当期）、`discord-to-x`（取最新文件）——**三处都不回看历史日期**，所以标签改对自动生效于下一期。唯一在窗口内的 09-24 数据已现查，互帮互助 0 条，没有被遗漏的内容。不重抓的决定既经济又有根据。[T-0926-09 / 92b812bc](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/92b812bcc9006cb625cd358d27f5cc470a32f7a0) · [DATA_CONTRACTS.md](../../data/reference/DATA_CONTRACTS.md)
 
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
