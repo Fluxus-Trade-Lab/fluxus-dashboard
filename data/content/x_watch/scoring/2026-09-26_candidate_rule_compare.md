@@ -1,0 +1,48 @@
+# 候选闸判据并排评测 · 2026-09-04→2026-09-25
+
+取件账 09-06·1 的脚本化并排评测,机制见 [`tools/compare_candidate_rules.py`](../tools/compare_candidate_rules.py) 文件头注释。**判据 A** = 现行「不在昨天榜首」;**判据 B** = 提案「人数日环比(Δ≠0)」。前两条(≥2 人、立场 long/watching、剔清单剔指数)两边共用,只对比第三条。
+
+| 日期 | 判据 A 候选(不在昨天榜首) | 判据 B 候选(人数日环比) | 两边都选 | 只 A 选 | 只 B 选 |
+|---|---|---|---|---|---|
+| 2026-09-04 | — | — | — | — | — |
+| 2026-09-05 | — | — | — | — | — |
+| 2026-09-06 | `$HOOD`=2 · `$INTC`=3 · `$MRNA`=2 · `$NVDA`=3 | `$HOOD`=2(Δ+2) · `$INTC`=3(Δ+3) · `$MRNA`=2(Δ+2) · `$NVDA`=3(Δ+3) | `$HOOD` · `$INTC` · `$MRNA` · `$NVDA` | — | — |
+| 2026-09-07 | — | — | — | — | — |
+| 2026-09-08 | `$AAOI`=2 · `$AMD`=2 · `$COHR`=2 · `$DOCN`=3 · `$INTC`=3 · `$LITE`=4 · `$NBIS`=2 · `$SPCX`=5 | `$AAOI`=2(Δ+2) · `$AMD`=2(Δ+2) · `$COHR`=2(Δ+2) · `$DOCN`=3(Δ+3) · `$INTC`=3(Δ+3) · `$LITE`=4(Δ+4) · `$NBIS`=2(Δ+2) · `$SPCX`=5(Δ+5) | `$AAOI` · `$AMD` · `$COHR` · `$DOCN` · `$INTC` · `$LITE` · `$NBIS` · `$SPCX` | — | — |
+| 2026-09-09 | `$META`=2 · `$MU`=2 | `$META`=2(Δ+2) · `$MU`=2(Δ+2) | `$META` · `$MU` | — | — |
+| 2026-09-10 | `$NOW`=2 · `$OKTA`=2 · `$SNOW`=2 | `$NOW`=2(Δ+2) · `$OKTA`=2(Δ+2) · `$SNOW`=2(Δ+2) | `$NOW` · `$OKTA` · `$SNOW` | — | — |
+| 2026-09-11 | — | — | — | — | — |
+| 2026-09-12 | `$AMD`=4 · `$BE`=2 | `$AMD`=4(Δ+4) · `$BE`=2(Δ+2) | `$AMD` · `$BE` | — | — |
+| 2026-09-13 | `$GOOGL`=2 · `$META`=2 · `$PLTR`=2 · `$TSLA`=2 | `$GOOGL`=2(Δ+2) · `$META`=2(Δ+2) · `$PLTR`=2(Δ+2) · `$TSLA`=2(Δ+2) | `$GOOGL` · `$META` · `$PLTR` · `$TSLA` | — | — |
+| 2026-09-14 | `$AMZN`=2 · `$COIN`=4 · `$CRWD`=2 · `$FTNT`=2 · `$NBIS`=3 · `$NET`=2 · `$OKTA`=2 | `$AMZN`=2(Δ+2) · `$COIN`=4(Δ+4) · `$CRWD`=2(Δ+2) · `$FTNT`=2(Δ+2) · `$NBIS`=3(Δ+3) · `$NET`=2(Δ+2) · `$OKTA`=2(Δ+2) | `$AMZN` · `$COIN` · `$CRWD` · `$FTNT` · `$NBIS` · `$NET` · `$OKTA` | — | — |
+| 2026-09-15 | `$AMD`=3 | `$AMD`=3(Δ+3) | `$AMD` | — | — |
+| 2026-09-16 | `$BE`=2 · `$LITE`=3 · `$SMTC`=2 | `$BE`=2(Δ+2) · `$LITE`=3(Δ+3) · `$SMTC`=2(Δ+2) | `$BE` · `$LITE` · `$SMTC` | — | — |
+| 2026-09-17 | `$SPCX`=2 | `$SPCX`=2(Δ+1) | `$SPCX` | — | — |
+| 2026-09-18 | `$HOOD`=2 · `$PURR`=3 · `$SNDK`=3 | `$HOOD`=2(Δ+2) · `$PURR`=3(Δ+3) · `$SNDK`=3(Δ+3) | `$HOOD` · `$PURR` · `$SNDK` | — | — |
+| 2026-09-19 | `$PLTR`=2 · `$SOXX`=2 | `$PLTR`=2(Δ+2) · `$SOXX`=2(Δ+2) | `$PLTR` · `$SOXX` | — | — |
+| 2026-09-20 | `$AMD`=3 · `$ARM`=2 · `$HOOD`=2 · `$HPE`=2 · `$HUT`=2 · `$INTC`=4 · `$MU`=5 · `$NBIS`=2 · `$NVDA`=2 · `$SNDK`=5 | `$AMD`=3(Δ+3) · `$ARM`=2(Δ+1) · `$HOOD`=2(Δ+1) · `$HPE`=2(Δ+2) · `$HUT`=2(Δ+2) · `$INTC`=4(Δ+4) · `$MU`=5(Δ+4) · `$NBIS`=2(Δ+1) · `$NVDA`=2(Δ+1) · `$SNDK`=5(Δ+5) | `$AMD` · `$ARM` · `$HOOD` · `$HPE` · `$HUT` · `$INTC` · `$MU` · `$NBIS` · `$NVDA` · `$SNDK` | — | — |
+| 2026-09-21 | `$CBRS`=2 · `$CRWD`=2 · `$LITE`=2 · `$MRVL`=3 · `$NET`=2 · `$OKTA`=2 | `$CBRS`=2(Δ+1) · `$CRWD`=2(Δ+2) · `$LITE`=2(Δ+2) · `$MRVL`=3(Δ+2) · `$MU`=2(Δ-3) · `$NET`=2(Δ+2) · `$NVDA`=3(Δ+1) · `$OKTA`=2(Δ+2) | `$CBRS` · `$CRWD` · `$LITE` · `$MRVL` · `$NET` · `$OKTA` | — | `$MU` · `$NVDA` |
+| 2026-09-22 | `$MU`=2 | — | — | `$MU` | — |
+| 2026-09-23 | `$BE`=2 · `$CRWD`=2 · `$NOW`=2 · `$PANW`=4 · `$PLTR`=3 · `$U`=4 | `$BE`=2(Δ+2) · `$CRWD`=2(Δ+2) · `$MU`=4(Δ+2) · `$NOW`=2(Δ+2) · `$PANW`=4(Δ+4) · `$PLTR`=3(Δ+3) · `$U`=4(Δ+4) | `$BE` · `$CRWD` · `$NOW` · `$PANW` · `$PLTR` · `$U` | — | `$MU` |
+| 2026-09-24 | `$AMD`=3 · `$ARM`=2 · `$CPU`=2 · `$DELL`=2 · `$HPE`=3 · `$INTC`=3 · `$MU`=2 · `$NBIS`=2 · `$NET`=2 · `$ORCL`=2 · `$RKLB`=2 · `$SNDK`=2 | `$AMD`=3(Δ+2) · `$ARM`=2(Δ+2) · `$CPU`=2(Δ+2) · `$DELL`=2(Δ+2) · `$HPE`=3(Δ+3) · `$INTC`=3(Δ+2) · `$MU`=2(Δ-2) · `$NBIS`=2(Δ+2) · `$NET`=2(Δ+1) · `$ORCL`=2(Δ+2) · `$RKLB`=2(Δ+2) · `$SNDK`=2(Δ+2) | `$AMD` · `$ARM` · `$CPU` · `$DELL` · `$HPE` · `$INTC` · `$MU` · `$NBIS` · `$NET` · `$ORCL` · `$RKLB` · `$SNDK` | — | — |
+| 2026-09-25 | `$SKHY`=4 | `$AMD`=2(Δ-1) · `$INTC`=2(Δ-1) · `$SKHY`=4(Δ+3) | `$SKHY` | — | `$AMD` · `$INTC` |
+
+## 小计(22 天)
+- 判据 A 选中候选 76 票-日 · 判据 B 选中候选 80 票-日 · 重叠 75 票-日
+- 只 A 选、B 不选(A 会漏掉的、Δ=0 却仍是新上榜的极少数情形):`$MU`
+- 只 B 选、A 不选(A 因为「昨天出现过」误杀,但今天人数其实有真实位移):`$AMD`、`$INTC`、`$MU`、`$NVDA`
+
+## 「换人不换数」个案扫描
+
+同一票连续两天都 ≥2 个 qualifying 人,但两天的人**完全不重叠**——这类票判据 A 必排除(昨天已候选过),严格「人数环比」(判据 B,总人数之差)在人数没变时**也**排除。README 09-06·1 引用的 09-14 `$GOOGL` 真实案例就是这个形状。
+
+| 日期 | 票 | 昨天是谁 | 今天是谁 | 判据 A 接住? | 判据 B(严格人数环比)接住? |
+|---|---|---|---|---|---|
+| 2026-09-14 | `$GOOGL` | Venu_7_ / ZaStocks | Jake__Wujastyk / TheProfInvestor | ❌ | ❌ |
+| 2026-09-21 | `$INTC` | NickSchmidt / Venu_7_ / ZaStocks / mindofzen_ | 1ChartMaster / Jake__Wujastyk / bluechipdaily / thesetupfactory | ❌ | ❌ |
+| 2026-09-21 | `$MU` | GnT_Trades / TheProfInvestor / Venu_7_ / ZaStocks / wey_how12640 | ShakePryzby1 / bluechipdaily | ❌ | ✅ |
+| 2026-09-24 | `$MU` | ConnorJBates_ / NickSchmidt / TheProfInvestor / thesetupfactory | 1ChartMaster / RealSimpleAriel | ❌ | ✅ |
+
+⚠️ **2/4 例「换人不换数」,判据 B 按字面(总人数之差)也接不住**——因为环比算的是总数的加减,人数刚好没变时 Δ=0,跟判据 A 一样把它排除。「人数日环比」如果要真的接住这类假阴性,环比的对象得从「总人数」换成「新面孔人数」(今天 qualifying 的人里,有几个不在昨天 qualifying 名单上)——这是本次评测发现的、原提案文字没写清楚的一个歧义,留给 Steve 周日和这份表一起判。
+
+⚠️ 本报告只出对照数据,不改现行判据。Steve 周日按这份数据在 README.md 取件账 09-06·1 行定夺。
