@@ -1,27 +1,25 @@
-date: 2026-09-25
+date: 2026-09-26
 tier: B
 source: queue
 gate: 🎮 1/5（本周 09-21 起，posts.csv 计）· streak 台账未定义，未登记
 ---
 ## C1
-bucket: QUOTE(EN) | entry: 93
-Market on a mission to destroy both sides.
-why: `Fluxus_Queue.md` 下周队列表第 5 格排定今天（09-25 五）发这条，Own_Lines #93⭐⭐⭐。这条经过两轮 Andy 亲自校正才落到今天：09-16 曾被误记为「已发」又更正为「未发，回弹药库」（verdicts.jsonl 两条 queue#93 行），09-20 结算台 Andy 原话「队列#93还挂着 放入下周要用的选题」把它点名补排进 09-25——今天是它第三次被排期，也是第一次有 Andy 亲口确认的日期锚点。
+bucket: QUOTE(中) | entry: 100
+价格只是回到几个月前。情绪回不去了。
+why: `Fluxus_Queue.md` 下周队列表第 6 格排定今天（09-26 六）发这条，Own_Lines #100⭐⭐⭐「情绪 vs 价格，一句讲完」。这是本周（09-21→09-27）队列表最后一个中文位，编排走到「承认」这一格。
 ---
 ## C2
-bucket: VOICE | entry: -（2026-09-24 Founders Note 口述，未单独发过）
+bucket: QUOTE(EN) | entry: -（2026-09-24 Founders Note 口述，未单独发过）
 Focus on RS leaders, not breadth. They can lie.
 中文版：盯相对强度的龙头，不要盯广度——广度会骗人。
-why: Andy 09-24 口述原话（`voice/raw/2026-09-24_founders_note_rs_over_breadth.md`），已用进 09-23 复盘的 Founders Note 正文，但从未作为独立 X 帖发过；出处双重（他的话 + O'Neil《How to Make Money in Stocks》「Interpret the Overrated Advance-Decline Line」一节，已登记 `METRIC_SOURCES.md`），四样具体物占三样（原话+可查书证+已用场景），够格进 C 档。
+why: Andy 09-24 口述原话（`voice/raw/2026-09-24_founders_note_rs_over_breadth.md`），已用进 09-23 复盘的 Founders Note 正文，从未作为独立 X 帖发过；出处双重（他的话 + O'Neil《How to Make Money in Stocks》「Interpret the Overrated Advance-Decline Line」一节，已登记 `METRIC_SOURCES.md`）。昨天（09-25）曾端过一次未获判决，今天第二次端。
 ---
 ## C3
-bucket: QUOTE(EN) | entry: 76
-Borrowed conviction was never conviction.
-中文版：借来的信念，从来都不是信念。
-why: Own_Lines #76⭐⭐⭐「全库最好的一条之一」，`posts.csv`/`verdicts.jsonl` 全查未出现过，从未端过；与 C1（市场脾气）、C2（方法论）不同类目，纪律/信念主题独立成立。
+bucket: QUOTE(中) | entry: -
+你看我止损的单子特别多。一部分是纪律，一部分是我做太多了。
+why: Own_Lines #28⭐⭐⭐，原话打磨版。09-13 曾端过一次（`verdicts.jsonl` 标 ignored，非 rejected），13 天未再出现，`posts.csv` 全查未发过。自嘲劈半的结构（一半纪律一半做太多）正是 `fable-voice` 手感库第 1 条讲的「诚实劈半」，换下昨天的 #76 做候选轮换。
 ---
 ## notes
-- **今天是课程发售日**（NOW.md 本周主线，Andy 09-19 22:10 JST 改期定案；`Fluxus_Course_Launch_2026-09-25.md` §四写明「X 主帖：官宣，附 Whop 链接」）——**但截至本班备稿时刻（09:25 JST），官宣文案与购买链路都还没到「可发」状态**：Whop 上架检查清单/测试购买（T-0919-68）状态仍是 `needs_andy`，尚待 Andy 本人点开验证；X 官宣正文归 Mia 执笔，仓库里目前只有落地页/定价页文案草稿（`Fluxus_Masterclass_Sales_Copy_Draft_2026-09-25.md`），没有专门写好的 X announcement thread。**本备稿不代写这条、也不假装它已就绪**——C1-C3 是队列/口述里已经写好的成品，官宣一旦定稿应作为当天的加发内容，不是本表能预判的。
-- 课程内容今天凌晨已推 Cloudflare（`T-0925-03`，前言/M1/CH00–07 共 25 页，done），说明发布机制侧在推进，但对外文案与销售渠道验证两块仍卡在需要 Andy 亲自动手的环节。
-- 09-23 口述原料 `voice/raw/2026-09-23_book_620_gil_morales.md`（Gil Morales 620 图口径）仍是课程书稿素材，非 X 成品，继续不纳入候选。
-- 🎮 关卡数字：posts.csv 本周（09-21 起）仅 1 条记录（09-22 ARM 长文），streak 字段台账无定义来源，未编造数字。
+- **⭐ 课程今天出了第一笔真实成交**：`material_inbox.md` 09-26 记「CH00–07 成交 2 笔 $2,998，买家都是存量会员」（commit `5fa908742`）——这是课程线从「产品化」到「市场验证」的第一个真数字，完全符合 `Fluxus_Build_In_Public.md` 的硬门槛（过去式、真数字、不预告）。**这条不是成品，是素材**：Steve 只递稿不代写，正文需要 Mia 起草一条 build-in-public 帖（老会员首批买单，past tense，真实金额）——本表不能替她写，只标出这是本周最值得优先生产的一条新内容，供日推/交接引用。
+- C2/C3 均为库存金句轮换出的候选，非今天新写；今天真正「新」的是上面这条课程首单素材，还没有对应的 X 成品。
+- 昨天（09-25）课程官宣文案与购买链路仍卡在 `needs_andy`；今天已看到真实成交说明链路至少部分跑通了，但没有查到官宣 X thread 是否已发（`posts.csv` 截至本班备稿时仍只有 09-22 一条记录），如实标注不假设。
