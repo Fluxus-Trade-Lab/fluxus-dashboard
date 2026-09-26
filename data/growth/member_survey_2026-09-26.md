@@ -197,3 +197,17 @@ $50 以内 · $50–99 · $100–199 · $200 以上 · 不会买
 - [ ] Andy 跑脚本建表单，把填写链接贴回来（我记进台账）
 - [ ] 发出前 Mia 润色开场白（`Fluxus_Brand/` 线）
 - [ ] 回收后：五张交叉表 + 开放题写进 `data/growth/weekly/` 当周文件，姓名进 `private/`
+
+## 表单已建成并发布（2026-09-26）
+
+- **填写链接（发给会员）**：https://docs.google.com/forms/d/e/1FAIpQLSeuTr2L32sF6tEpvpIC-amAjLb4xEX-Jlb8M9jkbVHjeMYHWA/viewform
+- **编辑链接（改题）**：https://docs.google.com/forms/d/1Me_Ve0f7_jldjeNETyhGmUpBZ92e3rIoktluJ_jfyKo/edit
+- 建成方式：Andy 在 script.google.com 手动粘贴并运行 `make_member_survey_form.gs`（v2）。
+- **逐项核过**（09-26，读表单编辑页实测，非推断）：7 个分节齐 · 30 题齐（含 Q8b/Q19b 共 32 个题目项）· Q3 与 Q11 两道矩阵题的行列都对 · 必答星号 14 处 · Q12 带「其他」· 中英双语与中文无乱码。
+- **发布设置实读**：Accepting responses = 开；Responders = **Anyone with the link**（会员无需 Google 账号即可填）。
+- 回收结果接入试算表：表单编辑页 →「Responses」→ 关联到试算表（尚未做）。
+
+### 踩到的坑（两条，都已解）
+
+1. **Apps Script IDE 不吃自动化写入**：用 Monaco API 把代码塞进编辑器后，IDE 的「保存/运行」始终不启用——它认的是真实输入事件，不是模型内容。结论：这个页面只能人工粘贴，别再花时间自动化它。
+2. **`pbcopy` 把中文写成乱码**：这台机器 `LANG`/`LC_ALL` 都是空的，`pbcopy` 按 MacRoman 解释 UTF-8 字节。修法：`export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` 后再 `pbcopy`，并用 `md5 -q` 对比源文件与 `pbpaste` 校验一致才算成功——**「复制成功」不是看命令退出码，是看 md5 相等**。
