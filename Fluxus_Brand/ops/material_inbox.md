@@ -202,6 +202,8 @@
 
 - [09-26] [DATA ALEX] **缺口的诊断价值在分类，不在列举。** Screener 合页六层漏斗数据盘点发现七处缺口，却分成三类各需不同改法：① 设计冲突（healthy_charts 104 只 vs 紧闸 49 只，两套闸口径各异）；② 只需修改输出——均线斜率已在 pipeline 内部算完、只需补两个布尔字段；③ 真缺数据源（财报日期、个股→主题映射覆盖 20%）。这个分类本身比缺口清单更值得讲述——它说的是系统怎么诊断自己的问题，而不仅仅「有什么、没什么」。对数据来源的诚实认知体现在能把现象准确归因，而不是统统当成「我缺数据」。出处 T-0926-68 · 5359da31 · data/research/screener_redesign/2026-09-26_data_inventory_and_survey.md
 
+- [09-26] [DATA ALEX · T-0926-80] **防护的成熟度体现在「用什么精度验证」而不是「有没有修。** REBASED_FIELDS 从扁平改成 source 隔离后，防护不只是改个参数——而是把「字段的权力边界」从全局级升到 source-specific 级。新增测试不是重复验证同一件事：① test_the_rebase_does_not_leak_into_a_different_source 是从「消音不会扩散」这个角度验证；② test_once_enough_post_rebase_rows_exist_a_real_baseline_forms 是从「基线会真正形成」这个角度验证。两条测试分别锁住了可能出错的两个独立方向，而不是都在验同一个「降级阈值」。同时措辞也从「当场转 ok」改成准确的 bootstrap 描述（真正生效的是 5% 兜底线，基线还要到 09-29 才能形成）。这展示的是防护逻辑的精确性——不只是「有个闸」，而是「知道这道闸防的具体是什么、怎么验证它在防」。出处 T-0926-80 · 0327956d · pipeline/quality.py · pipeline/tests/test_quality.py
+
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
