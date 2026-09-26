@@ -579,6 +579,46 @@ def test_a_skipif_that_asks_the_machine_counts_even_without_the_keywords(tmp_pat
     assert cov.suite_tests(tmp_path)[0]["history_gated"] is True
 
 
+def test_a_skipif_that_asks_the_machine_nothing_is_not_history_gated(tmp_path):
+    """The other half of the line above, and the half nothing was watching.
+
+    `history_gated` decides whether a shallow checkout is allowed to excuse a
+    test. Over-flagging is the expensive direction: a `skipif(False)` marked
+    as history-gated gets written off as "shallow checkout skipped it", and
+    the test stops being anybody's problem.
+
+    Two survivors sat on this one expression (`and` -> `or`, `h in seg` ->
+    `h not in seg`) and both of them turn this False into True. Neither was
+    visible from the flagged side: `_has("abc")` keeps reading True under
+    `not in` too, because a real condition never contains *every* hint.
+    """
+    _write_suite(tmp_path, "pipeline/tests", """\
+        import pytest
+        @pytest.mark.skipif(False, reason="x")
+        def test_a(): pass
+        """)
+    assert cov.suite_tests(tmp_path)[0]["history_gated"] is False
+
+
+def test_a_decorator_chain_that_ends_at_mark_is_read_without_crashing(tmp_path):
+    """`@pytest.mark` with nothing after it: no marker, and no traceback.
+
+    `i + 1 >= len(attr)` is the only thing standing between this decorator and
+    an IndexError one line later. An auditor that raises on one malformed
+    decorator reports nothing about the other 3,600 tests -- so the failure
+    mode here is not a wrong number, it is no number at all.
+    """
+    _write_suite(tmp_path, "pipeline/tests", """\
+        import pytest
+        @pytest.mark
+        def test_a(): pass
+        @pytest.mark.slow
+        def test_b(): pass
+        """)
+    got = {t["name"]: t["markers"] for t in cov.suite_tests(tmp_path)}
+    assert got == {"test_a": set(), "test_b": {"slow"}}
+
+
 def test_t3_uses_the_repo_it_was_given_not_the_module_constant(tmp_path):
     """`--repo` was half-honoured: T3 went and asked the real repository."""
     res = cov.check([], [], declared={"tests": ("o", "r", "d")}, repo=tmp_path)
@@ -912,6 +952,19 @@ def test_render_does_not_say_and_zero_more_when_the_bucket_is_exactly_three():
     text = cov.render(_res(buckets={"marker:slow": _bucket_items(3)}, total=3))
     assert text.count("      e.g.   ") == 3
     assert "more" not in text
+
+
+def test_render_accounts_for_the_fourth_test_when_the_bucket_is_exactly_four():
+    """One past the boundary -- the only width at which `> 3` and `> 4` differ.
+
+    Seven and three were both measured; four was not, and `3 -> 4` on this
+    comparison survived because of it. Under the mutant a four-test bucket
+    prints three examples and stops: the header says 4, the body shows 3, and
+    the missing one is silently the reader's problem.
+    """
+    text = cov.render(_res(buckets={"marker:slow": _bucket_items(4)}, total=4))
+    assert text.count("      e.g.   ") == 3
+    assert "... and 1 more" in text
 
 
 @pytest.mark.parametrize("depth,expected", [
