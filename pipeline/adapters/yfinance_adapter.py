@@ -15,6 +15,7 @@ from .base_adapter import BaseAdapter
 from .yahoo_budget import BUDGET
 from ..constants.tickers import STOCK_GROUPS
 from ..constants.leveraged import get_leveraged_etfs
+from ..marketcal import last_completed_session
 from ..screeners.atr_enrichment import atr_multiple_from_levels
 from ..screeners.stage_analysis import moglen_bar_fields
 from ..macro.calc_signals import calculate_ma_structure, calculate_power_trend
@@ -858,6 +859,13 @@ class YfinanceAdapter(BaseAdapter):
         data = yf.download(tickers, period='1y', group_by='ticker',
                            progress=False, threads=True)
 
+        # T-0926-56: this was the one data/output file with no date key at
+        # all -- a bare JSON list, so nothing (human or gate) could tell it
+        # apart from a stale copy. `as_of` is the ET trading day, same
+        # `last_completed_session()` source every other file's date field
+        # already uses in run_all.py, not the fetch instant.
+        as_of = last_completed_session().isoformat()
+
         spy_hist = None
         if 'SPY' in data.columns.get_level_values(0):
             spy_hist = data['SPY'][['High', 'Low', 'Close']].dropna()
@@ -948,6 +956,7 @@ class YfinanceAdapter(BaseAdapter):
                         sparkline = [round(float(v) / base, 4) for v in spark_data]
 
                 results.append({
+                    'as_of': as_of,
                     'ticker': ticker,
                     'close': close,
                     'change_pct': float((close - hist['Close'].iloc[-2]) / hist['Close'].iloc[-2]) if len(hist) >= 2 else None,

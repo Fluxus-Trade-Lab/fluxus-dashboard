@@ -179,6 +179,11 @@ def build(proxies: Mapping[str, str],
         "members_asof": members_asof,
         "benchmark": BENCH,
         "bucket_days": BUCKET_DAYS,
+        # `PROXY_MAP_DATE` in constants/theme_proxies.py -- the theme->ETF
+        # mapping table's own last-edited date, not a market-data date. It
+        # only moves when someone edits that table, so it drifts further
+        # behind `asof` on every day nobody touches it, then jumps. A gap
+        # here is not a same-fixed-lag rule and not a bug (T-0926-56).
         "proxy_map_date": proxy_map_date,
         "parallel_until": parallel_until,   # 并排期结束日，到期撤 state_prev
         "counts": counts,

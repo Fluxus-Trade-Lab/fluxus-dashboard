@@ -299,6 +299,11 @@ def test_run_all_end_to_end(tmp_path, monkeypatch):
     assert spy_sig["ema5"] != spy_sig["ema5_prev"], "ema5 vs ema5_prev look like the same value"
     etf = json.loads((out / "etf_data.json").read_text())
     assert any(row["ticker"] == "UUP" for row in etf), "etf_data.json is missing its UUP row"
+    # T-0926-56: etf_data.json was the one data/output file with no date key
+    # at all (a bare list, no top-level wrapper to hang a timestamp on) --
+    # nothing could tell a stale copy apart from a fresh one. Every row now
+    # carries the canonical `as_of` key (see DATA_CONTRACTS.md §十九).
+    assert etf and all("as_of" in row for row in etf), "etf_data.json rows are missing as_of"
 
     # 3c. Every screener answers with a number. `stockbee_ratio` read `null`
     # for eight nights while its output file was healthy, because the payload

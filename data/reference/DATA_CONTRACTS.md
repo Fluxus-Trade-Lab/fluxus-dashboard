@@ -1434,3 +1434,15 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 - **事实错**：同一行「Whop 另有一个 Free 产品『Fluxus Masterclass』…课程正片挂在免费产品上」是**误报**。09-26 12:2x JST 在 Whop 后台实核：用「Preview as」只看 $0 产品「Fluxus Masterclass」，侧栏**没有任何 app**；课件 app `Fluxus Masterclass 2026` = `exp_bzetHy6Yy5rnlj`，**只装在 $1,499 产品**上（产品列表「Included apps」列：$1,499 = FM，$0 = None）。那句来自台账推断，没在后台看过。
 - 顺带记一笔真事故（不归你，归书线，已修）：Cloudflare Pages Production 从上线起就缺 `WHOP_API_KEY`，门禁代码缺变量时 fail-open，会员资格二次校验空转一天；Andy 已补变量、重部署 `aca44a81`、真会员验过能进；代码改 fail-closed（SwingMasterclass `aa46b1d`）。
 - 请你：在 `metrics.csv` 追一行 2026-09-26 更正（或在 notes 末尾追「更正：…」，**不重写原行**），做完在本节下追 `↳ 已执行（日期）`。私有仓库 fluxus-ops 的 `pages/course_launch.html` 我已改（`75fe690c`）。
+
+## 十九、[2026-09-26] alex：T-0926-56 口径日期审计——`data/output` 顶层日期键统一为 `as_of`
+
+起因（Andy 亲裁开单）：「开单给 ALEX，检查这些bug，不过我知道宇宙闸不是bug，是真的设计，如果合成一页，的确需要一个默认的。」全量核了 `data/output/` 36 个文件的口径日期，查出两个真问题、确认一个非问题：
+
+- **① `etf_data.json` 之前完全没有日期键**（裸的 168 元素 JSON 列表，任意深度找不到日期串）。已修：`pipeline/adapters/yfinance_adapter.py::fetch_etf_data` 给每一行加 `as_of`（`pipeline.marketcal.last_completed_session().isoformat()`，ET 交易日，和 `run_all.py` 里其余 `timestamp`/`date` 字段同一个来源，不是抓取时刻）；同一提交把仓库里现存的 `data/output/etf_data.json` 也按同一交易日（2026-09-25，与同一次跑出的 `market_health.json`/`breadth.json` 一致）回填了这个字段，免得等今晚 cron 才生效。
+- **② 日期键此前有 7 个不同名字**（`timestamp`×15、`date`×8、`as_of`/`asof` 各 2/1 同时并存、`members_asof`/`proxy_map_date`/`parallel_until` 各 1）。**定案：新文件一律用 `as_of`**（`YYYY-MM-DD`，ET 交易日）。旧文件的既有键名不强制重写（22 个文件逐一改写等于碰一遍 `run_all.py` 所有写出点，风险和收益不成比例），但新增 `pipeline/tests/test_output_date_keys.py` 当闸：遍历 `data/output/*.json`，任何**新**文件若既没有 `as_of` 也没有那 6 个legacy 名字之一，测试直接红——治的正是「下一个新文件用第 8 个名字会被静默漏掉」那句话本身：审计过程中就撞见了一个活案例，`portfolio_backtest.json` 用的是 `generated_at`，一个 7 个名字都没扫到的第 8 个名字；它连同 `h1_2026_stats.json`/`performance.json`/`x_heat.json` 三个静态报表（H1 回测、组合复盘、X 热度周窗口，不是每日快照）一起登记进测试的 `EXEMPT_FILES`，附各自的理由和它们自己的准日期字段，不强行套 `as_of` 语义。
+- **③ `theme_board.json` 的 `proxy_map_date`（2026-09-24）落后 `asof`（2026-09-25）一天——确认是设计，且比"故意滞后一天"更精确一层**：`proxy_map_date` 来自 `pipeline/constants/theme_proxies.py` 的 `PROXY_MAP_DATE` 常量，是**主题→ETF 映射表自己的最后编辑日期**，不是行情日期——它只在有人改表时才动，不改表的每一天它都会继续落后 `asof`，改表的那天会跳到当天，**不是固定一天的滞后规则**。已在 `pipeline/themes/proxy_board.py` 写入代码注释说明这一点，防止下一个查到这里的人重新查一遍（本单起因原文就点名"我刚查过一遍"）。
+- **✅ 一条假警报已在任务书里作废，不用再查**：`universe.json` 与 `watchlist.json` 曾报差一天，起因单已确认是比较了夜班跑前跑后两个快照，重拉后两边同为 2026-09-25，不是真偏差。
+- **不是 bug，未改动（Andy 本单亲口确认）**：Today's List（日额 ≥$20M）与 Screener（日额 ≥$2M）两页的宇宙闸不同是真实设计差异，两页合成一页时挑默认档、做成可切换属于前端（Claire）范畴；`universe.json` 里 136 只落后一天 + 48 只无 `bar_date`（均为 `tradeable: false` 的 SPAC/units/退市壳，`bars_stale` 已标记 137 只）同样是设计如此。
+
+**产出**：`pipeline/adapters/yfinance_adapter.py`（加 `as_of` 列）· `pipeline/screeners/run_all.py` 无需改（写出口不变）· `pipeline/themes/proxy_board.py`（注释）· `pipeline/tests/test_output_date_keys.py`（新测试，闸新文件）· `pipeline/tests/test_run_all_smoke.py`（补 etf_data 行断言）· `data/output/etf_data.json`（回填现存文件）· 本行。三个测试根全绿（3644 passed, 1 skipped）。
