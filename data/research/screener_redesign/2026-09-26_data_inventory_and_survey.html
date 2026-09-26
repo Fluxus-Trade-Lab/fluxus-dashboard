@@ -112,7 +112,7 @@
     <tr><td>EP</td><td><code>ep_qullamaggie.json</code> / <code>ep_stockbee.json</code></td><td>各自流派定义，<code>unmeasured</code> 标了无法量化部分</td><td class="ok">✅ 有</td></tr>
     <tr><td>VCP</td><td><code>vcp.json</code></td><td>oratnek VCS v2 verbatim port</td><td class="ok">✅ 有</td></tr>
   </table>
-  <div class="callout">⚠️ ema21_watch 不检查「财报 7 天以外」这一条（课程原文要求，代码注释明确写了不查）——Andy 定尺子不改，这里只是记一笔风险。</div>
+  <div class="callout">⚠️ 课程原文要求"财报 7 天以外"，实测 ema21_watch.py 全文没有 earnings/财报 字样——不是代码注释写明放弃，是压根没实现这条检查。Andy 定尺子不改，这里只是记一笔风险。</div>
 
   <h3>层⑤ 主题状态 + 大盘读数</h3>
   <table>
@@ -130,7 +130,7 @@
     <tr><th>扫描器</th><th>课程判据</th><th>dashboard 现状</th></tr>
     <tr><td>成长股周频池</td><td>EPS/营收 yoy≥20%、站上 50 日线、10/20EMA 上</td><td class="warn">⚠️ 基本面字段覆盖率低（多为 None），均线位置可算、斜率同层③缺口</td></tr>
     <tr><td>板块与主题 ETF</td><td>11 行业+自定义主题</td><td class="ok">✅ etf_data.json + theme_board.json</td></tr>
-    <tr><td>事件驱动跳空</td><td>财报缺口≥10%，守住 1 天</td><td class="bad">❌ 财报日历只覆盖 245/5611 只，要新数据源</td></tr>
+    <tr><td>事件驱动跳空</td><td>财报缺口≥10%，守住 1 天</td><td class="bad">❌ 245 只 tearsheet 里也只有 22 只有真实 next_earnings 日期，universe 级别没有财报日历，要新数据源</td></tr>
     <tr><td>流动性龙头</td><td>距 52 周低+70%、日均量≥200万、站上 50 日线、RS 前 20%</td><td class="warn">🔶 有但口径不同，缺「距 52 周低+70%」这条</td></tr>
     <tr><td>龙头回踩</td><td>见层④</td><td class="ok">✅ ema21_watch.json</td></tr>
     <tr><td>52 周新高</td><td>5 天内创新高，量≥1.5倍均量</td><td class="warn">⚠️ 无独立产出，字段都在，可算</td></tr>

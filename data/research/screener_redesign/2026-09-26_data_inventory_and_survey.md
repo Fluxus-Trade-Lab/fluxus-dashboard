@@ -67,7 +67,7 @@ evidence: 全部字段现场读 data/output/*.json、pipeline/*.py 源码、cour
 | EP | `ep_qullamaggie.json` + `ep_stockbee.json` | 两家各自的 EP 定义，`unmeasured` 字段里各自标了没法量化的部分（Stockbee 的"neglect + 变盘财报"是人工读，无数据） | ✅ 有 |
 | VCP | `vcp.json` | oratnek VCS v2 verbatim port | ✅ 有 |
 
-⚠️ **ema21_watch 与课程 §5.5 表里的"龙头回踩"定义有一处差**：课程原文要求"财报在 7 天以外"，`ema21_watch.py` 的注释明确写了它**不检查财报日期**（因为个股财报字段本来就没有全覆盖，见下面层⑥前的"财报"节）。Andy 说尺子不改，这里只是记一笔：现在过这个 setup 的名字，理论上可能财报就在后天。
+⚠️ **ema21_watch 与课程 §5.5 表里的"龙头回踩"定义有一处差**：课程原文要求"财报在 7 天以外"，实测 `ema21_watch.py` 全文没有 earnings/财报 字样——它的判据（21EMA/50SMA 距离、日内收盘位置、周涨幅、preset 附加条件）里**没有实现这一条**，不是代码注释里写明放弃，是压根没有这个检查（个股财报字段本来就没有全覆盖，见下面这一节）。Andy 说尺子不改，这里只是记一笔：现在过这个 setup 的名字，理论上可能财报就在后天。
 
 ## 层⑤ 主题状态 + 大盘读数
 
@@ -91,7 +91,7 @@ evidence: 全部字段现场读 data/output/*.json、pipeline/*.py 源码、cour
 |---|---|---|
 | 成长股周频池 | EPS/营收 yoy≥20%、站上 50 日线、10/20EMA 上 | ⚠️ `eps_growth_this_y`/`revenue_growth` 字段在，但样本行里几乎全是 `None`（fundamentals_store 覆盖率低）；均线位置条件可算，斜率同层③缺口 |
 | 板块与主题 ETF | 11 行业+自定义主题 | ✅ `etf_data.json` + `theme_board.json` |
-| 事件驱动跳空 | 财报缺口≥10%，缺口守住 1 天 | ❌ 要新数据源：全 universe 的财报日历现在只覆盖 245/5,611 只（`data/output/tickers/*.json` 的 `next_earnings`，只给 tearsheet 追踪的票），5,611 只普查级别没有 |
+| 事件驱动跳空 | 财报缺口≥10%，缺口守住 1 天 | ❌ 要新数据源：`data/output/tickers/*.json` 的 `next_earnings` 只给 245 只 tearsheet 追踪票，且这 245 只里现场实测只有 22 只（约 9%）`next_earnings.date` 真的有值（yfinance 抓不到大多数票的下一次财报日）；5,611 只 universe 普查级别完全没有财报日历，缺口比"只覆盖 245 只"更大 |
 | 流动性龙头 | 距 52 周低+70%、日均量≥200 万股、站上 50 日线、RS 前 20% | 🔶 有但口径不同：`universe.json.liquid_leader` 实现是 avg_volume≥200万且 sma50_dist>0 且 rs_3m≥80，**没有"距 52 周低+70%"这一条**（引用见 `run_all.py:635` 注释，实现依据是 TradersLab Alex 的扫描说明，非课程原文） |
 | 龙头回踩 | 见层④ | ✅ `ema21_watch.json` |
 | 52 周新高 | 5 天内创新高，量≥1.5倍均量 | ⚠️ 无独立产出，但 `days_since_52wh`+`rel_volume` 两个字段都在，用现有字段可算 |
