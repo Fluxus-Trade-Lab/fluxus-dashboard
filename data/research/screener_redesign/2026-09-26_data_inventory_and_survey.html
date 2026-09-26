@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Screener 合页 · 数据盘点 + 设计调研（2026-09-26）</title>
+<style>
+  :root {
+    --ink:#1a1a1a; --sub:#5a5a5a; --line:#e3e0d8; --bg:#faf8f3;
+    --ok:#1f7a3d; --warn:#b5760a; --bad:#b3261e; --card:#ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); margin: 0; padding: 0 0 80px;
+    line-height: 1.6;
+  }
+  header {
+    background: var(--ink); color: #fff; padding: 28px 32px;
+  }
+  header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
+  header p { margin: 0; color: #c9c4b8; font-size: 13px; }
+  header a { color: #ffd479; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 32px; }
+  .summary {
+    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+    border-radius: 6px; padding: 18px 22px; margin-bottom: 28px; font-size: 15px;
+  }
+  h2 { font-size: 18px; margin: 40px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+  h3 { font-size: 15px; margin: 24px 0 10px; color: #333; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13.5px; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f0ede4; font-weight: 600; }
+  tr:nth-child(even) td { background: #fcfbf8; }
+  .ok { color: var(--ok); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  code { background: #f0ede4; padding: 1px 5px; border-radius: 3px; font-size: 12.5px; }
+  .callout {
+    background: #fff8e8; border: 1px solid #e8d5a0; border-radius: 6px;
+    padding: 12px 16px; margin: 14px 0; font-size: 13.5px;
+  }
+  .stat-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 24px; }
+  .stat {
+    flex: 1; min-width: 140px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 6px; padding: 14px 16px; text-align: center;
+  }
+  .stat .n { font-size: 26px; font-weight: 700; }
+  .stat .l { font-size: 12px; color: var(--sub); margin-top: 4px; }
+  .src-list { padding-left: 20px; }
+  .src-list li { margin-bottom: 8px; }
+  footer { max-width: 1080px; margin: 40px auto 0; padding: 0 32px; color: var(--sub); font-size: 12px; }
+  a { color: #0a5fb0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Screener 合页：数据盘点 + 设计调研</h1>
+  <p>T-0926-62 · 2026-09-26 · 真数据预览：<a href="https://claude.ai/artifact/TTVDd4Jd8n2e6bRgrMxb1N" target="_blank">Artifact 链接</a> · 方向：Andy 09-26 定的六层漏斗（宇宙闸 → 大名单 → §11.1资格 → setup → 主题+大盘 → Focus≤15）</p>
+</header>
+
+<div class="wrap">
+
+  <div class="summary">
+    <b>一句话结论：</b>六层里三层已经在跑，两层字段齐全只差拼页。真正的硬缺口只有一个——
+    §11.1 资格门槛的核心两条（<b>50 日线上倾、10/20 EMA 上倾</b>）现在算不出来，因为
+    <b>位置有，斜率没往外吐</b>（pipeline 内部算过均线的历史值，收窄成一行时被扔了）。
+    另外两处要注意：healthy_charts 104 只只有 <b>49 只</b>过 Today's List 紧闸（两套闸口径不同）；
+    个股→主题映射只覆盖 <b>20%</b>（1132/5611 只），273 只还同时挂两个主题下。
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">3 / 6</div><div class="l">层已有对应产出</div></div>
+    <div class="stat"><div class="n">49 / 104</div><div class="l">healthy_charts 过紧闸</div></div>
+    <div class="stat"><div class="n">1132 / 5611</div><div class="l">个股有主题归属（20%）</div></div>
+    <div class="stat"><div class="n">5 / 15</div><div class="l">§5.5 扫描器已有产出</div></div>
+    <div class="stat"><div class="n">0 / 245</div><div class="l">tearsheet ai_synthesis 已填充</div></div>
+  </div>
+
+  <h2>A · 数据盘点（六层漏斗）</h2>
+
+  <h3>层① 宇宙闸（Today's List 紧闸）</h3>
+  <table>
+    <tr><th>判据</th><th>字段</th><th>状态</th></tr>
+    <tr><td>市值 ≥ $10 亿</td><td><code>universe.json rows[].market_cap</code></td><td class="ok">✅ 有</td></tr>
+    <tr><td>日成交额 ≥ $2,000万</td><td>close × avg_volume（两个字段都在，需现算）</td><td class="ok">✅ 用现有字段可算</td></tr>
+    <tr><td>ADR ≥ 3.5%</td><td><code>adr_pct</code>（20 日口径）</td><td class="ok">✅ 有</td></tr>
+  </table>
+  <div class="callout">⚠️ <b>同名不同闸</b>：<code>run_all.py</code> 另有一个更松的 <code>cap_floor</code>（只卡市值 ≥$1B，不查成交额/ADR），healthy_charts 和 ema21_watch 跑在这个松闸上，不是 Today's List 的紧闸。</div>
+
+  <h3>层② 大名单（healthy_charts）</h3>
+  <p>判据（课程 §5.4）：站上 50/200 日线、离 52 周高 5%–25%、近一月上涨、RS≥80、相对成交量≥0.5。字段全齐（<code>sma50_dist</code> / <code>sma200_dist</code> / <code>high_52w_dist</code> / <code>perf_1m</code> / <code>rs_3m</code> / <code>rel_volume</code>）。今天 104 只。</p>
+  <div class="callout">⚠️ <b>实测</b>：把这 104 只拿去过层①紧闸，<b>只有 49 只过</b>。不是数据缺口，是两套闸本来不是同一批股票。合页前要定：①healthy_charts 也改跑紧闸（104→49）；②两个数字并排显示。</div>
+
+  <h3>层③ §11.1 资格门槛（五条）</h3>
+  <table>
+    <tr><th>条</th><th>拆开看</th><th>字段</th><th>状态</th></tr>
+    <tr><td rowspan="2">(1)</td><td>价 &gt; 50 日线</td><td><code>sma50_dist</code></td><td class="ok">✅ 有</td></tr>
+    <tr><td><b>50 日线上倾</b></td><td>无历史值，只发布当前值</td><td class="bad">❌ 要新字段（<code>sma50_rising</code>），不要新数据源</td></tr>
+    <tr><td rowspan="2">(2)</td><td>10EMA &gt; 20EMA</td><td><code>ema10</code>、<code>ema20</code></td><td class="ok">✅ 用现有字段可算</td></tr>
+    <tr><td><b>两条都上倾</b></td><td>同上，无历史值</td><td class="bad">❌ 要新字段（<code>ema10_rising</code>/<code>ema20_rising</code>）</td></tr>
+    <tr><td>(3)</td><td>离 52 周高 25% 内</td><td><code>high_52w_dist</code></td><td class="ok">✅ 有，直接判</td></tr>
+    <tr><td>(4)</td><td>离 52 周低 30% 外</td><td><code>low_52w</code></td><td class="ok">✅ 有，直接判</td></tr>
+    <tr><td>(5)</td><td>大盘绿灯 + 情境热</td><td><code>market_light.json.verdict</code></td><td class="ok">✅ 有</td></tr>
+  </table>
+  <div class="callout">⚠️ <b>命名要避坑</b>：现有卡片文案（<code>name_cards.py</code>）已经用「资格✓/✗」这个词，但判的是 <code>liquid_leader</code> 或 TML 命中，跟 §11.1 这五条不是一回事。合页要么改名，要么分清楚是哪种「资格」。</div>
+
+  <h3>层④ setup（首批：龙头回踩 / EP / VCP）</h3>
+  <table>
+    <tr><th>setup</th><th>产出文件</th><th>定义来源</th><th>状态</th></tr>
+    <tr><td>龙头回踩（尺子A）</td><td><code>ema21_watch.json</code></td><td>Alex Desjardins（TradersLab）21EMA 回踩扫 + 页面附加条件</td><td class="ok">✅ 有，67 只</td></tr>
+    <tr><td>EP</td><td><code>ep_qullamaggie.json</code> / <code>ep_stockbee.json</code></td><td>各自流派定义，<code>unmeasured</code> 标了无法量化部分</td><td class="ok">✅ 有</td></tr>
+    <tr><td>VCP</td><td><code>vcp.json</code></td><td>oratnek VCS v2 verbatim port</td><td class="ok">✅ 有</td></tr>
+  </table>
+  <div class="callout">⚠️ ema21_watch 不检查「财报 7 天以外」这一条（课程原文要求，代码注释明确写了不查）——Andy 定尺子不改，这里只是记一笔风险。</div>
+
+  <h3>层⑤ 主题状态 + 大盘读数</h3>
+  <table>
+    <tr><th>判据</th><th>字段</th><th>状态</th></tr>
+    <tr><td>大盘读数</td><td><code>market_light.json</code> / <code>market_health.json</code></td><td class="ok">✅ 有</td></tr>
+    <tr><td>主题状态（state/accel/ribbon）</td><td><code>groups.json.themes[kind=theme]</code>，30 组</td><td class="ok">✅ 有</td></tr>
+    <tr><td>个股 → 主题映射</td><td>反查 <code>groups.json</code> 的 <code>tickers</code> 数组</td><td class="warn">⚠️ 覆盖仅 20%（1132/5611），273 只重叠</td></tr>
+  </table>
+
+  <h3>层⑥ Focus ≤15</h3>
+  <p><code>shortlist.json</code>（6 个 seat + cards 明细）已经是可借的骨架，<code>pick_seats()</code>（<code>name_cards.py</code>）已经在做"各扫描器挑一两只拼短名单"——<b>不用从零建，改判据比新写方便</b>。</p>
+
+  <h2>§5.5 扫描器全家桶（15 个）现状</h2>
+  <table>
+    <tr><th>扫描器</th><th>课程判据</th><th>dashboard 现状</th></tr>
+    <tr><td>成长股周频池</td><td>EPS/营收 yoy≥20%、站上 50 日线、10/20EMA 上</td><td class="warn">⚠️ 基本面字段覆盖率低（多为 None），均线位置可算、斜率同层③缺口</td></tr>
+    <tr><td>板块与主题 ETF</td><td>11 行业+自定义主题</td><td class="ok">✅ etf_data.json + theme_board.json</td></tr>
+    <tr><td>事件驱动跳空</td><td>财报缺口≥10%，守住 1 天</td><td class="bad">❌ 财报日历只覆盖 245/5611 只，要新数据源</td></tr>
+    <tr><td>流动性龙头</td><td>距 52 周低+70%、日均量≥200万、站上 50 日线、RS 前 20%</td><td class="warn">🔶 有但口径不同，缺「距 52 周低+70%」这条</td></tr>
+    <tr><td>龙头回踩</td><td>见层④</td><td class="ok">✅ ema21_watch.json</td></tr>
+    <tr><td>52 周新高</td><td>5 天内创新高，量≥1.5倍均量</td><td class="warn">⚠️ 无独立产出，字段都在，可算</td></tr>
+    <tr><td>高 ADR 加内包日</td><td>ADR≥5%，今日振幅落在昨日之内</td><td class="bad">❌ 内包日无字段，需新写</td></tr>
+    <tr><td>长期平台</td><td>横盘≥10周，15%带内收窄</td><td class="bad">❌ 现有 wk_band_3 是 3 周口径，需新计算</td></tr>
+    <tr><td>多头狂奔</td><td>大实体、天量、收在最高附近</td><td class="bad">❌ 无对应字段组合，需新计算</td></tr>
+    <tr><td>VCP</td><td>见层④</td><td class="ok">✅ vcp.json</td></tr>
+    <tr><td>当日最强</td><td>相对成交量×涨幅前20，价>$5，日均量>50万</td><td class="warn">⚠️ 无独立产出，字段都在，可算</td></tr>
+    <tr><td>盘前扫描</td><td>盘前涨跌≥3%，盘前量≥10万</td><td class="bad">❌ 管线是隔夜批跑，没有盘前实时报价</td></tr>
+    <tr><td>次新股</td><td>上市 6 个月到 5 年，筑第一个平台</td><td class="bad">❌ 无 IPO 日期字段</td></tr>
+    <tr><td>箱体龙头</td><td>距 52 周低+100%，量放大，贴近新高</td><td class="warn">⚠️ 字段都在，可算，没人写</td></tr>
+    <tr><td>表内再筛</td><td>Focus 与准备就绪名单</td><td class="ok">✅ watchlist.json / shortlist.json</td></tr>
+  </table>
+  <p style="color:var(--sub); font-size:13px;">统计：5 个✅已有产出 · 4 个⚠️可算但未写代码 · 2 个🔶口径对不上 · 4 个❌真缺数据源</p>
+
+  <h2>单位不统一（前端要注意）</h2>
+  <table>
+    <tr><th>字段</th><th>样本值</th><th>实际单位</th></tr>
+    <tr><td><code>adr_pct</code></td><td>2.9391</td><td>百分数（2.94 即 2.94%）</td></tr>
+    <tr><td><code>change_pct</code></td><td>-0.0003</td><td>小数（-0.03%）</td></tr>
+    <tr><td><code>gap_pct</code></td><td>-0.0050</td><td>小数</td></tr>
+    <tr><td><code>high_52w_dist</code></td><td>-0.0113</td><td>小数</td></tr>
+    <tr><td><code>dcr_pct</code></td><td>0.9782</td><td class="bad">⚠️ 不是百分比，是 0–1 比值（名字误导）</td></tr>
+  </table>
+
+  <h2>B · 调研：screener 与 setup 该怎么设计</h2>
+
+  <div class="callout">
+    <b>来源与限制的诚实说明</b>：alex 是无人值守 worker，这次没有可用的真实浏览器/X 登录会话，
+    X 调研需要交互会话的真 Chrome Connect。本报告改用课程书稿里逐条标注页码/时间戳的外部访谈转录、
+    以及 pipeline 源码注释里对原始定义的直接引用——这些本身就是从 TraderLion/Qullamaggie/TradersLab
+    原始材料摘录的，但不是这次现场去源头重新核实的。
+  </div>
+
+  <h3>① 来源清单（5 个）</h3>
+  <ol class="src-list">
+    <li><b>TradersLab / Alex Desjardins 扫描说明</b>（traderslab.gitbook.io，引用于 <code>run_all.py</code>/<code>ema21_watch.py</code>）——21EMA 回踩、流动性龙头两个扫描器的直接来源</li>
+    <li><b>The Setup Factory / Alex Desjardins 付费 RS 指南</b>（2026-05-05，见 <code>data/research/tsf_substack_2026-09/RS_GUIDE_FINDING.md</code>）——核心思路：个股 RS 要比自己所在的组，不比大盘；Screener 列设计是累计窗口 RS + 单独 RS Accel</li>
+    <li><b>TraderLion 模型册两本书 379 张图 + Shake Pryzby 轮动访谈</b>（<code>FluxusTrading_Obsidian/30_References/traderlion/</code>，38 条缺口逐条标出处）</li>
+    <li><b>课程书稿自带的外部访谈逐字稿</b>（<code>CH05_扫描.md</code> §5.2-5.5、<code>CH11_什么时候不买.md</code> §11.1，带时间戳）</li>
+    <li><b>课程自己的实测账本</b>（<code>l9_combo.json</code>，123 天 246 笔入场）——健康图形单独入场胜率 52.4%、+2.06R，是唯一样本量够大的正向证据</li>
+  </ol>
+
+  <h3>② 别人的 screener 页怎么组织：三种范式</h3>
+  <table>
+    <tr><th>范式</th><th>代表</th><th>特点</th></tr>
+    <tr><td>条件搭配器</td><td>Jeff Sun（<code>jeff_sun.py</code> 的 Clause 拼接）</td><td>灵活，但容易拼出口径不一致的条件（本单发现的单位问题正是这种范式最容易踩的坑）</td></tr>
+    <tr><td>命名 setup</td><td>TradersLab 21EMA 回踩、Qullamaggie EP、Minervini VCP</td><td>用户不用懂内部字段，但不透明，出误判难定位</td></tr>
+    <tr><td>漏斗</td><td>课程 §5.2、TSF 分级 RS、<b>Andy 这次定的六层</b></td><td>天然可追溯，但对字段完整度要求最高——本单大部分缺口都是这个原因暴露出来的</td></tr>
+  </table>
+
+  <h3>③ TraderLion 对照表：跟合页直接相关的几条</h3>
+  <ul class="src-list">
+    <li><b>缺口 2「21ema Reclaim」</b>：三态状态机 Respect→Breaks→Reclaim，我们只有静态"0-1 ATR 内"一态；细分回踩 setup 可以抄这个设计</li>
+    <li><b>缺口 15/31「RS 线新高早于/晚于价格新高」</b>：RS 先创新高加分，价格先创新高是<b>否决闸</b>（原文："RS line fails to make a new high as RNA breaks out. Do not buy."）；<code>rs_line_pctl_21</code> 已在，只差日期比较没人写</li>
+    <li><b>缺口 4「仓位随结构质量缩放」</b>：Focus 候选排序可以用 <code>vcs</code> 当连续分数，不必是二元判定</li>
+    <li>Shake Pryzby「每季财报'性格突变'名单按族群汇总」——比四态 state 更早反应轮动的事件量，dashboard 目前缺"按季汇总 EP 到主题"这一层</li>
+  </ul>
+
+  <h3>④ "更偏人工智能"的方向（3 个）</h3>
+  <table>
+    <tr><th>方向</th><th>可行性</th><th>数据现状</th></tr>
+    <tr><td>用文字总结候选的"板块变强/变弱 + 大盘支不支持"</td><td class="ok">最高</td><td>数据 100% 覆盖（groups.json + market_light.json）；<code>ai_synthesis</code> 字段和 tearsheet skill 已上线，但<b>245 个里 0 个已填充</b>——管线闲置，直接复用即可</td></tr>
+    <tr><td>用模型读图给回踩候选打"形态干净度"分</td><td class="warn">中等</td><td>K 线只覆盖 245 只 tearsheet 追踪票，全 universe 没有；要现抓+渲染+调用三步都新写。<code>vcs</code> 字段可先顶上当纯数值版</td></tr>
+    <tr><td>按 Andy 历史成交学他实际会挑哪 5 只</td><td class="bad">低</td><td>没有"每天候选池快照"这个中间产物留存，第一步不是建模型，是先攒数据</td></tr>
+  </table>
+  <p style="color:var(--sub); font-size:13px;">附：TSF 的"个股 RS 比组内不比大盘"——不算 AI，但实现成本低，可以先做</p>
+
+</div>
+
+<footer>
+  T-0926-62 · alex · 2026-09-26 · 完整版见同目录 <code>.md</code> 文件（含参考文件清单与命令）
+</footer>
+
+</body>
+</html>
