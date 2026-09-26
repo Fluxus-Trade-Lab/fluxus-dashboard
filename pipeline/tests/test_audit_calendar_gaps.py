@@ -692,3 +692,111 @@ class TestMain:
         got = _json.loads(out_path.read_text())
         assert got["window"] == ["2026-08-24", "2026-08-28"]
         assert got["ok"] is True and code == 0
+
+
+class TestFetch:
+    """`fetch` is where classify_bar's verdict becomes the two sets everything
+    downstream reads. classify_bar is fully pinned; that buys nothing if the
+    routing under it is free, because a swapped branch sends every placeholder
+    into `good` and C5 goes blind on exactly the row it was written for.
+
+    It could not be tested before because its first statement is
+    `import yfinance`. It does not need the network -- it needs a frame. The
+    stub below is the vendor's shape, not the vendor.
+    """
+
+    @staticmethod
+    def _frame(rows, tickers):
+        import pandas as pd
+        idx = pd.DatetimeIndex([r[0] for r in rows])
+        cols = ["Open", "High", "Low", "Close", "Volume"]
+        body = pd.DataFrame([list(r[1:]) for r in rows], index=idx, columns=cols)
+        if len(tickers) == 1:
+            return body
+        return pd.concat({t: body for t in tickers}, axis=1)
+
+    def _stub(self, monkeypatch, frame):
+        import sys
+        import types as _types
+        seen = {}
+
+        def download(*a, **kw):
+            seen["args"], seen["kwargs"] = a, kw
+            return frame
+
+        mod = _types.ModuleType("yfinance")
+        mod.download = download
+        monkeypatch.setitem(sys.modules, "yfinance", mod)
+        return seen
+
+    # a good bar, the FBRX placeholder, and an empty padding row
+    ROWS = [("2026-08-24", 10.0, 11.0, 9.5, 10.5, 1_000_000),
+            ("2026-08-25", 76.99, 76.99, 76.99, 76.99, 0),
+            ("2026-08-26", None, None, None, None, None)]
+
+    def test_it_routes_each_verdict_to_its_own_set(self, monkeypatch):
+        """Kills L343 and L345 (`== "good"` / `== "bad"` -> `!=`).
+
+        Under L343 flipped, the placeholder lands in `good` and the real
+        session is dropped entirely -- the auditor then reports the halted
+        name as the session's only survivor, which is the 2026-09-01 mistake
+        reproduced one layer up from where it was fixed.
+        """
+        self._stub(monkeypatch, self._frame(self.ROWS, ["A"]))
+        good, bad = acg.fetch(["A"], START, END)
+        assert good == {"A": {"2026-08-24"}}
+        assert bad == {"A": {"2026-08-25"}}          # padding in neither
+
+    def test_a_single_ticker_frame_is_used_as_it_comes(self, monkeypatch):
+        """yfinance returns flat columns for one name and grouped columns for
+        several. `raw[t] if len(tickers) > 1 else raw` is that fork; with
+        `>= 1` the one-name case looks up a column named "A", raises KeyError,
+        and `continue` swallows it -- the auditor then reports nothing and
+        `main` calls that "feed returned nothing at all". Kills L336
+        `Gt -> GtE`."""
+        self._stub(monkeypatch, self._frame(self.ROWS, ["A"]))
+        good, _ = acg.fetch(["A"], START, END)
+        assert good["A"] == {"2026-08-24"}
+
+    def test_two_tickers_are_unwrapped_by_name(self, monkeypatch):
+        """The other side of the same fork -- and the one the module docstring
+        calls the point of C4. With `> 2`, a two-name sample hands the whole
+        grouped frame to classify_bar, whose `.get("Close")` finds nothing, so
+        both names come back empty. Kills L336 `1 -> 2`."""
+        self._stub(monkeypatch, self._frame(self.ROWS, ["A", "B"]))
+        good, bad = acg.fetch(["A", "B"], START, END)
+        assert good == {"A": {"2026-08-24"}, "B": {"2026-08-24"}}
+        assert bad == {"A": {"2026-08-25"}, "B": {"2026-08-25"}}
+
+    def test_the_vendor_is_asked_one_day_past_the_end(self, monkeypatch):
+        """yfinance's `end` is exclusive, so the `+1` is what makes our
+        inclusive window inclusive. Kills L329 `1 -> 2`, which would pull in a
+        bar past the window that C3 then reports as a calendar disagreement."""
+        seen = self._stub(monkeypatch, self._frame(self.ROWS, ["A"]))
+        acg.fetch(["A"], START, END)
+        assert seen["kwargs"]["end"] == str(END + dt.timedelta(days=1))
+        assert seen["kwargs"]["start"] == str(START)
+
+    def test_the_vendor_is_not_allowed_to_adjust_the_prices(self, monkeypatch):
+        """A config pin, and it is named as one: this asserts the argument, not
+        a behaviour we can observe here.
+
+        It is worth pinning anyway because `auto_adjust=True` rewrites OHLC
+        against the split/dividend history, and the FBRX check is an exact
+        equality between four legs. Adjusted prices can stop being equal, so
+        flipping this flag makes the placeholder detector quietly weaker
+        rather than broken. Kills one of the two L330 `False -> True`.
+        """
+        seen = self._stub(monkeypatch, self._frame(self.ROWS, ["A"]))
+        acg.fetch(["A"], START, END)
+        assert seen["kwargs"]["auto_adjust"] is False
+        assert seen["kwargs"]["group_by"] == "ticker"
+        assert seen["kwargs"]["interval"] == "1d"
+
+    def test_a_ticker_the_vendor_never_returned_is_skipped_not_faked(
+            self, monkeypatch):
+        """`except KeyError: continue`. The name is absent from the result
+        rather than present-and-empty, so C0/C1 count what was really asked."""
+        self._stub(monkeypatch, self._frame(self.ROWS, ["A", "B"]))
+        good, bad = acg.fetch(["A", "B", "GONE"], START, END)
+        assert set(good) == {"A", "B"} and set(bad) == {"A", "B"}
