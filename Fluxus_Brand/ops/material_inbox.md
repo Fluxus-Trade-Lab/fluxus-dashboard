@@ -207,6 +207,8 @@
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
 - [09-19] [DATA] 复盘最隐蔽的坑：收盘价缺数据时系统无声用前日补——09-16 HOOD 盈亏报错 ±0.89%，错了一整晚才查出。改法：缺就 fail-fast，不靠陈旧行情填坑。出处 a1ca0308 · test_recap_book_closes.py
 
+- [09-26] [数据质量] **诊断精度的递进体现在防护的精准度。** REBASED_FIELDS 漏洞链条：groups_stocks 新加 12 个字段入库后，同名字段在 groups_themes/rotation_baskets 的列也被错误豁免 degraded 判定（扁平登记设计的隐蔽问题）。防护不是简单排除，而是**按 source 分桶** `Dict[source, Dict[field, date]]`，让各台账字段各自受管。验证用双向测试——不仅锁住「跨 source 消音不会发生」，还验证「bootstrap 基线攒够 MIN_HISTORY 根时能按新水位形成」（09-23 只有 2 根，9 月 29 日才形成真基线）。从「发现同名冲突」到「诊断设计前提错」再到「建立可验证的防护」，每一步都是系统自诊能力的递进证据。出处 T-0926-29 · 0327956da · pipeline/quality.py + test_quality.py
+
 - [09-25] [steve] **隐私防护从「排斥可疑」升到「精准定义数据来源」** · Model Books 的 dollar_vol_min（市场日均美元成交额）与 prose（交易所文档摘录）原被隐私闸当账户数据一律排斥；改法是准确定义字段语义——市场流动性阈值按 watchlist.json 先例允许、原文摘录按 news/ai_synthesis 先例允许——补进 ALLOWED_KEYS/ALLOWED_VALUES 的白名单。同一个「金额」字段名下，防护精准度取决于对数据来源的诊断清晰度，而非黑名单的宽度。import_modelbook_notes.py 的 generated_at 标 localtime-ok 防止本地时钟闸误判。防护的第二层诊断：从量级排斥升到来源分类。出处 T-0925-67 · bca32908 · [pipeline/tests/test_public_output_privacy.py](../../../pipeline/tests/test_public_output_privacy.py)
 > 判据仍是 `↳ ✅`，不是所在节。
 
