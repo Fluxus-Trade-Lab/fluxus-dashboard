@@ -144,32 +144,49 @@ def is_retired(field: str) -> bool:
 # this guard exists to report, and must not be rebased away. The entry is safe
 # to keep forever -- it only narrows which history the field is compared to;
 # check() still records every day, bad ones included.
-REBASED_FIELDS: Dict[str, str] = {
-    "i_score": "2026-09-04",
-    "excess_1m": "2026-09-23",
-    "excess_3m": "2026-09-23",
-    "group_pctile": "2026-09-23",
-    "persistence": "2026-09-23",
-    "persistence_of": "2026-09-23",
-    "rs_0_1w": "2026-09-23",
-    "rs_1m_3m": "2026-09-23",
-    "rs_1w_1m": "2026-09-23",
-    "rs_accel": "2026-09-23",
-    "rs_accel_rate": "2026-09-23",
-    "state": "2026-09-23",
-    "top_quartile": "2026-09-23",
+#
+# Keyed by SOURCE first, field second (T-0926-29 branch-review, second round):
+# a bare field name is not a safe key -- `state`/`rs_accel`/`persistence`/...
+# are column names shared across groups_stocks.csv, groups_themes.csv and
+# rotation_baskets.csv (each its own ledger, checked separately by
+# check_source()), and a flat dict registered "state" for the groups_stocks
+# coverage change would have silently exempted rotation_baskets.state from
+# ever being graded degraded again -- a real fault there, with no commit to
+# justify it, would read "ok, no baseline yet" forever. Every source's history
+# lives in its own CSV already; this only makes the lookup match that.
+REBASED_FIELDS: Dict[str, Dict[str, str]] = {
+    "universe": {
+        "i_score": "2026-09-04",
+    },
+    "groups_stocks": {
+        "excess_1m": "2026-09-23",
+        "excess_3m": "2026-09-23",
+        "group_pctile": "2026-09-23",
+        "persistence": "2026-09-23",
+        "persistence_of": "2026-09-23",
+        "rs_0_1w": "2026-09-23",
+        "rs_1m_3m": "2026-09-23",
+        "rs_1w_1m": "2026-09-23",
+        "rs_accel": "2026-09-23",
+        "rs_accel_rate": "2026-09-23",
+        "state": "2026-09-23",
+        "top_quartile": "2026-09-23",
+    },
 }
 
 
 def history_since_rebase(history: Sequence[Mapping[str, str]],
-                         field: str) -> Sequence[Mapping[str, str]]:
-    """The slice of history `field` may be compared against.
+                         field: str,
+                         source: str = "universe") -> Sequence[Mapping[str, str]]:
+    """The slice of history `field` may be compared against, within `source`.
 
-    All of it, unless the field's coverage was deliberately changed
-    (REBASED_FIELDS); then only rows dated on or after the change. A row
-    without a date cannot be placed after the change and is dropped.
+    All of it, unless the field's coverage was deliberately changed for this
+    source (REBASED_FIELDS); then only rows dated on or after the change. A
+    row without a date cannot be placed after the change and is dropped.
+    `source` defaults to "universe" -- the single ledger `check()` grades --
+    so existing callers that never named a source keep grading against it.
     """
-    since = REBASED_FIELDS.get(field)
+    since = REBASED_FIELDS.get(source, {}).get(field)
     if since is None:
         return history
     return [r for r in history if str(r.get("date") or "") >= since]
@@ -276,14 +293,17 @@ def read_history(path: Path = HISTORY) -> List[Dict[str, str]]:
         return list(csv.DictReader(fh))
 
 
-def baseline(history: Sequence[Mapping[str, str]], field: str) -> Optional[float]:
-    """Trailing median null rate for `field`, or None if too little history.
+def baseline(history: Sequence[Mapping[str, str]], field: str,
+            source: str = "universe") -> Optional[float]:
+    """Trailing median null rate for `field` within `source`, or None if too
+    little history.
 
     For a REBASED_FIELDS entry only the history since the rebase counts, so
     "too little history" can recur for that field after a deliberate change.
+    `source` scopes the rebase lookup -- see REBASED_FIELDS.
     """
     vals = []
-    for row in history_since_rebase(history, field):
+    for row in history_since_rebase(history, field, source):
         raw = row.get(field)
         if raw in (None, ""):
             continue
@@ -298,8 +318,9 @@ def baseline(history: Sequence[Mapping[str, str]], field: str) -> Optional[float
     return vals[mid] if len(vals) % 2 else (vals[mid - 1] + vals[mid]) / 2
 
 
-def min_reference(history: Sequence[Mapping[str, str]], field: str) -> Optional[float]:
-    """The best (lowest) null rate this field has ever recorded.
+def min_reference(history: Sequence[Mapping[str, str]], field: str,
+                  source: str = "universe") -> Optional[float]:
+    """The best (lowest) null rate this field has ever recorded, within `source`.
 
     The baseline (median of >=5 runs) answers "what is normal"; this answers a
     prior question -- "has this column ever actually been populated". One
@@ -309,7 +330,7 @@ def min_reference(history: Sequence[Mapping[str, str]], field: str) -> Optional[
     Rebased fields read only the history since the rebase, like baseline().
     """
     vals = []
-    for row in history_since_rebase(history, field):
+    for row in history_since_rebase(history, field, source):
         raw = row.get(field)
         if raw in (None, ""):
             continue
@@ -321,8 +342,14 @@ def min_reference(history: Sequence[Mapping[str, str]], field: str) -> Optional[
 
 
 def assess(rates: Mapping[str, float],
-           history: Sequence[Mapping[str, str]]) -> Dict[str, Any]:
+           history: Sequence[Mapping[str, str]],
+           source: str = "universe") -> Dict[str, Any]:
     """Grade each field against its own past, and the run as a whole.
+
+    `source` names the ledger `history` came from (check() always grades the
+    single universe ledger, "universe"; check_source() passes its own source
+    name) -- REBASED_FIELDS entries are scoped to it, so a coverage change in
+    one source's column never silences the same-named column in another.
 
     The severity ladder distinguishes three ways a column can be empty:
 
@@ -337,13 +364,14 @@ def assess(rates: Mapping[str, float],
     """
     fields: Dict[str, Any] = {}
     for field, rate in rates.items():
-        base = baseline(history, field)
-        ref = min_reference(history, field)
+        base = baseline(history, field, source)
+        ref = min_reference(history, field, source)
         # runs this field is actually compared against (fewer than the ledger
         # holds for a REBASED_FIELDS entry), so the evidence counts honestly
-        stored = len(history_since_rebase(history, field))
-        if field in REBASED_FIELDS:
-            stored_note = f"{stored} runs stored since the {REBASED_FIELDS[field]} rebase"
+        stored = len(history_since_rebase(history, field, source))
+        rebase_date = REBASED_FIELDS.get(source, {}).get(field)
+        if rebase_date is not None:
+            stored_note = f"{stored} runs stored since the {rebase_date} rebase"
         else:
             stored_note = f"{stored} runs stored"
         if is_sparse_by_design(field):
@@ -472,7 +500,7 @@ def check_source(source: str, rows: Sequence[Mapping[str, Any]], date: str,
     path = history_dir / f"{source}.csv"
     history = read_history(path)
     rates = null_rates(rows, discovered_fields(rows, history))
-    verdict = assess(rates, history)
+    verdict = assess(rates, history, source)
     append_history(date, rates, path)
     for field, f in verdict["fields"].items():
         if f["status"] == "severe":

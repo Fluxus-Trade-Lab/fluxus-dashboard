@@ -416,21 +416,29 @@ class TestRebasedFields:
 
     def test_the_registered_date_is_the_first_ledger_row_with_the_new_coverage(self):
         """Pinned literal on purpose: the date is a fact about the ledger
-        (first 6.x% row = 2026-09-04, written by 2e75f20d), not a knob."""
+        (first 6.x% row = 2026-09-04, written by 2e75f20d), not a knob.
+
+        Keyed by source first (T-0926-29 branch-review, second round): a bare
+        field name is shared across groups_stocks.csv/groups_themes.csv/
+        rotation_baskets.csv, each its own ledger -- see REBASED_FIELDS."""
         assert Q.REBASED_FIELDS == {
-            "i_score": "2026-09-04",
-            "excess_1m": "2026-09-23",
-            "excess_3m": "2026-09-23",
-            "group_pctile": "2026-09-23",
-            "persistence": "2026-09-23",
-            "persistence_of": "2026-09-23",
-            "rs_0_1w": "2026-09-23",
-            "rs_1m_3m": "2026-09-23",
-            "rs_1w_1m": "2026-09-23",
-            "rs_accel": "2026-09-23",
-            "rs_accel_rate": "2026-09-23",
-            "state": "2026-09-23",
-            "top_quartile": "2026-09-23",
+            "universe": {
+                "i_score": "2026-09-04",
+            },
+            "groups_stocks": {
+                "excess_1m": "2026-09-23",
+                "excess_3m": "2026-09-23",
+                "group_pctile": "2026-09-23",
+                "persistence": "2026-09-23",
+                "persistence_of": "2026-09-23",
+                "rs_0_1w": "2026-09-23",
+                "rs_1m_3m": "2026-09-23",
+                "rs_1w_1m": "2026-09-23",
+                "rs_accel": "2026-09-23",
+                "rs_accel_rate": "2026-09-23",
+                "state": "2026-09-23",
+                "top_quartile": "2026-09-23",
+            },
         }
 
     def test_new_coverage_with_its_own_baseline_is_ok(self):
@@ -516,7 +524,15 @@ class TestGroupsStocksRebase:
     rows; the ~2,756 newly admitted small/micro caps were already missing
     perf_1m in universe.json (sampled market caps $240k-$170M), so every
     field derived from perf_* jumped together in the same commit -- the
-    i_score failure mode above, a different trigger."""
+    i_score failure mode above, a different trigger.
+
+    First version of this fix registered the 12 field names in a flat
+    REBASED_FIELDS (no source), which branch-review's second round caught as
+    a real bug, not a nitpick: those same names are columns in
+    groups_themes.csv and rotation_baskets.csv too, each its own ledger, and
+    the flat dict would have silently exempted THEIR same-named columns from
+    ever reading degraded again. REBASED_FIELDS is now keyed by source first;
+    see test_the_rebase_does_not_leak_into_a_different_source below."""
 
     @staticmethod
     def ledger(before=6, after=2, old="0.007132", new="0.040333",
@@ -527,16 +543,49 @@ class TestGroupsStocksRebase:
         rows_ += [{"date": f"2026-09-{i+23:02d}", field: new} for i in range(after)]
         return rows_
 
-    def test_the_post_widening_rate_is_ok_against_its_own_baseline(self):
-        v = Q.assess({"rs_accel": 0.040333}, self.ledger())
+    def test_the_post_widening_rate_reads_ok_via_bootstrap_not_a_real_baseline(self):
+        """(T-0926-29 branch-review, second round) The live ledger only has 2
+        rows since the 09-23 rebase -- fewer than MIN_HISTORY=5 -- so this is
+        bootstrapped (4.0% < BOOTSTRAP_DEGRADED 5%), not graded against an
+        actual baseline yet. The contract line and the first version of this
+        test both said "against its own baseline", which overclaimed: a real
+        baseline needs 3 more post-rebase rows (~2026-09-29) before this
+        reading is anything sturdier than "hasn't crossed 5% yet"."""
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger(), source="groups_stocks")
         f = v["fields"]["rs_accel"]
         assert f["status"] == "ok", f["evidence"]
+        assert f["baseline"] is None, "only 2 rows since rebase, no real baseline yet"
+        assert "no baseline yet" in f["evidence"]
+
+    def test_once_enough_post_rebase_rows_exist_a_real_baseline_forms(self):
+        """Same field, same rebase date, but with MIN_HISTORY rows since it --
+        now baseline() has enough to compute, and tonight's rate is graded
+        against the new (~4%) normal instead of the bootstrap ceiling."""
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger(after=Q.MIN_HISTORY),
+                     source="groups_stocks")
+        f = v["fields"]["rs_accel"]
+        assert f["status"] == "ok", f["evidence"]
+        assert f["baseline"] == pytest.approx(0.040333)
 
     def test_without_the_rebase_the_same_ledger_reads_degraded(self, monkeypatch):
         """Negative control: this is the false alarm that was actually live
         on origin/main for 09-23/09-24 before this entry existed."""
-        monkeypatch.setattr(Q, "REBASED_FIELDS", {"i_score": "2026-09-04"})
-        v = Q.assess({"rs_accel": 0.040333}, self.ledger())
+        monkeypatch.setattr(Q, "REBASED_FIELDS", {"universe": {"i_score": "2026-09-04"}})
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger(), source="groups_stocks")
+        assert v["fields"]["rs_accel"]["status"] == "degraded"
+
+    def test_the_rebase_does_not_leak_into_a_different_source(self):
+        """(T-0926-29 branch-review, second round -- the FAIL that sent this
+        back) `state`/`rs_accel`/`persistence`/... are column names shared by
+        groups_stocks.csv, groups_themes.csv and rotation_baskets.csv, each
+        graded from its own ledger by a separate check_source() call. A flat
+        (unscoped) REBASED_FIELDS registered under one of those names would
+        have silently exempted the OTHER sources' same-named column from ever
+        reading degraded again -- with no commit to justify it, exactly what
+        the admission rule above the dict forbids. Same ledger shape as the
+        live groups_stocks false alarm, graded as "rotation_baskets": still
+        degraded, because rotation_baskets has no rebase entry for rs_accel."""
+        v = Q.assess({"rs_accel": 0.040333}, self.ledger(), source="rotation_baskets")
         assert v["fields"]["rs_accel"]["status"] == "degraded"
 
 
