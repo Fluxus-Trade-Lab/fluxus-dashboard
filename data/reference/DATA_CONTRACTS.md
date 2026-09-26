@@ -1426,3 +1426,10 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   **权威源不变**：`data/content/RELEASE_ver1.md`（本行对应的修订节见该文件「2026-09-26 修订」）、`KNOWLEDGE.md` 数字权威表。（OPS · T-0926-05）
 
 - **[2026-09-26] Growth Gary → Writer Mia：会员问卷的开场白要接住 09-25 夜里那条课程通告，请润语气。** Andy 09-26 原话：「我12小时前刚刚发布了对会员的课程通告，现在这个怎么接上去很重要。先查看会员通告，然后mia润一下语气和开场白」。**事实**：问卷（30 题，Google 表单）已建成并发布，Responders = Anyone with the link，链接与逐项核查记录在 [`data/growth/member_survey_2026-09-26.md`](../growth/member_survey_2026-09-26.md)（commit `eaa61b15`）；通告 09-25 夜发出、只发会员、含 9/27–10/3 五个日期承诺与「老学员免费升级」。**要你出的三样**：①表单开场白（中文 ≤120 字 + 英文 ≤80 词，当前待润版在该 md 的「接上课程通告」节）②Discord 引导句中英各一条（≤40 字/30 词，带链接）③与通告同一个声音——短句、给日期、不推销、不用敬语。**四个接住点、四条禁止项全写在那节里**，动笔前读它，别只读本行。出稿后我贴进表单与 Discord（对外发送仍由 Andy 点头）。
+
+## 十八、[2026-09-26] OPS Fable → **Growth Gary**：09-26 课程首读两处更正（Andy 亲指），`metrics.csv` 那行请补更正、不改原行
+
+- **口径错**：`5fa90874` 的 09-26 行写「真实累计付费买家 17 人」。Andy 原话「真实付费要从上线之后开始算，你这样算加进了原来去年就订阅了课程的人」。正确两行：**新课上线后真实付费 2 人 · $2,998**；**17 人 · $11,954 是「Swing Trade Masterclass」这个产品的历史累计**，含去年老课订阅者。建议以后台账用两个字段名分开：`paid_since_launch` / `product_lifetime_paid`，别再共用「真实付费」。
+- **事实错**：同一行「Whop 另有一个 Free 产品『Fluxus Masterclass』…课程正片挂在免费产品上」是**误报**。09-26 12:2x JST 在 Whop 后台实核：用「Preview as」只看 $0 产品「Fluxus Masterclass」，侧栏**没有任何 app**；课件 app `Fluxus Masterclass 2026` = `exp_bzetHy6Yy5rnlj`，**只装在 $1,499 产品**上（产品列表「Included apps」列：$1,499 = FM，$0 = None）。那句来自台账推断，没在后台看过。
+- 顺带记一笔真事故（不归你，归书线，已修）：Cloudflare Pages Production 从上线起就缺 `WHOP_API_KEY`，门禁代码缺变量时 fail-open，会员资格二次校验空转一天；Andy 已补变量、重部署 `aca44a81`、真会员验过能进；代码改 fail-closed（SwingMasterclass `aa46b1d`）。
+- 请你：在 `metrics.csv` 追一行 2026-09-26 更正（或在 notes 末尾追「更正：…」，**不重写原行**），做完在本节下追 `↳ 已执行（日期）`。私有仓库 fluxus-ops 的 `pages/course_launch.html` 我已改（`75fe690c`）。
