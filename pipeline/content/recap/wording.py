@@ -9,11 +9,22 @@ W1 · "week" shorthand (Andy 09-13: 「最近的几个里面出现 theme week这
 
 week/weak review · auto-captions confuse the two words, so delivery.md lists every content sentence that
      contains week or weak, flagging the ones that closely match a transcript sentence.
+
+Andy coverage review (T-0927-35, Andy 09-27「周五缺一格，是这周的个例，那 ok，每周如此，那就是问题」)
+     · pack.json's `andy.messages` carry a `session` (date) per live-commentary line; `andy.missing_dates`
+     is the export gap (benign — no thread file that day). A session with messages but none of them echoed
+     in `session_commentary` is the shape Andy called a problem: real material that never made the page.
+     Coverage is word-overlap (SequenceMatcher on lower-cased word tokens, same method as week_weak_review)
+     between each session's raw messages and every session_commentary sentence — a heuristic, not a claim
+     that the meaning necessarily carried over, but sensitive enough to catch "this session got nothing".
 """
 from __future__ import annotations
 
 import difflib
+import json
 import re
+
+from pipeline.content.recap import RECAP_ROOT
 
 ALLOWED_BEFORE = {"this", "next", "the", "last", "that", "each", "every", "one", "a", "per", "on", "over", "of", "same", "prior", "whole"}
 _NAMED = re.compile(
@@ -83,3 +94,78 @@ def week_weak_review(content_en: dict, transcript_md: str | None) -> dict:
             best = max((difflib.SequenceMatcher(None, w, words(t)).ratio() for t in trans), default=0.0)
             rows.append({"text": sent, "from_transcript": best >= 0.35, "match": round(best, 2)})
     return {"transcript_week_weak": len(trans), "content": rows}
+
+
+# ------------------------------------------------------------------ Andy coverage (T-0927-35)
+COVERAGE_LEDGER = RECAP_ROOT / "_ledger" / "andy_coverage.jsonl"
+_COV_MIN_RATIO = 0.30
+
+
+def _covered(messages: list[str], commentary_words: list[set]) -> bool:
+    for text in messages:
+        w = set(re.findall(r"[a-z0-9]+", text.lower()))
+        if not w:
+            continue
+        for cw in commentary_words:
+            if not cw:
+                continue
+            ratio = difflib.SequenceMatcher(None, sorted(w), sorted(cw)).ratio()
+            if ratio >= _COV_MIN_RATIO:
+                return True
+    return False
+
+
+def andy_coverage_review(pack: dict, content_en: dict) -> dict:
+    """Per session in pack['andy']: did any of its messages get echoed in session_commentary?
+    missing_dates (no export that day) are recorded separately — Andy 09-27: that half is not the problem."""
+    andy = pack.get("andy") or {}
+    messages = andy.get("messages") or []
+    missing = sorted(andy.get("missing_dates") or [])
+    by_session: dict[str, list[str]] = {}
+    for m in messages:
+        by_session.setdefault(m["session"], []).append(m["text"])
+    commentary = [re.sub(r"<[^>]+>", "", s) for s in (content_en.get("session_commentary") or [])]
+    commentary_words = [set(re.findall(r"[a-z0-9]+", s.lower())) for s in commentary]
+    sessions = []
+    for date in sorted(by_session):
+        texts = by_session[date]
+        sessions.append({"date": date, "count": len(texts), "covered": _covered(texts, commentary_words)})
+    uncovered = [s["date"] for s in sessions if s["count"] > 0 and not s["covered"]]
+    n_total = len(sessions) + len(missing)
+    n_covered = sum(1 for s in sessions if s["covered"])
+    return {"sessions": sessions, "missing_dates": missing, "uncovered": uncovered,
+            "n_total": n_total, "n_covered": n_covered}
+
+
+def load_coverage_ledger(path=COVERAGE_LEDGER) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
+
+
+def record_coverage(label: str, uncovered: list[str], path=COVERAGE_LEDGER) -> None:
+    """Updates in place when the issue was already recorded (a re-render), so a retry never jumps
+    the entry to the end of the ledger and corrupts the chronological order coverage_streak relies on."""
+    entries = load_coverage_ledger(path)
+    for e in entries:
+        if e["issue"] == label:
+            e["uncovered"] = uncovered
+            break
+    else:
+        entries.append({"issue": label, "uncovered": uncovered})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(json.dumps(e, ensure_ascii=False) for e in entries) + "\n")
+
+
+def coverage_streak(prior_entries: list[dict], uncovered: list[str]) -> int:
+    """Andy 09-27「周五缺一格，是这周的个例，那 ok，每周如此，那就是问题」— one issue is not a problem,
+    the same shape (real messages, nothing on the page) two issues running is. Returns the streak length
+    ending at (and including) the current issue; 0 when the current issue has nothing uncovered."""
+    if not uncovered:
+        return 0
+    streak = 1
+    for e in reversed(prior_entries):
+        if not e.get("uncovered"):
+            break
+        streak += 1
+    return streak

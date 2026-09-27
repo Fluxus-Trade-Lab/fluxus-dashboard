@@ -243,11 +243,17 @@ def cmd_render(a) -> int:
         write_delivery(iss, state, rep)
         return 2
     copy_pack(iss)
-    from pipeline.content.recap.wording import week_weak_review
+    from pipeline.content.recap.wording import week_weak_review, andy_coverage_review, load_coverage_ledger, record_coverage, coverage_streak
     tr = iss.pack / "transcript.md"
     state["week_weak"] = week_weak_review(json.loads((iss.pack / "content_EN.json").read_text()),
                                           tr.read_text() if tr.exists() else None)
     state["week_weak"]["transcript_present"] = tr.exists()
+    content_en = json.loads((iss.pack / "content_EN.json").read_text())
+    pack_json = json.loads((iss.pack / "pack.json").read_text())
+    cov = andy_coverage_review(pack_json, content_en)
+    cov["streak"] = coverage_streak(load_coverage_ledger(), cov["uncovered"])
+    state["andy_coverage"] = cov
+    record_coverage(iss.label, cov["uncovered"])
     data_issue = vis.issue_data(iss.tag, iss.label, iss.pack, a.edu)
     data = {"chrome": vis.CHROME_LABELS, "layouts": ["A"], "store_key": f"fluxusRecap-{iss.label}", "issues": [vis.public(data_issue)]}
     data_json = vis.jdump(data)
@@ -405,6 +411,19 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
                      f"（其中与字幕句子接近的 {sum(r['from_transcript'] for r in ww['content'])} 条，标 ★）")
         for r in ww["content"]:
             lines.append(f"  - {'★ ' if r['from_transcript'] else ''}{r['text']}")
+    cov = state.get("andy_coverage")
+    if cov:
+        missing_str = "、".join(cov["missing_dates"]) if cov["missing_dates"] else "无"
+        uncovered_str = "、".join(cov["uncovered"]) if cov["uncovered"] else "无"
+        lack_str = "、".join(sorted(set(cov["missing_dates"]) | set(cov["uncovered"]))) or "无"
+        lines.append("")
+        lines.append("## 盘面点评覆盖自检（T-0927-35：有原话未上页，连两期升 P1）")
+        lines.append(f"- 盘面点评覆盖：上页 {cov['n_covered']}/{cov['n_total']} 场 · 缺场 {lack_str} "
+                     f"· 其中缺数据 {missing_str} · 有原话未上页 {uncovered_str}")
+        if cov["streak"] >= 2:
+            lines.append(f"- ⚠️ 同一形状（有原话未上页）连续第 {cov['streak']} 期出现——按 Andy 09-27 裁决，"
+                         "开一张 P1 单给 ops：`taskboard.py new --owner ops --type skill_fix --priority P1 "
+                         f'--title "复盘 {iss.label} 有原话未上页连续第 {cov["streak"]} 期" --created-by <本任务id>`')
     if state.get("pdf"):
         lines.append("")
         lines.append("## PDF 与图片")

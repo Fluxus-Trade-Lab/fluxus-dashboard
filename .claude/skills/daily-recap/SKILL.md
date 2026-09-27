@@ -40,7 +40,7 @@ owner: ops
 6. **What Lagged / Blew Up**：不 working 的是画面的一半；财报失望（数据源补齐前只写他提到的）
 7. **主线深挖**：当天唯一最大的事（09-04＝Memory & Storage），成分展开、放量与站位分开说
 8. **（仅周五）Weekly**：周收盘视角——`perf_1w`、`wk_ema10/20`、`three_weeks_tight`、`rs_0_1w`；他的话：「weekly close very important」。30 周线补上前不引 Weinstein stage
-9. **Session Commentary（盘中评论，2026-09-15 立）**：Discord 里当天盘中说的话——被拒的反弹、守住的位置、"卖方控盘"这类实时判断、点名某只票——放这里，不进 Tomorrow。`content_*.json` 字段 `session_commentary`（数组，可省略），中性口吻不署名，同三条法 C
+9. **Session Commentary（盘中评论，2026-09-15 立）**：Discord 里当天盘中说的话——被拒的反弹、守住的位置、"卖方控盘"这类实时判断、点名某只票——放这里，不进 Tomorrow。`content_*.json` 字段 `session_commentary`（数组，可省略），中性口吻不署名，同三条法 C。**每场都要覆盖**：render 会自动算一行覆盖自检写进 `delivery.md`，见裁决记录 [2026-09-27]
 10. **Tomorrow**：加速度排名在这儿用——他的口径是**为明天做准备**，不是描述昨天，只写下一交易日的关键位/事件/待验证问题；写成「看什么」清单。**盘中已经发生的观察不放这里**（见第 9 条）
 11. **The Rules**：他的七条，固定文本照抄
 12. **Portfolio Update**：指标条+截图+一句中性点评；依赖他先更新 tracker（人肉前置，堵了就留占位）；**cost / stop / TRIM / CLOSE 改成 R 阶梯，见裁决记录 [2026-09-23]**
@@ -446,6 +446,31 @@ prose / 列表项 ........ 10.5pt      表格单元 / 面板行 / 腿 ..... 9.5p
 
 落两处（09-24 判例延续）：本节（SKILL.md）+ `~/.fluxus-ops-daemon/schedule.json` 的 `ops-recap-weekly` 与 `ops-recap-daily` 两个模板 body。下一期成品实测数字（对比句数、破折号/千字，按上面钉死的量法）写进 `delivery.md`。测试载体：`pipeline/tests/test_recap_style_gates.py` 断言本节与两条闸的文字存在，防止下次编辑悄悄删改（同 `test_daily_recap_skill_dryrun_guard.py` 的做法）。
 
+
+### [2026-09-27] 盘面点评覆盖自检（T-0927-35，起因 W39 周五 `session_commentary` 缺格）
+
+**事实**：2026-W39 的 `session_commentary` 有周一、周二、周四和整周四格，独独没有周五；周五是道指五个交易日里最强的一天，BE 右侧放量突破。查 `pack.json`，`andy.messages` 共 119 条（按场 09-21 27 条 / 09-22 40 条 / 09-24 27 条 / 09-25 25 条），`missing_dates` 只有 `2026-09-23`——**周五 25 条原话全在包里，一句没写上页**，不是数据没到。
+
+Andy 的裁决：
+> 「周五缺一格，是这周的个例，那 ok，每周如此，那就是问题。」
+
+一期缺格＝个例，放过；**同一形状连续两期才算问题**。落地两类判据（`pipeline/content/recap/wording.py` 的 `andy_coverage_review`）：
+- **缺数据**（该场在 `andy.missing_dates` 里）→ 记一笔，不算问题——没有原话，没什么可写。
+- **有原话却没上页**（该场 `andy.messages` 条数 > 0，但没有一条与 `session_commentary` 任何一句的词级相似度 ≥ 0.30）→ 这一类才是 Andy 说的「问题」的形状。覆盖判定是启发式（`difflib.SequenceMatcher` 词级重叠，同 `week_weak_review` 的方法），不是语义正确性的证明，但足够抓住「这场原话整个没进正文」。
+
+**每次 render 自动写进 `delivery.md`**（`run.py: write_delivery`）一行：
+```
+盘面点评覆盖：上页 N/M 场 · 缺场 <日期列表> · 其中缺数据 <missing_dates> · 有原话未上页 <差集>
+```
+数字与本期 `pack/pack.json` 的 `andy.messages` / `missing_dates` 对得上。
+
+**复发闸**：覆盖结果落一份本地台账 `RECAP_ROOT/_ledger/andy_coverage.jsonl`（`wording.load_coverage_ledger` / `record_coverage`，同 `_ledger/edu_topics.jsonl` 一样只存本机、永不进 git）。`coverage_streak` 判定「有原话未上页」是不是连续出现——**连续第 2 期起**，`delivery.md` 会多印一行 ⚠️ 并给出现成命令，出片班看到就照抄执行：
+```bash
+python3 $FLUXUS_OPS_REPO/tools/taskboard.py new --owner ops --type skill_fix --priority P1 \
+  --title "复盘 <期号> 有原话未上页连续第 N 期" --created-by <本班任务 id>
+```
+单期出现只需在交付汇报里提一句，不开单——照 Andy 的话放过。
+
 ---
 
 ## 试跑铁律（ops 自修，源于 T-0919-24 事故：试跑吃掉了 W38 正班；不是口径/判断改动，不需要 Andy 点头）
@@ -516,7 +541,7 @@ render 必须用 venv 的 python（真字号闸需要 pdfminer.six）。
 闸含：专名（含 Grow）、W1 一周缩写、版心截断、示意图重叠、**L1 页数结构**（教育/组合更新之外内容须在前 4 页、组合更新独占末页、断句底线）、**L2 真字号**（pdfminer 实读：正文 10.5±0.1pt、表格 ≥9.0pt——周刊的「逐日读数」表最容易撑宽页面触发 Chrome 整页缩印，红了不许缩字号，停手汇报是哪个元素超宽）。**文风自查**（ZH 正文「A，不是 B」对比收尾式 ≤4 处、破折号 `——` ≤4 个/千字，见裁决记录 [2026-09-27]）是**人工检查项，不在上面这套 render 自动闸里**——`run check` 不会替你数，交付前自己按裁决记录的量法数一遍，数字写进 `delivery.md`。
 
 ### 第 6 步 · 核对产出
-`<W>/pdf/` 中英 PDF（页数与教育是否溢出写进 `delivery.md`）· `img/EN`、`img/ZH`（数量 = 页数）· `delivery.md` · `preview.html`；**不应有 `x/`**。
+`<W>/pdf/` 中英 PDF（页数与教育是否溢出写进 `delivery.md`）· `img/EN`、`img/ZH`（数量 = 页数）· `delivery.md` · `preview.html`；**不应有 `x/`**。**读 `delivery.md` 的「盘面点评覆盖自检」一行**（见裁决记录 [2026-09-27]）：出现「⚠️ 连续第 N 期」就照那行给的命令开 P1 单给 ops；单期缺场不用开单，交付汇报里提一句即可。
 
 ### 第 7 步 · INBOX 留痕（仓库公开：只写状态）
 直推 main 标准动作（临时树、只 add INBOX、删除行自检为空、冲突重放最多 3 轮、push 后核实、移除临时树），追一行：
