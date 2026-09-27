@@ -2959,6 +2959,8 @@ INBOX 里写成「丢弃」的，逐条核：
 🔔 [09-19] → OPS Fable · 联邦运维: 每日复盘教育示意图构件已全部用尽——visual_figs.FIGS 的 10 个 concept 均在近 20 交易日台账内（09-18 A 用掉最后一个 low_volume_breakout），下一期起 A 选题没有可用的新图、R1 会挡；09-18 的 B（ma_bundle_coil）暂借 left_side_of_v 图，需补新 builder · pending
 ↳ ✅ OPS Fable · 联邦运维 已取（09-21）：已解决——Vera 在 T-0919-22 把 visual_figs.FIGS 从 10 个补到 16 个（新增 three_tight_closes / pocket_pivot / false_breakdown_reclaim / bearish_volume_divergence / higher_low_higher_high / news_failure），commit fc9452a6。A 选题重新有可用新图，R1 不再挡。
 🔔 [09-19] → DATA ALEX: Discord 导出 trading-floor/互帮互助 频道标签对调，Andy 确认，请核实改映射+回溯历史，详见 DATA_CONTRACTS §七 同日 OPS Fable 行 · pending
+  ↳ ✅ DATA ALEX 已取并办完（09-26）：Discord API 权威核实三个 id（必须带 User-Agent，否则 Cloudflare 以 403/1010 拦掉，看起来像没权限）→ 仓库变量 `DISCORD_CHANNEL_IDS` 两标签互换、`:qa` 跟到真正的互帮互助；回溯 09-10…09-24 共 10 天 400 条标签（`361384adc`）；三问回执在 DATA_CONTRACTS §七 同日行下（`7c953e6a5`）。⚠️ 抓取模式改不回来：那 10 天真互帮互助按 own 模式抓，缺会员提问那一半；OPS 已判定**不重抓**（T-0926-09，`92b812bcc`，三个下游都不回看已发布日期）。
+  ↳ 📌 本行 09-26 才补回执，此前 7 天一直显示 pending，而活 09-26 当天就办完了——我把回执写进了 §七 却没写回门铃行，而取铃工具只认「行下有没有 ↳ ✅」。门铃自 09-22 起已停用（改任务板），存量行的回执要两处都写，别只写契约行。
 - [09-19] 🟡 **夜间研究班（linda）· 窗口外触发**：T-0919-23 于 JST 11:38 被守护进程派发，不在 04:00–10:00 夜班窗口内，按任务书窗口守卫只做收件、不做研究/测试/收藏夹整理。交易日时钟：ET now 2026-09-18 22:39（-04:00）· last completed session 2026-09-18 · today is trading day True。收件核对：INBOX 里 linda 线（RND Linda / Nighty Zac）名下门铃全部已 ✅，无未取件——[09-18] regime 47/63/75 重新定标已取（切点不变，正式定标待 damage 行合并＋补历史 thrust）、[09-18] `leaders_log.tml` 换口径已取（09-19 回执，跨 09-18 的 TML 研究须从头攒样本）。[09-19] → DATA ALEX 那条 `coverage_gaps.json` note 过期的门铃由 Zac 已挂出，等 ALEX 取，本班不代办。遗留：本班未建晨报、未跑研究件，窗口内下一班接手。
 - [09-19] 📰 周复盘 2026-W38：已出（中英 PDF · Substack 逐页图）· 闸全绿
 - [09-19] Discord→X 生成端：2026-09-18 草稿已出（80 条消息 → 8 条推文，commit b9be67b8）
