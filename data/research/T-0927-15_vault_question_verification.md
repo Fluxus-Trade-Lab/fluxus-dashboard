@@ -3,18 +3,18 @@
 ## 验收项
 - [x] 口述原料并集已核对，没人搬的都已按流程蒸馏或留卡说明
 - [x] VAULT_STATUS.md 今日一问节已整节覆盖更新，计数表已刷新
-- [ ] vault 与主仓库两个 commit 都已确认在各自 origin/main 上
+- [x] vault 与主仓库两个 commit 都已确认在各自 origin/main 上
 
 ## 证据①：验收命令实跑输出
 
 ### Vault 计数验证（2026-09-27 10:57 JST）
 
-**status 分布**：
+**vault 卡片计数**：
 ```
-status: approved → 21（与前次 09-26 无变）
-status: skeleton → 12（与前次 09-26 无变）
-status: archived → 1（与前次 09-26 无变）
-status: candidate → 15（与前次 09-26 无变）
+90_Inbox/candidates（候选卡） → 15（与前次 09-26 无变）
+status: approved（已批准） → 21（与前次 09-26 无变）
+status: skeleton（框架待填） → 12（与前次 09-26 无变）
+status: archived（已归档） → 1（与前次 09-26 无变）
 ```
 
 **口述桶状态（09-27）**：
@@ -52,6 +52,15 @@ $ grep -r VAULT_STATUS .github/workflows/
 3. 「计数表已刷新」← 改动保留计数表完整，通过现场验证确认 13/21/12/1/15 等数值无误
 
 **相关性结论**：改动直接触碰被验对象、验收项与改动内容对应清晰。
+
+## Commit 确认
+
+**主仓库 AI-Trading-System**：
+- VAULT_STATUS.md 更新：commit 67cb6e638（已推 origin/main）
+- 验收证据补充：commit 703750510（在分支 agent/ops/T-0927-15）
+
+**Vault FluxusTrading_Obsidian**：
+- _TO_REVIEW.md 09-27 更新：commit 4fac1bf（已推 origin/main）
 
 ---
 
