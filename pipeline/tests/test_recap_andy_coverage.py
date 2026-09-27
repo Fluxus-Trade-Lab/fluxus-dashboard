@@ -3,7 +3,8 @@
 that never shows up in session_commentary is the shape he called a problem. Positive control built
 by removing the one commentary sentence that actually carries a session's material (Gary 08-25: a
 check that's never proven red is not proven at all)."""
-from pipeline.content.recap.wording import andy_coverage_review, coverage_streak, load_coverage_ledger, record_coverage
+from pipeline.content.recap.wording import (andy_coverage_review, coverage_streak, coverage_streak_for_issue,
+                                             load_coverage_ledger, record_coverage)
 
 
 def _pack(sessions: dict[str, list[str]], missing: list[str] | None = None) -> dict:
@@ -74,3 +75,25 @@ def test_record_coverage_round_trips_and_is_idempotent_per_issue(tmp_path):
     entries = load_coverage_ledger(path)
     assert [e["issue"] for e in entries] == ["2026-W38", "2026-W39"], "re-render must not reorder the ledger"
     assert coverage_streak(entries, ["doesn't matter, only the shape counts"]) == 1, "W39 was clean, streak resets"
+
+
+def test_coverage_streak_for_issue_ignores_a_rerun_of_the_same_issue():
+    """Review finding (branch agent/ops/T-0927-35): record_coverage runs before any L1/L2 gate, so an
+    L2 font-size retry or `--edu B` re-render sees its own already-recorded entry and would otherwise
+    double-count a first-time individual issue as "streak 2" — exactly what Andy's ruling forbids."""
+    entries = [{"issue": "2026-W40", "uncovered": ["2026-10-02"]}]  # W40's own first render, already logged
+    assert coverage_streak_for_issue(entries, "2026-W40", ["2026-10-02"]) == 1
+
+
+def test_coverage_streak_for_issue_only_compares_same_cadence():
+    """A clean daily sitting between two dirty weeklies must not reset the weekly streak — Andy's
+    ruling is about a weekly pattern (「每周如此」), not about whatever ran in between."""
+    entries = [{"issue": "2026-W38", "uncovered": ["2026-09-19"]},
+               {"issue": "2026-09-24", "uncovered": []}]  # a clean daily in between, wrong cadence
+    assert coverage_streak_for_issue(entries, "2026-W39", ["2026-09-26"]) == 2, \
+        "the clean daily must not reset the weekly streak"
+
+    entries_dirty_daily = [{"issue": "2026-W38", "uncovered": []},
+                           {"issue": "2026-09-24", "uncovered": ["2026-09-24"]}]  # dirty daily, wrong cadence
+    assert coverage_streak_for_issue(entries_dirty_daily, "2026-W39", ["2026-09-26"]) == 1, \
+        "a dirty daily must not inflate the weekly streak either"

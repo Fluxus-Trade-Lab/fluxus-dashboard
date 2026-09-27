@@ -169,3 +169,19 @@ def coverage_streak(prior_entries: list[dict], uncovered: list[str]) -> int:
             break
         streak += 1
     return streak
+
+
+def _is_weekly(label: str) -> bool:
+    return "-W" in label
+
+
+def coverage_streak_for_issue(entries: list[dict], label: str, uncovered: list[str]) -> int:
+    """The two things a caller must get right, wrapped so run.py can't skip them (T-0927-35 review,
+    branch agent/ops/T-0927-35, both confirmed):
+    1. Exclude this issue's own ledger entry — a re-render (an L2 gate retry, `--edu B`) must not
+       count itself twice, or a first-time individual issue prints as "streak 2" on its own retry.
+    2. Only compare same-cadence issues — Andy's ruling is「每周如此」(week after week); a clean
+       daily sitting between two dirty weeklies must not reset the weekly streak, and a dirty daily
+       must not inflate it either."""
+    same_kind = [e for e in entries if e["issue"] != label and _is_weekly(e["issue"]) == _is_weekly(label)]
+    return coverage_streak(same_kind, uncovered)

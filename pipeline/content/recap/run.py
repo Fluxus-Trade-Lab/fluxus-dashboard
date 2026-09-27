@@ -243,7 +243,8 @@ def cmd_render(a) -> int:
         write_delivery(iss, state, rep)
         return 2
     copy_pack(iss)
-    from pipeline.content.recap.wording import week_weak_review, andy_coverage_review, load_coverage_ledger, record_coverage, coverage_streak
+    from pipeline.content.recap.wording import (week_weak_review, andy_coverage_review, load_coverage_ledger,
+                                                record_coverage, coverage_streak_for_issue)
     tr = iss.pack / "transcript.md"
     state["week_weak"] = week_weak_review(json.loads((iss.pack / "content_EN.json").read_text()),
                                           tr.read_text() if tr.exists() else None)
@@ -251,7 +252,7 @@ def cmd_render(a) -> int:
     content_en = json.loads((iss.pack / "content_EN.json").read_text())
     pack_json = json.loads((iss.pack / "pack.json").read_text())
     cov = andy_coverage_review(pack_json, content_en)
-    cov["streak"] = coverage_streak(load_coverage_ledger(), cov["uncovered"])
+    cov["streak"] = coverage_streak_for_issue(load_coverage_ledger(), iss.label, cov["uncovered"])
     state["andy_coverage"] = cov
     record_coverage(iss.label, cov["uncovered"])
     data_issue = vis.issue_data(iss.tag, iss.label, iss.pack, a.edu)
