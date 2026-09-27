@@ -14,6 +14,7 @@ fetch.py 住在 Fluxus_Brand/ops/tools/x_watch/（Marketing Steve 线的工具�
 from __future__ import annotations
 
 import importlib.util
+import re
 from pathlib import Path
 
 import pytest
@@ -193,7 +194,7 @@ def test_dollar_prefixed_emphasis_lookalikes_still_count(text, sym):
 
 _MIXED_SLANG_POST = (
     "Big FOMO energy today, IMO this dip is a gift.\n"
-    "DM me if you want the GPU/EDA basket, ALGO is printing BUY signals.\n"
+    "DM me if you want the GPU/EDA basket, ALGO is printing BUY signals, FORCE it.\n"
     "HOLD the line, don't PANIC — this is the START of something RIGHT.\n"
     "Watching LL and VA on the shortlist, HAGW everyone, hope the GOODS ship soon.\n"
     "$NOW $MCO $EST $LL $VA $ALGO all still on watch."
@@ -204,7 +205,9 @@ def test_bare_slang_and_emphasis_words_are_not_tickers():
     """漏改方向：这批裸词一个都不该进代码集。"""
     bare_junk = {"FOMO", "IMO", "DM", "FORCE", "GPU", "EDA", "ALGO", "BUY", "HOLD",
                  "PANIC", "START", "RIGHT", "HAGW", "GOODS", "LL", "VA"}
-    assert not (bare_junk & fx.tickers(_MIXED_SLANG_POST.rsplit("\n", 1)[0]))
+    bare_only = _MIXED_SLANG_POST.rsplit("\n", 1)[0]
+    assert bare_junk <= set(re.findall(r"\b[A-Z]{2,5}\b", bare_only))  # 正文里每个词都真的出现过
+    assert not (bare_junk & fx.tickers(bare_only))
 
 
 @pytest.mark.parametrize("text,sym", [
