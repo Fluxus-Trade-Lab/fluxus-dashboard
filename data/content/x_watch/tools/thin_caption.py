@@ -16,14 +16,31 @@
   - 不该剔的（Linda "Bonds: 106'27 key swing low."）：106'27 是一个具体点位，
     去掉链接后依然读得出来——这是本工具唯一保证接得住的正例，写进了测试。
 
-**已知局限**：这把尺子只挡得住"正文里连一个数字都没有"的纯图/纯标题帖（比如
-只有 "$MCD chart" 这种）。"正文有词但全是复述图里的标题，没有数字"这一类
-（如上面 NYSE 的例子）挡不住——判它需要理解语义，不是这条尺子的活。跑手遇到
-这类漏判，照旧在日报「给 Steve」里手记，不要因为这条闸没报红就以为帖子没问题。
+判据 09-27 已改（T-0927-63，反方向第 4 次三次律到期）：单看「有没有数字」在
+反方向系统性误剔——**判断句里天然没有数字**（盘评、季节性、方法对照）。现在是
+**无数字 且 去链接后短于 `MIN_SUBSTANTIVE_LEN` 字**才算空帖。阈值 60 是从取件账
+09-24d·2 → 09-26d·2 那一串反方向误剔案例现场量出来的：Jake `$SMCI`「Could be
+interesting here if this breaks out」90 字、Linda 的期货图评（Copper/SPs 各
+80/107 字）、ConnorJBates 季节性 82 字、Muninn 的 Zanger/Qullamaggie 对照 149 字、
+wey_how12640 的 `$DELL` 波段低点 107 字——全部 ≥80 字；本工具测试基线里的真空帖
+（"MCD chart update" 一类）全部 ≤43 字。两簇之间有 37 字的空档，60 落在正中间。
+
+**已知局限（两个方向都在自造口径里，缺一个方向就是没查清楚偏离在哪）**：
+1. **漏判方向**（原有）——这把尺子只挡得住"正文里连一个数字都没有、且短"的
+   纯图/纯标题帖。"正文有词但全是复述图里的标题，没有数字，但写得比较长"这一类
+   （如上面 NYSE 的例子，去链接后长度够不上被长度闸放过）挡不住——判它需要
+   理解语义，不是这条尺子的活。
+2. **误剔方向**（09-27 补，此前一次都没记）——长度阈值是从 6 个反方向案例的
+   分布里画的一条线，不是语义边界；一条恰好写得很短（<60 字）的真判断句仍会
+   被误判成空帖，只是目前的样本里还没见到这种案例。
+跑手遇到这两类漏判/误剔，照旧在日报「给 Steve」里手记，不要因为闸没报红/报红
+就以为帖子没问题/有问题。**这把尺子报的阳性（⛔ 空帖剔除）可以信，报的阴性
+（✅ 留）不能信**——跑手自己得出的判词（取件账 09-26d·2）。
 
 用法：
     python3 data/content/x_watch/tools/thin_caption.py data/content/x_watch/posts/2026-09-23.jsonl
     # 只在候选按密度降序排好之后跑，不重新排序，只在前 pool 名里剔、取前 pick 名
+    # 排位前必看 annotate() 的并排输出，不是可选步骤——见两班任务书「蹭位榜与回复方向」节
 """
 from __future__ import annotations
 
@@ -37,6 +54,7 @@ _DIGIT_RE = re.compile(r"\d")
 
 POOL = 8   # 只在密度前几名里找
 PICK = 5   # 最终要凑够几个
+MIN_SUBSTANTIVE_LEN = 60   # 去链接后短于这个字数、且无数字，才算空帖（见模块 docstring 判据说明）
 
 
 def strip_urls(text: str) -> str:
@@ -44,9 +62,12 @@ def strip_urls(text: str) -> str:
 
 
 def is_thin_caption(text: str) -> bool:
-    """去掉链接后的正文里一个数字都没有 = 图片自己说话，正文没有独立信息。
-    自造口径，见模块 docstring；已知局限也在那里。"""
-    return not _DIGIT_RE.search(strip_urls(text))
+    """空帖 = 去掉链接后无数字 且 短于 MIN_SUBSTANTIVE_LEN 字。
+    自造口径，见模块 docstring；两个方向的已知局限也在那里。"""
+    stripped = strip_urls(text)
+    if _DIGIT_RE.search(stripped):
+        return False
+    return len(stripped) < MIN_SUBSTANTIVE_LEN
 
 
 def top5_from_pool(
