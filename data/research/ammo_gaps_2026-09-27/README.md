@@ -38,7 +38,7 @@ SPY，**728 个 session（2023-10-30 → 2026-09-25）**，真跳空 **292 个�
 第一小时填平的只有 25 次里 1 次。方向不改变这件事（≥0.25 ATR 里上跳中位 0.34、下跳 0.36）。
 
 ⚠️ **分母换一个，头条数就翻一倍。** 上表的分母是「开盘价 − 昨收」（ChartSchool 的填补目标）。
-换成「开盘价 − 昨日极值」，中位数从 0.43 变成 **0.86**，而且小缺口的比值会炸（p90 顶到 3.0）。
+换成「开盘价 − 昨日极值」，中位数从 0.43 变成 **0.86**，而且这个比值**没有上限**——一分钱越过昨高的缺口分母近零，p90 全样本 **8.0**，不足 0.25 ATR 的那批 **18.5**。
 两个都讲得通，但发出去必须写死是哪一个——这正是口径要进表的原因。
 
 复算：`.venv/bin/python data/research/ammo_gaps_2026-09-27/probe_gap_fill.py` →
@@ -152,6 +152,7 @@ SPY，**728 个 session（2023-10-30 → 2026-09-25）**，真跳空 **292 个�
 |---|---|
 | 首小时回补中位 0.43 / 0.35 / 0.28 | 跑 `probe_gap_fill.py`，比 `gap_fill_pilot.json` |
 | yfinance 1h 能回溯到 2023-10-27、729 根首小时 bar | 同上，`sessions` / `first_session` 两个字段 |
+| 换分母后中位 0.86、p90 8.0 / 18.5 | 同上，`alt_denominator_prior_extreme` 一节 |
 | 枢轴失败事件率 7–17 次/票/年 | 跑 `probe_pivot_fail_rate.py` |
 | naive 倒填全池一年 7.7 小时 | 同上，`naive_replay.projected_hours_full_universe_1y` |
 | `failed_today` 算了但没发 | `grep -n failed_today pipeline/screeners/structure_pivot.py`（4 处）对 `grep -n sp_failed pipeline/`（0 处） |

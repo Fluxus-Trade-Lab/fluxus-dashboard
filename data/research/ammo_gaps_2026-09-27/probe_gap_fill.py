@@ -93,6 +93,18 @@ def measure(j: pd.DataFrame) -> dict:
                 "fill_p75": round(float(q[0.75]), 3),
                 "closed_in_hour1": round(float(sub["closed_h1"].mean()), 3)}
 
+    # The alternate denominator, measured rather than asserted: the memo claims
+    # the headline moves when you divide by the gap against the prior EXTREME
+    # instead of the prior CLOSE. That claim needs its own numbers, and the p90
+    # is the point -- a gap one cent past the prior high has a denominator near
+    # zero, so the ratio has no upper bound and the tail is the whole story.
+    alt_gap = (tg["open"] - np.where(tg["dir"] > 0, tg["prev_high"], tg["prev_low"])) * tg["dir"]
+    alt_fill = tg["retrace"] / alt_gap
+    alt = {"median": round(float(alt_fill.median()), 3),
+           "p90_all": round(float(alt_fill.quantile(0.9)), 1),
+           "p90_under_025atr": round(float(alt_fill[tg.gap_atr < 0.25].quantile(0.9)), 1),
+           "p90_over_025atr": round(float(alt_fill[tg.gap_atr >= 0.25].quantile(0.9)), 1)}
+
     return {
         "sessions": int(len(j)),
         "first_session": str(j.index[0].date()),
@@ -102,6 +114,7 @@ def measure(j: pd.DataFrame) -> dict:
         "sweep": [cut(tg, "all true gaps"),
                   cut(tg[tg.gap_atr >= 0.25], "gap >= 0.25 ATR"),
                   cut(tg[tg.gap_atr >= 0.50], "gap >= 0.50 ATR")],
+        "alt_denominator_prior_extreme": alt,
         "by_direction_025atr": {
             "up": cut(tg[(tg.gap_atr >= 0.25) & (tg.dir > 0)], "up"),
             "down": cut(tg[(tg.gap_atr >= 0.25) & (tg.dir < 0)], "down")},
