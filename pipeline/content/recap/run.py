@@ -224,7 +224,10 @@ def headings(content: dict, weekly: bool) -> list[tuple[str, str]]:
         pairs.append(("sentiment", L["sentiment"]))
     if content.get("session_commentary"):
         pairs.append(("session_commentary", L["session_commentary"]))
-    pairs += [("tomorrow", L["tomorrow"]), ("rules", L["rules"]), ("education", L["education"]), ("portfolio", L["portfolio"])]
+    pairs.append(("tomorrow", L["tomorrow"]))
+    if weekly and content.get("weekly_watchlist"):
+        pairs.append(("weekly_watchlist", L["weekly_watchlist"]))
+    pairs += [("rules", L["rules"]), ("education", L["education"]), ("portfolio", L["portfolio"])]
     if content.get("founders_note"):
         pairs.append(("founders_note", V["founders"]))
     return pairs

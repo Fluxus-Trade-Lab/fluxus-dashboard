@@ -428,6 +428,11 @@ prose / 列表项 ........ 10.5pt      表格单元 / 面板行 / 腿 ..... 9.5p
 3. **旧 pack 不会自己跟上写入端**：Portfolio 三栏空着，是因为 dry-run 里的 pack 由出片班在
    「成本/止损改价格」合并**之前**生成，只有 `stop_R`。**改了 build_pack 就要重建 pack，不能只重 render。**
 
+### [2026-09-27] 下周观察名单独立成节（Andy 原话，递送会话，起因是 W39 参照片后半段的行业分组观察名单在 content 里零消费）
+> 「对后班车，下周观察名单，并没有出现。下次周复盘里单独分开出这个，不合并到一起。我们改进后再看有没有需求。」
+
+落地（T-0927-33）：新增字段 `weekly_watchlist`（仅周刊，见 `CONTENT_SCHEMA.md`），渲染成自己的一节（Tomorrow 之后、Rules 之前），**不并入 `led`/`lagged`/`tomorrow`**；`labels.weekly_watchlist` 必须同步补上。首次生效期号 **2026-W40**（2026-10-04 那班）。
+**Andy 后半句是待定**：「我们改进后再看有没有需求」——W40 递送时必须在正文里单独问他一句这一节留不留，答案回填任务板；三期内没人再问＝这条裁决没闭环。
 
 ---
 
@@ -471,7 +476,7 @@ python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，�
 ### 第 3 步 · 必读（每次读）
 1. 本 skill 全文，尤其裁决记录（含「周五规格」与 2026-09-13 各条）
 2. `~/Downloads/Daily_Recap_Workflow_Spec.md`
-3. `$WT/pipeline/content/recap/CONTENT_SCHEMA.md`（周刊字段：`weekly_k_names`、`weekly_k_line`；**不写 `x_posts`**）
+3. `$WT/pipeline/content/recap/CONTENT_SCHEMA.md`（周刊字段：`weekly_k_names`、`weekly_k_line`、`weekly_watchlist`；**不写 `x_posts`**）
 4. 中文：`$WT/.claude/skills/fable-voice/SKILL.md` + `~/Desktop/中文表达训练/01-风格卡/风格卡-日用版.md` + `~/Desktop/中文表达训练/00-说明书/教练说明书.md` 第二、三节
 5. 本周各期日刊的 `content_EN.json` / `content_ZH.json`（在 `<YYYY-MM>/<YYYY-MM-DD>/pack/`）——周刊是**一周的总结**，不是把日刊拼起来
 6. 上一期周刊的内容文件（抄 labels）；教育台账 `~/Documents/Trading/01_Market_Reports_Daily/_ledger/edu_topics.jsonl`
@@ -481,6 +486,7 @@ python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，�
 - **一周涨跌**写 `over the week (theme)` / `1-week` / 「本周」「一周」，**不写 `theme week` / `industry week` / `IBIT week` 这类缩写**（周刊最容易踩，W37 样张一次踩了 11 处）。
 - **「Grow」是视频专名，不出现。**
 - **Big Picture 两拍 + 标题定性**（2026-09-19，见裁决记录）：① 一句定性 ② 故事线，≤8 个数；标题副标题不用数字。
+- **下周观察名单，独立成节（2026-09-27，见裁决记录）**：来源是参照片后半段——他按行业分组念出的下周观察名单（不是我方扫出来的领涨/落后，那两组仍各自留在 `led`/`lagged`）。字段 `weekly_watchlist`（仅周刊）：`[{"group": "半导体", "items": [{"ticker": "SMCI", "note": "他说的那句判据 ◇"}]}]`；`note` 只转述视频里那一句（位置/均线/触发条件），**不替他加理由**。**不并入 `led`/`lagged`/`tomorrow`**——它是它自己的节，渲染在 Tomorrow 之后、Rules 之前。populate 时必须同时补 `labels.weekly_watchlist`（EN `Next Week's Watchlist` / ZH `下周观察名单`），否则 `headings()` 会在 render 时抛错。参照片没有这段名单就整段省略字段，不要为了凑一节而自己找票。
 
 ### 第 5 步 · 过闸与出片
 ```bash

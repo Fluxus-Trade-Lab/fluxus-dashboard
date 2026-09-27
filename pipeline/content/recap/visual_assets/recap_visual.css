@@ -204,6 +204,10 @@ table.book td{padding:6px 16px 6px 0;border-bottom:1px solid var(--soft);color:v
 ul.legs{list-style:none;margin:0 0 12px;padding:0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink2);max-width:560px}
 ul.legs li{padding:5px 0;border-bottom:1px solid var(--soft)}
 ul.legs .t{color:var(--ink);font-weight:500;letter-spacing:.05em}
+/* weekly watchlist: his next-week names grouped by sector, one .ww-group per group */
+.ww-group{margin-top:14px}
+.ww-group:first-child{margin-top:0}
+.ww-group h4{font-size:13px;font-weight:600;margin:0 0 6px}
 
 .bigidx.seven{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
 .bigidx.seven>.bi:first-child{grid-column:span 2}
