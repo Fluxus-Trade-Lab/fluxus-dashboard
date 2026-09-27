@@ -1,9 +1,13 @@
 # Fluxus Swing Masterclass — 销售文案更正草稿（T-0919-67，Writer Mia）
 
-> ⚠️ **草稿，待 Andy 批准。09-25 之前、Andy 点头之前不得外发或上线。**
+> ✅ **09-27 定版**（T-0920-59）。价格 $1,499、退款政策、L1–5 免费试学三项 Andy 已分别批过（09-19/09-22，见下方改动清单）；09-20/09-22 两次因课程正文未定稿而延后，课程内容现已按 `data/content/RELEASE_ver1.md` 封版（09-25 定稿 + 09-26 修订），本单不再等待。
 > 只读参照：`~/Documents/SwingMasterclass/_marketing/sales_copy.md`（Q 线仓库，本次未改动那份文件，改动全部落在这份草稿里）。
 > 出处：任务 T-0919-67，事实源见 `~/Documents/fluxus-ops/tasks/T-0919-67.md` 「已定事实」节（Andy 2026-09-19 22:10 JST 前后原话）。
-> Andy 批准后，交 **UI Claire** 落地（渠道：Vercel dashboard 新 landing page，见同目录 `Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`）；若最终仍走 Squarespace，本文内容同样适用，字段一一对应旧版 `sales_copy.md` 的三节。
+> 定版后交 **Growth Gary**（Whop 商品页）与 **UI Claire**（落地页，见同目录 `Fluxus_Masterclass_Landing_Page_Copy_2026-09-25.md`）落地；若最终仍走 Squarespace，本文内容同样适用，字段一一对应旧版 `sales_copy.md` 的三节。
+
+## 09-27 更新：PDF 退出买家交付物（取代下表第 7 行「新增交付物」里的 PDF 部分）
+
+`data/content/RELEASE_ver1.md`「六」09-26 修订：Andy 原话「让pdf退居二线，不提供了。做1」「但我们内部保留pdf」——两份中英文 PDF 只留内部存档，**不再是买家能拿到的东西，任何一处都不能再写「购买后你会拿到 PDF」**。买家能拿到的只有：交互课件（全集，随进度解锁）+ 一页可打印自检清单 + 录播视频（分批）+ 不定期直播。下面正文里原来分开列的「Bilingual PDF」条目、确认邮件里「先看 PDF」的引导句，本次一并删除/改写，改动处标注 **(09-27 改)**。
 
 ## 改动清单（对照旧版，逐条给理由）
 
@@ -50,7 +54,6 @@ If you've traded 1–3 years, taken real losses, and you're done chasing signals
 ### What you get with the bundle / 购买后你会得到
 
 - **The full written system + operations manual** — built into the lessons, always the latest version *（整套系统 + 操作手册，内建在课程里，永远最新）*
-- **Bilingual PDF (EN / 中文)** — the written reference, done, yours from day one *（中英文 PDF，已成，购买当天就有）*
 - **The rest of the interactive courseware** — Lesson 6 onward, unlocking as it's finished (L1–5 you've already tried, free) *（交互课件 Lesson 6 及以后，随进度陆续解锁——L1–5 你已经免费试过了）*
 - **10+ recorded video lessons**, released in batches as they're finished *（10+ 录播视频，分批放出）*
 - **Full written notes inside every lesson** *（每课完整讲义，都在课程页内）*
@@ -107,7 +110,7 @@ You're in. Welcome to the Fluxus Swing Trading Masterclass.
 
 Here's how to start:
 1. **Sign in** to your member account and open the Masterclass area.
-2. **Open the member area** — start with the bilingual PDF (Lessons 1–5 you've already tried free; Lesson 6 onward unlocks here). More unlocks as it's finished; you won't need to ask, it'll just show up.
+2. **Open the member area** — start with the interactive courseware (Lessons 1–5 you've already tried free; Lesson 6 onward unlocks here). More unlocks as it's finished; you won't need to ask, it'll just show up. *(09-27 改：PDF 退居内部，不再是买家的起点)*
 3. **Start with Module 1, Lesson 1.** Do the drills. Don't rush ahead — everything builds on the basics.
 4. Watch for **live-stream announcements** by email — those happen as needed, not on a fixed schedule.
 
@@ -129,7 +132,7 @@ Tom · Fluxus Trade Lab
 
 开始方式：
 1. 登录会员账号，打开 Masterclass 区域。
-2. **进入会员区**——先看中英文 PDF（L1–L5 你已经免费试过了；Lesson 6 起从这里解锁）。后面的内容会随进度陆续解锁，不用你去问。
+2. **进入会员区**——先看交互课件（L1–L5 你已经免费试过了；Lesson 6 起从这里解锁）。后面的内容会随进度陆续解锁，不用你去问。*(09-27 改：PDF 退居内部)*
 3. **从模块一 Lesson 1 开始**，把 drill 做了。别急着往后跳——一切都建在基础上。
 4. 留意邮件里的**直播通知**——直播不定期，看需要开。
 
