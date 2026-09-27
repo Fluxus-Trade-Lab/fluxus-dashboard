@@ -387,7 +387,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     out["book"] = book_out(pack.get("book") or {}, D)
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
             "led", "lagged", "movers", "cross_assets", "sentiment", "session_commentary", "tomorrow", "rules",
-            "portfolio_note", "weekly_k_line", "labels")
+            "portfolio_note", "weekly_k_line", "weekly_watchlist", "labels")
     out["V"] = {}
     out["fig"] = {}
     for lang in ("EN", "ZH"):

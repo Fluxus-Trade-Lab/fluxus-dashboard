@@ -699,6 +699,17 @@
     }).join("");
   }
 
+  /* his next-week watchlist, reported as his list — grouped by sector, ticker + his own
+     stated clause, its own section (Andy 2026-09-27:「单独分开出这个，不合并到一起」) */
+  function weeklyWatchlist(c) {
+    return list(c.weekly_watchlist).map(function (g) {
+      var items = list(g.items).map(function (it) {
+        return '<li><span class="t">' + esc(it.ticker) + "</span> " + rich(it.note) + "</li>";
+      }).join("");
+      return '<div class="ww-group"><h4>' + esc(g.group) + '</h4><ul class="legs">' + items + "</ul></div>";
+    }).join("");
+  }
+
   /* topic cards are review information: preview pages only, never in a member PDF */
   function eduPick(c, V) {
     if (printMode) {
@@ -772,6 +783,9 @@
       (c.sentiment ? sec(false, L.sentiment, "", '<p class="prose">' + rich(c.sentiment) + "</p>") : "") +
       (c.session_commentary && c.session_commentary.length ? sec(false, L.session_commentary, "", olist(c.session_commentary, "ol-a")) : "") +
       sec(false, L.tomorrow, "", olist(c.tomorrow, "ol-a")) +
+      (is.weekly && c.weekly_watchlist && c.weekly_watchlist.length
+        ? sec(false, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(c); }))
+        : "") +
       sec(false, L.rules, "", olist(c.rules, "ol-a")) +
       folio(is, V, 3, false, dl) + "</article>";
     var edu = c.education || {};
@@ -828,9 +842,12 @@
       (wk ? '<div class="kicker sp">' + esc(L.weekly_k) + "</div>" + wk : "") + folio(is, V, 3, true, dl) + "</article>";
     var edu = c.education || {};
     var bk = safe(function () { return book(is, c, V); });
+    var ww = is.weekly && c.weekly_watchlist && c.weekly_watchlist.length
+      ? '<div class="kicker sp">' + esc(L.weekly_watchlist) + "</div>" + safe(function () { return weeklyWatchlist(c); })
+      : "";
     var left = (c.founders_note ? '<div class="kicker">' + esc(V.founders) + '</div><p class="prose">' +
       rich(c.founders_note) + '</p><div class="kicker sp">' : '<div class="kicker">') + esc(L.tomorrow) + "</div>" +
-      olist(c.tomorrow, "ol-b") + (bk ? '<div class="kicker sp">' + esc(L.portfolio) + "</div>" + bk : "");
+      olist(c.tomorrow, "ol-b") + ww + (bk ? '<div class="kicker sp">' + esc(L.portfolio) + "</div>" + bk : "");
     var s4 = '<article class="sheet b"><div class="pull edu"><div class="kicker">' + esc(L.education) +
       '</div><h3 class="hb big">' + esc(edu.title) + "</h3>" + eduPick(c, V) + '<p class="prose lead">' + rich(edu.body) +
       "</p></div>" + safe(function () { return figure(is.fig && is.fig[c.lang]); }) + '<p class="schem">' + esc(V.schem) +
