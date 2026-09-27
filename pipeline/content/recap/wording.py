@@ -14,9 +14,14 @@ Andy coverage review (T-0927-35, Andy 09-27「周五缺一格，是这周的个�
      · pack.json's `andy.messages` carry a `session` (date) per live-commentary line; `andy.missing_dates`
      is the export gap (benign — no thread file that day). A session with messages but none of them echoed
      in `session_commentary` is the shape Andy called a problem: real material that never made the page.
-     Coverage is word-overlap (SequenceMatcher on lower-cased word tokens, same method as week_weak_review)
-     between each session's raw messages and every session_commentary sentence — a heuristic, not a claim
-     that the meaning necessarily carried over, but sensitive enough to catch "this session got nothing".
+     Coverage is content-word containment, not symmetric word-overlap: how much of a commentary sentence's
+     content words (stopwords stripped) show up somewhere in that session's raw messages. A first cut used
+     `week_weak_review`'s SequenceMatcher ratio and was checked against the real 2026-W39 pack that motivated
+     this task — it scored the two genuinely-covered weekday sessions at 0.28-0.30 and the one genuinely
+     uncovered session (Friday) at 0.24, no separation worth a threshold. Containment on the same data scores
+     the covered sessions 0.55-0.59 and the uncovered one 0.21 — a heuristic still, not a claim that the
+     meaning necessarily carried over, but one that actually separates "this session got nothing" from
+     "this session got a paraphrase" on real editorial writing (summaries compress, they don't quote).
 """
 from __future__ import annotations
 
@@ -98,20 +103,31 @@ def week_weak_review(content_en: dict, transcript_md: str | None) -> dict:
 
 # ------------------------------------------------------------------ Andy coverage (T-0927-35)
 COVERAGE_LEDGER = RECAP_ROOT / "_ledger" / "andy_coverage.jsonl"
-_COV_MIN_RATIO = 0.30
+_COV_MIN_CONTAINMENT = 0.40
+_COV_STOPWORDS = frozenset(
+    "the a an is are was were be been being to of in on at for with and or but that this these those "
+    "it its as by from up down out over under than then so if not no yes into onto".split()
+)
+
+
+def _content_words(text: str) -> set[str]:
+    return {w for w in re.findall(r"[a-z0-9]+", text.lower()) if w not in _COV_STOPWORDS}
 
 
 def _covered(messages: list[str], commentary_words: list[set]) -> bool:
+    """A commentary sentence "covers" a session when most of its own content words (not the
+    session's) are found somewhere among that session's raw messages — containment, not a
+    symmetric ratio, because a summary is short and the source material is long by design."""
+    session_words: set[str] = set()
     for text in messages:
-        w = set(re.findall(r"[a-z0-9]+", text.lower()))
-        if not w:
+        session_words |= _content_words(text)
+    if not session_words:
+        return False
+    for cw in commentary_words:
+        if not cw:
             continue
-        for cw in commentary_words:
-            if not cw:
-                continue
-            ratio = difflib.SequenceMatcher(None, sorted(w), sorted(cw)).ratio()
-            if ratio >= _COV_MIN_RATIO:
-                return True
+        if len(cw & session_words) / len(cw) >= _COV_MIN_CONTAINMENT:
+            return True
     return False
 
 
@@ -125,7 +141,7 @@ def andy_coverage_review(pack: dict, content_en: dict) -> dict:
     for m in messages:
         by_session.setdefault(m["session"], []).append(m["text"])
     commentary = [re.sub(r"<[^>]+>", "", s) for s in (content_en.get("session_commentary") or [])]
-    commentary_words = [set(re.findall(r"[a-z0-9]+", s.lower())) for s in commentary]
+    commentary_words = [_content_words(s) for s in commentary]
     sessions = []
     for date in sorted(by_session):
         texts = by_session[date]

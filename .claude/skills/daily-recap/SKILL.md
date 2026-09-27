@@ -456,7 +456,8 @@ Andy 的裁决：
 
 一期缺格＝个例，放过；**同一形状连续两期才算问题**。落地两类判据（`pipeline/content/recap/wording.py` 的 `andy_coverage_review`）：
 - **缺数据**（该场在 `andy.missing_dates` 里）→ 记一笔，不算问题——没有原话，没什么可写。
-- **有原话却没上页**（该场 `andy.messages` 条数 > 0，但没有一条与 `session_commentary` 任何一句的词级相似度 ≥ 0.30）→ 这一类才是 Andy 说的「问题」的形状。覆盖判定是启发式（`difflib.SequenceMatcher` 词级重叠，同 `week_weak_review` 的方法），不是语义正确性的证明，但足够抓住「这场原话整个没进正文」。
+- **有原话却没上页**（该场 `andy.messages` 条数 > 0，但 `session_commentary` 里没有一句覆盖它）→ 这一类才是 Andy 说的「问题」的形状。
+  ⚠️ **覆盖判定的量法踩过一次坑，别抄第一版**：第一版照抄 `week_weak_review` 的对称词重叠比（`difflib.SequenceMatcher`），拿真实的 2026-W39 `pack.json` 一测就塌——两个真被覆盖的场（周一、周四）比出 0.28–0.30，真正没被覆盖的周五比出 0.24，三者挤在一起没有能立住的阈值，因为一句编辑改写过的摘要天生比原始群聊短得多，对称比会系统性偏低。**改用包含度**：commentary 那一句的内容词（去停用词）有多大比例出现在该场全部原话的词汇并集里；同一份真实数据上，真覆盖的场比出 0.55–0.59，真没覆盖的场比出 0.21，阈值定在 `_COV_MIN_CONTAINMENT = 0.40`，两边都留足余量。仍是启发式，不是语义正确性的证明，但摘要压缩原文、不是逐字引用这件事本身被算进去了。
 
 **每次 render 自动写进 `delivery.md`**（`run.py: write_delivery`）一行：
 ```

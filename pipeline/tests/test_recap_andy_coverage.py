@@ -51,6 +51,26 @@ def test_session_with_no_messages_is_not_flagged():
     assert r["uncovered"] == [] and r["n_total"] == 0
 
 
+def test_a_short_paraphrase_covers_a_long_casual_session():
+    """Regression, root cause found on the real 2026-W39 pack: the old symmetric SequenceMatcher
+    ratio compares one commentary sentence against one raw message at a time, so it misses coverage
+    that's assembled from several messages — no single message alone echoes enough of the paraphrase.
+    Verified against this exact fixture: the pre-fix algorithm (`difflib.SequenceMatcher` ratio,
+    threshold 0.30) scores every message below threshold (max 0.267) and marks the session uncovered;
+    containment scores it 0.818 and marks it covered. Each message below carries only a slice of the
+    paraphrase's content words — none alone crosses the old ratio threshold, but their union does."""
+    pack = _pack({"2026-09-21": [
+        "it is monday and my stance today is pretty simple honestly nothing fancy going on",
+        "semiconductors are honestly the only sector i even care to look at this week",
+        "i would rather sit tight than initiate anything new into a gap like this one",
+        "just watching for now, this whole thing is not worth forcing a trade over",
+    ]})
+    content = {"session_commentary": ["Monday's stance was to add rather than initiate, "
+                                       "with semiconductors the only thing worth watching."]}
+    r = andy_coverage_review(pack, content)
+    assert r["uncovered"] == [], "content words assembled across messages must count as coverage"
+
+
 def test_coverage_streak_needs_two_in_a_row():
     assert coverage_streak([], []) == 0
     assert coverage_streak([], ["2026-09-19"]) == 1, "a single issue is not a problem (Andy 09-27)"
