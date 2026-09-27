@@ -13,7 +13,7 @@ owner: steve
 | **主班** | 13:30 JST = ET 00:30 | 七节日报 + ticker 看板 | `data/content/x_watch/daily/<ET 日>.md` |
 | **速报** | 02:00 JST = 前一日 13:00 ET | 蹭位榜 + 圈外主题起量，两屏 | `data/content/x_watch/nightcap/<ET 日>.md` |
 
-仓库：`/Users/taolezhu/Documents/AI-Trading-System`。只写 `data/content/x_watch/**`。
+仓库：`/Users/taolezhu/Documents/AI-Trading-System`。只写 `data/content/x_watch/**`，**窄口子例外一个文件：`data/output/x_heat.json`**（见下方「送到」节，DATA ALEX 2026-09-27 裁 · T-0927-67）。
 
 ## 开工前必读（读权威版，不读主树副本）
 
@@ -235,19 +235,22 @@ Andy 2026-09-14 原话：「继续出，我每天都在看。关键是ai能够�
 
 # 送到（两班同法）
 
-宪法「直推 main 标准动作」，临时树，**只 add `data/content/x_watch/`**（主班含 `ticker_daily.csv`，不含 `board.html` / `board_data.json`）：
+宪法「直推 main 标准动作」，临时树，**只 add `data/content/x_watch/`**（主班含 `ticker_daily.csv`，不含 `board.html` / `board_data.json`）**+ `data/output/x_heat.json` 这一个文件**：
 
 ```bash
 export WT=$(mktemp -d)/wt-xw
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
 git -C /Users/taolezhu/Documents/AI-Trading-System worktree add "$WT" origin/main
 # 在 $WT 里跑抓取/mood/写报告（.env 用 set -a; . 主树/.env; set +a 带进来）
-git -C "$WT" diff --cached --name-only   # 多出来的先 restore --staged
+git -C "$WT" add data/content/x_watch/ data/output/x_heat.json
+git -C "$WT" diff --cached --name-only   # 只应有 data/content/x_watch/** 与 data/output/x_heat.json；多出来的先 restore --staged
 (cd "$WT" && python3 data/content/x_watch/tools/check_mentions.py)   # 公箱自检，退出码必须 0
 git -C "$WT" commit -F <消息文件> && git -C "$WT" push origin HEAD:main
 git -C "$WT" log origin/main -1 --oneline  # 看到自己的 commit 才算送到
 git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 ```
+
+⚠️ **落地权只到这一个文件，不是整个 `data/output/`**——`build_board.py` 顺手写的是 `x_heat.json`，别把 `git add` 写宽成 `data/output/`（会带上别的会话在数据目录里未提交的东西）。文件已挂进 `pipeline/tests/test_output_date_keys.py` 的 `EXEMPT_FILES`（静态周窗口报表，不是每日快照）与 `data/reference/schema_snapshot.json` 基线，字段结构改动要跟 DATA ALEX 说一声（`data-contract` skill 第 4 步）——**新增/删字段仍是 ALEX 的口径决定权，本条只给「按现有结构照常写」的落地权**。
 
 ⚠️ **自检用 `check_mentions.py`，不再用 `grep '^-'`**（09-13 升机制：grep 在有 stance 回填的日子必然报红，数的是改行不是丢行）。脚本按 `(date,ticker,handle,post_id)` 比对，**丢行 / 非 stance 列被改 / 已有 stance 被改**三个失败分支在 CI 里各有注射测试。退出码非 0 → 看它列出的前 5 个键，**修掉再提交，不许绕过**。
 
