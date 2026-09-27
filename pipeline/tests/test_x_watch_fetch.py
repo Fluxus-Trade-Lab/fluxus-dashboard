@@ -181,3 +181,53 @@ def test_mtf_bare_is_jargon_not_a_ticker():
 def test_dollar_prefixed_emphasis_lookalikes_still_count(text, sym):
     """STOPWORDS/INDICATOR_BARE 只拦裸词，带 $ 的照认（同 RS/SMA 的既有约定）。"""
     assert sym in fx.tickers(text)
+
+
+# --- 裸大写词族第 4 次（取件账 09-25d·1 / 09-26d·1，任务单 T-0927-62）---------
+#
+# 一天撞上十二个新强调词：FOMO IMO DM FORCE GPU EDA ALGO LL VA BUY HOLD PANIC
+# START RIGHT；前一次(09-25d·1)还撞了 NOW MCO HAGW EST GOODS，其中 $NOW 靠半票
+# 凑到两人，一度进了第 1 节候选表——这一族已经从「脏读数」升级成「假候选」。
+# 两个方向都要钉住：漏改（这批词仍进裸代码集）· 改了但接错（连带 $ 的真代码一
+# 起丢，尤其 $NOW 是全库最活跃的真代码之一，61 次全是 ServiceNow）。
+
+_MIXED_SLANG_POST = (
+    "Big FOMO energy today, IMO this dip is a gift.\n"
+    "DM me if you want the GPU/EDA basket, ALGO is printing BUY signals.\n"
+    "HOLD the line, don't PANIC — this is the START of something RIGHT.\n"
+    "Watching LL and VA on the shortlist, HAGW everyone, hope the GOODS ship soon.\n"
+    "$NOW $MCO $EST $LL $VA $ALGO all still on watch."
+)
+
+
+def test_bare_slang_and_emphasis_words_are_not_tickers():
+    """漏改方向：这批裸词一个都不该进代码集。"""
+    bare_junk = {"FOMO", "IMO", "DM", "FORCE", "GPU", "EDA", "ALGO", "BUY", "HOLD",
+                 "PANIC", "START", "RIGHT", "HAGW", "GOODS", "LL", "VA"}
+    assert not (bare_junk & fx.tickers(_MIXED_SLANG_POST.rsplit("\n", 1)[0]))
+
+
+@pytest.mark.parametrize("text,sym", [
+    ("$NOW ~ \"AI Everywhere\"", "NOW"),
+    ("adding $MCO here", "MCO"),
+    ("$EST looks interesting into earnings", "EST"),
+    ("$LL breaking out today", "LL"),
+    ("watching $VA on the shortlist", "VA"),
+])
+def test_dollar_prefixed_new_batch_still_counts(text, sym):
+    """改了但接错方向：$NOW/$MCO/$EST/$LL/$VA 这些真代码不能被一起拦掉。"""
+    assert sym in fx.tickers(text)
+
+
+def test_bare_now_is_not_a_ticker_but_dollar_now_is():
+    """NOW 全库 61 次 `$` 用例都是真代码(ServiceNow)，但裸 NOW 几乎全是英文副词。"""
+    assert "NOW" not in fx.tickers("if you know me by NOW, you know my system")
+    assert "NOW" in fx.tickers("$NOW just keeps finding ways to drag my eyes")
+
+
+def test_mixed_post_drops_bare_slang_but_keeps_dollar_codes():
+    """整段混合帖：裸词族全丢，带 $ 的五个代码一个不少。"""
+    out = fx.tickers(_MIXED_SLANG_POST)
+    assert out & {"NOW", "MCO", "EST", "LL", "VA", "ALGO"} == {"NOW", "MCO", "EST", "LL", "VA", "ALGO"}
+    assert not (out & {"FOMO", "IMO", "DM", "FORCE", "GPU", "EDA", "BUY", "HOLD",
+                        "PANIC", "START", "RIGHT", "HAGW", "GOODS"})

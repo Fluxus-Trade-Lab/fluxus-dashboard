@@ -45,6 +45,13 @@ STOPWORDS = {
     # 取件账 09-24（T-0924-104）。LOW 虽是 Lowe's 真代码，但归在 INDICATOR_BARE
     # 更符合本文件自己立的分类口径（真代码同名缩写才进那边），见下方。
     "DAILY","PUT","TRADE","BANKS","MTF",
+    # 裸大写词族第 3/4 次（取件账 09-25d·1 / 09-26d·1，任务单 T-0927-62）：一天
+    # 撞上十二个新强调词/缩写，跟 09-24·4 补的五个是同一形状——一条一条补词已
+    # 证明跟不上（见 fetch.py 顶部这次没写但任务单正文钉了：这一族第 4 次三次律
+    # 早已到期）。这批全库 23 天零 `$` 用例（`grep -ho '\$LL\b' posts/*.jsonl`
+    # 等零命中），拦裸词不误伤：
+    "FOMO","IMO","DM","FORCE","GPU","EDA","ALGO","BUY","HOLD","PANIC","START",
+    "RIGHT","HAGW","GOODS","EST","MCO","LL","VA",
 }
 
 # 指标名 / 经济数据名 / 真代码同名缩写：只在「裸大写词」分支拦，带 $ 的照认。
@@ -55,7 +62,12 @@ STOPWORDS = {
 # 「LOW」也是常见大写强调词（如「DT Break」「DAILY LOW」句式），裸词先拦，
 # 真要认某票就带 $（T-0924-104）。两个集合在 tickers() 里判法完全等价，放哪边
 # 不影响结果，只影响这份注释自证的分类是否一致。
-INDICATOR_BARE = {"SMA","EMA","RS","PPI","MA","VWAP","ATR","MACD","PCE","DT","LOW"}
+# NOW（ServiceNow）09-27 加入同理，但证据比 DT/LOW 更硬：全库 `$NOW` 61 次都是
+# 真代码（AI 应用/软件清单帖），而裸 `NOW` 几乎全是英文副词（「if you know me by
+# NOW」「keeps finding ways to drag my eyes NOW」），跟 MCO/EST 那批零 `$` 证据
+# 不同——MCO/EST 留在 STOPWORDS，因为库里连一次 `$MCO`/`$EST` 都没有，没有「真代
+# 码同名」的证据支持它们进这边（T-0927-62）。
+INDICATOR_BARE = {"SMA","EMA","RS","PPI","MA","VWAP","ATR","MACD","PCE","DT","LOW","NOW"}
 
 
 def key() -> str:
