@@ -1,0 +1,54 @@
+{
+  "symbol": "SPY",
+  "sessions": 728,
+  "first_session": "2023-10-30",
+  "last_session": "2026-09-25",
+  "full_gap_up": 189,
+  "full_gap_down": 103,
+  "partial_gap_up": 245,
+  "partial_gap_down": 187,
+  "sweep": [
+    {
+      "label": "all true gaps",
+      "n": 292,
+      "fill_p25": 0.196,
+      "fill_median": 0.434,
+      "fill_p75": 0.85,
+      "closed_in_hour1": 0.209
+    },
+    {
+      "label": "gap >= 0.25 ATR",
+      "n": 223,
+      "fill_p25": 0.168,
+      "fill_median": 0.35,
+      "fill_p75": 0.604,
+      "closed_in_hour1": 0.099
+    },
+    {
+      "label": "gap >= 0.50 ATR",
+      "n": 126,
+      "fill_p25": 0.146,
+      "fill_median": 0.284,
+      "fill_p75": 0.493,
+      "closed_in_hour1": 0.04
+    }
+  ],
+  "by_direction_025atr": {
+    "up": {
+      "label": "up",
+      "n": 132,
+      "fill_p25": 0.144,
+      "fill_median": 0.337,
+      "fill_p75": 0.682,
+      "closed_in_hour1": 0.136
+    },
+    "down": {
+      "label": "down",
+      "n": 91,
+      "fill_p25": 0.174,
+      "fill_median": 0.356,
+      "fill_p75": 0.554,
+      "closed_in_hour1": 0.044
+    }
+  }
+}
