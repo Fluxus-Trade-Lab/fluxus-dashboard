@@ -17,8 +17,11 @@ owner: steve
 
 ## 开工前必读（读权威版，不读主树副本）
 
+⚠️⚠️ **第一条命令：把本 skill 自己刷到权威版。** harness 是从**主树**加载这份文件的，主树那份可能落后 `origin/main` 好几天 —— 三次「main 上没有这条」的假警报都是这么来的（取件账 09-22·2 / 09-24·1 / 09-24·2 / 09-25n 末条）。宪法「读规矩读 `git show origin/main:`」管的是你手动读的文件，管不到 harness 替你加载的那一份。
+
 ```bash
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
+git -C /Users/taolezhu/Documents/AI-Trading-System checkout origin/main -- .claude/skills/x-watch/SKILL.md   # ← 刷完这一句，后面读到的词表/口径才是 main 上那份
 git show origin/main:Fluxus_Brand/ops/briefs/2026-09-06_x_daily_watch_runbook.md
 git show origin/main:data/content/x_watch/README.md
 git show origin/main:data/content/x_watch/subs/README.md
@@ -74,6 +77,7 @@ awk -F, 'NR==1||!seen[$1","$2","$3","$4]++' data/content/x_watch/mentions.csv > 
 
 落 `data/content/x_watch/subs/jfsrev/<日期>.jsonl`：`id · dt · et · kind · tickers · proxy · stats · text`。`kind` 用他自己的词：`Stalk` / `Focus` / `Update` / `WeekendSeries` / `Groups` / `Note` / `Plan` / `Educational`。
   ⚠️ 后三个是 09-20 周结补进来的（取件账 09-14·1 数到第 4 次）：库里存量早就有 `Note` 21 条、`Plan` 4 条，跑手每班照实写、每班又超纲，超的是词表不是跑手。**这张表以本行为准，别再按五个词自检。**
+  ⚠️ **首行判不出 kind 的帖**（09-21 那条以 `$XRPUSD` 开头、只写了代理和杠杆）：记 `Note`，并在第 5 节表里那一格写「无状态词」。**不新增词**——新增一个词要等它出现第二次，一次性的写法不配一个词（取件账 09-21·3，Steve 09-27 裁）。
 
 ✅ **原话直接上页**（Andy 2026-09-24 原话：「jeff原话只存不引的规则取消，我要在ticker台账上直接能看到」）。
 墙后正文进两处：**ticker 台账**（票视图展开行的铜色块 + 墙后视图的正文列，都是私有 Artifact）· **日报第 5 节**（可以直接引他的句子，不再只写转述）。
@@ -210,7 +214,11 @@ Andy 2026-09-14 原话：「继续出，我每天都在看。关键是ai能够�
 
 - **角度**：一句话 —— 接他哪一点、往哪边推（补数 / 补反例 / 补失效条件 / 补一个他没问的问题）
 - **挂哪份自有内容**：课程哪一课（`~/Documents/SwingMasterclass/` 的课名）· 每日复盘 · dashboard 哪一页 · `data/research/` 哪个结论。**挂不上自有内容的方向不出** —— 蹭的目的是把人带回我们的东西，不是替别人热场
-- **能不能放链接**：课程 **09-25 上架前不能链接**（Andy 09-19 把发布日从 09-20 改到 09-25，$1,499 / Whop），只能用课里的观点；dashboard / Substack 已公开可链。⚠️ 仓库是 PUBLIC，课程原文不进仓库，方向里只写课名
+- **能不能放链接**：课程已于 2026-09-25 上架（$1,499 / Whop），**口径是三层，不是一句禁令**（取件账 09-26n·2 / 09-26d·5，Steve 09-27 定）：
+  - 落地页 `/` 与免费试读 `/lessons` —— **可链**
+  - 全集 `/paid/` —— 无会员 403，**不链，只用课里的观点**
+  - dashboard / Substack —— 已公开可链
+  **判据是现场 `curl -o /dev/null -s -w '%{http_code}'`，不是这份文档里的日期。** 日期会过期、页面状态不会；上一版写死「09-25 上架前不能链接」，发布日过了那句话仍读起来像禁令，连着两班照旧不链。⚠️ 仓库是 PUBLIC，课程原文不进仓库，方向里只写课名
 
 ⛔ **只给方向，不写成品回复。** 字由 Andy 写（对外永不代笔）。英文帖也只用中文写方向。
 ⛔ 说「我们有 X」之前**现场核实 X 存在**（grep 前端/数据文件），核不到就不许写进方向。
