@@ -1449,21 +1449,25 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 - **✅ 一条假警报已在任务书里作废，不用再查**：`universe.json` 与 `watchlist.json` 曾报差一天，起因单已确认是比较了夜班跑前跑后两个快照，重拉后两边同为 2026-09-25，不是真偏差。
 - **不是 bug，未改动（Andy 本单亲口确认）**：Today's List（日额 ≥$20M）与 Screener（日额 ≥$2M）两页的宇宙闸不同是真实设计差异，两页合成一页时挑默认档、做成可切换属于前端（Claire）范畴；`universe.json` 里 136 只落后一天 + 48 只无 `bar_date`（均为 `tradeable: false` 的 SPAC/units/退市壳，`bars_stale` 已标记 137 只）同样是设计如此。
 
+**产出**：`pipeline/adapters/yfinance_adapter.py`（加 `as_of` 列）· `pipeline/screeners/run_all.py` 无需改（写出口不变）· `pipeline/themes/proxy_board.py`（注释）· `pipeline/tests/test_output_date_keys.py`（新测试，闸新文件）· `pipeline/tests/test_run_all_smoke.py`（补 etf_data 行断言）· `data/output/etf_data.json`（回填现存文件）· 本行。三个测试根全绿（3644 passed, 1 skipped）。
+
 ## 二十、[2026-09-27] alex：T-0927-67 —— `data/output/x_heat.json` 无落地权，判 B：给 X 调研线开窄口子
 
 起因：`data/content/x_watch/tools/build_board.py` 每次跑顺手写 `data/output/x_heat.json`（T-0923-88），但 X 调研线的 skill 只授权 `git add data/content/x_watch/`，该文件在 main 上停在 09-23 commit `31efde0d`，09-24/09-25/09-26 三班都算出新值却都没提交。任务书原文判断「现在没有后果（`git grep x_heat` 在 `frontend/`/`pipeline/` 零命中）」——**这句在今天核查时已经不成立**：
 
-- `git grep x_heat` 实际命中 `frontend/src/components/ticker/TickerXHeat.jsx` 与 `frontend/src/hooks/useXHeat.js`（commit `046ae6e62`，任务 T-0923-104，与 `x_heat.json` 同一天 09-23 上线），个股页「X 热度」卡片每次渲染都 `fetch('/data/output/x_heat.json')`。这是一个**真实、已部署、正在被读的消费者**，不是零引用。
+- `git grep x_heat` 实际命中 `frontend/src/components/ticker/TickerXHeat.jsx` 与 `frontend/src/hooks/useXHeat.js`（commit `046ae6e62`，任务 T-0923-104，与 `x_heat.json` 同一天 09-23 上线），个股页「X 热度」卡片每次渲染都 `fetch('/data/output/x_heat.json')`。这是一个**真实、已部署、正在被读的消费者**，不是零引用；`TickerPage.jsx` 真挂载了 `<TickerXHeat symbol={symbol} xHeat={xHeat} />`，不是孤儿组件。
+- **且线上读的就是 main 上那个冻住的文件本身，不是构建期快照**：`vercel.json` 第 14–15 行把 `/data/output/(.*)` rewrite 到 `https://raw.githubusercontent.com/Fluxus-Trade-Lab/fluxus-dashboard/main/data/output/$1`——每次用户打开个股页，浏览器现场从 `main` 分支拉这个文件，main 上冻结即线上冻结，没有中间缓存层能挡。
 - 结果：个股页从 09-23 起一直静默展示同一个「近 7 日」窗口（`2026-09-17`–`2026-09-23`）的人数读数，界面上 `windowLabel` 会显示真实日期区间（不是显示为「今天」），不算彻底欺骗读者，但读数本身已冻结 4 天、还会继续冻结下去——这正是「靠没人消费活着」的反面：**有人在消费，且消费的是过期数据**。
 
 **判 B**：给 X 调研线在 `data/output/x_heat.json` 这一个文件上开落地权，不采 A（把写出那行从 `build_board.py` 摘出去）。理由：A 需要另立一条谁来跑、多久跑一次的管线，且短期内没人接手会让这张卡直接冻结在 09-23 不再更新；B 只是把 X 调研线本来就在算的东西放行，零新增代码，且 `build_board.py` 本身就在数据契约文件的合法产出范围内（结构三列读的也是 `data/output` 既有字段）。
 
 **执行**：
-- `.claude/skills/x-watch/SKILL.md` 加窄口子条款——「只写 `data/content/x_watch/**`」下补一句例外，「送到」节的 `git add` 命令改为显式 `data/content/x_watch/ data/output/x_heat.json` 两项，并写明落地权只到这一个文件、不是整个 `data/output/`；字段结构改动仍要过 alex（口径决定权不下放，只下放「照现有结构照常写」）。
-- `data/reference/schema_snapshot.json` 手动补登 `x_heat.json` 一条（`top`: `count/note/rows/source/window/window_days`；`rows[]`: `days_7d/is_index/peak_day/peak_people/people_7d/posts_7d/ticker`）——**没有跑全量 `--update`**，因为当前 `--check` 还挂着约 15 个与本单无关的 in-flight 字段新增（`breadth.json`/`groups.json`/`universe.json` 等），整体接受会连带把那些未经各自任务收尾的改动一起写进基线，超出本单授权。已改后 `--check` 单独核实 `x_heat.json` 不再报 `new file`，退出码 0。
+- `.claude/skills/x-watch/SKILL.md` 加窄口子条款——「只写 `data/content/x_watch/**`」下补一句例外，「送到」节的 `git add` 命令改为显式 `data/content/x_watch/ data/output/x_heat.json` 两项，并写明落地权只到这一个文件、不是整个 `data/output/`；字段结构改动仍要过 alex（口径决定权不下放，只下放「照现有结构照常写」）。新增 `pipeline/tests/test_x_watch_skill_authorizes_x_heat.py` 钉死这句授权文字，见下方「产出」。
+- `data/reference/schema_snapshot.json` 手动补登 `x_heat.json` 一条（`top`: `count/note/rows/source/window/window_days`；`rows[]`: `days_7d/is_index/peak_day/peak_people/people_7d/posts_7d/ticker`，与 `build_board.py::x_heat()` 实际写出的键逐字核对一致）——**没有跑全量 `--update`**，因为当前 `--check` 还挂着 22 条与本单无关的 in-flight 变更（其中 7 个 `new file`：`breadth_panes.json`/`ep_qullamaggie.json`/`ep_stockbee.json`/`market_light.json`/`theme_board.json`/`theme_ladder.json`/`tick_cycle.json`，另有 `breadth.json`/`breadth_replay.json`/`correction_risk.json`/`etf_data.json`/`groups.json`/`groups_history.json`/`stockbee_ratio.json`/`universe.json` 若干字段新增），整体接受会连带把那些未经各自任务收尾的改动一起写进基线，超出本单授权。已改后 `--check` 单独核实 `x_heat.json` 不再出现在输出里，退出码 0。
 - `x_heat.json` 早已登记在 `pipeline/tests/test_output_date_keys.py::EXEMPT_FILES`（T-0926-56，静态周窗口报表口径），本次不重复处理。
 - 取件账 `data/content/x_watch/README.md` 09-25d·4 / 09-26d·4 两行下各追 `↳`。
+- 已给 steve 开知悉单 **T-0927-71**，通知下一班起随日班一起 `git add data/output/x_heat.json`（skill 已写死，不用手改）。
 
 **不含**：X 调研线仍不获得 `data/output/` 其余文件的写权；`build_board.py` 代码本身不改动。
 
-**产出**：`pipeline/adapters/yfinance_adapter.py`（加 `as_of` 列）· `pipeline/screeners/run_all.py` 无需改（写出口不变）· `pipeline/themes/proxy_board.py`（注释）· `pipeline/tests/test_output_date_keys.py`（新测试，闸新文件）· `pipeline/tests/test_run_all_smoke.py`（补 etf_data 行断言）· `data/output/etf_data.json`（回填现存文件）· 本行。三个测试根全绿（3644 passed, 1 skipped）。
+**产出**：`.claude/skills/x-watch/SKILL.md`（窄口子条款）· `data/reference/schema_snapshot.json`（补登 `x_heat.json` 基线）· `pipeline/tests/test_x_watch_skill_authorizes_x_heat.py`（新测试，钉死授权文字，见 branch-review Q2 要求补的 red→green 载体）· `data/content/x_watch/README.md`（取件账两行标已解决）· 本行。三个测试根跑过全量不掉绿（3701 passed, 1 skipped）；新测试单独验证改动前红、改动后绿。
