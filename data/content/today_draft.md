@@ -1,25 +1,25 @@
-date: 2026-09-26
+date: 2026-09-27
 tier: B
-source: queue
-gate: 🎮 1/5（本周 09-21 起，posts.csv 计）· streak 台账未定义，未登记
+source: ammo（Fluxus_Own_Lines.md 金句库；本周 Queue 表 09-27 这一格 Andy 09-20 明确留空，非数据缺口）
+gate: 🎮 posts.csv 1/5（本周 09-21→09-27，仅台账口径，未核实 X 实况）· streak 未登记
 ---
 ## C1
-bucket: QUOTE(中) | entry: 100
-价格只是回到几个月前。情绪回不去了。
-why: `Fluxus_Queue.md` 下周队列表第 6 格排定今天（09-26 六）发这条，Own_Lines #100⭐⭐⭐「情绪 vs 价格，一句讲完」。这是本周（09-21→09-27）队列表最后一个中文位，编排走到「承认」这一格。
+bucket: QUOTE(EN) | entry: -
+The market never waits for you to get used to it.
+why: Own_Lines #91⭐⭐⭐，原话「但市场从来就不等你习惯」打磨版。逐查 posts.csv／历次 Queue 表／verdicts.jsonl 全库零命中，今天第一次端。
 ---
 ## C2
-bucket: QUOTE(EN) | entry: -（2026-09-24 Founders Note 口述，未单独发过）
-Focus on RS leaders, not breadth. They can lie.
-中文版：盯相对强度的龙头，不要盯广度——广度会骗人。
-why: Andy 09-24 口述原话（`voice/raw/2026-09-24_founders_note_rs_over_breadth.md`），已用进 09-23 复盘的 Founders Note 正文，从未作为独立 X 帖发过；出处双重（他的话 + O'Neil《How to Make Money in Stocks》「Interpret the Overrated Advance-Decline Line」一节，已登记 `METRIC_SOURCES.md`）。昨天（09-25）曾端过一次未获判决，今天第二次端。
+bucket: QUOTE(中) | entry: -
+贩卖恐惧和贩卖FOMO都是生意。恐惧通常源自卖家的亲身经历——卖着卖着，自己也信了。
+why: Own_Lines #132⭐⭐⭐「对整个恐惧贩卖行业的一句判词」，原话已打磨。全库零命中，今天第一次端；行业冷眼类，配 EN 版 "Selling fear is a business, and so is selling FOMO..." 可选。
 ---
 ## C3
-bucket: QUOTE(中) | entry: -
-你看我止损的单子特别多。一部分是纪律，一部分是我做太多了。
-why: Own_Lines #28⭐⭐⭐，原话打磨版。09-13 曾端过一次（`verdicts.jsonl` 标 ignored，非 rejected），13 天未再出现，`posts.csv` 全查未发过。自嘲劈半的结构（一半纪律一半做太多）正是 `fable-voice` 手感库第 1 条讲的「诚实劈半」，换下昨天的 #76 做候选轮换。
+bucket: QUOTE(EN) | entry: -
+No tightness, no trade.
+why: Own_Lines #105⭐⭐⭐，签名级死规则。09-12 曾端过一次（`verdicts.jsonl` 标 ignored，非 rejected，库注「未被否，留在库里可再端」），15 天未再出现，今天第二次端。
 ---
 ## notes
-- **⭐ 课程今天出了第一笔真实成交**：`material_inbox.md` 09-26 记「CH00–07 成交 2 笔 $2,998，买家都是存量会员」（commit `5fa908742`）——这是课程线从「产品化」到「市场验证」的第一个真数字，完全符合 `Fluxus_Build_In_Public.md` 的硬门槛（过去式、真数字、不预告）。**这条不是成品，是素材**：Steve 只递稿不代写，正文需要 Mia 起草一条 build-in-public 帖（老会员首批买单，past tense，真实金额）——本表不能替她写，只标出这是本周最值得优先生产的一条新内容，供日推/交接引用。
-- C2/C3 均为库存金句轮换出的候选，非今天新写；今天真正「新」的是上面这条课程首单素材，还没有对应的 X 成品。
-- 昨天（09-25）课程官宣文案与购买链路仍卡在 `needs_andy`；今天已看到真实成交说明链路至少部分跑通了，但没有查到官宣 X thread 是否已发（`posts.csv` 截至本班备稿时仍只有 09-22 一条记录），如实标注不假设。
+- **A 档不可用**：夜间内容产线 2026-09-21 起正式停产（非维修期，`PIPELINE.md` 顶部停产令），最近四张 campaign 卡（09-06/09-03/09-01/08-29）全部 killed/归档不发，没有 queued/approved 的卡可取。
+- **本周 Queue 表 09-27 这格是 Andy 主动留空**（09-20 结算台原话「下周队列踢掉 09-25 五、09-27 日，留 5 条」），不是断更保险出故障；三条候选改从金句库直取（B 档合法来源之一），逐条核对未见于 `posts.csv`／历次 Queue 表／`verdicts.jsonl`。
+- ⚠️ **课程首单素材仍未变成成品（第 2 天）**：09-26 记的「上线后真实付费 2 人 · $2,998」（`material_inbox.md` T-0926-17/44，`data/growth/` growth ledger）——09-26 契约行 §十八已更正口径（**2 人是上线后新单**，17 人/$11,954 是老课历史累计，两者别混），本条数字口径以更正后的为准。这条 build-in-public 素材两天了还没人起草成 X 稿，Steve 只递稿不代写，标出来供 Mia/交接引用，不进 C1-C3。
+- NOW.md 停在 09-23 更新，未反映课程发布后的现状，仅供参考；今天备稿未据此对课程发布链路下判断。
