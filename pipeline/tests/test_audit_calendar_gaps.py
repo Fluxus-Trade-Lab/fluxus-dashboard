@@ -899,3 +899,73 @@ def test_the_share_a_d1_reports_is_the_share_that_was_measured():
                for v in out["violations"]), out["violations"]
     hit = [f for f in out["findings"] if f["session"] == "2026-08-26"]
     assert hit and hit[0]["feed_frac"] == 0.3, hit
+
+
+# ------------------- the percent sign and the declared precision of a report
+# Survivors [75] L165, [95] L265, [98] L276 (`100 -> 101`) and [74] L162,
+# [82] L281 (`round(x, 4) -> 5`). The three `100 -> 101` ones are the same
+# shape Zac hit on 2026-09-02 and wrote down: a drift of 0.2692 prints "27"
+# under both `*100` and `*101`, because `:.0f` throws the added 1% away. So
+# a share that separates them has to be picked, not assumed. `f == 1.0` does
+# it for any ticker count -- 100 vs 101 -- and it is also the most ordinary
+# reading either message will ever carry.
+
+def test_a_universal_c1_says_a_hundred_percent_not_a_hundred_and_one():
+    """Kills L165 `100 -> 101`.
+
+    Every name lost the session, so the gap is 100% of the sample. A guard
+    that reports 101% has told the reader something impossible, and this is
+    the line a human reads to decide whether to page the data owner.
+    """
+    out = check(feed([d for d in WEEK if d != "2026-08-28"]), START, END, END)
+    assert any("C1 2026-08-28: absent for 10/10 tickers (100%)" in v
+               for v in out["violations"]), out["violations"]
+
+
+def test_a_d1_over_a_whole_feed_says_a_hundred_percent():
+    """Kills L265 `100 -> 101` -- the D1 message's own share.
+
+    ⚠️ `test_the_share_a_d1_reports_is_the_share_that_was_measured` above
+    asserts "30%" and does NOT kill this mutant: 0.3*101 is 30.3, which
+    `:.0f` prints as "30" too. Asserting a percentage is not the same as
+    pinning the multiplier.
+    """
+    out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-26"}, START, END, END)
+    assert any("D1 2026-08-26: the market traded (100% of tickers have a bar)"
+               in v for v in out["violations"]), out["violations"]
+
+
+def test_a_d3_reports_the_share_that_is_still_coming_back():
+    """Kills L276 `100 -> 101` -- the D3 message's share.
+
+    D3 only fires below the threshold, so 100% is unreachable here and the
+    separating share has to be found: 1 of 8 is 0.125, which prints "12"
+    under `*100` and "13" under `*101`. D3 is the loud one -- the vendor
+    deleted a session we already consumed -- and the percentage is how the
+    reader tells "the feed dropped everything" from "one name delisted".
+    """
+    eight = NAMES[:8]
+    given = only_these_carry(WEEK, "2026-08-26", 1, eight)
+    out = reconcile(given, set(WEEK), START, END, END)
+    assert not out["ok"]
+    assert any("D3 2026-08-26" in v and "(12% of tickers)" in v
+               for v in out["violations"]), out["violations"]
+
+
+def test_the_frac_fields_carry_the_four_decimals_they_declare():
+    """Kills L162 and L281 `round(x, 4) -> round(x, 5)`.
+
+    One name of three is 0.333333..., the smallest sample where the declared
+    precision is observable at all: with ten tickers every share is exact and
+    `round(_, 4)` and `round(_, 5)` agree on every possible input. These two
+    numbers are what a downstream reader compares against a threshold, so the
+    digit count is part of the contract, not decoration.
+    """
+    three = NAMES[:3]
+    gapped = only_these_carry(WEEK, "2026-08-26", 2, three)
+    assert check(gapped, START, END, END)["gaps"][0]["frac"] == 0.3333
+
+    out = reconcile(only_these_carry(WEEK, "2026-08-26", 1, three),
+                    set(WEEK) - {"2026-08-26"}, START, END, END)
+    hit = [f for f in out["findings"] if f["session"] == "2026-08-26"]
+    assert hit and hit[0]["feed_frac"] == 0.3333, hit
