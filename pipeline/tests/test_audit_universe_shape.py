@@ -346,20 +346,14 @@ def test_three_trailing_sessions_are_enough_to_judge():
 def test_a_drift_of_exactly_the_tolerance_is_inside_the_tolerance():
     """Kills [39] L92 `Gt -> GtE` -- is `--tolerance` allowed or forbidden?
 
-    ⚠️ The numbers are chosen so the boundary is REACHABLE, and the default
-    0.15 is not a good choice for it. `abs(sh - base)` has to equal the
-    tolerance to the bit, and every ordinary pair does not: 0.65 - 0.50,
-    0.50 - 0.35 and 0.40 - 0.25 all come out 0.15000000000000002, which is
-    ALREADY greater than 0.15, so real line and mutant both fire and the test
-    proves nothing. 0.15 is reachable, but only one way -- a baseline of
-    exactly 0.0 against a share of exactly 3/20 -- and a 0.0 baseline needs
-    trailing sessions that are themselves all-zero and under MIN_ROWS. 0.25 is
-    exact under subtraction: 0.50 - 0.25 is 0.25 to the bit, for free.
-
-    (Cousin of audit_calendar_gaps L258, where the default threshold
-    `1.0 - 0.8` == 0.19999999999999996 is not reachable at all: no k/n with
-    n <= 20000 equals it, and the nearest non-0.2 ratio misses by 1e-5 against
-    a double spacing of 2.8e-17.)
+    ⚠️ The numbers are chosen so `abs(sh - base)` equals the tolerance TO THE
+    BIT, and the obvious constructions do not: 0.65 - 0.50, 0.50 - 0.35 and
+    0.40 - 0.25 all come out 0.15000000000000002, which is already greater
+    than 0.15, so the real line and the mutant both fire and the test proves
+    nothing. The default IS reachable -- 0.30 against 0.15 lands on it exactly
+    -- but it depends on how the fixture happens to divide. 0.25 is exact
+    under subtraction of halves and quarters, so it stays reachable however
+    this test is later rewritten.
     """
     by = healthy(8)
     by["2026-06-09"] = AL * 3 + MZ                   # 50/200 = 0.25 exactly
