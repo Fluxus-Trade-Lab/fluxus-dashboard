@@ -53,8 +53,8 @@ Fluxus_Brand/voice/raw/README_POINTERS.md
 - commit: `697b2c379`（分支 agent/ops/T-0928-22，待合并后自动在 origin/main 上）
 
 ### Vault 侧
-- `90_Inbox/candidates/_TO_REVIEW.md` 页底更新节：**缺「09-28 更新」节**
-- vault git log：最后 commit 为 09-27（待补 09-28 记录）
+- `90_Inbox/candidates/_TO_REVIEW.md` 页底更新节：**09-28 更新已补**（commit 8bd1792，时间戳 2026-09-28 10:04:46）
+- vault git log：origin/main 顶端已确认为 09-28 的「vault-status: 2026-09-28 第 12 跑更新 · 原料并集核对结果」
 
 ## ③ 相关性说明
 

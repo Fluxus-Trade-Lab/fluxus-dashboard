@@ -48,7 +48,7 @@
 2. `C14_2050震荡带_体系薄弱区`（8 分钟，或授权跑账本）
 3. `C21_LongerInBase`（5 分钟，或授权跑账本）
 
-清单入口：`FluxusTrading_Obsidian/90_Inbox/candidates/_TO_REVIEW.md`（页底「09-17 更新」）
+清单入口：`FluxusTrading_Obsidian/90_Inbox/candidates/_TO_REVIEW.md`（页底「09-28 更新」）
 
 ## 已知缺口（登记，不在此展开）
 - **口述原料 11 天没人搬**（09-17 发现）：C17 / C26 在 09-06 已口述、原料落在 `Fluxus_Brand/voice/raw/`，
