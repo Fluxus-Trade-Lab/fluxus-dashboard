@@ -18,6 +18,16 @@
  *   members  finished; membership is the only thing missing
  *   beta     not finished, nobody gets in yet — including members
  *
+ * 2026-09-28 — THE BLUR IS GONE. Andy: "先把模糊的门禁撤了." Members pages
+ * now open in full for everyone: members are using the dashboard and there is
+ * no account system to tell them from visitors, so a gate that only blurs is
+ * friction with no protection behind it (see the warning below). The MEMBERS
+ * state stays in the table because it is still TRUE — those pages are what the
+ * membership buys, and real gating (T-0925-73) will read it — but for now it
+ * closes nothing. BETA is untouched as a rule: unfinished boards stay closed to
+ * everyone (his 09-25 ruling, not revoked), shown as a card with nothing
+ * blurred behind it.
+ *
  * ⚠️ NONE OF THIS IS SECURITY. The blur is CSS over a page that has already
  * rendered, and every number behind it comes from JSON this site serves
  * publicly out of `data/output/`, from a repository that is also public.
@@ -119,7 +129,14 @@ export function accessOf(pageKey) {
   return PAGE_ACCESS[pageKey] ?? FREE
 }
 
-/** True when the page should render behind the blur — members OR beta. */
+/**
+ * True when the page is closed — today that means BETA only.
+ *
+ * Until 2026-09-28 this was `!== FREE`, which also blurred every MEMBERS page.
+ * Andy took the blur down ("先把模糊的门禁撤了"); a members page now renders in
+ * full. When real gating arrives it should gate MEMBERS on an actual session,
+ * not by widening this function back.
+ */
 export function isLocked(pageKey) {
-  return accessOf(pageKey) !== FREE
+  return accessOf(pageKey) === BETA
 }

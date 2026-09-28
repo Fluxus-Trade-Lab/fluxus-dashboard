@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import HeroField from './HeroField'
 import { PUBLIC_STATS } from './publicStats'
+import { isLocked } from '../access'
 
 /* The four parts of the tool, named by Andy on 2026-09-25:
    "dashboard是工具，这个工具分几个部分，一个是市场观察 market state, themes,
@@ -135,10 +136,10 @@ export default function LandingPage({ onNavigate }) {
 
       {/* What a member actually gets, in the four parts Andy named on
           2026-09-25: market read / your own book / education / the daily recap.
-          Every row links to the real page. The locked ones render for real and
-          then blur, so clicking is the proof — a visitor sees this site's own
-          dashboard with today's date in it, which is the one thing a
-          competitor's marketing screenshot cannot fake. */}
+          Every row links to the real page, today's data included — the one
+          thing a competitor's marketing screenshot cannot fake. The lock marks
+          only the unfinished boards `access.js` closes; since 2026-09-28 the
+          blur is gone and every other page opens in full. */}
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="public-section public-section-wide py-16">
           <h2 className="public-h2">What you get</h2>
@@ -174,8 +175,8 @@ export default function LandingPage({ onNavigate }) {
                           {pg.free
                             ? <span className="text-[11px] px-1.5 py-0.5 rounded"
                                     style={{ background: 'var(--color-poster-blue)', color: '#fff' }}>FREE</span>
-                            : <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
-                                   aria-label="members only" role="img"
+                            : isLocked(pg.hash.replace('#/', '')) && <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                                   aria-label="not open yet" role="img"
                                    className="shrink-0 opacity-55"
                                    style={{ color: 'var(--color-text-muted)' }}>
                                 <rect x="4.5" y="10.5" width="15" height="10" rx="2.5"

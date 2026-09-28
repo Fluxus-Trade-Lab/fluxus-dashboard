@@ -1,8 +1,12 @@
 import { useLanguage } from '../i18n/LanguageContext'
 import { BLURB, accessOf, BETA } from './access'
 
-/* The shop window: the real page renders, then goes soft behind a card that
-   says what it is.
+/* The closed-page card. Until 2026-09-28 this was a shop window — the real
+   page rendered, then went soft behind the card. Andy took the blur down that
+   day ("先把模糊的门禁撤了"): members pages now open in full, and only BETA
+   pages (unfinished, closed to everyone) reach this component, as a card with
+   nothing behind it. The notes below describe the blur as it was, kept so the
+   reasoning is on file if a gate ever comes back.
  *
  * Andy, 2026-09-25: "可以点击这个栏目但是出现的是一个模糊的界面."
  *
@@ -36,7 +40,7 @@ function LockGlyph({ size = 22 }) {
   )
 }
 
-export default function LockedPane({ page, children }) {
+export default function LockedPane({ page }) {
   const { t } = useLanguage()
   const blurbKey = BLURB[page]
   /* Two closed states, and the card must not blur them together. A members
@@ -46,36 +50,18 @@ export default function LockedPane({ page, children }) {
      a beta page would be selling something that does not exist yet. */
   const beta = accessOf(page) === BETA
 
+  /* 2026-09-28: no blur, and nothing rendered behind the card. Andy took the
+     blurred gate down ("先把模糊的门禁撤了"); the only pages that still reach
+     this component are BETA ones, which are closed, so there is no page to
+     show through. The card sits in normal flow where the page would be.
+     `children` is deliberately not rendered — an unfinished page should not
+     mount (and fetch) just to be hidden. */
   return (
     <div className="relative">
-      {/* The page itself. `inert` is what actually stops the keyboard getting
-          in; the filter is only what the eye sees. */}
-      <div
-        inert=""
-        aria-hidden="true"
-        className="pointer-events-none select-none"
-        style={{ filter: 'blur(5px) saturate(0.85)', transform: 'scale(1.01)' }}
-      >
-        {children}
-      </div>
-
-      {/* A wash, kept deliberately thin. The first version faded to 92% of
-          the background and the page underneath went black — which defeats the
-          entire point: this is a shop window, and a shop window you cannot see
-          into is a wall. Enough to seat the card, not enough to hide the
-          product. */}
-      <div className="absolute inset-0 pointer-events-none"
-           style={{ background:
-             'linear-gradient(to bottom, color-mix(in srgb, var(--color-bg) 12%, transparent) 0%,'
-             + ' color-mix(in srgb, var(--color-bg) 34%, transparent) 40%,'
-             + ' color-mix(in srgb, var(--color-bg) 52%, transparent) 100%)' }} />
-
-      <div className="absolute inset-0 flex items-start justify-center px-4 pt-[14vh] sm:pt-[18vh]">
+      <div className="flex items-start justify-center px-4 pt-[10vh] pb-[16vh]">
         <div className="w-full max-w-[440px] rounded-2xl px-6 py-7 text-center"
-             style={{ background: 'color-mix(in srgb, var(--color-surface) 96%, transparent)',
-                      border: '1px solid var(--color-border)',
-                      backdropFilter: 'blur(10px)',
-                      boxShadow: '0 18px 50px -12px rgba(0,0,0,.55)' }}>
+             style={{ background: 'var(--color-surface)',
+                      border: '1px solid var(--color-border)' }}>
           <div className="flex justify-center mb-3" style={{ color: 'var(--color-text-muted)' }}>
             <LockGlyph />
           </div>

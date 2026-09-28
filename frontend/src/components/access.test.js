@@ -7,21 +7,26 @@ describe('isLocked', () => {
     expect(isLocked('modelbooks')).toBe(false)
   })
 
-  it('locks the market pages', () => {
-    for (const p of ['dashboard', 'rotation', 'screener', 'watchlist', 'rs-live', 'breadth']) {
-      expect(isLocked(p), p).toBe(true)
+  // 2026-09-28, Andy: "先把模糊的门禁撤了." The blur is gone; a MEMBERS page
+  // opens in full. Only BETA (unfinished, his 09-25 ruling) still closes.
+  it('opens every members page — no blur gate any more', () => {
+    const members = Object.entries(PAGE_ACCESS).filter(([, v]) => v === MEMBERS).map(([k]) => k)
+    expect(members.length).toBeGreaterThan(0)
+    for (const p of members) expect(isLocked(p), p).toBe(false)
+  })
+
+  it('opens the market and book pages by name', () => {
+    for (const p of ['dashboard', 'rotation', 'screener', 'watchlist', 'breadth',
+                     'portfolio', 'journal', 'briefing', 'offense']) {
+      expect(isLocked(p), p).toBe(false)
     }
   })
 
-  it('locks the book pages', () => {
-    for (const p of ['portfolio', 'journal', 'review']) expect(isLocked(p), p).toBe(true)
-  })
-
-  it('locks the library shelves but not Model Books beside them', () => {
-    for (const p of ['defense', 'offense', 'psychology', 'portfolio-management', 'news']) {
-      expect(isLocked(p), p).toBe(true)
-    }
-    expect(isLocked('modelbooks')).toBe(false)
+  it('still closes every unfinished (beta) page', () => {
+    const beta = Object.entries(PAGE_ACCESS).filter(([, v]) => v === BETA).map(([k]) => k)
+    expect(beta).toEqual(expect.arrayContaining(['rs-live', 'masterclass', 'review',
+      'defense', 'psychology', 'portfolio-management', 'news']))
+    for (const p of beta) expect(isLocked(p), p).toBe(true)
   })
 
   it('does not lock the public marketing pages', () => {
@@ -134,8 +139,8 @@ describe('three states, not two', () => {
     expect(isLocked('a-page-added-next-week')).toBe(false)
   })
 
-  it('locks both members and beta, but they are not the same state', () => {
-    expect(isLocked('dashboard')).toBe(true)
+  it('keeps members and beta as different states — only beta closes', () => {
+    expect(isLocked('dashboard')).toBe(false)
     expect(isLocked('review')).toBe(true)
     expect(accessOf('dashboard')).toBe(MEMBERS)
     expect(accessOf('review')).toBe(BETA)
@@ -170,5 +175,22 @@ describe('one lock system, not two', () => {
       join(dirname(fileURLToPath(import.meta.url)), 'Layout.jsx'), 'utf8')
     expect(layout).not.toMatch(/<BetaLock/)
     expect(layout).not.toMatch(/import BetaLock/)
+  })
+})
+
+describe('no blur anywhere', () => {
+  it('LockedPane renders no filter and does not mount the page behind the card', async () => {
+    // 2026-09-28: the blur was the gate Andy asked to take down. A closed page
+    // is a card, not a page gone soft; the unfinished page must not even
+    // mount, or it fetches data just to be hidden.
+    const { readFileSync } = await import('node:fs')
+    const { fileURLToPath } = await import('node:url')
+    const { dirname, join } = await import('node:path')
+    const src = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), 'LockedPane.jsx'), 'utf8')
+    const code = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '')
+    expect(code).not.toMatch(/filter:\s*['"]blur/)
+    expect(code).not.toMatch(/backdropFilter/)
+    expect(code).not.toMatch(/\{children\}/)
   })
 })

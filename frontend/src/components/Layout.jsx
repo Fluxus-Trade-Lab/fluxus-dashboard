@@ -141,9 +141,9 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         onNavigate={navigate}
       />
 
-      {/* The shop window. Everything but Model Books renders and then goes
-          soft behind a card naming what it is (Andy 2026-09-25). `locked` is
-          read once here so the rail and the body can never disagree about
+      {/* Closed pages. Since 2026-09-28 ("先把模糊的门禁撤了") only BETA pages
+          close, as a card with nothing behind it; members pages open in full.
+          Read once here so the rail and the body can never disagree about
           which pages are open. NOT access control — see access.js. */}
       <Locked page={current}>
       {current === 'dashboard' ? (
