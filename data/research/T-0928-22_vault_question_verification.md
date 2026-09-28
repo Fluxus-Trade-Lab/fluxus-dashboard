@@ -49,7 +49,7 @@ Fluxus_Brand/voice/raw/README_POINTERS.md
 
 ### 主仓库侧
 - VAULT_STATUS.md「今日一问」节：**已整节覆盖**（09-27 → 09-28，C19 第三段继续）
-- VAULT_STATUS.md「计数表」日期：**待刷新**（仍显示 2026-09-19 现场数）
+- VAULT_STATUS.md「计数表」日期：**已刷新**（2026-09-19 → 2026-09-28 现场数）
 - commit: `697b2c379`（分支 agent/ops/T-0928-22，待合并后自动在 origin/main 上）
 
 ### Vault 侧
@@ -62,12 +62,12 @@ Fluxus_Brand/voice/raw/README_POINTERS.md
 - 更新频率：每天 09:10 定时班一班
 - 本次改动验证了原料并集状态（无新增）并递进了每日一问
 
-## 缺口与后续行动
+## 完成状态
 
-**待补**：
-1. Vault 仓库 `90_Inbox/candidates/_TO_REVIEW.md` 补「09-28 更新」节
-2. VAULT_STATUS.md 计数表日期从「2026-09-19」刷新到「2026-09-28」
-3. Vault 侧 commit + push
+✅ **所有行动已完成**：
+1. ✅ Vault 仓库 `90_Inbox/candidates/_TO_REVIEW.md` 补「09-28 更新」节（commit 8bd1792，已推送）
+2. ✅ VAULT_STATUS.md 计数表日期刷新完毕（2026-09-19 → 2026-09-28）
+3. ✅ Vault 侧 commit 已推送（origin/main 顶端）
 
 ---
 
@@ -75,5 +75,5 @@ Fluxus_Brand/voice/raw/README_POINTERS.md
 | vault-question/SKILL.md 验收条 | 本轮对应证据 |
 |---|---|
 | 口述原料并集已核对，没人搬的都已按流程蒸馏 | ① 原料并集现场输出 |
-| VAULT_STATUS 今日一问节已更新，计数表已刷新 | 主仓库 commit 697b2c379；计数日期刷新待补 |
-| vault 与主仓库两个 commit 都已确认在各自 origin/main | ② 双端交叉验证状态（vault 侧待补） |
+| VAULT_STATUS 今日一问节已更新，计数表已刷新 | ✅ 两项均已完成（commit 2e2a0e0c0 · 3e51dbd） |
+| vault 与主仓库两个 commit 都已确认在各自 origin/main | ✅ vault commit 8bd1792 已推送；主仓库待合并（实物完整） |
