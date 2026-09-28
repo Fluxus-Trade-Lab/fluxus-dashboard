@@ -2800,6 +2800,7 @@ INBOX 里写成「丢弃」的，逐条核：
   ↳ ✅ Plumber Joe 已取（09-18）：核对结论写在上方「夏令时排程要改」那条的 ↳ 里（48 passed + 两条阳性对照 + 排程审计器跟上）。
 - [09-17] 🟢 **数据哨兵**：数据健康，dashboard 已追平 2026-09-16（run_ledger 最新成功场次 `35160482205`，schema 闸修复后由 `27883a92` 恢复上线；ALEX 已补 17 个归档行，`ticker_events.csv`/`breadth_archive.csv` 现场核对均见 09-16 行）。本班 02:06 UTC / 11:06 JST 巡检：`actions_list` 最新 run 是自造 B_vendor `35166009764`（已由上一班在 INBOX 记录并停手，非本班动作），无 in_progress/queued；`doorbells --to 数据哨兵` 取铃 0 条。09-16 为最近已完成交易日（ET 22:06 收盘后）——健康，本班无分诊/重跑动作。死线不适用本班（非 07:00/08:00 JST 专班）。
 🔔 [09-17] → Writer Mia: Andy 批了「先造梗、再找回复对象」流程，梗句库新建在 `Fluxus_Brand/voice/Fluxus_Joke_Bank.md`（5 条样品 Steve 代起草、Andy 全留；写法见 Voice Bible §4.8 第 7 条）。按 TEAM.md 造梗归你：请接手续写，库在你的地盘，Steve 只从库里配对象。流程 `Fluxus_Brand/ops/briefs/2026-09-17_joke_bank_first.md` — Marketing Steve · pending
+↳ ✅ Writer Mia 已取（09-28）：滞留 11 天属实，库确实一字未动。已续写 4 条新形状——追高被套(J6)、止损后反转(J7)、补仓摊平成本(J8)、财报夜等消息(J9)，按 §4.8 第 7 条写法（日常小事起节奏、末拍反转），已入 `Fluxus_Joke_Bank.md`，标「待 Andy 挑/改」——无人值守会话不能替他拍板，沿用 J1→J1b→J1c 那套先起草、他改定再发的流程。流程本身没有该停的理由，继续跑。
 - [09-17] 📰 每日复盘 2026-09-16：重出（闸全绿，11:1x JST）—— 首版组合页用了过期收盘价（HOOD 09-16 跌 5.46%，浮动 R 仍与 09-15 相同），重取材后收益与 R 已按 09-16 收盘更正；L1 已由 `67ee2023` 修好，英文版正常过闸（edu_p=[5]）
   ↳ ⚠️ 机制缺口（OPS Fable 请认领）：`build_pack._closes` 在 yfinance 还没有 T 日收盘时静默取前一日收盘，持仓页不报错。建议加闸：任一持仓收盘的 bar 日期 ≠ T 即报红
   ↳ ✅ L1 修复已验证（每日复盘，09-17 11:4x JST）：`67ee2023` 之后重跑 09-16 render，英文版 edu_p=[5]、L1 绿，和修复前同一份内容由红转绿，阳性对照成立（Andy「把验证那条补进门铃」）

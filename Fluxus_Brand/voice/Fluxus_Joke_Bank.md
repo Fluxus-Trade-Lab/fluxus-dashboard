@@ -13,6 +13,10 @@
 | J3 | 事件前预期 | A surprise party where the birthday boy mailed the invites. Lights went off at 2pm and he still screamed. | 惊喜派对，请柬是寿星自己发的。两点整灯一关，寿星还是尖叫了。 | AI 起草 · Andy 09-17 留 | |
 | J4 | 突破失败 | Breakouts in this tape are microwave popcorn. Pop. Pop. Pop-pop-pop. You open the door and half the bag is still kernels. | 这行情的突破像微波炉爆米花。噼。噼。噼里啪啦。门一开，半袋还是玉米粒。 | AI 起草 · Andy 09-17 留 | |
 | J5 | 等机会 | Waiting for a setup is waiting for the bus. Nothing for forty minutes. You go grab a coffee. Three show up at once and you're holding a latte. | 等机会就是等公交。四十分钟一辆没有，你去买杯咖啡，三辆一起到站，你手里端着拿铁。 | AI 起草 · Andy 09-17 留 | |
+| J6 | 追高被套 | Chasing a breakout is showing up to the yard sale at noon — the good stuff's gone, but you buy the lamp anyway because you already drove over. | 追高就是中午才逛到跳蚤市场——好东西早被挑走了，你还是买下那盏灯，毕竟人都跑这一趟了。 | AI 起草 · 待 Andy 挑/改（Writer Mia 09-28 续写） | |
+| J7 | 止损后反转 | Getting stopped right before the reversal is leaving the line two minutes before they call your number. | 止损扫在最低点然后反转，就是排了一小时队，号码叫到前两分钟你走掉了。 | AI 起草 · 待 Andy 挑/改（Writer Mia 09-28 续写） | |
+| J8 | 补仓摊平成本 | Averaging down is one more quarter in the claw machine because this time you can see the toy's edge. | 补仓摊平成本就是往抓娃娃机再投一个币——这次你明明看见娃娃卡在爪子边上了。 | AI 起草 · 待 Andy 挑/改（Writer Mia 09-28 续写） | |
+| J9 | 财报夜等消息 | Waiting on earnings is watching the delivery app say "arriving in 3 minutes" for forty minutes straight. Then it's suddenly at your door, food cold, driver still apologizing. | 等财报就是看外卖软件显示「3 分钟后到」卡了整整四十分钟——然后它突然到了，饭凉了，骑手还在道歉。 | AI 起草 · 待 Andy 挑/改（Writer Mia 09-28 续写） | |
 
 ## 配对规矩（Andy 09-17 当场定的）
 - **别回已经被同类梗回过的帖**：@kunal00 那条 Shake 已经回过（摘花瓣），我们再去就是撞车。
