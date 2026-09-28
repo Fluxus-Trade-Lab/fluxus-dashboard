@@ -800,3 +800,102 @@ class TestFetch:
         self._stub(monkeypatch, self._frame(self.ROWS, ["A", "B"]))
         good, bad = acg.fetch(["A", "B", "GONE"], START, END)
         assert set(good) == {"A", "B"} and set(bad) == {"A", "B"}
+
+
+# ------------------------------- the four holes the 09-27 sweep left standing
+# Survivors [22] L258 `GtE -> Gt`, [43] L250 `0 -> 1`, [65] L203 `LtE -> Lt`
+# and [81] L257 `1 -> 2` in audit_mutation_sweep's site list. Each test below
+# was run against its own mutant first and seen RED; the mutant it kills is
+# named in the docstring so the next reader can re-derive that.
+
+def only_these_carry(sessions, day, k, tickers=NAMES):
+    """Everyone gets `sessions`; only the first `k` names also carry `day`."""
+    out = {}
+    for i, t in enumerate(tickers):
+        days = set(sessions)
+        days.discard(day)
+        if i < k:
+            days.add(day)
+        out[t] = days
+    return out
+
+
+def test_c5_counts_a_degenerate_bar_on_the_first_day_of_the_window():
+    """Kills L203 `LtE -> Lt` on the LEFT comparator of `start <= d <= end`.
+
+    `test_c5_ignores_degenerate_bars_outside_the_window` uses 2026-07-01,
+    which stays excluded whether the bound is `<` or `<=` -- so it is blind
+    here. Only a fake bar landing exactly ON `start` tells the two apart, and
+    the left edge of the window is where a fake bar is most likely to sit: the
+    audit window opens at whatever `--days` back, and the oldest day in it is
+    the one a truncated vendor response pads.
+    """
+    out = check(feed(WEEK), START, END, END, degenerate={"T0": {str(START)}})
+    assert not out["ok"], "a fake bar on the window's own first day was dropped"
+    assert any(v.startswith(f"C5 {START}: 1/10") for v in out["violations"])
+
+
+@pytest.mark.parametrize("k", [0, 1, 10])
+def test_reconcile_reports_the_ticker_count_it_actually_audited(k):
+    """Kills L250 `0 -> 1`: the C0 early return hard-codes `"tickers": 0`.
+
+    C0's whole message is "the feed returned no tickers at all -- nothing was
+    checked". A report that says that AND `tickers: 1` hands the reader two
+    contradictory facts about the same run, and the count is the one a
+    dashboard or a follow-up script reads. `k=0` is the mutated branch; 1 and
+    10 pin the normal path against the same rule.
+    """
+    given = only_these_carry(WEEK, "2026-08-26", 10, NAMES[:k]) if k else {}
+    out = reconcile(given, set(WEEK), START, END, END)
+    assert out["tickers"] == k
+
+
+def test_d1_fires_at_exactly_the_threshold_share_not_one_name_above_it():
+    """Kills L258 `GtE -> Gt`: `have_feed >= (1.0 - universal_frac)`.
+
+    ⚠️ This test has to pass `universal_frac` explicitly, and that is the
+    finding, not a shortcut. Under the module default 0.80 the threshold is
+    `1.0 - 0.8` == 0.19999999999999996, and no share a real feed can produce
+    lands on it -- 2/10 is 0.2, which is both `>=` and `>` that value. With
+    the default in place the boundary is UNREACHABLE and the two operators are
+    observationally identical, which is why four sweeps in a row left this
+    survivor standing. 0.5 is exact in binary, so 5/10 hits it dead on.
+    """
+    given = only_these_carry(WEEK, "2026-08-26", 5)
+    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END,
+                    universal_frac=0.5)
+    assert not out["ok"], "a share sitting exactly on the threshold counts as traded"
+    assert any(v.startswith("D1 2026-08-26") for v in out["violations"])
+
+
+def test_one_name_short_of_the_threshold_is_a_calendar_warning_not_a_hole():
+    """The other side of the same boundary -- and it also kills L257 `1 -> 2`.
+
+    4/10 is under the 0.5 threshold, so this day reads as "nobody traded":
+    D2, a warning about our calendar, not a violation about our writer. Get
+    the numerator wrong by a factor of two and 0.4 becomes 0.8, which crosses
+    the line and accuses a writer of losing a session that never happened.
+    Blaming the wrong side is the expensive half of this gate (docstring:
+    "right for 2026-08-28 and wrong for 2025-01-09").
+    """
+    given = only_these_carry(WEEK, "2026-08-26", 4)
+    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END,
+                    universal_frac=0.5)
+    assert out["ok"], out["violations"]
+    assert any(w.startswith("D2 2026-08-26") for w in out["warnings"])
+
+
+def test_the_share_a_d1_reports_is_the_share_that_was_measured():
+    """Also kills L257 `1 -> 2` -- from the reported-number side.
+
+    The count feeding `have_feed` is both the classifier's input and the
+    number printed in the finding. 3/10 must read 30%, not 60%: the percentage
+    in a D1 is what tells whoever gets paged whether the market really traded
+    or three names twitched.
+    """
+    given = only_these_carry(WEEK, "2026-08-26", 3)
+    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END)
+    assert any("D1 2026-08-26: the market traded (30% of tickers" in v
+               for v in out["violations"]), out["violations"]
+    hit = [f for f in out["findings"] if f["session"] == "2026-08-26"]
+    assert hit and hit[0]["feed_frac"] == 0.3, hit
