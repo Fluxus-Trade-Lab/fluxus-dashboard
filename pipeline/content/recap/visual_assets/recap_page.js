@@ -711,14 +711,16 @@
   }
 
   /* layout W · its own PDF (Andy 2026-09-28:「下次W40单独列出来，变成一份pdf」) — one flowing sheet,
-     not folded into the recap's 4-page structure; no folio (that "n / 4" is the recap's own count). */
+     not folded into the recap's 4-page structure; no folio (that "n / 4" is the recap's own count).
+     mast() carries the running "Weekly Market Recap · No. N" identity (same text as every recap page,
+     so the reader can place it as part of the same weekly issue); the watchlist's own title prints
+     exactly once, as the sec() heading — an earlier draft printed L.weekly_watchlist three times on
+     one page (masthead + <h2> + sec()), caught in branch review before this shipped. */
   function layoutW(is, c, V) {
     var L = c.labels;
     var legal = V && V.legal ? '<p class="legal">' + esc(V.legal) + ' <span class="m">' + esc(V.handle) +
       "</span> · " + esc(V.site) + "</p>" : "";
-    return '<article class="sheet a"><div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>' +
-      esc(L.weekly_watchlist) + " · No. " + esc(is.no) + '</span></div><hr class="r ink">' +
-      '<h2 class="hl-a">' + esc(L.weekly_watchlist) + "</h2>" +
+    return '<article class="sheet a">' + mast(is, V) +
       sec(true, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(c); })) +
       legal + "</article>";
   }
