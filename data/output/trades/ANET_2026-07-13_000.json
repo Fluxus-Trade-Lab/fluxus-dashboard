@@ -1,6 +1,6 @@
 {
   "trade_id": "ANET_2026-07-13_000",
-  "generated_at": "2026-09-25T23:48:37+00:00",
+  "generated_at": "2026-09-28T23:35:39+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ANET",
@@ -38,9 +38,9 @@
     "low": 180.5,
     "volume": 9149500.0,
     "ma20": 169.5335,
-    "ma50": 160.59560000000002,
-    "ma200": 144.1335,
-    "rsi14": 58.474060740962784,
+    "ma50": 160.5956,
+    "ma200": null,
+    "rsi14": 58.47406881922136,
     "atr14": 10.840785714285714,
     "atr14_pct": 5.984424904380742,
     "high_52w": 189.817,
@@ -50,7 +50,7 @@
     "low_10d": 155.22,
     "low_5d": 162.59
   },
-  "setup_type": "Breakout / near 52W high",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.171428571428573,
     "mfe_date": "2026-07-13",
@@ -67,7 +67,7 @@
     "hold_calendar_days": 0
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **ANET** long on 2026-07-13 at $188.60 with stop $183.00 (1R = $5.60/sh = 3.0% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($169.53), MA20 > MA50 > MA200 (golden alignment), RSI 58, 88% through 52W range, ATR 6.0% of price. Realized **-0.54R**, peak was **+0.17R** on 2026-07-13 (day +0). **Lesson: Failed setup.**",
+  "narrative": "Entered **ANET** long on 2026-07-13 at $188.60 with stop $183.00 (1R = $5.60/sh = 3.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($169.53), RSI 58, 88% through 52W range, ATR 6.0% of price. Realized **-0.54R**, peak was **+0.17R** on 2026-07-13 (day +0). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-06-15",

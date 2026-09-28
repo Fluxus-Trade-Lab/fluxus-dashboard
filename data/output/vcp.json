@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-25T23:22:05.657444+00:00",
-  "count": 3,
+  "timestamp": "2026-09-28T23:08:41.539657+00:00",
+  "count": 4,
   "results": [
     {
       "ticker": "APH",
@@ -8,10 +8,34 @@
       "max_depth": 21.8,
       "last_depth": 9.2,
       "pivot": 84.35,
-      "pct_to_pivot": 0.3,
+      "pct_to_pivot": -0.3,
       "volume_declining": true,
       "ratios_healthy": true,
-      "atr_ext": 1.43,
+      "atr_ext": 1.55,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMAX",
+      "num_contractions": 2,
+      "max_depth": 18.9,
+      "last_depth": 10.0,
+      "pivot": 55.57,
+      "pct_to_pivot": -1.0,
+      "volume_declining": true,
+      "ratios_healthy": true,
+      "atr_ext": 3.26,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "NVGS",
+      "num_contractions": 3,
+      "max_depth": 21.0,
+      "last_depth": 5.4,
+      "pivot": 22.6,
+      "pct_to_pivot": -1.4,
+      "volume_declining": true,
+      "ratios_healthy": true,
+      "atr_ext": 1.09,
       "atr_color": "green"
     },
     {
@@ -20,22 +44,10 @@
       "max_depth": 19.8,
       "last_depth": 5.7,
       "pivot": 43.17,
-      "pct_to_pivot": 2.3,
+      "pct_to_pivot": 2.1,
       "volume_declining": true,
       "ratios_healthy": true,
-      "atr_ext": 0.62,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "YPF",
-      "num_contractions": 3,
-      "max_depth": 23.4,
-      "last_depth": 7.5,
-      "pivot": 53.44,
-      "pct_to_pivot": 2.6,
-      "volume_declining": true,
-      "ratios_healthy": true,
-      "atr_ext": 0.12,
+      "atr_ext": 0.6,
       "atr_color": "green"
     }
   ]

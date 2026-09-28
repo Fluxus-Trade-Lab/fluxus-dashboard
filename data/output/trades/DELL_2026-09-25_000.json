@@ -1,6 +1,6 @@
 {
   "trade_id": "DELL_2026-09-25_000",
-  "generated_at": "2026-09-25T23:48:37+00:00",
+  "generated_at": "2026-09-28T23:35:39+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "DELL",
@@ -11,36 +11,57 @@
     "stop_price": 540.0,
     "initial_stop": 540.0,
     "closed": false,
-    "remaining_pct": 100.0,
+    "remaining_pct": 50.08319467554077,
     "exit_date": null,
     "hold_business_days": null,
     "r_pct_of_entry": 1.033648559489771,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_R": -0.4611109144333955,
+    "trims": [
+      {
+        "date": "2026-09-28",
+        "price": 540.43,
+        "pct_of_position": 49.91680532445923,
+        "type": "trim_1_2"
+      }
+    ]
   },
   "entry_snapshot": {
-    "close": 575.31,
-    "open": 586.77,
-    "high": 592.44,
-    "low": 567.435,
-    "volume": 7599722.0,
-    "ma20": 510.332,
-    "ma50": 465.461404,
-    "ma200": 274.111879,
-    "rsi14": 62.802441546651536,
-    "atr14": 37.661785714285735,
-    "atr14_pct": 6.546346441794118,
+    "close": 562.89,
+    "open": 546.29,
+    "high": 573.8,
+    "low": 541.24,
+    "volume": 8703900.0,
+    "ma20": 529.1764999999999,
+    "ma50": 475.69612200000006,
+    "ma200": 282.365493,
+    "rsi14": 58.69224596746932,
+    "atr14": 32.08428571428572,
+    "atr14_pct": 5.699921070597403,
     "high_52w": 595.51,
     "low_52w": 109.6987,
-    "position_in_52w_range_pct": 95.8420069685493,
+    "position_in_52w_range_pct": 93.28545877792467,
     "high_20d": 595.51,
-    "low_10d": 506.25,
-    "low_5d": 539.0
+    "low_10d": 525.85,
+    "low_5d": 530.45
   },
-  "setup_type": "Breakout / near 52W high",
-  "path_analytics": {},
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 4.992907801418446,
+    "mfe_date": "2026-09-25",
+    "mae_R": 1.797872340425534,
+    "mae_date": "2026-09-28",
+    "optimal_exit_price": 573.8,
+    "optimal_exit_date": "2026-09-25",
+    "optimal_R": 4.992907801418446,
+    "days_to_optimal": 0,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
+    "post_exit_R": null,
+    "hold_calendar_days": 3
+  },
   "lesson": "In progress",
-  "narrative": "Entered **DELL** long on 2026-09-25 at $545.64 with stop $540.00 (1R = $5.64/sh = 1.0% of entry). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($510.33), MA20 > MA50 > MA200 (golden alignment), RSI 63, 96% through 52W range, ATR 6.5% of price. **In progress.**",
+  "narrative": "Entered **DELL** long on 2026-09-25 at $545.64 with stop $540.00 (1R = $5.64/sh = 1.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($529.18), MA20 > MA50 > MA200 (golden alignment), RSI 59, 93% through 52W range, ATR 5.7% of price. **In progress.** Peak so far +4.99R; worst drawdown -1.80R.",
   "ohlc_window": [
     {
       "date": "2026-08-26",
@@ -176,15 +197,55 @@
       "high": 595.51,
       "low": 568.06,
       "close": 568.06,
-      "volume": 11709400.0
+      "volume": 11739100.0
     },
     {
       "date": "2026-09-21",
       "open": 586.77,
       "high": 592.44,
-      "low": 567.435,
+      "low": 567.38,
       "close": 575.31,
-      "volume": 7599722.0
+      "volume": 7736600.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 569.8,
+      "high": 574.6,
+      "low": 547.71,
+      "close": 548.92,
+      "volume": 9781600.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 559.0,
+      "high": 570.72,
+      "low": 542.23,
+      "close": 549.83,
+      "volume": 8252300.0
+    },
+    {
+      "date": "2026-09-24",
+      "open": 535.97,
+      "high": 549.85,
+      "low": 530.45,
+      "close": 536.02,
+      "volume": 7963000.0
+    },
+    {
+      "date": "2026-09-25",
+      "open": 546.29,
+      "high": 573.8,
+      "low": 541.24,
+      "close": 562.89,
+      "volume": 8703900.0
+    },
+    {
+      "date": "2026-09-28",
+      "open": 551.74,
+      "high": 556.785,
+      "low": 535.5,
+      "close": 543.43,
+      "volume": 6608759.0
     }
   ]
 }

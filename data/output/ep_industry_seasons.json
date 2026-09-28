@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-25T23:49:08.612567+00:00",
-  "as_of": "2026-09-25",
+  "timestamp": "2026-09-28T23:35:48.704720+00:00",
+  "as_of": "2026-09-28",
   "definition": "EP hit = ep_stockbee UNION ep_qullamaggie (author-verbatim, from 2026-09-18) UNION retired episodic_pivot (rows <= 2026-09-17, self-invented, kept for historical continuity only -- see METRIC_SOURCES.md). Used as a proxy for 'post-earnings gap', not filtered by an actual earnings date (none exists universe-wide).",
   "season_window_rule": "Earnings season has no SEC/exchange-official date range (only a 45-day filing deadline). We use the widely cited convention (FINRA / Yahoo Finance / CFI): quarter-end + ~2 weeks through the end of the following month. Self-invented operationalization of a descriptive convention -- see METRIC_SOURCES.md.",
   "industry_source": "Finviz industry field, data/output/universe.json (current snapshot; see module docstring)",
@@ -12,6 +12,7 @@
       "total_hits": 235,
       "unique_tickers": 207,
       "unmapped_tickers": [
+        "ATAI",
         "BLD",
         "KALV",
         "SILA",
@@ -20,8 +21,8 @@
       "industries": [
         {
           "industry": "Biotechnology",
-          "tickers": 27,
-          "hits": 27
+          "tickers": 26,
+          "hits": 26
         },
         {
           "industry": "Semiconductors",
@@ -50,8 +51,8 @@
         },
         {
           "industry": "Information Technology Services",
-          "tickers": 5,
-          "hits": 8
+          "tickers": 6,
+          "hits": 10
         },
         {
           "industry": "Electronic Components",
@@ -60,6 +61,11 @@
         },
         {
           "industry": "Medical Care Facilities",
+          "tickers": 5,
+          "hits": 5
+        },
+        {
+          "industry": "UNKNOWN",
           "tickers": 5,
           "hits": 5
         },
@@ -90,11 +96,6 @@
         },
         {
           "industry": "Rental & Leasing Services",
-          "tickers": 4,
-          "hits": 4
-        },
-        {
-          "industry": "UNKNOWN",
           "tickers": 4,
           "hits": 4
         },
@@ -141,11 +142,6 @@
         {
           "industry": "Specialty Business Services",
           "tickers": 3,
-          "hits": 3
-        },
-        {
-          "industry": "Asset Management",
-          "tickers": 2,
           "hits": 3
         },
         {
@@ -220,6 +216,11 @@
         },
         {
           "industry": "Apparel Manufacturing",
+          "tickers": 1,
+          "hits": 1
+        },
+        {
+          "industry": "Asset Management",
           "tickers": 1,
           "hits": 1
         },

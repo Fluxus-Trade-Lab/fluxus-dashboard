@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-25",
+  "date": "2026-09-28",
   "sources": {
     "etf_data": {
       "status": "ok",
@@ -10,21 +10,8 @@
       "flagged": {}
     },
     "groups_stocks": {
-      "status": "degraded",
-      "flagged": {
-        "excess_1m": "degraded",
-        "excess_3m": "degraded",
-        "group_pctile": "degraded",
-        "persistence": "degraded",
-        "persistence_of": "degraded",
-        "rs_0_1w": "degraded",
-        "rs_1m_3m": "degraded",
-        "rs_1w_1m": "degraded",
-        "rs_accel": "degraded",
-        "rs_accel_rate": "degraded",
-        "state": "degraded",
-        "top_quartile": "degraded"
-      }
+      "status": "ok",
+      "flagged": {}
     },
     "rotation_baskets": {
       "status": "ok",
@@ -40,5 +27,5 @@
     }
   },
   "missing_blocks": {},
-  "status": "degraded"
+  "status": "ok"
 }

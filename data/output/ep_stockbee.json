@@ -1,17 +1,39 @@
 {
-  "timestamp": "2026-09-25T23:22:05.657444+00:00",
-  "count": 1,
+  "timestamp": "2026-09-28T23:08:41.539657+00:00",
+  "count": 3,
   "tickers": [
     {
-      "ticker": "AESI",
-      "change_pct": 0.1347,
-      "volume": 12171401.0,
-      "vol_x_avg50": 3.61,
-      "rel_volume": 3.45,
-      "market_cap": 1560000000.0,
-      "sector": "Energy",
-      "atr_ext": -0.04,
-      "atr_color": "below"
+      "ticker": "KOD",
+      "change_pct": 1.7796,
+      "volume": 38517890.0,
+      "vol_x_avg50": 57.46,
+      "rel_volume": 13.96,
+      "market_cap": 5650000000.0,
+      "sector": "Healthcare",
+      "atr_ext": 17.59,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "CAAP",
+      "change_pct": 0.0909,
+      "volume": 1069129.0,
+      "vol_x_avg50": 5.25,
+      "rel_volume": 4.28,
+      "market_cap": 4250000000.0,
+      "sector": "Industrials",
+      "atr_ext": 2.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HHH",
+      "change_pct": 0.0807,
+      "volume": 1896313.0,
+      "vol_x_avg50": 3.52,
+      "rel_volume": 2.37,
+      "market_cap": 4420000000.0,
+      "sector": "Real Estate",
+      "atr_ext": 4.1,
+      "atr_color": "amber"
     }
   ],
   "definition": "Stockbee 2014-07 'My process flow for Episodic Pivots (EP)': c/c1>1.04 and v>3*avgv50.1 and v>=300000",

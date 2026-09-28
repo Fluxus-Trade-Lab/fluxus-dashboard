@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXL_2026-09-07_000",
-  "generated_at": "2026-09-25T23:48:37+00:00",
+  "generated_at": "2026-09-28T23:35:39+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXL",
@@ -37,10 +37,10 @@
     "high": 118.1026,
     "low": 109.6581,
     "volume": 63548000.0,
-    "ma20": 123.24619500000001,
+    "ma20": 123.24619499999999,
     "ma50": 145.11305000000002,
-    "ma200": 108.748196,
-    "rsi14": 45.44508827852031,
+    "ma200": 108.74819600000001,
+    "rsi14": 45.44508829319601,
     "atr14": 11.049185714285713,
     "atr14_pct": 9.427375459275611,
     "high_52w": 301.8021,
@@ -52,22 +52,22 @@
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
   "path_analytics": {
-    "mfe_R": 4.13362068965517,
-    "mfe_date": "2026-09-22",
+    "mfe_R": 4.269396551724138,
+    "mfe_date": "2026-09-25",
     "mae_R": 1.559849137931035,
     "mae_date": "2026-09-14",
-    "optimal_exit_price": 152.64,
-    "optimal_exit_date": "2026-09-22",
-    "optimal_R": 4.13362068965517,
-    "days_to_optimal": 15,
+    "optimal_exit_price": 153.9,
+    "optimal_exit_date": "2026-09-25",
+    "optimal_R": 4.269396551724138,
+    "days_to_optimal": 18,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 18
+    "hold_calendar_days": 21
   },
   "lesson": "In progress",
-  "narrative": "Entered **SOXL** long on 2026-09-07 at $114.28 with stop $105.00 (currently trailed to $114.00) (1R = $9.28/sh = 8.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($123.25), MA stack mixed, RSI 45, 33% through 52W range, ATR 9.4% of price. **In progress.** Peak so far +4.13R; worst drawdown -1.56R.",
+  "narrative": "Entered **SOXL** long on 2026-09-07 at $114.28 with stop $105.00 (currently trailed to $114.00) (1R = $9.28/sh = 8.1% of entry). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($123.25), MA stack mixed, RSI 45, 33% through 52W range, ATR 9.4% of price. **In progress.** Peak so far +4.27R; worst drawdown -1.56R.",
   "ohlc_window": [
     {
       "date": "2026-08-10",
@@ -323,7 +323,31 @@
       "high": 151.0,
       "low": 139.58,
       "close": 146.25,
-      "volume": 61043803.0
+      "volume": 62051700.0
+    },
+    {
+      "date": "2026-09-24",
+      "open": 138.47,
+      "high": 147.2,
+      "low": 136.9,
+      "close": 146.33,
+      "volume": 65335900.0
+    },
+    {
+      "date": "2026-09-25",
+      "open": 149.24,
+      "high": 153.9,
+      "low": 147.39,
+      "close": 151.45,
+      "volume": 56130400.0
+    },
+    {
+      "date": "2026-09-28",
+      "open": 148.14,
+      "high": 149.99,
+      "low": 135.212,
+      "close": 142.29,
+      "volume": 69584851.0
     }
   ]
 }

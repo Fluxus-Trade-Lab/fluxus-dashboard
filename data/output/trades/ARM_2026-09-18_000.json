@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-09-18_000",
-  "generated_at": "2026-09-25T23:48:37+00:00",
+  "generated_at": "2026-09-28T23:35:39+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -10,12 +10,12 @@
     "entry_price": 267.12,
     "stop_price": 267.12,
     "initial_stop": 262.0,
-    "closed": false,
-    "remaining_pct": 30.1314459049545,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-28",
+    "hold_business_days": 6,
     "r_pct_of_entry": 1.9167415393830507,
-    "realized_R": 2.043292625126385,
+    "realized_R": 2.93781992542972,
     "trims": [
       {
         "date": "2026-09-18",
@@ -28,6 +28,12 @@
         "price": 322.7,
         "pct_of_position": 19.919110212335692,
         "type": "trim_1_5"
+      },
+      {
+        "date": "2026-09-28",
+        "price": 282.32,
+        "pct_of_position": 30.1314459049545,
+        "type": "sell_rest"
       }
     ]
   },
@@ -39,8 +45,8 @@
     "volume": 6963100.0,
     "ma20": 249.26550000000003,
     "ma50": 261.061,
-    "ma200": 207.29047500000001,
-    "rsi14": 57.725199563136535,
+    "ma200": 207.29047499999996,
+    "rsi14": 57.725199432243514,
     "atr14": 14.586285714285717,
     "atr14_pct": 5.292364469462544,
     "high_52w": 452.7,
@@ -52,22 +58,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 13.644511718749984,
+    "mfe_R": 13.644531249999991,
     "mfe_date": "2026-09-23",
     "mae_R": 1.0673828125000053,
     "mae_date": "2026-09-18",
-    "optimal_exit_price": 336.9799,
+    "optimal_exit_price": 336.98,
     "optimal_exit_date": "2026-09-23",
-    "optimal_R": 13.644511718749984,
+    "optimal_R": 13.644531249999991,
     "days_to_optimal": 5,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 2.93781992542972,
+    "capture_pct": 21.531116544804146,
+    "missed_R": 10.706711324570271,
     "post_exit_R": null,
-    "hold_calendar_days": 7
+    "hold_calendar_days": 10
   },
-  "lesson": "In progress",
-  "narrative": "Entered **ARM** long on 2026-09-18 at $267.12 with stop $262.00 (currently trailed to $267.12) (1R = $5.12/sh = 1.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($249.27), MA stack mixed, RSI 58, 50% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +13.64R; worst drawdown -1.07R.",
+  "lesson": "Premature trim",
+  "narrative": "Entered **ARM** long on 2026-09-18 at $267.12 with stop $262.00 (currently trailed to $267.12) (1R = $5.12/sh = 1.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($249.27), MA stack mixed, RSI 58, 50% through 52W range, ATR 5.3% of price. Realized **+2.94R**, peak was **+13.64R** on 2026-09-23 (day +5) \u2014 captured **22%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-08-19",
@@ -263,11 +269,35 @@
     },
     {
       "date": "2026-09-23",
-      "open": 331.72,
-      "high": 336.9799,
+      "open": 331.78,
+      "high": 336.98,
       "low": 324.56,
       "close": 332.56,
-      "volume": 6946312.0
+      "volume": 6982300.0
+    },
+    {
+      "date": "2026-09-24",
+      "open": 319.23,
+      "high": 326.0,
+      "low": 303.65,
+      "close": 306.34,
+      "volume": 9559500.0
+    },
+    {
+      "date": "2026-09-25",
+      "open": 318.5,
+      "high": 325.48,
+      "low": 310.08,
+      "close": 310.32,
+      "volume": 6994400.0
+    },
+    {
+      "date": "2026-09-28",
+      "open": 305.83,
+      "high": 307.01,
+      "low": 279.2,
+      "close": 283.33,
+      "volume": 9031967.0
     }
   ]
 }

@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-09-25T23:22:05.657444+00:00",
+  "timestamp": "2026-09-28T23:08:41.539657+00:00",
   "SPY": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 771.3499755859375,
-    "ema5": 768.6518990609642,
-    "ema5_prev": 767.3028607984774,
-    "ema8": 767.2107864331269,
-    "ema21": 764.6582378530702,
-    "sma50": 759.9079907226562,
-    "sma200": 714.8377163696289,
-    "sma20": 764.0262573242187,
+    "close": 765.6099853515625,
+    "ema5": 767.6379278244971,
+    "ema5_prev": 768.6518990609642,
+    "ema8": 766.855052859446,
+    "ema21": 764.744760352328,
+    "sma50": 760.3912145996094,
+    "sma200": 715.2870211791992,
+    "sma20": 763.9345428466797,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": true,
+      "close_gt_open": false,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -24,29 +24,29 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 0.58,
-      "21ema_dist": 0.87,
-      "50sma_dist": 1.48,
-      "200sma_dist": 7.33,
-      "52w_high_dist": -0.59
+      "9ema_dist": -0.13,
+      "21ema_dist": 0.11,
+      "50sma_dist": 0.68,
+      "200sma_dist": 6.57,
+      "52w_high_dist": -1.33
     }
   },
   "QQQ": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 744.5,
-    "ema5": 739.3052726046984,
-    "ema5_prev": 736.7079089070476,
-    "ema8": 734.5423381194337,
-    "ema21": 724.2202776954274,
-    "sma50": 711.989130859375,
-    "sma200": 664.1446078491211,
-    "sma20": 720.3175048828125,
+    "close": 736.530029296875,
+    "ema5": 738.3801915020907,
+    "ema5_prev": 739.3052726046984,
+    "ema8": 734.9840472699763,
+    "ema21": 725.3393460228215,
+    "sma50": 712.827607421875,
+    "sma200": 664.7166256713867,
+    "sma20": 721.3597930908203,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": true,
+      "close_gt_open": false,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -55,24 +55,24 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 1.52,
-      "21ema_dist": 2.72,
-      "50sma_dist": 4.37,
-      "200sma_dist": 10.79,
-      "52w_high_dist": -0.4
+      "9ema_dist": 0.36,
+      "21ema_dist": 1.52,
+      "50sma_dist": 3.22,
+      "200sma_dist": 9.75,
+      "52w_high_dist": -1.46
     }
   },
   "IWM": {
     "signal": "WARNING",
     "color": "orange",
-    "close": 281.9700012207031,
-    "ema5": 283.1060775963985,
-    "ema5_prev": 283.6741157842462,
-    "ema8": 284.0961529572666,
-    "ema21": 287.92623406988986,
-    "sma50": 293.3701513671875,
-    "sma200": 274.42383499145507,
-    "sma20": 288.1912216186523,
+    "close": 280.0199890136719,
+    "ema5": 282.0773814021563,
+    "ema5_prev": 283.1060775963985,
+    "ema8": 283.19033874757895,
+    "ema21": 287.2074845180428,
+    "sma50": 293.1050701904297,
+    "sma200": 274.57962524414063,
+    "sma20": 287.44324188232423,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": false,
@@ -86,29 +86,29 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": -0.87,
-      "21ema_dist": -2.11,
-      "50sma_dist": -4.04,
-      "200sma_dist": 2.68,
-      "52w_high_dist": -7.34
+      "9ema_dist": -1.26,
+      "21ema_dist": -2.57,
+      "50sma_dist": -4.67,
+      "200sma_dist": 1.94,
+      "52w_high_dist": -7.98
     }
   },
   "RSP": {
     "signal": "WARNING",
     "color": "orange",
-    "close": 211.11000061035156,
-    "ema5": 211.40237982358084,
-    "ema5_prev": 211.5485694301955,
-    "ema8": 211.9051898451567,
-    "ema21": 213.96307700618107,
-    "sma50": 216.2777670288086,
-    "sma200": 203.7567152404785,
-    "sma20": 214.38003005981446,
+    "close": 209.74000549316406,
+    "ema5": 210.84825504677528,
+    "ema5_prev": 211.40237982358084,
+    "ema8": 211.42403776693618,
+    "ema21": 213.579161415207,
+    "sma50": 216.22114807128906,
+    "sma200": 203.86795036315917,
+    "sma20": 213.87385330200195,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": false,
       "sma50_rising": false,
-      "close_gt_open": true,
+      "close_gt_open": false,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -117,29 +117,29 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": -0.46,
-      "21ema_dist": -1.35,
-      "50sma_dist": -2.45,
-      "200sma_dist": 3.48,
-      "52w_high_dist": -4.88
+      "9ema_dist": -0.9,
+      "21ema_dist": -1.83,
+      "50sma_dist": -3.09,
+      "200sma_dist": 2.8,
+      "52w_high_dist": -5.5
     }
   },
   "^GSPC": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 7743.41015625,
-    "ema5": 7716.999719791737,
-    "ema5_prev": 7703.794501562606,
-    "ema8": 7702.83591142191,
-    "ema21": 7679.099095194083,
-    "sma50": 7636.08580078125,
-    "sma200": 7205.2027587890625,
-    "sma20": 7672.476513671875,
+    "close": 7683.68994140625,
+    "ema5": 7705.896460329907,
+    "ema5_prev": 7716.999719791737,
+    "ema8": 7698.581251418431,
+    "ema21": 7679.516444849734,
+    "sma50": 7640.60580078125,
+    "sma200": 7209.418659667968,
+    "sma20": 7671.073022460938,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
-      "close_gt_open": true,
+      "close_gt_open": false,
       "is_power_trend": false
     },
     "ma_structure": {
@@ -148,26 +148,26 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 0.57,
-      "21ema_dist": 0.83,
-      "50sma_dist": 1.39,
-      "200sma_dist": 6.95,
-      "52w_high_dist": -0.71
+      "9ema_dist": -0.16,
+      "21ema_dist": 0.05,
+      "50sma_dist": 0.56,
+      "200sma_dist": 6.17,
+      "52w_high_dist": -1.48
     }
   },
   "BTC-USD": {
     "signal": "POWER_3",
     "color": "green",
-    "close": 84063.4921875,
-    "ema5": 83992.19669573933,
-    "ema5_prev": 83956.54894985899,
-    "ema8": 83183.9085183438,
-    "ema21": 80552.62963665834,
-    "sma50": 75323.532421875,
-    "sma200": 70929.2068359375,
-    "sma20": 79961.151953125,
+    "close": 83474.640625,
+    "ema5": 83981.75851170054,
+    "ema5_prev": 84235.31745505081,
+    "ema8": 83630.104176555,
+    "ema21": 81428.62405467466,
+    "sma50": 76477.149296875,
+    "sma200": 71137.6335546875,
+    "sma20": 80681.45859375,
     "power_trend": {
-      "low_gt_ema21_10d": false,
+      "low_gt_ema21_10d": true,
       "ema21_gt_sma50_5d": true,
       "sma50_rising": true,
       "close_gt_open": false,
@@ -179,24 +179,24 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 1.36,
-      "21ema_dist": 4.18,
-      "50sma_dist": 10.4,
-      "200sma_dist": 15.62,
-      "52w_high_dist": -11.61
+      "9ema_dist": 0.01,
+      "21ema_dist": 2.45,
+      "50sma_dist": 8.38,
+      "200sma_dist": 14.78,
+      "52w_high_dist": -6.74
     }
   },
   "^VIX": {
     "signal": "RISK_OFF",
     "color": "red",
-    "close": 14.869999885559082,
-    "ema5": 15.170609683693081,
-    "ema5_prev": 15.320914582760082,
-    "ema8": 15.322941849020586,
-    "ema21": 15.572351208911027,
-    "sma50": 15.973399963378906,
-    "sma200": 18.06055003643036,
-    "sma20": 15.67649998664856,
+    "close": 16.06999969482422,
+    "ema5": 15.470406354070127,
+    "ema5_prev": 15.170609683693081,
+    "ema8": 15.488954703643616,
+    "ema21": 15.61759198035768,
+    "sma50": 15.921799964904785,
+    "sma200": 18.06665003299713,
+    "sma20": 15.733999967575073,
     "power_trend": {
       "low_gt_ema21_10d": false,
       "ema21_gt_sma50_5d": false,
@@ -210,11 +210,11 @@
       "50sma_gt_200sma": false
     },
     "trend_status": {
-      "9ema_dist": -3.32,
-      "21ema_dist": -4.72,
-      "50sma_dist": -7.42,
-      "200sma_dist": -21.46,
-      "52w_high_dist": -52.11
+      "9ema_dist": 3.52,
+      "21ema_dist": 2.82,
+      "50sma_dist": 0.92,
+      "200sma_dist": -12.42,
+      "52w_high_dist": -48.24
     }
   }
 }

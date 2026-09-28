@@ -1,8 +1,8 @@
 {
   "ticker": "FBRX",
-  "fetched_at": "2026-09-21T22:23:16Z",
+  "fetched_at": "2026-09-28T23:30:55Z",
   "_schema": "v2",
-  "current_price": 76.99,
+  "current_price": 76.98999786376953,
   "info": {
     "symbol": null,
     "longName": null,
@@ -39,32 +39,7 @@
     "sharesFloat": null,
     "companyOfficers": []
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.97,
-      "eps_estimate": -0.8785,
-      "eps_surprise_pct": -0.1042
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -1.24,
-      "eps_estimate": -1.16,
-      "eps_surprise_pct": -0.069
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -1.45,
-      "eps_estimate": -1.1475,
-      "eps_surprise_pct": -0.2636
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.99,
-      "eps_estimate": -1.0675,
-      "eps_surprise_pct": 0.0726
-    }
-  ],
+  "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [
     {
@@ -124,89 +99,12 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 5,
-    "bullish": 5,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 73.0,
-    "high_price_target": 77.0,
-    "low_price_target": 61.0,
-    "current_price": 76.99,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-28T10:51:16",
-        "firm": "Barclays",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Overweight",
-        "action": "down"
-      },
-      {
-        "date": "2026-07-21T12:44:05",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-11-25T12:55:21",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-11-17T12:49:18",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-08-18T13:01:35",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-08-15T12:09:54",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-06-24T11:59:25",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-04-01T11:24:39",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-01-21T16:01:45",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2024-12-04T14:32:58",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
-  "quarterly_asof": "2026-09-14T21:41:56Z",
+  "quarterly_asof": "2026-09-28T23:30:55Z",
   "news": [
     {
       "date": "2026-08-28T13:16:01Z",
@@ -264,119 +162,38 @@
     },
     {
       "date": "2026-07-28T09:35:41Z",
-      "title": "argenx signs agreement to buy Forte Biosciences for $2.2bn",
-      "url": "https://www.hospitalmanagement.net/news/argenx-to-buy-forte-biosciences/",
-      "source": "Hospital Management"
+      "title": "Argenx signs agreement to buy Forte Biosciences for $2.2bn",
+      "url": "https://www.pharmaceutical-technology.com/news/argenx-to-buy-forte-biosciences/",
+      "source": "Pharmaceutical Technology"
     }
   ],
   "options_implied_move": null,
   "technicals": {
     "rsi14": null,
-    "low_5d": 76.91999816894531,
     "high_52w": 77.0,
-    "low_52w": 42.0,
-    "atr14": 6.015000661214192,
-    "atr14_pct": 7.8127040240441055,
-    "position_in_52w_range_pct": 99.97142246791296
+    "low_52w": 76.95999908447266,
+    "atr14": 0.04000091552734375,
+    "atr14_pct": 0.051955989917188514,
+    "position_in_52w_range_pct": 74.99523173755483
   },
   "ohlc_2y": [
-    {
-      "date": "2026-07-17",
-      "open": 43.35,
-      "high": 50.0,
-      "low": 42.0,
-      "close": 48.93,
-      "volume": 595090.0
-    },
-    {
-      "date": "2026-08-24",
-      "open": 76.94,
-      "high": 76.95,
-      "low": 76.92,
-      "close": 76.95,
-      "volume": 1255680.0
-    },
-    {
-      "date": "2026-08-25",
-      "open": 76.96,
-      "high": 76.98,
-      "low": 76.95,
-      "close": 76.97,
-      "volume": 1235753.0
-    },
     {
       "date": "2026-08-26",
       "open": 76.97,
       "high": 77.0,
       "low": 76.96,
       "close": 76.99,
-      "volume": 1400111.0
-    },
-    {
-      "date": "2026-08-27",
-      "open": 76.99,
-      "high": 76.99,
-      "low": 76.99,
-      "close": 76.99,
-      "volume": 0.0
-    },
-    {
-      "date": "2026-08-28",
-      "open": 76.99,
-      "high": 76.99,
-      "low": 76.99,
-      "close": 76.99,
-      "volume": 0.0
+      "volume": 1399801
     }
   ],
   "ohlc_1y": [
     {
-      "date": "2026-07-17",
-      "open": 43.35,
-      "high": 50.0,
-      "low": 42.0,
-      "close": 48.93,
-      "volume": 595090.0
-    },
-    {
-      "date": "2026-08-24",
-      "open": 76.94,
-      "high": 76.95,
-      "low": 76.92,
-      "close": 76.95,
-      "volume": 1255680.0
-    },
-    {
-      "date": "2026-08-25",
-      "open": 76.96,
-      "high": 76.98,
-      "low": 76.95,
-      "close": 76.97,
-      "volume": 1235753.0
-    },
-    {
       "date": "2026-08-26",
       "open": 76.97,
       "high": 77.0,
       "low": 76.96,
       "close": 76.99,
-      "volume": 1400111.0
-    },
-    {
-      "date": "2026-08-27",
-      "open": 76.99,
-      "high": 76.99,
-      "low": 76.99,
-      "close": 76.99,
-      "volume": 0.0
-    },
-    {
-      "date": "2026-08-28",
-      "open": 76.99,
-      "high": 76.99,
-      "low": 76.99,
-      "close": 76.99,
-      "volume": 0.0
+      "volume": 1399801
     }
   ],
   "ai_synthesis": null,

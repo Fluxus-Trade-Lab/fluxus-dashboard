@@ -1,6 +1,6 @@
 {
   "trade_id": "AAPU_2026-09-10_000",
-  "generated_at": "2026-09-25T23:48:37+00:00",
+  "generated_at": "2026-09-28T23:35:39+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AAPU",
@@ -10,18 +10,24 @@
     "entry_price": 42.0,
     "stop_price": 42.0,
     "initial_stop": 40.8,
-    "closed": false,
-    "remaining_pct": 80.0126103404792,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-28",
+    "hold_business_days": 12,
     "r_pct_of_entry": 2.857142857142864,
-    "realized_R": 0.3730979403110545,
+    "realized_R": 3.1735393022278218,
     "trims": [
       {
         "date": "2026-09-11",
         "price": 44.24,
         "pct_of_position": 19.987389659520808,
         "type": "trim_1_5"
+      },
+      {
+        "date": "2026-09-28",
+        "price": 46.2,
+        "pct_of_position": 80.0126103404792,
+        "type": "sell_rest"
       }
     ]
   },
@@ -33,8 +39,8 @@
     "volume": 5125300.0,
     "ma20": 40.16889,
     "ma50": 41.097276,
-    "ma200": 34.7786095,
-    "rsi14": 57.62979376037263,
+    "ma200": 34.77861,
+    "rsi14": 57.62979395077989,
     "atr14": 1.884678571428571,
     "atr14_pct": 4.406110626098374,
     "high_52w": 48.6899,
@@ -46,22 +52,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 3.8939999999999926,
-    "mfe_date": "2026-09-23",
+    "mfe_R": 4.704166666666658,
+    "mfe_date": "2026-09-22",
     "mae_R": 1.4296666666666649,
     "mae_date": "2026-09-10",
-    "optimal_exit_price": 46.6728,
-    "optimal_exit_date": "2026-09-23",
-    "optimal_R": 3.8939999999999926,
-    "days_to_optimal": 13,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "optimal_exit_price": 47.645,
+    "optimal_exit_date": "2026-09-22",
+    "optimal_R": 4.704166666666658,
+    "days_to_optimal": 12,
+    "realized_R": 3.1735393022278218,
+    "capture_pct": 67.46230580466596,
+    "missed_R": 1.530627364438836,
     "post_exit_R": null,
-    "hold_calendar_days": 15
+    "hold_calendar_days": 18
   },
-  "lesson": "In progress",
-  "narrative": "Entered **AAPU** long on 2026-09-10 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($40.17), MA stack mixed, RSI 58, 74% through 52W range, ATR 4.4% of price. **In progress.** Peak so far +3.89R; worst drawdown -1.43R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **AAPU** long on 2026-09-10 at $42.00 with stop $40.80 (currently trailed to $42.00) (1R = $1.20/sh = 2.9% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($40.17), MA stack mixed, RSI 58, 74% through 52W range, ATR 4.4% of price. Realized **+3.17R**, peak was **+4.70R** on 2026-09-22 (day +12) \u2014 captured **67%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-08-11",
@@ -297,19 +303,43 @@
     },
     {
       "date": "2026-09-22",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 0.0
+      "open": 46.35,
+      "high": 47.645,
+      "low": 45.88,
+      "close": 46.12,
+      "volume": 1118100.0
     },
     {
       "date": "2026-09-23",
       "open": 46.43,
-      "high": 46.6728,
-      "low": 45.0106,
+      "high": 46.673,
+      "low": 45.01,
       "close": 45.39,
-      "volume": 1440653.0
+      "volume": 1491400.0
+    },
+    {
+      "date": "2026-09-24",
+      "open": 45.21,
+      "high": 45.88,
+      "low": 44.68,
+      "close": 45.07,
+      "volume": 645800.0
+    },
+    {
+      "date": "2026-09-25",
+      "open": 45.13,
+      "high": 46.575,
+      "low": 44.641,
+      "close": 46.42,
+      "volume": 659000.0
+    },
+    {
+      "date": "2026-09-28",
+      "open": 46.34,
+      "high": 46.9526,
+      "low": 45.6099,
+      "close": 45.72,
+      "volume": 638921.0
     }
   ]
 }
