@@ -700,11 +700,26 @@
   }
 
   /* his next-week watchlist, reported as his list — grouped by sector, ticker + his own
-     stated clause, its own section (Andy 2026-09-27:「单独分开出这个，不合并到一起」) */
-  function weeklyWatchlist(c) {
+     stated clause, its own section (Andy 2026-09-27:「单独分开出这个，不合并到一起」).
+     T-0928-58 adds two things Andy asked for on the same list:
+     - a ticker he already holds is marked (called out live as useful — W39 hit HOOD/ARM/DELL);
+       checked against this issue's own book.pos, not a field anyone writes
+     - a ticker the transcript garbled beyond confident recovery prints as ⚠️ + the features he
+       described, never a guessed code (`ticker: null` + `unclear`, Andy「不许替它填代码：标⚠️并写他讲的特征」) */
+  function weeklyWatchlist(is, c, V) {
+    var held = {};
+    list(is && is.book && is.book.pos).forEach(function (p) { held[String(p[0]).toUpperCase()] = true; });
     return list(c.weekly_watchlist).map(function (g) {
       var items = list(g.items).map(function (it) {
-        return '<li><span class="t">' + esc(it.ticker) + "</span> " + rich(it.note) + "</li>";
+        var tk;
+        if (it.ticker) {
+          var isHeld = !!held[String(it.ticker).toUpperCase()];
+          tk = '<span class="t">' + esc(it.ticker) + "</span>" +
+            (isHeld ? ' <span class="held">' + esc(V.p_held) + "</span>" : "");
+        } else {
+          tk = '<span class="t unclear">⚠️ ' + esc(it.unclear) + "</span>";
+        }
+        return "<li>" + tk + " " + rich(it.note) + "</li>";
       }).join("");
       return '<div class="ww-group"><h4>' + esc(g.group) + '</h4><ul class="legs">' + items + "</ul></div>";
     }).join("");
@@ -715,14 +730,19 @@
      mast() carries the running "Weekly Market Recap · No. N" identity (same text as every recap page,
      so the reader can place it as part of the same weekly issue); the watchlist's own title prints
      exactly once, as the sec() heading — an earlier draft printed L.weekly_watchlist three times on
-     one page (masthead + <h2> + sec()), caught in branch review before this shipped. */
+     one page (masthead + <h2> + sec()), caught in branch review before this shipped.
+     T-0928-58 adds his indices-and-rotation closing (`weekly_watchlist_close`) as a second section,
+     after the grouped list and before the disclaimer footer — omitted entirely when he had none. */
   function layoutW(is, c, V) {
     var L = c.labels;
+    var closing = c.weekly_watchlist_close
+      ? sec(false, L.weekly_watchlist_close, "", '<p class="prose">' + rich(c.weekly_watchlist_close) + "</p>")
+      : "";
     var legal = V && V.legal ? '<p class="legal">' + esc(V.legal) + ' <span class="m">' + esc(V.handle) +
       "</span> · " + esc(V.site) + "</p>" : "";
     return '<article class="sheet a">' + mast(is, V) +
-      sec(true, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(c); })) +
-      legal + "</article>";
+      sec(true, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(is, c, V); })) +
+      closing + legal + "</article>";
   }
 
   /* topic cards are review information: preview pages only, never in a member PDF */

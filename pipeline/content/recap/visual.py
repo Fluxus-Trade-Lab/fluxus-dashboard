@@ -65,6 +65,9 @@ CHROME_LABELS = {
            # These live here, not in the issue's own `labels`, so an issue written before the
            # ladder existed still renders it.
            "p_cost": "Cost", "p_industries": "Industries", "p_sectors": "Sectors", "p_themes": "Themes", "leg_held": "held {n} sessions",
+           # T-0928-58: a watchlist name already sitting in the book (Andy called this out live as
+           # useful — W39 hit HOOD/ARM/DELL). Chrome, not issue labels, so an old issue still renders it.
+           "p_held": "In book",
            "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "vlabels": {}},
     "ZH": {"legend": ["计入看多", "计入看空", "在线内", "未计入", "数字 = 离各自那条线的距离"],
            "units": {"ratio": "比值", "names": "只", "points": "点", "warnings": "条", "": ""},
@@ -79,6 +82,7 @@ CHROME_LABELS = {
            "legal": "这里不给建议，也不劝人买卖。量好自己的水。",
            "handle": "@Fluxus_Z", "site": "fluxus-capital.com",
            "p_cost": "成本", "p_industries": "行业", "p_sectors": "板块", "p_themes": "主题", "leg_held": "持有 {n} 个交易日",
+           "p_held": "已持仓",
            "vlabels": {"5-day ratio": "5 日比", "10-day ratio": "10 日比", "Thrust": "推力", "Quarterly spread": "季度差",
                        "13%/34d spread": "13%/34 日差", "New highs vs lows": "新高对新低", "McClellan": "McClellan",
                        "% above 200-day": "站上 200 日线占比", "T2108 zone": "T2108 区间", "SPY warnings": "SPY 警示",
@@ -387,7 +391,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     out["book"] = book_out(pack.get("book") or {}, D)
     keep = ("lang", "title", "subtitle", "big_picture", "index_notes", "extra_index_rows", "state_line", "founders_note",
             "led", "lagged", "movers", "cross_assets", "sentiment", "session_commentary", "tomorrow", "rules",
-            "portfolio_note", "weekly_k_line", "weekly_watchlist", "labels")
+            "portfolio_note", "weekly_k_line", "weekly_watchlist", "weekly_watchlist_close", "labels")
     out["V"] = {}
     out["fig"] = {}
     for lang in ("EN", "ZH"):

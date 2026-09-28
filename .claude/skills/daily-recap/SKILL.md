@@ -442,6 +442,16 @@ prose / 列表项 ........ 10.5pt      表格单元 / 面板行 / 腿 ..... 9.5p
 这条**改掉** 09-27 那条的交付形态：`weekly_watchlist` 字段不变（仍是仅周刊、按行业分组、转述他原话、不替他加理由），但**不再渲染进 `Market_Recap_<issue>_<lang>.pdf`**——`run.py:headings()` 不再把它算进复盘正文的节；改由 `recap_page.js` 新增的 `layoutW`（一张不跟复盘共用页码的独立单页文档：masthead + 标题 + 分组列表 + 免责声明页脚）渲染，`run.py:cmd_render` 对每种语言、只要该语言的内容里 `weekly_watchlist` 非空，就打印成 `Watchlist_<issue>_{EN,ZH}.pdf`，落在与复盘 PDF 同一个 `pdf/` 目录。**默认双语**（他只说「一份 pdf」，没提语言；只要中文他会说，届时删 EN 那份）。同时这句话也回答了 09-27 那条「留不留」的待办——他要留，而且要升级，那个问题不用再问一次。
 落三处（09-24 判例延续，缺一处等于没改）：本节（daily-recap SKILL.md）+ `~/.fluxus-ops-daemon` `schedule.json` 的 `ops-recap-weekly` 模板 body 第 3.5 步 + `pipeline/content/recap/{run.py,visual_assets/recap_page.js,CONTENT_SCHEMA.md}`。**递送必须三份一起发**（复盘 EN/ZH + 这份 Watchlist）——只发复盘＝没交付，同 09-19 那条「PDF 需要能直接看到」的道理，缺一份也是没交付。首次生效仍是 **2026-W40**（2026-10-04 那班）。
 
+### [2026-09-28] 下周观察名单 PDF 补三条规格（T-0928-58；来源是 T-0928-56 原任务描述里没做完的三条，分支复核读全文时挑出来的）
+
+上面 09-28 那条只做了「独立成 PDF」这一件事；原任务里还有三条写在交付规格里，当时没落地，这里补齐：
+
+1. **末页收尾**：字段 `weekly_watchlist_close`（string，可省略），转述同一支视频指数与轮动那段收尾（SPX/QQQ 的读法、RSP/IWM、TLT、板块轮动如 XLU/ITB/XLRE/区域银行/XBI/XLI、USO）——和 `note` 一样只转述、不加理由、标 `◇`。在 `layoutW` 里是分组名单之后、免责声明之前的**第二节**，标签 `labels.weekly_watchlist_close`（EN `Indices & Rotation` / ZH `指数与轮动`）。视频没有这段收尾就整段省略字段，那一节就不印，其余内容不受影响。
+2. **持仓交叉标注**（Andy 当场说有用——W39 命中 HOOD/ARM/DELL）：名单里的 `ticker` 只要也在本期 `book.pos`（组合持仓）里，就自动打上标记——**不是一个要写的字段**，`recap_page.js:weeklyWatchlist` 拿 `it.ticker` 去对 `is.book.pos`（大小写不敏感），命中就在代码旁边加一个标记（chrome 标签 `p_held`：EN `In book` / ZH `已持仓`）。写手不用管这条，写好 `ticker` 就自动生效。
+3. **听糊代码不许瞎填**：字幕把代码听糊了、拿不准是哪只票时，`ticker` 写 `null`，另加 `unclear`——一句话写他讲的特征（哪个板块、干什么的、他拿来跟谁比），**不许自己猜一个代码填上去**。渲染出来是 `⚠️` + 那句特征描述，代替原本该出现的代码，让 Andy 自己认。`note` 照常写他那句判据/位置。
+
+三处落地位置同 09-24 判例：本节 + `pipeline/content/recap/{visual.py,visual_assets/recap_page.js,CONTENT_SCHEMA.md}` + 对应测试 `pipeline/tests/test_recap_weekly_watchlist.py`。首次生效仍是 **2026-W40**（2026-10-04 那班）；W40 之前来不及做完不阻塞独立 PDF 本身，但第 2 条（持仓交叉）优先级不该拖。
+
 ### [2026-09-27] 文风自查：两条可数闸（T-0927-34，Andy 原话「一个骨架露了出来。「A，不是 B」这个形状全页 12 处，那适量更改可以的。」）
 起因：W39 ZH 正文实测——「A，不是 B」对比收尾式约 **12 处**（含「不是/不能/不买/不活/而不是」等变体，字面「A，不是 B」只占其中一部分）、破折号 `——` **32 个**。单句都成立，连起来读者能预判下一句的形状（fable-voice 病 3 节奏过匀 + 病 4「不是 X 是 Y」成瘾）。他要的是**适量**，不是清零。
 
@@ -532,6 +542,7 @@ python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，�
 - **「Grow」是视频专名，不出现。**
 - **Big Picture 两拍 + 标题定性**（2026-09-19，见裁决记录）：① 一句定性 ② 故事线，≤8 个数；标题副标题不用数字。
 - **下周观察名单，独立 PDF、不进复盘正文**（2026-09-27 立节、2026-09-28 升级为独立 PDF，见裁决记录）：来源是参照片后半段——他按行业分组念出的下周观察名单（不是我方扫出来的领涨/落后，那两组仍各自留在 `led`/`lagged`）。字段 `weekly_watchlist`（仅周刊）：`[{"group": "半导体", "items": [{"ticker": "SMCI", "note": "他说的那句判据 ◇"}]}]`；`note` 只转述视频里那一句（位置/均线/触发条件），**不替他加理由**。**不并入 `led`/`lagged`/`tomorrow`，也不再渲染进 `Market_Recap_<W>_{EN,ZH}.pdf`**——`headings()` 不含它，它由 `recap_page.js` 的 `layoutW` 单独渲染，`run.py` 打印成自己的 `Watchlist_<W>_{EN,ZH}.pdf`，落在同一个 `pdf/` 目录。populate 时仍要同步补 `labels.weekly_watchlist`（EN `Next Week's Watchlist` / ZH `下周观察名单`）——它现在是这份独立 PDF 的 masthead 与标题，缺了 render 会报错。参照片没有这段名单就整段省略字段，那种语言不出这份 PDF，不要为了凑一份而自己找票。
+  **写这份名单时另守三条（T-0928-58，见裁决记录 [2026-09-28]）**：①听糊的代码不许自己猜——`ticker` 写 `null`，`unclear` 写他讲的特征，让 Andy 自己认；②`ticker` 命中持仓的标记是自动的，不用写；③视频有收尾（指数与轮动那段）就写进 `weekly_watchlist_close`，同 `note` 一样只转述、标 `◇`，没有就整段省略。
 
 ### 第 5 步 · 过闸与出片
 ```bash
