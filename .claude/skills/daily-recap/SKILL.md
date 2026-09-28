@@ -434,6 +434,13 @@ prose / 列表项 ........ 10.5pt      表格单元 / 面板行 / 腿 ..... 9.5p
 
 落地（T-0927-33）：新增字段 `weekly_watchlist`（仅周刊，见 `CONTENT_SCHEMA.md`），渲染成自己的一节（Tomorrow 之后、Rules 之前），**不并入 `led`/`lagged`/`tomorrow`**；`labels.weekly_watchlist` 必须同步补上。首次生效期号 **2026-W40**（2026-10-04 那班）。
 **Andy 后半句是待定**：「我们改进后再看有没有需求」——W40 递送时必须在正文里单独问他一句这一节留不留，答案回填任务板；三期内没人再问＝这条裁决没闭环。
+↳ **升级为独立 PDF（2026-09-28，T-0928-56，见下条）**：本条「后半句待定」已由 Andy 直接答复——他不但要留，还要升级成自己一份 PDF，遮盖了原来「问他留不留」那个待办；下面 [2026-09-28] 一条取代本条关于渲染位置的部分。
+
+### [2026-09-28] 下周观察名单改成独立 PDF，不再是复盘的一节（Andy 原话，递送会话，看完 W39 手工抽的名单之后）
+> 「嗯不错不错，下次W40单独列出来，变成一份pdf。」
+
+这条**改掉** 09-27 那条的交付形态：`weekly_watchlist` 字段不变（仍是仅周刊、按行业分组、转述他原话、不替他加理由），但**不再渲染进 `Market_Recap_<issue>_<lang>.pdf`**——`run.py:headings()` 不再把它算进复盘正文的节；改由 `recap_page.js` 新增的 `layoutW`（一张不跟复盘共用页码的独立单页文档：masthead + 标题 + 分组列表 + 免责声明页脚）渲染，`run.py:cmd_render` 对每种语言、只要该语言的内容里 `weekly_watchlist` 非空，就打印成 `Watchlist_<issue>_{EN,ZH}.pdf`，落在与复盘 PDF 同一个 `pdf/` 目录。**默认双语**（他只说「一份 pdf」，没提语言；只要中文他会说，届时删 EN 那份）。同时这句话也回答了 09-27 那条「留不留」的待办——他要留，而且要升级，那个问题不用再问一次。
+落三处（09-24 判例延续，缺一处等于没改）：本节（daily-recap SKILL.md）+ `~/.fluxus-ops-daemon` `schedule.json` 的 `ops-recap-weekly` 模板 body 第 3.5 步 + `pipeline/content/recap/{run.py,visual_assets/recap_page.js,CONTENT_SCHEMA.md}`。**递送必须三份一起发**（复盘 EN/ZH + 这份 Watchlist）——只发复盘＝没交付，同 09-19 那条「PDF 需要能直接看到」的道理，缺一份也是没交付。首次生效仍是 **2026-W40**（2026-10-04 那班）。
 
 ### [2026-09-27] 文风自查：两条可数闸（T-0927-34，Andy 原话「一个骨架露了出来。「A，不是 B」这个形状全页 12 处，那适量更改可以的。」）
 起因：W39 ZH 正文实测——「A，不是 B」对比收尾式约 **12 处**（含「不是/不能/不买/不活/而不是」等变体，字面「A，不是 B」只占其中一部分）、破折号 `——` **32 个**。单句都成立，连起来读者能预判下一句的形状（fable-voice 病 3 节奏过匀 + 病 4「不是 X 是 Y」成瘾）。他要的是**适量**，不是清零。
@@ -524,7 +531,7 @@ python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，�
 - **一周涨跌**写 `over the week (theme)` / `1-week` / 「本周」「一周」，**不写 `theme week` / `industry week` / `IBIT week` 这类缩写**（周刊最容易踩，W37 样张一次踩了 11 处）。
 - **「Grow」是视频专名，不出现。**
 - **Big Picture 两拍 + 标题定性**（2026-09-19，见裁决记录）：① 一句定性 ② 故事线，≤8 个数；标题副标题不用数字。
-- **下周观察名单，独立成节（2026-09-27，见裁决记录）**：来源是参照片后半段——他按行业分组念出的下周观察名单（不是我方扫出来的领涨/落后，那两组仍各自留在 `led`/`lagged`）。字段 `weekly_watchlist`（仅周刊）：`[{"group": "半导体", "items": [{"ticker": "SMCI", "note": "他说的那句判据 ◇"}]}]`；`note` 只转述视频里那一句（位置/均线/触发条件），**不替他加理由**。**不并入 `led`/`lagged`/`tomorrow`**——它是它自己的节，渲染在 Tomorrow 之后、Rules 之前。populate 时必须同时补 `labels.weekly_watchlist`（EN `Next Week's Watchlist` / ZH `下周观察名单`），否则 `headings()` 会在 render 时抛错。参照片没有这段名单就整段省略字段，不要为了凑一节而自己找票。
+- **下周观察名单，独立 PDF、不进复盘正文**（2026-09-27 立节、2026-09-28 升级为独立 PDF，见裁决记录）：来源是参照片后半段——他按行业分组念出的下周观察名单（不是我方扫出来的领涨/落后，那两组仍各自留在 `led`/`lagged`）。字段 `weekly_watchlist`（仅周刊）：`[{"group": "半导体", "items": [{"ticker": "SMCI", "note": "他说的那句判据 ◇"}]}]`；`note` 只转述视频里那一句（位置/均线/触发条件），**不替他加理由**。**不并入 `led`/`lagged`/`tomorrow`，也不再渲染进 `Market_Recap_<W>_{EN,ZH}.pdf`**——`headings()` 不含它，它由 `recap_page.js` 的 `layoutW` 单独渲染，`run.py` 打印成自己的 `Watchlist_<W>_{EN,ZH}.pdf`，落在同一个 `pdf/` 目录。populate 时仍要同步补 `labels.weekly_watchlist`（EN `Next Week's Watchlist` / ZH `下周观察名单`）——它现在是这份独立 PDF 的 masthead 与标题，缺了 render 会报错。参照片没有这段名单就整段省略字段，那种语言不出这份 PDF，不要为了凑一份而自己找票。
 
 ### 第 5 步 · 过闸与出片
 ```bash
@@ -535,21 +542,21 @@ python 命令写成 `(cd "$WT" && …)`；git 一律 `git -C`；永不 stash，�
 (cd "$WT" && ~/.venvs/fluxus-recap/bin/python -m pipeline.content.recap.run render --week W)
 (cd "$WT" && python3 -m pipeline.content.recap.run ledger-add --week W)
 ```
-render 必须用 venv 的 python（真字号闸需要 pdfminer.six）。
+render 必须用 venv 的 python（真字号闸需要 pdfminer.six）。同一次 render 会顺带打印 `Watchlist_<W>_{EN,ZH}.pdf`（layout `W`，只要该语言 `weekly_watchlist` 非空）——不是另一条命令，出现在同一份 `delivery.md` 里「下周观察名单（独立 PDF）」一节。
 
 **版式定稿（2026-09-13 晚最终版）**：正文 10.5pt、表格 9.5pt，宽松行距（行距比 1.4–1.5）。**教育段允许跨页**，唯一底线是不许在句子/段落中间断页。**页数规则**：教育、组合更新之外的全部内容必须在前几页放完；组合更新独占最后一页；教育段收尾在哪一页由内容多少决定——周刊内容更多，正常会是 6 页，**不要为了凑某个固定页数压字号或删内容**。
 
 闸含：专名（含 Grow）、W1 一周缩写、版心截断、示意图重叠、**L1 页数结构**（教育/组合更新之外内容须在前 4 页、组合更新独占末页、断句底线）、**L2 真字号**（pdfminer 实读：正文 10.5±0.1pt、表格 ≥9.0pt——周刊的「逐日读数」表最容易撑宽页面触发 Chrome 整页缩印，红了不许缩字号，停手汇报是哪个元素超宽）。**文风自查**（ZH 正文「A，不是 B」对比收尾式 ≤4 处、破折号 `——` ≤4 个/千字，见裁决记录 [2026-09-27]）是**人工检查项，不在上面这套 render 自动闸里**——`run check` 不会替你数，交付前自己按裁决记录的量法数一遍，数字写进 `delivery.md`。
 
 ### 第 6 步 · 核对产出
-`<W>/pdf/` 中英 PDF（页数与教育是否溢出写进 `delivery.md`）· `img/EN`、`img/ZH`（数量 = 页数）· `delivery.md` · `preview.html`；**不应有 `x/`**。**读 `delivery.md` 的「盘面点评覆盖自检」一行**（见裁决记录 [2026-09-27]）：出现「⚠️ 连续第 N 期」就照那行给的命令开 P1 单给 ops；单期缺场不用开单，交付汇报里提一句即可。
+`<W>/pdf/` 中英 PDF **加上** `Watchlist_<W>_{EN,ZH}.pdf`（有 `weekly_watchlist` 时；页数与教育是否溢出写进 `delivery.md`）· `img/EN`、`img/ZH`（数量 = 页数）· `delivery.md` · `preview.html`；**不应有 `x/`**。**读 `delivery.md` 的「盘面点评覆盖自检」一行**（见裁决记录 [2026-09-27]）：出现「⚠️ 连续第 N 期」就照那行给的命令开 P1 单给 ops；单期缺场不用开单，交付汇报里提一句即可。**读 `delivery.md` 的「下周观察名单（独立 PDF）」一节**：有字段就该有 PDF 且通过，没字段就写着「本期无」——两者都不是拦截，出现「拦截」才是真问题。
 
 ### 第 7 步 · INBOX 留痕（仓库公开：只写状态）
 直推 main 标准动作（临时树、只 add INBOX、删除行自检为空、冲突重放最多 3 轮、push 后核实、移除临时树），追一行：
-`- [MM-DD] 📰 周复盘 <W>：已出（中英 PDF · Substack 逐页图）· 闸全绿` 或 `…：未出 —— <一句原因>`
+`- [MM-DD] 📰 周复盘 <W>：已出（中英 PDF + 下周观察名单 PDF · Substack 逐页图）· 闸全绿` 或 `…：未出 —— <一句原因>`
 
 ### 红线
 不发任何消息 · 不发布到任何平台 · 字幕、材料包、PDF、图片、台账永不进 git · 不改 `pipeline/` 代码（工具报错就开一件任务给 ops：`taskboard.py new --owner ops --type skill_fix --title "周复盘工具报错 <一句>"` 并停手）· 不碰 Visual 线工作树 · 不 force、不 stash。
 
 ### 最终回复（≤8 行）
-`周复盘 <W>：已出 / 未出（原因）` · PDF 路径与页数（教育是否溢出）· 正文实测字号 · 教育 A（B）题目 · `delivery.md` 里 ★ 句数 · 缺什么 · 耗时。
+`周复盘 <W>：已出 / 未出（原因）` · PDF 路径与页数（教育是否溢出）· 下周观察名单 PDF 是否出、几份 · 正文实测字号 · 教育 A（B）题目 · `delivery.md` 里 ★ 句数 · 缺什么 · 耗时。

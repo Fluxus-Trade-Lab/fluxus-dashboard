@@ -710,6 +710,19 @@
     }).join("");
   }
 
+  /* layout W · its own PDF (Andy 2026-09-28:「下次W40单独列出来，变成一份pdf」) — one flowing sheet,
+     not folded into the recap's 4-page structure; no folio (that "n / 4" is the recap's own count). */
+  function layoutW(is, c, V) {
+    var L = c.labels;
+    var legal = V && V.legal ? '<p class="legal">' + esc(V.legal) + ' <span class="m">' + esc(V.handle) +
+      "</span> · " + esc(V.site) + "</p>" : "";
+    return '<article class="sheet a"><div class="mast"><span class="brand">FLUXUS CAPITAL</span><span>' +
+      esc(L.weekly_watchlist) + " · No. " + esc(is.no) + '</span></div><hr class="r ink">' +
+      '<h2 class="hl-a">' + esc(L.weekly_watchlist) + "</h2>" +
+      sec(true, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(c); })) +
+      legal + "</article>";
+  }
+
   /* topic cards are review information: preview pages only, never in a member PDF */
   function eduPick(c, V) {
     if (printMode) {
@@ -783,9 +796,6 @@
       (c.sentiment ? sec(false, L.sentiment, "", '<p class="prose">' + rich(c.sentiment) + "</p>") : "") +
       (c.session_commentary && c.session_commentary.length ? sec(false, L.session_commentary, "", olist(c.session_commentary, "ol-a")) : "") +
       sec(false, L.tomorrow, "", olist(c.tomorrow, "ol-a")) +
-      (is.weekly && c.weekly_watchlist && c.weekly_watchlist.length
-        ? sec(false, L.weekly_watchlist, "", safe(function () { return weeklyWatchlist(c); }))
-        : "") +
       sec(false, L.rules, "", olist(c.rules, "ol-a")) +
       folio(is, V, 3, false, dl) + "</article>";
     var edu = c.education || {};
@@ -842,12 +852,9 @@
       (wk ? '<div class="kicker sp">' + esc(L.weekly_k) + "</div>" + wk : "") + folio(is, V, 3, true, dl) + "</article>";
     var edu = c.education || {};
     var bk = safe(function () { return book(is, c, V); });
-    var ww = is.weekly && c.weekly_watchlist && c.weekly_watchlist.length
-      ? '<div class="kicker sp">' + esc(L.weekly_watchlist) + "</div>" + safe(function () { return weeklyWatchlist(c); })
-      : "";
     var left = (c.founders_note ? '<div class="kicker">' + esc(V.founders) + '</div><p class="prose">' +
       rich(c.founders_note) + '</p><div class="kicker sp">' : '<div class="kicker">') + esc(L.tomorrow) + "</div>" +
-      olist(c.tomorrow, "ol-b") + ww + (bk ? '<div class="kicker sp">' + esc(L.portfolio) + "</div>" + bk : "");
+      olist(c.tomorrow, "ol-b") + (bk ? '<div class="kicker sp">' + esc(L.portfolio) + "</div>" + bk : "");
     var s4 = '<article class="sheet b"><div class="pull edu"><div class="kicker">' + esc(L.education) +
       '</div><h3 class="hb big">' + esc(edu.title) + "</h3>" + eduPick(c, V) + '<p class="prose lead">' + rich(edu.body) +
       "</p></div>" + safe(function () { return figure(is.fig && is.fig[c.lang]); }) + '<p class="schem">' + esc(V.schem) +
@@ -915,9 +922,11 @@
     var lang = (is.V && is.V[st.lang]) ? st.lang : "ZH";
     var c = is.V[lang];
     var V = (DATA.chrome && DATA.chrome[lang]) || {};
-    var layout = printMode ? "A" : (layouts.indexOf(st.layout) >= 0 ? st.layout : layouts[0]);
+    /* print mode always forces layout A for the recap itself — except "W", the standalone
+       watchlist PDF (Andy 2026-09-28), which is its own document and never a recap layout choice */
+    var layout = printMode ? (st.layout === "W" ? "W" : "A") : (layouts.indexOf(st.layout) >= 0 ? st.layout : layouts[0]);
     app.innerHTML = safe(function () {
-      return layout === "B" ? layoutB(is, c, V) : layoutA(is, c, V);
+      return layout === "W" ? layoutW(is, c, V) : (layout === "B" ? layoutB(is, c, V) : layoutA(is, c, V));
     });
     app.setAttribute("data-rendered", is.tag + "|" + lang + "|" + layout);
     document.documentElement.lang = lang === "ZH" ? "zh-Hans" : "en";
