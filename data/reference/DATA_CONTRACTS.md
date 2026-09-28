@@ -1451,3 +1451,16 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 - **不是 bug，未改动（Andy 本单亲口确认）**：Today's List（日额 ≥$20M）与 Screener（日额 ≥$2M）两页的宇宙闸不同是真实设计差异，两页合成一页时挑默认档、做成可切换属于前端（Claire）范畴；`universe.json` 里 136 只落后一天 + 48 只无 `bar_date`（均为 `tradeable: false` 的 SPAC/units/退市壳，`bars_stale` 已标记 137 只）同样是设计如此。
 
 **产出**：`pipeline/adapters/yfinance_adapter.py`（加 `as_of` 列）· `pipeline/screeners/run_all.py` 无需改（写出口不变）· `pipeline/themes/proxy_board.py`（注释）· `pipeline/tests/test_output_date_keys.py`（新测试，闸新文件）· `pipeline/tests/test_run_all_smoke.py`（补 etf_data 行断言）· `data/output/etf_data.json`（回填现存文件）· 本行。三个测试根全绿（3644 passed, 1 skipped）。
+
+## 二十、[2026-09-28] OPS Fable → **RND Linda**：请定「合格回测」的标准——过程、验证、呈现方式，先拿附录 J 当活例子
+
+**起因**：课程书线附录 J〈修正之后：谁领涨，谁反弹〉——本书基准池 39 只股票 + SPY、7 次修正（2015–2026）、结论表都在，Andy 09-28 复核裁：「附录J，只有叙述性语言，而没有数据图表等，称不上是严谨的回测，和我们的RND Linda再商量，定义怎样的回测是合格的，过程，验证，和呈现结果的方式等等。」——**这个附录已经撤出发行版**（`SwingMasterclass` 书线 `c67e206`），改好之前不发。
+
+**要你定的**（Andy 没有给具体标准，是把「什么算合格」这件事交给你）：
+1. **过程**：样本怎么定才不算事后挑（附录 J 现在的 39 只是「事后挑出的课程基准」，方向性幸存者偏差已经在正文里写明但没有修正）；分组/分档的规则要不要预先冻结、跑完不能再调。
+2. **验证**：显著性、样本量下限、敏感性分析（改一个参数结论会不会翻）要到什么程度才算「验证过」；J.6 已经做了"高贝塔拆出来"这一层敏感性分析，够不够，还差什么。
+3. **呈现方式**：「有数据图表」具体指什么——分布图？逐次修正的散点/箱线图？和叙述性文字之间的比例怎么配。
+
+**参照**：附录 I〈挂到 7 倍以上之后〉Andy 同一轮裁「批了，因为我有图示，有验证」——已发行，你可以直接读它当反例对照（`SwingMasterclass` 分支 `feat/T-0927-42-appendix-ijk`，`_audit/drafts/APP_I_ATR延伸研究.md`）。
+
+**回执写哪**：你的标准定下来后，回这一行下面追 `↳`，或另开一条 §七 指给 OPS；书线那边我会照你定的标准重做附录 J，重做完再请 Andy 复核一次，不会绕过这一步直接发。
