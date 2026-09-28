@@ -256,3 +256,247 @@ def test_load_truncates_a_timestamp_to_its_date(tmp_path):
     by = load(p)
     assert list(by) == ["2026-06-01"], by
     assert by["2026-06-01"] == ["AAPL", "WMT"]
+
+
+# ----------------------------------------------------------- 2026-09-28
+# The 18 survivors the sweep has been reporting since 2026-09-02, read one by
+# one for the first time. 17 of them are real holes and are pinned below; the
+# one left standing is `indent=1 -> 2` on the JSON the tool writes, which is
+# whitespace -- a test for it would freeze a harmless formatting choice.
+#
+# Every test in this block was run against its own mutant and seen RED first;
+# the index in the sweep's site list is named so the next reader can redo that.
+
+def as_csv(tmp_path, by_session, name="arch.csv"):
+    p = tmp_path / name
+    lines = ["date,ticker"]
+    for d in sorted(by_session):
+        lines += [f"{d},{t}" for t in by_session[d]]
+    p.write_text("\n".join(lines) + "\n")
+    return p
+
+
+def test_the_split_letter_itself_sorts_before_the_split_not_after():
+    """Kills [32] L64 `Gt -> GtE` -- the comparison that DEFINES the statistic.
+
+    Every existing test is blind to it: `AL` is all A-names and `MZ` all
+    W-names, and neither "A" nor "W" changes side when `>` becomes `>=`. The
+    split letter is the only input that does, and there was no L-name in the
+    suite.
+
+    Why it matters beyond pedantry: L is one of the busiest initials on the
+    tape (LLY, LIN, LMT, LOW, LRCX...). Counting them as "after L" inflates
+    every session's share AND the trailing median it is compared against, so
+    the drift stays small -- an M-to-Z truncation would be partly absorbed by
+    the L-names still being counted on the far side. This guard exists because
+    a content-dimension cut hides from count-dimension checks; measuring the
+    content dimension one letter off is the same failure one level in.
+    """
+    assert share_after(["LLY", "LIN", "LMT"]) == 0.0
+    assert share_after(["LLY", "MMM"]) == 0.5
+    assert share_after(["LLY", "MMM"], split="M") == 0.0
+
+
+def test_u2_fires_at_exactly_min_rows():
+    """Kills [2] L57 `MIN_ROWS = 50 -> 51` and [20] L83 `GtE -> Gt` together.
+
+    Both mutants do the same thing: move the smallest sample on which a hard
+    zero counts as evidence up by one row. 50 rows is the declared floor, so
+    50 rows must fire. The number is written out here on purpose -- change
+    MIN_ROWS and this test has to change with it, and that cost is the point.
+    """
+    by = healthy(8)
+    by["2026-06-09"] = AL                  # exactly 50 rows, none after 'L'
+    assert len(by["2026-06-09"]) == 50     # the fixture, not the guard
+    out = check(by)
+    assert any(v.startswith("U2 2026-06-09") for v in out["violations"]), out
+
+
+def test_one_row_below_min_rows_is_still_small_sample_noise():
+    """The other side of the same floor: 49 rows must stay quiet.
+
+    `test_u2_ignores_a_zero_that_is_just_a_small_sample` uses 3 rows, which is
+    nowhere near the boundary -- it would stay green if MIN_ROWS were lowered
+    to 4. This one holds the floor from below.
+    """
+    by = healthy(8)
+    by["2026-06-09"] = AL[:49]
+    assert not any(v.startswith("U2") for v in check(by)["violations"])
+
+
+def test_three_trailing_sessions_are_enough_to_judge():
+    """Kills [29] L89 `Lt -> LtE` and [37] L89 `3 -> 4`.
+
+    `len(prior) < 3` is where this guard stops saying "not judged" and starts
+    accusing. The fourth session has exactly three priors, so it is the first
+    one that must be judged. Both mutants push that to the fifth -- and U3 is
+    a warning, never fatal, so the effect is that a truncation landing on the
+    fourth session of any archive is reported as "not enough history" and
+    passes. An archive that is truncated from early on is exactly the case the
+    docstring calls the worst one, because it poisons every later baseline.
+    """
+    by = healthy(3)                                  # 0.50 on three sessions
+    by["2026-06-04"] = AL + MZ[:1]                   # 1/51 = 0.0196, not a hard 0
+    out = check(by)
+    assert not out["ok"], out
+    assert any(v.startswith("U1 2026-06-04") for v in out["violations"]), out
+    assert not any("2026-06-04" in w for w in out["warnings"]), out["warnings"]
+
+
+def test_a_drift_of_exactly_the_tolerance_is_inside_the_tolerance():
+    """Kills [39] L92 `Gt -> GtE` -- is `--tolerance` allowed or forbidden?
+
+    ⚠️ The numbers are chosen so the boundary is REACHABLE. `abs(sh - base)`
+    has to equal `tolerance` to the bit, which rules out the default: 0.15 is
+    not 0.15 in binary and no achievable share lands on it. 0.25 is exact, and
+    a baseline of 0.50 against a share of 0.25 is exactly 0.25 away.
+
+    (Same trap as audit_calendar_gaps L258, where the default threshold
+    `1.0 - 0.8` == 0.19999999999999996 is unreachable and left `>=` vs `>`
+    untestable for four sweeps.)
+    """
+    by = healthy(8)
+    by["2026-06-09"] = AL * 3 + MZ                   # 50/200 = 0.25 exactly
+    assert check(by, tolerance=0.25)["ok"], check(by, tolerance=0.25)["violations"]
+    # one hair further out and it does fire, so the test above is not vacuous
+    by["2026-06-09"] = AL * 3 + MZ[:49]              # 49/199 = 0.2462
+    assert not check(by, tolerance=0.25)["ok"]
+
+
+def test_the_share_and_baseline_in_the_row_are_the_numbers_measured():
+    """Kills [26] L80 `Is -> IsNot` on `None if sh is None else round(sh, 4)`.
+
+    Inverted, the field reports None for every session that HAS a share, and
+    calls `round(None, 4)` on the ones that do not. Nothing was reading these
+    two numbers, and they are the machine-readable half of the report -- the
+    printed violation lines are for humans, `rows` is for whatever consumes
+    the JSON.
+    """
+    out = check(healthy(8))
+    last = out["rows"][-1]
+    assert last["share"] == 0.5, last
+    assert last["baseline"] == 0.5, last
+
+
+def test_the_share_fields_carry_the_four_decimals_they_declare():
+    """Kills [33] L80 and [34] L81 `round(x, 4) -> round(x, 5)`.
+
+    One name of three is 0.333333..., the smallest sample where the declared
+    precision is visible at all: with the 50/50 fixtures every share is exact
+    and four digits equal five on every possible input.
+    """
+    by = {f"2026-06-{d:02d}": AL[:2] + MZ[:1] for d in range(1, 6)}
+    last = check(by)["rows"][-1]
+    assert last["share"] == 0.3333, last
+    assert last["baseline"] == 0.3333, last
+
+
+def test_the_tolerance_a_u1_quotes_is_the_tolerance_it_was_given():
+    """Kills [48] L97 `100 -> 101` -- the tolerance in the U1 message.
+
+    ⚠️ 0.15 cannot separate the two: 15.00 and 15.15 both print "15". Same
+    rounding trap the 09-02 note above records for the drift figure, one
+    format string over. 0.6 prints 60 against 61, so the tolerance has to be
+    dialled up for the assertion to mean anything -- and the drift then has to
+    clear it, which is why the baseline here is 0.98 rather than 0.50 (0.50
+    cannot move more than 0.50).
+    """
+    by = {f"2026-06-{d:02d}": MZ + AL[:1] for d in range(1, 9)}   # 50/51 = 0.9804
+    by["2026-06-09"] = AL + MZ[:1]                               # 1/51 = 0.0196
+    out = check(by, tolerance=0.6)
+    msg = next(v for v in out["violations"] if v.startswith("U1 2026-06-09"))
+    assert "tolerance 60pp" in msg, msg
+
+
+def test_load_needs_both_a_date_and_a_ticker_to_keep_a_row(tmp_path):
+    """Kills [14] L119 `And -> Or` on `if d and t:`.
+
+    Turned into `or`, a row with a ticker and no date opens a session called
+    "" and a row with a date and no ticker files an empty symbol under a real
+    one. Both are silent: the "" session is below MIN_ROWS so it is never
+    judged, and `share_after` drops blank symbols -- so the damage shows up
+    only as a share computed over a denominator that quietly disagrees with
+    the row count printed beside it.
+    """
+    from pipeline.tools.audit_universe_shape import load
+
+    p = tmp_path / "ragged.csv"
+    p.write_text("date,ticker\n2026-06-01,AAPL\n,ORPHAN\n2026-06-01,\n")
+    assert load(p) == {"2026-06-01": ["AAPL"]}, load(p)
+
+
+def test_load_finds_the_date_column_in_a_single_row_archive(tmp_path):
+    """Kills [45] L112 `0 -> 1`: `if c in rows[0]` reading `rows[1]` instead.
+
+    A one-row archive then raises IndexError before anything is checked. Same
+    shape as `read_archive_dates` in audit_calendar_gaps, pinned there on
+    09-27 -- column detection that indexes past the only row it has.
+    """
+    from pipeline.tools.audit_universe_shape import load
+
+    p = tmp_path / "one.csv"
+    p.write_text("date,ticker\n2026-06-01,AAPL\n")
+    assert load(p) == {"2026-06-01": ["AAPL"]}
+
+
+class TestMainExitCodeAndPrinting:
+    """`main()` had exactly one test (the empty-archive branch). Everything
+    below the archive read -- the exit code, the header, the `-q` flag -- was
+    unpinned."""
+
+    def test_a_clean_archive_exits_zero_and_a_truncated_one_exits_one(self, tmp_path):
+        """Kills [16] L155 `0 -> 1` and [17] L155 `1 -> 2`.
+
+        ⭐ Fifth module with this survivor: audit_archives, audit_ledger,
+        audit_ci_test_coverage and audit_calendar_gaps L423 each carried it
+        too (pinned 09-25, 09-26, 09-27). `0 -> 1` is the quiet one -- CI goes
+        red on every clean night, and a guard that is always red stops being
+        read. `1 -> 2` is louder than it looks: argparse already uses exit 2
+        for "you called me wrong", so it merges "the archive is broken" into
+        "the command line is broken".
+        """
+        from pipeline.tools.audit_universe_shape import main
+
+        clean = as_csv(tmp_path, healthy(8), "clean.csv")
+        assert main([str(clean)]) == 0
+
+        by = healthy(8)
+        by["2026-06-09"] = AL
+        assert main([str(as_csv(tmp_path, by, "broken.csv"))]) == 1
+
+    def test_the_header_quotes_the_tolerance_it_was_given(self, tmp_path, capsys):
+        """Kills [43] L145 `100 -> 101` on the header line.
+
+        Same unreachable-boundary problem as the U1 message: 0.15 prints "15"
+        either way, so the run has to ask for 0.6.
+        """
+        from pipeline.tools.audit_universe_shape import main
+
+        main([str(as_csv(tmp_path, healthy(8))), "--tolerance", "0.6"])
+        assert "tolerance 60pp" in capsys.readouterr().out
+
+    def test_the_default_run_prints_the_header_and_the_warnings(self, tmp_path, capsys):
+        """Kills [9] L143 and [10] L148 `drop not` on `if not a.quiet:`.
+
+        Dropped, the two flags invert: the header and the U3 warnings appear
+        ONLY under `-q`. Nothing was reading either stream.
+        """
+        from pipeline.tools.audit_universe_shape import main
+
+        main([str(as_csv(tmp_path, healthy(4)))])
+        out = capsys.readouterr().out
+        assert "sessions, split 'L'" in out, out
+        assert "WARN U3" in out, out
+
+    def test_quiet_drops_the_header_and_the_warnings_and_keeps_the_verdict(
+            self, tmp_path, capsys):
+        """The other side of the same two flags -- `-q` is documented as "only
+        print the sessions that failed", so a U3 warning leaking into it
+        defeats the whole flag."""
+        from pipeline.tools.audit_universe_shape import main
+
+        main([str(as_csv(tmp_path, healthy(4))), "-q"])
+        out = capsys.readouterr().out
+        assert "sessions, split 'L'" not in out, out
+        assert "WARN" not in out, out
+        assert "OK: 0 violations" in out, out
