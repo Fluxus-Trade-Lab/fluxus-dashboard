@@ -99,8 +99,9 @@ reconcile: D1 2026-08-26: the market traded (20% of tickers have a bar)
 行为既然判错，钉它的测试必须跟着翻——**留着它就是让闸继续为一个错判作证。**
 新测试保留原来的 `universal_frac=0.5` 用例当独立见证（0.5 在二进制里精确，新旧写法都可达），
 另加默认 0.80 一行，那是旧写法根本到不了的地方。
-除此之外 diff 里没有其他删除行；`check()` C4 的 docstring 从
-「only a share above」改成「AT OR ABOVE」，是让注释跟上早就是 `>=` 的代码。
+diff 里其余的删除行只有两组，都在第三节逐字贴过：被替换掉的那两行源码，
+以及 `check()` C4 的 docstring「only a share above」→「AT OR ABOVE」（让注释跟上早就是 `>=` 的代码）。
+⚠️ 本节初稿写的是「除此之外 diff 里没有其他删除行」，字面不成立——源码那两行也是删除行，复核员挑出来的，已改成逐组列清。
 
 ## 七、留下的一句规矩
 
