@@ -450,7 +450,14 @@ def build() -> dict:
 
 
 def highlights(data: dict) -> list[dict]:
-    """自动挑重点。判据全部写在 why 里,不给形容词。"""
+    """自动挑重点。判据全部写在 why 里,不给形容词。
+
+    ⭐ 「新进」判据 09-27 起是**新面孔版**（README 09-25d·3，T-0927-66 实装）：
+    不再要求「昨天 0 人」,而是「今天的人里至少 1 个不在昨天的名单上」——
+    同时接住两个旧判据接不住的形状：①同一批人总数在降（如 09-25 `$AMD` 2→1,
+    Δ<0 但没有新面孔)不该判新鲜;②总人数没涨甚至没变,但人换了(如 09-14 `$GOOGL`
+    2→2、09-26 `$SMH` 1→2 且两人都是新面孔)该判新鲜却被「昨天 0 人」漏掉。
+    """
     ds = data["dates"]
     if not ds:
         return []
@@ -460,17 +467,22 @@ def highlights(data: dict) -> list[dict]:
     def np(t, d):
         return len(t["days"].get(d, {}).get("p", [])) if d else 0
 
+    def people(t, d):
+        return set(t["days"].get(d, {}).get("p") or []) if d else set()
+
     for t in data["tickers"]:
         if not t["cash"]:
             continue
         n, o = np(t, today), np(t, prev)
+        new_faces = people(t, today) - people(t, prev)
         wall_today = [w for w in t["wall"] if w["d"] <= today]
         st = t["st"]
         recap = st.get("recap", 0) + st.get("exited", 0)
         fwd = st.get("long", 0) + st.get("watching", 0)
-        if n >= 2 and o == 0:
+        if n >= 2 and new_faces:
             k = "指数进场" if t["sym"] in INDEX else "新进"
-            out.append({"k": k, "sym": t["sym"], "why": f"今天 {n} 人,昨天 0 人", "n": n})
+            out.append({"k": k, "sym": t["sym"],
+                        "why": f"今天 {n} 人,新面孔 {len(new_faces)} 人(昨天 {o} 人)", "n": n})
         elif n == 1 and wall_today:
             kinds = "/".join(sorted({w["kind"] for w in wall_today if w["kind"]}))
             out.append({"k": "墙后补票", "sym": t["sym"],
