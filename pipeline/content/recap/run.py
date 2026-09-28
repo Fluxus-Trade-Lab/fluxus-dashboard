@@ -209,6 +209,12 @@ def to_images(pdf: Path, out_dir: Path) -> list[Path]:
     return made
 
 
+def watchlist_pdf_path(pdf_dir: Path, label: str, lang: str) -> Path:
+    """Andy 2026-09-28「下次W40单独列出来，变成一份pdf」: the next-week watchlist is its own
+    PDF, next to Market_Recap_<label>_<lang>.pdf in the same pdf/ dir — not a section inside it."""
+    return pdf_dir / f"Watchlist_{label}_{lang}.pdf"
+
+
 def headings(content: dict, weekly: bool) -> list[tuple[str, str]]:
     L, V = content["labels"], vis.CHROME_LABELS[content["lang"]]
     pairs = [("title", content["title"]), ("big_picture", L["big_picture"]), ("index_action", L["index_action"])]
@@ -225,8 +231,6 @@ def headings(content: dict, weekly: bool) -> list[tuple[str, str]]:
     if content.get("session_commentary"):
         pairs.append(("session_commentary", L["session_commentary"]))
     pairs.append(("tomorrow", L["tomorrow"]))
-    if weekly and content.get("weekly_watchlist"):
-        pairs.append(("weekly_watchlist", L["weekly_watchlist"]))
     pairs += [("rules", L["rules"]), ("education", L["education"]), ("portfolio", L["portfolio"])]
     if content.get("founders_note"):
         pairs.append(("founders_note", V["founders"]))
@@ -331,6 +335,39 @@ def cmd_render(a) -> int:
             blocked.mkdir(exist_ok=True)
             shutil.move(tmp, blocked / final.name)
 
+    # Andy 2026-09-28「下次W40单独列出来，变成一份pdf」: the watchlist is its own PDF (never folded
+    # back into Market_Recap_*), rendered per language when that language's content carries it.
+    if iss.weekly:
+        wl_state = {}
+        for lang in ("EN", "ZH"):
+            rows = data_issue["V"][lang].get("weekly_watchlist") or []
+            if not rows:
+                continue
+            t1 = time.time()
+            final = watchlist_pdf_path(pdf_dir, iss.label, lang)
+            tmp = pdf_dir / f".partial_watchlist_{lang}.pdf"
+            if not vis.print_pdf(f"{print_html.as_uri()}#issue={iss.tag}&lang={lang}&layout=W&print=1", tmp, a.chrome_timeout):
+                wl_state[lang] = {"ok": False, "error": "not produced"}
+                status = 1
+                print(f"WATCHLIST PDF {lang} NOT PRODUCED")
+                continue
+            text = subprocess.run(["pdftotext", "-layout", str(tmp), "-"], capture_output=True, text=True, check=True).stdout
+            g, pg, mg = run_gates(text), check_pages(text), check_margins(tmp, *vis.PAGE_MARGIN_MM)
+            ok = g["ok"] and pg["ok"] and mg["ok"]
+            wl_state[lang] = {"ok": ok, "path": str(final), "pages": pg["pages"], "margin_overflow": mg["count"],
+                              "gates": {"banned": len(g["banned"]), "leadership_zh": g["leadership_zh"],
+                                        "money": len(g["money_shares"]), "voice": len(g["voice"])},
+                              "seconds": round(time.time() - t1, 1)}
+            print(f"WATCHLIST PDF {lang} ok={ok} pages={pg['pages']} margins={mg['count']} gates={g['ok']} · {time.time() - t1:.1f}s")
+            if ok:
+                shutil.move(tmp, final)
+            else:
+                status = 1
+                blocked.mkdir(exist_ok=True)
+                shutil.move(tmp, blocked / final.name)
+        if wl_state:
+            state["watchlist"] = wl_state
+
     if iss.weekly and (iss.dir / "x").exists():
         shutil.rmtree(iss.dir / "x")
     if state["images"].get("EN") and not iss.weekly:
@@ -434,6 +471,15 @@ def write_delivery(iss: Issue, state: dict, rep: dict) -> None:
         lines.append(f"- 图片宽 {IMG_WIDTH}px；超过 5MB 改 JPG 的：{', '.join(jpgs) if jpgs else '无'}")
         if not iss.weekly:
             lines.append("- X 配图：`x/img1–img4` = 英文版第 1–4 页")
+    if iss.weekly:
+        wl = state.get("watchlist")
+        lines.append("")
+        lines.append("## 下周观察名单（独立 PDF，T-0928-56：不再是复盘的一节）")
+        if wl:
+            for lang, p in wl.items():
+                lines.append(f"- {lang}：{'通过' if p.get('ok') else '拦截'} · {p.get('pages', '—')} 页 · `{p.get('path', '')}`")
+        else:
+            lines.append("- 本期无 `weekly_watchlist`（参照片没有这段名单），不出这份 PDF")
     xp = state.get("x_post")
     if xp:
         from pipeline.content.recap.xpost import LIMIT, P2_MAX
