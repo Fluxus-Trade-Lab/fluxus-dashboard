@@ -47,6 +47,18 @@ Andy 在对话里给一个页面改动方向，而不是完整规格——「整
 
 `feat/*` 短分支，合并即删（TEAM.md 08-22）；已经过 Andy 预览拍板的小改，gate=none 就直接推 main，不用每次都留分支等复核。
 
+### 7. 核「线上是哪一版」时，别 grep 注释（09-27 事故：`data/reference/incidents/2026-09-27_grepped_a_minified_bundle_for_comment_text.md`）
+
+判定「线上前端停在哪个 commit」是这套工序的收尾动作，不是单独的活——出过一次假阳性 P1（线上其实是最新的，判据本身站不住）：
+
+- **探针只取会被渲染出去的字符串**——JSX 文本、i18n 的 value、className、报错文案。**永不取注释**（`//`、`/* */`、`{/* */}`）：`vite build` 走 esbuild minify，默认剥注释,所以注释里的串对**任何**构建版本都返回 0 命中,包括正确的最新版——0 不是「旧」的证据,只是「这串本来就活不到 bundle 里」。
+- **反向探针必须同时跑**：新版**加**的串要命中,新版**删**的串要 0。只跑一个方向,命中和不命中都解释得通,判不出「线上是旧版」还是「探针没分辨率」。
+- **最硬的一条、完全绕开 minify**：比某个随该轮改动变过的 `frontend/public/**` 静态文件的 `shasum -a 256`。它逐字节进 `dist`,能把线上直接对到 commit 上：
+  ```bash
+  curl -s https://fluxus-dashboard.vercel.app/data/modelbooks/ohlcv/oneil-msft-1986.json | shasum -a 256
+  git show origin/main:frontend/public/data/modelbooks/ohlcv/oneil-msft-1986.json | shasum -a 256
+  ```
+
 ## 参照
 
 - 视觉细节（轴/色/字体/标注/突变不标记）另有专门的 `chart-for-andy` skill——图表类改动两个一起读，本 skill 管工序，那个管画法。
