@@ -47,6 +47,17 @@ def test_recap_page_js_has_its_own_layout_for_the_watchlist_and_no_longer_embeds
     assert 'layout === "W" ? layoutW' in js
 
 
+def test_layout_w_prints_its_title_exactly_once():
+    """Branch review (T-0928-56) caught a first draft that printed L.weekly_watchlist three times
+    on one page (masthead + <h2> + sec() heading) — nothing in the render gates would have caught
+    that before a human saw the W40 PDF. layoutW must use the label exactly once."""
+    js = RECAP_JS.read_text(encoding="utf-8")
+    start = js.index("function layoutW(")
+    body = js[start:js.index("\n  }", start)]
+    assert body.count("L.weekly_watchlist") == 1
+    assert "<h2" not in body  # no separate headline duplicating the section title
+
+
 def test_skill_documents_weekly_watchlist_as_its_own_pdf():
     text = SKILL_MD.read_text(encoding="utf-8")
     assert "下周观察名单" in text
