@@ -16,7 +16,7 @@
 >
 > 要看内容：本机 `FluxusTrading_Obsidian/`（Obsidian 打开），或那个私有仓库。
 
-## 计数（2026-09-19 现场数：vault 内 `grep '^status: <x>$'`）
+## 计数（2026-09-28 现场数：vault 内 `grep '^status: <x>$'`）
 
 | 项 | 数 |
 |---|---|
