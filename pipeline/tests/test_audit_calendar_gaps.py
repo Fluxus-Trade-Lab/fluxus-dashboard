@@ -850,22 +850,34 @@ def test_reconcile_reports_the_ticker_count_it_actually_audited(k):
     assert out["tickers"] == k
 
 
-def test_d1_fires_at_exactly_the_threshold_share_not_one_name_above_it():
-    """Kills L258 `GtE -> Gt`: `have_feed >= (1.0 - universal_frac)`.
+@pytest.mark.parametrize("carrying, frac", [(2, None), (5, 0.5)])
+def test_a_share_exactly_on_the_threshold_reads_as_a_feed_loss_not_a_hole(
+        carrying, frac):
+    """Kills L258 `GtE -> Gt` on `(n - carrying) / n >= universal_frac`.
 
-    ⚠️ This test has to pass `universal_frac` explicitly, and that is the
-    finding, not a shortcut. Under the module default 0.80 the threshold is
-    `1.0 - 0.8` == 0.19999999999999996, and no share a real feed can produce
-    lands on it -- 2/10 is 0.2, which is both `>=` and `>` that value. With
-    the default in place the boundary is UNREACHABLE and the two operators are
-    observationally identical, which is why four sweeps in a row left this
-    survivor standing. 0.5 is exact in binary, so 5/10 hits it dead on.
+    The day sits exactly on the edge: 8/10 missing is 0.80 on the nose, and
+    that is what `universal_frac` names. C4 in `check()` calls that share FEED
+    LOST A SESSION, so this side has to agree -- the archive has no row
+    because the vendor has no bar, and billing our nightly writer for it (D1,
+    a violation) points the page at the wrong party. D2 is the honest verdict:
+    nobody traded as far as we can tell.
+
+    ⚠️ This test used to be the reverse, and had to pass `universal_frac=0.5`
+    to say anything at all. The old spelling `have_feed >= (1.0 -
+    universal_frac)` put the threshold at `1.0 - 0.8` == 0.19999999999999996,
+    which no share a real feed can produce ever lands on, so with the default
+    in place `>=` and `>` were the same program and four sweeps in a row left
+    the survivor standing. The first row below is the whole point: the default
+    is now reachable. The second keeps the 0.5 case, which is exact in binary
+    either way, as an independent witness that this is not an artefact of one
+    particular float.
     """
-    given = only_these_carry(WEEK, "2026-08-26", 5)
-    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END,
-                    universal_frac=0.5)
-    assert not out["ok"], "a share sitting exactly on the threshold counts as traded"
-    assert any(v.startswith("D1 2026-08-26") for v in out["violations"])
+    kwargs = {} if frac is None else {"universal_frac": frac}
+    given = only_these_carry(WEEK, "2026-08-26", carrying)
+    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END, **kwargs)
+    assert out["ok"], out["violations"]
+    assert any(w.startswith("D2 2026-08-26") for w in out["warnings"]), out
+    assert not any(v.startswith("D1 2026-08-26") for v in out["violations"])
 
 
 def test_one_name_short_of_the_threshold_is_a_calendar_warning_not_a_hole():
@@ -969,3 +981,40 @@ def test_the_frac_fields_carry_the_four_decimals_they_declare():
                     set(WEEK) - {"2026-08-26"}, START, END, END)
     hit = [f for f in out["findings"] if f["session"] == "2026-08-26"]
     assert hit and hit[0]["feed_frac"] == 0.3333, hit
+
+
+# ------------------------------------------- check() vs reconcile() agreement
+
+@pytest.mark.parametrize("carrying", list(range(0, 11)))
+def test_check_and_reconcile_agree_on_who_lost_the_session(carrying):
+    """The two functions must never answer this question differently.
+
+    Both read the same feed, take the same `universal_frac`, and decide the
+    same thing: did the FEED lose this session, or did it not? `check()` asks
+    it of the missing share (`frac >= universal_frac` -> "FEED LOST A
+    SESSION"); `reconcile()` asks it of the present share and then blames
+    whoever is left. If they can disagree, `reconcile()` blames our nightly
+    writer for a day `check()` has already blamed the vendor for -- and D1 is
+    a violation, so somebody gets paged for a hole they did not dig.
+
+    Scanning every k from 0 to 10 rather than asserting one crafted case: the
+    disagreement lives on exactly one share and a hand-picked example would
+    have to already know which one.
+    """
+    given = only_these_carry(WEEK, "2026-08-26", carrying)
+    gap = [g for g in check(given, START, END, END)["gaps"]
+           if g["session"] == "2026-08-26"]
+    feed_lost_per_check = bool(gap) and gap[0]["universal"]
+
+    out = reconcile(given, set(WEEK) - {"2026-08-26"}, START, END, END)
+    # reconcile does not publish the flag, so read it off the verdict it
+    # produced: with the day absent from the archive, feed_has -> D1, and
+    # not feed_has -> D2.
+    kinds = {f["kind"] for f in out["findings"] if f["session"] == "2026-08-26"}
+    assert kinds, f"reconcile said nothing about a day {carrying}/10 names carry"
+    feed_lost_per_reconcile = kinds == {"D2"}
+
+    assert feed_lost_per_check == feed_lost_per_reconcile, (
+        f"{carrying}/10 names carry the day: check says feed_lost="
+        f"{feed_lost_per_check}, reconcile says {feed_lost_per_reconcile} "
+        f"({kinds})")

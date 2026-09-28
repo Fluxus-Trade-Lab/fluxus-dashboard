@@ -52,7 +52,9 @@ is not corrupt; the *index* is, and no value-level check can see it.
       discriminator, and it is the whole reason to sample more than one name:
         ~all tickers  -> the feed dropped a session; nothing downstream is safe
         a few tickers -> those names did not trade (halt, IPO, delisting)
-      Reported as a share, and only a share above --universal-frac is fatal.
+      Reported as a share, and a share AT OR ABOVE --universal-frac is fatal.
+      (`>=`, not `>`. `reconcile()` below reads the same threshold the same
+      way; the two used to disagree on the edge itself.)
 
 C1 alone is not enough, and 2025-01-09 is why. `marketcal` calls it a trading
 day. No ticker has a bar for it, and `breadth_archive.csv` has no row -- it
@@ -233,6 +235,9 @@ def reconcile(feed: dict[str, set[str]], archive: set[str], start: dt.date,
 
     archive          the set of session dates our archive holds, e.g. every
                      distinct `date` in breadth_archive.csv
+    universal_frac   the same threshold C4 uses, read the same way: a session
+                     missing for at least this share of the sample is one the
+                     FEED lost, and D1 must not bill our writer for it.
     grace_sessions   how many of the newest sessions to exempt from D1. The
                      nightly writer runs after the close, so between 16:00 ET
                      and the cron there is a window where the newest session
@@ -254,8 +259,20 @@ def reconcile(feed: dict[str, set[str]], archive: set[str], start: dt.date,
     violations: list[str] = []
     warnings: list[str] = []
     for d in grid:
-        have_feed = sum(1 for t in tickers if d in feed[t]) / n
-        feed_has = have_feed >= (1.0 - universal_frac)
+        carrying = sum(1 for t in tickers if d in feed[t])
+        have_feed = carrying / n
+        # Ask "did the feed lose this session?" with the SAME quantity, the
+        # same threshold and the same operator as C4 above, so the two
+        # functions cannot answer it differently. Written as `1.0 -
+        # universal_frac` on the present share it did: at exactly the
+        # threshold C4 said FEED LOST A SESSION while this line said the
+        # market traded, and D1 then billed our own writer for the vendor's
+        # missing day. Spelling the complement out also costs the gate its
+        # boundary -- `1.0 - 0.8` is 0.19999999999999996, so with the default
+        # in place NO share a feed can produce ever lands on the edge and
+        # `>=` vs `>` here were the same program (four mutation sweeps left
+        # that survivor standing). 8/10 missing is 0.80 on the nose.
+        feed_has = not ((n - carrying) / n >= universal_frac)
         arch_has = d in archive
         if feed_has and arch_has:
             continue
