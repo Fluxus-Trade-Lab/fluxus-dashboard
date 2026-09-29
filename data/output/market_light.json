@@ -1,5 +1,5 @@
 {
- "date": "2026-09-28",
+ "date": "2026-09-29",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,32 +7,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 766.3652,
-    "b": 764.8711
+    "a": 765.9716,
+    "b": 764.8072
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 766.3652,
-    "b": 766.5331
+    "a": 765.9716,
+    "b": 766.3652
    },
    {
     "key": "slow_rising",
-    "pass": true,
-    "a": 764.8711,
-    "b": 764.7933
+    "pass": false,
+    "a": 764.8072,
+    "b": 764.8711
    }
   ],
-  "checks_passed": 2,
+  "checks_passed": 1,
   "light": "red",
   "history": [
-   {
-    "date": "2026-07-06",
-    "close": 749.4191,
-    "fast": 741.3581,
-    "slow": 739.7936,
-    "checks_passed": 3
-   },
    {
     "date": "2026-07-07",
     "close": 745.8579,
@@ -445,6 +438,13 @@
     "fast": 766.3652,
     "slow": 764.8711,
     "checks_passed": 2
+   },
+   {
+    "date": "2026-09-29",
+    "close": 764.2,
+    "fast": 765.9716,
+    "slow": 764.8072,
+    "checks_passed": 1
    }
   ]
  },
@@ -453,32 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 732.8312,
-    "b": 725.8079
+    "a": 733.7583,
+    "b": 726.9624
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 732.8312,
-    "b": 732.0093
+    "a": 733.7583,
+    "b": 732.8312
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 725.8079,
-    "b": 724.6793
+    "a": 726.9624,
+    "b": 725.8079
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-07-06",
-    "close": 722.0676,
-    "fast": 720.8697,
-    "slow": 719.9577,
-    "checks_passed": 3
-   },
    {
     "date": "2026-07-07",
     "close": 708.6915,
@@ -891,27 +884,36 @@
     "fast": 732.8312,
     "slow": 725.8079,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-29",
+    "close": 737.93,
+    "fast": 733.7583,
+    "slow": 726.9624,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 2,
+   "count": 4,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 41,
-   "count_is_floor": false,
+   "pool_count": 55,
+   "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 1,
-    "ep_qullamaggie": 2,
-    "ll_hl_1st": 5,
-    "ll_hl_2nd": 7,
-    "ll_hl_trend_break": 4,
-    "liquid_leader_pullback": 23
+    "ep_stockbee": 4,
+    "ep_qullamaggie": 3,
+    "ll_hl_1st": 7,
+    "ll_hl_2nd": 13,
+    "ll_hl_trend_break": 9,
+    "liquid_leader_pullback": 26
    },
-   "capped_panels": [],
+   "capped_panels": [
+    "liquid_leader_pullback"
+   ],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -920,29 +922,8 @@
   },
   "leaders": [
    {
-    "ticker": "MRNA",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TXG",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "CDNA",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TWST",
-    "theme": "Genomics",
+    "ticker": "QMCO",
+    "theme": "Quantum Computing",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
@@ -963,7 +944,7 @@
    },
    {
     "ticker": "SNDK",
-    "theme": "Semiconductors Broad",
+    "theme": "Memory & Storage",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
@@ -976,8 +957,8 @@
     "rs_rating": 99
    },
    {
-    "ticker": "GRAL",
-    "theme": "Genomics",
+    "ticker": "AEHR",
+    "theme": "Semiconductors Broad",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
@@ -988,11 +969,33 @@
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
+   },
+   {
+    "ticker": "ASX",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "STX",
+    "theme": "Memory & Storage",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "UMC",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
    }
   ],
   "leaders_meta": {
    "themes": [
-    "Genomics",
+    "Memory & Storage",
+    "Quantum Computing",
     "Semiconductors Broad",
     "Semiconductors Large Caps"
    ],

@@ -1,6 +1,6 @@
 {
   "trade_id": "DELL_2026-09-25_000",
-  "generated_at": "2026-09-28T23:35:39+00:00",
+  "generated_at": "2026-09-29T22:32:10+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "DELL",
@@ -8,7 +8,7 @@
     "sector": "Unknown",
     "entry_date": "2026-09-25",
     "entry_price": 545.64,
-    "stop_price": 540.0,
+    "stop_price": 545.64,
     "initial_stop": 540.0,
     "closed": false,
     "remaining_pct": 50.08319467554077,
@@ -58,10 +58,10 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 3
+    "hold_calendar_days": 4
   },
   "lesson": "In progress",
-  "narrative": "Entered **DELL** long on 2026-09-25 at $545.64 with stop $540.00 (1R = $5.64/sh = 1.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($529.18), MA20 > MA50 > MA200 (golden alignment), RSI 59, 93% through 52W range, ATR 5.7% of price. **In progress.** Peak so far +4.99R; worst drawdown -1.80R.",
+  "narrative": "Entered **DELL** long on 2026-09-25 at $545.64 with stop $540.00 (currently trailed to $545.64) (1R = $5.64/sh = 1.0% of entry). Setup: **Long in mixed structure** \u2014 price above MA20 ($529.18), MA20 > MA50 > MA200 (golden alignment), RSI 59, 93% through 52W range, ATR 5.7% of price. **In progress.** Peak so far +4.99R; worst drawdown -1.80R.",
   "ohlc_window": [
     {
       "date": "2026-08-26",
