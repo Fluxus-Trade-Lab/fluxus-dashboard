@@ -76,3 +76,75 @@ class TestQuarterMapping:
         from pipeline.screeners.run_all import _quarter_excess
         out = _quarter_excess(pd.DataFrame({'ticker': ['A']}), 63)
         assert len(out) == 1
+
+
+class TestMissingOneYearHistory:
+    """T-1001-04: q3 and q4 both need perf_1y, and `+` does not skip NaN, so
+    any tradeable name under ~1y old gets _rs_raw = NaN. The bug was not that
+    -- it is correct and matches IBD, which does not rate names that young --
+    it was treating that NaN as the field's single WORST score (na='top')
+    instead of "not scored" (na='keep'). 09-29 universe.json: 73/73 tradeable
+    names with rs_rating==1 were missing perf_1y, 11 of them with elite
+    perf_3m/perf_6m (ANDG: +50%/+104%, rs_rating 1 anyway).
+    """
+
+    @staticmethod
+    def _row(ticker, **kw):
+        base = dict(
+            ticker=ticker, market_cap=5e9, close=100.0, avg_volume=1_000_000,
+            industry="Software - Application", sector="Technology",
+            perf_1w=0.01, perf_1m=0.05, perf_3m=0.10, perf_6m=0.20, perf_1y=0.30,
+            atr=1.0, sma20_dist=0.0, sma50_dist=0.0, high_52w=-0.05,
+        )
+        base.update(kw)
+        return base
+
+    def _scored(self):
+        from pipeline.screeners.run_all import compute_universe_scores
+        rows = [
+            self._row("FULL1", perf_3m=0.05, perf_6m=0.08, perf_1y=0.10),
+            self._row("FULL2", perf_3m=0.05, perf_6m=0.08, perf_1y=0.10),
+            self._row("FULL3", perf_3m=0.05, perf_6m=0.08, perf_1y=0.10),
+            self._row("FULL4", perf_3m=0.05, perf_6m=0.08, perf_1y=0.10),
+            # ANDG shape: no 1y history, but elite 3m/6m -- must not rank
+            # as the worst name in the field.
+            self._row("NEWIPO", perf_3m=0.50, perf_6m=1.00, perf_1y=None),
+        ]
+        return compute_universe_scores(pd.DataFrame(rows)).set_index("ticker")
+
+    def test_missing_one_year_history_gives_no_rating_not_the_worst_one(self):
+        out = self._scored()
+        assert pd.isna(out.loc["NEWIPO", "rs_rating"]), (
+            "no 1-year history -> null, same as growth_score's "
+            "'unknown, not worst' convention"
+        )
+
+    def test_full_history_names_are_unaffected_by_the_missing_one(self):
+        """Regression guard the other direction: na='keep' must not also
+        swallow the names that DO have a full year of history."""
+        out = self._scored()
+        for t in ("FULL1", "FULL2", "FULL3", "FULL4"):
+            assert pd.notna(out.loc[t, "rs_rating"]), t
+
+    def test_na_top_is_the_mechanism_the_bug_shipped_with(self):
+        """Positive control built the way the bug actually broke, not just
+        the opposite direction (CLAUDE.md `method_positive_controls_by_
+        failure_mode`): `compute_universe_scores` calls
+        `score_against_tradeable('_rs_raw', na='keep')` -- this reaches
+        inside that private call shape by replaying pandas' own rank()
+        against the na_option it uses, to pin down that na='top' (the
+        default, and what shipped pre-fix) really does put a missing value
+        at the SINGLE LOWEST rank rather than leaving it unranked. That is
+        the exact mechanism `rank_tradeable`'s docstring in run_all.py
+        describes; if a future edit reverts `na='keep'` back to the
+        (unspecified) default, `test_missing_one_year_history_gives_no_
+        rating_not_the_worst_one` above is what actually catches it -- this
+        test documents *why* that default is unsafe for `_rs_raw`."""
+        s = pd.Series([0.50, 0.10, 0.05, np.nan])  # NEWIPO-shaped: best raw
+        # return of the four, but no 1-year history to compute it against.
+        top = s.rank(pct=True, na_option="top") * 99
+        keep = s.rank(pct=True, na_option="keep") * 99
+        assert top.iloc[3] == top.min(), "na='top' ranks the NaN row worst"
+        assert pd.isna(keep.iloc[3]), "na='keep' leaves it unranked instead"
+        assert top.iloc[0] == top.max(), "meanwhile it has the best raw return"
+
