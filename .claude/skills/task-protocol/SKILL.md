@@ -89,6 +89,11 @@ git -C ~/Documents/fluxus-ops diff --stat HEAD~5
 
 ## 附：审核与合并相关
 
-`gate <id> --worktree <路径>` 算这件改动该走哪道闸（none / reviewer / andy）；`review <id> --verdict PASS|FAIL --evidence-file <文件>` 写审核结论（判词按 `branch-review` skill 出）；`reap --max-hours <N>` 回收挂死的认领。交互会话派聊天复核员时，每轮判词用 `taskboard.py review <id> --verdict <PASS|FAIL> --record-only --evidence-file <文件>` 登记（T-0922-34：只写 `review_log` + 一条 commit，不改 status/attempts/claimed_at，metrics 否决率照样计入）。
+`gate <id> --worktree <路径>` 算这件改动该走哪道闸（none / reviewer / andy）；`reap --max-hours <N>` 回收挂死的认领。写审核结论用 `review`，但命令按谁在写分两行，别混用：
+
+- **守护进程工人**（gate=reviewer 流程里派的只读子 agent）：`taskboard.py review <id> --verdict PASS|FAIL --evidence-file <文件>`——这个会驱动状态机（改 status、清 attempts/claimed_at）。
+- **交互会话**（自己判、或自己派聊天复核员判）：`taskboard.py review <id> --verdict PASS|FAIL --record-only --evidence-file <文件>`——只登记（写 `review_log` + 一条 commit），不碰 status/attempts/claimed_at；metrics 否决率照样计入（T-0922-34）。
+
+漏加 `--record-only`：交互会话的判词会被当成驱动状态机的那一种，FAIL 会把单退回 `open`，守护进程 60 秒内当场派工人重做——T-1001-08 实况：claire 交互会话照原样记了一次 FAIL 没加这个参数，单退回 open，03:01 被 daemon/claire 领走重做，03:28 合入并上线了一个 Andy 没选中的版本，交互会话只能再覆盖一次（T-1001-31）。
 
 - 任务板命令在工作树有未提交改动或未推送提交时会拒绝执行（DirtyTree）；先提交推送或丢弃再用。
