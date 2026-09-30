@@ -80,6 +80,8 @@
 
 ## 📥 追加到这里
 
+- [10-01] [OPS · task-protocol] **并发参数防护的规则透明**：交互会话和守护进程的审核命令行为不同，参数设计从模糊的「登记」拆分为 `--record-only` 区分两身份——T-1001-08 并行两个写者的事故根因诊断清楚后，规则层面不再靠口头说明，而用参数强制化防护；系统从「人工记忆完整性」升到「机制下移决策」的成熟度。[T-1001-36 / ce77b9ac6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ce77b9ac6)
+
 - [10-01] [DATA ALEX] **数据权限的诊断纠正**：x_heat 冻结 7 日诊断指向权限边界错位（X 线无权写），决策链展现诊断→权限重组→防护→验证的完整（复用原 x_heat() 口径避免拷贝漂移，补齐 09-24→09-30 缺口）；系统成熟度从「有什么问题」升到「谁该拥有什么」的决策诚实度。[T-1001-33 / a2e1e3ee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a2e1e3ee)
 
 - [09-30] [DATA ALEX] 诊断的回溯校正：INBOX 门铃列表里挂着三天的"分支滞留"，现场核三样后发现是**假滞留**——分支内容 09-18 已合进 main（`76819e4fd`），远端分支已删，问卷查询 zero 命中；这不是新 bug 而是过去的账记漏了。系统的诚实度不只体现在发现新问题，还在主动回溯检查过去的假设、逐处校正账记的完整性。`git merge-base --is-ancestor` 和 `git ls-remote --heads` 双向验证使诊断从「人工印象」升到「机械无误判断」。[T-0930-41](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/compare/HEAD~1..fcd3e365) · [fcd3e365](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/fcd3e365)
