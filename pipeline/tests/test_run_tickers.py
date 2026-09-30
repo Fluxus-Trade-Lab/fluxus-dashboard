@@ -183,4 +183,54 @@ class TestPortfolioTickersFromSheet:
         from pipeline.portfolio.sheets_source import SheetsUnavailable
         def boom(): raise SheetsUnavailable("no env")
         monkeypatch.setattr(RT, "_sheet_trades", boom)
+
+
+class TestRunEarningsHistoryEmptySummary:
+    """T-1001-04: Yahoo blocking crumb-authenticated endpoints (401) or
+    rate-limiting (429) makes earnings_history come back empty for most/all
+    of a run WITHOUT raising -- yfinance swallows the HTTP error itself.
+    `run()` must count this and warn once the empty share crosses
+    EARNINGS_EMPTY_ALERT_SHARE, since nothing else in the log ties the cause
+    (vendor 401/429) to the effect (empty fields) for a human or an alert.
+    Keyed on earnings_history, not next_earnings: next_earnings now carries
+    forward across a bad night (_next_earnings_carry) and can look populated
+    even when tonight's live fetch failed, but earnings_history never does
+    (_quarterly_carry refuses to carry a section that was empty last night)."""
+
+    def _fake_data(self, sym, earnings_history):
+        return {
+            'ticker': sym, 'fetched_at': '2026-09-28T23:00:00Z', '_schema': 'v2',
+            'current_price': 1.0, 'info': {}, 'earnings_history': earnings_history,
+            'next_earnings': {}, 'quarterly_metrics': [], 'analyst': {},
+            'quarterly_asof': '2026-09-28T23:00:00Z', 'news': [],
+        }
+
+    def test_warns_when_earnings_history_empty_share_crosses_threshold(self, tmp_path, monkeypatch, caplog):
+        import logging
+        from pipeline.tickers import run_tickers as RT
+        tickers = ["AAA", "BBB", "CCC"]
+        monkeypatch.setattr(RT, "fetch_ticker_data",
+                             lambda sym, prior=None: self._fake_data(sym, []))
+        monkeypatch.setattr(RT, "write_ticker_json", lambda sym, data, out: out / f"{sym}.json")
+        with caplog.at_level(logging.WARNING, logger="pipeline.tickers.run_tickers"):
+            summary = RT.run(tickers, tmp_path, sleep_between=0)
+        assert summary['earnings_history_empty'] == ["AAA", "BBB", "CCC"]
+        assert any("earnings_history empty" in r.message for r in caplog.records)
+
+    def test_no_warning_under_normal_coverage_gaps(self, tmp_path, monkeypatch, caplog):
+        """A handful of names with no reported quarters yet is normal (204/244
+        non-empty baseline on a healthy night, 2026-09-18) and must not page
+        anyone."""
+        import logging
+        from pipeline.tickers import run_tickers as RT
+        tickers = ["AAA", "BBB", "CCC", "DDD"]
+        def fake_fetch(sym, prior=None):
+            hist = [] if sym == "AAA" else [{'period_end': '2026-06-30'}]
+            return self._fake_data(sym, hist)
+        monkeypatch.setattr(RT, "fetch_ticker_data", fake_fetch)
+        monkeypatch.setattr(RT, "write_ticker_json", lambda sym, data, out: out / f"{sym}.json")
+        with caplog.at_level(logging.WARNING, logger="pipeline.tickers.run_tickers"):
+            summary = RT.run(tickers, tmp_path, sleep_between=0)
+        assert summary['earnings_history_empty'] == ["AAA"]
+        assert not any("earnings_history empty" in r.message for r in caplog.records)
         assert RT.relevant_tickers_from_sheet(90) is None

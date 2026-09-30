@@ -147,12 +147,27 @@ def relevant_tickers(csv_path: Path, closed_window_days: int = 90) -> list[str]:
     return _relevant_from_trades(parse_csv(csv_path), closed_window_days)
 
 
+#: Share of a run's *successfully written* tickers coming back with no
+#: earnings_history above which we treat it as vendor degradation rather
+#: than normal per-ticker coverage gaps. earnings_history has no carry
+#: across a failed night (see `_quarterly_carry`: it refuses to carry
+#: forward when any of its sections was empty last night), so it stays a
+#: reliable live signal even after `_next_earnings_carry` (T-1001-04) makes
+#: `next_earnings` mask a live-fetch failure by design. Baseline on a
+#: healthy night (2026-09-18): non-empty on 204/244. The 2026-09-21..09-29
+#: Yahoo crumb/rate-limit incident (T-1001-04) was 0/246 non-empty on
+#: 09-28. 50% gives wide margin over the legitimate baseline while still
+#: catching it quickly instead of silently for over a week.
+EARNINGS_EMPTY_ALERT_SHARE = 0.5
+
+
 def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dict:
     """Fetch all tickers. Returns a summary dict."""
     output_dir.mkdir(parents=True, exist_ok=True)
     succeeded = []
     failed = []
     skipped_no_bars = []
+    earnings_history_empty = []
     for i, sym in enumerate(tickers, start=1):
         try:
             logger.info(f"[{i}/{len(tickers)}] {sym}")
@@ -171,6 +186,8 @@ def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dic
                 skipped_no_bars.append(sym)
             else:
                 succeeded.append(sym)
+                if not data.get('earnings_history'):
+                    earnings_history_empty.append(sym)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"  {sym}: FAILED — {e}")
             failed.append(sym)
@@ -179,8 +196,26 @@ def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dic
             time.sleep(sleep_between)
     if skipped_no_bars:
         logger.warning(f"no-bars skips (file untouched): {', '.join(skipped_no_bars)}")
+    if succeeded and len(earnings_history_empty) / len(succeeded) >= EARNINGS_EMPTY_ALERT_SHARE:
+        # Both next_earnings and earnings_history come back empty, with no
+        # exception raised, when yfinance swallows a Yahoo 401 (Invalid
+        # Crumb) or 429 (rate limit) internally -- see the note on
+        # fetch_earnings_history in ticker_data_fetcher.py. That is what
+        # silently sat empty for 2026-09-21..09-29 (T-1001-04); nothing else
+        # in the log ties "lots of 401s" to "earnings data landed empty".
+        logger.warning(
+            f"⚠ earnings_history empty for {len(earnings_history_empty)}/{len(succeeded)} "
+            f"successfully-fetched tickers ({len(earnings_history_empty) / len(succeeded):.0%}) "
+            "-- likely Yahoo blocking crumb-authenticated endpoints (401) or "
+            "rate-limiting (429) for this run, not a per-ticker gap. Check the "
+            "run log for 'HTTP Error 401'/'HTTP Error 429' around 'Fetching "
+            "ticker data for'. next_earnings may still look populated "
+            "(carried forward from a prior good night -- see "
+            "_next_earnings_carry), but that is a stale reading, not fresh."
+        )
     return {'succeeded': succeeded, 'failed': failed,
-            'skipped_no_bars': skipped_no_bars, 'total': len(tickers)}
+            'skipped_no_bars': skipped_no_bars,
+            'earnings_history_empty': earnings_history_empty, 'total': len(tickers)}
 
 
 def write_benchmarks(output_dir: Path) -> None:
@@ -273,6 +308,11 @@ def main(argv: list[str] | None = None) -> None:
     print(f"\n✓ Succeeded: {len(summary['succeeded'])}/{summary['total']}")
     if summary['failed']:
         print(f"✗ Failed: {', '.join(summary['failed'])}")
+    if summary['succeeded']:
+        share = len(summary['earnings_history_empty']) / len(summary['succeeded'])
+        if share >= EARNINGS_EMPTY_ALERT_SHARE:
+            print(f"⚠ earnings_history empty: {len(summary['earnings_history_empty'])}/"
+                  f"{len(summary['succeeded'])} ({share:.0%}) — see warning above")
 
     # Always refresh benchmarks alongside tickers
     write_benchmarks(args.output)
