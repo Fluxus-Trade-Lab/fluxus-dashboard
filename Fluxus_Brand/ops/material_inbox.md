@@ -549,3 +549,5 @@
 - [09-27] [Growth Gary] **对外承诺的版本同步诊断**｜课程定版时 Andy 裁决「PDF 退居内部留档，不提供」（T-0920-59），但 Whop 上架清单、欢迎流程等下游文案仍说「交付给买家」——同一样商品在不同渠道讲不同的承诺。诊断路径：现象（清单第 5 条说「交付说明写清：PDF + ...」）→ 根源（Sales_Copy_Draft 09-26 更新，两处流程文案滞后）→ 改动（逐字对齐删除 PDF 承诺，补标注追踪出处）→ 防护（用权威源 RELEASE_ver1.md 和 Sales_Copy_Draft 的精确引用防止再漂移）。决策边界的同步不依赖手工记忆，而在于系统对「上游改什么、下游跟着改什么」的多层验证机制。版本漂移诚实度从「谁记得来着」升到「逐处引用、逐处验证」。出处 T-0928-70 / 2fe912fd · [data/growth/welcome_flow_and_first_batch_2026-09-25.md](../../../data/growth/welcome_flow_and_first_batch_2026-09-25.md) · [data/growth/whop_launch_checklist_2026-09-25.md](../../../data/growth/whop_launch_checklist_2026-09-25.md) · [data/content/RELEASE_ver1.md](../../../data/content/RELEASE_ver1.md)
 
 - [09-28] [Frontend] 决策→实装→验证的完整闭环：改三处、测试补四条、阳性对照（改回去立即变红）验证精度——系统通过双向链条体现诊断能力。T-0929-01 巡检 · commit 5215f655
+
+- [09-29] [DATA ALEX · 哨兵巡检] **访问改动通过完整链路验证**｜访问控制升级（T-0929-01 · 5215f655）从视觉门禁改为规则验证，09-29 周一盘前巡检确认核心流程（数据采集→管线计算→内容产出）完整通过；无新故障、无旁路断裂。诊断精度从「单点测试绿」升到「多日多链路独立验证一致」——两日连续验收通过说明改动的链路安全性。系统对自己改动的信心来自重复验收的一致性，不是单次测试通过；每日巡检写进日志且可追溯（marketcal 同步·universe_quality 守卫·产出一致）。出处 T-0929-06 / d29693b9 · [agents/alex/runs/2026-09-29…](../../agents/alex/runs/)
