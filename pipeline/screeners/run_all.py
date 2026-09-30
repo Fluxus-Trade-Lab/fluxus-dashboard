@@ -544,6 +544,21 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # +104%, rs_rating 1) -- the opposite of what the field claims to show.
     # na='keep' makes the right call instead: no 1-year history -> no
     # rs_rating (null), same as growth_score's "unknown, not worst" rule.
+    #
+    # This DOES move the rest of the field, per the membership-diff rule two
+    # paragraphs up -- and not only for the 73 names that go from rank 1 to
+    # null. na='top' counted those 73 NaN rows in the denominator, so every
+    # genuinely-scored name was being ranked as "beating" 73 phantom worst
+    # entries it never actually competed against; na='keep' removes that
+    # inflation for everyone, not just the 73. Measured on 2026-09-29
+    # universe.json (5612 rows, both tradeable and the field-ruler score for
+    # everyone else): every real-valued score moves down by 0-3 points
+    # (rank/2500 under 'top' vs rank/2427 under 'keep'; the gap between the
+    # two shrinks toward the very top and is 0 at rs_rating=99).  At the
+    # >=70 gate (VCP Trend Template leg 8): 1280 -> 1247 tradeable+outsider
+    # rows qualify, -33/+0. At >=97: 141 -> 138, -3/+0. No name is ever
+    # newly qualified by this change -- only names that were borderline on
+    # an inflated score drop out.
     _q = {}
     for name, lag in (('q1', 63), ('q2', 126), ('q3', 189), ('q4', 252)):
         _q[name] = _quarter_excess(df, lag)
