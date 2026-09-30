@@ -90,15 +90,21 @@ def check_x_pages(text: str, lang: str, book_tickers=(), first_n: int = 4, min_p
 
 
 def page_sections(text: str, headings: list[str]) -> list[list[str]]:
-    """For each page, the section headings that start on it (letter-spacing and case tolerant)."""
+    """For each page, the section headings whose own heading line opens on it (letter-spacing and
+    case tolerant). A heading counts only when it is the start of a body line — never when the same
+    characters merely turn up inside a sentence. `<h3>` prints the heading immediately followed by
+    an optional note (a score, a subtitle, the lesson's own title) in the same line, so "line starts
+    with the heading" — not "line equals the heading" — is the real shape (2026-09-29: ZH prose used
+    the word 情绪, the Sentiment heading, mid-sentence; matching it anywhere on the page misread that
+    sentence as the Sentiment section opening there)."""
     pages = text.split("\f")
     if pages and not pages[-1].strip():
         pages = pages[:-1]
     squash = lambda s: re.sub(r"\s+", "", s).upper()
     out = []
     for p in pages:
-        sp = squash(p)
-        out.append([h for h in headings if h and squash(h) in sp])
+        lines = [squash(ln) for ln in _body_lines(p)]
+        out.append([h for h in headings if h and any(ln.startswith(squash(h)) for ln in lines)])
     return out
 
 

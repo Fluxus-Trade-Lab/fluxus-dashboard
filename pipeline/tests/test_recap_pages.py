@@ -100,6 +100,35 @@ def test_page_sections_are_case_and_spacing_tolerant():
     assert page_sections(text, ["The Big Picture", "组合更新"]) == [["The Big Picture"], ["组合更新"]]
 
 
+# Positive controls, both failure modes (T-0930-28): a heading must be recognised when it genuinely
+# opens a page, and must be ignored when its characters merely turn up inside a sentence elsewhere.
+def test_page_sections_ignore_a_heading_word_embedded_in_prose():
+    # 2026-09-29 real shape: 情绪 (the Sentiment heading) appeared mid-sentence in ZH body prose under
+    # 交易纪律; the old substring-anywhere check misread the page as if Sentiment opened there too.
+    text = "\f".join(["交易纪律\n区分这两个阶段的不是情绪，是几何。", "组 合 更 新\ny"]) + "\f"
+    assert page_sections(text, ["情绪", "交易纪律", "组合更新"]) == [["交易纪律"], ["组合更新"]]
+
+
+def test_page_sections_still_catch_a_heading_line_with_a_fused_note():
+    # <h3> prints heading + note (a score, the lesson's own title) on the same line — the note must
+    # not stop the heading itself from being recognised as opening the page.
+    text = "教学 底部定风险，催化剂只定日子\n正文。\f"
+    assert page_sections(text, ["教学"]) == [["教学"]]
+
+
+def test_l1_reds_on_a_real_overflow_detected_via_page_sections():
+    # Positive control, overflow direction: RULES genuinely opens page 5 as its own heading line —
+    # the fix for the false-red above must not also swallow a real overflow.
+    from pipeline.content.recap.pages import check_layout
+
+    labels = ["TITLE", "CONDITIONS", "LEADERS", "TOMORROW", "RULES", "THE LESSON", "PORTFOLIO UPDATE"]
+    text = "\f".join(["TITLE\np1.", "CONDITIONS\np2.", "LEADERS\np3.", "TOMORROW\np4.",
+                      "RULES\n1 rule.", "THE LESSON\nbody.", "PORTFOLIO UPDATE\nbook."]) + "\f"
+    sections = page_sections(text, labels)
+    r = check_layout(text, sections, "THE LESSON", "PORTFOLIO UPDATE")
+    assert not r["ok"] and any("RULES" in h for h in r["hits"])
+
+
 def test_rules_check_red_when_rule7_loses_the_fixed_opening():
     bad = GOOD_EN[:6] + ["Crude staying weak matters most"]
     assert "rule 7" in check_rules(bad, "EN")
