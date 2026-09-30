@@ -1,13 +1,15 @@
 {
- "as_of_session": "2026-09-29",
- "ok": true,
- "violations": 0,
- "warnings": 0,
+ "as_of_session": "2026-09-30",
+ "ok": false,
+ "violations": 3,
+ "warnings": 3,
  "archives": [
   {
    "archive": "breadth_archive.csv",
    "rows": 595,
-   "violations": [],
+   "violations": [
+    "I5 newest session 2026-09-29 < last completed 2026-09-30"
+   ],
    "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
@@ -15,30 +17,36 @@
   {
    "archive": "ticker_events.csv",
    "rows": 149861,
-   "violations": [],
+   "violations": [
+    "I5 newest session 2026-09-29 < last completed 2026-09-30"
+   ],
    "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "watchlist_hits.csv",
-   "rows": 20699,
+   "rows": 20833,
    "violations": [],
-   "warnings": [],
+   "warnings": [
+    "I4 2026-09-30: 134 rows vs trailing median 622"
+   ],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "leaders_log.csv",
-   "rows": 5113,
+   "rows": 5143,
    "violations": [],
-   "warnings": [],
+   "warnings": [
+    "I4 2026-09-30: 30 rows vs trailing median 155"
+   ],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "groups_archive.csv",
-   "rows": 6759,
+   "rows": 6870,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -46,7 +54,7 @@
   },
   {
    "archive": "momentum97_shadow.csv",
-   "rows": 2030,
+   "rows": 2034,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -54,7 +62,7 @@
   },
   {
    "archive": "universe_quality.csv",
-   "rows": 36,
+   "rows": 37,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -62,7 +70,7 @@
   },
   {
    "archive": "asset_signals.csv",
-   "rows": 754,
+   "rows": 780,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -70,7 +78,7 @@
   },
   {
    "archive": "shortlist_log.csv",
-   "rows": 380,
+   "rows": 391,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -78,7 +86,7 @@
   },
   {
    "archive": "regime_ledger.csv",
-   "rows": 28,
+   "rows": 29,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -86,7 +94,7 @@
   },
   {
    "archive": "delayed_ep_log.csv",
-   "rows": 1442,
+   "rows": 1502,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -95,14 +103,18 @@
   {
    "archive": "reconcile(I6)",
    "rows": 0,
-   "violations": [],
-   "warnings": [],
+   "violations": [
+    "I6b ticker_events newest session 2026-09-29 is not the session under audit 2026-09-30 -- today's screener payloads have no archive rows to reconcile against (the archive never got this session; see I5)"
+   ],
+   "warnings": [
+    "I6c breadth_archive newest session 2026-09-29 is not the session under audit 2026-09-30 -- universe.json describes a session this archive does not reach, so the two row counts are not comparable (see I5)"
+   ],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "tickers(I7)",
-   "rows": 250,
+   "rows": 251,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
