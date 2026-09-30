@@ -198,6 +198,7 @@
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
 
+- [09-30] [Growth Gary] **决策边界不清，多处版本漂移** · T-0920-59 定版销售文案（PDF 删除）后，数据端两份草稿（whop_launch_checklist + welcome_flow）仍保留 PDF 引用。诊断：决策时未精确定义同步范围；改法：逐字对标 RELEASE_ver1.md + Sales_Copy_Draft 修剪。系统能力体现：从被动发现疏漏升到主动定义决策物理边界。出处 T-0928-28 / 2fe912fd3
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
