@@ -75,6 +75,21 @@ const SHADE_MAX = 0.4
 /** Grey by rate: the ground at 0%, near-ink at SHADE_MAX and above. */
 const shade = (r) => `color-mix(in srgb, var(--color-text) ${Math.round(Math.min(1, r / SHADE_MAX) * 78)}%, var(--color-bg))`
 
+/** Same rule as the pipeline's quintile_of (correction_risk.py) — the ts-dimension
+ *  table is built from its own (shorter, VIX3M-limited) sample, so its quintile
+ *  edges land on different cuts than the headline 2-dim table's. `today.vix_quintile`
+ *  is bucketed with those other edges; reusing it here rings the wrong column
+ *  whenever the two edge sets disagree on where today's VIX falls (09-23: VIX 16.04
+ *  was Q2 by the 2-dim edges but Q3 by this table's own — the ringed cell's rate
+ *  didn't match prob_3d/n_cell_3d because it was the wrong cell). */
+function quintileOfEdges(v, edges) {
+  if (v == null || !edges?.length) return null
+  for (let q = 1; q <= 5; q++) {
+    if (edges[q - 1] < v && v <= edges[q]) return q
+  }
+  return v > edges[edges.length - 1] ? 5 : 1
+}
+
 export function CondGrid({ ts, today }) {
   const g = ts?.table?.by_vix_quintile_x_200dma_x_ts
   if (!g) return null
@@ -87,6 +102,7 @@ export function CondGrid({ ts, today }) {
     }
   }
   const todayKey = today && `${today.above_200dma ? 'above200' : 'below200'}_${today.ts_state}`
+  const todayQ = quintileOfEdges(today?.vix, edges) ?? today?.vix_quintile
   const LW = 214, CW = 70, RH = 30, TOP = 30, GAP = 10
   const sides = [...new Set(rows.map((r) => r.side))]
   const H = TOP + rows.length * RH + (sides.length - 1) * GAP + 6
@@ -128,7 +144,7 @@ export function CondGrid({ ts, today }) {
                     style={{ fill: isTodayRow ? 'var(--color-text)' : 'var(--color-text-muted)' }}>{TS_LABEL[r.s]}</text>
               {r.cells.map((c, i) => {
                 const x = LW + i * CW
-                const on = isTodayRow && today.vix_quintile === i + 1
+                const on = isTodayRow && todayQ === i + 1
                 if (!c) {
                   return <text key={i} x={x + CW / 2} y={y + 19} fontSize="11" textAnchor="middle"
                                style={{ fill: 'var(--color-border)' }}>—</text>
