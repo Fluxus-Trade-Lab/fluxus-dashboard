@@ -138,7 +138,13 @@ def fetch_earnings_history(tk: yf.Ticker) -> list:
         out.sort(key=lambda x: x.get('period_end') or '', reverse=True)
         return out[:8]
     except Exception as e:  # noqa: BLE001
-        logger.debug(f"earnings_history fetch failed: {e}")
+        # WARNING, not debug: a genuine exception here (network/parse error)
+        # should be visible without --debug. It will NOT catch Yahoo 401/429
+        # -- yfinance swallows those itself and returns an empty/None result,
+        # so `hist` above is just empty and this branch is never reached.
+        # That failure mode (T-1001-04, 2026-09-21..09-29) is caught by the
+        # empty-earnings-history count in run_tickers.run(), not this line.
+        logger.warning(f"earnings_history fetch failed: {e}")
         return out
 
 
@@ -168,7 +174,8 @@ def fetch_next_earnings(tk: yf.Ticker) -> dict:
                 out[target] = _safe(v)
         return out
     except Exception as e:  # noqa: BLE001
-        logger.debug(f"calendar fetch failed: {e}")
+        # WARNING, not debug -- same caveat as fetch_earnings_history above.
+        logger.warning(f"calendar fetch failed: {e}")
         return out
 
 
