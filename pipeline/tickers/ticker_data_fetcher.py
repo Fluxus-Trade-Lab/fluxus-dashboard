@@ -464,7 +464,9 @@ def fetch_ohlc_and_technicals(tk: yf.Ticker) -> dict:
 #: nightly costs three yfinance endpoints per ticker -- roughly a thousand
 #: requests a night across the tracked list -- and returns the same numbers
 #: for eighty-odd of those nights. `next_earnings` is deliberately NOT here:
-#: the date moves, and it is the one an open position acts on.
+#: it is scored separately below, on its own date-based rule (see
+#: `_next_earnings_carry`), because "stale" means something different for a
+#: forward-looking date than for a backward-looking quarter.
 QUARTERLY_SECTIONS = ('earnings_history', 'quarterly_metrics', 'analyst')
 
 #: How stale a carried-forward quarterly section may be before it is re-read.
@@ -503,12 +505,55 @@ def _quarterly_carry(prior: Optional[dict],
     return carried
 
 
+def _next_earnings_carry(prior: Optional[dict],
+                          today: Optional[date] = None) -> Optional[dict]:
+    """Last night's next_earnings, if the date on it has not passed yet.
+
+    T-1001-04: `calendarEvents` (this section's vendor endpoint) came back
+    empty for 249/251 tracked tickers on both the 2026-09-28 and 2026-09-29
+    nightly runs -- from the very first ticker fetched, while the same
+    night's quarterly_metrics/analyst/info calls (separate endpoints)
+    succeeded normally, and the identical calendar calls for the identical
+    tickers succeed when re-run outside the runner. That shape is a
+    vendor/runner-side block on this one endpoint, not a per-ticker "no
+    earnings data" answer -- yfinance's own exception handling swallows the
+    real HTTP error before it reaches us (`hide_exceptions=True` by default),
+    so a failed call and a legitimately-empty one are indistinguishable from
+    here except by the blanket, from-ticker-one pattern.
+
+    This reverses the original no-carry design (still the right call for a
+    date that has already passed -- see the boundary below) in favor of the
+    narrower rule that actually protects an open position: never show a
+    PAST date as upcoming. A same estimate carried a few nights while the
+    vendor recovers is a better failure mode than a blank field, which reads
+    as "no earnings risk" rather than "we don't know right now."
+    """
+    if not prior:
+        return None
+    ne = prior.get('next_earnings') or {}
+    raw_date = ne.get('date')
+    if not raw_date:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(raw_date)).date()
+    except ValueError:
+        return None
+    ref = today or datetime.utcnow().date()
+    if parsed < ref:
+        return None
+    asof = prior.get('next_earnings_asof') or prior.get('fetched_at')
+    if not asof:
+        return None
+    return {'next_earnings': dict(ne), 'next_earnings_asof': str(asof)}
+
+
 def fetch_ticker_data(symbol: str, prior: Optional[dict] = None) -> dict:
     """Fetch all L1 numeric data for one ticker. Returns the JSON dict.
 
     `prior` is last night's file for this ticker, if any. Its quarterly
-    sections are carried forward while fresh (see `_quarterly_carry`); pass
-    None to force a full read.
+    sections are carried forward while fresh (see `_quarterly_carry`), and
+    its next_earnings is carried forward while its date has not passed (see
+    `_next_earnings_carry`); pass None to force a full read.
     """
     logger.info(f"Fetching ticker data for {symbol}")
     tk = yf.Ticker(symbol)
@@ -534,16 +579,30 @@ def fetch_ticker_data(symbol: str, prior: Optional[dict] = None) -> dict:
             'quarterly_asof': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
         }
 
+    fetched_at = datetime.utcnow().isoformat(timespec='seconds') + 'Z'
+    next_earnings = fetch_next_earnings(tk)
+    next_earnings_asof = fetched_at
+    if not next_earnings:
+        carry = _next_earnings_carry(prior)
+        if carry:
+            next_earnings = carry['next_earnings']
+            next_earnings_asof = carry['next_earnings_asof']
+            logger.info(f"  {symbol}: next_earnings carried forward from "
+                        f"{next_earnings_asof} (live calendar fetch empty)")
+
     out = {
         'ticker': symbol.upper(),
-        'fetched_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+        'fetched_at': fetched_at,
         '_schema': 'v2',
         'current_price': current_price,
         'info': info,
         'earnings_history': quarterly['earnings_history'],
-        # Not carried: the next earnings date moves, and it is the field an
-        # open position acts on.
-        'next_earnings': fetch_next_earnings(tk),
+        'next_earnings': next_earnings,
+        # Separate from `fetched_at`: a carried-forward date is legitimately
+        # from an earlier night (see `_next_earnings_carry`), and folding it
+        # under tonight's timestamp would be the same small lie the
+        # quarterly sections' own `quarterly_asof` exists to avoid.
+        'next_earnings_asof': next_earnings_asof,
         'quarterly_metrics': quarterly['quarterly_metrics'],
         'analyst': quarterly['analyst'],
         # `fetched_at` describes the price and info above it. The quarterly
