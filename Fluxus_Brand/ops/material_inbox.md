@@ -543,6 +543,8 @@
 
 ## 📥 追加到这里
 
+- [10-01] [Growth Gary] **班次升成 skill：从重复写规则升到机械调用**｜增长周记账班已 done 3 次（T-0919-28、T-0921-25、T-0928-30），做法本身稳定成型，现固化为 growth-ledger skill。诊断链条：现象（同一套采集流程被三班各自手写一遍）→ 根源（方法本身完整且无演变）→ 改动（迁 schedule.json body 成 .claude/skills/ 的正式 SKILL.md）→ 防护（fluxus-ops config.json 登记引用，下班自动加载无需手工配置）。系统从「谁还得记怎么做」升到「固化成流程让机器负责」的能力递进——这道升级的价值不在技术细节（six 列采集、Whop 脚本、来源标注），而在**诊断深度：识别了哪种工作值得自动化**。从人工重复升到定制流程，是系统对自己工作负荷的诚实度——知道什么该背死、什么该写成规则。出处 T-0929-34 / aa0530ec · [.claude/skills/growth-ledger/SKILL.md](../../.claude/skills/growth-ledger/SKILL.md)
+
 - [09-28] [DATA ALEX] **诊断完整性升级：从事后发现升到事前验证**｜数据哨兵周一盘前巡检从「检查有无问题」升级到「验证是否继续有效」——三轴独立检查（CI 构建·数据日期·交易日历）各自溯源。权威源明确（git log / GitHub API / market_health.json），检查点无法篡改。前轮数据漏报靠 Andy 邮箱提醒（T-0922-61），此后改周一机械检查，三轴全绿才能下一班用数。诊断精度体现在『可继续的理由』而非『没问题的结论』——验证链条完整，系统能负责任地说「数据可用」。出处 T-0928-76 / d7ac5bff
 
 - [09-27] [RND Linda] **弹药缺口两量的口径诚实度**｜X 调研两班连报 Linda Raschke 帖密度排前五却接不上的两个缺口（跳空首小时回补、枢轴失败之后），诊断出不是「没能力」而是「没量过」。改动逐条按宪法「先找口径别自造」：① 真跳空+回补标准照抄 ChartSchool（两处），但「回补几成」按 ATR 尺寸查无行业标准改自造，已明标偏离；② 枢轴事件每晚算完被 to_row() 扔掉，接线两行恢复，长度参照 MFE/MAE 但「多久失效」自造；两处自造均登记 METRIC_SOURCES。从「接不上」升到「诚实标注自己的口径边界」是系统对规矩执行到细节。试跑读数可直接用（SPY 728 session 292 真跳空），排期 W40–W42。出处 T-0927-64 / 83ae45cf · [data/research/ammo_gaps_2026-09-27/README.md](../../research/ammo_gaps_2026-09-27/README.md) · [data/reference/METRIC_SOURCES.md](../../reference/METRIC_SOURCES.md)
