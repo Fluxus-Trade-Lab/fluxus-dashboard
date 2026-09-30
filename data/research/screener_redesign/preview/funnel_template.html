@@ -1,0 +1,262 @@
+<title>Screener 漏斗</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f5f7;--surface:#ffffff;--alt:#eceef2;--raised:#e2e5ea;--border:#c9cdd5;--border-light:#dde0e6;
+  --text:#14161a;--text-2:#4a5160;--muted:#7a8291;--accent:#d97a2b;--accent-ink:#8a4a12;
+  --good:#2f8a5b;--good-bg:#e3f3ea;--warn:#b7791f;--warn-bg:#fbf0d9;--bad:#c2463e;--bad-bg:#f9e3e1;--off:#9aa1ad;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--sans:"IBM Plex Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b0c0f;--surface:#1c1f25;--alt:#101216;--raised:#2b2f36;--border:#393f4b;--border-light:#252930;
+  --text:#e8ebf0;--text-2:#b5bbc7;--muted:#8f96a3;--accent:#e0873a;--accent-ink:#f0b077;
+  --good:#5cc08a;--good-bg:#173224;--warn:#dba24a;--warn-bg:#3a2d12;--bad:#e2695f;--bad-bg:#3c1e1b;--off:#5d6470;}}
+:root[data-theme="dark"]{
+  --bg:#0b0c0f;--surface:#1c1f25;--alt:#101216;--raised:#2b2f36;--border:#393f4b;--border-light:#252930;
+  --text:#e8ebf0;--text-2:#b5bbc7;--muted:#8f96a3;--accent:#e0873a;--accent-ink:#f0b077;
+  --good:#5cc08a;--good-bg:#173224;--warn:#dba24a;--warn-bg:#3a2d12;--bad:#e2695f;--bad-bg:#3c1e1b;--off:#5d6470;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--sans);padding:0 16px;padding-block:20px 48px}
+.wrap{max-width:1060px;margin:0 auto}
+h1{font-size:19px;font-weight:600;margin:0;letter-spacing:.01em}
+.sub{color:var(--text-2);font-size:13px;margin-top:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.entry{display:flex;gap:6px}
+.entry button{background:var(--alt);border:1px solid var(--border-light);color:var(--text-2);padding:6px 12px;border-radius:4px;font:inherit;font-size:13px;cursor:pointer}
+.entry button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.layer{display:grid;grid-template-columns:150px 1fr 88px;gap:0 16px;align-items:start;padding:14px 0;border-top:1px solid var(--border-light)}
+.layer:first-of-type{border-top:0}
+.ln{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lt{font-weight:600;font-size:14px;margin-top:2px}
+.ls{font-size:12px;color:var(--muted);margin-top:2px}
+.lc{text-align:right;font-family:var(--mono);font-size:22px;font-weight:500;line-height:1.1}
+.lc small{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:3px;font-family:var(--sans)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--border);background:var(--surface);border-radius:4px;padding:5px 9px;font-size:13px;display:inline-flex;gap:8px;align-items:baseline;cursor:default}
+.chip b{font-family:var(--mono);font-weight:500;color:var(--text-2)}
+.chip.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--text)}
+.chip.sel{cursor:pointer}
+.chip.sel:hover{background:var(--alt)}
+.chip.off{color:var(--muted);border-style:dashed;background:transparent}
+.chip.ok{border-color:var(--good)}
+.chip.miss{border-color:var(--bad);border-style:dashed;color:var(--text-2)}
+.bar{height:6px;background:var(--alt);border-radius:3px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.note{font-size:12px;color:var(--text-2);margin-top:8px}
+.note code{font-family:var(--mono);font-size:11.5px;background:var(--alt);padding:1px 4px;border-radius:3px}
+.ctx{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:6px}
+.k{background:var(--surface);border:1px solid var(--border-light);border-radius:4px;padding:8px 10px}
+.k .kl{font-size:11px;color:var(--muted)}
+.k .kv{font-family:var(--mono);font-size:15px;margin-top:2px}
+.k .kv .st{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.off{color:var(--off)}
+.bg-good{background:var(--good)}.bg-warn{background:var(--warn)}.bg-bad{background:var(--bad)}.bg-off{background:var(--off)}
+.q17{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.q17 span{font-size:12px;border:1px solid var(--border-light);border-radius:3px;padding:3px 8px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:6px 8px;border-bottom:1px solid var(--border)}
+td{padding:6px 8px;border-bottom:1px solid var(--border-light);vertical-align:top}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr.focus td:first-child{border-left:3px solid var(--accent);padding-left:6px}
+tr.rest{color:var(--muted)}
+tr.hid{display:none}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;border:1px solid transparent}
+.tag.Improving{background:var(--good-bg);color:var(--good)}
+.tag.Weakening{background:var(--warn-bg);color:var(--warn)}
+.tag.Lagging{background:var(--bad-bg);color:var(--bad)}
+.tag.none{color:var(--muted);border-color:var(--border-light)}
+.tw{overflow-x:auto}
+.foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-2)}
+.foot h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:500}
+.foot ul{margin:0;padding-left:18px}
+.stop{border:1px dashed var(--border);border-radius:4px;padding:10px 12px;margin-top:14px;color:var(--text-2);font-size:13px}
+.stop b{color:var(--text)}
+@media (max-width:640px){.layer{grid-template-columns:1fr;gap:6px}.lc{text-align:left;font-size:20px}.lc small{display:inline;margin-left:8px}}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .25s ease}}
+button:focus-visible,.chip.sel:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.mk{background:var(--surface);border:1px solid var(--border-light);border-radius:4px;padding:10px 12px;font-size:13px;color:var(--text-2);margin-top:4px}
+.mk b{color:var(--text);font-weight:600}
+.ai{font-size:11.5px;color:var(--muted);margin:10px 0 2px}
+.ai .pill{display:inline-block;font-size:10.5px;letter-spacing:.05em;border:1px solid var(--accent);color:var(--accent-ink);border-radius:3px;padding:0 5px;margin-right:6px}
+.cands{list-style:none;margin:6px 0 0;padding:0}
+.cand{display:grid;grid-template-columns:28px 62px 1fr;gap:4px 12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--border-light)}
+.cand .rk{font-family:var(--mono);color:var(--muted);font-size:12px;padding-top:2px;text-align:right}
+.cand.top .rk{color:var(--accent-ink);font-weight:500}
+.cand .tk{font-family:var(--mono);font-weight:600;font-size:14px}
+.cand .tk small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.cand .grp{font-size:12px;color:var(--text-2);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cand .dir{font-family:var(--mono);font-size:11.5px}
+.cand .dir.up{color:var(--good)}.cand .dir.dn{color:var(--warn)}
+.cand .say{font-size:14px;line-height:1.6;color:var(--text);margin-top:3px;max-width:68ch}
+.cand details{grid-column:3;font-size:12px;color:var(--muted)}
+.cand details summary{cursor:pointer;list-style:none;display:inline}
+.cand details summary::-webkit-details-marker{display:none}
+.cand details summary::before{content:"+ 事实卡";}
+.cand details[open] summary::before{content:"− 事实卡";}
+.fc{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:4px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.cand.flag .say{color:var(--bad)}
+.more{margin-top:10px;font-size:12.5px}
+.more summary{cursor:pointer;color:var(--text-2)}
+@media (max-width:640px){.cand{grid-template-columns:24px 1fr}.cand>div:nth-child(3){grid-column:1/-1}.cand details{grid-column:1/-1}}
+</style>
+<div class="wrap">
+<div class="top">
+  <div><h1>Screener · 从 <span id="h-u"></span> 到今天能买的 ≤15</h1>
+  <div class="sub">课程第 5 章 §5.2 那条漏斗做成页面 · 数据 <span class="mono" id="asof"></span> 收盘 · 数字全部来自 <code class="mono">data/output</code></div></div>
+  <div class="entry" role="tablist"><button class="on" id="e-pre" role="tab">盘前 · 今日 setup</button><button id="e-wk" role="tab">周末 · 大名单</button></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">① 宇宙闸</div><div class="lt">三道门槛</div><div class="ls">§5.3 · 默认用 Today's List 那套（09-26「紧的当默认」）</div></div>
+  <div>
+    <div class="chips" id="gate"></div>
+    <div class="bar"><i id="bar1"></i></div>
+    <div class="note">课程 §5.3 原口径（$1B / 日额 $60M / ADR≥3%）留 <b class="mono" id="c-course"></b> 只；宽档 <code>tradeable</code>（$1B / $2M）留 <b class="mono" id="c-wide"></b> 只——做成档位切换，不做默认。</div>
+  </div>
+  <div class="lc" id="c-gate"><small>过闸</small></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">② 大名单</div><div class="lt">健康图形撒网</div><div class="ls">§5.4 · 一百五十只上下 · 每日跑</div></div>
+  <div>
+    <div class="chips"><span class="chip on">healthy_charts <b id="c-h"></b></span><span class="chip">其中过①闸 <b id="c-ht"></b></span></div>
+    <div class="bar"><i id="bar2"></i></div>
+    <div class="note">周末入口停在这一层：500–800 张图人工翻，30–45 分钟（§5.7）。页面在这层给的是图墙，不是表。</div>
+  </div>
+  <div class="lc" id="c-big"><small>雷达上</small></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">③ 资格门槛</div><div class="lt">五条前置闸</div><div class="ls">§11.1 · 只剔烂交易，不制造好交易</div></div>
+  <div>
+    <div class="chips">
+      <span class="chip ok">50 日线上方</span><span class="chip ok">10 EMA &gt; 20 EMA</span><span class="chip ok">距 52 周高 ≤25%</span><span class="chip ok">距 52 周低 ≥30%</span>
+      <span class="chip miss">50 日线上倾 · 两条 EMA 上倾 — 缺斜率字段 → ALEX</span><span class="chip off">(5) 市场绿灯 · 情境热 — 看下面「大盘读数」，不进闸</span>
+    </div>
+    <div class="note">这层不单独显示计数，它作用在④每个 setup 的结果上（表里 4/4 才算过）。</div>
+  </div>
+  <div></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">④ 今天想做的 setup</div><div class="lt">选一个，不是搭条件</div><div class="ls">§5.5 十五个扫描 · 首批上 3 个（09-26「2 y」）</div></div>
+  <div>
+    <div class="chips" id="setups"></div>
+    <div class="bar"><i id="bar4"></i></div>
+    <div class="note" id="setup-src"></div>
+  </div>
+  <div class="lc" id="c-setup"><small>命中</small></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">⑤ 环境</div><div class="lt">大盘读数 + 主题状态</div><div class="ls">§1.7 四问 · §7.2 六项 · 第 4 章四问第 3 问</div></div>
+  <div>
+    <div class="ctx" id="ctx"></div>
+    <div class="q17" id="q17"></div>
+    <div class="note" id="themes"></div>
+  </div>
+  <div></div>
+</div>
+
+<div class="layer">
+  <div><div class="ln">⑥ Focus</div><div class="lt">≤15，在场 5</div><div class="ls">§5.6 · 页面到此为止，最后一步是你</div></div>
+  <div>
+    <div class="mk"><b>今天的大盘</b>（所有候选共用这一句）· <span id="mk"></span></div>
+    <div class="ai"><span class="pill">AI</span>每只一句话：它的组在变强还是变弱，它自己站在哪。句中每个数都过了核对闸——数必须出现在这只票的事实卡里，点「+ 事实卡」可对。</div>
+    <ol class="cands" id="cands"></ol>
+    <details class="more" id="more"><summary id="more-s"></summary><div class="tw"><table id="tbl"></table></div></details>
+    <div class="stop"><b>止于 Focus。</b>10→5→1 那两步是 §5.8 性格与 §7.2 情境感知，页面不替你选；触发（620 / ORB / PDH-BO / Re-VWAP / IMR，§10.2）在 5 分钟图上，日线页给不了。</div>
+  </div>
+  <div class="lc" id="c-focus"><small>候选</small></div>
+</div>
+
+<div class="foot">
+  <h3>缺口（交 ALEX）</h3>
+  <ul>
+    <li>50 日线斜率、10/20 EMA 斜率——§11.1 (1)(2) 后半句；universe 只有 <code class="mono">wk_sma30_rising</code> 这一个斜率字段</li>
+    <li>财报日期——§5.5 龙头回踩「财报在 7 天以外」、§11.5 (3) 二元事件前减仓；251 个个股文件的 <code class="mono">next_earnings</code> 全是空的，句子里因此不提财报</li>
+    <li>§1.7 周线问（10/40 周均线）与 5 日 EMA 斜率——SPY/QQQ 不在 universe，<code class="mono">etf_data</code> 没有周线字段</li>
+    <li>个股行挂「所属主题的状态」——今天是从 <code class="mono">groups.themes[].tickers</code> 反查拼的，56 个主题只有 30 个是 theme 类</li>
+    <li>其余 12 个 §5.5 扫描器的管线（灰色那些）</li>
+  </ul>
+</div>
+</div>
+<script>
+const D=__DATA__;
+const NOTES=__NOTES__;
+const $=id=>document.getElementById(id);
+const fmtN=n=>n==null?'—':n.toLocaleString('en-US');
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const stc={green:'good',red:'bad',MIXED:'warn',Damaged:'bad',Mixed:'warn',Healthy:'good',Extended:'warn',avoid:'bad',dim:'warn',bright:'good'};
+$('asof').textContent=D.asof;
+const C=D.counts;$('h-u').textContent=fmtN(C.universe);
+$('gate').innerHTML=[['市值 ≥ $1B',C.cap],['日额 ≥ $20M',C.vol],['ADR ≥ 3.5%',C.adr]].map(([l,n],i)=>`<span class="chip ${i==2?'on':''}">${l} <b>${fmtN(n)}</b></span>`).join('');
+$('c-gate').insertAdjacentText('afterbegin',fmtN(C.adr));
+$('c-course').textContent=fmtN(C.course);$('c-wide').textContent=fmtN(C.wide);
+$('bar1').style.width=(C.adr/C.universe*100)+'%';
+$('c-h').textContent=fmtN(C.healthy);$('c-ht').textContent=fmtN(C.healthy_tight);
+$('c-big').insertAdjacentText('afterbegin',fmtN(C.healthy));$('bar2').style.width=(C.healthy/C.universe*100)+'%';
+$('mk').textContent=NOTES._market;
+const S=D.setups;const live=['pullback','ep','vcp'];
+const rest=['成长股周频池','板块与主题 ETF','流动性龙头','52 周新高','高 ADR 加内包日','长期平台','多头狂奔','当日最强','盘前扫描','次新股','箱体龙头','表内再筛'];
+let cur='pullback';
+function setCount(el,n){const x=$(el);if(x.firstChild&&x.firstChild.nodeType===3)x.firstChild.textContent=n;else x.insertAdjacentText('afterbegin',n)}
+function renderSetups(){
+  $('setups').innerHTML=live.map(k=>`<span class="chip sel ${k===cur?'on':''}" tabindex="0" role="button" data-k="${k}">${S[k].label} <b>${S[k].rows.length}</b></span>`).join('')
+   +rest.map(n=>`<span class="chip off">${n}</span>`).join('');
+  document.querySelectorAll('.chip.sel').forEach(el=>{el.onclick=()=>{cur=el.dataset.k;render()};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();cur=el.dataset.k;render()}}});
+}
+const grpOf=r=>r.theme?{...r.theme,kind:'主题'}:(r.ind?{...r.ind,kind:'行业'}:null);
+const sgn=x=>x==null?'—':(x>0?'+':x<0?'−':'')+Math.abs(x);
+function render(){
+  renderSetups();
+  const s=S[cur];$('setup-src').textContent=s.src;setCount('c-setup',fmtN(s.rows.length));
+  $('bar4').style.width=Math.max(0.6,s.rows.length/C.universe*100*8)+'%';
+  const rows=s.rows.map(r=>({...r,pass:r.tight&&r.qn===4})).sort((a,b)=>(b.pass-a.pass)||((b.rs||0)-(a.rs||0)));
+  const cand=rows.filter(r=>r.pass), other=rows.filter(r=>!r.pass);
+  setCount('c-focus',fmtN(cand.length));
+  $('cands').innerHTML=cand.length?cand.map((r,i)=>{
+    const g=grpOf(r);const up=g&&g.accel>0;
+    const say=NOTES[r.t];const flag=say&&say.startsWith('⚠');
+    return `<li class="cand ${i<15?'top':''} ${flag?'flag':''}">
+      <div class="rk">${i+1}</div>
+      <div class="tk">${esc(r.t)}<small>RS ${r.rs??'—'}</small></div>
+      <div><div class="grp">${g?`<span>${esc(g.name)}</span><span class="tag ${g.state}">${g.state}</span><span class="dir ${up?'up':'dn'}">${up?'▲ 加速':'▼ 减速'} ${sgn(g.accel)}</span>${g.kind==='行业'?'<span class="tag none">无主题 · 看行业</span>':''}`:'<span class="off">无组别</span>'}</div>
+      <div class="say">${say?esc(say):'<span class="off">（这只还没写句子）</span>'}</div></div>
+      <details><summary></summary><div class="fc">
+        <span>21EMA ${r.ema21_atr==null?'—':r.ema21_atr.toFixed(2)} ATR</span><span>50SMA ${r.sma50_atr??'—'} ATR</span>
+        <span>离 52 周高 ${r.hi52}%</span><span>1 个月 ${r.perf_1m}%</span><span>组内 ${r.grp_pctile??'—'} 百分位</span>
+        <span>EPS 今年 ${r.eps==null?'—':r.eps+'%'}</span><span>营收 ${r.rev==null?'—':r.rev+'%'}</span>
+        ${g?`<span>${g.kind} 1 个月超额 ${g.ex1m}%</span><span>三档 ${esc((g.prev||[]).join(' → '))}</span>`:''}
+        <span>大名单 ${r.healthy?'●':'—'}</span></div></details>
+    </li>`}).join(''):'<li class="off" style="padding:10px 0">今天这个 setup 没有候选过①③两道闸</li>';
+  $('more-s').textContent=other.length?`还有 ${other.length} 只命中但没过①或③闸 —— 展开`:'没有被闸挡下的';
+  $('more').style.display=other.length?'':'none';
+  $('tbl').innerHTML=`<thead><tr><th>Ticker</th><th class="n">RS</th><th>组 · 状态</th><th class="n">21EMA</th><th class="n">离高点</th><th>卡在</th></tr></thead><tbody>`+
+    other.map(r=>{const g=grpOf(r);const why=!r.tight?'①宇宙闸':('③ '+r.qn+'/4');return `<tr class="rest"><td class="mono">${esc(r.t)}</td><td class="n">${r.rs??'—'}</td><td>${g?esc(g.name)+' <span class="tag '+g.state+'">'+g.state+'</span>':'—'}</td><td class="n">${r.ema21_atr==null?'—':r.ema21_atr.toFixed(2)}</td><td class="n">${r.hi52}%</td><td>${why}</td></tr>`}).join('')+'</tbody>';
+}
+const M=D.market;
+const dot=c=>`<span class="st bg-${c}"></span>`;
+$('ctx').innerHTML=[
+ ['SPY 交通灯',`${dot(stc[M.spy_light]||'off')}${M.spy_light} ${M.spy_checks}/3`,'market_light'],
+ ['QQQ 交通灯',`${dot(stc[M.qqq_light]||'off')}${M.qqq_light} ${M.qqq_checks}/3`,'market_light'],
+ ['交通灯结论',`${dot(stc[M.light_verdict]||'warn')}${M.light_verdict}`,'market_light.verdict'],
+ ['广度环境',`${dot(stc[M.env]||'warn')}${M.env} ${M.score}`,M.exposure],
+ ['Regime',`${dot(stc[M.regime]||'off')}${M.regime} ${M.regime_score}`,'breadth.regime'],
+ ['新高 / 新低',`${M.nh} / ${M.nl}`,'52 周，普通股'],
+ ['龙头守住 50 日',`${M.leaders_hold} / ${M.leaders_n}`,'§7.2 RS 领导权'],
+ ['T2108 · %>200d',`${M.t2108} · ${M.pct200}`,''],
+].map(([l,v,s])=>`<div class="k"><div class="kl">${l}</div><div class="kv">${v}</div><div class="kl">${s}</div></div>`).join('');
+const d17=M.spy_checks===3&&M.qqq_checks===3, nn=M.nh-M.nl;
+$('q17').innerHTML=[
+ ['§1.7 日线',d17?'✓ 两个指数都过':`✗ SPY ${M.spy_checks}/3 · QQQ ${M.qqq_checks}/3`,d17?'good':'bad'],
+ ['§1.7 周线','缺字段（10/40 周）','off'],['§1.7 5 日 EMA 斜率','缺字段','off'],
+ ['§1.7 52 周净新高',`${nn>0?'✓':'✗'} ${nn}`,nn>0?'good':'bad'],
+].map(([l,v,c])=>`<span><span class="off">${l}</span> <span class="${c}">${v}</span></span>`).join('');
+$('themes').innerHTML=`主题状态（30 个 theme 类）：Leading ${M.themes_leading.length} · <span class="good">Improving ${M.themes_improving.length}</span> · <span class="warn">Weakening ${M.themes_weakening.length}</span> · <span class="bad">Lagging ${M.themes_lagging.length}</span> — 在加速的：${M.themes_improving.slice(0,10).join('、')}${M.themes_improving.length>10?'…':''}`;
+$('e-wk').onclick=()=>{$('e-wk').classList.add('on');$('e-pre').classList.remove('on');document.querySelectorAll('.layer')[1].scrollIntoView({behavior:'smooth',block:'start'})};
+$('e-pre').onclick=()=>{$('e-pre').classList.add('on');$('e-wk').classList.remove('on');document.querySelectorAll('.layer')[3].scrollIntoView({behavior:'smooth',block:'start'})};
+render();
+</script>
