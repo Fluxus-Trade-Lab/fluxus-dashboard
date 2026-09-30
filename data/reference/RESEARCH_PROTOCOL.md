@@ -106,3 +106,12 @@ preregistered → candidate → validated → live
 - **发布物**：本文件 + `claim_registry.py` 接进每日 CI（2026-08-23 当天）
 - **截止日**：存量结论回填台账，2026-08-26 前完成
 - **到期规则**：回填没完成也不摘闸门——闸门先行，台账逐步补齐
+
+## 八、对外发行的回测：[`BACKTEST_STANDARD.md`](BACKTEST_STANDARD.md)（2026-10-01 加）
+
+本协议管**内部研究**什么算「测过了」。**对外发行**（课程正文与附录、会员 PDF、Substack、X、复盘材料）
+另有一份发行档：[`BACKTEST_STANDARD.md`](BACKTEST_STANDARD.md)——过程 P1–P7 / 验证 V1–V7 / 呈现 R1–R8，
+缺一条不发行。它不重复本协议（预注册、`spec_search_n`、holdout、台账、检查单一律指回这里），
+只加三样本协议没有的硬要求：**池子要 point-in-time 全集**、**头条数字要带区间（少簇只许给方向）**、
+**每个主结论要有承载结论的图**。起因是 Andy 09-28 撤下课程附录 J（「只有叙述性语言，而没有数据图表等，
+称不上是严谨的回测」），任务 T-1001-19。
