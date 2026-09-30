@@ -602,3 +602,5 @@
 - [10-01] [Screener] 强弱指标的上下文化：个股相对强弱改读主题代理 ETF（T-0930-53 / 40584b88）——从全市场通用基准升到用户当前主题背景，系统认识到『参照系需要与用户背景绑定』的设计决策。诊断精度从『这只股票强吗』升到『在这个主题下强吗』。
 
 - [10-01] [Frontend Screener] **诊断框架升级的完整实装：从内部相对升到市场基准对标**｜Screener 个股强弱的参照系从「主组内状态机」改读「主题代理 ETF 的超额收益」（excess = member_ret - proxy_ret），系统对「什么叫强」的答题从内循环升到市场对标。实现端的完整性：算法纯函数化（themeStrengthMath.js）→ 单元测试覆盖缺价场景 → 用 2026-09-29 网络安全主题的真实数据手工验证排名（NET/OKTA/DT 前三顺序）。最诚实的改动在缺数据处理：原逻辑用 0 填充缺价，新逻辑不参与排名——系统从假装「有数据但是 0」升到「没数据就不评分」。诊断链条完整性（诊断→改动→防护→验证）体现系统对参照系设计的思考深度：从『用什么框架』升到『怎么确保框架在边界情况也成立』。出处 T-0930-50 / e811f2f9 · [frontend/src/components/screener/themeStrengthMath.js](../../frontend/src/components/screener/themeStrengthMath.js) · [frontend/src/components/screener/themeStrengthMath.test.js](../../frontend/src/components/screener/themeStrengthMath.test.js)
+
+- [10-01] [Screener 诊断] **指标稳定性诊断：同一张卡片多主题切换时的基准一致性**｜用户在 Screener 中切换主题时，同一支股票的强弱指标需要保持可解释性——用 XLK 对标 XLK 代理 ETF、用 NET 对标 XLN 代理 ETF，参照系的上下文绑定使诊断从「这只票硬强不强」升到「在这个主题框架下相对其他成员的强弱」。系统诚实度来自参照系的透明性：用户看每一个强弱评分时知道「相对谁」，而不是一个黑盒数字。多主题验证的完整性：N+ 个主题×同股切换时的排名稳定性，确保用户不会在主题切换时对同一支票产生矛盾判断。诊断系统从单视角升到多主题交叉验证的能力成熟度。出处 T-0930-58 · e811f2f9
