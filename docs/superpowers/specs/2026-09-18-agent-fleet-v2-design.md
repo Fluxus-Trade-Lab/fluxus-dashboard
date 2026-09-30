@@ -192,7 +192,10 @@ Andy 在任何窗口对某 agent 说的「以后这样做」，该会话在同�
 
 ### 7.3 并发
 
-全局同时 ≤ 3 个工人；每 agent 同时 ≤ 1；有 P0 open 时不起新 P2。
+全局同时 ≤ 5 个工人（2026-10-01 起，T-1001-22，Andy「照建议」：3→5，从 `config/daemon.json` 的
+`max_global` 读，读不到/非正整数回落 5；其中 1 个位子只给 P0，非 P0 任务最多占 4 个）；
+每 agent 同时上限见 `agents/<agent>/config.json` 的 `max_parallel`（缺省 1，2026-10-01 起
+steve=3、ops=2，其余仍是 1）；有 P0 open 时不起新 P2。
 
 ### 7.4 失效与对策
 
