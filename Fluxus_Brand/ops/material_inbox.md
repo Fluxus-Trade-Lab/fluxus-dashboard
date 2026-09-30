@@ -202,6 +202,8 @@
 
 - [09-30] [DATA] **诊断链条的完整性体现系统诚实度**：死线班 08:00 的诊断任务 4 分钟内完成「发现→分诊→验证」，每日按时通过重复诊断是对数据质量的直接承诺，系统从被动应急升到定时机械诊断的能力成熟度就体现在这条日常链条的可重复一致。出处：[T-0930-15](../../../Documents/fluxus-ops/tasks/T-0930-15.md) · run 36637199694 · [27bdb8e6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/27bdb8e6a579ca6b6bf83c897836d7c02993bb58)
 
+- [09-30] [DATA] **诊断的验证链条——两班独立复核确保结论可信**：死线班（07:33 complete）发现 x-watch 看板日期滞后、诊断根因（输出端未刷新）、修复（republish）；晨检班（15:01）独立复核，逐项验证交易日时钟、cron 状态、审计工具、质量度量——前班和后班各自完整走过发现→诊断→验证环节，得出同一结论「无新缺陷」。诊断结论的可信度体现在重复验证的一致，不来自单次完美而来自链条的可重复性。出处：T-0930-12 · T-0930-11 · [bd494f42](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/bd494f421ea4d6f1c6d21cb95e208d4087017969)
+
 - [09-30] [OPS · 诊断] **从常年红的闸反推残留副本的诊断精度**｜audit_unpushed 每晚顶红 U1 violations，乍看像真滞留。诊断路径：现象（两条报红）→ 逐条验证（工人树在飞、残留树压的改动用 patch-id 验证）→ 根源识别（一条是已合内容的副本、一条是正常工人，都不是真漏推）→ 改动（删除残留工作树与分支）→ 防护（audit_unpushed 变干净，U1 violations 清零）。系统对自己诊断工具的反思——从「闸一直红所以可能有问题」升到「用 patch-id 逐一验证再判真伪」，这道从被动接受到主动验证的递进，展示的是诊断精度的深化（删不删都要算对，不能凭猜）。出处 T-0928-48 / T-0928-43 · 7e8700589
 - [09-30] [Growth Gary] **决策边界不清，多处版本漂移** · T-0920-59 定版销售文案（PDF 删除）后，数据端两份草稿（whop_launch_checklist + welcome_flow）仍保留 PDF 引用。诊断：决策时未精确定义同步范围；改法：逐字对标 RELEASE_ver1.md + Sales_Copy_Draft 修剪。系统能力体现：从被动发现疏漏升到主动定义决策物理边界。出处 T-0928-28 / 2fe912fd3
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
