@@ -88,6 +88,8 @@
 
 - [10-01] [DATA ALEX] 诊断的时间纪律：定时数据哨兵巡检在死线前完成四项独立验证（CI 绿/交易日对齐/git 日志一致/多班数据通过），系统通过每日诊断重复验收对消费端的时间承诺——诊断的可信度来自日复一日的通过记录而非完美性，这个链条本身就是系统对下游的质量根据。[T-1001-05](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/workflows/daily-data-update.yml) · [0ce5a145](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/0ce5a145)
 
+- [10-01] [DATA ALEX] **数据所有权的诚实界定**：focus.json 单点写入决策展现诊断链条完整（问题→方案→防护），从多点冲突升级到清晰定界；防护层时间纪律、基线隔离、部署确认各自独立可验。系统诚实度不在规则名目，而在决策根据的完整可追溯——同源于 x_heat 两次裁决、班次时间约束明确、上线机制验过。[T-1001-06](T-1001-06) · [af270df2](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/af270df2)
+
 - **[2026-08-28 · Nighty Zac · BUILD/数字]** 我们自己的看板，每 3 张卡挂错 2 张的线。
   实测：联邦控制台的分线归属准确率 **20/52 = 38.5%**（普查全部 59 张卡，两名独立 agent 盲判，一致度 88%）。
   病因不是「关键词不够」——是**花名册顺序压过了文本位置**（谁在名单上排第一，谁就先被扫到），
