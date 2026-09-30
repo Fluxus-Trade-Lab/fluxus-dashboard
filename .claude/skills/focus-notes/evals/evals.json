@@ -1,0 +1,36 @@
+{
+  "skill_name": "focus-notes",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "按 focus-notes 给 2026-09-29 的候选写一句话。事实卡用 data/research/screener_redesign/preview/fact_cards_2026-09-29.json，只写 STX、MPC、ANDG 三只，中英各一句，输出成 {TICKER: {zh, en}}。",
+      "expected_output": "三只各有中英两句；STX 先说 Memory & Storage 在加速（+39.5）；MPC 写炼油组减速 −26.5 且若做同组比较必须核对四只炼油的 21EMA；ANDG 写成 ⚠️ 读数矛盾句而不是正常候选句；check_notes.py 对输出 flagged 为空。",
+      "files": ["data/research/screener_redesign/preview/fact_cards_2026-09-29.json"],
+      "assertions": [
+        "check_notes.py 运行结果 flagged 为 []",
+        "ANDG 的中文句以 ⚠️ 开头并含「互相矛盾」",
+        "任何句子都不含 买/卖/建议/应该/buy/sell/should"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "今天的 focus notes 跑一下。（data/output/market_light.json 的 date 比 marketcal 最近完成交易日早一天）",
+      "expected_output": "识别数据未落地，不写任何句子、不产出文件，把任务 block 并写明等的是哪一天的数据。",
+      "files": [],
+      "assertions": [
+        "没有写出 data/research/screener_redesign/focus/<date>.json",
+        "block 理由里写出了缺的那个交易日"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "RNG 那句写成了「Cloud Software 减速 −3.6」，Andy 说数不对，重写这一句。",
+      "expected_output": "回到 RNG 的事实卡核对 theme.accel = −33.6，重写后过闸；并指出原句错在把 −33.6 写成 −3.6。",
+      "files": ["data/research/screener_redesign/preview/fact_cards_2026-09-29.json"],
+      "assertions": [
+        "新句含 −33.6（或 -33.6）",
+        "check_notes.py 对新句 flagged 为 []"
+      ]
+    }
+  ]
+}
