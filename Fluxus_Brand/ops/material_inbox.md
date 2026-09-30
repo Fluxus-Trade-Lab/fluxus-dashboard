@@ -212,6 +212,8 @@
 
 - [09-19] [数据哨兵] **晨检无异常**：dashboard 与交易日 2026-09-17 同步确认、完整性 100%；系统每交易日收盘后 1 小时内完成自动验证、无新失败。出处 [INBOX.md](../../data/research/night_reports/INBOX.md) · 705f8ec5
 
+- [09-30] [DATA] **诊断系统的自我迭代——从事后补救升到前置规避**｜09-29 08:00 班发现主排程会压死线→主动提前 dispatch（事后应急）；09-30 07:00 班吸收前一班经验，不等诊断结果下来就提早一整个时段出手（前置规避），提前近一小时安全落地。同一形状 4 天连续验证，系统对自己的诊断框架不是被动执行，而是在重复应用中不断优化时间窗口——从「问题→反应」迭代到「预判→规避」。诊断系统的成熟度体现在能否从前一班的失败中学会今天怎么做，而不只是会诊断。出处：T-0930-31 / 0fb526d5 · run 36637199694 · [27bdb8e6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/27bdb8e6a579ca6b6bf83c897836d7c02993bb58)
+
 - 2026-08-30 · OPS(蒸馏厂) · **总纲金句(Andy 原生英文,已批入体系)**:"Day trade your entry, swing trade your trim, position trade your winner." 一句装下入场(日内精度换仓位杠杆)/持仓(动能确认后沿趋势减)/赢家(position 级拿住)三段。标题级资产:课程章节/Substack/X 均可用。出处 FluxusTrading_Obsidian 总纲卡+访谈 round2 原话
 
 - [09-19] [OPS] **内容产线从云端+本机二重管道统一到单一本机守护进程**｜Discord→X 数据生成端原本云端+本机并行，每晚一段时间两边产出不同步、队列互相打架、诊断难点指向「内容问题」而漏看「系统问题」。改派转成本机守护进程后，单一货源、任务板串联、错误即刻可见。09-19 冷启动试跑成功；云端 routine 已确认停用（trig_01UwhQA2SaEWSFEDkyK7dtTZ enabled:false）。故事素材：自动化编队如何把「两个都对但都不对」的诊断陷阱消灭掉。出处 data/research/night_reports/INBOX.md [09-18]→[09-19] 行 · T-0919-21 · commit 2cbc49d6
