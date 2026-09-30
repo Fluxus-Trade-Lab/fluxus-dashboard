@@ -19,7 +19,15 @@ This tool checks the invariants that hold for every archive, reports, and
       for the event archives (a 1/4-size day is a half scrape, a 5x day is a
       broken enrichment) -- reported, never repaired automatically
   I5  the newest session in each nightly archive is the last completed
-      session (stale archive = a writer silently stopped)
+      session (stale archive = a writer silently stopped). Fatal for the ten
+      archives `run_all.py` writes directly every night (`ARCHIVES[...]
+      ["stale_is_fatal"] is True`): a stale one means tonight's own run
+      failed to reach it, the same fact I6a/I6b already treat as fatal for
+      watchlist_hits.csv/ticker_events.csv. A warning only for
+      delayed_ep_log.csv, whose "Archive Delayed-EP stages" step is
+      `continue-on-error` and legitimately writes zero rows on a day with no
+      EP candidates in the scan window (DATA_CONTRACTS.md §七 [2026-10-01],
+      DATA ALEX, T-1001-45).
   I6  reconciliation: watchlist.json counts == watchlist_hits rows; the seven
       screener JSONs' rows == ticker_events rows for that date; breadth
       universe_size ~ universe.json rows (mismatch = two writers disagree)
@@ -27,10 +35,13 @@ This tool checks the invariants that hold for every archive, reports, and
 Exit code 1 when ANY violation exists (CI refuses to commit the run on that),
 0 otherwise. That is I1/I2/I3 plus I6a, I6b and I7, which were added after this
 sentence first claimed only I1/I2/I3 were fatal -- `run()` has always summed
-every report's `violations`, so the list above is what the code does. I4, I5
-and I6c are warnings by design: I5 covers archives several different cadences
-write (regime_ledger, delayed_ep_log), so failing the nightly on any of them
-being behind would fail it for reasons the nightly cannot fix.
+every report's `violations`, so the list above is what the code does. I5
+joined them on 2026-10-01 (T-1001-44/45) for every archive whose
+`stale_is_fatal` is True -- before that date ANY stale archive was only a
+warning, which meant a silently-stopped writer on one of `run_all.py`'s own
+nine other archives committed clean every night until a human noticed. I4 and
+I6c stay warnings by design; so does I5 for delayed_ep_log.csv, the one
+archive a different, optional step writes.
 --repair rewrites the file without I1/I2/I3 rows after writing a .bak next to
 it (only those three; a reconciliation mismatch is a writer bug, never a row to
 delete).
@@ -56,25 +67,36 @@ from pipeline.marketcal import is_trading_day, last_completed_session
 
 HISTORY = Path("data/history")
 
-# archive -> (date column, primary key columns, counts-checked, nightly)
+# archive -> (date column, primary key columns, counts-checked, nightly,
+# stale_is_fatal). stale_is_fatal decided 2026-10-01 (DATA_CONTRACTS.md §七
+# [2026-10-01], DATA ALEX, T-1001-45): True for the archives run_all.py's own
+# process writes every night -- I5 stale on one of them means tonight's run
+# itself failed to reach it, the nightly can fix that by being rerun. False
+# only for delayed_ep_log.csv, written by a separate continue-on-error step.
 ARCHIVES: Dict[str, Dict[str, Any]] = {
-    "breadth_archive.csv":   {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    "ticker_events.csv":     {"date": "date",  "key": ["date", "ticker", "screener"], "counts": True,  "nightly": True},
-    "watchlist_hits.csv":    {"date": "date",  "key": ["date", "panel", "ticker"],    "counts": True,  "nightly": True},
-    "leaders_log.csv":       {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True},
-    "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True},
-    "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True},
-    "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    "asset_signals.csv":     {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True},
-    "shortlist_log.csv":     {"date": "date",  "key": ["date", "ticker"],             "counts": False, "nightly": True},
-    # owned by the risk session (Andy 2026-08-21: correction_risk 归他主导);
-    # registered here because every archive under data/history gets audited,
-    # whoever writes it
-    "regime_ledger.csv":     {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    # nightly since 08-13 (cron step "Archive Delayed-EP stages"); 08-18 it
-    # silently archived 0 rows on a throttled download -- I5 is what would
-    # have said so the next morning.
-    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": True,  "nightly": True},
+    "breadth_archive.csv":   {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True, "stale_is_fatal": True},
+    "ticker_events.csv":     {"date": "date",  "key": ["date", "ticker", "screener"], "counts": True,  "nightly": True, "stale_is_fatal": True},
+    "watchlist_hits.csv":    {"date": "date",  "key": ["date", "panel", "ticker"],    "counts": True,  "nightly": True, "stale_is_fatal": True},
+    "leaders_log.csv":       {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True, "stale_is_fatal": True},
+    "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True, "stale_is_fatal": True},
+    "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True, "stale_is_fatal": True},
+    "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True, "stale_is_fatal": True},
+    "asset_signals.csv":     {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True, "stale_is_fatal": True},
+    "shortlist_log.csv":     {"date": "date",  "key": ["date", "ticker"],             "counts": False, "nightly": True, "stale_is_fatal": True},
+    # `ROLE.md` registers this line's ownership as the risk session
+    # (correction_risk), but that is editorial ownership, not the runtime
+    # writer: `run_all.py` calls `pipeline.risk.regime_ledger.append()`
+    # unconditionally every night (T-1001-45 traced it to run_all.py:1650),
+    # so a stale row here is the same "tonight's run didn't get there" fact
+    # as the other nine, not a different cadence.
+    "regime_ledger.csv":     {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True, "stale_is_fatal": True},
+    # nightly since 08-13 (cron step "Archive Delayed-EP stages"), but that
+    # step is `continue-on-error: true` and a genuinely different cadence
+    # from run_all.py: `delayed_ep_scan.py` returns without writing a row
+    # when the EP candidate window is empty, which is a legitimate 0-row
+    # night, not a stopped writer -- stale_is_fatal stays False so I5 keeps
+    # this one a warning (T-1001-45).
+    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": True,  "nightly": True, "stale_is_fatal": False},
 }
 class _Misaligned(Exception):
     """I6 refuses to compare two sessions. Carries the message it will report,
@@ -139,7 +161,9 @@ def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: d
     if spec["nightly"] and len(info):
         newest = info.date.max()
         if newest < last_done.isoformat():
-            rep["warnings"].append(f"I5 newest session {newest} < last completed {last_done}")
+            msg = f"I5 newest session {newest} < last completed {last_done}"
+            bucket = rep["violations"] if spec["stale_is_fatal"] else rep["warnings"]
+            bucket.append(msg)
     return rep
 
 

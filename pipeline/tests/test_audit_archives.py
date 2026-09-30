@@ -47,14 +47,20 @@ def test_future_row_identical_spx_and_dupes_are_violations_and_repairable(tmp_pa
     assert len(pd.read_csv(q)) == 1
 
 
-def test_count_collapse_and_staleness_are_warnings_not_violations(tmp_path):
+def test_count_collapse_is_a_warning_but_staleness_is_now_a_violation(tmp_path):
+    """I4 (count collapse) stays a warning; I5 (staleness) on the same
+    archive is now fatal, because leaders_log.csv is one of the ten archives
+    run_all.py writes directly every night (T-1001-44/45). Before that date
+    this test's name was accurate for both -- staleness there is the part
+    that changed."""
     rows = [{"date": f"2026-07-{d:02d}", "ticker": t} for d in (20, 21, 22, 23, 24, 27, 28) for t in "ABCDEFGHIJ"]
     rows += [{"date": "2026-07-29", "ticker": "A"}]       # 1 row vs median 10
     _write(tmp_path, "leaders_log.csv", rows)
     out = A.run(tmp_path, last_done=LAST, output=None)
-    assert out["ok"]
-    w = {r["archive"]: r["warnings"] for r in out["archives"]}["leaders_log.csv"]
-    assert any(x.startswith("I4 2026-07-29") for x in w) and any(x.startswith("I5") for x in w)
+    assert not out["ok"]
+    rep = {r["archive"]: r for r in out["archives"]}["leaders_log.csv"]
+    assert any(x.startswith("I4 2026-07-29") for x in rep["warnings"])
+    assert any(x.startswith("I5") for x in rep["violations"])
 
 
 # ---------------------------------------------------------------------------
@@ -322,14 +328,30 @@ class TestI5Freshness:
     def test_newest_equals_the_last_completed_session_is_silent(self, tmp_path):
         _write(tmp_path, "leaders_log.csv", [{"date": LAST.isoformat(), "ticker": "A"}])
         out = A.run(tmp_path, last_done=LAST, output=None)
-        w = {r["archive"]: r for r in out["archives"]}["leaders_log.csv"]["warnings"]
-        assert [x for x in w if x.startswith("I5")] == [], w
+        rep = {x["archive"]: x for x in out["archives"]}["leaders_log.csv"]
+        assert [m for m in rep["violations"] + rep["warnings"] if m.startswith("I5")] == [], rep
 
-    def test_one_session_behind_is_a_warning(self, tmp_path):
+    def test_one_session_behind_is_a_violation_for_a_nightly_own_write(self, tmp_path):
+        # leaders_log.csv is one of the ten archives run_all.py writes
+        # directly every night (DATA_CONTRACTS.md §七 [2026-10-01], T-1001-45)
+        # -- a stale one means tonight's run failed to reach it, so it blocks
+        # the commit like I6a/I6b already do for the same fact.
         _write(tmp_path, "leaders_log.csv", [{"date": "2026-08-17", "ticker": "A"}])
         out = A.run(tmp_path, last_done=LAST, output=None)
-        w = {r["archive"]: r for r in out["archives"]}["leaders_log.csv"]["warnings"]
-        assert any(x.startswith("I5 newest session 2026-08-17") for x in w), w
+        rep = {x["archive"]: x for x in out["archives"]}["leaders_log.csv"]
+        assert any(m.startswith("I5 newest session 2026-08-17") for m in rep["violations"]), rep["violations"]
+        assert [m for m in rep["warnings"] if m.startswith("I5")] == [], rep["warnings"]
+        assert not out["ok"]
+
+    def test_one_session_behind_stays_a_warning_for_the_separate_cadence(self, tmp_path):
+        # delayed_ep_log.csv is the one archive a different, continue-on-error
+        # step writes (T-1001-45) -- its staleness can be a legitimate 0-row
+        # night, so I5 stays a warning here, not a violation.
+        _write(tmp_path, "delayed_ep_log.csv", [{"as_of": "2026-08-17", "ticker": "A"}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        rep = {x["archive"]: x for x in out["archives"]}["delayed_ep_log.csv"]
+        assert any(m.startswith("I5 newest session 2026-08-17") for m in rep["warnings"]), rep["warnings"]
+        assert [m for m in rep["violations"] if m.startswith("I5")] == [], rep["violations"]
 
     def test_a_header_only_archive_does_not_reach_the_freshness_check(self, tmp_path):
         # no rows -> no dates -> nothing to compare; asking for max() of nothing
@@ -478,7 +500,7 @@ def _rows_for(spec, dates_and_counts):
     return rows
 
 
-def _warnings_for(tmp_path, name, rows, prefix):
+def _rep_for(tmp_path, name, rows):
     _write(tmp_path, name, rows)
     out = A.run(tmp_path, last_done=LAST, output=None)
     rep = {r["archive"]: r for r in out["archives"]}[name]
@@ -489,6 +511,11 @@ def _warnings_for(tmp_path, name, rows, prefix):
     # with ten rows a day IS a duplicate there. I2 and I4 read different
     # fields; it cannot lend or take away an I4 warning.
     assert [v for v in rep["violations"] if v[:2] in ("I1", "I3")] == [], rep["violations"]
+    return rep
+
+
+def _warnings_for(tmp_path, name, rows, prefix):
+    rep = _rep_for(tmp_path, name, rows)
     return [w for w in rep["warnings"] if w.startswith(prefix)]
 
 
@@ -504,19 +531,26 @@ def _warnings_for(tmp_path, name, rows, prefix):
 # table. That cost is the feature: turning a check off for an archive is a
 # decision (09-18: a check that stopped applying, and nobody logged it), and
 # this is where it gets signed.
+# T-1001-44/45 (2026-10-01) added a third column, stale_is_fatal, signed the
+# same way and for the same reason: nine of the eleven already say True below
+# (they always did -- I5 just could not report it as a violation before this
+# date), regime_ledger.csv flips from the assumption in its own module
+# comment (True: DATA_CONTRACTS.md §七 [2026-10-01] traced its write to
+# run_all.py's own process), and delayed_ep_log.csv is the one archive this
+# table says stays a warning.
 WATCHED_ON_2026_09_25 = {
-    # archive                 (counts -> I4 applies, nightly -> I5 applies)
-    "breadth_archive.csv":    (False, True),
-    "ticker_events.csv":      (True,  True),
-    "watchlist_hits.csv":     (True,  True),
-    "leaders_log.csv":        (True,  True),
-    "groups_archive.csv":     (True,  True),
-    "momentum97_shadow.csv":  (False, True),
-    "universe_quality.csv":   (False, True),
-    "asset_signals.csv":      (True,  True),
-    "shortlist_log.csv":      (False, True),
-    "regime_ledger.csv":      (False, True),
-    "delayed_ep_log.csv":     (True,  True),
+    # archive                 (counts -> I4 applies, nightly -> I5 applies, stale_is_fatal -> I5 is a violation)
+    "breadth_archive.csv":    (False, True, True),
+    "ticker_events.csv":      (True,  True, True),
+    "watchlist_hits.csv":     (True,  True, True),
+    "leaders_log.csv":        (True,  True, True),
+    "groups_archive.csv":     (True,  True, True),
+    "momentum97_shadow.csv":  (False, True, True),
+    "universe_quality.csv":   (False, True, True),
+    "asset_signals.csv":      (True,  True, True),
+    "shortlist_log.csv":      (False, True, True),
+    "regime_ledger.csv":      (False, True, True),
+    "delayed_ep_log.csv":     (True,  True, False),
 }
 
 
@@ -541,10 +575,30 @@ def test_only_the_archives_this_file_says_are_counted_can_raise_I4(tmp_path, nam
 def test_only_the_archives_this_file_says_are_nightly_can_raise_I5(tmp_path, name, nightly):
     """An archive whose newest row is a session old raises I5 on exactly the
     archives this file lists as nightly -- all eleven today, i.e. every one of
-    them still gets its clock read."""
+    them still gets its clock read. I5 can land in either bucket (T-1001-44/45
+    split severity), so this only asks whether it fires at all; the next test
+    asks which bucket."""
     rows = _rows_for(A.ARCHIVES[name], [("2026-08-17", 1)])
-    w = _warnings_for(tmp_path, name, rows, "I5")
-    assert bool(w) is nightly, f"{name}: this file says nightly={nightly}, I5 said {w}"
+    rep = _rep_for(tmp_path, name, rows)
+    fired = any(x.startswith("I5") for x in rep["violations"] + rep["warnings"])
+    assert fired is nightly, f"{name}: this file says nightly={nightly}, I5 fired={fired}"
+
+
+@pytest.mark.parametrize("name,stale_is_fatal", [(n, v[2]) for n, v in sorted(WATCHED_ON_2026_09_25.items())])
+def test_only_the_archives_this_file_says_are_fatal_on_stale_raise_a_violation(tmp_path, name, stale_is_fatal):
+    """Same staleness as the test above, but which bucket it lands in: a
+    violation (blocks the commit) when this file says stale_is_fatal, a
+    warning otherwise. Only delayed_ep_log.csv says False today (T-1001-45:
+    its archiving step is continue-on-error and legitimately writes zero rows
+    some nights)."""
+    rows = _rows_for(A.ARCHIVES[name], [("2026-08-17", 1)])
+    rep = _rep_for(tmp_path, name, rows)
+    is_violation = any(x.startswith("I5") for x in rep["violations"])
+    is_warning = any(x.startswith("I5") for x in rep["warnings"])
+    assert is_violation is stale_is_fatal, (
+        f"{name}: this file says stale_is_fatal={stale_is_fatal}, I5 in violations={is_violation}")
+    assert is_warning is not stale_is_fatal, (
+        f"{name}: I5 must not be in both buckets at once (violations={is_violation}, warnings={is_warning})")
 
 
 # --------------------------------------------------------------------------
@@ -664,9 +718,15 @@ def test_a_ticker_literally_named_NA_is_not_read_as_a_missing_value(tmp_path):
 def test_a_clean_repo_exits_zero(tmp_path, capsys, monkeypatch):
     """main()'s exit code is the whole CI contract: 1 blocks the commit. The
     violation case was pinned; the clean case was not, so `return 1 if ok`
-    -- which fails every good night -- was invisible."""
+    -- which fails every good night -- was invisible. `main()` has no
+    --last-done override, so it always reads the real last_completed_session()
+    -- breadth_archive.csv is stale_is_fatal (T-1001-44/45), so the newest row
+    must track that real session, not a fixed old date, or this fixture would
+    fail I5 by construction and no longer be the clean case it claims to be."""
+    from pipeline.marketcal import last_completed_session
+    today = last_completed_session()
     _write(tmp_path, "breadth_archive.csv", [
-        {"date": "2026-08-17", "spx_close": 7745.06}, {"date": "2026-08-18", "spx_close": 7691.76}])
+        {"date": "2026-08-17", "spx_close": 7745.06}, {"date": today.isoformat(), "spx_close": 7691.76}])
     monkeypatch.chdir(tmp_path)
     assert A.main(["--history", str(tmp_path)]) == 0
     assert "OK:" in capsys.readouterr().out
