@@ -57,10 +57,11 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
  "en_reviewed_by_andy": false}
 ```
 
-= `build_cards.py` 的整份输出 + `notes` + `gate`。按宪法「直推 main 标准动作」在临时树提交**只这一个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
+= `build_cards.py` 的整份输出 + `notes` + `gate`。**同一份内容再写一份 `latest.json`**（同目录）——Screener 页只读这一个（T-1001-08），它拿 `asof` 和站点最新交易日比，过期会在页上标出来。按宪法「直推 main 标准动作」在临时树提交**只这两个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
 
 ## 坑（同工作流的坑追加在这里，不另开 memory）
 
 - **组选哪个**：挂多个主题时取三个月超额最高的那个（ESTC 挂 Cloud Software 与 Cybersecurity，取后者）。句子里要说「挂两个主题，按三个月超额取 X」。
 - **RS 评级 1**：09-25 SUNB、09-29 ANDG 都是 1，组内却靠前。成因在查（T-1001-04），在查清前一律按上面的 ⚠️ 句处理。
+- **忘写 `latest.json` 页面就停在旧日子**：页上会标「句子还停在 X」，但那是症状；两份同时写、同一个 commit。
 - **临时目录会被清**：`/private/tmp` 下的草稿隔夜可能就没了（09-26 的模板丢过一次），当天写完当天落仓库。
