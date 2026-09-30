@@ -63,6 +63,36 @@ PCT_COLUMNS = [
     'eps_growth_next_y', 'eps_growth_this_y', 'revenue_growth',
 ]
 
+#: Finviz's HTML screener stops paginating at row 1000.  Any `r` above that
+#: returns 403 with `Cf-Mitigated: challenge` -- a Cloudflare managed
+#: challenge, i.e. an interstitial we cannot solve from a script.
+#:
+#: Measured 2026-09-30, after two GitHub runs (36783219599, 36785607847) and a
+#: local run all stopped at exactly 1000 of 5613 rows on page 51.  The first
+#: reading of that shape was "the runner's IP got throttled"; it was not:
+#:
+#:   fresh session, FIRST request     r=981  -> 200      r=1001 -> 403
+#:   fresh session, FIRST request     r=1021 -> 403      r=3001 -> 403
+#:
+#: A rate limit cannot be reproduced by a request that is the first one a
+#: session makes, and an IP ban cannot be reproduced from three different
+#: networks.  The boundary is the row offset, so it is a per-query cap and
+#: **backing off and retrying the same page can never clear it** -- the cure
+#: is to ask smaller questions.
+ROW_CAP = 1000
+
+#: ...which is what this is.  Sector is the partition because it is the one
+#: Finviz facet that is provably exhaustive: on 2026-09-30 the 11 slices
+#: summed to 5613, exactly the unpartitioned claim, with no name in two
+#: sectors and none in neither.  (Market cap bands lose the 41 names Finviz
+#: has no cap for; exchange loses 1.)  `_fetch_html_screener` re-checks that
+#: sum on every run rather than trusting this paragraph.
+SECTOR_FILTERS = (
+    'sec_basicmaterials', 'sec_communicationservices', 'sec_consumercyclical',
+    'sec_consumerdefensive', 'sec_energy', 'sec_financial', 'sec_healthcare',
+    'sec_industrials', 'sec_realestate', 'sec_technology', 'sec_utilities',
+)
+
 
 class FinvizAdapter(BaseAdapter):
     """Primary data adapter using Finviz CSV or HTML scraping."""
@@ -165,27 +195,83 @@ class FinvizAdapter(BaseAdapter):
         v= parameter.  Performance/technical data is enriched via yfinance in
         the pipeline orchestrator instead.
 
-        Pages are 20 rows each; we paginate until no more rows.
+        Pages are 20 rows each.  Since 2026-09-30 a single query only yields
+        its first ROW_CAP rows, so the market is asked for one sector at a time
+        and the slices are unioned; see ROW_CAP and SECTOR_FILTERS.
         """
-        base_params = {
-            'f': 'cap_1.0to,ind_stocksonly',
-            'ft': '4',
-        }
+        base_filter = 'cap_1.0to,ind_stocksonly'
         # Finviz returns rows alphabetically, so a binding page cap does not
         # sample the market -- it truncates it mid-alphabet.  At 150 pages the
         # universe stopped at LNTH: every ticker from M to Z was missing,
-        # including NVDA, MSFT, TSLA and PLTR.  Sized to clear the full
-        # cap_1.0to,ind_stocksonly list with headroom; _scrape_view warns
-        # loudly if it ever binds again.
+        # including NVDA, MSFT, TSLA and PLTR.  Sized to clear the largest
+        # single sector with headroom; _scrape_pages warns loudly if it binds.
         max_pages = 600
 
         session = requests.Session()
         session.headers.update(self.HEADERS)
 
-        df = self._scrape_view(session, '111', base_params, max_pages)
-        if df is not None and len(df) > 0:
-            logger.info(f"Overview (v=111): scraped {len(df)} rows")
+        # The unpartitioned claim, asked for once.  This is the denominator the
+        # run reconciles against (run_all.py's short-scrape guard), so it has to
+        # be the whole market's number and not the sum of the parts -- if the
+        # partition itself starts losing a sector, a self-consistent sum would
+        # hide exactly the failure we are trying to surface.
+        whole_claim = self._claimed_total(session, '111', {'f': base_filter, 'ft': '4'})
+        if whole_claim:
+            self.claimed_total = whole_claim
+
+        frames: list[pd.DataFrame] = []
+        claims: dict[str, int] = {}
+        for sector in SECTOR_FILTERS:
+            params = {'f': f'{base_filter},{sector}', 'ft': '4'}
+            part, claimed = self._scrape_pages(session, '111', params, max_pages)
+            if claimed:
+                claims[sector] = claimed
+            if part is None or part.empty:
+                logger.error("Finviz sector %s returned no rows", sector)
+                continue
+            if claimed and len(part) < claimed:
+                logger.error("Finviz sector %s: got %d of %d claimed rows",
+                             sector, len(part), claimed)
+            frames.append(part)
+
+        if not frames:
+            return None
+
+        df = pd.concat(frames, ignore_index=True)
+        if 'Ticker' in df.columns:
+            # Sectors are disjoint, but head/tail passes inside one sector
+            # overlap on purpose (see _scrape_pages), so dedupe is required.
+            df = df.drop_duplicates(subset=['Ticker'], keep='first')
+            df = df.reset_index(drop=True)
+
+        summed = sum(claims.values())
+        if whole_claim and summed != whole_claim:
+            # The partition stopped covering the market: Finviz added a sector,
+            # renamed one, or started classifying names outside all eleven.
+            # Not fatal here -- run_all's short-scrape guard owns that call --
+            # but the reason has to be in the log next to the number.
+            logger.error(
+                "Finviz sector partition does not reconcile: sectors claim %d, "
+                "whole universe claims %d (missing %d). SECTOR_FILTERS needs a "
+                "new slice.", summed, whole_claim, whole_claim - summed)
+        logger.info("Overview (v=111): scraped %d rows across %d sectors "
+                    "(sectors claim %d, universe claims %s)",
+                    len(df), len(frames), summed, whole_claim)
         return df
+
+    def _claimed_total(
+        self, session: requests.Session, view_id: str, base_params: dict,
+    ) -> int | None:
+        """How many rows Finviz says match a filter, from its "#1 / N Total"."""
+        params = {**base_params, 'v': view_id, 'r': 1}
+        try:
+            resp = session.get(self.SCREENER_URL, params=params, timeout=30)
+            resp.raise_for_status()
+        except requests.RequestException as e:
+            logger.warning("Finviz claimed-total probe failed: %s", e)
+            return None
+        m = re.search(r'/\s*([\d,]+)\s*Total', resp.text)
+        return int(m.group(1).replace(',', '')) if m else None
 
     # -----------------------------------------------------------------
     #  Helper: scrape one Finviz view across all pages
@@ -197,17 +283,85 @@ class FinvizAdapter(BaseAdapter):
         base_params: dict,
         max_pages: int,
     ) -> pd.DataFrame | None:
-        """Scrape all pages for a single Finviz screener view.
+        """Scrape one Finviz view; rows only. See `_scrape_pages`."""
+        return self._scrape_pages(session, view_id, base_params, max_pages)[0]
 
-        Returns a DataFrame with raw Finviz column names (including 'Ticker').
+    def _scrape_pages(
+        self,
+        session: requests.Session,
+        view_id: str,
+        base_params: dict,
+        max_pages: int,
+    ) -> tuple[pd.DataFrame | None, int | None]:
+        """Scrape all reachable pages for one Finviz screener query.
+
+        Returns `(rows, claimed)` -- a DataFrame with raw Finviz column names
+        (including 'Ticker'), and the row count Finviz claims for this query.
         The 'No.' column is dropped automatically.
+
+        Only the first ROW_CAP rows of a query are reachable (see ROW_CAP).
+        When the query claims more than that, the rest is read from the other
+        end, sorted descending, which reaches rows ROW_CAP+1..2*ROW_CAP. The
+        two passes deliberately overlap; the caller dedupes on Ticker. A query
+        claiming more than 2*ROW_CAP has an unreachable middle and says so.
+        """
+        claimed = self._claimed_total(session, view_id, base_params)
+
+        rows_asc, headers = self._scrape_one_direction(
+            session, view_id, base_params, max_pages, order=None)
+        all_rows = list(rows_asc)
+
+        if claimed and claimed > ROW_CAP:
+            if claimed > 2 * ROW_CAP:
+                logger.error(
+                    "Finviz query claims %d rows; only %d are reachable from "
+                    "each end, so rows %d..%d cannot be read at all. Split the "
+                    "query further.",
+                    claimed, ROW_CAP, ROW_CAP + 1, claimed - ROW_CAP)
+            tail_rows, tail_headers = self._scrape_one_direction(
+                session, view_id, base_params, max_pages, order='-ticker',
+                stop_after=claimed - ROW_CAP)
+            if headers is None:
+                headers = tail_headers
+            all_rows.extend(tail_rows)
+
+        if not all_rows:
+            return None, claimed
+
+        df = pd.DataFrame(all_rows)
+
+        # Drop the row-number column that Finviz puts first
+        if 'No.' in df.columns:
+            df = df.drop(columns=['No.'])
+
+        return df, claimed
+
+    def _scrape_one_direction(
+        self,
+        session: requests.Session,
+        view_id: str,
+        base_params: dict,
+        max_pages: int,
+        order: str | None = None,
+        stop_after: int | None = None,
+    ) -> tuple[list[dict], list[str] | None]:
+        """Page through one query in one sort order, up to ROW_CAP rows.
+
+        `stop_after` stops early once that many rows are in hand -- the tail
+        pass only needs the overflow, not another full ROW_CAP of rows.
         """
         all_rows: list[dict] = []
         headers: list[str] | None = None
         page = 1
 
         while page <= max_pages:
-            params = {**base_params, 'v': view_id, 'r': (page - 1) * 20 + 1}
+            offset = (page - 1) * 20 + 1
+            if offset > ROW_CAP:
+                # Requesting this would earn a Cloudflare challenge, not rows.
+                break
+            params = {**base_params, 'v': view_id, 'r': offset}
+            if order:
+                params['o'] = order
             try:
                 resp = session.get(self.SCREENER_URL, params=params, timeout=30)
                 resp.raise_for_status()
@@ -216,19 +370,10 @@ class FinvizAdapter(BaseAdapter):
                     f"Scraping view {view_id}: page {page} request failed: {e}"
                 )
                 if page == 1:
-                    return None
+                    return [], None
                 break
 
             soup = BeautifulSoup(resp.text, 'html.parser')
-            # Finviz prints "#1 / 5621 Total" above the table. Keep the number
-            # the vendor claims so the run can reconcile rows scraped against
-            # rows promised (DATA_RELIABILITY §六 2): a silently short scrape
-            # is otherwise invisible -- 3,000 of 5,600 looked fine for a week.
-            if page == 1 and getattr(self, 'claimed_total', None) is None:
-                m = re.search(r'/\s*([\d,]+)\s*Total', resp.text)
-                if m:
-                    self.claimed_total = int(m.group(1).replace(',', ''))
-                    logger.info("Finviz claims %d rows total for view %s", self.claimed_total, view_id)
             table = self._find_screener_table(soup)
 
             if table is None:
@@ -236,7 +381,7 @@ class FinvizAdapter(BaseAdapter):
                     logger.warning(
                         f"Could not find screener table for view {view_id}"
                     )
-                    return None
+                    return [], None
                 break  # no more pages
 
             rows = table.find_all('tr')
@@ -272,11 +417,15 @@ class FinvizAdapter(BaseAdapter):
                     page_rows += 1
 
             logger.info(
-                f"Scraping view {view_id}: page {page}, {len(all_rows)} rows so far"
+                "Scraping view %s%s: page %d, %d rows so far",
+                view_id, ' (desc)' if order else '', page, len(all_rows),
             )
 
             if page_rows < 20:
                 break  # last page
+
+            if stop_after is not None and len(all_rows) >= stop_after:
+                break  # the tail pass has the overflow; the rest is overlap
 
             page += 1
             time.sleep(0.2)  # be polite to Finviz
@@ -291,16 +440,7 @@ class FinvizAdapter(BaseAdapter):
                 all_rows[-1].get('Ticker') if all_rows else 'n/a',
             )
 
-        if not all_rows:
-            return None
-
-        df = pd.DataFrame(all_rows)
-
-        # Drop the row-number column that Finviz puts first
-        if 'No.' in df.columns:
-            df = df.drop(columns=['No.'])
-
-        return df
+        return all_rows, headers
 
     # -----------------------------------------------------------------
     #  Helper: locate the screener data table in the HTML

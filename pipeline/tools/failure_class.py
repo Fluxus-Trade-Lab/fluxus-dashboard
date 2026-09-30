@@ -44,6 +44,21 @@ LEDGER = Path("data/history/run_ledger.jsonl")
 #: 放在 5% 是为了让「市场真的烂到没票可交易」也不会误触。
 TRADEABLE_FLOOR = 0.05
 
+#: 抓回来的行数占**供应商自己声明的**行数的比例，低于此值视为抓取被腰斩。
+#: 这是 2026-09-30 补的第五类，因为前四类判不出它：那晚 Finviz 在第 51 页
+#: （r=1001）开始返回 403，两班各只抓到 1000/5613 行，而分诊器说 C_gate
+#: ——「数据是好的，去下载 artifact 发布」。照它说的做会把一份 18% 的宇宙
+#: 发上 dashboard。
+#:
+#: 为什么旧判据看不见：`tradeable_share` 是**已抓行内**的比例，截断不改变
+#: 它。那两班 449/1000 = 44.9%，健康夜间是 45% 上下——一模一样。缺的行
+#: 连分母都没进，所以「行数本身被砍半」这个形状在比例里不留痕迹。
+#:
+#: 阈值与 `run_all.py` 那条 short-scrape 日志同源（本模块是它的家），
+#: 由 pipeline/tests/test_failure_class.py 钉住两处一致。健康夜间这个比例
+#: 恒等于 1.000（账本里 53 班无一例外，rows == finviz_claimed 逐字相等）。
+UNIVERSE_COMPLETE_FLOOR = 0.9
+
 #: 分诊结论。字符串是给人读的，键是给脚本判的。
 CLASSES = {
     "OK": "这一班没有失败",
@@ -51,6 +66,7 @@ CLASSES = {
     "B_vendor": "上游拒绝：拿回来的价格不成样子（quality severe / 可交易崩塌）",
     "C_gate": "我们拒绝了自己：抓取正常，是下游的闸不让发",
     "D_code": "代码：管线自己抛了异常",
+    "E_truncated": "抓取被腰斩：供应商只给了它自己声明的行数的一小部分，宇宙不完整",
 }
 
 #: 每一类唯一正确的下一步。措辞是命令式的，因为这张表存在的全部理由，
@@ -66,6 +82,13 @@ NEXT_ACTION = {
               "两边一起提交——只回放输出会让归档缺一天。"
               "重抓只会用一份更差的数据覆盖一份更好的。",
     "D_code": "修代码，加一条能红的测试，再重跑。重跑不会让 traceback 消失。",
+    "E_truncated": "**不要发布这一班的 artifact**——它是真的短，不是被闸误伤，"
+                   "发上去就是拿 18% 的宇宙冒充全市场（广度、RS、新高新低全部作废）。"
+                   "**也不要指望重抓。** 2026-09-30 实测：同一个行偏移在全新会话的"
+                   "第一个请求上就被拒（r=981 通、r=1001 拒），换 runner、换机房、"
+                   "换本机网络都一样——那是每个查询的行数上限，不是限流，退避重试"
+                   "碰的还是同一面墙。去看供应商的分页限制变了没有，改抓法（把查询"
+                   "切小），然后重跑。",
 }
 
 
@@ -76,6 +99,16 @@ def _tradeable_share(guards: Dict) -> Optional[float]:
     if not rows or tr is None:
         return None
     return tr / rows
+
+
+def _universe_share(guards: Dict) -> Optional[float]:
+    """抓到的行数 ÷ 供应商声明的行数。缺 `finviz_claimed` 的旧记录返回 None。"""
+    uq = guards.get("universe_quality") or {}
+    rows = uq.get("rows")
+    claimed = uq.get("finviz_claimed")
+    if not rows or not claimed:
+        return None
+    return rows / claimed
 
 
 def _looks_like_traceback(errors: List[Dict]) -> bool:
@@ -110,6 +143,7 @@ def classify(record: Optional[Dict], failed: bool = True) -> Dict:
     errors = record.get("errors") or []
     uq = guards.get("universe_quality") or {}
     share = _tradeable_share(guards)
+    u_share = _universe_share(guards)
     evidence = {
         "run_id": record.get("run_id"),
         "started_utc": record.get("started_utc"),
@@ -117,11 +151,24 @@ def classify(record: Optional[Dict], failed: bool = True) -> Dict:
         "tradeable": (uq.get("tradeable") or {}).get("tradeable"),
         "rows": uq.get("rows"),
         "tradeable_share": None if share is None else round(share, 4),
+        "finviz_claimed": uq.get("finviz_claimed"),
+        "universe_share": None if u_share is None else round(u_share, 4),
         "errors": len(errors),
     }
 
     if _looks_like_traceback(errors):
         return {"klass": "D_code", "why": "errors 里有 traceback", "evidence": evidence}
+
+    # 截断排在上游读数之前：宇宙不完整时，它下面每一个读数都是在一份残缺的
+    # 分母上算出来的，而 `quality` 和 `tradeable_share` 会照样报健康（比例
+    # 对截断免疫）。先说出「行数本身少了一半」，操作员才不会照 C_gate 的话
+    # 去发布 artifact。
+    if u_share is not None and u_share < UNIVERSE_COMPLETE_FLOOR:
+        return {"klass": "E_truncated",
+                "why": f"只抓到 {uq.get('rows')}/{uq.get('finviz_claimed')} 行"
+                       f"（{u_share:.1%} < {UNIVERSE_COMPLETE_FLOOR:.0%}）"
+                       f"，供应商中途就不给了",
+                "evidence": evidence}
 
     if uq.get("status") == "severe" or (share is not None and share < TRADEABLE_FLOOR):
         why = []

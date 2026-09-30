@@ -1269,7 +1269,12 @@ def main():
         s: statuses.count(s) for s in ('tradeable', 'excluded', 'unmeasurable')
     }
     claimed = getattr(finviz, 'claimed_total', None)
-    if claimed and len(rows_out) < 0.9 * claimed:
+    # Same floor the triage tool classifies on -- one threshold, one home. If
+    # these two ever disagree, a short scrape logs here and still gets called
+    # C_gate ("the data is fine, publish the artifact") over there, which is
+    # exactly what happened on 2026-09-30.
+    from pipeline.tools.failure_class import UNIVERSE_COMPLETE_FLOOR
+    if claimed and len(rows_out) < UNIVERSE_COMPLETE_FLOOR * claimed:
         logger.error("Finviz claimed %d rows, universe has %d (%.0f%%) -- short scrape",
                      claimed, len(rows_out), 100 * len(rows_out) / claimed)
     ledger.note('universe_quality', quality['status'], rows=len(rows_out), finviz_claimed=claimed,

@@ -113,3 +113,110 @@ def test_the_floor_separates_the_two_populations(records):
         (healthy if v["klass"] == "C_gate" else throttled).append(share)
     assert min(healthy) > TRADEABLE_FLOOR * 5
     assert max(throttled) < TRADEABLE_FLOOR / 5
+
+
+# ---------------------------------------------------------------------------
+#  2026-09-30 的第二张考卷：抓取被腰斩
+# ---------------------------------------------------------------------------
+#
+# `fixtures/run_ledger_2026-09-30.jsonl` 是三条真实记录，逐字取自
+# data/history/run_ledger.jsonl：
+#
+#     36637199694  09-29 22:04  rows 5612 / claimed 5612   成功
+#     36783219599  09-30 22:03  rows 1000 / claimed 5613   失败
+#     36785607847  09-30 22:27  rows 1000 / claimed 5613   失败
+#
+# 那两班失败的原因是 Finviz 在第 51 页（r=1001）起返回 403，宇宙被砍到 18%。
+# 而分诊器当时说 **C_gate**——「数据是好的，去下载 artifact 发布」。照它说的
+# 做，会把一份 1000 行的宇宙当全市场发上 dashboard：广度、RS、新高新低全错。
+#
+# 它为什么答错，是这一节真正要钉住的东西：旧判据只有 `tradeable_share`，
+# 而那是**已抓行内**的比例，对截断免疫。449/1000 = 44.9%，和健康夜间的
+# 45% 一模一样。缺的行连分母都没进去。
+FIXTURE_0930 = Path(__file__).parent / "fixtures" / "run_ledger_2026-09-30.jsonl"
+
+TRUNCATED_RUNS = ("36783219599", "36785607847")
+HEALTHY_RUN = "36637199694"
+
+
+@pytest.fixture(scope="module")
+def records_0930():
+    recs = load_ledger(FIXTURE_0930)
+    assert len(recs) == 3, "考卷少了几班，先看 fixture 是不是被动过"
+    return recs
+
+
+@pytest.mark.parametrize("run_id", TRUNCATED_RUNS)
+def test_a_halved_universe_is_not_called_a_gate_problem(records_0930, run_id):
+    """两班真实的截断必须判 E_truncated——判成 C_gate 就会有人去发布它。"""
+    rec = find_run(records_0930, run_id)
+    assert rec is not None
+    v = classify(rec)
+    assert v["klass"] == "E_truncated", v["why"]
+    assert "不要发布" in NEXT_ACTION[v["klass"]]
+
+
+@pytest.mark.parametrize("run_id", TRUNCATED_RUNS)
+def test_the_old_ruler_cannot_see_this_shape(records_0930, run_id):
+    """阳性对照①「漏改」：证明旧判据在这两班上读数是健康的。
+
+    如果哪天有人把 E_truncated 那一支删掉，`tradeable_share` 会照样落在
+    健康带里，于是又回到 C_gate——这条断言就是那个回归的检波器。它断言的
+    不是「新代码对」，是「旧代码在这里必然瞎」。
+    """
+    v = classify(find_run(records_0930, run_id))
+    share = v["evidence"]["tradeable_share"]
+    assert share > TRADEABLE_FLOOR * 5, "旧判据在这一班上并不报警"
+    assert 0.40 < share < 0.50, f"{share}: 和健康夜间的 45% 处在同一带"
+    # 真正把它和健康夜间分开的是这一个数，不是上面那一个。
+    assert v["evidence"]["universe_share"] < 0.2
+
+
+def test_a_complete_universe_is_still_a_gate_problem(records_0930):
+    """阳性对照②「改了但接错」：rows == claimed 的班次不许被新判据抓走。
+
+    账本里 53 班健康夜间 rows 与 finviz_claimed 逐字相等，所以这一支只要
+    阈值或分母写反（比如拿 claimed/rows），整段历史会立刻被判成截断。
+    """
+    rec = json.loads(json.dumps(find_run(records_0930, HEALTHY_RUN)))
+    uq = rec["guards"]["universe_quality"]
+    assert uq["rows"] == uq["finviz_claimed"]
+    v = classify(rec)
+    assert v["klass"] == "C_gate", v["why"]
+    assert v["evidence"]["universe_share"] == 1.0
+
+
+def test_a_traceback_still_outranks_truncation(records_0930):
+    """代码异常仍在最前：它会把 rows 也弄脏，先修代码。"""
+    rec = json.loads(json.dumps(find_run(records_0930, TRUNCATED_RUNS[0])))
+    rec["errors"] = [{"where": "run_all", "msg": "Traceback (most recent call last): ..."}]
+    assert classify(rec)["klass"] == "D_code"
+
+
+def test_truncation_outranks_a_healthy_looking_quality_status(records_0930):
+    """`universe_quality: ok` 不能盖过截断——那两班的 status 正是 ok。"""
+    rec = find_run(records_0930, TRUNCATED_RUNS[0])
+    assert rec["guards"]["universe_quality"]["status"] == "ok"
+    assert classify(rec)["klass"] == "E_truncated"
+
+
+def test_missing_claimed_total_falls_back_instead_of_crashing(records_0930):
+    """2026-08-20 之前的账本没有 finviz_claimed；老记录不许让分诊器炸。"""
+    rec = json.loads(json.dumps(find_run(records_0930, TRUNCATED_RUNS[0])))
+    del rec["guards"]["universe_quality"]["finviz_claimed"]
+    v = classify(rec)
+    assert v["klass"] == "C_gate"
+    assert v["evidence"]["universe_share"] is None
+
+
+def test_the_short_scrape_threshold_has_exactly_one_home():
+    """`run_all` 的 short-scrape 日志与本模块必须用同一个阈值。
+
+    两处各写一个 0.9 时，短抓会在日志里报红、同时在分诊器里被叫成
+    「数据是好的，去发布」——2026-09-30 就是这么过去的。
+    """
+    from pipeline.tools.failure_class import UNIVERSE_COMPLETE_FLOOR
+    src = (Path(__file__).parents[1] / "screeners" / "run_all.py").read_text()
+    assert "UNIVERSE_COMPLETE_FLOOR * claimed" in src
+    assert "0.9 * claimed" not in src, "run_all 又自己拍了一个阈值"
+    assert UNIVERSE_COMPLETE_FLOOR == 0.9
