@@ -47,7 +47,7 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
 
 ## 五、产出与落地
 
-文件：`data/research/screener_redesign/focus/<asof>.json`（白名单，可自合）。ALEX 确认 `data/output/focus.json` 之前一律写这里（T-1001-06）。形状：
+逐日存档文件：`data/research/screener_redesign/focus/<asof>.json`（`data/` 前缀，gate=none，可自合；此子目录归本线，2026-10-01 ops 裁 T-1001-16）。ALEX 确认 `data/output/focus.json` 之前一律写这里（T-1001-06）。形状：
 
 ```json
 {"asof": "2026-09-29", "generated_at": "<UTC ISO>", "counts": {}, "rule": {}, "market": {},
@@ -57,11 +57,11 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
  "en_reviewed_by_andy": false}
 ```
 
-= `build_cards.py` 的整份输出 + `notes` + `gate`。**同一份内容再写一份 `latest.json`**（同目录）——Screener 页只读这一个（T-1001-08），它拿 `asof` 和站点最新交易日比，过期会在页上标出来。按宪法「直推 main 标准动作」在临时树提交**只这两个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
+= `build_cards.py` 的整份输出 + `notes` + `gate`。**同一份内容再写一份 `frontend/public/data/focus.json`**——DATA ALEX T-1001-06 定的落地路径（不进 `data/output/`），Screener 页只读这一个（T-1001-08），它拿 `asof` 和站点最新交易日比，过期会在页上标出来。这个精确路径 gate.py 已判 none（2026-10-01 ops 裁 T-1001-16），不走 reviewer。按宪法「直推 main 标准动作」在临时树提交**只这两个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
 
 ## 坑（同工作流的坑追加在这里，不另开 memory）
 
 - **组选哪个**：挂多个主题时取三个月超额最高的那个（ESTC 挂 Cloud Software 与 Cybersecurity，取后者）。句子里要说「挂两个主题，按三个月超额取 X」。
 - **RS 评级 1**：09-25 SUNB、09-29 ANDG 都是 1，组内却靠前。成因在查（T-1001-04），在查清前一律按上面的 ⚠️ 句处理。
-- **忘写 `latest.json` 页面就停在旧日子**：页上会标「句子还停在 X」，但那是症状；两份同时写、同一个 commit。
+- **忘写 `frontend/public/data/focus.json` 页面就停在旧日子**：页上会标「句子还停在 X」，但那是症状；两份同时写、同一个 commit。
 - **临时目录会被清**：`/private/tmp` 下的草稿隔夜可能就没了（09-26 的模板丢过一次），当天写完当天落仓库。
