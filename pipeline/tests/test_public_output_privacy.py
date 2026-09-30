@@ -71,6 +71,10 @@ ALLOWED_KEYS = [
     # Model Books outlier screen: a whole-market liquidity floor (min average
     # dollar volume traded in the stock), same category as watchlist above.
     ('frontend/public/data/modelbooks/excluded.json', r'^\.thresholds\.dollar_vol_min$'),
+    # Screener funnel's universe gate (T-1001-08): market cap / dollar volume /
+    # ADR floor for the whole tradeable universe, same category as watchlist
+    # above -- not an account amount.
+    ('frontend/public/data/focus.json', r'^\.rule\.gate\.dollar_vol$'),
 ]
 
 # Dollar totals and share counts hiding inside prose (the trade narrative said
