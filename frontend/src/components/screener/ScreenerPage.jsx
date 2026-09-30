@@ -17,6 +17,7 @@ import StockTable from './StockTable'
 import HowToRead from '../HowToRead'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { computeThemeStrength, THEME_STATE_LABEL } from './themeStrengthMath'
+import FunnelPanel from './funnel/FunnelPanel'
 
 /**
  * One table over the tradeable universe, read through four vocabularies the
@@ -421,6 +422,21 @@ export default function ScreenerPage() {
           <DataFreshnessBadge key="fresh" sessionDate={heat?.as_of?.slice(0, 10)} />,
         ]} />
 
+      {/* THE FUNNEL (Andy 2026-09-30 「合」, T-1001-08): course §5.2 as the top
+          of this page. It is the page's purpose — from the universe down to at
+          most fifteen names, one sentence each — so it comes first, and the
+          table below becomes what it always was: every name, free to filter.
+          A ticker clicked in the funnel opens in the chart band below. */}
+      <FunnelPanel siteDate={heat?.as_of?.slice(0, 10)}
+                   onTicker={(t) => {
+                     if (t !== charted) chartPick(t)
+                     document.getElementById('screener-chart')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                   }} />
+
+      <h2 className="m-0 mb-2 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+        {tr('funnel.all')}
+      </h2>
+
       {/* the whole confluence ledger, not the old 25-row display slice — the
           sentence says "here", and here now holds all fifty */}
       {/* the names it just argued for are the names you can chart */}
@@ -442,7 +458,7 @@ export default function ScreenerPage() {
 
           Wide also suits the chart itself. A month of candles in a 380px
           column is a smear; across the page it is a chart. */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]
+      <div id="screener-chart" className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]
                       xl:grid-cols-[minmax(0,1fr)_340px] gap-3 items-start mb-4">
         {/* 320, not 400 (Andy 2026-08-19, off the finish review). The band and
             the ten-row table were each right on their own and inverted the
