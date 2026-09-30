@@ -501,8 +501,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # institutions have been accumulating.
     #
     # What it structurally cannot see:
-    #   * anything listed under a year ago -- perf_1y is missing, so recent
-    #     IPOs and 2024-25 listings cannot reach the top however they trade
+    #   * anything listed under a year ago -- perf_1y (and therefore q3, q4)
+    #     is missing, so recent IPOs and 2024-25 listings get no rs_rating at
+    #     all (null, not zero -- see na='keep' below), however they trade
     #   * a move that started this month -- three long windows need a quarter
     #     before they register it
     #   * a leader that has stopped. A name can hold a top score on last
@@ -528,12 +529,27 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # quarter, two quarters, one year, which matches neither IBD nor the
     # reconstruction. It gates three theme cards and displays nowhere, so a
     # change here silently changes membership; the switch reports its diff.
+    # T-1001-04: `+` on pandas Series does not skip NaN, so ANY one of the
+    # four quarters missing poisons the whole weighted sum to NaN -- and
+    # q3/q4 both depend on perf_1y, so this is really "1-year history or
+    # nothing." That part is correct and matches IBD (no RS Rating is
+    # published for a name that young). The bug was in what happened next:
+    # na='top' (the default, right for rs_1m/rs_3m/rs_6m above, where a
+    # missing perf_* really does mean "no reading") ranked that NaN as the
+    # SINGLE WORST score in the field -- not "unknown", but "rank 1", tied
+    # with names that are genuinely down big. Measured 2026-09-29: every one
+    # of the 73 tradeable names with rs_rating==1 had perf_1y missing (none
+    # were a true bottom-of-market read), and 11 of them had a perf_3m or
+    # perf_6m in the elite percentiles (e.g. ANDG: perf_3m +50%, perf_6m
+    # +104%, rs_rating 1) -- the opposite of what the field claims to show.
+    # na='keep' makes the right call instead: no 1-year history -> no
+    # rs_rating (null), same as growth_score's "unknown, not worst" rule.
     _q = {}
     for name, lag in (('q1', 63), ('q2', 126), ('q3', 189), ('q4', 252)):
         _q[name] = _quarter_excess(df, lag)
     df['_rs_raw'] = (0.4 * _q['q1'] + 0.2 * _q['q2']
                      + 0.2 * _q['q3'] + 0.2 * _q['q4'])
-    df['rs_rating'] = score_against_tradeable('_rs_raw')
+    df['rs_rating'] = score_against_tradeable('_rs_raw', na='keep')
     df.drop(columns=['_rs_raw'], inplace=True)
 
     # --- F score (fundamental) ---
