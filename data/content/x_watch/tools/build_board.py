@@ -536,13 +536,11 @@ def main() -> None:
                 rs_cell(t.get("rs")), d50_cell(t.get("d50")), bask_cell(t.get("bask")),
             ])
 
-    # 给 dashboard 个股页的「X 热度」列(前端归 UI Claire)。这是本工具唯一写进
-    # data/output/ 的文件,只新增,不碰任何既有 output。
-    heat = x_heat(data)
-    X_HEAT_PATH.write_text(
-        json.dumps(heat, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"x_heat.json ← {heat['count']} 只票 / 窗口 "
-          f"{heat['window']['start']}→{heat['window']['end']}")
+    # x_heat.json 不再由本工具写：X 调研线没有 data/output/ 的落地权，这里写了也提交
+    # 不上去，main 上那份从 09-24 起就冻在 09-17→09-23 窗口。改由数据端夜跑
+    # （pipeline/screeners/run_all.py）调用本文件的 build()/x_heat() 生成。
+    # Andy 2026-09-27「不开新落地权」· 2026-10-01「B，数据端接手」（T-0927-67）。
+    # x_heat() 函数留在这里是单一口径——数据端 import 它，不另抄一份。
 
     if TPL.exists():
         html = TPL.read_text(encoding="utf-8").replace(

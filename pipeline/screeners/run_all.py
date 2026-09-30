@@ -1431,6 +1431,27 @@ def main():
     except Exception:
         logger.exception("theme board failed - theme_board.json not updated")
 
+    # X 热度（个股页「X 热度」列）：由数据端夜跑生成，X 调研线不写 data/output。
+    # Andy 2026-09-27 裁「不开新落地权」，2026-10-01 裁「B，数据端接手」——此前
+    # X 线的 build_board.py 顺手写这个文件却无权提交，main 上的 x_heat.json 从 09-24
+    # 起停在 09-17→09-23 窗口，个股页那一列冻了 7 天没人发现。
+    # 直接复用 build_board.build()/x_heat()，不另抄一份口径：两份拷贝会漂。
+    # 它只读仓库里已提交的文件（X 帖子台账 + data/output 现成字段），不联网。
+    # 自己的失败域：X 台账坏了不能让别的输出看起来是坏的。
+    try:
+        import importlib.util as _ilu
+        _bb_path = Path('data/content/x_watch/tools/build_board.py')   # 与 OUTPUT_DIR 同口径：相对仓库根运行
+        _spec = _ilu.spec_from_file_location('x_watch_build_board', _bb_path)
+        _bb = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_bb)
+        _heat = _bb.x_heat(_bb.build())
+        _emit(ledger, OUTPUT_DIR / 'x_heat.json',
+              json.dumps(_heat, ensure_ascii=False, indent=1))
+        logger.info("Saved x_heat.json - %d tickers, window %s->%s", _heat['count'],
+                    _heat['window']['start'], _heat['window']['end'])
+    except Exception:
+        logger.exception("x_heat failed - x_heat.json not updated")
+
     # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
     # the Watchlist page renders instead of filtering. Own failure domain.
     try:

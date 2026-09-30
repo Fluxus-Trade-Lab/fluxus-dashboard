@@ -194,3 +194,23 @@ def test_x_heat_sorted_by_people_desc():
                    "days": _days({"2026-09-22": ["a", "b", "c"]})}],
                  ["2026-09-22"])
     assert [r["ticker"] for r in bb.x_heat(data)["rows"]] == ["HIGH", "LOW"]
+
+
+# ── x_heat.json 的写者只有数据端（T-0927-67，Andy 2026-10-01「B，数据端接手」）──
+
+def test_build_board_main_no_longer_writes_into_data_output():
+    """X 线的工具不许再往 data/output/ 写——它没有那个目录的落地权，写了也提交不上去，
+    于是 main 上的文件冻住、前端读到的是旧窗口（09-24→09-30 实际发生过 7 天）。"""
+    import inspect
+    src = inspect.getsource(bb.main)
+    # 查写入动作本身，不查字符串「data/output」——注释里解释为什么不写时本来就会提到它
+    assert "X_HEAT_PATH" not in src
+
+
+def test_the_nightly_pipeline_is_the_one_that_writes_x_heat():
+    """写入改到数据端夜跑，而且复用 build_board 的 x_heat()，不另抄口径。"""
+    from pathlib import Path
+    src = Path("pipeline/screeners/run_all.py").read_text()
+    assert "'x_heat.json'" in src
+    assert "x_watch/tools/build_board.py" in src
+    assert "_bb.x_heat(_bb.build())" in src
