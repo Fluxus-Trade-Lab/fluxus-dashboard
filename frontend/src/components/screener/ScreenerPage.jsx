@@ -10,11 +10,13 @@ import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
 import { useGroups } from '../../hooks/useGroups'
 import { useMarketData } from '../../hooks/useMarketData'
+import { useThemeBoard } from '../../hooks/useThemeBoard'
 import { SCAN_DEFS, scanTickers } from '../../lib/scanSets'
 import ScanBar from './ScanBar'
 import StockTable from './StockTable'
 import HowToRead from '../HowToRead'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { computeThemeStrength, THEME_STATE_LABEL } from './themeStrengthMath'
 
 /**
  * One table over the tradeable universe, read through four vocabularies the
@@ -84,6 +86,7 @@ export default function ScreenerPage() {
   const groups = useGroups()
   const heat = useHeatingUp()
   const { data: market } = useMarketData()
+  const themeBoard = useThemeBoard()
   const { t: tr } = useLanguage()
 
   const initial = useMemo(loadQuery, [])
@@ -178,6 +181,23 @@ export default function ScreenerPage() {
     () => (themes.size ? groups.themes.filter((t) => themes.has(t.group)) : []),
     [themes, groups.themes])
 
+  /**
+   * Per-stock strength against the theme's own proxy ETF, replacing the
+   * State/Top-quartile columns' usual cohort (the stock's home group) with
+   * the selected theme — data from `theme_board.json`
+   * (`pipeline/themes/proxy_board.py`, shipped 2026-09-29).
+   *
+   * Only with exactly one theme chosen: two themes give two different excess
+   * readings for any stock that sits in both, and this table shows one row
+   * per stock. The roster is the theme's FULL membership (groups.json), not
+   * whatever the scan/search on top of it happens to be showing — the
+   * ranking is the theme's, not the table's current cut of it.
+   */
+  const themeStrengthName = themes.size === 1 ? [...themes][0] : null
+  const themeStrengthMap = useMemo(
+    () => computeThemeStrength(themeBoard.data, themeStrengthName, themeRows[0]?.tickers),
+    [themeBoard.data, themeStrengthName, themeRows])
+
   // Rows before the state filter, so state counts can be honest facet counts
   // of what each state word would keep — not of the whole world.
   const preState = useMemo(() => {
@@ -209,11 +229,22 @@ export default function ScreenerPage() {
       // theme, industry as the total fallback) — never chosen by the frontend
       const home = s?.primary_group ?? indName
       const homeKind = s?.primary_kind ?? (indName ? 'industry' : null)
+      // With one theme chosen, every row here already passed the theme
+      // membership filter above — `ts` is undefined only for members the
+      // proxy board could not price (see themeStrengthMath.js), never for a
+      // name outside the theme.
+      const ts = themeStrengthName ? themeStrengthMap.get(t) : null
       out.push({
         ticker: t,
         inUniverse: Boolean(u),
         heat: heatByTicker.get(t) ?? null,
-        state: s?.state ?? null,
+        state: themeStrengthName
+          ? (ts?.state ? THEME_STATE_LABEL[ts.state] : null)
+          : (s?.state ?? null),
+        stateTitle: themeStrengthName
+          ? (ts?.state ? `vs ${themeStrengthName} proxy — excess ${ts.excess > 0 ? '+' : ''}${ts.excess.toFixed(1)}%, momentum ${ts.momentum > 0 ? '+' : ''}${ts.momentum.toFixed(1)}%`
+              : `no proxy-relative reading — ${themeStrengthName}'s proxy board could not price this name`)
+          : null,
         ind: indName,
         indState: indName ? industryState.get(indName) ?? null : null,
         home,
@@ -227,8 +258,15 @@ export default function ScreenerPage() {
         vol5050: u?.vol_5d_50d ?? null,
         indPct: s?.group_pctile ?? null,
         accel: s?.rs_accel ?? null,
-        tq: s?.persistence ?? null,
-        tqOf: s?.persistence_of ?? null,
+        // Top quartile: home-group cohort persistence by default, swapped for
+        // "top 25% of THIS theme by excess over its proxy ETF" while a single
+        // theme is selected (themeStrengthMath.js — Andy 09-30, T-0930-50).
+        tq: themeStrengthName ? (ts ? (ts.topQuartile ? 1 : 0) : null) : (s?.persistence ?? null),
+        tqOf: themeStrengthName ? (ts ? 1 : null) : (s?.persistence_of ?? null),
+        tqTitle: themeStrengthName
+          ? (ts ? `top 25% of ${themeStrengthName} by excess over its proxy ETF: ${ts.topQuartile ? 'yes' : 'no'} (${ts.excess > 0 ? '+' : ''}${ts.excess.toFixed(1)}%)`
+              : undefined)
+          : undefined,
         rs1: u?.rs_1m ?? u?.rs_21d ?? null,
         rs3: u?.rs_3m ?? u?.rs_63d ?? null,
         rs6: u?.rs_6m ?? u?.rs_126d ?? null,
@@ -243,7 +281,8 @@ export default function ScreenerPage() {
       })
     }
     return out
-  }, [universe, activeScan, themeRows, search, groups.stocks, heatByTicker, industryState, ribbonByHome])
+  }, [universe, activeScan, themeRows, search, groups.stocks, heatByTicker, industryState,
+      ribbonByHome, themeStrengthName, themeStrengthMap])
 
   // null while groups.json is absent — "Leading 0" is a reading, not a shrug
   const statesLoaded = !groups.loading && !groups.error
@@ -456,7 +495,8 @@ export default function ScreenerPage() {
            retires it. */
         <StockTable key={`${scan}|${[...states].join()}|${[...themes].join()}|${search.trim().toUpperCase()}`}
                     rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'relVol'}
-                    onChart={(t) => { if (t !== charted) chartPick(t) }} />
+                    onChart={(t) => { if (t !== charted) chartPick(t) }}
+                    themeStrengthName={themeStrengthName} />
       ) : (
         <p className="m-0 py-8 text-center text-[13px] text-[var(--color-text-muted)]">
           {!activeScan.loaded
@@ -471,12 +511,24 @@ export default function ScreenerPage() {
           Only the confluence 50 carry one. The caret opens the appearances
           behind the number.
         </p>
-        <p>
-          <b>Align</b> — left dot: own RS 3M in the top third. Right dot: its
-          industry&rsquo;s state. The market-conditions number in the header is the
-          third light. Three lit together is the aligned setup; they are never
-          summed into a score.
-        </p>
+        {themeStrengthName ? (
+          <p>
+            <b>State</b> and <b>Top quartile</b> are reading against {themeStrengthName}&rsquo;s
+            own proxy ETF while one theme is picked — excess return over the
+            proxy this bucket, momentum against the bucket before, top 25%
+            ranked on that excess within {themeStrengthName}&rsquo;s full roster.
+            A name the proxy board could not price shows no reading at all
+            rather than a guess. Pick a second theme or clear the filter to
+            go back to the home-group reading.
+          </p>
+        ) : (
+          <p>
+            <b>Align</b> — left dot: own RS 3M in the top third. Right dot: its
+            industry&rsquo;s state. The market-conditions number in the header is the
+            third light. Three lit together is the aligned setup; they are never
+            summed into a score.
+          </p>
+        )}
         <p>
           <b>Group trend</b> is the state history of the stock&rsquo;s home group —
           the pipeline&rsquo;s one-home-per-stock pointer (smallest curated theme,

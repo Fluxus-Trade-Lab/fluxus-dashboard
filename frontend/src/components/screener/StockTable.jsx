@@ -265,7 +265,7 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
   )
 }
 
-export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
+export default function StockTable({ rows, defaultSort = 'rs3', onChart, themeStrengthName }) {
   const { t: tr } = useLanguage()
   const [shown, setShown] = useState(HEAD)
   const boxRef = useRef(null)
@@ -340,7 +340,10 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
                 title="confluence score — how many screens stacked, quality tier ×3">{tr('scr.col.heat')}</SortTh>
             <th className="text-center py-1 pr-2.5 font-medium"
                 title="left dot: own RS 3M ≥ 67 · right dot: industry state">{tr('scr.col.align')}</th>
-            <th className="text-left py-1 pr-2.5 font-medium">{tr('scr.col.state')}</th>
+            <th className="text-left py-1 pr-2.5 font-medium"
+                title={themeStrengthName
+                  ? `vs ${themeStrengthName}’s own proxy ETF, not the home-group state machine`
+                  : undefined}>{tr('scr.col.state')}</th>
             <th className="text-left py-1 pr-2.5 font-medium"
                 title="state history of the stock's home group; cells light as the archive completes fortnights">{tr('scr.col.groupTrend')}</th>
             <SortTh k="rs1" sort={sort} onSort={clickSort}>RS 1M</SortTh>
@@ -354,7 +357,9 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
             <SortTh k="vol5050" sort={sort} onSort={clickSort}
                 title="5-day average volume over 50-day average volume, from daily bars">{tr('scr.col.vol5d50d')}</SortTh>
             <SortTh k="tq" sort={sort} onSort={clickSort} align="left"
-                title="windows spent in the top quartile of its own cohort">{tr('scr.col.topQuartile')}</SortTh>
+                title={themeStrengthName
+                  ? `top 25% of ${themeStrengthName} by excess over its proxy ETF`
+                  : 'windows spent in the top quartile of its own cohort'}>{tr('scr.col.topQuartile')}</SortTh>
             <th className="py-1 font-medium w-5"></th>
           </tr>
         </thead>
@@ -403,7 +408,7 @@ function RowPair({ r, i, open, onToggle, onChart }) {
         <td className="py-[4px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
-        <td className="py-[4px] pr-2.5 text-[11px]">
+        <td className="py-[4px] pr-2.5 text-[11px]" title={r.stateTitle || undefined}>
           <StateWord state={r.state} fallback={r.inUniverse ? '—' : tr('scr.notInUniverse')} />
         </td>
         <GroupTrendCell home={r.home} homeKind={r.homeKind} ribbon={r.homeRibbon} />
@@ -431,7 +436,8 @@ function RowPair({ r, i, open, onToggle, onChart }) {
         </td>
         <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-78 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
-            title={r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined} />
+            title={r.tqTitle
+              ?? (r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined)} />
         </td>
         <td className="py-[4px] text-right">
           {hasEvidence && (
