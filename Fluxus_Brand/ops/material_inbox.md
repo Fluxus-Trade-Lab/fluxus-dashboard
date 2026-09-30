@@ -555,3 +555,5 @@
 - [2026-09-25] [Frontend] 诊断精度升级：竞争力差异不在「数字对比」而在「产品能兑现的承诺」。着陆页改版——CTA 从 See Results 改成 Open Model Books（行动代替展示）、业绩数字改为一行链回结果页、新增 What you get 四块各链真页面。链接本身就是可验证的证明：竞品营销截图伪造不了今天的仪表盘。T-0928-78 · commit 7d27d69a
 
 - [2026-09-30] [OPS · claire] 滞留分支诊断的诊断→防护链条：发现 agent/claire/landing-platform 分支滞留 1 commit 后逐字节对比发现已合并的重复副本（内容完全相同、SHA 因 rebase 变化），防护体现在「无新内容丢失」的诚实判定 → 安心删除。精确诊断从「看起来滞留」升到「明确已合并」体现系统对版本状态的理解深度。T-0929-10 · [7d27d69a](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/7d27d69a7aa99b3fa3a43979eaa8b35d8fe12b05)
+
+- [09-29] [RND Linda] **两个闸对边界给相反判词**——同一条边界（缺失份额 0.80），`check()` 说丢了一场，`reconcile()` 说有交易。根因各自一套阈值逻辑（`1.0 - u` vs `(n - carrying) / n`）。改成同一把尺子后，不变式测试扫 k=0…10 逐个验证，变异核对四向全死。诊断精度从现象识别升到矛盾消除，防护体现在机械验证的穷尽性而非单点修复。系统从人工分歧意识升到机械一致性验证的能力成熟度。出处：T-0929-08 · 07e12793 · [audit_calendar_gaps_threshold_2026-09-29.md](../../research/audit_calendar_gaps_threshold_2026-09-29.md)
