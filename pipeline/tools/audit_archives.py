@@ -24,9 +24,16 @@ This tool checks the invariants that hold for every archive, reports, and
       screener JSONs' rows == ticker_events rows for that date; breadth
       universe_size ~ universe.json rows (mismatch = two writers disagree)
 
-Exit code 1 when any I1/I2/I3 violation exists (CI refuses to commit the run
-on that), 0 otherwise; I4/I5 are warnings in the report. --repair rewrites
-the file without I1/I2/I3 rows after writing a .bak next to it.
+Exit code 1 when ANY violation exists (CI refuses to commit the run on that),
+0 otherwise. That is I1/I2/I3 plus I6a, I6b and I7, which were added after this
+sentence first claimed only I1/I2/I3 were fatal -- `run()` has always summed
+every report's `violations`, so the list above is what the code does. I4, I5
+and I6c are warnings by design: I5 covers archives several different cadences
+write (regime_ledger, delayed_ep_log), so failing the nightly on any of them
+being behind would fail it for reasons the nightly cannot fix.
+--repair rewrites the file without I1/I2/I3 rows after writing a .bak next to
+it (only those three; a reconciliation mismatch is a writer bug, never a row to
+delete).
 
     python -m pipeline.tools.audit_archives            # report
     python -m pipeline.tools.audit_archives --repair   # also fix I1-I3
@@ -69,6 +76,12 @@ ARCHIVES: Dict[str, Dict[str, Any]] = {
     # have said so the next morning.
     "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": True,  "nightly": True},
 }
+class _Misaligned(Exception):
+    """I6 refuses to compare two sessions. Carries the message it will report,
+    so the `except Exception -> warning` fallback below cannot swallow it as an
+    unexpected crash."""
+
+
 COUNT_FLOOR = 0.30
 COUNT_CEIL = 3.0
 
@@ -145,13 +158,35 @@ def repair(path: Path, spec: Dict[str, Any], frame: pd.DataFrame, rep: Dict[str,
     return removed
 
 
-def reconcile(history: Path = HISTORY, output: Path = Path("data/output")) -> Dict[str, Any]:
+def reconcile(history: Path = HISTORY, output: Path = Path("data/output"),
+              last_done: Optional[dt.date] = None) -> Dict[str, Any]:
     """I6 -- cross-file agreement for the newest session. Two writers that
     describe the same thing must agree; a mismatch is a writer bug, not data.
       a) watchlist.json panel counts == watchlist_hits.csv rows per panel (same date)
       b) ticker_events.csv core screener counts (newest date) == the screener JSONs' row counts
       c) breadth_archive.csv newest universe_size == universe.json row count
-    Reported as violations only when the dates line up (a stale file is I5's job)."""
+
+    EVERY COMPARISON HAPPENS INSIDE ONE SESSION. Counts from two different
+    sessions differ because the market moved, so subtracting them and calling
+    the remainder "two writers disagree" names the wrong defect and the wrong
+    session. Before 2026-10-01 (b) and (c) did exactly that: with the archive
+    one session behind and today's payloads on disk, (b) billed our writer for
+    a count delta on YESTERDAY -- a session that was clean -- while I5 stated
+    the real fact (the archive is behind) one line above, as a warning.
+
+    How each part finds the session it is allowed to compare in:
+      (a) a shared key -- `watchlist.json` carries `date`, so it aligns on that
+      (b,c) NO shared key -- the screener payloads and `universe.json` carry
+          only `timestamp`, and turning that into an ET session would be a
+          THIRD copy of `et_session` (it already lives in both
+          `audit_universe_population` and `audit_universe_freshness`). So they
+          align on `last_done`, which is the same quantity I5 reads.
+    A misalignment is reported as ITSELF, never as a count delta, and keeps the
+    severity that part already had: (b) fatal, because today's payloads sitting
+    beside an archive that never got today's rows must stop the commit; (c) a
+    warning, which is all it ever was."""
+    last_done = last_done or last_completed_session()
+    on_session = last_done.isoformat()
     rep: Dict[str, Any] = {"archive": "reconcile(I6)", "rows": 0, "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
     try:
         wl = json.loads((output / "watchlist.json").read_text())
@@ -171,6 +206,13 @@ def reconcile(history: Path = HISTORY, output: Path = Path("data/output")) -> Di
         from pipeline.screeners.ticker_events import SCREENER_FILES, extract_events
         te = pd.read_csv(history / "ticker_events.csv", dtype=str)
         newest = te["date"].max()
+        if newest != on_session:
+            # The payloads on disk describe `on_session`; this archive does not
+            # reach it. Comparing the two counts the market, not the writers.
+            raise _Misaligned(f"I6b ticker_events newest session {newest} is not the "
+                              f"session under audit {on_session} -- today's screener "
+                              f"payloads have no archive rows to reconcile against "
+                              f"(the archive never got this session; see I5)")
         day = te[te["date"] == newest]
         for scr in SCREENER_FILES:
             p = output / f"{scr}.json"
@@ -181,13 +223,20 @@ def reconcile(history: Path = HISTORY, output: Path = Path("data/output")) -> Di
             n_csv = int((day["screener"] == scr).sum())
             if n_json != n_csv:
                 rep["violations"].append(f"I6b {newest} {scr}: {scr}.json {n_json} rows vs ticker_events {n_csv}")
+    except _Misaligned as e:
+        rep["violations"].append(str(e))
     except Exception as e:  # noqa: BLE001
         rep["warnings"].append(f"I6b skipped: {type(e).__name__}")
     try:
         ba = pd.read_csv(history / "breadth_archive.csv", dtype=str)
         u = json.loads((output / "universe.json").read_text())
         last = ba.sort_values("date").iloc[-1]
-        if int(float(last["universe_size"])) != len(u["rows"]):
+        if last["date"] != on_session:
+            rep["warnings"].append(f"I6c breadth_archive newest session {last['date']} is not "
+                                   f"the session under audit {on_session} -- universe.json "
+                                   f"describes a session this archive does not reach, so the "
+                                   f"two row counts are not comparable (see I5)")
+        elif int(float(last["universe_size"])) != len(u["rows"]):
             rep["warnings"].append(f"I6c breadth universe_size {last['universe_size']} ({last['date']}) vs universe.json rows {len(u['rows'])}")
     except Exception as e:  # noqa: BLE001
         rep["warnings"].append(f"I6c skipped: {type(e).__name__}")
@@ -214,7 +263,7 @@ def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt
             rep["repaired_rows"] = repair(p, spec, frame, rep)
         reports.append(rep)
     if output is not None and output.exists():
-        reports.append(reconcile(history, output))
+        reports.append(reconcile(history, output, last_done))
         reports.append(ticker_shells(output))
     n_viol = sum(len(r["violations"]) for r in reports)
     return {"as_of_session": last_done.isoformat(), "ok": n_viol == 0, "violations": n_viol,

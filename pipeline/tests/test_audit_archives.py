@@ -716,3 +716,95 @@ class TestTickerShellsMessageTruncation:
         names = msg.split(": ", 1)[1]
         assert msg.endswith("…"), msg
         assert len(names.rstrip("…").split(", ")) == 12, names
+
+
+class TestI6ComparesInsideOneSessionOnly:
+    """2026-10-01. Reconciliation used to subtract counts taken from two
+    different sessions and report the remainder as a writer disagreement.
+
+    Reproduction on `origin/main` at 8c059cf00 -- `ticker_events.csv` one
+    session behind, today's screener payload on disk:
+
+        I5   ticker_events  newest session 2026-08-17 < last completed 2026-08-18   WARNING
+        I6b  gainers_4pct.json 3 rows vs ticker_events 2                            VIOLATION
+
+    Same fact, two answers. I5 named it (the archive is behind) and warned;
+    I6b billed our writer for a count delta on 08-17, a session that was
+    clean, and failed the nightly job with that message. Exit code is
+    unchanged by the fix -- today's payloads beside an archive that never got
+    today's rows still must stop the commit -- but the sentence CI prints now
+    names the misalignment instead of a bogus delta.
+
+    The expected verdicts below are written out, not read back from the module:
+    a table that asks the code what it thinks agrees with any code at all.
+    """
+
+    def _fixture(self, tmp_path, archive_session, csv_n, json_n):
+        rows = [{"date": archive_session, "ticker": f"T{i}", "screener": "gainers_4pct"}
+                for i in range(csv_n)]
+        _write(tmp_path, "ticker_events.csv", rows)
+        files = {"gainers_4pct": {"tickers": [{"ticker": f"J{i}"} for i in range(json_n)]}}
+        out = A.run(tmp_path, last_done=LAST, output=_out(tmp_path, **files))
+        return _rep(out, "reconcile(I6)"), out
+
+    # ---- the two ways this can be wrong, one test each -------------------
+
+    def test_a_count_delta_inside_the_session_under_audit_still_fires(self, tmp_path):
+        """The gate I must not have blinded: aligned dates, writer really did
+        drop a row. Without this the fix below could be 'never compare'."""
+        r, out = self._fixture(tmp_path, DATE, csv_n=2, json_n=3)
+        v = [x for x in r["violations"] if x.startswith("I6b")]
+        assert v and "3 rows vs ticker_events 2" in v[0], v
+        assert not out["ok"]
+
+    def test_a_misaligned_archive_is_never_reported_as_a_count_delta(self, tmp_path):
+        """The bug. 08-17 archive, 08-18 payloads: two sessions, so the counts
+        are not comparable and the message must not pretend they are."""
+        r, out = self._fixture(tmp_path, "2026-08-17", csv_n=2, json_n=3)
+        v = [x for x in r["violations"] if x.startswith("I6b")]
+        assert len(v) == 1, v
+        assert "rows vs ticker_events" not in v[0], v[0]
+        assert "2026-08-17" in v[0] and "2026-08-18" in v[0], v[0]
+        assert "see I5" in v[0], v[0]
+        assert not out["ok"], "outputs beside an archive missing this session must still stop CI"
+
+    def test_a_misaligned_archive_whose_counts_happen_to_match_is_not_silent(self, tmp_path):
+        """The false-negative half, and the reason 'compare only when aligned'
+        is not enough on its own. Old code: 2 == 2, so it said nothing at all
+        while the archive was a whole session behind."""
+        r, out = self._fixture(tmp_path, "2026-08-17", csv_n=2, json_n=2)
+        assert [x for x in r["violations"] if x.startswith("I6b")], r["violations"]
+        assert not out["ok"]
+
+    # ---- the invariant, scanned rather than spot-checked -----------------
+
+    @pytest.mark.parametrize("behind", [0, 1, 2, 3, 4, 5])
+    def test_no_count_delta_is_ever_reported_for_a_session_other_than_last_done(
+            self, tmp_path, behind):
+        """k CALENDAR days behind, for k = 0..5 (08-16 is a Sunday, so some k
+        also raise I1 -- irrelevant here, this assertion only reads the count
+        deltas). Only k = 0 may produce a count
+        delta; every other k must report the misalignment instead. On
+        `origin/main` this scan is 1 green (k=0) and 5 red -- the invariant
+        breaks everywhere except the aligned point, which is the mirror image
+        of the calendar_gaps scan (10 green, 1 red on the edge) and is why
+        this one is a parametrize and not a single case."""
+        day = (LAST - dt.timedelta(days=behind)).isoformat()
+        r, _ = self._fixture(tmp_path, day, csv_n=2, json_n=3)
+        deltas = [x for x in r["violations"] if "rows vs ticker_events" in x]
+        assert (len(deltas) == 1) is (behind == 0), f"behind={behind}: {r['violations']}"
+
+    def test_i6c_reports_the_misalignment_not_a_size_delta(self, tmp_path):
+        """Same shape in the warning-only part: keep its severity, fix its
+        sentence. `universe_size` 100 on 08-17 vs universe.json's 103 rows on
+        08-18 is the universe growing overnight, not two writers disagreeing."""
+        _write(tmp_path, "breadth_archive.csv",
+               [{"date": "2026-08-14", "spx_close": 7700.0, "universe_size": 100},
+                {"date": "2026-08-17", "spx_close": 7745.06, "universe_size": 100}])
+        out = A.run(tmp_path, last_done=LAST,
+                    output=_out(tmp_path, universe={"rows": [{"t": i} for i in range(103)]}))
+        r = _rep(out, "reconcile(I6)")
+        w = [x for x in r["warnings"] if x.startswith("I6c")]
+        assert len(w) == 1 and "not comparable" in w[0], w
+        assert "universe_size 100" not in w[0], w[0]
+        assert r["violations"] == [], "I6c was a warning before this fix and stays one"
