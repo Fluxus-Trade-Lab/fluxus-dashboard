@@ -16,7 +16,7 @@ from datetime import date
 import pytest
 
 from pipeline.tickers.ticker_data_fetcher import (
-    QUARTERLY_SECTIONS, _quarterly_carry,
+    QUARTERLY_SECTIONS, _next_earnings_carry, _quarterly_carry,
 )
 
 
@@ -88,6 +88,77 @@ def test_an_empty_section_is_refetched(empty_key):
     assert _quarterly_carry(_prior(**{empty_key: []}), today=TODAY) is None
 
 
-def test_next_earnings_is_not_a_carried_section():
-    """It moves, and it is the field an open position acts on."""
+def test_next_earnings_is_not_a_quarterly_section():
+    """It has its own carry rule (date-based, see below), not the
+    stamp-age rule the true quarterly sections share."""
     assert "next_earnings" not in QUARTERLY_SECTIONS
+
+
+# ── next_earnings: carried while its date has not passed (T-1001-04) ───────
+#
+# `calendarEvents` came back empty for 249/251 tracked tickers on both the
+# 2026-09-28 and 2026-09-29 nightly runs -- from the first ticker fetched,
+# while quarterly_metrics/analyst/info succeeded the same nights, and the
+# identical calls for the identical tickers succeed when re-run outside the
+# runner. That is a vendor/runner-side block on one endpoint, not 249
+# separate "no earnings data" answers -- so carrying the last known date
+# forward (until it passes) is a better failure mode than going blank.
+
+def _prior_ne(ne_date="2026-09-10", asof="2026-09-01T00:00:00Z", **over):
+    d = {
+        "next_earnings": {"date": ne_date, "revenue_low": 1e9, "revenue_high": 1.1e9},
+        "next_earnings_asof": asof,
+    }
+    d.update(over)
+    return d
+
+
+def test_a_future_date_is_carried():
+    got = _next_earnings_carry(_prior_ne("2026-09-10"), today=TODAY)
+    assert got is not None
+    assert got["next_earnings"] == _prior_ne()["next_earnings"]
+    assert got["next_earnings_asof"] == "2026-09-01T00:00:00Z"
+
+
+def test_todays_date_is_still_carried():
+    """The boundary: earnings today have not passed yet."""
+    assert _next_earnings_carry(_prior_ne(str(TODAY)), today=TODAY) is not None
+
+
+def test_a_past_date_is_not_carried():
+    """This is the one thing the original no-carry rule protected against:
+    an open position must never be told a passed date is still upcoming."""
+    assert _next_earnings_carry(_prior_ne("2026-09-01"), today=TODAY) is None
+
+
+def test_no_prior_next_earnings_means_fetch():
+    assert _next_earnings_carry(None, today=TODAY) is None
+    assert _next_earnings_carry({}, today=TODAY) is None
+
+
+def test_an_empty_prior_section_means_fetch():
+    assert _next_earnings_carry(_prior_ne(ne_date=None), today=TODAY) is None
+    assert _next_earnings_carry({"next_earnings": {}}, today=TODAY) is None
+
+
+def test_an_unparseable_date_means_fetch():
+    assert _next_earnings_carry(_prior_ne("soon"), today=TODAY) is None
+
+
+def test_a_carry_without_any_stamp_means_fetch():
+    """Pre-T-1001-04 files have no next_earnings_asof and no fetched_at
+    fallback to borrow from in this fixture -- must not be trusted."""
+    p = _prior_ne()
+    del p["next_earnings_asof"]
+    assert _next_earnings_carry(p, today=TODAY) is None
+
+
+def test_falls_back_to_fetched_at_when_asof_is_missing():
+    """A file written before next_earnings_asof existed still carries `date`,
+    dated by the file's own fetched_at."""
+    p = _prior_ne()
+    del p["next_earnings_asof"]
+    p["fetched_at"] = "2026-08-31T00:00:00Z"
+    got = _next_earnings_carry(p, today=TODAY)
+    assert got is not None
+    assert got["next_earnings_asof"] == "2026-08-31T00:00:00Z"
