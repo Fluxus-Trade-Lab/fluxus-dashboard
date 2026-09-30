@@ -181,10 +181,15 @@ def reconcile(history: Path = HISTORY, output: Path = Path("data/output"),
           THIRD copy of `et_session` (it already lives in both
           `audit_universe_population` and `audit_universe_freshness`). So they
           align on `last_done`, which is the same quantity I5 reads.
-    A misalignment is reported as ITSELF, never as a count delta, and keeps the
-    severity that part already had: (b) fatal, because today's payloads sitting
-    beside an archive that never got today's rows must stop the commit; (c) a
-    warning, which is all it ever was."""
+    A misalignment is reported as ITSELF, never as a count delta. (a) and (b)
+    are fatal: today's watchlist.json / screener payloads sitting beside an
+    archive that never got today's rows must stop the commit. Before
+    2026-10-01 (a)'s misalignment was a warning while (b)'s was already a
+    violation -- the exact same fact (archive missing this session's rows)
+    reported two severities, which is what this function exists to prevent;
+    T-1001-44 made (a) match (b). (c) stays a warning, which is all it ever
+    was -- that call is unchanged by T-1001-44, which only reconciled (a)
+    with (b)."""
     last_done = last_done or last_completed_session()
     on_session = last_done.isoformat()
     rep: Dict[str, Any] = {"archive": "reconcile(I6)", "rows": 0, "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
@@ -199,7 +204,9 @@ def reconcile(history: Path = HISTORY, output: Path = Path("data/output"),
                     if p.get("measured") and per.get(p["key"], 0) != p["count"]:
                         rep["violations"].append(f"I6a {wl['date']} {p['key']}: watchlist.json count {p['count']} vs watchlist_hits {per.get(p['key'], 0)}")
         else:
-            rep["warnings"].append(f"I6a no watchlist_hits rows for watchlist.json date {wl['date']}")
+            rep["violations"].append(f"I6a watchlist_hits has no rows for watchlist.json's date "
+                                     f"{wl['date']} -- today's watchlist is on disk beside an "
+                                     f"archive that never got this session's panel rows (see I5)")
     except Exception as e:  # noqa: BLE001
         rep["warnings"].append(f"I6a skipped: {type(e).__name__}")
     try:

@@ -119,11 +119,15 @@ class TestReconcileI6a:
 
     def test_hits_from_another_session_do_not_count_as_this_one(self, tmp_path):
         # rows exist, but for a different date -- reconciling against them would
-        # compare today's page with yesterday's archive
+        # compare today's page with yesterday's archive. T-1001-44: this is the
+        # same fact I6b already treats as fatal (archive missing this session's
+        # rows), so it is a violation here too, not a warning.
         out = self._fixture(tmp_path, json_count=4, n_hit_rows=4, hits_date="2026-08-17")
         r = _rep(out, "reconcile(I6)")
-        assert r["violations"] == []
-        assert any(x.startswith("I6a no watchlist_hits rows") for x in r["warnings"]), r["warnings"]
+        v = [x for x in r["violations"] if x.startswith("I6a")]
+        assert v, r["violations"]
+        assert "watchlist_hits has no rows" in v[0] and "see I5" in v[0], v[0]
+        assert not out["ok"], "a watchlist page beside an archive missing this session must still stop CI"
 
 
 class TestReconcileI6b:
