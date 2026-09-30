@@ -47,6 +47,8 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
 
 ## 五、产出与落地
 
+存量 `data/research/screener_redesign/focus/latest.json`（旧口径留下的文件）自 2026-10-01 起停更，不再有班次写它；删它按 `gate.py` 判 `status=="D"` + `data/` 前缀 = andy 档，不要顺手删，要删另开单问 Andy。
+
 逐日存档文件：`data/research/screener_redesign/focus/<asof>.json`（`data/` 前缀，gate=none，可自合；此子目录归本线，2026-10-01 ops 裁 T-1001-16）。形状：
 
 ```json
@@ -57,7 +59,7 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
  "en_reviewed_by_andy": false}
 ```
 
-= `build_cards.py` 的整份输出 + `notes` + `gate`。**同一份内容再写一份 `frontend/public/data/focus.json`**——DATA ALEX T-1001-06 定的落地路径（不进 `data/output/`），Screener 页只读这一个（T-1001-08），它拿 `asof` 和站点最新交易日比，过期会在页上标出来。这个精确路径 gate.py 已判 none（2026-10-01 ops 裁 T-1001-16），不走 reviewer——**换来的是没有复核员再替你查这份文件**，push 前自己跑一遍 `python3 -m pytest -q pipeline/tests/test_public_output_privacy.py`（2 秒级，`frontend/public` 是它的扫描根之一，已有的白名单豁免见该测试 `PUBLIC_ROOTS`），红了就是句子/字段里混进了像美元、股数、会员名这类不该公开的东西，不许带红推送。按宪法「直推 main 标准动作」在临时树提交**只这两个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
+= `build_cards.py` 的整份输出 + `notes` + `gate`。**同一份内容再写一份 `frontend/public/data/focus.json`**——DATA ALEX T-1001-06 定的落地路径（不进 `data/output/`），Screener 页只读这一个（T-1001-08），它拿 `asof` 和站点最新交易日比，过期会在页上标出来。这个精确路径 gate.py 已判 none（2026-10-01 ops 裁 T-1001-16），不走 reviewer——**换来的是没有复核员再替你查这份文件**，push 前自己跑一遍 `python3 -m pytest -q pipeline/tests/test_public_output_privacy.py`（二十秒级，`frontend/public` 是它的扫描根之一，已有的白名单豁免见该测试 `PUBLIC_ROOTS`），红了就是句子/字段里混进了像美元、股数、会员名这类不该公开的东西，不许带红推送。按宪法「直推 main 标准动作」在临时树提交**只这两个文件**，push 带重试，最后 `git log origin/main -1` 核到自己的 commit。
 
 ## 坑（同工作流的坑追加在这里，不另开 memory）
 
