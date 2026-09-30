@@ -510,6 +510,86 @@ def bearish_volume_divergence(lang):
     return c.svg(T[2])
 
 
+
+def base_before_the_catalyst(lang):
+    """A base whose right side tightens onto a flattening average, with a dated event ahead.
+
+    Drawn for the 2026-09-29 lesson. The point of the picture is the order of the two
+    things: the base is already there and already says where the risk is, while the
+    catalyst is only a vertical line in the future - it sets the day, not the level.
+    Andy 2026-09-30: the diagram carries the structure and the body carries the day,
+    so the body never reads these labels back out.
+    """
+    T = {"EN": ["pivot", "shakeouts, taken back", "right side tightens onto the average",
+                "the catalyst is a date, not a level", "base low · the risk"],
+         "ZH": ["突破位", "两次洗盘，都被收回", "右侧向均线收紧",
+                "催化剂是一个日子，不是一个位置", "箱体低点 · 风险所在"]}[lang]
+    import math
+    PIV, SUP, EVT = 44.0, 30.0, 94.0
+    px = _lin(4, 88, 16)
+    py = [43.2, 38.0, 33.0, 27.6, 33.0, 40.8, 35.0, 27.9, 34.0, 38.6, 35.6, 39.4, 37.4, 39.8, 38.6, 39.6]
+    ma = lambda x: 39.2 - 9.0 * math.exp(-(x - 4) / 26.0)
+    win = lambda a, b: max(py[a:b]) - min(py[a:b])
+    assert py[3] < SUP <= py[4] and py[7] < SUP <= py[8], "two shakeouts under the base low, each taken back"
+    assert win(9, 12) > win(11, 14) > win(13, 16), "the right side tightens: each swing inside the last"
+    assert max(py[9:]) < PIV, "still under the pivot - the base has not broken out yet"
+    assert abs(py[-1] - ma(px[-1])) < 1.0, "price finishes sitting on the average"
+    assert ma(88) - ma(60) < ma(60) - ma(30), "the average is flattening as the range tightens"
+    assert EVT > px[-1], "the catalyst is still ahead of the last bar"
+    c = Canvas(ylim=(24, 48))
+    c.hline(PIV, "lvl", 2, 100)
+    c.hline(SUP, "lvl", 2, 100)
+    c.vline(EVT, "guide")
+    xs = _lin(4, 88, 60)
+    c.path(xs, [ma(x) for x in xs], "ma")
+    c.path(px, py, "trend")
+    c.text(2, PIV + 1.1, T[0], "small")
+    c.text(2, SUP - 1.9, T[4], "lab-acc small")
+    c.text(EVT - 2.5, 46.4, T[3], "lab-dn small", "end")
+    c.callout(px[7], py[7], px[7] + 6, 25.4, T[1], "lab-up")
+    c.callout(px[13], py[13], px[13] - 34, 46.4, T[2], "lab-acc")
+    return c.svg(T[2])
+
+
+def right_side_quality(lang):
+    """Two right sides under one pivot: swings that shrink, and swings that do not.
+
+    Drawn for the 2026-09-29 lesson. Both halves are the same width, the same
+    average and the same pivot, so the only difference the reader can see is the
+    behaviour of the range - which is the whole grading rule.
+    """
+    T = {"EN": ["TIGHT", "SLOPPY", "same pivot", "each swing inside the last",
+                "up, down, up, down through one line"],
+         "ZH": ["紧", "乱", "同一个突破位", "每一次摆动都在上一次之内",
+                "围着同一条线上下反复"]}[lang]
+    PIV, AVG = 46.0, 41.8
+    lx = _lin(6, 44, 9)
+    ly = [39.2, 43.4, 40.6, 43.0, 41.4, 42.9, 41.9, 42.7, 42.3]
+    rx = _lin(56, 94, 9)
+    ry = [41.5, 44.8, 38.6, 45.2, 38.2, 44.6, 38.8, 45.0, 39.4]
+    w = lambda s, a, b: max(s[a:b]) - min(s[a:b])
+    rd = [b - a for a, b in zip(ry, ry[1:])]
+    crossings = sum(1 for a, b in zip(ry, ry[1:]) if (a - AVG) * (b - AVG) < 0)
+    assert w(ly, 0, 3) > w(ly, 3, 6) > w(ly, 6, 9), "tight: each swing inside the last"
+    assert abs(ly[-1] - AVG) < 1.0, "tight: it finishes on the average"
+    assert all(a * b < 0 for a, b in zip(rd, rd[1:])), "sloppy: every bar reverses the one before it"
+    assert w(ry, 6, 9) > w(ly, 0, 3), "sloppy: still wider than where the tight one began"
+    assert crossings >= 4, "sloppy: it keeps crossing the same average"
+    assert max(ly) < PIV and max(ry) < PIV, "neither has cleared the pivot"
+    c = Canvas(ylim=(30, 56))
+    c.hline(PIV, "lvl", 2, 100)
+    c.vline(50, "guide")
+    c.path(lx, [AVG] * len(lx), "ma")
+    c.path(rx, [AVG] * len(rx), "ma")
+    c.path(lx, ly, "trend")
+    c.path(rx, ry, "trend")
+    c.text(6, PIV + 2.6, T[2], "small")
+    c.text(6, 31.6, T[0], "lab-up small")
+    c.text(56, 31.6, T[1], "lab-dn small")
+    c.callout(lx[7], ly[7], lx[7] - 20, 53.6, T[3], "lab-up")
+    c.callout(rx[4], ry[4], rx[4] - 6, 34.2, T[4], "lab-dn")
+    return c.svg(T[3])
+
 FIGS = {
     "left_side_of_v": left_side_of_v,
     "rs_before_price": rs_before_price,
@@ -528,4 +608,6 @@ FIGS = {
     "pocket_pivot": pocket_pivot,
     "false_breakdown_reclaim": false_breakdown_reclaim,
     "bearish_volume_divergence": bearish_volume_divergence,
+    "base_before_the_catalyst": base_before_the_catalyst,
+    "right_side_quality": right_side_quality,
 }

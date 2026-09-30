@@ -25,3 +25,14 @@ def test_style_gate_is_documented_as_manual_not_render_gate():
     line = text[idx: idx + 700]
     assert "文风自查" in line
     assert "人工检查项，不在上面这套 render 自动闸里" in line
+
+
+def test_the_figure_echo_ruling_is_pinned():
+    """T-0930-30: Andy 2026-09-30 retired half of the 2026-09-24 figure judgement."""
+    text = _text()
+    idx = text.index("### [2026-09-30] 图承担结构，正文不复述图上标注")
+    section = text[idx: idx + 2400]
+    assert "「教学图和教学好像有点重复。」" in section
+    assert "「备选B也不是很好。」" in section
+    assert "正文不得逐条复述图上标注" in section
+    assert "「正文里出现过」这一条**作废**" in section

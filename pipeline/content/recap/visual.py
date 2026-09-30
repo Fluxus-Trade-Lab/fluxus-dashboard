@@ -217,7 +217,48 @@ def drop_series(cache: dict, anchor: str, sessions: list[str]) -> tuple[list[flo
     return spx + cache["sessions"][sessions[-1]], cut
 
 
-def pick_edu(education: dict, key: str) -> dict:
+_FIG_TAGS = re.compile(r"<[^>]+>")
+# A phrase, not a one-word panel name: "TIGHT" / "pivot" / "紧" are chrome, not argument.
+_FIG_ECHO_MIN = {"EN": 12, "ZH": 5}
+
+
+def figure_labels(figure: str, lang: str) -> list[str]:
+    """Every word the schematic prints on itself, in drawing order."""
+    from pipeline.content.recap.visual_figs import FIGS
+    out = []
+    for it in FIGS[figure](lang).get("items", []):
+        if it[0] == "text":
+            out.append(it[4])
+        elif it[0] == "callout":
+            out.append(it[6])
+    return out
+
+
+def echoed_labels(sel: dict, lang: str) -> list[str]:
+    """Labels the lesson reads back out loud. Andy 2026-09-30: 「教学图和教学好像有点重复。」
+
+    2026-09-29 shipped a lesson whose `figure_reuse_reason` was, in so many words,
+    "every label on this diagram is a phrase this lesson uses" — which passed the
+    2026-09-24 judgement ("each label either appears in the body or is a direct
+    illustration of it") and still read as the same paragraph printed twice. The
+    half of that judgement that allowed "appears in the body" is retired: the
+    diagram carries the structure, the body carries the day, and a label that is
+    also a phrase of the body makes the picture an echo instead of a second
+    channel. Exact-substring only — a rephrased recitation still gets past this,
+    so it is a floor and not a proof.
+    """
+    text = _FIG_TAGS.sub(" ", " ".join(str(sel.get(k) or "") for k in ("title", "why", "body"))).lower()
+    floor = _FIG_ECHO_MIN.get(lang, 12)
+    hits = []
+    for label in figure_labels(sel["figure"], lang):
+        for part in re.split(r"[·|]", label):
+            part = part.strip()
+            if len(part) >= floor and part.lower() in text and part not in hits:
+                hits.append(part)
+    return hits
+
+
+def pick_edu(education: dict, key: str, lang: str | None = None) -> dict:
     """Content education block → what the page renders: the chosen option's title/body/figure + the cards."""
     opts = education.get("options") or []
     sel = next((o for o in opts if o.get("key") == key), None)
@@ -233,6 +274,13 @@ def pick_edu(education: dict, key: str) -> dict:
             f"education option {key}: figure {sel['figure']!r} is not this concept's "
             f"({sel.get('concept')!r}). Write the builder, or state figure_reuse_reason "
             f"naming which of the lesson's own words the borrowed labels carry.")
+    if lang:
+        echoes = echoed_labels(sel, lang)
+        if echoes:
+            raise SystemExit(
+                f"education option {key} ({lang}): the body reads the diagram's own labels back out "
+                f"— {echoes}. Andy 2026-09-30: the figure carries the structure, the body carries the "
+                f"day. Say it in the lesson's own words, or draw a figure this lesson does not narrate.")
     return {"chosen": key, "title": sel["title"], "body": sel["body"], "figure": sel["figure"],
             "options": [{"key": o["key"], "title": o["title"], "why": o.get("why", "")} for o in opts]}
 
@@ -395,7 +443,7 @@ def issue_data(tag: str, label: str, pdir: Path, edu: str = "A") -> dict:
     out["V"] = {}
     out["fig"] = {}
     for lang in ("EN", "ZH"):
-        ed = pick_edu(content[lang]["education"], edu)
+        ed = pick_edu(content[lang]["education"], edu, lang)
         out["V"][lang] = {**{k: content[lang].get(k) for k in keep}, "education": ed}
         out["fig"][lang] = FIGS[ed["figure"]](lang)
     out["_rules_check"] = {lang: check_rules(content[lang].get("rules"), lang, D) for lang in ("EN", "ZH")}

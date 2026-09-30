@@ -47,3 +47,49 @@ def test_every_registered_builder_still_draws_in_both_languages():
     for name, fn in FIGS.items():
         for lang in ("EN", "ZH"):
             assert fn(lang)["items"], (name, lang)
+
+
+# ---------------------------------------------------------------- 2026-09-30 (T-0930-30)
+# Andy, looking at the 09-29 issue: 「教学图和教学好像有点重复。」 The lesson there borrowed
+# `left_side_of_v` and justified it by saying every label on the diagram was a phrase the
+# lesson used — which satisfied the 2026-09-24 judgement and still printed the same
+# paragraph twice. The half of that judgement that allowed "the body uses the label" is
+# retired; the body now has to say it in its own words or the figure is an echo.
+from pipeline.content.recap.visual import echoed_labels  # noqa: E402
+
+
+def test_the_body_may_not_read_the_diagram_labels_back_out():
+    """Positive control: the retired 09-29 pairing, in both languages."""
+    en = {"figure": "left_side_of_v", "title": "t", "why": "w",
+          "body": "On the left side the pop sold at the 20 is the first form of it."}
+    assert echoed_labels(en, "EN") == ["pop sold at the 20"]
+    zh = {"figure": "base_before_the_catalyst", "title": "t", "why": "w",
+          "body": "这一课讲的是右侧向均线收紧这件事。"}
+    assert echoed_labels(zh, "ZH") == ["右侧向均线收紧"]
+
+
+def test_one_word_panel_names_are_chrome_not_recitation():
+    """`pivot` / `TIGHT` / 紧 appear in any lesson about bases; only phrases count."""
+    en = {"figure": "right_side_quality", "title": "The tight handle",
+          "why": "same pivot", "body": "A tight right side under the pivot."}
+    assert echoed_labels(en, "EN") == []
+
+
+def test_pick_edu_reds_when_the_lesson_narrates_its_own_figure():
+    with pytest.raises(SystemExit) as e:
+        pick_edu(_edu(concept="left_side_of_v", figure="left_side_of_v",
+                      body="the pop sold at the 20 is the first form of it"), "A", "EN")
+    assert "reads the diagram's own labels back out" in str(e.value)
+
+
+def test_pick_edu_without_a_language_still_skips_the_echo_check():
+    """Call sites that have no language (unit fixtures, older callers) keep working."""
+    assert pick_edu(_edu(concept="left_side_of_v", figure="left_side_of_v",
+                         body="the pop sold at the 20"), "A")["figure"] == "left_side_of_v"
+
+
+def test_the_two_2026_09_29_builders_exist_and_are_their_own_concepts():
+    for name in ("base_before_the_catalyst", "right_side_quality"):
+        assert name in FIGS
+        for lang in ("EN", "ZH"):
+            assert FIGS[name](lang)["items"], (name, lang)
