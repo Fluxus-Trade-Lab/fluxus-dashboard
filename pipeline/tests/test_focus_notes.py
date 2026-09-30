@@ -40,7 +40,7 @@ def test_every_focus_card_has_both_languages(doc):
 
 @pytest.mark.parametrize("ticker,mutate,kind", [
     ("STX", lambda s: s.replace("0.84", "0.48"), "number"),
-    ("RNG", lambda s: s.replace("33.6", "3.6"), "number"),
+    ("RNG", lambda s: s.replace("0.33", "0.38"), "number"),
     ("STX", lambda s: s + "建议回踩买入。", "advice"),
 ])
 def test_gate_catches_planted_errors(gate, doc, ticker, mutate, kind):
@@ -63,3 +63,17 @@ def test_builder_focus_means_gate_and_four_of_four():
     for r in rows:
         assert r["focus"] == (r["tight"] and r["qn"] == 4), r["t"]
     assert "s111_unchecked" in cards["rule"]
+
+
+@pytest.mark.parametrize("ticker,sentence", [
+    ("MPC", "Oil & Gas Refining & Marketing 在减速；离 21EMA 只剩 0.15 ATR。"),
+    ("RNG", "Weakening group; 99th percentile in its group."),
+])
+def test_gate_refuses_repeating_the_group(gate, doc, ticker, sentence):
+    # Andy 2026-10-01「B1」：组的方向页面另印一栏，句子只说个股
+    bad = gate.check(gate._cards(doc), {ticker: {"zh": sentence}})
+    assert any(b[2][0] == "group" for b in bad), bad
+
+
+def test_notes_follow_b1(doc):
+    assert doc.get("note_style", "").startswith("B1")

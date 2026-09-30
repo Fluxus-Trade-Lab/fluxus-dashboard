@@ -56,75 +56,38 @@ function Chip({ on, off, onClick, children }) {
   )
 }
 
-function FactCard({ r, t }) {
-  const g = groupOf(r)
-  const items = [
-    [t('funnel.fc.ema21'), r.ema21_atr == null ? '—' : `${r.ema21_atr.toFixed(2)} ATR`],
-    [t('funnel.fc.sma50'), r.sma50_atr == null ? '—' : `${r.sma50_atr} ATR`],
-    [t('funnel.fc.hi52'), `${r.hi52}%`],
-    [t('funnel.fc.m1'), r.perf_1m == null ? '—' : `${r.perf_1m}%`],
-    [t('funnel.fc.pctile'), r.grp_pctile ?? '—'],
-    [t('funnel.fc.eps'), r.eps == null ? '—' : `${r.eps}%`],
-    [t('funnel.fc.rev'), r.rev == null ? '—' : `${r.rev}%`],
-    ...(g ? [
-      [t('funnel.fc.group'), `${g.name}${g.kind === 'industry' ? ` (${t('funnel.industryNoTheme')})` : ''} · ${g.state}`],
-      [t('funnel.fc.accel'), signed(g.accel)],
-      [t('funnel.fc.ex1m'), `${g.ex1m}%`],
-      [t('funnel.fc.prev'), (g.prev || []).join(' → ')],
-    ] : []),
-    [t('funnel.fc.big'), r.healthy ? '●' : '—'],
-  ]
-  return (
-    <dl className="m-0 mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-[var(--color-text-muted)]">
-      {items.map(([k, v]) => (
-        <div key={k} className="flex gap-1.5"><dt>{k}</dt><dd className="m-0 font-mono tabular-nums text-[var(--color-text-secondary)]">{v}</dd></div>
-      ))}
-    </dl>
-  )
-}
-
-/* 2026-10-01 「组方向和一行句子的内容重复性极高，有改」: the sentence already
-   restates the group's name/state/accel in prose (e.g. "Cloud Software slid
-   from Leading to Weakening, decelerating −33.6"), so a separate group row
-   said the same thing twice and cost a whole line per candidate. The fix that
-   stays in frontend/ — the sentence text itself is the daily skill's output,
-   out of bounds until T-1001-16 rules — is to fold the group cue down to an
-   arrow-and-state tag on the ticker line, and move the full name/accel number
-   into the fact card where it was already half-duplicated (ex1m/prev). One
-   row saved per candidate, nothing shown twice at first glance. */
+/* B1 (Andy 2026-10-01 「B1」): one row per name. The group's direction is
+   printed ONCE, in its own column, from the fact card; the sentence beside it
+   is about the stock alone. The earlier layout repeated the group in the
+   sentence and he called that out: 「组方向和一行句子的内容重复性极高」. */
 function Candidate({ r, i, doc, lang, t, onTicker }) {
-  const [open, setOpen] = useState(false)
   const g = groupOf(r)
   const dir = accelDir(g?.accel)
   const say = noteFor(doc, r.t, lang)
   const flag = isFlagged(say)
   return (
-    <li className="grid grid-cols-[26px_72px_minmax(0,1fr)] gap-x-3 py-2 border-b border-[var(--color-border-light)]">
-      <span className={`font-mono text-[11px] text-right pt-0.5 ${i < FOCUS_CAP ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)]'}`}>{i + 1}</span>
-      <div>
-        <button type="button" onClick={() => onTicker?.(r.t)}
-                className="font-mono font-semibold text-[13px] text-[var(--color-text-bold)] bg-transparent border-0 p-0 cursor-pointer hover:underline"
-                title={t('funnel.chartIt')}>
+    <li className="grid grid-cols-[22px_60px_minmax(0,1fr)] md:grid-cols-[22px_60px_minmax(0,230px)_minmax(0,1fr)]
+                   gap-x-3 gap-y-0.5 items-baseline py-1.5 border-b border-[var(--color-border-light)]">
+      {/* the course cap (§5.6, FOCUS_CAP) stays visible: ranks inside it carry the
+          accent, so opening "the other N" still shows where fifteen ends */}
+      <span className={`font-mono text-[11px] text-right ${i < FOCUS_CAP ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)]'}`}>{i + 1}</span>
+      <span className="whitespace-nowrap">
+        <button type="button" onClick={() => onTicker?.(r.t)} title={t('funnel.chartIt')}
+                className="font-mono font-semibold text-[13px] text-[var(--color-text-bold)] bg-transparent border-0 p-0 cursor-pointer hover:underline">
           {r.t}
         </button>
-        <div className="text-[11px] text-[var(--color-text-muted)] font-mono">RS {r.rs ?? '—'}</div>
-        {g && (
-          <div className="text-[11px] text-[var(--color-text-muted)] font-mono" title={g.name}>
-            {ARROW[dir]} {t(`funnel.accel.${dir}`)}
-          </div>
-        )}
-      </div>
-      <div className="min-w-0">
-        <p className={`m-0 text-[13px] leading-relaxed max-w-[68ch]
-                       ${flag ? 'text-[var(--color-loss)]' : say ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}`}>
-          {say ?? t('funnel.noNote')}
-        </p>
-        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open}
-                className="mt-1 text-[11px] text-[var(--color-text-muted)] bg-transparent border-0 p-0 cursor-pointer hover:text-[var(--color-text)]">
-          {open ? '−' : '+'} {t('funnel.factCard')}
-        </button>
-        {open && <FactCard r={r} t={t} />}
-      </div>
+        {/* bare RS number, no "RS" label: exactly as in the B1 preview Andy picked
+            (artifact JLN1nmsD6bMnL6LpShhgAV v2, 「B1」); the label is in the title */}
+        <span className="ml-1.5 font-mono text-[11px] text-[var(--color-text-muted)]" title="RS">{r.rs ?? '—'}</span>
+      </span>
+      <span className="min-w-0 truncate text-[11px] text-[var(--color-text-secondary)]"
+            title={g ? `${g.name} · ${g.state}${g.kind === 'industry' ? ` · ${t('funnel.industryNoTheme')}` : ''}` : ''}>
+        {g && <><span className="font-mono text-[var(--color-text-muted)]">{ARROW[dir]} {t(`funnel.accel.${dir}`)} {signed(g.accel)}</span> {g.name}</>}
+      </span>
+      <span className={`col-start-2 col-span-2 md:col-start-auto md:col-span-1 text-[13px]
+                        ${flag ? 'text-[var(--color-loss)]' : say ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}`}>
+        {say ?? t('funnel.noNote')}
+      </span>
     </li>
   )
 }

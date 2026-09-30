@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Gate for focus notes: every number a sentence prints must be on that ticker's
-own fact card, and no sentence may tell the reader to buy or sell.
+own fact card, no sentence may tell the reader to buy or sell, and (Andy
+2026-10-01 「B1」) no sentence may repeat the group: the page prints the group's
+name, state and acceleration in its own column, so the clause is about the
+stock alone -- the group's name and the four state words are refused.
 
 Accepts either
   - the daily file   {"setups": ..., "notes": {TICKER: {"zh": s, "en": s}}, ...}
@@ -43,8 +46,23 @@ def numbers_in(card):
     return out
 
 
+STATE_WORDS = ("Leading", "Improving", "Weakening", "Lagging")
+
+
+def group_words(card):
+    words = list(STATE_WORDS)
+    for k in ("theme", "ind"):
+        g = card.get(k) or {}
+        if g.get("name"):
+            words.append(g["name"])
+    return words
+
+
 def check_sentence(card, s):
     bad = []
+    for w in group_words(card):
+        if w in s:
+            bad.append(("group", w))
     have = numbers_in(card)
     for m in re.findall(r"\d+(?:\.\d+)?", s.replace("§11.1", "")):
         v = float(m)
