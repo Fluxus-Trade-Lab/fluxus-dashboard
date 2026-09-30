@@ -196,3 +196,41 @@ jobs:
         continue-on-error: true
         run: |
           python -m pipeline.tools.audit_wiring
+
+  # T-1001-17 (2026-10-01): until this job, NO workflow ran frontend/'s vitest.
+  # vercel-deploy.yml only runs `npm run build`, and build passing is not tests
+  # passing. Real miss found by T-1001-14: BreadthPage.test.jsx "rings exactly
+  # one cell of the grid" was red on origin/main (today's VIX fell on a
+  # quintile boundary of the other table) while this workflow stayed green --
+  # because it never ran that test. "CI green" meant nothing for frontend.
+  #
+  # Same severity as the pytest job above: loud, not blocking (DATA_RELIABILITY
+  # §二点五). A separate job so a red vitest shows as its own red line and
+  # cannot hide a pytest result, and vice versa. Trigger is the file's shared
+  # `on:` block -- frontend/** is already inside `paths: ['**']`, so no new
+  # filter (and nothing new for audit_ci_test_coverage's DECLARED_TRIGGERS).
+  #
+  # Checked before merging: `npx vitest run` on origin/main 2026-10-01 is
+  # 86 files / 674 tests all green, so adding this does not start a new red
+  # streak (the 09-22 / 09-23 inbox floods were exactly that). Node 22: the
+  # first Node setup in this repo's Actions; vite 7 needs >= 20.19.
+  vitest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: vitest
+        run: npx vitest run
