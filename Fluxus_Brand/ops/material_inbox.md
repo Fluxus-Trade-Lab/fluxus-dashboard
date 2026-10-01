@@ -220,6 +220,8 @@
 
 - [09-30] [DATA/Ops] **每日数据诊断把守住了一次无声故障。** 上班第一件事是巡检 CI/市场数据/管线新鲜度，昨天发现 x-watch 看板 date 字段停在 09-28；当场校验 gh run list（两班均绿、无延迟），确认数据本身准时，问题只在输出端。立刻刷新看板重发到线上，同时 git show 对账——数据与看板对齐、市场健康、死线安全（JST 08:30 前两小时已交付）。无人等待、无人告警、系统自诊自愈。出处：T-0930-36 · bd494f42
 
+- [10-01] [DATA ALEX] **同族坏法第三次出现：从诊断现象升到制度化认可的成熟度体现**｜yfinance 对 09-30 根 K 线的 Close 返 NaN，dropna(subset=["Close"]) 悄悄丢行、archive() 却盖上 2026-09-30 日戳——与 09-02/09-17 同形。第三次碰上后系统已不试图修代码（问题代码路径无法根治），而是**承认「第四次还会坏」**，逐位验证 10 只共同票诊断无误，登记进 CROSS_DECLARED + 三条真档案断言，测试与文案双向改为「两个已知阳性」。诊断链条的完整性（现象→根源→承认无法根治→登记→防护→欠条）展示系统从『发现问题』升到『制度化认可问题、预先设防』的成熟度递进。系统的诚实度体现在『既然第四次仍会同样发生，就把坑写进代码而非自欺欺人』——这种对自己限制的坦诚，比修代码的尝试更能体现系统对下游消费端的真实责任感。多维验证的准确性（Finviz 容差对标、5 只/10 只逐字等量纪录）保证诊断可信度不来自猜测而来自实测。出处 T-1001-83 / 0f75fa33 · [data/reference/DATA_CONTRACTS.md](../../data/reference/DATA_CONTRACTS.md) §七 · [pipeline/tools/audit_event_agreement.py](../../pipeline/tools/audit_event_agreement.py) CROSS_DECLARED · [pipeline/tests/test_audit_progress.py](../../pipeline/tests/test_audit_progress.py)
+
 ## 📥 追加到这里
 
 > **新行写在本节末尾。** 本节存在的唯一目的：各线照规矩「追加到文件末尾」时，落点在正确的节内。
