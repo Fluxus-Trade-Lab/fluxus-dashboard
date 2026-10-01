@@ -37,6 +37,11 @@ wey_how12640 的 `$DELL` 波段低点 107 字——全部 ≥80 字；本工具�
 就以为帖子没问题/有问题。**这把尺子报的阳性（⛔ 空帖剔除）可以信，报的阴性
 （✅ 留）不能信**——跑手自己得出的判词（取件账 09-26d·2）。
 
+**per-handle 上限（09-24n·a → 09-25n·2，三次律到期）**：空帖闸剔完之后，
+同一 handle 在前 `pool` 名里最多留 `PER_HANDLE_CAP` 条——同一个人连发的帖
+会把蹭位榜前排占满，挤掉别的账号。第三条起算「挤出」，顺延给池里下一名顶上。
+这跟空帖剔除是两件事，不共用一个标记——`annotate()` 并排输出里分开标。
+
 用法：
     python3 data/content/x_watch/tools/thin_caption.py data/content/x_watch/posts/2026-09-23.jsonl
     # 只在候选按密度降序排好之后跑，不重新排序，只在前 pool 名里剔、取前 pick 名
@@ -55,6 +60,7 @@ _DIGIT_RE = re.compile(r"\d")
 POOL = 8   # 只在密度前几名里找
 PICK = 5   # 最终要凑够几个
 MIN_SUBSTANTIVE_LEN = 60   # 去链接后短于这个字数、且无数字，才算空帖（见模块 docstring 判据说明）
+PER_HANDLE_CAP = 2   # 同一 handle 在前 pool 名里最多留几条，第三条起挤出（09-25n·2 口径）
 
 
 def strip_urls(text: str) -> str:
@@ -73,25 +79,58 @@ def is_thin_caption(text: str) -> bool:
 def top5_from_pool(
     rows: list[dict],
     text_key: str = "text",
+    handle_key: str = "h",
     pool: int = POOL,
     pick: int = PICK,
+    per_handle_cap: int = PER_HANDLE_CAP,
 ) -> list[dict]:
-    """rows 必须已按密度降序排好。从前 `pool` 名里剔掉空帖，取剩下的前 `pick` 个。
+    """rows 必须已按密度降序排好。从前 `pool` 名里剔掉空帖、同 handle 超过
+    `per_handle_cap` 条的挤出，取剩下的前 `pick` 个。
 
     不去动排序本身，也不去补第 pool+1 名——挂得上的不够 `pick` 个，就照实只
     返回剩下的那几个（跟人数榜「闸空了就报空」是同一条纪律）。
     """
     candidates = rows[:pool]
-    kept = [r for r in candidates if not is_thin_caption(r.get(text_key, ""))]
-    return kept[:pick]
+    kept: list[dict] = []
+    handle_counts: dict = {}
+    for r in candidates:
+        if len(kept) >= pick:
+            break
+        if is_thin_caption(r.get(text_key, "")):
+            continue
+        h = r.get(handle_key)
+        if handle_counts.get(h, 0) >= per_handle_cap:
+            continue
+        kept.append(r)
+        handle_counts[h] = handle_counts.get(h, 0) + 1
+    return kept
 
 
-def annotate(rows: list[dict], text_key: str = "text", pool: int = POOL) -> list[dict]:
-    """给前 `pool` 名逐条标注 thin/kept，供并排打印——不给阳性也不给阴性单独的话语权。"""
+def annotate(
+    rows: list[dict],
+    text_key: str = "text",
+    handle_key: str = "h",
+    pool: int = POOL,
+    pick: int = PICK,
+    per_handle_cap: int = PER_HANDLE_CAP,
+) -> list[dict]:
+    """给前 `pool` 名逐条标注 thin_caption/handle_capped，供并排打印——
+    两个标记不共用：空帖剔除管的是帖子本身没信息，handle_capped 管的是同一
+    个人占太多格，挤出去的那条不该被读成「这帖子本身是空帖」。"""
     out = []
+    handle_counts: dict = {}
+    kept_count = 0
     for i, row in enumerate(rows[:pool]):
         thin = is_thin_caption(row.get(text_key, ""))
-        out.append({**row, "rank_in_pool": i + 1, "thin_caption": thin})
+        capped = False
+        if not thin:
+            h = row.get(handle_key)
+            if handle_counts.get(h, 0) >= per_handle_cap:
+                capped = True
+            elif kept_count < pick:
+                handle_counts[h] = handle_counts.get(h, 0) + 1
+                kept_count += 1
+        out.append({**row, "rank_in_pool": i + 1, "thin_caption": thin, "handle_capped": capped})
     return out
 
 
@@ -105,11 +144,16 @@ def main(argv: list[str] | None = None) -> int:
     with open(args.posts, encoding="utf-8") as fh:
         rows = [json.loads(line) for line in fh if line.strip()]
 
-    marked = annotate(rows, pool=args.pool)
-    kept = [r for r in marked if not r["thin_caption"]][: args.pick]
-    print(f"{args.posts} · 前 {args.pool} 名里剔空帖 · 目标 {args.pick} 个")
+    marked = annotate(rows, pool=args.pool, pick=args.pick)
+    kept = [r for r in marked if not r["thin_caption"] and not r["handle_capped"]][: args.pick]
+    print(f"{args.posts} · 前 {args.pool} 名里剔空帖 + per-handle 上限 · 目标 {args.pick} 个")
     for r in marked:
-        flag = "⛔ 空帖剔除" if r["thin_caption"] else "✅ 留"
+        if r["thin_caption"]:
+            flag = "⛔ 空帖剔除"
+        elif r["handle_capped"]:
+            flag = "🚫 挤出（同 handle 已超上限）"
+        else:
+            flag = "✅ 留"
         preview = strip_urls(r.get("text", ""))[:40]
         print(f"  #{r['rank_in_pool']} @{r.get('h', '?')} {flag} · {preview}")
     print(f"最终留下 {len(kept)} 个（目标 {args.pick}）")

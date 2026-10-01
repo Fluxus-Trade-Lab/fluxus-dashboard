@@ -1,4 +1,4 @@
-"""蹭位榜「前 8 名里挂得上的前 5」空帖闸。
+"""蹭位榜「前 8 名里挂得上的前 5」空帖闸 + per-handle 上限。
 
 取件账 09-18·3，三次律到期（09-22 四格 · 09-23 速报一格 · 09-23 主班两格）。
 自造口径见 `thin_caption.py` 模块 docstring：无数字 且 去链接后短于
@@ -18,6 +18,14 @@
      判断句，取件账 09-24d·2 真实原句）
   4. 改了但接错（长度闸门槛画歪，短的真空帖也被放过）
      → test_short_thin_caption_still_gets_dropped 红
+
+⭐⭐⭐ T-1001-102 补第三组两方向阳性对照，专测 per-handle 上限（09-24n·a →
+09-25n·2，三次律到期）：
+  5. 漏改（per_handle_cap 没接上，同 handle 三条全留）
+     → test_per_handle_cap_squeezes_third_post_and_promotes_next 红
+     （09-29 实例：1ChartMaster 三条占了前排，`$MRVL` 那条该被挤，Muninn 顺延）
+  6. 改了但接错（上限画歪，两条就被误挤）
+     → test_per_handle_cap_does_not_squeeze_when_only_two 红
 """
 from __future__ import annotations
 
@@ -118,6 +126,44 @@ def test_short_thin_caption_still_gets_dropped():
     """改了但接错的阳性对照（反方向）：长度闸门槛画歪，短的真空帖也该照旧被剔。"""
     assert tcap.is_thin_caption("MCD chart update https://t.co/abc") is True
     assert tcap.is_thin_caption("SPY setup https://t.co/4") is True
+
+
+def test_per_handle_cap_squeezes_third_post_and_promotes_next():
+    """漏改的阳性对照：同一 handle 在前 8 名里占了三条，第三条起必须被挤出，
+    顺延给池里下一名顶上。
+
+    09-29 实例：1ChartMaster 三条占了蹭位榜前排，`$MRVL` 那条被挤，Muninn 顺延。
+    """
+    mrvl_text = "$MRVL 30 min pivot printing. 🫡 https://t.co/ImK9jN4YN9"
+    rows = [
+        _row("1ChartMaster", "$STX gapping up https://t.co/8rR3gqVZG3 7085 views strong", 9000),
+        _row("1ChartMaster", "Another 30-min pivot in a leader printing. $AMD https://t.co/iJIOgJXesa 7856", 8500),
+        _row("1ChartMaster", mrvl_text, 8000),
+        _row("Muninn", "They were selected as stocks that made 31% returns, 2024 cohort", 7500),
+        _row("wey_how12640", "$DELL long swing low confirmed at 42.10 on volume", 7000),
+        _row("ConnorJBates_", "Seasonality turns positive into October at 68% rate", 6500),
+        _row("Jake__Wujastyk", "SMCI resistance at 55.80 held three times this month", 6000),
+        _row("LindaRaschke", "Bonds: 106'27 key swing low. https://t.co/8JGrHmDBwz", 5500),
+    ]
+    kept = tcap.top5_from_pool(rows)
+    kept_handles = [r["h"] for r in kept]
+    assert kept_handles.count("1ChartMaster") <= 2
+    assert mrvl_text not in [r["text"] for r in kept]
+    assert "Muninn" in kept_handles
+
+
+def test_per_handle_cap_does_not_squeeze_when_only_two():
+    """改了但接错的阳性对照：同一 handle 只有两条时，不许被误挤。"""
+    rows = [
+        _row("1ChartMaster", "$STX gapping up at 42.50 on heavy volume today", 9000),
+        _row("1ChartMaster", "$AMD another 30-min pivot printing at 165.30 level", 8500),
+        _row("Muninn", "They were selected as stocks that made 31% returns last cycle", 8000),
+        _row("wey_how12640", "$DELL long swing low confirmed at 42.10 on volume", 7000),
+        _row("ConnorJBates_", "Seasonality turns positive into October at 68% rate", 6500),
+    ]
+    kept = tcap.top5_from_pool(rows)
+    kept_handles = [r["h"] for r in kept]
+    assert kept_handles.count("1ChartMaster") == 2
 
 
 def test_not_enough_survivors_does_not_pad_from_rank_nine():
