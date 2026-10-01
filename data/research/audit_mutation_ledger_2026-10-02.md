@@ -80,7 +80,7 @@ $ echo $?
 实测（真仓库，不是夹具）：
 
 ```
-as filed        : FRESH   nothing touched the guard or its test since e1d79e104
+as filed        : FRESH   nothing touched the guard or its test since a097c1562
 the 55% reading : STALE   1 commit(s) touched the guard or its test since e44796e3b
 unknown sha     : UNKNOWN commit 000000000 is not in this clone's history
 site count moved: STALE   guard now has 45 mutation sites, the reading was taken over 44
