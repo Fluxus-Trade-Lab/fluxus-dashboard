@@ -80,6 +80,8 @@
 
 ## 📥 追加到这里
 
+- [10-02] [steve] **死线班诊断的分类精度**：抓取耗时从基线 20s 拉长到 24 分钟，系统三层验证（时间迟到度未触发 600min 丢弃阈值 · universe_quality 行数一致 · audit_archives 已知滞后）快速分类「迟到中非故障」，主动 dispatch 补救 07:26 落地。诊断价值不在告警数量而在分类精度——多维交叉确认让 07:00 班能在 08:30 死线前 62 分钟完成决策，系统的时间纪律承诺等同完整诊断链条。[T-1002-19 / 37d1af5c](../../data/research/night_reports/INBOX.md)
+
 - [10-02] [OPS · 工人协议] **并发改动的诊断深度**：两个工人同树共写的事故，初诊为「claim 重复」被实测推翻——真根源是工人替别人收尾（树名违规），而任务板的「status」判据永远看不见这一维。闸建在错的量上，防护升级三层：协议禁止（5.7）· 磁盘自查（5.6）· 代码断言（test_worker_protocol_text.py）——诊断→分类→防护的完整链条。系统从被数字迷惑升到多维交叉验证的诚实度。[T-1002-18 / 80907fff](../../data/reference/incidents/2026-10-02_a_worker_landed_another_tasks_branch.md)
 
 - [10-01] [steve] **缓存数据防护的等级化设计**：供应商中断导致陈旧数据被当新鲜，T-1001-04 在数据层加时间戳，T-1001-127 升级消费端防护——TickerEarnings/QuickStats 显示「asof <date>」让用户自判，build_cards.py 已禁用。防护不一刀切而是按消费端分类（禁用/展示/默认），诊断的分类精度决定防护精准度；系统诚实度来自让用户决策而非代判。[T-1001-127 / 574a10be](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/574a10be)
