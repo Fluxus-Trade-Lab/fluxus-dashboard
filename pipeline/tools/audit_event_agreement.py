@@ -106,6 +106,24 @@ CROSS: Tuple[Tuple[str, str, str, str, Tuple[str, ...]], ...] = (
 # 跨文件一律按较粗一方记录的精度比：`delayed_ep_log` 写的是 float32 残迹
 # （150.66 存成 `150.66000366210938`），精确比会把 71 例里的 54 例判成假分歧。
 CROSS_DECLARED: Dict[str, Tuple[str, str, str]] = {
+    "2026-09-30": (
+        "linda", "2026-10-01",
+        "yf.Ticker(t).history(...) 对这批票 2026-09-30 这根 K 线的 Close 字段是 NaN"
+        "（Open/High/Low/Volume 都有值，不是整行缺失）——与 2026-09-01 那次同一个厂商坏法"
+        "（见 data/reference/incidents/2026-09-01_vendor_dropped_a_completed_session.md）。"
+        "delayed_ep_scan.py 的 main() 对批量下载结果先 dropna(subset=['Close'])，这根 NaN 行"
+        "因此被悄悄丢弃；classify() 里 today = b.iloc[-1] 于是落回 09-29 那根 bar，却被 "
+        "archive() 盖上 as_of=2026-09-30 的日戳。验证：10 只共同票里 8 只（ACVA/AMRX/ATEC/"
+        "BFLY/FSLY/PURR/SDGR/WBD）的 delayed_ep_log 读数逐位等于 leaders_log（Finviz 官方收盘）"
+        "前一场(09-29)的读数；另 2 只（SECZ/WLTH）leaders_log 09-29 当日无该票记录、按这把尺子"
+        "不可比，但 delayed_ep_log 自身历史显示这两只 09-30 close 同样逐位等于自己 09-29 的记录"
+        "（15.84、10.10 两场不变）。yf.download(..., repair=True) 能补回估计值，但逐票核对"
+        "leaders_log 只有 5/10 落在容差内，另 5/10 偏离 Finviz 官方收盘 0.04–0.43 不等——"
+        "repair 只是用同根 bar 的 H/L 区间估的，不是真实收盘，held/contracting/breakout/"
+        "base_high 全部派生自这个 close 的历史序列，带着估计值重算整场风险比留着不声明更大。"
+        "按 09-02/09-17 两条先例处理：**不重算**。dropna(subset=['Close']) 静默改 as_of 日戳"
+        "这条代码路径本身没有修，第三次厂商再给 NaN Close 还会同样发生",
+    ),
     "2026-09-17": (
         "DATA ALEX", "2026-09-18",
         "leaders_log 与 shortlist_log 对 MSFT 的 tml 一真一假：两个写入方用的不是同一条规则。"

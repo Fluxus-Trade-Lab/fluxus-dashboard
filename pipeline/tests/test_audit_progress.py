@@ -303,8 +303,8 @@ def _real():
     return ap.audit(ap.ARCHIVE)
 
 
-def test_real_archive_reports_2026_09_02_as_a_duplicated_session():
-    assert _real()["p2"] == ["2026-09-02"]
+def test_real_archive_reports_2026_09_02_and_09_30_as_duplicated_sessions():
+    assert _real()["p2"] == ["2026-09-02", "2026-09-30"]
 
 
 def test_real_archive_independently_finds_the_known_bad_2026_08_17():
@@ -351,8 +351,8 @@ def test_real_archive_august_rows_had_moving_prices_so_they_are_not_p2():
         assert s not in res["p2"]
 
 
-def test_real_archive_has_exactly_these_five_violations():
-    assert _codes(_real()) == ["P1", "P1", "P1", "P2", "P3"]
+def test_real_archive_has_exactly_these_six_violations():
+    assert _codes(_real()) == ["P1", "P1", "P1", "P2", "P2", "P3"]
 
 
 # ---------- --sweep：不需要日历、不需要计数器、不需要懂这张表 ----------
@@ -415,6 +415,8 @@ def test_sweep_skips_pairs_with_too_few_common_keys(tmp_path):
 
 
 def test_sweep_on_the_real_archives_puts_2026_09_02_first_by_a_wide_margin():
+    """09-02 与 09-30 现在并列第一（同一个厂商坏法，见 CROSS_DECLARED 2026-09-30）——
+    断层改量在第二名到第三名之间，仍是 37.5pp（第三名是 shortlist_log 的 0.5）。"""
     hist = ap.ARCHIVE.parent
     if not (hist / "delayed_ep_log.csv").exists():
         pytest.skip("归档不在这棵树上")
@@ -422,8 +424,11 @@ def test_sweep_on_the_real_archives_puts_2026_09_02_first_by_a_wide_margin():
     top = rows[0]
     assert top["archive"] == "delayed_ep_log.csv" and top["session"] == "2026-09-02"
     assert top["frozen"] == 14 and top["columns"] == 16
+    second = rows[1]
+    assert second["archive"] == "delayed_ep_log.csv" and second["session"] == "2026-09-30"
+    assert second["frozen"] == 14 and second["columns"] == 16
     # 断层写死（实测 37.5pp）：塌到 20pp 以内就说明这个读法不再有分辨率，该有人看一眼
-    assert (top["share"] - rows[1]["share"]) > 0.20
+    assert (second["share"] - rows[2]["share"]) > 0.20
 
 
 def test_sweep_reports_and_never_gates(tmp_path):
