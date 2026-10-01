@@ -1,7 +1,7 @@
-date: 2026-09-30
+date: 2026-10-01
 tier: B
-source: T-0927-82（新主线复盘长文，已合 main 未发布，第 3 天）+ ammo（Fluxus_Own_Lines.md 队列表）+ nightcap 09-29 蹭位榜
-gate: 🎮 09-27 W39 结算台后关卡口径待重定（新主线判据＝两周两篇复盘长文中位 ≥158.5，非 5/5 发布数）；posts.csv 最新一行仍是 09-23，本周(09-28→10-04)迄今 0 条；T-0927-82 长文占该判据分子第 3 篇，仍未发
+source: T-0927-82（新主线复盘长文，已合 main 未发布，第 4 天）+ discord-to-x 09-29 草稿（T-0930-08，昨夜新产）+ ammo（Fluxus_Own_Lines.md 队列表，今天排期格）
+gate: 🎮 新主线判据＝两周两篇复盘长文中位 ≥158.5（非 5/5 发布数）；分子仍只有 MRNA 571、ARM 124 两条，T-0927-82 这篇还没发就进不了分子；posts.csv 全库最新一行仍停在 09-23
 ---
 ## C1
 bucket: LONGFORM(EN) | entry: -
@@ -46,24 +46,33 @@ The trade isn't guessing which trader gets proven right next week. It's knowing 
 
 *Sourcing — every number above can be reproduced from this repo:*
 *NDX McClellan Oscillator and % above 200-day: `data/output/breadth.json` → `history.mcclellan_osc_ndx` / `history.pct_above_200sma`, dates 2026-09-22 through 2026-09-25 (`history.dates`). Day verdict: `verdict.confirmation = "Inconclusive — signals split"`, `verdict.env = "MIXED"`. SPY/QQQ above-50-day and the 5-day ratio: `state_board.rows` (`index repair`, `confirmation`) and `verdict.vote_detail` (`ratio_5d` = 0.8115). Tweets: PrimeTrading_ status/2103497754102178134 (14:52 UTC), NickSchmidt status/2103522994442150041 (16:32 UTC), RealSimpleAriel status/2103573039141282130 (19:51 UTC) — full text captured in `data/content/x_watch/posts/2026-09-25.jsonl`; ET times are UTC−4 (EDT).*
-why: 已连续第三天首荐。09-27 W39 结算台定的新主线首篇（Andy「下周主线选 C 改一周一篇复盘长文」），Writer Mia 成稿、复核 PASS、已合 main（commit `5f17dce37`），发布单 T-0928-25（owner=steve，status=blocked，review 里写明「后台工人无 X 会话能力，需要 Andy 本人或 Steve 互动会话代发」）——待办性质和昨天完全一样，两天过去还没人发。今天现场核过 `breadth.json` 09-29 收盘读数：McClellan 继续走高到 +22.02、200 日线比例继续走低到 37.53，**分歧不但没收敛还在加深**（09-25 那两个数分别是 +19.85 / 39.39），稿子的判决没被后续行情推翻，反而多了一层「五天后仍未收敛」的印证。但"Sept 25" 这个具体日期已经过去 5 天，越晚发越像旧闻，稿子的时效衰减速度快于它的论点衰减速度——今天不是「可以发」而是「再拖就只能重写日期」。
+why: 已连续第四天首荐同一条。09-27 W39 结算台定的新主线首篇（Andy「下周主线选 C 改一周一篇复盘长文」），Writer Mia 成稿、复核 PASS、已合 main（commit `5f17dce37`），发布单 T-0928-25（owner=steve，status=blocked，三天没人动）——待办性质和昨天完全一样，但今天现场核过 `breadth.json` 09-30 收盘读数：McClellan 继续走高到 +22.97、200 日线比例继续走低到 36.5（对照 09-25 那两个数 +19.85 / 39.39，09-29 时已是 +22.02 / 37.53）。**三个交易日过去，分歧没有收敛，还在加深**——稿子的判决仍站得住，论点没被行情推翻。但"Sept 25"这个具体日期现在是 3 个交易日前的事，再拖这条帖就只能重写日期、丢掉"当天两条推互相矛盾"这个锚点。
 ---
 ## C2
-bucket: VOICE(EN) | entry: -
-Wait for buyers first, then enter. Don't enter hoping buyers show up.
-why: 断更保险表排的正是今天（09-30 三）这一格，Own_Lines #106⭐⭐⭐，他本人英文原话（库里标 `(EN)`）。全库 posts.csv／verdicts.jsonl 零命中，未发过。队列已降为被动观察不主动推，但表本身没作废，随手发不算走回老主线。
+bucket: LONGFORM(EN) | entry: -
+1/ Market hit an inflection point this year — rate hikes, Bessent leaning on the bond market. Liquidity has been a train running full speed; the brakes just came on. The question is not if it slows, it is whether the ride gets bumpy on the way down.
+
+2/ That makes range and chop the base case for the next leg, not the exception. FOMC low is the line in the sand — test it harder if hikes get priced in, or watch the range open up if sentiment turns. Semis and AI stay the preferred lane either way.
+
+3/ Today lived that theme: weak close, exhausted chop, then a bid out of nowhere — the pattern for months now. Most semis sit at the 20ema, playing gaps or prior support. Rotational tape means expect the shakeout, cut fast, or just sit in cash.
+
+4/ Intraday rotation inside semis: SOXX up, INTC down to start — only interested in SOXL here, not chasing INTC. LRCX, KLAC, AMAT moved with the caps. CRWD started to unwind while MU and SNDK pushed ahead of MU earnings.
+
+5/ Afternoon flipped weaker — rates blew out, SPX tested the 21ema, every pop got sold. Feels like capitulation building, and it can move faster than people expect. For TLT to reverse: need a real pension buy, crude below 90, and Bessent stepping up buybacks.
+
+6/ MU earnings base rate to watch: sell-the-news. Institutions buy into the print, sell the pop, then buy the gap-fill after — the market's favorite rerun. High-debt, thin-margin AI names like CRWV and IREN are the weak links if the rate move keeps going.
+
+7/ Coaching note: a member asked how many distribution days it takes before bulls get nervous. No fixed number — track QQQ/SPY's ATR distance from the 50-day instead, layer in DeMark or Bollinger signals, and you will know when to lower your expectations.
+why: discord-to-x 昨夜（T-0930-08）新产的草稿，底稿是 Andy 09-29 在 Discord 盘中原话，没经我改写。今天核过 `data/output/threads/2026-09-29/messages.json` 对应时间戳，内容未过期（MU 财报当晚就是这条第 6 段讲的 base rate，今天 09-30 财报已落地可以对照验证）。全库 posts.csv／verdicts.jsonl 零命中，确认未发过。
 ---
 ## C3
-bucket: REPLY | entry: -
-回复方向（不写成品，给 2–3 个方向挑）：09-29 nightcap 蹭位榜第 5 条 @bluechipdaily —— "$SOXX daily walking into tomorrow's $MU earnings, right under the breakout line, MAs stacked bullish" ，他自己补了一句风险提示："charts don't predict earnings, and the yield breakout is a red flag too"。**$MU 今晚（09-30 周三盘后）财报，时效性对上了。**
-- 方向一（补另一半：财报前怎么拿）：他说了图好、也说了不可测，唯独没说仓位怎么办。回一句问他财报前是否减仓——对应课程 M2_Appendix_C Holding Through Earnings 的默认动作（假设最差一次跳空方向重演，亏损超 2R 就不原样带过夜）。不链，只用观点。
-- 方向二（补数：带着涨幅进财报）：我们组页 `#/groups`（`groups.json` 09-29 收盘）上存储这组（Memory & Storage）近一月涨幅在所有芯片子组里最高——带着一段涨幅进财报，跳空的不对称更大。可放 `#/groups` 链接。
-- 方向三（只问不评）：财报后无论方向，第一句该问「破位/新高之后，你的认错条件是哪一条」，把讨论从「图好看」推到「怎么带仓位过夜」。不带情绪，纯问句。
-出处：`data/content/x_watch/nightcap/2026-09-29.md` 蹭位榜第 5 条；组状态数据来自同报表内 `groups.json` 09-29 收盘引用。
+bucket: VOICE(ZH) | entry: -
+股市有风险，入市先烧纸。
+why: 断更保险表排的正是今天（10-01 四）这一格，Own_Lines #115⭐⭐⭐，民俗黑色幽默、英文世界没有对应物。全库 posts.csv／verdicts.jsonl 零命中，未发过。队列已降为被动观察不主动推，但表排到了今天，随手发不算走回老主线。
 ---
 ## notes
-- **C1 已经是三天里第三次首荐同一条**：写完+核数据+过闸+合 main 四步都做完，唯一缺发布动作，T-0928-25 单挂着 blocked 无人认领。建议今天优先处理，否则「两周两篇中位 ≥158.5」这条判据永远测不出来（目前分子只有 MRNA 571、ARM 124 两条），且稿子的"Sept 25"框架再拖会失去时效意义，届时只能作废重写。
 - **A 档不可用**：夜间内容产线 2026-09-21 起正式停产（非维修期，`PIPELINE.md` 顶部停产令），最近四张 campaign 卡（09-06/09-03/09-01/08-29）全部 killed/归档不发，没有 queued/approved 的卡可取。
-- **discord-to-x 草稿端仍无新可用成品**：`data/output/threads/2026-09-28`、`2026-09-29` 两份 messages.json 均无对应 `draft.txt`（生成任务 T-0929-14 / T-0930-08 仍 open 未做，属另一任务类型，本轮不代写）；更早两份 draft（09-21/09-22）时效早已过期，不端。
+- **discord-to-x 09-28 草稿同样可用但今天没端**：`data/output/threads/2026-09-28/draft.txt`（T-1001-48 刚产出），内容是 MU 财报前仓位管理+宏观（伊朗协议）主题，与 C2 同格式同作者声音，怕一天塞两条同形状的长推挤占读者注意力，留作明天或后天备选，别等它过期。
+- **09-30 的 discord 原料已抓（`threads/2026-09-30/messages.json`），draft.txt 还没生成**——按 discord-to-x skill 规矩一次只处理一天，不代做。
 - **posts.csv 有落地缺口**：全库最新一行仍停在 09-23，09-24 → 09-30 之间实际发的帖（若有）尚未回填，回填归判决记录 / `sync_own_posts.py` 那一环，本轮备稿不做，标出供交接引用。
-- 09-27 W39 结算台裁决摘要（供交接引用）：Andy 选主线 C——放弃金句队列主动实验，改一周一篇复盘长文，执行归 Writer Mia、选题与判据归本线；`Fluxus_Week_Plan.md` 周信排期表整段作废（#001-#005 全未发，对外不再承诺周更）。
+- **C1 连续第 4 天卡在同一处**：写完+核数据+过闸+合 main 四步都做完，唯一缺发布动作，T-0928-25 单挂着 blocked 无人认领。建议今天优先处理，否则「两周两篇中位 ≥158.5」这条判据永远测不出来。
