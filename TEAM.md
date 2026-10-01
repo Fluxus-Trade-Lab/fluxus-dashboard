@@ -41,6 +41,8 @@
 
 **[2026-10-01 ops 裁 · T-1001-66]** `pipeline/tools/failure_class.py`（分诊器，判断一班数据失败属于 A_infra/B_vendor/C_gate/D_code/E_truncated 哪一类）补进 DATA ALEX 边界——判例同 `constants/`（T-0921-70/71）、`portfolio/`（T-0922-46）、`themes/`+`quality.py`（T-0924-90/94）：此前不在任何人边界内是遗漏，不是新设（全仓只有 linda 登记了 `pipeline/tools/audit_*`，`failure_class.py` 没人登记）；ALEX 自己的 `ROLE.md` 职责节早把 `python3 -m pipeline.tools.failure_class --run-id <id>` 写成修法顺序第一步，却一直没有对应的写权。起因：T-1001-61（P0，按板块切分 Finviz 抓取绕过每查询 1000 行上限）在修复过程中一并补了分诊器第五类 `E_truncated`（旧判据 `tradeable_share` 对截断免疫，44.9% 与健康夜间一致，看不出宇宙只抓回 18%），复核判词 Q3 越界（P0 放行），已合并进 main（commit `fd591ab6f`）；本次只补齐边界，不追溯处理。同批裁决同步写在 fluxus-ops `agents/alex/ROLE.md`。
 
+**[2026-10-01 ops 裁 · T-1001-119]** `data/reference/METRIC_SOURCES.md` 无主缺口裁清——T-1001-04（alex，`rs_rating` 口径说明）branch-review 两轮复核都确认该文件不在任何线的文件边界表、也不在下方「资料区与单一写入方」清单内，查了四处（各线 ROLE.md 文件边界节、本表花名册边界列、下方清单、`data/reference/proposals/` 判例）均无登记。**不走「归一线独占」那一套**（`constants/`/`portfolio/`/`themes/`+`quality.py`/modelbooks/`screener_redesign/` 六次判例都是「实际只有一个写者，补登记」）——这次实际写者本就是多线：`## 登记表` 的 `rs_rating` 行是 ALEX 写的，但文件里早已有 Linda 的「组四态双系统口径」「外部规则的口径登记」「弹药缺口两量」三节、Steve 的「X 台账…T+k 相对 SPY」一节，各自带任务号落款。这正是 CLAUDE.md「数字只有一个家」「先找口径，别自己造」两条要求**全线执行**的登记动作——任何线造一个新量前先查这张表、查不到也要留痕，造完就得登记自己那行/节，天然是多写者。**裁为公共口径登记区，判例同下方「资料区与单一写入方」里的 `data/reference/proposals/`**（2026-09-22 ops 裁）：任何线可新增一行/一节登记自己产出的指标口径；**改别人登记的行/节**（不含修订自己产出的指标，如本次 T-1001-04 ALEX 改自己写的 `rs_rating` 行）要走 §七 契约行知会该线，不直接改。gate 维持 CLAUDE.md「safe-merge 判据修正」已定的 `data/reference/**` 默认档——reviewer（治理文档类，无测试载体）。同批裁决同步写在 fluxus-ops `agents/ops/ROLE.md`「裁决记录」节。
+
 ## 一条线可以有多个会话
 
 线 = 职责 + 文件边界；会话 = 这条线上的工人，可以有好几个。唯一的铁规矩：
@@ -83,6 +85,7 @@
   - **`Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md`**：Gate 唯一写入口（过闸追一行），Andy 批完自己追 ↳。
   - **`Fluxus_Brand/brain/hooks.md`「类型登记」节**：分发站首用新 hook 当晚可 append 一行 ⏳。
   - **`data/reference/proposals/`**（2026-09-22 ops 裁 · T-0922-80/86 补，此前不在任何线的文件边界表内是遗漏不是新设——CLAUDE.md「改宪法的判据」一节本就要求豁免/开放类改动「写成提案放 `data/reference/proposals/` 等 Andy 裁」，即所有线共用）：登记为**公共提案区**——任何线可新增/编辑**自己署名**的提案文件，不得改别人署名的提案；gate=reviewer（治理文档类，无测试载体，走 `branch-review` skill Q2 替代证据②）。起因：T-0922-80（claire，落地页定档）把 T-0920-02 旧方案标作废时被判 ASK，卡在这条边界缺失，事实上未越界。
+  - **`data/reference/METRIC_SOURCES.md`**（2026-10-01 ops 裁 · T-1001-119 补，此前同样是遗漏不是新设；详见上方 [2026-10-01 ops 裁 · T-1001-119] 整条裁决）：登记为**公共口径登记区**，判例同上一条 `proposals/`——任何线可新增一行/一节登记自己产出的指标口径；改别人登记的行/节（不含修订自己产出的指标）要走 §七 契约行知会该线；gate=reviewer（治理文档类，无测试载体）。起因：T-1001-04（alex，`rs_rating` 口径说明）branch-review 两轮复核均确认该文件不在任何线的文件边界内。
 - 每个数据文件只有一条线有写入权：
   - `data/output/`、`data/history/`（除 regime_ledger）→ DATA ALEX
   - `data/history/regime_ledger.csv` → RND Linda
