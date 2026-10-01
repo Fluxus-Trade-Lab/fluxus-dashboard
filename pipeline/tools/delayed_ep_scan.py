@@ -309,6 +309,12 @@ def main() -> None:
         df = df[df.index <= pd.Timestamp(as_of)]
         if len(df) < 25:
             continue
+        if df.index[-1].strftime("%Y-%m-%d") != as_of:
+            # Yahoo hasn't posted this ticker's as_of bar yet (thin names lag).
+            # Archiving anyway would silently relabel yesterday's bar as today's --
+            # that's the 2026-09-02 / 2026-09-30 frozen-session shape. Skip; it
+            # catches up once the vendor posts the bar.
+            continue
         r = cands[t]
         d = classify(df, r["date"], near=a.near, contract=a.contract,
                      ep_change=float(r["change_pct"]) if r.get("change_pct") else None,
