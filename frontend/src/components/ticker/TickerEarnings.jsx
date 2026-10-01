@@ -1,9 +1,20 @@
+import { freshness } from '../shared/dataFreshness'
+
 /**
  * Earnings — next + last 4Q table.
+ *
+ * T-1001-04: when the vendor's earnings endpoint comes back empty, the
+ * pipeline carries forward last night's `next_earnings` rather than blanking
+ * it (a vendor outage must not read as "no earnings risk"). `next_earnings_asof`
+ * says which night that reading was actually confirmed; `freshness()` is the
+ * same "stale reading must not render as current" check the rest of the site
+ * uses for session dates (see dataFreshness.js) -- silent unless 2+ weekdays old.
  */
 export default function TickerEarnings({ tickerData }) {
   const next = tickerData?.next_earnings || {}
   const history = tickerData?.earnings_history || []
+  const asof = tickerData?.next_earnings_asof
+  const stale = asof ? freshness(String(asof).slice(0, 10)) : null
 
   if (!next.date && history.length === 0) {
     return (
@@ -30,7 +41,17 @@ export default function TickerEarnings({ tickerData }) {
           {next.date && (
             <tr className="bg-[color-mix(in_srgb,var(--color-signal-caution)_5%,transparent)] border-b border-[var(--color-border-light)]">
               <td className="px-2 py-1.5 font-semibold text-[var(--color-signal-caution)]">Next</td>
-              <td className="px-2 py-1.5">{String(next.date).slice(0, 10)}</td>
+              <td className="px-2 py-1.5">
+                {String(next.date).slice(0, 10)}
+                {stale && (
+                  <span
+                    className="ml-1.5 text-[11px]"
+                    style={{ color: stale.level === 'alarm' ? 'var(--color-refused)' : 'var(--color-text-secondary)' }}
+                    title={`Vendor outage carried this date forward -- last confirmed ${stale.date}.`}>
+                    asof {stale.date}
+                  </span>
+                )}
+              </td>
               <td className="px-2 py-1.5 text-right tabular-nums">
                 {next.eps_estimate != null ? `est ${Number(next.eps_estimate).toFixed(2)}` : '—'}
               </td>
