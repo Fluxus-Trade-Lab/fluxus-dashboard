@@ -88,6 +88,8 @@
 
 - [10-01] [OPS · task-protocol] **并发参数防护的规则透明**：交互会话和守护进程的审核命令行为不同，参数设计从模糊的「登记」拆分为 `--record-only` 区分两身份——T-1001-08 并行两个写者的事故根因诊断清楚后，规则层面不再靠口头说明，而用参数强制化防护；系统从「人工记忆完整性」升到「机制下移决策」的成熟度。[T-1001-36 / ce77b9ac6](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/ce77b9ac6)
 
+- [10-02] [steve] **字段重命名的无声故障与自动化同步防护**：screenerFilter.js 的 rsIbd 过滤键在 09-04 字段改名（rs_ibd → rs_rating）后未同步，导致用户自建预设无声失败——没有报错、只是过滤条件对空集合执行。诊断链条完整（现象→根源：版本漂移→改动→防护升级）：防护从"人工审查每条引用"升到"自动化追踪字段定义与消费点的同步"，系统诚实度体现在决策边界是否依赖手工记忆（易遗漏）还是逐处权威源（可机械验证）。[T-1002-05 / 3ca8541e4](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/3ca8541e4)
+
 - [10-01] [DATA ALEX] **数据权限的诊断纠正**：x_heat 冻结 7 日诊断指向权限边界错位（X 线无权写），决策链展现诊断→权限重组→防护→验证的完整（复用原 x_heat() 口径避免拷贝漂移，补齐 09-24→09-30 缺口）；系统成熟度从「有什么问题」升到「谁该拥有什么」的决策诚实度。[T-1001-33 / a2e1e3ee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/a2e1e3ee)
 
 - [10-01] [steve] **十年期急升后股指分档诊断的链条完整**：从圈内讲「n=1 的先例」（上次二十年前、RSI 到某年）升到 144 个样本的主动分档统计。诊断链条完整（三套权威口径逐数反核→自造参数扫档并标明→多班取件断言可运行）；系统诚实度体现在「口径透明和验证独立性」而非单点结论数字。[T-1001-103 / 37d42bee](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/37d42bee)
