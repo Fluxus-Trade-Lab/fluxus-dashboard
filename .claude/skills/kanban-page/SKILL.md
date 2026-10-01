@@ -44,7 +44,8 @@ owner: ops
 |---|---|---|---|
 | Fluxus 每日 | https://claude.ai/artifact/LCb5gkgt4Bv8asdrtVjYH6 | 守护进程 daily_page 班（skill `daily-page`） | `~/Documents/fluxus-ops/state/dailypage.json` + 现场核 |
 | 课程上线 09-25 | https://claude.ai/artifact/RPSokvUnub38CCttkFkvbk | 定时任务 course-page-refresh-6h | 任务板 + 页面评论 + 现场核 |
-| X 日调研 | 见 `data/content/x_watch/README.md` | steve-x-daily-watch（skill `x-watch`） | 当天日报 `daily/<ET 日>.md` |
+| X 日调研 | https://claude.ai/artifact/5zrcFsdMM4b3sGr8wEp8fJ | steve-x-daily-watch（skill `x-watch` 四点五节） | `tools/build_daily_board.py` 读当天 `daily/<ET 日>.md` |
+| X 名单 Ticker 台账 | https://claude.ai/artifact/QDZD6bT5ngjfbgpF34gGt8 | steve-x-daily-watch（skill `x-watch` 第五节） | `tools/build_board.py`（展示层照本标准，热度分列；搜索/日期/筛选保留） |
 
 
 ## 六、变体 B：可拖拽看板（Andy 2026-10-01 原话：「加一个设计并成为默认设计之一，看板的卡片可以拖拽。比如从进行中拖拽到已完成。」）

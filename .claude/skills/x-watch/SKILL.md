@@ -135,6 +135,55 @@ awk -F, 'NR==1||!seen[$1","$2","$3","$4]++' data/content/x_watch/mentions.csv > 
 
 ✅ 09-13 起 `fetch.py` 只在裸大写词分支拦指标名（SMA EMA RS PPI MA VWAP ATR MACD PCE），带 `$` 的照认——`RS`（Reliance Steel）`SMA`（Summit Materials）`MA`（Mastercard）是真代码。⚠️ **09-12 及以前的 posts/mentions 里仍有这批假行**，跨到那几天比人数时要人工剔。撞上新的指标名写进「给 Steve」，别手改 `fetch.py`。
 
+## 四点五、日报看板（Andy 2026-10-01 定：给他看的页面默认是 Trello 式看板）
+
+`daily/$D.md` 写完、`check_mentions.py` 过了之后，在送到用的那棵临时树里把它转成看板页，发布到**固定链接**。
+md 照旧入库，它是机器读的耐久处；Andy 看的是这个页面。（宪法交付面条：「`.md` 不是给 Andy 的交付形态」）
+
+```bash
+python3 data/content/x_watch/tools/build_daily_board.py \
+  data/content/x_watch/daily/$D.md "$WT/x_daily_board.html" --check
+```
+
+- 只用标准库，`python3` 直接跑，不需要 `.venv`。输出写在**临时树根目录**：本班只 `git add data/content/x_watch/`，这个文件不会被带进 commit。
+- `--check` 会打印每一节「md 条目数 → 卡片数」，再逐行核对 md 的每一行正文是否都进了页面。**退出码非 0（有漏行）就不发布**。日报末尾写「日报看板未刷新 · 漏 N 行 · 首条：…」，原样留给 Steve，**不手改 JSON 去凑**。
+- 页面怎么排（脚本按 H2 标题里的关键词认节，认不出的节自动多出一列，不会丢）：
+
+  | 列（从左到右） | 来自 | 卡面 | 卡背 |
+  |---|---|---|---|
+  | 蹭位榜 · 回复方向 | 第 7 节表格 + 同编号的回复方向 | @谁：他在讲什么 · 密度/距今 · 2–3 个方向各一行，跳过的标「跳过」 | 方向全文，再附榜单那一行的各字段和原帖链接 |
+  | 明天的候选 | 第 1 节 | ticker · 净/总/新面孔 · 说了什么 · 谁 | 整行。墙后补票带「Jeff Focus/Stalk」标签；🚩 清单票单独一张 |
+  | 已经跑完 · 别追 | 第 2 节 | 「别追」+ ticker + 讲的是什么 | 整行 |
+  | 接下来的走势 | 第 3 节，3a、分歧、谁写了「算我错」各成一组 | 按小标题打标签 | 整行或整条 |
+  | Jeff 墙后 vs 墙外 | 第 5 节 | kind 标签（Focus 红、Stalk 琥珀）· 票 · 原话 | 整行 |
+  | 选题候选 | 第 6 节 | 卡点 · 收藏比/倍数 · 谁 | 弹药与角度全文 |
+  | 圈内人在聊什么 | 第 4 节 | 谁 · 一句 | 全文 |
+  | 给 Steve · 回执 · 收工 | 开头回执、「给 Steve」、收工三问 | 每条一张，标「第 N 次」（≥3 次标红） | 全文 |
+
+  每节开头讲口径的段落收进列尾的「本节口径」卡。窗口、mood、看板、名单、stance 这几行进页底「数字出处」。
+- **顶部那句话**：md 里如果有一行 `**一句话**：……`（建议写在窗口行下面），脚本直接拿它当标题；没有就自己拼：「明天候选 N 只 + 圈外主题 + Jeff 墙后 Focus」。**有判断要给 Andy 的那天，自己写这一行。** 拼出来的那句只有计数，没有判断。
+- 状态条五个 chip 全部从 md 里数，不另算：帖/人、coverage、明天候选几只、圈外主题、Jeff 墙后 Focus 几张。
+
+### 发布到固定链接
+
+固定链接：https://claude.ai/artifact/5zrcFsdMM4b3sGr8wEp8fJ（README「🗂 日报看板」节同步登记）。和 ticker 台账不是同一个 Artifact，别发错。
+
+```
+Artifact action:"read" url:<日报看板 URL>        # 不先 read，publish 会被拒
+Artifact publish url:<日报看板 URL> file_path:$WT/x_daily_board.html label:"日报 ET $D"
+```
+
+- **永远带 `url` 发布。** 不带 url 会新开一个链接，Andy 收藏的那个就停在昨天了。
+- `<title>` 固定是 `X 日调研`，不改。
+- 发布前核一眼：页面 JSON 的 `date` 必须等于 `$D`。不等说明喂错了文件，别发。
+- Artifact 工具不可用时：日报末尾写「日报看板未刷新 · 原因」，不静默跳过。
+
+固定链接（10-01 OPS 首发，已声明 `comments composer_only`）：**https://claude.ai/artifact/5zrcFsdMM4b3sGr8wEp8fJ** 。发布时**不传 `capabilities`**（省略＝沿用，「回话」按钮靠它）。
+
+### 页面评论＝Andy 的回话
+
+卡片上的「回话」按钮会打开评论框。下一班开工时 `ArtifactComments read` 读一遍这个链接，**把评论当回执**：对某张蹭位卡的评论，说明他挑了哪个方向、或者想要别的方向。读到的内容写进「回执」节，逐条一句状态。
+
 ## 五、刷新 ticker 看板（Andy 2026-09-18 要回来的「以票为主体」阅览）
 
 日报是营销编排视角（谁说了什么、我该发什么）；看板是交易视角（按票检索、看热点）。**两个都要。**
@@ -146,7 +195,7 @@ awk -F, 'NR==1||!seen[$1","$2","$3","$4]++' data/content/x_watch/mentions.csv > 
 ```
 
 - `ticker_daily.csv` 随本班一起 `git add`（Excel 用的宽表，入库）；`board.html` / `board_data.json` **不提交**（各 2.5MB，未进 .gitignore）：`git add data/content/x_watch/` 之后必须跑 `git -C "$WT" reset -q -- data/content/x_watch/board.html data/content/x_watch/board_data.json`，再看 `git diff --cached --name-only` 里没有它俩。
-- 发布到同一个 Artifact（URL 见 `data/content/x_watch/README.md`「📇 每日看板」节）：先 `Artifact action:"read"` 这个 url（不 read 会被拒），再 `Artifact publish url:<同上> file_path:<临时树>/data/content/x_watch/board.html label:"数据到 ET $D"`。**不 publish 不带 url**（那会新建一个 URL，Andy 收藏的那个就又停了）。
+- 发布到同一个 Artifact（URL 见 `data/content/x_watch/README.md`「📇 每日看板」节）：先 `Artifact action:"read"` 这个 url（不 read 会被拒），再 `Artifact publish url:<同上> file_path:<临时树>/data/content/x_watch/board.html label:"数据到 ET $D"`（**不传 `capabilities`**，沿用已存的 comments 声明；10-01 起台账是看板样式，见 `kanban-page`）。**不 publish 不带 url**（那会新建一个 URL，Andy 收藏的那个就又停了）。
 - 发布前核一眼：`board_data.json` 的 `dates` 末项必须 = `$D`。不等就是没用新数据，别发。
 - Artifact 工具不可用时：日报末尾写「看板未刷新 · 原因」，不静默跳过。
 
@@ -262,6 +311,8 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 中文。**散文里不出现手打的数字** —— 全部从脚本产出的 jsonl 来，表格里给。公开区原话只存不引；**墙后原话 09-24 起可以直接引**（见第二节）。昨天也在的不复述。**多天比较前先确认每天覆盖是同一把尺子**；**跨天比计数一律先换成比例**。不写「值得关注」这类空话。写之前读 `.claude/skills/fable-voice/SKILL.md`。
 
 速报的**两屏就是上限** —— 蹭位榜连回复方向一屏半，圈外主题半屏；超过说明在做主班的活。末尾一行：本窗口 ET 起止 + 条数/人数，让 Andy 知道这是半天的量。
+
+> 日报现在有两个读者：Andy 看的是看板页（脚本照 md 结构排）。表格一行一件事、列表一项一件事、蹭位方向用 `**N · …**` 加列表，这几条守住；脚本认不出的节会单出一列，不会丢。节标题里的关键词（蹭位 / 候选 / 别追 / 走势 / 墙后 / 选题 / 圈内 / Steve）别改没。
 
 # 禁区
 

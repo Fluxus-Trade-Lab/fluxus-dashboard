@@ -1,409 +1,215 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>X 名单 Ticker 台账</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <style>
-:root{
-  --ground:#EDEFF1; --surface:#FFFFFF; --surface2:#F5F7F8; --raise:#E4E8EA;
-  --ink:#15191C; --ink2:#3A444A; --muted:#5F6A70; --faint:#8C979D;
-  --rule:#D5DADD; --rule2:#E6EAEC;
-  --brass:#B06A05; --brass-soft:#F5E7CE; --brass-line:#E0C48C;
-  --fwd:#1264B4; --fwd-soft:#E2ECF7;
-  --shadow:0 1px 2px rgba(21,25,28,.06),0 8px 24px -12px rgba(21,25,28,.18);
-  --sans:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
-  --mono:"IBM Plex Mono","SFMono-Regular",ui-monospace,Menlo,monospace;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ground:#101416; --surface:#171C1F; --surface2:#1D2327; --raise:#232A2E;
-  --ink:#E4E9EB; --ink2:#C2CBCF; --muted:#8B979D; --faint:#6C777D;
-  --rule:#283035; --rule2:#212930;
-  --brass:#D4972B; --brass-soft:#33280F; --brass-line:#5A4517;
-  --fwd:#4290D2; --fwd-soft:#152836;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
-}}
-:root[data-theme="dark"]{
-  --ground:#101416; --surface:#171C1F; --surface2:#1D2327; --raise:#232A2E;
-  --ink:#E4E9EB; --ink2:#C2CBCF; --muted:#8B979D; --faint:#6C777D;
-  --rule:#283035; --rule2:#212930;
-  --brass:#D4972B; --brass-soft:#33280F; --brass-line:#5A4517;
-  --fwd:#4290D2; --fwd-soft:#152836;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
-}
-*{box-sizing:border-box}
-body{background:var(--ground);color:var(--ink);font-family:var(--sans);
-  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;margin:0}
-/* ⚠️ 底部留白只有 14px，是**算出来的**，不是手感（09-23）。
-   表格盒现在是 .wrap 的最后一个子元素，sticky 的行程上限＝它自己的下边缘，
-   也就是说它**没有行程可走**（实测：滚到底时 box.bottom 恰好等于 .wrap 的内容框底）。
-   于是页面能多滚的那点距离全部由 padding-bottom 提供，而多滚多少，表头就往
-   工具条底下钻多少（72px 时实测表头顶 104 < 工具条底 134，列名被盖住）。
-   不让它钻的充要条件：maxScrollY ≤ boxDocTop − stickyTop，代入
-   boxH = 100vh − barh − 24 与 stickyTop = barh + 8，两边的 barh 与 vh 全约掉，
-   只剩 **padding-bottom ≤ 16px**。取 14px，留 2px 余量。
-   改这个数之前先把上面这条不等式重算一遍。 */
-.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 14px}
-h1{font-size:21px;font-weight:700;letter-spacing:-.015em;margin:0;text-wrap:balance}
-a{color:var(--brass)}
-:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:3px}
-.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  /* 看板标准（.claude/skills/kanban-page/template.html）：深色为底，浅色为第二主题。颜色只在 token 里定义。
+     token 块与模板逐字一致；本页只加了两个组件 token 都不新造：.lb.mut（中性标签）与 .wallb（墙后铜色块，用 --amb）。 */
+  :root{
+    color-scheme:dark;
+    --board:#0D0F14; --board2:#121620; --list:#171B24; --card:#1F2430; --card-h:#252B39;
+    --ink:#E8EAEF; --sub:#9AA0B0; --mute:#646B7D; --line:#2A3040;
+    --amb:#E0A458; --ambbg:#33281A; --ok:#5BBF8F; --okbg:#173025; --hot:#E8766C; --hotbg:#371C1A;
+    --blu:#7EA6E8; --blubg:#1B2638; --shadow:0 1px 0 rgba(0,0,0,.35),0 6px 18px -10px rgba(0,0,0,.6);
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Noto Sans SC',system-ui,-apple-system,'PingFang SC',sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      color-scheme:light;
+      --board:#EEF0F3; --board2:#E4E8EE; --list:#F7F8FA; --card:#FFFFFF; --card-h:#FBFBFC;
+      --ink:#1A1D24; --sub:#586072; --mute:#8A91A2; --line:#DCE0E7;
+      --amb:#9A6420; --ambbg:#FBF0DC; --ok:#2C7D57; --okbg:#E3F3EA; --hot:#B83F35; --hotbg:#FBE7E4;
+      --blu:#2F5DA8; --blubg:#E5EDF9; --shadow:0 1px 0 rgba(20,30,50,.06),0 6px 16px -10px rgba(20,30,50,.25);
+    }
+  }
+  :root[data-theme="light"]{
+    color-scheme:light;
+    --board:#EEF0F3; --board2:#E4E8EE; --list:#F7F8FA; --card:#FFFFFF; --card-h:#FBFBFC;
+    --ink:#1A1D24; --sub:#586072; --mute:#8A91A2; --line:#DCE0E7;
+    --amb:#9A6420; --ambbg:#FBF0DC; --ok:#2C7D57; --okbg:#E3F3EA; --hot:#B83F35; --hotbg:#FBE7E4;
+    --blu:#2F5DA8; --blubg:#E5EDF9; --shadow:0 1px 0 rgba(20,30,50,.06),0 6px 16px -10px rgba(20,30,50,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:radial-gradient(1200px 500px at 15% -10%,var(--board2),transparent 60%),var(--board);
+       color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100%}
+  .wrap{padding-inline:16px;padding-block:26px 56px;max-width:1360px;margin:0 auto}
+  .ic{width:15px;height:15px;stroke-width:2;flex:none}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* ── 顶栏 ── */
-.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
-  padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:14px}
-.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);flex-basis:100%}
-.meta{margin-left:auto;display:flex;gap:14px;font-family:var(--mono);
-  font-size:11.5px;color:var(--muted);flex-wrap:wrap}
-.meta b{color:var(--ink);font-weight:600}
+  /* 顶部 */
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase}
+  h1{font-size:clamp(19px,2.6vw,25px);font-weight:900;line-height:1.35;margin:6px 0 0;text-wrap:balance;letter-spacing:-.01em;max-width:46ch}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 10px;border-radius:8px;background:var(--list);
+        border:1px solid var(--line);color:var(--sub);white-space:nowrap;font-family:inherit}
+  .chip b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .chip.hot{background:var(--hotbg);border-color:transparent;color:var(--hot)} .chip.hot b{color:var(--hot)}
+  .chip.ok{background:var(--okbg);border-color:transparent;color:var(--ok)} .chip.ok b{color:var(--ok)}
+  button.chip{cursor:pointer}
+  button.chip:hover{border-color:var(--sub)}
+  .status{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 14px}
 
-/* ── 顶部 curated（替代原来那排占满一屏的重点卡） ── */
-.curated{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));
-  gap:10px;margin:0 0 12px}
-.card{background:var(--surface);border:1px solid var(--rule);border-radius:2px;
-  padding:10px 12px 11px;min-width:0}
-.card h2{font:600 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);margin:0 0 2px}
-.card .sub{font-size:10.5px;color:var(--faint);line-height:1.35;margin:0 0 7px;
-  overflow-wrap:anywhere}
-.card ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
-.ci{display:flex;gap:8px;align-items:baseline;width:100%;background:none;border:0;
-  padding:4px 5px;margin:0 -5px;text-align:left;font:inherit;color:inherit;cursor:pointer;
-  border-radius:2px;min-width:0}
-.ci:hover{background:var(--surface2)}
-.ci .s{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:-.01em;
-  white-space:nowrap}
-.ci .w{font-size:11px;color:var(--muted);line-height:1.35;margin-left:auto;text-align:right;
-  white-space:nowrap}
-.ci .txt{font-size:11px;color:var(--muted);line-height:1.35;overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
-.card .none{font-size:11.5px;color:var(--faint);line-height:1.45;overflow-wrap:anywhere;margin:0}
-.ciw{display:flex;align-items:baseline;gap:4px;min-width:0}
-.ciw .ci{flex:1;min-width:0}
-.ext{font-size:11px;text-decoration:none;flex:none}
+  /* 工具条：搜索 / 视图 / 日期 / 筛选，全部长成 chip */
+  .bar{position:sticky;top:0;z-index:20;background:var(--board);padding:10px 0;margin-bottom:12px;border-bottom:1px solid var(--line);
+       display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .search{flex:1 1 220px;min-width:0;display:flex;align-items:center;gap:6px;padding:0 10px;border-radius:8px;background:var(--list);border:1px solid var(--line);color:var(--mute)}
+  .search:focus-within{border-color:var(--blu)}
+  .search input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:500 13px/1.4 var(--mono);padding:7px 0;outline:none}
+  .search input::placeholder{color:var(--mute);font-weight:400}
+  .seg{display:flex;border:1px solid var(--line);border-radius:8px;background:var(--list);overflow-x:auto;overflow-y:hidden;max-width:100%;scrollbar-width:thin}
+  .seg button{flex:none;font:500 12.5px var(--sans);padding:6px 10px;background:none;border:0;color:var(--sub);cursor:pointer;border-right:1px solid var(--line);white-space:nowrap}
+  .seg button:last-child{border-right:0}
+  .seg button[aria-pressed="true"]{background:var(--ink);color:var(--board)}
+  .tog[aria-pressed="true"]{background:var(--blubg);border-color:transparent;color:var(--blu)}
+  select.chip{appearance:auto;color:var(--ink);max-width:100%}
+  .count{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+  .hint{font:inherit;font-size:12px;color:var(--blu);background:none;border:0;cursor:pointer;padding:0;text-decoration:underline}
 
-/* ── 折叠块（今日变动 / 人员名单） ── */
-.fold{background:var(--surface);border:1px solid var(--rule);border-radius:2px;
-  margin:0 0 14px;padding:0 12px}
-.fold>summary{cursor:pointer;font:600 11px var(--sans);letter-spacing:.06em;
-  text-transform:uppercase;color:var(--muted);padding:9px 0;list-style:none}
-.fold>summary::-webkit-details-marker{display:none}
-.fold>summary::before{content:"▸ ";color:var(--faint)}
-.fold[open]>summary::before{content:"▾ "}
-.fold>summary:hover{color:var(--ink)}
-.foldbody{padding:0 0 12px}
-/* 口径说明与人员名单并排一行，收起时只占一条 —— 它们从表格下方挪到了上方
-   （见下面 .tblbox 那段的说明），并排是为了别把表格又往下推一整行。 */
-.foldrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
-.foldrow>.fold{margin:0;min-width:0}
-@media (max-width:720px){.foldrow{grid-template-columns:1fr}}
+  /* 精选（原 curated 四块，收进折叠） */
+  details.fold{margin:0 0 14px;background:var(--list);border:1px solid var(--line);border-radius:12px}
+  details.fold>summary{cursor:pointer;padding:10px 14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--sub);list-style:none;display:flex;gap:8px;align-items:center}
+  details.fold>summary::-webkit-details-marker{display:none}
+  details.fold[open]>summary{border-bottom:1px solid var(--line)}
+  .cur{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;padding:12px}
+  .cur section{background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow);min-width:0}
+  .cur h3{margin:0;font-size:13px;font-weight:700}
+  .cur .sub{font-size:11.5px;color:var(--mute);margin:2px 0 6px;line-height:1.45}
+  .ci{display:flex;gap:8px;align-items:baseline;width:100%;background:none;border:0;padding:4px 6px;margin:0 -6px;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:6px;min-width:0}
+  .ci:hover{background:var(--card-h)}
+  .ci .s{font-family:var(--mono);font-weight:600;font-size:13px;white-space:nowrap}
+  .ci .t{font-size:12px;color:var(--sub);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ci .w{font-family:var(--mono);font-size:11.5px;color:var(--mute);white-space:nowrap}
 
-/* ── 重点卡（收进折叠块） ── */
-.flags{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:8px}
-.flag{background:var(--surface2);border:1px solid var(--rule);border-radius:2px;
-  padding:9px 11px 10px;display:flex;flex-direction:column;gap:3px;
-  border-left:3px solid var(--rule);cursor:pointer;text-align:left;font:inherit;color:inherit;
-  min-width:0}
-.flag:hover{background:var(--raise)}
-.flag.wall{border-left-color:var(--brass)}
-.flag.fresh{border-left-color:var(--fwd)}
-.flag-k{font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
-.flag.wall .flag-k{color:var(--brass)} .flag.fresh .flag-k{color:var(--fwd)}
-.flag-s{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:-.01em}
-.flag-w{font-size:11.5px;color:var(--muted);line-height:1.35;overflow-wrap:anywhere}
+  /* 看板 */
+  .board{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(260px,1fr));gap:12px;align-items:start;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+  .list{background:var(--list);border:1px solid var(--line);border-radius:12px;padding:10px;scroll-snap-align:start;min-width:0}
+  .lh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 4px 4px}
+  .lh h2{margin:0;font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px}
+  .lh .n{font-family:var(--mono);font-size:11.5px;color:var(--mute);background:var(--card);border-radius:6px;padding:1px 7px;font-variant-numeric:tabular-nums}
+  .ld{font-size:11.5px;color:var(--mute);padding:0 4px 9px;line-height:1.45}
+  .cards{display:flex;flex-direction:column;gap:8px}
+  .card{background:var(--card);border-radius:10px;padding:10px 12px 11px;box-shadow:var(--shadow);cursor:pointer;
+        border:1px solid transparent;text-align:left;width:100%;font:inherit;color:inherit;display:block;transition:background .12s,border-color .12s,transform .12s}
+  .card:hover{background:var(--card-h);border-color:var(--line)}
+  .card:focus-visible{outline:2px solid var(--blu);outline-offset:2px}
+  @media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-1px)}}
+  .labels{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+  .lb{font-size:11px;font-weight:600;padding:1px 8px;border-radius:5px;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .lb.hot{background:var(--hotbg);color:var(--hot)} .lb.amb{background:var(--ambbg);color:var(--amb)}
+  .lb.ok{background:var(--okbg);color:var(--ok)} .lb.blu{background:var(--blubg);color:var(--blu)}
+  .lb.mut{background:var(--board2);color:var(--sub)}
+  .ct{font-size:14px;font-weight:600;line-height:1.45;text-wrap:pretty}
+  .cd{font-size:12.5px;color:var(--sub);margin-top:5px;line-height:1.55;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px;color:var(--mute);font-size:12px}
+  .foot .meta{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:11px;flex-wrap:wrap}
+  .foot .meta span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+  .reply{font:inherit;font-size:12px;display:inline-flex;align-items:center;gap:5px;color:var(--ink);background:var(--board2);
+         border:1px solid var(--line);border-radius:7px;padding:3px 9px;cursor:pointer}
+  .reply:hover{border-color:var(--sub)}
+  .reply[hidden]{display:none!important}
+  [hidden]{display:none!important}
+  .empty{font-size:12.5px;color:var(--mute);padding:8px 4px}
+  .more{font:inherit;font-size:12px;color:var(--sub);background:none;border:1px dashed var(--line);border-radius:8px;padding:6px;cursor:pointer;width:100%}
+  .more:hover{color:var(--ink);border-color:var(--sub)}
 
-/* ── 人员名单 ── */
-.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(182px,1fr));gap:4px 10px}
-.rp{display:flex;align-items:baseline;gap:6px;font-family:var(--mono);font-size:11.5px;
-  color:var(--ink2);min-width:0}
-.rp .n{color:var(--faint);margin-left:auto;white-space:nowrap}
-.rp .h{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 票卡：代码 + 当日人数 + 人数条 */
+  .tk{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .sym{font-family:var(--mono);font-weight:600;font-size:16px;letter-spacing:-.01em;white-space:nowrap}
+  .sym .d{color:var(--mute);font-weight:400}
+  .metric{display:flex;align-items:baseline;gap:6px;font-size:12px;color:var(--sub);white-space:nowrap}
+  .metric b{font-size:18px;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700}
+  .up{color:var(--ok)} .dn{color:var(--hot)} .flat{color:var(--mute)}
+  .spark{display:flex;align-items:flex-end;gap:2px;height:20px;margin-top:8px}
+  .spark span{flex:1;max-width:9px;background:var(--mute);border-radius:2px 2px 0 0;min-height:3px;opacity:.75}
+  .spark span.on{background:var(--ink);opacity:1}
+  .spark span.z{background:var(--line);height:2px;min-height:2px;opacity:1}
+  .spark.big{height:44px;gap:3px;margin:6px 0 2px}
+  .spark.big span{max-width:14px}
 
-/* ── ⭐ 关注钮 ── */
-.star{background:none;border:0;padding:0 2px;margin:0;cursor:pointer;line-height:1;
-  font-size:12px;color:var(--faint);vertical-align:baseline}
-.star:hover{color:var(--brass)}
-.star[aria-pressed="true"]{color:var(--brass)}
+  /* 卡背 */
+  dialog{border:1px solid var(--line);border-radius:14px;background:var(--list);color:var(--ink);padding:0;width:min(760px,calc(100vw - 32px));
+         max-height:88vh;overflow:auto;box-shadow:0 30px 80px -20px rgba(0,0,0,.6)}
+  dialog::backdrop{background:rgba(5,7,12,.55)}
+  .dh{display:flex;justify-content:space-between;gap:12px;padding:18px 20px 6px;position:sticky;top:0;background:var(--list);z-index:2}
+  .dh h3{margin:0;font-size:17px;line-height:1.4;text-wrap:balance;font-family:var(--mono)}
+  .dh .acts{display:flex;gap:6px;align-items:flex-start}
+  .x{background:none;border:0;color:var(--sub);cursor:pointer;padding:4px;border-radius:6px}
+  .x:hover{color:var(--ink);background:var(--card)}
+  .db{padding:4px 20px 20px}
+  .db p{margin:8px 0;font-size:13.5px;color:var(--sub);line-height:1.65}
+  .db .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;margin-top:16px}
+  .kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:8px}
+  .kv div{background:var(--card);border-radius:8px;padding:7px 10px;min-width:0}
+  .kv small{display:block;font-size:11px;color:var(--mute)}
+  .kv b{font-family:var(--mono);font-size:14px;font-weight:600;overflow-wrap:anywhere}
+  .kv b.na{color:var(--mute);font-weight:400;font-size:12.5px}
+  .seq{font-family:var(--mono);font-size:11px;color:var(--mute);line-height:1.7;overflow-wrap:anywhere}
+  .who{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-family:var(--mono);font-size:12.5px;color:var(--sub)}
+  .who span{display:inline-flex;align-items:center;gap:2px}
+  .star{background:none;border:0;padding:0 2px;margin:0;cursor:pointer;line-height:1;font-size:13px;color:var(--mute)}
+  .star:hover,.star[aria-pressed="true"]{color:var(--amb)}
+  .po{padding:10px 0;border-top:1px dashed var(--line)}
+  .po:first-child{border-top:0}
+  .ph{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+  .ph .h{color:var(--ink);font-weight:500}
+  .pt{font-size:13px;color:var(--ink);margin-top:4px;line-height:1.6;overflow-wrap:anywhere;white-space:pre-wrap}
+  .wallb{background:var(--ambbg);border-left:3px solid var(--amb);border-radius:8px;padding:10px 12px;margin-top:8px}
+  .wallb .ph,.wallb .ph .h{color:var(--amb)}
+  .symchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+  .symchips button{font:600 11.5px var(--mono);padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  .symchips button:hover{border-color:var(--sub)}
+  .sw{display:flex;gap:6px;margin-top:8px}
+  a{color:var(--blu)}
 
-/* ── 工具条 ── */
-.bar{position:sticky;top:0;z-index:20;background:var(--ground);
-  padding:8px 0 9px;margin-bottom:2px;border-bottom:1px solid var(--rule);
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.search{flex:1 1 210px;min-width:150px;position:relative}
-.search input{width:100%;padding:7px 10px 7px 27px;font:500 13px/1.4 var(--mono);
-  background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:2px}
-.search input::placeholder{color:var(--faint);font-weight:400}
-.search svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);
-  width:13px;height:13px;stroke:var(--faint);fill:none;stroke-width:1.8}
-/* ⚠️ 这里不能用 overflow:hidden —— 375px 下日期钮有 20 个，hidden 会把 09-12
-   之后的直接裁掉，点都点不到（main 同病）。改成自己横滚。 */
-.seg{display:flex;border:1px solid var(--rule);border-radius:2px;background:var(--surface);
-  overflow-x:auto;overflow-y:hidden;max-width:100%;scrollbar-width:thin}
-.seg button{flex:none}
-.seg button{font:500 12px var(--sans);padding:7px 11px;background:none;border:0;
-  color:var(--muted);cursor:pointer;border-right:1px solid var(--rule2)}
-.seg button:last-child{border-right:0}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-.chip{font:500 11.5px var(--mono);padding:6px 9px;border:1px solid var(--rule);
-  border-radius:2px;background:var(--surface);color:var(--muted);cursor:pointer}
-.chip[aria-pressed="true"]{border-color:var(--brass);color:var(--brass);background:var(--brass-soft)}
-select{font:500 12px var(--sans);padding:7px 8px;background:var(--surface);
-  color:var(--ink);border:1px solid var(--rule);border-radius:2px;max-width:100%}
+  details.src{margin-top:26px;background:var(--list);border:1px solid var(--line);border-radius:12px}
+  details.src summary{cursor:pointer;padding:12px 16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--sub);list-style:none}
+  details.src summary::-webkit-details-marker{display:none}
+  details.src[open] summary{border-bottom:1px solid var(--line)}
+  details.src ul{margin:0;padding:10px 16px 14px 32px}
+  details.src li{font-size:12.5px;color:var(--sub);margin:5px 0;line-height:1.6}
+  footer{font-family:var(--mono);font-size:10.5px;color:var(--mute);margin-top:22px;line-height:1.9}
 
-/* ── 表 ── */
-/* ⚠️ 表头吸顶的坑：.scroll 只写 overflow-x:auto 时，overflow-y 的 visible 会被
-   计算成 auto —— 它就成了纵向滚动容器，而它自己没有纵向溢出，于是 thead 的
-   position:sticky 永远贴在一个不滚的盒子上，页面一滚列名就没了（main 同病，
-   那边还硬编码 top:44px 去躲工具条，而 .bar 实测 133px 高，反把第一行压住）。
-   修法：让 .scroll 真的接管纵向滚动，高度跟着视口减去工具条实高（--barh 由
-   ResizeObserver 现场量），thead 贴 top:0 —— 不再有任何写死的 px。
-   ⚠️ 光给 max-height 不够：盒顶恒在 curated + 今日变动 + 工具条之下（实测 y=519），
-   一个 100vh−barh−26 高的盒子从那儿往下画，盒底永远掉出视口 359px，而且每个视口
-   高度都一样多 —— 780px 的屏（MBP 14"）一屏只读得到 6 行，600px 只剩 1 行。
-   所以盒子自己也要 sticky：页面一滚它就贴在工具条下沿，整只盒子回到视口里。
-   ⚠️ 也不能 overscroll-behavior:contain —— 那会让鼠标停在表上时页面完全不滚，
-   掉出去的那截够都够不着。默认的滚动链接（表滚到底 → 继续滚页面）就是对的。 */
-/* ⚠️ T-0923-136：sticky 从 .scroll 挪到外壳 .tblbox —— 渐隐提示要 position:absolute
-   叠在滚动盒之上，而 absolute 元素放进 overflow:auto 的盒子里会跟着内容一起横滚。
-   壳负责 sticky（原来的行为一字不变：页面一滚整只盒回到工具条下沿），盒负责滚动。
-   max-height 从 −26px 改成 −40px，是把顶部那条 14px 的同步滚动条让出来 ——
-   盒底在视口里的落点（100vh−18px）与改动前完全一致。 */
-.tblbox{position:sticky;top:calc(var(--barh, 140px) + 8px);z-index:1}
-.scroll{overflow:auto;max-height:calc(100vh - var(--barh, 140px) - 40px);
-  background:var(--surface);border:1px solid var(--rule);border-radius:0 0 2px 2px}
-
-/* ── 横滚条常驻 + 顶部同步条 ──
-   Andy 09-23：「目前我只能看到这里 / 所以需要一个左右的scroll 更方便的」。
-   表能滚，但 macOS 的 overlay 滚动条平时隐藏、且只长在盒底（盒高近一屏，
-   他看着表头时那条在 700px 以外）。两件事一起治：
-   ① scrollbar-width / ::-webkit-scrollbar 两套都写 —— 只要写了 ::-webkit-scrollbar，
-      Chromium 就把 overlay 条换成常驻的经典条，不滚动时截图里也看得见。
-   ② 表头正上方再放一条同样宽的空条，拖它等于拖表。
-   ⚠️ 这两套 CSS **不能写在同一个元素上**（09-23 实测，Chromium 145 / macOS）：
-   只写 ::-webkit-scrollbar 时，macOS Chrome 把 overlay 条换成常驻经典条，
-   `offsetHeight − clientHeight` = 13px（条）+ 2px（边框）= 15，截图里看得见；
-   一旦同一元素上再写 scrollbar-width / scrollbar-color，**标准属性接管、webkit 伪元素失效**，
-   读数立刻掉回 0（又变回平时不画的 overlay 条）。所以 .scroll 只留 webkit 那套。
-   ⚠️ 量这件事的时候注意 headless 的 `--hide-scrollbars`（Playwright 默认带）：
-   带上它六种写法一律读 0，会让人得出「macOS 上都不生效」的错误结论 —— 本轮我先栽了一次，
-   复核在真页面量出 15px 才纠回来。跑之前确认参数里没有它。
-   顶部那条则相反：.xtop 的原生条要藏掉（scrollbar-width:none + height:0），
-   因为它上面盖着我们自己画的把手 .xbar/.xthumb，留着原生条就成了两条叠在 16px 里。
-   于是表头上下各一条：上面是自绘把手（任何平台都画得出来），下面是常驻的经典条。 */
-.xtop{overflow-x:auto;overflow-y:hidden;height:16px;
-  background:var(--surface2);border:1px solid var(--rule);border-bottom:0;
-  border-radius:2px 2px 0 0}
-.xtop>div{height:1px}
-.xbar{position:absolute;top:0;left:0;right:0;height:16px;z-index:15;background:none}
-.xbar.off{display:none}
-.xthumb{position:absolute;top:3px;bottom:3px;left:0;min-width:32px;
-  background:var(--muted);border-radius:5px;cursor:grab}
-.xbar:hover .xthumb{background:var(--ink2)}
-.xthumb.drag{cursor:grabbing;background:var(--ink)}
-.seg{scrollbar-width:thin;scrollbar-color:var(--muted) var(--surface2)}
-.xtop{scrollbar-width:none}
-.xtop::-webkit-scrollbar{height:0;width:0}
-.scroll::-webkit-scrollbar{height:13px;width:13px;background:var(--surface2)}
-.scroll::-webkit-scrollbar-track{background:var(--surface2)}
-.scroll::-webkit-scrollbar-thumb{background:var(--muted);border-radius:7px;
-  border:3px solid var(--surface2)}
-.scroll::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
-.scroll::-webkit-scrollbar-corner{background:var(--surface2)}
-
-/* 边缘渐隐：只是「那边还有列」的提示，永不吃点击（pointer-events:none）。
-   左侧那道从首列右缘开始画 —— 首列是 sticky 的，永远在，压它没意义。
-   --c1w 由 updateFades() 现场量首列实宽写入。 */
-.fade{position:absolute;top:16px;bottom:15px;width:30px;pointer-events:none;
-  z-index:14;opacity:0;transition:opacity .12s}
-.fade.on{opacity:1}
-.fade.fr{right:1px;background:linear-gradient(to right,rgba(0,0,0,0),var(--surface))}
-.fade.fl{left:var(--c1w, 1px);background:linear-gradient(to left,rgba(0,0,0,0),var(--surface))}
-
-/* 列开关（治本：关掉几列表就窄了，可能根本不用横滚） */
-.colmenu{position:relative}
-.colmenu>summary{font:500 12px var(--sans);padding:7px 10px;border:1px solid var(--rule);
-  border-radius:2px;background:var(--surface);color:var(--muted);cursor:pointer;
-  list-style:none;white-space:nowrap}
-.colmenu>summary::-webkit-details-marker{display:none}
-.colmenu>summary::after{content:" ▾";color:var(--faint)}
-.colmenu[open]>summary{border-color:var(--brass);color:var(--brass)}
-.colpop{position:absolute;top:calc(100% + 4px);right:0;z-index:30;min-width:186px;
-  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
-  box-shadow:var(--shadow);padding:7px 4px 5px;max-height:62vh;overflow:auto}
-.colopt{display:flex;align-items:center;gap:7px;font:500 12px var(--sans);
-  color:var(--ink2);padding:4px 8px;border-radius:2px;cursor:pointer;white-space:nowrap}
-.colopt:hover{background:var(--surface2)}
-.colopt input{margin:0;accent-color:var(--brass)}
-.colopt input:disabled{opacity:.55}
-.colopt input:disabled+span{color:var(--faint)}
-.colact{display:flex;gap:6px;padding:6px 8px 1px;margin-top:4px;border-top:1px solid var(--rule2)}
-.colact button{flex:1;font:500 11px var(--sans);padding:5px 6px;border:1px solid var(--rule);
-  border-radius:2px;background:var(--surface2);color:var(--muted);cursor:pointer;white-space:nowrap}
-.colact button:hover{color:var(--ink);border-color:var(--ink2)}
-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
-table.wide{min-width:1180px}
-thead th{position:sticky;top:0;z-index:10;background:var(--surface2);
-  font:600 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);text-align:left;padding:0;white-space:nowrap;
-  border-bottom:1px solid var(--rule)}
-/* 首列同时 sticky 行列：表头 > 首列 > 内容 */
-thead th:first-child{left:0;z-index:12;border-right:1px solid var(--rule)}
-tbody td:first-child{position:sticky;left:0;z-index:5;background:var(--surface);
-  border-right:1px solid var(--rule)}
-tbody tr.row:hover td:first-child,tbody tr.row.open td:first-child{background:var(--surface2)}
-tr.detail td:first-child{position:static;border-right:0}
-th button.sortbtn{display:block;width:100%;background:none;border:0;cursor:pointer;
-  font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;
-  text-align:inherit;padding:8px 10px;white-space:nowrap}
-th button.sortbtn:hover{color:var(--ink)}
-th[aria-sort]:not([aria-sort="none"]) button.sortbtn{color:var(--ink)}
-th.num button.sortbtn{text-align:right}
-.dir{font-size:9px;vertical-align:1px;color:var(--brass)}
-tbody td{padding:8px 10px;border-bottom:1px solid var(--rule2);vertical-align:middle}
-tbody tr.row{cursor:pointer}
-tbody tr.row:hover td{background:var(--surface2)}
-tbody tr.row.open td{background:var(--surface2)}
-.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.sym{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:-.01em;white-space:nowrap}
-.sym .cur{color:var(--faint);font-weight:400}
-.tagi{font:500 9.5px var(--mono);color:var(--faint);border:1px solid var(--rule);
-  padding:0 3px;border-radius:2px;margin-left:5px;vertical-align:1px}
-.who{color:var(--muted);font-size:11.5px;max-width:190px;line-height:1.35;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.who.mono{max-width:230px}
-
-/* 墙后徽标 —— 全页只有它和「前瞻」用颜色 */
-.wallmark{display:inline-flex;align-items:center;gap:4px;font:600 10.5px var(--mono);
-  color:var(--brass);background:var(--brass-soft);border:1px solid var(--brass-line);
-  border-radius:2px;padding:1px 5px;white-space:nowrap}
-.wallmark::before{content:"";width:5px;height:5px;background:var(--brass);border-radius:50%}
-
-/* 立场:颜色只编「跑没跑」,词本身照写。
-   ⚠️ 表里只显人数最高的 2 个 + 「+N」,一行放平不换行 —— 平均 4.3 个 chip 竖排
-   才是行高的真正驱动,Andy 那句「占的空间太大」指的就是这个。全部立场在展开处。 */
-.st{display:inline-flex;gap:3px;flex-wrap:nowrap;white-space:nowrap;align-items:baseline}
-.st i.more{color:var(--faint);border:0;padding:0 1px}
-.bask{display:block;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.st i{font:600 10.5px var(--mono);font-style:normal;padding:1px 5px;border-radius:2px;white-space:nowrap}
-.st i.f{color:var(--fwd);background:var(--fwd-soft);border:1px solid var(--fwd)}
-.st i.d{color:var(--ink2);background:var(--raise);border:1px solid var(--rule)}
-.st i.n{color:var(--faint);border:1px solid var(--rule)}
-
-/* 人数条 —— 单序列,量的是当日提及人数。默认只画近 10 天,全序列在悬停与展开处。
-   ⚠️ 条色不能用 --rule：那是分隔线的灰，实测对深浅两版的行底色只有 1.38:1 / 1.22:1,
-   3px 宽压下去除最后一天那根就肉眼不可见了。条色走 --muted(正文级)、宽度 5px,
-   10 根 59px 仍比 main 的 19 根 169px 省掉三分之二。零值那根保持 --rule2 的细线,
-   它要的就是「这天没人说」的留白,不参与可读性判据。 */
-.spark{display:flex;align-items:flex-end;gap:1px;height:18px}
-.spark span{width:5px;background:var(--muted);border-radius:1px 1px 0 0;min-height:3px}
-.spark span.last{background:var(--ink)}
-.spark span.zero{background:var(--rule2);height:2px;min-height:2px}
-.delta{font-family:var(--mono);font-size:11.5px;white-space:nowrap}
-.delta.up::before{content:"▲ ";font-size:8px;vertical-align:1px}
-.delta.dn::before{content:"▼ ";font-size:8px;vertical-align:1px}
-.delta.flat{color:var(--faint)}
-.rel{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.rel.na{color:var(--faint);font-size:11px}
-/* 不适用（ETF/指数不在个股 universe 内）与「个股但当日无读数」视觉上分开 */
-.na-idx{color:var(--faint);font-family:var(--mono);font-size:12px;cursor:help}
-.na-eq{color:var(--ink2);font-family:var(--mono);font-size:14px;font-weight:600;cursor:help}
-
-/* 展开的帖 */
-tr.detail td{padding:0;background:var(--surface2);border-bottom:1px solid var(--rule)}
-.posts{display:flex;flex-direction:column}
-.full{padding:8px 14px;border-bottom:1px dashed var(--rule);font-size:11.5px;
-  color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
-.full b{color:var(--ink2);font-weight:600}
-.full .seq{font-family:var(--mono);font-size:11px}
-.post{display:grid;grid-template-columns:82px 132px 1fr auto;gap:12px;align-items:baseline;
-  padding:8px 14px;border-top:1px dashed var(--rule)}
-.post:first-child{border-top:0}
-.post .d{font-family:var(--mono);font-size:11px;color:var(--faint)}
-.post .h{font-family:var(--mono);font-size:11.5px;color:var(--ink2);font-weight:500;
-  overflow:hidden;text-overflow:ellipsis}
-.post .t{font-size:12.5px;color:var(--ink2);line-height:1.5;overflow-wrap:anywhere}
-.post .t a{text-decoration:none;border-bottom:1px solid var(--brass-line)}
-.post .v{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
-.post.wallp{background:var(--brass-soft);border-left:3px solid var(--brass)}
-/* 墙后正文（09-24 起直接上页）。正文列在表里只给一行，点开才铺全文 ——
-   Jeff 的帖中位 260 字，整段铺进单元格会把行高顶成四五行，表就没法扫了。 */
-/* ⚠️ max-width 写在 <td> 上不生效（table-layout 是 auto，td 会被内容撑开，
-   整张表跟着被顶到一千多 px 宽，正文列反而滚到屏幕外——09-24 第一版就是这么栽的）。
-   必须套一层 display:block 的 span，宽度才收得住。 */
-.wprev{display:block;width:420px;max-width:420px;font-size:11.5px;color:var(--ink2);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* ⚠️ 同一个「max-width 在 td 上不生效」的坑，墙后视图里还有两格：
-   一条 Groups 帖挂 46 只票、46 个当日人数，把表顶到 4462px 宽（视口 1138），
-   正文列被推到 x=2613 —— 页面上根本看不到。两格都套 block span 收住，
-   全量放进展开行（挂 5 只票以上才印）。 */
-.wclip{display:block;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wclip.pub{max-width:150px}
-.wbody{margin-top:4px;font-size:12.5px;line-height:1.6;color:var(--ink2);
-  white-space:normal;overflow-wrap:anywhere}
-tr.detail .full.wbody{padding:10px 14px;border-bottom:0;color:var(--ink2)}
-
-.empty{padding:34px 16px;text-align:center;color:var(--muted);font-size:13px}
-/* ⚠️ 遮挡这件事的账（09-23，Andy：「最下方有问题」）——
-   .tblbox 是 sticky 的，它的包含块是 .wrap，一直延伸到脚注和人员名单之下，
-   滚到页底时盒子会压在它们上面（实测 #note 被盖 175px、手机 397px，名单点不开）。
-   上一轮的修法是给 #note/#rosterbox 加 position:relative;z-index:2 把它们抬到盒子之上
-   —— 点是点得开了，但**变成它们反过来盖住表格行**：整段口径说明压在 $PANW/$HPE 上，
-   名单那条夹在 $HPE 和 $CRDO 中间。两个东西抢同一块屏幕，谁盖谁都难看。
-   现在的修法是结构上不再重叠：**把这两块挪到表格之前**（工具条上方，和「今日变动」
-   同一组折叠块）。sticky 盒后面再没有兄弟节点，遮挡从根上消失，
-   那两条 z-index/background 补丁一并删掉 —— 不用 z-index 互相盖。 */
-.note{font-size:11.5px;color:var(--muted);margin:0 2px 2px;line-height:1.6}
-.note code{font-family:var(--mono);font-size:11px;background:var(--raise);padding:1px 4px;border-radius:2px}
-.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:0 2px}
-@media (max-width:720px){
-  .wrap{padding:16px 12px 14px}   /* 底部同上：必须 ≤16px，见 .wrap 那条注释 */
-  .post{grid-template-columns:1fr;gap:3px}
-  .who{max-width:150px}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media (max-width:1100px){.board{grid-template-columns:repeat(var(--cols,4),minmax(272px,82vw))}}
+  @media (max-width:720px){.bar{position:static}}
 </style>
 
+<!-- build_board.py 只替换这一块 JSON；页面其余部分不动。 -->
+<script type="application/json" id="data">/*__DATA__*/null</script>
+
 <div class="wrap">
-  <header class="top">
-    <span class="eyebrow">Copybook List · 34 人 · 每日 ET 日历日</span>
-    <h1>X 名单 Ticker 台账</h1>
-    <div class="meta" id="meta"></div>
-  </header>
+  <div class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="headline"></h1>
+    </div>
+    <div class="tags"><span class="chip" id="tag"></span></div>
+  </div>
+  <div class="status" id="status"></div>
 
-  <div class="curated" id="curated"></div>
-
-  <details class="fold" id="flagbox">
-    <summary id="flagsum">今日变动</summary>
-    <div class="foldbody"><div class="flags" id="flags"></div></div>
+  <details class="fold" id="curbox">
+    <summary><i data-lucide="star" class="ic"></i><span id="cursum">精选</span></summary>
+    <div class="cur" id="curated"></div>
   </details>
 
-  <div class="foldrow">
-    <details class="fold" id="notebox">
-      <summary id="notesum">口径说明</summary>
-      <div class="foldbody"><p class="note" id="note"></p></div>
-    </details>
-    <details class="fold" id="rosterbox">
-      <summary id="rostersum">人员名单</summary>
-      <div class="foldbody"><div class="roster" id="roster"></div></div>
-    </details>
-  </div>
-
-  <div class="bar">
-    <label class="search">
-      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg>
-      <input id="q" type="search" placeholder="搜 ticker 或 handle —— 例 INTC / ohiain" autocomplete="off">
-    </label>
+  <div class="bar" id="bar">
+    <label class="search"><i data-lucide="search" class="ic"></i>
+      <input id="q" type="search" placeholder="搜 ticker 或 handle —— 例 INTC / ohiain" autocomplete="off" aria-label="搜 ticker 或 handle"></label>
     <div class="seg" id="views" role="group" aria-label="视图">
-      <button data-v="t" aria-pressed="true">票</button>
-      <button data-v="p" aria-pressed="false">人</button>
-      <button data-v="w" aria-pressed="false">墙后</button>
+      <button type="button" data-v="t" aria-pressed="true">票</button>
+      <button type="button" data-v="p" aria-pressed="false">人</button>
+      <button type="button" data-v="w" aria-pressed="false">墙后</button>
     </div>
-    <div class="seg" id="dates" role="group" aria-label="日期"></div>
-    <button class="chip" id="cash" aria-pressed="true">只看 $ 标记</button>
-    <button class="chip" id="idx" aria-pressed="false">含指数</button>
-    <button class="chip" id="wallonly" aria-pressed="false">只看墙后碰过的</button>
-    <button class="chip" id="solo" aria-pressed="false">含只有 1 人说过的</button>
-    <select id="sort" aria-label="排序">
+    <div class="seg" id="dates" role="group" aria-label="日期（ET）"></div>
+    <button type="button" class="chip tog" id="cash" aria-pressed="true">只看 $ 标记</button>
+    <button type="button" class="chip tog" id="idx" aria-pressed="false">含指数</button>
+    <button type="button" class="chip tog" id="wallonly" aria-pressed="false">只看墙后碰过的</button>
+    <button type="button" class="chip tog" id="solo" aria-pressed="false">含只有 1 人说过的</button>
+    <select class="chip" id="sort" aria-label="列内排序">
       <option value="today">按当日人数</option>
       <option value="total">按总提及</option>
       <option value="views">按总曝光</option>
@@ -412,716 +218,447 @@ tr.detail .full.wbody{padding:10px 14px;border-bottom:0;color:var(--ink2)}
       <option value="rs">按 RS 评级</option>
       <option value="d50">按距 50 日线</option>
       <option value="bask">按篮子数</option>
-      <option value="__col" id="optcol">（点表头排的）</option>
     </select>
-    <details class="colmenu" id="colmenu">
-      <summary id="colsum">列</summary>
-      <div class="colpop" id="colpop"></div>
-    </details>
     <span class="count" id="count"></span>
   </div>
 
-  <div class="tblbox" id="tblbox">
-    <div class="xtop" id="xtop" aria-hidden="true"><div id="xtopin"></div></div>
-    <div class="xbar" id="xbar" role="scrollbar" aria-controls="scroll" aria-orientation="horizontal"
-         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="表格左右滚动"><div class="xthumb" id="xthumb"></div></div>
-    <div class="scroll" id="scroll" tabindex="0" role="region"
-         aria-label="台账表格，可左右滚动：Shift+滚轮、← →、Home/End"><table id="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
-    <span class="fade fl" id="fadeL"></span><span class="fade fr" id="fadeR"></span>
-  </div>
+  <div class="board" id="board"></div>
+
+  <details class="src"><summary>口径与数字出处</summary><ul id="sources"></ul></details>
+  <footer id="foot"></footer>
 </div>
 
+<dialog id="dlg" aria-labelledby="dlg-t">
+  <div class="dh"><h3 id="dlg-t"></h3>
+    <div class="acts">
+      <button class="reply" id="dlg-r" type="button" hidden><i data-lucide="message-square" class="ic"></i>回话</button>
+      <button class="x" id="dlg-x" type="button" aria-label="关闭"><i data-lucide="x" class="ic"></i></button>
+    </div>
+  </div>
+  <div class="db" id="dlg-b"></div>
+</dialog>
+
 <script>
-const D = /*__DATA__*/null;
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
-const nf = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(1)+"k" : String(n||0);
-/* 墙后正文：Andy 2026-09-24 取消「只存不引」——「我要在ticker台账上直接能看到」。
-   正文只在 D.wall 里存一份，按 post id 查；票视图那边只带 id，不复制正文。 */
-const WALLTXT = new Map((D.wall||[]).map(w => [w.id, w.text || ""]));
-const wtxt = w => (w && (w.txt || WALLTXT.get(w.id))) || "";
-const lines = s => esc(s).replace(/\n/g, "<br>");
-const FWD = new Set(["long","watching","short"]), DONE = new Set(["recap","exited"]);
-const DATES = D.dates, LAST = DATES[DATES.length-1], PREV = DATES[DATES.length-2] || null;
-const SPARK_N = 10;                       // 默认只画近 10 天；全序列在悬停与展开处
-const SPARK_DATES = DATES.slice(-SPARK_N);
+(function(){
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var $ = function(id){ return document.getElementById(id); };
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function icon(name){ var i=document.createElement('i'); i.setAttribute('data-lucide',name); i.className='ic'; return i; }
+  function paintIcons(){ try{ if(window.lucide) lucide.createIcons(); }catch(e){} }
+  function link(href, text){ var a=el('a',null,text); a.href=href; a.target='_blank'; a.rel='noopener'; return a; }
+  /* 帖子正文是 X API 原样（带 &amp; 之类实体），textContent 渲染前还原这几个。 */
+  var ENT={'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&#39;':"'"};
+  function dec(s){ return String(s==null?'':s).replace(/&(amp|lt|gt|quot|#39);/g,function(m){return ENT[m];}); }
+  var nf=function(n){ n=n||0; return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'k':String(n); };
+  var isNil=function(v){ return v===null||v===undefined; };
 
-/* 三个视图各自记住自己的排序列与方向。dir: 1 升序 / -1 降序。 */
-const S = { v:"t", q:"", date:"all", cash:true, idx:false, wallonly:false, solo:false, openw:new Set(),
-            sort:"today", open:new Set(),
-            ord:{ t:{k:"today",dir:-1}, p:{k:"posts",dir:-1}, w:{k:"d",dir:-1} } };
+  var DATES=D.dates, LAST=DATES[DATES.length-1], BENCH=D.bench||'SPY';
+  var FWD={long:1,watching:1,short:1}, DONE={recap:1,exited:1};
+  var WALLTXT={}; (D.wall||[]).forEach(function(w){ WALLTXT[w.id]=w.text||''; });
+  var BYSYM={}; D.tickers.forEach(function(t){ BYSYM[t.sym]=t; });
+  var HL={}; (D.highlights||[]).forEach(function(h){ (HL[h.sym]=HL[h.sym]||[]).push(h); });
+  var SPARK_N=10;
 
-/* ── ⭐ 关注名单：只活在这台浏览器的 localStorage 里。
-   隐私窗口 / 清过站点数据 / 被策略禁用时，读写都会抛 —— 每一次都包 try，
-   取不到就当空集合，页面照常渲染。 ── */
-const STAR_KEY = "xboard.stars.v1";
-function loadStars(){
-  try{
-    const raw = window.localStorage.getItem(STAR_KEY);
-    const a = JSON.parse(raw || "[]");
-    return new Set(Array.isArray(a) ? a.filter(x => typeof x === "string") : []);
-  }catch(e){ return new Set(); }
-}
-function saveStars(){
-  try{ window.localStorage.setItem(STAR_KEY, JSON.stringify([...STARS])); }
-  catch(e){ /* 存不下就只在本次会话里有效，不影响渲染 */ }
-}
-let STARS = loadStars();
-const starBtn = h => `<button class="star" data-h="${esc(h)}" aria-pressed="${STARS.has(h)}"` +
-  ` title="${STARS.has(h) ? "取消关注 @" : "关注 @"}${esc(h)}">${STARS.has(h) ? "★" : "☆"}</button>`;
+  /* 状态。日期默认＝最后一个 ET 日（看板＝「今天」）；「全部」仍在，等于原来的默认视图再加一列「更早」。 */
+  var S={v:'t', q:'', date:LAST, cash:true, idx:false, wallonly:false, solo:false, sort:'today', shown:{}};
 
-/* 相对表现单元格：[值, 原因]。没有值时照写原因，不写 0、不留空——
-   「无价格」和「0%」是两件完全不同的事。 */
-const relv = (t,k) => (t.rel && t.rel[k]) ? t.rel[k][0] : null;
-const relCell = (t,k) => {
-  const c = t.rel && t.rel[k];
-  if (!c) return `<span class="rel na">—</span>`;
-  if (c[0] === null) return `<span class="rel na">${esc(c[1])}</span>`;
-  return `<span class="rel ${c[0]>0?"up":c[0]<0?"dn":""}">${c[0]>0?"+":""}${c[0].toFixed(2)}%</span>`;
-};
-
-/* 结构三列（RS 评级 · 距 50 日线% · ETF 篮子）：读 data/output 的现成字段。
-   空格子分两种，视觉上要能区分 ——
-     ETF/指数（t.idx）：这三列的源（universe.json / groups.json 的 etf 篮子）本来就
-       只收个股，它们不是缺数据，是 **不适用** → 淡色「—」。
-     个股：源里该有而没有 → 「·」，那才是真的当日没读数。 */
-const naCell = t => t.idx
-  ? `<span class="na-idx" title="ETF/指数，不在个股 universe 内">—</span>`
-  : `<span class="na-eq" title="个股但当日无读数">·</span>`;
-const isNil = v => v === null || v === undefined;
-const rsCell = t => isNil(t.rs) ? naCell(t)
-  : `<span class="rel${t.rs >= 80 ? " up" : ""}">${Math.round(t.rs)}</span>`;
-const d50Cell = t => isNil(t.d50) ? naCell(t)
-  : `<span class="rel ${t.d50>0?"up":t.d50<0?"dn":""}">${t.d50>0?"+":""}${(t.d50*100).toFixed(2)}%</span>`;
-const baskCell = t => {
-  const b = t.bask || [];
-  if (!b.length) return naCell(t);
-  return `<span class="bask" title="${esc(b.join(" / "))}">${esc(b[0])}${b.length>1?` +${b.length-1}`:""}</span>`;
-};
-
-/* 两边都没读数 → 0（交给后面的次级判据）；一边没有 → 它排最后。都有 → null，由调用方比大小 */
-const nullLast = (x,y) => {
-  const nx = isNil(x), ny = isNil(y);
-  if (nx && ny) return 0;
-  if (nx) return 1;
-  if (ny) return -1;
-  return null;
-};
-
-const np = (t,d) => d && t.days[d] ? t.days[d].p.length : 0;
-const whoOf = t => [...new Set(t.m.filter(m => S.date==="all" || m.d===S.date).map(m => m.h))];
-
-$("#meta").innerHTML = [
-  ["窗口", DATES[0].slice(5)+" → "+LAST.slice(5)+"（ET）"],
-  ["帖", D.counts.posts], ["发帖人", D.counts.people],
-  ["代码", D.counts.cash+" 带 $ / "+D.counts.syms+" 全部"],
-  ["墙后", D.wall.length+" 条"],
-].map(([k,v]) => `${k} <b>${esc(v)}</b>`).join("");
-
-/* ── 今日变动（原来的重点卡，默认折叠） ── */
-$("#flagsum").textContent = `今日变动（${D.highlights.length} 条）`;
-$("#flags").innerHTML = D.highlights.length ? D.highlights.map(h => {
-  const cls = h.k.startsWith("墙后") ? "wall" : (h.k==="新进"||h.k==="加人") ? "fresh" : "";
-  return `<button class="flag ${cls}" data-sym="${esc(h.sym)}">
-    <span class="flag-k">${esc(h.k)}</span>
-    <span class="flag-s">$${esc(h.sym)}</span>
-    <span class="flag-w">${esc(h.why)}</span></button>`;
-}).join("") : `<div class="flag"><span class="flag-k">重点</span><span class="flag-w">今天没有触发任何一条判据。</span></div>`;
-
-$("#dates").innerHTML = `<button data-d="all" aria-pressed="true">全部</button>` +
-  DATES.map(d => `<button data-d="${d}" aria-pressed="false">${d.slice(5)}</button>`).join("");
-
-/* ── 顶部 curated ──
-   四块的候选池统一是「带 $ 且不是指数/ETF」——指数天天有人说，放进来这四块会被它们占满。
-   要看指数走势用「含指数」开关看主表。 */
-const CAND = () => D.tickers.filter(t => t.cash && !t.idx);
-const LAST10 = DATES.slice(-10);
-
-function curPersist(){
-  return CAND().map(t => ({ t,
-      days: LAST10.filter(d => np(t,d) > 0).length,
-      ppl: LAST10.reduce((s,d) => s + np(t,d), 0) }))
-    .filter(x => x.days > 0)
-    .sort((a,b) => b.days-a.days || b.ppl-a.ppl || b.t.tv-a.t.tv).slice(0,5);
-}
-function curToday(){
-  return CAND().map(t => ({ t, n: np(t,LAST), o: np(t,PREV) })).filter(x => x.n > 0)
-    .sort((a,b) => b.n-a.n || b.t.tv-a.t.tv).slice(0,5);
-}
-function curT5(){
-  return CAND().filter(t => (t.mx||0) >= 2 && relv(t,5) !== null)
-    .sort((a,b) => relv(b,5)-relv(a,5)).slice(0,5);
-}
-/* 被 ⭐ 的人在最后一个日期当天的帖。同一条帖会挂在多只票下，按 url 去重后把票合起来。 */
-function curStars(){
-  const by = new Map();
-  for (const t of D.tickers) for (const m of t.m){
-    if (m.d !== LAST || !STARS.has(m.h)) continue;
-    const k = m.url || (m.h + "|" + m.txt);
-    if (!by.has(k)) by.set(k, { h:m.h, txt:m.txt, url:m.url, v:m.v, syms:new Set() });
-    by.get(k).syms.add(t.sym);
+  /* ⭐ 关注名单：只活在这台浏览器的 localStorage（与旧版同一个键，旧收藏不丢）。读写都包 try。 */
+  var STAR_KEY='xboard.stars.v1', STARS;
+  try{ var a0=JSON.parse(localStorage.getItem(STAR_KEY)||'[]'); STARS=new Set(Array.isArray(a0)?a0.filter(function(x){return typeof x==='string';}):[]); }catch(e){ STARS=new Set(); }
+  function saveStars(){ try{ localStorage.setItem(STAR_KEY, JSON.stringify(Array.from(STARS))); }catch(e){} }
+  function starBtn(h){
+    var b=el('button','star',STARS.has(h)?'★':'☆'); b.type='button'; b.setAttribute('aria-pressed',STARS.has(h));
+    b.title=(STARS.has(h)?'取消关注 @':'关注 @')+h;
+    b.addEventListener('click',function(e){ e.stopPropagation(); STARS.has(h)?STARS.delete(h):STARS.add(h); saveStars();
+      b.textContent=STARS.has(h)?'★':'☆'; b.setAttribute('aria-pressed',STARS.has(h)); dirty=true; if(!dlg.open) refresh(); });
+    return b;
   }
-  return [...by.values()].sort((a,b) => b.v-a.v);
-}
 
-function card(title, sub, body){
-  return `<section class="card"><h2>${title}</h2><p class="sub">${sub}</p>${body}</section>`;
-}
-function renderCurated(){
-  const bench = esc(D.bench || "SPY");
-  const p = curPersist();
-  const c1 = card("近 10 日最持续",
-    `${esc(LAST10[0].slice(5))} → ${esc(LAST.slice(5))}，按有人说的天数排；并列看总人次。指数/ETF 不计。`,
-    p.length ? `<ol>${p.map(x => `<li><button class="ci" data-sym="${esc(x.t.sym)}">
-        <span class="s">$${esc(x.t.sym)}</span>
-        <span class="txt">10 天里 ${x.days} 天有人说</span>
-        <span class="w">${x.ppl} 人次</span></button></li>`).join("")}</ol>`
-      : `<p class="none">近 10 天没有一只非指数的票被提到过。</p>`);
+  /* ── 读数 ── */
+  function asOf(){ return S.date==='all'?LAST:S.date; }
+  function prevOf(d){ var i=DATES.indexOf(d); return i>0?DATES[i-1]:null; }
+  function np(t,d){ return d&&t.days[d]?t.days[d].p.length:0; }
+  function pre3(t,d){ var i=DATES.indexOf(d), s=0; for(var j=Math.max(0,i-3);j<i;j++) s+=np(t,DATES[j]); return s; }
+  function wallOn(t,d){ return t.wall.some(function(w){return w.d===d;}); }
+  function relv(t,k){ var c=t.rel&&t.rel[k]; return c?c[0]:null; }
+  function relTxt(t,k){ var c=t.rel&&t.rel[k]; if(!c) return '—'; if(c[0]===null) return c[1]; return (c[0]>0?'+':'')+c[0].toFixed(2)+'%'; }
+  function naTxt(t){ return t.idx?'不适用（ETF/指数）':'个股但无读数'; }
+  function stSorted(t){ return Object.keys(t.st).map(function(k){return [k,t.st[k]];}).sort(function(a,b){return b[1]-a[1];}); }
+  function stTone(k){ return FWD[k]?'blu':DONE[k]?'mut':'mut'; }
+  function whoOf(t){ var seen={}, out=[]; t.m.forEach(function(m){ if((S.date==='all'||m.d===S.date)&&!seen[m.h]){ seen[m.h]=1; out.push(m.h); } }); return out; }
 
-  const td = curToday();
-  const c2 = card("今天最多人说",
-    `${esc(LAST)}（ET）当天提及人数，括号里是对比前日${PREV ? "（" + esc(PREV.slice(5)) + "）" : ""}。`,
-    td.length ? `<ol>${td.map(x => { const d = x.n - x.o;
-      return `<li><button class="ci" data-sym="${esc(x.t.sym)}">
-        <span class="s">$${esc(x.t.sym)}</span>
-        <span class="txt">${x.n} 人</span>
-        <span class="w">${d>0?"+"+d:d<0?String(d):"持平"}</span></button></li>`; }).join("")}</ol>`
-      : `<p class="none">最后一天没有非指数的票被提到。</p>`);
-
-  const t5 = curT5();
-  const c3 = card(`T+5 涨幅最大 vs ${bench}`,
-    `峰值日锚点往后 5 个交易日，个股收益减 ${bench} 同期收益。只取有读数、且至少 2 人说过的。`,
-    t5.length ? `<ol>${t5.map(t => `<li><button class="ci" data-sym="${esc(t.sym)}">
-        <span class="s">$${esc(t.sym)}</span>
-        <span class="txt">峰值日 ${esc(t.peak ? t.peak.slice(5) : "—")}</span>
-        <span class="w">${relv(t,5)>0?"+":""}${relv(t,5).toFixed(2)}%</span></button></li>`).join("")}</ol>`
-      : `<p class="none">还没有一只票同时满足「≥2 人说过」和「T+5 已到期且有行情」。</p>`);
-
-  const sp = curStars();
-  const c4 = card("⭐ 我关注的人今天说了什么",
-    STARS.size ? `已关注 ${STARS.size} 人 · ${esc(LAST)}（ET）当天${sp.length ? "共 " + sp.length + " 条" : "没发带票的帖"}。`
-               : `这一块只列你 ⭐ 过的人。`,
-    !STARS.size ? `<p class="none">点任意 handle 旁的 ⭐ 把他加进来（人视图每行、主表「谁在说」列、页底人员名单都有）。</p>`
-    : sp.length ? `<ol>${sp.slice(0,5).map(x => `<li class="ciw"><button class="ci" data-sym="${esc([...x.syms][0])}">
-        <span class="s">@${esc(x.h)}</span>
-        <span class="txt">${esc([...x.syms].slice(0,3).map(s => "$"+s).join(" "))} ${esc(x.txt.slice(0,70))}</span>
-        </button>${x.url ? `<a class="ext" href="${esc(x.url)}" target="_blank" rel="noopener" title="原帖">↗</a>` : ""}</li>`).join("")}${sp.length>5 ? `<li class="none">还有 ${sp.length-5} 条，去「人」视图看。</li>` : ""}</ol>`
-    : `<p class="none">你关注的这 ${STARS.size} 人，${esc(LAST)} 当天没有带票的帖。</p>`);
-
-  $("#curated").innerHTML = c1 + c2 + c3 + c4;
-}
-
-/* ── 人员名单（页底，默认折叠） ── */
-function renderRoster(){
-  $("#rostersum").textContent = `人员名单（${D.people.length} 人）`;
-  $("#roster").innerHTML = D.people.map(p =>
-    `<div class="rp">${starBtn(p.h)}<span class="h">@${esc(p.h)}</span>
-      <span class="n">${p.posts} 帖</span></div>`).join("");
-}
-
-function spark(t){
-  const all = DATES.map(d => np(t,d));
-  const vals = all.slice(-SPARK_N), mx = Math.max(1, ...vals);
-  const full = DATES.map((d,i) => `${d.slice(5)} ${all[i]}`).join("  ");
-  return `<div class="spark" role="img" title="全 ${DATES.length} 天：${esc(full)}"` +
-    ` aria-label="近 ${vals.length} 天提及人数 ${vals.join("、")}；全 ${DATES.length} 天 ${esc(full)}">` +
-    vals.map((v,i) => `<span class="${v===0?"zero":""}${i===vals.length-1&&v>0?" last":""}" style="height:${v?Math.round(3+v/mx*15):2}px" title="${SPARK_DATES[i]}：${v} 人"></span>`).join("") + `</div>`;
-}
-const stChip = ([k,n]) => `<i class="${FWD.has(k)?"f":DONE.has(k)?"d":"n"}">${esc(k)} ${n}</i>`;
-const stSorted = t => Object.entries(t.st).sort((a,b) => b[1]-a[1]);
-function stanceCells(t){
-  const e = stSorted(t);
-  if (!e.length) return `<span class="st"><i class="n">未标</i></span>`;
-  const full = e.map(([k,n]) => `${k} ${n}`).join(" · ");
-  return `<span class="st" title="${esc(full)}">` + e.slice(0,2).map(stChip).join("") +
-    (e.length > 2 ? `<i class="more">+${e.length-2}</i>` : "") + `</span>`;
-}
-function wallCell(t){
-  if (!t.wall.length) return "";
-  const kinds = [...new Set(t.wall.map(w => w.kind).filter(Boolean))].join("/");
-  const last = t.wall[t.wall.length-1];
-  return `<span class="wallmark" title="@jfsrev 墙后 ${esc(last.d)}">${esc(kinds||"墙后")}</span>`;
-}
-
-/* ── 列定义 ──
-   每列一个 val()。排序走同一个通用比较器：**null 永远排末尾，两个方向都是**
-   （不乘方向系数），有读数的那批才按 dir 正反。 */
-const stTotal = t => Object.values(t.st || {}).reduce((a,b) => a+b, 0);
-const COLS = {
-  t: [
-    {k:"sym",   label:"代码", val:t=>t.sym, dir0:1, w:88,
-     cell:t=>`<td class="sym"><span class="cur">$</span>${esc(t.sym)}${t.idx?'<span class="tagi">指数</span>':""}${t.cash?"":'<span class="tagi">裸码</span>'}</td>`},
-    {k:"wall",  label:"墙后", val:t=>t.wall.length, dir0:-1, w:64,
-     cell:t=>`<td>${wallCell(t)}</td>`},
-    {k:"spark", label:`近 ${SPARK_N} 日人数`, dir0:-1, w:74,
-     val:t=>SPARK_DATES.reduce((s,d)=>s+np(t,d),0),
-     title:`只画 ${esc(SPARK_DATES[0])} → ${esc(LAST)}；全 ${DATES.length} 天悬停条形图或展开看`,
-     cell:t=>`<td>${spark(t)}</td>`},
-    {k:"today", label:LAST.slice(5), cls:"num", dir0:-1, w:58,
-     val:t=>np(t, S.date==="all"?LAST:S.date), tie:(a,b)=>b.tv-a.tv,
-     cell:(t,R)=>`<td class="num" style="font-size:15px;font-weight:600">${R.n||"—"}</td>`},
-    {k:"delta", label:"对比前日", cls:"num", dir0:-1, val:t=>np(t,LAST)-np(t,PREV), w:74,
-     cell:(t,R)=>`<td class="num"><span class="delta ${R.d>0?"up":R.d<0?"dn":"flat"}">${R.d>0?"+"+R.d:R.d<0?R.d:"持平"}</span></td>`},
-    {k:"st",    label:"立场", dir0:-1, val:stTotal, w:122,
-     cell:t=>`<td>${stanceCells(t)}</td>`},
-    {k:"total", label:"提及", cls:"num", dir0:-1, val:t=>t.tn, w:58,
-     cell:t=>`<td class="num">${t.tn}</td>`},
-    {k:"views", label:"曝光", cls:"num", dir0:-1, val:t=>t.tv, w:58,
-     cell:t=>`<td class="num">${nf(t.tv)}</td>`},
-    {k:"peak",  label:"峰值日", cls:"num", dir0:-1, val:t=>t.peak ?? null, w:68,
-     cell:t=>`<td class="num" style="color:var(--faint);font-size:11.5px">${esc(t.peak ? t.peak.slice(5) : "—")}</td>`},
-    {k:"t1",    label:`T+1 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,1), tie:(a,b)=>b.tv-a.tv, w:88,
-     cell:t=>`<td class="num">${relCell(t,1)}</td>`},
-    {k:"t5",    label:`T+5 vs ${esc(D.bench||"SPY")}`, cls:"num", dir0:-1, val:t=>relv(t,5), tie:(a,b)=>b.tv-a.tv, w:88,
-     cell:t=>`<td class="num">${relCell(t,5)}</td>`},
-    {k:"rs",    label:"RS 评级", cls:"num", dir0:-1, val:t=>isNil(t.rs)?null:t.rs, w:72,
-     cell:t=>`<td class="num">${rsCell(t)}</td>`},
-    {k:"d50",   label:"距 50 日线", cls:"num", dir0:-1, val:t=>isNil(t.d50)?null:t.d50, w:84,
-     cell:t=>`<td class="num">${d50Cell(t)}</td>`},
-    {k:"bask",  label:"ETF 篮子", dir0:-1, val:t=>(t.bask||[]).length, tie:(a,b)=>b.tv-a.tv, w:90,
-     cell:t=>`<td style="font-size:11.5px;color:var(--faint)">${baskCell(t)}</td>`},
-    {k:"who",   label:"谁在说", dir0:-1, val:t=>whoOf(t).length, w:94,
-     cell:(t,R)=>`<td class="who" title="${esc(R.who.map(h=>"@"+h).join(" "))}">${R.whoCell}</td>`},
-  ],
-  p: [
-    {k:"h",     label:"Handle", val:p=>p.h, dir0:1},
-    {k:"posts", label:"帖数", cls:"num", dir0:-1, val:p=>p.posts},
-    {k:"days",  label:"出现天数", cls:"num", dir0:-1, val:p=>p.days},
-    {k:"med",   label:"曝光中位", cls:"num", dir0:-1, val:p=>p.med},
-    {k:"bk",    label:"收藏合计", cls:"num", dir0:-1, val:p=>p.bk},
-    {k:"syms",  label:"他提过的票（带 $ 的）", dir0:-1, val:p=>p.syms.length},
-  ],
-  w: [
-    {k:"d",     label:"日期 (ET)", val:w=>w.d, dir0:-1},
-    {k:"kind",  label:"类型", val:w=>w.kind || "", dir0:1},
-    {k:"tk",    label:"票", val:w=>w.tickers.join(" "), dir0:1},
-    {k:"txt",   label:"正文（点行展开）", val:w=>w.text || "", dir0:1},
-    {k:"proxy", label:"代理 / 杠杆", val:w=>w.proxy || "", dir0:1},
-    {k:"pub",   label:"公开区当天人数", cls:"num", dir0:-1, val:w=>wallPub(w).reduce((a,b)=>a+b,0)},
-    {k:"views", label:"曝光", cls:"num", dir0:-1, val:w=>w.views || 0},
-  ],
-};
-const colOf = (v,k) => COLS[v].find(c => c.k === k) || COLS[v][0];
-
-/* ── 列开关 ──
-   「代码」列不可关（它是 sticky 首列，也是唯一的身份列）。
-   选择存这台浏览器的 localStorage；和 ⭐ 一样，读写各包一层 try——
-   隐私窗口 / 站点数据被清 / 策略禁用时抛出，就当「全开」，页面照常渲染。 */
-const COL_KEY = "xboard.cols.v1";
-const COL_LOCKED = new Set(["sym"]);
-const COL_KEEP = new Set(["sym","today","delta","st","t5","who"]);   // 「只留常用」留下的
-function loadCols(){
-  try{
-    const a = JSON.parse(window.localStorage.getItem(COL_KEY) || "[]");
-    return new Set(Array.isArray(a) ? a.filter(x => typeof x === "string" && !COL_LOCKED.has(x)) : []);
-  }catch(e){ return new Set(); }
-}
-function saveCols(){
-  try{ window.localStorage.setItem(COL_KEY, JSON.stringify([...HIDDEN])); }catch(e){}
-}
-let HIDDEN = loadCols();
-const visCols = v => v === "t" ? COLS.t.filter(c => !HIDDEN.has(c.k)) : COLS[v];
-
-function sorter(v){
-  const o = S.ord[v], c = colOf(v, o.k), dir = o.dir;
-  return (a,b) => {
-    const x = c.val(a), y = c.val(b);
-    const nl = nullLast(x,y);
-    if (nl !== null) return nl || (c.tie ? c.tie(a,b) : 0);
-    const base = (typeof x === "string") ? String(x).localeCompare(String(y)) : (x - y);
-    return (base * dir) || (c.tie ? c.tie(a,b) : 0);
+  /* ── 列：按「所选日」与它前几天的人数分。一只票只进一列。 ──
+     新起   ＝当日有人说，前 3 个日期 0 人
+     升温   ＝当日有人说，前 3 天也有人说，人数不比前一日少
+     降温   ＝当日人数比前一日少（含掉到 0 的「掉出」）
+     墙后独有＝@jfsrev 当日在墙后点了，公开区当日 0 人
+     更早   ＝只在「全部」里出现：截至最后一天，前一日与当日都没人说 */
+  var COLS={
+    t:[{k:'new',  ic:'sparkles',     name:'新起',    desc:'当日有人说，前 3 个日期没人说'},
+       {k:'hot',  ic:'flame',        name:'升温 / 持续', desc:'前几天就有人说，当日人数不比前一日少'},
+       {k:'cool', ic:'trending-down',name:'降温',    desc:'当日人数比前一日少，含掉到 0 的'},
+       {k:'wall', ic:'lock',         name:'墙后独有', desc:'@jfsrev 当日墙后点了，公开区当日 0 人'},
+       {k:'old',  ic:'archive',      name:'更早',    desc:'前一日和当日都没人说（只在「全部」里出现）'}],
+    p:[{k:'star', ic:'star',         name:'⭐ 我关注的', desc:'点任何 handle 旁的 ☆ 加进来，存在这台浏览器'},
+       {k:'every',ic:'calendar-check',name:'几乎天天在', desc:'窗口内 ≥80% 的日子发过帖'},
+       {k:'often',ic:'calendar-days',name:'常来',     desc:'40%–80% 的日子'},
+       {k:'rare', ic:'calendar',     name:'偶尔',     desc:'不到 40% 的日子'}],
+    w:[{k:'Stalk',ic:'eye',          name:'Stalk',   desc:'盯着的票'},
+       {k:'Focus',ic:'crosshair',    name:'Focus',   desc:'重点'},
+       {k:'Update',ic:'refresh-cw',  name:'Update / Plan', desc:'更新与计划'},
+       {k:'Groups',ic:'layers',      name:'Groups',  desc:'板块清单（常一条挂几十只）'},
+       {k:'Note', ic:'notebook-pen', name:'Note / 其它', desc:'笔记、教学、周末系列'}]
   };
-}
-function headRow(v){
-  const o = S.ord[v];
-  return "<tr>" + visCols(v).map(c => {
-    const on = c.k === o.k;
-    const aria = on ? (o.dir === 1 ? "ascending" : "descending") : "none";
-    const arrow = on ? `<span class="dir">${o.dir === 1 ? "▲" : "▼"}</span>` : "";
-    return `<th class="${c.cls||""}" aria-sort="${aria}"${c.title?` title="${c.title}"`:""}>` +
-      `<button class="sortbtn" data-k="${c.k}" type="button">${c.label} ${arrow}</button></th>`;
-  }).join("") + "</tr>";
-}
-/* 点表头：同一列再点一次翻向，换列则用该列的默认方向。 */
-function clickHead(k){
-  const o = S.ord[S.v];
-  if (o.k === k) o.dir = -o.dir;
-  else { o.k = k; o.dir = colOf(S.v,k).dir0; }
-  if (S.v === "t") syncSelect();
-  render();
-}
-/* 下拉与表头双向同步。下拉里没有的列，落到那个「（点表头排的）」选项上并写出列名。 */
-const SELECT_KEYS = new Set(["today","total","views","sym","t5","rs","d50","bask"]);
-function syncSelect(){
-  const o = S.ord.t, opt = $("#optcol");
-  if (SELECT_KEYS.has(o.k) && o.dir === colOf("t",o.k).dir0){
-    $("#sort").value = o.k; opt.textContent = "（点表头排的）";
-  } else {
-    opt.textContent = `表头：${colOf("t",o.k).label} ${o.dir===1?"▲":"▼"}`;
-    $("#sort").value = "__col";
+  function tCol(t,A){
+    var n=np(t,A), o=np(t,prevOf(A));
+    if(n===0&&wallOn(t,A)) return 'wall';
+    if(n>0&&pre3(t,A)===0) return 'new';
+    if(n>0&&n>=o) return 'hot';
+    if(n>0||o>0) return 'cool';
+    return 'old';
   }
-}
+  function wCol(w){ var k=w.kind||''; if(k==='Stalk'||k==='Focus'||k==='Groups') return k; if(k==='Update'||k==='Plan') return 'Update'; return 'Note'; }
+  function pCol(p){ if(STARS.has(p.h)) return 'star'; var r=p.days/DATES.length; return r>=.8?'every':r>=.4?'often':'rare'; }
 
-/* 搜索词归一：去掉用户顺手打的 $ # @，统一小写。
-   有搜索词时「只看 $」「含指数」「只看墙后」三个筛选一律让路——
-   搜 $XLK 却因为它被归进指数而空表，是 09-22 Andy 撞上的那个 bug。 */
-const normQ = q => q.trim().replace(/^[$#@]+/, "").toLowerCase();
-const textHit = (t, q) => {
-  const re = new RegExp("(^|[^a-z0-9])[$#]?" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "([^a-z0-9]|$)", "i");
-  return t.m.some(m => re.test(m.txt));
-};
-let SEARCH_MODE = "";
-function tickers(){
-  const q = normQ(S.q);
-  SEARCH_MODE = "";
-  const passes = t => !(S.cash && !t.cash) && !(!S.idx && t.idx) &&
-                      !(S.wallonly && !t.wall.length) && !(!S.solo && (t.mx||0) < 2);
-  const base = D.tickers.filter(t => S.date === "all" || t.days[S.date]);
-  let r = base.filter(passes);
-  if (q){
-    /* 代码命中：筛选让路。只按人名命中：筛选照旧，否则裸码噪声全放出来。 */
-    r = base.filter(t => t.sym.toLowerCase().includes(q) ||
-                         (passes(t) && t.m.some(m => m.h.toLowerCase().includes(q))));
-    SEARCH_MODE = "sym";
-    if (!r.length && q.length >= 2){
-      r = base.filter(t => textHit(t, q));
-      SEARCH_MODE = "text";
+  /* ── 筛选：与旧版同一套规则。有搜索词且命中代码时，四个筛选一律让路（09-22 $XLK 空表那个 bug）。 ── */
+  var normQ=function(q){ return q.trim().replace(/^[$#@]+/,'').toLowerCase(); };
+  function textHit(t,q){ var re=new RegExp('(^|[^a-z0-9])[$#]?'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z0-9]|$)','i'); return t.m.some(function(m){return re.test(m.txt);}); }
+  var SEARCH_MODE='';
+  function inDate(t){
+    if(S.date==='all') return true;
+    var A=S.date; return !!t.days[A] || (np(t,prevOf(A))>0) || wallOn(t,A);
+  }
+  function passes(t){
+    /* 「墙后独有」那列是墙的代价本身：它们公开区 0 人，mx<2 的折叠不该把它们藏掉 */
+    var A=asOf(), wallOnly = np(t,A)===0&&wallOn(t,A);
+    return !(S.cash&&!t.cash) && !(!S.idx&&t.idx) && !(S.wallonly&&!t.wall.length) && !(!S.solo&&(t.mx||0)<2&&!wallOnly);
+  }
+  function tickers(){
+    var q=normQ(S.q); SEARCH_MODE='';
+    var base=D.tickers.filter(inDate), r=base.filter(passes);
+    if(q){
+      r=base.filter(function(t){ return t.sym.toLowerCase().indexOf(q)>=0 || (passes(t)&&t.m.some(function(m){return m.h.toLowerCase().indexOf(q)>=0;})); });
+      SEARCH_MODE='sym';
+      if(!r.length&&q.length>=2){ r=base.filter(function(t){return textHit(t,q);}); SEARCH_MODE='text'; }
     }
+    var A=asOf(), key=S.sort;
+    var val={today:function(t){return np(t,A);}, total:function(t){return t.tn;}, views:function(t){return t.tv;},
+             sym:function(t){return t.sym;}, t5:function(t){return relv(t,5);}, rs:function(t){return isNil(t.rs)?null:t.rs;},
+             d50:function(t){return isNil(t.d50)?null:t.d50;}, bask:function(t){return (t.bask||[]).length;}}[key];
+    var dir=key==='sym'?1:-1;
+    r.sort(function(a,b){
+      var x=val(a), y=val(b), nx=isNil(x), ny=isNil(y);
+      if(nx||ny){ if(nx&&ny) return b.tv-a.tv; return nx?1:-1; }      // 没读数永远排末尾
+      var c=(typeof x==='string')?x.localeCompare(y):(x-y);
+      return (c*dir) || (b.tv-a.tv);
+    });
+    if(q) r.sort(function(a,b){ return (b.sym.toLowerCase()===q)-(a.sym.toLowerCase()===q); });
+    return r;
   }
-  r.sort(sorter("t"));
-  if (q) r.sort((a,b) => (b.sym.toLowerCase()===q) - (a.sym.toLowerCase()===q));
-  return r;
-}
 
-function wallPub(w){
-  return w.tickers.map(s => { const t = D.tickers.find(x => x.sym === s); return t ? np(t, w.d) : 0; });
-}
-
-function render(){
-  const th = $("#thead"), tb = $("#tbody"), tbl = $("#tbl");
-  tbl.className = S.v === "t" ? "wide" : "";
-  tbl.style.minWidth = S.v === "t" ? visCols("t").reduce((a,c) => a + (c.w || 90), 0) + "px" : "";
-  th.innerHTML = headRow(S.v);
-  if (S.v === "t"){
-    const rows = tickers();
-    const hidden = S.solo || SEARCH_MODE ? 0 :
-      D.tickers.filter(t => (t.mx||0) < 2 && (!S.cash || t.cash) && (S.idx || !t.idx)).length;
-    $("#count").textContent = rows.length + " 个代码" +
-      (hidden ? ` · 折叠了 ${hidden} 个只有 1 人说过的` : "") +
-      (SEARCH_MODE === "sym" ? " · 搜索中，筛选已让路" :
-       SEARCH_MODE === "text" && rows.length ? " · 代码里没有「" + normQ(S.q).toUpperCase() + "」，下面是帖子正文提到它的票" : "");
-    const cols = visCols("t"), span = cols.length;
-    tb.innerHTML = rows.length ? rows.map(t => {
-      const n = np(t,LAST), o = np(t,PREV), d = n-o;
-      const who = whoOf(t);
-      const open = S.open.has(t.sym);
-      const whoCell = who.slice(0,3).map(h => `${starBtn(h)}@${esc(h)}`).join(" ") +
-        (who.length>3 ? ` <span style="color:var(--faint)">+${who.length-3}</span>` : "");
-      const R = { n, o, d, who, whoCell };
-      return `<tr class="row${open?" open":""}" data-sym="${esc(t.sym)}" tabindex="0" aria-expanded="${open}">` +
-        cols.map(c => c.cell(t, R)).join("") + `</tr>` +
-        (open ? `<tr class="detail"><td colspan="${span}"><div class="posts">${detail(t)}</div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="${span}" class="empty">没有符合的代码。搜索已经忽略了「只看 $」「含指数」；还空的话，看看日期是不是选在了某一天。</td></tr>`;
-    $("#note").innerHTML = `裸代码噪声很大（<code>RS</code> <code>EMA</code> <code>WHAT</code> 这类被当成过代码），
-      所以默认只显示帖子原文里真的带 <code>$</code> 的那些。<b>没有删任何数据</b>——关掉「只看 $ 标记」全都在。
-      「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光读 <code>posts/*.jsonl</code> 的最新值（重抓会更新），不是 <code>mentions.csv</code> 的首次快照。
-      默认<b>折叠只有 1 人说过的票</b>——按「含只有 1 人说过的」全都在。
-      人数条默认只画<b>近 ${SPARK_N} 天</b>（19 天横着吃掉小半张表）；全 ${DATES.length} 天悬停条形图或展开该行看。
-      <b>T+k vs ${esc(D.bench||"SPY")}</b>：峰值日（窗口内提及人数最高的 ET 日，并列取最早）当天或之前
-      最后一个收盘为锚，往后数 k 个交易日，个股收益减 ${esc(D.bench||"SPY")} 同期收益（event study 的
-      market-adjusted model，AR=R_i−R_m）。<code>无价格</code>＝本地没有这只票的行情，不外抓；
-      <code>未到期</code>＝T+k 那天还没收盘。口径见 <code>data/reference/METRIC_SOURCES.md</code>。
-      <b>RS 评级 · 距 50 日线 · ETF 篮子</b>：直接读 dashboard 管线已算好的 <code>data/output/</code> 字段
-      （<code>universe.json</code> 的 <code>rs_rating</code> / <code>sma50_dist</code>，
-      <code>groups.json</code> 里 <code>method=="etf"</code> 的篮子成分），<b>没有新算任何指标</b>。
-      这三列的空格子分两种：<b>—</b>＝ETF/指数，这几份源本来就只收个股，<b>不适用</b>；
-      <b>·</b>＝个股但当日无读数。一只票可以同时属于多个篮子，全留（悬停看全部）。`;
-  } else if (S.v === "p"){
-    const q = normQ(S.q);
-    const rows = D.people.filter(p => !q || p.h.toLowerCase().includes(q) || p.syms.some(s => s.toLowerCase().includes(q)));
-    rows.sort(sorter("p"));
-    $("#count").textContent = rows.length + " 人" + (STARS.size ? ` · ⭐ ${STARS.size}` : "");
-    tb.innerHTML = rows.length ? rows.map(p => `<tr><td class="sym">${starBtn(p.h)}@${esc(p.h)}</td>
-      <td class="num">${p.posts}</td><td class="num">${p.days}/${DATES.length}</td>
-      <td class="num">${nf(p.med)}</td><td class="num">${nf(p.bk)}</td>
-      <td class="who mono" title="${esc(p.syms.join(" "))}">${p.syms.length ? esc(p.syms.join(" ")) : "—"}</td></tr>`).join("")
-      : `<tr><td colspan="6" class="empty">没有符合的人。</td></tr>`;
-    $("#note").innerHTML = `曝光中位是该账号窗口内所有帖的中位数，用来判「这条帖是不是他的异常值」。
-      名单 34 人，这里只列窗口内真的发过帖的。点 ⭐ 把人加进顶部那块「我关注的人今天说了什么」——
-      存在这台浏览器的 <code>localStorage</code>（<code>xboard.stars.v1</code>），换台机器要重新点。`;
-  } else {
-    const q = normQ(S.q);
-    const rows = D.wall.filter(w => !q || w.tickers.some(s => s.toLowerCase().includes(q)) || "jfsrev".includes(q));
-    rows.sort(sorter("w"));
-    $("#count").textContent = rows.length + " 条";
-    tb.innerHTML = rows.length ? rows.map(w => {
-      const pub = wallPub(w);
-      const zero = w.tickers.length && pub.every(n => n === 0);
-      const body = w.text || "";
-      const open = S.openw.has(w.id);
-      return `<tr class="row${open?" open":""}" data-wid="${esc(w.id)}" tabindex="0" aria-expanded="${open}">
-        <td class="mono" style="color:var(--muted)">${esc(w.d)}</td>
-        <td><span class="wallmark">${esc(w.kind || "—")}</span></td>
-        <td class="sym"><span class="wclip">${w.tickers.length ? w.tickers.map(s => "$"+esc(s)).join(" ") : "—"}</span></td>
-        <td><span class="wprev">${body ? esc(body.replace(/\n+/g, " ")) : "—"}</span></td>
-        <td class="mono" style="font-size:11.5px;color:var(--muted)">${esc(w.proxy || "—")}</td>
-        <td class="num" style="${zero?"color:var(--brass);font-weight:600":""}"><span class="wclip pub">${w.tickers.length ? pub.join(" / ") : "—"}</span></td>
-        <td class="num">${nf(w.views)}</td></tr>` +
-        (open ? `<tr class="detail"><td colspan="7"><div class="posts"><div class="full wbody">${
-          w.tickers.length > 4 ? `<b>全部 ${w.tickers.length} 只</b> ${w.tickers.map(s=>"$"+esc(s)).join(" ")}<br><b>公开区当天人数</b> ${pub.join(" / ")}<br><br>` : ""}${
-          body ? lines(body) : "（这条没有正文，只有图）"}${
-          w.url ? `<br><a href="${esc(w.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</div></div></td></tr>` : "");
-    }).join("") : `<tr><td colspan="7" class="empty">没有符合的条目。</td></tr>`;
-    $("#note").innerHTML = `付费订阅内容，<b>看板上直接显示正文</b>（Andy 2026-09-24 取消「只存不引」）——
-      正文列点一下展开全文，票视图里展开任何一只票也能读到铜色那几条。
-      <b>这页是私有 Artifact，仍然不往对外文案里贴他的原话。</b>
-      「公开区当天人数」是 <b>0</b> 时标成铜色——那就是墙的代价：只看公开区的人看不见这一格。`;
+  /* ── 顶部 ── */
+  function renderTop(){
+    var A=asOf(), P=prevOf(A);
+    $('eyebrow').textContent='X 名单 Ticker 台账 · 窗口 '+DATES[0].slice(5)+' → '+LAST.slice(5)+'（ET）· '+D.counts.people+' 人 · '+D.counts.posts+' 帖';
+    $('tag').textContent=S.date==='all'?'全部日期 · 列按 '+LAST.slice(5)+' 分':'ET '+A+' 这一天';
+    var st=$('status'); st.textContent='';
+    function chip(ic,label,val,tone,onClick){
+      var c=el(onClick?'button':'span','chip'+(tone?' '+tone:'')); if(onClick){ c.type='button'; c.addEventListener('click',onClick); }
+      c.appendChild(icon(ic)); c.appendChild(document.createTextNode(label+' ')); c.appendChild(el('b',null,val)); st.appendChild(c);
+    }
+    var cand=D.tickers.filter(function(t){return t.cash&&!t.idx&&np(t,A)>0;}).sort(function(a,b){return np(b,A)-np(a,A)||b.tv-a.tv;});
+    var cashA=D.tickers.filter(function(t){return t.cash&&np(t,A)>0;}).length;
+    var ppl={}; D.tickers.forEach(function(t){ (t.days[A]?t.days[A].p:[]).forEach(function(h){ppl[h]=1;}); });
+    var wallA=D.wall.filter(function(w){return w.d===A;}).length;
+    var newA=D.tickers.filter(function(t){return t.cash&&!t.idx&&np(t,A)>0&&pre3(t,A)===0;}).length;
+    if(S.v==='t'){
+      $('headline').textContent = cand.length
+        ? A.slice(5)+' 最多人说：'+cand.slice(0,3).map(function(t){var n=np(t,A),o=np(t,P);return '$'+t.sym+' '+n+' 人'+(n>o?'（+'+(n-o)+'）':'');}).join('、')+'。'
+        : A.slice(5)+' 这一天没有非指数的票被提到。';
+    } else if(S.v==='p'){
+      $('headline').textContent=Object.keys(ppl).length+' 人在 '+A.slice(5)+' 发过带票的帖'+(STARS.size?'，你关注了 '+STARS.size+' 人。':'。');
+    } else {
+      $('headline').textContent='@jfsrev 墙后：'+(S.date==='all'?'窗口内 '+D.wall.length+' 条':A.slice(5)+' 当天 '+wallA+' 条')+'，点开直接读原文。';
+    }
+    chip('hash','当日带 $ 代码',String(cashA));
+    chip('sparkles','新起（非指数）',String(newA),newA?'ok':'');
+    chip('users','当日带票发帖人',Object.keys(ppl).length+'/'+D.counts.people);
+    chip('lock','墙后当日',wallA+' 条',wallA?'hot':'');
+    var hl=D.highlights||[];
+    chip('bell','今日变动 '+LAST.slice(5),hl.length+' 条',hl.length?'hot':'',function(){ openHighlights(); });
   }
-  syncScrollGeom();
-}
 
-/* ── 横滚三件套：顶部同步条 · Shift+滚轮/键盘 · 边缘渐隐 ── */
-const SC = $("#scroll"), XT = $("#xtop"), XTI = $("#xtopin");
-/* 两条互相 set scrollLeft，天然有回声。重入保护三层，缺一都可能抖：
-   ① lock：正在同步时进来的 scroll 事件直接返回，不再回写；
-   ② 差值门槛：只有相差 ≥1px 才写，子像素差不触发下一轮；
-   ③ 等长 + 末端对齐：把顶部条的内容宽设成「表宽 − 盒可视宽 + 条可视宽」，
-      让两边的 maxScrollLeft 尽量相等（子像素取整后仍可能差 1–3px，做不到恒等）；
-      **真正兜住的是末端对齐** —— 一边已经到自己的最右时，另一边直接写它自己的最右，
-      不照抄那个对不上的数。否则滚到最右时一边会被 clamp 成另一个值，两边互相往回拽，
-      那才是真正会自激的形状（盒子有纵向滚动条，可视宽本来就比顶条窄）。
-   XSYNC 计数供验收数事件次数：top/box = 收到的 scroll 事件，applied = 真正写回的次数。 */
-const XSYNC = { lock:false, top:0, box:0, applied:0, wheel:0, key:0 };
-window.__xsync = XSYNC;
-function syncScrollGeom(){
-  const w = Math.max(0, $("#tbl").scrollWidth - SC.clientWidth) + XT.clientWidth;
-  XTI.style.width = Math.round(w) + "px";
-  /* 一次性校正：边框/子像素会让两边的 maxScrollLeft 差几 px，差多少就把空条加长/缩短多少。
-     校正后两边完全等长，滚到最右时谁都不会被 clamp 成另一个值（那才是会自激的形状）。 */
-  let cur = w;
-  for (let i = 0; i < 3; i++){
-    const d = (SC.scrollWidth - SC.clientWidth) - (XT.scrollWidth - XT.clientWidth);
-    if (!d) break;
-    cur = Math.max(0, cur + d);
-    XTI.style.width = cur + "px";
+  /* ── 精选四块（原顶部 curated，判据一字不改） ── */
+  function renderCurated(){
+    var CAND=D.tickers.filter(function(t){return t.cash&&!t.idx;}), L10=DATES.slice(-10), PREV=prevOf(LAST);
+    var box=$('curated'); box.textContent='';
+    function sec(title,sub,items,none){
+      var s=el('section'); s.appendChild(el('h3',null,title)); s.appendChild(el('div','sub',sub));
+      if(!items.length) s.appendChild(el('div','empty',none));
+      items.forEach(function(it){ var b=el('button','ci'); b.type='button';
+        b.appendChild(el('span','s',it.s)); b.appendChild(el('span','t',it.t)); b.appendChild(el('span','w',it.w));
+        b.addEventListener('click',it.go); s.appendChild(b); });
+      box.appendChild(s);
+    }
+    var per=CAND.map(function(t){return {t:t,days:L10.filter(function(d){return np(t,d)>0;}).length,ppl:L10.reduce(function(s,d){return s+np(t,d);},0)};})
+      .filter(function(x){return x.days>0;}).sort(function(a,b){return b.days-a.days||b.ppl-a.ppl||b.t.tv-a.t.tv;}).slice(0,5);
+    sec('近 10 日最持续',L10[0].slice(5)+' → '+LAST.slice(5)+'，按有人说的天数排；并列看总人次。指数/ETF 不计。',
+      per.map(function(x){return {s:'$'+x.t.sym,t:'10 天里 '+x.days+' 天有人说',w:x.ppl+' 人次',go:function(){openTicker(x.t);}};}),'近 10 天没有一只非指数的票被提到过。');
+    var td=CAND.map(function(t){return {t:t,n:np(t,LAST),o:np(t,PREV)};}).filter(function(x){return x.n>0;}).sort(function(a,b){return b.n-a.n||b.t.tv-a.t.tv;}).slice(0,5);
+    sec('今天最多人说',LAST+'（ET）当天提及人数，右边是对比前日'+(PREV?'（'+PREV.slice(5)+'）':'')+'。',
+      td.map(function(x){var d=x.n-x.o;return {s:'$'+x.t.sym,t:x.n+' 人',w:d>0?'+'+d:d<0?String(d):'持平',go:function(){openTicker(x.t);}};}),'最后一天没有非指数的票被提到。');
+    var t5=CAND.filter(function(t){return (t.mx||0)>=2&&relv(t,5)!==null;}).sort(function(a,b){return relv(b,5)-relv(a,5);}).slice(0,5);
+    sec('T+5 涨幅最大 vs '+BENCH,'峰值日锚点往后 5 个交易日，个股收益减 '+BENCH+' 同期收益。只取有读数、且至少 2 人说过的。',
+      t5.map(function(t){return {s:'$'+t.sym,t:'峰值日 '+(t.peak?t.peak.slice(5):'—'),w:relTxt(t,5),go:function(){openTicker(t);}};}),'还没有一只票同时满足「≥2 人说过」和「T+5 已到期且有行情」。');
+    var by={}, list=[];
+    D.tickers.forEach(function(t){ t.m.forEach(function(m){ if(m.d!==LAST||!STARS.has(m.h)) return; var k=m.url||(m.h+'|'+m.txt);
+      if(!by[k]){ by[k]={h:m.h,txt:m.txt,url:m.url,v:m.v,syms:[]}; list.push(by[k]); } if(by[k].syms.indexOf(t.sym)<0) by[k].syms.push(t.sym); }); });
+    list.sort(function(a,b){return b.v-a.v;});
+    sec('⭐ 我关注的人今天说了什么', STARS.size?'已关注 '+STARS.size+' 人 · '+LAST+'（ET）当天'+(list.length?'共 '+list.length+' 条':'没发带票的帖')+'。':'这一块只列你 ⭐ 过的人。',
+      list.slice(0,5).map(function(x){return {s:'@'+x.h,t:x.syms.slice(0,3).map(function(s){return '$'+s;}).join(' ')+' '+dec(x.txt).slice(0,70),w:'',go:function(){openTicker(BYSYM[x.syms[0]]);}};}),
+      STARS.size?'你关注的这 '+STARS.size+' 人，'+LAST+' 当天没有带票的帖。':'点任意 handle 旁的 ☆ 把他加进来（「人」视图每张卡、票卡背面的「谁在说」都有）。');
+    $('cursum').textContent='精选：近 10 日最持续 · 今天最多人说 · T+5 最大 · ⭐ 关注的人'+(STARS.size?'（'+STARS.size+'）':'');
   }
-  layoutThumb(); updateFades();
-}
 
-/* 顶部把手：位置/宽度只读 SC 的三个数，自己从不写 SC —— 写只发生在用户拖它的时候，
-   那一路走 XT.scrollLeft，再由上面那条 mirror 同步到 SC。 */
-function layoutThumb(){
-  const max = SC.scrollWidth - SC.clientWidth;
-  const bar = $("#xbar"), th = $("#xthumb");
-  bar.classList.toggle("off", max <= 0);
-  if (max <= 0) return;
-  const track = bar.clientWidth;
-  const tw = Math.max(32, Math.round(track * SC.clientWidth / SC.scrollWidth));
-  th.style.width = tw + "px";
-  th.style.left = Math.round((SC.scrollLeft / max) * (track - tw)) + "px";
-  bar.setAttribute("aria-valuenow", Math.round(SC.scrollLeft / max * 100));
-}
-/* 拖把手 / 点轨道。两者都只 set XT.scrollLeft，走同一条同步路径。 */
-(function thumbDrag(){
-  const bar = $("#xbar"), th = $("#xthumb");
-  let from = 0, at = 0;
-  const geo = () => {
-    const max = SC.scrollWidth - SC.clientWidth, track = bar.clientWidth;
-    return { max, track, tw: th.offsetWidth, run: Math.max(1, track - th.offsetWidth) };
-  };
-  const moveTo = px => { const g = geo();
-    XT.scrollLeft = Math.max(0, Math.min(g.max, px / g.run * g.max)); };
-  th.addEventListener("pointerdown", e => {
-    e.preventDefault(); th.classList.add("drag"); th.setPointerCapture(e.pointerId);
-    from = e.clientX; at = parseFloat(th.style.left) || 0;
+  /* ── 看板 ── */
+  var PAGE=30;
+  function listEl(col,n){
+    var s=el('section','list'); var lh=el('div','lh'); var h=el('h2'); h.appendChild(icon(col.ic)); h.appendChild(document.createTextNode(col.name));
+    lh.appendChild(h); lh.appendChild(el('span','n',String(n))); s.appendChild(lh); s.appendChild(el('div','ld',col.desc));
+    var c=el('div','cards'); s.appendChild(c); return {s:s,c:c};
+  }
+  function fillList(L,key,items,make,emptyTxt){
+    var lim=S.shown[key]||PAGE;
+    if(!items.length) L.c.appendChild(el('div','empty',emptyTxt||'没有。'));
+    items.slice(0,lim).forEach(function(x){ L.c.appendChild(make(x)); });
+    if(items.length>lim){ var b=el('button','more','再显示 '+Math.min(PAGE,items.length-lim)+' 张（还剩 '+(items.length-lim)+'）'); b.type='button';
+      b.addEventListener('click',function(){ S.shown[key]=lim+PAGE; render(); }); L.c.appendChild(b); }
+  }
+  function cardEl(onOpen){
+    var c=el('div','card'); c.tabIndex=0; c.setAttribute('role','button');
+    c.addEventListener('click',function(e){ if(e.target.closest('a')||e.target.closest('.star')) return; lastCard=c; onOpen(); });
+    c.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ')&&e.target===c){ e.preventDefault(); lastCard=c; onOpen(); } });
+    return c;
+  }
+  function spark(t,A,big){
+    var i=DATES.indexOf(A), ds=big?DATES:DATES.slice(Math.max(0,i-SPARK_N+1),i+1);
+    var vals=ds.map(function(d){return np(t,d);}), mx=Math.max.apply(null,[1].concat(vals)), h=big?40:17;
+    var sp=el('div','spark'+(big?' big':'')); sp.setAttribute('role','img');
+    sp.setAttribute('aria-label',(big?'全 ':'近 ')+ds.length+' 天提及人数 '+vals.join('、'));
+    ds.forEach(function(d,j){ var v=vals[j], b=el('span',(v===0?'z':'')+(d===A&&v>0?' on':'')); if(v) b.style.height=Math.round(3+v/mx*h)+'px'; b.title=d.slice(5)+'：'+v+' 人'; sp.appendChild(b); });
+    return sp;
+  }
+  function tickerCard(t){
+    var A=asOf(), P=prevOf(A), n=np(t,A), o=np(t,P), d=n-o;
+    var c=cardEl(function(){ openTicker(t); });
+    var lb=el('div','labels');
+    if(A===LAST&&HL[t.sym]) HL[t.sym].forEach(function(h){ lb.appendChild(el('span','lb '+(h.k.indexOf('墙后')===0?'amb':h.k==='掉榜'||h.k==='已跑完'?'mut':'hot'),h.k)); });
+    if(t.wall.length){ var ks=[]; t.wall.forEach(function(w){ if(w.kind&&ks.indexOf(w.kind)<0) ks.push(w.kind); });
+      var wl=el('span','lb amb','墙后 '+(ks.join('/')||'')); wl.title='@jfsrev 墙后，最近一次 '+t.wall[t.wall.length-1].d; lb.appendChild(wl); }
+    var ss=stSorted(t); ss.slice(0,2).forEach(function(x){ lb.appendChild(el('span','lb '+stTone(x[0]),x[0]+' '+x[1])); });
+    if(ss.length>2) lb.appendChild(el('span','lb mut','+'+(ss.length-2)));
+    if(t.idx) lb.appendChild(el('span','lb mut','指数'));
+    if(!t.cash) lb.appendChild(el('span','lb mut','裸码'));
+    if(n===0&&o>0) lb.appendChild(el('span','lb mut','掉出'));
+    if(lb.childNodes.length) c.appendChild(lb);
+    var tk=el('div','tk'); var sy=el('span','sym'); sy.appendChild(el('span','d','$')); sy.appendChild(document.createTextNode(t.sym)); tk.appendChild(sy);
+    var mt=el('span','metric'); mt.appendChild(el('b',null,n?String(n):'—')); mt.appendChild(document.createTextNode('人 '));
+    mt.appendChild(el('span',d>0?'up':d<0?'dn':'flat',d>0?'▲'+d:d<0?'▼'+(-d):'持平')); tk.appendChild(mt); c.appendChild(tk);
+    c.appendChild(spark(t,A,false));
+    var who=whoOf(t); if(who.length) c.appendChild(el('div','cd',who.slice(0,3).map(function(h){return '@'+h;}).join(' ')+(who.length>3?' +'+(who.length-3):'')));
+    var f=el('div','foot'), m=el('div','meta');
+    function mi(ic,txt,cls,title){ var s=el('span',cls||null); s.appendChild(icon(ic)); s.appendChild(document.createTextNode(txt)); if(title) s.title=title; m.appendChild(s); }
+    mi('message-circle',String(t.tn),null,'窗口内总提及');
+    var r5=relv(t,5); mi('trending-up','T+5 '+relTxt(t,5),r5===null?'flat':r5>0?'up':r5<0?'dn':'', 'T+5 vs '+BENCH+'（峰值日起）');
+    if(!isNil(t.rs)) mi('gauge','RS '+Math.round(t.rs),t.rs>=80?'up':null,'RS 评级');
+    f.appendChild(m); c.appendChild(f);
+    return c;
+  }
+  function personCard(p){
+    var c=cardEl(function(){ openPerson(p); });
+    var lb=el('div','labels'); lb.appendChild(el('span','lb mut',p.days+'/'+DATES.length+' 天')); if(p.syms.length) lb.appendChild(el('span','lb blu',p.syms.length+' 只带 $ 的票')); c.appendChild(lb);
+    var tk=el('div','tk'); var sy=el('span','sym'); sy.appendChild(starBtn(p.h)); sy.appendChild(document.createTextNode('@'+p.h)); tk.appendChild(sy);
+    var mt=el('span','metric'); mt.appendChild(el('b',null,String(p.posts))); mt.appendChild(document.createTextNode('帖')); tk.appendChild(mt); c.appendChild(tk);
+    if(p.syms.length) c.appendChild(el('div','cd',p.syms.slice(0,8).map(function(s){return '$'+s;}).join(' ')));
+    var f=el('div','foot'), m=el('div','meta');
+    var a=el('span'); a.appendChild(icon('eye')); a.appendChild(document.createTextNode('中位 '+nf(p.med))); a.title='曝光中位'; m.appendChild(a);
+    var b=el('span'); b.appendChild(icon('bookmark')); b.appendChild(document.createTextNode(nf(p.bk))); b.title='收藏合计'; m.appendChild(b);
+    f.appendChild(m); c.appendChild(f); return c;
+  }
+  function wallPub(w){ return w.tickers.map(function(s){ var t=BYSYM[s]; return t?np(t,w.d):0; }); }
+  function wallCard(w){
+    var c=cardEl(function(){ openWall(w); });
+    var pub=wallPub(w), zero=w.tickers.length&&pub.every(function(n){return n===0;});
+    var lb=el('div','labels'); lb.appendChild(el('span','lb amb',w.kind||'—')); lb.appendChild(el('span','lb mut',w.d.slice(5)));
+    if(zero) lb.appendChild(el('span','lb hot','公开区当天 0 人'));
+    if(w.proxy) lb.appendChild(el('span','lb blu','代理 '+w.proxy)); c.appendChild(lb);
+    c.appendChild(el('div','ct',w.tickers.length?w.tickers.slice(0,6).map(function(s){return '$'+s;}).join(' ')+(w.tickers.length>6?' +'+(w.tickers.length-6):''):'（没挂票）'));
+    var body=dec(w.text||'').replace(/\s+/g,' ').trim(); c.appendChild(el('div','cd',body||'（这条没有正文，只有图）'));
+    var f=el('div','foot'), m=el('div','meta');
+    var a=el('span'); a.appendChild(icon('users')); a.appendChild(document.createTextNode('公开 '+(w.tickers.length?pub.reduce(function(x,y){return x+y;},0):'—'))); a.title='公开区当天人数合计'; m.appendChild(a);
+    var b=el('span'); b.appendChild(icon('eye')); b.appendChild(document.createTextNode(nf(w.views))); m.appendChild(b);
+    f.appendChild(m); c.appendChild(f); return c;
+  }
+
+  function render(){
+    var bd=$('board'); bd.textContent=''; var q=normQ(S.q);
+    $('sort').hidden = S.v!=='t';
+    ['cash','idx','wallonly','solo'].forEach(function(id){ $(id).hidden = S.v!=='t'; });
+    if(S.v==='t'){
+      var rows=tickers(), A=asOf(), groups={new:[],hot:[],cool:[],wall:[],old:[]};
+      rows.forEach(function(t){ groups[tCol(t,A)].push(t); });
+      var cols=COLS.t.filter(function(c){ return c.k!=='old'||S.date==='all'; });
+      bd.style.setProperty('--cols',cols.length);
+      cols.forEach(function(col){ var L=listEl(col,groups[col.k].length); fillList(L,'t.'+col.k,groups[col.k],tickerCard,'这一列今天是空的。'); bd.appendChild(L.s); });
+      var hidden = S.solo||SEARCH_MODE ? 0 : D.tickers.filter(function(t){ return inDate(t)&&(t.mx||0)<2&&(!S.cash||t.cash)&&(S.idx||!t.idx)&&!(np(t,asOf())===0&&wallOn(t,asOf())); }).length;
+      var ct=$('count'); ct.textContent = rows.length+' 个代码'+(hidden?' · 折叠了 '+hidden+' 个只有 1 人说过的':'')+
+        (SEARCH_MODE==='sym'?' · 搜索中，筛选已让路':SEARCH_MODE==='text'&&rows.length?' · 代码里没有「'+q.toUpperCase()+'」，下面是帖子正文提到它的票':'');
+      if(q&&!rows.length&&S.date!=='all'){ ct.appendChild(document.createTextNode(' · ')); var h=el('button','hint','这一天没有，切到「全部」'); h.type='button'; h.addEventListener('click',function(){ setDate('all'); }); ct.appendChild(h); }
+    } else if(S.v==='p'){
+      var pr=D.people.filter(function(p){ return !q||p.h.toLowerCase().indexOf(q)>=0||p.syms.some(function(s){return s.toLowerCase().indexOf(q)>=0;}); });
+      if(S.date!=='all'){ var on={}; D.tickers.forEach(function(t){ (t.days[S.date]?t.days[S.date].p:[]).forEach(function(h){on[h]=1;}); }); pr=pr.filter(function(p){return on[p.h];}); }
+      var pg={star:[],every:[],often:[],rare:[]}; pr.forEach(function(p){ pg[pCol(p)].push(p); });
+      bd.style.setProperty('--cols',4);
+      COLS.p.forEach(function(col){ var L=listEl(col,pg[col.k].length); fillList(L,'p.'+col.k,pg[col.k],personCard,col.k==='star'?'还没关注任何人。':'没有。'); bd.appendChild(L.s); });
+      $('count').textContent=pr.length+' 人'+(S.date!=='all'?'（'+S.date.slice(5)+' 发过带票的帖）':'')+(STARS.size?' · ⭐ '+STARS.size:'');
+    } else {
+      var wr=D.wall.filter(function(w){ return (S.date==='all'||w.d===S.date)&&(!q||w.tickers.some(function(s){return s.toLowerCase().indexOf(q)>=0;})||'jfsrev'.indexOf(q)>=0||dec(w.text||'').toLowerCase().indexOf(q)>=0); });
+      wr.sort(function(a,b){ return a.d<b.d?1:a.d>b.d?-1:0; });
+      var wg={Stalk:[],Focus:[],Update:[],Groups:[],Note:[]}; wr.forEach(function(w){ wg[wCol(w)].push(w); });
+      bd.style.setProperty('--cols',5);
+      COLS.w.forEach(function(col){ var L=listEl(col,wg[col.k].length); fillList(L,'w.'+col.k,wg[col.k],wallCard,'没有。'); bd.appendChild(L.s); });
+      $('count').textContent=wr.length+' 条'+(S.date!=='all'?'（'+S.date.slice(5)+'）':'');
+    }
+    renderTop(); paintIcons();
+  }
+  function refresh(){ dirty=false; renderCurated(); render(); }
+
+  /* ── 卡背 ── */
+  var dlg=$('dlg'), lastCard=null, dirty=false;
+  function back(title){ $('dlg-t').textContent=title; var b=$('dlg-b'); b.textContent=''; return b; }
+  function show(){ if(!dlg.open){ if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open',''); } dlg.scrollTop=0; paintIcons(); }
+  $('dlg-x').addEventListener('click',function(){ dlg.close(); });
+  dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+  dlg.addEventListener('close',function(){ if(dirty) refresh(); });
+  function k(b,txt){ b.appendChild(el('div','k',txt)); }
+  function kv(b,pairs){ var g=el('div','kv'); pairs.forEach(function(p){ var d=el('div'); d.appendChild(el('small',null,p[0])); d.appendChild(el('b',p[2]?'na':null,p[1])); g.appendChild(d); }); b.appendChild(g); }
+  function whoRow(b,hs){ var w=el('div','who'); if(!hs.length) w.appendChild(document.createTextNode('—')); hs.forEach(function(h){ var s=el('span'); s.appendChild(starBtn(h)); s.appendChild(document.createTextNode('@'+h)); w.appendChild(s); }); b.appendChild(w); }
+  function wallBlock(b,w,full){
+    var x=el('div','wallb'), ph=el('div','ph'); ph.appendChild(el('span','h','@jfsrev · 墙后 · '+(w.kind||'—'))); ph.appendChild(el('span',null,w.d));
+    if(w.proxy) ph.appendChild(el('span',null,'代理 '+w.proxy)); var v=w.v!=null?w.v:w.views; if(v) ph.appendChild(el('span',null,nf(v)+' 曝光'));
+    if(w.url) ph.appendChild(link(w.url,'原帖 ↗')); x.appendChild(ph);
+    var body=dec(WALLTXT[w.id]||w.text||''); x.appendChild(el('div','pt',body||'（这条没有正文，只有图）'));
+    if(full&&w.tickers&&w.tickers.length>4){ x.appendChild(el('div','seq','全部 '+w.tickers.length+' 只 · 公开区当天人数：'+w.tickers.map(function(s,i){return '$'+s+' '+wallPub(w)[i];}).join(' · '))); }
+    b.appendChild(x);
+  }
+  function postRow(m, withSym){
+    var p=el('div','po'), ph=el('div','ph'); ph.appendChild(starBtn(m.h)); ph.appendChild(el('span','h','@'+m.h)); ph.appendChild(el('span',null,m.d.slice(5)+(m.rep?' · 回复':'')));
+    if(withSym) ph.appendChild(el('span',null,withSym));
+    if(m.st) ph.appendChild(el('span','lb '+stTone(m.st),m.st)); ph.appendChild(el('span',null,nf(m.v)+' 曝光 · '+m.bk+' 收藏'));
+    if(m.url) ph.appendChild(link(m.url,'原帖 ↗')); p.appendChild(ph); p.appendChild(el('div','pt',dec(m.txt))); return p;
+  }
+  function pagedPosts(b,list,make,emptyTxt){
+    var box=el('div'); b.appendChild(box); var lim=40;
+    function draw(){ box.textContent=''; if(!list.length) box.appendChild(el('p',null,emptyTxt));
+      list.slice(0,lim).forEach(function(m){ box.appendChild(make(m)); });
+      if(list.length>lim){ var mb=el('button','more','再显示 40 条（还剩 '+(list.length-lim)+'）'); mb.type='button'; mb.addEventListener('click',function(){ lim+=40; draw(); }); box.appendChild(mb); } }
+    draw();
+  }
+  function openTicker(t){
+    if(!t) return;
+    var A=asOf(), P=prevOf(A), n=np(t,A), o=np(t,P);
+    var b=back('$'+t.sym+(t.idx?' · 指数':'')+(t.cash?'':' · 裸码'));
+    kv(b,[[A.slice(5)+' 人数',String(n)],['对比前日 '+(P?P.slice(5):''),n-o>0?'+'+(n-o):n-o<0?String(n-o):'持平'],['总提及',String(t.tn)],['总曝光',nf(t.tv)],
+          ['峰值日',t.peak?t.peak.slice(5):'无提及日',!t.peak],['T+1 vs '+BENCH,relTxt(t,1),relv(t,1)===null],['T+5 vs '+BENCH,relTxt(t,5),relv(t,5)===null],
+          ['RS 评级',isNil(t.rs)?naTxt(t):String(Math.round(t.rs)),isNil(t.rs)],['距 50 日线',isNil(t.d50)?naTxt(t):(t.d50>0?'+':'')+(t.d50*100).toFixed(2)+'%',isNil(t.d50)],
+          ['ETF 篮子',(t.bask||[]).length?t.bask.join(' / '):(t.idx?'不适用（ETF/指数）':'无读数'),!(t.bask||[]).length]]);
+    if(HL[t.sym]){ k(b,'今日变动（'+LAST.slice(5)+'）'); HL[t.sym].forEach(function(h){ b.appendChild(el('p',null,h.k+'：'+h.why)); }); }
+    k(b,'全 '+DATES.length+' 天人数'); b.appendChild(spark(t,A,true)); b.appendChild(el('div','seq',DATES.map(function(d){return d.slice(5)+' '+np(t,d);}).join('　')));
+    var ss=stSorted(t); k(b,'全部立场（'+ss.length+'）'); var lb=el('div','labels'); if(!ss.length) lb.appendChild(el('span','lb mut','未标')); ss.forEach(function(x){ lb.appendChild(el('span','lb '+stTone(x[0]),x[0]+' '+x[1])); }); b.appendChild(lb);
+    var who=whoOf(t); k(b,'谁在说'+(S.date==='all'?'（全部日期）':'（'+S.date.slice(5)+'）')+' · '+who.length+' 人'); whoRow(b,who);
+    if(t.wall.length){ k(b,'@jfsrev 墙后 · '+t.wall.length+' 条（付费区原文）'); t.wall.slice().reverse().forEach(function(w){ wallBlock(b,w,false); }); }
+    var dayOnly=S.date!=='all', all=t.m.slice().sort(function(a,c){ return a.d<c.d?1:a.d>c.d?-1:c.v-a.v; });
+    var hd=el('div','k'); b.appendChild(hd); var sw=el('div','sw'); b.appendChild(sw); var box=el('div'); b.appendChild(box);
+    function drawPosts(){
+      var list=dayOnly?all.filter(function(m){return m.d===S.date;}):all;
+      hd.textContent='公开区帖子 · '+(dayOnly?S.date.slice(5)+' ':'全部 ')+list.length+' 条'; sw.textContent='';
+      if(S.date!=='all'){ var bt=el('button','chip tog',dayOnly?'看全部 '+all.length+' 条':'只看 '+S.date.slice(5)); bt.type='button'; bt.addEventListener('click',function(){ dayOnly=!dayOnly; drawPosts(); }); sw.appendChild(bt); }
+      box.textContent=''; pagedPosts(box,list,function(m){return postRow(m);},'这一天没有公开区提及。');
+    }
+    drawPosts(); show();
+  }
+  function openPerson(p){
+    var b=back('@'+p.h);
+    var hb=el('div','sw'); var sb=starBtn(p.h); hb.appendChild(sb); hb.appendChild(el('span','count',STARS.has(p.h)?'已关注':'点 ☆ 关注')); b.appendChild(hb);
+    kv(b,[['帖数',String(p.posts)],['出现天数',p.days+'/'+DATES.length],['曝光中位',nf(p.med)],['收藏合计',nf(p.bk)]]);
+    k(b,'他提过的票（带 $ 的）· '+p.syms.length); var sc=el('div','symchips');
+    p.syms.forEach(function(s){ var bt=el('button',null,'$'+s); bt.type='button'; bt.addEventListener('click',function(){ openTicker(BYSYM[s]); }); sc.appendChild(bt); }); b.appendChild(sc);
+    if(!p.syms.length) b.appendChild(el('p',null,'—'));
+    var by={}, list=[];
+    D.tickers.forEach(function(t){ t.m.forEach(function(m){ if(m.h!==p.h||(S.date!=='all'&&m.d!==S.date)) return; var kk=m.url||(m.d+'|'+m.txt);
+      if(!by[kk]){ by[kk]={m:m,syms:[]}; list.push(by[kk]); } if(by[kk].syms.indexOf(t.sym)<0) by[kk].syms.push(t.sym); }); });
+    list.sort(function(a,c){ return a.m.d<c.m.d?1:a.m.d>c.m.d?-1:c.m.v-a.m.v; });
+    k(b,'带票的帖 · '+(S.date==='all'?'全部日期':S.date.slice(5))+' · '+list.length+' 条');
+    pagedPosts(b,list,function(x){ return postRow(x.m, x.syms.map(function(s){return '$'+s;}).join(' ')); },'这一天没有带票的帖。');
+    b.appendChild(el('p',null,'曝光中位是该账号窗口内所有帖的中位数，用来判「这条帖是不是他的异常值」。'));
+    show();
+  }
+  function openWall(w){
+    var b=back('@jfsrev · '+(w.kind||'—')+' · '+w.d);
+    wallBlock(b,w,true);
+    var pub=wallPub(w);
+    if(w.tickers.length){ k(b,'挂的票 · 公开区当天人数'); var sc=el('div','symchips');
+      w.tickers.forEach(function(s,i){ var bt=el('button',null,'$'+s+' · '+pub[i]); bt.type='button'; bt.addEventListener('click',function(){ openTicker(BYSYM[s]); }); sc.appendChild(bt); }); b.appendChild(sc);
+      if(pub.every(function(n){return n===0;})) b.appendChild(el('p',null,'公开区当天全是 0 人——这就是墙的代价：只看公开区的人看不见这一格。')); }
+    show();
+  }
+  function openHighlights(){
+    var b=back('今日变动 · '+LAST+'（ET）');
+    var hl=D.highlights||[]; if(!hl.length) b.appendChild(el('p',null,'今天没有触发任何一条判据。'));
+    hl.forEach(function(h){ var bt=el('button','ci'); bt.type='button'; bt.appendChild(el('span','s','$'+h.sym)); bt.appendChild(el('span','t',h.why)); bt.appendChild(el('span','w',h.k));
+      bt.addEventListener('click',function(){ openTicker(BYSYM[h.sym]||{sym:h.sym,cash:true,idx:false,days:{},st:{},wall:[],m:[],tn:0,tv:0,rel:{}}); }); b.appendChild(bt); });
+    b.appendChild(el('p',null,'判据：墙后补票＝公开区 1 人 + @jfsrev 墙后点过；新进＝今天 ≥2 人且有新面孔；墙后独有＝墙后点了、公开区 0 人；加人＝人数比昨天多且 ≥3；已跑完＝复盘/离场多于前瞻；掉榜＝昨天 ≥3 人今天 0 人。'));
+    show();
+  }
+
+  /* ── 工具条 ── */
+  var dates=$('dates');
+  function dbtn(d,txt){ var b=el('button',null,txt); b.type='button'; b.dataset.d=d; b.setAttribute('aria-pressed',S.date===d); dates.appendChild(b); }
+  dbtn('all','全部'); DATES.slice().reverse().forEach(function(d){ dbtn(d,d.slice(5)); });
+  function setDate(d){ S.date=d; S.shown={}; [].forEach.call(dates.children,function(x){ x.setAttribute('aria-pressed',x.dataset.d===d); }); render(); }
+  dates.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b) setDate(b.dataset.d); });
+  $('views').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; S.v=b.dataset.v; S.shown={};
+    [].forEach.call($('views').children,function(x){ x.setAttribute('aria-pressed',x===b); }); render(); });
+  var qt=null; $('q').addEventListener('input',function(e){ clearTimeout(qt); qt=setTimeout(function(){ S.q=e.target.value; S.shown={}; render(); },120); });
+  ['cash','idx','wallonly','solo'].forEach(function(id){ $(id).addEventListener('click',function(e){ S[id]=!S[id]; S.shown={}; e.currentTarget.setAttribute('aria-pressed',S[id]); render(); }); });
+  $('sort').addEventListener('change',function(e){ S.sort=e.target.value; render(); });
+
+  /* ── 口径（原「口径说明」，内容不删） ── */
+  [
+    '裸代码噪声很大（RS、EMA、WHAT 这类被当成过代码），所以默认只显示帖子原文里真的带 $ 的那些。没有删任何数据——关掉「只看 $ 标记」全都在。默认折叠只有 1 人说过的票，按「含只有 1 人说过的」全都在；「墙后独有」那列不受这条折叠影响。',
+    '列怎么分：按所选日（「全部」时按 '+LAST.slice(5)+'）。新起＝当日有人说、前 3 个日期 0 人；升温/持续＝前几天就有人说、当日人数不比前一日少；降温＝当日比前一日少（含掉到 0 的「掉出」）；墙后独有＝@jfsrev 当日点了、公开区 0 人；更早＝只在「全部」里出现。这四条是本页的分列方式，自造，不是行业口径；「今日变动」标签沿用原有判据。',
+    '「立场」只标过日报第 1、2 节用到的票，其余显示「未标」。曝光读 posts/*.jsonl 的最新值（重抓会更新），不是 mentions.csv 的首次快照。',
+    '卡面人数条画所选日往前 '+SPARK_N+' 天，所选日那根加深；全 '+DATES.length+' 天在卡背。',
+    'T+k vs '+BENCH+'：峰值日（窗口内提及人数最高的 ET 日，并列取最早）当天或之前最后一个收盘为锚，往后数 k 个交易日，个股收益减 '+BENCH+' 同期收益（event study 的 market-adjusted model，AR=R_i−R_m）。「无价格」＝本地没有这只票的行情，不外抓；「未到期」＝T+k 那天还没收盘。口径见 data/reference/METRIC_SOURCES.md。',
+    'RS 评级 · 距 50 日线 · ETF 篮子：直接读 dashboard 管线已算好的 data/output/ 字段（universe.json 的 rs_rating / sma50_dist，groups.json 里 method=="etf" 的篮子成分），没有新算任何指标。空值分两种：ETF/指数＝不适用；个股＝无读数。一只票可以同时属于多个篮子，全留。',
+    '@jfsrev 是付费订阅内容，看板上直接显示正文（Andy 2026-09-24 取消「只存不引」）。这页是私有 Artifact，仍然不往对外文案里贴他的原话。',
+    '⭐ 关注存在这台浏览器的 localStorage（xboard.stars.v1），换台机器要重新点。',
+    '数据：data/content/x_watch/posts/*.jsonl · mentions.csv · subs/jfsrev/，由 data/content/x_watch/tools/build_board.py 生成；Excel 版是同目录 ticker_daily.csv。'
+  ].forEach(function(s){ $('sources').appendChild(el('li',null,s)); });
+  $('foot').textContent='每日覆盖本页，链接不变 · 点卡片看全部帖子 · 窗口 '+DATES.length+' 天 · '+D.counts.syms+' 个代码（'+D.counts.cash+' 个带 $）· 墙后 '+D.wall.length+' 条';
+
+  refresh();
+
+  /* 回话：锚在打开卡背的那张卡上（Andy 的回话＝这条评论）。拿不到 comments 就一直藏着。 */
+  var comments=null;
+  $('dlg-r').addEventListener('click',function(){
+    if(!comments) return;
+    comments.openComposer({element:(lastCard&&lastCard.isConnected)?lastCard:$('dlg-t')}).catch(function(e){
+      if(e&&(e.code==='unavailable'||e.code==='not_granted'||e.code==='capability_disabled'||e.code==='capability_removed')) $('dlg-r').hidden=true;
+    });
   });
-  th.addEventListener("pointermove", e => {
-    if (!th.classList.contains("drag")) return;
-    moveTo(at + (e.clientX - from));
-  });
-  for (const ev of ["pointerup","pointercancel"])
-    th.addEventListener(ev, e => { th.classList.remove("drag"); try{ th.releasePointerCapture(e.pointerId); }catch(_){} });
-  bar.addEventListener("pointerdown", e => {
-    if (e.target === th) return;
-    const g = geo(), x = e.clientX - bar.getBoundingClientRect().left;
-    moveTo(x - g.tw / 2);
-  });
+  if(window.claude&&claude.use){
+    claude.use('comments').then(function(c){ if(!c) return; comments=c; $('dlg-r').hidden=false; }).catch(function(){});
+  }
 })();
-function mirror(from, to, key){
-  XSYNC[key]++;
-  if (XSYNC.lock) return;
-  XSYNC.lock = true;
-  const fMax = from.scrollWidth - from.clientWidth, tMax = to.scrollWidth - to.clientWidth;
-  const want = from.scrollLeft >= fMax - 1 ? tMax : from.scrollLeft;
-  if (Math.abs(to.scrollLeft - want) >= 1){ to.scrollLeft = want; XSYNC.applied++; }
-  XSYNC.lock = false;
-  layoutThumb(); updateFades();
-}
-XT.addEventListener("scroll", () => mirror(XT, SC, "top"));
-SC.addEventListener("scroll", () => mirror(SC, XT, "box"));
-
-/* 渐隐：右边还有列 → 右侧一道；已经滚出去了 → 左侧一道。
-   左侧那道从首列右缘起画（首列 sticky，永远在，压它没意义）。 */
-function updateFades(){
-  const max = SC.scrollWidth - SC.clientWidth, x = SC.scrollLeft;
-  $("#fadeL").classList.toggle("on", x > 1);
-  $("#fadeR").classList.toggle("on", x < max - 1);
-  const c1 = SC.querySelector("tbody td:first-child") || SC.querySelector("thead th:first-child");
-  const w = c1 ? Math.round(c1.getBoundingClientRect().width) : 0;
-  document.documentElement.style.setProperty("--c1w", (w + 1) + "px");
-}
-
-/* Shift + 滚轮 = 横滚（触控板双指横扫本来就走 deltaX，这条是给鼠标用户的）。 */
-SC.addEventListener("wheel", e => {
-  if (!e.shiftKey) return;
-  const d = e.deltaX || e.deltaY;
-  if (!d || SC.scrollWidth - SC.clientWidth <= 0) return;
-  SC.scrollLeft += d; XSYNC.wheel++; e.preventDefault();
-}, {passive:false});
-
-/* 键盘：← → 一屏的 80%，Home/End 到两端。输入框/下拉里的按键不抢。 */
-SC.addEventListener("keydown", e => {
-  if (e.target.closest("input,select,textarea")) return;
-  const max = SC.scrollWidth - SC.clientWidth;
-  const page = Math.max(60, Math.round(SC.clientWidth * 0.8));
-  let to = null;
-  if (e.key === "ArrowRight") to = Math.min(max, SC.scrollLeft + page);
-  else if (e.key === "ArrowLeft") to = Math.max(0, SC.scrollLeft - page);
-  else if (e.key === "Home") to = 0;
-  else if (e.key === "End") to = max;
-  if (to === null) return;
-  e.preventDefault(); SC.scrollLeft = to; XSYNC.key++;
-});
-
-/* ── 列菜单 ── */
-function renderColMenu(){
-  const on = COLS.t.length - HIDDEN.size;
-  $("#colsum").textContent = `列 ${on}/${COLS.t.length}`;
-  $("#colpop").innerHTML = COLS.t.map(c =>
-    `<label class="colopt"><input type="checkbox" data-k="${c.k}"` +
-    `${HIDDEN.has(c.k) ? "" : " checked"}${COL_LOCKED.has(c.k) ? " disabled" : ""}>` +
-    `<span>${c.label}${COL_LOCKED.has(c.k) ? "（固定）" : ""}</span></label>`).join("") +
-    `<div class="colact"><button type="button" data-act="all">全开</button>` +
-    `<button type="button" data-act="min">只留常用</button></div>`;
-}
-$("#colpop").addEventListener("change", e => {
-  const cb = e.target.closest("input[type=checkbox]"); if (!cb) return;
-  const k = cb.dataset.k; if (COL_LOCKED.has(k)) return;
-  cb.checked ? HIDDEN.delete(k) : HIDDEN.add(k);
-  saveCols(); renderColMenu(); render();
-});
-$("#colpop").addEventListener("click", e => {
-  const b = e.target.closest("button[data-act]"); if (!b) return;
-  HIDDEN = b.dataset.act === "all" ? new Set()
-         : new Set(COLS.t.filter(c => !COL_KEEP.has(c.k)).map(c => c.k));
-  saveCols(); renderColMenu(); render();
-});
-
-function detail(t){
-  const ms = t.m.filter(m => S.date === "all" || m.d === S.date);
-  const who = whoOf(t);
-  const seq = DATES.map(d => `${d.slice(5)} ${np(t,d)}`).join("　");
-  const st = stSorted(t);
-  const head = `<div class="full"><b>全 ${DATES.length} 天人数</b> <span class="seq">${esc(seq)}</span>
-    <br><b>全部立场（${st.length}）</b> ${st.length ? `<span class="st" style="flex-wrap:wrap;white-space:normal">${st.map(stChip).join("")}</span>` : "未标"}
-    <br><b>ETF 篮子</b> ${(t.bask||[]).length ? esc(t.bask.join(" / ")) : (t.idx ? "不适用（ETF/指数）" : "无读数")}
-    <br><b>谁在说（${who.length}）</b> ${who.map(h => `${starBtn(h)}@${esc(h)}`).join(" ") || "—"}</div>`;
-  const wall = t.wall.map(w => {
-    const body = wtxt(w);
-    return `<div class="post wallp">
-      <span class="d mono">${esc(w.d)}</span><span class="h">@jfsrev · 墙后</span>
-      <span class="t"><b>${esc(w.kind)}</b>${w.proxy ? " · 代理 "+esc(w.proxy) : ""}${
-        body ? `<div class="wbody">${lines(body)}</div>` : ""}${
-        w.url ? ` <a href="${esc(w.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</span>
-      <span class="v">${w.v ? nf(w.v)+" 曝光" : "—"}</span></div>`;
-  }).join("");
-  return head + wall + (ms.map(m => `<div class="post">
-      <span class="d mono">${esc(m.d.slice(5))}${m.rep ? " · 回复" : ""}</span>
-      <span class="h">${starBtn(m.h)}@${esc(m.h)}${m.st ? ` <i class="st"><i class="${FWD.has(m.st)?"f":DONE.has(m.st)?"d":"n"}">${esc(m.st)}</i></i>` : ""}</span>
-      <span class="t">${esc(m.txt)} ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">原帖 ↗</a>` : ""}</span>
-      <span class="v">${nf(m.v)} 曝光 · ${m.bk} 收藏</span></div>`).join("") || `<div class="post"><span class="t">这一天没有公开区提及。</span></div>`);
-}
-
-/* 跳到某只票：curated 与重点卡共用。 */
-function gotoSym(sym){
-  S.v = "t"; S.q = sym; S.idx = true; S.date = "all"; S.solo = true;
-  $("#solo").setAttribute("aria-pressed", true);
-  $("#q").value = sym; $("#idx").setAttribute("aria-pressed", true);
-  [...$("#views").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.v === "t"));
-  [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.d === "all"));
-  S.open.add(sym); render();
-  $("#tbl").scrollIntoView({block:"start"});
-}
-/* ⭐ 切换：只重画依赖它的两处，不重建整页。 */
-function toggleStar(h){
-  STARS.has(h) ? STARS.delete(h) : STARS.add(h);
-  saveStars(); renderCurated(); renderRoster(); render();
-}
-
-/* 事件 */
-$("#q").addEventListener("input", e => { S.q = e.target.value.trim(); render(); });
-$("#views").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (!b) return;
-  S.v = b.dataset.v;
-  [...$("#views").children].forEach(x => x.setAttribute("aria-pressed", x === b));
-  render();
-});
-$("#dates").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (!b) return;
-  S.date = b.dataset.d;
-  [...$("#dates").children].forEach(x => x.setAttribute("aria-pressed", x === b));
-  render();
-});
-for (const [id, key] of [["#cash","cash"],["#idx","idx"],["#wallonly","wallonly"],["#solo","solo"]]){
-  $(id).addEventListener("click", e => {
-    S[key] = !S[key]; e.currentTarget.setAttribute("aria-pressed", S[key]); render();
-  });
-}
-$("#sort").addEventListener("change", e => {
-  if (e.target.value === "__col"){ syncSelect(); return; }   // 这一项只是回显，不是可选项
-  S.ord.t.k = e.target.value; S.ord.t.dir = colOf("t", e.target.value).dir0;
-  syncSelect(); render();
-});
-$("#thead").addEventListener("click", e => {
-  const b = e.target.closest("button.sortbtn"); if (b) clickHead(b.dataset.k);
-});
-$("#curated").addEventListener("click", e => {
-  if (e.target.closest("a")) return;
-  const b = e.target.closest(".ci"); if (b && b.dataset.sym) gotoSym(b.dataset.sym);
-});
-$("#flags").addEventListener("click", e => {
-  const b = e.target.closest(".flag"); if (b && b.dataset.sym) gotoSym(b.dataset.sym);
-});
-$("#roster").addEventListener("click", e => {
-  const b = e.target.closest(".star"); if (b) toggleStar(b.dataset.h);
-});
-function toggle(el){
-  const wid = el.dataset.wid;
-  if (wid){ S.openw.has(wid) ? S.openw.delete(wid) : S.openw.add(wid); render(); return; }
-  const sym = el.dataset.sym; if (!sym) return;
-  S.open.has(sym) ? S.open.delete(sym) : S.open.add(sym); render();
-}
-$("#tbody").addEventListener("click", e => {
-  if (e.target.closest("a")) return;
-  const s = e.target.closest(".star");
-  if (s){ e.stopPropagation(); toggleStar(s.dataset.h); return; }
-  const r = e.target.closest("tr.row"); if (r) toggle(r);
-});
-$("#tbody").addEventListener("keydown", e => {
-  if (e.key !== "Enter" && e.key !== " ") return;
-  if (e.target.closest(".star")) return;            // ⭐ 自己是 button，按键交给它
-  const r = e.target.closest("tr.row"); if (r){ e.preventDefault(); toggle(r); }
-});
-
-/* 工具条高度随换行（窄屏日期钮/筛选钮会多占几行）而变，写死任何一个 px 都会错。
-   现场量，写进 --barh，表格容器的最大高度与表头吸顶都读它。 */
-function syncBarHeight(){
-  const h = Math.ceil($(".bar").getBoundingClientRect().height);
-  document.documentElement.style.setProperty("--barh", h + "px");
-}
-if (window.ResizeObserver) new ResizeObserver(syncBarHeight).observe($(".bar"));
-addEventListener("resize", () => { syncBarHeight(); syncScrollGeom(); });
-if (window.ResizeObserver) new ResizeObserver(syncScrollGeom).observe($("#scroll"));
-
-renderCurated(); renderRoster(); renderColMenu(); syncSelect(); render(); syncBarHeight(); syncScrollGeom();
 </script>

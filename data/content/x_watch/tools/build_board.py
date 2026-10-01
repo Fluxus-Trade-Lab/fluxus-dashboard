@@ -543,8 +543,11 @@ def main() -> None:
     # x_heat() 函数留在这里是单一口径——数据端 import 它，不另抄一份。
 
     if TPL.exists():
-        html = TPL.read_text(encoding="utf-8").replace(
-            "/*__DATA__*/null", json.dumps(data, ensure_ascii=False, separators=(",", ":")))
+        # 看板标准（.claude/skills/kanban-page）：数据放在 <script type="application/json" id="data">
+        # 里，页面用 JSON.parse 读。帖子正文是外部文本，可能含 `</script>` / `<!--`，
+        # 嵌进 script 标签前把 `<` 全部写成 \u003c —— 仍是合法 JSON，解析结果逐字不变。
+        payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+        html = TPL.read_text(encoding="utf-8").replace("/*__DATA__*/null", payload)
         (BASE / "board.html").write_text(html, encoding="utf-8")
         print(f"board.html ← {len(data['tickers'])} 个代码 / {data['counts']['cash']} 个带 $ / "
               f"{len(data['dates'])} 天 / {len(data['highlights'])} 条重点")

@@ -135,6 +135,14 @@
 
 ---
 
+## 🗂 日报看板 —— 七节日报的 Trello 页
+
+Andy 2026-10-01：「完美，这个以后是默认标准了。把课程上线进度页和steve的X日调研也这样改。」
+
+**Artifact（Andy 看这个）**：https://claude.ai/artifact/5zrcFsdMM4b3sGr8wEp8fJ
+每班由 `tools/build_daily_board.py daily/<ET 日>.md <out> --check` 生成，带 url 发布。和下面的 ticker 台账是两个 Artifact。
+蹭位榜 + 回复方向排第一列；点卡片看全文；卡上「回话」＝评论，下一班读作回执。
+
 ## 📇 每日看板 —— 可检索的 ticker 台账
 
 报告(`daily/*.md`)是「今天该看什么」,看板是「让我自己翻」。两个都要,不互相替代。
