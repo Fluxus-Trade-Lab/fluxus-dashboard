@@ -80,6 +80,8 @@
 
 ## 📥 追加到这里
 
+- [10-02] [OPS · 工人协议] **并发改动的诊断深度**：两个工人同树共写的事故，初诊为「claim 重复」被实测推翻——真根源是工人替别人收尾（树名违规），而任务板的「status」判据永远看不见这一维。闸建在错的量上，防护升级三层：协议禁止（5.7）· 磁盘自查（5.6）· 代码断言（test_worker_protocol_text.py）——诊断→分类→防护的完整链条。系统从被数字迷惑升到多维交叉验证的诚实度。[T-1002-18 / 80907fff](../../data/reference/incidents/2026-10-02_a_worker_landed_another_tasks_branch.md)
+
 - [10-01] [steve] **缓存数据防护的等级化设计**：供应商中断导致陈旧数据被当新鲜，T-1001-04 在数据层加时间戳，T-1001-127 升级消费端防护——TickerEarnings/QuickStats 显示「asof <date>」让用户自判，build_cards.py 已禁用。防护不一刀切而是按消费端分类（禁用/展示/默认），诊断的分类精度决定防护精准度；系统诚实度来自让用户决策而非代判。[T-1001-127 / 574a10be](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/574a10be)
 
 - [10-01] [steve] **蹭位榜 per-handle 上限的规则固化**：同一 handle 最多 2 条经三轮验证（09-24n·a → 09-25n·2 → 09-29）升级为代码参数 `PER_HANDLE_CAP` + 独立的 handle_counts 逻辑，与空帖删除分类独立；系统从人工记忆升到机械自动化，防护的诚实度由参数明确性和分类独立性体现。[T-1001-102 / 5283effde](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5283effde)
