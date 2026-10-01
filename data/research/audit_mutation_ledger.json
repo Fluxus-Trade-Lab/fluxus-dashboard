@@ -1,0 +1,89 @@
+{
+ "_schema": "audit_mutation_ledger/1",
+ "modules": {
+  "audit_ledger": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.975,
+   "killed": 78,
+   "measured_at": "2026-10-02T04:45:05+0900",
+   "mutants": 80,
+   "repeat": 1,
+   "survived": 2,
+   "total_sites": 80,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_metric_names": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.677,
+   "killed": 21,
+   "measured_at": "2026-10-02T04:54:55+0900",
+   "mutants": 31,
+   "repeat": 1,
+   "survived": 10,
+   "total_sites": 31,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_reads_declarations": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.654,
+   "killed": 34,
+   "measured_at": "2026-10-02T05:11:03+0900",
+   "mutants": 52,
+   "repeat": 1,
+   "survived": 18,
+   "total_sites": 52,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_tml": {
+   "commit": "e1d79e104c7ea34c2f3faeadd1281da06586e7b7",
+   "kill_rate": 0.841,
+   "killed": 37,
+   "measured_at": "2026-10-02T05:22:06+0900",
+   "mutants": 44,
+   "repeat": 1,
+   "survived": 7,
+   "total_sites": 44,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_universe_freshness": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.929,
+   "killed": 52,
+   "measured_at": "2026-10-02T05:03:57+0900",
+   "mutants": 56,
+   "repeat": 1,
+   "survived": 4,
+   "total_sites": 56,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_universe_shape": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.98,
+   "killed": 48,
+   "measured_at": "2026-10-02T05:00:51+0900",
+   "mutants": 49,
+   "repeat": 1,
+   "survived": 1,
+   "total_sites": 49,
+   "uncommitted": [],
+   "unstable": 0
+  },
+  "audit_unpushed": {
+   "commit": "e44796e3bb7062bb77f3e5ff16b1f761bef9a50f",
+   "kill_rate": 0.9,
+   "killed": 27,
+   "measured_at": "2026-10-02T04:53:25+0900",
+   "mutants": 30,
+   "repeat": 1,
+   "survived": 3,
+   "total_sites": 30,
+   "uncommitted": [],
+   "unstable": 0
+  }
+ }
+}
