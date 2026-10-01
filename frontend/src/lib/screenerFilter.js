@@ -196,7 +196,7 @@ export function applyFilters(rows, filters, tickerSearch) {
     ['rs21d', 'rs_21d'],
     ['rs63d', 'rs_63d'],
     ['rs126d', 'rs_126d'],
-    ['rsIbd', 'rs_ibd'],
+    ['rsIbd', 'rs_rating'],
   ]
   for (const [filterKey, dataKey] of rsRanges) {
     const f = filters[filterKey]
