@@ -405,3 +405,4 @@
 - [10-01] 📰 每日复盘 2026-09-30：已出（中英 PDF · Substack 逐页图 · X 素材 · 纯字幕对照组）· 闸全绿
 - [10-01] 🔔 → OPS: fluxus-ops 主 clone 有一处未提交改动（`data/theme_states/_closes.csv` 改了一行＋未跟踪 `2026-09-30.csv`，mtime 12:37 JST，本地落后 origin 42），`taskboard.py` 在这棵树上报 DirtyTree 拒用，聊天会话记不了裁决（15:34 JST 实测）。写者疑似 theme_states 逐日存档班；请认领后提交或核对 origin 是否已有同内容再处置 · pending
 ↳ ✅ 已自行解除（10-01 17:0x JST）：tracked 改动已被写者提交，taskboard 恢复可用，本会话 6 条裁决已补记。剩一个未跟踪 `data/theme_states/2026-09-30.csv` 不影响 DirtyTree 判据。
+- [2026-10-02] Discord→X 生成端：2026-09-30 草稿已出（37 条消息 → 7 条推文，commit 693a0a378）
