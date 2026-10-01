@@ -1,5 +1,5 @@
 {
- "date": "2026-09-29",
+ "date": "2026-09-30",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,32 +7,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 765.9716,
-    "b": 764.8072
+    "a": 765.364,
+    "b": 764.5998
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 765.9716,
-    "b": 766.3652
+    "a": 765.364,
+    "b": 765.9716
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 764.8072,
-    "b": 764.8711
+    "a": 764.5998,
+    "b": 764.8072
    }
   ],
   "checks_passed": 1,
   "light": "red",
   "history": [
-   {
-    "date": "2026-07-07",
-    "close": 745.8579,
-    "fast": 742.1762,
-    "slow": 740.3711,
-    "checks_passed": 3
-   },
    {
     "date": "2026-07-08",
     "close": 743.5536,
@@ -445,6 +438,13 @@
     "fast": 765.9716,
     "slow": 764.8072,
     "checks_passed": 1
+   },
+   {
+    "date": "2026-09-30",
+    "close": 762.63,
+    "fast": 765.364,
+    "slow": 764.5998,
+    "checks_passed": 1
    }
   ]
  },
@@ -453,32 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 733.7583,
-    "b": 726.9624
+    "a": 734.8513,
+    "b": 728.1822
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 733.7583,
-    "b": 732.8312
+    "a": 734.8513,
+    "b": 733.7583
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 726.9624,
-    "b": 725.8079
+    "a": 728.1822,
+    "b": 726.9624
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-07-07",
-    "close": 708.6915,
-    "fast": 718.6555,
-    "slow": 718.8847,
-    "checks_passed": 0
-   },
    {
     "date": "2026-07-08",
     "close": 710.6995,
@@ -891,29 +884,34 @@
     "fast": 733.7583,
     "slow": 726.9624,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-09-30",
+    "close": 739.77,
+    "fast": 734.8513,
+    "slow": 728.1822,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 4,
+   "count": 15,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 55,
-   "count_is_floor": true,
+   "pool_count": 63,
+   "count_is_floor": false,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 4,
-    "ep_qullamaggie": 3,
-    "ll_hl_1st": 7,
-    "ll_hl_2nd": 13,
-    "ll_hl_trend_break": 9,
-    "liquid_leader_pullback": 26
+    "ep_stockbee": 3,
+    "ep_qullamaggie": 0,
+    "ll_hl_1st": 12,
+    "ll_hl_2nd": 10,
+    "ll_hl_trend_break": 21,
+    "liquid_leader_pullback": 23
    },
-   "capped_panels": [
-    "liquid_leader_pullback"
-   ],
+   "capped_panels": [],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -929,8 +927,36 @@
     "rs_rating": 99
    },
    {
+    "ticker": "MRNA",
+    "theme": "Genomics",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
+    "ticker": "TXG",
+    "theme": "Genomics",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
+    "ticker": "CDNA",
+    "theme": "Genomics",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
+    "ticker": "TWST",
+    "theme": "Genomics",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 99
+   },
+   {
     "ticker": "AXTI",
-    "theme": "Semiconductors Broad",
+    "theme": "Optics & Networking Equipment",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
@@ -951,42 +977,14 @@
    },
    {
     "ticker": "MXL",
-    "theme": "Semiconductors Broad",
+    "theme": "Optics & Networking Equipment",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
    },
    {
-    "ticker": "AEHR",
-    "theme": "Semiconductors Broad",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "AMD",
-    "theme": "Semiconductors Large Caps",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "ASX",
-    "theme": "Semiconductors Broad",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "STX",
-    "theme": "Memory & Storage",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 98
-   },
-   {
-    "ticker": "UMC",
-    "theme": "Semiconductors Broad",
+    "ticker": "GRAL",
+    "theme": "Genomics",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
@@ -994,9 +992,10 @@
   ],
   "leaders_meta": {
    "themes": [
+    "Genomics",
     "Memory & Storage",
+    "Optics & Networking Equipment",
     "Quantum Computing",
-    "Semiconductors Broad",
     "Semiconductors Large Caps"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
@@ -1006,7 +1005,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": -2
+   "score": -3
   }
  },
  "verdict": "avoid",

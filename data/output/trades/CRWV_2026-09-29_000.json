@@ -1,0 +1,206 @@
+{
+  "trade_id": "CRWV_2026-09-29_000",
+  "generated_at": "2026-10-01T00:01:39+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "CRWV",
+    "direction": "short",
+    "sector": "Unknown",
+    "entry_date": "2026-09-29",
+    "entry_price": 86.23,
+    "stop_price": 87.5,
+    "initial_stop": 88.2,
+    "closed": false,
+    "remaining_pct": 100.0,
+    "exit_date": null,
+    "hold_business_days": null,
+    "r_pct_of_entry": 2.284587730488228,
+    "realized_R": 0.0,
+    "trims": []
+  },
+  "entry_snapshot": {
+    "close": 85.07,
+    "open": 86.345,
+    "high": 88.2158,
+    "low": 83.53,
+    "volume": 18853819.0,
+    "ma20": 86.24199999999999,
+    "ma50": 86.0,
+    "ma200": 92.155175,
+    "rsi14": 47.8342521195773,
+    "atr14": 4.753699999999999,
+    "atr14_pct": 5.587986364170683,
+    "high_52w": 153.2,
+    "low_52w": 60.55,
+    "position_in_52w_range_pct": 26.465191581219642,
+    "high_20d": 104.59,
+    "low_10d": 78.27,
+    "low_5d": 83.53
+  },
+  "setup_type": "Short in mixed structure",
+  "path_analytics": {},
+  "lesson": "In progress",
+  "narrative": "Entered **CRWV** short on 2026-09-29 at $86.23 with stop $88.20 (currently trailed to $87.50) (1R = $1.97/sh = 2.3% of entry). Setup: **Short in mixed structure** \u2014 price below MA20 ($86.24), MA stack mixed, RSI 48, 26% through 52W range, ATR 5.6% of price. **In progress.**",
+  "ohlc_window": [
+    {
+      "date": "2026-08-31",
+      "open": 82.63,
+      "high": 85.23,
+      "low": 82.4,
+      "close": 84.89,
+      "volume": 13237900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 82.34,
+      "high": 82.81,
+      "low": 80.37,
+      "close": 81.85,
+      "volume": 15848700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 80.09,
+      "high": 82.53,
+      "low": 79.58,
+      "close": 80.93,
+      "volume": 15574700.0
+    },
+    {
+      "date": "2026-09-03",
+      "open": 80.12,
+      "high": 84.85,
+      "low": 79.03,
+      "close": 84.56,
+      "volume": 18798400.0
+    },
+    {
+      "date": "2026-09-04",
+      "open": 85.725,
+      "high": 89.63,
+      "low": 84.9,
+      "close": 89.36,
+      "volume": 20796900.0
+    },
+    {
+      "date": "2026-09-08",
+      "open": 92.95,
+      "high": 104.59,
+      "low": 92.88,
+      "close": 99.83,
+      "volume": 51191200.0
+    },
+    {
+      "date": "2026-09-09",
+      "open": 100.035,
+      "high": 100.581,
+      "low": 94.61,
+      "close": 94.94,
+      "volume": 22038800.0
+    },
+    {
+      "date": "2026-09-10",
+      "open": 89.91,
+      "high": 92.19,
+      "low": 88.73,
+      "close": 89.12,
+      "volume": 27867100.0
+    },
+    {
+      "date": "2026-09-11",
+      "open": 91.08,
+      "high": 91.99,
+      "low": 88.62,
+      "close": 88.99,
+      "volume": 17682400.0
+    },
+    {
+      "date": "2026-09-14",
+      "open": 82.65,
+      "high": 85.93,
+      "low": 82.08,
+      "close": 82.98,
+      "volume": 26522600.0
+    },
+    {
+      "date": "2026-09-15",
+      "open": 82.62,
+      "high": 83.86,
+      "low": 80.52,
+      "close": 80.92,
+      "volume": 15675200.0
+    },
+    {
+      "date": "2026-09-16",
+      "open": 83.75,
+      "high": 85.258,
+      "low": 81.157,
+      "close": 83.35,
+      "volume": 18787600.0
+    },
+    {
+      "date": "2026-09-17",
+      "open": 81.45,
+      "high": 82.43,
+      "low": 78.27,
+      "close": 79.88,
+      "volume": 79547300.0
+    },
+    {
+      "date": "2026-09-18",
+      "open": 79.83,
+      "high": 81.74,
+      "low": 79.16,
+      "close": 81.36,
+      "volume": 66370200.0
+    },
+    {
+      "date": "2026-09-21",
+      "open": 81.56,
+      "high": 87.25,
+      "low": 80.92,
+      "close": 85.43,
+      "volume": 39845100.0
+    },
+    {
+      "date": "2026-09-22",
+      "open": 85.71,
+      "high": 89.23,
+      "low": 84.6,
+      "close": 86.76,
+      "volume": 26584500.0
+    },
+    {
+      "date": "2026-09-23",
+      "open": 88.985,
+      "high": 90.36,
+      "low": 86.55,
+      "close": 86.9,
+      "volume": 31705100.0
+    },
+    {
+      "date": "2026-09-24",
+      "open": 88.905,
+      "high": 91.123,
+      "low": 85.936,
+      "close": 90.13,
+      "volume": 33748900.0
+    },
+    {
+      "date": "2026-09-25",
+      "open": 90.365,
+      "high": 90.91,
+      "low": 86.8,
+      "close": 87.59,
+      "volume": 23510500.0
+    },
+    {
+      "date": "2026-09-28",
+      "open": 86.345,
+      "high": 88.2158,
+      "low": 83.53,
+      "close": 85.07,
+      "volume": 18853819.0
+    }
+  ]
+}

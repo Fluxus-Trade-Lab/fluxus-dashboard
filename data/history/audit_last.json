@@ -1,52 +1,44 @@
 {
  "as_of_session": "2026-09-30",
- "ok": false,
- "violations": 3,
- "warnings": 3,
+ "ok": true,
+ "violations": 0,
+ "warnings": 0,
  "archives": [
   {
    "archive": "breadth_archive.csv",
-   "rows": 595,
-   "violations": [
-    "I5 newest session 2026-09-29 < last completed 2026-09-30"
-   ],
+   "rows": 596,
+   "violations": [],
    "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "ticker_events.csv",
-   "rows": 149861,
-   "violations": [
-    "I5 newest session 2026-09-29 < last completed 2026-09-30"
-   ],
+   "rows": 150763,
+   "violations": [],
    "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "watchlist_hits.csv",
-   "rows": 20833,
+   "rows": 21384,
    "violations": [],
-   "warnings": [
-    "I4 2026-09-30: 134 rows vs trailing median 622"
-   ],
+   "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "leaders_log.csv",
-   "rows": 5143,
+   "rows": 5272,
    "violations": [],
-   "warnings": [
-    "I4 2026-09-30: 30 rows vs trailing median 155"
-   ],
+   "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "groups_archive.csv",
-   "rows": 6870,
+   "rows": 6954,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -54,7 +46,7 @@
   },
   {
    "archive": "momentum97_shadow.csv",
-   "rows": 2034,
+   "rows": 2069,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -78,7 +70,7 @@
   },
   {
    "archive": "shortlist_log.csv",
-   "rows": 391,
+   "rows": 397,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -94,7 +86,7 @@
   },
   {
    "archive": "delayed_ep_log.csv",
-   "rows": 1502,
+   "rows": 1500,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -103,18 +95,14 @@
   {
    "archive": "reconcile(I6)",
    "rows": 0,
-   "violations": [
-    "I6b ticker_events newest session 2026-09-29 is not the session under audit 2026-09-30 -- today's screener payloads have no archive rows to reconcile against (the archive never got this session; see I5)"
-   ],
-   "warnings": [
-    "I6c breadth_archive newest session 2026-09-29 is not the session under audit 2026-09-30 -- universe.json describes a session this archive does not reach, so the two row counts are not comparable (see I5)"
-   ],
+   "violations": [],
+   "warnings": [],
    "drop_dates": [],
    "drop_dupes": 0
   },
   {
    "archive": "tickers(I7)",
-   "rows": 251,
+   "rows": 250,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
