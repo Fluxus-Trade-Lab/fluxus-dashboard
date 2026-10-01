@@ -10,7 +10,7 @@
 | 名字（新会话用 `claude -n "<名字>"` 启动） | 职责 | 文件边界（只在边界内写） | 分支习惯 |
 |---|---|---|---|
 | **UI Claire** | Dashboard 前端 UI | `frontend/`（`frontend/public/data/focus.json` 单独 gate=none，见下方裁决行）、`.claude/skills/focus-notes/**`、`data/research/screener_redesign/focus/**`（10-01 补，见下方裁决行） | `feat/*` 短分支，合并即删 |
-| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters\|constants\|portfolio\|themes/`、`pipeline/quality.py`（09-21 补 `constants/`、09-22 补 `portfolio/`、09-24 补 `themes/`+`quality.py`，见下方裁决行）、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
+| **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters\|constants\|portfolio\|themes/`、`pipeline/quality.py`、`pipeline/tools/failure_class.py`（09-21 补 `constants/`、09-22 补 `portfolio/`、09-24 补 `themes/`+`quality.py`、10-01 补 `failure_class.py`，见下方裁决行）、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
 | **Studio Q** | **课程线**（08-31 拆分后瘦身）：课程整理与设计、视频生成工作流、试读本 | 课程仓库（`~/Documents/SwingMasterclass`）、vault `FluxusTrading_Obsidian/20_Course/` | 成稿小改直推 main；大改 `feat/*` |
 | **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
@@ -38,6 +38,8 @@
 2. **`data/research/screener_redesign/focus/**` 从 DATA ALEX 边界切给 Claire**——与 T-0926-63 相反方向的同型切法：ALEX 只在 DATA_CONTRACTS §七 T-1001-06 说明该目录「可以继续留作逐日存档」，实际写者从来是 Claire 的每日班，不是 ALEX。切给实际写者避免两线共写同一路径（本页「同一条线同一时刻只有一个会话执笔」的跨线版）。`data/research/screener_redesign/` 其余内容（数据盘点表、设计调研 md/html）不受影响，仍归 ALEX；按「跨线≠跨授权」二选一的第①种，不要求 ALEX 会签，已开知悉单 T-1001-25。
 3. **`frontend/public/data/focus.json` 单独开 gate=none**——DATA ALEX T-1001-06 已定该文件写这里、不进 `data/output/`；但它在 `frontend/` 前缀下默认 gate=reviewer，而写者是无人值守的每日两班（08:15/10:15 JST），reviewer 闸的 Q2（改动前红改动后绿）对纯数据文件答不出，每天都会卡死。改法落在 fluxus-ops `tools/gate.py`（新增 `NONE_EXACT_PATHS` 精确路径，仅此一个文件，非 `frontend/public/data/**`），**不改本文件的白名单**——那需要 Andy 批且 Claire 是受益人不能自己提；gate.py 是实现层，ops 作为无利益冲突的裁决方直接做。
 同批裁决同步写在 fluxus-ops `agents/claire/ROLE.md`、`agents/alex/ROLE.md`；`schedule.json` 暂撤班次（存在 `agents/claire/memory/held_schedule_focus_notes.json`）第 5 步同步改路径。起因：T-1001-08 分支复核（branch-review）判 FAIL，Q3 文件边界。
+
+**[2026-10-01 ops 裁 · T-1001-66]** `pipeline/tools/failure_class.py`（分诊器，判断一班数据失败属于 A_infra/B_vendor/C_gate/D_code/E_truncated 哪一类）补进 DATA ALEX 边界——判例同 `constants/`（T-0921-70/71）、`portfolio/`（T-0922-46）、`themes/`+`quality.py`（T-0924-90/94）：此前不在任何人边界内是遗漏，不是新设（全仓只有 linda 登记了 `pipeline/tools/audit_*`，`failure_class.py` 没人登记）；ALEX 自己的 `ROLE.md` 职责节早把 `python3 -m pipeline.tools.failure_class --run-id <id>` 写成修法顺序第一步，却一直没有对应的写权。起因：T-1001-61（P0，按板块切分 Finviz 抓取绕过每查询 1000 行上限）在修复过程中一并补了分诊器第五类 `E_truncated`（旧判据 `tradeable_share` 对截断免疫，44.9% 与健康夜间一致，看不出宇宙只抓回 18%），复核判词 Q3 越界（P0 放行），已合并进 main（commit `fd591ab6f`）；本次只补齐边界，不追溯处理。同批裁决同步写在 fluxus-ops `agents/alex/ROLE.md`。
 
 ## 一条线可以有多个会话
 
