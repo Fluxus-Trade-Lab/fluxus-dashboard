@@ -638,6 +638,51 @@ def book_block(T: str, data: dict, period_start: Optional[str] = None) -> dict:
     return out
 
 
+# ------------------------------------------------------------------ freshness gate
+# breadth_block stops when T has no row; the other blocks filter archives by
+# date and quietly come back empty/None when T is missing. A recap built from
+# a half-written night (breadth landed, the rest didn't) would then print with
+# blank sections. This gate makes every T-keyed archive prove it has T before
+# the pack is written: T must have rows; fixed-roster archives must also keep
+# at least FRESH_FLOOR of P's row count (self-calibrated, no magic counts).
+# ticker_events / leaders_log are screener hits whose daily count swings
+# legitimately (ticker_events 2453 -> 1157 on 09-21), so only "has rows" applies.
+FRESH_FLOOR = 0.8
+FRESH_ARCHIVES = [  # (path, row filter beyond date, label, ratio-checked)
+    ("data/history/asset_signals.csv", None, "asset_signals", True),
+    ("data/history/groups_archive.csv", ("kind", "industry"), "groups_archive[industry]", True),
+    ("data/history/groups_archive.csv", ("kind", "theme"), "groups_archive[theme]", True),
+    ("data/history/ticker_events.csv", None, "ticker_events", False),
+    ("data/history/leaders_log.csv", None, "leaders_log", False),
+]
+
+
+def freshness_problems(T: str, P: str) -> list[str]:
+    probs = []
+    for path, flt, label, ratio in FRESH_ARCHIVES:
+        rows = csv_rows(path)
+        if flt:
+            rows = [r for r in rows if r.get(flt[0]) == flt[1]]
+        nT = sum(1 for r in rows if r["date"] == T)
+        nP = sum(1 for r in rows if r["date"] == P)
+        if nT == 0:
+            probs.append(f"{label}: no rows for {T} (P {P} has {nP})")
+        elif ratio and nP and nT < FRESH_FLOOR * nP:
+            probs.append(f"{label}: {T} has {nT} rows, < {FRESH_FLOOR:.0%} of {P}'s {nP}")
+    v, c = _verdicts()
+    if T not in v:
+        probs.append(f"breadth_replay.json verdicts: no entry for {T}")
+    if T not in c:
+        probs.append(f"breadth.json conditions.history: no entry for {T}")
+    return probs
+
+
+def freshness_gate(T: str, P: str) -> None:
+    probs = freshness_problems(T, P)
+    if probs:
+        raise SystemExit("recap data not fresh for " + T + ":\n  - " + "\n  - ".join(probs))
+
+
 # ------------------------------------------------------------------ main
 def _gas_blocks(pack: dict, T: str, period_start: Optional[str], weekly_monday: Optional[str]) -> None:
     try:
@@ -663,6 +708,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     if a.week:
         sessions = [d.isoformat() for d in week_sessions(a.week)]
         T, W0 = sessions[-1], prior_week_close(a.week).isoformat()
+        if not a.sample:
+            freshness_gate(T, prev_session(dt.date.fromisoformat(T)).isoformat())
         out_dir = pack_dir(a.week, a.sample)
         andy = andy_block(sessions)
         pack = {"kind": "weekly", "label": a.week, "sessions": sessions, "date": T, "prev_week_close": W0,
@@ -676,6 +723,8 @@ def main(argv: Optional[list[str]] = None) -> int:
             print(f"{a.date} is not an NYSE session", file=sys.stderr)
             return 2
         T, P = a.date, prev_session(d).isoformat()
+        if not a.sample:
+            freshness_gate(T, P)
         out_dir = pack_dir(T, a.sample)
         andy = andy_block([T])
         pack = {"kind": "daily", "label": T, "date": T, "prev_session": P, "weekday": d.strftime("%A"),
