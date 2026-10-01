@@ -1,4 +1,5 @@
 import { fmtCur } from '../portfolio/lib/portfolioFormat'
+import { freshness } from '../shared/dataFreshness'
 
 /**
  * Compact 7-stat horizontal strip below the header. AAOI-reference style.
@@ -9,6 +10,12 @@ import { fmtCur } from '../portfolio/lib/portfolioFormat'
 export default function TickerQuickStats({ tickerData, universe }) {
   const info = tickerData?.info || {}
   const u = universe || {}
+
+  // T-1001-04: a carried next_earnings date (vendor outage) must not render
+  // identically to a freshly-confirmed one -- same freshness() check used for
+  // session dates (dataFreshness.js), silent unless 2+ weekdays stale.
+  const nextErAsof = tickerData?.next_earnings_asof
+  const nextErStale = nextErAsof ? freshness(String(nextErAsof).slice(0, 10)) : null
 
   const stats = [
     ['Mkt Cap', formatMktCap(info.marketCap ?? u.market_cap)],
@@ -22,16 +29,24 @@ export default function TickerQuickStats({ tickerData, universe }) {
     ['ATR / %PX', formatAtrPx(u.atr, u.atr_pct)],
     ['Fwd P/S', formatRatio(info.priceToSalesTrailing12Months ?? info.priceToBook)],
     ['Fwd P/E', formatRatio(info.forwardPE)],
-    ['Next ER', formatNextER(tickerData?.next_earnings)],
+    ['Next ER', formatNextER(tickerData?.next_earnings), nextErStale],
   ]
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-4 mb-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-        {stats.map(([label, value]) => (
+        {stats.map(([label, value, stale]) => (
           <div key={label} className="flex flex-col">
             <span className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide">{label}</span>
             <span className="tabular-nums text-[13px] font-semibold">{value}</span>
+            {stale && (
+              <span
+                className="text-[11px] tabular-nums"
+                style={{ color: stale.level === 'alarm' ? 'var(--color-refused)' : 'var(--color-text-secondary)' }}
+                title={`Vendor outage carried this date forward -- last confirmed ${stale.date}.`}>
+                asof {stale.date.slice(5)}
+              </span>
+            )}
           </div>
         ))}
       </div>
