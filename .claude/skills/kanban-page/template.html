@@ -1,0 +1,319 @@
+<title>Fluxus 每日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* 深色为底（Andy 偏好深色版），浅色为第二主题。颜色只在 token 里定义。 */
+  :root{
+    color-scheme:dark;
+    --board:#0D0F14; --board2:#121620; --list:#171B24; --card:#1F2430; --card-h:#252B39;
+    --ink:#E8EAEF; --sub:#9AA0B0; --mute:#646B7D; --line:#2A3040;
+    --amb:#E0A458; --ambbg:#33281A; --ok:#5BBF8F; --okbg:#173025; --hot:#E8766C; --hotbg:#371C1A;
+    --blu:#7EA6E8; --blubg:#1B2638; --shadow:0 1px 0 rgba(0,0,0,.35),0 6px 18px -10px rgba(0,0,0,.6);
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Noto Sans SC',system-ui,-apple-system,'PingFang SC',sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      color-scheme:light;
+      --board:#EEF0F3; --board2:#E4E8EE; --list:#F7F8FA; --card:#FFFFFF; --card-h:#FBFBFC;
+      --ink:#1A1D24; --sub:#586072; --mute:#8A91A2; --line:#DCE0E7;
+      --amb:#9A6420; --ambbg:#FBF0DC; --ok:#2C7D57; --okbg:#E3F3EA; --hot:#B83F35; --hotbg:#FBE7E4;
+      --blu:#2F5DA8; --blubg:#E5EDF9; --shadow:0 1px 0 rgba(20,30,50,.06),0 6px 16px -10px rgba(20,30,50,.25);
+    }
+  }
+  :root[data-theme="light"]{
+    color-scheme:light;
+    --board:#EEF0F3; --board2:#E4E8EE; --list:#F7F8FA; --card:#FFFFFF; --card-h:#FBFBFC;
+    --ink:#1A1D24; --sub:#586072; --mute:#8A91A2; --line:#DCE0E7;
+    --amb:#9A6420; --ambbg:#FBF0DC; --ok:#2C7D57; --okbg:#E3F3EA; --hot:#B83F35; --hotbg:#FBE7E4;
+    --blu:#2F5DA8; --blubg:#E5EDF9; --shadow:0 1px 0 rgba(20,30,50,.06),0 6px 16px -10px rgba(20,30,50,.25);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 500px at 15% -10%,var(--board2),transparent 60%),var(--board);
+       color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100%}
+  .wrap{padding-inline:16px;padding-block:26px 56px;max-width:1360px;margin:0 auto}
+  .ic{width:15px;height:15px;stroke-width:2;flex:none}
+
+  /* 顶部 */
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mute);text-transform:uppercase}
+  h1{font-size:clamp(19px,2.6vw,25px);font-weight:900;line-height:1.35;margin:6px 0 0;text-wrap:balance;letter-spacing:-.01em;max-width:46ch}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 10px;border-radius:8px;background:var(--list);
+        border:1px solid var(--line);color:var(--sub);white-space:nowrap}
+  .chip b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .chip.hot{background:var(--hotbg);border-color:transparent;color:var(--hot)} .chip.hot b{color:var(--hot)}
+  .chip.ok{background:var(--okbg);border-color:transparent;color:var(--ok)} .chip.ok b{color:var(--ok)}
+  .status{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+
+  /* 看板 */
+  .board{display:grid;grid-template-columns:repeat(4,minmax(260px,1fr));gap:12px;align-items:start;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+  .list{background:var(--list);border:1px solid var(--line);border-radius:12px;padding:10px;scroll-snap-align:start;min-width:0}
+  .lh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 4px 10px}
+  .lh h2{margin:0;font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px}
+  .lh .n{font-family:var(--mono);font-size:11.5px;color:var(--mute);background:var(--card);border-radius:6px;padding:1px 7px;font-variant-numeric:tabular-nums}
+  .cards{display:flex;flex-direction:column;gap:8px}
+  .card{background:var(--card);border-radius:10px;padding:10px 12px 11px;box-shadow:var(--shadow);cursor:pointer;
+        border:1px solid transparent;text-align:left;width:100%;font:inherit;color:inherit;display:block;transition:background .12s,border-color .12s,transform .12s}
+  .card:hover{background:var(--card-h);border-color:var(--line)}
+  .card:focus-visible{outline:2px solid var(--blu);outline-offset:2px}
+  @media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-1px)}}
+  .labels{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+  .lb{font-size:11px;font-weight:600;padding:1px 8px;border-radius:5px;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+  .lb.hot{background:var(--hotbg);color:var(--hot)} .lb.amb{background:var(--ambbg);color:var(--amb)}
+  .lb.ok{background:var(--okbg);color:var(--ok)} .lb.blu{background:var(--blubg);color:var(--blu)}
+  .ct{font-size:14px;font-weight:600;line-height:1.45;text-wrap:pretty}
+  .cd{font-size:12.5px;color:var(--sub);margin-top:5px;line-height:1.55}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px;color:var(--mute);font-size:12px}
+  .foot .meta{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:11px}
+  .foot .meta span{display:inline-flex;align-items:center;gap:4px}
+  .ask{display:inline-flex;margin-top:8px;font-family:var(--mono);font-size:11.5px;color:var(--amb);background:var(--ambbg);border-radius:6px;padding:2px 8px}
+  .reply{font:inherit;font-size:12px;display:inline-flex;align-items:center;gap:5px;color:var(--ink);background:var(--board2);
+         border:1px solid var(--line);border-radius:7px;padding:3px 9px;cursor:pointer}
+  .reply:hover{border-color:var(--sub)}
+  .reply[hidden]{display:none!important}
+  .bar{height:6px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:9px}
+  .bar i{display:block;height:100%;background:var(--ok);border-radius:4px}
+  .metric{display:flex;align-items:baseline;gap:6px;margin-top:8px;font-size:12.5px;color:var(--sub)}
+  .metric b{font-size:18px;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700}
+  .metric.na{font-size:12px;color:var(--mute)}
+  .ag{display:grid;grid-template-columns:56px 1fr auto;gap:8px;align-items:center;padding:4px 0;font-size:12.5px}
+  .ag .nm{font-family:var(--mono);color:var(--sub)}
+  .ag .tr{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line)}
+  .ag .tr .d{background:var(--ok)} .ag .tr .b{background:var(--hot)}
+  .ag .num{font-family:var(--mono);font-size:11.5px;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .legend{display:flex;gap:12px;font-size:11.5px;color:var(--mute);margin-top:8px}
+  .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:0}
+  .empty{font-size:12.5px;color:var(--mute);padding:8px 4px}
+
+  /* 卡背 */
+  dialog{border:1px solid var(--line);border-radius:14px;background:var(--list);color:var(--ink);padding:0;width:min(560px,calc(100vw - 32px));box-shadow:0 30px 80px -20px rgba(0,0,0,.6)}
+  dialog::backdrop{background:rgba(5,7,12,.55)}
+  .dh{display:flex;justify-content:space-between;gap:12px;padding:18px 20px 6px}
+  .dh h3{margin:0;font-size:17px;line-height:1.4;text-wrap:balance}
+  .x{background:none;border:0;color:var(--sub);cursor:pointer;padding:4px;border-radius:6px}
+  .x:hover{color:var(--ink);background:var(--card)}
+  .db{padding:4px 20px 20px}
+  .db p{margin:8px 0;font-size:13.5px;color:var(--sub);line-height:1.65}
+  .db .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;margin-top:14px}
+  .mn{font-family:var(--mono);font-size:12px;word-break:break-all}
+  a{color:var(--blu)}
+
+  details.src{margin-top:26px;background:var(--list);border:1px solid var(--line);border-radius:12px}
+  details.src summary{cursor:pointer;padding:12px 16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--sub);list-style:none}
+  details.src summary::-webkit-details-marker{display:none}
+  details.src[open] summary{border-bottom:1px solid var(--line)}
+  details.src ul{margin:0;padding:10px 16px 14px 32px}
+  details.src li{font-size:12.5px;color:var(--sub);margin:5px 0;line-height:1.6}
+  footer{font-family:var(--mono);font-size:10.5px;color:var(--mute);margin-top:22px;line-height:1.9}
+
+  @media (max-width:1100px){.board{grid-template-columns:repeat(4,minmax(272px,82vw))}}
+</style>
+
+<!-- 每日班只替换这一块 JSON；页面其余部分不动。 -->
+<script type="application/json" id="data">
+{
+  "date": "2026-10-01",
+  "eyebrow": "FLUXUS 每日 · 2026-10-01 周四 10:21 JST（ET 09-30 周三 21:21）",
+  "tag": "开卖第七天",
+  "headline": "营销过期一天，本周还是 0 件。dashboard 今早迟到 32 分钟。",
+  "status": [
+    {"icon":"activity","label":"守护进程","value":"在动 · 满档","tone":"ok"},
+    {"icon":"gauge","label":"本周额度","value":"18%","tone":"ok"},
+    {"icon":"database","label":"Dashboard","value":"迟到 32 分","tone":"hot"},
+    {"icon":"hourglass","label":"最慢领取","value":"59 小时","tone":"hot"}
+  ],
+  "decide": [
+    {"id":"T-0921-07","title":"两套 theme 口径：给几条读数，Alex 逐条判对错","prio":"P1","days":10,
+     "desc":"groups.json 走二阶加速度，theme_ladder.json 走一阶动量，两套口径和各自喂哪几页都已落 main。就差你点 ticker、日期、哪一页。",
+     "ask":"给几个 ticker + 日期",
+     "check":"10-01 10:21 核：main 上带这个单号的提交仍只有 9532b2c7（口径文档），任务正文仍写「Andy 尚未给出具体项」——还在等你。"},
+    {"id":"T-0925-94","title":"Whop OAuth app：要你的后台权限","prio":"P2","days":5,
+     "desc":"注册 OAuth app、填 Vercel 两个环境变量，都要你的账号，AI 登不进去。redirect 填 https://fluxus-dashboard.vercel.app/，不带路径。",
+     "ask":"你做 / 代填",
+     "check":"10-01 10:21 核：线上 bundle index-BiyUotqU.js 里「会员登录配置中」仍命中 1 次——登录按钮还是灰的，没人填过。"}
+  ],
+  "projects": [
+    {"name":"课程","days_left":-6,"done":21,"open":1,"metric":{"name":"首周付费人数","na":"列 course_first_week_paid 还没建"},
+     "link":{"text":"课程进度页","href":"https://claude.ai/artifact/RPSokvUnub38CCttkFkvbk"}},
+    {"name":"dashboard 会员化 / 会员增长","days_left":91,"done":4,"open":0,"metric":{"name":"付费会员数","value":"18","as_of":"09-28"}},
+    {"name":"市场营销","days_left":-1,"done":18,"open":0,"metric":{"name":"本周发布件数","value":"0","as_of":"10-01"}}
+  ],
+  "today": [
+    {"icon":"database","title":"Dashboard 比 08:30 死线晚了 32 分钟","tone":"hot",
+     "desc":"09-30 周三那批数据 09:02 JST 进站。守护进程把这批记成 10-01，自己判的是「按时」；按交易日算是迟到。",
+     "detail":"landed_at 2026-10-01T09:02+09:00；json 的 data_date 写 10-01（UTC 日期），交易日按 breadth_archive.csv 末行是 09-30，死线因此是 10-01 08:30 JST。数据 commit 3ec38348。"},
+    {"icon":"activity","title":"守护进程在动，额度本周用掉 18%","tone":"ok",
+     "desc":"满档运行，心跳 1 分钟前。5 小时那格额度读数缺。",
+     "detail":"tier=full · tier_source=plan · plan_week_pct 18.0（00:01 UTC 取）· plan_5h_pct=null。"},
+    {"icon":"hourglass","title":"昨天最慢的一件活等了 59 小时才有人接","tone":"hot",
+     "desc":"派出去到被领走之间的空档。另有滞留分支 3 条，跟进单超 48 小时没人处理。",
+     "detail":"slowest_claim_min_yesterday 3535 分钟。"}
+  ],
+  "agents_date": "09-30",
+  "agents": [
+    {"agent":"steve","done":39,"blocked":6},{"agent":"alex","done":16,"blocked":3},{"agent":"ops","done":7,"blocked":12},
+    {"agent":"linda","done":2,"blocked":1},{"agent":"claire","done":1,"blocked":1},{"agent":"gary","done":0,"blocked":1},
+    {"agent":"mia","done":0,"blocked":1},{"agent":"q","done":0,"blocked":1},{"agent":"vera","done":0,"blocked":0}
+  ],
+  "sources": [
+    "看板全部数字：~/Documents/fluxus-ops/state/dailypage.json（10:08 JST 生成，心跳 age 1 分钟）。",
+    "项目指标：data/growth/metrics.csv（whop_members、course_first_week_paid）· data/content/posts.csv（按 ISO 周计数）。",
+    "等你拍板：status=needs_andy 共 5 件；T-0927-83（x_heat）已由 a2e1e3ee 结案（你 10-01 的原话「B，数据端接手」）；T-0926-72、T-0922-03 是 agent 内务，不上页。",
+    "结构照 .claude/skills/daily-page/SKILL.md，中文过 fable-voice 七病自查。"
+  ]
+}
+</script>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="headline"></h1>
+    </div>
+    <div class="tags"><span class="chip" id="tag"></span></div>
+  </div>
+  <div class="status" id="status"></div>
+
+  <div class="board" id="board">
+    <section class="list" aria-labelledby="l1"><div class="lh"><h2 id="l1"><i data-lucide="gavel" class="ic"></i>等你拍板</h2><span class="n" id="n1"></span></div><div class="cards" id="c1"></div></section>
+    <section class="list" aria-labelledby="l2"><div class="lh"><h2 id="l2"><i data-lucide="folder-kanban" class="ic"></i>项目</h2><span class="n" id="n2"></span></div><div class="cards" id="c2"></div></section>
+    <section class="list" aria-labelledby="l3"><div class="lh"><h2 id="l3"><i data-lucide="radar" class="ic"></i>今天的系统</h2><span class="n" id="n3"></span></div><div class="cards" id="c3"></div></section>
+    <section class="list" aria-labelledby="l4"><div class="lh"><h2 id="l4"><i data-lucide="users" class="ic"></i>各线昨天</h2><span class="n" id="n4"></span></div><div class="cards" id="c4"></div></section>
+  </div>
+
+  <details class="src"><summary>数字出处</summary><ul id="sources"></ul></details>
+  <footer>每日覆盖本页，链接不变 · 点卡片看全文 · 「回话」直接在卡片上留言，或划词批注</footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlg-t">
+  <div class="dh"><h3 id="dlg-t"></h3><button class="x" id="dlg-x" aria-label="关闭"><i data-lucide="x" class="ic"></i></button></div>
+  <div class="db" id="dlg-b"></div>
+</dialog>
+
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var $ = function(id){ return document.getElementById(id); };
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function icon(name){ var i=document.createElement('i'); i.setAttribute('data-lucide',name); i.className='ic'; return i; }
+
+  $('eyebrow').textContent = D.eyebrow;
+  $('headline').textContent = D.headline;
+  $('tag').textContent = D.tag;
+
+  D.status.forEach(function(s){
+    var c=el('span','chip'+(s.tone?' '+s.tone:'')); c.appendChild(icon(s.icon));
+    c.appendChild(document.createTextNode(s.label+' ')); c.appendChild(el('b',null,s.value)); $('status').appendChild(c);
+  });
+
+  // 卡背
+  var dlg=$('dlg');
+  function openBack(title, parts){
+    $('dlg-t').textContent=title; var b=$('dlg-b'); b.textContent='';
+    parts.forEach(function(p){
+      if(p.k){ b.appendChild(el('div','k',p.k)); }
+      if(p.t){ b.appendChild(el('p',null,p.t)); }
+      if(p.a){ var pa=el('p'); var a=el('a',null,p.a.text); a.href=p.a.href; a.target='_blank'; a.rel='noopener'; pa.appendChild(a); b.appendChild(pa); }
+    });
+    if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+    paintIcons();
+  }
+  $('dlg-x').addEventListener('click',function(){ dlg.close(); });
+  dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+
+  function card(onOpen){
+    var c=el('div','card'); c.tabIndex=0; c.setAttribute('role','button');
+    c.addEventListener('click',function(e){ if(e.target.closest('.reply')||e.target.closest('a')) return; onOpen(); });
+    c.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ') && e.target===c){ e.preventDefault(); onOpen(); } });
+    return c;
+  }
+
+  // 列 1：等你拍板
+  $('n1').textContent=D.decide.length;
+  if(!D.decide.length){ $('c1').appendChild(el('div','empty','今天没有要你拍板的。')); }
+  D.decide.forEach(function(t){
+    var c=card(function(){ openBack(t.title,[{t:t.desc},{k:'要你回的',t:t.ask},{k:'今早现场核',t:t.check},{k:'单号',t:t.id}]); });
+    var lb=el('div','labels'); lb.appendChild(el('span','lb '+(t.prio==='P0'||t.prio==='P1'?'hot':'amb'),t.prio));
+    lb.appendChild(el('span','lb '+(t.days>=7?'hot':'amb'),'挂 '+t.days+' 天')); c.appendChild(lb);
+    c.appendChild(el('div','ct',t.title));
+    c.appendChild(el('div','ask',t.ask));
+    var f=el('div','foot'); var m=el('div','meta'); var s=el('span'); s.appendChild(icon('hash')); s.appendChild(document.createTextNode(t.id)); m.appendChild(s); f.appendChild(m);
+    var r=el('button','reply'); r.type='button'; r.hidden=true; r.appendChild(icon('message-square')); r.appendChild(document.createTextNode('回话'));
+    r.addEventListener('click',function(){ reply(c); }); f.appendChild(r); c.appendChild(f);
+    $('c1').appendChild(c);
+  });
+
+  // 列 2：项目
+  $('n2').textContent=D.projects.length;
+  D.projects.forEach(function(p){
+    var total=p.done+p.open, pct=total?Math.round(p.done/total*100):0;
+    var due = p.days_left<0 ? '截止日过了 '+(-p.days_left)+' 天' : '还剩 '+p.days_left+' 天';
+    var c=card(function(){
+      var parts=[{t:due+' · 做完 '+p.done+' 件，在做 '+p.open+' 件。'}];
+      parts.push({k:p.metric.name, t:p.metric.na ? '读不到：'+p.metric.na : p.metric.value+'（截至 '+p.metric.as_of+'）'});
+      if(p.link) parts.push({a:p.link});
+      openBack(p.name, parts);
+    });
+    var lb=el('div','labels'); lb.appendChild(el('span','lb '+(p.days_left<0?'hot':(p.days_left<14?'amb':'ok')),due)); c.appendChild(lb);
+    c.appendChild(el('div','ct',p.name));
+    if(p.metric.na){ c.appendChild(el('div','metric na',p.metric.name+'：读不到')); }
+    else { var mt=el('div','metric'); mt.appendChild(el('b',null,p.metric.value)); mt.appendChild(document.createTextNode(p.metric.name+' · 截至 '+p.metric.as_of)); c.appendChild(mt); }
+    var bar=el('div','bar'); var i=el('i'); i.style.width=pct+'%'; bar.appendChild(i); c.appendChild(bar);
+    var f=el('div','foot'); var m=el('div','meta'); var s=el('span'); s.appendChild(icon('check-square')); s.appendChild(document.createTextNode(p.done+'/'+total)); m.appendChild(s); f.appendChild(m);
+    if(p.link){ var a=el('a',null,p.link.text); a.href=p.link.href; a.target='_blank'; a.rel='noopener'; f.appendChild(a); }
+    c.appendChild(f); $('c2').appendChild(c);
+  });
+
+  // 列 3：今天的系统
+  $('n3').textContent=D.today.length;
+  D.today.forEach(function(t){
+    var c=card(function(){ openBack(t.title,[{t:t.desc},{k:'读数',t:t.detail}]); });
+    var lb=el('div','labels'); var l=el('span','lb '+(t.tone==='hot'?'hot':'ok'),t.tone==='hot'?'要注意':'正常'); lb.appendChild(l); c.appendChild(lb);
+    var ct=el('div','ct'); ct.textContent=t.title; c.appendChild(ct);
+    c.appendChild(el('div','cd',t.desc));
+    $('c3').appendChild(c);
+  });
+
+  // 列 4：各线昨天
+  var done=D.agents.reduce(function(a,x){return a+x.done},0), blk=D.agents.reduce(function(a,x){return a+x.blocked},0);
+  $('n4').textContent=D.agents_date;
+  var max=Math.max.apply(null,D.agents.map(function(a){return a.done+a.blocked}))||1;
+  var c4=card(function(){
+    openBack('各线昨天（'+D.agents_date+'）',[{t:'做完 '+done+' 件，卡住 '+blk+' 件。'}].concat(D.agents.map(function(a){return {t:a.agent+'：做完 '+a.done+' · 卡住 '+a.blocked};})));
+  });
+  var lb4=el('div','labels'); lb4.appendChild(el('span','lb ok','做完 '+done)); lb4.appendChild(el('span','lb hot','卡住 '+blk)); c4.appendChild(lb4);
+  D.agents.slice().sort(function(a,b){return (b.done+b.blocked)-(a.done+a.blocked)}).forEach(function(a){
+    var r=el('div','ag'); r.appendChild(el('span','nm',a.agent));
+    var tr=el('div','tr'); var d=el('span','d'); d.style.width=(a.done/max*100)+'%'; var b=el('span','b'); b.style.width=(a.blocked/max*100)+'%';
+    tr.appendChild(d); tr.appendChild(b); r.appendChild(tr);
+    r.appendChild(el('span','num',a.done+' / '+a.blocked)); c4.appendChild(r);
+  });
+  var lg=el('div','legend'); var g1=el('span'); var i1=el('i'); i1.style.background='var(--ok)'; g1.appendChild(i1); g1.appendChild(document.createTextNode('做完'));
+  var g2=el('span'); var i2=el('i'); i2.style.background='var(--hot)'; g2.appendChild(i2); g2.appendChild(document.createTextNode('卡住')); lg.appendChild(g1); lg.appendChild(g2); c4.appendChild(lg);
+  $('c4').appendChild(c4);
+
+  D.sources.forEach(function(s){ $('sources').appendChild(el('li',null,s)); });
+
+  function paintIcons(){ try{ if(window.lucide) lucide.createIcons(); }catch(e){} }
+  paintIcons();
+
+  // 回话：打开评论框，锚在这张卡上（Andy 的回话＝这条评论，班次读评论当回执）
+  var comments=null;
+  function reply(cardEl){
+    if(!comments) return;
+    comments.openComposer({element:cardEl}).catch(function(e){
+      if(e && (e.code==='unavailable'||e.code==='not_granted'||e.code==='capability_disabled'||e.code==='capability_removed')){
+        [].forEach.call(document.querySelectorAll('.reply'),function(b){ b.hidden=true; });
+      }
+    });
+  }
+  if(window.claude && claude.use){
+    claude.use('comments').then(function(c){
+      if(!c) return; comments=c;
+      [].forEach.call(document.querySelectorAll('.reply'),function(b){ b.hidden=false; });
+    }).catch(function(){});
+  }
+})();
+</script>

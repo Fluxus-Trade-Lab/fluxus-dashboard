@@ -1,10 +1,10 @@
 ---
 name: daily-page
-description: 老板每日页——给 Andy 出一份纯业务语言的页面（固定 Artifact URL，republish 到同一个链接），数据来自 ~/Documents/fluxus-ops/state/dailypage.json。凡任务 type=daily_page、或有人说「出每日页 / 老板早报 / 今天的牌面 / 更新那个每日链接 / 我今天要拍板什么」都用本 skill；四行 + 等你拍板一节，fable-voice 七病自查、送达自核、降级不顶替缺一不可。
+description: 老板每日页——给 Andy 出一份纯业务语言的页面（固定 Artifact URL，republish 到同一个链接），数据来自 ~/Documents/fluxus-ops/state/dailypage.json。凡任务 type=daily_page、或有人说「出每日页 / 老板早报 / 今天的牌面 / 更新那个每日链接 / 我今天要拍板什么」都用本 skill；看板形态（skill kanban-page，Andy 10-01 定为默认标准），fable-voice 七病自查、送达自核、降级不顶替缺一不可。
 owner: ops
 ---
 
-# daily-page — 四行，加一节「等你拍板」
+# daily-page — 看板：四行变状态条＋四列，「等你拍板」是第一列
 
 ⛔ 产出不是对话文字，是**一个固定链接的页面**：用 Artifact 工具、**带 `url` 参数 republish**（先 `action:"read"` 那个 url，再 publish 同一个 url；conflict 用 `force:true`——此页是每日重生快照）。**不带 url 的 publish 会新建一个链接，Andy 收藏的那个就停了。**
 
@@ -62,17 +62,28 @@ v2 起，本页的数据**只从这一个文件来**（由任务板工具生成�
 
 读不到 `dailypage.json`，或某一节缺：**写明「读不到」，不拿昨天的顶替**。「等你拍板」为空是合法的，照实写一句「今天没有要你拍板的」。
 
-## 页面结构（HTML 深色，沿用现版骨架——先 `Artifact action:"read"` 看一眼线上现状再重建）
+## 页面结构＝看板（Andy 2026-10-01：「完美，这个以后是默认标准了」）
 
-1. 顶部四行
-2. 等你拍板（≤5）
-3. 怎么回话（页面划词批注即可）
+**先读 `.claude/skills/kanban-page/SKILL.md`。** 模板就是 `.claude/skills/kanban-page/template.html`——它本身就是 Fluxus 每日的看板版。
+每天的动作只有一个：**替换模板里 `<script type="application/json" id="data">` 那一块**，其余一个字不动，然后带 url republish。
 
-**结论与判据必须在页面上就完整**，链接只承载明细。`.md` 是机器读的耐久处，不是给 Andy 的交付形态。
+上面「四行 + 等你拍板」的内容不变，只是换了摆法：
+
+| 原来 | 看板里 | JSON 字段 |
+|---|---|---|
+| 一句话结论 | h1 | `headline` |
+| 行 1 心跳 / 行 2 dashboard | 顶部状态 chip（+「今天的系统」列各一张卡，卡背放读数） | `status[]` · `today[]` |
+| 行 3 项目 | 「项目」列，一个项目一张卡（截止标签、进度条、指标） | `projects[]` |
+| 行 4 agent 昨日 | 「各线昨天」列，一张卡内每条线一根横条 | `agents[]` · `agents_date` |
+| 等你拍板（≤5） | 第一列，每件一张卡：优先级/挂几天标签 · 一句话 · 要他回的那句 · 卡背放现场核依据 | `decide[]` |
+| 数字出处 | 底部折叠 | `sources[]` |
+
+- 发布：`Artifact action:"read"` 固定 url → `publish url:<同上>`。**不要传 `capabilities`**（省略＝沿用已存的 `comments composer_only`，「回话」按钮靠它）。
+- 「回话」：Andy 在卡片上留的评论就是回执——开工先 `ArtifactComments read` 这个 url，评论与任务板冲突时评论赢，照办后在汇报里写「Andy <时刻> 评论：『原话』」。
 
 ## ⛔ Gate（三件，缺一件不算完）
 
-1. **送达自核**：publish 之后用 `Artifact action:"list"` 核「Fluxus 每日」的 updated 是今天；不是就写「未送达」。
+1. **送达自核**：publish 之后用 `Artifact action:"list"` 核「Fluxus 每日」的 updated 是今天；不是就写「未送达」。JSON 块必须 `json.loads` 得过（发布前跑一次）。
 2. **数字出处**：页脚折叠块列权威源路径。
 3. **降级诚实**：源读不到写明不顶替；四行里有三行读不到就只出「等你拍板」并标「本期降级」。
 
