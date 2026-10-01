@@ -141,10 +141,28 @@ class Workspace:
     mutant that had been flipping has a byte delta of exactly 0 from its
     predecessor. Turn the flag off and the instrument starts lying again."""
 
+    def __init__(self, module, repo=None):
+        self.module = module
+        self.repo = repo or ROOT
+
     def __enter__(self):
         self.dir = Path(tempfile.mkdtemp(prefix="mutsweep-"))
         shutil.copytree(ROOT / "pipeline", self.dir / "pipeline")
         (self.dir / "data").symlink_to(ROOT / "data")
+        # The commit and dirty-state of the GUARD are read here, at the instant
+        # its source is copied into the workspace -- not after the sweep runs,
+        # which can be minutes later. `record()` used to ask git for both at
+        # the END of the sweep, which means a commit landing mid-sweep gets
+        # credited with bytes it never contained: T-1002-10's review caught a
+        # reading filed at a timestamp that postdated its own recorded commit
+        # by the time a 44-mutant sweep takes to run. What is measured is
+        # whatever this copytree just captured, so that is also when the git
+        # state describing it has to be read.
+        _, head = _git(["rev-parse", "HEAD"], self.repo)
+        _, dirty = _git(["status", "--porcelain", "--", *guard_paths(self.module)],
+                        self.repo)
+        self.commit = head.strip() or None
+        self.uncommitted = sorted(ln[3:].strip() for ln in dirty.splitlines() if ln.strip())
         # .github is COPIED, not symlinked: it is small, and a guard's tests
         # reading it must not be able to write through to the real repo. Left
         # out entirely (until 2026-09-21) it made audit_schedule_windows --
@@ -222,7 +240,7 @@ def sweep(module, verbose=True, repeat=1, index_from=0, index_to=None):
     hi = len(cands) if index_to is None else min(index_to, len(cands))
 
     survivors, unstable, killed, errored, timed_out = [], [], 0, 0, 0
-    with Workspace() as ws:
+    with Workspace(module) as ws:
         mod_path = ws.module_path(module)
         if ws.run_tests(module)[0] is not True:
             return {"module": module, "error": "baseline is already red; refusing to sweep"}
@@ -271,7 +289,8 @@ def sweep(module, verbose=True, repeat=1, index_from=0, index_to=None):
             "unstable": len(unstable), "no_verdict": timed_out, "repeat": repeat,
             "total_sites": len(cands), "index_from": lo, "index_to": hi,
             "kill_rate": round(killed / total, 3) if total else None,
-            "survivors": survivors, "unstable_mutants": unstable}
+            "survivors": survivors, "unstable_mutants": unstable,
+            "commit": ws.commit, "uncommitted": ws.uncommitted}
 
 
 def main(argv=None):
@@ -491,7 +510,17 @@ def record(result, repo=None, path=None, now=None):
     only -- writing it under the module's name would publish `12/13 = 92%` as
     the guard's score. Only `[0, total_sites)` is recorded; partial sweeps are
     refused so the merged numbers have to be assembled before they can be
-    filed, which is exactly the step that makes them true."""
+    filed, which is exactly the step that makes them true.
+
+    The commit and uncommitted-files fields are NOT read here. They come
+    straight from `result`, which `sweep()` filled in from `Workspace.__enter__`
+    at the moment the guard's source was copied into the throwaway tree --
+    i.e. the instant the measured bytes were fixed. Asking git again here,
+    after the sweep has run, reads the commit as of NOW instead of as of
+    WHEN IT WAS MEASURED: a sweep takes minutes, and a commit landing
+    mid-sweep used to get silently credited with a reading of bytes it never
+    contained (T-1002-10's review, caught via a `measured_at` that postdated
+    its own recorded commit)."""
     repo = repo or ROOT
     if result.get("error") or result.get("kill_rate") is None:
         return None
@@ -499,8 +528,6 @@ def record(result, repo=None, path=None, now=None):
         return None
 
     module = result["module"]
-    _, head = _git(["rev-parse", "HEAD"], repo)
-    _, dirty = _git(["status", "--porcelain", "--", *guard_paths(module)], repo)
     entry = {
         "killed": result["killed"],
         "mutants": result["mutants"],
@@ -509,8 +536,8 @@ def record(result, repo=None, path=None, now=None):
         "kill_rate": result["kill_rate"],
         "total_sites": result["total_sites"],
         "repeat": result.get("repeat", 1),
-        "commit": head.strip() or None,
-        "uncommitted": sorted(ln[3:].strip() for ln in dirty.splitlines() if ln.strip()),
+        "commit": result.get("commit"),
+        "uncommitted": result.get("uncommitted", []),
         "measured_at": now or time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
     p = path or ledger_path(repo)
