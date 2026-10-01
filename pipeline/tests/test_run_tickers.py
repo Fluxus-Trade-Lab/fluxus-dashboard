@@ -183,6 +183,7 @@ class TestPortfolioTickersFromSheet:
         from pipeline.portfolio.sheets_source import SheetsUnavailable
         def boom(): raise SheetsUnavailable("no env")
         monkeypatch.setattr(RT, "_sheet_trades", boom)
+        assert RT.relevant_tickers_from_sheet(90) is None
 
 
 class TestRunEarningsHistoryEmptySummary:
@@ -233,4 +234,3 @@ class TestRunEarningsHistoryEmptySummary:
             summary = RT.run(tickers, tmp_path, sleep_between=0)
         assert summary['earnings_history_empty'] == ["AAA"]
         assert not any("earnings_history empty" in r.message for r in caplog.records)
-        assert RT.relevant_tickers_from_sheet(90) is None
