@@ -1,7 +1,44 @@
 {
-  "timestamp": "2026-09-30T23:37:53.382812+00:00",
-  "count": 0,
-  "tickers": [],
+  "timestamp": "2026-10-01T22:05:05.604272+00:00",
+  "count": 3,
+  "tickers": [
+    {
+      "ticker": "ACN",
+      "gap_pct": 0.1778,
+      "change_pct": 0.1578,
+      "volume": 28978115.0,
+      "vol_x_avg50": 4.98,
+      "rel_volume": 4.36,
+      "market_cap": 129919999999.99998,
+      "sector": "Technology",
+      "atr_ext": 4.14,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "VICR",
+      "gap_pct": 0.1421,
+      "change_pct": 0.068,
+      "volume": 1464130.0,
+      "vol_x_avg50": 1.7,
+      "rel_volume": 1.6,
+      "market_cap": 14230000000.0,
+      "sector": "Technology",
+      "atr_ext": 6.82,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "EFXT",
+      "gap_pct": 0.1299,
+      "change_pct": 0.1163,
+      "volume": 2093982.0,
+      "vol_x_avg50": 3.15,
+      "rel_volume": 3.09,
+      "market_cap": 3110000000.0,
+      "sector": "Energy",
+      "atr_ext": 3.95,
+      "atr_color": "green"
+    }
+  ],
   "definition": "Qullamaggie 'How to master a setup: Episodic Pivots': gap up of 10% or more + massive volume near the open (volume >= 1 ADV on the day = necessary part only)",
   "unmeasured": "volume timing -- 'trade the average daily volume the first 15-20 minutes' needs intraday bars; list is a superset of his EPs"
 }

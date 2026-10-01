@@ -1,6 +1,6 @@
 {
   "trade_id": "CRWV_2026-09-29_000",
-  "generated_at": "2026-10-01T00:01:39+00:00",
+  "generated_at": "2026-10-01T22:26:23+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "CRWV",
@@ -10,13 +10,20 @@
     "entry_price": 86.23,
     "stop_price": 87.5,
     "initial_stop": 88.2,
-    "closed": false,
-    "remaining_pct": 100.0,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "remaining_pct": 0.0,
+    "exit_date": "2026-09-30",
+    "hold_business_days": 1,
     "r_pct_of_entry": 2.284587730488228,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_R": -0.6446700507614197,
+    "trims": [
+      {
+        "date": "2026-09-30",
+        "price": 87.5,
+        "pct_of_position": 100.0,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 85.07,
@@ -39,8 +46,8 @@
   },
   "setup_type": "Short in mixed structure",
   "path_analytics": {},
-  "lesson": "In progress",
-  "narrative": "Entered **CRWV** short on 2026-09-29 at $86.23 with stop $88.20 (currently trailed to $87.50) (1R = $1.97/sh = 2.3% of entry). Setup: **Short in mixed structure** \u2014 price below MA20 ($86.24), MA stack mixed, RSI 48, 26% through 52W range, ATR 5.6% of price. **In progress.**",
+  "lesson": "Insufficient data",
+  "narrative": "Entered **CRWV** short on 2026-09-29 at $86.23 with stop $88.20 (currently trailed to $87.50) (1R = $1.97/sh = 2.3% of entry). Setup: **Short in mixed structure** \u2014 price below MA20 ($86.24), MA stack mixed, RSI 48, 26% through 52W range, ATR 5.6% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-08-31",

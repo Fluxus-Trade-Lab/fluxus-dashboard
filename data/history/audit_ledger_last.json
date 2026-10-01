@@ -1,53 +1,22 @@
 {
- "as_of_session": "2026-09-30",
+ "as_of_session": "2026-10-01",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 58,
+ "lines": 59,
  "runs": [
   {
-   "session": "2026-09-30",
-   "code_sha": "aa814e9",
+   "session": "2026-10-01",
+   "code_sha": "bd1523d",
    "trigger": "workflow_dispatch",
    "violations": [],
    "warnings": [
-    "L2 breadth stale (universe_size 1000 < 1500)",
-    "L2 ticker_events stale (only 68 rows total (< 100))",
-    "L2 no_downgrade no-baseline (stored copy is session 2026-09-29, candidate is 2026-09-30 -- a different day is the market moving, not the pipeline)"
+    "L2 no_downgrade no-baseline (stored copy is session 2026-09-30, candidate is 2026-10-01 -- a different day is the market moving, not the pipeline)"
    ],
-   "fund_fail_rate": 0.0,
-   "universe_rows": 1000,
-   "superseded": true
-  },
-  {
-   "session": "2026-09-30",
-   "code_sha": "6f082d5",
-   "trigger": "workflow_dispatch",
-   "violations": [],
-   "warnings": [
-    "L2 breadth stale (universe_size 1000 < 1500)",
-    "L2 ticker_events stale (only 68 rows total (< 100))",
-    "L2 no_downgrade no-baseline (stored copy is session 2026-09-29, candidate is 2026-09-30 -- a different day is the market moving, not the pipeline)"
-   ],
-   "fund_fail_rate": 0.0,
-   "universe_rows": 1000,
-   "superseded": true
-  },
-  {
-   "session": "2026-09-30",
-   "code_sha": "fd591ab",
-   "trigger": "workflow_dispatch",
-   "violations": [],
-   "warnings": [
-    "L2 no_downgrade no-baseline (stored copy is session 2026-09-29, candidate is 2026-09-30 -- a different day is the market moving, not the pipeline)",
-    "L6 universe 5613 vs window median 1000"
-   ],
-   "fund_fail_rate": 0.0,
-   "universe_rows": 5613
+   "fund_fail_rate": 0.052,
+   "universe_rows": 5617
   }
  ],
  "violations": 0,
- "warnings": 8,
- "top": [
-  "L6 2026-09-30: 3 lines (re-run; both happened, not a violation)"
- ],
+ "warnings": 1,
+ "top": [],
  "ok": true
 }

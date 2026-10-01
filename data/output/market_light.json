@@ -1,5 +1,5 @@
 {
- "date": "2026-09-30",
+ "date": "2026-10-01",
  "ma_type": "EMA",
  "rising_rule": "MA today > MA yesterday (self-invented operationalization, plan L106)",
  "spy": {
@@ -7,32 +7,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 765.364,
-    "b": 764.5998
+    "a": 765.1142,
+    "b": 764.5417
    },
    {
     "key": "fast_rising",
     "pass": false,
-    "a": 765.364,
-    "b": 765.9716
+    "a": 765.1142,
+    "b": 765.364
    },
    {
     "key": "slow_rising",
     "pass": false,
-    "a": 764.5998,
-    "b": 764.8072
+    "a": 764.5417,
+    "b": 764.5998
    }
   ],
   "checks_passed": 1,
   "light": "red",
   "history": [
-   {
-    "date": "2026-07-08",
-    "close": 743.5536,
-    "fast": 742.4267,
-    "slow": 740.6742,
-    "checks_passed": 3
-   },
    {
     "date": "2026-07-09",
     "close": 749.848,
@@ -445,6 +438,13 @@
     "fast": 765.364,
     "slow": 764.5998,
     "checks_passed": 1
+   },
+   {
+    "date": "2026-10-01",
+    "close": 763.99,
+    "fast": 765.1142,
+    "slow": 764.5417,
+    "checks_passed": 1
    }
   ]
  },
@@ -453,32 +453,25 @@
    {
     "key": "fast_above_slow",
     "pass": true,
-    "a": 734.8513,
-    "b": 728.1822
+    "a": 736.1565,
+    "b": 729.501
    },
    {
     "key": "fast_rising",
     "pass": true,
-    "a": 734.8513,
-    "b": 733.7583
+    "a": 736.1565,
+    "b": 734.8513
    },
    {
     "key": "slow_rising",
     "pass": true,
-    "a": 728.1822,
-    "b": 726.9624
+    "a": 729.501,
+    "b": 728.1822
    }
   ],
   "checks_passed": 3,
   "light": "green",
   "history": [
-   {
-    "date": "2026-07-08",
-    "close": 710.6995,
-    "fast": 717.209,
-    "slow": 718.1052,
-    "checks_passed": 0
-   },
    {
     "date": "2026-07-09",
     "close": 722.5272,
@@ -891,27 +884,37 @@
     "fast": 734.8513,
     "slow": 728.1822,
     "checks_passed": 3
+   },
+   {
+    "date": "2026-10-01",
+    "close": 742.03,
+    "fast": 736.1565,
+    "slow": 729.501,
+    "checks_passed": 3
    }
   ]
  },
  "brightness": {
   "setups": {
-   "count": 15,
+   "count": 37,
    "label": "index \u2014 not the course's hand count",
    "narrowed_to": "2w Leading theme members (same pool as Q2)",
-   "pool_count": 63,
-   "count_is_floor": false,
+   "pool_count": 89,
+   "count_is_floor": true,
    "q1_votes": false,
    "vote_restore_rule": "Q1 votes again only when the system holds a hand-picked daily list artifact (Focus <= 5, or the six seats updated daily). Then Q1 = that list's trigger count today, read with the lesson's own 1-3 / 10+ bands, and that day is calibrated. No percentile or index conversion -- the lesson teaches an absolute hand count, and converting it rewrites the lesson.",
    "by_panel": {
-    "ep_stockbee": 3,
-    "ep_qullamaggie": 0,
-    "ll_hl_1st": 12,
-    "ll_hl_2nd": 10,
-    "ll_hl_trend_break": 21,
-    "liquid_leader_pullback": 23
+    "ep_stockbee": 4,
+    "ep_qullamaggie": 2,
+    "ll_hl_1st": 22,
+    "ll_hl_2nd": 26,
+    "ll_hl_trend_break": 19,
+    "liquid_leader_pullback": 27
    },
-   "capped_panels": [],
+   "capped_panels": [
+    "ll_hl_2nd",
+    "liquid_leader_pullback"
+   ],
    "setups_without_panel": [
     "BO",
     "HTF"
@@ -919,41 +922,6 @@
    "provisional": true
   },
   "leaders": [
-   {
-    "ticker": "QMCO",
-    "theme": "Quantum Computing",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "MRNA",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TXG",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "CDNA",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
-   {
-    "ticker": "TWST",
-    "theme": "Genomics",
-    "status": "holding",
-    "above_ema21": true,
-    "rs_rating": 99
-   },
    {
     "ticker": "AXTI",
     "theme": "Optics & Networking Equipment",
@@ -963,7 +931,7 @@
    },
    {
     "ticker": "MU",
-    "theme": "Semiconductors Large Caps",
+    "theme": "Memory & Storage",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 99
@@ -983,8 +951,43 @@
     "rs_rating": 99
    },
    {
-    "ticker": "GRAL",
-    "theme": "Genomics",
+    "ticker": "RNG",
+    "theme": "Cloud Software",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "HPE",
+    "theme": "Optics & Networking Equipment",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "LITE",
+    "theme": "Optics & Networking Equipment",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "AEHR",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "COHU",
+    "theme": "Semiconductors Broad",
+    "status": "holding",
+    "above_ema21": true,
+    "rs_rating": 98
+   },
+   {
+    "ticker": "AMD",
+    "theme": "Semiconductors Large Caps",
     "status": "holding",
     "above_ema21": true,
     "rs_rating": 98
@@ -992,10 +995,10 @@
   ],
   "leaders_meta": {
    "themes": [
-    "Genomics",
+    "Cloud Software",
     "Memory & Storage",
     "Optics & Networking Equipment",
-    "Quantum Computing",
+    "Semiconductors Broad",
     "Semiconductors Large Caps"
    ],
    "status_rule": "holding = above the 50 SMA, the line Lesson 6B gives to institutions; broken = below it. Whether the name also holds the 21 EMA (swing money) is reported beside it as above_ema21, not folded into the label. The course's three healthy sub-states (holding / extending / basing) all read 'bright', so the verdict only needs healthy-vs-broken; splitting them would need thresholds the course does not give. Gap-down is not yet applied: with a zero threshold nearly every red open would count as broken -- threshold to agree with Studio Q.",
@@ -1005,7 +1008,7 @@
    "state": "mixed",
    "source": "breadth.json verdict.env",
    "env": "MIXED",
-   "score": -3
+   "score": -2
   }
  },
  "verdict": "avoid",

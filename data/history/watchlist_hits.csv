@@ -21383,3 +21383,691 @@ date,panel,zone,ticker,close,chg_pct,rel_volume,atr_from_sma50,ema21_atr_dist,rs
 2026-09-30,extended,trouble,TWST,193.24,3.8,1.48,8.06,3.06,100,99,99,77.0,0.988,14,,Genomics,Improving
 2026-09-30,extended,trouble,TXG,90.36,0.4,1.25,7.81,2.75,100,99,99,73.0,0.991,26,,Genomics,Improving
 2026-09-30,extended,trouble,SECZ,14.59,-7.9,0.7,8.16,2.14,81,99,88,54.0,0.887,,,Fintech,Lagging
+2026-10-01,true_market_leaders,leaders,CDNA,66.23,1.9,1.46,7.74,3.19,100,98,99,87.0,0.991,22,,Genomics,Improving
+2026-10-01,true_market_leaders,leaders,ECO,85.74,6.0,0.92,6.86,2.44,90,97,98,88.0,0.983,44,1st_break,Transportation & Logistics,Improving
+2026-10-01,true_market_leaders,leaders,FORM,148.44,-0.6,0.98,5.91,3.23,95,99,91,79.0,0.916,10,,Memory & Storage,Leading
+2026-10-01,true_market_leaders,leaders,HPE,64.58,1.1,0.64,3.04,1.3,100,97,97,72.0,0.968,33,,Optics & Networking Equipment,Improving
+2026-10-01,true_market_leaders,leaders,MRVL,268.08,1.5,0.99,3.87,1.61,100,98,76,71.0,0.801,34,,Optics & Networking Equipment,Improving
+2026-10-01,true_market_leaders,leaders,STX,945.57,2.5,0.66,2.07,1.31,100,94,78,87.0,0.817,19,2nd_break,Memory & Storage,Leading
+2026-10-01,liquid_leaders,leaders,BTG,5.17,-1.0,0.98,0.66,-0.67,5,57,92,72.0,0.926,57,,Gold Miners,Weakening
+2026-10-01,liquid_leaders,leaders,AMC,2.76,-8.0,1.05,0.57,-0.19,62,84,98,81.0,0.975,23,,Entertainment,Lagging
+2026-10-01,liquid_leaders,leaders,META,725.93,0.1,0.51,4.62,1.33,67,96,89,62.0,0.903,20,,Tech Mega Caps,Improving
+2026-10-01,liquid_leaders,leaders,MGNI,25.44,0.7,0.76,2.21,0.99,90,81,89,75.0,0.906,41,,Advertising Agencies,Improving
+2026-10-01,liquid_leaders,leaders,SNAP,5.65,4.6,1.42,1.24,0.63,76,77,88,60.0,0.893,40,,Internet Content & Information,Lagging
+2026-10-01,liquid_leaders,leaders,FIGS,14.08,1.6,0.92,1.28,0.82,86,45,95,44.0,0.956,48,,Apparel Manufacturing,Improving
+2026-10-01,liquid_leaders,leaders,KSS,18.92,2.5,1.13,0.78,1.13,86,71,83,80.0,0.853,19,2nd_break,Department Stores,
+2026-10-01,liquid_leaders,leaders,MAT,15.04,18.8,5.6,1.02,1.84,100,81,85,44.0,0.873,21,,Leisure,Improving
+2026-10-01,liquid_leaders,leaders,SN,179.78,-0.2,0.51,0.82,0.73,86,81,89,64.0,0.902,38,,Homebuilders,Improving
+2026-10-01,liquid_leaders,leaders,VSXY,88.51,0.1,0.41,0.88,1.31,90,84,84,78.0,0.861,15,,Consumer Retail,Lagging
+2026-10-01,liquid_leaders,leaders,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,liquid_leaders,leaders,DHT,23.56,4.4,1.04,5.55,2.28,100,95,96,81.0,0.963,44,,Energy,Weakening
+2026-10-01,liquid_leaders,leaders,DINO,112.7,5.0,0.88,3.42,1.29,81,87,97,88.0,0.97,45,1st_break,Oil & Gas,Weakening
+2026-10-01,liquid_leaders,leaders,DK,74.34,4.2,0.62,1.26,0.55,57,84,95,92.0,0.954,21,,Oil & Gas,Weakening
+2026-10-01,liquid_leaders,leaders,MPC,420.15,6.2,0.7,4.35,1.78,86,90,97,92.0,0.973,48,tp1_hit,Oil & Gas,Weakening
+2026-10-01,liquid_leaders,leaders,NAT,8.17,3.4,0.81,4.86,1.84,90,96,96,82.0,0.961,42,1st_break,Energy,Weakening
+2026-10-01,liquid_leaders,leaders,PBF,82.34,7.0,0.97,2.83,1.72,100,90,98,87.0,0.98,42,,Oil & Gas,Weakening
+2026-10-01,liquid_leaders,leaders,SM,35.06,3.8,0.62,0.29,-0.2,43,36,94,79.0,0.941,20,,Energy,Weakening
+2026-10-01,liquid_leaders,leaders,TRMD,38.8,2.0,0.56,6.33,2.6,100,96,97,82.0,0.966,37,,Energy,Weakening
+2026-10-01,liquid_leaders,leaders,VLO,408.46,5.4,0.67,4.16,1.62,86,92,97,92.0,0.969,45,1st_break,Oil & Gas,Weakening
+2026-10-01,liquid_leaders,leaders,ASST,30.11,2.4,0.5,7.69,1.48,95,97,99,90.0,0.991,59,,Financials,Lagging
+2026-10-01,liquid_leaders,leaders,BMNR,26.73,1.1,0.72,3.3,0.65,71,94,98,64.0,0.982,41,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,COIN,189.29,1.5,0.6,1.7,0.29,52,89,82,66.0,0.846,23,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,CRCL,82.91,0.9,0.64,0.32,-0.79,14,43,89,40.0,0.902,41,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,PURR,12.03,-2.0,0.48,2.42,-0.14,43,87,94,56.0,0.947,41,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,SBET,9.58,3.2,0.6,3.85,0.93,81,95,98,75.0,0.981,38,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,XP,21.17,0.8,1.19,4.39,1.52,100,86,92,57.0,0.93,42,,Financials,Lagging
+2026-10-01,liquid_leaders,leaders,WT,24.03,-1.1,0.96,1.49,0.38,67,78,92,84.0,0.933,45,,Financials,Lagging
+2026-10-01,liquid_leaders,leaders,ABCL,13.91,-4.7,1.61,6.01,1.72,90,96,98,73.0,0.984,33,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,ADPT,27.37,-5.3,2.35,1.61,0.06,48,91,91,85.0,0.923,29,stop_hit,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,AMRX,20.07,-0.3,1.05,2.46,1.32,86,92,88,82.0,0.892,0,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,liquid_leaders,leaders,AVAH,12.43,0.2,0.68,0.62,-1.05,14,47,92,71.0,0.933,36,,Medical Care Facilities,Lagging
+2026-10-01,liquid_leaders,leaders,CAI,28.35,-7.4,0.86,3.16,-0.29,43,93,98,69.0,0.975,40,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,CERT,9.34,1.5,1.42,3.49,1.93,100,93,93,75.0,0.935,20,,Health Information Services,Lagging
+2026-10-01,liquid_leaders,leaders,DOCS,28.5,0.6,1.12,3.44,1.78,100,89,90,78.0,0.915,58,,Health Information Services,Lagging
+2026-10-01,liquid_leaders,leaders,ILMN,265.72,-2.9,0.47,5.22,1.85,76,97,94,86.0,0.948,9,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,IOVA,14.23,-4.0,0.86,12.7,4.09,90,99,99,73.0,0.995,15,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,KOD,98.46,3.9,1.12,17.86,6.24,100,99,99,73.0,0.993,3,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,MRNA,188.94,-1.9,1.05,7.78,1.52,76,97,99,67.0,0.991,31,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,NEO,17.78,-3.2,1.17,0.8,-0.74,33,80,87,84.0,0.885,41,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,NEOG,12.24,-4.4,0.67,0.74,-0.84,43,83,92,67.0,0.928,31,,Agribusiness,Lagging
+2026-10-01,liquid_leaders,leaders,NVAX,10.6,-1.9,0.6,3.21,0.77,81,81,84,55.0,0.858,30,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,PGEN,8.21,-4.1,0.95,3.34,1.43,95,95,96,71.0,0.963,30,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,PRGO,14.02,-5.0,0.92,1.46,-0.29,48,62,92,76.0,0.929,41,stop_hit,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,liquid_leaders,leaders,REPL,13.45,1.6,1.16,0.43,0.16,76,10,87,60.0,0.884,89,,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,RVTY,149.06,-2.5,1.09,5.25,1.58,76,93,93,85.0,0.937,25,,Diagnostics & Research,Weakening
+2026-10-01,liquid_leaders,leaders,SDGR,30.46,-1.9,1.97,7.6,2.19,95,99,98,82.0,0.986,17,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,TEM,76.5,-6.6,1.04,3.57,0.45,62,96,91,81.0,0.92,24,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,TRLV,10.87,-0.3,0.92,0.42,-0.91,5,41,90,66.0,0.909,40,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,liquid_leaders,leaders,TWST,188.05,-2.7,1.18,6.78,2.34,95,98,99,77.0,0.987,17,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,TXG,88.76,-1.8,1.06,6.78,2.17,90,99,99,71.0,0.99,27,,Genomics,Improving
+2026-10-01,liquid_leaders,leaders,VIR,11.29,1.0,1.24,2.39,0.9,81,68,83,72.0,0.853,44,1st_break,Biotechnology,Lagging
+2026-10-01,liquid_leaders,leaders,XERS,9.25,-3.2,0.92,1.64,0.85,86,89,80,83.0,0.833,0,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,liquid_leaders,leaders,CNH,12.85,0.0,0.93,1.74,-0.45,5,47,87,54.0,0.889,53,,Agribusiness,Lagging
+2026-10-01,liquid_leaders,leaders,TH,20.48,3.9,0.75,2.84,0.77,71,92,85,71.0,0.874,26,2nd_break,Specialty Business Services,Lagging
+2026-10-01,liquid_leaders,leaders,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,liquid_leaders,leaders,AEHR,101.6,2.0,0.6,0.72,0.65,95,97,95,82.0,0.953,55,2nd_break,Semiconductors Broad,Improving
+2026-10-01,liquid_leaders,leaders,AI,11.11,1.1,1.15,2.02,0.95,95,86,88,66.0,0.897,52,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,AMD,615.73,0.7,0.74,5.27,2.01,86,98,82,74.0,0.842,10,,Semiconductors Large Caps,Improving
+2026-10-01,liquid_leaders,leaders,AVPT,14.08,0.0,1.67,1.75,1.28,95,86,86,77.0,0.882,24,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,AXTI,81.81,5.7,0.98,2.42,1.34,100,98,92,74.0,0.929,35,,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leaders,leaders,CNXC,27.01,8.3,1.0,0.04,-0.26,24,9,87,51.0,0.884,24,,Information Technology Services,Lagging
+2026-10-01,liquid_leaders,leaders,CRWD,266.09,0.5,0.63,4.99,1.96,100,98,93,89.0,0.941,28,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,DELL,541.74,0.7,0.72,2.11,0.29,52,91,93,88.0,0.937,55,,Computer Hardware,Improving
+2026-10-01,liquid_leaders,leaders,DOCU,69.74,3.9,0.58,2.9,0.98,81,87,97,86.0,0.966,56,1st_break,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,DXC,11.64,7.5,1.52,1.36,1.24,81,74,86,60.0,0.876,27,,Information Technology Services,Lagging
+2026-10-01,liquid_leaders,leaders,ESTC,92.31,0.7,0.67,2.93,1.01,95,82,98,82.0,0.974,58,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,FRSH,13.15,2.8,0.96,1.75,1.05,90,73,92,82.0,0.931,59,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,FSLY,26.39,2.8,0.43,1.02,0.58,86,97,96,73.0,0.96,31,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,GDDY,96.98,1.5,0.48,0.1,-0.1,38,53,84,70.0,0.858,24,,Software,Lagging
+2026-10-01,liquid_leaders,leaders,GTLB,49.95,5.7,1.06,3.83,1.26,95,76,97,84.0,0.969,73,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,GTM,3.85,1.6,0.88,0.09,-0.05,48,47,93,55.0,0.936,49,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,HPE,64.58,1.1,0.64,3.04,1.3,100,97,97,72.0,0.968,33,,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leaders,leaders,HPQ,32.15,2.8,0.85,1.43,0.27,57,78,95,79.0,0.958,40,,Computer Hardware,Improving
+2026-10-01,liquid_leaders,leaders,LITE,1045.78,7.7,1.55,3.06,1.67,100,96,95,70.0,0.957,38,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leaders,leaders,MSTR,160.5,4.8,0.81,5.61,1.58,81,98,98,80.0,0.975,25,,Crypto Equities,Improving
+2026-10-01,liquid_leaders,leaders,MU,1097.39,3.0,1.71,3.48,1.53,100,94,82,75.0,0.841,27,,Semiconductors Large Caps,Improving
+2026-10-01,liquid_leaders,leaders,NET,351.0,1.1,0.89,3.13,1.11,86,97,95,87.0,0.955,35,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,NOW,137.76,2.8,0.83,1.68,0.44,67,76,91,85.0,0.925,69,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,NTAP,215.05,2.4,0.91,3.48,2.16,100,95,93,85.0,0.937,33,,Memory & Storage,Leading
+2026-10-01,liquid_leaders,leaders,NTSK,17.85,2.4,0.93,3.39,1.0,81,98,96,87.0,0.962,42,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,OKTA,212.63,1.7,0.8,6.62,2.39,100,98,95,82.0,0.957,30,tp2_hit,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,P,134.13,2.6,0.56,6.84,3.13,100,99,98,92.0,0.982,13,,Memory & Storage,Leading
+2026-10-01,liquid_leaders,leaders,PANW,396.25,-0.3,0.83,2.25,1.21,95,96,81,86.0,0.836,31,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,PEGA,34.43,3.5,0.63,0.54,-0.18,33,37,80,60.0,0.83,32,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,RBRK,115.4,0.8,0.67,4.58,1.68,100,98,93,88.0,0.937,33,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,S,24.67,3.8,1.0,3.39,1.76,100,97,94,85.0,0.946,34,2nd_break,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,SAIL,20.58,1.1,1.53,1.71,0.46,76,92,92,82.0,0.932,39,,Cybersecurity,Leading
+2026-10-01,liquid_leaders,leaders,SECZ,13.74,-5.8,0.64,6.3,1.34,71,99,91,57.0,0.921,,,Fintech,Lagging
+2026-10-01,liquid_leaders,leaders,SHOP,149.09,0.5,0.46,1.47,1.13,100,85,90,84.0,0.912,26,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,SMCI,41.92,2.1,0.69,2.89,0.91,95,93,97,88.0,0.971,41,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leaders,leaders,SMTC,186.59,4.6,0.98,4.74,1.69,100,98,94,75.0,0.943,29,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leaders,leaders,SNOW,341.99,0.7,0.67,1.44,0.66,95,92,92,90.0,0.933,59,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,SNPS,490.54,12.8,2.8,5.37,3.86,100,95,81,82.0,0.837,4,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,liquid_leaders,leaders,SONO,17.75,-0.8,0.83,3.08,1.57,76,91,92,82.0,0.934,10,,Consumer Electronics,Lagging
+2026-10-01,liquid_leaders,leaders,SWKS,83.16,-2.7,0.7,2.38,-0.08,33,94,94,65.0,0.942,52,,Semiconductors Broad,Improving
+2026-10-01,liquid_leaders,leaders,TEAM,189.91,5.9,0.78,3.55,0.72,57,80,99,90.0,0.99,68,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,TWLO,301.27,3.0,0.97,6.01,2.54,100,98,96,80.0,0.959,9,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,U,43.61,6.6,1.0,1.31,0.77,86,88,96,88.0,0.964,51,,Software,Lagging
+2026-10-01,liquid_leaders,leaders,WDAY,186.75,-1.9,0.96,0.26,-0.42,19,41,94,81.0,0.944,91,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,ZETA,32.4,2.6,1.13,3.26,1.51,100,87,96,88.0,0.965,54,,Cloud Software,Weakening
+2026-10-01,liquid_leaders,leaders,ZS,198.78,-0.3,0.37,2.42,0.58,71,94,93,84.0,0.938,32,,Cybersecurity,Leading
+2026-10-01,ma_reclaim,entries,RBLX,43.0,1.5,0.79,0.21,-0.77,29,84,10,29.0,0.255,31,,Electronic Gaming & Multimedia,Improving
+2026-10-01,ma_reclaim,entries,SNAP,5.65,4.6,1.42,1.24,0.63,76,77,88,60.0,0.893,40,,Internet Content & Information,Lagging
+2026-10-01,ma_reclaim,entries,WLY,48.9,2.4,1.23,-1.0,0.1,76,56,46,44.0,0.544,53,,Publishing,Improving
+2026-10-01,ma_reclaim,entries,ANF,136.36,1.2,0.85,2.36,0.25,48,73,97,75.0,0.969,64,1st_break,Consumer Retail,Lagging
+2026-10-01,ma_reclaim,entries,BH,357.19,3.9,0.56,-1.05,0.08,57,29,22,45.0,0.372,68,,Travel & Leisure,Improving
+2026-10-01,ma_reclaim,entries,CPRI,14.48,2.5,0.67,-0.16,0.02,57,93,11,26.0,0.272,50,,Luxury Goods,Improving
+2026-10-01,ma_reclaim,entries,CRI,31.71,1.3,0.72,-2.19,0.17,76,67,17,44.0,0.332,51,,Consumer Retail,Lagging
+2026-10-01,ma_reclaim,entries,MAT,15.04,18.8,5.6,1.02,1.84,100,81,85,44.0,0.873,21,,Leisure,Improving
+2026-10-01,ma_reclaim,entries,MOD,189.21,1.1,0.89,-0.45,0.01,57,86,15,38.0,0.314,55,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,VGNT,46.26,2.9,0.74,0.34,0.06,48,71,78,54.0,0.818,63,counter_break,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,ma_reclaim,entries,DK,74.34,4.2,0.62,1.26,0.55,57,84,95,92.0,0.954,21,,Oil & Gas,Weakening
+2026-10-01,ma_reclaim,entries,SM,35.06,3.8,0.62,0.29,-0.2,43,36,94,79.0,0.941,20,,Energy,Weakening
+2026-10-01,ma_reclaim,entries,WTTR,20.03,1.2,1.05,0.08,0.02,48,78,81,75.0,0.839,34,,Oil & Gas,Weakening
+2026-10-01,ma_reclaim,entries,DXYZ,31.24,1.3,1.06,0.95,0.19,52,55,89,67.0,0.906,84,counter_break,Financials,Lagging
+2026-10-01,ma_reclaim,entries,FDS,277.61,2.8,1.45,-0.32,0.01,43,29,80,70.0,0.832,45,,Financials,Lagging
+2026-10-01,ma_reclaim,entries,CRSP,55.44,0.2,0.64,0.46,0.03,52,65,34,59.0,0.462,32,,Genomics,Improving
+2026-10-01,ma_reclaim,entries,GRDN,40.84,0.1,0.67,0.01,-0.71,33,84,59,60.0,0.642,3,,Medical Care Facilities,Lagging
+2026-10-01,ma_reclaim,entries,NTLA,12.12,0.5,1.68,0.19,0.0,57,52,4,26.0,0.193,54,,Genomics,Improving
+2026-10-01,ma_reclaim,entries,REPL,13.45,1.6,1.16,0.43,0.16,76,10,87,60.0,0.884,89,,Biotechnology,Lagging
+2026-10-01,ma_reclaim,entries,AEIS,294.11,4.4,0.87,0.35,1.15,100,90,49,41.0,0.563,36,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,DCO,171.94,0.2,0.69,-1.22,0.0,86,83,37,44.0,0.485,42,,Defense,Improving
+2026-10-01,ma_reclaim,entries,FIX,1685.29,1.9,0.92,0.39,0.66,95,89,47,52.0,0.55,56,2nd_break,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,IESC,330.16,2.8,0.67,-0.25,0.33,90,90,58,52.0,0.636,88,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,POWL,190.6,3.3,0.88,-0.5,0.42,90,92,11,33.0,0.272,78,1st_break,Clean Energy,Improving
+2026-10-01,ma_reclaim,entries,PRIM,76.25,2.3,1.02,-0.54,0.33,81,82,23,28.0,0.379,56,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,RXO,21.36,4.4,1.04,0.07,0.87,100,89,15,46.0,0.313,58,tp1_hit,Transportation & Logistics,Improving
+2026-10-01,ma_reclaim,entries,SAIA,344.38,3.2,1.28,-1.06,0.06,62,83,19,33.0,0.341,59,,Transportation & Logistics,Improving
+2026-10-01,ma_reclaim,entries,STRL,505.12,2.7,0.7,-0.74,0.03,62,91,6,46.0,0.211,93,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,SUNB,75.61,3.3,0.57,0.26,0.69,100,93,72,61.0,0.766,49,,Rental & Leasing Services,Lagging
+2026-10-01,ma_reclaim,entries,SYM,43.17,2.6,1.07,0.65,0.33,62,89,55,46.0,0.609,33,1st_break,Physical AI & Humanoid Robotics,Improving
+2026-10-01,ma_reclaim,entries,TRI,99.36,2.1,0.91,-0.43,0.01,62,45,84,60.0,0.862,55,,Specialty Business Services,Lagging
+2026-10-01,ma_reclaim,entries,VSTS,13.78,3.1,0.93,0.3,0.44,67,93,65,55.0,0.713,44,1st_break,Rental & Leasing Services,Lagging
+2026-10-01,ma_reclaim,entries,AAOI,107.32,8.1,1.55,-0.44,0.37,86,84,28,41.0,0.415,89,counter_break,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,APPN,37.77,7.1,0.97,1.4,0.49,57,50,97,80.0,0.972,56,1st_break,Software,Lagging
+2026-10-01,ma_reclaim,entries,APPS,11.55,4.0,1.29,0.62,0.31,71,95,69,85.0,0.743,51,,Software,Lagging
+2026-10-01,ma_reclaim,entries,ATEN,27.6,1.8,0.91,0.43,1.2,100,92,10,62.0,0.262,75,,Cybersecurity,Leading
+2026-10-01,ma_reclaim,entries,BELFB,252.09,3.3,1.09,-0.72,0.37,95,84,37,60.0,0.485,58,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,BSY,32.75,2.5,0.71,-1.15,0.21,81,43,64,61.0,0.689,66,,Software,Lagging
+2026-10-01,ma_reclaim,entries,CIEN,379.14,7.8,0.89,0.22,0.94,100,88,29,42.0,0.421,53,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,CNXC,27.01,8.3,1.0,0.04,-0.26,24,9,87,51.0,0.884,24,,Information Technology Services,Lagging
+2026-10-01,ma_reclaim,entries,COHR,319.19,10.9,1.69,1.14,1.06,100,95,50,59.0,0.57,42,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,CRDO,210.17,7.9,1.04,0.13,1.28,100,97,13,60.0,0.297,40,,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,DUOL,146.57,2.9,0.74,0.66,0.23,52,40,83,73.0,0.855,43,,Software,Lagging
+2026-10-01,ma_reclaim,entries,DXC,11.64,7.5,1.52,1.36,1.24,81,74,86,60.0,0.876,27,,Information Technology Services,Lagging
+2026-10-01,ma_reclaim,entries,EPAM,114.35,5.5,1.35,1.17,0.51,48,66,93,59.0,0.936,38,,Information Technology Services,Lagging
+2026-10-01,ma_reclaim,entries,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,FLEX,112.78,2.5,0.63,-0.28,0.11,67,87,16,65.0,0.325,82,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,FN,451.44,6.4,1.25,0.11,1.52,100,93,36,54.0,0.472,57,,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,GCT,53.19,2.9,0.74,1.4,0.45,81,85,97,76.0,0.972,62,1st_break,Software,Lagging
+2026-10-01,ma_reclaim,entries,GDDY,96.98,1.5,0.48,0.1,-0.1,38,53,84,70.0,0.858,24,,Software,Lagging
+2026-10-01,ma_reclaim,entries,GFS,48.68,1.6,0.6,0.27,0.73,100,91,6,43.0,0.214,57,,Semiconductors Broad,Improving
+2026-10-01,ma_reclaim,entries,GLOB,36.98,6.6,2.04,-0.2,0.34,52,53,88,56.0,0.896,39,,Information Technology Services,Lagging
+2026-10-01,ma_reclaim,entries,GLW,160.42,4.3,0.93,0.99,0.67,81,92,19,54.0,0.343,56,,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,GTM,3.85,1.6,0.88,0.09,-0.05,48,47,93,55.0,0.936,49,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,GWRE,155.32,8.9,0.95,-1.05,0.17,86,5,83,68.0,0.855,76,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,HPQ,32.15,2.8,0.85,1.43,0.27,57,78,95,79.0,0.958,40,,Computer Hardware,Improving
+2026-10-01,ma_reclaim,entries,INGM,27.79,3.7,0.83,-0.12,0.59,86,75,74,65.0,0.785,42,,Information Technology Services,Lagging
+2026-10-01,ma_reclaim,entries,INTA,37.59,3.8,0.73,0.08,0.22,62,29,94,77.0,0.946,78,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,IOT,40.04,5.0,0.58,0.58,0.48,76,90,75,73.0,0.792,36,counter_break,Robotics & Automation,Improving
+2026-10-01,ma_reclaim,entries,IPGP,83.66,6.9,1.07,0.88,1.51,100,90,14,42.0,0.308,90,2nd_break,Robotics & Automation,Improving
+2026-10-01,ma_reclaim,entries,NOK,10.37,2.3,0.69,0.7,0.01,52,85,19,46.0,0.347,50,,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,NOW,137.76,2.8,0.83,1.68,0.44,67,76,91,85.0,0.925,69,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,NVTS,12.12,4.4,1.2,0.12,0.38,95,89,14,49.0,0.303,50,1st_break,Clean Energy,Improving
+2026-10-01,ma_reclaim,entries,ON,80.08,4.2,0.91,1.02,1.57,100,91,23,50.0,0.378,32,,AI Power & Infrastructure,Improving
+2026-10-01,ma_reclaim,entries,PEGA,34.43,3.5,0.63,0.54,-0.18,33,37,80,60.0,0.83,32,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,SNX,271.76,5.8,1.05,1.22,0.69,86,88,84,87.0,0.863,0,1st_break,Electronics & Computer Distribution,Leading
+2026-10-01,ma_reclaim,entries,SYNA,106.15,4.7,1.29,1.18,1.61,100,91,25,50.0,0.392,35,,Robotics & Automation,Improving
+2026-10-01,ma_reclaim,entries,TEAM,189.91,5.9,0.78,3.55,0.72,57,80,99,90.0,0.99,68,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,TTAN,67.34,2.4,0.36,-2.16,0.17,81,1,27,57.0,0.407,42,,Cloud Software,Weakening
+2026-10-01,ma_reclaim,entries,TTMI,126.5,3.0,0.94,0.42,0.43,86,90,23,66.0,0.38,55,,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,U,43.61,6.6,1.0,1.31,0.77,86,88,96,88.0,0.964,51,,Software,Lagging
+2026-10-01,ma_reclaim,entries,UI,609.64,7.4,0.75,1.89,1.55,100,80,84,45.0,0.861,33,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ma_reclaim,entries,VSH,34.27,5.3,1.08,0.95,1.12,100,92,9,56.0,0.245,93,2nd_break,Semiconductors Broad,Improving
+2026-10-01,ma_reclaim,entries,WK,69.63,4.6,0.88,0.04,-0.36,29,35,94,79.0,0.944,41,,Software,Lagging
+2026-10-01,ma_reclaim,entries,TLN,323.09,3.3,1.33,0.21,1.14,95,88,25,35.0,0.392,40,,Uranium & Nuclear Energy,Lagging
+2026-10-01,ep_stockbee,entries,MAT,15.04,18.8,5.6,1.02,1.84,100,81,85,44.0,0.873,21,,Leisure,Improving
+2026-10-01,ep_stockbee,entries,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,ep_stockbee,entries,FICO,661.75,11.7,3.27,-4.12,-3.73,14,0,1,42.0,0.121,11,,Software,Lagging
+2026-10-01,ep_stockbee,entries,SNPS,490.54,12.8,2.8,5.37,3.86,100,95,81,82.0,0.837,4,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,ep_qullamaggie,entries,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,ep_qullamaggie,entries,VICR,308.59,6.8,1.6,6.82,3.27,100,99,77,80.0,0.806,2,,AI Power & Infrastructure,Improving
+2026-10-01,ll_hl_1st,entries,ANF,136.36,1.2,0.85,2.36,0.25,48,73,97,75.0,0.969,64,1st_break,Consumer Retail,Lagging
+2026-10-01,ll_hl_1st,entries,CVI,54.36,6.6,0.8,6.2,1.9,95,97,99,96.0,0.987,50,1st_break,Oil & Gas,Weakening
+2026-10-01,ll_hl_1st,entries,DINO,112.7,5.0,0.88,3.42,1.29,81,87,97,88.0,0.97,45,1st_break,Oil & Gas,Weakening
+2026-10-01,ll_hl_1st,entries,NAT,8.17,3.4,0.81,4.86,1.84,90,96,96,82.0,0.961,42,1st_break,Energy,Weakening
+2026-10-01,ll_hl_1st,entries,TNK,101.01,4.1,0.61,3.95,1.52,81,92,96,80.0,0.964,52,1st_break,Energy,Weakening
+2026-10-01,ll_hl_1st,entries,VLO,408.46,5.4,0.67,4.16,1.62,86,92,97,92.0,0.969,45,1st_break,Oil & Gas,Weakening
+2026-10-01,ll_hl_1st,entries,VIR,11.29,1.0,1.24,2.39,0.9,81,68,83,72.0,0.853,44,1st_break,Biotechnology,Lagging
+2026-10-01,ll_hl_1st,entries,ECO,85.74,6.0,0.92,6.86,2.44,90,97,98,88.0,0.983,44,1st_break,Transportation & Logistics,Improving
+2026-10-01,ll_hl_1st,entries,MYRG,297.92,1.9,0.59,-1.01,0.45,100,86,4,36.0,0.188,67,1st_break,Clean Energy,Improving
+2026-10-01,ll_hl_1st,entries,POWL,190.6,3.3,0.88,-0.5,0.42,90,92,11,33.0,0.272,78,1st_break,Clean Energy,Improving
+2026-10-01,ll_hl_1st,entries,SYM,43.17,2.6,1.07,0.65,0.33,62,89,55,46.0,0.609,33,1st_break,Physical AI & Humanoid Robotics,Improving
+2026-10-01,ll_hl_1st,entries,VSTS,13.78,3.1,0.93,0.3,0.44,67,93,65,55.0,0.713,44,1st_break,Rental & Leasing Services,Lagging
+2026-10-01,ll_hl_1st,entries,APPN,37.77,7.1,0.97,1.4,0.49,57,50,97,80.0,0.972,56,1st_break,Software,Lagging
+2026-10-01,ll_hl_1st,entries,DOCU,69.74,3.9,0.58,2.9,0.98,81,87,97,86.0,0.966,56,1st_break,Cloud Software,Weakening
+2026-10-01,ll_hl_1st,entries,GCT,53.19,2.9,0.74,1.4,0.45,81,85,97,76.0,0.972,62,1st_break,Software,Lagging
+2026-10-01,ll_hl_1st,entries,IT,192.8,3.4,1.0,1.41,0.85,81,83,95,72.0,0.956,56,1st_break,Information Technology Services,Lagging
+2026-10-01,ll_hl_1st,entries,NVTS,12.12,4.4,1.2,0.12,0.38,95,89,14,49.0,0.303,50,1st_break,Clean Energy,Improving
+2026-10-01,ll_hl_1st,entries,PI,183.87,2.5,0.87,2.38,1.03,100,85,90,65.0,0.913,71,1st_break,Semiconductors Broad,Improving
+2026-10-01,ll_hl_1st,entries,SKHY,193.5,5.1,0.87,3.59,1.26,95,95,0,37.0,0.033,,1st_break,Memory & Storage,Leading
+2026-10-01,ll_hl_1st,entries,SMCI,41.92,2.1,0.69,2.89,0.91,95,93,97,88.0,0.971,41,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_1st,entries,SMTC,186.59,4.6,0.98,4.74,1.69,100,98,94,75.0,0.943,29,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_1st,entries,SNX,271.76,5.8,1.05,1.22,0.69,86,88,84,87.0,0.863,0,1st_break,Electronics & Computer Distribution,Leading
+2026-10-01,ll_hl_2nd,entries,PINS,19.46,3.0,0.86,-2.52,-0.03,76,34,29,37.0,0.422,52,2nd_break,Internet Content & Information,Lagging
+2026-10-01,ll_hl_2nd,entries,KSS,18.92,2.5,1.13,0.78,1.13,86,71,83,80.0,0.853,19,2nd_break,Department Stores,
+2026-10-01,ll_hl_2nd,entries,SHAK,60.19,2.6,0.96,-1.82,-0.13,62,22,81,48.0,0.839,44,2nd_break,Travel & Leisure,Improving
+2026-10-01,ll_hl_2nd,entries,ELF,104.09,3.1,1.27,1.98,0.97,81,63,95,79.0,0.955,53,2nd_break,Household & Personal Products,Lagging
+2026-10-01,ll_hl_2nd,entries,INSW,114.6,4.0,0.76,4.99,2.24,100,95,95,83.0,0.954,39,2nd_break,Energy,Weakening
+2026-10-01,ll_hl_2nd,entries,TPG,44.73,1.4,0.97,-2.03,-1.04,33,13,74,71.0,0.785,46,2nd_break,Financials,Lagging
+2026-10-01,ll_hl_2nd,entries,ECG,119.63,1.8,0.53,-0.69,0.43,90,87,20,36.0,0.351,86,2nd_break,Industrials,Improving
+2026-10-01,ll_hl_2nd,entries,FIX,1685.29,1.9,0.92,0.39,0.66,95,89,47,52.0,0.55,56,2nd_break,AI Power & Infrastructure,Improving
+2026-10-01,ll_hl_2nd,entries,NVT,165.77,3.4,0.85,1.39,1.04,100,92,74,59.0,0.78,26,2nd_break,Clean Energy,Improving
+2026-10-01,ll_hl_2nd,entries,TH,20.48,3.9,0.75,2.84,0.77,71,92,85,71.0,0.874,26,2nd_break,Specialty Business Services,Lagging
+2026-10-01,ll_hl_2nd,entries,ACMR,83.58,3.3,1.26,1.51,1.57,100,95,24,62.0,0.382,28,2nd_break,Semiconductors Broad,Improving
+2026-10-01,ll_hl_2nd,entries,AEHR,101.6,2.0,0.6,0.72,0.65,95,97,95,82.0,0.953,55,2nd_break,Semiconductors Broad,Improving
+2026-10-01,ll_hl_2nd,entries,ALGM,36.38,0.1,1.14,-1.29,0.13,67,81,3,49.0,0.17,69,2nd_break,Semiconductors Broad,Improving
+2026-10-01,ll_hl_2nd,entries,CIEN,379.14,7.8,0.89,0.22,0.94,100,88,29,42.0,0.421,53,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_2nd,entries,COHR,319.19,10.9,1.69,1.14,1.06,100,95,50,59.0,0.57,42,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_2nd,entries,DOCN,139.8,4.8,0.53,1.91,0.87,81,98,75,75.0,0.789,22,2nd_break,Cloud Software,Weakening
+2026-10-01,ll_hl_2nd,entries,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,ll_hl_2nd,entries,IPGP,83.66,6.9,1.07,0.88,1.51,100,90,14,42.0,0.308,90,2nd_break,Robotics & Automation,Improving
+2026-10-01,ll_hl_2nd,entries,LITE,1045.78,7.7,1.55,3.06,1.67,100,96,95,70.0,0.957,38,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_2nd,entries,RNG,78.31,4.8,0.84,3.9,1.32,86,89,99,87.0,0.988,50,2nd_break,Cloud Software,Weakening
+2026-10-01,ll_hl_2nd,entries,S,24.67,3.8,1.0,3.39,1.76,100,97,94,85.0,0.946,34,2nd_break,Cybersecurity,Leading
+2026-10-01,ll_hl_2nd,entries,SPSC,84.2,2.1,0.7,2.26,0.98,100,79,95,83.0,0.952,73,2nd_break,Cloud Software,Weakening
+2026-10-01,ll_hl_2nd,entries,STX,945.57,2.5,0.66,2.07,1.31,100,94,78,87.0,0.817,19,2nd_break,Memory & Storage,Leading
+2026-10-01,ll_hl_2nd,entries,TSEM,241.3,6.1,1.06,1.29,1.24,100,94,80,66.0,0.829,30,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_2nd,entries,UI,609.64,7.4,0.75,1.89,1.55,100,80,84,45.0,0.861,33,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_2nd,entries,VSH,34.27,5.3,1.08,0.95,1.12,100,92,9,56.0,0.245,93,2nd_break,Semiconductors Broad,Improving
+2026-10-01,ll_hl_trend_break,entries,ATEX,82.48,5.1,0.88,-1.18,-0.04,57,53,12,44.0,0.283,69,counter_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_trend_break,entries,ABG,178.47,3.6,1.07,-3.52,-1.68,14,9,26,25.0,0.397,12,counter_break,Auto & Truck Dealerships,Lagging
+2026-10-01,ll_hl_trend_break,entries,ANDG,57.36,5.4,2.4,2.74,1.38,100,80,97,81.0,0.969,56,counter_break,Personal Services,Lagging
+2026-10-01,ll_hl_trend_break,entries,SAH,63.76,5.7,0.92,-3.67,-1.35,29,7,9,21.0,0.247,25,counter_break,Auto & Truck Dealerships,Lagging
+2026-10-01,ll_hl_trend_break,entries,VGNT,46.26,2.9,0.74,0.34,0.06,48,71,78,54.0,0.818,63,counter_break,AI Power & Infrastructure,Improving
+2026-10-01,ll_hl_trend_break,entries,BKV,21.54,0.9,0.4,-2.57,-1.61,10,14,14,44.0,0.303,22,counter_break,Energy,Weakening
+2026-10-01,ll_hl_trend_break,entries,DXYZ,31.24,1.3,1.06,0.95,0.19,52,55,89,67.0,0.906,84,counter_break,Financials,Lagging
+2026-10-01,ll_hl_trend_break,entries,LION,11.25,0.5,1.25,-1.26,-0.03,67,76,12,,0.288,41,counter_break,,
+2026-10-01,ll_hl_trend_break,entries,RYAN,38.39,3.8,0.95,-1.88,-0.48,43,29,45,54.0,0.538,30,counter_break,Insurance,Lagging
+2026-10-01,ll_hl_trend_break,entries,BBIO,66.91,1.7,1.2,-3.39,-1.08,43,18,26,36.0,0.402,34,counter_break,Biotechnology,Lagging
+2026-10-01,ll_hl_trend_break,entries,CECO,71.87,3.2,0.66,-0.12,-0.12,48,77,33,63.0,0.452,54,counter_break,Pollution & Treatment Controls,Improving
+2026-10-01,ll_hl_trend_break,entries,CXT,48.06,2.0,0.83,-1.05,-0.05,48,57,43,54.0,0.525,25,counter_break,Business Equipment & Supplies,Lagging
+2026-10-01,ll_hl_trend_break,entries,AAOI,107.32,8.1,1.55,-0.44,0.37,86,84,28,41.0,0.415,89,counter_break,Optics & Networking Equipment,Improving
+2026-10-01,ll_hl_trend_break,entries,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,ll_hl_trend_break,entries,AGYS,100.31,3.3,1.66,-1.73,-0.62,38,21,36,67.0,0.476,38,counter_break,Cloud Software,Weakening
+2026-10-01,ll_hl_trend_break,entries,BL,27.48,3.6,1.0,-1.85,-0.8,19,13,48,50.0,0.557,42,counter_break,Cloud Software,Weakening
+2026-10-01,ll_hl_trend_break,entries,IOT,40.04,5.0,0.58,0.58,0.48,76,90,75,73.0,0.792,36,counter_break,Robotics & Automation,Improving
+2026-10-01,ll_hl_trend_break,entries,KVYO,16.19,2.9,0.6,-1.36,-0.34,48,10,50,52.0,0.572,51,counter_break,Cloud Software,Weakening
+2026-10-01,ll_hl_trend_break,entries,MNDY,80.31,2.4,0.91,-1.43,-0.99,19,12,55,68.0,0.613,18,counter_break,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,MGNI,25.44,0.7,0.76,2.21,0.99,90,81,89,75.0,0.906,41,,Advertising Agencies,Improving
+2026-10-01,liquid_leader_pullback,entries,SNAP,5.65,4.6,1.42,1.24,0.63,76,77,88,60.0,0.893,40,,Internet Content & Information,Lagging
+2026-10-01,liquid_leader_pullback,entries,FIGS,14.08,1.6,0.92,1.28,0.82,86,45,95,44.0,0.956,48,,Apparel Manufacturing,Improving
+2026-10-01,liquid_leader_pullback,entries,SN,179.78,-0.2,0.51,0.82,0.73,86,81,89,64.0,0.902,38,,Homebuilders,Improving
+2026-10-01,liquid_leader_pullback,entries,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,liquid_leader_pullback,entries,DK,74.34,4.2,0.62,1.26,0.55,57,84,95,92.0,0.954,21,,Oil & Gas,Weakening
+2026-10-01,liquid_leader_pullback,entries,BMNR,26.73,1.1,0.72,3.3,0.65,71,94,98,64.0,0.982,41,,Crypto Equities,Improving
+2026-10-01,liquid_leader_pullback,entries,COIN,189.29,1.5,0.6,1.7,0.29,52,89,82,66.0,0.846,23,,Crypto Equities,Improving
+2026-10-01,liquid_leader_pullback,entries,SBET,9.58,3.2,0.6,3.85,0.93,81,95,98,75.0,0.981,38,,Crypto Equities,Improving
+2026-10-01,liquid_leader_pullback,entries,WT,24.03,-1.1,0.96,1.49,0.38,67,78,92,84.0,0.933,45,,Financials,Lagging
+2026-10-01,liquid_leader_pullback,entries,REPL,13.45,1.6,1.16,0.43,0.16,76,10,87,60.0,0.884,89,,Biotechnology,Lagging
+2026-10-01,liquid_leader_pullback,entries,VIR,11.29,1.0,1.24,2.39,0.9,81,68,83,72.0,0.853,44,1st_break,Biotechnology,Lagging
+2026-10-01,liquid_leader_pullback,entries,TH,20.48,3.9,0.75,2.84,0.77,71,92,85,71.0,0.874,26,2nd_break,Specialty Business Services,Lagging
+2026-10-01,liquid_leader_pullback,entries,AEHR,101.6,2.0,0.6,0.72,0.65,95,97,95,82.0,0.953,55,2nd_break,Semiconductors Broad,Improving
+2026-10-01,liquid_leader_pullback,entries,AI,11.11,1.1,1.15,2.02,0.95,95,86,88,66.0,0.897,52,,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,DELL,541.74,0.7,0.72,2.11,0.29,52,91,93,88.0,0.937,55,,Computer Hardware,Improving
+2026-10-01,liquid_leader_pullback,entries,DOCU,69.74,3.9,0.58,2.9,0.98,81,87,97,86.0,0.966,56,1st_break,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,FSLY,26.39,2.8,0.43,1.02,0.58,86,97,96,73.0,0.96,31,,Cybersecurity,Leading
+2026-10-01,liquid_leader_pullback,entries,HPQ,32.15,2.8,0.85,1.43,0.27,57,78,95,79.0,0.958,40,,Computer Hardware,Improving
+2026-10-01,liquid_leader_pullback,entries,NOW,137.76,2.8,0.83,1.68,0.44,67,76,91,85.0,0.925,69,,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,NTSK,17.85,2.4,0.93,3.39,1.0,81,98,96,87.0,0.962,42,,Cybersecurity,Leading
+2026-10-01,liquid_leader_pullback,entries,SAIL,20.58,1.1,1.53,1.71,0.46,76,92,92,82.0,0.932,39,,Cybersecurity,Leading
+2026-10-01,liquid_leader_pullback,entries,SMCI,41.92,2.1,0.69,2.89,0.91,95,93,97,88.0,0.971,41,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,liquid_leader_pullback,entries,SNOW,341.99,0.7,0.67,1.44,0.66,95,92,92,90.0,0.933,59,,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,TEAM,189.91,5.9,0.78,3.55,0.72,57,80,99,90.0,0.99,68,,Cloud Software,Weakening
+2026-10-01,liquid_leader_pullback,entries,U,43.61,6.6,1.0,1.31,0.77,86,88,96,88.0,0.964,51,,Software,Lagging
+2026-10-01,vcs,compression,ANF,136.36,1.2,0.85,2.36,0.25,48,73,97,75.0,0.969,64,1st_break,Consumer Retail,Lagging
+2026-10-01,vcs,compression,DXYZ,31.24,1.3,1.06,0.95,0.19,52,55,89,67.0,0.906,84,counter_break,Financials,Lagging
+2026-10-01,vcs,compression,HTFL,48.91,-1.7,0.59,3.74,0.28,43,67,98,88.0,0.986,66,,Health Information Services,Lagging
+2026-10-01,vcs,compression,REPL,13.45,1.6,1.16,0.43,0.16,76,10,87,60.0,0.884,89,,Biotechnology,Lagging
+2026-10-01,vcs,compression,TARS,75.46,-4.0,1.07,1.15,-0.44,14,32,83,62.0,0.851,64,,Biotechnology,Lagging
+2026-10-01,vcs,compression,XNCR,24.77,-0.7,0.76,0.57,-0.04,52,36,98,68.0,0.979,74,,Biotechnology,Lagging
+2026-10-01,vcs,compression,GCT,53.19,2.9,0.74,1.4,0.45,81,85,97,76.0,0.972,62,1st_break,Software,Lagging
+2026-10-01,vcs,compression,GTLB,49.95,5.7,1.06,3.83,1.26,95,76,97,84.0,0.969,73,,Cloud Software,Weakening
+2026-10-01,vcs,compression,INTA,37.59,3.8,0.73,0.08,0.22,62,29,94,77.0,0.946,78,,Cloud Software,Weakening
+2026-10-01,vcs,compression,NOW,137.76,2.8,0.83,1.68,0.44,67,76,91,85.0,0.925,69,,Cloud Software,Weakening
+2026-10-01,vcs,compression,PI,183.87,2.5,0.87,2.38,1.03,100,85,90,65.0,0.913,71,1st_break,Semiconductors Broad,Improving
+2026-10-01,vcs,compression,SPSC,84.2,2.1,0.7,2.26,0.98,100,79,95,83.0,0.952,73,2nd_break,Cloud Software,Weakening
+2026-10-01,vcs,compression,TEAM,189.91,5.9,0.78,3.55,0.72,57,80,99,90.0,0.99,68,,Cloud Software,Weakening
+2026-10-01,vcs,compression,WDAY,186.75,-1.9,0.96,0.26,-0.42,19,41,94,81.0,0.944,91,,Cloud Software,Weakening
+2026-10-01,anticipation,compression,VAC,103.12,0.8,0.53,-0.62,-0.04,76,84,74,51.0,0.786,71,,Travel & Leisure,Improving
+2026-10-01,anticipation,compression,XNCR,24.77,-0.7,0.76,0.57,-0.04,52,36,98,68.0,0.979,74,,Biotechnology,Lagging
+2026-10-01,anticipation,compression,FCEL,16.57,0.9,0.61,-1.31,-0.3,62,94,2,31.0,0.135,96,,Clean Energy,Improving
+2026-10-01,anticipation,compression,AMKR,52.9,1.0,0.92,0.41,0.45,76,92,10,54.0,0.26,80,,Semiconductors Broad,Improving
+2026-10-01,anticipation,compression,ICHR,62.48,1.0,0.93,-0.01,1.23,100,95,3,54.0,0.176,86,,Semiconductors Broad,Improving
+2026-10-01,anticipation,compression,PENG,54.98,0.5,0.85,0.59,0.51,86,94,16,69.0,0.322,78,,Memory & Storage,Leading
+2026-10-01,pp_today,accumulation,ANDG,57.36,5.4,2.4,2.74,1.38,100,80,97,81.0,0.969,56,counter_break,Personal Services,Lagging
+2026-10-01,pp_today,accumulation,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,pp_today,accumulation,ELF,104.09,3.1,1.27,1.98,0.97,81,63,95,79.0,0.955,53,2nd_break,Household & Personal Products,Lagging
+2026-10-01,pp_today,accumulation,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,pp_today,accumulation,MU,1097.39,3.0,1.71,3.48,1.53,100,94,82,75.0,0.841,27,,Semiconductors Large Caps,Improving
+2026-10-01,pp_2plus_10d,accumulation,ANDG,57.36,5.4,2.4,2.74,1.38,100,80,97,81.0,0.969,56,counter_break,Personal Services,Lagging
+2026-10-01,pp_2plus_10d,accumulation,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,pp_2plus_10d,accumulation,CDNA,66.23,1.9,1.46,7.74,3.19,100,98,99,87.0,0.991,22,,Genomics,Improving
+2026-10-01,pp_2plus_10d,accumulation,IBRX,9.28,-1.7,1.05,2.82,1.34,95,94,71,63.0,0.755,19,,Biotechnology,Lagging
+2026-10-01,pp_2plus_10d,accumulation,MRNA,188.94,-1.9,1.05,7.78,1.52,76,97,99,67.0,0.991,31,,Genomics,Improving
+2026-10-01,pp_2plus_10d,accumulation,PRGO,14.02,-5.0,0.92,1.46,-0.29,48,62,92,76.0,0.929,41,stop_hit,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,pp_2plus_10d,accumulation,TARS,75.46,-4.0,1.07,1.15,-0.44,14,32,83,62.0,0.851,64,,Biotechnology,Lagging
+2026-10-01,pp_2plus_10d,accumulation,TWST,188.05,-2.7,1.18,6.78,2.34,95,98,99,77.0,0.987,17,,Genomics,Improving
+2026-10-01,pp_2plus_10d,accumulation,XERS,9.25,-3.2,0.92,1.64,0.85,86,89,80,83.0,0.833,0,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,pp_2plus_10d,accumulation,AMD,615.73,0.7,0.74,5.27,2.01,86,98,82,74.0,0.842,10,,Semiconductors Large Caps,Improving
+2026-10-01,pp_2plus_10d,accumulation,ARM,292.34,0.9,0.56,1.61,0.51,71,97,37,62.0,0.483,0,,Semiconductors Broad,Improving
+2026-10-01,pp_2plus_10d,accumulation,BB,9.18,1.6,1.15,1.83,1.47,100,96,15,66.0,0.317,34,,Cybersecurity,Leading
+2026-10-01,pp_2plus_10d,accumulation,MU,1097.39,3.0,1.71,3.48,1.53,100,94,82,75.0,0.841,27,,Semiconductors Large Caps,Improving
+2026-10-01,pp_2plus_10d,accumulation,NICE,116.48,4.7,1.22,2.75,1.45,90,90,89,74.0,0.898,10,,Cloud Software,Weakening
+2026-10-01,pp_2plus_10d,accumulation,OUST,40.87,1.3,0.86,0.84,0.81,90,95,18,62.0,0.336,35,,Physical AI & Humanoid Robotics,Improving
+2026-10-01,pp_2plus_10d,accumulation,QMCO,31.89,0.5,1.13,6.35,1.93,95,98,99,89.0,0.994,28,,Quantum Computing,Improving
+2026-10-01,pp_2plus_10d,accumulation,SHOP,149.09,0.5,0.46,1.47,1.13,100,85,90,84.0,0.912,26,,Cloud Software,Weakening
+2026-10-01,pp_2plus_10d,accumulation,TWLO,301.27,3.0,0.97,6.01,2.54,100,98,96,80.0,0.959,9,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,AUGO,78.85,0.2,0.6,0.3,-0.95,14,42,87,64.0,0.886,45,,Gold Miners,Weakening
+2026-10-01,morales_pp_10d,accumulation,BTG,5.17,-1.0,0.98,0.66,-0.67,5,57,92,72.0,0.926,57,,Gold Miners,Weakening
+2026-10-01,morales_pp_10d,accumulation,MTRN,285.14,5.8,1.34,3.57,2.46,100,95,78,66.0,0.817,49,tp2_hit,Other Industrial Metals & Mining,Lagging
+2026-10-01,morales_pp_10d,accumulation,AMC,2.76,-8.0,1.05,0.57,-0.19,62,84,98,81.0,0.975,23,,Entertainment,Lagging
+2026-10-01,morales_pp_10d,accumulation,IDT,79.98,0.0,1.55,4.79,3.1,95,94,93,64.0,0.939,9,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,IMAX,52.52,-4.2,1.87,0.48,-0.48,38,79,95,74.0,0.953,48,,Entertainment,Lagging
+2026-10-01,morales_pp_10d,accumulation,META,725.93,0.1,0.51,4.62,1.33,67,96,89,62.0,0.903,20,,Tech Mega Caps,Improving
+2026-10-01,morales_pp_10d,accumulation,MGNI,25.44,0.7,0.76,2.21,0.99,90,81,89,75.0,0.906,41,,Advertising Agencies,Improving
+2026-10-01,morales_pp_10d,accumulation,FIGS,14.08,1.6,0.92,1.28,0.82,86,45,95,44.0,0.956,48,,Apparel Manufacturing,Improving
+2026-10-01,morales_pp_10d,accumulation,GME,24.11,-2.2,1.05,4.91,1.86,90,97,74,63.0,0.782,24,,Consumer Retail,Lagging
+2026-10-01,morales_pp_10d,accumulation,KSS,18.92,2.5,1.13,0.78,1.13,86,71,83,80.0,0.853,19,2nd_break,Department Stores,
+2026-10-01,morales_pp_10d,accumulation,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,morales_pp_10d,accumulation,SG,8.68,-2.1,1.05,5.36,2.19,90,97,77,62.0,0.803,13,,Travel & Leisure,Improving
+2026-10-01,morales_pp_10d,accumulation,VSXY,88.51,0.1,0.41,0.88,1.31,90,84,84,78.0,0.861,15,,Consumer Retail,Lagging
+2026-10-01,morales_pp_10d,accumulation,ELF,104.09,3.1,1.27,1.98,0.97,81,63,95,79.0,0.955,53,2nd_break,Household & Personal Products,Lagging
+2026-10-01,morales_pp_10d,accumulation,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,morales_pp_10d,accumulation,INSW,114.6,4.0,0.76,4.99,2.24,100,95,95,83.0,0.954,39,2nd_break,Energy,Weakening
+2026-10-01,morales_pp_10d,accumulation,MPC,420.15,6.2,0.7,4.35,1.78,86,90,97,92.0,0.973,48,tp1_hit,Oil & Gas,Weakening
+2026-10-01,morales_pp_10d,accumulation,NAT,8.17,3.4,0.81,4.86,1.84,90,96,96,82.0,0.961,42,1st_break,Energy,Weakening
+2026-10-01,morales_pp_10d,accumulation,PBF,82.34,7.0,0.97,2.83,1.72,100,90,98,87.0,0.98,42,,Oil & Gas,Weakening
+2026-10-01,morales_pp_10d,accumulation,SEI,71.38,0.3,0.61,3.5,1.32,100,98,74,80.0,0.783,44,,AI Power & Infrastructure,Improving
+2026-10-01,morales_pp_10d,accumulation,TNK,101.01,4.1,0.61,3.95,1.52,81,92,96,80.0,0.964,52,1st_break,Energy,Weakening
+2026-10-01,morales_pp_10d,accumulation,VLO,408.46,5.4,0.67,4.16,1.62,86,92,97,92.0,0.969,45,1st_break,Oil & Gas,Weakening
+2026-10-01,morales_pp_10d,accumulation,WTTR,20.03,1.2,1.05,0.08,0.02,48,78,81,75.0,0.839,34,,Oil & Gas,Weakening
+2026-10-01,morales_pp_10d,accumulation,ASST,30.11,2.4,0.5,7.69,1.48,95,97,99,90.0,0.991,59,,Financials,Lagging
+2026-10-01,morales_pp_10d,accumulation,BMNR,26.73,1.1,0.72,3.3,0.65,71,94,98,64.0,0.982,41,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,COIN,189.29,1.5,0.6,1.7,0.29,52,89,82,66.0,0.846,23,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,HOOD,111.15,-1.2,0.77,1.03,-0.5,19,84,48,58.0,0.561,32,stop_hit,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,MRX,70.96,1.7,0.8,0.36,-0.3,19,71,76,61.0,0.797,42,,Financials,Lagging
+2026-10-01,morales_pp_10d,accumulation,PURR,12.03,-2.0,0.48,2.42,-0.14,43,87,94,56.0,0.947,41,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,SBET,9.58,3.2,0.6,3.85,0.93,81,95,98,75.0,0.981,38,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,XP,21.17,0.8,1.19,4.39,1.52,100,86,92,57.0,0.93,42,,Financials,Lagging
+2026-10-01,morales_pp_10d,accumulation,WT,24.03,-1.1,0.96,1.49,0.38,67,78,92,84.0,0.933,45,,Financials,Lagging
+2026-10-01,morales_pp_10d,accumulation,ABCL,13.91,-4.7,1.61,6.01,1.72,90,96,98,73.0,0.984,33,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,ABSI,10.75,-0.2,1.15,2.88,1.52,95,96,44,62.0,0.531,10,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,ADPT,27.37,-5.3,2.35,1.61,0.06,48,91,91,85.0,0.923,29,stop_hit,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,AMRX,20.07,-0.3,1.05,2.46,1.32,86,92,88,82.0,0.892,0,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,morales_pp_10d,accumulation,BFLY,8.53,-4.8,1.01,0.33,-0.04,67,92,70,74.0,0.75,8,stop_hit,Medical Devices,Lagging
+2026-10-01,morales_pp_10d,accumulation,CDNA,66.23,1.9,1.46,7.74,3.19,100,98,99,87.0,0.991,22,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,GRAL,132.56,-5.4,0.76,9.4,3.2,90,99,99,88.0,0.987,0,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,HNGE,97.94,0.7,0.6,2.65,1.13,100,87,81,79.0,0.834,52,,Health Information Services,Lagging
+2026-10-01,morales_pp_10d,accumulation,HTFL,48.91,-1.7,0.59,3.74,0.28,43,67,98,88.0,0.986,66,,Health Information Services,Lagging
+2026-10-01,morales_pp_10d,accumulation,IBRX,9.28,-1.7,1.05,2.82,1.34,95,94,71,63.0,0.755,19,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,INSP,70.78,2.0,2.11,2.5,0.43,62,92,95,75.0,0.957,44,,Medical Devices,Lagging
+2026-10-01,morales_pp_10d,accumulation,IOVA,14.23,-4.0,0.86,12.7,4.09,90,99,99,73.0,0.995,15,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,KOD,98.46,3.9,1.12,17.86,6.24,100,99,99,73.0,0.993,3,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,MRNA,188.94,-1.9,1.05,7.78,1.52,76,97,99,67.0,0.991,31,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,NEO,17.78,-3.2,1.17,0.8,-0.74,33,80,87,84.0,0.885,41,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,NEOG,12.24,-4.4,0.67,0.74,-0.84,43,83,92,67.0,0.928,31,,Agribusiness,Lagging
+2026-10-01,morales_pp_10d,accumulation,NTRA,408.47,-1.2,1.16,7.55,2.53,81,97,96,93.0,0.959,17,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,NVAX,10.6,-1.9,0.6,3.21,0.77,81,81,84,55.0,0.858,30,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,OMER,18.47,-3.0,0.83,2.11,-0.35,33,67,98,68.0,0.985,50,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,PGEN,8.21,-4.1,0.95,3.34,1.43,95,95,96,71.0,0.963,30,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,PRGO,14.02,-5.0,0.92,1.46,-0.29,48,62,92,76.0,0.929,41,stop_hit,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,morales_pp_10d,accumulation,REPL,13.45,1.6,1.16,0.43,0.16,76,10,87,60.0,0.884,89,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,RGEN,177.23,-7.8,1.77,1.2,-0.47,52,81,91,78.0,0.917,31,,Medical Instruments & Supplies,Lagging
+2026-10-01,morales_pp_10d,accumulation,RVTY,149.06,-2.5,1.09,5.25,1.58,76,93,93,85.0,0.937,25,,Diagnostics & Research,Weakening
+2026-10-01,morales_pp_10d,accumulation,RXRX,4.07,-1.4,0.82,3.37,1.55,95,96,68,53.0,0.737,3,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,SMMT,16.69,-1.3,1.0,1.64,0.3,33,93,72,51.0,0.765,34,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,TARS,75.46,-4.0,1.07,1.15,-0.44,14,32,83,62.0,0.851,64,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,TEM,76.5,-6.6,1.04,3.57,0.45,62,96,91,81.0,0.92,24,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,TWST,188.05,-2.7,1.18,6.78,2.34,95,98,99,77.0,0.987,17,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,TXG,88.76,-1.8,1.06,6.78,2.17,90,99,99,71.0,0.99,27,,Genomics,Improving
+2026-10-01,morales_pp_10d,accumulation,XNCR,24.77,-0.7,0.76,0.57,-0.04,52,36,98,68.0,0.979,74,,Biotechnology,Lagging
+2026-10-01,morales_pp_10d,accumulation,XERS,9.25,-3.2,0.92,1.64,0.85,86,89,80,83.0,0.833,0,,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,morales_pp_10d,accumulation,WRBY,27.49,-1.0,1.14,1.22,1.25,95,94,47,69.0,0.551,4,,Medical Instruments & Supplies,Lagging
+2026-10-01,morales_pp_10d,accumulation,FIX,1685.29,1.9,0.92,0.39,0.66,95,89,47,52.0,0.55,56,2nd_break,AI Power & Infrastructure,Improving
+2026-10-01,morales_pp_10d,accumulation,NVT,165.77,3.4,0.85,1.39,1.04,100,92,74,59.0,0.78,26,2nd_break,Clean Energy,Improving
+2026-10-01,morales_pp_10d,accumulation,RXO,21.36,4.4,1.04,0.07,0.87,100,89,15,46.0,0.313,58,tp1_hit,Transportation & Logistics,Improving
+2026-10-01,morales_pp_10d,accumulation,WOR,59.14,-0.7,0.45,0.52,0.04,38,73,77,66.0,0.805,8,,Industrials,Improving
+2026-10-01,morales_pp_10d,accumulation,XMTR,104.23,1.3,0.63,2.83,1.32,95,93,81,85.0,0.833,5,,Industrials,Improving
+2026-10-01,morales_pp_10d,accumulation,HHH,72.06,-2.1,1.03,2.74,1.93,86,93,53,65.0,0.594,1,,Real Estate - Diversified,
+2026-10-01,morales_pp_10d,accumulation,ACLS,136.71,4.2,1.13,2.42,2.74,100,96,56,66.0,0.621,22,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,ACMR,83.58,3.3,1.26,1.51,1.57,100,95,24,62.0,0.382,28,2nd_break,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,morales_pp_10d,accumulation,ALAB,356.42,0.1,0.94,2.54,1.28,71,98,19,62.0,0.341,15,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,ALNT,115.95,3.9,0.83,3.41,1.83,100,98,93,79.0,0.936,11,,Physical AI & Humanoid Robotics,Improving
+2026-10-01,morales_pp_10d,accumulation,AMBQ,69.15,1.4,0.85,1.59,0.91,90,96,19,62.0,0.343,43,,Robotics & Automation,Improving
+2026-10-01,morales_pp_10d,accumulation,AMD,615.73,0.7,0.74,5.27,2.01,86,98,82,74.0,0.842,10,,Semiconductors Large Caps,Improving
+2026-10-01,morales_pp_10d,accumulation,AMPL,14.3,3.2,0.9,3.41,1.36,100,89,98,89.0,0.976,55,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,ARM,292.34,0.9,0.56,1.61,0.51,71,97,37,62.0,0.483,0,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,AVPT,14.08,0.0,1.67,1.75,1.28,95,86,86,77.0,0.882,24,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,AVT,102.24,2.3,0.88,2.62,1.3,95,93,90,85.0,0.914,18,tp2_hit,Electronics & Computer Distribution,Leading
+2026-10-01,morales_pp_10d,accumulation,AXTI,81.81,5.7,0.98,2.42,1.34,100,98,92,74.0,0.929,35,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,BAND,62.44,2.9,0.82,3.12,1.46,100,98,69,77.0,0.739,32,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,BB,9.18,1.6,1.15,1.83,1.47,100,96,15,66.0,0.317,34,,Cybersecurity,Leading
+2026-10-01,morales_pp_10d,accumulation,BLSH,34.79,-0.3,0.5,2.06,-0.33,24,87,93,68.0,0.935,43,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,CDNS,350.73,6.2,1.17,2.94,3.03,100,93,45,75.0,0.536,12,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,CEVA,35.52,0.5,0.64,2.85,1.89,95,98,14,53.0,0.302,36,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,CLS,373.09,3.2,1.18,2.49,1.39,100,98,75,77.0,0.79,19,,Electronic Components,Improving
+2026-10-01,morales_pp_10d,accumulation,COHR,319.19,10.9,1.69,1.14,1.06,100,95,50,59.0,0.57,42,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,COHU,70.34,3.2,0.89,5.95,2.82,100,99,88,82.0,0.898,10,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,CRDO,210.17,7.9,1.04,0.13,1.28,100,97,13,60.0,0.297,40,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,DDOG,276.46,0.9,0.84,3.02,2.19,100,98,77,89.0,0.807,14,,Cybersecurity,Leading
+2026-10-01,morales_pp_10d,accumulation,DIOD,97.49,0.7,0.7,1.25,0.8,100,89,62,64.0,0.668,55,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,ENTG,158.48,2.9,0.83,3.0,1.88,100,96,79,73.0,0.82,26,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,FORM,148.44,-0.6,0.98,5.91,3.23,95,99,91,79.0,0.916,10,,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,FSLY,26.39,2.8,0.43,1.02,0.58,86,97,96,73.0,0.96,31,,Cybersecurity,Leading
+2026-10-01,morales_pp_10d,accumulation,GCT,53.19,2.9,0.74,1.4,0.45,81,85,97,76.0,0.972,62,1st_break,Software,Lagging
+2026-10-01,morales_pp_10d,accumulation,GDDY,96.98,1.5,0.48,0.1,-0.1,38,53,84,70.0,0.858,24,,Software,Lagging
+2026-10-01,morales_pp_10d,accumulation,GLW,160.42,4.3,0.93,0.99,0.67,81,92,19,54.0,0.343,56,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,HPE,64.58,1.1,0.64,3.04,1.3,100,97,97,72.0,0.968,33,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,INOD,71.85,9.3,1.55,2.87,1.83,100,98,58,70.0,0.632,0,,Information Technology Services,Lagging
+2026-10-01,morales_pp_10d,accumulation,INTC,120.0,-0.2,0.92,3.84,1.39,71,98,57,61.0,0.631,8,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,IONQ,43.99,0.3,0.7,1.43,0.81,86,94,35,69.0,0.47,17,,Quantum Computing,Improving
+2026-10-01,morales_pp_10d,accumulation,KLAC,200.33,2.8,0.9,1.83,1.83,100,94,26,59.0,0.399,34,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,KLIC,96.03,1.9,0.55,2.25,2.0,100,96,15,58.0,0.316,45,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,LITE,1045.78,7.7,1.55,3.06,1.67,100,96,95,70.0,0.957,38,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,LRCX,340.1,3.5,0.9,2.79,2.24,100,95,55,72.0,0.611,20,,Semiconductors Large Caps,Improving
+2026-10-01,morales_pp_10d,accumulation,LSCC,128.86,2.6,0.81,1.55,1.58,100,93,46,64.0,0.546,14,,Physical AI & Humanoid Robotics,Improving
+2026-10-01,morales_pp_10d,accumulation,MPWR,1360.97,1.0,0.67,1.2,1.23,95,92,65,64.0,0.709,10,,AI Power & Infrastructure,Improving
+2026-10-01,morales_pp_10d,accumulation,MRVL,268.08,1.5,0.99,3.87,1.61,100,98,76,71.0,0.801,34,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,MSTR,160.5,4.8,0.81,5.61,1.58,81,98,98,80.0,0.975,25,,Crypto Equities,Improving
+2026-10-01,morales_pp_10d,accumulation,MTSI,301.63,5.9,0.88,2.11,1.71,100,95,41,60.0,0.511,31,tp1_hit,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,MU,1097.39,3.0,1.71,3.48,1.53,100,94,82,75.0,0.841,27,,Semiconductors Large Caps,Improving
+2026-10-01,morales_pp_10d,accumulation,MXL,92.12,2.0,0.74,3.92,1.73,90,99,52,68.0,0.592,18,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,NBIS,232.28,-1.5,0.79,0.92,0.26,67,93,78,88.0,0.817,54,,AI - Datacenters,Improving
+2026-10-01,morales_pp_10d,accumulation,NICE,116.48,4.7,1.22,2.75,1.45,90,90,89,74.0,0.898,10,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,NOK,10.37,2.3,0.69,0.7,0.01,52,85,19,46.0,0.347,50,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,NSIT,161.33,3.2,0.89,2.16,0.79,81,87,96,90.0,0.96,58,,Electronics & Computer Distribution,Leading
+2026-10-01,morales_pp_10d,accumulation,NTAP,215.05,2.4,0.91,3.48,2.16,100,95,93,85.0,0.937,33,,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,NTSK,17.85,2.4,0.93,3.39,1.0,81,98,96,87.0,0.962,42,,Cybersecurity,Leading
+2026-10-01,morales_pp_10d,accumulation,ONTO,314.88,2.3,0.8,2.47,2.07,100,96,70,69.0,0.749,33,tp2_hit,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,OUST,40.87,1.3,0.86,0.84,0.81,90,95,18,62.0,0.336,35,,Physical AI & Humanoid Robotics,Improving
+2026-10-01,morales_pp_10d,accumulation,P,134.13,2.6,0.56,6.84,3.13,100,99,98,92.0,0.982,13,,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,PD,15.58,3.2,1.06,5.75,2.14,100,93,97,78.0,0.973,50,tp1_hit,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,PDFS,53.39,4.6,0.82,2.83,2.16,100,97,47,80.0,0.551,28,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,PENG,54.98,0.5,0.85,0.59,0.51,86,94,16,69.0,0.322,78,,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,PI,183.87,2.5,0.87,2.38,1.03,100,85,90,65.0,0.913,71,1st_break,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,QMCO,31.89,0.5,1.13,6.35,1.93,95,98,99,89.0,0.994,28,,Quantum Computing,Improving
+2026-10-01,morales_pp_10d,accumulation,ROG,155.8,1.8,1.19,4.26,2.8,100,97,80,75.0,0.831,9,,Electronic Components,Improving
+2026-10-01,morales_pp_10d,accumulation,SAIL,20.58,1.1,1.53,1.71,0.46,76,92,92,82.0,0.932,39,,Cybersecurity,Leading
+2026-10-01,morales_pp_10d,accumulation,SANM,221.96,3.3,0.93,2.01,1.01,90,95,67,78.0,0.724,12,tp2_hit,Electronic Components,Improving
+2026-10-01,morales_pp_10d,accumulation,SHOP,149.09,0.5,0.46,1.47,1.13,100,85,90,84.0,0.912,26,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,SITM,678.87,4.1,0.88,2.05,1.35,100,95,80,74.0,0.83,28,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,SMCI,41.92,2.1,0.69,2.89,0.91,95,93,97,88.0,0.971,41,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,SMTC,186.59,4.6,0.98,4.74,1.69,100,98,94,75.0,0.943,29,1st_break,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,SNDK,1787.69,2.8,0.97,2.84,0.9,86,94,68,86.0,0.734,53,,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,SNOW,341.99,0.7,0.67,1.44,0.66,95,92,92,90.0,0.933,59,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,SNPS,490.54,12.8,2.8,5.37,3.86,100,95,81,82.0,0.837,4,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,SNX,271.76,5.8,1.05,1.22,0.69,86,88,84,87.0,0.863,0,1st_break,Electronics & Computer Distribution,Leading
+2026-10-01,morales_pp_10d,accumulation,STX,945.57,2.5,0.66,2.07,1.31,100,94,78,87.0,0.817,19,2nd_break,Memory & Storage,Leading
+2026-10-01,morales_pp_10d,accumulation,SYNA,106.15,4.7,1.29,1.18,1.61,100,91,25,50.0,0.392,35,,Robotics & Automation,Improving
+2026-10-01,morales_pp_10d,accumulation,TER,415.79,3.7,0.69,2.45,1.71,100,96,79,70.0,0.822,22,,Robotics & Automation,Improving
+2026-10-01,morales_pp_10d,accumulation,TSEM,241.3,6.1,1.06,1.29,1.24,100,94,80,66.0,0.829,30,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,TTMI,126.5,3.0,0.94,0.42,0.43,86,90,23,66.0,0.38,55,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,TWLO,301.27,3.0,0.97,6.01,2.54,100,98,96,80.0,0.959,9,,Cloud Software,Weakening
+2026-10-01,morales_pp_10d,accumulation,UCTT,78.64,-3.0,1.36,0.23,0.68,90,95,9,59.0,0.246,76,,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,VIA,30.22,-0.1,0.69,4.07,1.52,95,91,97,89.0,0.973,38,,Software,Lagging
+2026-10-01,morales_pp_10d,accumulation,VIAV,44.78,6.8,1.25,3.05,2.39,100,97,73,64.0,0.775,13,,Optics & Networking Equipment,Improving
+2026-10-01,morales_pp_10d,accumulation,VICR,308.59,6.8,1.6,6.82,3.27,100,99,77,80.0,0.806,2,,AI Power & Infrastructure,Improving
+2026-10-01,morales_pp_10d,accumulation,VPG,75.09,3.2,1.04,0.9,1.62,100,96,2,51.0,0.154,83,,Physical AI & Humanoid Robotics,Improving
+2026-10-01,morales_pp_10d,accumulation,VSH,34.27,5.3,1.08,0.95,1.12,100,92,9,56.0,0.245,93,2nd_break,Semiconductors Broad,Improving
+2026-10-01,morales_pp_10d,accumulation,WOLF,31.17,10.8,1.34,2.21,1.71,100,94,13,41.0,0.296,54,tp1_hit,AI Power & Infrastructure,Improving
+2026-10-01,morales_pp_10d,accumulation,ZETA,32.4,2.6,1.13,3.26,1.51,100,87,96,88.0,0.965,54,,Cloud Software,Weakening
+2026-10-01,weekly_momentum_97,moving,IDT,79.98,0.0,1.55,4.79,3.1,95,94,93,64.0,0.939,9,,Optics & Networking Equipment,Improving
+2026-10-01,weekly_momentum_97,moving,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,weekly_momentum_97,moving,PARR,86.21,5.6,0.88,1.67,1.27,90,88,95,84.0,0.956,32,,Oil & Gas,Weakening
+2026-10-01,weekly_momentum_97,moving,PBF,82.34,7.0,0.97,2.83,1.72,100,90,98,87.0,0.98,42,,Oil & Gas,Weakening
+2026-10-01,weekly_momentum_97,moving,TRMD,38.8,2.0,0.56,6.33,2.6,100,96,97,82.0,0.966,37,,Energy,Weakening
+2026-10-01,weekly_momentum_97,moving,ECO,85.74,6.0,0.92,6.86,2.44,90,97,98,88.0,0.983,44,1st_break,Transportation & Logistics,Improving
+2026-10-01,weekly_momentum_97,moving,ACN,212.3,15.8,4.36,4.14,2.9,100,93,98,70.0,0.974,38,counter_break,Information Technology Services,Lagging
+2026-10-01,weekly_momentum_97,moving,LITE,1045.78,7.7,1.55,3.06,1.67,100,96,95,70.0,0.957,38,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,weekly_momentum_97,moving,S,24.67,3.8,1.0,3.39,1.76,100,97,94,85.0,0.946,34,2nd_break,Cybersecurity,Leading
+2026-10-01,weekly_momentum_97,moving,ZETA,32.4,2.6,1.13,3.26,1.51,100,87,96,88.0,0.965,54,,Cloud Software,Weakening
+2026-10-01,bullish_4pct,moving,MTRN,285.14,5.8,1.34,3.57,2.46,100,95,78,66.0,0.817,49,tp2_hit,Other Industrial Metals & Mining,Lagging
+2026-10-01,bullish_4pct,moving,SNAP,5.65,4.6,1.42,1.24,0.63,76,77,88,60.0,0.893,40,,Internet Content & Information,Lagging
+2026-10-01,bullish_4pct,moving,ANDG,57.36,5.4,2.4,2.74,1.38,100,80,97,81.0,0.969,56,counter_break,Personal Services,Lagging
+2026-10-01,bullish_4pct,moving,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,bullish_4pct,moving,MAT,15.04,18.8,5.6,1.02,1.84,100,81,85,44.0,0.873,21,,Leisure,Improving
+2026-10-01,bullish_4pct,moving,GO,11.77,4.6,1.91,1.73,0.82,86,67,84,63.0,0.859,56,,Consumer Staples,Lagging
+2026-10-01,bullish_4pct,moving,DHT,23.56,4.4,1.04,5.55,2.28,100,95,96,81.0,0.963,44,,Energy,Weakening
+2026-10-01,bullish_4pct,moving,RXO,21.36,4.4,1.04,0.07,0.87,100,89,15,46.0,0.313,58,tp1_hit,Transportation & Logistics,Improving
+2026-10-01,bullish_4pct,moving,AAOI,107.32,8.1,1.55,-0.44,0.37,86,84,28,41.0,0.415,89,counter_break,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,ACLS,136.71,4.2,1.13,2.42,2.74,100,96,56,66.0,0.621,22,,Semiconductors Broad,Improving
+2026-10-01,bullish_4pct,moving,CDNS,350.73,6.2,1.17,2.94,3.03,100,93,45,75.0,0.536,12,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,bullish_4pct,moving,COHR,319.19,10.9,1.69,1.14,1.06,100,95,50,59.0,0.57,42,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,CRDO,210.17,7.9,1.04,0.13,1.28,100,97,13,60.0,0.297,40,,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,DXC,11.64,7.5,1.52,1.36,1.24,81,74,86,60.0,0.876,27,,Information Technology Services,Lagging
+2026-10-01,bullish_4pct,moving,EFOR,36.19,10.0,1.7,3.41,1.97,100,95,99,65.0,0.989,59,tp1_hit,Information Technology Services,Lagging
+2026-10-01,bullish_4pct,moving,FIVN,35.75,5.1,1.23,2.06,0.73,81,87,96,85.0,0.965,34,2nd_break,Cloud Software,Weakening
+2026-10-01,bullish_4pct,moving,FN,451.44,6.4,1.25,0.11,1.52,100,93,36,54.0,0.472,57,,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,GTLB,49.95,5.7,1.06,3.83,1.26,95,76,97,84.0,0.969,73,,Cloud Software,Weakening
+2026-10-01,bullish_4pct,moving,INOD,71.85,9.3,1.55,2.87,1.83,100,98,58,70.0,0.632,0,,Information Technology Services,Lagging
+2026-10-01,bullish_4pct,moving,IPGP,83.66,6.9,1.07,0.88,1.51,100,90,14,42.0,0.308,90,2nd_break,Robotics & Automation,Improving
+2026-10-01,bullish_4pct,moving,JBL,299.79,4.5,1.66,-1.14,-0.56,24,74,32,56.0,0.442,27,,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,LITE,1045.78,7.7,1.55,3.06,1.67,100,96,95,70.0,0.957,38,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,NICE,116.48,4.7,1.22,2.75,1.45,90,90,89,74.0,0.898,10,,Cloud Software,Weakening
+2026-10-01,bullish_4pct,moving,NVTS,12.12,4.4,1.2,0.12,0.38,95,89,14,49.0,0.303,50,1st_break,Clean Energy,Improving
+2026-10-01,bullish_4pct,moving,SNPS,490.54,12.8,2.8,5.37,3.86,100,95,81,82.0,0.837,4,tp1_hit,Semiconductors Broad,Improving
+2026-10-01,bullish_4pct,moving,SNX,271.76,5.8,1.05,1.22,0.69,86,88,84,87.0,0.863,0,1st_break,Electronics & Computer Distribution,Leading
+2026-10-01,bullish_4pct,moving,SYNA,106.15,4.7,1.29,1.18,1.61,100,91,25,50.0,0.392,35,,Robotics & Automation,Improving
+2026-10-01,bullish_4pct,moving,TSEM,241.3,6.1,1.06,1.29,1.24,100,94,80,66.0,0.829,30,2nd_break,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,VIAV,44.78,6.8,1.25,3.05,2.39,100,97,73,64.0,0.775,13,,Optics & Networking Equipment,Improving
+2026-10-01,bullish_4pct,moving,VSH,34.27,5.3,1.08,0.95,1.12,100,92,9,56.0,0.245,93,2nd_break,Semiconductors Broad,Improving
+2026-10-01,bullish_4pct,moving,WOLF,31.17,10.8,1.34,2.21,1.71,100,94,13,41.0,0.296,54,tp1_hit,AI Power & Infrastructure,Improving
+2026-10-01,weekly_20_gainers,moving,LIND,33.63,7.0,1.97,3.15,3.28,100,98,93,71.0,0.937,18,tp1_hit,Travel & Leisure,Improving
+2026-10-01,weekly_20_gainers,moving,VIAV,44.78,6.8,1.25,3.05,2.39,100,97,73,64.0,0.775,13,,Optics & Networking Equipment,Improving
+2026-10-01,stop_hit,trouble,BBY,87.7,-0.6,1.0,0.28,-0.55,19,80,84,70.0,0.861,35,stop_hit,Consumer Retail,Lagging
+2026-10-01,stop_hit,trouble,DDS,646.35,-3.5,2.1,0.94,-0.08,52,79,91,70.0,0.916,48,stop_hit,Department Stores,
+2026-10-01,stop_hit,trouble,PM,188.18,-1.4,0.8,-0.41,-0.48,38,74,66,48.0,0.721,42,stop_hit,Tobacco,Lagging
+2026-10-01,stop_hit,trouble,HOOD,111.15,-1.2,0.77,1.03,-0.5,19,84,48,58.0,0.561,32,stop_hit,Crypto Equities,Improving
+2026-10-01,stop_hit,trouble,ADPT,27.37,-5.3,2.35,1.61,0.06,48,91,91,85.0,0.923,29,stop_hit,Genomics,Improving
+2026-10-01,stop_hit,trouble,BFLY,8.53,-4.8,1.01,0.33,-0.04,67,92,70,74.0,0.75,8,stop_hit,Medical Devices,Lagging
+2026-10-01,stop_hit,trouble,BLLN,105.76,-0.6,0.88,-0.32,-0.48,57,90,25,69.0,0.394,35,stop_hit,Genomics,Improving
+2026-10-01,stop_hit,trouble,BRKR,61.94,-4.3,1.03,1.1,0.39,71,85,65,71.0,0.702,8,stop_hit,Medical Devices,Lagging
+2026-10-01,stop_hit,trouble,CORT,114.03,-1.1,0.48,0.27,-0.05,57,83,90,77.0,0.914,57,stop_hit,Biotechnology,Lagging
+2026-10-01,stop_hit,trouble,EXEL,57.94,-0.8,0.64,1.34,0.3,52,71,71,61.0,0.758,43,stop_hit,Biotechnology,Lagging
+2026-10-01,stop_hit,trouble,GMAB,34.55,-3.1,2.48,2.57,0.24,52,77,90,64.0,0.91,40,stop_hit,Biotechnology,Lagging
+2026-10-01,stop_hit,trouble,IRTC,111.05,-2.3,0.69,-1.56,-0.67,29,29,31,47.0,0.432,71,stop_hit,Medical Devices,Lagging
+2026-10-01,stop_hit,trouble,ONC,358.77,-2.0,0.88,0.65,-0.05,62,71,86,61.0,0.876,46,stop_hit,Biotechnology,Lagging
+2026-10-01,stop_hit,trouble,PRGO,14.02,-5.0,0.92,1.46,-0.29,48,62,92,76.0,0.929,41,stop_hit,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,stop_hit,trouble,QGEN,42.04,-3.9,1.36,-0.77,-1.2,5,53,77,65.0,0.808,27,stop_hit,Genomics,Improving
+2026-10-01,stop_hit,trouble,RCUS,25.23,-2.3,0.77,-1.9,-0.84,38,11,22,31.0,0.371,43,stop_hit,Biotechnology,Lagging
+2026-10-01,stop_hit,trouble,RDY,12.25,-2.9,0.98,0.47,-0.1,76,76,26,50.0,0.398,27,stop_hit,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,stop_hit,trouble,WAT,425.53,-3.1,1.16,1.43,0.15,71,82,82,89.0,0.848,35,stop_hit,Diagnostics & Research,Weakening
+2026-10-01,stop_hit,trouble,BETA,21.73,-1.7,0.33,-0.09,-0.25,52,87,85,54.0,0.867,39,stop_hit,Drones,Improving
+2026-10-01,stop_hit,trouble,LTC,42.67,-0.5,0.96,2.09,0.38,57,82,82,54.0,0.842,51,stop_hit,Real Estate,Lagging
+2026-10-01,ll_break,trouble,AEM,180.59,-1.5,0.99,-0.88,-1.8,5,35,86,61.0,0.882,50,ll_break,Gold Miners,Weakening
+2026-10-01,ll_break,trouble,AGI,31.89,-1.5,0.82,-1.47,-1.94,5,21,65,53.0,0.705,37,ll_break,Gold Miners,Weakening
+2026-10-01,ll_break,trouble,B,40.1,-1.4,1.15,-1.54,-1.8,5,30,73,61.0,0.777,53,ll_break,Gold Miners,Weakening
+2026-10-01,ll_break,trouble,BCPC,163.69,-0.8,0.79,-2.33,-1.4,5,42,57,42.0,0.628,66,ll_break,Chemicals & Materials,Lagging
+2026-10-01,ll_break,trouble,CRH,81.7,-1.3,1.01,-4.01,-2.19,5,20,10,13.0,0.265,35,ll_break,Building Materials,Improving
+2026-10-01,ll_break,trouble,CX,9.4,-1.2,0.52,-4.48,-2.47,5,23,11,22.0,0.268,28,ll_break,Building Materials,Improving
+2026-10-01,ll_break,trouble,EMN,64.05,-1.2,1.52,-3.01,-1.76,5,26,47,37.0,0.553,40,ll_break,Chemicals & Materials,Lagging
+2026-10-01,ll_break,trouble,HMY,17.52,-1.1,0.77,-1.95,-1.93,5,26,76,68.0,0.801,40,ll_break,Gold Miners,Weakening
+2026-10-01,ll_break,trouble,MP,46.09,-2.5,1.28,-1.65,-1.33,10,11,28,38.0,0.414,53,ll_break,Rare Earth Metals,Lagging
+2026-10-01,ll_break,trouble,MUX,17.66,-1.1,0.72,-1.49,-1.34,5,19,46,54.0,0.544,36,ll_break,Silver Miners,Weakening
+2026-10-01,ll_break,trouble,NTR,69.73,-0.7,0.94,-1.08,-1.83,5,18,78,49.0,0.815,23,ll_break,Agribusiness,Lagging
+2026-10-01,ll_break,trouble,PAAS,44.98,-1.2,0.88,-1.85,-1.74,5,18,63,54.0,0.678,39,ll_break,Silver Miners,Weakening
+2026-10-01,ll_break,trouble,SQM,64.12,-1.2,1.23,-2.79,-2.16,5,5,33,33.0,0.447,26,ll_break,Lithium & Battery Tech,Improving
+2026-10-01,ll_break,trouble,CARG,29.73,-4.6,1.68,-3.37,-2.2,5,14,20,29.0,0.356,15,ll_break,Internet Content & Information,Lagging
+2026-10-01,ll_break,trouble,DIS,101.33,-3.4,1.06,-1.25,-1.68,5,45,71,60.0,0.755,42,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,ECHO,88.25,-1.3,1.08,-0.43,-0.93,10,79,35,26.0,0.466,43,ll_break,Space,Improving
+2026-10-01,ll_break,trouble,FOX,54.92,-2.5,1.3,-1.42,-1.68,5,31,81,64.0,0.834,44,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,GOOG,334.93,-1.7,1.11,-0.69,-0.55,29,75,40,45.0,0.505,43,ll_break,Tech Mega Caps,Improving
+2026-10-01,ll_break,trouble,GOOGL,338.24,-1.7,1.22,-0.59,-0.54,29,75,42,46.0,0.518,41,ll_break,Tech Mega Caps,Improving
+2026-10-01,ll_break,trouble,NFLX,67.85,-2.5,1.16,-3.4,-2.7,5,7,34,39.0,0.455,14,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,PSKY,9.34,-9.6,1.73,-0.89,-1.59,5,13,44,50.0,0.528,33,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,ROKU,151.26,-0.7,0.9,-0.91,-1.3,10,57,75,74.0,0.788,53,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,SPHR,128.55,-4.4,1.59,-2.67,-1.92,5,33,24,48.0,0.382,36,ll_break,Entertainment,Lagging
+2026-10-01,ll_break,trouble,ZD,54.42,-4.0,0.85,-0.53,-1.16,5,57,65,57.0,0.707,26,ll_break,Advertising Agencies,Improving
+2026-10-01,ll_break,trouble,CHWY,17.72,-2.6,0.7,-3.67,-2.46,5,1,20,29.0,0.354,21,ll_break,Consumer Retail,Lagging
+2026-10-01,ll_break,trouble,LCII,82.11,-1.9,1.05,-4.66,-2.47,5,4,14,9.0,0.301,36,ll_break,Recreational Vehicles,Lagging
+2026-10-01,ll_break,trouble,MELI,1685.12,-2.5,1.08,-2.8,-2.09,5,10,45,44.0,0.535,18,ll_break,Fintech,Lagging
+2026-10-01,ll_break,trouble,NKE,35.15,-0.7,2.54,-3.41,-1.51,5,35,18,14.0,0.335,47,ll_break,Footwear & Accessories,Weakening
+2026-10-01,ll_break,trouble,NVR,6126.38,-0.5,1.19,-1.11,-0.79,14,62,39,26.0,0.498,51,ll_break,Homebuilders,Improving
+2026-10-01,ll_break,trouble,PATK,66.56,-1.8,0.92,-4.39,-2.25,5,5,12,16.0,0.284,38,ll_break,Homebuilders,Improving
+2026-10-01,ll_break,trouble,PDD,76.5,-1.9,0.75,-3.73,-1.67,5,41,39,35.0,0.495,73,ll_break,Consumer Retail,Lagging
+2026-10-01,ll_break,trouble,PRKS,31.18,-3.8,0.94,-4.72,-2.69,5,2,3,18.0,0.18,31,ll_break,Leisure,Improving
+2026-10-01,ll_break,trouble,QSR,69.76,-1.9,0.79,-3.02,-2.2,5,23,52,40.0,0.588,15,ll_break,Travel & Leisure,Improving
+2026-10-01,ll_break,trouble,RIVN,14.76,-1.2,1.45,-1.48,-0.94,10,49,7,30.0,0.231,57,ll_break,Lithium & Battery Tech,Improving
+2026-10-01,ll_break,trouble,SE,95.27,-2.1,1.24,-3.76,-2.41,5,11,37,50.0,0.483,45,ll_break,Fintech,Lagging
+2026-10-01,ll_break,trouble,WEN,6.25,-2.0,1.04,-3.81,-2.53,5,2,14,28.0,0.305,36,ll_break,Travel & Leisure,Improving
+2026-10-01,ll_break,trouble,BTI,53.19,-2.2,0.83,-3.41,-2.28,5,55,30,31.0,0.427,37,ll_break,Tobacco,Lagging
+2026-10-01,ll_break,trouble,CALM,65.84,-3.3,1.77,-4.48,-2.55,5,9,12,26.0,0.277,29,ll_break,Agribusiness,Lagging
+2026-10-01,ll_break,trouble,CL,84.53,-0.9,0.92,-3.25,-1.73,5,45,38,48.0,0.488,42,ll_break,Household & Personal Products,Lagging
+2026-10-01,ll_break,trouble,DEO,84.42,-1.4,1.17,-3.0,-1.72,5,39,69,63.0,0.744,74,ll_break,Consumer Staples,Lagging
+2026-10-01,ll_break,trouble,EL,90.19,-2.8,1.17,-0.93,-1.64,5,23,75,64.0,0.791,43,ll_break,Household & Personal Products,Lagging
+2026-10-01,ll_break,trouble,FMX,115.19,-2.8,1.69,-1.96,-1.47,5,52,35,37.0,0.465,35,ll_break,Consumer Staples,Lagging
+2026-10-01,ll_break,trouble,INGR,94.91,-0.9,1.04,-3.51,-1.95,5,38,51,37.0,0.578,42,ll_break,Agribusiness,Lagging
+2026-10-01,ll_break,trouble,JBS,10.86,-3.8,1.71,-4.65,-3.03,5,4,34,28.0,0.461,25,ll_break,Consumer Staples,Lagging
+2026-10-01,ll_break,trouble,KMB,94.34,-3.2,1.25,-4.29,-2.45,5,18,23,43.0,0.376,52,ll_break,Household & Personal Products,Lagging
+2026-10-01,ll_break,trouble,KVUE,17.22,-2.5,0.78,-3.43,-1.99,5,31,35,48.0,0.471,52,ll_break,Household & Personal Products,Lagging
+2026-10-01,ll_break,trouble,PG,143.95,-0.9,0.92,-0.73,-0.92,10,65,55,54.0,0.61,33,ll_break,Household & Personal Products,Lagging
+2026-10-01,ll_break,trouble,TPB,55.32,-5.8,1.49,-4.82,-3.47,5,1,3,15.0,0.173,20,ll_break,Tobacco,Lagging
+2026-10-01,ll_break,trouble,NXE,8.87,-2.7,1.27,-2.51,-1.81,5,16,40,25.0,0.5,42,ll_break,Uranium & Nuclear Energy,Lagging
+2026-10-01,ll_break,trouble,BCS,23.64,-2.6,1.28,-4.65,-2.87,5,27,22,46.0,0.371,18,ll_break,Banks - Diversified,Lagging
+2026-10-01,ll_break,trouble,CIB,91.08,-1.9,0.81,-0.81,-1.16,10,55,86,65.0,0.877,40,ll_break,Regional Banks,Lagging
+2026-10-01,ll_break,trouble,DB,35.13,-2.1,1.66,-3.31,-2.88,5,16,49,50.0,0.566,13,ll_break,Regional Banks,Lagging
+2026-10-01,ll_break,trouble,FCFS,208.15,-1.5,1.03,-1.04,-1.39,5,49,44,47.0,0.528,51,ll_break,Fintech,Lagging
+2026-10-01,ll_break,trouble,FUTU,106.43,-3.7,1.05,-1.34,-1.56,5,27,77,41.0,0.809,70,ll_break,Fintech,Lagging
+2026-10-01,ll_break,trouble,GOLD,42.09,-1.1,0.62,-0.6,-0.96,10,69,57,47.0,0.627,35,ll_break,Financials,Lagging
+2026-10-01,ll_break,trouble,NWG,17.4,-4.1,1.91,-2.53,-2.35,5,44,52,52.0,0.593,23,ll_break,Regional Banks,Lagging
+2026-10-01,ll_break,trouble,OTF,9.75,-0.6,1.08,-2.55,-1.78,5,22,56,51.0,0.623,51,ll_break,Financials,Lagging
+2026-10-01,ll_break,trouble,OWL,8.95,-1.5,1.28,-3.9,-2.62,5,3,52,54.0,0.589,35,ll_break,Financials,Lagging
+2026-10-01,ll_break,trouble,SMFG,25.28,-2.4,1.66,-1.06,-1.38,5,50,60,57.0,0.65,20,ll_break,Banks - Diversified,Lagging
+2026-10-01,ll_break,trouble,USB,57.36,-0.7,1.3,-3.5,-1.9,5,37,42,47.0,0.513,10,ll_break,Regional Banks,Lagging
+2026-10-01,ll_break,trouble,ACHC,26.93,-2.1,0.83,-1.72,-1.01,5,63,27,53.0,0.408,81,ll_break,Medical Care Facilities,Lagging
+2026-10-01,ll_break,trouble,ALC,63.94,-1.2,1.19,-4.26,-2.17,10,21,45,47.0,0.541,37,ll_break,Medical Devices,Lagging
+2026-10-01,ll_break,trouble,ALNY,231.18,-6.3,1.44,-1.04,-1.51,5,16,8,35.0,0.239,79,ll_break,Genomics,Improving
+2026-10-01,ll_break,trouble,ANAB,48.63,-3.2,0.87,-2.37,-1.82,5,17,12,34.0,0.286,34,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,BIO,355.57,-5.9,0.98,-0.81,-1.81,5,34,89,68.0,0.9,56,ll_break,Medical Devices,Lagging
+2026-10-01,ll_break,trouble,BMRN,58.44,-2.6,1.05,-3.18,-2.56,5,17,61,48.0,0.657,22,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,CELC,75.13,-5.5,1.02,-2.42,-1.78,5,3,5,26.0,0.204,39,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,CNC,60.99,-1.8,1.12,-1.62,-1.32,5,28,42,39.0,0.518,7,ll_break,Healthcare Plans,Improving
+2026-10-01,ll_break,trouble,EHC,119.06,-2.0,1.05,-0.41,-0.95,5,68,82,64.0,0.84,53,ll_break,Medical Care Facilities,Lagging
+2026-10-01,ll_break,trouble,GSK,47.18,-2.1,2.34,-3.16,-2.44,5,43,35,47.0,0.465,18,ll_break,Drug Manufacturers - General,Lagging
+2026-10-01,ll_break,trouble,INBX,97.93,-2.1,0.6,-0.51,-1.04,5,3,64,55.0,0.695,47,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,INCY,117.14,-3.5,1.52,-1.81,-1.9,5,30,65,54.0,0.711,38,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,IRON,63.61,-2.8,1.35,-3.55,-2.11,5,4,19,35.0,0.344,32,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,JNJ,258.66,-2.3,1.29,-1.27,-1.71,5,46,63,61.0,0.677,51,ll_break,Drug Manufacturers - General,Lagging
+2026-10-01,ll_break,trouble,KRYS,325.31,-2.2,0.81,-1.53,-1.45,5,20,28,46.0,0.411,57,ll_break,Genomics,Improving
+2026-10-01,ll_break,trouble,KYMR,110.12,-1.5,1.37,-0.82,-0.91,5,40,52,63.0,0.586,29,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,MDGL,499.71,-0.8,0.9,-1.39,-1.23,5,33,48,50.0,0.556,41,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,MIRM,83.92,-1.8,0.84,-3.28,-2.19,5,10,5,37.0,0.2,29,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,MLYS,23.72,-5.6,1.08,-1.89,-2.0,5,6,17,32.0,0.326,1,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,MOH,180.85,-4.4,1.72,-2.35,-2.07,5,23,14,35.0,0.3,26,ll_break,Healthcare Plans,Improving
+2026-10-01,ll_break,trouble,NKTR,46.99,-22.4,3.67,-3.55,-3.78,5,0,3,16.0,0.169,2,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,SRPT,17.57,-3.6,0.99,-1.02,-1.61,5,2,39,24.0,0.499,34,ll_break,Genomics,Improving
+2026-10-01,ll_break,trouble,TAK,17.86,-1.8,1.01,-0.47,-1.94,5,62,73,62.0,0.779,43,ll_break,Drug Manufacturers - Specialty & Generic,Lagging
+2026-10-01,ll_break,trouble,TMDX,78.64,-5.8,1.23,-1.45,-1.57,5,42,80,54.0,0.83,50,ll_break,Medical Devices,Lagging
+2026-10-01,ll_break,trouble,TVTX,56.85,-3.5,1.47,-1.98,-1.98,5,11,59,63.0,0.646,25,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,UNH,365.2,-0.5,0.76,-2.98,-1.57,5,36,30,37.0,0.43,48,ll_break,Healthcare Plans,Improving
+2026-10-01,ll_break,trouble,VERA,30.99,-4.0,0.42,-1.09,-1.21,5,17,11,30.0,0.277,46,ll_break,Biotechnology,Lagging
+2026-10-01,ll_break,trouble,ZTS,69.1,-1.1,1.17,-2.61,-1.61,5,29,42,40.0,0.516,32,ll_break,Agribusiness,Lagging
+2026-10-01,ll_break,trouble,ZBH,88.06,-0.9,1.05,-2.79,-1.94,5,22,58,53.0,0.634,26,ll_break,Robotics & Automation,Improving
+2026-10-01,ll_break,trouble,ARXS,47.52,-3.8,1.64,-1.78,-1.28,5,40,66,36.0,0.721,55,ll_break,Defense,Improving
+2026-10-01,ll_break,trouble,DNOW,15.28,-1.4,1.03,-0.58,-0.97,5,61,88,81.0,0.895,59,ll_break,Industrials,Improving
+2026-10-01,ll_break,trouble,GFL,40.43,-3.4,1.51,-0.9,-1.18,5,52,62,44.0,0.668,33,ll_break,Waste Management,Lagging
+2026-10-01,ll_break,trouble,JBLU,4.15,-1.9,0.79,-3.8,-1.64,5,24,4,21.0,0.198,66,ll_break,Travel & Leisure,Improving
+2026-10-01,ll_break,trouble,KRMN,31.89,-1.6,0.59,-3.85,-1.95,5,4,2,12.0,0.149,51,ll_break,Defense,Improving
+2026-10-01,ll_break,trouble,LTM,47.74,-4.3,1.66,-2.58,-2.25,5,42,20,29.0,0.35,26,ll_break,Travel & Leisure,Improving
+2026-10-01,ll_break,trouble,PAC,196.61,-4.3,1.18,-2.06,-1.72,5,48,12,20.0,0.277,29,ll_break,Transportation & Logistics,Improving
+2026-10-01,ll_break,trouble,WCN,150.66,-2.1,1.29,-4.05,-2.44,5,35,35,37.0,0.47,32,ll_break,Waste Management,Lagging
+2026-10-01,ll_break,trouble,ADC,65.03,-2.7,1.45,-6.02,-3.27,5,26,24,26.0,0.388,25,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,AHR,50.69,-1.1,0.88,-3.31,-1.85,5,29,49,43.0,0.562,51,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,ARE,47.03,-0.9,1.7,-1.74,-1.71,5,28,51,32.0,0.581,2,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,BNL,18.25,-1.4,1.08,-5.44,-2.86,5,20,30,30.0,0.429,24,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,BXP,60.24,-1.4,0.99,-3.74,-2.02,5,30,28,34.0,0.417,37,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,COLD,13.81,-1.2,0.88,-1.12,-0.98,19,58,28,40.0,0.416,39,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,CTRE,35.91,-1.8,0.96,-3.99,-2.21,5,34,30,34.0,0.425,50,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,DX,11.08,-0.5,1.29,-4.53,-3.05,5,20,28,17.0,0.417,4,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,EPR,55.49,-1.1,0.84,-3.45,-1.85,5,44,50,37.0,0.571,27,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,GTY,27.84,-1.4,0.87,-5.6,-3.1,5,17,20,21.0,0.354,16,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,HR,17.43,-1.8,1.14,-5.22,-2.89,5,27,27,26.0,0.406,26,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,JAN,28.74,-3.0,1.04,-1.89,-1.64,5,45,58,45.0,0.633,18,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,MAA,116.38,-1.2,0.95,-5.24,-2.54,5,28,21,22.0,0.361,24,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,NNN,40.2,-2.2,1.29,-5.96,-3.11,5,23,27,25.0,0.41,24,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,OHI,45.23,-2.3,0.83,-2.52,-1.66,5,59,45,37.0,0.539,53,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,REXR,36.02,-0.7,0.92,-1.24,-1.41,5,72,75,47.0,0.788,31,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,SBRA,19.2,-2.6,1.12,-3.13,-2.1,5,36,59,47.0,0.644,45,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,VMRK,60.17,-1.0,0.72,-3.64,-2.07,5,39,26,25.0,0.401,15,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,VNO,33.56,-0.9,1.14,-3.39,-1.54,5,35,19,42.0,0.342,41,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,WELL,226.94,-1.4,1.05,-1.8,-1.24,5,53,57,50.0,0.625,43,ll_break,Real Estate,Lagging
+2026-10-01,ll_break,trouble,ASTS,57.04,-3.1,1.25,-1.26,-0.92,5,33,6,32.0,0.213,76,ll_break,Space,Improving
+2026-10-01,ll_break,trouble,GDS,29.8,-4.6,1.63,-1.69,-1.59,5,61,53,49.0,0.597,13,ll_break,AI - Datacenters,Improving
+2026-10-01,ll_break,trouble,GRND,14.17,-8.2,2.99,-2.13,-1.89,5,28,33,60.0,0.45,37,ll_break,Software,Lagging
+2026-10-01,ll_break,trouble,KSPI,92.02,-2.2,1.15,-1.39,-1.64,5,20,71,66.0,0.756,48,ll_break,Fintech,Lagging
+2026-10-01,ll_break,trouble,PONY,6.24,-4.6,1.69,-2.69,-1.84,5,22,33,49.0,0.453,30,ll_break,Physical AI & Humanoid Robotics,Improving
+2026-10-01,ll_break,trouble,PRGS,36.58,-8.5,3.17,-2.39,-2.08,5,11,48,64.0,0.557,25,ll_break,Software,Lagging
+2026-10-01,ll_break,trouble,QNT,46.68,-2.9,1.29,-1.74,-1.08,5,64,2,54.0,0.136,65,ll_break,Quantum Computing,Improving
+2026-10-01,ll_break,trouble,CPK,124.33,-3.2,1.42,-2.46,-1.74,5,55,68,44.0,0.733,34,ll_break,Utilities,Improving
+2026-10-01,ll_break,trouble,HTO,60.2,-2.3,1.01,-1.93,-1.65,5,51,60,49.0,0.649,31,ll_break,Utilities,Improving
+2026-10-01,ll_break,trouble,ORA,89.66,-2.0,0.87,-3.19,-1.89,5,14,13,16.0,0.298,38,ll_break,Clean Energy,Improving
+2026-10-01,extended,trouble,DV,13.49,0.0,0.74,7.28,1.48,67,77,86,73.0,0.874,100,,Advertising Agencies,Improving
+2026-10-01,extended,trouble,WBD,30.95,0.0,0.91,8.7,3.56,95,90,88,61.0,0.891,7,,Entertainment,Lagging
+2026-10-01,extended,trouble,ACVA,10.45,0.2,0.41,10.47,3.12,76,99,95,61.0,0.953,67,,Auto & Truck Dealerships,Lagging
+2026-10-01,extended,trouble,HZO,52.33,0.1,1.14,15.05,1.57,62,75,96,75.0,0.965,100,1st_break,Consumer Retail,Lagging
+2026-10-01,extended,trouble,ARX,19.73,0.0,0.49,13.47,1.31,52,74,97,79.0,0.966,100,,Insurance,Lagging
+2026-10-01,extended,trouble,ASST,30.11,2.4,0.5,7.69,1.48,95,97,99,90.0,0.991,59,,Financials,Lagging
+2026-10-01,extended,trouble,CDNA,66.23,1.9,1.46,7.74,3.19,100,98,99,87.0,0.991,22,,Genomics,Improving
+2026-10-01,extended,trouble,GRAL,132.56,-5.4,0.76,9.4,3.2,90,99,99,88.0,0.987,0,,Genomics,Improving
+2026-10-01,extended,trouble,IOVA,14.23,-4.0,0.86,12.7,4.09,90,99,99,73.0,0.995,15,,Biotechnology,Lagging
+2026-10-01,extended,trouble,KOD,98.46,3.9,1.12,17.86,6.24,100,99,99,73.0,0.993,3,,Biotechnology,Lagging
+2026-10-01,extended,trouble,MRNA,188.94,-1.9,1.05,7.78,1.52,76,97,99,67.0,0.991,31,,Genomics,Improving
+2026-10-01,extended,trouble,NTRA,408.47,-1.2,1.16,7.55,2.53,81,97,96,93.0,0.959,17,,Genomics,Improving
+2026-10-01,extended,trouble,SDGR,30.46,-1.9,1.97,7.6,2.19,95,99,98,82.0,0.986,17,,Genomics,Improving
+2026-10-01,extended,trouble,STRC,99.5,0.1,1.2,7.32,2.56,95,83,86,70.0,0.876,90,,Software,Lagging
