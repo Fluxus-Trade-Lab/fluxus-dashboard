@@ -90,7 +90,7 @@
 3. `data/history/delayed_ep_log.csv`：26 行 2026-09-23 场次的 `days_since` 各 +1，改成
    `_sessions_between(ep_date, as_of)` 应有的日历值（纯日期算术，不依赖任何价格数据，
    无歧义）。改之前 `test_real_archive_ghost_rows_should_have_been_outside_the_scan_window`
-   与 `test_real_archive_has_exactly_these_five_violations` 均失败，改之后通过。
+   与 `test_real_archive_has_exactly_these_six_violations` 均失败，改之后通过。
 
 **欠条（没做的，交给谁）**：
 - 上面"模式命中、未逐一确认"那约 210 只票，没有逐一核实本地 K 线库是否还缺 09-22——

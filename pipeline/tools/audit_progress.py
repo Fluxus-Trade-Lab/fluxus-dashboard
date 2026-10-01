@@ -77,8 +77,8 @@ P1 要一份交易日历，P3 要知道哪一列是累积极值 —— 两条都
 在 2026-09-02 那一对上报 **0.0%** —— 16 个非键列里有 2 列带着供应商修订回来，
 **整行比法就此全废**。逐列问的话，那天是 **14/16 = 87.5%**。
 
-全库实测（`data/history` 的 8 个归档、**208** 个相邻场对，键列不计）：
-中位 14.3% · P95 37.5% · **最大 87.5% = `delayed_ep_log` 2026-09-02 与 2026-09-30 并列**
+全库实测（`data/history` 的 8 个归档、**343** 个相邻场对，键列不计）：
+中位 14.3% · P95 33.3% · **最大 87.5% = `delayed_ep_log` 2026-09-02 与 2026-09-30 并列**
 （同一个厂商坏法：yfinance 对那批票的 Close 给了 NaN，被 dropna 悄悄丢行、archive() 却盖上
 当天日戳，见 `CROSS_DECLARED`），与第三名（`shortlist_log` 08-28 的 50.0%）差 **37.5 个百分点**。
 **除这两天之外没有第三个整场重放。**
@@ -326,8 +326,10 @@ def render_sweep(rows: List[Dict[str, Any]], top: int = 8) -> str:
     L.append(f"  {len(rows)} 个相邻场对 · 中位 {100 * med:.1f}% · "
              f"P95 {100 * shares[int(.95 * len(shares))]:.1f}% · "
              f"最大 {100 * shares[-1]:.1f}%")
-    gap = 100 * (rows[0]["share"] - rows[1]["share"]) if len(rows) > 1 else 0.0
-    L.append(f"  第一名与第二名差 {gap:.1f} 个百分点")
+    top_share = rows[0]["share"]
+    next_row = next((x for x in rows[1:] if x["share"] != top_share), None)
+    gap = 100 * (top_share - next_row["share"]) if next_row else 0.0
+    L.append(f"  第一名与下一档差 {gap:.1f} 个百分点")
     L.append("")
     for x in rows[:top]:
         L.append(f"  {100 * x['share']:>5.1f}%  {x['archive']:<22} {x['session']}  "
