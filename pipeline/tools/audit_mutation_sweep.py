@@ -292,10 +292,21 @@ def main(argv=None):
     ap.add_argument("--list-sites", action="store_true",
                     help="print every mutation site with its index and exit, "
                          "without running anything (use it to plan slices)")
+    ap.add_argument("--ledger", action="store_true",
+                    help=f"file each whole-module result in {LEDGER_REL} so the "
+                         "rate has one home and nobody has to quote it out of "
+                         "a dated markdown (slices are refused -- see record())")
+    ap.add_argument("--show-ledger", action="store_true",
+                    help="print the filed rates, lowest-known first, each with "
+                         "a FRESH/STALE/UNKNOWN verdict git computed; exit "
+                         "without sweeping anything")
     a = ap.parse_args(argv)
 
     mods = a.module or sorted(p.stem for p in TOOLS.glob("audit_*.py")
                               if p.stem != Path(__file__).stem)
+    if a.show_ledger:
+        print_ledger(ledger_rows(modules=a.module))
+        return 0
     if a.list_sites:
         for m in mods:
             path = TOOLS / f"{m}.py"
@@ -312,8 +323,20 @@ def main(argv=None):
     for m in mods:
         if not a.quiet:
             print(f"\n{m}")
-        report["modules"].append(sweep(m, verbose=not a.quiet, repeat=a.repeat,
-                                       index_from=a.index_from, index_to=a.index_to))
+        r = sweep(m, verbose=not a.quiet, repeat=a.repeat,
+                  index_from=a.index_from, index_to=a.index_to)
+        report["modules"].append(r)
+        if a.ledger:
+            filed = record(r)
+            if filed is None:
+                why = r.get("error") or (f"slice {r.get('index_from')}:"
+                                         f"{r.get('index_to')} of {r.get('total_sites')}")
+                print(f"  not filed: only a whole-module sweep with a rate is a "
+                      f"reading ({why})", flush=True)
+            else:
+                print(f"  filed in {LEDGER_REL}: {filed['killed']}/{filed['mutants']} "
+                      f"at {(filed['commit'] or '?')[:9]}", flush=True)
+
     report["seconds"] = round(time.time() - t0, 1)
 
     print("\n" + "=" * 68)
@@ -337,6 +360,214 @@ def main(argv=None):
         print(f"\nreport -> {a.json}")
     return 0
 
+
+
+# ---------------------------------------------------------------------------
+# The ledger: where a kill rate lives between sweeps.
+#
+# A full sweep is hours, so a rate is measured once and then quoted for weeks.
+# Quoted out of PROSE, which is how every one of these went wrong:
+#
+#   09-24  the night report quoted `audit_ledger` 42/80 = 53% and
+#          `audit_archives` 54/101 = 53%. Both reports were written as
+#          "54 -> 57%" (before -> after fixing); the transcription took the
+#          number on the LEFT of the arrow. Two numbers, both wrong, and the
+#          cost was concrete: it picked the wrong guard to work on that night.
+#   09-27  three rates left "recompute before you start": one right, one with
+#          both numerator and denominator wrong, one hole already closed.
+#   09-28  "audit_universe_shape has 18 survivors nobody has read" -- written
+#          on 09-02 and copied forward into every report for three weeks.
+#   10-01  "audit_ledger is 52.5%, the 09-02 number, four weeks old" -- it had
+#          been 98% since 09-25. That is the sentence that was handed to the
+#          10-02 night shift as its first task.
+#
+# Four instances of one shape, so it gets a mechanism rather than a fifth
+# reminder to recompute (三次律). The ledger is the number's only home; prose
+# cites it. And the ledger does not ask you to trust its own freshness: a
+# reading carries the commit it was taken at, and `--show-ledger` asks git
+# whether the guard or its test has moved since.
+# ---------------------------------------------------------------------------
+
+LEDGER_REL = Path("data") / "research" / "audit_mutation_ledger.json"
+LEDGER_SCHEMA = "audit_mutation_ledger/1"
+
+
+def ledger_path(root=None):
+    """Resolved from ROOT at CALL time, not frozen at import.
+
+    The tests point the sweep at a throwaway tree by monkeypatching ROOT; a
+    module-level `LEDGER = ROOT / ...` would keep writing into the real
+    repository from inside them."""
+    return (root or ROOT) / LEDGER_REL
+
+
+def _git(args, repo):
+    """(returncode, stdout) for a git command. Never raises, never writes."""
+    try:
+        r = subprocess.run(["git", "-C", str(repo), *args],
+                           capture_output=True, text=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return None, ""
+    return r.returncode, r.stdout
+
+
+def guard_paths(module):
+    """The two files a reading is about: the guard, and the tests that pin it."""
+    return [f"pipeline/tools/{module}.py", f"pipeline/tests/test_{module}.py"]
+
+
+def freshness(entry, module, repo=None, sites_now=None):
+    """Is this reading still about the code that is in the tree now?
+
+    Two independent rulers, because each is blind where the other sees:
+
+      * git -- has any commit touched the guard or its test since the reading?
+      * the site count -- does the tree still present the same number of
+        mutation sites the reading was taken over?
+
+    git is unavailable in a tarball and incomplete in a shallow clone; the site
+    count cannot see an edit to the TEST file, which has no mutation sites of
+    its own and is half of what decides a kill rate. Neither alone is enough.
+
+    UNKNOWN is load-bearing and is the whole reason this function exists rather
+    than a date comparison. `git log <sha>..HEAD` for a sha this clone does not
+    have exits non-zero with an EMPTY stdout, and reading that empty output as
+    "no commits touched it" reports FRESH for a reading that cannot be placed
+    in this history at all. Same shape as grepping a ref that does not exist
+    and believing the zero hits.
+    """
+    repo = repo or ROOT
+    sites_then = entry.get("total_sites")
+
+    if sites_now is not None and sites_then is not None and sites_now != sites_then:
+        return {"verdict": "STALE", "commits": None,
+                "why": f"guard now has {sites_now} mutation sites, "
+                       f"the reading was taken over {sites_then}"}
+
+    if entry.get("uncommitted"):
+        return {"verdict": "UNKNOWN", "commits": None,
+                "why": "reading was taken with uncommitted changes to "
+                       + ", ".join(entry["uncommitted"])}
+
+    sha = entry.get("commit")
+    if not sha:
+        return {"verdict": "UNKNOWN", "commits": None,
+                "why": "reading records no commit, so it cannot be placed"}
+
+    rc, _ = _git(["cat-file", "-e", f"{sha}^{{commit}}"], repo)
+    if rc != 0:
+        return {"verdict": "UNKNOWN", "commits": None,
+                "why": f"commit {sha[:9]} is not in this clone's history "
+                       "(rebased away, or a shallow checkout)"}
+
+    rc, out = _git(["log", "--oneline", f"{sha}..HEAD", "--", *guard_paths(module)], repo)
+    if rc != 0:
+        return {"verdict": "UNKNOWN", "commits": None,
+                "why": f"git could not compare {sha[:9]}..HEAD"}
+
+    moved = [ln for ln in out.splitlines() if ln.strip()]
+    if moved:
+        return {"verdict": "STALE", "commits": len(moved),
+                "why": f"{len(moved)} commit(s) touched the guard or its test "
+                       f"since {sha[:9]}: {moved[0][:60]}"}
+    return {"verdict": "FRESH", "commits": 0,
+            "why": f"nothing touched the guard or its test since {sha[:9]}"}
+
+
+def read_ledger(path=None):
+    path = path or ledger_path()
+    if not path.exists():
+        return {"_schema": LEDGER_SCHEMA, "modules": {}}
+    data = json.loads(path.read_text())
+    data.setdefault("modules", {})
+    return data
+
+
+def record(result, repo=None, path=None, now=None):
+    """Put one WHOLE-MODULE reading into the ledger. Returns the entry, or None.
+
+    A SLICE IS NOT A READING. Slices exist because a full sweep does not fit in
+    one sitting, and `kill_rate` on a slice is the rate over those indices
+    only -- writing it under the module's name would publish `12/13 = 92%` as
+    the guard's score. Only `[0, total_sites)` is recorded; partial sweeps are
+    refused so the merged numbers have to be assembled before they can be
+    filed, which is exactly the step that makes them true."""
+    repo = repo or ROOT
+    if result.get("error") or result.get("kill_rate") is None:
+        return None
+    if result.get("index_from") or result.get("index_to") != result.get("total_sites"):
+        return None
+
+    module = result["module"]
+    _, head = _git(["rev-parse", "HEAD"], repo)
+    _, dirty = _git(["status", "--porcelain", "--", *guard_paths(module)], repo)
+    entry = {
+        "killed": result["killed"],
+        "mutants": result["mutants"],
+        "survived": result["survived"],
+        "unstable": result.get("unstable", 0),
+        "kill_rate": result["kill_rate"],
+        "total_sites": result["total_sites"],
+        "repeat": result.get("repeat", 1),
+        "commit": head.strip() or None,
+        "uncommitted": sorted(ln[3:].strip() for ln in dirty.splitlines() if ln.strip()),
+        "measured_at": now or time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+    }
+    p = path or ledger_path(repo)
+    data = read_ledger(p)
+    data["modules"][module] = entry
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")
+    return entry
+
+
+def ledger_rows(repo=None, path=None, modules=None):
+    """One row per guard, ordered the way the question is actually asked.
+
+    The question a research shift opens with is "which guard should I work on
+    tonight", and the honest answer is not "the lowest number on file" -- a
+    guard nobody has measured, or one whose reading no longer describes the
+    code, is less known than one sitting at 63%. So the groups come first
+    (unmeasured, then unplaceable, then stale, then fresh) and the rate only
+    orders within a group."""
+    repo = repo or ROOT
+    tools = repo / "pipeline" / "tools"
+    data = read_ledger(path or ledger_path(repo))
+    mods = modules or sorted(p.stem for p in tools.glob("audit_*.py")
+                             if p.stem != Path(__file__).stem)
+    rank = {"NEVER": 0, "UNKNOWN": 1, "STALE": 2, "FRESH": 3}
+    rows = []
+    for m in mods:
+        entry = data["modules"].get(m)
+        if not entry:
+            rows.append({"module": m, "verdict": "NEVER", "entry": None,
+                         "why": "no reading on file", "kill_rate": None})
+            continue
+        try:
+            sites_now = len(sites(ast.parse((tools / f"{m}.py").read_text())))
+        except (OSError, SyntaxError):
+            sites_now = None
+        f = freshness(entry, m, repo=repo, sites_now=sites_now)
+        rows.append({"module": m, "verdict": f["verdict"], "entry": entry,
+                     "why": f["why"], "kill_rate": entry.get("kill_rate")})
+    rows.sort(key=lambda r: (rank[r["verdict"]],
+                             r["kill_rate"] if r["kill_rate"] is not None else -1,
+                             r["module"]))
+    return rows
+
+
+def print_ledger(rows):
+    print(f"{'guard':24s} {'rate':>8s}  {'killed':>9s}  {'state':8s} why")
+    print("-" * 100)
+    for r in rows:
+        e = r["entry"] or {}
+        rate = f"{r['kill_rate']:.0%}" if r["kill_rate"] is not None else "--"
+        tally = f"{e['killed']}/{e['mutants']}" if e else "--"
+        print(f"{r['module']:24s} {rate:>8s}  {tally:>9s}  {r['verdict']:8s} {r['why']}")
+    print()
+    print("A rate is quotable only on a FRESH row. STALE/UNKNOWN/NEVER mean "
+          "re-measure before citing:")
+    print("  python3 -m pipeline.tools.audit_mutation_sweep --module <guard> --ledger")
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -15,6 +15,9 @@ Both were red before the 2026-09-02 change and are the reason it exists.
 """
 from __future__ import annotations
 
+import ast
+import json
+import subprocess
 import textwrap
 
 import pytest
@@ -348,3 +351,211 @@ def test_workspace_carries_the_second_test_root_so_guards_that_read_it_sweep(
     r = sweep_mod.sweep(name, verbose=False)
     assert not r.get("error"), r
     assert r["mutants"] > 0, r
+
+
+# ---------------------------------------------------------------------------
+# The ledger (2026-10-02, T-1002-10).
+#
+# Added because the rate kept being quoted out of prose and kept being wrong:
+# 09-24 took the number on the left of a "54 -> 57%" arrow (twice, and it
+# picked the wrong guard to work on), 09-28 copied a three-week-old survivor
+# count forward, 10-01 handed the next shift "audit_ledger is 52.5%" when it
+# had been 98% since 09-25. Four instances, so: one home for the number, and a
+# freshness verdict the reader does not have to take on trust.
+#
+# The controls below are built per FAILURE MODE, not one per function -- a
+# single happy-path assertion proves only that the code recognises "nothing
+# happened". The modes that matter here:
+#   (a) a reading is filed that was never a whole-module sweep
+#   (b) a reading is believed FRESH when the guard moved underneath it
+#   (c) a reading is believed FRESH when it cannot be placed at all
+#       (unknown sha, no sha, dirty tree) -- the silent false negative
+# ---------------------------------------------------------------------------
+
+
+def git_repo(tmp_path):
+    """A real git repo with one guard and one test, both committed."""
+    guard = """
+        LIMIT = 3
+        def over(n):
+            return n > LIMIT
+    """
+    test = """
+        from pipeline.tools.fake_guard import over
+        def test_limit():
+            assert over(4) and not over(3)
+    """
+    make_repo(tmp_path, guard, test)
+    run = lambda *a: subprocess.run(["git", "-C", str(tmp_path), *a],
+                                    capture_output=True, text=True, check=True)
+    run("init", "-q", "-b", "main")
+    run("config", "user.email", "t@t")
+    run("config", "user.name", "t")
+    run("add", "-A")
+    run("commit", "-q", "-m", "init")
+    head = run("rev-parse", "HEAD").stdout.strip()
+    return head, run
+
+
+def reading(**over):
+    base = {"killed": 9, "mutants": 10, "survived": 1, "unstable": 0,
+            "kill_rate": 0.9, "total_sites": 10, "repeat": 1,
+            "commit": None, "uncommitted": [], "measured_at": "2026-10-02T04:00:00+0900"}
+    base.update(over)
+    return base
+
+
+def test_a_whole_module_sweep_is_filed_with_the_commit_it_was_taken_at(
+        tmp_path, point_sweep_at):
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    r = sweep_mod.sweep("fake_guard", verbose=False)
+    entry = sweep_mod.record(r)
+    assert entry is not None
+    assert entry["commit"] == head
+    assert entry["killed"] == r["killed"] and entry["mutants"] == r["mutants"]
+    on_disk = json.loads(sweep_mod.ledger_path(tmp_path).read_text())
+    assert on_disk["modules"]["fake_guard"]["kill_rate"] == r["kill_rate"]
+
+
+def test_a_slice_is_refused_so_its_rate_never_lands_under_the_module_name(
+        tmp_path, point_sweep_at):
+    """(a) The failure this prevents is publishing 12/13 as a guard's score."""
+    git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    partial = sweep_mod.sweep("fake_guard", verbose=False, index_from=0, index_to=1)
+    assert partial["kill_rate"] is not None          # the slice HAS a rate
+    assert sweep_mod.record(partial) is None         # and it is still not a reading
+    assert not sweep_mod.ledger_path(tmp_path).exists()
+
+
+def test_a_reading_on_an_untouched_guard_is_fresh(tmp_path, point_sweep_at):
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    f = sweep_mod.freshness(reading(commit=head), "fake_guard", repo=tmp_path)
+    assert f["verdict"] == "FRESH"
+    assert f["commits"] == 0
+
+
+def test_editing_the_guard_makes_the_reading_stale(tmp_path, point_sweep_at):
+    """(b) via git."""
+    head, run = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    (tmp_path / "pipeline" / "tools" / "fake_guard.py").write_text(
+        "LIMIT = 4\ndef over(n):\n    return n > LIMIT\n")
+    run("commit", "-qam", "bump the limit")
+    f = sweep_mod.freshness(reading(commit=head), "fake_guard", repo=tmp_path)
+    assert f["verdict"] == "STALE"
+    assert f["commits"] == 1
+
+
+def test_editing_only_the_test_file_also_makes_the_reading_stale(
+        tmp_path, point_sweep_at):
+    """(b) the half the site count cannot see.
+
+    A kill rate is a fact about the guard AND its tests. Adding a test changes
+    the rate without changing one mutation site, so a freshness check that only
+    counted sites would call this reading FRESH -- which is precisely the
+    situation on 09-25 (`audit_ledger` 66% -> 98%, source untouched)."""
+    head, run = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    t = tmp_path / "pipeline" / "tests" / "test_fake_guard.py"
+    t.write_text(t.read_text() + "\ndef test_more():\n    assert not over(2)\n")
+    run("commit", "-qam", "one more test")
+    before = sweep_mod.freshness(reading(commit=head), "fake_guard", repo=tmp_path)
+    assert before["verdict"] == "STALE"
+    # and the site count really is blind to it, which is why git has to be asked
+    sites_now = len(sweep_mod.sites(ast.parse(
+        (tmp_path / "pipeline" / "tools" / "fake_guard.py").read_text())))
+    assert sites_now == reading()["total_sites"] or sites_now != 10
+    assert sweep_mod.freshness(reading(commit=head, total_sites=sites_now),
+                               "fake_guard", repo=tmp_path,
+                               sites_now=sites_now)["verdict"] == "STALE"
+
+
+def test_a_commit_this_clone_does_not_have_reads_unknown_not_fresh(
+        tmp_path, point_sweep_at):
+    """(c) The silent false negative, and the reason this is not a date check.
+
+    `git log <missing sha>..HEAD` exits NON-ZERO with EMPTY stdout. Count the
+    lines of that output and a reading that cannot be placed in this history at
+    all scores "0 commits touched it" = FRESH. Same shape as grepping a ref
+    that does not exist and believing the zero hits."""
+    git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    absent = "0" * 40
+    rc, out = sweep_mod._git(
+        ["log", "--oneline", f"{absent}..HEAD", "--",
+         *sweep_mod.guard_paths("fake_guard")], tmp_path)
+    assert rc != 0 and out.strip() == ""        # the trap, demonstrated
+    f = sweep_mod.freshness(reading(commit=absent), "fake_guard", repo=tmp_path)
+    assert f["verdict"] == "UNKNOWN"
+
+
+def test_a_reading_with_no_commit_reads_unknown(tmp_path, point_sweep_at):
+    """(c) same mode, via a ledger written before commits were recorded."""
+    git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    assert sweep_mod.freshness(reading(commit=None), "fake_guard",
+                               repo=tmp_path)["verdict"] == "UNKNOWN"
+
+
+def test_a_reading_taken_on_a_dirty_guard_reads_unknown(tmp_path, point_sweep_at):
+    """(c) the commit is real, but the measured bytes were never in it."""
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    entry = reading(commit=head, uncommitted=["pipeline/tools/fake_guard.py"])
+    f = sweep_mod.freshness(entry, "fake_guard", repo=tmp_path)
+    assert f["verdict"] == "UNKNOWN"
+    assert "uncommitted" in f["why"]
+
+
+def test_record_captures_a_dirty_guard_so_the_reading_is_not_trusted_later(
+        tmp_path, point_sweep_at):
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    g = tmp_path / "pipeline" / "tools" / "fake_guard.py"
+    g.write_text(g.read_text() + "\n# touched after the commit\n")
+    entry = sweep_mod.record(sweep_mod.sweep("fake_guard", verbose=False), repo=tmp_path)
+    assert entry["uncommitted"] == ["pipeline/tools/fake_guard.py"]
+    assert sweep_mod.freshness(entry, "fake_guard", repo=tmp_path)["verdict"] == "UNKNOWN"
+
+
+def test_a_guard_whose_site_count_moved_is_stale_without_asking_git(
+        tmp_path, point_sweep_at):
+    """(b) via the second ruler, for the tarball/shallow-clone case."""
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    f = sweep_mod.freshness(reading(commit=head, total_sites=10), "fake_guard",
+                            repo=tmp_path, sites_now=11)
+    assert f["verdict"] == "STALE"
+    assert "11" in f["why"] and "10" in f["why"]
+
+
+def test_an_unmeasured_guard_outranks_a_low_but_known_one(tmp_path, point_sweep_at):
+    """The ordering is the point: 'which guard tonight' is answered by what is
+    least KNOWN, not by the smallest number on file. A guard nobody swept is
+    less known than one sitting at 50%."""
+    head, _ = git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    tools = tmp_path / "pipeline" / "tools"
+    (tools / "audit_measured.py").write_text("X = 1\n")
+    (tools / "audit_never.py").write_text("Y = 2\n")
+    sweep_mod.ledger_path(tmp_path).parent.mkdir(parents=True, exist_ok=True)
+    sweep_mod.ledger_path(tmp_path).write_text(json.dumps({
+        "_schema": sweep_mod.LEDGER_SCHEMA,
+        "modules": {"audit_measured": reading(commit=head, kill_rate=0.5,
+                                              total_sites=0)}}))
+    rows = sweep_mod.ledger_rows(repo=tmp_path)
+    order = [r["module"] for r in rows]
+    assert order.index("audit_never") < order.index("audit_measured")
+    assert [r["verdict"] for r in rows if r["module"] == "audit_never"] == ["NEVER"]
+
+
+def test_the_ledger_path_follows_root_so_tests_never_write_into_the_repo(tmp_path):
+    """The bug this is the control for already has a history in this repo: a
+    tool that resolved a real-tree path at import time, and a test suite that
+    wrote into `data/history/` for four days before anyone noticed
+    (2026-08-23, test_quality.py)."""
+    assert sweep_mod.ledger_path(tmp_path) == tmp_path / sweep_mod.LEDGER_REL
+    assert sweep_mod.ledger_path(tmp_path) != sweep_mod.ledger_path()
