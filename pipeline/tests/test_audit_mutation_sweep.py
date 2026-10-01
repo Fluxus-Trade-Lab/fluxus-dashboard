@@ -521,6 +521,53 @@ def test_record_captures_a_dirty_guard_so_the_reading_is_not_trusted_later(
     assert sweep_mod.freshness(entry, "fake_guard", repo=tmp_path)["verdict"] == "UNKNOWN"
 
 
+def test_record_uses_the_commit_at_workspace_entry_not_after_the_sweep_runs(
+        tmp_path, point_sweep_at, monkeypatch):
+    """(mechanism, T-1002-16) A commit landing WHILE the sweep is running must
+    not be credited with bytes it never contained.
+
+    T-1002-10's review caught this: a filed reading's `measured_at` postdated
+    its own recorded `commit` by about as long as a 44-mutant sweep takes to
+    run, which only makes sense if the commit was read at the END of the
+    sweep rather than at the start. Here a commit is made to land mid-sweep
+    (right after the baseline check, well after `Workspace.__enter__` has
+    already copied the guard's bytes into the throwaway tree) and the filed
+    reading must still carry the OLDER commit and the dirty state that was
+    true when those bytes were actually copied.
+
+    Positive control: this is exactly the scenario that goes red if `record()`
+    is reverted to asking git for `HEAD` / `status --porcelain` itself after
+    the sweep finishes -- it would then report the newer commit and an empty
+    `uncommitted`, because by that time the mid-sweep commit has already
+    absorbed the dirty file."""
+    head_before, run = git_repo(tmp_path)
+    guard = tmp_path / "pipeline" / "tools" / "fake_guard.py"
+    guard.write_text(guard.read_text() + "\n# dirty before the sweep starts\n")
+    point_sweep_at(tmp_path)
+
+    real_run_tests = sweep_mod.Workspace.run_tests
+    calls = {"n": 0}
+
+    def run_tests_then_commit_once(self, module):
+        result = real_run_tests(self, module)
+        calls["n"] += 1
+        if calls["n"] == 1:
+            # By now Workspace.__enter__ has already read HEAD and the dirty
+            # state for this sweep -- this commit must NOT be what gets filed.
+            run("commit", "-qam", "a commit that lands mid-sweep")
+        return result
+
+    monkeypatch.setattr(sweep_mod.Workspace, "run_tests", run_tests_then_commit_once)
+
+    r = sweep_mod.sweep("fake_guard", verbose=False)
+    head_after = run("rev-parse", "HEAD").stdout.strip()
+    assert head_after != head_before, "precondition: a commit really landed mid-sweep"
+
+    entry = sweep_mod.record(r, repo=tmp_path)
+    assert entry["commit"] == head_before
+    assert entry["uncommitted"] == ["pipeline/tools/fake_guard.py"]
+
+
 def test_a_guard_whose_site_count_moved_is_stale_without_asking_git(
         tmp_path, point_sweep_at):
     """(b) via the second ruler, for the tarball/shallow-clone case."""
