@@ -777,4 +777,4 @@
 
 - [10-02] [Vera · 海报系统] **对外署名角标的防护从规则遵循升到机械验证**：海报·数据卡的 @Fluxus_Z 角标改动（8dce44aca·aac44f373）不止改代码，更重要的是三个生成模块（make_poster.py·make_data_card.py·test_poster_mark_handle.py）各自独立测试验证——诊断完整链条从「规则口头说明→文字化进 skill」升到「执行层每个生成点都有独立防护」。防护的分散设计确保署名一致性不依赖单个工人记忆完整性，而是由机械测试强制——任何模块的改动都会被同名的 test 抓住。系统对品牌身份统一的防护精准度体现在「分布式防护覆盖」而非「中央审核」：写海报的工作流经过测试、写数据卡的工作流也经过测试、两个测试各自独立而非共享一套闸。这个多维度防护的独立性设计，使得诊断系统从「发现问题」升到「预防问题」的能力递进——署名错误不再等人发现，而是在代码落地时就被拦。系统诚实度体现在每个出口点都有同等严格的防护标准，下游消费端（设计师、发布管理员）对「署名一致性已保障」的信心来自机械验证的重复有效而非人为声明。出处 T-1002-88 · 8dce44aca·aac44f373 · [pipeline/tests/test_poster_mark_handle.py](../../pipeline/tests/test_poster_mark_handle.py)
 
-- [10-02] [Vera] 对外署名角标 @Fluxus_Z 的工作流（make_poster.py、make_data_card.py、test_poster_mark_handle.py）从「Vera 脑子里的规则」移进 TEAM.md 登记项。复核指出「同一规则漏一处会重演 ASK」，现在不问就能查。相同改动规则在不同班次下机械一致，系统从依赖人工理解升到代码透明。[TEAM.md](../../../TEAM.md) · T-1002-94 复核判词 · bfb8ef6d
+- [10-02] [Vera] 对外署名角标 @Fluxus_Z 的工作流（make_poster.py、make_data_card.py、test_poster_mark_handle.py）从「Vera 脑子里的规则」移进 TEAM.md 登记项。复核指出「同一规则漏一处会重演 ASK」，现在不问就能查。相同改动规则在不同班次下机械一致，系统从依赖人工理解升到代码透明。[TEAM.md](../../../TEAM.md) · T-1002-97 · bfb8ef6d
