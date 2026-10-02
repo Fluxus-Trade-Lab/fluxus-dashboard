@@ -408,3 +408,4 @@
 - [2026-10-02] Discord→X 生成端：2026-09-30 草稿已出（37 条消息 → 7 条推文，commit 693a0a378）
 - [2026-10-02] 🔴 **数据哨兵**：07:00 JST 死线班（T-1002-19）· `audit_schedule_windows` 核：20:20Z 槽迟到 101min（历史 p50 217/max 281）、21:20Z 槽迟到 41min（p50 120/max 186），均未到 600min 丢弃阈值，判「迟到中」非 A_infra；dashboard 停在 2026-09-30（昨晚 `fd591ab6f` 按板块分段抓取修复生效，09-30 场已追平完整 5613 行，非截断）。按近 5 天同形状（p50 推算自然触发会压过死线），07:02 JST（ET 18:02，合法发布时段内）主动 dispatch run `36932615946`。**本次分段抓取耗时拉长到 24 分钟**（此前单次整表抓取仅 16-20s），07:26 JST `success`，market data commit `8c711e5e` 落 main，universe_quality rows 5617/5617（claimed 一致，无截断），`market_health.json` spy 最新 candle 追到 2026-10-01（Thu，最近完成交易日），`stale: false`。`audit_archives` 11 violations/2 warnings 均为「归档差一个 session」的已知正常滞后（下一班会追平），非真实缺口。**死线状态：安全**——07:28 JST 判断，距 08:30 死线尚余约 62 分钟。
 - [10-02] 📰 每日复盘 2026-10-01：已出（中英 PDF · 对照组纯字幕 EN PDF · Substack 逐页图 · X 素材）· 闸全绿 · 递送单 T-1002-37（runtime=app）
+- [2026-10-03] Discord→X 生成端：2026-10-01 草稿已出（83 条消息 → 7 条推文，commit c21d9ae83）
