@@ -423,3 +423,30 @@ def test_worktree_listing_takes_md_files_only_and_only_real_files(tmp_path):
     assert "plain.txt" not in listed         # 不是 .md
     assert "Fluxus_Brand/brain/signals.md" in listed
     assert A.audit(root, A.WORKTREE) == []   # plain.txt 的那句声明不该被查
+
+
+def test_a_bad_rev_exits_2_not_1(tmp_path, monkeypatch):
+    """⭐ 拼错 rev 不是「有断裂」。
+
+    2026-10-03（T-1003-10）：`--rev orgin/main` 原来把 CalledProcessError 抛到顶上，
+    Python 以退出码 1 收场，而本模块文档说 1 = 有断裂——于是「这个 rev 不存在」
+    被读成「契约断了」，接它的人收到错那一类的红。
+    两侧都探：坏 rev 必须 2，好 rev 必须 0，否则「一律退 2」也能让上半条通过。
+    """
+    root = _repo(tmp_path, {
+        f"{A.ROLES_DIR}/01_signal.md": CONTRACT.format(extra=""),
+        "Fluxus_Brand/brain/signals.md": DECLARER,
+    })
+    with pytest.raises(SystemExit) as e:
+        _main(root, monkeypatch, rev="no/such/rev")
+    assert e.value.code == 2
+    assert _main(root, monkeypatch, rev="HEAD") == 0
+
+
+def test_a_broken_declaration_still_exits_1_after_the_rev_guard(tmp_path, monkeypatch):
+    """阳性对照的第三条腿：rev 闸不许把真断裂也吞成 2。"""
+    root = _repo(tmp_path, {
+        f"{A.ROLES_DIR}/01_signal.md": CONTRACT.format(extra=""),
+        "Fluxus_Brand/brain/other.md": DECLARER,
+    })
+    assert _main(root, monkeypatch) == 1
