@@ -119,6 +119,7 @@
 | `data/research/canary_2026-08/nhnl_4w.md:11·13·101` | 研究档 | 只读 live 段（作者自己的表就是分段的） | **在它自己的读法下成立**，缺的是把读法写出来 → 顶部加横幅，数字不动 |
 | `data/research/canary_2026-08/nhnl_4w.md:22` | 研究档 | 同上 | 同上；另注「07-31 前 =3000」应为「08-07 前」 |
 | `data/research/canary_2026-08/breadth_corroboration.md:135` | 研究档 | 同上 | 同上 |
+| `pipeline/screeners/breadth_store.py:183` | 代码注释（Record High Percent / High-Low Index 头部） | 没写 | **日期错，已修**，归 alex（`T-1003-17`，复核第二轮在同一文件发现，`191b0e337`） |
 
 ⚠️ 两份 `canary_2026-08` 文档**没有改写任何数字**（data-gap-study 规矩：C 级文档加横幅，
 永不改原数）——它们的数在它们的读法下是对的。
