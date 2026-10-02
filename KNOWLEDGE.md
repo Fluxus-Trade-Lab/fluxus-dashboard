@@ -24,7 +24,7 @@
 > Andy 2026-09-06：「是应该找到怎么做然后进行学习，而不是仅仅把什么做错了放到记忆里面去。」
 > 三次律①（同类活成功干到第 3 次＝固化）过去没有落脚点，这一层就是它的落脚点。教训层管「别再犯」，这一层管「照着做」。
 - memory/`method_*` — 跨会话的标准动作（画图 · 取数 · 写稿…），索引在 `MEMORY.md` 的 Methods 节
-- `.claude/skills/` — 已经固化成 skill 的：`kanban-page`（**给 Andy 的页面默认长成 Trello 式看板**，模板＝Fluxus 每日，Andy 2026-10-01「完美，这个以后是默认标准了」）· `fable-voice`（中文文风账）· `shuorenhua` · `lieflat-charts` · `vercel-ops`（Vercel 容量/保留期/删部署：先数清楚再说多久）
+- `.claude/skills/` — 已经固化成 skill 的：`output-format`（**出东西前先选形态**：八成 STE 文字→图→HTML→解说视频，带每级 token 成本；Andy 2026-10-02 转 Karpathy 帖）· `kanban-page`（**给 Andy 的页面默认长成 Trello 式看板**，模板＝Fluxus 每日，Andy 2026-10-01「完美，这个以后是默认标准了」）· `fable-voice`（中文文风账）· `shuorenhua` · `lieflat-charts` · `vercel-ops`（Vercel 容量/保留期/删部署：先数清楚再说多久）
 - SwingMasterclass 仓 `.claude/skills/` — 课程仓的 skill：`bar-by-bar-replay`（形态分类的逐根回放练习）· `explainer-video`（课程解说动画全流程：分镜→角色→MiniMax 配音→时间轴→一镜到底整片，CH00 周期为样板，Andy 2026-10-01「没问题」） · `chapter-reskeleton`（一章对照 TSF 重排全流程：找骨架→对照页→旧文搬位置＋转述新写→新稿页逐条改→冷读/中英/课件交互/裁定台；CH03、CH04 两轮固化，Andy 2026-10-02「技能草案全部看了，通过」；干净实例触发 3/3）
 - `data/reference/DATA_RELIABILITY.md` — 数据层的标准动作（与教训层的事故档互为正反面）
 - `Fluxus_Brand/ops/campaigns/roles/*.md` — 内容线各角色的标准动作
