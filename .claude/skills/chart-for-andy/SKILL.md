@@ -72,6 +72,11 @@ owner: vera
 - **拿不到就是拿不到，别把限制说成 bug**：4 月的 5 分钟线在 Yahoo 这条路上不存在，要更早的日内线只有 IBKR（`pipeline/ibkr.py`，需要本机 Gateway／TWS 在跑）。
 - **图要能重跑，就把 CSV 冻进仓库**（`_pdf/.chartcache/` + `git add -f`）。窗口过期之后，脚本仍然出得来同一张图——这是"以后还能改这张图"的唯一保证。
 
+## 署名（对外图，10-02 补）
+
+**对外图署名角标写 `@Fluxus_Z`，不写 `FLUXUS` / `Fluxus`。** Andy 原话：「署名对外一致用 twitter handle @Fluxus_Z 而不是Fluxus」。
+起因：Writer Mia 给宽度稿自制的十年期图角标写了「FLUXUS」，当场被纠正（已改：`Fluxus_Substack/drafts/breadth_2026-10/1990s_10y_above_5pct_fluxus.png`，main `3ae67e6a0`）。这条管全线产出的对外图——不只写作线，Visual Vera 的图、RND Linda 的出版图、这个 skill 画出来的任何东西都一样。
+
 ## 交付面
 
 需要他挑的，出**渲染件**让他挑一个 token（用他的真实数据画，确定的部分先做掉再给预览）。`SendUserFile` 的 HTML 不跑脚本，要交互必须走 Artifact。
