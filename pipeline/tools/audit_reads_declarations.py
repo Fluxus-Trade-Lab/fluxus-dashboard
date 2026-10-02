@@ -18,7 +18,7 @@ Andy 2026-09-10 批（原话「ok」，回应 MAINTENANCE_2026-09-10 §七的提
 用法:
     python3 pipeline/tools/audit_reads_declarations.py            # 扫 origin/main 权威版
     python3 pipeline/tools/audit_reads_declarations.py --rev WORKTREE   # 提交前扫工作区
-退出码: 0 = 全部对上; 1 = 有断裂; 2 = 工具自身没法跑（比如找不到 roles/）
+退出码: 0 = 全部对上; 1 = 有断裂; 2 = 工具自身没法跑（找不到 roles/、或 rev 写错列不出文件）
 """
 from __future__ import annotations
 
@@ -79,18 +79,34 @@ def _git_show(root: Path, rev: str, path: str) -> str | None:
 def _git_ls(root: Path, rev: str) -> list[str]:
     if rev == WORKTREE:
         # 已跟踪 + 未跟踪（新加的声明文件也要查），不含被忽略的
-        out = subprocess.run(
-            ["git", "-C", str(root), "ls-files", "--cached", "--others",
-             "--exclude-standard"],
-            capture_output=True, text=True, check=True,
-        ).stdout
+        out = _git_ls_or_die(
+            root, ["ls-files", "--cached", "--others", "--exclude-standard"], rev)
         return sorted({p for p in out.splitlines()
                        if p.endswith(".md") and (root / p).is_file()})
-    out = subprocess.run(
-        ["git", "-C", str(root), "ls-tree", "-r", "--name-only", rev],
-        capture_output=True, text=True, check=True,
-    ).stdout
+    out = _git_ls_or_die(root, ["ls-tree", "-r", "--name-only", rev], rev)
     return [p for p in out.splitlines() if p.endswith(".md")]
+
+
+def _git_ls_or_die(root: Path, argv: list[str], rev: str) -> str:
+    """列不出文件就退 2，不让它变成退 1。
+
+    2026-10-03（T-1003-10）：拼错一个 rev（`--rev orgin/main`）原来会把
+    `CalledProcessError` 抛到顶上，Python 用退出码 **1** 收场——而本模块文档说
+    1 = 「有断裂」。于是「这个 rev 不存在」被读成「契约断了」，接它的人收到的是
+    错那一类的红。这和本文件早就认真对待的另一头是同一条规矩：找不到 roles/
+    时显式 `sys.exit(2)`（见 test_no_roles_dir_exits_2_rather_than_reporting_clean）。
+    列文件失败也属于「工具自身没法跑」，归 2。
+    """
+    try:
+        return subprocess.run(
+            ["git", "-C", str(root), *argv],
+            capture_output=True, text=True, check=True,
+        ).stdout
+    except subprocess.CalledProcessError as e:
+        print(f"❌ 列不出 `{rev}` 的文件（git {argv[0]} 退 {e.returncode}）"
+              f"——rev 写错了？工具没法跑\n{(e.stderr or '').strip()}",
+              file=sys.stderr)
+        sys.exit(2)
 
 
 def station_contracts(root: Path, rev: str) -> dict[str, str]:
