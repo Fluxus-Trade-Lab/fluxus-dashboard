@@ -80,14 +80,14 @@ TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
          margin-top:auto;padding-top:1.1em;border-top:1px solid {rule}}}
   .meta{{font-family:{mono};font-size:.92em;letter-spacing:.06em;
          text-transform:uppercase;color:{fg3}}}
-  .mark{{font-family:{cond};font-weight:700;letter-spacing:.3em;font-size:.85em}}
+  .mark{{font-family:{cond};font-weight:700;letter-spacing:.08em;font-size:.85em}}
 </style></head><body><div class="stack">
   <div class="number">{number}</div>
   <div class="label">
     <div class="en">{en}</div>
     {zh}
   </div>
-  <div class="foot"><span class="meta">{meta}</span><span class="mark">FLUXUS</span></div>
+  <div class="foot"><span class="meta">{meta}</span><span class="mark">@Fluxus_Z</span></div>
 </div></body></html>"""
 
 LIGHT = dict(bg="#F2F1ED", fg="#1c1917", fg2="#57534E", fg3="#948F86", rule="#e7e5e4")
