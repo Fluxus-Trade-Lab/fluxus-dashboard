@@ -40,9 +40,14 @@
 副句    IBM Plex Sans Regular,1.28em,#57534E      —— 中文
 分隔    1px #e7e5e4,压在底部
 展签    IBM Plex Mono,1em,大写,字距 .1em,#948F86
-标记    FLUXUS,IBM Plex Sans Condensed Bold,字距 .3em,右下角,永远在同一个位置
+标记    @Fluxus_Z,IBM Plex Sans Condensed Bold,字距 .08em,右下角,永远在同一个位置
 ```
 
+> **2026-10-02 · 署名角标 FLUXUS → @Fluxus_Z。** Andy 原话:「署名对外一致用 twitter handle @Fluxus_Z 而不是Fluxus」。
+> 字距同步从 `.3em` 收到 `.08em`——`.3em` 是给全大写单词留的呼吸,原样套在带 `@`、下划线、大小写混排的
+> handle 上会被拉得松散难认;字体/位置/字重不变。`scripts/make_poster.py`、`scripts/make_data_card.py`
+> 同一提交改掉。
+>
 > **2026-08-09 · 迁移到 v2 字体与纸色。** Inter → IBM Plex Sans、JetBrains Mono → IBM Plex Mono、
 > 标记改用 Plex Sans Condensed Bold,纸 `#fafaf9` → `#F2F1ED`,次级字 `#78716c` → `#57534E`、
 > 展签灰 `#a8a29e` → `#948F86`。墨色 `#12110F` 不变。对齐 `DESIGN.md` 第一节与 5.3。

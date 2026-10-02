@@ -88,13 +88,13 @@ TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
      caption. Set in ink rather than the palest grey for the same reason. */
   .meta{{font-family:{mono};
          font-size:1.15em;letter-spacing:.06em;text-transform:uppercase;color:{fg}}}
-  .mark{{font-family:{cond};font-weight:700;letter-spacing:.3em;font-size:1.05em}}
+  .mark{{font-family:{cond};font-weight:700;letter-spacing:.08em;font-size:1.05em}}
 </style></head><body>
   <div class="frame"><img src="{img}" alt=""></div>
   <div class="label">
     <div class="en">{en}</div>
     {zh}
-    <div class="foot"><span class="meta">{meta}</span><span class="mark">FLUXUS</span></div>
+    <div class="foot"><span class="meta">{meta}</span><span class="mark">@Fluxus_Z</span></div>
   </div>
 </body></html>"""
 
