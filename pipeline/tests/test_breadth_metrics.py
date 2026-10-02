@@ -292,7 +292,9 @@ class TestCommonStockUniverse:
         """Continuity: 574 archive rows stand behind new_highs/new_lows.
 
         Redefining them in place would put a SECOND level break into a series
-        that already has one (universe 3000 -> 5614 on 2026-08-14).
+        that already has one (universe 3000 -> 5618 on 2026-08-10; reading the
+        archive split by `source` hides this row and makes it look like
+        3000 -> 5614 on 2026-08-14 instead).
         """
         from pipeline.screeners.breadth_metrics import compute_snapshot
         filtered = compute_snapshot(self._uni())
