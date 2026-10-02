@@ -443,6 +443,26 @@ def test_a_bad_rev_exits_2_not_1(tmp_path, monkeypatch):
     assert _main(root, monkeypatch, rev="HEAD") == 0
 
 
+def test_the_bad_rev_message_names_the_rev_the_subcommand_and_gits_own_words(
+        tmp_path, monkeypatch, capsys):
+    """退出码给程序，这一行给人——所以它也要被钉住。
+
+    不钉的话，消息里的 `argv[0]`→`argv[1]`、`(e.stderr or '')`→`and` 这类改动
+    谁都不会发现，而排查「闸退 2 了」的人手上只有这一行。
+    """
+    root = _repo(tmp_path, {
+        f"{A.ROLES_DIR}/01_signal.md": CONTRACT.format(extra=""),
+        "Fluxus_Brand/brain/signals.md": DECLARER,
+    })
+    with pytest.raises(SystemExit):
+        _main(root, monkeypatch, rev="no/such/rev")
+    err = capsys.readouterr().err
+    assert "no/such/rev" in err          # 是哪个 rev
+    assert "ls-tree" in err              # 哪一步失败的
+    assert "128" in err                  # git 的退出码
+    assert "Not a valid object name" in err or "not a valid object" in err.lower()
+
+
 def test_a_broken_declaration_still_exits_1_after_the_rev_guard(tmp_path, monkeypatch):
     """阳性对照的第三条腿：rev 闸不许把真断裂也吞成 2。"""
     root = _repo(tmp_path, {
