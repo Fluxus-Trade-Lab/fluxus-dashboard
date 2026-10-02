@@ -1,7 +1,7 @@
 # 半导体组内宽度 · 日序列（2026-08-03 → 10-01）
 
 *T-1002-80 · linda · 为宽度稿 `Fluxus_Substack/drafts/breadth_2026-10/DRAFT_v1.md` 第 2 段〔数据槽〕与第 7 段作废条件供数。*
-*数据文件：[`semi_breadth_series.csv`](semi_breadth_series.csv)（43 行）· 池子成分：[`pool_members.json`](pool_members.json)（120 只）· 重算脚本：[`build_series.py`](build_series.py)*
+*数据文件：[`semi_breadth_series.csv`](semi_breadth_series.csv)（43 行）· 池子成分：[`pool_members.json`](pool_members.json)（120 只）· 重算脚本：[`build_series.py`](build_series.py)· 阈值闸：[`pipeline/tests/test_semi_breadth_series.py`](../../../pipeline/tests/test_semi_breadth_series.py)*
 
 ---
 
@@ -23,7 +23,7 @@
 
 没有。最后 5 个交易日的组内 50 日线占比：62.50 → 59.17 → 63.33 → 64.17 → **74.17**（全市场同期 30.24 → 25.21）。
 
-但有一条该同时说出来：**这个组几乎没有人在创 52 周新高。** 43 个交易日里，120 只票一共只出现过 **1 次** 52 周新高（SLAB，9-03），新低 5 次。10-01 池子里的中位票离自己 52 周高点 **31.9%**，117 只里只有 2 只在 1% 以内。
+但有一条该同时说出来：**这个组几乎没有人在创 52 周新高。** 43 个交易日里，120 只票一共只出现过 **1 次** 52 周新高（SLAB，9-03），新低 5 次。10-01 池子里的中位票离自己 52 周高点 **31.5%**，118 只里只有 2 只在 1% 以内。
 **这是一次从回撤里的修复，不是一个新高行情。** 两者在 50 日线这把尺子上长得一模一样。
 
 ### 三个子组：谁在拉车
@@ -62,7 +62,9 @@
 | 共同股闸 | `industry` 不在 `{'Shell Companies'}`，且该票历史 ≥ 200 根日线 | `breadth_metrics.py:51, 59` |
 | `semi_new_highs_4w_common` / `_lows_` | 同上两条，窗口换成 20 个交易日，历史门槛 ≥ 20 根 | `breadth_metrics.py:60, 379–380` |
 
-**共同股闸在这个池子里是空转的**：120 只里 **0 只**是 `Shell Companies`（行业分布见下）。真正起作用的只有 200 根日线那条门槛，它在 10-01 挡掉 3 只（SKHY 59 根、CBRS 97 根、BZAI），所以 52 周新高新低的分母是 **117**，不是 120。
+**共同股闸在这个池子里是空转的**：120 只里 **0 只**是 `Shell Companies`（行业分布见下）。真正起作用的只有 200 根日线那条门槛，它在 10-01 挡掉 2 只（SKHY 59 根、CBRS 97 根），所以 52 周新高新低的分母是 **118**，不是 120。
+
+⚠️ **这个分母在复核时修过一次**（同任务，2026-10-02 当天）：`panels()` 里的 252 日滚动窗口原来没写 `min_periods`，pandas 的默认值等于窗口长度，于是实际门槛变成 **252 根**而不是 200 根，10-01 的分母少数了一只（读 117）。生产的门槛是 200 根（`breadth_metrics.py:59`），现已对齐，并由 `pipeline/tests/test_semi_breadth_series.py` 两侧卡住（199 根不算、200 根要算）。这处只动分母，新高新低的家数一个没变——全窗口本来就近似为零。
 
 池子的行业分布（Finviz，10-01）：Semiconductors 70 · Semiconductor Equipment & Materials 29 · Software - Application 5 · Computer Hardware 4 · Electronic Components 3 · Scientific & Technical Instruments 3 · Software - Infrastructure 2 · Electrical Equipment & Parts / Auto Parts / Information Technology Services / Specialty Industrial Machinery 各 1。
 （前两类 99 只是行业映射来的；后 9 类共 21 只来自 TSF 手工名单和 SMH 持仓。）
@@ -89,6 +91,16 @@
 收盘价那一臂是故意留着的：Finviz 的 52 周区间走**日内高低点**，用收盘价滚动会在 10-01 凭空多造 4 个「新高」。
 这条阴性对照同时是个闸——`verify_control()` 里断言「收盘价臂的误差必须比日内高价臂大 5 倍以上」，哪天它不再明显更差，说明这个对照已经分辨不出两种做法，那它就什么也没证明，脚本会当场崩掉而不是给我一个好看的绿。
 （收编的坑：fluxus-ops 私有仓 `agents/linda/memory/methods.md` 的 2026-09-18、09-25 两条——阳性对照要按「能坏的方式」造，断言不许读自己那个常量。）
+
+### 第二份独立实现对过一遍（2026-10-02）
+
+这张单因为工人超时被放回任务板，第二轮工人从零写了一份实现（不同的取数参数：`auto_adjust=False`、不同的分批与窗口代码），然后和本序列逐列对账。结果：
+
+- **四列家数全程完全一致**（52 周新高/新低、4 周新高/新低，43 天 × 4 列零分歧）
+- **过闸只数全程一致**（修掉上面那处 `min_periods` 之后）
+- **50 日线占比 43 天里 35 天完全一致**，另外 8 天差 0.84–1.67 个百分点，最大 1.67（9-23）。原因是复权：本序列用 `auto_adjust=True`，那份用 `auto_adjust=False`，派息票的 50 日均线会差一点，个别票在均线附近会翻边。**两个头条日（8-03 和 10-01）两种算法完全相同**，10-01 两边都是 74.17，也都对上了已发布快照的 89/119。
+
+所以 1.67 个百分点是这个读数的实现容差，写稿时不要把 50 日线占比写到小数点后两位当精确值用；整数位是稳的。
 
 ---
 
@@ -152,6 +164,14 @@
 三只都**不在** 52 周新高上，TSEM 还差 24.58%。按 20 日窗口算，三只那天也**都没有**收在 20 日新高（收盘差 1.5–2.7%），其中 TSEM 和 SMTC 的**日内**高点摸到了 20 日区间上沿。
 「broke out」作为盘面描述站得住，「to new highs」不加限定站不住。
 
+### 订正 3 · 开头那句「中位个股离一年高点约 16%」，我们自己的池子算出来是 29.6%
+
+稿里开头把这句署名给了 @ConnorJBates_，署名是对的，**但如果要换成我们自己的读数，数字得跟着换**：10-01 全市场 5,302 只有读数的名字，离 52 周高点的中位距离是 **−29.6%**（`data/output/universe.json` 的 `high_52w` 中位数）。
+
+两个数差 13 个百分点，多半是池子不同——他大概用的是某个指数成分，我们是 5,600 只全筛选池，小票拉低中位数。**所以这不是说他错了**，是说这句话不能一边换成我们的数一边留着他的池子。要么照原样署名引用他的 16%，要么换成「我们的全筛选池里中位股离一年高点 29.6%」并写明池子。两种写法都成立，混着写不成立。
+
+顺带一条给第 2 段用：**半导体组内的中位股离 52 周高点 31.5%，比全市场的 29.6% 还远一点。** 组内宽度好，只好在 50 日这个尺度上——一年的尺度上它不比大盘好。
+
 ---
 
 ## 六、第 7 段作废条件：给 Andy 定阈值的三个事实
@@ -167,8 +187,10 @@
 ## 七、重算
 
 ```bash
-python3 data/research/semi_breadth_2026-10-02/build_series.py
+python3 data/research/semi_breadth_2026-10-02/build_series.py       # 重取 bars，重建 csv
+python3 -m pytest -q pipeline/tests/test_semi_breadth_series.py     # 四道闸，不联网
 ```
 
 现抓 yfinance 日线（120 只，约 1 分钟），重建全窗口，跑完 `verify_control()` 的三条断言才写文件。
+`test_semi_breadth_series.py` 卡的是另一件事：restate 过来的四个阈值（0.1% 容差、200 根、20 根、排除行业）每一个都从两侧探一次。这组闸做过变异检验——把 `min_periods` 改回去、把容差放大十倍、把行业闸短路，三处各打红对应的那一条。
 成分跟着 `data/output/groups.json` 走，所以**换一天跑会换一个池子**——池子变了，`pool_members.json` 要跟着一起重新提交，否则这份口径节就对不上数了。
