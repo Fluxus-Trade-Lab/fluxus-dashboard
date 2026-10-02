@@ -300,7 +300,7 @@ but the promise is one, and I'd rather keep a small promise than break a big one
 Start here → [Start Here 那篇的链接]
 The record → [Track Record 那篇的链接]
 
-— Fluxus
+— @Fluxus_Z
 ```
 
 ---
@@ -332,7 +332,7 @@ same reason the winners are — a record that shows you only the good half teach
 One letter a week, every Sunday. And if a week goes by where I have nothing measured that's
 worth your time, I'll say so instead of filling the space. That's the deal.
 
-— Fluxus
+— @Fluxus_Z
 ```
 
 > **这封的活儿是消化买家后悔**,不是再推销一次。所以三段都是「你现在拿到了什么」的具体物,
@@ -365,7 +365,7 @@ you'll see the losses — my win rate is 39.9%, and the year still works because
 If that isn't what you want in your inbox, unsubscribe in one click. I'd rather have a short
 list that reads than a long one that doesn't.
 
-— Fluxus
+— @Fluxus_Z
 ```
 
 > **这封唯一的活儿是压住投诉率。** 导入名单最大的风险不是退订,是被标垃圾邮件 —— 一旦标了,
