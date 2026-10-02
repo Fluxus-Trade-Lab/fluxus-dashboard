@@ -36,7 +36,7 @@ This year the train didn't stop. Somebody hit the brakes: the Fed hiking on one 
 
 The brakes don't hit every car the same way. Rate hikes made bad breadth because the companies that don't make much money now make even less. That is what IWM is. In a higher-for-longer regime, what holds up is cash flow plus growth — and that's a short list of sectors.
 
-J Law (@JLawStock) put the arithmetic behind this on October 2. With the 10-year around 5%, a Treasury's P/E-equivalent is roughly 18–20 — about the same as the S&P 500's forward P/E, which FactSet had at 19.2 on September 25. When a low-risk asset pays that, a stock has to earn its place with real earnings growth, cash flow and staying power. Smaller companies with thin margins and no pricing power can't. In his words, if earnings growth stays concentrated in a handful of sectors, weak breadth could persist.
+J Law (@JLawStock) put the arithmetic behind this on October 2. With the 10-year around 5%, a Treasury's P/E-equivalent is roughly 18–20 — about the same as the S&P 500's forward P/E, which FactSet had at 19.2 on September 25. When a low-risk asset pays that, a stock has to earn its place with real earnings growth, cash flow and staying power. Smaller companies with thin margins and no pricing power can't. His conclusion: if rates stay higher for longer while earnings growth stays concentrated in a handful of sectors, weak breadth could persist.
 
 It is concentrated. FactSet's estimates for third-quarter earnings growth, year over year, as of September 25:
 
@@ -112,7 +112,7 @@ The same goes for yields. The worry right now is a 10-year near 5%. In the 1990s
 
 From its October 1990 low to its March 2000 peak, the S&P 500 rose 417%. Across those 2,366 trading days, the 10-year Treasury closed at or above 5% on 95.5% of them. It held above 5% on every single close for 1,979 days in a row, until LTCM and Russia pushed it under in September 1998. The median close for the whole decade was 6.4%.
 
-J Law made the general version of this argument. Backtest high yields and you'll find they often come with big corrections; add breadth and how high the index sits, and the backtest will tell you the market falls sooner or later. But wet ground doesn't mean it just rained. Leave out one variable — earnings, valuation — and the backtest stops describing the future. Earnings are the variable that's different now.
+J Law made the general version of this argument. Backtests can build a strong bearish case: high-yield periods have often come with major drawdowns, and adding weak breadth and index levels makes the case look even more convincing. But rain makes the ground wet, and wet ground doesn't necessarily mean it just rained. "Historical relationships matter, but they are not laws of physics." Change one important variable — earnings, valuations or liquidity — and the same setup can produce a very different outcome. For him, the variable that's different now is earnings.
 
 @ArtofSpecuycky made the same comparison independently — money squeezing into a handful of high-return giants the way it did in the 1999 rate-hike cycle. @RealSimpleAriel noted the share of stocks above the 50-day in his universe had dropped below 30%, the weakest since March, and that last time breadth stayed weak for weeks before it turned. Weak can stay weak. In the same post, he said he had more actionable names than at any point since April.
 
@@ -142,7 +142,7 @@ Until one of these trips, the bad breadth is somebody else's car.
 **v2 → v3（Andy 10-02 发来 90 年代十年期图 + J Law 10-02 帖）**
 - 十年期图存为 `1990s_10y_above_5pct.jpg`。图上数字**已用美联储 FRED `DGS10` 逐格复现**（窗口 1990-10-11 → 2000-03-24）：2,366 个收盘日 · ≥5% 95.5% · ≥6% 67.2% · ≥7% 28.4% · ≥8% 7.6% · 中位 6.415% · 连续 1,979 天 ≥5%（1990-10-11 → 1998-09-08）· 最低 4.16%（1998-10-05）——一格不差。标普 +417% 由图上两个收盘价 295.46 → 1,527.46 算术一致；指数收盘本身未另核。
 - FactSet 数字**已对原文核过**（Earnings Insight 2026-09-25 PDF）：第 1 页 S&P Q3 +29.1%、远期 P/E 19.2；第 12–13 页 IT +63.5%（第二高，第一是能源 +111.4%）、半导体及设备 +126%、**剔除半导体后 IT 增速 24.2%**；第 25 页图表 金融 +3.3% · 必需消费 +2.9% · 可选消费 +3.0% · 公用事业 +6.8% · 医疗 +5.9% · 工业 +14.9%。
-- J Law：英文版 X 帖只发了前半（股债性价比、盈利集中、宽度可能持续）；「天下雨地下湿」的回测论点只在 Andy 贴来的中文版里（他说放在留言区）。稿里两处都是转述加署名，**直接引语只有一句**（weak breadth could persist 那句的意思），没搬他的原文。**他帖子里的账户盈利金额一律未引用**（铁律）。他提到的「2026 Q2 税后企业盈利增长约 18%、盈利/GDP 约 12%」**没核到出处，未上稿**。
+- J Law：主帖是前半（股债性价比、盈利集中、宽度可能持续），**后半段在他自己的 7 条回复里**（Andy 10-02 指出；`api.fxtwitter.com/2/conversation/2105961330926649438` 抓回，回复 id 2105961337176109537 起）。回测那段已按英文原文校正：变量补上 liquidity；结论从「回测不再描述未来」改回他的「同样的形态可能走出完全不同的结果」。**直接引语只有一句**："Historical relationships matter, but they are not laws of physics."；其余为转述加署名。**他帖子里的账户盈利金额一律未引用**（铁律）。他提到的「2026 Q2 税后企业盈利增长约 18%、盈利/GDP 约 12%」英文回复里也有，但**他没给出处，我没核到一手源（应是 BEA 国民收入账户），未上稿**。他另一条回复里的 AI 三波（训练 → 基建 → 推理/CPU）和你说的子主题接力是同一件事，**没加进稿**，你要的话可放第 3 段一句。
 - 第 2 段新增的那句「The index is growing earnings at almost 30%. More than half the sectors in it are growing at single digits」是我照 FactSet 表算出的：11 个板块里个位数增长的有 6 个（公用事业、医疗、地产 8.7%、金融、可选、必需），表里只列了其中 5 个，地产没列。
 
 **v1 → v2**：1999 图到位（Andy 10-02 发来，StockCharts `!ADLINENYA` 与纳指 100，1999-01 → 2000-07），存为 `1999_nyse_adline_vs_ndx.jpg`。图下两句是我照图读的：腾落线 1999 年夏天掉头、几乎一路跌到 2000 年 3 月；同期纳指 100 从约 2,300 到约 4,700（图上目测，取整）。⚠️ 同一张图我还在反方第 5 段加了两句：纳指见顶时腾落线已在低位附近，宽度最后是对的，只是早了约八个月——**这是我从图上读出来放进反方的，不是你说过的话，不要就删**，正方那段不受影响。2000 年这个案例因此不用再另找出处；2007、2021 仍待核。
