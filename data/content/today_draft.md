@@ -1,6 +1,6 @@
-date: 2026-10-01
+date: 2026-10-02
 tier: B
-source: T-0927-82（新主线复盘长文，已合 main 未发布，第 4 天）+ discord-to-x 09-29 草稿（T-0930-08，昨夜新产）+ ammo（Fluxus_Own_Lines.md 队列表，今天排期格）
+source: T-0927-82（新主线复盘长文，已合 main 未发布，第 5 天）+ discord-to-x 09-30 草稿（新产，未端过）+ ammo（Fluxus_Own_Lines.md 队列表，今天排期格）
 gate: 🎮 新主线判据＝两周两篇复盘长文中位 ≥158.5（非 5/5 发布数）；分子仍只有 MRNA 571、ARM 124 两条，T-0927-82 这篇还没发就进不了分子；posts.csv 全库最新一行仍停在 09-23
 ---
 ## C1
@@ -46,33 +46,34 @@ The trade isn't guessing which trader gets proven right next week. It's knowing 
 
 *Sourcing — every number above can be reproduced from this repo:*
 *NDX McClellan Oscillator and % above 200-day: `data/output/breadth.json` → `history.mcclellan_osc_ndx` / `history.pct_above_200sma`, dates 2026-09-22 through 2026-09-25 (`history.dates`). Day verdict: `verdict.confirmation = "Inconclusive — signals split"`, `verdict.env = "MIXED"`. SPY/QQQ above-50-day and the 5-day ratio: `state_board.rows` (`index repair`, `confirmation`) and `verdict.vote_detail` (`ratio_5d` = 0.8115). Tweets: PrimeTrading_ status/2103497754102178134 (14:52 UTC), NickSchmidt status/2103522994442150041 (16:32 UTC), RealSimpleAriel status/2103573039141282130 (19:51 UTC) — full text captured in `data/content/x_watch/posts/2026-09-25.jsonl`; ET times are UTC−4 (EDT).*
-why: 已连续第四天首荐同一条。09-27 W39 结算台定的新主线首篇（Andy「下周主线选 C 改一周一篇复盘长文」），Writer Mia 成稿、复核 PASS、已合 main（commit `5f17dce37`），发布单 T-0928-25（owner=steve，status=blocked，三天没人动）——待办性质和昨天完全一样，但今天现场核过 `breadth.json` 09-30 收盘读数：McClellan 继续走高到 +22.97、200 日线比例继续走低到 36.5（对照 09-25 那两个数 +19.85 / 39.39，09-29 时已是 +22.02 / 37.53）。**三个交易日过去，分歧没有收敛，还在加深**——稿子的判决仍站得住，论点没被行情推翻。但"Sept 25"这个具体日期现在是 3 个交易日前的事，再拖这条帖就只能重写日期、丢掉"当天两条推互相矛盾"这个锚点。
+why: ⚠️ **连续第 5 天首荐同一条，陈旧度已到临界**。今天现场核过 `breadth.json` 10-01 收盘读数：McClellan 继续走高到 +36.67（对比稿里引用的 09-25 +19.85），200 日线比例继续走低到 36.41（对比稿里的 39.39），verdict 仍是 MIXED / "Inconclusive — signals split"——**分歧没有收敛，论点本身没被推翻**，但稿子里锚定的「Sept 25 那天两条互相矛盾的推」这个具体日期，距最近完成交易日 10-01 已经过了 5 个交易日。再拖这条，锚点就失效，只能重写日期或整篇作废。T-0928-25（owner=steve，status=blocked）五天没人动——卡点不是稿子不行，是后台工人没有 X 发帖能力，需要 Andy 或互动会话代发。**建议今天就是最后一个能发的窗口，否则明天起只能换角度重写。**
 ---
 ## C2
 bucket: LONGFORM(EN) | entry: -
-1/ Market hit an inflection point this year — rate hikes, Bessent leaning on the bond market. Liquidity has been a train running full speed; the brakes just came on. The question is not if it slows, it is whether the ride gets bumpy on the way down.
+1/ PCE came in soft: headline 3.4% against a 3.7% forecast, core 3.0% against 3.3%. The 10-year moved right on cue, yield down to 5.207%, and Goldman pushed their Fed call from an October hike to December. Soft data plus a later hike date is not the same thing as a green light.
 
-2/ That makes range and chop the base case for the next leg, not the exception. FOMC low is the line in the sand — test it harder if hikes get priced in, or watch the range open up if sentiment turns. Semis and AI stay the preferred lane either way.
+2/ Cool PCE buys time, it does not confirm strength. Breadth improved, IWM bounced, and a META long went on today — but the bar was always a strong close into the bell, not just a quiet morning. Character change shows up at 3:50pm, not 10am.
 
-3/ Today lived that theme: weak close, exhausted chop, then a bid out of nowhere — the pattern for months now. Most semis sit at the 20ema, playing gaps or prior support. Rotational tape means expect the shakeout, cut fast, or just sit in cash.
+3/ Said it plainly today: this is not a market where sizing up or finding clean entries comes easy. Rebal mornings sell the pop, the bid shows up late afternoon instead. Recognizing when conditions are not yours to force is half the system — the other half is sitting on hands.
 
-4/ Intraday rotation inside semis: SOXX up, INTC down to start — only interested in SOXL here, not chasing INTC. LRCX, KLAC, AMAT moved with the caps. CRWD started to unwind while MU and SNDK pushed ahead of MU earnings.
+4/ Coaching moment from the help channel: a chart read walked through live — volatility compressing, a bottom reversal, then a wedge popping over the 20ema. The lesson was not the pattern itself, it was comparing charts side by side until a real breakout looks obvious in advance.
 
-5/ Afternoon flipped weaker — rates blew out, SPX tested the 21ema, every pop got sold. Feels like capitulation building, and it can move faster than people expect. For TLT to reverse: need a real pension buy, crude below 90, and Bessent stepping up buybacks.
+5/ Breakouts right now cluster in two lanes — cybersecurity (OKTA) and genomics (ILMN, TXG, TWST) — with institutions still defending the 50-day underneath both. Everywhere else is grind-and-chop: buy the pullback to the moving average, do not chase the gap.
 
-6/ MU earnings base rate to watch: sell-the-news. Institutions buy into the print, sell the pop, then buy the gap-fill after — the market's favorite rerun. High-debt, thin-margin AI names like CRWV and IREN are the weak links if the rate move keeps going.
+6/ Big-cap tells its own story at the highs. AAPL sitting near its prior peak but hourly momentum fading — frequent large red candles followed by a grind back up usually reads as distribution, not strength, with no catalyst in sight to force a real breakout.
 
-7/ Coaching note: a member asked how many distribution days it takes before bulls get nervous. No fixed number — track QQQ/SPY's ATR distance from the 50-day instead, layer in DeMark or Bollinger signals, and you will know when to lower your expectations.
-why: discord-to-x 昨夜（T-0930-08）新产的草稿，底稿是 Andy 09-29 在 Discord 盘中原话，没经我改写。今天核过 `data/output/threads/2026-09-29/messages.json` 对应时间戳，内容未过期（MU 财报当晚就是这条第 6 段讲的 base rate，今天 09-30 财报已落地可以对照验证）。全库 posts.csv／verdicts.jsonl 零命中，确认未发过。
+7/ Intraday notes: INTC took size right out of the gate, HOOD printed a sell-the-news candle, PANW and MDB both set up long. The META long came with the exit already decided — sell into the new high, not after it.
+why: discord-to-x 09-30 新产草稿（`data/output/threads/2026-09-30/draft.txt`），底稿是 Andy 09-30 在 Discord 盘中原话，未经我改写。PCE 3.4%/3.7%、10 年期 5.207%、Goldman 加息预测改期这几个数字都是当天盘面上的具体数，不是转述。全库 posts.csv／verdicts.jsonl 零命中，确认未发过——比 09-29 那份（已在昨天备稿端过、未选）更新一个交易日，优先端这份。
 ---
 ## C3
-bucket: VOICE(ZH) | entry: -
-股市有风险，入市先烧纸。
-why: 断更保险表排的正是今天（10-01 四）这一格，Own_Lines #115⭐⭐⭐，民俗黑色幽默、英文世界没有对应物。全库 posts.csv／verdicts.jsonl 零命中，未发过。队列已降为被动观察不主动推，但表排到了今天，随手发不算走回老主线。
+bucket: VOICE(EN) | entry: -
+Borrowed conviction was never conviction.
+why: 断更保险表排的正是今天（10-02 五）这一格，Own_Lines #76⭐⭐⭐，他原话本来就是中英混（「借来的conviction从来都不是conviction」），这半句英文是他自己的词，不是翻译。全库 posts.csv／verdicts.jsonl 零命中，未发过。队列已降为被动观察不主动推，但表排到了今天，随手发不算走回老主线。
 ---
 ## notes
 - **A 档不可用**：夜间内容产线 2026-09-21 起正式停产（非维修期，`PIPELINE.md` 顶部停产令），最近四张 campaign 卡（09-06/09-03/09-01/08-29）全部 killed/归档不发，没有 queued/approved 的卡可取。
-- **discord-to-x 09-28 草稿同样可用但今天没端**：`data/output/threads/2026-09-28/draft.txt`（T-1001-48 刚产出），内容是 MU 财报前仓位管理+宏观（伊朗协议）主题，与 C2 同格式同作者声音，怕一天塞两条同形状的长推挤占读者注意力，留作明天或后天备选，别等它过期。
-- **09-30 的 discord 原料已抓（`threads/2026-09-30/messages.json`），draft.txt 还没生成**——按 discord-to-x skill 规矩一次只处理一天，不代做。
-- **posts.csv 有落地缺口**：全库最新一行仍停在 09-23，09-24 → 09-30 之间实际发的帖（若有）尚未回填，回填归判决记录 / `sync_own_posts.py` 那一环，本轮备稿不做，标出供交接引用。
-- **C1 连续第 4 天卡在同一处**：写完+核数据+过闸+合 main 四步都做完，唯一缺发布动作，T-0928-25 单挂着 blocked 无人认领。建议今天优先处理，否则「两周两篇中位 ≥158.5」这条判据永远测不出来。
+- **discord-to-x 09-28 草稿同样可用但今天没端**：`data/output/threads/2026-09-28/draft.txt`，内容是财报/宏观（MU earnings、Iran 协议）主题选股框架，与 C2 同格式同作者声音，怕一天塞两条同形状的长推挤占读者注意力，留作备选。
+- **09-29 草稿已在昨天端过未选**（Bessent/rate hikes 主题），今天改端更新一个交易日的 09-30 草稿，09-29 那份回弹药库。
+- **10-01 discord 原料已抓（`threads/2026-10-01/messages.json`），draft.txt 还没生成**——按 discord-to-x skill 规矩一次只处理一天，不代做，留给下一次 discord-to-x 运行。
+- **posts.csv 有落地缺口**：全库最新一行仍停在 09-23，09-24 → 10-01 之间实际发的帖（若有）尚未回填，回填归判决记录 / `sync_own_posts.py` 那一环，本轮备稿不做，标出供交接引用。
+- **C1 已连续卡 5 天，今天是关键窗口**：稿子写完+核数据+过闸+合 main 四步都做完，唯一缺发布动作，T-0928-25 单挂着 blocked 无人认领。今天若仍不发，建议明天改判：不是继续拖，而是要重写日期或整篇作废——拖一条过期的稿子不如换一条新鲜的。
