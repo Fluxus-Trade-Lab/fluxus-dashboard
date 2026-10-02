@@ -17,6 +17,7 @@ unit gates; that is the calibration.
 from __future__ import annotations
 
 import importlib.util
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -140,7 +141,9 @@ def test_excluded_industry_drops_out_of_the_extreme_counts_only(mod):
 
 def test_the_published_pool_is_the_three_theme_groups(mod):
     pool = mod.load_pool(ROOT)
-    assert pool["as_of"] == "2026-10-01"
+    # as_of mirrors data/output/groups.json's "date" and rolls forward every
+    # trading day -- pin the format, not a specific day (T-1003-34).
+    assert re.match(r"^\d{4}-\d{2}-\d{2}$", pool["as_of"])
     assert set(pool["groups"]) == set(mod.GROUPS)
     assert len(pool["pool"]) == 120
     # Union, not sum: the three groups overlap.
