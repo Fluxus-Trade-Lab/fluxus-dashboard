@@ -1501,12 +1501,13 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 
 **[2026-10-01 追补] T-1001-111 跟进单核实：T-1001-04 分支曾因工人超时滞留，复核第二轮抓到一处测试插入错位（`test_run_tickers.py` 新类插在既有测试末行之前，挤走一句断言、让另一测试偶然打了真实网络请求），已在合并前修复。上面①③记的 `commit sha：1afc578b3` 是 cherry-pick 前的旧对象，不在 `origin/main` 的历史里（它仍挂在远端分支 `origin/agent/alex/T-1001-04` 上——该分支与 `agent/alex/T-1001-04-v2` 都已随这次合并失效，留给仓库清理）；最终合进 `origin/main` 的 sha 是 **`4de406a7d`**（含测试修复），`tasks/T-1001-04.md` 的 `result`/`status` 已在 ops 仓同步为 `done`。（alex）**
 
-## 二十二、[2026-10-03] alex：T-1003-17 universe 断层误读第 7 处——`breadth_store.py:113` 补漏
+## 二十二、[2026-10-03] alex：T-1003-17 universe 断层误读第 7 处——`breadth_store.py` Record High Percent 注释补漏
 
 起因：`T-1003-11`（修 6 处同一坑：universe 断层写成 08-14/5614，真实是 08-10/5618，见
 `data/research/universe_break_2026-08-10/README.md` 的「九行字」表）合并后，复核第二轮在
-**同一文件**里又发现一处没被那张表列到的日期——`pipeline/screeners/breadth_store.py:113`
-（Record High Percent / High-Low Index 的头部注释），开了本单。
+**同一文件**里又发现一处没被那张表列到的日期——`pipeline/screeners/breadth_store.py:183`
+（Record High Percent / High-Low Index 的头部注释，任务单写的行号 113 是旧版行号，本次改动
+前该注释实际在第 183 行），开了本单。
 
 **改法同 T-1003-11 六处**：日期 08-14→08-10、规模 5614→5618，并原地写明「按 `source` 分段读
 会读成 08-14/5614」。`pipeline/tests/test_universe_break_date_language.py` 补第 7 条断言
