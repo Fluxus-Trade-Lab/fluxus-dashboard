@@ -37,6 +37,6 @@ fig.text(0.075,0.945,'In the 1990s bull market, the 10-year closed at or above 5
 fig.text(0.075,0.835,'S&P 500 +417%, from its Oct 11, 1990 close (295.46) to its Mar 24, 2000 close (1,527.46).',fontsize=10,color=SUB,va='top')
 fig.text(0.075,0.805,f'{n:,} daily closes · median {med:.1f}% · above 5% on every close for 1,979 days straight, Oct 1990 – Sep 1998.',fontsize=10,color=SUB,va='top')
 fig.text(0.075,0.035,'Data: FRED DGS10 (10-year Treasury, constant maturity) · S&P 500 price index, Yahoo Finance ^GSPC',fontsize=8.5,color=SUB)
-fig.text(0.97,0.035,'FLUXUS',fontsize=9,color=INK,fontweight='bold',ha='right')
+fig.text(0.97,0.035,'@Fluxus_Z',fontsize=9.5,color=INK,fontweight='bold',ha='right')
 fig.savefig(f'{S}/1990s_10y_above_5pct_fluxus.png',facecolor='white')
 print('ok',n,round(share,1),round(med,2))
