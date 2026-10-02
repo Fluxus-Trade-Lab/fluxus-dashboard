@@ -180,10 +180,12 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
     #
     # These are RATIOS, which is the whole reason to prefer them here: the raw
     # counts are not comparable across time in this archive, because the
-    # universe stepped from 3000 to 5614 names on 2026-08-14. Every level
-    # comparison spanning that date measures the universe growing, not the
-    # market changing -- a mistake this file's own consumer made on 2026-08-30.
-    # A ratio is immune to it.
+    # universe stepped from 3000 to 5618 names on 2026-08-10 (reading the
+    # archive split by `source` hides this row and makes it look like
+    # 3000 -> 5614 on 2026-08-14 instead). Every level comparison spanning
+    # that date measures the universe growing, not the market changing -- a
+    # mistake this file's own consumer made on 2026-08-30. A ratio is immune
+    # to it.
     #
     # Computed on the COMMON-STOCK counts, not the raw ones, because a ratio
     # built from a SPAC-contaminated numerator is still contaminated. NULL for
