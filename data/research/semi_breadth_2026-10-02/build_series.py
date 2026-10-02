@@ -86,10 +86,19 @@ def panels(bars: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
             "close": c,
             "sma50": c.rolling(50).mean(),
             "sma200": c.rolling(200).mean(),
-            "max_h_252": h["High"].rolling(WIN_52W).max(),
-            "min_l_252": h["Low"].rolling(WIN_52W).min(),
-            "max_h_20": h["High"].rolling(WIN_4W).max(),
-            "min_l_20": h["Low"].rolling(WIN_4W).min(),
+            # min_periods is the bar floor, not the window length: production
+            # counts a name at a 52-week extreme once it has 200 bars
+            # (MIN_BARS_52W), and Finviz publishes a high_52w for it from the
+            # history it has. Leaving min_periods at the pandas default (= the
+            # window) would silently impose a 252-bar floor instead and drop
+            # names with 200-251 bars out of the gated counts -- one name on
+            # 2026-10-01, which is why `semi_n_gate_52w` read 117 before this
+            # was fixed. The gate below still re-checks bars_n, so the two
+            # floors agree rather than overlapping at different values.
+            "max_h_252": h["High"].rolling(WIN_52W, min_periods=MIN_BARS_52W).max(),
+            "min_l_252": h["Low"].rolling(WIN_52W, min_periods=MIN_BARS_52W).min(),
+            "max_h_20": h["High"].rolling(WIN_4W, min_periods=MIN_BARS_4W).max(),
+            "min_l_20": h["Low"].rolling(WIN_4W, min_periods=MIN_BARS_4W).min(),
             "bars_n": np.arange(1, len(c) + 1),
         })
     return out
