@@ -337,8 +337,10 @@ class TestRecordHighPercent:
     RHP = new highs / (new highs + new lows). High-Low Index = its 10-day SMA.
     Adopted 2026-08-31 for one reason above all: they are RATIOS. The raw
     counts in this archive are not comparable across time, because the
-    universe stepped from 3000 to 5614 names on 2026-08-14 -- a break that
+    universe stepped from 3000 to 5618 names on 2026-08-10 -- a break that
     silently corrupted a 21-day comparison reported to Andy on 08-30.
+    (Reading by `source` segment instead of by date lands on 08-14/5614,
+    the first live-pool day, not the break.)
     """
 
     def _frame(self, nh, nl, **over):
@@ -361,9 +363,10 @@ class TestRecordHighPercent:
     def test_immune_to_the_universe_doubling(self):
         """The reason this indicator exists here.
 
-        Double every count -- as happened on 2026-08-14 when the universe went
-        3000 -> 5614 -- and the ratio must not move. If this fails, the ratio
-        has picked up a level dependence and the 08-14 break is back.
+        Double every count -- as happened on 2026-08-10 when the universe went
+        3000 -> 5618 -- and the ratio must not move. If this fails, the ratio
+        has picked up a level dependence and the break is back. (Reading by
+        `source` segment instead of by date lands on 08-14/5614 instead.)
         """
         from pipeline.screeners.breadth_store import derive
         small = derive(self._frame([30], [10]))

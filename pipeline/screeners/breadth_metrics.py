@@ -346,7 +346,9 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     # them, for two reasons. (1) Continuity: `new_highs`/`new_lows` have 574
     # rows of archive behind them and silently redefining them would put a
     # second level break into a series that already has one (universe went
-    # 3000 -> 5614 on 2026-08-14). (2) Identification: with 4 counts on a
+    # 3000 -> 5618 on 2026-08-10; reading it by `source` segment instead of
+    # by date lands on 08-14/5614, the first live-pool day, not the break).
+    # (2) Identification: with 4 counts on a
     # 2x2 of {20d, 252d} x {gated, ungated}, the window effect and the
     # pollution effect can be read separately. Collapsing to one gated
     # number would confound them -- any change could be either cause.
