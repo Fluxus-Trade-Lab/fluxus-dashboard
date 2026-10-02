@@ -1500,3 +1500,24 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 **[2026-10-01 追补] alex：③ 结转会遮住"活着的失败"，补一道独立于结转的供应商健康信号**——上面②的结转（`_next_earnings_carry`）是正确的降级，但它有个副作用：`next_earnings` 结转后看起来"有值"，如果未来再发生一次类似的供应商批量失败，`next_earnings` 非空会让人误读成"今晚抓到了"，实际只是在读上一个好夜晚的旧值。`earnings_history` 没有这个问题——`_quarterly_carry` 的设计本就拒绝结转「上一晚本身就是空」的 section（见 `ticker_data_fetcher.py` 里那条拒绝优先的条件），所以它在连续失败的夜晚里会持续如实报空，是比 `next_earnings` 更干净的"今晚供应商是否健康"信号。`pipeline/tickers/run_tickers.py`：`run()` 新增 `earnings_history_empty` 计数，成功写入的票里 `earnings_history` 为空的份额 ≥50%（`EARNINGS_EMPTY_ALERT_SHARE`，健康夜基线 2026-09-18 是 204/244≈84% 非空，50% 留足余量）时 `logger.warning` 一整段，点名去 run log 里搜 `HTTP Error 401`/`HTTP Error 429`；`main()` 同步打印一行。两个 fetch 函数（`fetch_earnings_history`/`fetch_next_earnings`）的异常日志从 `debug` 提到 `warning`——但按①②同样的复核，这**不是**本次失败的真正出口：09-28/09-29 那次失败是 `cal`/`hist` 在 try 块内部就被 yfinance 自己吞成空结构，从未触发 `except`，所以这行提级只覆盖"网络/解析异常真的抛出来"这一更窄的情况，两处注释已如实写清，别误读成"这行就是修复"。测试：`pipeline/tests/test_run_tickers.py::TestRunEarningsHistoryEmptySummary`，2 条（超阈值告警 + 正常覆盖缺口不误报）。三个测试根全绿（3819 passed, 1 skipped, 12 deselected）。
 
 **[2026-10-01 追补] T-1001-111 跟进单核实：T-1001-04 分支曾因工人超时滞留，复核第二轮抓到一处测试插入错位（`test_run_tickers.py` 新类插在既有测试末行之前，挤走一句断言、让另一测试偶然打了真实网络请求），已在合并前修复。上面①③记的 `commit sha：1afc578b3` 是 cherry-pick 前的旧对象，不在 `origin/main` 的历史里（它仍挂在远端分支 `origin/agent/alex/T-1001-04` 上——该分支与 `agent/alex/T-1001-04-v2` 都已随这次合并失效，留给仓库清理）；最终合进 `origin/main` 的 sha 是 **`4de406a7d`**（含测试修复），`tasks/T-1001-04.md` 的 `result`/`status` 已在 ops 仓同步为 `done`。（alex）**
+
+## 二十二、[2026-10-03] alex：T-1003-17 universe 断层误读第 7 处——`breadth_store.py:113` 补漏
+
+起因：`T-1003-11`（修 6 处同一坑：universe 断层写成 08-14/5614，真实是 08-10/5618，见
+`data/research/universe_break_2026-08-10/README.md` 的「九行字」表）合并后，复核第二轮在
+**同一文件**里又发现一处没被那张表列到的日期——`pipeline/screeners/breadth_store.py:113`
+（Record High Percent / High-Low Index 的头部注释），开了本单。
+
+**改法同 T-1003-11 六处**：日期 08-14→08-10、规模 5614→5618，并原地写明「按 `source` 分段读
+会读成 08-14/5614」。`pipeline/tests/test_universe_break_date_language.py` 补第 7 条断言
+（`test_breadth_store_record_high_percent_header_comment_names_the_real_break`），阴性（旧日期）
+红、阳性（新日期）绿。无结论翻转——这一处也是纯注释，没有代码拿这个日期剪窗口。
+
+⚠️ **`data/research/universe_break_2026-08-10/README.md` 的「九行字」表漏列了这一处**（它只数了
+6 个代码/测试位置 + 2 个 METRIC_SOURCES 行 + 3 个 canary 研究文档行＝9，没算上这第 10 个）；
+该文件归 RND Linda（T-1003-10），不在本线边界内，本行只记事实，更新表格请她看到后自己补，
+或指给她一个任务号。
+
+**产出**：`pipeline/screeners/breadth_store.py`（注释）· `pipeline/tests/test_universe_break_date_language.py`
+（新增 1 条断言，共 7 条）· 本行。两个测试根全绿（pipeline/tests 3293 passed, 1 skipped, 12 deselected；
+tests 632 passed）。

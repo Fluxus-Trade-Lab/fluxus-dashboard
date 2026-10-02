@@ -1,9 +1,10 @@
-"""Guards T-1003-11: six prose spots used to claim the universe break (the
-step from a 3000-name pool to a 5000+-name pool) happened on 2026-08-14 at
-5614 names. The archive (data/history/breadth_archive.csv) shows the real
-jump is 2026-08-07 -> 2026-08-10, 3000 -> 5618; 2026-08-14/5614 is only the
-first `source == 'live'` row after a backfilled segment, an artifact of
-reading the archive by source instead of by date (see
+"""Guards T-1003-11 and T-1003-17: seven prose spots used to claim the
+universe break (the step from a 3000-name pool to a 5000+-name pool)
+happened on 2026-08-14 at 5614 names. The archive
+(data/history/breadth_archive.csv) shows the real jump is
+2026-08-07 -> 2026-08-10, 3000 -> 5618; 2026-08-14/5614 is only the first
+`source == 'live'` row after a backfilled segment, an artifact of reading
+the archive by source instead of by date (see
 data/research/universe_break_2026-08-10/README.md).
 
 Each check: the stale claim ("5614" tied to "08-14" as if that were the
@@ -97,4 +98,16 @@ def test_metric_sources_registered_debt_paragraph_names_the_real_break():
             "读成 08-14/5614",
         ],
         must_not_contain=["比值口径能让 08-14 断层"],
+    )
+
+
+def test_breadth_store_record_high_percent_header_comment_names_the_real_break():
+    _check(
+        "pipeline/screeners/breadth_store.py",
+        must_contain=[
+            "universe stepped from 3000 to 5618 names on 2026-08-10",
+            "makes it look like",
+            "3000 -> 5614 on 2026-08-14 instead",
+        ],
+        must_not_contain=["universe stepped from 3000 to 5614 names on 2026-08-14"],
     )
