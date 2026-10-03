@@ -907,8 +907,8 @@ const base = {
     'pf.col.rr': '盈亏比',
 
     // Portfolio — direction values
-    'pf.dir.long': '多头',
-    'pf.dir.short': '空头',
+    'pf.dir.long': '做多',
+    'pf.dir.short': '做空',
 
     // Portfolio — leg-state badges
     'pf.leg.PRE_TRIM': '待减仓',
