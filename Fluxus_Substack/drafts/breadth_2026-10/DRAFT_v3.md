@@ -90,7 +90,7 @@ Other people have made it sharper. @Signal_Sigma pointed out that only twice in 
 
 The same 1999 chart makes their point too. When the Nasdaq-100 topped in March 2000, the advance-decline line was already near its low. Breadth was right in the end. It was about eight months early.
 
-〔折叠槽 · 2007 / 2021 宽度先坏、指数后跌的案例 —— ⚠️ 出处待核，未核前不上稿〕
+It wasn't a one-off. In 2007 the NYSE advance-decline line peaked at the beginning of June. The NYSE Composite kept making new highs in July and again in October, and the S&P 500 topped on October 9 — about four months after breadth did. In late 2021, as Lance Roberts noted, the line stalled nearly six months before the correction that took hold in January 2022.
 
 ## The case for ignoring it (for now)
 
@@ -135,7 +135,12 @@ Until one of these trips, the bad breadth is somebody else's car.
 
 ## 🔴 交接
 
-**正文 1,075 词（不含槽位，脚本数）。** 待补五处：标题 · 半导体组内宽度序列（Linda，T-1002-80）· 2007/2021 历史案例出处（待核）· 第 7 段阈值与动作（Andy）· 收口（Andy）。
+**正文 1,075 词（不含槽位，脚本数）。** 待补四处：标题 · 半导体组内宽度序列（Linda，T-1002-80）· 第 7 段阈值与动作（Andy）· 收口（Andy）。
+
+**2007 / 2021 历史案例已核（10-03）**
+- **2007**：StockCharts ChartSchool〈Advance-Decline Line〉逐字：「The NYSE Composite moved to new highs in July, but the AD Line peaked at the beginning of June」，10 月再创新高、腾落线没跟，两次背离「foreshadowed the January support break and the bear market of 2008」。标普见顶用 `^GSPC` 核：2007-10-09 收 1,565.15（NYSE 综合 10-31）。6 月 1 日 → 10 月 9 日 `marketcal` 计 90 个交易日，稿里写「about four months」。
+- **2021**：**精确见顶日期没有可靠出处，未写日期**。流传的「2021-06-11 见顶、领先 142 日」出自 thetrading.tools 自家用 TradeStation 行情重建的合成线（2016 年起），不是官方 NYSE 腾落线，不用。McClellan Financial 原文直连 403，存档那篇是 2025 年另一次背离。稿里只用 Real Investment Advice 的 Lance Roberts（2025-03-11）定性说法「the NYSE A/D began to stagnate nearly six months before the correction eventually took hold」并署名。标普见顶 `^GSPC` 核：2022-01-03 收 4,796.56。
+- 要给 2021 一个硬日期，需要官方 NYSE 腾落线日数据（StockCharts `$NYAD` 或 WSJ Market Diary 存档）；我们的宽度归档从 2024 年才有。
 
 **十年期图改为自制（Andy 10-02：作者记不得了，「可以自己做吗」）**：`1990s_10y_above_5pct_fluxus.png`，数据 FRED `DGS10` + Yahoo `^GSPC`，署 `@Fluxus_Z`（Andy 10-02：对外署名一律用 X handle），脚本 `tools/chart_10y.py`（窗口 1990-10-11 → 2000-03-24，脚本内断言 2,366 日 / 95.5%）。标普两端收盘 295.46 → 1,527.46 已用 `^GSPC` 现场核过，且正好是窗口最低与最高，+417.0%。原来那张来源不明的图已从仓库删除。
 
