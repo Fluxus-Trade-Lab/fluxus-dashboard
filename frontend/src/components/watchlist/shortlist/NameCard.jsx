@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import CardChart from './CardChart'
 import { pctFromReading, fmtPct, fmtAtr, fmtPctl } from './scales'
+import { inLang } from '../../../i18n/fieldLang'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { dataName } from '../../../i18n/names'
 import { rich, word } from '../../screener/richText'
@@ -64,7 +65,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
             <div className="flex items-baseline gap-2 flex-wrap">
               <span className="text-[11px] font-mono uppercase tracking-[.24em]
                                text-[var(--color-text-muted)]">{seatLabel}</span>
-              <span className="text-[11px] text-[var(--color-text-secondary)]">{seat.why}</span>
+              <span className="text-[11px] text-[var(--color-text-secondary)]">{inLang(seat, 'why', lang)}</span>
             </div>
           )}
           <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">

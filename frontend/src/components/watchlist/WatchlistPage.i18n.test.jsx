@@ -105,6 +105,15 @@ describe("Today's List in English", () => {
     expect(han).toEqual([])
   })
 
+  // T-1004-21 (Andy 2026-10-04 「你自己做吧」): the file now ships why_en /
+  // verdict_en / legend_en, so a file that carries them leaves no Chinese at all.
+  it('short list tab prints no Chinese when the file carries English twins', async () => {
+    const twins = s.seats?.every((x) => x.why_en) && s.cards?.every((x) => x.verdict_en) && s.legend_en
+    expect(twins, 'data/output/shortlist.json should carry *_en twins').toBeTruthy()
+    const han = (await mount('en', 'shortlist')).filter((x) => HAN.test(x))
+    expect(han).toEqual([])
+  })
+
   it('keeps the strings English mode always printed', async () => {
     const all = (await mount('en')).join('\n')
     for (const en of ['Short List', 'exclude healthcare', '$1B cap · $20M/day traded · ADR ≥ 3.5% except trouble',

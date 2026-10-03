@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import TickerLink from '../ticker/TickerLink'
+import { inLang } from '../../i18n/fieldLang'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import ShortlistTray from '../shared/ShortlistTray'
@@ -1084,7 +1085,7 @@ export default function WatchlistPage({ zone: routeZone }) {
     panel.measured && shown(panel, { ...view, zoneKey: zone.key }).length === 0
   const visible = all.filter((x) => !isEmptied(x))
   const emptied = all.filter(isEmptied)
-  const rule = data.cross_zone_rule
+  const rule = inLang(data, 'cross_zone_rule', lang)
 
   return (
     <div className="py-6 px-1">

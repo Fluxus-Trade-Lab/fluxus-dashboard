@@ -7,6 +7,7 @@ import { useUniverse } from '../../../hooks/useUniverse'
 import { manualCards } from './manualCards'
 import { buildLedger, tally } from './ledger'
 import { credentials, pushOne, record, state as syncState } from './sync'
+import { inLang } from '../../../i18n/fieldLang'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { rich } from '../../screener/richText'
 
@@ -171,7 +172,7 @@ const UNKNOWN_EMPTY = {
 }
 
 export function EmptySeat({ seat, label }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const state = EMPTY_STATE[seat.empty_reason] ?? UNKNOWN_EMPTY
   const known = state !== UNKNOWN_EMPTY
   return (
@@ -180,7 +181,7 @@ export function EmptySeat({ seat, label }) {
         <span className="text-[11px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         {seat.why && (
-          <span className="text-[11px] text-[var(--color-text-secondary)]">{seat.why}</span>
+          <span className="text-[11px] text-[var(--color-text-secondary)]">{inLang(seat, 'why', lang)}</span>
         )}
       </div>
       <div className="mt-3 rounded-2xl p-5 flex gap-4 items-start"
@@ -308,7 +309,7 @@ export default function ShortListPage() {
 }
 
 function Body({ data }) {
-  const { t: tx } = useLanguage()
+  const { t: tx, lang } = useLanguage()
   const { names: trayNames, dropped, add, remove, madeOn, fileDate, stale } = useShortlist()
   const { all: universeRows } = useUniverse()
   const all = useMarks()
@@ -388,7 +389,7 @@ function Body({ data }) {
           {tx('wl2.sl.tally', { v: t.vetoed, s: t.starred, i: t.ignored, e: t.empty })}
         </p>
       </div>
-      <Legend legend={data.legend} />
+      <Legend legend={inLang(data, 'legend', lang)} />
 
       {/* The loop's other half is missing, and the page has to say so — a mark
           that looks saved but feeds nothing is worse than no button at all. */}
@@ -433,7 +434,7 @@ function Body({ data }) {
       {mine.length > 0 ? (
         <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
           {mine.map((c) => (
-            <NameCard key={c.ticker} card={c} verdictOf={c.verdict}
+            <NameCard key={c.ticker} card={c} verdictOf={inLang(c, 'verdict', lang)}
                       entry={entryOf(c.ticker)}
                       onRemove={() => dropName(c.ticker)}
                       onMark={(v) => setMark(data.date, c.ticker, v)}
@@ -458,7 +459,7 @@ function Body({ data }) {
           if (!card) return <EmptySeat key={s.seat} seat={s} label={label} />
           return (
             <NameCard key={s.seat} card={card} seat={s} seatLabel={label}
-                      verdictOf={card.verdict} entry={entryOf(card.ticker)}
+                      verdictOf={inLang(card, 'verdict', lang)} entry={entryOf(card.ticker)}
                       onMark={(v) => setMark(data.date, card.ticker, v)}
                       onNote={(v) => setNote(data.date, card.ticker, v)} />
           )
