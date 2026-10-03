@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 
 from pipeline.tools.audit_universe_population import (
-    check, et_session, share_small,
+    check, et_session, positive_caps, share_small,
 )
 
 BIG = [5e9] * 1000          # 老宇宙：一只 $1B 以下的都没有
@@ -312,3 +312,86 @@ def test_snapshots_reads_the_committed_history_and_skips_what_it_cannot_date(tmp
 def test_an_offset_bearing_timestamp_is_honoured_not_overwritten():
     """带时区的时刻要按它自己的时区换算；当成 UTC 会把这一场记到第二天。"""
     assert et_session('2026-06-26T12:00:00+09:00') == '2026-06-25'
+
+
+# ---- ④ 同一份名单，三个读者（2026-10-04，变异扫描 55/67 查出来的）-----------
+#
+# `check()` 里有三处读同一场的市值名单：当天的 `caps`、`share_small()` 算份额、
+# 以及「这个打底日有没有中位数」那一问。前两处写的是 `c and c > 0`（容得下空值），
+# 第三处写的是 `any(c > 0 for c in ...)`——`None > 0` 会抛 TypeError。
+#
+# 它为什么能躲过一个**专门喂空值**的测试：`any()` 短路。
+# `test_blank_caps_are_dropped_before_anything_is_counted` 写的是
+# `list(BIG) + [None] * 50`，第一行就是 5e9，`any()` 当场返回 True，
+# 后面那 50 个 None 一个都没读到。把同一场写成 `[None] * 50 + list(BIG)`
+# 就炸——**同一份数据，换个顺序，一个崩一个不崩**。
+#
+# 所以下面这两条按「它能坏的方式」造：一条把空值放在第一行（崩的那个方向），
+# 一条扫遍所有旋转位置（证明答案与顺序无关，不是只挪对了一格）。
+
+def test_a_blank_cap_in_the_first_row_is_dropped_too_not_a_crash():
+    """空值排在最前的那一场——现有测试把它排在最后，于是 any() 先短路了。"""
+    by = _twenty_quiet_sessions()
+    by['2026-06-05'] = [None] * 50 + list(BIG)          # 打底日，空值在最前
+    r = check(by)
+    rec = {x['session']: x for x in r['rows']}['2026-06-05']
+    assert rec['names'] == len(BIG)                      # 空值没进分母
+    assert r['ok'], r['violations']
+
+
+def test_the_answer_does_not_depend_on_where_the_blanks_sit():
+    """装成不变式扫一遍，而不是手挑一个边界用例。
+
+    把同一场名单旋转到每一个位置，`check()` 的每一行读数都必须逐字相同。
+    旋转而不是随机打乱：失败时能直接报出是第几格，而且 `BIG` 全同值，
+    旋转足以把空值送到 `any()` 短路前后的每一侧。"""
+    base = [None, 0, 5e9] + [5e9] * 997
+    answers = set()
+    for k in range(0, len(base), 97):                    # 0, 97, 194, ... 共 11 格
+        rotated = base[k:] + base[:k]
+        by = _twenty_quiet_sessions()
+        by['2026-06-05'] = list(rotated)
+        by['2026-06-19'] = list(rotated)
+        r = check(by)
+        answers.add((r['ok'], tuple(
+            (x['session'], x['names'], x['share_small'], x['median_cap'],
+             x['baseline_share'], x['baseline_median'], x['kind'])
+            for x in r['rows'])))
+    assert len(answers) == 1, f'{len(answers)} 个不同答案，取决于空值排在哪'
+
+
+def test_all_three_readers_drop_exactly_the_same_caps():
+    """份额的分母、当天的家数、打底日有没有中位数——必须是同一个名单。
+
+    判据不是「三处都调了同一个函数」（那只是实现），是三处在同一份含空值、
+    零、负数、一分钱的名单上给出同一个答案。"""
+    messy = [None, 0, -5e9, 1.0, 5e9, 1.4e8]
+    kept = positive_caps(messy)
+    assert kept == [1.0, 5e9, 1.4e8]                     # 一分钱算票，空值/0/负数不算
+
+    # ① share_small 的分母
+    assert share_small(messy) == 2 / 3                   # 1.0 与 1.4e8 在 $1B 以下
+    # ② 当天的 names
+    by = _twenty_quiet_sessions()
+    by['2026-06-05'] = list(messy) + list(BIG)
+    rec = {x['session']: x for x in check(by)['rows']}['2026-06-05']
+    assert rec['names'] == len(kept) + len(BIG)
+    # ③ 打底日有没有中位数：一整场全是不可判的值＝没有中位数可打底
+    by2 = _twenty_quiet_sessions()
+    by2['2026-06-02'] = [None, 0, -1.0]
+    rows2 = {x['session']: x for x in check(by2)['rows']}
+    assert rows2['2026-06-02']['median_cap'] is None
+    assert rows2['2026-06-02']['kind'] == 'P3'           # 片段，不判
+
+
+def test_check_keeps_a_one_dollar_cap_not_just_share_small():
+    """`> 0` 的那条界现在只有一处实现，所以 check() 这一侧也得有自己的钉子。
+
+    重构前这条界写在三处，只有 share_small 那处有测试
+    （`test_the_cap_filter_asks_for_positive_not_for_more_than_one`）；
+    现在三处共用一个 helper，但「哪个测试在钉它」不该又变成只有一个。"""
+    by = _twenty_quiet_sessions()
+    by['2026-06-05'] = [1.0] * 500 + [5e9] * 500
+    rec = {x['session']: x for x in check(by)['rows']}['2026-06-05']
+    assert rec['names'] == 1000                          # 一分钱的 500 只没被扔
+    assert rec['share_small'] == 0.5

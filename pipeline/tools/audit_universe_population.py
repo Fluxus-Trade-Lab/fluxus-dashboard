@@ -79,8 +79,34 @@ def et_session(timestamp) -> Optional[str]:
     return dt.astimezone(ET).date().isoformat()
 
 
+def positive_caps(caps: List[float]) -> List[float]:
+    """The caps a session actually contributes -- asked ONE way, in one place.
+
+    `check()` used to read the same session list three times with two
+    different questions. Two of them tolerated a blank cap
+    (`[c for c in caps if c and c > 0]`, used for the day itself and for each
+    prior day's median); the third did not (`any(c > 0 for c in caps)`, used
+    to decide whether a prior day HAS a median at all), and `None > 0` raises
+    TypeError.
+
+    Measured 2026-10-04: that crash is ORDER DEPENDENT, which is why it sat
+    here with a test pointed straight at it. `any()` short-circuits, so a
+    session written as `[5e9]*1000 + [None]*50` returns True off the first row
+    and never reaches a blank; the same session written
+    `[None]*50 + [5e9]*1000` raises. `test_blank_caps_are_dropped_before_
+    anything_is_counted` has fed this function blanks since it was written --
+    with the blanks at the END. Three mutation survivors sat on the same two
+    lines (`> 0` -> `>= 0`, `> 0` -> `> 1`, twice) for the same reason: nothing
+    reached them.
+
+    A guard that reads its own input two ways has two definitions of "a name
+    with a market cap", and the one that is wrong is the one with no test.
+    """
+    return [c for c in caps if c and c > 0]
+
+
 def share_small(caps: List[float], line: float = SMALL_CAP) -> Optional[float]:
-    usable = [c for c in caps if c and c > 0]
+    usable = positive_caps(caps)
     if not usable:
         return None
     return sum(1 for c in usable if c < line) / len(usable)
@@ -93,7 +119,7 @@ def check(by_session: Dict[str, List[float]], line: float = SMALL_CAP,
     sessions = sorted(by_session)
     rows, violations, warnings = [], [], []
     for i, day in enumerate(sessions):
-        caps = [c for c in by_session[day] if c and c > 0]
+        caps = positive_caps(by_session[day])
         n = len(caps)
         sh = share_small(caps, line)
         med = statistics.median(caps) if caps else None
@@ -101,8 +127,8 @@ def check(by_session: Dict[str, List[float]], line: float = SMALL_CAP,
         prior_days = sessions[max(0, i - window):i]
         prior_sh = [s for s in (share_small(by_session[p], line) for p in prior_days)
                     if s is not None]
-        prior_med = [statistics.median([c for c in by_session[p] if c and c > 0])
-                     for p in prior_days if any(c > 0 for c in by_session[p])]
+        prior_med = [statistics.median(cs) for cs in
+                     (positive_caps(by_session[p]) for p in prior_days) if cs]
         base_sh = statistics.median(prior_sh) if prior_sh else None
         base_med = statistics.median(prior_med) if prior_med else None
 
