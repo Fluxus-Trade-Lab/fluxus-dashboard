@@ -23,7 +23,7 @@ export default {
     'rp.tb.title': 'Proxy Board',
     'rp.tb.loading': 'Loading the theme board…',
     'rp.tb.failed': 'theme_board.json did not load — the board is not measured this session.',
-    'rp.tb.prevTitle': '旧读数：{prev}',
+    'rp.tb.prevTitle': 'old reading: {prev}',
     'rp.tb.was': 'was',
     'rp.tb.changed': 'changed',
     'rp.tb.members': '{n} members — {label}',
