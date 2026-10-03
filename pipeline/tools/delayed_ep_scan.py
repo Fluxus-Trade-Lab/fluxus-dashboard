@@ -116,6 +116,13 @@ class DelayedEp:
     today_relvol: Optional[float]
 
 
+def _is_session_bar(df: pd.DataFrame, as_of: str) -> bool:
+    """截到 as_of 之后，最后一根 bar 是不是 as_of 当天。"""
+    if df is None or not len(df):
+        return False
+    return pd.Timestamp(df.index[-1]).normalize() == pd.Timestamp(as_of).normalize()
+
+
 def classify(bars: pd.DataFrame, ep_date: str, *, near: float = 0.10,
              contract: float = 0.60, ep_change=None, ep_relvol=None,
              ticker: str = "") -> Optional[DelayedEp]:
@@ -302,12 +309,22 @@ def main() -> None:
             return
     uni = {r["ticker"]: r for r in json.loads(UNIVERSE.read_text())["rows"]}
     rows = []
+    stale = []
     for t in tickers:
         df = frames.get(t)
         if df is None:
             continue
         df = df[df.index <= pd.Timestamp(as_of)]
         if len(df) < 25:
+            continue
+        # 最后一根 K 线必须就是 as-of 当天，否则跳过这只票。
+        # 同形坏法两次：09-02 与 09-30——vendor 当天那根 bar 的 Close 是 NaN，上面的
+        # dropna(subset=["Close"]) 把它丢掉，classify() 的 today=b.iloc[-1] 于是退回前一天，
+        # archive() 却照样盖上 as_of 的日戳：前一天的读数冒充当天进了归档。
+        # 审计侧 0f75fa339 已把 09-30 声明为已知坏日（不重算）；这里堵的是源头，
+        # 让第三次不再发生。跳过的票打印出来，不静默。
+        if not _is_session_bar(df, as_of):
+            stale.append(t)
             continue
         r = cands[t]
         d = classify(df, r["date"], near=a.near, contract=a.contract,
@@ -321,6 +338,10 @@ def main() -> None:
     rows.sort(key=lambda d: (order[d.stage], d.days_since))
     if a.stage:
         rows = [d for d in rows if d.stage == a.stage]
+    if stale:
+        print(f"skipped {len(stale)} tickers whose {as_of} bar is missing "
+              f"(vendor Close=NaN or not yet printed): {' '.join(stale[:12])}"
+              f"{' …' if len(stale) > 12 else ''}", file=sys.stderr)
     print(f"{len(rows)} in the {a.min_days}-{a.max_days} session window\n")
     if a.archive:
         n = archive(rows, as_of)

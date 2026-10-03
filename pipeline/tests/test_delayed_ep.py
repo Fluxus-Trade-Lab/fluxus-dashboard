@@ -101,3 +101,32 @@ class TestCandidatesAfterEpSplit:
         ]))
         got = D.load_candidates("2026-09-25", 3, 15)
         assert set(got) == {"OLD", "SBX", "QMX"}
+
+
+# ── 当天那根 K 线缺失时不许拿前一天冒充（09-02 与 09-30 同形两次）──
+
+def test_session_bar_check_rejects_a_frame_that_stops_the_day_before():
+    """vendor 当天 Close=NaN → dropna 丢掉 → 最后一根是前一天：必须判「不是当天」。"""
+    import pandas as pd
+    from pipeline.tools import delayed_ep_scan as S
+    idx = pd.to_datetime(["2026-09-28", "2026-09-29"])     # 09-30 那根被 dropna 掉了
+    df = pd.DataFrame({"Close": [10.0, 10.5]}, index=idx)
+    assert S._is_session_bar(df, "2026-09-30") is False
+
+
+def test_session_bar_check_accepts_the_real_session():
+    import pandas as pd
+    from pipeline.tools import delayed_ep_scan as S
+    idx = pd.to_datetime(["2026-09-29", "2026-09-30"])
+    df = pd.DataFrame({"Close": [10.5, 10.4]}, index=idx)
+    assert S._is_session_bar(df, "2026-09-30") is True
+
+
+def test_session_bar_check_survives_intraday_timestamps():
+    """yfinance 有时带时分秒/时区：按日比，不按时刻比。"""
+    import pandas as pd
+    from pipeline.tools import delayed_ep_scan as S
+    idx = pd.to_datetime(["2026-09-29 00:00", "2026-09-30 00:00"])
+    df = pd.DataFrame({"Close": [10.5, 10.4]}, index=idx)
+    assert S._is_session_bar(df, "2026-09-30") is True
+    assert S._is_session_bar(pd.DataFrame(), "2026-09-30") is False
