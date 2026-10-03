@@ -606,3 +606,322 @@ def test_the_ledger_path_follows_root_so_tests_never_write_into_the_repo(tmp_pat
     (2026-08-23, test_quality.py)."""
     assert sweep_mod.ledger_path(tmp_path) == tmp_path / sweep_mod.LEDGER_REL
     assert sweep_mod.ledger_path(tmp_path) != sweep_mod.ledger_path()
+
+
+# --------------------------------------------------------------------------
+# merging slices back into a reading
+#
+# `record()` has required this step since it was written -- "the merged numbers
+# have to be assembled before they can be filed" -- and until 2026-10-04 the
+# only place the addition existed was the hand-written set union in
+# `test_complementary_slices_reconstruct_the_whole_module` above. The practical
+# cost: a full sweep of `audit_reads_declarations` is 52 mutants at ~17.6s each
+# (measured 2026-10-04), about 15 minutes against a 10-minute foreground
+# ceiling, so it could be swept in halves and never filed. The three biggest
+# guards (123 / 130 / 165 sites) sat at NEVER for the same reason.
+#
+# Every check in `merge_slices` is a refusal rather than a warning because each
+# one, when wrong, yields a PLAUSIBLE rate. The tests below are organised by
+# HOW the merge can be wrong, not by which line implements it: a gap, an
+# overlap, a short tiling, an edit to the guard between slices, a different
+# --repeat, a different commit, a report too old to carry the hash, and a
+# hand-edited report. Each has to come back refused on its own.
+
+MIXED_SITES = "A = (1, 2, 3, 4, 5, 6)\n"
+PINS_BOTH_ENDS = """
+    from pipeline.tools import fake_guard
+
+    def test_the_ends_are_pinned():
+        assert fake_guard.A[0] == 1
+        assert fake_guard.A[5] == 6
+"""
+
+
+def test_merged_slices_equal_the_whole_module_sweep(tmp_path, point_sweep_at):
+    """The headline: two ways of computing the same reading must agree.
+
+    The whole-module sweep is computed by running all six mutants in one go;
+    the merged reading is computed by running two halves and adding them. If
+    `merge_slices` double-counted, dropped a survivor, or recomputed the rate
+    over the wrong denominator, these two numbers would differ."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    whole = sweep_mod.sweep(name, verbose=False)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+
+    merged = sweep_mod.merge_slices([a, b])
+    assert not merged.get("error"), merged
+    # the mix is load-bearing: a guard whose mutants all die, or all survive,
+    # would pass this test even if the merge threw one half away.
+    assert whole["killed"] == 2 and whole["survived"] == 4, whole
+    for field in ("module", "mutants", "killed", "survived", "kill_rate",
+                  "total_sites", "index_from", "index_to"):
+        assert merged[field] == whole[field], (field, merged[field], whole[field])
+    assert [s["index"] for s in merged["survivors"]] == \
+           [s["index"] for s in whole["survivors"]]
+    assert merged["merged_from"] == [[0, 3], [3, 6]]
+
+
+def test_a_merged_reading_is_filed_while_its_own_slices_are_still_refused(
+        tmp_path, point_sweep_at):
+    """Both directions, in one test, because only the pair is informative.
+
+    `record()` refusing everything would pass a test that only checked the
+    slices; `record()` accepting anything would pass a test that only checked
+    the merge."""
+    git_repo(tmp_path)
+    point_sweep_at(tmp_path)
+    total = len(sweep_mod.sites(ast.parse(
+        (tmp_path / "pipeline" / "tools" / "fake_guard.py").read_text())))
+    a = sweep_mod.sweep("fake_guard", verbose=False, index_from=0, index_to=1)
+    b = sweep_mod.sweep("fake_guard", verbose=False, index_from=1, index_to=total)
+
+    assert sweep_mod.record(a) is None
+    assert sweep_mod.record(b) is None
+    assert not sweep_mod.ledger_path(tmp_path).exists()
+
+    merged = sweep_mod.merge_slices([a, b])
+    entry = sweep_mod.record(merged)
+    assert entry is not None, merged
+    assert entry["mutants"] == a["mutants"] + b["mutants"]
+    assert entry["total_sites"] == total
+    on_disk = json.loads(sweep_mod.ledger_path(tmp_path).read_text())
+    assert on_disk["modules"]["fake_guard"]["kill_rate"] == merged["kill_rate"]
+
+
+def test_a_gap_between_slices_is_refused(tmp_path, point_sweep_at):
+    """Drop the middle and the rate is taken over four mutants out of six --
+    a number that looks exactly like a reading."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=2)
+    c = sweep_mod.sweep(name, verbose=False, index_from=4, index_to=6)
+    r = sweep_mod.merge_slices([a, c])
+    assert r.get("error"), r
+    assert "gap at index 2" in r["error"], r["error"]
+
+
+def test_overlapping_slices_are_refused(tmp_path, point_sweep_at):
+    """An overlap counts a mutant twice, so `mutants` exceeds `total_sites`
+    while every individual report is honest."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=4)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error"), r
+    assert "overlap at index 3" in r["error"], r["error"]
+
+
+def test_slices_that_stop_short_of_the_last_site_are_refused(
+        tmp_path, point_sweep_at):
+    """The off-by-one at the end: a stride that stops one site early.
+
+    This is the one a tired operator actually hits, and it is invisible --
+    the slices tile perfectly, they just do not reach the end."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=5)
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error"), r
+    assert "cover [0, 5)" in r["error"] and "6 sites" in r["error"], r["error"]
+
+
+def test_an_edit_to_the_guard_between_slices_is_refused_even_with_the_site_count_unchanged(
+        tmp_path, point_sweep_at):
+    """The reason the hash exists rather than just `total_sites`.
+
+    Most edits to a guard do not change how many mutation sites it has --
+    change a constant, swap `>` for `>=` -- so `total_sites` matches across
+    the edit and the indices silently refer to different lines in each half.
+    Positive control for the hash itself: the same two slices with the same
+    `total_sites` must merge when the bytes match and refuse when they do
+    not, so this test asserts BOTH."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    guard = tmp_path / "pipeline" / "tools" / f"{name}.py"
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+
+    # An element the test does not pin, so the baseline stays green -- an edit
+    # that makes a guard's tests red is caught by "baseline is already red",
+    # not by this check, and would not exercise it. Site 1 is now `9 -> 10`
+    # where it used to be `2 -> 3`: same index, different line of meaning.
+    guard.write_text("A = (1, 9, 3, 4, 5, 6)\n")        # same 6 sites, new bytes
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    assert not b.get("error"), b                        # the edit did not break it
+    assert a["total_sites"] == b["total_sites"] == 6     # the weak check agrees
+    assert a["src_sha256"] != b["src_sha256"]
+
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error") and "src_sha256" in r["error"], r
+
+    guard.write_text(MIXED_SITES)                       # put the bytes back
+    b2 = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    assert not sweep_mod.merge_slices([a, b2]).get("error")
+
+
+def test_slices_run_with_different_repeat_are_refused(tmp_path, point_sweep_at):
+    """A 1-trial slice and a 3-trial slice do not share a definition of
+    UNSTABLE, so adding their survivor sets mixes two instruments."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3, repeat=1)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6, repeat=2)
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error") and "repeat" in r["error"], r
+
+
+def test_slices_taken_at_different_commits_are_refused(tmp_path, point_sweep_at):
+    """`commit` is the provenance `record()` files, and a reading has one.
+
+    Hand-built rather than swept twice: what is under test is the refusal, and
+    making a second commit here would also change the bytes, which the hash
+    would catch first and would not prove this check works."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = dict(sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6),
+             commit="deadbeef" * 5)
+    a = dict(a, commit="cafebabe" * 5)
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error") and "commit" in r["error"], r
+
+
+def test_a_slice_from_before_the_hash_existed_is_refused_not_merged_on_faith(
+        tmp_path, point_sweep_at):
+    """Reports written before 2026-10-04 have no `src_sha256`.
+
+    Treating a missing hash as "matches" would make every stale report on disk
+    mergeable with a fresh one -- the exact case the hash was added for."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    old = {k: v for k, v in a.items() if k != "src_sha256"}
+    r = sweep_mod.merge_slices([old, b])
+    assert r.get("error") and "re-sweep" in r["error"], r
+
+
+def test_an_empty_tail_slice_does_not_block_a_complete_merge(
+        tmp_path, point_sweep_at):
+    """Chunked runs walk off the end by construction, so the last report of a
+    fixed stride is routinely empty. It ran nothing, so it is not part of the
+    tiling -- refusing it would punish the caller for the arithmetic the tool
+    told them to do."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    tail = sweep_mod.sweep(name, verbose=False, index_from=6, index_to=9)
+    assert tail["mutants"] == 0
+    r = sweep_mod.merge_slices([a, b, tail])
+    assert not r.get("error"), r
+    assert r["mutants"] == 6 and r["merged_from"] == [[0, 3], [3, 6]]
+
+
+def test_a_mutant_index_outside_its_own_slice_is_refused(tmp_path, point_sweep_at):
+    """Guards against a report assembled or trimmed by hand.
+
+    The range fields and the survivor indices are two statements about the
+    same thing; if they disagree, the report is not a sweep's output and its
+    indices cannot be trusted to be disjoint from the other slice's."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep(name, verbose=False, index_from=3, index_to=6)
+    assert b["survivors"], b
+    tampered = dict(b, survivors=[dict(b["survivors"][0], index=1)])
+    r = sweep_mod.merge_slices([a, tampered])
+    assert r.get("error") and "outside its own slice" in r["error"], r
+
+
+def test_slices_from_different_modules_never_add_up(tmp_path, point_sweep_at):
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    make_repo_second = (tmp_path / "pipeline" / "tools" / "other_guard.py")
+    make_repo_second.write_text(MIXED_SITES)
+    (tmp_path / "pipeline" / "tests" / "test_other_guard.py").write_text(
+        textwrap.dedent(PINS_BOTH_ENDS).replace("fake_guard", "other_guard"))
+    point_sweep_at(tmp_path)
+    a = sweep_mod.sweep(name, verbose=False, index_from=0, index_to=3)
+    b = sweep_mod.sweep("other_guard", verbose=False, index_from=3, index_to=6)
+    r = sweep_mod.merge_slices([a, b])
+    assert r.get("error") and "different modules" in r["error"], r
+
+
+def test_merge_reads_the_file_shape_that_json_writes(tmp_path, point_sweep_at):
+    """End to end through the CLI, because the halves arrive as files.
+
+    `--json` writes `{"modules": [...]}`, and the operator passes two of those
+    paths back in. If `slices_in` only understood a bare result, the whole
+    feature would be unreachable from the command line while every unit test
+    stayed green."""
+    name = make_repo(tmp_path, MIXED_SITES, PINS_BOTH_ENDS)
+    point_sweep_at(tmp_path)
+    first, second = tmp_path / "a.json", tmp_path / "b.json"
+    sweep_mod.main(["--module", name, "-q", "--index-from", "0",
+                    "--index-to", "3", "--json", str(first)])
+    sweep_mod.main(["--module", name, "-q", "--index-from", "3",
+                    "--index-to", "6", "--json", str(second)])
+
+    found = sweep_mod.slices_in([first, second])
+    assert sorted(found) == [name] and len(found[name]) == 2
+    merged = sweep_mod.merge_slices(found[name])
+    assert not merged.get("error"), merged
+    assert merged["mutants"] == 6 and merged["index_to"] == 6
+    assert sweep_mod.main(["--merge", str(first), str(second), "-q"]) == 0
+
+
+MIXED_WITH_A_FLAKY_SITE = "LIMIT = 10\nA = (1, 2, 3)\n"
+PINS_TUPLE_ENDS_AND_ONE_FLAKY = """
+    import os, pathlib
+    from pipeline.tools import fake_guard
+
+    def test_tuple_ends_are_pinned():
+        assert fake_guard.A[0] == 1
+        assert fake_guard.A[2] == 3
+
+    def test_limit_is_flaky_once_mutated():
+        counter = pathlib.Path(os.environ["FAKE_COUNTER"])
+        n = int(counter.read_text() or "0")
+        counter.write_text(str(n + 1))
+        if fake_guard.LIMIT == 10:
+            return                      # unmutated: green every time
+        assert n % 2 == 0               # mutated: green, red, green, red...
+"""
+
+
+def test_the_merged_rate_is_over_mutants_not_over_sites(
+        tmp_path, point_sweep_at, monkeypatch):
+    """`mutants` and `total_sites` are different numbers, and must be shown so.
+
+    Every other merge test here uses a guard where the two are equal -- no
+    mutant skipped, none unstable -- so `killed/mutants` and
+    `killed/total_sites` give the same answer and a merge dividing by the
+    wrong one passes. Measured 2026-10-04: swapping the denominator in
+    `merge_slices` left the whole suite green. This guard separates them. One
+    site is flaky under mutation, so at repeat=2 it comes back UNSTABLE and is
+    kept OUT of the denominator (Plumber Joe's rule, 2026-09-01) while still
+    counting as a site: 4 sites, 3 mutants, 2 killed. 2/3 is 67%, 2/4 is 50%.
+    """
+    counter = tmp_path / "counter.txt"
+    counter.write_text("0")
+    monkeypatch.setenv("FAKE_COUNTER", str(counter))
+    name = make_repo(tmp_path, MIXED_WITH_A_FLAKY_SITE,
+                     PINS_TUPLE_ENDS_AND_ONE_FLAKY)
+    point_sweep_at(tmp_path)
+
+    whole = sweep_mod.sweep(name, verbose=False, repeat=2)
+    assert whole["total_sites"] == 4 and whole["mutants"] == 3, whole
+    assert whole["unstable"] == 1 and whole["killed"] == 2, whole
+    assert whole["kill_rate"] == round(2 / 3, 3), whole
+
+    a = sweep_mod.sweep(name, verbose=False, repeat=2, index_from=0, index_to=2)
+    b = sweep_mod.sweep(name, verbose=False, repeat=2, index_from=2, index_to=4)
+    merged = sweep_mod.merge_slices([a, b])
+    assert not merged.get("error"), merged
+    assert merged["mutants"] == 3 and merged["total_sites"] == 4, merged
+    assert merged["unstable"] == 1 and len(merged["unstable_mutants"]) == 1
+    assert merged["kill_rate"] == round(2 / 3, 3), merged
+    assert merged["kill_rate"] != round(2 / 4, 3)   # the wrong denominator

@@ -40,6 +40,7 @@ from __future__ import annotations
 import argparse
 import ast
 import copy
+import hashlib
 import json
 import os
 import shutil
@@ -235,6 +236,7 @@ def sweep(module, verbose=True, repeat=1, index_from=0, index_to=None):
     src = (TOOLS / f"{module}.py").read_text()
     src_lines = src.splitlines()
     cands = sites(ast.parse(src))
+    src_sha = hashlib.sha256(src.encode()).hexdigest()
 
     lo = max(0, index_from)
     hi = len(cands) if index_to is None else min(index_to, len(cands))
@@ -290,7 +292,149 @@ def sweep(module, verbose=True, repeat=1, index_from=0, index_to=None):
             "total_sites": len(cands), "index_from": lo, "index_to": hi,
             "kill_rate": round(killed / total, 3) if total else None,
             "survivors": survivors, "unstable_mutants": unstable,
-            "commit": ws.commit, "uncommitted": ws.uncommitted}
+            "commit": ws.commit, "uncommitted": ws.uncommitted,
+            "src_sha256": src_sha}
+
+
+def merge_slices(slices):
+    """Add a set of slice reports back into one whole-module reading.
+
+    This is the step `record()`'s docstring has demanded since it was written
+    ("the merged numbers have to be assembled before they can be filed") and
+    that nothing implemented. The gap is not cosmetic: a full sweep of the
+    slow guards does not fit in one foreground run -- measured 2026-10-04,
+    `audit_reads_declarations` is 52 mutants at ~17.6s each, about 15 minutes
+    against a 10-minute ceiling -- `--ledger` refuses slices, and the only
+    place the addition existed was by hand inside this file's own test. So the
+    three biggest guards (`audit_regression_gate` 123 sites,
+    `audit_events_vs_bars` 130, `audit_ci_test_coverage` 165) could be
+    measured all night and still never be filed: they sit at NEVER on the
+    ledger because the last step was missing, not because nobody swept them.
+
+    What must hold before the pieces may be added, and why each is a refusal
+    rather than a warning -- every one of these produces a PLAUSIBLE number
+    when it is wrong, which is the only kind of error worth a gate:
+
+    * same `src_sha256`. The indices come from `ast.walk` over one specific
+      source. Edit the guard between slices and index 7 is a different line in
+      each half, while the counts still add up to something. `total_sites`
+      catches the edits that change the number of sites and misses every edit
+      that does not -- swap a `>` for a `>=` and the count is identical. The
+      hash is the only check that pins the bytes.
+    * the ranges must tile `[0, total_sites)` exactly. A gap files a rate over
+      fewer mutants than the module has; an overlap counts one mutant twice.
+    * same `repeat`. A 1-trial slice and a 3-trial slice do not share a
+      definition of UNSTABLE, so their survivor sets are not comparable.
+    * same `commit` and `uncommitted`. These are the provenance `record()`
+      files, and a reading has one.
+
+    Returns a result shaped exactly like `sweep()`'s whole-module result, so
+    `record()` accepts it without being taught anything new: the honesty check
+    stays where it is and keeps refusing the individual slices.
+    """
+    if not slices:
+        return {"module": None, "error": "no slice reports to merge"}
+
+    mods = sorted({str(s.get("module")) for s in slices})
+    if len(mods) != 1:
+        return {"module": None,
+                "error": f"slices are from different modules: {mods}"}
+    module = slices[0].get("module")
+
+    for s in slices:
+        if s.get("error"):
+            return {"module": module,
+                    "error": f"a slice carries an error, nothing to merge: {s['error']}"}
+        if not s.get("src_sha256"):
+            return {"module": module,
+                    "error": "a slice predates src_sha256, so the bytes it measured "
+                             "cannot be shown to be the same bytes -- re-sweep it"}
+        for field in ("total_sites", "index_from", "index_to"):
+            if not isinstance(s.get(field), int):
+                return {"module": module,
+                        "error": f"a slice has no integer {field}; it is not a sweep report"}
+
+    for field, why in (
+            ("src_sha256", "the guard's source differs between slices, so their "
+                           "indices do not refer to the same lines"),
+            ("total_sites", "slices disagree on the module's site count"),
+            ("repeat", "slices disagree on --repeat, so UNSTABLE does not mean "
+                       "the same thing in each"),
+            ("commit", "slices were taken at different commits"),
+            ("uncommitted", "slices disagree on the guard's uncommitted state")):
+        seen = {json.dumps(s.get(field), sort_keys=True) for s in slices}
+        if len(seen) != 1:
+            return {"module": module, "error": f"{field}: {why} ({sorted(seen)})"}
+
+    total = slices[0]["total_sites"]
+    # `sweep()` runs `range(index_from, index_to)`, so a slice whose range is
+    # empty ran nothing and is not part of the tiling. The last chunk of a
+    # fixed stride is routinely empty; refusing it would punish the caller for
+    # the arithmetic the tool told them to do.
+    parts = [s for s in slices if s["index_to"] > s["index_from"]]
+    ordered = sorted(parts, key=lambda s: (s["index_from"], s["index_to"]))
+    spans = [(s["index_from"], s["index_to"]) for s in ordered]
+    cursor = 0
+    for lo, hi in spans:
+        if lo != cursor:
+            kind = "gap" if lo > cursor else "overlap"
+            return {"module": module,
+                    "error": f"{kind} at index {min(lo, cursor)}: the slices must tile "
+                             f"[0, {total}) exactly, got {spans}"}
+        cursor = hi
+    if cursor != total:
+        return {"module": module,
+                "error": f"the slices cover [0, {cursor}) but the module has {total} "
+                         f"sites; {total - cursor} mutants were never run"}
+
+    for s in parts:
+        for info in list(s.get("survivors", [])) + list(s.get("unstable_mutants", [])):
+            i = info.get("index")
+            if not isinstance(i, int) or not s["index_from"] <= i < s["index_to"]:
+                return {"module": module,
+                        "error": f"a reported mutant carries index {i!r}, outside its "
+                                 f"own slice [{s['index_from']}, {s['index_to']}) -- "
+                                 f"the report was edited or assembled by hand"}
+
+    killed = sum(s["killed"] for s in parts)
+    survivors = sorted((info for s in parts for info in s.get("survivors", [])),
+                       key=lambda d: d["index"])
+    unstable = sorted((info for s in parts for info in s.get("unstable_mutants", [])),
+                      key=lambda d: d["index"])
+    mutants = killed + len(survivors)
+    return {"module": module, "mutants": mutants, "killed": killed,
+            "survived": len(survivors),
+            "skipped": sum(s.get("skipped", 0) for s in parts),
+            "unstable": len(unstable),
+            "no_verdict": sum(s.get("no_verdict", 0) for s in parts),
+            "repeat": slices[0].get("repeat", 1),
+            "total_sites": total, "index_from": 0, "index_to": total,
+            "kill_rate": round(killed / mutants, 3) if mutants else None,
+            "survivors": survivors, "unstable_mutants": unstable,
+            "commit": slices[0].get("commit"),
+            "uncommitted": slices[0].get("uncommitted", []),
+            "src_sha256": slices[0]["src_sha256"],
+            "merged_from": [list(span) for span in spans]}
+
+
+def slices_in(paths):
+    """Every sweep result found in a list of `--json` report files, by module.
+
+    Accepts what `--json` writes (`{"modules": [...]}`), a bare list of
+    results, or a single result, because all three turn up: reports get
+    hand-pasted together, and refusing the shape is less useful than reading
+    it and then refusing the CONTENT if it does not tile."""
+    found = {}
+    for path in paths:
+        blob = json.loads(Path(path).read_text())
+        if isinstance(blob, dict):
+            results = blob.get("modules", [blob])
+        else:
+            results = blob
+        for r in results:
+            if isinstance(r, dict) and r.get("module"):
+                found.setdefault(r["module"], []).append(r)
+    return found
 
 
 def main(argv=None):
@@ -315,6 +459,13 @@ def main(argv=None):
                     help=f"file each whole-module result in {LEDGER_REL} so the "
                          "rate has one home and nobody has to quote it out of "
                          "a dated markdown (slices are refused -- see record())")
+    ap.add_argument("--merge", type=Path, nargs="+", metavar="REPORT.json",
+                    help="add slice reports (the files --json writes) back into "
+                         "one whole-module reading and print it; refused unless "
+                         "the slices tile [0, total_sites) exactly and every one "
+                         "measured the same source bytes. Combine with --ledger "
+                         "to file the merged reading -- this is how a guard too "
+                         "slow for one foreground run gets onto the ledger.")
     ap.add_argument("--show-ledger", action="store_true",
                     help="print the filed rates, lowest-known first, each with "
                          "a FRESH/STALE/UNKNOWN verdict git computed; exit "
@@ -325,6 +476,32 @@ def main(argv=None):
                               if p.stem != Path(__file__).stem)
     if a.show_ledger:
         print_ledger(ledger_rows(modules=a.module))
+        return 0
+    if a.merge:
+        by_module = slices_in(a.merge)
+        if not by_module:
+            print("no sweep results in those files")
+            return 0
+        merged = []
+        for m, parts in sorted(by_module.items()):
+            r = merge_slices(parts)
+            merged.append(r)
+            spans = ", ".join(f"{lo}:{hi}" for lo, hi in
+                              (r.get("merged_from") or []))
+            if r.get("error"):
+                print(f"{m:24s} NOT MERGED: {r['error']}")
+                continue
+            print(f"{m:24s} {r['killed']:3d}/{r['mutants']:3d} killed "
+                  f"({r['kill_rate']:.0%})   {r['survived']} survived"
+                  f"   [merged {len(r['merged_from'])} slices: {spans}]")
+            if a.ledger:
+                filed = record(r)
+                print(f"  filed in {LEDGER_REL}: {filed['killed']}/{filed['mutants']}"
+                      f" at {(filed['commit'] or '?')[:9]}"
+                      if filed else "  not filed: see record()")
+        if a.json:
+            a.json.write_text(json.dumps({"modules": merged}, indent=1))
+            print(f"\nreport -> {a.json}")
         return 0
     if a.list_sites:
         for m in mods:
