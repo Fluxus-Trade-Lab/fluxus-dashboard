@@ -47,7 +47,7 @@ W, H = 1920, 1080  # OBS 画布标准 16:9
 
 # 固定六段（Andy 10-02 定，策划页 UCsft7bm…）；中英文案各一份，--lang 切换卡上展示哪一套
 SEGMENTS = [
-    (1, "今天的盘", "Today's Tape"),
+    (1, "读盘", "Reading the Tape"),
     (2, "本章一张图", "This Chapter, One Chart"),
     (3, "三个案例", "Three Cases"),
     (4, "Dashboard 实操", "Dashboard Walkthrough"),
@@ -137,8 +137,8 @@ def build_title_or_closing(
         meta = f"EP {episode:02d} · {date_str} · Discord 舞台" if date_str else f"EP {episode:02d} · Discord 舞台"
     else:  # closing
         kicker = "本场到此结束"
-        meta = (f"回放 Whop / YouTube（不公开链接）· 下一场 {next_date_str}"
-                if next_date_str else "回放 Whop / YouTube（不公开链接）· 下一场见")
+        meta = (f"回放在会员区 · 下一场 {next_date_str}"
+                if next_date_str else "回放在会员区 · 下一场见")
     episode_str = f"{episode:02d}"
     title_en_html = (
         f'<div class="title-en">{html.escape(title_en)}</div>' if title_en else ""
@@ -192,7 +192,7 @@ def build_segment(episode: int, idx: int, name_zh: str, name_en: str) -> str:
         kicker=html.escape(f"FLUXUS 会员直播 · EP {episode:02d}"),
         circled=CIRCLED[idx - 1], idx=idx,
         name_zh=html.escape(name_zh), name_en=html.escape(name_en),
-        meta=html.escape("段落卡同时是剪辑切点"),
+        meta="",  # 观众看得见的卡上不印内部说明（OPS 10-03 复核）
     )
 
 
