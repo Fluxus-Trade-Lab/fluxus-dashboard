@@ -283,36 +283,49 @@ _EVIDENCE = {"window_years": 17, "n_sell_entries": 71,
              "sell_p_dd5": 0.099, "base_p_dd5": 0.154}
 
 
+def _tick_band(r: float) -> str:
+    return "grind" if r <= 0.10 else ("washout" if r >= 0.90 else "neutral")
+
+
+def _tick_frame(t: pd.DataFrame) -> pd.DataFrame:
+    """One row per session that has a full 252-day spread rank: SMA15 of
+    H/C/L, spread_rank252, band. The snapshot and the history array both read
+    this frame, so the history's last row cannot drift from the snapshot."""
+    m_hi = t["high"].rolling(TICK_N).mean()
+    m_lo = t["low"].rolling(TICK_N).mean()
+    m_cl = t["close"].rolling(TICK_N).mean()
+    spread = (m_hi - m_lo).dropna()
+    rank = spread.rolling(252).apply(lambda w: (w <= w.iloc[-1]).mean(), raw=False).dropna()
+    f = pd.DataFrame({"ma_high": m_hi, "ma_close": m_cl, "ma_low": m_lo}).loc[rank.index]
+    f["spread_rank252"] = rank
+    f["band"] = rank.map(_tick_band)
+    return f
+
+
 def write_tick_cycle_json(ledger_date: str) -> Optional[dict]:
     """Morning page 1 (market layer) reading of the LBR TICK cycle
     (Andy 2026-08-22). Band by spread rank -- the feed-agnostic measure:
     <=0.10 grind (red, compressed band), >=0.90 washout (green), else
     neutral. The reading sentence is a calculated account, page-copy rules
-    apply (trading content only). Spec: indicators/fluxus-lbr-tick-cycle.txt."""
+    apply (trading content only). Spec: indicators/fluxus-lbr-tick-cycle.txt.
+    `history` (T-1003-81) = every session with a rank, same fields as the
+    snapshot, so the Advanced breadth chart can draw the band over time."""
     path = TVDIR / TICK_CSV_NAME
     if not path.exists():
         return None
     t = pd.read_csv(path, parse_dates=["date"]).set_index("date").sort_index()
     if len(t) < 252 + TICK_N:
         return None
-    m_hi = t["high"].rolling(TICK_N).mean()
-    m_lo = t["low"].rolling(TICK_N).mean()
-    m_cl = t["close"].rolling(TICK_N).mean()
-    spread = (m_hi - m_lo).dropna()
-    rank = spread.rolling(252).apply(lambda w: (w <= w.iloc[-1]).mean(), raw=False).dropna()
-
-    def band_of(r: float) -> str:
-        return "grind" if r <= 0.10 else ("washout" if r >= 0.90 else "neutral")
-
-    bands = rank.map(band_of)
-    cur = bands.iloc[-1]
-    since = bands.index[-1]
-    for d in reversed(bands.index):
-        if bands.loc[d] != cur:
+    f = _tick_frame(t)
+    last = f.iloc[-1]
+    cur = last["band"]
+    since = f.index[-1]
+    for d in reversed(f.index):
+        if f.loc[d, "band"] != cur:
             break
         since = d
 
-    r = float(rank.iloc[-1])
+    r = float(last["spread_rank252"])
     if cur == "grind":
         reading = (f"红带磨市：TICK 高低带收缩到一年 {r:.0%} 分位（{since.date()} 入带）。"
                    f"17 年账本：入带后 21 日收益中位约为基准一半（+1.1% vs +1.6%），"
@@ -323,17 +336,26 @@ def write_tick_cycle_json(ledger_date: str) -> Optional[dict]:
     else:
         reading = f"TICK 高低带处于中性区（一年 {r:.0%} 分位），无带内读数。"
 
+    history = [{"date": str(d.date()),
+                "ma_high": round(float(row["ma_high"]), 1),
+                "ma_close": round(float(row["ma_close"]), 1),
+                "ma_low": round(float(row["ma_low"]), 1),
+                "spread_rank252": round(float(row["spread_rank252"]), 3),
+                "band": row["band"]}
+               for d, row in f.iterrows()]
+
     out = {"as_of": str(t.index[-1].date()),
            "source": "USI:TICK hourly-rebuilt daily H/L, SMA15; spec indicators/fluxus-lbr-tick-cycle.txt",
-           "ma_high": round(float(m_hi.iloc[-1]), 1),
-           "ma_close": round(float(m_cl.iloc[-1]), 1),
-           "ma_low": round(float(m_lo.iloc[-1]), 1),
+           "ma_high": round(float(last["ma_high"]), 1),
+           "ma_close": round(float(last["ma_close"]), 1),
+           "ma_low": round(float(last["ma_low"]), 1),
            "spread_rank252": round(r, 3),
            "band": cur, "band_since": str(since.date()),
            "reading": reading,
            "evidence": _EVIDENCE,
            "stale_days": _staleness(t.index[-1], ledger_date),
-           "note": "band 语义: grind=价差收缩(自满磨市, 收益变薄非回撤警报) / washout=价差张开(洗盘买入带); timing 语境读数, 不是尾部风险维度 (E1 NULL, 不设灯)"}
+           "note": "band 语义: grind=价差收缩(自满磨市, 收益变薄非回撤警报) / washout=价差张开(洗盘买入带); timing 语境读数, 不是尾部风险维度 (E1 NULL, 不设灯)",
+           "history": history}
     TICK_CYCLE_JSON.parent.mkdir(parents=True, exist_ok=True)
     TICK_CYCLE_JSON.write_text(json.dumps(out, ensure_ascii=False, indent=1))
     return out
