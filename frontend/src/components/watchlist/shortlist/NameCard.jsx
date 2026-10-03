@@ -1,6 +1,14 @@
 import { useRef, useState } from 'react'
 import CardChart from './CardChart'
 import { pctFromReading, fmtPct, fmtAtr, fmtPctl } from './scales'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import { dataName } from '../../../i18n/names'
+import { rich, word } from '../../screener/richText'
+import { panelName, panelNameFromLabel } from '../panelName'
+
+/* The tray stores where a name was taken from; a hand-typed name is stored
+   with this literal (ShortListPage), so it is translated at display. */
+const BY_HAND = '手工加入'
 
 /**
  * One name, and everything the engine already decided about it.
@@ -19,6 +27,7 @@ import { pctFromReading, fmtPct, fmtAtr, fmtPctl } from './scales'
  *  with rs_1m, vcs, trend_base and seven others null, because the asset layer
  *  measures fewer things, not because they came out zero. */
 function Reading({ label, value, title }) {
+  const { t } = useLanguage()
   const missing = value == null
   return (
     <div className="flex flex-col gap-[1px] min-w-0" title={title}>
@@ -26,7 +35,7 @@ function Reading({ label, value, title }) {
                        text-[var(--color-text-muted)] truncate">{label}</span>
       <span className={`text-[13px] font-mono tabular-nums ${missing
         ? 'text-[var(--color-text-muted)] italic' : 'text-[var(--color-text-bold)]'}`}>
-        {missing ? 'not measured' : value}
+        {missing ? t('wl.unmeasured') : value}
       </span>
     </div>
   )
@@ -34,6 +43,7 @@ function Reading({ label, value, title }) {
 
 export default function NameCard({ card, seat, seatLabel, verdictOf,
                                    entry = {}, onMark, onNote, onRemove }) {
+  const { t, lang } = useLanguage()
   const [open, setOpen] = useState(false)
   const [noteOpen, setNoteOpen] = useState(false)
   const noteTimer = useRef(0)
@@ -78,21 +88,22 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
               <span className="text-[11px] font-mono uppercase tracking-[.16em]
                                px-1.5 py-[1px] bg-[var(--color-refused)]
                                text-[var(--color-bg)]"
-                    title="当日 ≥15% —— 追高警告，不是买点">chase</span>
+                    title={t('wl2.nc.chaseTitle')}>{t('wl2.nc.chase')}</span>
             )}
           </div>
           <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
             {/* 「无主题」is a claim, and only the engine is in a position to make
                 it — it looked. A name typed into the box here was never checked
                 against the theme map, so its group is simply not printed. */}
-            {[card.group
-                || (card.is_asset ? 'asset' : card.source === 'manual' ? null : '无主题'),
-              card.state, r.sector].filter(Boolean).join(' · ')}
+            {[dataName(card.group, lang)
+                || (card.is_asset ? t('wl2.nc.asset') : card.source === 'manual' ? null : t('wl2.nc.noTheme')),
+              word(t, `state.${card.state}`, card.state), dataName(r.sector, lang)].filter(Boolean).join(' · ')}
             {/* where it was picked off — the one thing you cannot reconstruct
                 a week later, and the tray froze it at the moment of adding */}
             {card.takenFrom && (
               <span className="ml-2 text-[var(--color-text-secondary)]">
-                自「{card.takenFrom}」
+                {t('wl2.nc.from', { from: card.takenFrom === BY_HAND ? t('sh.st.byHand')
+                  : panelNameFromLabel(t, lang, card.takenFrom) })}
               </span>
             )}
           </p>
@@ -115,14 +126,14 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
                style={{ backgroundImage:
                  'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
             <p className="m-0 text-[13px] leading-snug text-[var(--color-text-bold)]">
-              还没有图 —— 引擎不知道这个名字。
+              {t('wl2.nc.noChart.head')}
             </p>
             <p className="m-0 mt-1.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-              130 根 K 线和信号标记由每晚的 cron 生成，而手工加的票还没有走到管线那边去
-              （回路的另一半 GAS <code className="font-mono">shortlist_upsert</code> 还没接）。
-              下面的读数是真的，来自 <code className="font-mono">universe.json</code>，跟六席同一个口径。
+              {rich(t('wl2.nc.noChart.body'), {
+                upsert: <code className="font-mono">shortlist_upsert</code>,
+                universe: <code className="font-mono">universe.json</code> })}
               {card.inUniverse === false && (
-                <b className="font-semibold"> 这个代码连 universe.json 里也没有 —— 读数一个都没有。</b>
+                <b className="font-semibold">{' '}{t('wl2.nc.noChart.notInUniverse')}</b>
               )}
             </p>
           </div>
@@ -138,7 +149,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
         </p>
       ) : card.source === 'manual' ? (
         <p className="m-0 mt-3 text-[13px] leading-snug text-[var(--color-text-muted)] italic">
-          没有判词 —— 判词是引擎按模板生成的，它还没见过这个名字。这里不替它写一句。
+          {t('wl2.nc.noVerdict')}
         </p>
       ) : null}
 
@@ -160,7 +171,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
             noteTimer.current = setTimeout(() => onNote?.(v.trim()), 400)
           }}
           onBlur={(e) => { clearTimeout(noteTimer.current); onNote?.(e.target.value.trim()) }}
-          placeholder="为什么 —— 这只票本身的问题？这一席选错了人？还是别的。按钮只说「今天不要」，剩下的写这里。"
+          placeholder={t('wl2.nc.notePlaceholder')}
           rows={2}
           className="mt-3 w-full resize-y rounded-2xl bg-[var(--color-bg)]
                      border border-[var(--color-border)] px-3 py-2
@@ -171,24 +182,24 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
 
       <div className="mt-3.5 grid grid-cols-3 sm:grid-cols-5 gap-x-4 gap-y-2.5">
         <Reading label="RS 1M" value={fmtPctl(r.rs_1m)}
-                 title="rs_1m — 相对强弱在全池里的排名" />
-        <Reading label="RS线 21d" value={fmtPctl(r.rs_line_pctl_21)}
-                 title="rs_line_pctl_21 — RS 线自己过去 21 日的百分位。和 RS 1M 不是同一个量" />
-        <Reading label="ATR 位" value={fmtAtr(r.atr_from_sma50)}
-                 title="atr_from_sma50 — 离 50 日线几个 ATR，负数是在线下" />
-        <Reading label="52w 高" value={r.high_52w_dist == null ? null
+                 title={t('wl2.nc.t.rs1m')} />
+        <Reading label={t('wl2.nc.r.rsLine')} value={fmtPctl(r.rs_line_pctl_21)}
+                 title={t('wl2.nc.t.rsLine')} />
+        <Reading label={t('wl2.nc.r.atr')} value={fmtAtr(r.atr_from_sma50)}
+                 title={t('wl2.nc.t.atr')} />
+        <Reading label={t('wl2.nc.r.high52')} value={r.high_52w_dist == null ? null
                    : fmtPct(r.high_52w_dist * 100, 1)}
-                 title="high_52w_dist — 离 52 周高点多远" />
-        <Reading label="VCS" value={fmtPctl(r.vcs)} title="vcs — 波动收缩分" />
-        <Reading label="量比" value={r.rel_volume == null ? null : `${r.rel_volume.toFixed(2)}x`}
-                 title="rel_volume — 相对成交量" />
-        <Reading label="heat" value={card.heat?.score == null ? null
+                 title={t('wl2.nc.t.high52')} />
+        <Reading label="VCS" value={fmtPctl(r.vcs)} title={t('wl2.nc.t.vcs')} />
+        <Reading label={t('wl2.nc.r.relVol')} value={r.rel_volume == null ? null : `${r.rel_volume.toFixed(2)}x`}
+                 title={t('wl2.nc.t.relVol')} />
+        <Reading label={t('wl2.nc.r.heat')} value={card.heat?.score == null ? null
                    : `${card.heat.score}${card.heat.rank ? ` (#${card.heat.rank})` : ''}`}
-                 title="合流分与名次" />
-        <Reading label="合流日" value={card.heat?.confluence_days ?? null}
-                 title="confluence_days — 同日 ≥4 个筛选器齐亮的天数" />
+                 title={t('wl2.nc.t.heat')} />
+        <Reading label={t('wl2.nc.r.confluence')} value={card.heat?.confluence_days ?? null}
+                 title={t('wl2.nc.t.confluence')} />
         <Reading label="RS 3M" value={fmtPctl(r.rs_3m)} title="rs_3m" />
-        <Reading label="信号" value={r.sp_signal} title="sp_signal — Structure Pivot" />
+        <Reading label={t('wl2.nc.r.signal')} value={r.sp_signal} title={t('wl2.nc.t.signal')} />
       </div>
 
       {(card.panels?.length || card.events?.length) ? (
@@ -197,7 +208,8 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
                   className="mt-3 text-[11px] font-mono uppercase tracking-[.16em]
                              text-[var(--color-text-muted)] hover:text-[var(--color-text)]
                              bg-transparent border-0 p-0 cursor-pointer">
-            {open ? '收起历史' : `近三月痕迹 (${card.panels?.length ?? 0} 格 · ${card.events?.length ?? 0} 天)`}
+            {open ? t('wl2.nc.histHide')
+              : t('wl2.nc.histShow', { p: card.panels?.length ?? 0, e: card.events?.length ?? 0 })}
           </button>
           {open && <History card={card} />}
         </>
@@ -220,6 +232,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
  * day's own mind can still be changed.
  */
 function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen, onRemove }) {
+  const { t } = useLanguage()
   const btn = (on) => `text-[11px] font-mono uppercase tracking-[.14em] px-2 py-[3px]
     border cursor-pointer transition-colors ${on
       ? 'bg-[var(--color-text-bold)] text-[var(--color-bg)] border-[var(--color-text-bold)]'
@@ -228,37 +241,38 @@ function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen, onRemove }) 
     <div className="flex gap-1.5 shrink-0">
       <button type="button" className={btn(mark === 'vetoed')}
               aria-pressed={mark === 'vetoed'}
-              title={`不是这个，今天 —— 只有这一个意思。不是「${ticker} 这只票不行」，也不是「这一席选错了人」；那些写进备注。再按一下取消。`}
-              onClick={() => onMark(mark === 'vetoed' ? null : 'vetoed')}>✗ 今天不要</button>
+              title={t('wl2.nc.vetoTitle', { ticker })}
+              onClick={() => onMark(mark === 'vetoed' ? null : 'vetoed')}>{t('wl2.nc.veto')}</button>
       <button type="button" className={btn(mark === 'starred')}
               aria-pressed={mark === 'starred'}
-              title="进我的名单。再按一下取消。"
-              onClick={() => onMark(mark === 'starred' ? null : 'starred')}>★ 关注</button>
+              title={t('wl2.nc.starTitle')}
+              onClick={() => onMark(mark === 'starred' ? null : 'starred')}>{t('wl2.nc.star')}</button>
       <button type="button" className={btn(!!note)}
               aria-pressed={!!note}
-              title={note ? `备注：${note}` : '写备注 —— 按钮之外的话都写这里'}
-              onClick={() => setNoteOpen(!noteOpen)}>备注</button>
+              title={note ? t('wl2.nc.noteTitle', { note }) : t('wl2.nc.noteTitleEmpty')}
+              onClick={() => setNoteOpen(!noteOpen)}>{t('wl2.nc.note')}</button>
       {/* A name you put on the list by hand has to come off it by hand. ✗ is a
           judgement about today and does not remove anything; this does. */}
       {onRemove && (
-        <button type="button" className={btn(false)} title="从我的名单里拿掉"
-                onClick={onRemove}>移出</button>
+        <button type="button" className={btn(false)} title={t('wl2.nc.removeTitle')}
+                onClick={onRemove}>{t('wl2.nc.remove')}</button>
       )}
     </div>
   )
 }
 
 function History({ card }) {
+  const { t, lang } = useLanguage()
   return (
     <div className="mt-2.5 rounded-2xl bg-[var(--color-bg)] px-3.5 py-3
                     text-[11px] text-[var(--color-text-secondary)] max-h-[220px] overflow-y-auto">
       {card.panels?.length > 0 && (
         <div className="mb-2">
           <div className="text-[11px] font-mono uppercase tracking-[.18em]
-                          text-[var(--color-text-muted)] mb-1">上过哪些格</div>
+                          text-[var(--color-text-muted)] mb-1">{t('wl2.nc.histPanels')}</div>
           {card.panels.map((p, i) => (
             <div key={i} className="font-mono tabular-nums">
-              {p.date} · {p.panel}
+              {p.date} · {lang === 'zh' ? panelName(t, lang, p.panel, p.panel) : p.panel}
               {p.chg_pct != null && ` · ${p.chg_pct > 0 ? '+' : ''}${p.chg_pct}%`}
               {p.atr != null && ` · ${p.atr} ATR`}
             </div>
@@ -270,7 +284,7 @@ function History({ card }) {
           {/* P: 前缀是预设命中，不是原始筛选器 —— 数据端的口径，原样透出 */}
           <div className="text-[11px] font-mono uppercase tracking-[.18em]
                           text-[var(--color-text-muted)] mb-1">
-            近三月筛选器命中（P: = 预设）
+            {t('wl2.nc.histEvents')}
           </div>
           {card.events.map((e, i) => (
             <div key={i} className="font-mono tabular-nums">

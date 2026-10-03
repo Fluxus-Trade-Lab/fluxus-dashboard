@@ -6,6 +6,10 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import ShortlistTray from '../shared/ShortlistTray'
 import ShortListPage from './shortlist/ShortListPage'
+import { dataName } from '../../i18n/names'
+import { word } from '../screener/richText'
+import watchlistPart from '../../i18n/parts/watchlist'
+import { panelName } from './panelName'
 
 /**
  * Today's list — six questions, already asked.
@@ -78,45 +82,34 @@ const HIDDEN_ZONES = new Set()
  */
 const STEPS = [
   {
-    key: 'water', label: '水域',
-    find: '只在 Leading / Improving 的主题里找票',
-    with: '顶部池子切到「3M 领先」；哪些主题在 Leading 去 Themes 页看',
-    dont: '不在这些主题里的票，后面四步都不做',
+    key: 'water',
     wants: ['主题四态', '池子开关'], panels: [], switches: ['pool3m'],
   },
   {
-    key: 'footprint', label: '脚印',
-    find: '同一天 20 日新高 + RS 线新高的票 —— 起涨最早最广的确认',
-    with: '开「只看 RS 新高」；三格本身只说「今天在动」，加这个开关才是「在领先地动」',
-    dont: '当日涨幅 ≥15% 的 4% 日不追（−9.3%、胜率 36%）',
+    key: 'footprint',
     switches: ['highOnly'],
     wants: ['Weekly 20%+', '4% Bullish', 'PP 三格'],
     panels: ['weekly_20_gainers', 'bullish_4pct', 'pp_today', 'pp_2plus_10d', 'morales_pp_10d'],
   },
   {
-    key: 'position', label: '位置',
-    find: '离 50 日线几个 ATR：0–4 建仓区，5–7 持有，≥7 只减不买',
-    with: '票旁的 ATR 位数字',
-    dont: 'ATR 4–5 时 momentum 与 4% 密集亮起，20 日后 −17～−38% —— 那不是买点是顶',
+    key: 'position',
     wants: ['ATR Matrix ≤4', 'Extended ≥7'], panels: ['extended'],
   },
   {
-    key: 'entry', label: '入场',
-    find: '第一波（4% × ATR≤4 × 新高 × RS 新高）precision 48%、EP 61%，基线 41%',
-    with: '回踩用 Liquid Leader Pullback —— 只在第 1 步的水域里做',
-    dont: 'EP 第一天不进：42% 会击穿 EP 日低点。第 3 个交易日起进 Delayed-EP 观察',
+    key: 'entry',
     wants: ['第一波', 'EP', 'Liquid Leader Pullback'],
     panels: ['ep_stockbee', 'ep_qullamaggie', 'liquid_leader_pullback',
              'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break'],
   },
   {
-    key: 'exit', label: '出场',
-    find: 'Structure Pivot 给的 21EMA Low 是止损；stop_hit / ll_break 亮 = 走',
-    with: 'Extended ≥7 亮 = 开始减',
-    dont: 'Structure Pivot 的入场信号在领头股上并不比 20 日新高早 —— 它值钱的是止损位',
+    key: 'exit',
     wants: ['Structure Pivot', 'Extended'], panels: ['stop_hit', 'll_break', 'extended'],
   },
 ]
+// The three lines of each step (what it looks for, what it is used with, how
+// it is misread) are the report's own words, keyed as wl2.step.<key>.find /
+// .with / .dont; the label as wl2.step.<key>.label.
+const stepText = (t, key, part) => t(`wl2.step.${key}.${part}`)
 const DEFAULT_STEP = 'footprint'
 
 const nf = (n) => n.toLocaleString()
@@ -126,6 +119,16 @@ const tr = (t, key, fallback) => {
   const out = t(key)
   return out === key ? fallback : out
 }
+
+/** English by default — gateWords is called bare by its tests and must print
+ *  what it always printed. */
+const enT = (k, vars) => String(watchlistPart.en[k] ?? k)
+  .replace(/\{(\w+)\}/g, (m, v) => (vars?.[v] != null ? String(vars[v]) : m))
+
+/** The time-series RS legend had English left in its Chinese; the fixed copy
+ *  lives in wl2. The cross-sectional one was already clean. */
+const rsKeyText = (t, rsKey) => (rsKey === 'rs_line_pctl_21'
+  ? t('wl2.rskey.rs_line_pctl_21') : t(`wl.rskey.${rsKey}`))
 
 /**
  * The gate, in the words its own keys imply.
@@ -140,19 +143,21 @@ const tr = (t, key, fallback) => {
  * formatted. A gate clause we cannot describe should be absent from the
  * sentence, never present as NaN.
  */
-export const gateWords = (gate = {}) => {
+export const gateWords = (gate = {}, t = enT) => {
   const out = []
-  if (gate.min_market_cap) out.push(`$${(gate.min_market_cap / 1e9).toFixed(0)}B cap`)
-  if (gate.min_dollar_volume) out.push(`$${(gate.min_dollar_volume / 1e6).toFixed(0)}M/day traded`)
-  else if (gate.min_avg_volume) out.push(`${(gate.min_avg_volume / 1e6).toFixed(0)}M shares/day`)
+  if (gate.min_market_cap) out.push(t('wl2.gate.cap', { v: (gate.min_market_cap / 1e9).toFixed(0) }))
+  if (gate.min_dollar_volume) out.push(t('wl2.gate.dollarVol', { v: (gate.min_dollar_volume / 1e6).toFixed(0) }))
+  else if (gate.min_avg_volume) out.push(t('wl2.gate.shares', { v: (gate.min_avg_volume / 1e6).toFixed(0) }))
   if (gate.min_adr_pct) {
     /* The exemption is named because the overview shows the exempt zone's
        panels on the same screen. An unqualified "ADR >= 3.5%" would claim a
        floor that visibly does not hold for the trouble rows two inches below:
        an exit signal does not stop mattering because the name went quiet. */
     const exempt = gate.adr_exempt_zones || []
-    const skip = exempt.length ? ` except ${exempt.join('/')}` : ''
-    out.push(`ADR ≥ ${gate.min_adr_pct}%${skip}`)
+    out.push(exempt.length
+      ? t('wl2.gate.adrExcept', { v: gate.min_adr_pct,
+          zones: exempt.map((z) => word(t, `wl2.zoneShort.${z}`, z)).join('/') })
+      : t('wl2.gate.adr', { v: gate.min_adr_pct }))
   }
   return out.join(' · ')
 }
@@ -396,15 +401,16 @@ function useDarkTheme() {
   return dark
 }
 
-const atrTitle = (v) => v == null || !Number.isFinite(v)
-  ? 'ATR 位未测量'
-  : v < 0 ? `${v.toFixed(1)} ATR — 在 50 日线下方，不在扩张刻度上`
-  : v <= 4 ? `${v.toFixed(1)} ATR — 0–4 建仓区`
-  : v < 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`   // 7.0 itself is Extended, as watchlist.py:246 (>= 7)
-  : `${v.toFixed(1)} ATR — ≥7 只减不买`
+const atrTitle = (v, t) => v == null || !Number.isFinite(v)
+  ? t('wl2.atr.none')
+  : v < 0 ? t('wl2.atr.below', { v: v.toFixed(1) })
+  : v <= 4 ? t('wl2.atr.build', { v: v.toFixed(1) })
+  : v < 7 ? t('wl2.atr.hold', { v: v.toFixed(1) })   // 7.0 itself is Extended, as watchlist.py:246 (>= 7)
+  : t('wl2.atr.ext', { v: v.toFixed(1) })
 
 
 export function Name({ row, rsKey = 'rs_1m' }) {
+  const { t, lang } = useLanguage()
   const v = row[rsKey]
   const alt = rsKey !== 'rs_1m' && row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null
   /**
@@ -435,7 +441,7 @@ export function Name({ row, rsKey = 'rs_1m' }) {
           and white-on-red are two different foregrounds and only one of them
           is legible on each. Off the scale it falls back to the token. */}
       <TickerLink symbol={row.ticker}
-                  title={atrTitle(row.atr_from_sma50)}
+                  title={atrTitle(row.atr_from_sma50, t)}
                   style={fill ? { background: fill.bg, color: fill.fg,
                                   padding: '1px 4px', borderRadius: '3px' } : undefined}
                   className={`shrink-0 text-[11px] font-mono font-semibold
@@ -444,13 +450,13 @@ export function Name({ row, rsKey = 'rs_1m' }) {
           groups" — a flag the pipeline ships on every panel row, not a filter.
           Muted text, not a colour: one bit, and it is not about the number. */}
       {row.top20_industry && (
-        <span title="Industry ranks in the top 20 (Moglen's 'often in the Top 20 Industry groups' — a mark, not a filter)"
+        <span title={t('wl2.t20.title')}
               className="shrink-0 text-[11px] font-mono text-[var(--color-text-muted)]">
           T20
         </span>
       )}
       {withTheme && (
-        <i title={`${row.group} · ${row.group_state}`}
+        <i title={`${dataName(row.group, lang)} · ${word(t, `state.${row.group_state}`, row.group_state)}`}
            className="shrink-0 w-[3px] h-[3px] rounded-full translate-y-[-3px]
                       bg-[var(--color-text-secondary)]" />
       )}
@@ -600,7 +606,7 @@ function Count({ panel, view = {}, zoneKey }) {
             // a view that skips a panel has to admit it, or the count silently
             // means something different here than on the card beside it
             view.exHealth && !exHealthApplies(panel.key)
-              ? 'the healthcare view does not apply to this scan — an EP is a repricing and biotech is where those happen'
+              ? t('wl2.exHealth.skip')
               : null,
           ].filter(Boolean).join(' · ') || undefined}>
       {/* Both numbers, always. The views hide rows; the panel still counted
@@ -635,7 +641,7 @@ function Count({ panel, view = {}, zoneKey }) {
  * it found nothing on the questions you are not asking right now.
  */
 function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
   const [opened, setOpened] = useState(false)
   const rows = shown(panel, { ...view, zoneKey })
@@ -650,7 +656,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
                          hover:bg-[var(--color-surface)] transition-colors">
         <span className="text-[11px] font-mono text-[var(--color-text-muted)] shrink-0">+</span>
         <span className="min-w-0 flex-1 truncate text-[13px] text-[var(--color-text-secondary)]">
-          {tr(t, `wlp.${panel.key}`, panel.label)}
+          {panelName(t, lang, panel.key, panel.label)}
         </span>
         <span className="shrink-0"><Count panel={panel} view={view} zoneKey={zoneKey} /></span>
       </button>
@@ -674,12 +680,12 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
             <span className="text-[11px] font-mono text-[var(--color-text-muted)] shrink-0">−</span>
             <b className="text-[13px] font-semibold leading-tight
                           text-[var(--color-text-bold)]">
-              {tr(t, `wlp.${panel.key}`, panel.label)}
+              {panelName(t, lang, panel.key, panel.label)}
             </b>
           </button>
         ) : (
           <b className="text-[13px] font-semibold leading-tight">
-            {tr(t, `wlp.${panel.key}`, panel.label)}
+            {panelName(t, lang, panel.key, panel.label)}
           </b>
         )}
         <span className="ml-auto shrink-0">
@@ -714,7 +720,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
               <Names rows={rest} rsKey={rsKey} />
               <p className="m-0 px-3 pt-2 pb-1 text-[11px] font-mono uppercase tracking-[.14em]
                             text-[var(--color-text-muted)]">
-                {chase.length} 当日 ≥15% &mdash; 不追
+                {t('wl2.chase', { n: chase.length })}
               </p>
               <span className="opacity-45">
                 <Names rows={chase} rsKey={rsKey} />
@@ -746,7 +752,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
 /* ── Detail: one question, every name ────────────────────────────────────── */
 
 function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
   const rows = shown(panel, { ...view, zoneKey })
 
@@ -756,7 +762,7 @@ function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
         {/* The file's label is English. A key we know gets the reader's
             language; one we do not gets the file's own words, so a panel the
             pipeline adds tomorrow shows up rather than disappearing. */}
-        <b className="text-[13px] font-semibold">{tr(t, `wlp.${panel.key}`, panel.label)}</b>
+        <b className="text-[13px] font-semibold">{panelName(t, lang, panel.key, panel.label)}</b>
 
         {panel.measured ? (
           <span className="text-[11px] font-mono tabular-nums text-[var(--color-text-secondary)]">
@@ -841,7 +847,7 @@ function ZoneDetail({ zone, index, total, view }) {
       )}
 
       <p className="text-[11px] text-[var(--color-text-muted)] mb-3">
-        {t(`wl.rskey.${rsKey}`)}
+        {rsKeyText(t, rsKey)}
       </p>
       <div className="rounded-3xl bg-[var(--color-surface)] px-4 py-1">
         {zone.panels.map((p) => (
@@ -865,6 +871,7 @@ function ZoneDetail({ zone, index, total, view }) {
  * teaching half of it.
  */
 function StepBar({ step, onStep, missing, counts }) {
+  const { t } = useLanguage()
   const cur = STEPS.find((s) => s.key === step) ?? STEPS[0]
   return (
     <div className="mb-4">
@@ -878,7 +885,7 @@ function StepBar({ step, onStep, missing, counts }) {
                                 ${s.key === step
                                   ? 'text-[var(--color-text-bold)] font-semibold border-[var(--color-accent)]'
                                   : 'text-[var(--color-text-muted)] border-transparent hover:text-[var(--color-text)]'}`}>
-              {i + 1} {s.label}
+              {i + 1} {stepText(t, s.key, 'label')}
               {/* what the chips used to carry: how much is behind each step,
                   before you point at it. Muted, and always both numbers —
                   scans lit and names in them. */}
@@ -894,10 +901,10 @@ function StepBar({ step, onStep, missing, counts }) {
 
       {/* three lines, and only for the step you are on */}
       <div className="mt-2 pl-3 border-l-2 border-[var(--color-accent)] max-w-[104ch]">
-        <p className="m-0 text-[13px] leading-snug text-[var(--color-text)]">{cur.find}</p>
-        <p className="m-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)]">{cur.with}</p>
+        <p className="m-0 text-[13px] leading-snug text-[var(--color-text)]">{stepText(t, cur.key, 'find')}</p>
+        <p className="m-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)]">{stepText(t, cur.key, 'with')}</p>
         <p className="m-0 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-          <b className="text-[var(--color-text-secondary)]">别这么用：</b>{cur.dont}
+          <b className="text-[var(--color-text-secondary)]">{t('wl2.step.dontHead')}</b>{stepText(t, cur.key, 'dont')}
         </p>
         {/* what this step calls for and cannot point at. A step quietly
             covering less than it claims is the failure this page is built
@@ -910,10 +917,8 @@ function StepBar({ step, onStep, missing, counts }) {
           <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
             {missing.map((m) => (
               <span key={m} className="mr-3">
-                <b className="text-[var(--color-text-secondary)]">{m}</b>
-                {m === 'ATR Matrix ≤4'
-                  ? ' 不是一格 — 它是每个名字旁边那个 ATR 位数字'
-                  : ' 管线没有单独出这一格'}
+                <b className="text-[var(--color-text-secondary)]">{word(t, MISS_KEY[m], m)}</b>
+                {' '}{m === 'ATR Matrix ≤4' ? t('wl2.miss.atrMatrixWhy') : t('wl2.miss.noPanel')}
               </span>
             ))}
           </p>
@@ -923,6 +928,14 @@ function StepBar({ step, onStep, missing, counts }) {
   )
 }
 
+/** Display keys for what a step wants and cannot point at. The step logic
+ *  matches on the raw words; only the printed name goes through the dictionary. */
+const MISS_KEY = {
+  'ATR Matrix ≤4': 'wl2.miss.atrMatrix', '第一波': 'wl2.miss.firstWave',
+  extended: 'wl2.named.extended', stop_hit: 'wl2.named.stop_hit', ll_break: 'wl2.named.ll_break',
+  ep_stockbee: 'wl2.named.ep_stockbee', ep_qullamaggie: 'wl2.named.ep_qullamaggie',
+}
+
 const MORNING = null
 const SHORTLIST = 'shortlist'
 
@@ -930,14 +943,15 @@ const SHORTLIST = 'shortlist'
  *  state of the data, and the page's chrome does not get to look like a
  *  reading. */
 function Tabs({ active }) {
-  const items = [[MORNING, '晨报'], [SHORTLIST, 'Short List']]
+  const { t } = useLanguage()
+  const items = [[MORNING, t('wl2.tab.morning')], [SHORTLIST, t('wl2.tab.shortlist')]]
   return (
     <div className="flex items-baseline gap-6 mt-1 mb-4
                     border-b border-[var(--color-border-light)]">
       {items.map(([key, label]) => {
         const on = active === key
         return (
-          <button key={label} type="button" onClick={() => go(key)}
+          <button key={key ?? 'morning'} type="button" onClick={() => go(key)}
                   className={`bg-transparent border-0 p-0 pb-2 -mb-px cursor-pointer
                               text-[13px] font-mono uppercase tracking-[.16em]
                               border-b-2 transition-colors ${on
@@ -952,7 +966,7 @@ function Tabs({ active }) {
 }
 
 export default function WatchlistPage({ zone: routeZone }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { data, failed } = useWatchlist()
   /**
    * "RS highs only" — a view, never a screen.
@@ -1046,8 +1060,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   const lit = new Set(curStep.panels.filter((k) => onPage.has(k)))
   const missingSteps = curStep.panels.filter((k) => !onPage.has(k))
   // the report's names for instruments that have no panel here at all
-  const NAMED = { extended: 'Extended', stop_hit: 'Stop Hit', ll_break: 'Lower Low Break',
-                  ep_stockbee: 'EP · Stockbee', ep_qullamaggie: 'EP · Qullamaggie' }
+  // (their printed names: MISS_KEY → wl2.named.*)
   /** names behind each step, under the current view — the chips' number, kept */
   const stepCounts = Object.fromEntries(STEPS.map((st) => {
     const keys = new Set(st.panels)
@@ -1060,7 +1073,7 @@ export default function WatchlistPage({ zone: routeZone }) {
 
   const missing = [
     ...curStep.wants.filter((w) => ['ATR Matrix ≤4', '第一波'].includes(w)),
-    ...missingSteps.map((k) => NAMED[k] ?? k),
+    ...missingSteps,
   ]
 
   // Which scans are on the table, and which the current view emptied. A panel
@@ -1085,7 +1098,7 @@ export default function WatchlistPage({ zone: routeZone }) {
         {t('wl.provenance', {
           date: data.date,
           n: nf(tradeableCount(data)),
-          gate: gateWords(data.gate),
+          gate: gateWords(data.gate, t),
         })}
       </p>
       <Switch on={pool3m} set={setPool3m} label={t('wl.pool3m')}
@@ -1094,7 +1107,7 @@ export default function WatchlistPage({ zone: routeZone }) {
               cued={curStep.switches?.includes('highOnly')} />
       <Switch on={floor} set={setFloor} label={t('wl.floor', { n: RS_FLOOR })}
               note={t('wl.floor.note')} />
-      <Switch on={exHealth} set={setExHealth} label="exclude healthcare" />
+      <Switch on={exHealth} set={setExHealth} label={t('wl2.exHealth')} />
       </div>
 
       {/* The five steps: the order a name is read in, not five more filters. */}
@@ -1145,7 +1158,7 @@ export default function WatchlistPage({ zone: routeZone }) {
         <p className="text-[11px] text-[var(--color-text-muted)] mt-2.5">
           {t('wl.emptied', { n: emptied.length })}{' '}
           <span className="font-mono opacity-80">
-            {emptied.map((e) => tr(t, `wlp.${e.panel.key}`, e.panel.label)).join(' · ')}
+            {emptied.map((e) => panelName(t, lang, e.panel.key, e.panel.label)).join(' · ')}
           </span>
         </p>
       )}
@@ -1197,8 +1210,8 @@ export default function WatchlistPage({ zone: routeZone }) {
           on the page saying what they were. The label is derived from the same
           pick that draws them, so the two cannot drift apart. */}
       <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[72ch]">
-        {t(`wl.rskey.${pickRs(zones.flatMap((z) => z.panels.flatMap((p) => p.tickers || [])))}`)}
-        {' '}{t('wl.dot')}{' '}{t('wl.foot')}
+        {rsKeyText(t, pickRs(zones.flatMap((z) => z.panels.flatMap((p) => p.tickers || []))))}
+        {' '}{t('wl2.dot')}{' '}{t('wl.foot')}
       </p>
     </div>
   )

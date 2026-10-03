@@ -14,7 +14,8 @@ import { act, render } from '@testing-library/react'
  * the page is still standing. It is not about hooks; it is about the only
  * ordering that ever happens in production.
  */
-beforeEach(() => { localStorage.clear(); vi.restoreAllMocks() })
+// zh: the assertions below pin the Chinese copy (the page is bilingual since 2026-10-03)
+beforeEach(() => { localStorage.clear(); localStorage.setItem('fluxus-lang', 'zh'); vi.restoreAllMocks() })
 
 const DOC = {
   date: '2026-08-19',
@@ -41,8 +42,9 @@ describe('ShortListPage mounting before its file lands', () => {
   it('renders nothing, then the page, without tearing down', async () => {
     lateFetch(DOC)
     const { default: ShortListPage } = await import('./ShortListPage')
+    const { LanguageProvider } = await import('../../../i18n/LanguageContext')
     let c
-    await act(async () => { c = render(<ShortListPage />) })
+    await act(async () => { c = render(<LanguageProvider><ShortListPage /></LanguageProvider>) })
     expect(c.container.textContent).toBe('')              // the file has not landed
     await act(async () => { await new Promise((r) => setTimeout(r, 20)) })
     const t = c.container.textContent
@@ -55,8 +57,9 @@ describe('ShortListPage mounting before its file lands', () => {
     globalThis.fetch = () => later({ ok: false })
     vi.resetModules()
     const { default: ShortListPage } = await import('./ShortListPage')
+    const { LanguageProvider } = await import('../../../i18n/LanguageContext')
     let c
-    await act(async () => { c = render(<ShortListPage />) })
+    await act(async () => { c = render(<LanguageProvider><ShortListPage /></LanguageProvider>) })
     await act(async () => { await new Promise((r) => setTimeout(r, 20)) })
     expect(c.container.textContent).toContain('shortlist.json 还没有')
   })

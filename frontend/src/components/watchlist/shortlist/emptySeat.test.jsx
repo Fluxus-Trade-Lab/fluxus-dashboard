@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { render } from '@testing-library/react'
 import { EmptySeat } from './ShortListPage'
+import { LanguageProvider } from '../../../i18n/LanguageContext'
 
 /**
  * The four states of a seat with nobody in it.
@@ -19,7 +20,12 @@ import { EmptySeat } from './ShortListPage'
  * Shape carries it, never hue — an empty seat is not a side, and the colour
  * budget on this page belongs to the took/refused pair.
  */
-const draw = (seat) => render(<EmptySeat seat={seat} label="入场 · 今天最好的入场刀" />)
+// The Chinese wording is what these cases pin, so they render in zh (2026-10-03:
+// the page is bilingual now; English mode has its own copy in parts/watchlist.js).
+beforeEach(() => { localStorage.setItem('fluxus-lang', 'zh') })
+afterEach(() => { localStorage.removeItem('fluxus-lang') })
+const draw = (seat) => render(
+  <LanguageProvider><EmptySeat seat={seat} label="入场 · 今天最好的入场刀" /></LanguageProvider>)
 const shape = (c) => c.container.querySelector('svg[viewBox="0 0 20 20"]')?.innerHTML
 const text = (c) => c.container.textContent.replace(/\s+/g, ' ')
 
