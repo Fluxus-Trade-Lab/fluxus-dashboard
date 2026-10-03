@@ -105,7 +105,7 @@ The other big worry is rates. Today people worry about a 10-year above 5%. In th
 
 From its October 1990 low to its March 2000 peak, the S&P 500 rose 417%. On 95.5% of those 2,366 trading days, the 10-year closed at or above 5%. It stayed above 5% on every close for 1,979 days in a row, until LTCM and Russia pushed it under in September 1998. The median close for the decade was 6.4%.
 
-You can build a scary backtest out of high yields, weak breadth and an index near its high. Each of those has come before big drawdowns. But a pattern from the past only holds if nothing important has changed. Change earnings, valuations or liquidity, and the same setup can end very differently. What's different this time is earnings, and most of them are in semis.
+You can build a scary backtest out of high yields, weak breadth and an index near its high. Each of those has come before big drawdowns. But a pattern from the past only holds if nothing important has changed. Change earnings or liquidity, and the same setup can end very differently. What's different this time is earnings, and most of them are in semis.
 
 〔收口槽 —— Andy 亲笔。边界：不写对仗格言、不复述以上内容、收在下一步或一个邀请上。〕
 
@@ -138,6 +138,6 @@ You can build a scary backtest out of high yields, weak breadth and an index nea
 - 删了冷读挑出的复述式短句：「Both are looking at real numbers…」「A large part of the tech trade is the semis trade」「This has happened before more than once」「Being early on that trade was expensive」「Weak breadth and good setups can exist at the same time」；「Yields are the same story」换成「The other big worry is rates」。
 - 「money printed」和「Fed 加息」读着自相矛盾，改成「money flowing into markets」。
 - 买回写成 $150 billion（公司公开数字，不是账户金额）。
-- 冷读还提了两点我**没改**，留给你判断：①「What's different this time」容易让人联想到那句著名的反讽格言（你说留着，照留）；②正方最后列出「earnings, valuations or liquidity」，而前文说标普 19 倍市盈率和国债差不多，等于估值比 90 年代更贵，懂行的读者会觉得这里自相矛盾。要不要把 valuations 删掉，你定。
+- 冷读还提了两点我**没改**，留给你判断：①「What's different this time」容易让人联想到那句著名的反讽格言（你说留着，照留）；②正方最后列出「earnings, valuations or liquidity」，而前文说标普 19 倍市盈率和国债差不多，等于估值比 90 年代更贵，懂行的读者会觉得这里自相矛盾。→ Andy 10-04「选A」：已删 valuations，只留 earnings or liquidity。
 
 **仍空着**：标题 · 收口。
