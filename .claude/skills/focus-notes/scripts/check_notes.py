@@ -74,8 +74,23 @@ def check_sentence(card, s):
     return bad
 
 
+# Chinese notes speak the site's Chinese (Andy 2026-10-03: 「整个网页需要有完整的
+# 中文和英文界面」). These English vocabulary words have approved Chinese twins
+# in frontend/src/i18n (收着做 / 多空分歧 / 受损 / 减仓 / 领先 …), and 转弱 is not
+# the glossary word for Weakening (走弱). Caught on the 10-02 _market note.
+ZH_FORBIDDEN = re.compile(r"\b(full|dim|avoid|BULLISH|BEARISH|MIXED|OVERBOUGHT|OVERSOLD|Damaged|Healthy|Reduced|selective|Leading|Weakening|Improving|Lagging|score|Regime)\b|转弱")
+
+
+def check_zh_vocab(s):
+    return [("zh-vocab", m.group(0)) for m in ZH_FORBIDDEN.finditer(s)]
+
+
 def check(cards_by_ticker, notes):
     flagged = []
+    for t, val in notes.items():
+        if isinstance(val, dict) and isinstance(val.get("zh"), str):
+            for b in check_zh_vocab(val["zh"]):
+                flagged.append((t, "zh", b))
     for t, val in notes.items():
         if t.startswith("_"):
             continue

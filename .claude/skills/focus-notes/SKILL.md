@@ -69,3 +69,4 @@ python3 .claude/skills/focus-notes/scripts/check_notes.py <当日产出文件>
 - **RS 评级 1**：09-25 SUNB、09-29 ANDG 都是 1，组内却靠前。成因在查（T-1001-04），在查清前一律按上面的 ⚠️ 句处理。
 - **忘写 `frontend/public/data/focus.json` 页面就停在旧日子**：页上会标「句子还停在 X」，但那是症状；两份同时写、同一个 commit。
 - **临时目录会被清**：`/private/tmp` 下的草稿隔夜可能就没了（09-26 的模板丢过一次），当天写完当天落仓库。
+- **中文句里混英文状态词**（10-03 抓到）：10-02 的 `_market` 中文句写着 dim / MIXED / Damaged / Reduced / selective / score / Regime，还把 Weakening 写成「转弱」。全站中英文分开之后（Andy「整个网页需要有完整的中文和英文界面」），中文句一律用站点词典的译名：收着做 / 多空分歧 / 受损 / 减仓 / 精挑 / 得分 / 市况 / 领先·改善·走弱·落后 / 领涨股。`check_notes.py` 的 `ZH_FORBIDDEN` 会拦（含 `_market`），阳性对照：拿 10-02 旧文件跑会报 8 条。

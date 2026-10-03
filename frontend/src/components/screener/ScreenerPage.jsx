@@ -445,7 +445,7 @@ export default function ScreenerPage() {
       {/* the whole confluence ledger, not the old 25-row display slice — the
           sentence says "here", and here now holds all fifty */}
       {/* the names it just argued for are the names you can chart */}
-      <Reading text={untouched ? readScreener(heat) : selectionReading}
+      <Reading text={untouched ? readScreener(heat, tr, lang) : selectionReading}
                tickers={rows.map((r) => r.ticker)}
                onTicker={(t) => { if (t !== charted) chartPick(t) }} />
 
