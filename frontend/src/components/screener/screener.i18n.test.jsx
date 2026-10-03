@@ -72,7 +72,7 @@ describe('Screener in Chinese', () => {
   it('prints the interface in Chinese, tickers and numbers untouched', async () => {
     const box = await mount('zh')
     const text = box.textContent
-    for (const zh of ['今天的漏斗', '绿灯 3/3', '收着做', '多空分歧', '受损 37.5', '减仓 / 精挑', '市况档位',
+    for (const zh of ['今天的漏斗', '绿灯 3/3', '收着做', '多空分歧', '受损 37.5', '减仓 / 精挑', '市场环境档位',
       '主题：领先 1', '重点名单', '今天做哪种形态', '榜上同组五只里回踩最深。', '大盘这句是中文。', '云软件',
       '不限', '不设', '已收窄到你在主题页上比较的那个主题', '去掉扫描', '改善', '综合动量 97', '科技 · 应用软件', 'TEAM 个股页 →']) {
       expect(text, zh).toContain(zh)
