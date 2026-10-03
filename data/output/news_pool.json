@@ -1,0 +1,191 @@
+{
+  "timestamp": "2026-10-02T22:03:12.826660+00:00",
+  "session": "2026-10-02",
+  "prior_session": "2026-10-01",
+  "window_et": [
+    "2026-10-01 16:00",
+    "2026-10-02 16:00"
+  ],
+  "count": 14,
+  "bucket_counts": {
+    "leader": 10,
+    "ep": 4,
+    "news_failure": 0
+  },
+  "tickers": [
+    {
+      "ticker": "XRPN",
+      "bucket": "leader",
+      "change_pct": 0.6825,
+      "rel_volume": 8.284130738266224,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "MXL",
+      "bucket": "leader",
+      "change_pct": 0.1499,
+      "rel_volume": 1.5558025302292786,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "IMOS",
+      "bucket": "leader",
+      "change_pct": 0.1461,
+      "rel_volume": 2.694577672622214,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "AZTA",
+      "bucket": "leader",
+      "change_pct": 0.12380000000000001,
+      "rel_volume": 3.391143868955874,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "PENG",
+      "bucket": "leader",
+      "change_pct": 0.11599999999999999,
+      "rel_volume": 2.2714791099764344,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "VSH",
+      "bucket": "leader",
+      "change_pct": 0.11410000000000001,
+      "rel_volume": 2.6296866737278006,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "IBRX",
+      "bucket": "leader",
+      "change_pct": 0.10830000000000001,
+      "rel_volume": 2.400505386455798,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "MTRN",
+      "bucket": "leader",
+      "change_pct": 0.09480000000000001,
+      "rel_volume": 1.5723179067864632,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "OUST",
+      "bucket": "leader",
+      "change_pct": 0.0861,
+      "rel_volume": 1.3425300302210863,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "QMCO",
+      "bucket": "leader",
+      "change_pct": 0.08199999999999999,
+      "rel_volume": 1.9456581885206294,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "XRPN",
+      "bucket": "ep",
+      "change_pct": 0.6825,
+      "rel_volume": 8.284130738266224,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "SYNA",
+      "bucket": "ep",
+      "change_pct": 0.1408,
+      "rel_volume": 8.058084431312754,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "AZTA",
+      "bucket": "ep",
+      "change_pct": 0.12380000000000001,
+      "rel_volume": 3.391143868955874,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    },
+    {
+      "ticker": "IBRX",
+      "bucket": "ep",
+      "change_pct": 0.10830000000000001,
+      "rel_volume": 2.400505386455798,
+      "headline": null,
+      "url": null,
+      "source": null,
+      "published_at": null,
+      "earnings": null,
+      "eps_surprise_pct": null
+    }
+  ],
+  "definition": "leader = rs_rating>=90 & sma50_dist>0, top10 by change_pct (proxy for the Leaders table); ep = ep_stockbee + ep_qullamaggie; news_failure = Finnhub EPS actual>estimate on the reaction session & change_pct<=+1% (earnings-only; non-earnings good news is not judged)",
+  "unmeasured": [
+    "headline/url/source/published_at (FINNHUB_API_KEY not set)",
+    "earnings/eps_surprise_pct (FINNHUB_API_KEY not set)"
+  ],
+  "news_failure_note": "0: earnings calendar not measured this run"
+}

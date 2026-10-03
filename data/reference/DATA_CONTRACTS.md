@@ -1540,3 +1540,27 @@ tests 632 passed）。
 **待你知悉**：`schema_snapshot --check` 的 `tick_cycle.json` 基线仍是旧的 13 键快照，本次多一个顶层键 `history`，**未 `--update`**。是否更新基线由你决定（任务号 T-1003-81）。
 
 **交接**：前端接入（Advanced breadth 放回 Raschke TICK 图）已开任务板单交 claire，任务号 **T-1003-85**。
+## 二十四、[2026-10-03] alex：T-1003-83 新增 `data/output/news_pool.json`（News & Events 候选池）
+
+**做了什么**：新增 `pipeline/screeners/news_pool.py`，在 `run_all.py` 的 ATR 之后、落盘之前接入（`results['news_pool']`，异常时写显式的 `error` 载荷，不留旧文件冒充今天）。Claire 的 T-1003-84 只在本池里做交叉核对与挑 5–8 只，本池不做挑选。
+
+**字段**：`tickers[]` 每项 `ticker, bucket, change_pct, rel_volume, headline, url, source, published_at, earnings, eps_surprise_pct`；顶层另有 `session`、`prior_session`、`window_et`、`bucket_counts`、`definition`、`unmeasured`；`news_failure` 为 0 时带 `news_failure_note`。`change_pct` 与其他 screener 一样是小数（0.04 = 4%）。只存标题、链接、来源、时间，不存正文。
+
+**三类口径**：
+- `leader`（**自造代理，不是 Leaders 表本身**）：`rs_rating >= 90` 且 `sma50_dist > 0`，按当天 `change_pct` 取前 10。原因：`market_light` 的 Leaders 表本身只有 10 行，按涨幅排一遍等于没排；`rs_rating` 为 NaN 的票直接不入池（不当垫底，承接 T-1001-04 的口径）。
+- `ep`：`ep_stockbee` ∪ `ep_qullamaggie`，两位作者的配方各自保留，不合并判断。
+- `news_failure`（**自造口径，已标记**）：财报 `epsActual > epsEstimate`，且反应日当天 `change_pct <= +1%`。反应日 = 报告日为当天（盘前/盘中），或前一交易日且 `hour=amc`。**非财报利好标题不判，不放**，不用 AI 给标题打情绪分。
+- **口径出处（先找口径，查过）**：查了「good news, bad reaction」的 O'Neil / Minervini 标准定义，**无标准**。能找到的只有市场预期层面的描述（"Stocks May Fall on Good News If Expectations Were Higher"；Minervini 的 SEPA 只谈盈利超预期与修正上调，不给这一格的判据）。来源：[CAN SLIM](https://en.wikipedia.org/wiki/CAN_SLIM)、[Mark Minervini Strategy（ChartMill）](https://www.chartmill.com/documentation/stock-screener/fundamental-analysis-investing-strategies/464-Mark-Minervini-Strategy-Think-and-Trade-Like-a-Champion-Part-1)。因此 `+1%` 阈值与 EPS 超预期的组合是**自造**，阈值放在 `news_pool.py` 的 `NEWS_FAILURE_MAX_CHANGE`，改动须另开契约行。
+
+**标题来源**：Finnhub `company-news`，取前一交易日 16:00 ET 到当天 16:00 ET 之间最新一条。`FINNHUB_API_KEY` 未设时，`headline/url/source/published_at/earnings/eps_surprise_pct` 全部为 `null`，并列入 `unmeasured`——**不会静默变成空**。
+
+**当天 news_failure 为何是 0**：本次为**无 key 的离线试跑**（10-02 session，`universe.json` 当晚数据）。`news_failure` 依赖财报日历，无 key 时日历未测量，所以 0 是「未测量」，不是「没有利空/利好」。`news_failure_note` 写明了这一点。
+
+**配套改动**：
+- `.github/workflows/daily-data-update.yml` 的 `Run data pipeline` 步骤补 `FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}`。此前只有 `premarket-digest.yml` 带这个 secret，夜间正班读不到，headline 会永远是 `null`。**该 workflow 文件属 reviewer 档**，需复核员过目。
+- `data/reference/schema_snapshot.json` 仅追加 `news_pool.json` 一项（26 行新增，无删除）。**未 `--update` 整份基线**：`--check` 现存的其他线漂移（breadth/correction_risk/x_heat 等）不是本单的，不替它们背书。
+- `data/output/news_pool.json` 是离线试跑产物（10-02 universe），**夜间正班会覆盖它**。
+
+**测试**：`pipeline/tests/test_news_pool.py`（11 条，无网络，用假 Finnhub 客户端）覆盖：leader 的 RS 门槛与 NaN 排除、SMA50 门、前 N 截断；ep 去重；反应日归属（bmo / amc）；EPS 超预期百分比；标题时间窗；无 key 显式 unmeasured；日历失败与「未测量」的区分。
+
+**待知悉**：Finnhub 免费档的调用频率未在本地验证；离线 dry-run 无法验证真实 headline 路径，**第一次夜间正班后应复核 `tickers[].headline` 是否非空**。

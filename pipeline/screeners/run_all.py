@@ -12,6 +12,7 @@ Entry point that runs the full data pipeline end-to-end:
 Per plan.md section 2.6.
 """
 import json
+import os
 import sys
 import logging
 from datetime import datetime, timezone
@@ -38,6 +39,7 @@ from pipeline.screeners.ema21_watch import run as run_ema21_watch
 from pipeline.screeners.healthy_charts import run as run_healthy_charts
 from pipeline.screeners.ep_stockbee import run as run_ep_stockbee
 from pipeline.screeners.ep_qullamaggie import run as run_ep_qullamaggie
+from pipeline.screeners.news_pool import build as build_news_pool
 from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
@@ -1125,6 +1127,21 @@ def main():
         logger.exception("Ticker event archive failed — its outputs will be skipped")
         heating_up_payload = None
         ticker_events_payload = None
+
+    # 7c. News & Events candidate pool (T-1003-83). Added after the ATR pass so
+    # its rows keep the fields the page reads. A failure ships an explicit error
+    # payload, never a stale file that reads as today's.
+    try:
+        results['news_pool'] = build_news_pool(
+            listed.to_dict('records'),
+            results['ep_stockbee'],
+            results['ep_qullamaggie'],
+            key=os.environ.get('FINNHUB_API_KEY') or None,
+        )
+    except Exception as e:  # noqa: BLE001 — isolate; every other output still ships
+        logger.exception("news_pool build failed")
+        results['news_pool'] = {'count': 0, 'tickers': [], 'error': repr(e),
+                                'unmeasured': ['build failed']}
 
     # 8. Save outputs
     for name, data in results.items():
