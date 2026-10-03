@@ -3,6 +3,7 @@ import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import HowToRead from '../HowToRead'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 import { useGroups } from '../../hooks/useGroups'
 import { useThemeLadder } from '../../hooks/useThemeLadder'
 import { boardsOf, defaultPicks, Y_MAX, R2W_LAG, PRIOR_WEEKS } from './rotationLogic'
@@ -28,7 +29,7 @@ import './rotation.css'
  * lines are the 30 themes; the plane counts every group the ladder measures.
  */
 export default function RotationPage() {
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
   const { themes, date, benchmark, loading, error } = useGroups()
   const ladder = useThemeLadder()
   const [selected, setSelected] = useState([])
@@ -55,8 +56,8 @@ export default function RotationPage() {
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  if (loading) return <div className="text-[13px] text-[var(--color-text-muted)]">Loading themes…</div>
-  if (error) return <div className="text-[13px] text-[var(--color-text-muted)]">Could not load groups.json.</div>
+  if (loading) return <div className="text-[13px] text-[var(--color-text-muted)]">{t('rp.loading')}</div>
+  if (error) return <div className="text-[13px] text-[var(--color-text-muted)]">{t('rp.error')}</div>
 
   const ladderDate = ladder.data?.as_of ?? null
   const missing = shown.filter((o) => !o.rel?.length).map((o) => o.name)
@@ -64,7 +65,7 @@ export default function RotationPage() {
   return (
     <div className="rot space-y-5">
       <PageHeader group="market" title={t('nav.rotation')}
-        meta={[`vs ${benchmark} · ${date} · ${rows.length} themes${ladderDate ? ` · ladder ${ladderDate}` : ''}`, <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
+        meta={[ladderDate ? t('rp.metaLadder', { bench: benchmark, date, n: rows.length, ladder: ladderDate }) : t('rp.meta', { bench: benchmark, date, n: rows.length }), <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
 
       <div className="rot-grid2">
         <TerrainCard ladder={ladder.data} loading={ladder.loading} wk={wk} setWk={setWk} open={open} onToggle={() => setOpen((v) => !v)} selected={names} onSelect={toggle} />
@@ -77,10 +78,10 @@ export default function RotationPage() {
       <ThemeBoardCard />
 
       <HowToRead>
-        <p><b>Terrain.</b> Every group the ladder measures, placed on the two-week board each session: level = the last ten sessions' excess over {benchmark}, momentum = the last five; Leading when both are positive, Weakening when only the level is, Improving when only the momentum is, Lagging when neither. Stacked, darkest = Leading. The window select moves the board to an earlier fortnight; expand lists who sat where on that fortnight's last session.</p>
-        <p><b>Momentum &amp; Acceleration.</b> Burst: the last two weeks' strength, the same arithmetic as the Terrain's level axis. Acceleration: this week's excess minus the weekly pace of the three weeks before it (that stretch is {PRIOR_WEEKS} weeks wide, so it is divided down before the two are compared) — positive means this week ran faster than the run-up to it. Stamina: the last thirteen weeks' excess, a quarter in and still ahead or not. Dots grow with the value; the top five and bottom two are named. Click any dot or name to put it on the Flux line; Escape clears.</p>
-        <p><b>Flux.</b> The two-week strength every session for up to three themes — the top of each board until you pick. The y-axis is linear to ±{Math.round(Y_MAX * 100)}% and saturates past it — a line off the scale rides in the tinted band just inside the frame rather than being cut off, and the hover always reads the true value. Under each line, that theme's two-week state per session. The benchmark is the zero line.{seriesDates.length ? ` Window ${seriesDates[R2W_LAG] ?? seriesDates[0]} → ${seriesDates[seriesDates.length - 1]}.` : ''}{missing.length ? ` No series yet for ${missing.join(', ')}.` : ''}{boards.approx ? ' Until the ladder ships its series, RS 0–2w is approximated as this week plus one week of the prior three.' : ''}</p>
-        <p><b>Data.</b> groups.json {date} for the dots; theme_ladder.json {ladderDate ?? '(missing)'} for the plane and the lines, equal-weighted baskets of each theme's constituents over {benchmark}. Counts are not comparable across dashboards that weight themes differently — the change is.</p>
+        <p><b>{t('rp.how.terrainH')}</b>{t('rp.how.terrain', { bench: benchmark })}</p>
+        <p><b>{t('rp.how.pointsH')}</b>{t('rp.how.points', { prior: PRIOR_WEEKS })}</p>
+        <p><b>{t('rp.how.fluxH')}</b>{t('rp.how.flux', { ymax: Math.round(Y_MAX * 100) })}{seriesDates.length ? t('rp.how.fluxWindow', { from: seriesDates[R2W_LAG] ?? seriesDates[0], to: seriesDates[seriesDates.length - 1] }) : ''}{missing.length ? t('rp.how.fluxMissing', { names: missing.map((n) => dataName(n, lang)).join(lang === 'zh' ? '、' : ', ') }) : ''}{boards.approx ? t('rp.how.fluxApprox') : ''}</p>
+        <p><b>{t('rp.how.dataH')}</b>{t('rp.how.data', { date, ladder: ladderDate ?? t('rp.how.missingFile'), bench: benchmark })}</p>
       </HowToRead>
     </div>
   )

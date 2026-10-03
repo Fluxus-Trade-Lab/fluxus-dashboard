@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 import { STATES, STATE_LADDER, WINDOWS, windowBounds, visibleFrom, countsAt, namesByState } from './rotationLogic'
 
 // short and wide: the names live under the chart in the same card now, so the
@@ -57,15 +58,15 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
       <div className="rot-head">
         <h2 className="rot-title">{t('rot.terrain')}</h2>
         <div className="rot-tools">
-          {m > 0 && <span className="rot-meta rot-counts">{dates[end]}{STATES.map((s) => <span key={s} title={s}><i style={{ background: STATE_LADDER[s] }} />{counts[s]}</span>)}</span>}
-          <select className="rot-sel" value={wk} onChange={(e) => setWk(+e.target.value)} aria-label="window" disabled={!m}>
+          {m > 0 && <span className="rot-meta rot-counts">{dates[end]}{STATES.map((s) => <span key={s} title={t(`state.${s}`)}><i style={{ background: STATE_LADDER[s] }} />{counts[s]}</span>)}</span>}
+          <select className="rot-sel" value={wk} onChange={(e) => setWk(+e.target.value)} aria-label={t('rp.windowAria')} disabled={!m}>
             {WINDOWS.map((l, k) => <option key={k} value={k} disabled={!windowBounds(dates, k)}>{t(l)}{windowBounds(dates, k) ? '' : ` · ${t('rot.nodata')}`}</option>)}
           </select>
           <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label={t('rot.expand')} onClick={onToggle} disabled={!m}>{open ? '−' : '+'}</button>
         </div>
       </div>
       {m - from > 1 ? (
-        <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label="four-state counts by session, two-week board"
+        <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={t('rp.terrainAria')}
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
           {/* A lightbox, not a tinted block: the whole terrain is drawn faint, the
               picked fortnight is drawn again over it at full strength. Opacity
@@ -87,7 +88,7 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
               <line x1={x(hov)} x2={x(hov)} y1={PAD.t} y2={H - PAD.b} stroke="var(--color-text)" strokeWidth=".8" />
               <rect x={tipX} y={PAD.t} rx="5" width="126" height="78" fill="var(--color-surface)" stroke="var(--color-border)" />
               <text className="rot-mono rot-ink" x={tipX + 8} y={PAD.t + 13}>{dates[hov]}</text>
-              {STATES.map((k, r) => <text key={k} x={tipX + 8} y={PAD.t + 28 + 14 * r} style={{ fill: k === 'Lagging' ? 'var(--color-text-muted)' : STATE_LADDER[k] }}>{k} {hc[k]}</text>)}
+              {STATES.map((k, r) => <text key={k} x={tipX + 8} y={PAD.t + 28 + 14 * r} style={{ fill: k === 'Lagging' ? 'var(--color-text-muted)' : STATE_LADDER[k] }}>{t(`state.${k}`)} {hc[k]}</text>)}
             </g>
           )}
         </svg>
@@ -99,6 +100,7 @@ export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle
 
 /** the names under the terrain — who sat in each state on the picked window's last session */
 function StateBand({ ladder, wk, selected, onSelect }) {
+  const { lang, t } = useLanguage()
   const h = ladder?.history?.['2w'] ?? null
   const dates = h?.dates ?? []
   const m = dates.length
@@ -110,10 +112,10 @@ function StateBand({ ladder, wk, selected, onSelect }) {
     <div className="rot-band">
       {known ? STATES.map((st) => (
         <div key={st} className="rot-band-row">
-          <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>
+          <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{t(`state.${st}`)} <span className="rot-meta">{byState[st].length}</span></div>
           <div className="rot-names">
             {byState[st].length ? byState[st].map((n) => (
-              <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} data-focus={selected[0] === n} onClick={() => onSelect(n)}>{n}</button>
+              <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} data-focus={selected[0] === n} onClick={() => onSelect(n)}>{dataName(n, lang)}</button>
             )) : <span className="rot-meta">—</span>}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, FLUX_STEP, sampleIndices, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
@@ -20,7 +21,8 @@ const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
  * hover snaps to a plotted week so the number never disagrees with the line.
  */
 export default function FluxCard({ shown, dates, stateDates, benchmark, picked, loading, onSelect }) {
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
+  const nm = (n) => dataName(n, lang)
   const clip = useId()
   const svgRef = useRef(null)
   const [hov, setHov] = useState(null)
@@ -52,13 +54,13 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
       <div className="rot-head"><h2 className="rot-title">{t('rot.flux')}</h2></div>
       <div className="rot-chips">
         {shown.map((o, j) => (
-          <button key={o.name} type="button" className="rot-chip" onClick={() => onSelect(o.name)} title={picked ? 'remove' : 'select'}>
-            <i style={{ background: LINE[j] }} />{o.name}{o.rel?.length ? '' : <span className="rot-meta">·</span>} <span className="rot-meta">×</span>
+          <button key={o.name} type="button" className="rot-chip" onClick={() => onSelect(o.name)} title={picked ? t('rp.chipRemove') : t('rp.chipSelect')}>
+            <i style={{ background: LINE[j] }} />{nm(o.name)}{o.rel?.length ? '' : <span className="rot-meta">·</span>} <span className="rot-meta">×</span>
           </button>
         ))}
       </div>
       {drawn >= 2 && lines.length ? (
-        <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`two-week relative strength vs ${benchmark}`}
+        <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={t('rp.fluxAria', { bench: benchmark })}
              onPointerMove={(e) => setHov(indexAt(e))} onPointerLeave={() => setHov(null)} style={{ touchAction: 'none' }}>
           <defs><clipPath id={clip}><rect x={PAD.l - 4} y={PAD.t - 4} width={W - PAD.l - PAD.r + 8} height={H - PAD.t - PAD.b + 8} /></clipPath></defs>
           {[-Y_MAX, -Y_MAX / 2, 0, Y_MAX / 2, Y_MAX].map((v) => (
@@ -81,7 +83,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
           </g>
           {ends.map(({ item: e, y: ly }) => (e.j < 0
             ? <text key="bench" x={W - PAD.r + 8} y={ly.toFixed(1)}>{benchmark}</text>
-            : <text key={e.name} className="rot-ink" x={W - PAD.r + 8} y={ly.toFixed(1)} style={{ fill: LINE[e.j] }}>{e.name} <tspan className="rot-mono" style={{ fill: 'var(--color-text-muted)', fontWeight: 500 }}>{fmtPct(e.v)}</tspan></text>))}
+            : <text key={e.name} className="rot-ink" x={W - PAD.r + 8} y={ly.toFixed(1)} style={{ fill: LINE[e.j] }}>{nm(e.name)} <tspan className="rot-mono" style={{ fill: 'var(--color-text-muted)', fontWeight: 500 }}>{fmtPct(e.v)}</tspan></text>))}
           {hov != null && (
             <g style={{ pointerEvents: 'none' }}>
               <line x1={x(hov).toFixed(1)} x2={x(hov).toFixed(1)} y1={PAD.t} y2={H - PAD.b} stroke="var(--color-text-secondary)" strokeWidth=".8" strokeDasharray="3 3" />
@@ -91,7 +93,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
               <text className="rot-mono rot-ink" x={tipX + 8} y={PAD.t + 18}>{dates[hov]}</text>
               {rows.map((o, r) => (
                 <g key={o.name}>
-                  <text x={tipX + 8} y={PAD.t + 34 + 15 * r} style={{ fill: LINE[o.j] }}>{o.name}</text>
+                  <text x={tipX + 8} y={PAD.t + 34 + 15 * r} style={{ fill: LINE[o.j] }}>{nm(o.name)}</text>
                   <text className="rot-mono" x={tipX + 162} y={PAD.t + 34 + 15 * r} textAnchor="end">{fmtPct(o.r2w[hov])}</text>
                 </g>
               ))}
@@ -103,9 +105,9 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
       ) : <div className="rot-empty" style={{ minHeight: 120 }}>{loading ? '' : n ? t('rot.nothingSelected') : t('rot.noSeries')}</div>}
       {lines.map((o) => (
         <div key={o.name} className="rot-rib">
-          <span style={{ color: LINE[o.j] }}>{o.name}</span>
+          <span style={{ color: LINE[o.j] }}>{nm(o.name)}</span>
           <div className="rot-rib-bar">
-            {dates.slice(lag).map((d) => { const st = o.states?.[stateIndex(d)] ?? null; return <i key={d} style={{ background: STATE_LADDER[st] ?? 'var(--color-border-light)' }} title={`${d} · ${st ?? '—'}`} /> })}
+            {dates.slice(lag).map((d) => { const st = o.states?.[stateIndex(d)] ?? null; return <i key={d} style={{ background: STATE_LADDER[st] ?? 'var(--color-border-light)' }} title={`${d} · ${st ? t(`state.${st}`) : '—'}`} /> })}
           </div>
         </div>
       ))}

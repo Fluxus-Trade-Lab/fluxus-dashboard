@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useThemeBoard } from '../../hooks/useThemeBoard'
 import { barStyle } from '../groups/ThemeBars'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 
 /**
  * 主题四态板 —— 50 个主题，每个读一只代理 ETF 的两周桶。
@@ -21,28 +23,32 @@ import { barStyle } from '../groups/ThemeBars'
  * （那是隔壁 Theme Leaders and Laggards 的活）。
  */
 
-const CN = { leading: 'Leading', weakening: 'Weakening', improving: 'Improving', lagging: 'Lagging' }
 const CAP = { leading: 'Leading', weakening: 'Weakening', improving: 'Improving', lagging: 'Lagging' }
 const ORDER = ['leading', 'improving', 'weakening', 'lagging']
 const HEAD = 12
 
+/** a lowercase state from theme_board.json in the reader's language; unknown values pass through */
+const stateWord = (t, state) => (CAP[state] ? t(`state.${CAP[state]}`) : state)
+
 function Mark({ state, dim = false }) {
+  const { t } = useLanguage()
   if (!state) return <i className="w-[8px] h-[8px] rounded-[1px] opacity-30"
                         style={{ background: 'var(--color-text-muted)' }} />
   return (
     <i className="w-[8px] h-[8px] rounded-[1px] shrink-0"
        style={{ ...barStyle(CAP[state] ?? state), opacity: dim ? 0.45 : 1 }}
-       title={CN[state] ?? state} />
+       title={stateWord(t, state)} />
   )
 }
 
 /** 成员四态的计数条。宽度＝该状态占成员数的比例，不带数字，数字在 title 里。 */
 function MemberBar({ dist, count }) {
+  const { t } = useLanguage()
   const total = ORDER.reduce((s, k) => s + (dist?.[k] ?? 0), 0)
   if (!total) return <span className="text-[11px] text-[var(--color-text-muted)]">—</span>
-  const label = ORDER.map((k) => `${CN[k]} ${dist[k] ?? 0}`).join(' · ')
+  const label = ORDER.map((k) => `${stateWord(t, k)} ${dist[k] ?? 0}`).join(' · ')
   return (
-    <span className="flex items-center gap-1.5 min-w-0" title={`${count} members — ${label}`}>
+    <span className="flex items-center gap-1.5 min-w-0" title={t('rp.tb.members', { n: count, label })}>
       <span className="flex h-[7px] w-[64px] shrink-0 overflow-hidden rounded-[2px]
                        bg-[var(--color-border-light)]">
         {ORDER.map((k) => (dist[k] ? (
@@ -57,6 +63,7 @@ function MemberBar({ dist, count }) {
 }
 
 function Row({ row, parallel }) {
+  const { lang, t } = useLanguage()
   const rs = Number.isFinite(row.rs) ? row.rs : null
   const changed = parallel && row.state_prev
     && String(row.state).toLowerCase() !== String(row.state_prev).toLowerCase()
@@ -64,15 +71,15 @@ function Row({ row, parallel }) {
     <div className="h-[26px] flex items-center gap-2 min-w-0">
       <Mark state={row.state} />
       {parallel && (
-        <span className="flex items-center gap-1 shrink-0" title={`旧读数：${row.state_prev ?? '—'}`}>
-          <span className="text-[11px] text-[var(--color-text-muted)]">was</span>
+        <span className="flex items-center gap-1 shrink-0" title={t('rp.tb.prevTitle', { prev: row.state_prev == null ? '—' : lang === 'zh' ? stateWord(t, String(row.state_prev).toLowerCase()) : row.state_prev })}>
+          <span className="text-[11px] text-[var(--color-text-muted)]">{t('rp.tb.was')}</span>
           <Mark state={String(row.state_prev ?? '').toLowerCase()} dim />
         </span>
       )}
       <span className="min-w-0 flex-1 truncate text-[13px] font-medium
-                       text-[var(--color-text-bold)]" title={`${row.theme} · ${row.etf}`}>
-        {row.theme}
-        {changed && <span className="ml-1.5 text-[11px] text-[var(--color-text-muted)]">changed</span>}
+                       text-[var(--color-text-bold)]" title={`${dataName(row.theme, lang)} · ${row.etf}`}>
+        {dataName(row.theme, lang)}
+        {changed && <span className="ml-1.5 text-[11px] text-[var(--color-text-muted)]">{t('rp.tb.changed')}</span>}
       </span>
       <MemberBar dist={row.members} count={row.member_count} />
       <span className="shrink-0 w-[58px] text-right text-[13px] font-mono tabular-nums font-medium"
@@ -85,6 +92,7 @@ function Row({ row, parallel }) {
 }
 
 export default function ThemeBoardCard() {
+  const { t } = useLanguage()
   const { data, loading, failed } = useThemeBoard()
   const [open, setOpen] = useState(false)
 
@@ -106,18 +114,18 @@ export default function ThemeBoardCard() {
     <div className="flex flex-col min-w-0">
       <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]
                       mb-3 px-1">
-        Proxy Board
+        {t('rp.tb.title')}
       </div>
       <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden
                           flex flex-col flex-1 pt-4">
         <div className="px-5 pb-4 flex-1 flex flex-col">
           {loading ? (
             <p className="m-0 py-6 text-[11px] text-[var(--color-text-muted)]">
-              Loading the theme board&hellip;
+              {t('rp.tb.loading')}
             </p>
           ) : failed || !rows.length ? (
             <p className="m-0 py-6 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-              theme_board.json did not load — the board is not measured this session.
+              {t('rp.tb.failed')}
             </p>
           ) : (
             <>
@@ -126,7 +134,7 @@ export default function ThemeBoardCard() {
                 {ORDER.map((k) => (
                   <span key={k} className="flex items-center gap-1.5">
                     <i className="w-[8px] h-[8px] rounded-[1px]" style={barStyle(CAP[k])} />
-                    {CN[k]} <span className="font-mono tabular-nums">{counts[k] ?? 0}</span>
+                    {stateWord(t, k)} <span className="font-mono tabular-nums">{counts[k] ?? 0}</span>
                   </span>
                 ))}
               </div>
@@ -140,17 +148,14 @@ export default function ThemeBoardCard() {
                         className="mt-2 self-start text-[11px] font-mono
                                    text-[var(--color-text-muted)] hover:text-[var(--color-text-bold)]
                                    focus-visible:outline focus-visible:outline-1">
-                  {open ? 'Show fewer' : `All ${rows.length} themes`}
+                  {open ? t('rp.tb.fewer') : t('rp.tb.all', { n: rows.length })}
                 </button>
               )}
 
               <p className="m-0 mt-3 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-                Each theme reads one proxy ETF: excess over {data.benchmark} across the last
-                two weeks, momentum against the two weeks before. The bar on each row is that
-                theme&rsquo;s own constituents, counted by state — a cap-weighted proxy can lead
-                while most of its names do not.
-                {parallel && ` Both readings run side by side until ${data.parallel_until}; the old one comes off then.`}
-                {staleMembers && ` Constituent states are ${data.members_asof} closes, one session behind the theme reading.`}
+                {t('rp.tb.foot', { bench: data.benchmark })}
+                {parallel && t('rp.tb.parallel', { until: data.parallel_until })}
+                {staleMembers && t('rp.tb.stale', { asof: data.members_asof })}
               </p>
             </>
           )}
