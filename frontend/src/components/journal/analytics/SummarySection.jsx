@@ -122,7 +122,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
                 <span className={`flex-shrink-0 ${ins.type === 'positive' ? 'text-[var(--color-profit)]' : ins.type === 'warning' ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-muted)]'}`}>
                   {ins.type === 'positive' ? '+' : ins.type === 'warning' ? '!' : '-'}
                 </span>
-                <span className="text-[var(--color-text-secondary)]">{ins.text}</span>
+                <span className="text-[var(--color-text-secondary)]">{ins.key ? t(ins.key, ins.vars) : ins.text}</span>
               </div>
             ))}
           </div>

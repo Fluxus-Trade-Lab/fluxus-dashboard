@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { datesWithEntries, loadEntry, saveEntry, todayKey, weekKey } from '../lib/writingStore'
 import EntryNav from './EntryNav'
 import SaveState from './SaveState'
+import { useLanguage } from '../i18n/LanguageContext'
 
 /**
  * A dated slot for words Andy writes himself, with its own back-catalogue.
@@ -30,6 +31,7 @@ export default function WritingSlot({
   minH = 150,             // the floor; above it the box takes whatever the row gives
   className = '',
 }) {
+  const { t } = useLanguage()
   const keyFor = cadence === 'weekly' ? weekKey : todayKey
   const current = keyFor()
 
@@ -129,7 +131,7 @@ export default function WritingSlot({
           is still honest; it is just silent about it now. */}
       {written > 1 && (
         <p className="text-[11px] font-mono text-[var(--color-text-muted)] m-0 mt-1.5">
-          {written} written
+          {t('misc.ws.written', { n: written })}
         </p>
       )}
     </section>

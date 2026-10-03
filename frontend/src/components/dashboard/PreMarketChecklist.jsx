@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import EntryNav from '../EntryNav'
 import SaveState from '../SaveState'
+import { useLanguage } from '../../i18n/LanguageContext'
 import { datesWithEntries, loadRecord, saveRecord, todayKey } from '../../lib/writingStore'
 
 const QUESTIONS = [
@@ -45,6 +46,7 @@ function migrateLegacy() {
 }
 
 export default function PreMarketChecklist() {
+  const { t } = useLanguage()
   const today = todayKey()
   const [date, setDate] = useState(today)
   const [state, setState] = useState(() => {
@@ -114,7 +116,7 @@ export default function PreMarketChecklist() {
     <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Pre-Market Checklist
+          {t('misc.pm.title')}
         </h3>
         <div className="flex items-center gap-3">
           <SaveState onSave={saveNow} dirty={dirty} />
@@ -126,9 +128,9 @@ export default function PreMarketChecklist() {
       </div>
 
       <div className="space-y-2.5">
-        {QUESTIONS.map(({ id, text, options }) => (
+        {QUESTIONS.map(({ id, options }) => (
           <div key={id}>
-            <div className="text-[13px] text-[var(--color-text)] mb-1">{text}</div>
+            <div className="text-[13px] text-[var(--color-text)] mb-1">{t(`misc.pm.q.${id}`)}</div>
             <div className="flex gap-1 flex-wrap">
               {options.map((opt) => (
                 <button
@@ -141,7 +143,7 @@ export default function PreMarketChecklist() {
                       : 'text-[var(--color-text-secondary)] bg-[var(--color-surface)] border-[var(--color-border)] hover:bg-[var(--color-hover-bg)]'
                   }`}
                 >
-                  {opt}
+                  {t(`misc.pm.a.${opt}`)}
                 </button>
               ))}
             </div>
@@ -154,8 +156,8 @@ export default function PreMarketChecklist() {
         <textarea
           value={state.note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Situational notes — what's on your mind today?"
-          aria-label="Situational notes"
+          placeholder={t('misc.pm.notePh')}
+          aria-label={t('misc.pm.noteLabel')}
           rows={2}
           className="w-full px-3 py-2 text-[13px] bg-[var(--color-bg)] rounded-3xl resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
         />

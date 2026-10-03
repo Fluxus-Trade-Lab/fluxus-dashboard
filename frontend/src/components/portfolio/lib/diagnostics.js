@@ -337,6 +337,10 @@ export function computeSpyVol(spyHistory) {
 
 /**
  * Rule-based insights from trade data.
+ *
+ * Each insight keeps its English `text` unchanged and carries `key` + `vars`
+ * beside it (i18n/parts/misc.js), so the Summary can show it in either
+ * language. The English template under that key reproduces `text` exactly.
  */
 export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stopAnalysis) {
   const insights = []
@@ -353,18 +357,18 @@ export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stop
   const profitFactor = grossLosses > 0 ? grossGains / grossLosses : Infinity
 
   if (winRate < 50 && profitFactor > 1.5) {
-    insights.push({ type: 'positive', text: `Low win rate (${winRate.toFixed(0)}%) but strong profit factor (${profitFactor.toFixed(1)}) — your winners more than compensate for frequent small losses.` })
+    insights.push({ type: 'positive', key: 'misc.ins.lowWinHighPf', vars: { wr: winRate.toFixed(0), pf: profitFactor.toFixed(1) }, text: `Low win rate (${winRate.toFixed(0)}%) but strong profit factor (${profitFactor.toFixed(1)}) — your winners more than compensate for frequent small losses.` })
   } else if (winRate > 60 && profitFactor < 1) {
-    insights.push({ type: 'warning', text: `High win rate (${winRate.toFixed(0)}%) but profit factor below 1.0 — your losses are too large relative to gains. Consider tighter risk management.` })
+    insights.push({ type: 'warning', key: 'misc.ins.highWinLowPf', vars: { wr: winRate.toFixed(0) }, text: `High win rate (${winRate.toFixed(0)}%) but profit factor below 1.0 — your losses are too large relative to gains. Consider tighter risk management.` })
   }
 
   // Holding period patterns
   const avgWinHold = winners.length > 0 ? winners.reduce((s, t) => s + t.holdingDays, 0) / winners.length : 0
   const avgLoseHold = losers.length > 0 ? losers.reduce((s, t) => s + t.holdingDays, 0) / losers.length : 0
   if (avgLoseHold > avgWinHold * 1.5 && losers.length >= 3) {
-    insights.push({ type: 'warning', text: `Losers held ${avgLoseHold.toFixed(0)} days avg vs ${avgWinHold.toFixed(0)} for winners — consider cutting losers faster.` })
+    insights.push({ type: 'warning', key: 'misc.ins.losersHeldLonger', vars: { lose: avgLoseHold.toFixed(0), win: avgWinHold.toFixed(0) }, text: `Losers held ${avgLoseHold.toFixed(0)} days avg vs ${avgWinHold.toFixed(0)} for winners — consider cutting losers faster.` })
   } else if (avgWinHold > avgLoseHold * 1.3 && winners.length >= 3) {
-    insights.push({ type: 'positive', text: `Winners held ${avgWinHold.toFixed(0)} days avg vs ${avgLoseHold.toFixed(0)} for losers — good discipline letting winners run.` })
+    insights.push({ type: 'positive', key: 'misc.ins.winnersHeldLonger', vars: { win: avgWinHold.toFixed(0), lose: avgLoseHold.toFixed(0) }, text: `Winners held ${avgWinHold.toFixed(0)} days avg vs ${avgLoseHold.toFixed(0)} for losers — good discipline letting winners run.` })
   }
 
   // Consecutive loss streaks
@@ -379,7 +383,7 @@ export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stop
     else curStreak = 0
   })
   if (maxStreak >= 5) {
-    insights.push({ type: 'warning', text: `Max consecutive loss streak: ${maxStreak} trades. Consider reducing size after 3+ losses in a row.` })
+    insights.push({ type: 'warning', key: 'misc.ins.lossStreak', vars: { n: maxStreak }, text: `Max consecutive loss streak: ${maxStreak} trades. Consider reducing size after 3+ losses in a row.` })
   }
 
   // Trim analysis insights
@@ -387,7 +391,7 @@ export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stop
     const tooEarlyPct = trimAnalysis.filter(t => t.tooEarly).length / trimAnalysis.length * 100
     const avgLeftOnTable = trimAnalysis.reduce((s, t) => s + t.leftOnTable, 0) / trimAnalysis.length
     if (tooEarlyPct > 40) {
-      insights.push({ type: 'warning', text: `${tooEarlyPct.toFixed(0)}% of trims were too early (stock ran 5%+ higher within 10 days). Avg left on table: ${avgLeftOnTable.toFixed(1)}%.` })
+      insights.push({ type: 'warning', key: 'misc.ins.trimTooEarly', vars: { pct: tooEarlyPct.toFixed(0), left: avgLeftOnTable.toFixed(1) }, text: `${tooEarlyPct.toFixed(0)}% of trims were too early (stock ran 5%+ higher within 10 days). Avg left on table: ${avgLeftOnTable.toFixed(1)}%.` })
     }
   }
 
@@ -396,7 +400,7 @@ export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stop
     const tooTightPct = stopAnalysis.filter(t => t.stopTooTight).length / stopAnalysis.length * 100
     if (tooTightPct > 30) {
       const avgStopDist = stopAnalysis.reduce((s, t) => s + t.stopDistPct, 0) / stopAnalysis.length
-      insights.push({ type: 'warning', text: `${tooTightPct.toFixed(0)}% of stopped-out trades recovered 5%+. Avg stop distance was ${avgStopDist.toFixed(1)}% — consider widening stops.` })
+      insights.push({ type: 'warning', key: 'misc.ins.stopTooTight', vars: { pct: tooTightPct.toFixed(0), dist: avgStopDist.toFixed(1) }, text: `${tooTightPct.toFixed(0)}% of stopped-out trades recovered 5%+. Avg stop distance was ${avgStopDist.toFixed(1)}% — consider widening stops.` })
     }
   }
 
@@ -405,9 +409,9 @@ export function computeInsights(enrichedTrades, monthlyStats, trimAnalysis, stop
     const profitable = monthlyStats.filter(m => m.monthlyRetPct > 0).length
     const consistency = (profitable / monthlyStats.length) * 100
     if (consistency >= 70) {
-      insights.push({ type: 'positive', text: `${consistency.toFixed(0)}% of months are profitable — strong consistency.` })
+      insights.push({ type: 'positive', key: 'misc.ins.consistentMonths', vars: { pct: consistency.toFixed(0) }, text: `${consistency.toFixed(0)}% of months are profitable — strong consistency.` })
     } else if (consistency < 40) {
-      insights.push({ type: 'warning', text: `Only ${consistency.toFixed(0)}% of months are profitable — review position sizing and trade selection.` })
+      insights.push({ type: 'warning', key: 'misc.ins.inconsistentMonths', vars: { pct: consistency.toFixed(0) }, text: `Only ${consistency.toFixed(0)}% of months are profitable — review position sizing and trade selection.` })
     }
   }
 

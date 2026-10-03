@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useLanguage } from '../i18n/LanguageContext'
 
 /**
  * Step through the days an entry actually exists on.
@@ -12,6 +13,7 @@ import { useMemo } from 'react'
  * and today is always reachable whether or not it has been written.
  */
 export default function EntryNav({ dates, date, current, onPick, cadence = 'daily' }) {
+  const { t } = useLanguage()
   const timeline = useMemo(() => {
     const s = new Set(dates)
     s.add(current)
@@ -31,24 +33,24 @@ export default function EntryNav({ dates, date, current, onPick, cadence = 'dail
     <div className="flex items-center gap-1.5 text-[11px] font-mono
                     text-[var(--color-text-muted)]">
       <button type="button" disabled={!older} onClick={() => onPick(older)}
-              title={older ? `Back to ${older}` : 'Nothing older'}
-              aria-label="Older entry"
+              title={older ? t('misc.en.backTo', { d: older }) : t('misc.en.nothingOlder')}
+              aria-label={t('misc.en.older')}
               className="bg-transparent border-none p-0 px-1 cursor-pointer
                          disabled:opacity-30 disabled:cursor-default
                          hover:text-[var(--color-text)]">‹</button>
-      <span title={cadence === 'weekly' ? 'week beginning' : 'entry date'}
+      <span title={cadence === 'weekly' ? t('misc.en.weekBeginning') : t('misc.en.entryDate')}
             className={isCurrent ? 'text-[var(--color-text-secondary)]' : ''}>
         {date}
       </span>
       <button type="button" disabled={!newer} onClick={() => onPick(newer)}
-              title={newer ? `Forward to ${newer}` : 'Nothing newer'}
-              aria-label="Newer entry"
+              title={newer ? t('misc.en.forwardTo', { d: newer }) : t('misc.en.nothingNewer')}
+              aria-label={t('misc.en.newer')}
               className="bg-transparent border-none p-0 px-1 cursor-pointer
                          disabled:opacity-30 disabled:cursor-default
                          hover:text-[var(--color-text)]">›</button>
       {!isCurrent && (
         <button type="button" onClick={() => onPick(current)}
-                title={cadence === 'weekly' ? 'Back to this week' : 'Back to today'}
+                title={cadence === 'weekly' ? t('misc.en.backThisWeek') : t('misc.en.backToday')}
                 className="bg-transparent border-none p-0 ml-1 cursor-pointer
                            underline hover:text-[var(--color-text)]">{current}</button>
       )}

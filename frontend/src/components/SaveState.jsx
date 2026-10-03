@@ -41,7 +41,7 @@ export default function SaveState({ onSave, dirty }) {
         type="button"
         onClick={onSave}
         disabled={!dirty}
-        title={dirty ? 'Save now' : 'Nothing unsaved'}
+        title={dirty ? t('misc.save.now') : t('misc.save.nothing')}
         className="text-[11px] font-mono uppercase tracking-[.14em] px-2 py-0.5 rounded
                    border border-[var(--color-border)] bg-transparent cursor-pointer
                    text-[var(--color-text-secondary)] hover:text-[var(--color-text)]

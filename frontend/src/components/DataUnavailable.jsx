@@ -1,4 +1,5 @@
 import PageHeader from './PageHeader'
+import { useLanguage } from '../i18n/LanguageContext'
 
 /**
  * The page a route becomes when its data did not arrive.
@@ -16,15 +17,16 @@ import PageHeader from './PageHeader'
  * hosted site sees the sentence above it and needs nothing more.
  */
 export default function DataUnavailable({ group, title, what, why, command }) {
+  const { t } = useLanguage()
   return (
     <div>
       <PageHeader group={group} title={title}
-                  meta={['no data', 'the page is here, the reading is not']} />
+                  meta={[t('misc.du.noData'), t('misc.du.pageHere')]} />
 
       <div className="bg-[var(--color-surface)] rounded-3xl p-6 max-w-[70ch]">
         <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-3">
-          Not loaded
+          {t('misc.du.notLoaded')}
         </div>
         <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text)]">
           {what}
@@ -36,7 +38,7 @@ export default function DataUnavailable({ group, title, what, why, command }) {
         )}
         {command && (
           <p className="text-[11px] text-[var(--color-text-muted)] mt-5 mb-0">
-            Rebuild it with <span className="font-mono">{command}</span>
+            {t('misc.du.rebuild')} <span className="font-mono">{command}</span>
           </p>
         )}
       </div>
