@@ -1,5 +1,7 @@
 import BreadthPanes from './BreadthPanes'
-import { verdictParts, indexCards, breadthTiles, crossAsset } from './marketStateMinMath'
+import { verdictParts, indexCards, breadthTiles, crossAsset, recapNotes, boldParts } from './marketStateMinMath'
+import { useRecapCross } from './useRecapCross'
+import { useLanguage } from '../../i18n/LanguageContext'
 import { leaderRows, themeTransitions, themeRows } from './morningReadMath'
 
 /* Market State, minimal (Andy 2026-10-03, preview artifact Mf9ZEf6kYwVNSp3sR9GMNb:
@@ -54,6 +56,8 @@ export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, load
   const leaders = leaderRows(ml, universe)
   const trans = themeRows(themeTransitions(groupsHistory), themes)
   const cross = crossAsset(etfs, signals)
+  const { lang } = useLanguage()
+  const notes = recapNotes(useRecapCross(), ml?.date, lang === 'zh' ? 'zh' : 'en')
   return (
     <div>
       <VerdictStrip ml={ml} />
@@ -153,6 +157,16 @@ export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, load
           </Card>
         ))}
       </div>
+      {notes.length > 0 && (
+        <ul data-testid="recap-cross" className="m-0 mt-3 list-none p-0 divide-y divide-[var(--color-border-light)] rounded-lg border border-[var(--color-border-light)] bg-[var(--color-surface)]">
+          {notes.map((n, i) => (
+            <li key={i} className="grid grid-cols-[3.5rem_1fr] gap-3 px-3.5 py-2.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+              <Mono className="pt-px text-[11px] font-semibold text-[var(--color-text-muted)]">{n.ticker ?? ''}</Mono>
+              <span>{boldParts(n.text).map((p, j) => (p.b ? <strong key={j} className="font-semibold text-[var(--color-text)]">{p.t}</strong> : <span key={j}>{p.t}</span>))}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

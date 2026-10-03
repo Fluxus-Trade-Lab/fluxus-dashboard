@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { verdictParts, indexCards, breadthTiles, crossAsset } from './marketStateMinMath'
+import { verdictParts, indexCards, breadthTiles, crossAsset, recapNotes, boldParts } from './marketStateMinMath'
 
 const ml = { verdict: 'dim', spy: { light: 'green', checks_passed: 3 }, qqq: { light: 'green', checks_passed: 3 },
   brightness: { leaders: Array.from({ length: 10 }, () => ({ status: 'holding' })), breadth: { env: 'MIXED' } } }
@@ -55,5 +55,22 @@ describe('indexCards / crossAsset', () => {
     const x = crossAsset(etfs, { '^VIX': { close: 15.31 } })
     expect(x[0]).toMatchObject({ ticker: 'VIX', last: 15.31 })
     expect(x.find((r) => r.ticker === 'TLT').vsSpy).toBeCloseTo(-0.0163, 4)
+  })
+})
+
+describe('recap cross-asset notes', () => {
+  const doc = { asof: '2026-10-02', notes: { en: [{ ticker: 'UUP', text: '<b>The dollar</b> held.' }], zh: [{ ticker: 'UUP', text: '<b>美元</b>守住。' }] } }
+  it('shows the recap only for the same session as the data', () => {
+    expect(recapNotes(doc, '2026-10-02')).toHaveLength(1)
+    expect(recapNotes(doc, '2026-10-05')).toEqual([])
+    expect(recapNotes(null, '2026-10-02')).toEqual([])
+  })
+  it('picks the page language, falls back to English', () => {
+    expect(recapNotes(doc, '2026-10-02', 'zh')[0].text).toContain('美元')
+    expect(recapNotes({ asof: 'x', notes: { en: doc.notes.en } }, 'x', 'zh')[0].ticker).toBe('UUP')
+  })
+  it('turns <b> into parts and never passes other markup through as HTML', () => {
+    expect(boldParts('<b>The dollar</b> held.')).toEqual([{ b: true, t: 'The dollar' }, { b: false, t: ' held.' }])
+    expect(boldParts('<i>x</i>')).toEqual([{ b: false, t: '<i>x</i>' }])
   })
 })

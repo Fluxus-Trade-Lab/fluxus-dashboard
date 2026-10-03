@@ -72,3 +72,21 @@ export function crossAsset(etfs, signals) {
   }
   return out
 }
+
+/**
+ * The recap's cross-asset sentences for this session (Andy 2026-10-03:
+ * 「选B，搬复盘原句，先不做门禁。」). Shown only when the recap is for the same
+ * session as the data — between the 08:30 data and the 10:30 recap the page
+ * would otherwise pair today's numbers with yesterday's words.
+ */
+export function recapNotes(doc, asof, lang = 'en') {
+  if (!doc || !asof || doc.asof !== asof) return []
+  const n = doc.notes ?? {}
+  return (n[lang] ?? n.en ?? []).filter((x) => x?.text)
+}
+
+/** Split the recap's <b>lead</b> markup into plain parts — no HTML injection. */
+export function boldParts(text) {
+  return String(text ?? '').split(/(<b>.*?<\/b>)/).filter(Boolean)
+    .map((s) => (s.startsWith('<b>') ? { b: true, t: s.slice(3, -4) } : { b: false, t: s }))
+}

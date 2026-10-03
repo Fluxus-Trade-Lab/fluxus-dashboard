@@ -7,6 +7,12 @@ import { LanguageProvider } from '../../i18n/LanguageContext'
 import BreadthPage from './BreadthPage'
 import { resetMarketLightCache } from '../../hooks/useMarketLight'
 
+/* The Advanced fold mounts the lightweight-charts panels. jsdom has no canvas,
+   so a real createChart throws ~224 unhandled errors and vitest exits 1 even
+   with every test green (introduced by 4dae8e92b, caught 10-03). This is a
+   structure test — the charts' own drawing is not what it checks. */
+vi.mock('./useBreadthChart', async (orig) => ({ ...(await orig()), useBreadthChart: () => {} }))
+
 /**
  * A mount test, not a unit test — the 2026-09-11 rewrite touched nine files
  * at once (BoardCard/ChainCard/VoteCard replacing StateBoard/VerdictBanner/
