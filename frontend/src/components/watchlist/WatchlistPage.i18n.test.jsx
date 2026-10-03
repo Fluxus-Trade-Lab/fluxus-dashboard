@@ -113,3 +113,15 @@ describe("Today's List in English", () => {
     }
   })
 })
+
+describe('zone detail route', () => {
+  // #/watchlist/<zone> threw "Cannot access 'view' before initialization":
+  // ZoneDetail was handed `view` before the const was declared (on main since before 10-04).
+  it('opens a zone page without throwing, in both languages', async () => {
+    const key = FILES['watchlist.json'].zones[0].key
+    for (const lang of ['en', 'zh']) {
+      const seen = await mount(lang, key)
+      expect(seen.length).toBeGreaterThan(0)
+    }
+  })
+})

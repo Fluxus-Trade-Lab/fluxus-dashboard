@@ -1038,6 +1038,8 @@ export default function WatchlistPage({ zone: routeZone }) {
     )
   }
 
+  // declared before the zone route uses it — ZoneDetail read it in its temporal dead zone
+  const view = { highOnly, floor, pool3m, exHealth }
   const at = zones.findIndex((z) => z.key === routeZone)
   if (at >= 0) {
     return (
@@ -1046,7 +1048,6 @@ export default function WatchlistPage({ zone: routeZone }) {
   }
 
   const cross = data.cross_zone || []
-  const view = { highOnly, floor, pool3m, exHealth }
 
   /**
    * Which panels this step lights, and what it asked for and did not get.
