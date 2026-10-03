@@ -88,10 +88,37 @@ def ol(items):
     return '<ol class="do">' + ''.join(f'<li>{E(i)}</li>' for i in items) + '</ol>'
 
 
+_PW = None
+
+
+def _shot(page_html, out):
+    """优先用 Playwright（一个浏览器渲全套，稳）；没装才退回 make_livestream_cards 的 Chrome 命令行
+    （10-03/04 本机 Chrome headless 连续偶发退出码 2，重试三次也会全败）。"""
+    global _PW
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        for attempt in range(5):
+            try:
+                return C._render(page_html, out, C.W, C.H)
+            except subprocess.CalledProcessError:
+                if attempt == 4: raise
+                time.sleep(3)
+    if _PW is None:
+        pw = sync_playwright().start(); br = pw.chromium.launch()
+        _PW = br.new_page(viewport={'width': C.W, 'height': C.H})
+    tmp = out.with_suffix('.tmp.html'); tmp.write_text(page_html, encoding='utf-8')
+    try:
+        _PW.goto(tmp.resolve().as_uri()); _PW.wait_for_load_state('networkidle'); _PW.wait_for_timeout(300)
+        _PW.screenshot(path=str(out))
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
 def render(D, base, outdir):
     ep = int(D['episode']); kick = f'FLUXUS 会员直播 · EP {ep:02d}'
     files = []
-    sec = 0
+    sec = 0; secname = ''
     for n, s in enumerate(D['slides']):
         t = s['type']
         if t == 'title':
@@ -101,7 +128,7 @@ def render(D, base, outdir):
                     f'<div class="cols"><div><div class="lab">今晚六段</div>{ul(s["agenda"], "agenda")}</div><div></div></div>')
             meta = f'EP {ep:02d} · Discord 舞台'
         elif t == 'section':
-            sec = int(s['idx']); name = C.SEGMENTS[sec - 1][1]
+            sec = int(s['idx']); name = secname = s.get('name') or C.SEGMENTS[sec - 1][1]
             body = (f'<div class="kicker">{E(kick)}</div>'
                     f'<div class="head"><span class="circled">{C.CIRCLED[sec-1]}</span><span class="h1">{E(name)}</span>'
                     f'<span class="prog">{sec:02d} / 06</span></div>'
@@ -111,7 +138,7 @@ def render(D, base, outdir):
             meta = ''
         elif t == 'image':
             img = (base / s['img']).resolve()
-            body = (f'<div class="kicker">{E(kick)} · {C.CIRCLED[sec-1]} {E(C.SEGMENTS[sec-1][1])}</div>'
+            body = (f'<div class="kicker">{E(kick)} · {C.CIRCLED[sec-1]} {E(secname)}</div>'
                     f'<div class="head"><span class="h2">{E(s["title"])}</span></div>'
                     f'<div class="img"><div class="pic"><img src="file://{E(str(img))}"></div>'
                     f'<div><div class="lab">{E(s.get("label","看什么"))}</div>{ul(s["points"])}</div></div>'
@@ -120,9 +147,9 @@ def render(D, base, outdir):
         elif t == 'questions':
             rows = ''.join(f'<div class="qn">{E(q["q"])}</div><div>{E(q["look"])}</div><div>{E(q["answer"])}</div>'
                            for q in s['rows'])
-            body = (f'<div class="kicker">{E(kick)} · {C.CIRCLED[sec-1]} {E(C.SEGMENTS[sec-1][1])}</div>'
+            body = (f'<div class="kicker">{E(kick)} · {C.CIRCLED[sec-1]} {E(secname)}</div>'
                     f'<div class="head"><span class="h2">{E(s["title"])}</span></div>'
-                    f'<div class="qs"><div class="qh">问什么</div><div class="qh">看图上哪里</div><div class="qh">答案长什么样</div>{rows}</div>'
+                    '<div class="qs">' + ''.join(f'<div class="qh">{E(h)}</div>' for h in s.get('heads', ['问什么', '看图上哪里', '答案长什么样'])) + f'{rows}</div>'
                     f'<div class="take"><b>这一页的结论</b>{E(s["takeaway"])}</div>')
             meta = s.get('source', '')
         elif t == 'closing':
@@ -135,12 +162,7 @@ def render(D, base, outdir):
         else:
             raise SystemExit(f'unknown slide type {t}')
         name = f'{n+1:02d}_{t}.png'
-        for attempt in range(3):  # 本机 Chrome headless 偶发退出码 2（10-03 连撞两次），重试即过
-            try:
-                C._render(page(body, meta), outdir / name, C.W, C.H); break
-            except subprocess.CalledProcessError:
-                if attempt == 2: raise
-                time.sleep(2)
+        _shot(page(body, meta), outdir / name)
         files.append(outdir / name)
         print(name)
     return files

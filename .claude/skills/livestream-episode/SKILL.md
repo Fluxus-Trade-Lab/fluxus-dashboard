@@ -64,6 +64,15 @@ Andy 2026-10-03 原话：「每一张卡片会是类似于KEYnoteSlide……KeYT
 ⚠️ **内容 JSON、PNG、PDF 只放课程私有仓** `SwingMasterclass/_live/liveNN/slides/`（merge-a），公开仓只放生成器。首场成品：课程仓 `3d77283`。
 **交付**：PDF 用 `SendUserFile` 发给 Andy；渲染完先自己看问题清单页和每个案例页（图有没有压住结论条）。
 
+### 第二轮裁决（Andy 2026-10-03，提词卡 v8 起照办）
+原话：「幻灯片设计和提词卡的结合设计的不好」「跑赢14%是什么意思？，会员还没有dashboard 页面的access」「我是希望能从过去复盘recap和discord我自己的文字里找到合适的去进行回答的。而非现在我去想一个答案」「我们是实战，所以三问和四问这里，用的应该是环境四问」「可以适当添加更多书里的页面。dashboard截图和案例截图应该用浅色背景」「我们要的是减少我的行动摩擦」「逐个回放的功能不需要现在设计，我直接用tradingview里的功能。作业目前没有。」
+1. **一份内容源出两样东西**：课程仓 `_live/liveNN/slides/build_epNN.py` 写 `epNN_slides.json`，每页带 `cue`（say · explain[] · asks[{ask, quotes[]}]）。幻灯片生成器读它出 PNG/PDF；`build_cue_slides.py <json> <png目录> <输出目录>` 出提词卡：**左边是这一页幻灯片，右边是怎么讲 · 名词解释 · 引导问题 → 他当时的原话**。提词卡发到固定链接 https://claude.ai/artifact/JSezTypvsBfWdwKjhqt4mm 。
+2. **会员没有 dashboard 权限**：屏幕上出现的每个数都要在 `explain` 里有一句白话（例：Themes 的 +14.1% 是「篮子 ÷ SPY 这条比值线两周的变化」，不是收益相减；口径出处见 `rotationLogic.js` `r2wSeries` 与 `pipeline/themes/short_window.py`）。
+3. **案例的回答只用他的原话**：派一个 agent 搜 `data/discord/fluxus_corpus.json`（互帮互助/live-commentary，到 2026-07-29）、`origin/main:data/output/threads/<日期>/messages.json`（9 月起他本人的 Discord 发言）、`Fluxus_Brand/voice/raw/`；复盘 `content_ZH.json` 正文是改写稿，不当原话。产出 `quotes.json` 逐字 + 来源 + 日期精度；`build_epNN.py` 按索引取，幻灯片结论条用他的原话前先逐字核对。
+4. **环境用 §1.7 环境四问**（日线 · 周线 · 最近一周 5 日 EMA · 全市场净新高），不用 §1.2 三问。
+5. **截图和案例图一律浅色**：`make_cases.py` 默认浅色；dashboard 用 Playwright `color_scheme="light"` + `localStorage.theme='light'`。书里的图多放（周期四层 0-13、一圈 0-14、Weinstein 0-4、情绪 0-16、森林到树木 2-1、§1.7 四问表）。
+6. **不做逐根回放的设计**（他直接用 TradingView 的回放），案例页只放图 + 引导问题 + 结论条。**本阶段没有作业**，第⑥段叫「下周看什么 · 下一场」。
+
 ## 讲稿形状（Studio Q 写，OPS 合成）
 
 每段：`goal`（一句话要观众带走什么）· `script`（可照着讲的完整段落）· `points` · `visual`（放哪张图）· `ops`（dashboard 点哪、读出什么数）· `ask`（问观众）· `transition` · `clip`（短片标题 + 公开/仅会员）；案例另有 `replay_steps`（停在哪、说什么、问什么、揭晓什么）；外加 `homework` 与 `qa_prep`（8 条左右预答）。
@@ -75,6 +84,8 @@ Andy 2026-10-03 原话：「每一张卡片会是类似于KEYnoteSlide……KeYT
 照 `kanban-page` 的深色规范，但提词卡是**纵向六段长页**（直播时从上往下滚），不是看板：大字号、每段一个色带、图片可点开全屏。固定链接，每场一页。工人没有 Artifact 工具——**发布永远由 OPS 代发**。
 
 ## gotcha（追加在这里）
+- 2026-10-04：本机 Chrome headless 连续偶发退出码 2，重试三次也会全败；幻灯片改用 Playwright 渲染（21 张 21 秒，原来 3 分钟）。
+- 2026-10-04：机器重启会清空 /private/tmp 的 scratchpad。所有中间产物当天就推进课程仓，别只留在临时目录。
 - 2026-10-03：SVG 书图在细节页按宽度撑高，压住了底部结论条。生成器已给图区固定高度 585px + `object-fit:contain`；换版式时保留。
 - 2026-10-03：Andy「screener页面UI还没有准备好」——**Screener 页不上直播**，直到他或 UI Claire 说可以。直播只开 Market State（#/dashboard、#/breadth）与 Themes（#/rotation）；挑票用最近一期复盘的领先名字在图表软件里看。上直播前每个要开的页面都先问一句「这页能见人吗」。
 - 2026-10-03：守护进程工人写的提词卡，案例数据三处错（盘中价当收盘、反弹当上涨、漏一个低点）。之后**案例数字一律 OPS 现场复算**，工人只写讲稿。
