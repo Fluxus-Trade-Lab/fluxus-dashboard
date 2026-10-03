@@ -8,11 +8,14 @@ import shared from './parts/shared'
 import watchlist from './parts/watchlist'
 import modelbooks from './parts/modelbooks'
 import library from './parts/library'
+import journal from './parts/journal'
+import portfolio from './parts/portfolio'
+import member from './parts/member'
 
 // Parts: one file per page area, so parallel work never edits the same file.
 // Each part carries its own en and zh; a key defined twice is a test failure
 // (translations.test.js), not a silent override.
-export const PARTS = { msMain, correctionRisk, advancedPanels, dashboard, rotation, screener, shared, watchlist, modelbooks, library }
+export const PARTS = { msMain, correctionRisk, advancedPanels, dashboard, rotation, screener, shared, watchlist, modelbooks, library, journal, portfolio, member }
 
 // zh-CN alongside English, for everything a reader sees.
 //
