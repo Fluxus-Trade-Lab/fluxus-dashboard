@@ -1,0 +1,205 @@
+{
+ "timestamp": "2026-10-03T14:55:07.714011+00:00",
+ "as_of": "2026-10-02",
+ "window": {
+  "from": "2026-10-01T16:00:00-04:00",
+  "to": "2026-10-02T16:00:00-04:00"
+ },
+ "finnhub": "no_key",
+ "counts": {
+  "leader": 10,
+  "ep": 4,
+  "news_failure": 0
+ },
+ "news_failure_zero_reason": "未设 FINNHUB_API_KEY，财报读数不可得",
+ "definitions": {
+  "leader": "Liquid Leaders (ADV>=2M, >SMA50, rs_3m>=80; course M2_L09), top 10 by change_pct",
+  "ep": "Episodic Pivots: Stockbee c/c1>1.04 & v>3*avgv50.1 & v>=300k; Qullamaggie gap>=10% & vol>=1 ADV",
+  "news_failure": "自造口径（机器可判的一版）：Finnhub 财报日历 epsActual > epsEstimate，且当天 change_pct <= +1%。非财报的利好标题不判、不入池。"
+ },
+ "unmeasured": "news_failure 只覆盖财报 beat；非财报利好（合同、评级、并购）判不了，不入池。headline 为窗口内 Finnhub 最新一条，可能不是最相关的一条。",
+ "tickers": [
+  {
+   "ticker": "MXL",
+   "bucket": "leader",
+   "change_pct": 0.1499,
+   "rel_volume": 1.5558,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "IBRX",
+   "bucket": "leader",
+   "change_pct": 0.1083,
+   "rel_volume": 2.4005,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "TER",
+   "bucket": "leader",
+   "change_pct": 0.08,
+   "rel_volume": 1.32,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "TGB",
+   "bucket": "leader",
+   "change_pct": 0.077,
+   "rel_volume": 0.8836,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "HPE",
+   "bucket": "leader",
+   "change_pct": 0.0736,
+   "rel_volume": 1.2274,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "QGEN",
+   "bucket": "leader",
+   "change_pct": 0.0645,
+   "rel_volume": 2.187,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "ASX",
+   "bucket": "leader",
+   "change_pct": 0.0608,
+   "rel_volume": 1.1422,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "AEHR",
+   "bucket": "leader",
+   "change_pct": 0.0552,
+   "rel_volume": 0.8422,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "TXG",
+   "bucket": "leader",
+   "change_pct": 0.0534,
+   "rel_volume": 1.0054,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "MRVI",
+   "bucket": "leader",
+   "change_pct": 0.0533,
+   "rel_volume": 0.7669,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null
+  },
+  {
+   "ticker": "XRPN",
+   "bucket": "ep",
+   "change_pct": 0.6825,
+   "rel_volume": 8.28,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null,
+   "ep_by": [
+    "stockbee",
+    "qullamaggie"
+   ]
+  },
+  {
+   "ticker": "SYNA",
+   "bucket": "ep",
+   "change_pct": 0.1408,
+   "rel_volume": 8.06,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null,
+   "ep_by": [
+    "stockbee",
+    "qullamaggie"
+   ]
+  },
+  {
+   "ticker": "AZTA",
+   "bucket": "ep",
+   "change_pct": 0.1238,
+   "rel_volume": 3.39,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null,
+   "ep_by": [
+    "stockbee"
+   ]
+  },
+  {
+   "ticker": "IBRX",
+   "bucket": "ep",
+   "change_pct": 0.1083,
+   "rel_volume": 2.4,
+   "headline": null,
+   "url": null,
+   "source": null,
+   "published_at": null,
+   "earnings": false,
+   "eps_surprise_pct": null,
+   "ep_by": [
+    "stockbee"
+   ]
+  }
+ ]
+}

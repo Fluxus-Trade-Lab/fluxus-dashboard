@@ -1540,3 +1540,24 @@ tests 632 passed）。
 **待你知悉**：`schema_snapshot --check` 的 `tick_cycle.json` 基线仍是旧的 13 键快照，本次多一个顶层键 `history`，**未 `--update`**。是否更新基线由你决定（任务号 T-1003-81）。
 
 **交接**：前端接入（Advanced breadth 放回 Raschke TICK 图）已开任务板单交 claire，任务号 **T-1003-85**。
+
+## 二十四、[2026-10-04] alex：T-1003-83 News & Events 候选池 `data/output/news_pool.json`（只出候选，不挑 5–8 只）
+
+起因：Andy 2026-10-03 把 News & Events 捡回 Market State 极简版，选票规则「1 领涨 2 EP 3 news failure 4 与 recap/X watch 交叉核对挑 5–8 只」。本单只做 1–3 的候选池；第 4 步归 claire（T-1003-84）。
+
+**字段**：顶层 `timestamp, as_of, window{from,to}, finnhub(ok|no_key|failed), counts{leader,ep,news_failure}, news_failure_zero_reason, definitions, unmeasured, tickers[]`。`tickers[]` 每行一个 (ticker, bucket)：`ticker, bucket, change_pct（小数，c/c1−1，0.01=+1%，与 universe.json 同单位）, rel_volume, headline, url, source, published_at（UTC）, earnings(bool), eps_surprise_pct（%）`；`bucket=ep` 的行另有 `ep_by`（`stockbee` / `qullamaggie` / 两者）。
+
+**三类口径出处**：
+- `leader`：`universe.json` 的 `liquid_leader == true`（即 `watchlist` 的 Liquid Leaders 谓词：ADV≥2M · 收盘>SMA50 · rs_3m≥80，课程 M2_L09），按 `change_pct` 降序取前 10。**不用 watchlist 的 25 只截断版**，因为那 25 只是按 Composite 排的，会漏掉当天涨幅大的票。
+- `ep`：`ep_stockbee.json` ∪ `ep_qullamaggie.json`，两位作者的原文定义见 `pipeline/screeners/ep_stockbee.py` / `ep_qullamaggie.py` 文件头。
+- `news_failure`（**自造口径，不是标准**）：Finnhub 财报日历里 `epsActual > epsEstimate`，且当天 `change_pct ≤ +1%`，市值 ≥ $1B（与 `universe_gate.cap_floor` 同）。偏离：O'Neil/Minervini 讲 good news / bad reaction 的文字没有机器可判的数值口径，本版只覆盖**财报 beat**；非财报利好（合同、评级、并购）**判不了，不入池**。**本次未做外部检索留痕**，「查无标准」这一步待补；在补之前一律按自造看。
+
+**标题与链接**：Finnhub `company-news`，窗口 = 前一交易日 16:00 ET ～ 当天 16:00 ET，取窗口内最新一条的 `headline / url / source / published_at`。只存标题与链接，不存正文（仓库公开）。
+
+**2026-10-02 场次（本机产出，供 T-1003-84 先用）**：`leader 10 · ep 4 · news_failure 0`。`news_failure` 为 0 的原因：**本机没有 `FINNHUB_API_KEY`**，财报读数不可得，所以 `finnhub=no_key`，所有 `headline` 为空。这是本机的情况，不是当天没有利好。
+
+**夜间正班**：`.github/workflows/daily-data-update.yml` 的 run_all 步骤已补 `FINNHUB_API_KEY`（与 premarket-digest 同一个 secret）。缺 key 或 Finnhub 出错时只让 news 那一列为空，不影响 leader/ep 两类，也不让整班失败。
+
+**Schema**：`news_pool.json` 是新文件，`schema_snapshot --check` 报 `new file`（只报告，退出码 0）；**基线未 `--update`**，等 ALEX 线下一次登记时一并补。
+
+**交接**：第 4 步交叉核对、挑 5–8 只 → claire，任务号 **T-1003-84**。

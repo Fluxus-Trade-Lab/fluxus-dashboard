@@ -1555,6 +1555,24 @@ def main():
         logger.exception("market_light failed - market_light.json not updated")
         ledger.error('market_light', 'exception')
 
+    # News & Events candidate pool (T-1003-83): leader / EP / news_failure
+    # buckets for the local cross-check (T-1003-84). Candidates only, no pick.
+    # Own failure domain: a Finnhub outage costs the news headlines, not the run.
+    try:
+        import os as _os
+        from pipeline.screeners import news_pool as NP
+        _np = NP.build(last_completed_session(),
+                       (_read_out('universe.json') or {}).get('rows'),
+                       _read_out('ep_stockbee.json'), _read_out('ep_qullamaggie.json'),
+                       key=_os.environ.get('FINNHUB_API_KEY'))
+        _emit(ledger, OUTPUT_DIR / 'news_pool.json', json.dumps(_np, indent=1, ensure_ascii=False))
+        ledger.note('news_pool', 'ok' if _np['finnhub'] == 'ok' else 'degraded',
+                    finnhub=_np['finnhub'], **_np['counts'])
+        logger.info("Saved news_pool.json - %s (finnhub %s)", _np['counts'], _np['finnhub'])
+    except Exception:
+        logger.exception("news_pool failed - news_pool.json not updated")
+        ledger.error('news_pool', 'exception')
+
     # Short List: manual names + six deterministic seats, full card data so
     # the page renders instead of computing (2026-08-20 design). Own domain.
     try:
