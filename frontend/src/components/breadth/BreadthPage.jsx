@@ -4,6 +4,7 @@ import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import RotationPanel from './RotationPanel'
 import BenchmarkPanel from './BenchmarkPanel'
 import CorrectionRiskPanel from './CorrectionRiskPanel'
+import TickCycleChart from './TickCycleChart'
 import BreadthTable from './BreadthTable'
 import { useMarketLight } from '../../hooks/useMarketLight'
 import MarketStateMin from './MarketStateMin'
@@ -77,9 +78,10 @@ export default function BreadthPage({ data }) {
                       themes={groups.themes} groupsHistory={gh.data} universe={universeByTicker} />
 
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
-        <Reference label="Advanced breadth" count={mh && !mh.stale ? 4 : 3}>
+        <Reference label="Advanced breadth" count={mh && !mh.stale ? 5 : 4}>
           <div className="space-y-4">
             <CorrectionRiskPanel session={session} />
+            <TickCycleChart />
             <RotationPanel />
             {mh && !mh.stale && <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />}
             <BreadthTable data={breadth} />

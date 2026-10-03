@@ -132,7 +132,10 @@ describe('BreadthPage — minimal (2026-10-03)', () => {
     expect(screen.getByText(/no fitted parameters/)).toBeInTheDocument()
     expect(screen.getByText(cr.caveats[0])).toBeInTheDocument()
     expect(screen.getByText('Side readings')).toBeInTheDocument()
-    expect(screen.getByText('TICK cycle')).toBeInTheDocument()
+    // once as Correction risk's side reading, once as the Raschke chart's heading
+    expect(screen.getAllByText('TICK cycle')).toHaveLength(2)
+    // the chart itself sits inside the fold (red if <TickCycleChart /> is removed)
+    expect(await screen.findByRole('img', { name: /TICK 10-day averages of high, close and low, \d+ sessions/ })).toBeInTheDocument()
     vi.unstubAllGlobals()
   })
 
@@ -152,10 +155,10 @@ describe('BreadthPage — minimal (2026-10-03)', () => {
   it('Advanced breadth drops the panels that repeated the main screen (Andy 选 A, 2026-10-03)', () => {
     renderPage()
     fireEvent.click(screen.getByText('Advanced breadth').closest('button'))
-    for (const gone of [/^% above 20 \/ 50 \/ 200 SMA$/i, /^Up\/down ratio · 5D \/ 10D/i, /^Quarterly ±25% spread · Stockbee/i, /^Quarterly breadth \(25%\+\)/, /^5-day \/ 10-day ratio/]) {
+    for (const gone of [/^% above 20 \/ 50 \/ 200 SMA$/i, /^Up\/down ratio · 5D \/ 10D/i, /^Quarterly ±25% spread · Stockbee/i, /^Quarterly breadth \(25%\+\)/, /^5-day \/ 10-day ratio/, /^McClellan Oscillator \(Nasdaq-100\)/i]) {
       expect(screen.queryAllByText(gone)).toHaveLength(0)
     }
-    expect(screen.getByText('Advanced breadth').closest('button').textContent).toMatch(/[34]/)
+    expect(screen.getByText('Advanced breadth').closest('button').textContent).toMatch(/[45]/)
   })
 
   it('moves the three series only Advanced had into the main chart\'s indicator menu', () => {
