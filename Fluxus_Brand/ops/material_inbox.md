@@ -545,3 +545,5 @@
 - [10-04] [课程] **波段大师课付费区换成交互课件，CH00–15 上线**：会员从读正文变成每章做自测题、勾判据卡、逐根回放真实个股（13 个新回放，答案由数据判，书里印的每个数构建时从行情 CSV 重算，对不上就不出包）。新增执行篇四章（仓位、ATR、砍损、均线）。出处：SwingMasterclass `merge-a` e215742；`data/content/RELEASE_ver1.md` §七。
 
 - [10-04] [OPS] T-1002-03-v2 滞留诊断：三分支中 v1/v2 重复（复核打回的重新推送），v3 补完 MRNA 样本是完整版。诊断精度从分类而非盲合；决策边界多处同步（代码+METRIC_SOURCES+DATA_CONTRACTS），让下班改动能机械验证而不依赖人工记忆。防护来自「让用户自判」而非代理。出处 T-1004-07 · [5cc3dc8e](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/commit/5cc3dc8e6643af1b08d92b377c72bdee17c4b4cb)
+
+- [10-04] [OPS/编辑部] **规则定义后，历史数据也得同步**。check_notes ZH_FORBIDDEN 规则上线（T-1003-89），要求中文文本不含英文状态词。09-29 存档的 _market 描述仍遗留 7 个英文词（avoid/MIXED/Regime/Damaged/Reduced/selective/Leading），导致测试 test_approved_day_passes 红。修复不是只改未来数据，而是主动回踩存档、逐词换成中文译名。**规则变成「仅对未来生效」的一刻，就开始在历史和现在之间挖沟**；这道修复的价值点是系统对「决策边界同步」的诚实承诺——规则定义后不让历史数据单独留在旧轨道上。诊断链条完整：规则→发现→回踩→验证，体现的是系统从「定了新规则」升到「让整个数据链都听命于新规则」的能力成熟度。出处 fd5ea5f6 · T-1004-13
