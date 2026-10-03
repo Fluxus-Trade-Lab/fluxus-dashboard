@@ -1,6 +1,9 @@
 import { useMemo } from 'react'
 import { useGroups } from '../../hooks/useGroups'
 import { barStyle } from '../groups/ThemeBars'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { WINDOW_KEY } from './LeadersLaggards'
 
 /**
  * Themes, moved today and this week.
@@ -37,15 +40,18 @@ const WINDOWS = { '1D': 'perf_1d', '1W': 'perf_1w' }
  * where it is read once instead of six times.
  */
 function Row({ theme, changeKey }) {
+  const { lang, t } = useLanguage()
+  const name = dataName(theme.group, lang)
   const change = theme[changeKey]
   const ok = Number.isFinite(change)
   return (
     <div className="h-[22px] flex items-center gap-2">
       <i className="shrink-0 w-[8px] h-[8px] rounded-[1px]"
-         style={barStyle(theme.state)} title={theme.state ?? 'no state'} />
+         style={barStyle(theme.state)}
+         title={theme.state ? t(`state.${theme.state}`) : t('db.th.noState')} />
       <span className="min-w-0 flex-1 truncate text-[13px] font-medium
-                       text-[var(--color-text-bold)]" title={theme.group}>
-        {theme.group}
+                       text-[var(--color-text-bold)]" title={name}>
+        {name}
       </span>
       <span className="shrink-0 text-[13px] font-mono tabular-nums font-medium"
             style={{ color: !ok ? 'var(--color-text-muted)'
@@ -59,11 +65,12 @@ function Row({ theme, changeKey }) {
 const STATES = ['Leading', 'Weakening', 'Improving', 'Lagging']
 
 function Column({ label, rows, changeKey }) {
+  const { t } = useLanguage()
   return (
     <div>
       {label && (
         <h4 className="text-[11px] font-mono font-medium uppercase tracking-[.2em]
-                       text-[var(--color-text-muted)] mb-1.5">{label}</h4>
+                       text-[var(--color-text-muted)] mb-1.5">{WINDOW_KEY[label] ? t(WINDOW_KEY[label]) : label}</h4>
       )}
       {rows.map((t) => <Row key={t.group} theme={t} changeKey={changeKey} />)}
     </div>
@@ -71,6 +78,7 @@ function Column({ label, rows, changeKey }) {
 }
 
 export default function ThemeMovers({ limit = 3 }) {
+  const { t } = useLanguage()
   const { themes, loading, error } = useGroups()
 
   const cols = useMemo(() => {
@@ -96,20 +104,19 @@ export default function ThemeMovers({ limit = 3 }) {
     <div className="flex flex-col min-w-0">
       <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]
                       mt-4 mb-3 px-1">
-        Theme Leaders and Laggards
+        {t('db.ll.theme')}
       </div>
       <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden
                           flex flex-col flex-1 pt-4">
         <div className="px-5 pb-4 flex-1 flex flex-col">
           {loading ? (
             <p className="m-0 py-6 text-[11px] text-[var(--color-text-muted)]">
-              Loading the theme layer&hellip;
+              {t('db.th.loading')}
             </p>
           ) : error || !ranked ? (
             /* not zero, and not an empty grid pretending to be a full one */
             <p className="m-0 py-6 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-              {error ? 'groups.json did not load — themes not measured this session.'
-                     : 'No theme carried a measurable move for these windows — not measured.'}
+              {error ? t('db.th.error') : t('db.th.none')}
             </p>
           ) : (
             <>
@@ -144,7 +151,7 @@ export default function ThemeMovers({ limit = 3 }) {
                 {STATES.map((st) => (
                   <span key={st} className="flex items-center gap-1.5">
                     <i className="w-[8px] h-[8px] rounded-[1px]" style={barStyle(st)} />
-                    {st}
+                    {t(`state.${st}`)}
                   </span>
                 ))}
               </div>

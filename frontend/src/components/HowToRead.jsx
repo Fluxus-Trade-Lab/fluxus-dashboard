@@ -1,4 +1,15 @@
 import { useState } from 'react'
+import { useLanguage } from '../i18n/LanguageContext'
+
+/**
+ * A translated string with `**bold**` runs. Lets each language put its bold
+ * phrase where its own word order needs it, instead of the sentence being
+ * cut into fragments around a <b> that only fits one order.
+ */
+export function Rich({ text }) {
+  const parts = String(text).split('**')
+  return parts.map((p, i) => (i % 2 ? <b key={i}>{p}</b> : p))
+}
 
 /**
  * Teaching attached to the object it explains, not exiled to its own page.
@@ -13,6 +24,7 @@ import { useState } from 'react'
  */
 export default function HowToRead({ children, video }) {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
 
   return (
     <div className="border-t border-[var(--color-border-light)] mt-3 pt-2">
@@ -22,7 +34,7 @@ export default function HowToRead({ children, video }) {
                          hover:text-[var(--color-text)] bg-transparent border-0 p-0
                          cursor-pointer">
         <span>{open ? '−' : '+'}</span>
-        How to read this
+        {t('db.howto.title')}
       </button>
 
       {open && (
@@ -34,7 +46,7 @@ export default function HowToRead({ children, video }) {
                dashboard, and a link is not a signal. */
             <a href={video} target="_blank" rel="noreferrer"
                className="inline-block mt-1 text-[13px] text-[var(--color-accent)] underline">
-              Walkthrough video →
+              {t('db.howto.video')}
             </a>
           )}
         </div>

@@ -25,6 +25,8 @@ function Band({ label, note }) {
   )
 }
 import TickerStrip from './dashboard/TickerStrip'
+import { useLanguage } from '../i18n/LanguageContext'
+import { Rich } from './HowToRead'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import VerdictCard from './dashboard/VerdictCard'
@@ -82,11 +84,15 @@ function sessionDateOf(breadth) {
   return Array.isArray(h) && h.length ? h[h.length - 1]?.date ?? null : null
 }
 
-function sessionTitle(breadth) {
+function sessionTitle(breadth, lang = 'en', t = null) {
   const iso = sessionDateOf(breadth)
-  if (!iso) return 'Today'            // absent is said, not guessed
+  if (!iso) return t ? t('db.crumb') : 'Today'            // absent is said, not guessed
   const d = new Date(`${iso}T00:00:00Z`)
   if (Number.isNaN(d.getTime())) return iso
+  // Chinese reads month, day, then weekday: 10月2日 周五
+  if (lang === 'zh') {
+    return `${d.getUTCMonth() + 1}月${d.getUTCDate()}日 周${'日一二三四五六'[d.getUTCDay()]}`
+  }
   return new Intl.DateTimeFormat('en-US', {
     weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
   }).format(d)
@@ -109,6 +115,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
   // they live on three different pages and a per-slot sync would pull on
   // every navigation.
   useWritingSync()
+  const { lang, t } = useLanguage()
   const [page, navigate] = useHash()
   const { key: current, sub: subRoute } = pageKey(page)
   const tickerSymbol = parseTickerHash(page)
@@ -179,8 +186,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               while the nightly job was failing. The title alone was honest and
               not enough: it printed an old date without ever saying it was
               old, and Andy found the gap before the page mentioned it. */}
-          <PageHeader group="market" crumbTitle="Today"
-                      title={sessionTitle(data?.breadth)}
+          <PageHeader group="market" crumbTitle={t('db.crumb')}
+                      title={sessionTitle(data?.breadth, lang, t)}
                       meta={[<DataFreshnessBadge key="fresh"
                                sessionDate={sessionDateOf(data?.breadth)} />]} />
 
@@ -241,17 +248,17 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                 of writing them. (Andy, 2026-08-17.) */}
             <div className="flex flex-col gap-4 min-w-0">
               <WritingSlot
-                label="Founders note · daily"
+                label={t('db.note.daily')}
                 kind="founders-daily"
                 className="flex-1"
-                placeholder="What the session actually did, in your words."
+                placeholder={t('db.note.dailyPh')}
               />
               <WritingSlot
-                label="Founders note · weekly"
+                label={t('db.note.weekly')}
                 kind="founders-weekly"
                 cadence="weekly"
                 className="flex-1"
-                placeholder="What the week is turning into."
+                placeholder={t('db.note.weeklyPh')}
               />
             </div>
           </div>
@@ -278,12 +285,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                     the Industries grammar, not the reverse) — the symmetry is
                     structural, not imitated. Each window column shows that
                     window's leaders and laggards WITH that window's move. */}
-                <LeadersLaggards title="Industry Leaders and Laggards"
+                <LeadersLaggards title={t('db.ll.industry')}
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
                   windows={['1D', '1W']} limit={3} />
-                <LeadersLaggards title="Sector Leaders and Laggards"
+                <LeadersLaggards title={t('db.ll.sector')}
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
@@ -294,42 +301,9 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           </div>
 
           <HowToRead>
-            <p>
-              Read this page by size. The largest card is today&rsquo;s read and the
-              condition that would end it; the middle pair is where the cycle sits and
-              what Andy makes of it; the small band underneath is what actually moved,
-              at four grains &mdash; benchmarks, industries, sectors, themes. Every card
-              is built the same way inside: what changed, then how strong, then which
-              names.
-            </p>
-            <p>
-              <b>The verdict card carries two different counts on purpose.</b> The line
-              above the word counts <b>conditions</b> (15 of them, and the only daily
-              series this pipeline stores with a date on it, which is why the change
-              line can exist at all). The number beside the word counts <b>votes</b>
-              (12 of them). They are separate instruments and the pipeline has always
-              kept them apart. The score is a <b>count of votes, not a confidence
-              level</b> &mdash; count the marks rather than trusting the number.
-            </p>
-            <p>
-              The twelve marks are drawn <b>each inside its own range</b>: height is how
-              far that vote sits from its own flip line, in its own unit, and two marks
-              are never comparable to each other. A ringed mark is a vote sitting on its
-              line. That is also why the sentence under them says how many votes have to
-              turn but never which ones &mdash; ranking a ratio against a count of names
-              would be a number this data cannot carry.
-            </p>
-            <p>
-              The regime band is the <b>weakest of three voters, never their average</b>:
-              averaging dilutes one danger into a caution, and that danger is the most
-              expensive information on the page. The line under it names exactly which
-              voter is holding the reading down, and on what condition.
-            </p>
-            <p>
-              Nothing here sizes a trade. Sizing needs an R and a ceiling, and both
-              of those are yours &mdash; the market half of this app deliberately stops at
-              what the market is doing.
-            </p>
+            {['p1', 'p2', 'p3', 'p4', 'p5'].map((k) => (
+              <p key={k}><Rich text={t(`db.howto.${k}`)} /></p>
+            ))}
           </HowToRead>
         </main>
       ) : tickerSymbol ? (

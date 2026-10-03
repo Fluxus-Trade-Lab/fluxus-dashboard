@@ -1,4 +1,5 @@
 import { MissingBlock } from './VerdictCard'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * The regime band — one word, one binding condition.
@@ -142,7 +143,7 @@ function powerVoter(signals) {
  */
 /** Month ticks: the first session of each month, thinned so labels never
  *  collide, with January carrying the year instead of the month name. */
-function monthTicks(history, maxLabels = 7) {
+function monthTicks(history, maxLabels = 7, lang = 'en') {
   const marks = []
   let prev = null
   history.forEach((d, i) => {
@@ -152,7 +153,7 @@ function monthTicks(history, maxLabels = 7) {
     const [y, mm] = m.split('-')
     marks.push({
       i,
-      label: mm === '01' ? y : new Date(`${m}-02T00:00:00Z`)
+      label: mm === '01' ? y : lang === 'zh' ? `${Number(mm)}月` : new Date(`${m}-02T00:00:00Z`)
         .toLocaleString('en', { month: 'short', timeZone: 'UTC' }),
       isYear: mm === '01',
     })
@@ -198,6 +199,7 @@ function monthTicks(history, maxLabels = 7) {
  * it would stretch with it.
  */
 function ConditionsLine({ history, score, binds }) {
+  const { lang, t } = useLanguage()
   if (!history?.length) return null
   const W = 1000, H = 130, PAD = 4
   const x = (i) => PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
@@ -216,14 +218,14 @@ function ConditionsLine({ history, score, binds }) {
   const gap = (W - PAD * 2) / Math.max(1, history.length - 1)
   const stem = Math.max(0.7, Math.min(2.2, gap * 0.38))
   const head = gap >= 6 ? Math.min(3.2, gap * 0.42) : 0
-  const ticks = monthTicks(history)
+  const ticks = monthTicks(history, 7, lang)
   const pos = (i) => `${(x(i) / W) * 100}%`
 
   return (
     <div className="mt-5 pr-9">
       <div className="relative">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[150px] block" role="img"
-             aria-label={`Market conditions ${score} of 100 over ${history.length} sessions`}
+             aria-label={t('db.rb.aria', { score: String(score), n: history.length })}
              preserveAspectRatio="none">
           {/* v3 chart grammar: three rules, not seven — the frame is 0/100
               and the 50 line; month ticks live in the label row below, so the
@@ -330,6 +332,7 @@ function ConditionsLine({ history, score, binds }) {
    payload; nothing on this card reads it now. */
 
 export default function RegimeBand({ verdict, signals, conditions, onNavigate }) {
+  const { t } = useLanguage()
   const cast = { breadth: breadthVoter(verdict), structure: structureVoter(verdict),
                  power: powerVoter(signals) }
   const voters = Object.values(cast).filter(Boolean)
@@ -346,7 +349,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
     const missing = Object.entries(cast).filter(([, v]) => !v).map(([k]) => k)
     return (
       <MissingBlock
-        what="The regime reading needs three voters and did not get them."
+        what={t('db.missing.regime')}
         keys={missing}
         onNavigate={onNavigate} />
     )
@@ -369,8 +372,8 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
         <div className="flex items-baseline gap-3">
           <span className="text-[11px] font-mono uppercase tracking-[.24em]
                            text-[var(--color-text-muted)]"
-                title="Our own composite, not a published indicator: bands 18/40/62/84 over the conditions score, capped by the weakest of breadth / structure / power. Registered in METRIC_SOURCES.md.">
-            Market conditions · our composite</span>
+                title={t('db.rb.tip')}>
+            {t('db.rb.title')}</span>
           {score != null && (
             <span className="text-[26px] font-semibold tabular-nums leading-none"
                   style={{ fontFamily: 'var(--font-cond)' }}>
@@ -395,7 +398,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
               className="text-[13px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
               style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-text-bold)',
                        color: 'var(--color-bg)' }}>
-          {BANDS[level]}
+          {t(`db.band.${BANDS[level]}`)}
         </span>
       </div>
 

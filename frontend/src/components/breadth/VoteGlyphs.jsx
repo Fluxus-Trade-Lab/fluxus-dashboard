@@ -1,3 +1,14 @@
+import { useLanguage } from '../../i18n/LanguageContext'
+import { translations } from '../../i18n/translations'
+import { Rich } from '../HowToRead'
+
+/** vote_detail carries English labels and units; in Chinese they are looked up
+ *  by the vote's key (and the unit's word), falling back to what arrived. */
+function zhOr(lang, t, key, fallback) {
+  return lang === 'zh' && translations.zh[key] != null ? t(key) : fallback
+}
+const unitKey = (u) => (u === 'names' ? 'ms.unit.names' : `db.unit.${u}`)
+
 /**
  * The twelve votes, each carrying four things instead of one.
  *
@@ -60,6 +71,7 @@ export function voteFrac(d) {
  * Off by default so the Market State page keeps the density it was drawn at.
  */
 export default function VoteGlyphs({ detail, stretch = false, perRow }) {
+  const { t } = useLanguage()
   if (!detail?.length) return null
 
   return (
@@ -81,30 +93,33 @@ export default function VoteGlyphs({ detail, stretch = false, perRow }) {
       )}
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
-          <i className="block w-4 h-px bg-[var(--color-text)]" />the line it flips at
+          <i className="block w-4 h-px bg-[var(--color-text)]" />{t('db.glyph.line')}
         </span>
         <span className="flex items-center gap-1.5">
-          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-took)' }} />for
+          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-took)' }} />{t('db.glyph.for')}
         </span>
         <span className="flex items-center gap-1.5">
-          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-refused)' }} />against
+          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-refused)' }} />{t('db.glyph.against')}
         </span>
         <span className="flex items-center gap-1.5">
           <i className="block w-2.5 h-2.5 border border-dashed"
-             style={{ borderColor: 'var(--color-untested)' }} />could not be counted
+             style={{ borderColor: 'var(--color-untested)' }} />{t('db.glyph.uncounted')}
         </span>
         <span className="flex items-center gap-1.5">
           <i className="block w-2.5 h-2.5" style={{
             background: 'var(--color-took)',
-            boxShadow: '0 0 0 2.5px rgba(184,134,11,.4)' }} />within a hair of its line
+            boxShadow: '0 0 0 2.5px rgba(184,134,11,.4)' }} />{t('db.glyph.onLine')}
         </span>
-        <span>height is inside each vote&rsquo;s own range — <b>up is always safer</b></span>
+        <span><Rich text={t('db.glyph.height')} /></span>
       </div>
     </div>
   )
 }
 
 function Glyph({ d, stretch }) {
+  const { lang, t } = useLanguage()
+  const label = zhOr(lang, t, `db.vote.${d.key}`, d.label)
+  const side = zhOr(lang, t, `db.side.${d.side}`, d.side)
   // thrust is drawn against its own line (it scales with the universe — 634
   // on 09-18); the flat 300 pinned a margin of −342 to the frame (Zac 09-18).
   const frac = voteFrac(d)
@@ -118,7 +133,7 @@ function Glyph({ d, stretch }) {
 
   return (
     <div className={stretch ? 'flex-1 min-w-[52px]' : 'w-[58px] shrink-0'}
-         title={`${d.label} · ${d.side}`}>
+         title={`${label} · ${side}`}>
       <div className="relative h-[62px] border-b border-[var(--color-border-light)]">
         <div className="absolute left-0 right-0 h-px bg-[var(--color-text)] opacity-50"
              style={{ bottom: '50%' }} />
@@ -140,7 +155,7 @@ function Glyph({ d, stretch }) {
       </div>
       <div className="text-[11px] font-mono leading-[1.25] text-center mt-1.5
                       text-[var(--color-text-muted)] break-words">
-        {d.label}
+        {label}
       </div>
       <div className="text-[13px] font-bold text-center leading-none mt-0.5"
            style={{ fontFamily: 'var(--font-cond)',
@@ -152,7 +167,7 @@ function Glyph({ d, stretch }) {
         {d.margin == null ? '—' : fmt(d.margin)}
       </div>
       <div className="text-[11px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
-        {d.margin == null ? 'not counted' : d.unit}
+        {d.margin == null ? t('db.glyph.notCounted') : zhOr(lang, t, unitKey(d.unit), d.unit)}
       </div>
     </div>
   )
@@ -190,7 +205,9 @@ const VOTE_LABEL = {
  * dashed outline — all three survive greyscale.
  */
 export function VoteMarks({ votes }) {
+  const { lang, t } = useLanguage()
   if (!votes) return null
+  const labelOf = (key) => zhOr(lang, t, `db.vote.${key}`, VOTE_LABEL[key] ?? key)
   const entries = Object.entries(votes)
   const tally = entries.reduce((a, [, v]) => ({ ...a, [v]: (a[v] ?? 0) + 1 }), {})
   const HATCH = 'repeating-linear-gradient(45deg,rgba(0,0,0,.45) 0 1.7px,transparent 1.7px 5px)'
@@ -208,22 +225,22 @@ export function VoteMarks({ votes }) {
           the breadth rules on top, the benchmark ones underneath. */}
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-2.5 gap-y-3">
         {entries.map(([key, v]) => (
-          <span key={key} className="flex flex-col gap-1.5" title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
+          <span key={key} className="flex flex-col gap-1.5" title={`${labelOf(key)}: ${zhOr(lang, t, `db.side.${v}`, v)}`}>
             <i className="block w-full h-[32px]" style={style(v)} />
             <span className="text-[11px] font-mono leading-tight
-                             text-[var(--color-text-muted)]">{VOTE_LABEL[key] ?? key}</span>
+                             text-[var(--color-text-muted)]">{labelOf(key)}</span>
           </span>
         ))}
       </div>
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-4 text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
-          <i className="block w-3.5 h-[10px]" style={style('bull')} />for {tally.bull ?? 0}
+          <i className="block w-3.5 h-[10px]" style={style('bull')} />{t('db.marks.for', { n: tally.bull ?? 0 })}
         </span>
         <span className="flex items-center gap-1.5">
-          <i className="block w-3.5 h-[10px]" style={style('bear')} />against {tally.bear ?? 0}
+          <i className="block w-3.5 h-[10px]" style={style('bear')} />{t('db.marks.against', { n: tally.bear ?? 0 })}
         </span>
         <span className="flex items-center gap-1.5">
-          <i className="block w-3.5 h-[10px]" style={style('neutral')} />undecided {tally.neutral ?? 0}
+          <i className="block w-3.5 h-[10px]" style={style('neutral')} />{t('db.marks.undecided', { n: tally.neutral ?? 0 })}
         </span>
 
       </div>

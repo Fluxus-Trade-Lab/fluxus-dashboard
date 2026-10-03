@@ -1,5 +1,11 @@
 import { useMemo } from 'react'
 import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfRank'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+
+/** Window label keys, shared with Market State (1D / 1W in English). */
+// eslint-disable-next-line react-refresh/only-export-components
+export const WINDOW_KEY = { '1D': 'ms.th.d1', '1W': 'ms.th.w1', '1M': 'ms.th.m1', '3M': 'ms.th.m3' }
 
 /**
  * Best and worst industries, four things per row.
@@ -19,7 +25,8 @@ import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfR
  */
 
 function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
-  const name = etfName(etf.ticker)
+  const { lang, t } = useLanguage()
+  const name = dataName(etfName(etf.ticker), lang)
   const change = etf[changeKey]
   const rs = ranks.get(etf.ticker)
   const ok = Number.isFinite(change)
@@ -31,8 +38,8 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
       <span className="w-7 shrink-0 text-center text-[11px] font-mono tabular-nums
                        leading-[17px] rounded-sm"
             style={rsTone(rs)}
-            title={rs == null ? 'no reading for this window'
-                              : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
+            title={rs == null ? t('db.ll.noReading')
+                              : t('db.ll.rsTip', { w: t(WINDOW_KEY[windowLabel] ?? windowLabel), rs, n: cohort })}>
         {fmtRs(rs)}
       </span>
       <span className="min-w-0 flex-1">
@@ -58,11 +65,12 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
  *  (Andy 2026-08-16). A second identical row of headers was the same word
  *  printed twice in one column. */
 function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
+  const { t } = useLanguage()
   return (
     <div>
       {label && (
         <h4 className="text-[11px] font-mono font-medium uppercase tracking-[.2em]
-                       text-[var(--color-text-muted)] mb-1.5">{label}</h4>
+                       text-[var(--color-text-muted)] mb-1.5">{WINDOW_KEY[label] ? t(WINDOW_KEY[label]) : label}</h4>
       )}
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}

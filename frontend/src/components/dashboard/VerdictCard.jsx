@@ -1,4 +1,6 @@
 import VoteGlyphs, { VoteMarks } from '../breadth/VoteGlyphs'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { translations } from '../../i18n/translations'
 
 /**
  * The largest card on the page — the read, and what would break it.
@@ -44,26 +46,24 @@ import VoteGlyphs, { VoteMarks } from '../breadth/VoteGlyphs'
  * and it names the keys so the absence is actionable rather than mysterious.
  */
 export function MissingBlock({ what, keys, onNavigate }) {
+  const { t } = useLanguage()
+  const [before, after = ''] = t(keys.length === 1 ? 'db.missing.bodyOne' : 'db.missing.bodyMany').split('{keys}')
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7">
       <div className="rounded-2xl p-6"
            style={{ backgroundImage:
              'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
         <div className="text-[11px] font-mono uppercase tracking-[.24em]
-                        text-[var(--color-text-muted)] mb-3">Not measured</div>
+                        text-[var(--color-text-muted)] mb-3">{t('db.missing.head')}</div>
         <p className="m-0 text-[17px] leading-snug text-[var(--color-text-bold)]">{what}</p>
         <p className="mt-2 mb-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)] max-w-[68ch]">
-          The nightly file arrived and{' '}
-          <span className="font-mono">{keys.join(' · ')}</span>{' '}
-          {keys.length === 1 ? 'is' : 'are'} missing from it. That is different from a
-          reading of zero: nothing was measured, so nothing is shown. Everything else on
-          this page comes from other blocks of the same file and is unaffected.
+          {before}<span className="font-mono">{keys.join(' · ')}</span>{after}
         </p>
         {onNavigate && (
           <button type="button" onClick={() => onNavigate('#/breadth')}
                   className="mt-4 text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
                              text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-            Market State detail &rarr;
+            {t('db.msDetail')}
           </button>
         )}
       </div>
@@ -72,6 +72,7 @@ export function MissingBlock({ what, keys, onNavigate }) {
 }
 
 export default function VerdictCard({ verdict, onNavigate }) {
+  const { lang, t } = useLanguage()
   /**
    * A MISSING BLOCK IS SAID, NOT SKIPPED.
    *
@@ -89,7 +90,7 @@ export default function VerdictCard({ verdict, onNavigate }) {
   if (!verdict) {
     return (
       <MissingBlock
-        what="Today's verdict is not in tonight's file."
+        what={t('db.missing.verdict')}
         keys={['verdict']}
         onNavigate={onNavigate} />
     )
@@ -115,18 +116,19 @@ export default function VerdictCard({ verdict, onNavigate }) {
         <h2 className="m-0 text-[clamp(3.25rem,9vw,5.5rem)] leading-[.86]
                        font-bold tracking-[-.018em] text-[var(--color-text-bold)]"
             style={{ fontFamily: 'var(--font-cond)' }}>
-          {verdict.env}
+          {lang === 'zh' && translations.zh[`ms.env.${verdict.env}`] != null
+            ? t(`ms.env.${verdict.env}`) : verdict.env}
         </h2>
         <span className="text-[26px] leading-none font-mono tabular-nums
                          text-[var(--color-text)]">
           {verdict.score > 0 ? '+' : ''}{verdict.score}
-          <span className="text-[13px] text-[var(--color-text-muted)]"> / 12 votes</span>
+          <span className="text-[13px] text-[var(--color-text-muted)]">{t('db.verdict.votes')}</span>
         </span>
         {onNavigate && (
           <button type="button" onClick={() => onNavigate('#/breadth')}
                   className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
                              text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-            Market State detail &rarr;
+            {t('db.msDetail')}
           </button>
         )}
       </div>

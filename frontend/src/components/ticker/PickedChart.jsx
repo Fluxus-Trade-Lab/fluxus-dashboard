@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import TickerChart from './TickerChart'
 import { useChartPick } from '../../hooks/useChartPick'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { rich, word } from '../screener/richText'
 import { useShortlist } from '../../hooks/useShortlist'
 
 /**
@@ -30,12 +33,13 @@ const SPANS = [
   { key: 'M', label: 'Month', tv: 'M' },
   { key: 'W', label: 'Week',  tv: 'W' },
   { key: 'D', label: 'Day',   tv: 'D' },
-]
+] // labels: t('sh.span.<key>')
 
 export default function PickedChart({ height = 460 }) {
   const { symbol, isDefault, names, panel, pick } = useChartPick()
   const shortlist = useShortlist()
   const [span, setSpan] = useState('D')
+  const { lang, t } = useLanguage()
 
   if (!panel) return null
 
@@ -53,8 +57,8 @@ export default function PickedChart({ height = 460 }) {
         </h2>
         {current && (
           <span className="text-[11px] text-[var(--color-text-muted)]">
-            {current.group}
-            {current.group_state && <> &middot; {current.group_state}</>}
+            {dataName(current.group, lang)}
+            {current.group_state && <> &middot; {word(t, `state.${current.group_state}`, current.group_state)}</>}
             {current.rs_1m != null && <> &middot; RS 1M <span className="font-mono tabular-nums">{current.rs_1m}</span></>}
           </span>
         )}
@@ -71,7 +75,7 @@ export default function PickedChart({ height = 460 }) {
         {isDefault && symbol && (
           <span className="text-[11px] text-[var(--color-text-muted)]"
                 title={`${panel.label} — ${panel.recipe}`}>
-            &middot; default: first {panel.label}
+            {t('sh.pc.default', { label: panel.label })}
           </span>
         )}
         {symbol && (
@@ -86,10 +90,10 @@ export default function PickedChart({ height = 460 }) {
                               rounded border-none cursor-pointer transition-colors ${onList
                     ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                     : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-            {onList ? 'on shortlist \u2212' : 'add to shortlist +'}
+            {onList ? t('sh.pc.onList') : t('sh.pc.add')}
           </button>
         )}
-        <div className="ml-auto flex gap-1" role="group" aria-label="timeframe">
+        <div className="ml-auto flex gap-1" role="group" aria-label={t('sh.pc.timeframe')}>
           {SPANS.map((s) => (
             <button key={s.key} type="button" onClick={() => setSpan(s.key)}
                     aria-pressed={span === s.key}
@@ -97,7 +101,7 @@ export default function PickedChart({ height = 460 }) {
                                 border-none transition-colors ${span === s.key
                       ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                       : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-              {s.label}
+              {t(`sh.span.${s.key}`)}
             </button>
           ))}
         </div>
@@ -116,16 +120,12 @@ export default function PickedChart({ height = 460 }) {
           {panel.measured ? (
             <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
                           text-[var(--color-text-muted)]">
-              True Market Leaders ran tonight and <b className="text-[var(--color-text-secondary)]">found
-              nobody</b>, so there is no name for this card to open on. That is a
-              reading, not a failed run.
+              {rich(t('sh.pc.nobody'), {}, 'text-[var(--color-text-secondary)]')}
             </p>
           ) : (
             <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
                           text-[var(--color-text-muted)]">
-              True Market Leaders was <b className="text-[var(--color-text-secondary)]">not
-              measured</b> in tonight&rsquo;s run, so there is no name for this card to open on.
-              That is different from the screen finding nobody.
+              {rich(t('sh.pc.notMeasured'), {}, 'text-[var(--color-text-secondary)]')}
             </p>
           )}
         </div>

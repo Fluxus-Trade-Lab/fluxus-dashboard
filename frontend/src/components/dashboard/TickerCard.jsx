@@ -1,3 +1,5 @@
+import { useLanguage } from '../../i18n/LanguageContext'
+
 /**
  * One benchmark, two lines — Andy's layout, 2026-08-16.
  *
@@ -45,6 +47,7 @@ function changeColour(val) {
  *  strip-scan distance where the number cannot. No measured move, no
  *  stripe: an unmeasured day has no direction to paint. */
 export default function TickerCard({ ticker, signal, etf }) {
+  const { t } = useLanguage()
   // signal data comes from signals.json (SPY, QQQ, IWM, BTC-USD, ^VIX)
   // etf data comes from etf_data.json (DIA, RSP, QQQE, GLD, TLT)
   // one or both may be present
@@ -73,7 +76,7 @@ export default function TickerCard({ ticker, signal, etf }) {
         {riskOff && (
           <span className="text-[11px] font-mono font-semibold uppercase tracking-[.12em]
                            text-[var(--color-signal-riskoff)] shrink-0">
-            RISK OFF
+            {t('db.riskOff')}
           </span>
         )}
       </div>
@@ -85,7 +88,7 @@ export default function TickerCard({ ticker, signal, etf }) {
         </span>
         <span className="font-mono text-[13px] tabular-nums font-medium"
               style={{ color: changeColour(change) }}
-              title={change == null ? 'no move measured for this instrument' : undefined}>
+              title={change == null ? t('dash.noMove') : undefined}>
           {formatChange(change)}
         </span>
       </div>
