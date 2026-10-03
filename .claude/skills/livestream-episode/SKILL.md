@@ -1,6 +1,6 @@
 ---
 name: livestream-episode
-description: 会员直播系列每一场的准备与收尾流程——Andy 2026-10-02 起给购课会员直播，约 10 场 × 2 小时，按课程骨架讲。凡是要为某一场直播准备提词卡、讲稿、案例、案例图、dashboard 截图、OBS 画面卡，或直播后要转写、切片、上回放，或 Andy 说「下一场直播」「直播 02」「提词卡」「讲稿太简单」「换个案例」「选 XX 当案例」「直播完了」「切片」——哪怕只丢一个票名或章号——都先读本 skill。首场（直播 01，2026-10-03，CH00–02）的全部裁决都在这里，照抄不重来。
+description: 会员直播系列每一场的准备与收尾流程——Andy 2026-10-02 起给购课会员直播，约 10 场 × 2 小时，按课程骨架讲。凡是要为某一场直播准备提词卡、讲稿、案例、案例图、dashboard 截图、OBS 画面卡、直播幻灯片（Keynote 式、PDF、读图五问、key takeaway），或直播后要转写、切片、上回放，或 Andy 说「下一场直播」「直播 02」「提词卡」「幻灯片」「slides」「卡片要有 summary / takeaway」「会员要学会问问题」「讲稿太简单」「换个案例」「选 XX 当案例」「直播完了」「切片」——哪怕只丢一个票名或章号——都先读本 skill。首场（直播 01，2026-10-03，CH00–02）的全部裁决都在这里，照抄不重来。
 owner: ops
 ---
 
@@ -48,6 +48,22 @@ owner: ops
 
 Python Playwright（`.venv`，chromium 已装）headless 拍 `https://fluxus-dashboard.vercel.app/#/<页>`，1600×900、2x、`color_scheme="dark"`，等 networkidle + 3.5 秒；页：`dashboard`（Market State）、`rotation`（Themes）、`groups`、`breadth`（`screener` 暂不上直播，见 gotcha）。拍完检查无 blur（锁页会糊）。屏幕上不能有会员名、持仓股数、金额。
 
+## 幻灯片（直播时全屏放的那一套，每场一份 PDF）
+
+Andy 2026-10-03 原话：「每一张卡片会是类似于KEYnoteSlide……KeYTakeaway要有summary也要有。每张卡片的要点有哪些。这些内容写上去，就是会员可以跟着去做的事情」「每一张后面还有更多的细节……案例A里面的KYTakeaway在哪里」「会员需要学会问正确的问题。族群，结构，均线，支撑阻力etc」；结构裁定「批了，写进 livestream-episode skill」。
+
+**固定结构**（首场 17 张，照抄）：
+1. 封面：一句话 summary + 六段议程。
+2. 每段一张**段落卡**（section）：summary + 要点 + 「跟着做」编号步骤。段落卡后面接细节页。
+3. 第②段固定一张**读图五问**（questions）：环境 · 族群 · 结构 · 均线 · 支撑阻力，三列＝问什么 · 看图上哪里 · 答案长什么样。问题可随章节加，五问不删。
+4. **每个案例一张细节页**（image）：左图右「五问作答」（每条以「环境：/族群：/结构：/均线：/支撑：」开头），底部黑条「这一页的结论」一句话。答不出的那一问就不写，不编。
+5. ①④段的 dashboard 截图、②段的书图也各一张细节页，同样有 takeaway。
+6. 收尾页：今晚三句话 + 这一周做什么。
+
+**工具**：`Fluxus_Brand/visual/livestream/make_livestream_slides.py --content <ep.json> --outdir <dir> --pdf <deck.pdf>`（版式照 Vera 的 `make_livestream_cards.py`；页型 title / section / questions / image / closing；图片路径相对内容 JSON）。渲染 17 张约 2 分钟，跑后台。
+⚠️ **内容 JSON、PNG、PDF 只放课程私有仓** `SwingMasterclass/_live/liveNN/slides/`（merge-a），公开仓只放生成器。首场成品：课程仓 `3d77283`。
+**交付**：PDF 用 `SendUserFile` 发给 Andy；渲染完先自己看问题清单页和每个案例页（图有没有压住结论条）。
+
 ## 讲稿形状（Studio Q 写，OPS 合成）
 
 每段：`goal`（一句话要观众带走什么）· `script`（可照着讲的完整段落）· `points` · `visual`（放哪张图）· `ops`（dashboard 点哪、读出什么数）· `ask`（问观众）· `transition` · `clip`（短片标题 + 公开/仅会员）；案例另有 `replay_steps`（停在哪、说什么、问什么、揭晓什么）；外加 `homework` 与 `qa_prep`（8 条左右预答）。
@@ -59,5 +75,6 @@ Python Playwright（`.venv`，chromium 已装）headless 拍 `https://fluxus-das
 照 `kanban-page` 的深色规范，但提词卡是**纵向六段长页**（直播时从上往下滚），不是看板：大字号、每段一个色带、图片可点开全屏。固定链接，每场一页。工人没有 Artifact 工具——**发布永远由 OPS 代发**。
 
 ## gotcha（追加在这里）
+- 2026-10-03：SVG 书图在细节页按宽度撑高，压住了底部结论条。生成器已给图区固定高度 585px + `object-fit:contain`；换版式时保留。
 - 2026-10-03：Andy「screener页面UI还没有准备好」——**Screener 页不上直播**，直到他或 UI Claire 说可以。直播只开 Market State（#/dashboard、#/breadth）与 Themes（#/rotation）；挑票用最近一期复盘的领先名字在图表软件里看。上直播前每个要开的页面都先问一句「这页能见人吗」。
 - 2026-10-03：守护进程工人写的提词卡，案例数据三处错（盘中价当收盘、反弹当上涨、漏一个低点）。之后**案例数字一律 OPS 现场复算**，工人只写讲稿。
