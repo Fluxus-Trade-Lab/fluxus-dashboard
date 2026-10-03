@@ -5,7 +5,7 @@
 
 ---
 
-〔标题槽 · 工作标题：**Breadth is the worst in years. I'm still long semis.**〕
+# Breadth Is Terrible. I'm Still Long Semis.
 
 Nearly three out of four US stocks are below their 50-day moving average. Traders call this kind of reading breadth: how many stocks are joining a move, not just how far the index moves. Since early August, the semiconductor ETF is up 16%. On X, people are calling it the weakest breadth since the dot-com bubble.
 
@@ -107,7 +107,7 @@ From its October 1990 low to its March 2000 peak, the S&P 500 rose 417%. On 95.5
 
 You can build a scary backtest out of high yields, weak breadth and an index near its high. Each of those has come before big drawdowns. But a pattern from the past only holds if nothing important has changed. Change earnings or liquidity, and the same setup can end very differently. What's different this time is earnings, and most of them are in semis.
 
-〔收口槽 —— Andy 亲笔。边界：不写对仗格言、不复述以上内容、收在下一步或一个邀请上。〕
+From here I'm watching two things. Do semis keep their breadth, and does the rest of the market start to join them? I'll post the semis series in Discord as it updates.
 
 ---
 
@@ -140,4 +140,4 @@ You can build a scary backtest out of high yields, weak breadth and an index nea
 - 买回写成 $150 billion（公司公开数字，不是账户金额）。
 - 冷读还提了两点我**没改**，留给你判断：①「What's different this time」容易让人联想到那句著名的反讽格言（你说留着，照留）；②正方最后列出「earnings, valuations or liquidity」，而前文说标普 19 倍市盈率和国债差不多，等于估值比 90 年代更贵，懂行的读者会觉得这里自相矛盾。→ Andy 10-04「选A」：已删 valuations，只留 earnings or liquidity。
 
-**仍空着**：标题 · 收口。
+**标题、收口已定（Andy 10-04「标题和结尾都选A。不需要linda更新数据。不是对外的承诺。」）**：正文无待补槽。Discord 那句是会员内部说法，不开单给 Linda 定期更新。
