@@ -35,6 +35,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
+from pipeline.constants import rs_leg
 from pipeline.screeners import ep_qullamaggie, ep_stockbee, tml_moglen
 
 MIN_CAP = 1e9
@@ -182,8 +183,8 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     # M2_L09_Scanning_Routines.md:134 "ADV ≥ 2M shares, above 50 SMA, RS rank
     # top 20%". Computed once in run_all.compute_universe_scores; see there.
     Panel("liquid_leaders", "Liquid Leaders",
-          "avg_volume >= 2M, above SMA50, rs_3m >= 80 -- course M2_L09 ('ADV >= 2M shares, above 50 SMA, RS rank top 20%'; "
-          "the RS window is ours: 3 months). Not the TradersLab scan of the same name. Top 25 by Composite Score shown, count is the whole list",
+          "avg_volume >= 2M, above SMA50, rs_rating >= 80 (rs_3m before 2026-10-05, RS unify B) -- course M2_L09 ('ADV >= 2M shares, above 50 SMA, RS rank top 20%'; "
+          "the RS reading is ours: rs_rating since 2026-10-05, rs_3m before). Not the TradersLab scan of the same name. Top 25 by Composite Score shown, count is the whole list",
           ["liquid_leader"], lambda r: r.get("liquid_leader") is True),
     # --- entries ---
     Panel("ll_hl_1st", "LL-HL Structure 1st Pivot",
@@ -283,12 +284,12 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           and _ge(r, "sma50_atr_dist", -0.5) and _le(r, "sma50_atr_dist", 4.0)),
     # --- compression ---
     Panel("vcs", "Volatility Contraction Score",
-          "vcs >= 60 and rs_3m >= 80 and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. "
+          "vcs >= 60 and rs_rating >= 80 (rs_3m before 2026-10-05, RS unify B) and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. "
           "VCS alone at >= 70 listed 33 gated names on 08-14, half of them weak (rs_1m < 30); oratnek's "
           "same-day panel had 2 (COTY 64 / CBRL 62, both rs_3m >= 88). Raising the VCS bar does not fix it "
           "(>= 90 still 8, all weak); the leadership gate does (15, his two inside). 60 = his 'developing' band edge",
-          ["vcs", "rs_3m", "sma50_dist", "adr_pct"],
-          lambda r: _ge(r, "vcs", 60) and _ge(r, "rs_3m", 80) and _f(r, "sma50_dist") is not None
+          ["vcs", rs_leg.field("vcs"), "sma50_dist", "adr_pct"],
+          lambda r: _ge(r, "vcs", 60) and _ge(r, rs_leg.field("vcs"), 80) and _f(r, "sma50_dist") is not None
           and _f(r, "sma50_dist") > 0 and _ge(r, "adr_pct", 3)),
     # Liquidity leg restored 2026-09-18 (Andy: 「全部按原文」): Stockbee,
     # stockbee.blogspot.com/2019/10/anticipation-scans-that-can-make-you.html,
@@ -341,10 +342,11 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           lambda r: _not_healthcare(r) and _ge(r, "perf_1w_pctile", 0.97) and _ge(r, "perf_3m_pctile", 0.85)
           and r.get("trend_base") is True and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     Panel("bullish_4pct", "4% Bullish",
-          "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10, not Healthcare (= the preset)",
+          "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_rating 60-99 (rs_21d before 2026-10-05, RS unify B), adr_pct 3.5-10, not Healthcare (= the preset)",
           ["change_pct", "rel_volume"],
           lambda r: _not_healthcare(r) and _ge(r, "change_pct", 0.04) and _ge(r, "rel_volume", 1.0)
-          and _ge(r, "from_open_pct", 0.0) and _ge(r, "rs_21d", 60)
+          and _ge(r, "from_open_pct", 0.0) and _ge(r, rs_leg.field("4pct_bullish"), 60)
+          and _le(r, rs_leg.field("4pct_bullish"), 99)
           and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     Panel("weekly_20_gainers", "Weekly 20%+ Gainers",
           "perf_5d >= 20% and adr_pct 3.5-10 (five SESSIONS from bars = the weekly candle oratnek reads; "

@@ -13,7 +13,7 @@ from pipeline.screeners.ticker_events import EVENT_COLUMNS
 
 def row(**kw):
     base = {"ticker": "T", "market_cap": 5e9, "avg_volume": 12e6, "sector": "Technology",
-            "change_pct": 0.05, "rel_volume": 1.6, "from_open_pct": 0.01, "rs_21d": 98,
+            "change_pct": 0.05, "rel_volume": 1.6, "from_open_pct": 0.01, "rs_21d": 98, "rs_rating": 98,
             "adr_pct": 4.5, "trend_base": True, "pocket_pivot": True, "pp_count_30d": 3,
             "perf_1w": 0.12, "perf_1w_pctile": 0.98, "perf_3m_pctile": 0.9, "h_score": 90,
             "dcr_pct": 0.8, "ema21_atr_dist": 0.5, "atr_from_sma50": 1.5,

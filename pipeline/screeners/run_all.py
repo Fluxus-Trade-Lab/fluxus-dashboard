@@ -611,8 +611,21 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # does not filter). 1 = highest median rs_3m of tradeable members. NOT
     # IBD's ruler: IBD ranks its own 197 groups on 6-month price performance;
     # ours are Finviz industries on the 3-month RS median behind i_score.
-    _ind_rank = industry_rs.rank(ascending=False, method='min')
+    # 2026-10-05 RS unify option B (pipeline/constants/rs_leg.py): the RANK
+    # now reads the median rs_rating; i_score above stays on rs_3m (it is an
+    # H-score input, not a panel leg). rs_leg.UNIFIED = False restores rs_3m.
+    from pipeline.constants import rs_leg as _rs_leg
+    _rank_rs = (industry_rs if _rs_leg.field('industry_rank') == 'rs_3m'
+                else df.loc[tradeable].groupby('industry')[_rs_leg.field('industry_rank')].median())
+    _ind_rank = _rank_rs.rank(ascending=False, method='min')
     df['industry_rank'] = df['industry'].map(_ind_rank).astype('Int64')
+    # Forward-test shadow (pipeline/tools/rs_switch_shadow.py): both readings'
+    # top 20 on the unrounded medians, same rank rule.
+    from pipeline.tools import rs_switch_shadow as _rs_shadow
+    _top20 = lambda col: set(df.loc[tradeable].groupby('industry')[col].median()
+                             .rank(ascending=False, method='min').loc[lambda s: s <= 20].index)
+    _rs_shadow.EXACT['industry_top20'] = (_top20(_rs_leg.field('industry_rank', unified=False)),
+                                          _top20(_rs_leg.field('industry_rank', unified=True)))
 
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
@@ -672,8 +685,14 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # no window either; avg_volume is the 20-session mean.
     _av = pd.to_numeric(df.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
     _sd = pd.to_numeric(df.get('sma50_dist', pd.Series(dtype=float)), errors='coerce')
-    df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df['rs_3m'] >= 80)
+    # 2026-10-05 RS unify option B: the RS leg reads rs_rating (was rs_3m);
+    # pipeline/constants/rs_leg.py, UNIFIED = False restores rs_3m.
+    df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df[_rs_leg.field('liquid_leader')] >= 80)
                            & tradeable).fillna(False).astype(bool)
+    _ll = lambda col: ((_av >= 2_000_000) & (_sd > 0) & (df[col] >= 80) & tradeable).fillna(False)
+    _rs_shadow.EXACT['liquid_leader'] = dict(zip(
+        df['ticker'], zip(_ll(_rs_leg.field('liquid_leader', unified=False)),
+                          _ll(_rs_leg.field('liquid_leader', unified=True)))))
 
     # --- Derived technical columns ---
     # ATR% -- gap-INCLUSIVE volatility. Renamed from `adr_pct` on 2026-09-04:
@@ -1517,6 +1536,13 @@ def main():
             logger.info("momentum97_shadow: +%d rows for %s", n_sh, wl_date)
         except Exception:
             logger.exception("momentum97 shadow log failed - watchlist.json unaffected")
+        try:
+            # RS unify option B forward test (Andy 2026-10-04: 「选B，而且务必要做forward testing，至少5天。」)
+            from pipeline.tools.rs_switch_shadow import archive as archive_rs_switch
+            n_rs = archive_rs_switch(wl_rows, date=wl_date)
+            logger.info("rs_switch_shadow: +%d rows for %s", n_rs, wl_date)
+        except Exception:
+            logger.exception("rs switch shadow log failed - watchlist.json unaffected")
         _emit(ledger, OUTPUT_DIR / 'watchlist.json', json.dumps(wl, indent=2, default=_json_serializer))
         ledger.note('watchlist', 'ok', gated=wl['universe_gated'],
                     panels={p['key']: p['count'] for z in wl['zones'] for p in z['panels']})

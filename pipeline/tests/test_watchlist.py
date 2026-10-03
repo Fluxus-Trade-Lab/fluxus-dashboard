@@ -23,7 +23,7 @@ def row(**kw):
             "sp_setup": True, "sp_signal": None, "sp_days": 3, "pp_count_10d": 0,
             "vcs": 30.0, "atr_from_sma50": 2.0, "ti65": 1.0, "c_low52w": 1.2, "mdt": 1.0,
             "change_pct": 0.005, "perf_1w_pctile": 0.5, "perf_3m_pctile": 0.5,
-            "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90,
+            "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90, "rs_rating": 90,
             "dcr_pct": 0.5, "min_vol_3d": 500_000, "min_vol_3d_1": 500_000, "ema21_atr_dist": 0.5,
             "sma50_atr_dist": 2.0,
             "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0,
@@ -72,12 +72,12 @@ class TestPanels:
         """Pinned takeover names score VCS 90+ with ADR under 2 -- not
         compression. The panel carries the same floor as the anticipation
         tool."""
-        # compression inside a leader: vcs>=60, rs_3m>=80, above SMA50, ADR floor
-        assert W.PANELS["vcs"].test(row(vcs=62, adr_pct=4.0, rs_3m=88, sma50_dist=0.1))
-        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=1.0, rs_3m=88, sma50_dist=0.1))   # ADR floor
-        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_3m=40, sma50_dist=0.1))   # not a leader
-        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_3m=88, sma50_dist=-0.05)) # below SMA50
-        assert not W.PANELS["vcs"].test(row(vcs=55, adr_pct=4.0, rs_3m=88, sma50_dist=0.1))
+        # compression inside a leader: vcs>=60, rs_rating>=80, above SMA50, ADR floor
+        assert W.PANELS["vcs"].test(row(vcs=62, adr_pct=4.0, rs_rating=88, sma50_dist=0.1))
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=1.0, rs_rating=88, sma50_dist=0.1))   # ADR floor
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_rating=40, sma50_dist=0.1))   # not a leader
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_rating=88, sma50_dist=-0.05)) # below SMA50
+        assert not W.PANELS["vcs"].test(row(vcs=55, adr_pct=4.0, rs_rating=88, sma50_dist=0.1))
 
     def test_anticipation_panel(self):
         assert W.PANELS["anticipation"].test(row(vcs=65, ti65=1.06, change_pct=0.004))
@@ -105,8 +105,10 @@ class TestPanels:
         b4 = presets["4% Bullish"]
         assert W.PANELS["bullish_4pct"].test(
             row(change_pct=b4["dailyPct"]["min"] / 100, rel_volume=b4["relVolume"]["min"],
-                from_open_pct=0.0, rs_21d=b4["rs21d"]["min"], adr_pct=b4["adrPct"]["min"]))
-        assert not W.PANELS["bullish_4pct"].test(row(change_pct=0.03, rel_volume=2, rs_21d=90))
+                from_open_pct=0.0, rs_rating=b4["rsIbd"]["min"], adr_pct=b4["adrPct"]["min"]))
+        assert not W.PANELS["bullish_4pct"].test(row(change_pct=0.03, rel_volume=2, rs_rating=90))
+        # RS unify B (2026-10-05): the RS leg is rs_rating, rs_21d no longer read
+        assert not W.PANELS["bullish_4pct"].test(row(change_pct=0.05, rel_volume=2, rs_21d=90, rs_rating=40))
         w20 = presets["Weekly 20%+ Gainers"]
         # same threshold as the preset; the WINDOW is five sessions (perf_5d),
         # not Finviz's calendar week -- by design since 2026-08-18
@@ -183,7 +185,7 @@ class TestBuild:
         return [
             row(ticker="A", sp_signal="1st_break", rs_1m=95, h_score=90),
             row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, vcs=90, adr_pct=4.0,
-                rs_3m=90, sma50_dist=0.1, rs_1m=99, h_score=95),   # entries x accumulation x compression
+                rs_3m=90, rs_rating=90, sma50_dist=0.1, rs_1m=99, h_score=95),   # entries x accumulation x compression
             row(ticker="C", vcs=80, ti65=1.08, change_pct=0.002, rs_1m=70, h_score=60),
             row(ticker="D", perf_1w=0.25, perf_5d=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
                 change_pct=0.05, rel_volume=2.0, rs_21d=95, rs_1m=100, h_score=88),
