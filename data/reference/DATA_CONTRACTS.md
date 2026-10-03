@@ -710,6 +710,8 @@ JSON schema(所有 library 文章通用):
 
 - **[2026-10-04] alex（T-1004-21）：`shortlist.json` 的席位 `why`、卡片 `verdict`、顶层 `legend`，以及 `watchlist.json` 的 `cross_zone_rule`，各补一份英文并列字段，原字段不动、仍是中文。** 新增字段：`seats[].why_en`、`cards[].verdict_en`、顶层 `legend_en`（键与 `legend` 相同）、`watchlist.json` 顶层 `cross_zone_rule_zh`。前端按 lang 取：EN 模式读 `*_en` 与 `cross_zone_rule`，ZH 模式读 `why` / `verdict` / `legend` / `cross_zone_rule_zh`。**为什么并列不嵌套**：`why` 原先是字符串，改成 `{en,zh}` 会让尚未改完的前端把对象印到页面上，所以前端改好之前不能动原字段。`rs_high_rule` / `top_3m_rule` 仍只有英文，不在本次范围内。schema 基线已登记；`data/output/` 已按同一套文案补齐，今晚正班起由代码重新生成。前端接手见任务板 handoff 单（claire）。
 
+- **[2026-10-04] alex（RS 统一选 B，`9eaa3398d`）：三处 RS 腿从 2026-10-05 正班起改读 `rs_rating`，Monthly Leader 97 不动。** Andy 原话「选B，而且务必要做forward testing，至少5天。」**改动**：`liquid_leader`（rs_3m≥80→rs_rating≥80，所有读 liquid_leader 的面板随之变）· watchlist `vcs`（同）· `4% Bullish`（前端预设 `frontend/public/data/screener-presets.json` 键 `rs21d`→`rsIbd`，60–99；管线同名面板同步）· `industry_rank`（行业中位数改用 rs_rating；`i_score` 不动）。**字段**：未增删任何输出字段，`rs_1m/rs_3m/rs_6m` 照常发布。**改回**：`pipeline/constants/rs_leg.py` 的 `UNIFIED = False`，前端预设按同文件 `PRESET_REVERT` 改回。**前向测试**：`data/history/rs_switch_shadow.csv` 每晚记新旧两份名单（date, panel, ticker, old, new, close, change_pct, rs_1m, rs_3m, rs_rating）；`python3 -m pipeline.tools.rs_switch_shadow` 出报告。满 5 个交易日（10-05→10-09 ET）后 ALEX 出对照报告，交 Andy 定去留。**→ Claire**：4% Bullish 预设的 RS 键已由数据端改动（Andy 批 B），前端若有显示「RS 21d」字样的地方请对一下。回测：`data/research/rs_unify/switch_impact.json`（`74028cef9`）。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
