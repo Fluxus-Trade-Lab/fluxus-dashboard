@@ -39,14 +39,14 @@ SMH 的涨，比 SOXX 更依赖它最大的那几只票。同一天同一批票�
 | 入选门槛 | 美国上市、半导体收入 ≥ 50%，取最大最流动的 25 只 | ICE 行业分类里半导体行业、美国上市，取最大的 30 只 | 2026-10-03 | [MVIS 指数页](https://www.marketvector.com/indices/sector/mvis-us-listed-semiconductor-25) · [SOXX 招募说明书 S-1](https://www.ishares.com/us/literature/summary-prospectus/sp-ishares-phlx-semiconductor-etf-3-31.pdf) |
 | 加权方式 | 自由流通市值修正加权 | 自由流通市值修正加权 | 2026-10-03 | [MVSMH 指数指南 §2.3](https://www.marketvector.com/rulebooks/download/MVSMH_Index_Guide.pdf) · [NYSE Arca 公告 RB-21-075](https://www.nyse.com/publicdocs/nyse/markets/nyse-arca/rule-interpretations/2021/NYSE%20Arca%20Equities%20RB-21-075.pdf) |
 | 单只上限（规则） | 大权重组单只 **20%**（下限 5%），小权重组单只 **4.5%**，大权重组合计 50% | **没取到公开主源**（见下面那条小字） | 2026-10-03 | [MVSMH 指数指南 §2.3](https://www.marketvector.com/rulebooks/download/MVSMH_Index_Guide.pdf) |
-| 实际最大权重 | **NVDA 19.27%** | **INTC 9.44%** | **2026-10-01** | 同上两个持仓文件 |
-| 前五大合计 | **43.94%**（NVDA·TSM·AMD·AVGO·MU） | **40.60%**（INTC·AMD·MU·NVDA·AVGO） | **2026-10-01** | 同上两个持仓文件 |
-| 海外注册的 ADR | **5 只，合计 20.12%**（TSM·SKHY·ASML·ARM·STM） | **8 只，合计 11.29%**（SKHY·TSM·ASML·TSEM·ASX·UMC·ARM·STM） | **2026-10-01** | SOXX 持仓文件的 `Location` 列（见下面那条小字） |
-| 行业构成（Finviz） | Semiconductors 18 · Semi Equipment 5 · **Software 2**（CDNS、SNPS） | Semiconductors 24 · Semi Equipment 6 | 2026-10-02 | `data/output/universe.json`（timestamp `2026-10-02T22:03:12Z`） |
-| 两者重叠 | 23 只，占 SMH 权重 **95.97%** | 23 只，占 SOXX 权重 **92.32%** | **2026-10-01** | 同上两个持仓文件 |
-| 只在 SMH 里 | CDNS、SNPS | — | **2026-10-01** | 同上 |
-| 只在 SOXX 里 | — | ASX、CBRS、CRDO、ENTG、MTSI、TSEM、UMC | **2026-10-01** | 同上 |
-| 8-03 → 10-02 涨幅 | **+15.61%** | **+16.07%** | 2026-10-02 | yfinance 日线，`auto_adjust=True`，见 `etf_facts.json` |
+| 实际最大权重 | **NVDA 19.27%** | **INTC 9.44%** | **2026-10-01** | [SMH 持仓 xlsx](https://www.vaneck.com/us/en/etf/equity/smh/holdings/download/xlsx/) · [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) |
+| 前五大合计 | **43.94%**（NVDA·TSM·AMD·AVGO·MU） | **40.60%**（INTC·AMD·MU·NVDA·AVGO） | **2026-10-01** | [SMH 持仓 xlsx](https://www.vaneck.com/us/en/etf/equity/smh/holdings/download/xlsx/) · [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) |
+| 海外注册的 ADR | **5 只，合计 20.12%**（TSM·SKHY·ASML·ARM·STM） | **8 只，合计 11.29%**（SKHY·TSM·ASML·TSEM·ASX·UMC·ARM·STM） | **2026-10-01** | [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) 的 `Location` 列（见下面那条小字） |
+| 行业构成（Finviz） | Semiconductors 18 · Semi Equipment 5 · **Software 2**（CDNS、SNPS） | Semiconductors 24 · Semi Equipment 6 | 2026-10-02 | `data/output/universe.json`（timestamp `2026-10-02T22:03:12Z`）；行业标签的上游是 [finviz.com 行业分类](https://finviz.com/groups.ashx?g=industry&v=110) |
+| 两者重叠 | 23 只，占 SMH 权重 **95.97%** | 23 只，占 SOXX 权重 **92.32%** | **2026-10-01** | [SMH 持仓 xlsx](https://www.vaneck.com/us/en/etf/equity/smh/holdings/download/xlsx/) · [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) |
+| 只在 SMH 里 | CDNS、SNPS | — | **2026-10-01** | [SMH 持仓 xlsx](https://www.vaneck.com/us/en/etf/equity/smh/holdings/download/xlsx/) · [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) |
+| 只在 SOXX 里 | — | ASX、CBRS、CRDO、ENTG、MTSI、TSEM、UMC | **2026-10-01** | [SMH 持仓 xlsx](https://www.vaneck.com/us/en/etf/equity/smh/holdings/download/xlsx/) · [SOXX 持仓 csv](https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv) |
+| 8-03 → 10-02 涨幅 | **+15.61%** | **+16.07%** | 2026-10-02 | yfinance 日线，`auto_adjust=True`，见 [`etf_facts.json`](etf_facts.json)；上游是 Yahoo Finance（[SMH](https://finance.yahoo.com/quote/SMH/history/) · [SOXX](https://finance.yahoo.com/quote/SOXX/history/)） |
 
 三条小字：
 
@@ -72,9 +72,9 @@ SMH 的涨，比 SOXX 更依赖它最大的那几只票。同一天同一批票�
 | 52 周新高家数 | 0 | 0 | 0 | 0 |
 | 52 周新低家数 | 0 | 0 | 0 | 0 |
 | 中位票离 52 周高点 | −31.38% | **−16.80%** | −31.38% | **−19.05%** |
-
-8-03 两只的中位数一模一样，不是抄错：两个篮子的中位都落在同一对票上（LRCX −32.81%、AMAT −29.94% 取平均）。
 | ETF 自己离 52 周高点 | −18.81% | **−6.14%** | −22.60% | **−10.16%** |
+
+8-03 两只的中位票读数一模一样，不是抄错：两个篮子的中位都落在同一对票上（LRCX −32.81% 与 AMAT −29.94% 取平均）。
 
 ### 池子越窄，读数越好
 
