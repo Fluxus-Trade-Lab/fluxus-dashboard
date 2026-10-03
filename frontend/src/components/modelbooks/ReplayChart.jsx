@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react'
 import { ema, sma, viewport, priceRange } from './replayMath'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /* The chart is the page now, so it is drawn rather than delegated: the replay
    needs to control the x-domain, the reveal edge and the act marks together,
@@ -83,6 +84,7 @@ export default function ReplayChart({
     return () => ro.disconnect()
   }, [])
 
+  const lowresText = useLanguage().t('mb.lowres')
   const draw = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas || !bars?.length || !width) return
@@ -219,9 +221,9 @@ export default function ReplayChart({
       ctx.textAlign = 'left'
       ctx.fillStyle = down
       ctx.font = '11px system-ui'
-      ctx.fillText('资料精度不足：多数 K 线开＝高＝低＝收', padL + 4, padT + plotH - 4)
+      ctx.fillText(lowresText, padL + 4, padT + plotH - 4)
     }
-  }, [bars, cursor, windowSize, logScale, acts, height, width, theme, lowres])
+  }, [bars, cursor, windowSize, logScale, acts, height, width, theme, lowres, lowresText])
 
   useEffect(() => { draw() }, [draw])
 

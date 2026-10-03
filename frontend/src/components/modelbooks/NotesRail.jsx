@@ -1,4 +1,6 @@
 import { patternTag, formatPattern } from './patternTag'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 
 /* The notes rail — Andy, 2026-09-25: "注释是很有用的教学，可以有一个侧栏是
    notes栏目."
@@ -50,6 +52,7 @@ function Labels({ labels }) {
 }
 
 function SourceCard({ source }) {
+  const { t } = useLanguage()
   if (!source?.book || !source?.author) return null
   const prose = source.prose
     ? source.prose.replace(/^[^\n]*\n/, '').replace(/```text|```/g, '').trim()
@@ -72,7 +75,7 @@ function SourceCard({ source }) {
       {prose && (
         <details className="mt-1.5">
           <summary className="text-[11px] text-[var(--color-text-muted)] cursor-pointer">
-            原文（{source.author}）
+            {t('mb.note.original', { author: source.author })}
           </summary>
           <pre className="mt-1.5 whitespace-pre-wrap text-[11px] leading-relaxed
                           text-[var(--color-text-secondary)] font-sans m-0">{prose}</pre>
@@ -83,6 +86,7 @@ function SourceCard({ source }) {
 }
 
 export default function NotesRail({ entry }) {
+  const { t, lang } = useLanguage()
   if (!entry) return null
   const note = entry.note
   const sources = (note?.sources || []).filter(s => s?.book && s?.author)
@@ -91,7 +95,7 @@ export default function NotesRail({ entry }) {
   if (!sources.length && !lessons.length && !entry.patterns?.length) {
     return (
       <p className="text-[13px] italic text-[var(--color-text-muted)] p-3 m-0">
-        这条没有注释。库里 {entry.libraryNoteCount ?? ''} 条有，其余只有 K 线。
+        {t('mb.note.empty', { n: entry.libraryNoteCount ?? '' })}
       </p>
     )
   }
@@ -103,7 +107,7 @@ export default function NotesRail({ entry }) {
           {entry.patterns.map(p => (
             <span key={p}
                   className={`inline-block px-1.5 py-0.5 text-[11px] font-medium rounded-full leading-tight ${patternTag(p)}`}>
-              {formatPattern(p)}
+              {dataName(formatPattern(p), lang)}
             </span>
           ))}
         </div>
@@ -117,13 +121,13 @@ export default function NotesRail({ entry }) {
 
       {note?.breakout && (
         <div className="mb-3 text-[13px]">
-          <span className="text-[var(--color-text-muted)]">模型册写明的突破 </span>
+          <span className="text-[var(--color-text-muted)]">{t('mb.note.statedBreakout')}</span>
           <span className="font-mono text-[var(--color-text-bold)]">
             {note.breakout.date}{note.breakout.price ? ` @ $${note.breakout.price}` : ''}
           </span>
           {note.peak?.date && (
             <>
-              <span className="text-[var(--color-text-muted)]"> → 高点 </span>
+              <span className="text-[var(--color-text-muted)]">{t('mb.note.peak')}</span>
               <span className="font-mono text-[var(--color-text-bold)]">
                 {note.peak.date}{note.peak.price ? ` @ $${note.peak.price}` : ''}
               </span>
@@ -131,7 +135,9 @@ export default function NotesRail({ entry }) {
           )}
           {note.gain_pct != null && (
             <span className="text-[var(--color-text-muted)]">
-              {' '}· 作者记的是 {note.gain_pct}%{note.weeks ? ` / ${note.weeks} 周` : ''}
+              {' '}{note.weeks
+                ? t('mb.note.authorGainWeeks', { gain: note.gain_pct, weeks: note.weeks })
+                : t('mb.note.authorGain', { gain: note.gain_pct })}
             </span>
           )}
         </div>
@@ -140,7 +146,7 @@ export default function NotesRail({ entry }) {
       {lessons.length > 0 && (
         <div className="mb-3">
           <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">
-            Key lessons
+            {t('mb.note.lessons')}
           </span>
           {lessons.map((l, i) => (
             <blockquote key={i}

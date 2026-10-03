@@ -1,5 +1,6 @@
 import { useRef, useCallback } from 'react'
 import { WINDOWS } from './replayMath'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /* The transport under the chart. Its track is marked with the ACTS rather than
    with bar numbers: every model book chart has the same three moments — the
@@ -9,15 +10,18 @@ import { WINDOWS } from './replayMath'
    drawn hollow, so the two are never confused for each other. */
 
 const ACT_LABEL = {
-  low: '底',
-  pivot: '突破日',
-  peak: '最高点',
+  low: 'mb.act.low',
+  pivot: 'mb.act.pivot',
+  peak: 'mb.act.peak',
 }
 
 export default function ReplayTransport({
   barCount, cursor, acts, playing, speed, windowSize,
   onSeek, onStep, onPlayToggle, onSpeed, onWindow, onJump,
 }) {
+  const { t } = useLanguage()
+  const actLabel = a => (a.kind === 'stated'
+    ? t(ACT_LABEL[a.key]) : t('mb.act.computed', { act: t(ACT_LABEL[a.key]) }))
   const trackRef = useRef(null)
 
   const seek = useCallback(e => {
@@ -29,7 +33,7 @@ export default function ReplayTransport({
 
   const pct = barCount > 1 ? (cursor / (barCount - 1)) * 100 : 0
   const jumpable = acts.filter(a => a.kind !== 'stated' || a.key === 'pivot')
-  const win = windowSize === 0 ? '全程' : `${windowSize / 21} 个月`
+  const win = windowSize === 0 ? t('mb.win.full') : t('mb.win.months', { n: windowSize / 21 })
 
   return (
     <div className="px-3 pt-2 pb-3 bg-[var(--color-surface-alt)] border-t border-[var(--color-border-light)]">
@@ -54,10 +58,10 @@ export default function ReplayTransport({
                  className="absolute top-0 -translate-x-1/2 text-center whitespace-nowrap"
                  style={{ left: `${(a.index / Math.max(barCount - 1, 1)) * 100}%`, color: colour }}
                  title={a.kind === 'stated'
-                   ? `${a.book || '模型册'} 写明的突破日${a.price ? ` · $${a.price}` : ''}`
-                   : '本站按规则算出的'}>
+                   ? `${t('mb.act.statedTitle', { book: a.book || t('mb.act.modelBook') })}${a.price ? ` · $${a.price}` : ''}`
+                   : t('mb.act.computedTitle')}>
               <span className="text-[11px]">
-                {ACT_LABEL[a.key]}{a.kind === 'stated' ? '' : '·算'}
+                {actLabel(a)}
               </span>
               <span className="block w-px h-2.5 mx-auto mt-[3px]"
                     style={{ backgroundColor: colour, opacity: a.kind === 'stated' ? 1 : 0.6 }} />
@@ -70,24 +74,24 @@ export default function ReplayTransport({
         <button onClick={onPlayToggle}
                 className="font-mono text-[11px] px-3 py-1 rounded border min-w-[76px] cursor-pointer
                            bg-[var(--color-text-bold)] text-[var(--color-bg)] border-[var(--color-text-bold)]">
-          {playing ? '❚❚ 暂停' : '▶ 播放'}
+          {playing ? t('mb.pause') : t('mb.play')}
         </button>
-        <Btn onClick={() => onStep(-1)}>◀ 一根</Btn>
-        <Btn onClick={() => onStep(1)}>一根 ▶</Btn>
+        <Btn onClick={() => onStep(-1)}>{t('mb.stepBack')}</Btn>
+        <Btn onClick={() => onStep(1)}>{t('mb.stepFwd')}</Btn>
         <Btn onClick={onSpeed}>{speed}×</Btn>
         <span className="w-2" />
         {jumpable.map((a, i) => (
           <Btn key={`j${i}`} onClick={() => onJump(a.index)}>
-            {ACT_LABEL[a.key]}{a.kind === 'stated' ? '' : '·算'}
+            {actLabel(a)}
           </Btn>
         ))}
-        <Btn onClick={() => onJump(barCount - 1)}>全部显示</Btn>
+        <Btn onClick={() => onJump(barCount - 1)}>{t('mb.showAll')}</Btn>
         <span className="w-2" />
-        <Btn onClick={() => onWindow(-1)} title="拉近">−</Btn>
-        <Btn onClick={() => onWindow(0)} title="回到三个月">{win}</Btn>
-        <Btn onClick={() => onWindow(1)} title="拉远">+</Btn>
+        <Btn onClick={() => onWindow(-1)} title={t('mb.zoomIn')}>−</Btn>
+        <Btn onClick={() => onWindow(0)} title={t('mb.zoomReset')}>{win}</Btn>
+        <Btn onClick={() => onWindow(1)} title={t('mb.zoomOut')}>+</Btn>
         <span className="ml-auto text-[11px] font-mono text-[var(--color-text-muted)]">
-          第 {cursor + 1} / {barCount} 根
+          {t('mb.barOf', { i: cursor + 1, n: barCount })}
         </span>
       </div>
     </div>

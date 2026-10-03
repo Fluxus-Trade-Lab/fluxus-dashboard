@@ -3,6 +3,8 @@ import PageHeader from '../PageHeader'
 import LibraryView from './LibraryView'
 import TagStats from './TagStats'
 import TradingGym from './TradingGym'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { rich } from '../screener/richText'
 
 /* Four sidecars are merged here, once, so every mode below reads the same
    library:
@@ -22,6 +24,7 @@ import TradingGym from './TradingGym'
    which is what it did before any of this existed. */
 
 export default function ModelBooksPage() {
+  const { t } = useLanguage()
   const [mode, setMode] = useState('library')
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -97,7 +100,7 @@ export default function ModelBooksPage() {
   if (loading) {
     return (
       <div className="max-w-[1400px] mx-auto py-6 px-4">
-        <div className="text-[13px] text-[var(--color-text-muted)] animate-pulse">载入模型册…</div>
+        <div className="text-[13px] text-[var(--color-text-muted)] animate-pulse">{t('mb.loading')}</div>
       </div>
     )
   }
@@ -106,17 +109,17 @@ export default function ModelBooksPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto py-6 px-4">
-      <PageHeader group="library" title="Model Books"
-        meta={[`${cards.length} 条 · ${withBars} 条有 K 线`,
-               `${noteCount} 条带注释（TraderLion / Market Leaders 原书，标明出处）`,
-               `另有 ${excludedCount} 条未通过质量闸，已移出`]} />
+      <PageHeader group="library" title={t('nav.modelbooks')}
+        meta={[t('mb.meta.count', { n: cards.length, bars: withBars }),
+               t('mb.meta.notes', { n: noteCount }),
+               t('mb.meta.excluded', { n: excludedCount })]} />
 
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Model Books
+          {t('nav.modelbooks')}
         </h2>
         <div className="flex gap-1">
-          {[['library', '翻库 + 回放'], ['stats', '统计'], ['gym', '练习']].map(([m, label]) => (
+          {[['library', t('mb.mode.library')], ['stats', t('mb.mode.stats')], ['gym', t('mb.mode.gym')]].map(([m, label]) => (
             <button key={m} onClick={() => setMode(m)}
                     className={`px-3 py-1.5 text-[11px] font-medium rounded cursor-pointer transition-colors ${
                       mode === m
@@ -133,10 +136,7 @@ export default function ModelBooksPage() {
         : <TradingGym cards={cards.filter(c => c.ohlcv_file)} />}
 
       <p className="mt-4 text-[11px] text-[var(--color-text-muted)] leading-relaxed">
-        注释与图上标注转引自 <b>TraderLion Model Books（Ross Haber）</b> 与
-        {' '}<b>10 Years of Market Leaders（Richard Moglen）</b>，每条都标了书名、作者与页码；
-        版权归原作者。「突破后涨幅」从模型册写明的突破日算起，没写明的用本站规则算出的那一天，
-        两者在回放轨道上分开标。
+        {rich(t('mb.footer'))}
       </p>
     </div>
   )

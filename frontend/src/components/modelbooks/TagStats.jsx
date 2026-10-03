@@ -1,13 +1,10 @@
 import { useState, useMemo } from 'react'
 import { patternTag, formatPattern } from './patternTag'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 
 
-const ERA_FILTERS = [
-  { label: 'All Time', value: 'all' },
-  { label: '2020s', value: '2020' },
-  { label: '2010s', value: '2010' },
-  { label: '2000s', value: '2000' },
-]
+const ERA_FILTERS = ['all', '2020', '2010', '2000']
 
 
 function getDecade(year) {
@@ -15,6 +12,7 @@ function getDecade(year) {
 }
 
 export default function TagStats({ cards }) {
+  const { t, lang } = useLanguage()
   const [era, setEra] = useState('all')
   const [sourceFilter, setSourceFilter] = useState('all')
 
@@ -77,17 +75,17 @@ export default function TagStats({ cards }) {
       <div className="flex flex-wrap items-center gap-2">
         {/* Era toggles */}
         <div className="flex gap-1">
-          {ERA_FILTERS.map(f => (
+          {ERA_FILTERS.map(value => (
             <button
-              key={f.value}
-              onClick={() => setEra(f.value)}
+              key={value}
+              onClick={() => setEra(value)}
               className={`px-2.5 py-1 text-[11px] font-medium rounded cursor-pointer transition-colors ${
-                era === f.value
+                era === value
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
               }`}
             >
-              {f.label}
+              {value === 'all' ? t('mb.era.all') : t('mb.era.decade', { d: value })}
             </button>
           ))}
         </div>
@@ -98,18 +96,18 @@ export default function TagStats({ cards }) {
           onChange={e => setSourceFilter(e.target.value)}
           className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-3xl px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
-          <option value="all">All Sources</option>
+          <option value="all">{t('mb.allSources')}</option>
           {allSources.map(s => (
-            <option key={s} value={s}>{s}</option>
+            <option key={s} value={s}>{dataName(s, lang)}</option>
           ))}
         </select>
 
         {/* Summary */}
         <span className="text-[11px] text-[var(--color-text-muted)] ml-auto">
-          {filtered.length} setups
+          {t('mb.stats.setups', { n: filtered.length })}
           {untaggedCount > 0 && (
             <span className="ml-2 text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
-              {untaggedCount} untagged
+              {t('mb.stats.untagged', { n: untaggedCount })}
             </span>
           )}
         </span>
@@ -118,10 +116,10 @@ export default function TagStats({ cards }) {
       {/* Stats grid */}
       {stats.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)] gap-2">
-          <span className="text-[13px] text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
+          <span className="text-[13px] text-[var(--color-text-muted)]">{t('mb.stats.empty')}</span>
           {untaggedCount > 0 && (
             <span className="text-[11px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
-              {untaggedCount} setups need pattern tags
+              {t('mb.stats.needTags', { n: untaggedCount })}
             </span>
           )}
         </div>
@@ -138,14 +136,14 @@ export default function TagStats({ cards }) {
               >
                 {/* Pattern badge */}
                 <span className={`inline-block px-2 py-0.5 text-[11px] font-medium rounded-full ${badgeColors}`}>
-                  {formatPattern(pattern)}
+                  {dataName(formatPattern(pattern), lang)}
                 </span>
 
                 {/* Stats with inline bars */}
                 <div className="space-y-2">
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">{t('mb.stats.count')}</span>
                       <span className="text-[11px] font-semibold text-[var(--color-text)]">{count}</span>
                     </div>
                     <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
@@ -154,7 +152,7 @@ export default function TagStats({ cards }) {
                   </div>
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">{t('mb.stats.avgGain')}</span>
                       <span className="text-[11px] font-medium text-[var(--color-profit)] dark:text-[var(--color-profit)]">
                         {avgGain != null ? `${avgGain.toFixed(0)}%` : '—'}
                       </span>
@@ -164,9 +162,9 @@ export default function TagStats({ cards }) {
                     </div>
                   </div>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">{t('mb.stats.avgDuration')}</span>
                     <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
-                      {avgDuration != null ? `${Math.round(avgDuration)}d` : '—'}
+                      {avgDuration != null ? t('mb.stats.days', { n: Math.round(avgDuration) }) : '—'}
                     </span>
                   </div>
                 </div>

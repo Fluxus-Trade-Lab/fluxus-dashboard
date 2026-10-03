@@ -3,6 +3,8 @@ import ReplayChart, { MaLegend } from './ReplayChart'
 import ReplayTransport from './ReplayTransport'
 import NotesRail from './NotesRail'
 import { patternTag, formatPattern } from './patternTag'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
 import {
   WINDOWS, DEFAULT_WINDOW, acts as computeActs, readout, openingCursor, compareEntries,
 } from './replayMath'
@@ -15,13 +17,14 @@ import {
    only valuable object here is the chart, so it gets the room. */
 
 const SORTS = [
-  { key: 'advance_pct', label: '突破后涨幅', hint: '从模型册（或我们算出的）突破日收盘，到最高收盘。这是从买点拿得到的那一段。' },
-  { key: 'gain_pct', label: '当年最低到最高', hint: '上游筛选器给的当年最低价到最高价——一个区间，不是回报，谁也拿不到全程。' },
-  { key: 'year', label: '年份', hint: '' },
-  { key: 'ticker', label: '代码', hint: '' },
+  { key: 'advance_pct', label: 'mb.sort.advance', hint: 'mb.sort.advanceHint' },
+  { key: 'gain_pct', label: 'mb.sort.range', hint: 'mb.sort.rangeHint' },
+  { key: 'year', label: 'mb.sort.year', hint: '' },
+  { key: 'ticker', label: 'ms.th.ticker', hint: '' },
 ]
 
 export default function LibraryView({ cards, noteCount }) {
+  const { t, lang } = useLanguage()
   const [search, setSearch] = useState('')
   const [patternFilter, setPatternFilter] = useState('all')
   const [sourceFilter, setSourceFilter] = useState('all')
@@ -164,7 +167,8 @@ export default function LibraryView({ cards, noteCount }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [togglePlay, step, move, stopPlay])
 
-  const sortHint = SORTS.find(s => s.key === sortKey)?.hint
+  const sortHintKey = SORTS.find(s => s.key === sortKey)?.hint
+  const sortHint = sortHintKey ? t(sortHintKey) : ''
 
   return (
     <div className="flex flex-col gap-2">
@@ -173,7 +177,7 @@ export default function LibraryView({ cards, noteCount }) {
         <button onClick={() => setListOpen(o => !o)}
                 className="text-[11px] font-medium px-2.5 py-1.5 rounded cursor-pointer
                            bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]">
-          {listOpen ? '收起列表' : `列表 ${filtered.length}`}
+          {listOpen ? t('mb.list.hide') : t('mb.list.show', { n: filtered.length })}
         </button>
         <button onClick={() => move(-1)} disabled={index <= 0}
                 className="text-[11px] px-2 py-1.5 rounded cursor-pointer disabled:opacity-40
@@ -182,32 +186,32 @@ export default function LibraryView({ cards, noteCount }) {
                 className="text-[11px] px-2 py-1.5 rounded cursor-pointer disabled:opacity-40
                            bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]">↓</button>
         <input value={search} onChange={e => setSearch(e.target.value)}
-               placeholder="代码、年份、标注…"
+               placeholder={t('mb.search')}
                className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)]
                           rounded-3xl px-3 py-1.5 w-44 focus:outline-none
                           focus:ring-1 focus:ring-[var(--color-input-border)]" />
         <select value={patternFilter} onChange={e => setPatternFilter(e.target.value)}
                 className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)]
                            rounded-3xl px-2 py-1.5 cursor-pointer focus:outline-none">
-          <option value="all">全部形态</option>
-          {allPatterns.map(p => <option key={p} value={p}>{formatPattern(p)}</option>)}
+          <option value="all">{t('mb.allPatterns')}</option>
+          {allPatterns.map(p => <option key={p} value={p}>{dataName(formatPattern(p), lang)}</option>)}
         </select>
         <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)}
                 className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)]
                            rounded-3xl px-2 py-1.5 cursor-pointer focus:outline-none">
-          <option value="all">全部来源</option>
-          {allSources.map(s => <option key={s} value={s}>{s}</option>)}
+          <option value="all">{t('mb.allSources')}</option>
+          {allSources.map(s => <option key={s} value={s}>{dataName(s, lang)}</option>)}
         </select>
         <label className="flex items-center gap-1.5 text-[11px] text-[var(--color-text-muted)] cursor-pointer select-none"
-               title="只看带注释的条目">
+               title={t('mb.notesOnlyTitle')}>
           <input type="checkbox" checked={notesOnly} className="cursor-pointer"
                  onChange={e => setNotesOnly(e.target.checked)} />
-          有注释 {noteCount}
+          {t('mb.notesOnly', { n: noteCount })}
         </label>
         <select value={sortKey} onChange={e => setSortKey(e.target.value)} title={sortHint}
                 className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)]
                            rounded-3xl px-2 py-1.5 cursor-pointer focus:outline-none ml-auto">
-          {SORTS.map(s => <option key={s.key} value={s.key}>按{s.label}</option>)}
+          {SORTS.map(s => <option key={s.key} value={s.key}>{t('mb.sortBy', { label: t(s.label) })}</option>)}
         </select>
         <button onClick={() => setSortDir(d => (d === 'desc' ? 'asc' : 'desc'))}
                 className="text-[11px] px-2 py-1.5 rounded cursor-pointer
@@ -231,16 +235,16 @@ export default function LibraryView({ cards, noteCount }) {
                     {c.advance_pct != null ? `+${c.advance_pct.toFixed(0)}%` : '—'}
                   </td>
                   <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-muted)]">
-                    {c.hasNotes ? '注' : ''}
+                    {c.hasNotes ? t('mb.list.noteMark') : ''}
                   </td>
                   <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-muted)] truncate max-w-[90px]">
-                    {c.source}
+                    {dataName(c.source, lang)}
                   </td>
                 </tr>
               ))}
               {filtered.length > 400 && (
                 <tr><td colSpan={5} className="px-2 py-2 text-[11px] text-[var(--color-text-muted)]">
-                  还有 {filtered.length - 400} 条，缩小筛选或搜索
+                  {t('mb.list.more', { n: filtered.length - 400 })}
                 </td></tr>
               )}
             </tbody>
@@ -256,7 +260,7 @@ export default function LibraryView({ cards, noteCount }) {
               {entry?.ticker ?? '—'}
             </h3>
             <span className="text-[13px] text-[var(--color-text-muted)]">{entry?.year}</span>
-            <span className="text-[11px] text-[var(--color-text-muted)]">{entry?.source}</span>
+            <span className="text-[11px] text-[var(--color-text-muted)]">{dataName(entry?.source, lang)}</span>
             {read && (
               <span className="text-[13px] font-mono ml-2">
                 <span className="text-[var(--color-text-muted)]">{read.date}</span>{' '}
@@ -277,19 +281,19 @@ export default function LibraryView({ cards, noteCount }) {
             <button onClick={() => setRailOpen(o => !o)}
                     className="text-[11px] px-2 py-1 rounded cursor-pointer
                                bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]">
-              {railOpen ? '收起注释' : `注释${entry?.hasNotes ? '' : '（无）'}`}
+              {railOpen ? t('mb.notes.hide') : t(entry?.hasNotes ? 'mb.notes.show' : 'mb.notes.showNone')}
             </button>
           </div>
 
           {loading ? (
             <div className="flex items-center justify-center h-[420px] text-[13px] text-[var(--color-text-muted)]">
-              载入 K 线…
+              {t('mb.bars.loading')}
             </div>
           ) : !bars?.length ? (
             <div className="flex flex-col items-center justify-center h-[420px] gap-1 px-6 text-center">
-              <span className="text-[13px] text-[var(--color-text-muted)]">这条还没有 K 线</span>
+              <span className="text-[13px] text-[var(--color-text-muted)]">{t('mb.bars.none')}</span>
               <span className="text-[11px] text-[var(--color-text-muted)]">
-                注释先到了，历史数据还没抓 —— 右边的注释照样能读
+                {t('mb.bars.noneSub')}
               </span>
             </div>
           ) : (
@@ -311,10 +315,10 @@ export default function LibraryView({ cards, noteCount }) {
               {read && (
                 <div className="grid gap-px bg-[var(--color-border-light)] border-t border-[var(--color-border-light)]"
                      style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(118px, 1fr))' }}>
-                  <Cell label="距 50 日线" value={read.vs50dPct} suffix="%" signed />
-                  <Cell label="量比 50 日" value={read.relVolume} suffix="×" digits={2} />
-                  <Cell label="突破日以来" value={read.sincePivotPct} suffix="%" signed digits={0} />
-                  <Cell label="距今为止最高" value={read.fromHighPct} suffix="%" digits={1} />
+                  <Cell label={t('mb.cell.vs50')} value={read.vs50dPct} suffix="%" signed />
+                  <Cell label={t('mb.cell.relVol')} value={read.relVolume} suffix="×" digits={2} />
+                  <Cell label={t('mb.cell.sincePivot')} value={read.sincePivotPct} suffix="%" signed digits={0} />
+                  <Cell label={t('mb.cell.fromHigh')} value={read.fromHighPct} suffix="%" digits={1} />
                 </div>
               )}
             </>

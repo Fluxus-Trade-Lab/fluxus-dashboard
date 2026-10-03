@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createChart, ColorType, CandlestickSeries, LineSeries, HistogramSeries } from 'lightweight-charts'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { rich } from '../screener/richText'
+import { formatPattern } from './patternTag'
 
 /* ── Theme helpers (shared with OhlcvChart) ─────────────── */
 
@@ -73,6 +77,7 @@ const maColor = (ma) =>
 /* ── GymChart — incremental bar reveal ──────────────────── */
 
 function GymChart({ data, revealIndex, height = 350 }) {
+  const { t } = useLanguage()
   const containerRef = useRef(null)
   const chartRef = useRef(null)
   const candleSeriesRef = useRef(null)
@@ -235,7 +240,7 @@ function GymChart({ data, revealIndex, height = 350 }) {
   if (!data?.length) {
     return (
       <div className="flex items-center justify-center text-[var(--color-text-muted)] text-[13px]" style={{ height }}>
-        No chart data
+        {t('mb.gym.noData')}
       </div>
     )
   }
@@ -258,6 +263,7 @@ function GymChart({ data, revealIndex, height = 350 }) {
 /* ── TradingGym ─────────────────────────────────────────── */
 
 export default function TradingGym({ cards }) {
+  const { t, lang } = useLanguage()
   const [difficulty, setDifficulty] = useState('mixed') // 'easy' | 'mixed'
   const [ohlcv, setOhlcv] = useState(null)
   const [entry, setEntry] = useState(null)
@@ -388,7 +394,7 @@ export default function TradingGym({ cards }) {
   if (!eligible().length) {
     return (
       <div className="text-[13px] text-[var(--color-text-muted)] py-8 text-center">
-        No entries with chart data{difficulty === 'easy' ? ' and 100%+ gains' : ''}.
+        {t(difficulty === 'easy' ? 'mb.gym.noneEasy' : 'mb.gym.none')}
       </div>
     )
   }
@@ -398,9 +404,9 @@ export default function TradingGym({ cards }) {
       {/* Header: score + difficulty */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 text-[11px] font-mono text-[var(--color-text-secondary)]">
-          <span>Round {round}{round > 0 ? ` \u2014 ${correct}/${round}${showResult ? '' : ' so far'}` : ''}</span>
+          <span>{t(round > 0 ? (showResult ? 'mb.gym.roundScore' : 'mb.gym.roundSoFar') : 'mb.gym.round', { n: round, c: correct })}</span>
           <span>
-            Streak:{' '}
+            {t('mb.gym.streak')}{' '}
             <span
               className={`inline-block transition-transform duration-200 ${streakBump ? 'scale-125' : 'scale-100'}`}
               style={{ fontVariantNumeric: 'tabular-nums' }}
@@ -408,7 +414,7 @@ export default function TradingGym({ cards }) {
               {streak}
             </span>
           </span>
-          <span className="text-[var(--color-text-muted)]">Best: {bestStreak}</span>
+          <span className="text-[var(--color-text-muted)]">{t('mb.gym.best', { n: bestStreak })}</span>
         </div>
         <div className="flex gap-1">
           {['easy', 'mixed'].map(d => (
@@ -421,7 +427,7 @@ export default function TradingGym({ cards }) {
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] bg-[var(--color-surface-raised)]'
               }`}
             >
-              {d === 'easy' ? 'Easy' : 'Mixed'}
+              {d === 'easy' ? t('mb.gym.easy') : t('mb.gym.mixed')}
             </button>
           ))}
         </div>
@@ -430,7 +436,7 @@ export default function TradingGym({ cards }) {
       {/* Chart */}
       {loading ? (
         <div className="flex items-center justify-center h-[350px] text-[13px] text-[var(--color-text-muted)] animate-pulse">
-          Loading chart...
+          {t('mb.gym.loading')}
         </div>
       ) : ohlcv ? (
         <div className="rounded-3xl overflow-hidden bg-[var(--color-surface)]">
@@ -438,34 +444,34 @@ export default function TradingGym({ cards }) {
         </div>
       ) : (
         <div className="flex items-center justify-center h-[350px] text-[13px] text-[var(--color-text-muted)]">
-          Failed to load chart data
+          {t('mb.gym.failed')}
         </div>
       )}
 
       {/* Action buttons */}
       {!showResult && ohlcv && !loading && (
         <div className="flex items-center justify-center gap-3 py-2">
-          <span className="text-[11px] text-[var(--color-text-muted)] mr-2">What's your call?</span>
+          <span className="text-[11px] text-[var(--color-text-muted)] mr-2">{t('mb.gym.call')}</span>
           <button
             onClick={() => handleChoice('buy')}
             disabled={animating || !!choice}
             className="px-4 py-1.5 text-[11px] font-medium rounded bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-85"
           >
-            Buy
+            {t('mb.gym.buy')}
           </button>
           <button
             onClick={() => handleChoice('pass')}
             disabled={animating || !!choice}
             className="px-4 py-1.5 text-[11px] font-medium rounded bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
           >
-            Pass
+            {t('mb.gym.pass')}
           </button>
           <button
             onClick={() => handleChoice('fade')}
             disabled={animating || !!choice}
             className="px-4 py-1.5 text-[11px] font-medium rounded bg-[var(--color-surface-raised)] text-[var(--color-text-bold)] cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-85"
           >
-            Fade
+            {t('mb.gym.fade')}
           </button>
         </div>
       )}
@@ -473,7 +479,7 @@ export default function TradingGym({ cards }) {
       {/* Animating indicator */}
       {animating && (
         <div className="text-center text-[11px] text-[var(--color-text-muted)] animate-pulse py-1">
-          Revealing...
+          {t('mb.gym.revealing')}
         </div>
       )}
 
@@ -482,7 +488,7 @@ export default function TradingGym({ cards }) {
         <div className="rounded-3xl p-4 bg-[var(--color-surface)]">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)] mb-1">Result</div>
+              <div className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)] mb-1">{t('mb.gym.result')}</div>
               <div className="flex items-center gap-3">
                 <span className={`text-[13px] font-mono font-semibold ${result.changePct >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
                   {result.changePct >= 0 ? '+' : ''}{result.changePct.toFixed(1)}%
@@ -492,17 +498,22 @@ export default function TradingGym({ cards }) {
                     ? 'bg-[color-mix(in_srgb,var(--color-profit)_15%,transparent)] text-[var(--color-profit)]'
                     : 'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-[var(--color-loss)]'
                 }`}>
-                  {result.isCorrect ? 'CORRECT' : 'WRONG'}
+                  {result.isCorrect ? t('mb.gym.correct') : t('mb.gym.wrong')}
                 </span>
                 <span className="text-[11px] text-[var(--color-text-muted)]">
-                  You chose <span className="font-medium text-[var(--color-text-secondary)]">{choice?.toUpperCase()}</span>
+                  {rich(t('mb.gym.youChose'), { choice: (
+                    <span className="font-medium text-[var(--color-text-secondary)]">
+                      {choice ? t(`mb.gym.${choice}`).toUpperCase() : ''}
+                    </span>) })}
                 </span>
               </div>
               {entry && (
                 <div className="text-[11px] text-[var(--color-text-muted)] mt-2">
-                  {entry.ticker} ({entry.year}) — {entry.source}
+                  {entry.ticker} ({entry.year}) — {dataName(entry.source, lang)}
                   {entry.patterns?.length > 0 && (
-                    <span className="ml-2">{entry.patterns.join(', ')}</span>
+                    <span className="ml-2">{lang === 'zh'
+                      ? entry.patterns.map(p => dataName(formatPattern(p), lang)).join('、')
+                      : entry.patterns.join(', ')}</span>
                   )}
                 </div>
               )}
@@ -511,7 +522,7 @@ export default function TradingGym({ cards }) {
               onClick={loadRandom}
               className="px-4 py-1.5 text-[11px] font-medium rounded bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] cursor-pointer hover:brightness-110 transition-all"
             >
-              Next
+              {t('mb.gym.next')}
             </button>
           </div>
         </div>
