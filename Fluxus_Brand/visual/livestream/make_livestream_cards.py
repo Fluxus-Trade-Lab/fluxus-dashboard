@@ -273,7 +273,8 @@ def main() -> None:
         _render(page, out, W, H)
         made.append(out)
 
-    if args.only in (None, "lowerthird"):
+    # 名牌条：Andy 2026-10-03「下三分之一名牌条……这个去掉」——默认不再出，只在显式 --only lowerthird 时出
+    if args.only == "lowerthird":
         page = build_lowerthird(args.name, args.name_sub)
         out = outdir / "lowerthird.png"
         _render(page, out, W, BAR_H, transparent=True)
