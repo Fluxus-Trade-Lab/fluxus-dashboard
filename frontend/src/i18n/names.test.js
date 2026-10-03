@@ -227,4 +227,14 @@ describe('dataName', () => {
   it('translates a known name in zh mode', () => {
     expect(dataName('Genomics', 'zh')).toBe('基因组学')
   })
+
+  it('no data name is defined twice across names.js and names/*.js', async () => {
+    const { BASE_NAMES, NAME_PARTS } = await import('./names')
+    const seen = new Map(Object.keys(BASE_NAMES).map((k) => [k, 'base']))
+    const dups = []
+    for (const [part, d] of Object.entries(NAME_PARTS)) {
+      for (const k of Object.keys(d)) { if (seen.has(k)) dups.push(`${k}: ${seen.get(k)} + ${part}`); else seen.set(k, part) }
+    }
+    expect(dups).toEqual([])
+  })
 })

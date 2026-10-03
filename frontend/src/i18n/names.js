@@ -3,7 +3,14 @@
 // the pipeline can add a theme any night — so they are looked up by the
 // English name itself, and an unknown name shows as it arrived (English),
 // never blank.
-export const ZH_NAMES = {
+import dashboardNames from './names/dashboard'
+import rotationNames from './names/rotation'
+import screenerNames from './names/screener'
+
+// Per-page additions live in ./names/*.js so parallel edits never collide.
+export const NAME_PARTS = { dashboardNames, rotationNames, screenerNames }
+
+const BASE_NAMES = {
   '52-Week High Leaders': '52周新高领涨股',
   'AI - Datacenters': 'AI数据中心',
   'AI Power & Infrastructure': 'AI电力与基建',
@@ -200,6 +207,9 @@ export const ZH_NAMES = {
   'Value Factor': '价值因子',
   'Waste Management': '废物管理',
 }
+
+export const ZH_NAMES = Object.assign({}, BASE_NAMES, ...Object.values(NAME_PARTS))
+export { BASE_NAMES }
 
 export function dataName(name, lang) {
   if (lang !== 'zh' || name == null) return name
