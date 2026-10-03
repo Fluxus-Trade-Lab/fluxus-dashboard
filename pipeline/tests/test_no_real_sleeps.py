@@ -76,6 +76,50 @@ def test_the_walling_fundamentals_test_finishes_promptly():
     assert r["retries"] == 1
 
 
+def test_the_wall_is_seen_in_submission_order_even_when_every_call_finished_first(monkeypatch):
+    """The walling count must not depend on thread timing.
+
+    as_completed yields futures that had ALREADY finished in set order. When
+    the worker beats the consumer -- which a fast fetch on a loaded runner
+    does -- the five early successes land between the failures, no run of 40
+    failures ever forms, and the wall goes unseen. This is how the test above
+    went red on main (T-1003-78) while passing on a quiet laptop.
+
+    Forcing the race directly: an executor whose submit() runs the call before
+    returning, so every future is finished before the consumer looks.
+    """
+    import pipeline.adapters.fundamentals_store as F
+    from concurrent.futures import Future
+
+    class _Inline:
+        def __init__(self, max_workers=None):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def submit(self, fn, *args, **kwargs):
+            f = Future()
+            f.set_result(fn(*args, **kwargs))
+            return f
+
+    monkeypatch.setattr(F, "ThreadPoolExecutor", _Inline)
+    state = {"n": 0, "seen": set()}
+
+    def fetch(t):
+        state["n"] += 1
+        if t in state["seen"]:
+            return {"eps_growth_next_y": 1.0}
+        state["seen"].add(t)
+        return None if state["n"] > 5 else {"eps_growth_next_y": 1.0}
+
+    r = F.refresh({}, [f"T{i}" for i in range(60)], budget=60, fetch=fetch, workers=1)
+    assert r["retries"] == 1, f"the wall was not seen in order: {r}"
+
+
 class TestNoVendorNetwork:
     """The suite must not depend on a website being up.
 

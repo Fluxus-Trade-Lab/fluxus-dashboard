@@ -44,7 +44,7 @@ from __future__ import annotations
 import json
 import logging
 import time
-from concurrent.futures import CancelledError, ThreadPoolExecutor, as_completed
+from concurrent.futures import CancelledError, ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Mapping, Optional, Sequence
@@ -158,7 +158,12 @@ def refresh(store: Dict[str, Dict], tickers: Iterable[str], *, budget: int = BUD
         done_ok: set = set()
         with ThreadPoolExecutor(max_workers=n_workers) as ex:
             futs = {ex.submit(fetch, t): t for t in names}
-            for fut in as_completed(futs):
+            # Submission order, NOT as_completed: as_completed yields futures
+            # that had already finished in set order, so whether the wall
+            # detector saw 40 failures in a row depended on thread timing
+            # (T-1003-78: CI red on main, locally green). Waiting in submission
+            # order makes the consecutive count a fact about the sequence sent.
+            for fut in futs:
                 t = futs[fut]
                 try:
                     res = fut.result()
