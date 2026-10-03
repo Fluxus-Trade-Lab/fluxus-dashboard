@@ -725,7 +725,7 @@ const base = {
     'nav.groups': '主题（旧）',
     'nav.rotation': '主题',
     'rot.terrain': '地形',
-    'rot.points': '两种动能和加速度',
+    'rot.points': '两种动量和加速度',
     'rot.flux': '轨迹',
     'rot.burst': '爆发',
     'rot.accel': '加速度',

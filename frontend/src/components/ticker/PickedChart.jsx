@@ -75,7 +75,7 @@ export default function PickedChart({ height = 460 }) {
         {isDefault && symbol && (
           <span className="text-[11px] text-[var(--color-text-muted)]"
                 title={`${panel.label} — ${panel.recipe}`}>
-            {t('sh.pc.default', { label: panel.label })}
+            {t('sh.pc.default', { label: lang === 'zh' && panel.label === 'True Market Leaders' ? t('wlp.true_market_leaders') : panel.label })}
           </span>
         )}
         {symbol && (

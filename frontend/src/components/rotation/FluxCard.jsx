@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { dataName } from '../../i18n/names'
+import { word } from '../screener/richText'
 import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, FLUX_STEP, sampleIndices, yFrac, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
@@ -107,7 +108,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
         <div key={o.name} className="rot-rib">
           <span style={{ color: LINE[o.j] }}>{nm(o.name)}</span>
           <div className="rot-rib-bar">
-            {dates.slice(lag).map((d) => { const st = o.states?.[stateIndex(d)] ?? null; return <i key={d} style={{ background: STATE_LADDER[st] ?? 'var(--color-border-light)' }} title={`${d} · ${st ? t(`state.${st}`) : '—'}`} /> })}
+            {dates.slice(lag).map((d) => { const st = o.states?.[stateIndex(d)] ?? null; return <i key={d} style={{ background: STATE_LADDER[st] ?? 'var(--color-border-light)' }} title={`${d} · ${st ? word(t, `state.${st}`, st) : '—'}`} /> })}
           </div>
         </div>
       ))}

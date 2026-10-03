@@ -3,6 +3,7 @@ import { useGroups } from '../../hooks/useGroups'
 import { barStyle } from '../groups/ThemeBars'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { dataName } from '../../i18n/names'
+import { word } from '../screener/richText'
 import { WINDOW_KEY } from './LeadersLaggards'
 
 /**
@@ -48,7 +49,7 @@ function Row({ theme, changeKey }) {
     <div className="h-[22px] flex items-center gap-2">
       <i className="shrink-0 w-[8px] h-[8px] rounded-[1px]"
          style={barStyle(theme.state)}
-         title={theme.state ? t(`state.${theme.state}`) : t('db.th.noState')} />
+         title={theme.state ? word(t, `state.${theme.state}`, theme.state) : t('db.th.noState')} />
       <span className="min-w-0 flex-1 truncate text-[13px] font-medium
                        text-[var(--color-text-bold)]" title={name}>
         {name}
@@ -151,7 +152,7 @@ export default function ThemeMovers({ limit = 3 }) {
                 {STATES.map((st) => (
                   <span key={st} className="flex items-center gap-1.5">
                     <i className="w-[8px] h-[8px] rounded-[1px]" style={barStyle(st)} />
-                    {t(`state.${st}`)}
+                    {word(t, `state.${st}`, st)}
                   </span>
                 ))}
               </div>

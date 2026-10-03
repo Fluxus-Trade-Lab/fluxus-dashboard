@@ -36,7 +36,7 @@ describe('Rotation page in Chinese', () => {
     fireEvent.click(screen.getByRole('button', { name: new RegExp(translations.zh['db.howto.title'] ?? 'How to read this') }))
     const text = document.body.textContent
 
-    for (const zh of ['地形', '轨迹', '两种动能和加速度', '爆发', '加速度', '耐力', 'RS 本周对比前 3 周', 'RS 最近 13 周',
+    for (const zh of ['地形', '轨迹', '两种动量和加速度', '爆发', '加速度', '耐力', 'RS 本周对比前 3 周', 'RS 最近 13 周',
       '领先', '走弱', '改善', '落后', '个主题', '每个主题只看一只代理 ETF', '梯队量到的每个组', '基准就是零线']) {
       expect(text, zh).toContain(zh)
     }

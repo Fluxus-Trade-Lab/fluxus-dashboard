@@ -53,7 +53,7 @@ describe('Dashboard in Chinese', () => {
   it('prints the interface in Chinese, tickers and numbers untouched', async () => {
     const c = await mount('zh')
     const text = c.container.textContent
-    for (const zh of [' / 12 票', '市场状态详情 →', '分界线', '看多', '看空', '越高越安全', '市场环境 · 自建综合分',
+    for (const zh of [' / 12 票', '市场状态详情 →', '分界线', '看多', '看空', '越高越安全', '市况 · 自建综合分',
       '主题领涨与领跌', '领先', '走弱', '改善', '落后', '怎么读这一页', '1日', '1周', '月']) {
       expect(text, zh).toContain(zh)
     }
