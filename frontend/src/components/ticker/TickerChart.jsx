@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * Embeds the free TradingView Advanced Chart widget for a symbol.
@@ -14,6 +15,7 @@ import { useEffect, useRef, useState } from 'react'
  * iframe height (150px).
  */
 export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
+  const { t } = useLanguage()
   const containerRef = useRef(null)
   const outerRef = useRef(null)
   // The widget's theme was hardcoded to dark, so on the light paper this was
@@ -221,11 +223,9 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
              'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
         <p className="m-0 max-w-[42ch] text-center text-[11px] leading-relaxed
                       text-[var(--color-text-muted)] bg-[var(--color-bg)] px-3 py-2 rounded-lg">
-          <b className="text-[var(--color-text-secondary)]">Chart unavailable.</b>{' '}
-          {!online
-            ? 'This browser is offline; the chart is drawn by TradingView over the network.'
-            : 'TradingView\u2019s embed script did not load \u2014 blocked, or its host is unreachable.'}
-          {' '}Everything else on this page is served from the nightly file and is unaffected.
+          <b className="text-[var(--color-text-secondary)]">{t('sh.tc.unavailable')}</b>{' '}
+          {!online ? t('sh.tc.offline') : t('sh.tc.blocked')}
+          {' '}{t('sh.tc.rest')}
         </p>
       </div>
       <div

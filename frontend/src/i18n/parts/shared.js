@@ -2,6 +2,10 @@
 // translations.js. Same rules as that file's header.
 export default {
   en: {
+    'sh.tc.unavailable': 'Chart unavailable.',
+    'sh.tc.offline': 'This browser is offline; the chart is drawn by TradingView over the network.',
+    'sh.tc.blocked': 'TradingView\u2019s embed script did not load \u2014 blocked, or its host is unreachable.',
+    'sh.tc.rest': 'Everything else on this page is served from the nightly file and is unaffected.',
     'sh.span.M': 'Month',
     'sh.span.W': 'Week',
     'sh.span.D': 'Day',
@@ -25,6 +29,10 @@ export default {
     'sh.st.local': 'Kept in this browser only — it does not follow you to another machine, and clearing site data clears it. Where a shortlist should really live is still open in PRODUCT.md.',
   },
   zh: {
+    'sh.tc.unavailable': '图表加载不了。',
+    'sh.tc.offline': '这个浏览器离线了；图表是 TradingView 联网画的。',
+    'sh.tc.blocked': 'TradingView 的嵌入脚本没加载上——被拦了，或者连不上它的服务器。',
+    'sh.tc.rest': '页面上其他内容都来自每晚的数据文件，不受影响。',
     'sh.span.M': '月线',
     'sh.span.W': '周线',
     'sh.span.D': '日线',
