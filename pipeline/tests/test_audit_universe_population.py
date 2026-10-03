@@ -404,9 +404,11 @@ def test_a_judged_session_always_has_a_positive_baseline_median():
     base_med 就一定 > 0——因为 prior_med 的每个元素都是 positive_caps 之后的中位数，
     严格正数的中位数仍是正数。删掉那个守卫之后，这条测试就是仅剩的钉子：
     哪天有人让 positive_caps 放进 0 或负数，这里会先红，而不是在除法里炸。"""
-    messy = [1.0, 0, None, -3.0, 1e6]                    # 一分钱与 1e6 留下，其余不算
-    by = {d: list(messy) + list(BIG) for d in _twenty_quiet_sessions()}
-    by['2026-06-05'] = [1.0, None] + list(BIG)           # 一场里混着空值，仍须正
+    # 非正值多于一半：未过滤的中位数会落在 0 或负数上，过滤后的中位数仍是 $5B。
+    # 只有这种形状能让「放过非正值」的变异体真的把 base_med 打成非正；
+    # 若只是混几个零进一串大票，中位数被大票拽着走，变异体照样绿（已实测）。
+    messy = [None, 0.0, -1.0] * 150 + [5e9] * 200         # 450 个非正 / 200 个正
+    by = _twenty_quiet_sessions(caps=messy)
     judged = [r for r in check(by)['rows'] if r['kind'] != 'P3']
     assert judged, '应当有判过的场次，否则这条测试没钉住任何东西'
     for r in judged:
