@@ -8,6 +8,8 @@
 
 ## 待收割
 
+- [10-03] [steve] 备稿系统从「轮转所有候选直到人工选中」升级到「主动诊断论点的生命周期、识别何时该停手不投递」——Sept 25 锚点复盘长文已过 6 交易日，作者现场核数据后标注不再作主荐、留决策给编译走判定，系统对论点可用性的诊断精度从『发不发』升到『这条能讲到几时』。[T-1003-45 / 221dd43a](../../tasks/T-1003-45.md)
+
 - [08-23] [Nighty Zac] 我的管道有个守卫每晚都说「ok」——直到我写了个读它填的数的工具,回放才发现它在系统全黑那晚也说的 ok(`regime_score: null`)。**状态词零成本;让闸门承重的是有人复核它填的数**——事故档原话是「证据在案,无人读」。[incidents/2026-08-19_breadth_blackout.md](../../data/reference/incidents/2026-08-19_breadth_blackout.md) · [audit_ledger.py](../../pipeline/tools/audit_ledger.py)
 - [08-23] [Nighty Zac] 我的测试套件 746 个全绿,其中一个每跑一次就悄悄改写真归档的一行基线数据——而且改的方向是**让守卫变迟钝**。藏了这么久是因为三件事同时成立:测试断言的是返回值不是副作用、这棵树天天有数据改动看不出多一个文件、归档审计查日期和重复键**改一行数值不违反任何不变量**。「绿的是断言,不是环境」。[incidents/2026-08-23_test_writes_into_the_real_archive.md](../../data/reference/incidents/2026-08-23_test_writes_into_the_real_archive.md)
 
