@@ -20,7 +20,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Optional, Sequence
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import pandas as pd
 
@@ -98,30 +98,54 @@ def series_from_bars(hist: pd.DataFrame, n_days: int = 130) -> Dict[str, list]:
 
 # ── verdict: a template over the five-step read, never prose ─────────────
 
-def verdict(r: Mapping[str, Any], state: Optional[str], tml: bool,
-            entry_panels: Sequence[str], roster_streak: int) -> str:
-    parts = []
-    parts.append({"Leading": "水域✓", "Improving": "水域～(Improving)"}.get(state or "", "水域✗" if state else "无主题"))
-    parts.append("TML✓" if tml else ("资格✓(liquid leader)" if r.get("liquid_leader") else "资格✗"))
+def _verdict_parts(r: Mapping[str, Any], state: Optional[str], tml: bool,
+                   entry_panels: Sequence[str]) -> List[Tuple[str, str]]:
+    """Each fragment is a (zh, en) pair -- same rule, two sentences."""
+    parts: List[Tuple[str, str]] = []
+    if state == "Leading":
+        parts.append(("水域✓", "theme Leading ✓"))
+    elif state == "Improving":
+        parts.append(("水域～(Improving)", "theme Improving ～"))
+    elif state:
+        parts.append(("水域✗", "theme not leading ✗"))
+    else:
+        parts.append(("无主题", "no theme"))
+    if tml:
+        parts.append(("TML✓", "TML ✓"))
+    elif r.get("liquid_leader"):
+        parts.append(("资格✓(liquid leader)", "eligible ✓ (liquid leader)"))
+    else:
+        parts.append(("资格✗", "eligible ✗"))
     a = r.get("atr_from_sma50")
     if a is None:
-        parts.append("位置未测")
+        parts.append(("位置未测", "position not measured"))
     elif a < 0:
-        parts.append(f"50线下({a:.1f} ATR)")
+        parts.append((f"50线下({a:.1f} ATR)", f"below 50 SMA ({a:.1f} ATR)"))
     elif a <= 4:
-        parts.append(f"建仓区({a:.1f} ATR)")
+        parts.append((f"建仓区({a:.1f} ATR)", f"build zone ({a:.1f} ATR)"))
     elif a < 7:
-        parts.append(f"持有区({a:.1f} ATR)")
+        parts.append((f"持有区({a:.1f} ATR)", f"hold zone ({a:.1f} ATR)"))
     else:
-        parts.append(f"减仓区({a:.1f} ATR)")
+        parts.append((f"减仓区({a:.1f} ATR)", f"trim zone ({a:.1f} ATR)"))
     if entry_panels:
-        parts.append("今日刀: " + "+".join(entry_panels))
+        joined = "+".join(entry_panels)
+        parts.append((f"今日刀: {joined}", f"today's entry: {joined}"))
     chg = r.get("change_pct")
     if chg is not None and chg >= 0.15:
-        parts.append("⚠当日≥15%不追")
+        parts.append(("⚠当日≥15%不追", "⚠ up ≥15% today, don't chase"))
     if "bar_date" in r and r.get("bar_date") is None:
-        parts.append("⚠当晚无K线(429)")
-    return " · ".join(parts)
+        parts.append(("⚠当晚无K线(429)", "⚠ no bar tonight (429)"))
+    return parts
+
+
+def verdict(r: Mapping[str, Any], state: Optional[str], tml: bool,
+            entry_panels: Sequence[str], roster_streak: int) -> str:
+    return " · ".join(zh for zh, _ in _verdict_parts(r, state, tml, entry_panels))
+
+
+def verdict_en(r: Mapping[str, Any], state: Optional[str], tml: bool,
+               entry_panels: Sequence[str], roster_streak: int) -> str:
+    return " · ".join(en for _, en in _verdict_parts(r, state, tml, entry_panels))
 
 
 def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional[str],
@@ -169,6 +193,7 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
         "heat": {"rank": heat_rank, "score": heat.get("score") if heat else None,
                  "confluence_days": heat.get("confluence_days") if heat else None},
         "verdict": verdict(r, state, tml, entry_today, roster),
+        "verdict_en": verdict_en(r, state, tml, entry_today, roster),
         "events": ev_list[-15:],
         "panels": pan_list,
         "flags": {"chase": bool((r.get("change_pct") or 0) >= 0.15),
@@ -234,12 +259,12 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         panel did not run tonight) / none_found (ran, zero candidates) /
         all_excluded (candidates existed, gates removed every one)."""
         raw = 0
-        for why, cands, key in chain:
+        for (why, why_en), cands, key in chain:
             raw += len(cands)
             got = prefer(cands, key)
             if got:
                 taken.add(got[0])
-                out.append({"seat": name, "ticker": got[0], "why": why})
+                out.append({"seat": name, "ticker": got[0], "why": why, "why_en": why_en})
                 return
         if feeds and all(panel_measured.get(k) is False for k in feeds):
             reason = "not_measured"
@@ -248,23 +273,29 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         else:
             reason = "none_found"
         entry = {"seat": name, "ticker": None, "empty_reason": reason,
-                 "why": "空：" + " / ".join(w for w, _, _ in chain)
+                 "why": "空：" + " / ".join(w for (w, _), _, _ in chain)
                  + {"not_measured": "(喂席的格今晚未测量)", "none_found": "(跑了但一个都没有)",
-                    "all_excluded": f"(有 {raw} 个候选,全被闸挡)"}[reason]}
+                    "all_excluded": f"(有 {raw} 个候选,全被闸挡)"}[reason],
+                 "why_en": "empty: " + " / ".join(e for (_, e), _, _ in chain)
+                 + {"not_measured": " (feeding zone not measured tonight)",
+                    "none_found": " (ran, but found none)",
+                    "all_excluded": f" ({raw} candidates, all removed by gates)"}[reason]}
         if reason == "all_excluded":
             entry["excluded_n"] = raw
         out.append(entry)
 
     heat_names = [h["ticker"] for h in heat[:50]]
     heat_rank = {t: i for i, t in enumerate(heat_names)}
-    seat("burning", chain=[("heat 前 50 内最高(ATR<7,主题优先)", heat_names,
+    seat("burning", chain=[(("heat 前 50 内最高(ATR<7,主题优先)",
+                             "highest heat in top 50 (ATR<7, theme first)"), heat_names,
                       lambda t: 50 - heat_rank.get(t, 50))])
 
     tml_now = panel_tickers("true_market_leaders")
     fresh = [t for t in tml_now if t not in prev_tml]
     seat("new_leader", feeds=("true_market_leaders",), chain=[
-        ("今日新进 TML", fresh, hscore),
-        ("替补:在册 TML 中 ATR 位最低(最贴基底)", tml_now,
+        (("今日新进 TML", "newly entered TML today"), fresh, hscore),
+        (("替补:在册 TML 中 ATR 位最低(最贴基底)",
+          "backup: lowest ATR among TML names (closest to base)"), tml_now,
          lambda t: -(by.get(t, {}).get("atr_from_sma50") if by.get(t, {}).get("atr_from_sma50") is not None else 99)),
     ])
 
@@ -277,9 +308,10 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     # Stockbee和 EP Qullamaggie」); the self-made 'episodic_pivot' panel is retired.
     ep_today = list(dict.fromkeys(panel_tickers("ep_stockbee") + panel_tickers("ep_qullamaggie")))
     seat("entry", feeds=("ep_stockbee", "ep_qullamaggie", "bullish_4pct", "liquid_leader_pullback"), chain=[
-        ("今日 EP(Stockbee ∪ Qullamaggie)", ep_today,
+        (("今日 EP(Stockbee ∪ Qullamaggie)", "today's EP (Stockbee ∪ Qullamaggie)"), ep_today,
          lambda t: by.get(t, {}).get("rel_volume") or 0),
-        ("替补:Leading 主题里的回踩", [t for t in panel_tickers("liquid_leader_pullback")
+        (("替补:Leading 主题里的回踩", "backup: pullback in a Leading theme"),
+         [t for t in panel_tickers("liquid_leader_pullback")
                                         if states.get(t) == "Leading"], hscore),
     ])
 
@@ -302,10 +334,11 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
 
     deep = [t for t in reclaim if (by.get(t, {}).get("high_52w") or 0) <= -0.25]
     seat("v_reversal", feeds=("ma_reclaim", "liquid_leader_pullback"), chain=[
-        ("新高后回踩(52wh 新鲜×回撤3-20%×在回踩/收复格)",
+        (("新高后回踩(52wh 新鲜×回撤3-20%×在回踩/收复格)",
+          "pullback after a fresh 52-week high (fresh 52wh × 3–20% drawdown × in pullback/reclaim zone)"),
          [t for t in {*pullback, *reclaim} if fresh_high_pullback(t)], rs3),
-        ("深 V:均线收复×离52周高≤−25%", deep, rs3),
-        ("替补:均线收复中 rs_3m 最高", reclaim, rs3),
+        (("深 V:均线收复×离52周高≤−25%", "deep V: MA reclaim × ≤−25% from 52-week high"), deep, rs3),
+        (("替补:均线收复中 rs_3m 最高", "backup: highest rs_3m among MA reclaims"), reclaim, rs3),
     ])
 
     # Coiling seat v3: chain order is Andy's call (2026-08-20, "蓄势席换成
@@ -334,10 +367,15 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     vcsv = lambda t: by.get(t, {}).get("vcs") or 0  # noqa: E731
     rng_tight = lambda t: -(by.get(t, {}).get("range5_pct") or 99)  # noqa: E731 -- tighter first
     seat("coiling", feeds=("vcs", "anticipation"), chain=[
-        ("3周紧(周K三连1.5%带×>50SMA×近52wh)", [t for t in universe_names if _tight(t, "3wt")], rs3),
-        ("日线coil(5日幅≤5%×近20日高×>50SMA)", [t for t in universe_names if _tight(t, "coil")], rng_tight),
-        ("替补:VCS 格(已判无优势,留作对照)", vcs_p, vcsv),
-        ("替补:anticipation 格", panel_tickers("anticipation"), vcsv),
+        (("3周紧(周K三连1.5%带×>50SMA×近52wh)",
+          "3-week tight (3 weekly bars in a 1.5% band × >50 SMA × near 52wh)"),
+         [t for t in universe_names if _tight(t, "3wt")], rs3),
+        (("日线coil(5日幅≤5%×近20日高×>50SMA)",
+          "daily coil (5-day range ≤5% × near 20-day high × >50 SMA)"),
+         [t for t in universe_names if _tight(t, "coil")], rng_tight),
+        (("替补:VCS 格(已判无优势,留作对照)", "backup: VCS zone (judged no edge, kept as control)"),
+         vcs_p, vcsv),
+        (("替补:anticipation 格", "backup: anticipation zone"), panel_tickers("anticipation"), vcsv),
     ])
 
     lead_assets = [a["ticker"] for a in assets if (a.get("rs_line_pctl_21") or 0) >= 100 and a.get("hi20")]
@@ -345,18 +383,21 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     a_by = {a["ticker"]: a for a in assets}
     if lead_assets or all_assets:
         pick = next((t for t in lead_assets if t not in taken), None)
-        why = "RS线21日=100×20日新高"
+        why = ("RS线21日=100×20日新高", "RS line at 100 (21-day) × 20-day high")
         if pick is None:
             pick = next((a["ticker"] for a in all_assets
                          if a["ticker"] not in taken and (a.get("atr_from_sma50") or 0) < 7), None)
-            why = "替补:资产层 RS 线自百分位最高(ATR<7)"
+            why = ("替补:资产层 RS 线自百分位最高(ATR<7)",
+                   "backup: highest asset RS-line percentile (ATR<7)")
         if pick:
             taken.add(pick)
-            out.append({"seat": "asset", "ticker": pick, "why": why})
+            out.append({"seat": "asset", "ticker": pick, "why": why[0], "why_en": why[1]})
         else:
-            out.append({"seat": "asset", "ticker": None, "why": "空：资产层无合格者"})
+            out.append({"seat": "asset", "ticker": None, "why": "空：资产层无合格者",
+                        "why_en": "empty: no qualifying asset"})
     else:
-        out.append({"seat": "asset", "ticker": None, "why": "空：asset_signals 缺失"})
+        out.append({"seat": "asset", "ticker": None, "why": "空：asset_signals 缺失",
+                    "why_en": "empty: asset_signals missing"})
     return out
 
 

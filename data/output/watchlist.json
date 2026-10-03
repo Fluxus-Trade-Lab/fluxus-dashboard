@@ -12,6 +12,7 @@
   },
   "sort": "composite_score desc (percentile of h_score); the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
   "cross_zone_rule": "count of ZONES a name appears in (not panels); >= 3 listed",
+  "cross_zone_rule_zh": "\u6309\u533a\u8ba1\u6570\uff08\u4e0d\u662f\u6309\u683c\uff09\uff1a\u4e00\u53ea\u7968\u51fa\u73b0\u5728\u51e0\u4e2a\u533a\uff1b\u22653 \u4e2a\u533a\u624d\u5217",
   "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",
   "top_3m_rule": "top_3m = perf_3m_pctile >= 0.85 (top 15% of 3M performance, whole universe); oratnek's pool as fitted on three sessions; detection only, count_top_3m per panel",
   "chase_rule": "chase = change_pct >= 15% today; count_chase per panel. 4% Bullish x same-day >= 15% was 20d -9.3% / 36% win in the 2026-08 validation -- fold these to the panel bottom, greyed",

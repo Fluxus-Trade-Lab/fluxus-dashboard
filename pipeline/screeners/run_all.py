@@ -1623,7 +1623,10 @@ def main():
                 cards.append(card)
         sl = {'date': wl_date, 'seats': seats, 'manual': manual, 'cards': cards,
               'legend': {'EP': 'Stockbee EP：涨>4%×量>3×50日均量(前一日)×量≥30万', '4%': '≥4%×量≥1', 'NH+RS': '20日新高+RS线新高同日',
-                         'x21': '上穿21EMA', 'x50': '上穿50SMA'}}
+                         'x21': '上穿21EMA', 'x50': '上穿50SMA'},
+              'legend_en': {'EP': 'Stockbee EP: up >4% × volume >3× prior-day 50-day average × volume ≥300k',
+                            '4%': '≥4% × relative volume ≥1', 'NH+RS': '20-day high and RS-line high on the same day',
+                            'x21': 'crosses above 21 EMA', 'x50': 'crosses above 50 SMA'}}
         _emit(ledger, OUTPUT_DIR / 'shortlist.json', json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
         n_sl = NC.archive(sl)
         NC.archive_seats(sl)
