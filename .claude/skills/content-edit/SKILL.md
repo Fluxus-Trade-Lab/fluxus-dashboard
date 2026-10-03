@@ -38,7 +38,7 @@ owner: mia
 
 ## 第 6 步：推分支前先核 type（gate=reviewer 最常见的坑）
 
-branch-review 的 Q2（无测试载体豁免）只认 `type` ∈ `content` / `deliver_pdf` / `visual` / `experiment` / `research` 这几个值。task.type 填错（比如写成 `followup`）即便内容完全一样也会稳定 FAIL（T-0928-16 的教训，T-0928-29 改对 type 才过）。推分支前先确认任务文件 `type: content`，不对就先开单改 type，别等复核判死了才查。
+branch-review 的 Q4（「这一问是唯一的活」那条豁免）只认 `type` ∈ `content` / `deliver_pdf` / `visual` / `experiment` / `research` 这几个值——Q2 的治理文档豁免按路径判,跟 type 无关,别混。task.type 填错（比如写成 `followup`）即便内容完全一样也会稳定 FAIL（T-0928-16 的教训，T-0928-29 改对 type 才过）。推分支前先确认任务文件 `type: content`，不对就先开单改 type，别等复核判死了才查。
 
 ## 第 7 步：duplicate 不能只看 claimed 就放行
 
