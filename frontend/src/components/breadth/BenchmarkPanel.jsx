@@ -1,4 +1,5 @@
 import HealthChart from './HealthChart'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * Benchmarks — SPY and QQQ, everything this page knows about each, in one fold.
@@ -14,22 +15,19 @@ import HealthChart from './HealthChart'
  * Nothing here is computed; the warnings and distances arrive composed.
  */
 
-const WARN = [
-  ['below_20sma', 'Below 20 SMA'],
-  ['stoch_cross', 'Fast stoch < slow'],
-  ['stoch_down', 'Stochs curving down'],
-  ['lower_lows', '3 lower lows'],
-  ['close_below_lows', 'Close < 3 prior lows'],
-]
+// labels live in i18n/parts/advancedPanels.js as bench.warn.<key>
+const WARN = ['below_20sma', 'stoch_cross', 'stoch_down', 'lower_lows', 'close_below_lows']
 
 function Warnings({ danger }) {
+  const { t } = useLanguage()
   if (!danger?.signals) return null
   return (
-    <div className="grid grid-cols-5 gap-1 mt-2" aria-label={`${danger.count ?? 0} of 5 warnings firing`}>
-      {WARN.map(([k, label]) => {
+    <div className="grid grid-cols-5 gap-1 mt-2" aria-label={t('bench.warnAria', { n: danger.count ?? 0 })}>
+      {WARN.map((k) => {
+        const label = t(`bench.warn.${k}`)
         const on = danger.signals[k] === true
         return (
-          <div key={k} title={`${label} — ${on ? 'firing' : 'quiet'}`}
+          <div key={k} title={t(on ? 'bench.firing' : 'bench.quiet', { label })}
                className={`rounded-md px-1.5 py-1.5 text-[11px] leading-tight min-h-[40px] ${on
                  ? 'bg-[var(--color-refused)] text-[var(--color-bg)] font-medium'
                  : 'bg-[var(--color-v2-off)] text-[var(--color-text-muted)]'}`}>
@@ -38,17 +36,22 @@ function Warnings({ danger }) {
         )
       })}
       {danger.date && (
-        <div className="col-span-5 text-[11px] text-[var(--color-text-muted)]">warnings as of {danger.date}</div>
+        <div className="col-span-5 text-[11px] text-[var(--color-text-muted)]">{t('bench.asOf', { date: danger.date })}</div>
       )}
     </div>
   )
 }
 
 function Benchmark({ title, block, state, t2108 }) {
+  const { t } = useLanguage()
   if (!block?.candles?.length) return null
+  // Uptrend / Mixed / Downtrend arrive as data (breadth_signals._bench_state);
+  // an unknown state shows as it arrived
+  const sk = `bench.state.${state}`
+  const stateLabel = state && t(sk) !== sk ? t(sk) : state
   return (
     <div className="bg-[var(--color-bg)] rounded-2xl p-3">
-      <HealthChart title={title} block={block} state={state} t2108={t2108}
+      <HealthChart title={title} block={block} state={stateLabel} t2108={t2108}
                    warnCount={block.danger?.count} />
       <Warnings danger={block.danger} />
     </div>
@@ -79,7 +82,8 @@ function placeLabels(pts, minGap = 30) {
 }
 
 export function MaRuler({ signals }) {
-  const rows = TICKERS.map((t) => [t, signals?.[t]?.trend_status]).filter(([, ts]) => ts)
+  const { t } = useLanguage()
+  const rows = TICKERS.map((tk) => [tk, signals?.[tk]?.trend_status]).filter(([, ts]) => ts)
   if (!rows.length) return null
   const vals = rows.flatMap(([, ts]) => MARKS.map(([k]) => ts[k])).filter(Number.isFinite)
   // even-number bounds around the data, always including zero
@@ -94,12 +98,12 @@ export function MaRuler({ signals }) {
     <div className="bg-[var(--color-bg)] rounded-2xl p-3">
       <div className="flex items-baseline justify-between mb-1">
         <h3 className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)]">
-          Distance from each average
+          {t('bench.rulerTitle')}
         </h3>
-        <span className="text-[11px] text-[var(--color-text-muted)]">right of 0 = above it</span>
+        <span className="text-[11px] text-[var(--color-text-muted)]">{t('bench.rulerHint')}</span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" role="img"
-           aria-label="distance of SPY, QQQ, IWM and RSP from their 9/21-day EMA, 50/200-day SMA and 52-week high">
+           aria-label={t('bench.rulerAria')}>
         {ticks.map((v) => (
           <g key={v}>
             <line x1={x(v)} x2={x(v)} y1={TOP - 6} y2={H - 18}
@@ -109,18 +113,18 @@ export function MaRuler({ signals }) {
                   style={{ fill: 'var(--color-text-muted)' }}>{v > 0 ? `+${v}` : v}%</text>
           </g>
         ))}
-        {rows.map(([t, ts], r) => {
+        {rows.map(([tk, ts], r) => {
           const y = TOP + r * ROW + ROW / 2
           const pts = placeLabels(MARKS.filter(([k]) => Number.isFinite(ts[k]))
             .map(([k, label]) => ({ k, label, v: ts[k], x: x(ts[k]) })))
           return (
-            <g key={t}>
+            <g key={tk}>
               <text x={4} y={y + 4} fontSize="13" fontWeight="600"
-                    style={{ fill: 'var(--color-text)' }}>{t}</text>
+                    style={{ fill: 'var(--color-text)' }}>{tk}</text>
               <line x1={PAD_L} x2={W - PAD_R} y1={y} y2={y} stroke="var(--color-border-light)" />
               {pts.map((p) => (
                 <g key={p.k}>
-                  <title>{`${t} vs ${p.label}: ${p.v > 0 ? '+' : ''}${p.v.toFixed(2)}%`}</title>
+                  <title>{t('bench.rulerDot', { t: tk, label: p.label, v: `${p.v > 0 ? '+' : ''}${p.v.toFixed(2)}` })}</title>
                   <circle cx={p.x} cy={y} r="5" stroke="var(--color-bg)" strokeWidth="1.5"
                           fill={p.v >= 0 ? 'var(--color-took)' : 'var(--color-refused)'} />
                   <text x={p.x} y={p.up ? y - 9 : y + 17} fontSize="11" textAnchor="middle"

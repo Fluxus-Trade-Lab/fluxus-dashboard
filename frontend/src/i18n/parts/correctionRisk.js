@@ -1,0 +1,120 @@
+// Market State i18n part (correctionRisk) — merged into translations.js. Same rules as
+// that file's header: flat dotted keys, identical key sets in en and zh,
+// tickers / numbers / trade proper nouns (T2108, McClellan, RS, ATR) stay Latin.
+//
+// Correction risk panel (CorrectionRiskPanel.jsx). Glossary here: drawdown 回撤 ·
+// base rate 基础比率 · term structure 期限结构 · dealer gamma 做市商 gamma ·
+// washout 出清 · percentile 分位. The TICK reading sentence itself is built in
+// lib/tickReading.js (englishReading / chineseReading), not here.
+export default {
+  en: {
+    'cr.notMeasured': '{what} — not measured.',
+    'cr.notMeasuredLast': '{what} — not measured (last {date}).',
+    'cr.what': 'Correction risk',
+
+    'cr.ts.1': 'complacent (<0.8)',
+    'cr.ts.2': 'neutral (0.8–1.0)',
+    'cr.ts.3': 'fear (1.0–1.1)',
+    'cr.ts.4': 'capitulation (≥1.1)',
+
+    'cr.grid.aria': 'share of days followed by a 5% drawdown within 21 sessions, by VIX level, 200-day side and VIX term structure',
+    'cr.grid.above': 'Above 200-day',
+    'cr.grid.below': 'Below 200-day',
+    'cr.grid.tipAbove': 'above 200-day · term structure {ts} · {col}: {rate} of {n} days{thin}',
+    'cr.grid.tipBelow': 'below 200-day · term structure {ts} · {col}: {rate} of {n} days{thin}',
+    'cr.grid.thin': ' — too few days to read',
+
+    'cr.head.q': 'P(S&P 500 falls ≥5% within 21 sessions)',
+    'cr.head.counts': '{n} days in this cell · {base} across all days since 1990',
+    'cr.head.vixAbove': 'VIX {vix} (quintile {q} of 5) · above the 200-day',
+    'cr.head.vixBelow': 'VIX {vix} (quintile {q} of 5) · below the 200-day',
+    'cr.head.ts': ' · term structure {ts}',
+    'cr.head.tsNone': ' · term-structure dimension not measured',
+    'cr.head.note': 'Each cell: of all days since {from} in that state, the share followed by a ≥5% S&P 500 drop within 21 sessions ({sessions} days, {episodes} separate drops). Darker = it happened more often. The ringed cell is today. Pale dashed cells have fewer than {thin} days — too few to read. Conditional base-rate table, no fitted parameters.',
+
+    'cr.side.label': 'Side readings',
+    'cr.side.aside': 'annotations — not part of the probability above',
+    'cr.side.nhnl': 'Breadth washout (NH/NL)',
+    'cr.side.nhnlAsks': 'how deep the internal flush is',
+    'cr.side.nhnlState': '{state} · 10-EMA ratio {ratio}',
+    'cr.side.gex': 'Dealer gamma (GEX)',
+    'cr.side.gexAsks': 'how thick the dealer cushion is',
+    'cr.side.gexState': '{p}th percentile of the year',
+    'cr.side.followed': '{state} — a 5% drawdown followed {rate} of days in this state',
+    'cr.side.since': 'since {from} · dashed = {base} across all days of this history',
+    'cr.side.gexKey': ' · Q1 = least dealer gamma, Q5 = most',
+    'cr.side.stale': 'not measured (last {date})',
+    'cr.side.note': 'Bars: the same 5%-drop question, split by this reading\'s own states, over its own history. The dashed line is that history\'s all-days rate — not the {base} above, which comes from a longer sample. Today\'s state is the dark bar.',
+    'cr.state.oversold': 'oversold',
+    'cr.state.mid': 'mid',
+    'cr.state.overbought': 'overbought',
+    'cr.state.lowGamma': 'low dealer gamma',
+    'cr.state.highGamma': 'high dealer gamma',
+
+    'cr.bars.aria': 'share of days followed by a 5% drawdown, by state of this reading',
+    'cr.bars.tip': '{lab}: {rate} of {n} days',
+
+    'cr.tick.aria': 'after entering this TICK band versus all sessions',
+    'cr.tick.ret': 'Median 21-session return',
+    'cr.tick.dd': 'Chance of a ≥5% drop',
+    'cr.tick.after': 'after entering this band',
+    'cr.tick.all': 'all sessions',
+    'cr.tick.tipAfter': '{label}, after entering this band: {v}',
+    'cr.tick.tipAll': '{label}, all sessions: {v}',
+  },
+  zh: {
+    'cr.notMeasured': '{what}：未测量。',
+    'cr.notMeasuredLast': '{what}：未测量（最近一次 {date}）。',
+    'cr.what': '回调风险',
+
+    'cr.ts.1': '自满（<0.8）',
+    'cr.ts.2': '中性（0.8–1.0）',
+    'cr.ts.3': '恐惧（1.0–1.1）',
+    'cr.ts.4': '投降式抛售（≥1.1）',
+
+    'cr.grid.aria': '按 VIX 水平、200 日线上下和 VIX 期限结构分格：之后 21 个交易日内出现 5% 回撤的天数占比',
+    'cr.grid.above': '200 日线上方',
+    'cr.grid.below': '200 日线下方',
+    'cr.grid.tipAbove': '200 日线上方 · 期限结构{ts} · {col}：{n} 天里有 {rate}{thin}',
+    'cr.grid.tipBelow': '200 日线下方 · 期限结构{ts} · {col}：{n} 天里有 {rate}{thin}',
+    'cr.grid.thin': '，天数太少，不作解读',
+
+    'cr.head.q': '标普 500 在 21 个交易日内回撤 ≥5% 的概率',
+    'cr.head.counts': '本格 {n} 天 · 1990 年以来全部交易日的基础比率 {base}',
+    'cr.head.vixAbove': 'VIX {vix}（五分位第 {q} 档）· 站在 200 日线上方',
+    'cr.head.vixBelow': 'VIX {vix}（五分位第 {q} 档）· 跌在 200 日线下方',
+    'cr.head.ts': ' · 期限结构{ts}',
+    'cr.head.tsNone': ' · 期限结构这一维未测量',
+    'cr.head.note': '每一格：{from} 年以来处在这个状态的所有交易日里，之后 21 个交易日内 S&P 500 跌了 ≥5% 的占比（共 {sessions} 天，{episodes} 次独立下跌）。颜色越深，发生得越多。圈起来的那格是今天。浅色虚线格不到 {thin} 天，样本太少，不作解读。这是一张条件基础比率表，没有拟合参数。',
+
+    'cr.side.label': '旁证读数',
+    'cr.side.aside': '只作注释，不计入上面的概率',
+    'cr.side.nhnl': '广度出清（NH/NL）',
+    'cr.side.nhnlAsks': '内部洗盘洗得多深',
+    'cr.side.nhnlState': '{state} · 10-EMA 比值 {ratio}',
+    'cr.side.gex': '做市商 gamma（GEX）',
+    'cr.side.gexAsks': '做市商的缓冲垫有多厚',
+    'cr.side.gexState': '过去一年的 {p} 分位',
+    'cr.side.followed': '{state}：处在这个状态的交易日里，{rate} 之后出现了 5% 回撤',
+    'cr.side.since': '{from} 年起 · 虚线 = 这段历史全部交易日的 {base}',
+    'cr.side.gexKey': ' · Q1 = 做市商 gamma 最少，Q5 = 最多',
+    'cr.side.stale': '未测量（最近一次 {date}）',
+    'cr.side.note': '柱子：问的还是 5% 回撤，只是按这项读数自己的状态分组，用它自己的历史。虚线是这段历史全部交易日的比率，跟上面那个 {base} 不是一回事——那个来自更长的样本。深色那根是今天所处的状态。',
+    'cr.state.oversold': '超卖',
+    'cr.state.mid': '中间',
+    'cr.state.overbought': '超买',
+    'cr.state.lowGamma': '做市商 gamma 低',
+    'cr.state.highGamma': '做市商 gamma 高',
+
+    'cr.bars.aria': '按这项读数的状态分组：之后出现 5% 回撤的天数占比',
+    'cr.bars.tip': '{lab}：{n} 天里有 {rate}',
+
+    'cr.tick.aria': '进入这个 TICK 带之后与全部交易日对比',
+    'cr.tick.ret': '21 日收益中位数',
+    'cr.tick.dd': '跌 ≥5% 的概率',
+    'cr.tick.after': '进入这个带之后',
+    'cr.tick.all': '全部交易日',
+    'cr.tick.tipAfter': '{label}，进入这个带之后：{v}',
+    'cr.tick.tipAll': '{label}，全部交易日：{v}',
+  },
+}

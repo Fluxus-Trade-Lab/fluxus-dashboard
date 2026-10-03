@@ -1,8 +1,10 @@
 import BreadthPanes from './BreadthPanes'
-import { verdictParts, indexCards, breadthTiles, crossAsset, recapNotes, boldParts } from './marketStateMinMath'
+import { withVars, verdictParts, indexCards, breadthTiles, crossAsset, recapNotes, boldParts } from './marketStateMinMath'
 import { useRecapCross } from './useRecapCross'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { leaderRows, themeTransitions, themeRows } from './morningReadMath'
+import { dataName } from '../../i18n/names'
+import msMain from '../../i18n/parts/msMain'
 
 /* Market State, minimal (Andy 2026-10-03, preview artifact Mf9ZEf6kYwVNSp3sR9GMNb:
    「对」). Data, not annotation: a label, one big number, one line under it.
@@ -32,17 +34,22 @@ function Pill({ good, children }) {
 
 const Mono = ({ className = '', children }) => <span className={`font-mono tabular-nums ${className}`}>{children}</span>
 
+/** A word that arrives as data but is interface vocabulary (green, MIXED, Leading):
+    translated when the dictionary knows it, shown as it arrived otherwise. */
+const word = (t, prefix, v) => (v != null && msMain.en[`${prefix}.${v}`] != null ? t(`${prefix}.${v}`) : v)
+
 export function VerdictStrip({ ml }) {
-  const v = verdictParts(ml)
+  const t = withVars(useLanguage().t)
+  const v = verdictParts(ml, t)
   if (!v) return null
-  const word = { full: true, dim: null, avoid: false }[v.verdict]
+  const good = { full: true, dim: null, avoid: false }[v.verdict]
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-[var(--color-border-light)] bg-[var(--color-surface)] px-4 py-3">
-      <Pill good={word}>{v.verdict}</Pill>
+      <Pill good={good}>{word(t, 'ms.verdict', v.verdict)}</Pill>
       {v.parts.map((p) => (
         <span key={p.key} className="inline-flex items-baseline gap-1.5 text-[13px]">
           <span className="text-[11px] uppercase tracking-[.06em] text-[var(--color-text-muted)]">{p.label}</span>
-          <Mono className={p.good === true ? 'text-[var(--color-profit)]' : p.good === false ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}>{p.value ?? '—'}</Mono>
+          <Mono className={p.good === true ? 'text-[var(--color-profit)]' : p.good === false ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}>{(p.key === 'spy' || p.key === 'qqq' ? word(t, 'ms.light', p.value) : p.key === 'breadth' ? word(t, 'ms.env', p.value) : p.value) ?? '—'}</Mono>
           {p.detail && <span className="text-[11px] text-[var(--color-text-muted)]">{p.detail}</span>}
         </span>
       ))}
@@ -51,50 +58,51 @@ export function VerdictStrip({ ml }) {
 }
 
 export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, loadingFull, themes, groupsHistory, universe }) {
+  const { lang, t: t0 } = useLanguage()
+  const t = withVars(t0)
   const idx = indexCards(etfs, ml)
-  const tiles = breadthTiles(rows)
+  const tiles = breadthTiles(rows, t)
   const leaders = leaderRows(ml, universe)
   const trans = themeRows(themeTransitions(groupsHistory), themes)
   const cross = crossAsset(etfs, signals)
-  const { lang } = useLanguage()
   const notes = recapNotes(useRecapCross(), ml?.date, lang === 'zh' ? 'zh' : 'en')
   return (
     <div>
       <VerdictStrip ml={ml} />
 
-      <Sec>Index</Sec>
+      <Sec>{t('ms.sec.index')}</Sec>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2.5">
         {idx.map((c) => {
-          const st = c.light ? [c.light === 'green' ? 'Uptrend' : c.light === 'red' ? 'Downtrend' : 'Mixed', c.light === 'green' ? true : c.light === 'red' ? false : null]
-            : c.aboveSma50 == null ? null : [c.aboveSma50 ? '> 50-day' : '< 50-day', c.aboveSma50]
+          const st = c.light ? [t(c.light === 'green' ? 'ms.idx.up' : c.light === 'red' ? 'ms.idx.down' : 'ms.idx.mixed'), c.light === 'green' ? true : c.light === 'red' ? false : null]
+            : c.aboveSma50 == null ? null : [t(c.aboveSma50 ? 'ms.idx.above50' : 'ms.idx.below50'), c.aboveSma50]
           return (
             <Card key={c.ticker} sign={c.chg}>
               <div className="flex items-baseline justify-between gap-2">
                 <Mono className="text-[13px] font-semibold text-[var(--color-text-bold)]">{c.ticker}</Mono>
                 <Mono className={`text-[17px] ${tone(c.chg)}`}>{pc(c.chg, 2)}</Mono>
               </div>
-              <Mono className="block mt-0.5 text-[11px] text-[var(--color-text-muted)]">${c.close?.toFixed(2)} · {c.fromHigh == null ? '' : Math.abs(c.fromHigh) < 0.0005 ? 'at high' : `${pc(c.fromHigh)} from high`}</Mono>
+              <Mono className="block mt-0.5 text-[11px] text-[var(--color-text-muted)]">${c.close?.toFixed(2)} · {c.fromHigh == null ? '' : Math.abs(c.fromHigh) < 0.0005 ? t('ms.idx.atHigh') : t('ms.idx.fromHigh', { v: pc(c.fromHigh) })}</Mono>
               <div className="mt-2 flex items-center justify-between gap-2 text-[11px] text-[var(--color-text-muted)]">
                 {st ? <Pill good={st[1]}>{st[0]}</Pill> : <span />}
-                <Mono className="whitespace-nowrap">1W {pc(c.w1)}</Mono>
+                <Mono className="whitespace-nowrap">{t('ms.w1', { v: pc(c.w1) })}</Mono>
               </div>
             </Card>
           )
         })}
       </div>
 
-      <Sec>Breadth</Sec>
+      <Sec>{t('ms.sec.breadth')}</Sec>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2.5">
-        {tiles.map((t) => (
-          <Card key={t.key} sign={t.sign}>
-            <div className="text-[11px] uppercase tracking-[.04em] text-[var(--color-text-muted)]">{t.label}</div>
+        {tiles.map((tl) => (
+          <Card key={tl.key} sign={tl.sign}>
+            <div className="text-[11px] uppercase tracking-[.04em] text-[var(--color-text-muted)]">{tl.label}</div>
             <Mono className="block mt-0.5 text-[26px] leading-tight text-[var(--color-text-bold)]">
-              {t.value == null ? '—' : typeof t.value === 'string' ? t.value
-                : t.key === 'adv' ? `${t.value > 0 ? '+' : ''}${t.value.toLocaleString()}`
-                : t.key === 'mco' ? sgn(t.value) : `${Math.round(t.value)}${t.unit ?? ''}`}
+              {tl.value == null ? '—' : typeof tl.value === 'string' ? tl.value
+                : tl.key === 'adv' ? `${tl.value > 0 ? '+' : ''}${tl.value.toLocaleString()}`
+                : tl.key === 'mco' ? sgn(tl.value) : `${Math.round(tl.value)}${tl.unit ?? ''}`}
             </Mono>
             <Mono className="block mt-1 text-[11px] text-[var(--color-text-muted)]">
-              {t.sub ?? (t.delta == null ? '' : `${sgn(t.delta)} vs prior`)}
+              {tl.sub ?? (tl.delta == null ? '' : t('ms.tile.vsPrior', { v: sgn(tl.delta) }))}
             </Mono>
           </Card>
         ))}
@@ -103,17 +111,17 @@ export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, load
         <BreadthPanes rows={paneRows} loadingFull={loadingFull} bare initialIndicator="kma" />
       </div>
 
-      <Sec>Leaders</Sec>
+      <Sec>{t('ms.sec.leaders')}</Sec>
       <div className="overflow-x-auto rounded-lg border border-[var(--color-border-light)] bg-[var(--color-surface)]">
         <table className="w-full border-collapse text-[13px]">
           <thead><tr className="text-[11px] uppercase tracking-[.04em] text-[var(--color-text-muted)]">
-            {['Ticker', 'Theme', 'RS', 'RS line', '1D', '1W', 'From high', '50-day'].map((h, i) =>
-              <th key={h} className={`px-2.5 py-2 font-medium border-b border-[var(--color-border-light)] whitespace-nowrap ${i < 2 ? 'text-left' : 'text-right'}`}>{h}</th>)}
+            {['ticker', 'theme', 'rs', 'rsLine', 'd1', 'w1', 'fromHigh', 'sma50'].map((h, i) =>
+              <th key={h} className={`px-2.5 py-2 font-medium border-b border-[var(--color-border-light)] whitespace-nowrap ${i < 2 ? 'text-left' : 'text-right'}`}>{t(`ms.th.${h}`)}</th>)}
           </tr></thead>
           <tbody>{leaders.map((l) => (
             <tr key={l.ticker} className="border-b border-[var(--color-border-light)] last:border-0">
               <td className="px-2.5 py-1.5"><Mono className="font-semibold text-[var(--color-text-bold)]">{l.ticker}</Mono></td>
-              <td className="px-2.5 py-1.5 text-[var(--color-text-secondary)] whitespace-nowrap">{l.theme ?? '—'}</td>
+              <td className="px-2.5 py-1.5 text-[var(--color-text-secondary)] whitespace-nowrap">{dataName(l.theme, lang) ?? '—'}</td>
               <td className="px-2.5 py-1.5 text-right"><Mono>{l.rs_rating ?? '—'}</Mono></td>
               <td className="px-2.5 py-1.5 text-right"><Mono>{l.rs_line == null ? '—' : Math.round(l.rs_line)}</Mono></td>
               <td className={`px-2.5 py-1.5 text-right ${cell(l.chg)}`}><Mono>{pc(l.chg)}</Mono></td>
@@ -125,25 +133,25 @@ export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, load
         </table>
       </div>
 
-      <Sec>Themes</Sec>
+      <Sec>{t('ms.sec.themes')}</Sec>
       <div className="overflow-x-auto rounded-lg border border-[var(--color-border-light)] bg-[var(--color-surface)]">
         <table className="w-full border-collapse text-[13px]">
           <thead><tr className="text-[11px] uppercase tracking-[.04em] text-[var(--color-text-muted)]">
-            {['Theme', 'State', '1D', '1W', '1M', '3M', 'Names'].map((h, i) =>
-              <th key={h} className={`px-2.5 py-2 font-medium border-b border-[var(--color-border-light)] whitespace-nowrap ${i < 2 ? 'text-left' : 'text-right'}`}>{h}</th>)}
+            {['theme', 'state', 'd1', 'w1', 'm1', 'm3', 'names'].map((h, i) =>
+              <th key={h} className={`px-2.5 py-2 font-medium border-b border-[var(--color-border-light)] whitespace-nowrap ${i < 2 ? 'text-left' : 'text-right'}`}>{t(`ms.th.${h}`)}</th>)}
           </tr></thead>
-          <tbody>{trans.map((t) => (
-            <tr key={t.name} className="border-b border-[var(--color-border-light)] last:border-0">
-              <td className="px-2.5 py-1.5 whitespace-nowrap">{t.name}</td>
-              <td className="px-2.5 py-1.5 whitespace-nowrap text-[var(--color-text-secondary)]">{t.from} → <b className={`font-medium ${t.dir === 'up' ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{t.to}</b></td>
-              {[t.d1, t.w1, t.m1, t.m3].map((v, i) => <td key={i} className={`px-2.5 py-1.5 text-right ${cell(v)}`}><Mono>{pc(v)}</Mono></td>)}
-              <td className="px-2.5 py-1.5 text-right"><Mono>{t.members ?? '—'}</Mono></td>
+          <tbody>{trans.map((th) => (
+            <tr key={th.name} className="border-b border-[var(--color-border-light)] last:border-0">
+              <td className="px-2.5 py-1.5 whitespace-nowrap">{dataName(th.name, lang)}</td>
+              <td className="px-2.5 py-1.5 whitespace-nowrap text-[var(--color-text-secondary)]">{word(t, 'ms.state', th.from)} → <b className={`font-medium ${th.dir === 'up' ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{word(t, 'ms.state', th.to)}</b></td>
+              {[th.d1, th.w1, th.m1, th.m3].map((v, i) => <td key={i} className={`px-2.5 py-1.5 text-right ${cell(v)}`}><Mono>{pc(v)}</Mono></td>)}
+              <td className="px-2.5 py-1.5 text-right"><Mono>{th.members ?? '—'}</Mono></td>
             </tr>))}
           </tbody>
         </table>
       </div>
 
-      <Sec>Cross-asset</Sec>
+      <Sec>{t('ms.sec.cross')}</Sec>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2.5">
         {cross.map((c) => (
           <Card key={c.ticker} sign={c.chg}>
@@ -152,7 +160,7 @@ export default function MarketStateMin({ ml, etfs, signals, rows, paneRows, load
               <Mono className={`text-[13px] ${c.ticker === 'VIX' ? 'text-[var(--color-text)]' : tone(c.chg)}`}>{c.ticker === 'VIX' ? (c.last?.toFixed(2) ?? '—') : pc(c.chg, 2)}</Mono>
             </div>
             <Mono className="block mt-1 text-[11px] text-[var(--color-text-muted)]">
-              {c.ticker === 'VIX' ? 'volatility index' : `1W ${pc(c.w1)} · vs SPY ${sgn(c.vsSpy == null ? null : c.vsSpy * 100)}`}
+              {c.ticker === 'VIX' ? t('ms.cross.vix') : t('ms.cross.line', { w: pc(c.w1), s: sgn(c.vsSpy == null ? null : c.vsSpy * 100) })}
             </Mono>
           </Card>
         ))}

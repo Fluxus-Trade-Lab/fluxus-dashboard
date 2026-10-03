@@ -1,8 +1,10 @@
 import { useRef } from 'react'
 import { CandlestickSeries, LineSeries } from 'lightweight-charts'
 import { useBreadthChart, chartTokens } from './useBreadthChart'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function HealthChart({ title, block, state, t2108, warnCount }) {
+  const { t } = useLanguage()
   const containerRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -63,7 +65,7 @@ export default function HealthChart({ title, block, state, t2108, warnCount }) {
       </div>
       <div ref={containerRef} />
       <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-        20 SMA thin · 50 SMA dark · T2108 dotted, 20/80 dashed
+        {t('bench.chartLegend')}
       </div>
     </div>
   )

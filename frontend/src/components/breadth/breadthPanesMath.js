@@ -11,6 +11,8 @@
  * Everything self-made is named in `rule` so the page can print it.
  */
 
+import { tEn } from './marketStateMinMath'
+
 export const Z_WIN = 252
 export const Z_MIN_SESSIONS = 60
 export const RECENT = 15
@@ -18,7 +20,12 @@ export const AFTER = 20
 
 const num = (v) => (Number.isFinite(v) ? v : null)
 
-/** The indicators the panes can show, each over the pool columns it has. */
+/**
+ * The indicators the panes can show, each over the pool columns it has.
+ * `label` / `primary` / extra `label` / `note` are the English text; the
+ * reader's language comes from the msMain keys `ms.ind.<key>.label|primary|note`
+ * and `ms.ind.<key>.extra.<extraKey>` (see indicatorText).
+ */
 export const INDICATORS = {
   // Common stocks only (SPAC / ETF / closed-end fund / preferred excluded) --
   // the standard pool, and the one the engine votes on and the morning read
@@ -87,6 +94,20 @@ export const POOLS = [
   { key: 'ndx', label: 'Nasdaq-100', pending: 'T-0923-03' },
 ]
 
+/** Interface text for one indicator in the reader's language (t from useLanguage). */
+export function indicatorText(key, t = tEn) {
+  const k = INDICATORS[key] ? key : 'nhnl'
+  const ind = INDICATORS[k]
+  const label = t(`ms.ind.${k}.label`)
+  return {
+    label,
+    primary: ind.primary ? t(`ms.ind.${k}.primary`) : label,
+    note: t(`ms.ind.${k}.note`),
+    extra: Object.fromEntries((ind.extra ?? []).map((e) => [e.key, t(`ms.ind.${k}.extra.${e.key}`)])),
+    unit: ind.unit === 'names' ? t('ms.unit.names') : ind.unit,
+  }
+}
+
 /** Rolling z-score: each point against the prior Z_WIN sessions (itself included). */
 export function zscore(arr, win = Z_WIN, min = Z_MIN_SESSIONS) {
   const out = new Array(arr.length).fill(null)
@@ -109,8 +130,9 @@ export const softClip = (v, lim = 3) => (v > lim ? lim + (v - lim) / (1 + (v - l
  * Build the two series for the panes.
  * @returns {{dates, index, value, raw, threshold, bands, recentFrom, rule, poolNote}}
  */
-export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'abs', window = 250, pct = 0.1 } = {}) {
+export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'abs', window = 250, pct = 0.1, t = tEn } = {}) {
   const ind = INDICATORS[indicator] ?? INDICATORS.nhnl
+  const txt = indicatorText(indicator, t)
   const all = rows ?? []
   const readAll = ind.pools.all
   const readPool = ind.pools[pool]
@@ -118,7 +140,7 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
   let read = readAll
   if (pool !== 'all') {
     if (readPool) read = readPool
-    else poolNote = `${ind.label} has no ${POOLS.find((p) => p.key === pool)?.label ?? pool} series yet — showing the all-market pool.`
+    else poolNote = t('ms.pane.noPoolSeries', { label: txt.label, pool: POOLS.find((p) => p.key === pool) ? t(`ms.pool.${pool}`) : pool })
   }
   const rawFull = all.map((r) => read(r))
   const zFull = scale === 'z' ? zscore(rawFull).map((v) => (v == null ? null : softClip(v))) : rawFull
@@ -134,7 +156,7 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
   const raw = rawFull.slice(s)
   const finite = value.filter(Number.isFinite)
   let threshold = null
-  if (finite.length < Z_MIN_SESSIONS) poolNote += `${poolNote ? ' ' : ''}Only ${finite.length} sessions in this series — no oversold cut until it has ${Z_MIN_SESSIONS}.`
+  if (finite.length < Z_MIN_SESSIONS) poolNote += `${poolNote ? ' ' : ''}${t('ms.pane.tooShort', { n: finite.length, min: Z_MIN_SESSIONS })}`
   else if (scale === 'z') threshold = pct <= 0.1 ? -2 : -1
   else threshold = [...finite].sort((a, b) => a - b)[Math.floor(finite.length * pct)]
   // oversold runs; runs ≤3 sessions apart are one episode
@@ -152,11 +174,11 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
     return { from: dates[a], to: dates[b], days: b - a + 1, min: value[mi], minRaw: raw[mi], after: ret, partial: e - b < AFTER }
   })
   return {
-    indicator: ind, dates, index, value, raw, extras, threshold, bands, episodes,
+    indicator: ind, text: txt, dates, index, value, raw, extras, threshold, bands, episodes,
     recentFrom: Math.max(0, value.length - RECENT),
     poolNote,
     rule: scale === 'z'
-      ? `σ = z-score against the prior ${Z_WIN} sessions (our window; Alex does not publish his). Axis fixed at ±3σ, soft-clipped beyond. Oversold line at ${threshold}σ (Alex: −1σ alert, −2σ deep).`
-      : `Oversold = the lowest ${Math.round(pct * 100)}% of the window shown (our cut); runs ≤3 sessions apart count as one episode; "after" = the index ${AFTER} sessions past the episode's end.`,
+      ? t('ms.pane.ruleZ', { win: Z_WIN, th: String(threshold) })
+      : t('ms.pane.ruleAbs', { pct: Math.round(pct * 100), after: AFTER }),
   }
 }

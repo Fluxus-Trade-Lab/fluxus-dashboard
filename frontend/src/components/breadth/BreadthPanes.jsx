@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
-import { buildPanes, INDICATORS, POOLS } from './breadthPanesMath'
+import { buildPanes, INDICATORS, POOLS, indicatorText } from './breadthPanesMath'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { withVars } from './marketStateMinMath'
 
 /**
  * Index over breadth, on one time axis — step ②'s chart.
@@ -65,10 +67,13 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
   const [window, setWindow] = useState(250)
   const [pct, setPct] = useState(0.1)
   const [hover, setHover] = useState(null)
+  const lt = useLanguage().t
+  const t = useMemo(() => withVars(lt), [lt])
 
-  const p = useMemo(() => buildPanes(rows, { indicator, pool, scale, window, pct }), [rows, indicator, pool, scale, window, pct])
+  const p = useMemo(() => buildPanes(rows, { indicator, pool, scale, window, pct, t }), [rows, indicator, pool, scale, window, pct, t])
+  const tx = p.text
   const n = p.dates.length
-  if (n < 2) return <p className="m-0 text-[13px] italic text-[var(--color-text-muted)]">Breadth history — not loaded.</p>
+  if (n < 2) return <p className="m-0 text-[13px] italic text-[var(--color-text-muted)]">{t('ms.pane.notLoaded')}</p>
 
   const x = (j) => L + (j * (W - L - R)) / (n - 1)
   const bw = (W - L - R) / (n - 1)
@@ -104,23 +109,26 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
       {/* header — the TradersLab register: title left, pool tabs right */}
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-2">
         <div className="text-[13px] font-semibold text-[var(--color-text)]">
-          Index over breadth
-          {!bare && <span className="ml-2 text-[11px] font-normal text-[var(--color-text-muted)]">S&amp;P 500 close above · {p.indicator.label} below · one time axis</span>}
+          {t('ms.pane.title')}
+          {!bare && <span className="ml-2 text-[11px] font-normal text-[var(--color-text-muted)]">{t('ms.pane.subtitle', { label: tx.label })}</span>}
         </div>
-        <Seg label="Pool" value={pool} onChange={setPool}
-             items={POOLS.filter((q) => !(bare && q.pending)).map((q) => ({ key: q.key, label: q.pending ? `${q.label} · pending` : q.note && !bare ? `${q.label} · 9 sessions` : q.label,
-               disabled: !!q.pending, title: q.pending ? `data layer ${q.pending}` : q.note }))} />
+        <Seg label={t('ms.pane.pool')} value={pool} onChange={setPool}
+             items={POOLS.filter((q) => !(bare && q.pending)).map((q) => {
+               const ql = t(`ms.pool.${q.key}`)
+               return { key: q.key, label: q.pending ? t('ms.pane.pending', { label: ql }) : q.note && !bare ? t('ms.pane.sessions9', { label: ql }) : ql,
+                 disabled: !!q.pending, title: q.pending ? t('ms.pane.pendingTitle', { id: q.pending }) : q.note ? t(`ms.pool.${q.key}Note`) : q.note }
+             })} />
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-2">
-        <Seg value={indicator} onChange={setIndicator} items={Object.entries(INDICATORS).map(([k, v]) => ({ key: k, label: v.label }))} />
-        <Seg label="Ruler" value={scale} onChange={setScale} items={[{ key: 'abs', label: 'absolute' }, { key: 'z', label: 'σ · 252d' }]} />
-        <Seg label="Window" value={window} onChange={setWindow} items={[{ key: 120, label: '6m' }, { key: 250, label: '12m' }, { key: 9999, label: 'all' }]} />
-        <Seg label="Oversold" value={pct} onChange={setPct} items={[{ key: 0.1, label: scale === 'z' ? '−2σ' : 'lowest 10%' }, { key: 0.2, label: scale === 'z' ? '−1σ' : 'lowest 20%' }]} />
+        <Seg value={indicator} onChange={setIndicator} items={Object.keys(INDICATORS).map((k) => ({ key: k, label: indicatorText(k, t).label }))} />
+        <Seg label={t('ms.pane.ruler')} value={scale} onChange={setScale} items={[{ key: 'abs', label: t('ms.pane.abs') }, { key: 'z', label: t('ms.pane.z') }]} />
+        <Seg label={t('ms.pane.window')} value={window} onChange={setWindow} items={[{ key: 120, label: t('ms.pane.w6m') }, { key: 250, label: t('ms.pane.w12m') }, { key: 9999, label: t('ms.pane.wAll') }]} />
+        <Seg label={t('ms.pane.oversold')} value={pct} onChange={setPct} items={[{ key: 0.1, label: scale === 'z' ? '−2σ' : t('ms.pane.lowest10') }, { key: 0.2, label: scale === 'z' ? '−1σ' : t('ms.pane.lowest20') }]} />
       </div>
 
       <div className="relative rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-bg)]">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" role="img"
-             aria-label={`S&P 500 above, ${p.indicator.label} below, ${n} sessions`}
+             aria-label={t('ms.pane.aria', { label: tx.label, n })}
              onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
           {/* oversold bands across both panes; the last 15 sessions in accent */}
           {p.bands.map(([a, b]) => (
@@ -133,7 +141,7 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
             return <g key={k}><line x1={L} x2={W - R} y1={y} y2={y} stroke="var(--color-border-light)" strokeDasharray="2 4" /><text x={W - R + 6} y={y + 4} fontSize="10" style={{ fill: 'var(--color-text-muted)' }}>{v.toFixed(0)}</text></g>
           })}
           <path d={path(p.index, y1)} fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
-          <text x={L + 4} y={T + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>S&amp;P 500</text>
+          <text x={L + 4} y={T + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{t('ms.pane.spx')}</text>
           {lastIdx != null && <Tag y={y1(lastIdx)} text={lastIdx.toFixed(0)} />}
           {/* indicator pane */}
           {[0, 0.25, 0.5, 0.75, 1].map((k) => {
@@ -171,10 +179,10 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
           })}
           {(p.extras ?? []).length
             ? <text x={L + 4} y={top2 + 11} fontSize="11">
-                <tspan style={{ fill: 'var(--color-text)' }}>{p.indicator.primary ?? p.indicator.label}</tspan>
-                {p.extras.map((e, i) => <tspan key={e.key} dx="10" style={{ fill: EXTRA_INK[i % EXTRA_INK.length] }}>{e.label}</tspan>)}
+                <tspan style={{ fill: 'var(--color-text)' }}>{tx.primary}</tspan>
+                {p.extras.map((e, i) => <tspan key={e.key} dx="10" style={{ fill: EXTRA_INK[i % EXTRA_INK.length] }}>{tx.extra[e.key] ?? e.label}</tspan>)}
               </text>
-            : <text x={L + 4} y={top2 + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{p.indicator.label}{scale === 'z' ? ' · σ' : ''}</text>}
+            : <text x={L + 4} y={top2 + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{tx.label}{scale === 'z' ? ' · σ' : ''}</text>}
           {Number.isFinite(last) && <Tag y={Math.min(Math.max(y2(last), top2 + 8), H - BOTTOM - 8)} text={scale === 'z' ? `${last.toFixed(2)}σ` : (p.extras ?? []).length ? tagNum(last) : `${fmt(last, last % 1 ? 1 : 0)}`} tone={(p.extras ?? []).length ? 'ink' : 'accent'} />}
           {/* months */}
           {months.map(([j, m], i) => (i > 0 || window <= 250) && (
@@ -184,31 +192,31 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
         </svg>
         {hover != null && (
           <div className="absolute top-2 left-3 text-[11px] font-mono px-2 py-1 rounded bg-[var(--color-text)] text-[var(--color-surface)] pointer-events-none">
-            {p.dates[hover]} · S&amp;P {p.index[hover]?.toFixed(0) ?? '—'} · {p.indicator.label} {Number.isFinite(p.value[hover])
-              ? (scale === 'z' ? `${p.value[hover].toFixed(2)}σ (raw ${fmt(p.raw[hover], 1)})` : fmt(p.value[hover], p.value[hover] % 1 ? 1 : 0))
-              : '—'}{p.indicator.unit && scale !== 'z' ? ` ${p.indicator.unit}` : ''}
+            {p.dates[hover]} · {t('ms.pane.spxShort')} {p.index[hover]?.toFixed(0) ?? '—'} · {tx.label} {Number.isFinite(p.value[hover])
+              ? (scale === 'z' ? `${p.value[hover].toFixed(2)}σ (${t('ms.pane.raw', { v: fmt(p.raw[hover], 1) })})` : fmt(p.value[hover], p.value[hover] % 1 ? 1 : 0))
+              : '—'}{tx.unit && scale !== 'z' ? ` ${tx.unit}` : ''}
           </div>
         )}
       </div>
       {/* the long form of all this lives on the tooltip — the page keeps one line
           (Andy 09-23: 「你的文字太多了」), but nothing self-made goes unstated */}
       {!bare && <p className="m-0 mt-1.5 text-[11px] text-[var(--color-text-muted)]"
-         title={`${p.poolNote ? p.poolNote + ' ' : ''}${p.indicator.note}. ${p.rule}`}>
-        Grey = oversold episodes · accent = last 15 sessions · hover for values
-        {p.poolNote ? ' · pool note ↑' : ''}{loadingFull ? ' · loading the full archive' : ''}
-        <span className="ml-1 underline decoration-dotted cursor-help">how this is cut</span>
+         title={`${p.poolNote ? p.poolNote + ' ' : ''}${tx.note}. ${p.rule}`}>
+        {t('ms.pane.legend')}
+        {p.poolNote ? t('ms.pane.poolNoteMark') : ''}{loadingFull ? t('ms.pane.loadingFull') : ''}
+        <span className="ml-1 underline decoration-dotted cursor-help">{t('ms.pane.howCut')}</span>
       </p>}
 
       {!bare && p.episodes.length > 0 && (
         <details className="mt-2 text-[13px]">
           <summary className="cursor-pointer text-[var(--color-text-secondary)]">
-            Oversold episodes in this window <span className="font-mono text-[var(--color-text-muted)]">{p.episodes.length}</span> — and what the index did over the next {20} sessions
+            {t('ms.pane.epHead')} <span className="font-mono text-[var(--color-text-muted)]">{p.episodes.length}</span> {t('ms.pane.epTail', { n: 20 })}
           </summary>
           <div className="overflow-x-auto mt-2">
             <table className="w-full border-collapse text-[13px]">
               <thead><tr className="text-[11px] font-mono uppercase tracking-[.08em] text-[var(--color-text-muted)]">
-                <th className="text-left font-medium py-1 pr-3">Episode</th><th className="text-right font-medium py-1 pr-3">Sessions</th>
-                <th className="text-right font-medium py-1 pr-3">Low{scale === 'z' ? ' (σ)' : ''}</th><th className="text-right font-medium py-1">S&amp;P, next 20</th>
+                <th className="text-left font-medium py-1 pr-3">{t('ms.pane.epCol')}</th><th className="text-right font-medium py-1 pr-3">{t('ms.pane.sessCol')}</th>
+                <th className="text-right font-medium py-1 pr-3">{t('ms.pane.lowCol')}{scale === 'z' ? ' (σ)' : ''}</th><th className="text-right font-medium py-1">{t('ms.pane.afterCol')}</th>
               </tr></thead>
               <tbody>
                 {p.episodes.map((e) => (
@@ -217,7 +225,7 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
                     <td className="py-1 pr-3 text-right tabular-nums">{e.days}</td>
                     <td className="py-1 pr-3 text-right tabular-nums">{scale === 'z' ? e.min.toFixed(2) : e.min.toFixed(0)}</td>
                     <td className={`py-1 text-right tabular-nums ${e.after == null ? 'text-[var(--color-text-muted)]' : e.after >= 0 ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>
-                      {e.after == null ? '— (in progress)' : `${(e.after * 100).toFixed(1)}%${e.partial ? ' (under 20)' : ''}`}
+                      {e.after == null ? t('ms.pane.inProgress') : `${(e.after * 100).toFixed(1)}%${e.partial ? t('ms.pane.under20') : ''}`}
                     </td>
                   </tr>
                 ))}

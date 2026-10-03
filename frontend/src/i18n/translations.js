@@ -1,3 +1,12 @@
+import msMain from './parts/msMain'
+import correctionRisk from './parts/correctionRisk'
+import advancedPanels from './parts/advancedPanels'
+
+// Parts: one file per page area, so parallel work never edits the same file.
+// Each part carries its own en and zh; a key defined twice is a test failure
+// (translations.test.js), not a silent override.
+export const PARTS = { msMain, correctionRisk, advancedPanels }
+
 // zh-CN alongside English, for everything a reader sees.
 //
 // Flat dotted keys. A missing key falls back to English and, in development,
@@ -25,7 +34,7 @@
 //   realized 已实现     optimal 最优      capture 捕获率
 //
 
-export const translations = {
+const base = {
   en: {
     // Brand / header
     'brand.name': 'Fluxus Capital',
@@ -1003,3 +1012,9 @@ export const translations = {
     'dash.noMove': '该标的没有测到涨跌幅',
   },
 }
+
+export const translations = {
+  en: Object.assign({}, base.en, ...Object.values(PARTS).map((p) => p.en)),
+  zh: Object.assign({}, base.zh, ...Object.values(PARTS).map((p) => p.zh)),
+}
+export const BASE = base

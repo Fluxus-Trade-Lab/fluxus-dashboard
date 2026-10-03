@@ -1,4 +1,5 @@
 import { orig } from './origCols'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * The archive — and, since 2026-09-11, the only place today's raw counts are
@@ -10,6 +11,7 @@ import { orig } from './origCols'
  * breadth carried that this table did not — is now a column.
  */
 export default function BreadthTable({ data }) {
+  const { t } = useLanguage()
   const rows = data?.history?.rows
   if (!rows?.length) return null
 
@@ -29,36 +31,35 @@ export default function BreadthTable({ data }) {
       {/* one scroll box for both axes, so the header and today's row can stick
           while the history scrolls under them */}
       <p className="px-3 pt-2 pb-1 m-0 text-[11px] text-[var(--color-text-muted)]">
-        4%, ratio, 25%/qtr, month and NH/NL columns print Stockbee's own scans (NH/NL: common stocks).
-        <span className="italic"> Grey italic</span> = the older count, shown where the author's column
-        does not exist yet; it is never tinted and no vote reads it.
+        {t('arch.legendA')}
+        <span className="italic">{t('arch.legendItalic')}</span>{t('arch.legendB')}
       </p>
       <div className="overflow-auto max-h-[460px]">
         <table className="w-full text-[13px] border-separate border-spacing-0">
           <thead className="sticky top-0 z-20">
             <tr className="bg-[var(--color-bg)]">
-              <Th>Date</Th>
-              <Th>Up 4%</Th>
-              <Th>Dn 4%</Th>
-              <Th>5D Ratio</Th>
-              <Th>10D Ratio</Th>
+              <Th>{t('arch.date')}</Th>
+              <Th>{t('arch.up4')}</Th>
+              <Th>{t('arch.dn4')}</Th>
+              <Th>{t('arch.r5')}</Th>
+              <Th>{t('arch.r10')}</Th>
               <ThSep />
-              <Th>Up 25% Qtr</Th>
-              <Th>Dn 25% Qtr</Th>
-              <Th>Up 25% Mo</Th>
-              <Th>Dn 25% Mo</Th>
-              <Th>Up 50% Mo</Th>
-              <Th>Dn 50% Mo</Th>
+              <Th>{t('arch.up25q')}</Th>
+              <Th>{t('arch.dn25q')}</Th>
+              <Th>{t('arch.up25m')}</Th>
+              <Th>{t('arch.dn25m')}</Th>
+              <Th>{t('arch.up50m')}</Th>
+              <Th>{t('arch.dn50m')}</Th>
               <ThSep />
               <Th>T2108</Th>
-              <Th>% &gt; 200</Th>
-              <Th>% &gt; 50</Th>
-              <Th>% &gt; 20</Th>
+              <Th>{t('arch.p200')}</Th>
+              <Th>{t('arch.p50')}</Th>
+              <Th>{t('arch.p20')}</Th>
               <ThSep />
-              <Th>Adv</Th>
-              <Th>Dec</Th>
-              <Th>NH</Th>
-              <Th>NL</Th>
+              <Th>{t('arch.adv')}</Th>
+              <Th>{t('arch.dec')}</Th>
+              <Th>{t('arch.nh')}</Th>
+              <Th>{t('arch.nl')}</Th>
               <Th>McCl</Th>
               <Th title="Nasdaq-100 pool, T-0923-03 -- the standard reading; McCl above is the legacy full-universe column, kept for archive continuity">McCl (NDX)</Th>
               <Th title="McClellan Summation Index, Nasdaq-100 pool">MCSI</Th>
@@ -141,12 +142,13 @@ function Td({ children, className = '' }) {
 
 /** A count with an author-definition column: that value, or the old one greyed. */
 function OTd({ row, k, fmt = (v) => v, tone }) {
+  const { t } = useLanguage()
   const { v, old } = orig(row, k)
   if (v == null) return <Td />
   if (old) {
     return (
       <Td className="italic text-[var(--color-text-muted)] font-normal">
-        <span title="older count — the author's column starts later">{fmt(v)}</span>
+        <span title={t('arch.oldTitle')}>{fmt(v)}</span>
       </Td>
     )
   }

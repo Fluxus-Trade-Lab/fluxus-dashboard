@@ -72,7 +72,13 @@ export function useLanguage() {
   const ctx = useContext(LanguageContext)
   if (!ctx) {
     // Safe fallback if a component renders outside the provider (e.g. isolated tests).
-    return { lang: 'en', setLang: () => {}, toggle: () => {}, t: (k) => translations.en[k] ?? k }
+    // Fills {placeholders} like the real t() does — without that, a component
+    // rendered outside the provider printed "{date} · high {h}" (caught 10-03).
+    const t = (k, vars) => {
+      const str = translations.en[k] ?? k
+      return vars ? String(str).replace(/\{(\w+)\}/g, (m, v) => (vars[v] != null ? String(vars[v]) : m)) : str
+    }
+    return { lang: 'en', setLang: () => {}, toggle: () => {}, t }
   }
   return ctx
 }

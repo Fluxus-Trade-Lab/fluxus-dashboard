@@ -28,9 +28,15 @@ import { barStyle } from '../groups/ThemeBars'
 
 
 
+import { useLanguage } from '../../i18n/LanguageContext'
+
+// an unknown state from the pipeline shows as it arrived, never as a raw key
+const STATES = new Set(['Leading', 'Weakening', 'Improving', 'Lagging'])
+
 const pct = (v) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`)
 
 export default function StateRibbon({ steps, labels, windowNote }) {
+  const { t } = useLanguage()
   if (!steps?.length) {
     return <span className="text-[var(--color-text-muted)] text-[11px]">—</span>
   }
@@ -38,11 +44,11 @@ export default function StateRibbon({ steps, labels, windowNote }) {
   return (
     <span className="flex gap-[2px] items-stretch h-[14px] w-full">
       {steps.map((s, i) => {
-        const label = labels?.[i] ?? `step ${i + 1}`
+        const label = labels?.[i] ?? t('ribbon.step', { n: i + 1 })
         const title = s?.state
-          ? `${label}: ${s.state} — level ${pct(s.level)}, accel ${pct(s.accel)}` +
+          ? t('ribbon.hover', { label, state: STATES.has(s.state) ? t(`state.${s.state}`) : s.state, level: pct(s.level), accel: pct(s.accel) }) +
             (windowNote ? `\n${windowNote}` : '')
-          : `${label}: not measurable`
+          : t('ribbon.notMeasurable', { label })
         return (
           <span
             key={i}

@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import RotationPanel from './RotationPanel'
-import BenchmarkPanel from './BenchmarkPanel'
 import CorrectionRiskPanel from './CorrectionRiskPanel'
 import TickCycleChart from './TickCycleChart'
 import BreadthTable from './BreadthTable'
@@ -13,6 +12,8 @@ import { useGroupsHistory } from '../../hooks/useGroupsHistory'
 import { useBreadthReplay } from '../../hooks/useBreadthReplay'
 import { useUniverse } from '../../hooks/useUniverse'
 import Reference from '../Reference'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { withVars } from './marketStateMinMath'
 
 /**
  * Market State — minimal (2026-10-03).
@@ -34,43 +35,38 @@ import Reference from '../Reference'
  * 以及archive里面的raw counts。其他的我觉得是重复/多余的」, then 选 A after the
  * audit): the % above / McClellan charts and the Stockbee rulers repeated the
  * main screen and came off; the summation, 5/10-day ratio and quarterly ±25%
- * series moved into the main chart's indicator menu. Benchmarks stays — its
- * five danger warnings are on no other surface.
+ * series moved into the main chart's indicator menu. Later the same day, on a
+ * screenshot of Benchmarks: 「图1的内容全部下线」 — BenchmarkPanel is off the page
+ * (file kept). The fold is Correction risk, TICK cycle chart, Risk on/off, Archive.
  */
 export default function BreadthPage({ data }) {
+  const t = withVars(useLanguage().t)
   const { data: ml } = useMarketLight()
   const groups = useGroups()
   const gh = useGroupsHistory()
   const replay = useBreadthReplay()
   const { universe } = useUniverse()
   const breadth = data?.breadth
-  const mh = data?.market_health
 
   const universeByTicker = useMemo(
     () => Object.fromEntries((universe ?? []).map((r) => [r.ticker, r])),
     [universe],
   )
-  const history = breadth?.history
-  const t2108Overlay = useMemo(
-    () => (history ? { dates: history.dates, values: history.rows.map((r) => r.t2108) } : null),
-    [history],
-  )
 
   if (!breadth) {
     return (
       <div className="text-[var(--color-text-muted)] text-[13px] font-medium uppercase tracking-wide py-8 text-center">
-        No breadth data available
+        {t('ms.noData')}
       </div>
     )
   }
 
-  const verdict = breadth.verdict
   const rows = breadth.history?.rows ?? []
   const session = rows[rows.length - 1]?.date
 
   return (
     <div className="space-y-3">
-      <PageHeader group="market" title="Market State"
+      <PageHeader group="market" title={t('ms.title')}
         meta={[<DataFreshnessBadge key="fresh" sessionDate={session} />]} />
 
       <MarketStateMin ml={ml} etfs={data?.etf_data} signals={data?.signals} rows={rows}
@@ -78,12 +74,11 @@ export default function BreadthPage({ data }) {
                       themes={groups.themes} groupsHistory={gh.data} universe={universeByTicker} />
 
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
-        <Reference label="Advanced breadth" count={mh && !mh.stale ? 5 : 4}>
+        <Reference label={t('ms.advanced')} count={4}>
           <div className="space-y-4">
             <CorrectionRiskPanel session={session} />
             <TickCycleChart />
             <RotationPanel />
-            {mh && !mh.stale && <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />}
             <BreadthTable data={breadth} />
           </div>
         </Reference>

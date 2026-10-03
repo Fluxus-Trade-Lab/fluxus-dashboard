@@ -132,8 +132,9 @@ describe('BreadthPage — minimal (2026-10-03)', () => {
     expect(screen.getByText(/no fitted parameters/)).toBeInTheDocument()
     expect(screen.getByText(cr.caveats[0])).toBeInTheDocument()
     expect(screen.getByText('Side readings')).toBeInTheDocument()
-    // once as Correction risk's side reading, once as the Raschke chart's heading
-    expect(screen.getAllByText('TICK cycle')).toHaveLength(2)
+    // only the Raschke chart's heading — the text-only block inside Correction
+    // risk came off 10-03 (Andy: 「上面那个没数据，删除。」)
+    expect(screen.getAllByText('TICK cycle')).toHaveLength(1)
     // the chart itself sits inside the fold (red if <TickCycleChart /> is removed)
     expect(await screen.findByRole('img', { name: /TICK 10-day averages of high, close and low, \d+ sessions/ })).toBeInTheDocument()
     vi.unstubAllGlobals()
@@ -158,7 +159,11 @@ describe('BreadthPage — minimal (2026-10-03)', () => {
     for (const gone of [/^% above 20 \/ 50 \/ 200 SMA$/i, /^Up\/down ratio · 5D \/ 10D/i, /^Quarterly ±25% spread · Stockbee/i, /^Quarterly breadth \(25%\+\)/, /^5-day \/ 10-day ratio/, /^McClellan Oscillator \(Nasdaq-100\)/i]) {
       expect(screen.queryAllByText(gone)).toHaveLength(0)
     }
-    expect(screen.getByText('Advanced breadth').closest('button').textContent).toMatch(/[45]/)
+    expect(screen.getByText('Advanced breadth').closest('button').textContent).toMatch(/4/)
+    // Benchmarks off the page 10-03 (Andy: 「图1的内容全部下线」)
+    for (const gone of ['Distance from each average', 'Below 20 SMA', 'warnings as of']) {
+      expect(screen.queryAllByText(new RegExp(gone, 'i'))).toHaveLength(0)
+    }
   })
 
   it('moves the three series only Advanced had into the main chart\'s indicator menu', () => {

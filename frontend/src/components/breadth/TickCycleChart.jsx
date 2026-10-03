@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useTickCycle } from '../../hooks/useTickCycle'
 import { tickSeries } from './tickCycleMath'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { withVars } from './marketStateMinMath'
 
 /**
  * The TICK cycle as a chart — Linda Raschke's read: the 10-day averages of
@@ -16,11 +18,12 @@ import { tickSeries } from './tickCycleMath'
  */
 const W = 1100, H = 240, L = 8, R = 56, T = 22, B = 22
 const INK = { high: 'var(--color-text)', close: 'var(--color-accent)', low: 'var(--color-text)' }
-const BAND = { grind: { fill: 'var(--color-text)', opacity: 0.08, label: 'Contracted' }, washout: { fill: 'var(--color-accent)', opacity: 0.12, label: 'Open' } }
+const BAND = { grind: { fill: 'var(--color-text)', opacity: 0.08, label: 'ms.tick.contracted' }, washout: { fill: 'var(--color-accent)', opacity: 0.12, label: 'ms.tick.open' } }
 
 export default function TickCycleChart() {
   const { data } = useTickCycle()
   const [hover, setHover] = useState(null)
+  const t = withVars(useLanguage().t)
   const s = tickSeries(data)
   if (!s) return null
   const { rows, lo, hi, runs } = s
@@ -41,14 +44,14 @@ export default function TickCycleChart() {
   return (
     <div className="bg-[var(--color-bg)] rounded-2xl p-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1.5">
-        <h3 className="m-0 text-[13px] font-semibold text-[var(--color-text-bold)]">TICK cycle</h3>
+        <h3 className="m-0 text-[13px] font-semibold text-[var(--color-text-bold)]">{t('ms.tick.title')}</h3>
         <span className="font-mono tabular-nums text-[11px] text-[var(--color-text-muted)]" data-testid="tick-readout">
-          {(h ?? last).date} · high {Math.round((h ?? last).ma_high)} · close {Math.round((h ?? last).ma_close)} · low {Math.round((h ?? last).ma_low)}
-          {(h ?? last).band !== 'neutral' && ` · ${BAND[(h ?? last).band]?.label ?? (h ?? last).band}`}
+          {t('ms.tick.readout', { date: (h ?? last).date, h: Math.round((h ?? last).ma_high), c: Math.round((h ?? last).ma_close), l: Math.round((h ?? last).ma_low) })}
+          {(h ?? last).band !== 'neutral' && ` · ${BAND[(h ?? last).band] ? t(BAND[(h ?? last).band].label) : (h ?? last).band}`}
         </span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img"
-           aria-label={`TICK 10-day averages of high, close and low, ${n} sessions`}
+           aria-label={t('ms.tick.aria', { n })}
            onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
         {runs.map(([a, b, band]) => (
           <rect key={`${a}-${band}`} x={x(a) - 1} y={T} width={Math.max(2, x(b) - x(a) + 2)} height={H - T - B}
@@ -64,9 +67,9 @@ export default function TickCycleChart() {
           <text key={m} x={x(i)} y={H - 6} fontSize="10" style={{ fill: 'var(--color-text-muted)' }}>{m.slice(5) === '01' ? m.slice(0, 4) : m.slice(5)}</text>
         ))}
         <text x={L + 4} y={T - 8} fontSize="11">
-          <tspan style={{ fill: 'var(--color-text)' }}>High / low</tspan>
-          <tspan dx="10" style={{ fill: 'var(--color-accent)' }}>Close</tspan>
-          <tspan dx="10" style={{ fill: 'var(--color-text-muted)' }}>shaded: contracted (grey) · open (accent)</tspan>
+          <tspan style={{ fill: 'var(--color-text)' }}>{t('ms.tick.hiLo')}</tspan>
+          <tspan dx="10" style={{ fill: 'var(--color-accent)' }}>{t('ms.tick.close')}</tspan>
+          <tspan dx="10" style={{ fill: 'var(--color-text-muted)' }}>{t('ms.tick.shaded')}</tspan>
         </text>
         {hover != null && <line x1={x(hover)} x2={x(hover)} y1={T} y2={H - B} stroke="var(--color-text-muted)" strokeDasharray="3 3" />}
       </svg>

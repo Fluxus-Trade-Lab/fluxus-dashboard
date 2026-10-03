@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { translations } from './translations'
+import { translations, BASE, PARTS } from './translations'
 
 describe('translations', () => {
   it('has both en and zh dictionaries', () => {
@@ -42,6 +42,20 @@ describe('translations', () => {
       for (const [key, val] of Object.entries(translations[lang])) {
         expect(val, `${lang}.${key} is empty`).toBeTruthy()
       }
+    }
+  })
+
+  it('no key is defined in two places (base or parts) — a silent override', () => {
+    for (const lang of ['en', 'zh']) {
+      const seen = new Map(Object.keys(BASE[lang]).map((k) => [k, 'base']))
+      const dups = []
+      for (const [name, part] of Object.entries(PARTS)) {
+        for (const k of Object.keys(part[lang])) {
+          if (seen.has(k)) dups.push(`${lang} ${k}: ${seen.get(k)} + ${name}`)
+          else seen.set(k, name)
+        }
+      }
+      expect(dups).toEqual([])
     }
   })
 })
