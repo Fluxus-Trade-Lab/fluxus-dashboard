@@ -12,18 +12,19 @@ import BehaviorSection from './analytics/BehaviorSection'
 import BehaviorDiagnosisSection from './analytics/BehaviorDiagnosisSection'
 import RiskAdjustedSection from './analytics/RiskAdjustedSection'
 import PositionSizeChart from '../portfolio/PositionSizeChart'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const SUB_TABS = [
-  { key: 'summary', label: 'Summary' },
-  { key: 'size-vs-r', label: 'Size vs R' },
-  { key: 'risk-adjusted', label: 'Risk-adjusted' },
-  { key: 'diagnosis', label: 'Diagnosis' },
-  { key: 'demon-finder', label: 'Demon Finder' },
-  { key: 'behavior', label: 'Behavior' },
-  { key: 'risk', label: 'Risk' },
-  { key: 'volatility', label: 'Volatility' },
-  { key: 'trim-stops', label: 'Trim & Stops' },
-  { key: 'monthly-review', label: 'Monthly Review' },
+  { key: 'summary', label: 'jn.tab.summary' },
+  { key: 'size-vs-r', label: 'rev.sec.size-vs-r' },
+  { key: 'risk-adjusted', label: 'rev.sec.risk-adjusted' },
+  { key: 'diagnosis', label: 'rev.sec.diagnosis' },
+  { key: 'demon-finder', label: 'rev.sec.demon-finder' },
+  { key: 'behavior', label: 'rev.sec.behavior' },
+  { key: 'risk', label: 'jn.tab.risk' },
+  { key: 'volatility', label: 'rev.sec.volatility' },
+  { key: 'trim-stops', label: 'rev.sec.trim-stops' },
+  { key: 'monthly-review', label: 'jn.tab.monthly' },
 ]
 
 export default function AnalyticsTab({ initialSection }) {
@@ -36,6 +37,7 @@ export default function AnalyticsTab({ initialSection }) {
 
 function AnalyticsTabInner({ initialSection }) {
   const { state } = usePortfolio()
+  const { t } = useLanguage()
   // Review addresses one of these sections directly, so the opening tab is the
   // caller's to choose. Its own tab strip still works from there.
   const [activeTab, setActiveTab] = useState(initialSection || 'summary')
@@ -116,7 +118,7 @@ function AnalyticsTabInner({ initialSection }) {
   if (!trades.length) {
     return (
       <div className="text-center py-16 text-[var(--color-text-muted)]">
-        No portfolio data. Import trades in the Portfolio tab first.
+        {t('jn.noPortfolio')}
       </div>
     )
   }
@@ -138,7 +140,7 @@ function AnalyticsTabInner({ initialSection }) {
                 : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
             }`}
           >
-            {label}
+            {t(label)}
           </button>
         ))}
       </div>

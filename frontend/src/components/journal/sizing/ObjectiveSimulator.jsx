@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { bootstrapObjective } from '../lib/sizingStats'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import { rich } from '../../screener/richText'
 
 const RISK_CHIPS = [
-  { value: 0.25, label: '0.25% target' },
-  { value: 0.37, label: '0.37% his actual (÷entry-day eq)' },
+  { value: 0.25, label: 'jn.os.chip.target' },
+  { value: 0.37, label: 'jn.os.chip.actual' },
   { value: 1.0, label: '1.0%' },
   { value: 2.0, label: '2.0%' },
 ]
@@ -49,6 +51,7 @@ function NumField({ label, value, onChange, step = 1, suffix, min, max }) {
 }
 
 export default function ObjectiveSimulator({ rs }) {
+  const { t } = useLanguage()
   const [riskPct, setRiskPct] = useState(0.25)
   const [horizon, setHorizon] = useState(300)
   const [targetReturnPct, setTargetReturnPct] = useState(50)
@@ -78,11 +81,10 @@ export default function ObjectiveSimulator({ rs }) {
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
       <div>
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Size to Objectives — Monte-Carlo
+          {t('jn.os.title')}
         </h3>
         <p className="text-[11px] text-[var(--color-text-muted)] mt-1">
-          Tharp&rsquo;s key move: don&rsquo;t size to maximize — size to hit YOUR objective with an acceptable chance of YOUR worst drawdown.
-          This resamples this account&rsquo;s own {rs?.length ?? 0} closed-trade R-distribution over {PATHS.toLocaleString()} paths.
+          {rich(t('jn.os.lede', { n: rs?.length ?? 0, paths: PATHS.toLocaleString() }))}
         </p>
       </div>
 
@@ -98,56 +100,59 @@ export default function ObjectiveSimulator({ rs }) {
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
             }`}
           >
-            {chip.label}
+            {chip.label.startsWith('jn.') ? t(chip.label) : chip.label}
           </button>
         ))}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <NumField label="Risk / Trade" suffix="%" value={riskPct} step={0.05} min={0} onChange={setRiskPct} />
-        <NumField label="Horizon" suffix="trades" value={horizon} step={50} min={0} max={MAX_HORIZON} onChange={setHorizon} />
-        <NumField label="Target Return" suffix="%" value={targetReturnPct} step={10} onChange={setTargetReturnPct} />
-        <NumField label="Max Acceptable DD" suffix="%" value={maxDDPct} step={5} min={0} onChange={setMaxDDPct} />
+        <NumField label={t('jn.os.risk')} suffix="%" value={riskPct} step={0.05} min={0} onChange={setRiskPct} />
+        <NumField label={t('jn.os.horizon')} suffix={t('jn.os.trades')} value={horizon} step={50} min={0} max={MAX_HORIZON} onChange={setHorizon} />
+        <NumField label={t('jn.os.target')} suffix="%" value={targetReturnPct} step={10} onChange={setTargetReturnPct} />
+        <NumField label={t('jn.os.maxDD')} suffix="%" value={maxDDPct} step={5} min={0} onChange={setMaxDDPct} />
       </div>
 
       {!sim ? (
         <p className="text-[13px] text-[var(--color-text-muted)]">
           {!hasSample
-            ? 'Not enough closed trades with stops to simulate.'
+            ? t('jn.os.noSample')
             : !inputsValid
-              ? 'Set risk / trade and horizon above zero to run the simulation.'
-              : 'Nothing to simulate.'}
+              ? t('jn.os.invalid')
+              : t('jn.os.nothing')}
         </p>
       ) : (
         <>
           {/* Verdict */}
           <p className="text-[13px] text-[var(--color-text)] leading-relaxed bg-[var(--color-bg)] rounded px-3 py-2">
-            At <span className="font-semibold font-mono">{riskPct}%</span> risk over <span className="font-mono">{horizon}</span> trades:
-            median <span className={`font-semibold font-mono ${sim.medianReturn >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>,
-            reaches ≥ {targetSign}{targetReturnPct}% in <span className="font-semibold font-mono">{sim.pReachTarget.toFixed(0)}%</span> of paths,
-            with a <span className={`font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span> chance of a drawdown greater than {maxDDPct}%.
+            {rich(t('jn.os.verdict', { target: `${targetSign}${targetReturnPct}`, dd: maxDDPct }), {
+              risk: <span className="font-semibold font-mono">{riskPct}%</span>,
+              horizon: <span className="font-mono">{horizon}</span>,
+              median: <span className={`font-semibold font-mono ${sim.medianReturn >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>,
+              reach: <span className="font-semibold font-mono">{sim.pReachTarget.toFixed(0)}%</span>,
+              breach: <span className={`font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>,
+            })}
           </p>
 
           {/* Stat tiles */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <div>
-              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Return</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.os.median')}</span>
               <span className="text-[13px] font-semibold font-mono text-[var(--color-text)]">{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">5th – 95th pctile</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.os.pctile')}</span>
               <span className="text-[13px] font-mono text-[var(--color-text)]">{sim.p5.toFixed(0)}% … {sim.p95.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Max DD</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.os.medDD')}</span>
               <span className="text-[13px] font-medium font-mono text-[var(--color-text)]">−{sim.medianMaxDD.toFixed(1)}%</span>
             </div>
             <div>
-              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(≥ Target)</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.os.pTarget')}</span>
               <span className="text-[13px] font-semibold font-mono text-[var(--color-profit)]">{sim.pReachTarget.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(DD &gt; {maxDDPct}%)</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.os.pDD', { dd: maxDDPct })}</span>
               <span className={`text-[13px] font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>
             </div>
           </div>
@@ -165,8 +170,8 @@ export default function ObjectiveSimulator({ rs }) {
                 />
                 <YAxis hide />
                 <Tooltip
-                  formatter={(v) => [`${v} paths`, 'Count']}
-                  labelFormatter={v => `~${Math.round(v)}% ending return`}
+                  formatter={(v) => [t('jn.os.tipPaths', { v }), t('jn.os.tipCount')]}
+                  labelFormatter={v => t('jn.os.tipEnd', { v: Math.round(v) })}
                   contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
                 />
                 <Bar dataKey="count" isAnimationActive={false}>
@@ -179,7 +184,7 @@ export default function ObjectiveSimulator({ rs }) {
           </div>
 
           <p className="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
-            Model note: i.i.d. bootstrap of realized R — ignores serial correlation, regime shifts, and that this R-sample comes from a bull half-year (it overstates the forward edge). Median and percentiles are order statistics of the {PATHS.toLocaleString()} simulated paths, not interpolated quantiles. That limitation is Tharp&rsquo;s point too: size to objectives, and respect what the sample can&rsquo;t tell you.
+            {t('jn.os.note', { paths: PATHS.toLocaleString() })}
           </p>
         </>
       )}

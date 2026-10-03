@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useTradeJournal } from '../../../hooks/useTradeJournal'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import Empty from '../Empty'
+import { word } from '../../screener/richText'
 import { setupEdge } from '../lib/setupEdge'
 
 const r2 = (v) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}`
@@ -41,7 +42,7 @@ export default function SetupEdgeSection() {
           <div key={r.setup}
                className="grid grid-cols-[168px_44px_1fr] items-center gap-2 py-2.5
                           border-b border-[var(--color-border-light)]">
-            <span className="text-[13px] leading-tight">{r.setup}</span>
+            <span className="text-[13px] leading-tight">{word(t, `jn.setup.${r.setup}`, r.setup)}</span>
             <span className="text-[11px] font-mono text-[var(--color-text-muted)] text-right">
               {r.n}
             </span>

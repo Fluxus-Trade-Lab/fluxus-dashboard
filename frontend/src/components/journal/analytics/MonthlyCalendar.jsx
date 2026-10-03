@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 /**
  * Monthly calendar heat-map showing daily P&L in $ or R.
  * Each cell is a weekday colored green (gain) or red (loss).
  */
 
-const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+const WEEKDAYS = ['mon', 'tue', 'wed', 'thu', 'fri']
 
 function fmt$(v) {
   if (v == null) return ''
@@ -27,6 +28,7 @@ function cellColor(value) {
 }
 
 export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct = 0.0025 }) {
+  const { t } = useLanguage()
   const [view, setView] = useState('dollar') // 'dollar' | 'r'
 
   // Compute daily P&L from consecutive equity curve points
@@ -116,7 +118,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Daily P&L Calendar
+          {t('jn.cal.title')}
         </h4>
         <div className="flex items-center gap-1">
           {['dollar', 'r'].map(v => (
@@ -139,7 +141,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
       <div className="grid grid-cols-5 gap-1 mb-1">
         {WEEKDAYS.map(d => (
           <div key={d} className="text-center text-[11px] font-medium text-[var(--color-text-muted)] uppercase">
-            {d}
+            {t(`jn.cal.${d}`)}
           </div>
         ))}
       </div>
@@ -173,7 +175,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
 
       {/* Month total */}
       <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
-        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Month Total</span>
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">{t('jn.cal.total')}</span>
         <span className={`text-[13px] font-semibold font-mono ${monthTotal.dollar >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
           {view === 'dollar' ? fmt$(monthTotal.dollar) : fmtR(monthTotal.r)}
         </span>

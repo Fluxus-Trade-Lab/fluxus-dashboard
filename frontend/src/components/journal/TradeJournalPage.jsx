@@ -6,6 +6,7 @@ import PreMarketChecklist from '../dashboard/PreMarketChecklist'
 import WritingSlot from '../WritingSlot'
 import PageHeader from '../PageHeader'
 import DataUnavailable from '../DataUnavailable'
+import { word } from '../screener/richText'
 
 const LESSON_COLORS = {
   'Good execution':    'text-[var(--color-profit)]',
@@ -61,13 +62,13 @@ export default function TradeJournalPage() {
   }, [trades])
 
   if (loading) {
-    return <div className="text-[var(--color-text-muted)] text-[13px] py-10 text-center">Loading trade journal…</div>
+    return <div className="text-[var(--color-text-muted)] text-[13px] py-10 text-center">{tr('jn.loading')}</div>
   }
   if (!trades.length) {
     return <DataUnavailable
-      group="book" title="Trade Journal"
-      what="No trade post-mortems were found."
-      why="Each entry is written from a closed trade in the log; until the post-mortem pass has run over them, there is nothing to read back."
+      group="book" title={tr('page.trades.title')}
+      what={tr('jn.du.what')}
+      why={tr('jn.du.why')}
       command="python -m pipeline.portfolio.trade_postmortem" />
   }
 
@@ -77,9 +78,10 @@ export default function TradeJournalPage() {
           17px bold, no crumb — so one product had two ideas of what a page
           title is, and the money half's read a tier smaller for no reason. */}
       <PageHeader group="book" title={tr('page.trades.title')}
-        meta={[`${trades.length} trades · ${stats.total} closed`,
-               `realized ${stats.totalR.toFixed(1)}R of ${stats.totalOpt.toFixed(1)}R available${
-                 stats.captureOverall != null ? ` · ${stats.captureOverall.toFixed(0)}% capture` : ''}`]} />
+        meta={[tr('jn.meta.count', { n: trades.length, closed: stats.total }),
+               tr(stats.captureOverall != null ? 'jn.meta.realizedCapture' : 'jn.meta.realized', {
+                 r: stats.totalR.toFixed(1), opt: stats.totalOpt.toFixed(1),
+                 pct: stats.captureOverall?.toFixed(0) })]} />
 
       {/* Two standing cards, before the log itself: what you asked yourself
           before the session, and what you concluded after it. They moved here
@@ -93,25 +95,25 @@ export default function TradeJournalPage() {
             did after the open, read back against what he planned before it.
             (Andy, 2026-08-17.) */}
         <WritingSlot
-          label="Trading recap"
+          label={tr('jn.recap.label')}
           kind="trading-recap"
           minH={210}
-          placeholder="What did you actually do today — and was it the plan?"
+          placeholder={tr('jn.recap.ph')}
         />
       </div>
 
       {/* Lesson filter chips */}
       <div className="flex flex-wrap gap-1.5 mb-4 text-[11px]">
-        <FilterChip current={filter} value="all" onChange={setFilter}>All ({trades.length})</FilterChip>
+        <FilterChip current={filter} value="all" onChange={setFilter}>{tr('jn.filter.all', { n: trades.length })}</FilterChip>
         <FilterChip current={filter} value="open" onChange={setFilter}>
-          Open ({trades.filter(t => !t.closed).length})
+          {tr('jn.filter.open', { n: trades.filter(t => !t.closed).length })}
         </FilterChip>
         <FilterChip current={filter} value="closed" onChange={setFilter}>
-          Closed ({trades.filter(t => t.closed).length})
+          {tr('jn.filter.closed', { n: trades.filter(t => t.closed).length })}
         </FilterChip>
         {Object.entries(stats.lessonCounts).map(([lesson, count]) => (
           <FilterChip key={lesson} current={filter} value={`lesson:${lesson}`} onChange={setFilter}>
-            <span className={LESSON_COLORS[lesson] || ''}>{lesson}</span> ({count})
+            <span className={LESSON_COLORS[lesson] || ''}>{word(tr, `rev.lesson.${lesson}`, lesson)}</span> ({count})
           </FilterChip>
         ))}
       </div>
@@ -120,15 +122,15 @@ export default function TradeJournalPage() {
         <table className="w-full text-[13px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
-              <Th onClick={() => handleSort('entry_date')} active={sortKey === 'entry_date'} dir={sortDir}>Entry</Th>
-              <Th onClick={() => handleSort('ticker')} active={sortKey === 'ticker'} dir={sortDir}>Ticker</Th>
-              <Th onClick={() => handleSort('direction')} active={sortKey === 'direction'} dir={sortDir}>Dir</Th>
-              <Th onClick={() => handleSort('hold_days')} active={sortKey === 'hold_days'} dir={sortDir}>Days</Th>
-              <Th onClick={() => handleSort('realized_R')} active={sortKey === 'realized_R'} dir={sortDir}>Realized R</Th>
-              <Th onClick={() => handleSort('optimal_R')} active={sortKey === 'optimal_R'} dir={sortDir}>Optimal R</Th>
-              <Th onClick={() => handleSort('capture_pct')} active={sortKey === 'capture_pct'} dir={sortDir}>Capture</Th>
-              <Th onClick={() => handleSort('setup_type')} active={sortKey === 'setup_type'} dir={sortDir}>Setup</Th>
-              <Th onClick={() => handleSort('lesson')} active={sortKey === 'lesson'} dir={sortDir}>Lesson</Th>
+              <Th onClick={() => handleSort('entry_date')} active={sortKey === 'entry_date'} dir={sortDir}>{tr('jn.th.entry')}</Th>
+              <Th onClick={() => handleSort('ticker')} active={sortKey === 'ticker'} dir={sortDir}>{tr('jn.th.ticker')}</Th>
+              <Th onClick={() => handleSort('direction')} active={sortKey === 'direction'} dir={sortDir}>{tr('jn.th.dir')}</Th>
+              <Th onClick={() => handleSort('hold_days')} active={sortKey === 'hold_days'} dir={sortDir}>{tr('jn.th.days')}</Th>
+              <Th onClick={() => handleSort('realized_R')} active={sortKey === 'realized_R'} dir={sortDir}>{tr('jn.th.realizedR')}</Th>
+              <Th onClick={() => handleSort('optimal_R')} active={sortKey === 'optimal_R'} dir={sortDir}>{tr('jn.th.optimalR')}</Th>
+              <Th onClick={() => handleSort('capture_pct')} active={sortKey === 'capture_pct'} dir={sortDir}>{tr('jn.th.capture')}</Th>
+              <Th onClick={() => handleSort('setup_type')} active={sortKey === 'setup_type'} dir={sortDir}>{tr('jn.th.setup')}</Th>
+              <Th onClick={() => handleSort('lesson')} active={sortKey === 'lesson'} dir={sortDir}>{tr('jn.th.lesson')}</Th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +145,7 @@ export default function TradeJournalPage() {
                   <TickerLink symbol={t.ticker} />
                 </td>
                 <td className={`px-2 py-1.5 text-[var(--color-text-secondary)]`}>
-                  {t.direction.toUpperCase()}
+                  {word(tr, `jn.dir.${t.direction}`, t.direction).toUpperCase()}
                 </td>
                 <td className="px-2 py-1.5 tabular-nums">{t.hold_days ?? '—'}</td>
                 <td className={`px-2 py-1.5 tabular-nums font-semibold ${rColor(t.realized_R)}`}>
@@ -155,8 +157,8 @@ export default function TradeJournalPage() {
                 <td className="px-2 py-1.5 tabular-nums">
                   {t.capture_pct != null ? `${t.capture_pct.toFixed(0)}%` : '—'}
                 </td>
-                <td className="px-2 py-1.5 text-[var(--color-text-muted)]">{t.setup_type}</td>
-                <td className={`px-2 py-1.5 font-semibold ${LESSON_COLORS[t.lesson] || ''}`}>{t.lesson}</td>
+                <td className="px-2 py-1.5 text-[var(--color-text-muted)]">{word(tr, `jn.setup.${t.setup_type}`, t.setup_type)}</td>
+                <td className={`px-2 py-1.5 font-semibold ${LESSON_COLORS[t.lesson] || ''}`}>{word(tr, `rev.lesson.${t.lesson}`, t.lesson)}</td>
               </tr>
             ))}
           </tbody>

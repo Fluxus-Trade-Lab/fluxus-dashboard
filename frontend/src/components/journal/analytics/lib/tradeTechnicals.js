@@ -105,31 +105,38 @@ export function computeTradeTechnicals(bars, trade) {
 /**
  * Label the setup. Winners → winning-type, losers → mistake-type. `isReattack`
  * is supplied by the caller (needs the full trade set to know prior red entries).
+ *
+ * `type` / `notes` are the English labels; `code` / `noteCodes` name the same
+ * labels for the dictionary (jn.cs.type.<code>, jn.cs.note.<k>) with whatever
+ * number they carry, so the page can print them in either language.
  */
 export function classifyTrade(trade, tech, isReattack) {
   const long = trade.direction !== 'short'
   const win = (trade.realizedPL ?? trade.totalPL ?? 0) > 0
   const ext = tech?.extAtr
   const notes = []
-  if (tech?.atrPct != null && tech.atrPct > 6) notes.push('high-vol name')
+  const noteCodes = []
+  if (tech?.atrPct != null && tech.atrPct > 6) { notes.push('high-vol name'); noteCodes.push({ k: 'highVol' }) }
 
   if (win) {
-    let type = 'Momentum long'
-    if (!long) type = tech?.stack?.startsWith('bear') ? 'Trend short' : 'Counter-trend short'
-    else if (ext != null && ext > 3) type = 'Extended momentum (chased & worked)'
-    else if (tech?.stack?.startsWith('bull') && tech?.aboveEma20 && ext != null && ext >= 0.3) type = 'Momentum breakout'
-    else if (tech?.aboveSma50 && ext != null && ext < 0.5 && tech?.sma50Slope > 0) type = 'Pullback continuation'
-    else if (tech?.stack?.startsWith('bull')) type = 'Trend continuation'
-    return { type, win: true, notes }
+    let type = 'Momentum long', code = 'momentumLong'
+    if (!long) [type, code] = tech?.stack?.startsWith('bear') ? ['Trend short', 'trendShort'] : ['Counter-trend short', 'counterShort']
+    else if (ext != null && ext > 3) [type, code] = ['Extended momentum (chased & worked)', 'extendedWorked']
+    else if (tech?.stack?.startsWith('bull') && tech?.aboveEma20 && ext != null && ext >= 0.3) [type, code] = ['Momentum breakout', 'momentumBreakout']
+    else if (tech?.aboveSma50 && ext != null && ext < 0.5 && tech?.sma50Slope > 0) [type, code] = ['Pullback continuation', 'pullbackCont']
+    else if (tech?.stack?.startsWith('bull')) [type, code] = ['Trend continuation', 'trendCont']
+    return { type, code, win: true, notes, noteCodes }
   }
 
   // losers — mistake taxonomy
-  let type = 'Failed momentum'
-  if (isReattack) type = 'Re-attack (avg down into red)'
-  else if (long && ext != null && ext > 2) type = `Chased extended (+${ext.toFixed(1)} ATR over 20EMA)`
-  else if (long && tech?.aboveSma50 === false && tech?.sma50Slope != null && tech.sma50Slope < -1) type = 'Knife-catch (below a falling 50SMA)'
-  else if (long && tech?.stack === 'bear') type = 'Bought a downtrend (bear MA stack)'
+  let type = 'Failed momentum', code = 'failedMomentum', vars
+  if (isReattack) [type, code] = ['Re-attack (avg down into red)', 'reattack']
+  else if (long && ext != null && ext > 2) {
+    [type, code, vars] = [`Chased extended (+${ext.toFixed(1)} ATR over 20EMA)`, 'chased', { ext: ext.toFixed(1) }]
+  }
+  else if (long && tech?.aboveSma50 === false && tech?.sma50Slope != null && tech.sma50Slope < -1) [type, code] = ['Knife-catch (below a falling 50SMA)', 'knife']
+  else if (long && tech?.stack === 'bear') [type, code] = ['Bought a downtrend (bear MA stack)', 'boughtDown']
   const R = trade.rr ?? null
-  if (R != null && R < -1.5) notes.push(`blew through stop (${R.toFixed(1)}R)`)
-  return { type, win: false, notes }
+  if (R != null && R < -1.5) { notes.push(`blew through stop (${R.toFixed(1)}R)`); noteCodes.push({ k: 'blew', vars: { r: R.toFixed(1) } }) }
+  return { type, code, vars, win: false, notes, noteCodes }
 }

@@ -2,11 +2,14 @@ import { useState, useMemo, Fragment } from 'react'
 import Empty from '../Empty'
 import StatCard from '../../portfolio/ui/StatCard'
 import { RankedBars } from '../lib/MiniBars'
+import { word } from '../../screener/richText'
 import { fmtCur, fmtPct, fmt } from '../../portfolio/lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 const INITIAL_ROWS = 8
 
 export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
+  const { t: tr } = useLanguage()
   const [expandedTickers, setExpandedTickers] = useState({})
   const [showAllTrims, setShowAllTrims] = useState(false)
   const [showAllStops, setShowAllStops] = useState(false)
@@ -72,20 +75,20 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
   if (trimStats.tooEarlyPct > 30 && trimAnalysis.length >= 3) {
     callouts.push({
       type: 'warning',
-      text: `You trimmed too early ${fmt(trimStats.tooEarlyPct, 0)}% of the time, capturing only ${fmt(trimStats.avgCaptured, 0)}% of the move on average. Consider delaying first trim or using trailing stops.`,
+      text: tr('jn.ts.early', { p: fmt(trimStats.tooEarlyPct, 0), c: fmt(trimStats.avgCaptured, 0) }),
     })
   }
   if (stopStats.tooTightPct > 25 && stopAnalysis.length >= 3) {
     callouts.push({
       type: 'warning',
-      text: `${fmt(stopStats.tooTightPct, 0)}% of stopped-out trades recovered 5%+ — stops may be too tight (avg distance: ${fmt(stopStats.avgStopDist, 1)}%).`,
+      text: tr('jn.ts.tight', { p: fmt(stopStats.tooTightPct, 0), d: fmt(stopStats.avgStopDist, 1) }),
     })
   }
   const highBetaStops = stopAnalysis.filter(s => s.recoveryPct > 10)
   if (highBetaStops.length >= 2) {
     callouts.push({
       type: 'neutral',
-      text: `${highBetaStops.length} trades had 10%+ recovery after stop-out — likely high-beta names needing wider stops.`,
+      text: tr('jn.ts.recover', { n: highBetaStops.length }),
     })
   }
 
@@ -110,22 +113,22 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
       {/* Trim Analysis */}
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-          Trim Analysis
+          {tr('jn.ts.trimTitle')}
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-          <StatCard label="Trims Analyzed" value={trimStats.total} />
-          <StatCard label="Too Early %" value={fmtPct(trimStats.tooEarlyPct)}
+          <StatCard label={tr('jn.ts.trimsAnalyzed')} value={trimStats.total} />
+          <StatCard label={tr('jn.ts.tooEarly')} value={fmtPct(trimStats.tooEarlyPct)}
             colorClass={trimStats.tooEarlyPct > 40 ? 'text-[var(--color-loss)]' : trimStats.tooEarlyPct > 25 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'} />
-          <StatCard label="Avg Left on Table" value={fmtPct(trimStats.avgLeftOnTable)}
+          <StatCard label={tr('jn.ts.avgLeft')} value={fmtPct(trimStats.avgLeftOnTable)}
             colorClass={trimStats.avgLeftOnTable > 5 ? 'text-[var(--color-signal-caution)]' : ''} />
-          <StatCard label="Avg Captured" value={fmtPct(trimStats.avgCaptured)}
+          <StatCard label={tr('jn.ts.avgCaptured')} value={fmtPct(trimStats.avgCaptured)}
             colorClass={trimStats.avgCaptured > 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'} />
         </div>
 
         {trimChartRows.length > 0 && (
           <div className="mb-4">
             <div className="text-[11px] text-[var(--color-text-muted)] mb-1">
-              % of the move captured, per name — worst-left-on-table first
+              {tr('jn.ts.trimChart')}
             </div>
             <RankedBars rows={trimChartRows} max={100}
                         colorOf={(r) => (r.value > 70 ? 'var(--color-profit)' : 'var(--color-signal-caution)')}
@@ -138,8 +141,8 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
             <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
-                  {['Ticker', 'Dir', 'Trims', 'Early', 'Avg Left%', 'Worst Left%', 'Avg Captured%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
+                  {['jn.k.ticker', 'jn.k.dir', 'jn.ts.h.trims', 'jn.ts.h.early', 'jn.ts.h.avgLeft', 'jn.ts.h.worstLeft', 'jn.ts.h.avgCaptured'].map(h => (
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{tr(h)}</th>
                   ))}
                 </tr>
               </thead>
@@ -158,7 +161,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                           {g.ticker}
                         </td>
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
-                          <span className={'text-[var(--color-text-secondary)]'}>{g.direction?.toUpperCase()}</span>
+                          <span className={'text-[var(--color-text-secondary)]'}>{g.direction && word(tr, `jn.dir.${g.direction}`, g.direction).toUpperCase()}</span>
                         </td>
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{g.trimCount}</td>
                         <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.tooEarlyCount > 0 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
@@ -177,10 +180,10 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                       {expanded && g.trims.map((t, i) => (
                         <tr key={`${t.trimDate}-${i}`} className="bg-[var(--color-surface-raised)]">
                           <td className="px-2 py-1 border-b border-[var(--color-border-light)] pl-7 text-[var(--color-text-muted)]" colSpan={2}>
-                            Trim {t.trimIndex} &middot; {t.trimDate} &middot; {fmtCur(t.trimPrice)}
+                            {tr('jn.ts.trimRow', { i: t.trimIndex, date: t.trimDate, price: fmtCur(t.trimPrice) })}
                           </td>
                           <td className="px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-text-muted)]" colSpan={2}>
-                            Peak {fmtCur(t.peakAfterTrim)} ({t.peakDate})
+                            {tr('jn.ts.peak', { price: fmtCur(t.peakAfterTrim), date: t.peakDate })}
                           </td>
                           <td className={`px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums ${t.leftOnTable > 5 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
                             {fmtPct(t.leftOnTable)}
@@ -201,7 +204,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                 onClick={() => setShowAllTrims(v => !v)}
                 className="mt-2 text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer"
               >
-                {showAllTrims ? 'Show less' : `Show all ${trimGroups.length} tickers`}
+                {showAllTrims ? tr('jn.k.showLess') : tr('jn.ts.showTickers', { n: trimGroups.length })}
               </button>
             )}
           </div>
@@ -214,19 +217,19 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
       {/* Stop Analysis */}
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-          Stop Analysis
+          {tr('jn.ts.stopTitle')}
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-          <StatCard label="Stopped Out" value={stopStats.total} />
-          <StatCard label="Stop Too Tight %" value={stopStats.total > 0 ? fmtPct(stopStats.tooTightPct) : '—'}
+          <StatCard label={tr('jn.ts.stoppedOut')} value={stopStats.total} />
+          <StatCard label={tr('jn.ts.tooTight')} value={stopStats.total > 0 ? fmtPct(stopStats.tooTightPct) : '—'}
             colorClass={stopStats.tooTightPct > 30 ? 'text-[var(--color-loss)]' : stopStats.tooTightPct > 15 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'} />
-          <StatCard label="Avg Stop Distance" value={stopStats.total > 0 ? fmtPct(stopStats.avgStopDist) : '—'} />
+          <StatCard label={tr('jn.ts.avgDist')} value={stopStats.total > 0 ? fmtPct(stopStats.avgStopDist) : '—'} />
         </div>
 
         {stopChartRows.length > 0 && (
           <div className="mb-4">
             <div className="text-[11px] text-[var(--color-text-muted)] mb-1">
-              recovery after the stop, per name — worst recoveries first
+              {tr('jn.ts.stopChart')}
             </div>
             <RankedBars rows={stopChartRows} max={Math.max(20, ...stopChartRows.map((r) => r.value))}
                         colorOf={(r) => (r.tight ? 'var(--color-loss)' : 'var(--color-profit)')}
@@ -239,8 +242,8 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
             <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
-                  {['Ticker', 'Dir', 'Entry', 'Stop', 'Exit', 'Recovery Peak', 'Recovery%', 'Stop Dist%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
+                  {['jn.k.ticker', 'jn.k.dir', 'jn.k.entry', 'jn.k.stop', 'jn.k.exit', 'jn.ts.h.recPeak', 'jn.ts.h.rec', 'jn.ts.h.dist'].map(h => (
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{tr(h)}</th>
                   ))}
                 </tr>
               </thead>
@@ -252,7 +255,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                   >
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">{s.ticker}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
-                      <span className={'text-[var(--color-text-secondary)]'}>{s.direction?.toUpperCase()}</span>
+                      <span className={'text-[var(--color-text-secondary)]'}>{s.direction && word(tr, `jn.dir.${s.direction}`, s.direction).toUpperCase()}</span>
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(s.entryPrice)}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(s.stopPrice)}</td>
@@ -271,7 +274,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                 onClick={() => setShowAllStops(v => !v)}
                 className="mt-2 text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer"
               >
-                {showAllStops ? 'Show less' : `Show all ${stopAnalysis.length} trades`}
+                {showAllStops ? tr('jn.k.showLess') : tr('jn.ts.showTrades', { n: stopAnalysis.length })}
               </button>
             )}
           </div>

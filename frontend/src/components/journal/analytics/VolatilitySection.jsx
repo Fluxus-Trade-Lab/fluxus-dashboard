@@ -2,8 +2,10 @@ import { useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
 import { fmt, fmtPct, fmtCur } from '../../portfolio/lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 export default function VolatilitySection({ volContrib, portfolioVol, spyVol, dailyPrices, spyHistory }) {
+  const { t } = useLanguage()
 
   // Merge rolling vol series for chart
   const rollingData = useMemo(() => {
@@ -34,22 +36,22 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {/* Portfolio vol summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <StatCard
-          label="Portfolio Vol (ann.)"
+          label={t('jn.vol.portfolio')}
           value={portfolioVol ? fmtPct(portfolioVol.annualizedVol) : '—'}
           colorClass={portfolioVol && portfolioVol.annualizedVol > 25 ? 'text-[var(--color-signal-caution)]' : ''}
         />
         <StatCard
-          label="SPY Vol (ann.)"
+          label={t('jn.vol.spy')}
           value={spyVol ? fmtPct(spyVol.annualizedVol) : '—'}
         />
         <StatCard
-          label="Vol Ratio"
+          label={t('jn.vol.ratio')}
           value={portfolioVol && spyVol ? fmt(portfolioVol.annualizedVol / spyVol.annualizedVol, 2) + 'x' : '—'}
-          sub={portfolioVol && spyVol ? (portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? 'High relative vol' : 'Moderate') : ''}
+          sub={portfolioVol && spyVol ? (portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? t('jn.vol.high') : t('jn.vol.moderate')) : ''}
           colorClass={portfolioVol && spyVol && portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? 'text-[var(--color-signal-caution)]' : ''}
         />
         <StatCard
-          label="Daily Vol"
+          label={t('jn.vol.daily')}
           value={portfolioVol ? fmtPct(portfolioVol.dailyVol) : '—'}
         />
       </div>
@@ -58,7 +60,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {rollingData.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Rolling 20-Day Volatility
+            {t('jn.vol.rolling')}
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={rollingData}>
@@ -71,7 +73,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
                 labelFormatter={l => l}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Line type="monotone" dataKey="portfolioVol" name="Portfolio" stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
+              <Line type="monotone" dataKey="portfolioVol" name={t('jn.k.portfolio')} stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
               <Line type="monotone" dataKey="spyVol" name="SPY" stroke="var(--color-text-muted)" dot={false} strokeWidth={1} strokeDasharray="4 2" />
             </LineChart>
           </ResponsiveContainer>
@@ -82,19 +84,19 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {volContrib.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Per-Position Volatility Contribution
+            {t('jn.vol.perPos')}
           </h3>
           {volContrib.slice(0, 3).some(v => v.volContribution != null) && (
             <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)] mb-4">
-              Top 3 vol contributors: {volContrib.slice(0, 3).filter(v => v.volContribution != null).map(v => `${v.ticker} (${fmt(v.volContribution, 2)}%)`).join(', ')}
+              {t('jn.vol.top3', { list: volContrib.slice(0, 3).filter(v => v.volContribution != null).map(v => `${v.ticker} (${fmt(v.volContribution, 2)}%)`).join(', ') })}
             </div>
           )}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
-                  {['Ticker', 'Weight%', 'Daily Vol', 'Ann. Vol', 'Beta', 'Vol Contrib%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
+                  {['jn.k.ticker', 'jn.k.weightPct', 'jn.vol.h.dailyVol', 'jn.vol.h.annVol', 'jn.k.beta', 'jn.vol.h.contrib'].map(h => (
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{t(h)}</th>
                   ))}
                 </tr>
               </thead>
@@ -121,16 +123,16 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {highBeta.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            High-Beta Watchlist (Beta &gt; 1.5)
+            {t('jn.vol.highBeta')}
           </h3>
           <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)] mb-4">
-            {highBeta.length} position{highBeta.length > 1 ? 's' : ''} with beta above 1.5. Consider sizing these smaller or widening stops.
+            {t(highBeta.length > 1 ? 'jn.vol.highBeta.many' : 'jn.vol.highBeta.one', { n: highBeta.length })}
           </div>
           <table className="w-full border-collapse text-[13px]">
             <thead>
               <tr>
-                {['Ticker', 'Beta', 'Weight%', 'Mkt Val', 'SPY Equiv'].map(h => (
-                  <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
+                {['jn.k.ticker', 'jn.k.beta', 'jn.k.weightPct', 'jn.k.mktVal', 'jn.vol.h.spyEq'].map(h => (
+                  <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{t(h)}</th>
                 ))}
               </tr>
             </thead>

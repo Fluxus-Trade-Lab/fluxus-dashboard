@@ -5,6 +5,7 @@ import StatCard from '../../portfolio/ui/StatCard'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
 import MonthlyCalendar from './MonthlyCalendar'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 const REVIEWS_KEY = 'fluxus-monthly-reviews'
 
@@ -57,31 +58,33 @@ ${tradeLines || '  No closed trades this month.'}
 }
 
 function MonthStats({ stats }) {
+  const { t } = useLanguage()
   if (!stats || stats.totalTrades === 0) {
     return <Empty k="empty.noMonth" />
   }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <StatCard label="Return" value={fmtPct(stats.monthlyRetPct)} colorClass={clr(stats.monthlyRetPct)} />
-      <StatCard label="Trades" value={stats.totalTrades} />
-      <StatCard label="Win Rate" value={fmtPct(stats.winPct)} colorClass={stats.winPct >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
-      <StatCard label="Avg Gain" value={fmtPct(stats.avgGain)} colorClass="text-[var(--color-profit)]" />
-      <StatCard label="Avg Loss" value={fmtPct(stats.avgLoss)} colorClass="text-[var(--color-loss)]" />
-      <StatCard label="Best Trade" value={fmtPct(stats.largestGain)} colorClass="text-[var(--color-profit)]" />
-      <StatCard label="Worst Trade" value={fmtPct(stats.largestLoss)} colorClass="text-[var(--color-loss)]" />
-      <StatCard label="Avg Hold" value={`${fmt(stats.avgHoldWin, 0)}d W / ${fmt(stats.avgHoldLoss, 0)}d L`} />
+      <StatCard label={t('jn.k.return')} value={fmtPct(stats.monthlyRetPct)} colorClass={clr(stats.monthlyRetPct)} />
+      <StatCard label={t('jn.k.trades')} value={stats.totalTrades} />
+      <StatCard label={t('jn.k.winRate')} value={fmtPct(stats.winPct)} colorClass={stats.winPct >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+      <StatCard label={t('jn.k.avgGain')} value={fmtPct(stats.avgGain)} colorClass="text-[var(--color-profit)]" />
+      <StatCard label={t('jn.k.avgLoss')} value={fmtPct(stats.avgLoss)} colorClass="text-[var(--color-loss)]" />
+      <StatCard label={t('jn.mr.best')} value={fmtPct(stats.largestGain)} colorClass="text-[var(--color-profit)]" />
+      <StatCard label={t('jn.mr.worst')} value={fmtPct(stats.largestLoss)} colorClass="text-[var(--color-loss)]" />
+      <StatCard label={t('jn.k.avgHold')} value={t('jn.mr.holdVal', { w: fmt(stats.avgHoldWin, 0), l: fmt(stats.avgHoldLoss, 0) })} />
     </div>
   )
 }
 
 function MiniEquityCurve({ data }) {
+  const { t } = useLanguage()
   if (!data || data.length < 2) return null
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4">
       <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
-        Equity Curve (Month)
+        {t('jn.mr.curve')}
       </h4>
       <ResponsiveContainer width="100%" height={160}>
         <LineChart data={data}>
@@ -90,7 +93,7 @@ function MiniEquityCurve({ data }) {
           <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
           <Tooltip
             contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
-            formatter={v => [`${v.toFixed(2)}%`, 'Return']}
+            formatter={v => [`${v.toFixed(2)}%`, t('jn.k.return')]}
             labelFormatter={l => l}
           />
           <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
@@ -101,18 +104,19 @@ function MiniEquityCurve({ data }) {
 }
 
 function VsPrevMonth({ current, prev }) {
+  const { t } = useLanguage()
   if (!current || !prev || prev.totalTrades === 0) return null
 
   const metrics = [
-    { label: 'Return', curr: current.monthlyRetPct, prev: prev.monthlyRetPct, fmt: fmtPct },
-    { label: 'Win Rate', curr: current.winPct, prev: prev.winPct, fmt: fmtPct },
-    { label: 'Trades', curr: current.totalTrades, prev: prev.totalTrades, fmt: v => v },
+    { label: t('jn.k.return'), curr: current.monthlyRetPct, prev: prev.monthlyRetPct, fmt: fmtPct },
+    { label: t('jn.k.winRate'), curr: current.winPct, prev: prev.winPct, fmt: fmtPct },
+    { label: t('jn.k.trades'), curr: current.totalTrades, prev: prev.totalTrades, fmt: v => v },
   ]
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
       <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
-        vs {prev.month}
+        {t('jn.mr.vs', { m: prev.month })}
       </h4>
       <div className="flex gap-6">
         {metrics.map(({ label, curr, prev: p, fmt: f }) => {
@@ -133,6 +137,7 @@ function VsPrevMonth({ current, prev }) {
 
 export default function MonthlyReviewSection({ enriched, monthlyStats, performanceData }) {
   const { state: portfolioState, dispatch } = usePortfolio()
+  const { t } = useLanguage()
   const months = useMemo(() => monthlyStats.filter(m => m.month !== 'Unknown').map(m => m.month), [monthlyStats])
   const [selectedMonth, setSelectedMonth] = useState(() => months[months.length - 1] || '')
   // Use portfolio context reviews (synced to Sheets), fall back to localStorage
@@ -236,7 +241,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-            Monthly Review
+            {t('jn.tab.monthly')}
           </h4>
           <div className="flex gap-2">
             <button
@@ -244,7 +249,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
               disabled={!currentStats}
               className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-accent-solid)] text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {copied ? 'Copied!' : 'Review with Claude'}
+              {copied ? t('jn.k.copied') : t('jn.mr.reviewClaude')}
             </button>
           </div>
         </div>
@@ -254,7 +259,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
             <textarea
               value={draftReview}
               onChange={e => setDraftReview(e.target.value)}
-              placeholder="Paste Claude's review here..."
+              placeholder={t('jn.mr.ph')}
               rows={12}
               className="w-full px-3 py-2 text-[13px] bg-[var(--color-bg)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
             />
@@ -264,13 +269,13 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
                 disabled={!draftReview.trim()}
                 className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Save Review
+                {t('jn.mr.save')}
               </button>
               <button
                 onClick={() => setEditing(false)}
                 className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
               >
-                Cancel
+                {t('jn.k.cancel')}
               </button>
             </div>
           </div>
@@ -281,28 +286,28 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
             </div>
             <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
               <span className="text-[11px] text-[var(--color-text-muted)]">
-                Saved {new Date(savedReview.savedAt).toLocaleDateString()}
+                {t('jn.mr.saved', { d: new Date(savedReview.savedAt).toLocaleDateString() })}
               </span>
               <button
                 onClick={handleStartEdit}
                 className="text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer"
               >
-                Edit
+                {t('jn.mr.edit')}
               </button>
             </div>
           </div>
         ) : (
           <div className="text-center py-6">
             <p className="text-[13px] text-[var(--color-text-muted)] mb-3">
-              Click "Review with Claude" to copy a prompt with your {selectedMonth} data.
+              {t('jn.mr.hint1', { m: selectedMonth })}
               <br />
-              Paste it in claude.ai, then save the response here.
+              {t('jn.mr.hint2')}
             </p>
             <button
               onClick={handleStartEdit}
               className="text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer"
             >
-              Or write your own review
+              {t('jn.mr.own')}
             </button>
           </div>
         )}

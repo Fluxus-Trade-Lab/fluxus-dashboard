@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 const FIELDS = [
-  { key: 'capital', label: 'Starting Capital', prefix: '$', format: v => v.toLocaleString(), parse: v => Number(v.replace(/,/g, '')) },
-  { key: 'riskPerTrade', label: 'Risk Per Trade', suffix: '%', format: v => (v * 100).toFixed(2), parse: v => Number(v) / 100 },
-  { key: 'minRR', label: 'Min R/R', suffix: ':1', format: v => v, parse: Number },
-  { key: 'overtradingMax', label: 'Max Entries / 5 Days', format: v => v, parse: Number },
-  { key: 'maxTotalHeat', label: 'Max Total Heat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
-  { key: 'maxSectorHeat', label: 'Max Sector Heat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
-  { key: 'circuitBreakerStreak', label: 'Circuit Breaker', format: v => v, parse: Number },
+  { key: 'capital', label: 'jn.df.f.capital', prefix: '$', format: v => v.toLocaleString(), parse: v => Number(v.replace(/,/g, '')) },
+  { key: 'riskPerTrade', label: 'jn.df.f.riskPerTrade', suffix: '%', format: v => (v * 100).toFixed(2), parse: v => Number(v) / 100 },
+  { key: 'minRR', label: 'jn.df.f.minRR', suffix: ':1', format: v => v, parse: Number },
+  { key: 'overtradingMax', label: 'jn.df.f.overtradingMax', format: v => v, parse: Number },
+  { key: 'maxTotalHeat', label: 'jn.df.f.maxTotalHeat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
+  { key: 'maxSectorHeat', label: 'jn.df.f.maxSectorHeat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
+  { key: 'circuitBreakerStreak', label: 'jn.df.f.circuitBreakerStreak', format: v => v, parse: Number },
 ]
 
 export default function DemonRulesConfig({ rules, onUpdate }) {
+  const { t } = useLanguage()
   const [open, setOpen] = useState(false)
 
   return (
@@ -21,7 +23,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
         aria-expanded={open}
         className="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-bg)] cursor-pointer bg-transparent border-none text-left"
       >
-        <span>Trading Rules</span>
+        <span>{t('jn.df.rules')}</span>
         <span className="text-[var(--color-text-muted)]">{open ? '\u25B2' : '\u25BC'}</span>
       </button>
 
@@ -31,7 +33,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
             {FIELDS.map(({ key, label, prefix, suffix, format, parse }) => (
               <div key={key}>
                 <label className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide block mb-1">
-                  {label}
+                  {t(label)}
                 </label>
                 <div className="flex items-center gap-1">
                   {prefix && <span className="text-[13px] text-[var(--color-text-muted)]">{prefix}</span>}
@@ -53,7 +55,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
             onClick={() => onUpdate(DEFAULT_RULES)}
             className="mt-2 text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer bg-transparent border-none"
           >
-            Reset to defaults
+            {t('jn.df.reset')}
           </button>
         </div>
       )}

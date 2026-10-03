@@ -4,6 +4,8 @@ import { computeStopSim } from './lib/stopSim'
 import StatCard from '../portfolio/ui/StatCard'
 import { DivergingBars } from './lib/MiniBars'
 import { fmtCur, fmtPct, fmt, clr } from '../portfolio/lib/portfolioFormat'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { word } from '../screener/richText'
 
 export default function RiskTab() {
   return (
@@ -15,6 +17,7 @@ export default function RiskTab() {
 
 function RiskTabInner() {
   const { state } = usePortfolio()
+  const { t } = useLanguage()
   const [mode, setMode] = useState(3)
 
   const simData2 = useMemo(
@@ -42,7 +45,7 @@ function RiskTabInner() {
   if (!simData || simData.rows.length === 0) {
     return (
       <div className="text-center py-16 text-[var(--color-text-muted)]">
-        No closed trades with stop prices to simulate. Close some trades first.
+        {t('jn.st.none')}
       </div>
     )
   }
@@ -51,21 +54,21 @@ function RiskTabInner() {
   const hasHistoryGap = rows.some(r => !r.hasHistory)
 
   const cards = [
-    { label: 'Actual Total P&L', value: fmtCur(summary.totalActualPL), color: clr(summary.totalActualPL) },
-    { label: `${mode}-Stop Total P&L`, value: fmtCur(summary.totalSimPL), color: clr(summary.totalSimPL) },
-    { label: 'P&L Difference', value: fmtCur(summary.totalDiff), color: clr(summary.totalDiff), sub: summary.totalDiff > 0 ? `${mode}-stop would save` : summary.totalDiff < 0 ? `${mode}-stop would cost` : 'No change' },
-    { label: 'Actual Avg Loss', value: fmtPct(summary.avgActualLoss), color: 'text-[var(--color-loss)]' },
-    { label: `${mode}-Stop Avg Loss`, value: fmtPct(summary.avgSimLoss), color: 'text-[var(--color-loss)]' },
-    { label: 'Trades Affected', value: `${summary.tradesAffected} / ${summary.totalTrades}`, color: '', sub: 'Had stops triggered' },
+    { label: t('jn.st.actualPL'), value: fmtCur(summary.totalActualPL), color: clr(summary.totalActualPL) },
+    { label: t('jn.st.simPL', { n: mode }), value: fmtCur(summary.totalSimPL), color: clr(summary.totalSimPL) },
+    { label: t('jn.st.diff'), value: fmtCur(summary.totalDiff), color: clr(summary.totalDiff), sub: summary.totalDiff > 0 ? t('jn.st.save', { n: mode }) : summary.totalDiff < 0 ? t('jn.st.cost', { n: mode }) : t('jn.st.noChange') },
+    { label: t('jn.st.actualLoss'), value: fmtPct(summary.avgActualLoss), color: 'text-[var(--color-loss)]' },
+    { label: t('jn.st.simLoss', { n: mode }), value: fmtPct(summary.avgSimLoss), color: 'text-[var(--color-loss)]' },
+    { label: t('jn.st.affected'), value: `${summary.tradesAffected} / ${summary.totalTrades}`, color: '', sub: t('jn.st.triggered') },
   ]
 
   const numStops = rows[0]?.stops?.length || mode
 
   return (
     <div>
-      <h3 className="text-[13px] font-semibold text-[var(--color-text)] mb-3">Stop-Loss Simulation</h3>
+      <h3 className="text-[13px] font-semibold text-[var(--color-text)] mb-3">{t('jn.st.title')}</h3>
       <p className="text-[13px] text-[var(--color-text-muted)] mb-4">
-        Compares your actual exits against a graduated N-stop system that splits positions into equal tranches with incremental stop levels.
+        {t('jn.st.lede')}
       </p>
 
       {/* Segmented toggle */}
@@ -78,7 +81,7 @@ function RiskTabInner() {
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
           }`}
         >
-          2-Stop
+          {t('jn.st.mode', { n: 2 })}
         </button>
         <button
           onClick={() => setMode(3)}
@@ -88,14 +91,13 @@ function RiskTabInner() {
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
           }`}
         >
-          3-Stop
+          {t('jn.st.mode', { n: 3 })}
         </button>
       </div>
 
       {hasHistoryGap && (
         <div className="p-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md mb-4 text-[13px] text-[var(--color-signal-caution)]">
-          Some trades lack daily price history — using worst-case (all stops triggered) for those.
-          Load full history on the Portfolio → Overview tab for accurate simulation.
+          {t('jn.st.gap')}
         </div>
       )}
 
@@ -109,16 +111,15 @@ function RiskTabInner() {
         <div className="bg-[var(--color-surface)] rounded-3xl p-4 mb-6">
           <div className="flex items-baseline justify-between mb-2">
             <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-              Which trades this would have changed
+              {t('jn.st.changed')}
             </h4>
             <span className="text-[11px] text-[var(--color-text-muted)]">
-              {diffRows.length} of {rows.length}, sorted by size of the swing
+              {t('jn.st.changedN', { n: diffRows.length, of: rows.length })}
             </span>
           </div>
           <DivergingBars rows={diffRows} formatValue={(v) => fmtCur(v)} />
           <p className="text-[11px] text-[var(--color-text-muted)] mt-2 mb-0">
-            right of the line = the {mode}-stop system beats what you actually did &middot;
-            left = it would have cost you
+            {t('jn.st.legend', { n: mode })}
           </p>
         </div>
       )}
@@ -127,19 +128,19 @@ function RiskTabInner() {
         <table className="w-full text-[13px] font-mono">
           <thead>
             <tr className="border-b border-[var(--color-border)] text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider">
-              <th className="text-left py-2 px-2">Ticker</th>
-              <th className="text-left py-2 px-1">Dir</th>
-              <th className="text-right py-2 px-2">Qty</th>
-              <th className="text-right py-2 px-2">Entry</th>
-              <th className="text-right py-2 px-2">Stop</th>
+              <th className="text-left py-2 px-2">{t('jn.k.ticker')}</th>
+              <th className="text-left py-2 px-1">{t('jn.k.dir')}</th>
+              <th className="text-right py-2 px-2">{t('jn.k.qty')}</th>
+              <th className="text-right py-2 px-2">{t('jn.k.entry')}</th>
+              <th className="text-right py-2 px-2">{t('jn.k.stop')}</th>
               <th className="text-right py-2 px-2">R</th>
               {Array.from({ length: numStops }, (_, i) => (
-                <th key={i} className="text-right py-2 px-2">Stop{i + 1}</th>
+                <th key={i} className="text-right py-2 px-2">{t('jn.st.h.stopN', { i: i + 1 })}</th>
               ))}
-              <th className="text-right py-2 px-2">Avg Exit</th>
-              <th className="text-right py-2 px-2">Actual P&L</th>
-              <th className="text-right py-2 px-2">{mode}-Stop P&L</th>
-              <th className="text-right py-2 px-2">Diff</th>
+              <th className="text-right py-2 px-2">{t('jn.st.h.avgExit')}</th>
+              <th className="text-right py-2 px-2">{t('jn.st.h.actualPL')}</th>
+              <th className="text-right py-2 px-2">{t('jn.st.h.simPL', { n: mode })}</th>
+              <th className="text-right py-2 px-2">{t('jn.st.h.diff')}</th>
             </tr>
           </thead>
           <tbody>
@@ -147,7 +148,7 @@ function RiskTabInner() {
               <tr key={r.id} className="border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
                 <td className="py-2 px-2 font-semibold text-[var(--color-accent)]">{r.ticker}</td>
                 <td className={`py-2 px-1 font-semibold text-[var(--color-text-secondary)]`}>
-                  {r.direction.toUpperCase()}
+                  {word(t, `jn.dir.${r.direction}`, r.direction).toUpperCase()}
                 </td>
                 <td className="text-right py-2 px-2">{r.qty}</td>
                 <td className="text-right py-2 px-2">{fmtCur(r.entryPrice)}</td>

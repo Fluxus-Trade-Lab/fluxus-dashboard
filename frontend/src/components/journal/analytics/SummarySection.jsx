@@ -5,8 +5,12 @@ import StatCard from '../../portfolio/ui/StatCard'
 import RRChart from '../../portfolio/RRChart'
 import PositionSizeChart from '../../portfolio/PositionSizeChart'
 import { fmtCur, fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
+
+const MONTH_HEADS = ['month', 'ret', 'n', 'win', 'avgR', 'maxGain', 'maxLoss', 'dw', 'dl']
 
 export default function SummarySection({ enriched, closedTrades, monthlyStats, performanceData, insights, startingCapital }) {
+  const { t } = useLanguage()
   // Summary stats
   const stats = useMemo(() => {
     if (closedTrades.length === 0) return null
@@ -33,19 +37,19 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
     <div className="space-y-5">
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <StatCard label="Total Trades" value={stats.totalTrades} />
-        <StatCard label="Win Rate" value={fmtPct(stats.winRate)} colorClass={stats.winRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
-        <StatCard label="Avg R-Multiple" value={`${fmt(stats.avgR, 1)}R`} colorClass={stats.avgR >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
-        <StatCard label="Expectancy" value={fmtCur(stats.expectancy)} colorClass={clr(stats.expectancy)} />
-        <StatCard label="Avg Hold" value={`${fmt(stats.avgHold, 0)}d`} />
-        <StatCard label="Profit Factor" value={fmt(stats.profitFactor, 2)} colorClass={stats.profitFactor >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+        <StatCard label={t('jn.sum.total')} value={stats.totalTrades} />
+        <StatCard label={t('jn.k.winRate')} value={fmtPct(stats.winRate)} colorClass={stats.winRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+        <StatCard label={t('jn.sum.avgR')} value={`${fmt(stats.avgR, 1)}R`} colorClass={stats.avgR >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+        <StatCard label={t('jn.k.expectancy')} value={fmtCur(stats.expectancy)} colorClass={clr(stats.expectancy)} />
+        <StatCard label={t('jn.k.avgHold')} value={`${fmt(stats.avgHold, 0)}d`} />
+        <StatCard label={t('jn.sum.pf')} value={fmt(stats.profitFactor, 2)} colorClass={stats.profitFactor >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
       </div>
 
       {/* Equity curve */}
       {performanceData.length > 1 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Equity Curve
+            {t('jn.sum.curve')}
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={performanceData}>
@@ -54,11 +58,11 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(0)}%`} />
               <Tooltip
                 contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
-                formatter={(v, name) => [`${Number(v).toFixed(2)}%`, name === 'returnPct' ? 'Portfolio' : name]}
+                formatter={(v, name) => [`${Number(v).toFixed(2)}%`, name === 'returnPct' ? t('jn.k.portfolio') : name]}
                 labelFormatter={l => l}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Line type="monotone" dataKey="returnPct" name="Portfolio" stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
+              <Line type="monotone" dataKey="returnPct" name={t('jn.k.portfolio')} stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
               {performanceData[0]?.SPY != null && (
                 <Line type="monotone" dataKey="SPY" name="SPY" stroke="var(--color-text-muted)" dot={false} strokeWidth={1} strokeDasharray="4 2" />
               )}
@@ -75,14 +79,14 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {monthlyStats.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Monthly Performance
+            {t('jn.sum.monthly')}
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
-                  {['Month', 'Return%', '# Trades', 'Win%', 'Avg R', 'Max Gain%', 'Max Loss%', 'Days(W)', 'Days(L)'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
+                  {MONTH_HEADS.map(h => (
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{t(`jn.sum.h.${h}`)}</th>
                   ))}
                 </tr>
               </thead>
@@ -110,7 +114,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {insights.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Insights
+            {t('jn.sum.insights')}
           </h3>
           <div className="space-y-2">
             {insights.map((ins, i) => (

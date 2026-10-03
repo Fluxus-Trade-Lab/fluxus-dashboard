@@ -6,66 +6,32 @@ import TharpLessons from './sizing/TharpLessons'
 import SqnReadout from './sizing/SqnReadout'
 import ObjectiveSimulator from './sizing/ObjectiveSimulator'
 import { closedR, rDenominatorStop } from './lib/sizingStats'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /* ── Educational Content ─────────────────────────────────── */
 
+// Every visible word lives in the dictionary under jn.sz.<key>.* — title, sub,
+// desc, formula, example, and pro.<i> / con.<i>. Only the shape is kept here.
 const METHODS = [
-  {
-    key: 'fixed-dollar',
-    title: 'Fixed Dollar Amount',
-    subtitle: 'Same $ per trade, regardless of setup quality',
-    description: 'Allocate a fixed dollar amount (e.g., $50,000) to every trade. Simple, but ignores volatility — a $200 stock and a $20 stock get the same notional exposure despite very different risk profiles.',
-    formula: 'Shares = Fixed Amount ÷ Entry Price',
-    example: { amount: 50000, entry: 150, result: '333 shares ($50,000 ÷ $150)' },
-    pros: ['Dead simple', 'Easy to track allocation'],
-    cons: ['Ignores stop distance (risk varies wildly)', 'Tight-stop trades get same size as wide-stop trades', 'No edge-based scaling'],
-    verdict: 'beginner',
-  },
-  {
-    key: 'fixed-pct',
-    title: 'Fixed % of Portfolio',
-    subtitle: 'Same portfolio weight per position',
-    description: 'Allocate a fixed percentage of portfolio value (e.g., 5%) to each trade. As your account grows, position sizes grow proportionally. Better than fixed dollar, but still ignores the distance to your stop.',
-    formula: 'Shares = (Portfolio × Weight%) ÷ Entry Price',
-    example: { amount: 1000000, entry: 150, result: '333 shares ($1M × 5% ÷ $150)' },
-    pros: ['Scales with account size', 'Prevents outsized positions'],
-    cons: ['Still ignores stop distance', 'A 2% stop and a 10% stop get same weight', 'Risk per trade is inconsistent'],
-    verdict: 'intermediate',
-  },
-  {
-    key: 'fixed-risk',
-    title: 'Fixed Fractional Risk',
-    subtitle: 'Risk the same % of portfolio on every trade',
-    description: 'The professional standard. Define your risk per trade (e.g., 0.25% of portfolio), then calculate shares based on the distance between entry and stop. Tight stops = bigger position. Wide stops = smaller position. Your risk is always the same dollar amount.',
-    formula: 'Shares = (Portfolio × Risk%) ÷ (Entry − Stop)',
-    example: { amount: 1000000, entry: 150, result: '500 shares ($2,500 risk ÷ $5 stop distance)' },
-    pros: ['Consistent risk per trade', 'Tight stops = larger position (reward tight patterns)', 'Mathematically optimal for compounding'],
-    cons: ['Requires a defined stop on every trade', 'Can lead to large notional on low-volatility setups'],
-    verdict: 'professional',
-  },
-  {
-    key: 'dynamic',
-    title: 'Dynamic / Kelly-Based',
-    subtitle: 'Scale size by edge strength and market regime',
-    description: 'Advanced: adjust the risk fraction based on win rate, R-multiple, and market conditions. In strong trends with high win rates, size up (toward Kelly optimal). In choppy markets or cold streaks, size down. Requires a track record to calibrate.',
-    formula: 'Risk% = Base% × Kelly Factor × Market Multiplier',
-    example: { amount: 1000000, entry: 150, result: 'Variable — 0.15% in choppy, 0.50% in trending' },
-    pros: ['Maximizes geometric growth', 'Adapts to regime changes', 'Compounds edge aggressively when conditions favor'],
-    cons: ['Needs reliable win rate / R data', 'Over-sizing kills accounts if stats are wrong', 'Complex to implement correctly'],
-    verdict: 'advanced',
-  },
+  { key: 'fixed-dollar', pros: 2, cons: 3, verdict: 'beginner' },
+  { key: 'fixed-pct', pros: 2, cons: 3, verdict: 'intermediate' },
+  { key: 'fixed-risk', pros: 3, cons: 2, verdict: 'professional' },
+  { key: 'dynamic', pros: 3, cons: 3, verdict: 'advanced' },
 ]
 
-const VERDICT_LABELS = {
-  beginner: { label: 'Beginner', color: 'text-[var(--color-signal-caution)]' },
-  intermediate: { label: 'Intermediate', color: 'text-[var(--color-text-secondary)]' },
-  professional: { label: 'Professional', color: 'text-[var(--color-profit)]' },
-  advanced: { label: 'Advanced', color: 'text-[var(--color-text-secondary)]' },
+const VERDICT_COLORS = {
+  beginner: 'text-[var(--color-signal-caution)]',
+  intermediate: 'text-[var(--color-text-secondary)]',
+  professional: 'text-[var(--color-profit)]',
+  advanced: 'text-[var(--color-text-secondary)]',
 }
+
+const range = (n) => Array.from({ length: n }, (_, i) => i)
 
 /* ── Position Size Calculator ────────────────────────────── */
 
 function SizingCalculator({ startingCapital }) {
+  const { t } = useLanguage()
   const [entry, setEntry] = useState('')
   const [stop, setStop] = useState('')
   const [riskPct, setRiskPct] = useState(0.25)
@@ -91,12 +57,12 @@ function SizingCalculator({ startingCapital }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
       <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-        Position Size Calculator
+        {t('jn.sz.calc')}
       </h3>
 
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Entry Price</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">{t('jn.sz.entryPrice')}</label>
           <input
             type="number"
             value={entry}
@@ -106,7 +72,7 @@ function SizingCalculator({ startingCapital }) {
           />
         </div>
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Stop Price</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">{t('jn.sz.stopPrice')}</label>
           <input
             type="number"
             value={stop}
@@ -116,7 +82,7 @@ function SizingCalculator({ startingCapital }) {
           />
         </div>
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Risk %</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">{t('jn.sz.riskPct')}</label>
           <input
             type="number"
             value={riskPct}
@@ -130,21 +96,21 @@ function SizingCalculator({ startingCapital }) {
       {calc && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-[var(--color-border-light)]">
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Shares</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.sz.shares')}</span>
             <span className="text-[13px] font-semibold text-[var(--color-text)]">{calc.shares.toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Position Value</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.sz.posValue')}</span>
             <span className="text-[13px] font-medium text-[var(--color-text)]">${calc.positionValue.toLocaleString()}</span>
             <span className="text-[11px] text-[var(--color-text-muted)] ml-1">({calc.positionPct.toFixed(1)}%)</span>
           </div>
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">$ at Risk</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.sz.atRisk')}</span>
             <span className="text-[13px] font-medium text-[var(--color-loss)]">${calc.riskDollar.toLocaleString()}</span>
-            <span className="text-[11px] text-[var(--color-text-muted)] ml-1">({calc.stopPct.toFixed(1)}% stop)</span>
+            <span className="text-[11px] text-[var(--color-text-muted)] ml-1">{t('jn.sz.stopPctSub', { v: calc.stopPct.toFixed(1) })}</span>
           </div>
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">R Targets</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">{t('jn.sz.rTargets')}</span>
             <span className="text-[13px] font-mono text-[var(--color-text)]">
               3R: ${calc.rTarget1.toFixed(2)} · 5R: ${calc.rTarget2.toFixed(2)}
             </span>
@@ -158,6 +124,7 @@ function SizingCalculator({ startingCapital }) {
 /* ── Portfolio Sizing Audit ──────────────────────────────── */
 
 function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
+  const { t: tr } = useLanguage()
   const audit = useMemo(() => {
     if (!trades?.length) return null
 
@@ -216,7 +183,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
   if (!audit) {
     return (
       <div className="text-[13px] text-[var(--color-text-muted)] py-4 text-center">
-        No open positions to audit.
+        {tr('jn.sz.noOpen')}
       </div>
     )
   }
@@ -231,10 +198,10 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Current Positions — Sizing Audit
+          {tr('jn.sz.audit')}
         </h3>
         <span className={`text-[13px] font-mono font-semibold ${audit.totalHeat > 3 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>
-          Total Heat: {audit.totalHeat.toFixed(2)}%
+          {tr('jn.sz.totalHeat', { v: audit.totalHeat.toFixed(2) })}
           {audit.totalHeat > 3 && ' ⚠'}
         </span>
       </div>
@@ -243,15 +210,15 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
         <table className="w-full text-[13px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              <th className="text-left px-2 py-1.5">Ticker</th>
-              <th className="text-right px-2 py-1.5">Qty</th>
-              <th className="text-right px-2 py-1.5">Entry</th>
-              <th className="text-right px-2 py-1.5">Stop</th>
-              <th className="text-right px-2 py-1.5">$ Risk</th>
-              <th className="text-right px-2 py-1.5">% Risk</th>
-              <th className="text-right px-2 py-1.5">Target Qty</th>
+              <th className="text-left px-2 py-1.5">{tr('jn.k.ticker')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.k.qty')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.k.entry')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.k.stop')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.sz.h.riskD')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.sz.h.riskP')}</th>
+              <th className="text-right px-2 py-1.5">{tr('jn.sz.h.target')}</th>
               <th className="text-right px-2 py-1.5">R</th>
-              <th className="text-center px-2 py-1.5">Status</th>
+              <th className="text-center px-2 py-1.5">{tr('jn.sz.h.status')}</th>
             </tr>
           </thead>
           <tbody>
@@ -268,7 +235,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
                   {p.rr.toFixed(1)}R
                 </td>
                 <td className={`px-2 py-1.5 text-center font-medium ${STATUS_COLORS[p.status]}`}>
-                  {p.status === 'ok' ? '✓' : p.status === 'undersized' ? '↓ Small' : '↑ Large'}
+                  {p.status === 'ok' ? '✓' : p.status === 'undersized' ? tr('jn.sz.small') : tr('jn.sz.large')}
                 </td>
               </tr>
             ))}
@@ -291,6 +258,7 @@ export default function SizingTab() {
 
 function SizingTabInner() {
   const { state } = usePortfolio()
+  const { t } = useLanguage()
   const [expandedMethod, setExpandedMethod] = useState('fixed-risk')
 
   const enriched = useMemo(() => {
@@ -305,12 +273,12 @@ function SizingTabInner() {
       {/* Section 1: Framework Education */}
       <div>
         <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-          Position Sizing Methods
+          {t('jn.sz.methods')}
         </h3>
         <div className="space-y-2">
           {METHODS.map(method => {
             const isExpanded = expandedMethod === method.key
-            const verdict = VERDICT_LABELS[method.verdict]
+            const m = (f) => t(`jn.sz.${method.key}.${f}`)
             return (
               <div
                 key={method.key}
@@ -322,12 +290,12 @@ function SizingTabInner() {
                   className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] transition-colors"
                 >
                   <div>
-                    <span className="text-[13px] font-semibold text-[var(--color-text)]">{method.title}</span>
-                    <span className="text-[11px] text-[var(--color-text-muted)] ml-2">{method.subtitle}</span>
+                    <span className="text-[13px] font-semibold text-[var(--color-text)]">{m('title')}</span>
+                    <span className="text-[11px] text-[var(--color-text-muted)] ml-2">{m('sub')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-[11px] font-medium uppercase tracking-wide ${verdict.color}`}>
-                      {verdict.label}
+                    <span className={`text-[11px] font-medium uppercase tracking-wide ${VERDICT_COLORS[method.verdict]}`}>
+                      {t(`jn.sz.v.${method.verdict}`)}
                     </span>
                     <span className="text-[var(--color-text-muted)] text-[13px]">{isExpanded ? '−' : '+'}</span>
                   </div>
@@ -337,39 +305,39 @@ function SizingTabInner() {
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border-light)]">
                     <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed pt-3">
-                      {method.description}
+                      {m('desc')}
                     </p>
 
                     {/* Formula */}
                     <div className="bg-[var(--color-bg)] rounded px-3 py-2">
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Formula</span>
-                      <code className="text-[13px] font-mono text-[var(--color-text)]">{method.formula}</code>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">{t('jn.sz.formula')}</span>
+                      <code className="text-[13px] font-mono text-[var(--color-text)]">{m('formula')}</code>
                     </div>
 
                     {/* Example */}
                     <div className="bg-[var(--color-bg)] rounded px-3 py-2">
-                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Example</span>
-                      <span className="text-[13px] text-[var(--color-text-secondary)]">{method.example.result}</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">{t('jn.sz.example')}</span>
+                      <span className="text-[13px] text-[var(--color-text-secondary)]">{m('example')}</span>
                     </div>
 
                     {/* Pros / Cons */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-profit)] block mb-1">Pros</span>
+                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-profit)] block mb-1">{t('jn.sz.pros')}</span>
                         <ul className="space-y-0.5">
-                          {method.pros.map((p, i) => (
+                          {range(method.pros).map((i) => (
                             <li key={i} className="text-[11px] text-[var(--color-text-secondary)] flex gap-1.5">
-                              <span className="text-[var(--color-profit)] shrink-0">+</span>{p}
+                              <span className="text-[var(--color-profit)] shrink-0">+</span>{m(`pro.${i}`)}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-loss)] block mb-1">Cons</span>
+                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-loss)] block mb-1">{t('jn.sz.cons')}</span>
                         <ul className="space-y-0.5">
-                          {method.cons.map((c, i) => (
+                          {range(method.cons).map((i) => (
                             <li key={i} className="text-[11px] text-[var(--color-text-secondary)] flex gap-1.5">
-                              <span className="text-[var(--color-loss)] shrink-0">−</span>{c}
+                              <span className="text-[var(--color-loss)] shrink-0">−</span>{m(`con.${i}`)}
                             </li>
                           ))}
                         </ul>

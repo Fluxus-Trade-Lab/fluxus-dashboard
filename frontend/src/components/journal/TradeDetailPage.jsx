@@ -3,9 +3,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, R
 import { useTradePostmortem } from '../../hooks/useTradeJournal'
 import TickerLink from '../ticker/TickerLink'
 import { fmtCur } from '../portfolio/lib/portfolioFormat'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { rich, word } from '../screener/richText'
+import { narrativeFor } from './lib/narrative'
 
 export default function TradeDetailPage({ tradeId }) {
   const { data, loading, error } = useTradePostmortem(tradeId)
+  const { t: tr, lang } = useLanguage()
+  const w = (key, raw) => word(tr, key, raw)
 
   // All hooks must run on every render — compute chart data before any early returns
   const chartData = useMemo(() => {
@@ -15,12 +20,12 @@ export default function TradeDetailPage({ tradeId }) {
     }))
   }, [data])
 
-  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-[13px]">Loading…</div>
+  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-[13px]">{tr('jn.td.loading')}</div>
   if (error || !data) {
     return (
       <div className="py-10 text-center text-[13px] text-[var(--color-text-muted)]">
-        <button onClick={() => window.history.back()} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] mb-3 block mx-auto">← Back</button>
-        No post-mortem found for <code>{tradeId}</code>.
+        <button onClick={() => window.history.back()} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] mb-3 block mx-auto">{tr('jn.td.back')}</button>
+        {rich(tr('jn.td.notFound'), { id: <code>{tradeId}</code> })}
       </div>
     )
   }
@@ -36,20 +41,20 @@ export default function TradeDetailPage({ tradeId }) {
         <button
           onClick={() => window.history.back()}
           className="text-[11px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer mb-1 block"
-        >← Back to journal</button>
+        >{tr('jn.td.backJournal')}</button>
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-[26px] font-bold tracking-tight flex items-center gap-3">
               <TickerLink symbol={t.ticker} className="text-[var(--color-accent)]" />
               <span className={`text-[13px] font-normal text-[var(--color-text-secondary)]`}>
-                {t.direction.toUpperCase()}
+                {w(`jn.dir.${t.direction}`, t.direction).toUpperCase()}
               </span>
               <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]' : 'bg-[color-mix(in_srgb,var(--color-accent)_15%,transparent)] text-[var(--color-accent)]'}`}>
-                {t.closed ? 'CLOSED' : 'OPEN'}
+                {t.closed ? tr('jn.td.closedBadge') : tr('jn.td.openBadge')}
               </span>
             </h1>
             <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-              {String(t.entry_date).slice(0, 10)}{t.exit_date && ` → ${String(t.exit_date).slice(0, 10)}`} · {data.setup_type}
+              {String(t.entry_date).slice(0, 10)}{t.exit_date && ` → ${String(t.exit_date).slice(0, 10)}`} · {w(`jn.setup.${data.setup_type}`, data.setup_type)}
             </div>
           </div>
           <div className="text-right">
@@ -57,8 +62,9 @@ export default function TradeDetailPage({ tradeId }) {
               {fmtR(analytics.realized_R)}
             </div>
             <div className="text-[11px] text-[var(--color-text-muted)]">
-              optimal {fmtR(analytics.optimal_R)}
-              {analytics.capture_pct != null && ` · captured ${analytics.capture_pct.toFixed(0)}%`}
+              {analytics.capture_pct != null
+                ? tr('jn.td.optimalCapture', { r: fmtR(analytics.optimal_R), pct: analytics.capture_pct.toFixed(0) })
+                : tr('jn.td.optimal', { r: fmtR(analytics.optimal_R) })}
             </div>
           </div>
         </div>
@@ -66,18 +72,18 @@ export default function TradeDetailPage({ tradeId }) {
 
       {/* Narrative */}
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
-        <div className="text-[13px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
+        <div className="text-[13px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(narrativeFor(data, lang, tr, w)) }} />
         <div className="mt-3 pt-3 border-t border-[var(--color-border-light)]">
-          <span className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)]">Lesson</span>
-          <div className={`text-[17px] font-bold ${lessonColor(data.lesson)}`}>{data.lesson}</div>
+          <span className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)]">{tr('jn.td.lesson')}</span>
+          <div className={`text-[17px] font-bold ${lessonColor(data.lesson)}`}>{w(`rev.lesson.${data.lesson}`, data.lesson)}</div>
         </div>
       </div>
 
       {/* Annotated chart */}
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
-        <div className="font-semibold mb-3 text-[13px]">Price path · entry → exit + buffer</div>
+        <div className="font-semibold mb-3 text-[13px]">{tr('jn.td.path')}</div>
         {chartData.length === 0 ? (
-          <div className="text-[var(--color-text-muted)] text-[13px]">No OHLC data available for this window.</div>
+          <div className="text-[var(--color-text-muted)] text-[13px]">{tr('jn.td.noOhlc')}</div>
         ) : (
           <ResponsiveContainer width="100%" height={320}>
             <LineChart data={chartData}>
@@ -91,17 +97,17 @@ export default function TradeDetailPage({ tradeId }) {
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `$${Number(v).toFixed(0)}`} domain={['auto', 'auto']} />
               <Tooltip
                 formatter={(v, name) => [name === 'close' ? `$${Number(v).toFixed(2)}` : v, name]}
-                labelFormatter={l => `Date: ${l}`}
+                labelFormatter={l => tr('jn.td.tipDate', { d: l })}
               />
-              <Line type="monotone" dataKey="close" stroke="var(--color-text-muted)" strokeWidth={2} dot={false} name="Close" />
+              <Line type="monotone" dataKey="close" stroke="var(--color-text-muted)" strokeWidth={2} dot={false} name={tr('jn.td.close')} />
 
               {/* Entry */}
-              <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: 'var(--color-text-muted)', fontSize: 11, position: 'left' }} />
+              <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: tr('jn.td.refEntry', { p: t.entry_price.toFixed(2) }), fill: 'var(--color-text-muted)', fontSize: 11, position: 'left' }} />
               <ReferenceLine x={String(t.entry_date).slice(0, 10)} stroke="var(--color-text-muted)" strokeDasharray="2 2" />
               <ReferenceDot x={String(t.entry_date).slice(0, 10)} y={t.entry_price} r={5} fill="var(--color-text)" stroke="var(--color-surface)" strokeWidth={1.5} />
 
               {/* Stop */}
-              <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: 'var(--color-loss)', fontSize: 11, position: 'left' }} />
+              <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: tr('jn.td.refStop', { p: t.stop_price.toFixed(2) }), fill: 'var(--color-loss)', fontSize: 11, position: 'left' }} />
 
               {/* Trims */}
               {t.trims.map((tr, i) => (
@@ -131,10 +137,10 @@ export default function TradeDetailPage({ tradeId }) {
           </ResponsiveContainer>
         )}
         <div className="text-[11px] text-[var(--color-text-muted)] mt-2 flex flex-wrap gap-3">
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text)] mr-1"/>Entry</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text-secondary)] mr-1"/>Trim</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-loss)] mr-1"/>Exit / Stop</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-profit)] mr-1"/>Optimal exit</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text)] mr-1"/>{tr('jn.td.legEntry')}</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text-secondary)] mr-1"/>{tr('jn.td.legTrim')}</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-loss)] mr-1"/>{tr('jn.td.legExit')}</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-profit)] mr-1"/>{tr('jn.td.legOptimal')}</span>
         </div>
       </div>
 
@@ -142,39 +148,39 @@ export default function TradeDetailPage({ tradeId }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {/* Entry snapshot */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[13px]">Entry snapshot</div>
+          <div className="font-semibold mb-3 text-[13px]">{tr('jn.td.snapshot')}</div>
           <div className="text-[13px] flex flex-col gap-1.5">
-            <Row label="Entry price" value={fmtCur(t.entry_price)} />
-            <Row label="Stop" value={fmtCur(t.stop_price)} />
+            <Row label={tr('jn.td.entryPrice')} value={fmtCur(t.entry_price)} />
+            <Row label={tr('jn.td.stop')} value={fmtCur(t.stop_price)} />
             {/* R and % only — no share counts or dollar risk (Andy 2026-09-13). */}
-            <Row label="1R (stop distance)" value={fmtPct(t.r_pct_of_entry, 1, ' of entry')} />
+            <Row label={tr('jn.td.oneR')} value={t.r_pct_of_entry == null ? '—' : tr('jn.td.ofEntry', { v: t.r_pct_of_entry.toFixed(1) })} />
             <hr className="border-[var(--color-border-light)] my-1" />
             <Row label="MA20" value={snap.ma20 != null ? fmtCur(snap.ma20) : '—'} />
             <Row label="MA50" value={snap.ma50 != null ? fmtCur(snap.ma50) : '—'} />
             <Row label="MA200" value={snap.ma200 != null ? fmtCur(snap.ma200) : '—'} />
             <Row label="RSI(14)" value={snap.rsi14 != null ? snap.rsi14.toFixed(1) : '—'} />
             <Row label="ATR(14)%" value={snap.atr14_pct != null ? `${snap.atr14_pct.toFixed(1)}%` : '—'} />
-            <Row label="52W position" value={snap.position_in_52w_range_pct != null ? `${snap.position_in_52w_range_pct.toFixed(0)}%` : '—'} />
+            <Row label={tr('jn.td.pos52')} value={snap.position_in_52w_range_pct != null ? `${snap.position_in_52w_range_pct.toFixed(0)}%` : '—'} />
           </div>
         </div>
 
         {/* Execution */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[13px]">Execution</div>
+          <div className="font-semibold mb-3 text-[13px]">{tr('jn.td.execution')}</div>
           <div className="text-[13px] flex flex-col gap-1.5">
-            <Row label="Status" value={t.closed ? 'Closed' : 'Open'} />
-            {!t.closed && <Row label="Position remaining" value={fmtPct(t.remaining_pct, 0)} />}
-            <Row label="Exit date" value={t.exit_date ? String(t.exit_date).slice(0, 10) : '—'} />
-            <Row label="Hold (cal days)" value={analytics.hold_calendar_days ?? '—'} />
-            <Row label="Realized R" value={fmtR(t.realized_R)} valueColor={rColor(t.realized_R)} />
+            <Row label={tr('jn.td.status')} value={t.closed ? tr('jn.td.closed') : tr('jn.td.open')} />
+            {!t.closed && <Row label={tr('jn.td.remaining')} value={fmtPct(t.remaining_pct, 0)} />}
+            <Row label={tr('jn.td.exitDate')} value={t.exit_date ? String(t.exit_date).slice(0, 10) : '—'} />
+            <Row label={tr('jn.td.holdCal')} value={analytics.hold_calendar_days ?? '—'} />
+            <Row label={tr('jn.td.realizedR')} value={fmtR(t.realized_R)} valueColor={rColor(t.realized_R)} />
             <hr className="border-[var(--color-border-light)] my-1" />
-            <div className="text-[11px] uppercase text-[var(--color-text-muted)] mt-1">Trims</div>
+            <div className="text-[11px] uppercase text-[var(--color-text-muted)] mt-1">{tr('jn.td.trims')}</div>
             {t.trims.length === 0 ? (
-              <div className="text-[var(--color-text-muted)] text-[11px]">No trims recorded.</div>
+              <div className="text-[var(--color-text-muted)] text-[11px]">{tr('jn.td.noTrims')}</div>
             ) : (
               t.trims.map((tr, i) => (
                 <div key={i} className="text-[11px] flex justify-between">
-                  <span className="text-[var(--color-text-muted)]">{String(tr.date).slice(0, 10)} · {tr.type}</span>
+                  <span className="text-[var(--color-text-muted)]">{String(tr.date).slice(0, 10)} · {w(`jn.trim.${tr.type}`, tr.type)}</span>
                   <span className="tabular-nums">{fmtPct(tr.pct_of_position, 0)} @ {fmtCur(tr.price)}</span>
                 </div>
               ))
@@ -184,17 +190,17 @@ export default function TradeDetailPage({ tradeId }) {
 
         {/* Path analytics */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[13px]">Path analytics</div>
+          <div className="font-semibold mb-3 text-[13px]">{tr('jn.td.pathAnalytics')}</div>
           <div className="text-[13px] flex flex-col gap-1.5">
-            <Row label="Optimal exit" value={analytics.optimal_exit_price != null ? fmtCur(analytics.optimal_exit_price) : '—'} />
-            <Row label="Optimal date" value={analytics.optimal_exit_date ? String(analytics.optimal_exit_date).slice(0, 10) : '—'} />
-            <Row label="Days to optimal" value={analytics.days_to_optimal ?? '—'} />
-            <Row label="Peak R (MFE)" value={fmtR(analytics.mfe_R)} valueColor={rColor(analytics.mfe_R)} />
-            <Row label="Worst R (MAE)" value={fmtR(analytics.mae_R)} valueColor="text-[var(--color-loss)]" />
+            <Row label={tr('jn.td.optExit')} value={analytics.optimal_exit_price != null ? fmtCur(analytics.optimal_exit_price) : '—'} />
+            <Row label={tr('jn.td.optDate')} value={analytics.optimal_exit_date ? String(analytics.optimal_exit_date).slice(0, 10) : '—'} />
+            <Row label={tr('jn.td.daysToOpt')} value={analytics.days_to_optimal ?? '—'} />
+            <Row label={tr('jn.td.mfe')} value={fmtR(analytics.mfe_R)} valueColor={rColor(analytics.mfe_R)} />
+            <Row label={tr('jn.td.mae')} value={fmtR(analytics.mae_R)} valueColor="text-[var(--color-loss)]" />
             <hr className="border-[var(--color-border-light)] my-1" />
-            <Row label="Realized R" value={fmtR(analytics.realized_R)} valueColor={rColor(analytics.realized_R)} />
-            <Row label="Available R" value={fmtR(analytics.optimal_R)} valueColor={rColor(analytics.optimal_R)} />
-            <Row label="Capture %" value={analytics.capture_pct != null ? `${analytics.capture_pct.toFixed(0)}%` : '—'} valueColor={captureColor(analytics.capture_pct)} />
+            <Row label={tr('jn.td.realizedR')} value={fmtR(analytics.realized_R)} valueColor={rColor(analytics.realized_R)} />
+            <Row label={tr('jn.td.availableR')} value={fmtR(analytics.optimal_R)} valueColor={rColor(analytics.optimal_R)} />
+            <Row label={tr('jn.td.capturePct')} value={analytics.capture_pct != null ? `${analytics.capture_pct.toFixed(0)}%` : '—'} valueColor={captureColor(analytics.capture_pct)} />
           </div>
         </div>
       </div>

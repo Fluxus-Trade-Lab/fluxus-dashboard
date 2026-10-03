@@ -6,6 +6,8 @@ import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 import { toJstDate } from '../../../lib/tradingDate'
 import { Bar } from '../lib/MiniBars'
 import DemonRulesConfig from './DemonRulesConfig'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import { rich, word } from '../../screener/richText'
 
 const RULES_KEY = 'fluxus-demon-rules'
 
@@ -21,17 +23,18 @@ function saveRules(rules) {
 }
 
 function CircuitBreakerBanner({ breakers }) {
+  const { t } = useLanguage()
   if (breakers.length === 0) return null
 
   return (
     <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[var(--color-loss)] rounded-2xl px-5 py-4">
       <div className="flex items-center gap-2 mb-1">
         <span className="text-[17px]">&#x1F6D1;</span>
-        <span className="text-[13px] font-bold text-[var(--color-loss)]">STOP TRADING</span>
+        <span className="text-[13px] font-bold text-[var(--color-loss)]">{t('jn.df.stop')}</span>
       </div>
       {breakers.map(b => (
         <p key={b.id} className="text-[13px] text-[var(--color-text)] mt-1">
-          <strong>{b.name}</strong> triggered {b.currentStreak} times in a row. Review these trades before taking new entries.
+          {rich(t('jn.df.breaker', { n: b.currentStreak }), { name: <strong>{word(t, `jn.demon.${b.id}`, b.name)}</strong> })}
         </p>
       ))}
     </div>
@@ -39,6 +42,7 @@ function CircuitBreakerBanner({ breakers }) {
 }
 
 function DemonCard({ stat, isActive, onClick }) {
+  const { t } = useLanguage()
   const borderColor = stat.currentStreak >= 6
     ? 'border-[var(--color-loss)]'
     : stat.currentStreak >= 3
@@ -58,27 +62,27 @@ function DemonCard({ stat, isActive, onClick }) {
           <span className={`text-[11px] font-bold uppercase px-1.5 py-0.5 rounded ${
             stat.currentStreak >= 6 ? 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]' : 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] text-[var(--color-signal-caution)]'
           }`}>
-            {stat.currentStreak} streak
+            {t('jn.df.streak', { n: stat.currentStreak })}
           </span>
         )}
       </div>
       <div className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1">
-        {stat.name}
+        {word(t, `jn.demon.${stat.id}`, stat.name)}
       </div>
       <div className="flex items-baseline gap-2">
         <span className="text-[17px] font-mono font-bold text-[var(--color-text-bold)]">{stat.fireCount}</span>
-        <span className="text-[11px] text-[var(--color-text-muted)]">/ 30 trades</span>
+        <span className="text-[11px] text-[var(--color-text-muted)]">{t('jn.df.of30')}</span>
       </div>
       <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-        {fmtPct(stat.fireRate)} fire rate
+        {t('jn.df.fireRate', { p: fmtPct(stat.fireRate) })}
       </div>
       {stat.winRateWith != null && stat.winRateWithout != null && (
         <div className="text-[11px] mt-1.5 pt-1.5 border-t border-[var(--color-border-light)]">
-          <span className="text-[var(--color-text-muted)]">Win rate: </span>
+          <span className="text-[var(--color-text-muted)]">{t('jn.df.winRate')}</span>
           <span className={clr(stat.winRateWith - stat.winRateWithout)}>
             {fmt(stat.winRateWith, 0)}%
           </span>
-          <span className="text-[var(--color-text-muted)]"> vs </span>
+          <span className="text-[var(--color-text-muted)]">{t('jn.df.vs')}</span>
           <span className="text-[var(--color-text-secondary)]">{fmt(stat.winRateWithout, 0)}%</span>
         </div>
       )}
@@ -87,6 +91,7 @@ function DemonCard({ stat, isActive, onClick }) {
 }
 
 function TradeRow({ trade }) {
+  const { t } = useLanguage()
   const demons = trade.demons || []
 
   return (
@@ -104,7 +109,7 @@ function TradeRow({ trade }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[13px] font-medium text-[var(--color-text-bold)]">{trade.ticker}</span>
-          <span className="text-[11px] text-[var(--color-text-muted)] uppercase">{trade.direction}</span>
+          <span className="text-[11px] text-[var(--color-text-muted)] uppercase">{word(t, `jn.dir.${trade.direction}`, trade.direction)}</span>
           <span className="text-[11px] text-[var(--color-text-muted)]">{toJstDate(trade.entryDate)}</span>
         </div>
         {/* Demon badges */}
@@ -115,10 +120,10 @@ function TradeRow({ trade }) {
               return (
                 <span
                   key={dId}
-                  title={d?.desc}
+                  title={d && word(t, `jn.demon.${dId}.desc`, d.desc)}
                   className="px-1.5 py-0.5 text-[11px] font-medium rounded bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]"
                 >
-                  {d?.icon} {d?.name}
+                  {d?.icon} {d && word(t, `jn.demon.${dId}`, d.name)}
                 </span>
               )
             })}
@@ -143,6 +148,7 @@ function TradeRow({ trade }) {
 
 export default function DemonFinderSection({ enriched, dailyPrices }) {
   const { dispatch } = usePortfolio()
+  const { t } = useLanguage()
   const [rules, setRules] = useState(loadRules)
   const [activeFilter, setActiveFilter] = useState(null) // demon id or 'clean'
 
@@ -196,9 +202,9 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
 
       {/* Summary line */}
       <div className="flex items-center gap-4 text-[13px] text-[var(--color-text-secondary)]">
-        <span>{analyzed.length} trades analyzed</span>
-        <span className="text-[var(--color-profit)]">{cleanCount} clean</span>
-        <span className="text-[var(--color-loss)]">{flaggedCount} flagged</span>
+        <span>{t('jn.df.analyzed', { n: analyzed.length })}</span>
+        <span className="text-[var(--color-profit)]">{t('jn.df.clean', { n: cleanCount })}</span>
+        <span className="text-[var(--color-loss)]">{t('jn.df.flagged', { n: flaggedCount })}</span>
       </div>
 
       {/* Demon scorecard */}
@@ -220,7 +226,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
         >
           <div className="text-[13px] mb-2">{'\u2713'}</div>
           <div className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1">
-            Clean Trades
+            {t('jn.df.cleanTrades')}
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-[17px] font-mono font-bold text-[var(--color-profit)]">{cleanCount}</span>
@@ -233,25 +239,25 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
       {tacticalStats && (
         <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
           <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-            Tactical Discipline (First Trim)
+            {t('jn.df.tactical')}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-            <Bar label="Avg Trim Size" value={tacticalStats.avgTrimRatio * 100} max={60} target={33}
+            <Bar label={t('jn.df.avgTrimSize')} value={tacticalStats.avgTrimRatio * 100} max={60} target={33}
                  color={tacticalStats.avgTrimRatio >= 0.25 && tacticalStats.avgTrimRatio <= 0.40
                    ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
-                 sub="target ~33% — the tick" />
-            <Bar label="Avg Trim R" value={tacticalStats.avgTrimRR} max={5} target={3} unit="R"
+                 sub={t('jn.df.avgTrimSize.sub')} />
+            <Bar label={t('jn.df.avgTrimR')} value={tacticalStats.avgTrimRR} max={5} target={3} unit="R"
                  color={tacticalStats.avgTrimRR >= 2.0 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
-                 sub="target 3R" />
-            <Bar label="Good Size Rate" value={tacticalStats.goodSizeRate} max={100} target={70}
+                 sub={t('jn.df.avgTrimR.sub')} />
+            <Bar label={t('jn.df.goodSize')} value={tacticalStats.goodSizeRate} max={100} target={70}
                  color={tacticalStats.goodSizeRate >= 70 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
-                 sub="share of trims in the 25–40% band" />
-            <Bar label="Good R/R Rate" value={tacticalStats.goodRRRate} max={100} target={50}
+                 sub={t('jn.df.goodSize.sub')} />
+            <Bar label={t('jn.df.goodRR')} value={tacticalStats.goodRRRate} max={100} target={50}
                  color={tacticalStats.goodRRRate >= 50 ? 'var(--color-profit)' : 'var(--color-signal-caution)'}
-                 sub="share trimmed at 2R+" />
-            <Bar label="Avg Days to Trim" value={tacticalStats.avgDaysToTrim}
+                 sub={t('jn.df.goodRR.sub')} />
+            <Bar label={t('jn.df.daysToTrim')} value={tacticalStats.avgDaysToTrim}
                  max={Math.max(10, tacticalStats.avgDaysToTrim * 1.5)} unit="d"
-                 sub="no target — context, not a rule" />
+                 sub={t('jn.df.daysToTrim.sub')} />
           </div>
         </div>
       )}
@@ -261,8 +267,8 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
         <div className="px-3 py-2 border-b border-[var(--color-border)] flex items-center justify-between">
           <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             {activeFilter
-              ? activeFilter === 'clean' ? 'Clean Trades' : DEMONS.find(d => d.id === activeFilter)?.name
-              : 'All Trades'
+              ? activeFilter === 'clean' ? t('jn.df.cleanTrades') : word(t, `jn.demon.${activeFilter}`, DEMONS.find(d => d.id === activeFilter)?.name)
+              : t('jn.df.allTrades')
             }
           </span>
           {activeFilter && (
@@ -270,7 +276,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
               onClick={() => setActiveFilter(null)}
               className="text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer bg-transparent border-none"
             >
-              Show all
+              {t('jn.k.showAll')}
             </button>
           )}
         </div>
@@ -280,7 +286,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
           ))}
           {filteredTrades.length === 0 && (
             <div className="text-center py-8 text-[13px] text-[var(--color-text-muted)]">
-              No trades match this filter.
+              {t('jn.df.noMatch')}
             </div>
           )}
         </div>

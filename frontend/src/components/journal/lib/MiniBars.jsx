@@ -1,3 +1,5 @@
+import { useLanguage } from '../../../i18n/LanguageContext'
+
 /**
  * Two small bar primitives shared by the "tools" under Review — the 2026-09-11
  * pass that turned four virtual-scroll tables into a knob + a chart.
@@ -11,6 +13,7 @@
  *  against a fixed goal (avg trim size vs. the 25–40% band, e.g.). `color` is
  *  a CSS colour value (a `var(--...)` token), not a Tailwind class. */
 export function Bar({ label, value, max, target, unit = '%', color = 'var(--color-accent)', sub }) {
+  const { t } = useLanguage()
   const pct = Math.max(0, Math.min(100, (value / max) * 100))
   const tPct = target != null ? Math.max(0, Math.min(100, (target / max) * 100)) : null
   return (
@@ -26,7 +29,7 @@ export function Bar({ label, value, max, target, unit = '%', color = 'var(--colo
              style={{ width: `${pct}%`, background: color }} />
         {tPct != null && (
           <div className="absolute top-[-2px] bottom-[-2px] w-[2px] bg-[var(--color-text)]"
-               style={{ left: `${tPct}%` }} title={`target ${target}${unit}`} />
+               style={{ left: `${tPct}%` }} title={t('jn.bar.target', { v: `${target}${unit}` })} />
         )}
       </div>
       {sub && <div className="text-[11px] text-[var(--color-text-muted)] mt-0.5">{sub}</div>}
