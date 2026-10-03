@@ -555,3 +555,5 @@
 - [10-04] [OPS/数据端] **国际化字段的并列策略体现系统的前瞻性**。shortlist 席位 why / 卡片 verdict / legend、watchlist cross_zone_rule 新增中英并列字段（why_en / verdict_en / legend_en / cross_zone_rule_zh），而非嵌套结构；这个设计让前端可以按需绑定、不强制同时演渲中英。同步链完整：代码改动 → data/output 同步补齐 → schema 基线登记四新键 → 10 条测试覆盖边界（字段存在性、格式正确、长度约束、唯一性）。诊断链条从「定了字段」升到「让数据链每一层都诚实地遵守新字段规约」；体现系统从「国际化需求」升到「设计决策的可扩展性保障」的能力成熟度。出处 T-1004-21 · commit 68699214 · pipeline/tests/test_name_cards.py (+27 行)
 
 - [10-04] [DATA] **News & Events 候选池：从观察升到诊断虚假利好**。news_pool.json 三类候选（leader / ep / news_failure），其中 news_failure 机械判定财报 beat 但当日涨幅 ≤ +1% 的情况——市场看好但反应冷淡，这是虚假利好的直接信号。诊断链条完整：判据透明（自造口径但明确定义）→ 防护周密（10 条离线测试、FINNHUB_API_KEY 管理、独立失败域）→ 后续巡检可持续验证一致性。系统从被动「看市场涨不涨」升到主动「诊断预期与实际的失配」，诊断精度从单维升到多维。出处 4bfda74e0 · T-1003-83 · 10 条测试 T-1004-01
+
+- [10-04] [steve] 选股器 12 条虚线规则诠释排查 · 诚实标准：有原文逐字引、无原文标「查过无标准」（实测 4 条子条件确实无标准）；多维对照梳出已有 2 个、可直接做 3 个、缺字段 5 个，系统从「能不能做」精进到「怎么定它」，诊断精度的递进是系统诚实度的直接证明 · [2026-10-04_missing_scanners_sources.md](../../data/research/screener_redesign/2026-10-04_missing_scanners_sources.md) · T-1004-28 / 68155659
