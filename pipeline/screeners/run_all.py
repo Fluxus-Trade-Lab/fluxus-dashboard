@@ -201,15 +201,21 @@ def _mtime_ns(path: Path):
         return None
 
 
-def _emit(ledger, path: Path, text: str, **kwargs) -> Path:
+def _emit(ledger, path: Path, text: str, *, record: bool = True, **kwargs) -> Path:
     """Write one output file, then record it in the run ledger.
 
     The single door for this module's own writes: `ledger.wrote` runs only
     after `write_text` returned, and re-checks the file on disk, so the
     ledger records what happened rather than what was intended.
+
+    `record=False` is for an archive copy outside OUTPUT_DIR (the news_pool
+    daily history): the write still goes through here, but `wrote` keeps
+    meaning "files in OUTPUT_DIR this run wrote", which is what the smoke
+    test checks it against.
     """
     path.write_text(text, **kwargs)
-    ledger.wrote(path)
+    if record:
+        ledger.wrote(path)
     return path
 
 
@@ -1597,7 +1603,9 @@ def main():
         try:
             _np_hist = Path('data/history/news_pool')
             _np_hist.mkdir(parents=True, exist_ok=True)
-            _emit(ledger, _np_hist / f"{_np['as_of']}.json", json.dumps(_np, indent=1, ensure_ascii=False))
+            # record=False: the ledger's `wrote` lists OUTPUT_DIR files only (T-1004-33).
+            _emit(ledger, _np_hist / f"{_np['as_of']}.json", json.dumps(_np, indent=1, ensure_ascii=False),
+                  record=False)
         except Exception:
             logger.exception("news_pool history archive failed - news_pool.json unaffected")
         ledger.note('news_pool', 'ok' if _np['finnhub'] == 'ok' else 'degraded',

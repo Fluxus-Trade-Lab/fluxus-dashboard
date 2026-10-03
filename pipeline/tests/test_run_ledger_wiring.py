@@ -57,6 +57,19 @@ def test_emit_passes_write_kwargs_through(tmp_path):
     assert led.row['wrote'] == ['market_health.json']
 
 
+def test_emit_record_false_writes_an_archive_but_keeps_it_out_of_wrote(tmp_path):
+    """T-1004-33. The news_pool daily archive lives in data/history/, not
+    OUTPUT_DIR, and `wrote` is checked against OUTPUT_DIR by the smoke test.
+    It must still be written (via the single door), and must not be listed."""
+    led = Ledger(session='2026-10-04', path=tmp_path / 'run_ledger.jsonl')
+    archive = tmp_path / '2026-10-04.json'
+
+    RA._emit(led, archive, '{"as_of": "2026-10-04"}', record=False)
+
+    assert json.loads(archive.read_text()) == {'as_of': '2026-10-04'}
+    assert led.row['wrote'] == []
+
+
 def test_every_output_write_in_run_all_goes_through_emit():
     """POSITIVE CONTROL. Revert any `_emit(ledger, OUTPUT_DIR / 'x.json', ...)`
     back to `(OUTPUT_DIR / 'x.json').write_text(...)` and this goes red.
