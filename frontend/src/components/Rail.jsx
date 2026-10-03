@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { isLocked } from './access'
+import RailIcon, { hasRailIcon } from './railIcons'
 
 /**
  * The left rail — four layers, and inside MARKET, three functions.
@@ -176,10 +177,11 @@ export default function Rail({ currentPage, onNavigate }) {
                   <button key={key} onClick={() => onNavigate(hash)}
                           aria-current={on ? 'page' : undefined}
                           aria-label={collapsed ? t(`nav.${key}`) : undefined}
+                          title={collapsed ? t(`nav.${key}`) : undefined}
                           className={`group relative w-full border-l-2 py-[7px]
                                       focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
                                       ${collapsed
-                                        ? 'text-[11px] font-mono font-medium text-center px-0'
+                                        ? 'flex justify-center text-[11px] font-mono font-medium px-0'
                                         // indented past the header's word: the
                                         // second level sits under the first
                                         : 'text-[13px] text-left pl-6 pr-3'}
@@ -188,10 +190,26 @@ export default function Rail({ currentPage, onNavigate }) {
                                         : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
                     {/* A small lock beside the name, so the rail says which
                         pages are open BEFORE the click rather than after it.
-                        Collapsed the row is three characters wide and a glyph
-                        would crowd the code out, so there it lives in the
-                        tooltip instead. */}
-                    {collapsed ? short : (
+                        Collapsed, each row is an icon (Andy 2026-10-04: icons,
+                        not abbreviations); the lock shrinks to a micro glyph
+                        tucked at the icon's upper-right corner so it marks the
+                        row without crowding the picture. `short` stays in the
+                        data as the fallback for a page with no icon. */}
+                    {collapsed ? (hasRailIcon(key) ? (
+                      <span className="relative inline-flex">
+                        <RailIcon name={key} />
+                        {isLocked(key) && (
+                          <svg width="8" height="8" viewBox="0 0 24 24" fill="none"
+                               aria-hidden="true" data-rail-lock=""
+                               className="absolute -right-[5px] -top-[4px] opacity-70">
+                            <rect x="3.5" y="10" width="17" height="11.5" rx="3"
+                                  fill="var(--color-bg)" stroke="currentColor" strokeWidth="3" />
+                            <path d="M7.5 10V7.5a4.5 4.5 0 0 1 9 0V10" stroke="currentColor"
+                                  strokeWidth="3" strokeLinecap="round" />
+                          </svg>
+                        )}
+                      </span>
+                    ) : short) : (
                       <span className="inline-flex items-center gap-1.5">
                         {t(`nav.${key}`)}
                         {isLocked(key) && (
@@ -206,11 +224,10 @@ export default function Rail({ currentPage, onNavigate }) {
                       </span>
                     )}
                     {collapsed && (
-                      // The codes are declared, not derived, which makes them
-                      // exact but unlearnable — nobody arrives knowing that THM
-                      // is the Themes page. The name was already in `title`,
-                      // but a native tooltip waits a second and appears under
-                      // the cursor rather than beside the code it explains.
+                      // An icon is quicker than a code but still not a name.
+                      // The name is also in `title`, but a native tooltip
+                      // waits a second and appears under the cursor rather
+                      // than beside the icon it explains.
                       <span className="pointer-events-none absolute left-full top-1/2 z-40 ml-1
                                        hidden -translate-y-1/2 whitespace-nowrap rounded-lg
                                        border border-[var(--color-border)] bg-[var(--color-surface)]
