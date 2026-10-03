@@ -39,7 +39,7 @@ export default function Header({ lastUpdated, isOffline }) {
 
       <div className="flex items-center gap-3">
         <div className="text-[11px] text-[var(--color-text-muted)] font-mono hidden sm:block">
-          {formatTimestamp(lastUpdated)}
+          {formatTimestamp(lastUpdated, lang)}
         </div>
         <button
           onClick={toggleLang}

@@ -2,6 +2,8 @@
 // translations.js. Same rules as that file's header.
 export default {
   en: {
+    'sh.footer.updated': 'Last updated: {ts}',
+    'sh.footer.cached': 'Cached',
     'sh.cc.aria': '{n} sessions of price with the 21-day and 50-day averages',
     'sh.cc.vol': ' · vol {rv}x',
     'sh.cc.logTitle': 'Log axis: equal distance = equal percentage. One outsized day would flatten the rest of a linear axis.',
@@ -32,6 +34,8 @@ export default {
     'sh.st.local': 'Kept in this browser only — it does not follow you to another machine, and clearing site data clears it. Where a shortlist should really live is still open in PRODUCT.md.',
   },
   zh: {
+    'sh.footer.updated': '最后更新：{ts}',
+    'sh.footer.cached': '缓存',
     'sh.cc.aria': '{n} 个交易日的价格，带 21 日和 50 日均线',
     'sh.cc.vol': ' · 量比 {rv}x',
     'sh.cc.logTitle': '纵轴按对数：等距离 = 等百分比。线性轴上，一天的暴涨会把其余部分压平。',

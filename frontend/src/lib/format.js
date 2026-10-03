@@ -85,9 +85,16 @@ export function fmtPctRaw(val) {
   return `${sign}${val.toFixed(1)}%`
 }
 
-export function formatTimestamp(ts) {
+export function formatTimestamp(ts, lang = 'en') {
   if (!ts) return ''
   const d = new Date(ts)
+  if (lang === 'zh') {
+    // 10月3日 07:03（GMT+9） — Chinese date order; the zone stays, it is the reader's clock
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', {
+      month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZoneName: 'short',
+    }).formatToParts(d).map((x) => [x.type, x.value]))
+    return `${p.month}月${p.day}日 ${p.hour}:${p.minute}（${p.timeZoneName}）`
+  }
   return d.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
