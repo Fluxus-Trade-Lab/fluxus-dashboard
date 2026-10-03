@@ -3,6 +3,8 @@ import Squares from '../Squares'
 import { barStyle } from '../groups/ThemeBars'
 import { tickerHref } from '../portfolio/lib/tickerUrl'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { word } from './richText'
 
 /**
  * One table, whatever the vocabularies selected. Changing a scan or a state
@@ -80,7 +82,7 @@ function StateWord({ state, fallback }) {
     <span className="text-[var(--color-text-secondary)] whitespace-nowrap">
       <i className="inline-block w-[7px] h-[7px] rounded-[1px] mr-[5px] align-[-0.5px]"
          style={barStyle(state)} />
-      {tr(`state.${state}`)}
+      {word(tr, `state.${state}`, state)}
     </span>
   )
 }
@@ -104,18 +106,19 @@ function RsCell({ v }) {
 }
 
 function AlignDots({ rs3, indState, indName }) {
+  const { t: tr, lang } = useLanguage()
   const stockKnown = Number.isFinite(rs3)
   return (
     <td className="py-[4px] pr-2.5 text-center whitespace-nowrap">
       <i className="inline-block w-[7px] h-[7px] rounded-full mx-[1.5px] align-middle"
-         title={stockKnown ? `own RS 3M ${Math.round(rs3)} of 99` : 'no RS reading'}
+         title={stockKnown ? tr('sc.align.own', { v: Math.round(rs3) }) : tr('sc.align.noRs')}
          style={!stockKnown
            ? { border: '1px dashed var(--color-text-muted)' }
            : rs3 >= 67
              ? { background: 'var(--color-text-bold)' }
              : { border: '1px solid var(--color-untested)' }} />
       <i className="inline-block w-[7px] h-[7px] rounded-[1px] mx-[1.5px] align-middle"
-         title={indState ? `${indName}: ${indState}` : 'industry state not measured'}
+         title={indState ? tr('sc.align.ind', { ind: dataName(indName, lang), state: word(tr, `state.${indState}`, indState) }) : tr('sc.align.indNone')}
          style={indState ? barStyle(indState) : { border: '1px dashed var(--color-text-muted)' }} />
     </td>
   )
@@ -128,18 +131,22 @@ function AlignDots({ rs3, indState, indName }) {
  *  unlived past stays dashed. A lit ribbon earns full opacity — only the
  *  still-empty ones rest faded. */
 function GroupTrendCell({ home, homeKind, ribbon }) {
+  const { t: tr, lang } = useLanguage()
   // a cell can be null INSIDE the array too — a fortnight the group sat out
   // (skipped scoring, thin membership); the calendar keeps the slot, drawn
   // dashed, so cell k means the same dates on every row
   const cells = ribbon ?? []
   const measured = cells.filter(Boolean)
   const pad = Math.max(0, 5 - cells.length)
-  const kindWord = homeKind === 'industry_unscored' ? 'industry, unscored' : homeKind
+  // an unknown kind prints as it arrived, the way it always did
+  const kindKey = `sc.kind.${homeKind}`
+  const kindWord = tr(kindKey) === kindKey ? homeKind : tr(kindKey)
+  const homeName = dataName(home, lang)
   const title = home
     ? measured.length
-      ? `${home} (home ${kindWord}) — ${measured.length} of 5 fortnights, oldest first: ${measured.map((c) => c.state).join(' · ')}`
-      : `${home} (home ${kindWord}) — 0 of 5 fortnights measured; the archive is accumulating`
-    : 'no home group — not in the group layer'
+      ? tr('sc.trend.some', { home: homeName, kind: kindWord, m: measured.length, cells: measured.map((c) => word(tr, `state.${c.state}`, c.state)).join(' · ') })
+      : tr('sc.trend.none', { home: homeName, kind: kindWord })
+    : tr('sc.trend.noHome')
   return (
     <td className={`py-[4px] pr-2.5 transition-opacity group-hover:opacity-100
                     ${measured.length ? '' : 'opacity-40'}`}>
@@ -174,9 +181,10 @@ function GroupTrendCell({ home, homeKind, ribbon }) {
  * dash for the names carrying no ledger at all.
  */
 export function HeatCell({ heat }) {
+  const { t: tr } = useLanguage()
   if (!heat) {
     return <td className="py-[4px] pr-2.5 text-[var(--color-text-muted)]"
-               title="not on the confluence ledger">—</td>
+               title={tr('sc.heat.none')}>—</td>
   }
   const marks = heat.screeners.map((s) => '|'.repeat(s.hits)).join(' ')
   const days = heat.confluence_days
@@ -190,7 +198,7 @@ export function HeatCell({ heat }) {
         // the tooltip has to sit on the span: `title` on an <svg> is inert,
         // and an SVG <title> child would show up as text to the audit probes
         <span className="inline-block ml-1 text-[var(--color-signal-caution)]"
-              title={`${days} session${days === 1 ? '' : 's'} with four or more screens lit at once \u2014 the score alone does not tell that apart from the same total spread over weeks`}>
+              title={tr(days === 1 ? 'sc.heat.days1' : 'sc.heat.daysN', { n: days })}>
           <svg viewBox="0 0 8 12" width="7" height="10" aria-hidden="true" className="align-[-1px]">
             <path d="M5 0 0 7h3l-1 5 5-7H4z" fill="currentColor" />
           </svg>
@@ -202,6 +210,7 @@ export function HeatCell({ heat }) {
 }
 
 function EvidenceFold({ row }) {
+  const { t: tr, lang } = useLanguage()
   return (
     <tr>
       <td colSpan={15} className="pb-2 pt-0 pl-9 border-none">
@@ -209,21 +218,23 @@ function EvidenceFold({ row }) {
                         px-3.5 py-2 text-[13px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
           {row.heat && row.heat.screeners.map((s) => (
             <span key={s.name}>
-              <b className="font-semibold text-[var(--color-text)]">{s.name}</b>
+              {/* ledger keys are pipeline file names; in Chinese the ones that are
+                  also scan words read as the scan word, English keeps the key */}
+              <b className="font-semibold text-[var(--color-text)]">{lang === 'zh' ? word(tr, `sc.scan.${s.name}`, s.name) : s.name}</b>
               {' '}×{s.hits} · {s.last_date?.slice(5)}
             </span>
           ))}
           {row.indPct != null && (
-            <span title="percentile within its own industry">Ind pct <b className="font-semibold text-[var(--color-text)]">{Math.round(row.indPct)}</b></span>
+            <span title={tr('sc.ev.indPctT')}>{tr('scr.col.indPct')} <b className="font-semibold text-[var(--color-text)]">{Math.round(row.indPct)}</b></span>
           )}
           {row.perf1w != null && <span>1W <b className="font-semibold text-[var(--color-text)]">{fmtPct(row.perf1w)}</b></span>}
-          {row.sector && <span className="text-[var(--color-text-muted)]">{row.sector}{row.ind ? ` · ${row.ind}` : ''}</span>}
+          {row.sector && <span className="text-[var(--color-text-muted)]">{dataName(row.sector, lang)}{row.ind ? ` · ${dataName(row.ind, lang)}` : ''}</span>}
           {/* the tear-sheet, named. It used to be what a row click did and
               nothing on the page said so; now it is a labelled destination and
               the row is free to do the thing you actually came for. */}
           <a href={tickerHref(row.ticker)} onClick={(e) => e.stopPropagation()}
              className="ml-auto text-[var(--color-accent)] no-underline hover:underline whitespace-nowrap">
-            {row.ticker} tear-sheet &rarr;
+            {tr('sc.ev.tearSheet', { t: row.ticker })}
           </a>
         </div>
       </td>
@@ -266,7 +277,7 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
 }
 
 export default function StockTable({ rows, defaultSort = 'rs3', onChart, themeStrengthName }) {
-  const { t: tr } = useLanguage()
+  const { t: tr, lang } = useLanguage()
   const [shown, setShown] = useState(HEAD)
   const boxRef = useRef(null)
   const [maxH, setMaxH] = useState(null)
@@ -337,29 +348,29 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart, themeSt
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
             <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">{tr('scr.col.ticker')}</SortTh>
             <SortTh k="heat" sort={sort} onSort={clickSort} align="left"
-                title="confluence score — how many screens stacked, quality tier ×3">{tr('scr.col.heat')}</SortTh>
+                title={tr('sc.colT.heat')}>{tr('scr.col.heat')}</SortTh>
             <th className="text-center py-1 pr-2.5 font-medium"
-                title="left dot: own RS 3M ≥ 67 · right dot: industry state">{tr('scr.col.align')}</th>
+                title={tr('sc.colT.align')}>{tr('scr.col.align')}</th>
             <th className="text-left py-1 pr-2.5 font-medium"
                 title={themeStrengthName
-                  ? `vs ${themeStrengthName}’s own proxy ETF, not the home-group state machine`
+                  ? tr('sc.colT.stateTheme', { theme: dataName(themeStrengthName, lang) })
                   : undefined}>{tr('scr.col.state')}</th>
             <th className="text-left py-1 pr-2.5 font-medium"
-                title="state history of the stock's home group; cells light as the archive completes fortnights">{tr('scr.col.groupTrend')}</th>
+                title={tr('sc.colT.groupTrend')}>{tr('scr.col.groupTrend')}</th>
             <SortTh k="rs1" sort={sort} onSort={clickSort}>RS 1M</SortTh>
             <SortTh k="rs3" sort={sort} onSort={clickSort}>RS 3M</SortTh>
             <SortTh k="rs6" sort={sort} onSort={clickSort}>RS 6M</SortTh>
             <SortTh k="accel" sort={sort} onSort={clickSort}
-                title="rs_accel — the same number the state machine reads">{tr('scr.col.accel')}</SortTh>
+                title={tr('sc.colT.accel')}>{tr('scr.col.accel')}</SortTh>
             <SortTh k="h52" sort={sort} onSort={clickSort}>{tr('scr.col.from52wh')}</SortTh>
             <SortTh k="relVol" sort={sort} onSort={clickSort}
-                title="today's volume ÷ 20-day average">{tr('scr.col.relVol')}</SortTh>
+                title={tr('sc.colT.relVol')}>{tr('scr.col.relVol')}</SortTh>
             <SortTh k="vol5050" sort={sort} onSort={clickSort}
-                title="5-day average volume over 50-day average volume, from daily bars">{tr('scr.col.vol5d50d')}</SortTh>
+                title={tr('sc.colT.vol5050')}>{tr('scr.col.vol5d50d')}</SortTh>
             <SortTh k="tq" sort={sort} onSort={clickSort} align="left"
                 title={themeStrengthName
-                  ? `top 25% of ${themeStrengthName} by excess over its proxy ETF`
-                  : 'windows spent in the top quartile of its own cohort'}>{tr('scr.col.topQuartile')}</SortTh>
+                  ? tr('sc.colT.tqTheme', { theme: dataName(themeStrengthName, lang) })
+                  : tr('sc.colT.tq')}>{tr('scr.col.topQuartile')}</SortTh>
             <th className="py-1 font-medium w-5"></th>
           </tr>
         </thead>
@@ -393,7 +404,7 @@ function RowPair({ r, i, open, onToggle, onChart }) {
           onKeyDown={(e) => {
             if (e.key === 'Enter' && e.target === e.currentTarget) onChart?.(r.ticker)
           }}
-          aria-label={`Chart ${r.ticker}`}
+          aria-label={tr('sc.row.chart', { t: r.ticker })}
           className={`group border-t border-[var(--color-border-light)] cursor-pointer
                       hover:bg-[var(--color-hover-bg)] outline-none focus-visible:ring-1
                       ${r.inUniverse ? '' : 'opacity-45'}`}>
@@ -430,14 +441,14 @@ function RowPair({ r, i, open, onToggle, onChart }) {
         </td>
         <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-78 group-hover:opacity-100 transition-opacity"
             title={r.vol5050 == null
-              ? 'not measured — fewer than fifty sessions of bars, or the vendor had none'
-              : `5-day avg volume is ${r.vol5050}x the 50-day avg`}>
+              ? tr('sc.vol.none')
+              : tr('sc.vol.ratio', { v: r.vol5050 })}>
           {r.vol5050 == null ? '—' : r.vol5050.toFixed(2)}
         </td>
         <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-78 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
             title={r.tqTitle
-              ?? (r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined)} />
+              ?? (r.tqOf ? tr('sc.tq.cohort', { n: r.tq, of: r.tqOf }) : undefined)} />
         </td>
         <td className="py-[4px] text-right">
           {hasEvidence && (

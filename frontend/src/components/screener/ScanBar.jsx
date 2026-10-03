@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { barStyle } from '../groups/ThemeBars'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { rich, word } from './richText'
 
 /**
  * The control bar: four vocabularies, all selection, no query construction.
@@ -41,11 +43,12 @@ function Count({ n, on }) {
  *  control bar were decoration pretending to be honesty; the unmeasured case
  *  is stated in the theme's tooltip instead. */
 function ThemeRibbon({ theme }) {
+  const { t: tr, lang } = useLanguage()
   const cells = theme?.ribbon?.length ? theme.ribbon : null
   if (!cells) return null
   return (
     <span className="inline-flex gap-[2px] ml-2 align-middle"
-          title={`${theme.group} — five fortnights, oldest first: ${cells.map((c) => c.state).join(' · ')}`}>
+          title={tr('sc.ribbonT', { theme: dataName(theme.group, lang), cells: cells.map((c) => word(tr, `state.${c.state}`, c.state)).join(' · ') })}>
       {cells.map((c, i) => (
         <i key={i} className="block w-[13px] h-[9px] rounded-[1px]" style={barStyle(c.state)} />
       ))}
@@ -159,16 +162,18 @@ export default function ScanBar({
   search, onSearch,
   receipt, hiddenNote, gateNote, gateOn, wideNote,
 }) {
-  const { t: tr } = useLanguage()
+  const { t: tr, lang } = useLanguage()
   const [themeQuery, setThemeQuery] = useState('')
   const [themeOpen, setThemeOpen] = useState(false)
   const [themeIdx, setThemeIdx] = useState(0)
 
   const themeMatches = useMemo(() => {
     const q = themeQuery.trim().toLowerCase()
-    const list = q ? themes.filter((t) => t.group.toLowerCase().includes(q)) : themes
+    // in Chinese the reader may type the Chinese name; the English one still matches
+    const list = q ? themes.filter((t) => t.group.toLowerCase().includes(q)
+      || (lang === 'zh' && String(dataName(t.group, lang)).toLowerCase().includes(q))) : themes
     return list.slice(0, 12)
-  }, [themes, themeQuery])
+  }, [themes, themeQuery, lang])
 
   const activeScan = scans.find((x) => x.key === scan) ?? scans[0]
 
@@ -193,9 +198,9 @@ export default function ScanBar({
           {scans.map((s) => (
             <Item key={s.key} on={scan === s.key} dim={s.count === 0} close
                   onClick={() => onScan(s.key)} n={s.count}
-                  title={s.count === 0 ? `${s.label} \u2014 0 today`
-                       : s.count == null ? `${s.label} \u2014 not loaded yet`
-                       : `${s.label} \u2014 ${s.count} names`}>
+                  title={s.count === 0 ? tr('sc.scanT.zero', { scan: s.label })
+                       : s.count == null ? tr('sc.scanT.notLoaded', { scan: s.label })
+                       : tr('sc.scanT.n', { scan: s.label, n: s.count })}>
               {s.label}
             </Item>
           ))}
@@ -203,16 +208,16 @@ export default function ScanBar({
 
         <Menu label={tr('scr.bar.state')} dim={!states.size}
               summary={states.size
-                ? [...STATE_ORDER].filter((x) => states.has(x)).map((x) => tr(`state.${x}`)).join(' + ')
-                : tr('scr.bar.anyState') === 'scr.bar.anyState' ? 'any' : tr('scr.bar.anyState')}>
+                ? [...STATE_ORDER].filter((x) => states.has(x)).map((x) => word(tr, `state.${x}`, x)).join(' + ')
+                : tr('sc.bar.anyState')}>
           {STATE_ORDER.map((st) => {
             const n = stateCounts ? (stateCounts[st] ?? 0) : null
             return (
               <Item key={st} on={states.has(st)} onClick={() => onToggleState(st)} n={n}
-                    title={n == null ? `${st} \u2014 not loaded yet` : `${st} \u2014 ${n} in this cut`}
+                    title={n == null ? tr('sc.stT.notLoaded', { state: word(tr, `state.${st}`, st) }) : tr('sc.stT.n', { state: word(tr, `state.${st}`, st), n })}
                     mark={<i className="inline-block w-[8px] h-[8px] rounded-[1px] shrink-0"
                              style={barStyle(st)} />}>
-                {tr(`state.${st}`)}
+                {word(tr, `state.${st}`, st)}
               </Item>
             )
           })}
@@ -223,7 +228,7 @@ export default function ScanBar({
         <Menu label={tr('scr.bar.gate')} dim={!gates?.size}
               summary={gates?.size
                 ? ['liquid', 'exHealth'].filter((g) => gates.has(g)).map((g) => tr(`scr.gate.${g}`)).join(' + ')
-                : tr('scr.bar.anyGate') === 'scr.bar.anyGate' ? 'none' : tr('scr.bar.anyGate')}>
+                : tr('sc.bar.anyGate')}>
           {['liquid', 'exHealth'].map((g) => (
             <Item key={g} on={gates?.has(g)} onClick={() => onToggleGate(g)}
                   n={gateCounts?.[g] ?? null} title={tr(`scr.gate.${g}.why`)}>
@@ -235,7 +240,7 @@ export default function ScanBar({
         <span className="text-[11px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
         {picked.length > 0 && picked.map((t) => (
           <span key={t.group} className="text-[13px] text-[var(--color-text-bold)]">
-            {t.group}
+            {dataName(t.group, lang)}
             {/* the ribbon belongs to ONE theme, so it is drawn only when one is
                 chosen — five fortnights of two themes side by side would read
                 as one sequence */}
@@ -267,7 +272,7 @@ export default function ScanBar({
                 }
               }}
               placeholder={picked.length
-                ? tr('scr.bar.addTheme') === 'scr.bar.addTheme' ? '+ another' : tr('scr.bar.addTheme')
+                ? tr('sc.bar.addTheme')
                 : `${tr('scr.bar.allThemes')} · ${themes.length}`}
               className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
                          text-[13px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
@@ -283,7 +288,7 @@ export default function ScanBar({
                     className={`px-2.5 py-1 text-[13px] cursor-pointer flex items-baseline gap-2
                                 ${chosen?.has(t.group) ? 'font-semibold' : ''}
                                 ${i === themeIdx ? 'bg-[var(--color-hover-bg)]' : ''}`}>
-                    <span>{t.group}</span>
+                    <span>{dataName(t.group, lang)}</span>
                     <span className="text-[11px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
                   </div>
                 ))}
@@ -293,7 +298,7 @@ export default function ScanBar({
 
         <Divider />
         <input value={search} onChange={(e) => onSearch(e.target.value)}
-          placeholder="find ticker…"
+          placeholder={tr('sc.bar.findTicker')}
           className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
                      text-[13px] font-mono text-[var(--color-text)] w-[104px] px-0.5 outline-none
                      placeholder:text-[var(--color-text-muted)]" />
@@ -317,10 +322,10 @@ export default function ScanBar({
       {handoff?.length > 0 && (
         <p className="m-0 mt-1.5 pl-3 text-[11px] leading-relaxed text-[var(--color-text-secondary)]
                       border-l border-dashed border-[var(--color-text-muted)]">
-          Narrowed to the {handoff.length === 1 ? 'theme' : `${handoff.length} themes`} you were
-          comparing on <a href="#/groups" className="text-inherit">Themes</a> &mdash;{' '}
-          <b className="text-[var(--color-text-bold)]">{handoff.join(' · ')}</b>. Clear a chip above
-          to widen it; this will not come back unless the picks over there change.
+          {rich(tr(handoff.length === 1 ? 'sc.handoff.one' : 'sc.handoff.many', { n: handoff.length }), {
+            link: <a href="#/groups" className="text-inherit">{tr('sc.handoff.link')}</a>,
+            list: <b className="text-[var(--color-text-bold)]">{handoff.map((n) => dataName(n, lang)).join(' · ')}</b>,
+          })}
         </p>
       )}
 
@@ -329,12 +334,11 @@ export default function ScanBar({
           leaves the switch to the reader. */}
       {wideNote && (
         <p className="m-0 mt-1.5 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-          These themes hold <b className="text-[var(--color-text-secondary)]">{wideNote.n}</b> tradeable
-          names in all &mdash; the scan on top is what empties it.{' '}
+          {rich(tr('sc.wide'), { n: <b className="text-[var(--color-text-secondary)]">{wideNote.n}</b> })}{' '}
           <button type="button" onClick={wideNote.onWiden}
                   className="bg-transparent border-none p-0 cursor-pointer underline
                              text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
-            drop the scan
+            {tr('sc.wide.drop')}
           </button>
         </p>
       )}

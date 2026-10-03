@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { useFocusDay } from './useFocusDay'
+import { dataName } from '../../../i18n/names'
+import { word } from '../richText'
 import {
   LIVE_SETUPS, PENDING_SETUPS, FOCUS_CAP,
   groupOf, accelDir, blockedAt, splitSetup, noteFor, isFlagged, freshness, netHighs,
@@ -15,6 +17,23 @@ import {
 const fmt = (n) => (n == null ? '—' : n.toLocaleString('en-US'))
 const signed = (x) => (x == null ? '—' : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x)}`)
 const ARROW = { up: '▲', down: '▼', flat: '·' }
+
+/* The stance words the pipeline writes (breadth_signals.py _EXPOSURE), keyed so
+   Chinese can say them; one the dictionary has not met prints as it arrived. */
+const EXPOSURE_KEY = {
+  'Full / normal size': 'full',
+  'Normal, tighter stops': 'normalTight',
+  'Reduced despite breadth — price warnings stack': 'reducedDespite',
+  'Reduced / selective': 'reduced',
+  'Defensive lean — wait for alignment': 'defLean',
+  'Defensive / capital preservation': 'defensive',
+  'Defensive but alert — thrust watch': 'defAlert',
+  'No chasing; harvest into strength': 'noChase',
+}
+const envWord = (t, env) => {
+  const k = `ms.env.${env}`
+  return t(k) !== k ? t(k) : word(t, `sc.env.${env}`, env)
+}
 
 function Layer({ n, title, rule, count, countLabel, children }) {
   return (
@@ -81,8 +100,8 @@ function Candidate({ r, i, doc, lang, t, onTicker }) {
         <span className="ml-1.5 font-mono text-[11px] text-[var(--color-text-muted)]" title="RS">{r.rs ?? '—'}</span>
       </span>
       <span className="min-w-0 truncate text-[11px] text-[var(--color-text-secondary)]"
-            title={g ? `${g.name} · ${g.state}${g.kind === 'industry' ? ` · ${t('funnel.industryNoTheme')}` : ''}` : ''}>
-        {g && <><span className="font-mono text-[var(--color-text-muted)]">{ARROW[dir]} {t(`funnel.accel.${dir}`)} {signed(g.accel)}</span> {g.name}</>}
+            title={g ? `${dataName(g.name, lang)} · ${word(t, `state.${g.state}`, g.state)}${g.kind === 'industry' ? ` · ${t('funnel.industryNoTheme')}` : ''}` : ''}>
+        {g && <><span className="font-mono text-[var(--color-text-muted)]">{ARROW[dir]} {t(`funnel.accel.${dir}`)} {signed(g.accel)}</span> {dataName(g.name, lang)}</>}
       </span>
       <span className={`col-start-2 col-span-2 md:col-start-auto md:col-span-1 text-[13px]
                         ${flag ? 'text-[var(--color-loss)]' : say ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}`}>
@@ -147,14 +166,14 @@ export default function FunnelPanel({ siteDate, onTicker }) {
         <Layer n="⑤" title={t('funnel.l5')}>
           <dl className="m-0 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 text-[13px]">
             {[
-              [t('funnel.m.spy'), `${M.spy_light ?? '—'} ${M.spy_checks ?? '—'}/3`],
-              [t('funnel.m.qqq'), `${M.qqq_light ?? '—'} ${M.qqq_checks ?? '—'}/3`],
-              [t('funnel.m.verdict'), M.light_verdict ?? '—'],
-              [t('funnel.m.breadth'), `${M.env ?? '—'} ${signed(M.score)}`],
-              [t('funnel.m.regime'), `${M.regime ?? '—'} ${M.regime_score ?? ''}`],
+              [t('funnel.m.spy'), `${word(t, `ms.light.${M.spy_light}`, M.spy_light) ?? '—'} ${M.spy_checks ?? '—'}/3`],
+              [t('funnel.m.qqq'), `${word(t, `ms.light.${M.qqq_light}`, M.qqq_light) ?? '—'} ${M.qqq_checks ?? '—'}/3`],
+              [t('funnel.m.verdict'), word(t, `ms.verdict.${M.light_verdict}`, M.light_verdict) ?? '—'],
+              [t('funnel.m.breadth'), `${(M.env == null ? null : envWord(t, M.env)) ?? '—'} ${signed(M.score)}`],
+              [t('funnel.m.regime'), `${word(t, `sc.regime.${M.regime}`, M.regime) ?? '—'} ${M.regime_score ?? ''}`],
               [t('funnel.m.highs'), `${M.nh ?? '—'} / ${M.nl ?? '—'}${nh == null ? '' : ` (${signed(nh)})`}`],
               [t('funnel.m.leaders'), `${M.leaders_hold ?? '—'} / ${M.leaders_n ?? '—'}`],
-              [t('funnel.m.exposure'), M.exposure ?? '—'],
+              [t('funnel.m.exposure'), word(t, `sc.exposure.${EXPOSURE_KEY[M.exposure]}`, M.exposure) ?? '—'],
             ].map(([k, v]) => (
               <div key={k}><dt className="text-[11px] text-[var(--color-text-muted)]">{k}</dt>
                 <dd className="m-0 font-mono tabular-nums text-[var(--color-text)]">{v}</dd></div>

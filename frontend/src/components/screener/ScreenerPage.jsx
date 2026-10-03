@@ -16,6 +16,8 @@ import ScanBar from './ScanBar'
 import StockTable from './StockTable'
 import HowToRead from '../HowToRead'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { dataName } from '../../i18n/names'
+import { rich, word } from './richText'
 import { computeThemeStrength, THEME_STATE_LABEL } from './themeStrengthMath'
 import FunnelPanel from './funnel/FunnelPanel'
 
@@ -88,7 +90,10 @@ export default function ScreenerPage() {
   const heat = useHeatingUp()
   const { data: market } = useMarketData()
   const themeBoard = useThemeBoard()
-  const { t: tr } = useLanguage()
+  const { t: tr, lang } = useLanguage()
+  /** a scan word in the reader's language; the SCAN_DEFS label is the English */
+  const scanLabel = (s) => (s ? tr(`sc.scan.${s.key}`) : s)
+  const signed1 = (x) => `${x > 0 ? '+' : ''}${x.toFixed(1)}`
 
   const initial = useMemo(loadQuery, [])
   const [scan, setScan] = useState(initial.scan)
@@ -243,8 +248,8 @@ export default function ScreenerPage() {
           ? (ts?.state ? THEME_STATE_LABEL[ts.state] : null)
           : (s?.state ?? null),
         stateTitle: themeStrengthName
-          ? (ts?.state ? `vs ${themeStrengthName} proxy — excess ${ts.excess > 0 ? '+' : ''}${ts.excess.toFixed(1)}%, momentum ${ts.momentum > 0 ? '+' : ''}${ts.momentum.toFixed(1)}%`
-              : `no proxy-relative reading — ${themeStrengthName}'s proxy board could not price this name`)
+          ? (ts?.state ? tr('sc.ts.stateTitle', { theme: dataName(themeStrengthName, lang), excess: signed1(ts.excess), momentum: signed1(ts.momentum) })
+              : tr('sc.ts.noReading', { theme: dataName(themeStrengthName, lang) }))
           : null,
         ind: indName,
         indState: indName ? industryState.get(indName) ?? null : null,
@@ -265,7 +270,7 @@ export default function ScreenerPage() {
         tq: themeStrengthName ? (ts ? (ts.topQuartile ? 1 : 0) : null) : (s?.persistence ?? null),
         tqOf: themeStrengthName ? (ts ? 1 : null) : (s?.persistence_of ?? null),
         tqTitle: themeStrengthName
-          ? (ts ? `top 25% of ${themeStrengthName} by excess over its proxy ETF: ${ts.topQuartile ? 'yes' : 'no'} (${ts.excess > 0 ? '+' : ''}${ts.excess.toFixed(1)}%)`
+          ? (ts ? tr('sc.ts.tqTitle', { theme: dataName(themeStrengthName, lang), yn: tr(ts.topQuartile ? 'sc.yes' : 'sc.no'), excess: signed1(ts.excess) })
               : undefined)
           : undefined,
         rs1: u?.rs_1m ?? u?.rs_21d ?? null,
@@ -283,7 +288,7 @@ export default function ScreenerPage() {
     }
     return out
   }, [universe, activeScan, themeRows, search, groups.stocks, heatByTicker, industryState,
-      ribbonByHome, themeStrengthName, themeStrengthMap])
+      ribbonByHome, themeStrengthName, themeStrengthMap, tr, lang])
 
   // null while groups.json is absent — "Leading 0" is a reading, not a shrug
   const statesLoaded = !groups.loading && !groups.error
@@ -356,11 +361,11 @@ export default function ScreenerPage() {
   // Numbers only — the selections themselves are already visible as underlines,
   // and restating them here was the duplication Andy flagged.
   const receipt = useMemo(() => {
-    if (!activeScan.loaded) return `${activeScan.label} — ${tr('scr.loading')}`
+    if (!activeScan.loaded) return tr('sc.scanLoading', { scan: scanLabel(activeScan), loading: tr('scr.loading') })
     if (needsGroups && !statesLoaded) return tr('scr.groupLayerLoading') 
     // the hidden count is honesty, not a headline — it rides the tooltip so a
     // four-digit number does not sit beside the one the reader came for
-    return `${rows.length} rows`
+    return tr('sc.rowsN', { n: rows.length })
   }, [rows.length, activeScan, noState, needsGroups, statesLoaded, tr])
 
   // The narrator follows the selection: the default view keeps the ledger's
@@ -370,21 +375,21 @@ export default function ScreenerPage() {
     if (untouched || !viewReady) return null
     // built from the selection itself — the receipt is just a row count now,
     // and deriving words from it would couple the sentence to a display string
-    const parts = [activeScan.label]
-    if (states.size) parts.push([...states].join('+'))
-    if (themes.size) parts.push([...themes].join(' + '))
+    const parts = [scanLabel(activeScan)]
+    if (states.size) parts.push([...states].map((st) => word(tr, `state.${st}`, st)).join('+'))
+    if (themes.size) parts.push([...themes].map((n) => dataName(n, lang)).join(' + '))
     if (search.trim()) parts.push(`"${search.trim().toUpperCase()}"`)
     const desc = parts.join(' ∩ ')
     if (!rows.length) {
-      return `Nothing clears ${desc} today — an empty intersection is a reading, not an error.`
+      return tr('sc.sel.empty', { desc })
     }
     const census = {}
     for (const r of rows) if (r.state) census[r.state] = (census[r.state] ?? 0) + 1
     const censusStr = ['Leading', 'Weakening', 'Improving', 'Lagging']
-      .filter((st) => census[st]).map((st) => `${census[st]} ${st}`).join(' · ')
+      .filter((st) => census[st]).map((st) => tr('sc.sel.censusItem', { n: census[st], state: word(tr, `state.${st}`, st) })).join(' · ')
     const front = rows.slice(0, 3).map((r) => r.ticker).join(', ')
-    return `${rows.length} names under ${desc}. States: ${censusStr || 'none measured'}. Front of the board: ${front}.`
-  }, [scan, states, themes, search, activeScan, rows])
+    return tr('sc.sel.some', { n: rows.length, desc, census: censusStr || tr('sc.sel.noneMeasured'), front })
+  }, [scan, states, themes, search, activeScan, rows, tr, lang])
 
   const conditions = market?.breadth?.conditions
   const toggleState = (st) => setStates((prev) => {
@@ -401,7 +406,7 @@ export default function ScreenerPage() {
   if (loading) {
     return (
       <div className="text-[var(--color-text-muted)] text-[13px] font-medium uppercase tracking-wide text-center py-20">
-        Loading universe...
+        {tr('sc.loadingUniverse')}
       </div>
     )
   }
@@ -412,12 +417,12 @@ export default function ScreenerPage() {
         meta={[
           conditions ? (
             <a key="mc" href="#/breadth" className="no-underline text-inherit"
-               title="the fifteen conditions behind this number — the page-level third light">
-              Market conditions{' '}
+               title={tr('sc.mc.title')}>
+              {tr('sc.mc.label')}{' '}
               <b className="text-[17px] text-[var(--color-text-bold)]">{conditions.today}</b>
-              {' '}· {conditions.positive_today} of {conditions.n_votes} positive
+              {' '}{tr('sc.mc.votes', { pos: conditions.positive_today, n: conditions.n_votes })}
             </a>
-          ) : 'Market conditions — not loaded',
+          ) : tr('sc.mc.missing'),
           heat?.as_of ?? '',
           <DataFreshnessBadge key="fresh" sessionDate={heat?.as_of?.slice(0, 10)} />,
         ]} />
@@ -472,7 +477,7 @@ export default function ScreenerPage() {
       </div>
 
       <ScanBar
-        scans={scans} scan={scan} onScan={setScan}
+        scans={scans.map((s) => ({ ...s, label: scanLabel(s) }))} scan={scan} onScan={setScan}
         stateCounts={stateCounts} states={states} onToggleState={toggleState}
         gates={gates} gateCounts={gateCounts} onToggleGate={toggleGate}
         themes={groups.themes} chosen={themes}
@@ -487,16 +492,15 @@ export default function ScreenerPage() {
         search={search} onSearch={setSearch}
         receipt={receipt}
         gateNote={gated
-          ? `${dropped.toLocaleString()} untradeable names are not in this table`
-            + (ungated
-              ? ` — except ${ungated} this scan carried in from the heat ledger, which is not gated. They are marked, and carry no readings.`
-              : '')
-          : 'the tradeable column has not shipped yet — this table still includes names you cannot trade'}
+          ? (ungated
+            ? tr('sc.gate.droppedExcept', { n: dropped.toLocaleString(), k: ungated })
+            : tr('sc.gate.dropped', { n: dropped.toLocaleString() }))
+          : tr('sc.gate.notShipped')}
         gateOn={gated}
         wideNote={themeWide != null && scan !== 'all' && themeWide > 0
           ? { n: themeWide, onWiden: () => setScan('all') }
           : null}
-        hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
+        hiddenNote={noState ? tr('sc.hidden', { n: noState }) : null} />
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
@@ -516,46 +520,19 @@ export default function ScreenerPage() {
       ) : (
         <p className="m-0 py-8 text-center text-[13px] text-[var(--color-text-muted)]">
           {!activeScan.loaded
-            ? `${activeScan.label} ${tr('scr.notLoadedYet')}`
+            ? `${scanLabel(activeScan)} ${tr('scr.notLoadedYet')}`
             : tr('scr.groupLayerLoading')}
         </p>
       )}
 
       <HowToRead>
-        <p>
-          <b>Heat</b> — how many screens a name stacked (quality screens ×3).
-          Only the confluence 50 carry one. The caret opens the appearances
-          behind the number.
-        </p>
+        <p>{rich(tr('sc.how.heat'))}</p>
         {themeStrengthName ? (
-          <p>
-            <b>State</b> and <b>Top quartile</b> are reading against {themeStrengthName}&rsquo;s
-            own proxy ETF while one theme is picked — excess return over the
-            proxy this bucket, momentum against the bucket before, top 25%
-            ranked on that excess within {themeStrengthName}&rsquo;s full roster.
-            A name the proxy board could not price shows no reading at all
-            rather than a guess. Pick a second theme or clear the filter to
-            go back to the home-group reading.
-          </p>
+          <p>{rich(tr('sc.how.theme', { theme: dataName(themeStrengthName, lang) }))}</p>
         ) : (
-          <p>
-            <b>Align</b> — left dot: own RS 3M in the top third. Right dot: its
-            industry&rsquo;s state. The market-conditions number in the header is the
-            third light. Three lit together is the aligned setup; they are never
-            summed into a score.
-          </p>
+          <p>{rich(tr('sc.how.align'))}</p>
         )}
-        <p>
-          <b>Group trend</b> is the state history of the stock&rsquo;s home group —
-          the pipeline&rsquo;s one-home-per-stock pointer (smallest curated theme,
-          industry as the total fallback). Each cell is a completed fortnight
-          from the group archive, which began 2026-08-07: cells light as
-          fortnights complete, and a dashed cell is a fortnight the archive has
-          not lived through yet — never a zero. <b>Vol 5d/50d</b> is the
-          five-day average volume over the fifty-day; names younger than fifty
-          sessions print a dash because their fifty-day average does not exist.
-          <b>Click a row to chart it</b> in the card at the top of the page; click the ticker itself for the full tear-sheet.
-        </p>
+        <p>{rich(tr('sc.how.trend'))}</p>
       </HowToRead>
     </div>
   )
