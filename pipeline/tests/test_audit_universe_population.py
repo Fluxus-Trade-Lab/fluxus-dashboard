@@ -395,3 +395,19 @@ def test_check_keeps_a_one_dollar_cap_not_just_share_small():
     rec = {x['session']: x for x in check(by)['rows']}['2026-06-05']
     assert rec['names'] == 1000                          # 一分钱的 500 只没被扔
     assert rec['share_small'] == 0.5
+
+
+def test_a_judged_session_always_has_a_positive_baseline_median():
+    """`check()` 里 `ratio = med / base_med` 不再守 `if base_med`，靠的是这条前提。
+
+    前提：只要一场进了判定分支（有 ≥3 个可用打底日、base_sh 与 base_med 都不是 None），
+    base_med 就一定 > 0——因为 prior_med 的每个元素都是 positive_caps 之后的中位数，
+    严格正数的中位数仍是正数。删掉那个守卫之后，这条测试就是仅剩的钉子：
+    哪天有人让 positive_caps 放进 0 或负数，这里会先红，而不是在除法里炸。"""
+    messy = [1.0, 0, None, -3.0, 1e6]                    # 一分钱与 1e6 留下，其余不算
+    by = {d: list(messy) + list(BIG) for d in _twenty_quiet_sessions()}
+    by['2026-06-05'] = [1.0, None] + list(BIG)           # 一场里混着空值，仍须正
+    judged = [r for r in check(by)['rows'] if r['kind'] != 'P3']
+    assert judged, '应当有判过的场次，否则这条测试没钉住任何东西'
+    for r in judged:
+        assert r['baseline_median'] is not None and r['baseline_median'] > 0, r

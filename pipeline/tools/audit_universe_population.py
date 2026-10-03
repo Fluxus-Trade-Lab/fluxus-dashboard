@@ -147,7 +147,9 @@ def check(by_session: Dict[str, List[float]], line: float = SMALL_CAP,
             warnings.append(f'P3 {day}: only {len(prior_sh)} trailing sessions, not judged')
         else:
             moved = abs(sh - base_sh)
-            ratio = (med / base_med) if base_med else 1.0
+            # base_med 在这里恒 > 0：prior_med 每个元素都是 positive_caps 的中位数，
+            # 严格正数的中位数仍是正数，上面的 elif 已排掉 None。
+            ratio = med / base_med
             if moved > tolerance:
                 rec['kind'] = 'P1'
                 violations.append(
