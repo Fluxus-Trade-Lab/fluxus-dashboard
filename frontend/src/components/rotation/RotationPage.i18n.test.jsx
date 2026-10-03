@@ -1,4 +1,5 @@
 /* global process */
+import { translations } from '../../i18n/translations'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -31,7 +32,8 @@ describe('Rotation page in Chinese', () => {
     await waitFor(() => expect(screen.getAllByText(dataName(board[0].theme, 'zh')).length).toBeGreaterThan(0))
     await waitFor(() => expect(document.body.textContent).toContain('RS 最近 2 周'))
     // open the explainer (its toggle label lives in shared HowToRead, not on this page)
-    fireEvent.click(screen.getByRole('button', { name: /How to read this/ }))
+    // HowToRead is shared; its label is whatever the zh dictionary says (English until it is translated)
+    fireEvent.click(screen.getByRole('button', { name: new RegExp(translations.zh['db.howto.title'] ?? 'How to read this') }))
     const text = document.body.textContent
 
     for (const zh of ['地形', '轨迹', '两种动能和加速度', '爆发', '加速度', '耐力', 'RS 本周对比前 3 周', 'RS 最近 13 周',
