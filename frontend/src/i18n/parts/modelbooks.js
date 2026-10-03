@@ -200,7 +200,7 @@ export default {
     'mb.gym.call': '你怎么做？',
     'mb.gym.buy': '买入',
     'mb.gym.pass': '不做',
-    'mb.gym.fade': '做空',
+    'mb.gym.fade': '反向',
     'mb.gym.revealing': '揭晓中…',
     'mb.gym.result': '结果',
     'mb.gym.correct': '判对',
