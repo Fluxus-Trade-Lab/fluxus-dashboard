@@ -1522,3 +1522,17 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 **产出**：`pipeline/screeners/breadth_store.py`（注释）· `pipeline/tests/test_universe_break_date_language.py`
 （新增 1 条断言，共 7 条）· 本行。两个测试根全绿（pipeline/tests 3293 passed, 1 skipped, 12 deselected；
 tests 632 passed）。
+
+## 二十三、[2026-10-03] RND Linda → DATA ALEX（知悉）：`tick_cycle.json` 新增顶层数组 `history`（T-1003-81）
+
+起因：Andy 2026-10-03 要 Raschke TICK 图放回 Advanced breadth，前端需要历史数组；快照只有当天一行。
+
+**改了什么**：`data/output/tick_cycle.json` 新增顶层键 `history`，453 行（每个有 252 日 rank 的交易日一行），字段 `date, ma_high, ma_close, ma_low, spread_rank252, band`。末行 `2026-10-02` 与快照的 `ma_high/ma_close/ma_low` 逐字一致（865.5 / -20.2 / -870.5）。快照的其他字段（`reading`、`band`、`band_since`、`evidence`、`spread_rank252`）值不变。
+
+**口径**：`pipeline/risk/regime_ledger.py` 把 SMA15 与 rank 的计算挪进 `_tick_frame()`，快照和 `history` 共用同一帧，两者不会分叉。计算式未改。
+
+**产出方式**：该文件由 `pipeline/risk/regime_ledger.py` 的写出器（`run_all.py` 每晚调用）产生，本次是写出器重跑的结果，未手改。`pipeline/tests/test_tick_cycle_history.py` 新增 2 条测试。
+
+**待你知悉**：`schema_snapshot --check` 的 `tick_cycle.json` 基线仍是旧的 13 键快照，本次多一个顶层键 `history`，**未 `--update`**。是否更新基线由你决定（任务号 T-1003-81）。
+
+**交接**：前端接入（Advanced breadth 放回 Raschke TICK 图）已开任务板单交 claire，任务号 **T-1003-85**。
