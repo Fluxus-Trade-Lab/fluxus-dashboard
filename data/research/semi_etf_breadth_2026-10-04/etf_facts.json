@@ -1,0 +1,163 @@
+{
+  "window": [
+    "2026-08-03",
+    "2026-10-02"
+  ],
+  "holdings_as_of": "2026-10-01",
+  "etfs": {
+    "SMH": {
+      "ret_window_pct": 15.61,
+      "dist_52w_high_pct": -6.14,
+      "date_of_52w_high": "2026-06-22",
+      "n_equity_holdings": 25,
+      "max_weight_pct": 19.27,
+      "top5_weight_pct": 43.94
+    },
+    "SOXX": {
+      "ret_window_pct": 16.07,
+      "dist_52w_high_pct": -10.16,
+      "date_of_52w_high": "2026-06-22",
+      "n_equity_holdings": 30,
+      "max_weight_pct": 9.44,
+      "top5_weight_pct": 40.6
+    }
+  },
+  "summary": {
+    "etfs": {
+      "SMH": {
+        "n_equity_holdings": 25,
+        "max_weight_pct": 19.27,
+        "top5_weight_pct": 43.94,
+        "top5_names": [
+          "NVDA",
+          "TSM",
+          "AMD",
+          "AVGO",
+          "MU"
+        ],
+        "non_us_names": [
+          "ARM",
+          "ASML",
+          "SKHY",
+          "STM",
+          "TSM"
+        ],
+        "non_us_weight_pct": 20.12,
+        "eq_50sma_first": 4.17,
+        "eq_50sma_last": 96.0,
+        "wt_50sma_first": 20.2,
+        "wt_50sma_last": 94.99,
+        "eq_200sma_first": 87.5,
+        "eq_200sma_last": 91.67,
+        "wt_minus_eq_mean": 14.32,
+        "wt_minus_eq_max": 25.07,
+        "wt_minus_eq_max_date": "2026-09-16",
+        "wt_minus_eq_min": -1.01,
+        "wt_minus_eq_min_date": "2026-10-01",
+        "days_wt_above_eq": 42,
+        "sessions": 44,
+        "new_highs_52w_total": 0,
+        "new_lows_52w_total": 0,
+        "new_highs_4w_total": 6,
+        "new_highs_4w_best_day": 2,
+        "new_lows_4w_total": 1,
+        "median_dist_52w_high_last": -0.168,
+        "etf_ret_window_pct": 15.61,
+        "etf_dist_52w_high_first": -0.1881,
+        "etf_dist_52w_high_last": -0.0614,
+        "etf_dist_52w_high_2026_09_22": -0.0958,
+        "eq_50sma_2026_09_22": 68.0
+      },
+      "SOXX": {
+        "n_equity_holdings": 30,
+        "max_weight_pct": 9.44,
+        "top5_weight_pct": 40.6,
+        "top5_names": [
+          "INTC",
+          "AMD",
+          "MU",
+          "NVDA",
+          "AVGO"
+        ],
+        "non_us_names": [
+          "ARM",
+          "ASML",
+          "ASX",
+          "SKHY",
+          "STM",
+          "TSEM",
+          "TSM",
+          "UMC"
+        ],
+        "non_us_weight_pct": 11.29,
+        "eq_50sma_first": 6.9,
+        "eq_50sma_last": 93.33,
+        "wt_50sma_first": 8.43,
+        "wt_50sma_last": 92.67,
+        "eq_200sma_first": 92.86,
+        "eq_200sma_last": 92.86,
+        "wt_minus_eq_mean": 4.54,
+        "wt_minus_eq_max": 19.95,
+        "wt_minus_eq_max_date": "2026-09-16",
+        "wt_minus_eq_min": -6.5,
+        "wt_minus_eq_min_date": "2026-08-12",
+        "days_wt_above_eq": 34,
+        "sessions": 44,
+        "new_highs_52w_total": 0,
+        "new_lows_52w_total": 0,
+        "new_highs_4w_total": 9,
+        "new_highs_4w_best_day": 4,
+        "new_lows_4w_total": 1,
+        "median_dist_52w_high_last": -0.1905,
+        "etf_ret_window_pct": 16.07,
+        "etf_dist_52w_high_first": -0.226,
+        "etf_dist_52w_high_last": -0.1016,
+        "etf_dist_52w_high_2026_09_22": -0.1262,
+        "eq_50sma_2026_09_22": 73.33
+      }
+    },
+    "overlap": {
+      "n": 23,
+      "tickers": [
+        "ADI",
+        "ALAB",
+        "AMAT",
+        "AMD",
+        "ARM",
+        "ASML",
+        "AVGO",
+        "INTC",
+        "KLAC",
+        "LRCX",
+        "MCHP",
+        "MPWR",
+        "MRVL",
+        "MU",
+        "NVDA",
+        "NXPI",
+        "ON",
+        "QCOM",
+        "SKHY",
+        "STM",
+        "TER",
+        "TSM",
+        "TXN"
+      ],
+      "smh_only": [
+        "CDNS",
+        "SNPS"
+      ],
+      "soxx_only": [
+        "ASX",
+        "CBRS",
+        "CRDO",
+        "ENTG",
+        "MTSI",
+        "TSEM",
+        "UMC"
+      ],
+      "share_of_smh_weight": 95.97,
+      "share_of_soxx_weight": 92.32
+    }
+  }
+}
