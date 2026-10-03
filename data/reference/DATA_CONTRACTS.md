@@ -712,6 +712,8 @@ JSON schema(所有 library 文章通用):
 
 - **[2026-10-04] alex（RS 统一选 B，`9eaa3398d`）：三处 RS 腿从 2026-10-05 正班起改读 `rs_rating`，Monthly Leader 97 不动。** Andy 原话「选B，而且务必要做forward testing，至少5天。」**改动**：`liquid_leader`（rs_3m≥80→rs_rating≥80，所有读 liquid_leader 的面板随之变）· watchlist `vcs`（同）· `4% Bullish`（前端预设 `frontend/public/data/screener-presets.json` 键 `rs21d`→`rsIbd`，60–99；管线同名面板同步）· `industry_rank`（行业中位数改用 rs_rating；`i_score` 不动）。**字段**：未增删任何输出字段，`rs_1m/rs_3m/rs_6m` 照常发布。**改回**：`pipeline/constants/rs_leg.py` 的 `UNIFIED = False`，前端预设按同文件 `PRESET_REVERT` 改回。**前向测试**：`data/history/rs_switch_shadow.csv` 每晚记新旧两份名单（date, panel, ticker, old, new, close, change_pct, rs_1m, rs_3m, rs_rating）；`python3 -m pipeline.tools.rs_switch_shadow` 出报告。满 5 个交易日（10-05→10-09 ET）后 ALEX 出对照报告，交 Andy 定去留。**→ Claire**：4% Bullish 预设的 RS 键已由数据端改动（Andy 批 B），前端若有显示「RS 21d」字样的地方请对一下。回测：`data/research/rs_unify/switch_impact.json`（`74028cef9`）。
 
+- **[2026-10-04] alex：⚠️ 仓库 GitHub secrets 里没有 `FINNHUB_API_KEY`——两处读它的任务一直在无 key 运行。** 证据：`gh secret list` 只有 8 个，不含它；补数任务 run 37146566761 日志 `FINNHUB_API_KEY:` 为空，退出 2；premarket-digest 10-02 那班日志同样为空（`tag_catalysts` 走「not set — skipping」分支，盘前摘要从未打过催化剂标签）。**影响**：①`news_pool.json` 的 headline / news_failure 在加 key 之前恒为空，`news_failure_zero_reason` 会写「未设 FINNHUB_API_KEY」；②补数任务 `news-pool-backfill.yml`（`db063a49b`）已合 main，等 key 到位后重跑。**等**：Andy 本人加 secret（API key 不由 AI 经手）。加好后 ALEX 立即重跑补数并核 10-05 正班。premarket digest 归属线请留意：加 key 之后催化剂标签会第一次真正出现。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
