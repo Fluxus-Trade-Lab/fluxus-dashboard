@@ -1,0 +1,11 @@
+{
+  "requested": 2500,
+  "retained": 2399,
+  "coverage": 0.9596,
+  "sessions": 1255,
+  "date_range": [
+    "2021-10-01",
+    "2026-10-01"
+  ],
+  "note": "tickers dropped here are names with < 273 sessions of yfinance history inside the 5y window (recent IPOs/relistings) -- this trims the sample further, on top of the survivorship bias from using today's tradeable set."
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>RS 统一方案：rs_rating / rs_1m·3m·6m / RS 线（2026-10-02）</title>
+<style>
+  :root {
+    --ink:#1a1a1a; --sub:#5a5a5a; --line:#e3e0d8; --bg:#faf8f3;
+    --ok:#1f7a3d; --warn:#b5760a; --bad:#b3261e; --card:#ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); margin: 0; padding: 0 0 80px;
+    line-height: 1.6;
+  }
+  header { background: var(--ink); color: #fff; padding: 28px 32px; }
+  header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
+  header p { margin: 0; color: #c9c4b8; font-size: 13px; }
+  header a { color: #ffd479; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
+  .summary {
+    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--ink);
+    border-radius: 6px; padding: 18px 22px; margin-bottom: 28px; font-size: 15px;
+  }
+  h2 { font-size: 18px; margin: 40px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+  h3 { font-size: 15px; margin: 22px 0 10px; color: #333; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13.5px; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f0ede4; font-weight: 600; }
+  tr:nth-child(even) td { background: #fcfbf8; }
+  .ok { color: var(--ok); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  code { background: #f0ede4; padding: 1px 5px; border-radius: 3px; font-size: 12.5px; }
+  .callout {
+    background: #fff8e8; border: 1px solid #e8d5a0; border-radius: 6px;
+    padding: 12px 16px; margin: 14px 0; font-size: 13.5px;
+  }
+  .stat-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 24px; }
+  .stat {
+    flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 6px; padding: 14px 16px; text-align: center;
+  }
+  .stat .n { font-size: 24px; font-weight: 700; }
+  .stat .l { font-size: 12px; color: var(--sub); margin-top: 4px; }
+  .cards { display: flex; gap: 20px; flex-wrap: wrap; margin: 16px 0; }
+  .card {
+    flex: 1; min-width: 380px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 8px; padding: 18px 20px;
+  }
+  .card h3 { margin-top: 0; }
+  .card.a { border-top: 4px solid #0a5fb0; }
+  .card.b { border-top: 4px solid #8a6d3b; }
+  details {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    margin: 10px 0; padding: 10px 16px;
+  }
+  summary { cursor: pointer; font-weight: 600; font-size: 13.5px; padding: 4px 0; }
+  summary:hover { color: #0a5fb0; }
+  details[open] summary { margin-bottom: 8px; }
+  footer { max-width: 1100px; margin: 40px auto 0; padding: 0 32px; color: var(--sub); font-size: 12px; }
+  a { color: #0a5fb0; }
+  .src-list { padding-left: 20px; }
+  .src-list li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>RS 统一方案：rs_rating / rs_1m·3m·6m / RS 线能并成一个吗</h1>
+  <p>T-1002-03 · alex · 2026-10-02 · 背景：Andy「我其实就是想统一起来看看能不能就用一个。而且我好奇为什么我们三个算法看似不一样，结果有时候接近」</p>
+</header>
+
+<div class="wrap">
+
+  <div class="summary">
+    <b>一句话结论：</b>能，而且应该——<code>rs_rating</code> 和 <code>rs_1m/rs_3m/rs_6m</code> 在 IBD / Minervini /
+    Stockbee 的公开材料里本来就是<b>同一个公式的不同阶段</b>（单窗收益是原料、<code>rs_rating</code> 是加权成品），
+    不是三种方法论；<b>RS 线</b>是另一类东西——自比一条曲线，不是排名——合并没有道理，继续只做检测。
+    5 年回测支持把排名动作统一到 <code>rs_rating</code>。<b>但面板会死四成名单</b>
+    （<code>liquid_leader</code> 164→159 只、重合率仅 71%），换不换、怎么换，是 Andy 的决定。
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">同一标准</div><div class="l">IBD = Minervini = Stockbee 的 RS Rating</div></div>
+    <div class="stat"><div class="n">0.65–0.85</div><div class="l">三个排名读数两两 Spearman 相关</div></div>
+    <div class="stat"><div class="n">t 0.3–0.6</div><div class="l">RS 线自百分位作排名用，回测不显著</div></div>
+    <div class="stat"><div class="n">~29%</div><div class="l">liquid_leader 换读数后名单不重合占比</div></div>
+    <div class="stat"><div class="n">2,397 / 5y</div><div class="l">回测样本（有存活偏差，见下）</div></div>
+  </div>
+
+  <h2>一、标准核查：三个"算法"其实是几个</h2>
+
+  <table>
+    <tr><th>概念</th><th>公开标准怎么说</th><th>我们的实现</th><th>判定</th></tr>
+    <tr>
+      <td><code>rs_rating</code></td>
+      <td>社区复刻 <code>0.4·P3+0.2·P6+0.2·P9+0.2·P12</code>，IBD 官方权重未公开但三方殊途同归。
+        Minervini 直接引用做 Trend Template 第 8 腿；Stockbee（Bonde）
+        <a href="https://stockbee.blogspot.com/2017/05/how-to-setup-ibd-style-relative.html" target="_blank">2017 博文</a>
+        标题自认是复刻 IBD，同一套权重。</td>
+      <td><code>run_all.py:562-567</code>，同一套权重</td>
+      <td class="ok">✅ 对齐唯一标准</td>
+    </tr>
+    <tr>
+      <td><code>rs_1m / rs_3m / rs_6m</code></td>
+      <td><b>查过，无独立标准</b>——P3/P6 只是上面那个公式的原料分量，IBD/Minervini/Stockbee 没有任何一家
+        单独发布过"3 个月 RS"这种东西</td>
+      <td><code>run_all.py:489-491</code>，单窗横截面百分位</td>
+      <td class="warn">⚠️ 自造，是 rs_rating 的半成品</td>
+    </tr>
+    <tr>
+      <td>RS 线（<code>rs_line_pctl_*</code>）</td>
+      <td>官方定义 = 价格 ÷ 基准的一条曲线，看新高/新低，不是排名。TraderLion/Moglen 有「RS Phase」
+        「RS New High」等具体打法，方向与我们的 <code>rs_high</code> 标记一致，
+        <a href="https://traderlion.com/markets-essentials/relative-strength-essentials/" target="_blank">窗口长度未核一手</a></td>
+      <td><code>yfinance_adapter.py:227</code>，21/63/126 日自百分位，oratnek 页面 29/29 复现</td>
+      <td class="warn">⚠️ 自造操作化，方向有支持</td>
+    </tr>
+    <tr>
+      <td><code>i_score / industry_rank</code></td>
+      <td>IBD 197 组按 6 个月涨幅排，公式不公开</td>
+      <td>行业内 <code>rs_3m</code> 中位数排名</td>
+      <td class="warn">⚠️ 自造（窗口也不一致）</td>
+    </tr>
+  </table>
+
+  <div class="callout">
+    <b>为什么三个读数"看似不一样结果有时候接近"</b>：因为它们本来就是同一个计算过程的不同阶段——
+    <code>rs_1m/rs_3m/rs_6m</code> 是原料，<code>rs_rating</code> 是把四个季度原料按 0.4/0.2/0.2/0.2 加权后的成品。
+    两个相关的量，相关度高不是巧合，相关度不是 1 也不是矛盾（成品引入了额外的 1 年窗口 + 加权，单看一个季度
+    看不到这些）。RS 线是另一回事——自比不是排名，跟前两者相关度明显更低（见下节）。
+  </div>
+
+  <h2>二、相关度与回测（独立实测，用 2026-09-30 universe.json + 5 年价格史）</h2>
+
+  <h3>相关度：独立复算核对了 claire 背景表的数字</h3>
+  <table>
+    <tr><th>配对</th><th>claire 原数</th><th>本次独立复算</th><th>前 20% Jaccard</th></tr>
+    <tr><td><code>rs_rating</code> ~ <code>rs_6m</code></td><td class="num">0.84</td><td class="num"><b>0.849</b></td><td class="num">0.608</td></tr>
+    <tr><td><code>rs_rating</code> ~ <code>rs_3m</code></td><td class="num">0.65</td><td class="num"><b>0.686</b></td><td class="num">0.410</td></tr>
+    <tr><td><code>rs_3m</code> ~ <code>rs_6m</code></td><td class="num">0.53</td><td class="num"><b>0.549</b></td><td class="num">0.352</td></tr>
+    <tr><td><code>rs_rating</code> ~ RS线(21d)</td><td class="num">—</td><td class="num">0.438</td><td class="num">0.351</td></tr>
+    <tr><td>RS线(21d) ~ RS线(63d)</td><td class="num">—</td><td class="num">0.801</td><td class="num">0.537</td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--sub)">两套实现路径完全独立（claire 读 universe.json 现成字段，这里从价格重新算），数字互相印证。
+  RS 线自己的两个窗口彼此相关 0.80，跟排名类（0.35–0.44）明显低——量化确认了"是另一个族"。</p>
+
+  <h3>5 年回测：哪个读数更能挑出之后跑赢的票</h3>
+  <div class="callout">
+    <b>⚠️ 存活偏差</b>：样本 = 今天（2026-09-30）的 2,499 只 <code>tradeable</code> 名字投影回 5 年前，
+    过去 5 年里退市/被收购/跌出资格的名字完全不在样本里，且这类名字系统性偏向输家——下面任何"赢"的读数
+    都是<b>偏乐观的上限</b>。同一类局限 <code>pipeline/themes/backtest_accel.py</code>（10 年期研究）也有。
+  </div>
+
+  <table>
+    <tr><th>读数</th><th>20 日 t</th><th>20 日胜率</th><th>63 日 t</th><th>63 日胜率</th></tr>
+    <tr><td><code>rs_rating</code>（IBD 复刻）</td><td class="num"><b>1.87</b></td><td class="num">67%</td><td class="num"><b>2.31</b></td><td class="num">59%</td></tr>
+    <tr><td><code>rs_1m</code>（单窗 1 月）</td><td class="num">1.91</td><td class="num">63%</td><td class="num">2.39</td><td class="num">64%</td></tr>
+    <tr><td><code>rs_6m</code>（单窗 6 月）</td><td class="num">1.70</td><td class="num">59%</td><td class="num">2.57</td><td class="num">61%</td></tr>
+    <tr><td>学术 12-1 动量（外部基准）</td><td class="num">1.60</td><td class="num">61%</td><td class="num">2.60</td><td class="num">61%</td></tr>
+    <tr><td><code>rs_3m</code>（单窗 3 月）</td><td class="num">1.03</td><td class="num">52%</td><td class="num">1.69</td><td class="num"><span class="bad">45%</span></td></tr>
+    <tr><td>RS 线自百分位 63d</td><td class="num"><span class="bad">0.58</span></td><td class="num">54%</td><td class="num"><span class="bad">0.28</span></td><td class="num"><span class="bad">45%</span></td></tr>
+    <tr><td>RS 线自百分位 21d</td><td class="num"><span class="bad">0.45</span></td><td class="num">54%</td><td class="num"><span class="bad">0.59</span></td><td class="num">59%</td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--sub)">每 21 交易日非重叠截面取各读数前 20%，量其后 20/63 交易日相对 SPY 超额；
+  t 为均值/标准误（|t|>2 常用判定线）。排名类（rs_rating/rs_1m/rs_6m）互相接近，<code>rs_3m</code> 最弱；
+  RS 线两个窗口都不显著，和 <code>backtest_accel.py</code> 此前的独立发现一致（"RS-line arms tested negative"）——
+  这是第二次独立验证同一个方向，不是新结论。学术 12-1 动量基准表现接近 <code>rs_rating</code>，说明我们的复刻
+  权重没有偏离因子文献共识。</p>
+
+  <details>
+    <summary>展开：完整回测结果 JSON + 脚本</summary>
+    <p>脚本 <code>rs_compare.py</code>（<code>python3 data/research/rs_unify/rs_compare.py --fetch</code> 复跑，~3 分钟）；
+    结果 <code>backtest_results.json</code>；面板元数据 <code>panel_meta.json</code>（2,397 只 + SPY，
+    2021-10-01 → 2026-10-01，1,255 根交易日）。</p>
+  </details>
+
+  <h2>二之五、排名适合筛选、不适合提示变化（MRNA 与可比样本，含没涨的）</h2>
+  <p style="font-size:13.5px;color:var(--sub)">Andy 原话：「我感兴趣的是RS线和rs rating在MRNA上的表现是怎样的」。
+  一只票、事后挑选、单日 +177% 跳空，不能回答"这个形状一般会怎样"——脚本
+  <code>mrna_comparable_cases.py</code> 在整个面板上事前定义、事后不挑地扫同一个形状。</p>
+
+  <div class="callout">
+    <b>形状定义（自造，非公开标准）</b>：RS 线 21 日自百分位在 t-10 个交易日 ≤60、到 t 日跳到 ≥95（新创短窗高点）；
+    同时 <code>rs_rating</code> 在整段 [t-10,t] 都落在 80–96（票本来就公认是强股，排名没变化）——这正是 MRNA 的形状。
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">3,428</div><div class="l">面板里这个形状出现的次数（不是罕见信号）</div></div>
+    <div class="stat"><div class="n"><span class="bad">46.0%</span></div><div class="l">20 日后超 SPY 为正的占比（低于五成）</div></div>
+    <div class="stat"><div class="n"><span class="bad">−0.9%</span></div><div class="l">20 日后超额收益中位数</div></div>
+    <div class="stat"><div class="n">+0.17%</div><div class="l">20 日后超额收益均值（被少数暴涨拉正）</div></div>
+  </div>
+
+  <h3>MRNA 本票出现过两次同形状事件，结果截然不同</h3>
+  <table>
+    <tr><th>日期</th><th>RS线21(前)</th><th>RS线21(当时)</th><th>rs_rating</th><th>20日后超SPY</th><th>63日后超SPY</th></tr>
+    <tr><td>2026-02-23</td><td class="num">33.3</td><td class="num">100.0</td><td class="num">92.3</td><td class="num">+5.7%</td><td class="num">−16.4%</td></tr>
+    <tr><td>2026-08-17</td><td class="num">4.8</td><td class="num">100.0</td><td class="num">91.3</td><td class="num"><b>+125.0%</b>（含08-19跳空）</td><td class="num">窗口未走完</td></tr>
+  </table>
+
+  <h3>跨票样本：按结果分布抽样（最差3·中位2·最好3，不是挑好看的）</h3>
+  <table>
+    <tr><th>ticker</th><th>日期</th><th>RS线21(前)</th><th>RS线21(当时)</th><th>rs_rating</th><th>20日后超SPY</th><th>63日后超SPY</th></tr>
+    <tr><td>RDW</td><td>2025-07-17</td><td class="num">14.3</td><td class="num">100.0</td><td class="num">95.6</td><td class="num"><span class="bad">−55.1%</span></td><td class="num"><span class="bad">−59.4%</span></td></tr>
+    <tr><td>TRLV</td><td>2024-10-22</td><td class="num">52.4</td><td class="num">100.0</td><td class="num">92.8</td><td class="num"><span class="bad">−54.4%</span></td><td class="num"><span class="bad">−66.9%</span></td></tr>
+    <tr><td>UNIT</td><td>2024-05-02</td><td class="num">9.5</td><td class="num">100.0</td><td class="num">90.9</td><td class="num"><span class="bad">−52.0%</span></td><td class="num"><span class="bad">−35.3%</span></td></tr>
+    <tr><td>ALNT</td><td>2023-01-12</td><td class="num">52.4</td><td class="num">95.2</td><td class="num">92.4</td><td class="num">−0.9%</td><td class="num">−12.1%</td></tr>
+    <tr><td>CSW</td><td>2024-05-28</td><td class="num">9.5</td><td class="num">95.2</td><td class="num">87.5</td><td class="num">−0.9%</td><td class="num">+20.2%</td></tr>
+    <tr><td>HIMS</td><td>2025-01-21</td><td class="num">28.6</td><td class="num">100.0</td><td class="num">95.8</td><td class="num"><span class="ok">+129.0%</span></td><td class="num">−2.7%</td></tr>
+    <tr><td>NVTS</td><td>2025-09-18</td><td class="num">4.8</td><td class="num">100.0</td><td class="num">94.6</td><td class="num"><span class="ok">+132.2%</span></td><td class="num">+8.0%</td></tr>
+    <tr><td>MSTR</td><td>2024-02-08</td><td class="num">14.3</td><td class="num">95.2</td><td class="num">94.5</td><td class="num"><span class="ok">+139.8%</span></td><td class="num"><span class="ok">+110.3%</span></td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--sub)"><b>要点</b>：形状本身对后续表现几乎没有分辨力——最差三个（RDW/TRLV/UNIT）
+  和最好三个（HIMS/NVTS/MSTR）进场那一刻的读数长得一模一样，差别只有事后才看得出来。</p>
+
+  <h3>谁来承担"最近有没有变化"这个信息？</h3>
+  <p style="font-size:13.5px">若排名并入一个（选项 A），这个问题结构上<b>只剩 RS 线能回答</b>——因为按形状定义，
+  <code>rs_rating</code> 在这些事件窗口里按定义没有变化，能"10 冲到 100"的只有 RS 线。<b>但 46% 的胜率和负的
+  中位数超额说明这个信息现在只能拿来描述，不能拿来当预警</b>——统一方案落地后，前端文案不应该把 RS 线包装成
+  "预警/早钟"，只能标"确认/描述"。</p>
+
+  <details>
+    <summary>展开：数据来源、存活偏差、脚本</summary>
+    <p>同一份面板（<code>rs_compare.py --fetch</code> 生成），<code>rs_rating</code> 用 <code>run_all.py:565-567</code>
+    同一套权重在面板每一天重新计算（不止"今天"这一行），这是为什么能找出 MRNA 02-23 那次事件。存活偏差同上节：
+    样本是今天还在交易的名字投影回去，3,428 个事件里"腰斩"案例的真实占比可能被低估不是高估。claire 的
+    <code>/tmp/rs/</code> 脚本仍未入库；<code>mrna_comparable_cases.py</code> 是本仓库内可重跑、可复核的独立实现。</p>
+  </details>
+
+  <h2>三、消费者清单与换读数的代价（2026-09-30 universe.json 现算）</h2>
+
+  <details open>
+    <summary>排名/过滤类消费者——换读数会动名单（5 处）</summary>
+    <table>
+      <tr><th>消费者</th><th>当前读数</th><th>证据行</th><th>换成 rs_rating（同阈值）</th></tr>
+      <tr>
+        <td><code>liquid_leader</code>（课程 M2_L09）</td>
+        <td><code>rs_3m ≥ 80</code></td>
+        <td><code>run_all.py:675</code></td>
+        <td>164→159 只，重合 117，只旧 47 / 只新 42（<b>约 43% 不重合</b>，核实了 claire「四成」的说法）</td>
+      </tr>
+      <tr>
+        <td><code>vcs</code> 面板</td>
+        <td><code>rs_3m ≥ 80</code></td>
+        <td><code>watchlist.py:285-292</code></td>
+        <td>20→16 只，重合 14，只旧 6 / 只新 2</td>
+      </tr>
+      <tr>
+        <td>「4% Bullish」/ <code>bullish_4pct</code></td>
+        <td><code>rs_21d(=rs_1m) ≥ 60</code></td>
+        <td><code>watchlist.py:344-347</code>；<code>screener-presets.json:62-66</code></td>
+        <td>15→12 只，重合 11，只旧 4 / 只新 1</td>
+      </tr>
+      <tr>
+        <td>「Monthly Leader 97」</td>
+        <td><code>rs21d(=rs_1m) 97–99</code></td>
+        <td><code>screener-presets.json:121-137</code></td>
+        <td>8→12 只，重合仅 5，只旧 3 / 只新 7——<b>几乎重排</b></td>
+      </tr>
+      <tr>
+        <td><code>industry_rank / top20_industry</code></td>
+        <td>行业内 <code>rs_3m</code> 中位数</td>
+        <td><code>tml_moglen.py:59-62</code></td>
+        <td>135 个有效行业，中位数 r=0.707，前 20 行业重合 11/20</td>
+      </tr>
+    </table>
+    <p style="font-size:13px;color:var(--sub)">TML（<code>tml_moglen.py:75,130</code>，<code>rs_rating≥97</code>）、
+    VCP Trend Template leg 8（<code>vcp_detector.py:128-129</code>，<code>rs_rating≥70</code>）、
+    <code>market_light.brightness.leaders</code>（<code>market_light.py:295-310</code>）三处<b>已经在用 rs_rating，不受影响</b>。</p>
+  </details>
+
+  <details open>
+    <summary>skills 类消费者——第一版漏收，复核打回后补（2 处）</summary>
+    <table>
+      <tr><th>消费者</th><th>用法</th><th>证据行</th><th>换读数影响</th></tr>
+      <tr><td><code>focus-notes</code> 的 <code>build_cards.py</code></td><td>把 <code>rs_rating</code> 写进 Focus 事实卡 <code>"rs"</code> 字段</td><td><code>build_cards.py:114</code></td><td>已用 rs_rating，不受影响；Option B 下字段标签要跟着改</td></tr>
+      <tr><td><code>daily-recap</code> 工作流第 1 步</td><td>同时提 <code>rs_line_pctl_21</code> 与「个股 RS」——<b>没写明是哪个字段</b></td><td><code>daily-recap/SKILL.md:52</code></td><td><b>Andy 疑惑的活证据</b>——这行文档本身就是混淆来源，不论 A/B 都该优先改成具体字段名</td></tr>
+    </table>
+  </details>
+
+  <details>
+    <summary>展示类消费者——只改页面文字/标签，不改名单（7 处）</summary>
+    <table>
+      <tr><th>消费者</th><th>用法</th><th>证据行</th></tr>
+      <tr><td><code>TickerStats.jsx</code></td><td><code>rs_21d</code> 标「RS 1M」/ <code>rs_63d</code> 标「RS 3M」</td><td><code>TickerStats.jsx:28-31</code></td></tr>
+      <tr><td><code>tickerReadings.js</code></td><td><code>rs_1m/rs_3m</code> 与 <code>rs_line_pctl_21/63</code> 并排</td><td><code>tickerReadings.js:103-106</code></td></tr>
+      <tr><td><code>ThemeMembers.jsx</code></td><td>组内排序 <code>rs_3m ?? rs_63d</code></td><td><code>ThemeMembers.jsx:60</code></td></tr>
+      <tr><td><code>MorningRead.jsx</code> 龙头表</td><td>同行并排 <code>rs_rating / rs_1m / rs_3m</code> 三栏——<b>很可能是 Andy 疑惑的直接触发点</b></td><td><code>MorningRead.jsx:423-425</code></td></tr>
+      <tr><td><code>WatchlistPage.jsx</code> <code>pickRs</code></td><td>优先 RS 线，没有才退回 <code>rs_1m</code>；前端<b>已经做过一次"只留一个"的决定</b></td><td><code>WatchlistPage.jsx:178-256</code></td></tr>
+      <tr><td><code>etfRank.js</code>（ETF 卡）</td><td>卡片自己的 cohort 重算，不在本次统一范围</td><td><code>etfRank.js:11</code>；已登记 <code>METRIC_SOURCES.md:120</code></td></tr>
+      <tr><td><code>screenerFilter.js</code></td><td><code>preset_hits.py</code> 的前端镜像，两边必须一起改</td><td><code>screenerFilter.js:196-197</code></td></tr>
+    </table>
+  </details>
+
+  <details>
+    <summary>RS 线消费者——全部检测/展示，没有一个过滤（5 处）</summary>
+    <table>
+      <tr><th>消费者</th><th>用法</th><th>证据行</th></tr>
+      <tr><td><code>rs_high</code> 标记</td><td><code>rs_line_pctl_21==100</code>，只写入票项，没有任何格用它筛选</td><td><code>watchlist.py:393,628,656</code></td></tr>
+      <tr><td>Short List <code>asset</code> 席</td><td>首选 / 排序键，不是闸</td><td><code>name_cards.py:343-344</code></td></tr>
+      <tr><td><code>momentum97_shadow_recipes</code></td><td>只写影子对照 CSV，从不进面板</td><td><code>watchlist.py:538-570</code></td></tr>
+      <tr><td>资产层（26 只核心 ETF）</td><td>只展示</td><td><code>asset_signals.py:89-90,172</code></td></tr>
+      <tr><td><code>WatchlistPage.jsx</code> 票旁数字</td><td>优先显示（同上表）</td><td><code>WatchlistPage.jsx:200-201</code></td></tr>
+    </table>
+  </details>
+
+  <h2>四、方案：A/B 两个选项</h2>
+  <div class="cards">
+    <div class="card a">
+      <h3>选项 A · 排名并入 rs_rating</h3>
+      <p><code>liquid_leader</code>、<code>vcs</code>、「4% Bullish」、「Monthly Leader 97」、
+      <code>industry_rank</code> 五处判据换成 <code>rs_rating</code>；<code>rs_1m/rs_3m/rs_6m</code>
+      字段保留做展示但不再叫"RS"；RS 线不动。</p>
+      <p><b>代价</b>：五个面板名单改变（上表数字）；行业前 20 重排 9/20；阈值需要重新标定（两把尺不是
+      线性对应）；<code>screener-presets.json</code>/<code>screenerFilter.js</code>/<code>preset_hits.py</code>
+      三处要同步改；schema 基线要 <code>--update</code>。</p>
+      <p><b>不动</b>：TML / VCP / market_light 三处已在用 rs_rating；RS 线全部用法不变。</p>
+    </div>
+    <div class="card b">
+      <h3>选项 B · 保留单窗读数，但不再叫"RS"</h3>
+      <p>字段名不变（不动 schema），前端标签/面板文案/METRIC_SOURCES 一律不再用"RS"描述
+      <code>rs_1m/rs_3m/rs_6m</code>，改叫中性名字（如"3 个月涨幅分位"）。所有现有面板阈值、名单<b>一个不变</b>。</p>
+      <p><b>代价</b>：不解决"为什么三个算法结果接近"的认知混淆——<code>MorningRead.jsx</code> 那张三栏表还在，
+      只是不叫同一个名字；回测没有显示单窗读数（尤其 <code>rs_3m</code>）比 <code>rs_rating</code> 更好用，
+      继续用一个回测更弱的读数做判据；前端标签改动面不比 A 小。</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>本研究的倾向（仅供参考）</b>：标准核查和回测两条独立证据都指向同一个方向——
+    <code>rs_1m/rs_3m/rs_6m</code> 不是独立方法论，是 <code>rs_rating</code> 的半成品原料；单独用时
+    <code>rs_3m</code> 回测最弱。选项 A 更贴近问题的根，但代价是实打实的名单变化和迁移工程，不是免费的。
+  </div>
+
+</div>
+
+<footer>
+  <p>产出：<code>data/research/rs_unify/2026-10-02_rs_unify_proposal.md</code>（完整版）·
+  <code>rs_compare.py</code> + <code>backtest_results.json</code>（回测脚本与结果，可复跑）·
+  <code>METRIC_SOURCES.md</code>（标准核查结论已登记）。不改代码、不改 data/output，等 Andy 拍板。
+  附带发现：<code>screenerFilter.js:199</code> 的 <code>rsIbd</code> 过滤键仍指向已退役字段 <code>rs_ibd</code>
+  （应为 <code>rs_rating</code>），与本次统一无关，已开单 T-1002-05 转交 claire。</p>
+</footer>
+
+</body>
+</html>

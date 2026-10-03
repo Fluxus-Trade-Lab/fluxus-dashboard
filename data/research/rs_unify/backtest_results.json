@@ -1,0 +1,198 @@
+{
+  "panel": {
+    "sessions": 1255,
+    "tickers": 2398,
+    "date_range": [
+      "2021-10-01",
+      "2026-10-01"
+    ]
+  },
+  "survivorship_bias": "tickers = today's tradeable set (2026-09-30) projected backward; delisted/acquired/dropped names over the 5y window are absent and skew toward losers -- edges below are an upper bound.",
+  "forward_horizons": {
+    "20": [
+      {
+        "arm": "rs_rating",
+        "label": "rs_rating (IBD-recon 0.4/0.2/0.2/0.2)",
+        "n_periods": 46,
+        "mean": 0.009021481746455846,
+        "median": 0.010018096508907441,
+        "se": 0.004828196941756816,
+        "t": 1.8684991219876044,
+        "hit": 0.6739130434782609,
+        "avg_names": 458.5652173913044
+      },
+      {
+        "arm": "rs_3m",
+        "label": "rs_3m (single-window 3m, cross-sect.)",
+        "n_periods": 46,
+        "mean": 0.005067593118653207,
+        "median": 0.0003031363671078506,
+        "se": 0.004963631114098188,
+        "t": 1.0209447483435534,
+        "hit": 0.5217391304347826,
+        "avg_names": 465.3695652173913
+      },
+      {
+        "arm": "rs_6m",
+        "label": "rs_6m (single-window 6m, cross-sect.)",
+        "n_periods": 46,
+        "mean": 0.008188448838695456,
+        "median": 0.010869192722385495,
+        "se": 0.004814464090098135,
+        "t": 1.7008017269329239,
+        "hit": 0.5869565217391305,
+        "avg_names": 463.2391304347826
+      },
+      {
+        "arm": "rs_1m",
+        "label": "rs_1m (single-window 1m, cross-sect.)",
+        "n_periods": 46,
+        "mean": 0.008663878972827013,
+        "median": 0.006458904833781224,
+        "se": 0.00453245215805992,
+        "t": 1.911521329005162,
+        "hit": 0.6304347826086957,
+        "avg_names": 466.7391304347826
+      },
+      {
+        "arm": "rs_line_21",
+        "label": "RS line self-pctl, 21d (oratnek RS 1M)",
+        "n_periods": 46,
+        "mean": 0.00169154935142121,
+        "median": 0.0016189661068772066,
+        "se": 0.0037168619497415585,
+        "t": 0.45510147384915034,
+        "hit": 0.5434782608695652,
+        "avg_names": 539.7826086956521
+      },
+      {
+        "arm": "rs_line_63",
+        "label": "RS line self-pctl, 63d (oratnek RS 3M)",
+        "n_periods": 46,
+        "mean": 0.0022154152855701054,
+        "median": 0.003120064400160138,
+        "se": 0.0038003384941572237,
+        "t": 0.5829520946558219,
+        "hit": 0.5434782608695652,
+        "avg_names": 488.17391304347825
+      },
+      {
+        "arm": "mom_12_1",
+        "label": "academic 12-1 momentum (benchmark, not ours)",
+        "n_periods": 46,
+        "mean": 0.0073976891070805075,
+        "median": 0.005918509036284105,
+        "se": 0.004637281406953513,
+        "t": 1.595264220107026,
+        "hit": 0.6086956521739131,
+        "avg_names": 458.5652173913044
+      }
+    ],
+    "63": [
+      {
+        "arm": "rs_rating",
+        "label": "rs_rating (IBD-recon 0.4/0.2/0.2/0.2)",
+        "n_periods": 44,
+        "mean": 0.023254851237615327,
+        "median": 0.018977000524013056,
+        "se": 0.010083462515810321,
+        "t": 2.3062366921236612,
+        "hit": 0.5909090909090909,
+        "avg_names": 457.65909090909093
+      },
+      {
+        "arm": "rs_3m",
+        "label": "rs_3m (single-window 3m, cross-sect.)",
+        "n_periods": 44,
+        "mean": 0.02020155826961034,
+        "median": -0.004059516062944553,
+        "se": 0.011974786619603264,
+        "t": 1.687007786555418,
+        "hit": 0.45454545454545453,
+        "avg_names": 464.70454545454544
+      },
+      {
+        "arm": "rs_6m",
+        "label": "rs_6m (single-window 6m, cross-sect.)",
+        "n_periods": 44,
+        "mean": 0.024349342329060327,
+        "median": 0.016632918649350584,
+        "se": 0.009481610253802066,
+        "t": 2.568059820777425,
+        "hit": 0.6136363636363636,
+        "avg_names": 462.47727272727275
+      },
+      {
+        "arm": "rs_1m",
+        "label": "rs_1m (single-window 1m, cross-sect.)",
+        "n_periods": 44,
+        "mean": 0.02557426349137253,
+        "median": 0.010036085048594625,
+        "se": 0.01075944215780486,
+        "t": 2.3769135161734245,
+        "hit": 0.6136363636363636,
+        "avg_names": 466.1363636363636
+      },
+      {
+        "arm": "rs_line_21",
+        "label": "RS line self-pctl, 21d (oratnek RS 1M)",
+        "n_periods": 44,
+        "mean": 0.004615335054500302,
+        "median": 0.007760525350918437,
+        "se": 0.007885773676580035,
+        "t": 0.5852735880827252,
+        "hit": 0.5909090909090909,
+        "avg_names": 540.3863636363636
+      },
+      {
+        "arm": "rs_line_63",
+        "label": "RS line self-pctl, 63d (oratnek RS 3M)",
+        "n_periods": 44,
+        "mean": 0.0024611794667097823,
+        "median": -0.007138351155315982,
+        "se": 0.008816725269016132,
+        "t": 0.2791489347364487,
+        "hit": 0.45454545454545453,
+        "avg_names": 487.0
+      },
+      {
+        "arm": "mom_12_1",
+        "label": "academic 12-1 momentum (benchmark, not ours)",
+        "n_periods": 44,
+        "mean": 0.0240650709668293,
+        "median": 0.03437943368616548,
+        "se": 0.009274763244292829,
+        "t": 2.594683048285637,
+        "hit": 0.6136363636363636,
+        "avg_names": 457.65909090909093
+      }
+    ]
+  },
+  "asof_overlap_check": {
+    "rs_rating~rs_6m": {
+      "spearman": 0.849,
+      "top20pct_jaccard": 0.6,
+      "n": 2398
+    },
+    "rs_rating~rs_3m": {
+      "spearman": 0.686,
+      "top20pct_jaccard": 0.41,
+      "n": 2398
+    },
+    "rs_3m~rs_6m": {
+      "spearman": 0.55,
+      "top20pct_jaccard": 0.358,
+      "n": 2398
+    },
+    "rs_rating~rs_line_21": {
+      "spearman": 0.412,
+      "top20pct_jaccard": 0.34,
+      "n": 2398
+    },
+    "rs_line_21~rs_line_63": {
+      "spearman": 0.806,
+      "top20pct_jaccard": 0.512,
+      "n": 2398
+    }
+  }
+}

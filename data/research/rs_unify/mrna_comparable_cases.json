@@ -1,0 +1,122 @@
+{
+  "definition": "rs_line_21 <=60 at t-10 sessions then >=95 at t, while rs_rating stays in [80,96] across the whole [t-10,t] window -- self-built shape filter, not a published standard (see METRIC_SOURCES.md)",
+  "n_events_total": 3428,
+  "n_events_with_fwd20": 3351,
+  "hit_rate_fwd20_positive": 0.46,
+  "hit_rate_fwd63_positive": 0.454,
+  "mean_fwd20_excess_pct": 0.17,
+  "median_fwd20_excess_pct": -0.9,
+  "mrna_events": [
+    {
+      "ticker": "MRNA",
+      "date": "2026-02-23",
+      "rs_line_21_before": 33.3,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 92.3,
+      "fwd20_excess_pct": 5.66,
+      "fwd63_excess_pct": -16.35
+    },
+    {
+      "ticker": "MRNA",
+      "date": "2026-08-17",
+      "rs_line_21_before": 4.8,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 91.3,
+      "fwd20_excess_pct": 125.02,
+      "fwd63_excess_pct": null
+    }
+  ],
+  "sample_spanning_outcomes": [
+    {
+      "ticker": "RDW",
+      "date": "2025-07-17",
+      "rs_line_21_before": 14.3,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 95.6,
+      "fwd20_excess_pct": -55.08,
+      "fwd63_excess_pct": -59.37
+    },
+    {
+      "ticker": "TRLV",
+      "date": "2024-10-22",
+      "rs_line_21_before": 52.4,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 92.8,
+      "fwd20_excess_pct": -54.35,
+      "fwd63_excess_pct": -66.91
+    },
+    {
+      "ticker": "UNIT",
+      "date": "2024-05-02",
+      "rs_line_21_before": 9.5,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 90.9,
+      "fwd20_excess_pct": -52.02,
+      "fwd63_excess_pct": -35.29
+    },
+    {
+      "ticker": "ALNT",
+      "date": "2023-01-12",
+      "rs_line_21_before": 52.4,
+      "rs_line_21_at": 95.2,
+      "rs_rating_at": 92.4,
+      "fwd20_excess_pct": -0.9,
+      "fwd63_excess_pct": -12.11
+    },
+    {
+      "ticker": "CSW",
+      "date": "2024-05-28",
+      "rs_line_21_before": 9.5,
+      "rs_line_21_at": 95.2,
+      "rs_rating_at": 87.5,
+      "fwd20_excess_pct": -0.9,
+      "fwd63_excess_pct": 20.19
+    },
+    {
+      "ticker": "HIMS",
+      "date": "2025-01-21",
+      "rs_line_21_before": 28.6,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 95.8,
+      "fwd20_excess_pct": 128.96,
+      "fwd63_excess_pct": -2.65
+    },
+    {
+      "ticker": "NVTS",
+      "date": "2025-09-18",
+      "rs_line_21_before": 4.8,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 94.6,
+      "fwd20_excess_pct": 132.21,
+      "fwd63_excess_pct": 8.0
+    },
+    {
+      "ticker": "MSTR",
+      "date": "2024-02-08",
+      "rs_line_21_before": 14.3,
+      "rs_line_21_at": 95.2,
+      "rs_rating_at": 94.5,
+      "fwd20_excess_pct": 139.84,
+      "fwd63_excess_pct": 110.27
+    },
+    {
+      "ticker": "MRNA",
+      "date": "2026-02-23",
+      "rs_line_21_before": 33.3,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 92.3,
+      "fwd20_excess_pct": 5.66,
+      "fwd63_excess_pct": -16.35
+    },
+    {
+      "ticker": "MRNA",
+      "date": "2026-08-17",
+      "rs_line_21_before": 4.8,
+      "rs_line_21_at": 100.0,
+      "rs_rating_at": 91.3,
+      "fwd20_excess_pct": 125.02,
+      "fwd63_excess_pct": null
+    }
+  ],
+  "note": "all_events (3,428 rows) omitted from this file to avoid repo bloat -- rerun this script (needs the panel cache from `rs_compare.py --fetch`) to regenerate the full event list; this file keeps only the summary stats, MRNA's own events, and the outcome-spanning sample used in the proposal."
+}
