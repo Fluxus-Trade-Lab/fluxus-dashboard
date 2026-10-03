@@ -17,6 +17,33 @@ def test_verdict_is_a_template():
     assert NC.verdict(r, "Leading", True, ["episodic_pivot"], 0) == v   # same input, same sentence
 
 
+def test_verdict_en_is_the_same_template_in_english():
+    # Andy 2026-10-03: EN mode must not print Chinese. Same fragments, same order.
+    r = {"atr_from_sma50": 2.1, "liquid_leader": True, "change_pct": 0.02}
+    assert NC.verdict_en(r, "Leading", True, ["episodic_pivot"], 0) == \
+        "theme Leading ✓ · TML ✓ · build zone (2.1 ATR) · today's entry: episodic_pivot"
+    r2 = {"atr_from_sma50": 9.6, "change_pct": 0.177, "bar_date": None}
+    v2 = NC.verdict_en(r2, "Improving", False, [], 6)
+    assert "trim zone (9.6 ATR)" in v2 and "⚠ up ≥15% today, don't chase" in v2
+    assert "⚠ no bar tonight (429)" in v2
+    # fragment-for-fragment: same count of " · " separators in both languages
+    assert NC.verdict(r2, "Improving", False, [], 6).count(" · ") == v2.count(" · ")
+
+
+def test_seat_why_is_bilingual_on_every_branch():
+    # A seat that filled and a seat that came up empty both carry an English why.
+    wl = _wl({"true_market_leaders": {"NEW": {}}.items()})
+    by = {"NEW": {"atr_from_sma50": 2.0, "h_score": 5}}
+    got = {s["seat"]: s for s in NC.pick_seats(wl, None, [], [], by)}
+    assert got["new_leader"]["ticker"] == "NEW"
+    assert got["new_leader"]["why"] == "今日新进 TML"
+    assert got["new_leader"]["why_en"] == "newly entered TML today"
+    empty = got["burning"]
+    assert empty["ticker"] is None and empty["why_en"].startswith("empty: ")
+    assert "(ran, but found none)" in empty["why_en"]
+    assert all(s.get("why_en") for s in got.values())
+
+
 def _wl(panel_tickers):
     return {"zones": [{"key": "z", "panels": [
         {"key": k, "tickers": [dict(ticker=t, **extra) for t, extra in v]}

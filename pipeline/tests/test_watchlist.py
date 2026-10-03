@@ -216,6 +216,7 @@ class TestBuild:
         assert "A" not in cross          # one zone
         assert "D" not in cross          # three panels, ONE zone -> no cross-zone credit
         assert out["cross_zone_rule"].endswith(">= 3 listed")
+        assert out["cross_zone_rule_zh"].endswith("≥3 个区才列")
         assert "E" not in cross
 
     def test_zone_order_and_keys_are_stable(self):

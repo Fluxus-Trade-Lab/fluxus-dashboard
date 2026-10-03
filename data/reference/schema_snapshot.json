@@ -809,7 +809,8 @@
    "source",
    "state",
    "ticker",
-   "verdict"
+   "verdict",
+   "verdict_en"
   ],
   "cards[].events[]": [
    "date",
@@ -830,12 +831,14 @@
   "seats[]": [
    "seat",
    "ticker",
-   "why"
+   "why",
+   "why_en"
   ],
   "top": [
    "cards",
    "date",
    "legend",
+   "legend_en",
    "manual",
    "seats",
    "timestamp"
@@ -1065,6 +1068,7 @@
    "chase_rule",
    "cross_zone",
    "cross_zone_rule",
+   "cross_zone_rule_zh",
    "date",
    "gate",
    "rs_high_rule",
