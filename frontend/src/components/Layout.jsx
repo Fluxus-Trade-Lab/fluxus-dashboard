@@ -374,36 +374,36 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* The Library pages read data/output/library/<page>_<topic>.md now.
               Same reserved block as before underneath — the first article
               landing on one page does not finish any of them. */}
-          {current === 'defense' && <LibraryPage entry={subRoute} page="defense" group="library" title="Defense"
-            blurb="What to do when you are wrong, and what cash is for."
-            willHold={['Stops, and why the one you set at entry is the only honest one',
-                       'Cash as a position, not as the absence of one',
-                       'Drawdown rules: what to cut, in what order, before deciding anything']} />}
+          {current === 'defense' && <LibraryPage entry={subRoute} page="defense" group="library" title={t('nav.defense')}
+            blurb={t('lib.blurb.defense')}
+            willHold={[t('lib.hold.defense.stops'),
+                       t('lib.hold.defense.cash'),
+                       t('lib.hold.defense.drawdown')]} />}
 
-          {current === 'offense' && <LibraryPage entry={subRoute} page="offense" group="library" title="Offense"
-            blurb="How much, when to add, and how to tell a good setup from one that merely looks familiar."
-            willHold={['Sizing: fixed R, and why the number is small',
-                       'Pyramiding — adding to a position that has already paid',
-                       'Leverage, and the conditions under which it is not a mistake',
-                       'Grading setups: what separates an A from a B before the outcome']} />}
+          {current === 'offense' && <LibraryPage entry={subRoute} page="offense" group="library" title={t('nav.offense')}
+            blurb={t('lib.blurb.offense')}
+            willHold={[t('lib.hold.offense.sizing'),
+                       t('lib.hold.offense.pyramiding'),
+                       t('lib.hold.offense.leverage'),
+                       t('lib.hold.offense.grading')]} />}
 
-          {current === 'psychology' && <LibraryPage entry={subRoute} page="psychology" group="library" title="Psychology"
-            blurb="Patience, and what to do on the day after a loss."
-            willHold={['Waiting as a position — the cost of trading a mediocre setup',
-                       'Tilt: recognising it in your own log rather than in the moment',
-                       'The re-attack, which the H1 audit named as the single largest leak']} />}
+          {current === 'psychology' && <LibraryPage entry={subRoute} page="psychology" group="library" title={t('nav.psychology')}
+            blurb={t('lib.blurb.psychology')}
+            willHold={[t('lib.hold.psychology.waiting'),
+                       t('lib.hold.psychology.tilt'),
+                       t('lib.hold.psychology.reattack')]} />}
 
-          {current === 'portfolio-management' && <LibraryPage entry={subRoute} page="portfolio-management" group="library" title="Portfolio Management"
-            blurb="The book as one object rather than a list of trades."
-            willHold={['Open heat — total risk across every position at once',
-                       'Correlation: several positions that are secretly one position',
-                       'Sharpe, expectancy, SQN — what each measures and what none of them do']} />}
+          {current === 'portfolio-management' && <LibraryPage entry={subRoute} page="portfolio-management" group="library" title={t('nav.portfolio-management')}
+            blurb={t('lib.blurb.portfolio-management')}
+            willHold={[t('lib.hold.pm.heat'),
+                       t('lib.hold.pm.correlation'),
+                       t('lib.hold.pm.metrics')]} />}
 
-          {current === 'news' && <LibraryPage entry={subRoute} page="news" group="library" title="News"
-            blurb="Reading the tape's reaction rather than the headline."
-            willHold={['News trading: the setup is the reaction, not the announcement',
-                       'News failure — when a good headline cannot lift a name, that is the signal',
-                       'Using news flow to track where momentum is arriving and leaving']} />}
+          {current === 'news' && <LibraryPage entry={subRoute} page="news" group="library" title={t('nav.news')}
+            blurb={t('lib.blurb.news')}
+            willHold={[t('lib.hold.news.reaction'),
+                       t('lib.hold.news.failure'),
+                       t('lib.hold.news.flow')]} />}
 
           {current === 'masterclass' && <Placeholder group="course" title="Swing Trading Masterclass"
             blurb="Sixteen lessons, beginner first, English with Chinese subtitles. Already written; not yet wired into this app."

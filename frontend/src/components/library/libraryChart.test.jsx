@@ -51,7 +51,7 @@ describe('the shelf', () => {
   it('makes the title the art when there is no chart, and says it once', async () => {
     withFetch({ 'offense_ep_mrna.json': ART })
     const c = await draw()
-    const cover = [...c.container.querySelectorAll('button')].find((b) => /读全文/.test(b.textContent))
+    const cover = [...c.container.querySelectorAll('button')].find((b) => /Read →/.test(b.textContent))
     expect([...cover.querySelectorAll('h3')]).toHaveLength(1)
     expect(cover.textContent).not.toContain('OFFENSE')
   })
@@ -80,7 +80,7 @@ describe('a piece', () => {
     const s = series(); s.c[s.c.length - 1] = 500
     withFetch({ 'offense_ep_mrna.json': { ...ART, chart: { ticker: 'X', series: s } } })
     const c = await draw({ entry: 'ep_mrna' })
-    expect(c.container.textContent).toContain('纵轴对数')
+    expect(c.container.textContent).toContain('Log axis')
   })
 
   it('renders every declared block type', async () => {
@@ -105,7 +105,7 @@ describe('a piece', () => {
     withFetch({ 'offense_ep_mrna.json': { ...ART,
       blocks: [{ type: 'quote', text: '将来某天的新块' }] } })
     const c = await draw({ entry: 'ep_mrna' })
-    expect(c.container.textContent).toContain('未知的块类型')
+    expect(c.container.textContent).toContain('Unknown block type')
     expect(c.container.textContent).toContain('quote')
   })
 
@@ -120,7 +120,7 @@ describe('a piece', () => {
   it('calls a failed fetch a failed read, not an empty article', async () => {
     withFetch({})
     const c = await draw({ entry: 'ep_mrna' })
-    expect(c.container.textContent).toContain('没取到')
+    expect(c.container.textContent).toContain('Not fetched')
   })
 })
 

@@ -2,6 +2,11 @@ import PageHeader from '../PageHeader'
 import { useLibrary } from '../../hooks/useLibrary'
 import CardChart from '../watchlist/shortlist/CardChart'
 import { toEntries, axisFor } from './entry'
+import { articleLang, coverField } from './coverText'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { rich } from '../screener/richText'
+
+const code = (x) => <code className="font-mono">{x}</code>
 
 /**
  * A Library page: a shelf of covers, and a page per piece.
@@ -47,6 +52,7 @@ const H = {
  * Silence would hide that an article had stopped rendering half of itself.
  */
 function Block({ b, charts }) {
+  const { t } = useLanguage()
   /* An article may place MORE THAN ONE chart, and where it places them is part
      of the argument — the MRNA piece wants the run-up before the discipline and
      the repricing after it. So a chart can be a block naming a key, with the
@@ -61,10 +67,9 @@ function Block({ b, charts }) {
              style={{ backgroundImage:
                'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
           <div className="text-[11px] font-mono uppercase tracking-[.24em]
-                          text-[var(--color-text-muted)] mb-2">Chart not shipped</div>
+                          text-[var(--color-text-muted)] mb-2">{t('lib.chart.notShipped')}</div>
           <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-            这篇文章要一张图（<code className="font-mono">{b.key}</code>），但
-            <code className="font-mono"> charts</code> 里没有它的 K 线。
+            {rich(t('lib.chart.notShippedBody'), { key: code(b.key), charts: code('charts') })}
           </p>
         </div>
       )
@@ -127,7 +132,8 @@ function Block({ b, charts }) {
   }
   return (
     <p className="my-2.5 text-[13px] leading-relaxed text-[var(--color-text-muted)] italic">
-      未知的块类型 <span className="font-mono not-italic">{String(b.type)}</span> —— 前端还不会画它。
+      {rich(t('lib.block.unknown'),
+            { type: <span className="font-mono not-italic">{String(b.type)}</span> })}
     </p>
   )
 }
@@ -140,6 +146,7 @@ function Block({ b, charts }) {
  * data side's own words rather than in a copy of them kept here.
  */
 function ArticleChart({ chart }) {
+  const { t } = useLanguage()
   const scale = axisFor(chart)
   return (
     <figure className="my-5 mx-0">
@@ -161,8 +168,8 @@ function ArticleChart({ chart }) {
           <span key={k}><b className="font-semibold font-mono">{k}</b> {v}</span>
         ))}
         {scale === 'log' && (
-          <span title="纵轴按对数：等距离 = 等百分比">
-            纵轴对数 —— 线性下，最后一天会把它之前的几个月压成一条线
+          <span title={t('lib.chart.logTitle')}>
+            {t('lib.chart.logNote')}
           </span>
         )}
       </figcaption>
@@ -173,6 +180,7 @@ function ArticleChart({ chart }) {
 function Article({ entry }) {
   const { name, title, subtitle, summary, chart, charts, blocks, updated,
           missing, malformed, keys } = entry
+  const { t } = useLanguage()
   if (malformed) {
     /* The file arrived and is not an article. Saying "not fetched" would blame
        the network for a shape problem; rendering it as an empty article would
@@ -181,18 +189,19 @@ function Article({ entry }) {
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                           max-w-[74ch] mb-6">
         <div className="text-[11px] font-mono uppercase tracking-[.24em]
-                        text-[var(--color-text-muted)] mb-2">Not an article</div>
+                        text-[var(--color-text-muted)] mb-2">{t('lib.malformed.label')}</div>
         <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-          <span className="font-mono">{name}</span> 取到了，但里面没有文章 —— 没有
-          <code className="font-mono"> title</code>，也没有
-          <code className="font-mono"> blocks</code>。顶层只有：
-          <span className="font-mono text-[var(--color-text-bold)]">{keys.join(', ')}</span>。
+          {rich(t('lib.malformed.body'), {
+            name: <span className="font-mono">{name}</span>,
+            title: code('title'), blocks: code('blocks'),
+            keys: <span className="font-mono text-[var(--color-text-bold)]">{keys.join(', ')}</span>,
+          })}
         </p>
         <p className="m-0 mt-2 text-[13px] leading-relaxed text-[var(--color-text-muted)]">
-          文章正文走这一个 JSON（`title` / `summary` / `blocks`），图放同文件的
-          <code className="font-mono"> charts</code> 里、由
-          <code className="font-mono"> {'{type:"chart", key}'}</code> 块定位。
-          markdown 解析器 2026-08-20 已按数据端要求删除（`42ec619d`），前端不再读 `.md`。
+          {rich(t('lib.malformed.how'), {
+            fields: code('title / summary / blocks'), charts: code('charts'),
+            chartBlock: code('{type:"chart", key}'),
+          })}
         </p>
       </section>
     )
@@ -202,10 +211,9 @@ function Article({ entry }) {
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                           max-w-[74ch] mb-6">
         <div className="text-[11px] font-mono uppercase tracking-[.24em]
-                        text-[var(--color-text-muted)] mb-2">Not fetched</div>
+                        text-[var(--color-text-muted)] mb-2">{t('lib.missing.label')}</div>
         <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
-          <span className="font-mono">{name}</span> 没取到 —— 名单里有它，文件没到。
-          这不是一篇空文章，是一次失败的读取。
+          {rich(t('lib.missing.body'), { name: <span className="font-mono">{name}</span> })}
         </p>
       </section>
     )
@@ -245,7 +253,13 @@ function Article({ entry }) {
  * picture that does not exist. That is what a spine looks like anyway.
  */
 function Cover({ entry, onOpen }) {
-  const { title, subtitle, summary, chart, charts, missing, name } = entry
+  const { chart, charts, missing, name } = entry
+  const { lang, t } = useLanguage()
+  /* The cover is interface and speaks the reader's language; the piece opens
+     in the language it was written in, and the cover says which. */
+  const pieceLang = articleLang(entry)
+  const [title, subtitle, summary] = [entry.title, entry.subtitle, entry.summary]
+    .map((x) => coverField(x, pieceLang, lang))
   // an article that places its charts still deserves a cover — the first one
   const cover = chart ?? Object.values(charts ?? {}).find((c) => c?.series?.c?.length) ?? null
   const art = !!cover
@@ -291,7 +305,9 @@ function Cover({ entry, onOpen }) {
         <p className="m-0 mt-3 pt-0 text-[11px] font-mono uppercase tracking-[.16em]
                       text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
                       transition-colors">
-          {missing ? `${name} 没取到` : '读全文 →'}
+          {missing ? t('lib.cover.missing', { name })
+            : pieceLang === lang ? t('lib.cover.read')
+            : `${t('lib.cover.read')} ${t(`lib.cover.inLang.${pieceLang}`)}`}
         </p>
       </div>
     </button>
@@ -299,6 +315,7 @@ function Cover({ entry, onOpen }) {
 }
 
 function Reserved({ willHold, indexed, anyWritten }) {
+  const { t } = useLanguage()
   if (!willHold.length) return null
   return (
     /* Reserved stays reserved. One piece arriving does not make the rest of the
@@ -308,7 +325,7 @@ function Reserved({ willHold, indexed, anyWritten }) {
                     max-w-[70ch] mt-6">
       <div className="text-[11px] font-mono uppercase tracking-[.24em]
                       text-[var(--color-text-muted)] mb-3">
-        {anyWritten ? 'Also reserved' : 'Reserved'}
+        {anyWritten ? t('lib.alsoReserved') : t('lib.reserved')}
       </div>
       <ul className="m-0 pl-4 space-y-1.5 text-[13px] leading-relaxed
                      text-[var(--color-text-secondary)]">
@@ -316,8 +333,7 @@ function Reserved({ willHold, indexed, anyWritten }) {
       </ul>
       {!indexed && (
         <p className="mt-4 mb-0 text-[11px] font-mono text-[var(--color-text-muted)]">
-          这一页读的是编译进来的文件名单，不是目录 —— 新增一篇现在还需要前端发一版。
-          已向数据端要 <code>library/index.json</code>（DATA_CONTRACTS §七）。
+          {rich(t('lib.reserved.compiledNote'), { file: <code>library/index.json</code> })}
         </p>
       )}
     </div>
@@ -327,6 +343,7 @@ function Reserved({ willHold, indexed, anyWritten }) {
 export default function LibraryPage({ page, entry: slug, group = 'library',
                                       title, blurb, willHold = [] }) {
   const { articles, loading, indexed } = useLibrary(page)
+  const { lang, t } = useLanguage()
   const entries = toEntries(articles, page)
   const written = entries.filter((e) => !e.missing).length
   const go = (s) => { window.location.hash = s ? `#/${page}/${s}` : `#/${page}` }
@@ -334,6 +351,7 @@ export default function LibraryPage({ page, entry: slug, group = 'library',
   /* ── one piece ───────────────────────────────────────────────────────── */
   if (slug) {
     const one = entries.find((e) => e.slug === slug)
+    const oneLang = one && !one.missing && !one.malformed ? articleLang(one) : lang
     return (
       <div>
         <button type="button" onClick={() => go(null)}
@@ -342,16 +360,21 @@ export default function LibraryPage({ page, entry: slug, group = 'library',
                            text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
           ← {title}
         </button>
+        {!loading && oneLang !== lang && (
+          <p className="m-0 mb-3 text-[11px] text-[var(--color-text-muted)]">
+            {t(`lib.article.inLang.${oneLang}`)}
+          </p>
+        )}
         {loading ? null : one ? <Article entry={one} /> : (
           /* A link that resolves to nothing says which piece and offers the
              shelf — a 404 inside our own product is a dead end we control. */
           <div className="border border-dashed border-[var(--color-untested)] rounded-3xl
                           p-6 max-w-[70ch]">
             <div className="text-[11px] font-mono uppercase tracking-[.24em]
-                            text-[var(--color-text-muted)] mb-2">No such piece</div>
+                            text-[var(--color-text-muted)] mb-2">{t('lib.noPiece.label')}</div>
             <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
-              这一页没有叫 <span className="font-mono">{slug}</span> 的篇目。
-              {!indexed && ' 也可能它刚写好，而前端读的还是编译进来的名单。'}
+              {rich(t('lib.noPiece.body'), { slug: <span className="font-mono">{slug}</span> })}
+              {!indexed && t('lib.noPiece.maybeNew')}
             </p>
           </div>
         )}
@@ -363,9 +386,10 @@ export default function LibraryPage({ page, entry: slug, group = 'library',
   return (
     <div>
       <PageHeader group={group} title={title} blurb={blurb}
-                  meta={loading ? ['reading'] : written
-                    ? [`${written} 篇`, indexed ? 'from the index' : 'compiled-in list']
-                    : ['not built yet', 'the slot is reserved, not missing']} />
+                  meta={loading ? [t('lib.meta.reading')] : written
+                    ? [t(written === 1 ? 'lib.meta.count.one' : 'lib.meta.count.other', { n: written }),
+                       indexed ? t('lib.meta.indexed') : t('lib.meta.compiled')]
+                    : [t('lib.meta.notBuilt'), t('lib.meta.reservedNote')]} />
 
       {entries.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
