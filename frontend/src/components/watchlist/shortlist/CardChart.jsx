@@ -1,3 +1,5 @@
+import { useLanguage } from '../../../i18n/LanguageContext'
+
 /**
  * 130 sessions, three lines, and the days something happened.
  *
@@ -64,14 +66,14 @@ export function MarkGlyph({ kind, size = 9 }) {
 /** The first session of each month, thinned so labels never collide. Without
  *  it the plot has no WHEN, and the history fold below the card lists dates
  *  that cannot be found on it. */
-function monthTicks(dates, maxLabels = 5) {
+function monthTicks(dates, maxLabels = 5, lang = 'en') {
   const marks = []
   let prev = null
   dates.forEach((d, i) => {
     const m = d?.slice(0, 7)
     if (!m || m === prev) return
     prev = m
-    marks.push({ i, label: new Date(`${m}-02T00:00:00Z`)
+    marks.push({ i, label: lang === 'zh' ? `${Number(m.slice(5))}月` : new Date(`${m}-02T00:00:00Z`)
       .toLocaleString('en', { month: 'short', timeZone: 'UTC' }) })
   })
   const step = Math.max(1, Math.ceil(marks.length / maxLabels))
@@ -103,6 +105,7 @@ function monthTicks(dates, maxLabels = 5) {
  */
 export default function CardChart({ series, marks = [], height = 190,
                                     scale = 'linear', bare = false }) {
+  const { lang, t } = useLanguage()
   const c = series?.c
   if (!c?.length) return null
   const n = c.length
@@ -154,7 +157,7 @@ export default function CardChart({ series, marks = [], height = 190,
     .map((m) => ({ ...m, i: at[m.d] }))
     .filter((m) => m.i != null)
 
-  const ticks = monthTicks(series.d)
+  const ticks = monthTicks(series.d, 5, lang)
   const last = c[n - 1]
 
   return (
@@ -162,7 +165,7 @@ export default function CardChart({ series, marks = [], height = 190,
     <div className="relative w-full" style={{ height }}>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full block"
            preserveAspectRatio="none" role="img"
-           aria-label={`${n} sessions of price with the 21-day and 50-day averages`}>
+           aria-label={t('sh.cc.aria', { n })}>
         {/* the 50-day first and palest, then the 21, then price on top: the
             reading is price AGAINST them, so they are ground, not figure */}
         {segments(series.s50).map((pts, i) => (
@@ -201,7 +204,7 @@ export default function CardChart({ series, marks = [], height = 190,
         const top = `${(y(c[m.i]) / H) * 100}%`
         const title = `${m.d} · ${kinds.join(' + ')}` +
           `${m.chg != null ? ` · ${m.chg > 0 ? '+' : ''}${m.chg}%` : ''}` +
-          `${m.rv != null ? ` · vol ${m.rv}x` : ''}`
+          `${m.rv != null ? t('sh.cc.vol', { rv: m.rv }) : ''}`
         return (
           <div key={m.d} className="absolute -translate-x-1/2 pointer-events-none"
                style={{ left, top }}>
@@ -223,7 +226,7 @@ export default function CardChart({ series, marks = [], height = 190,
       {log && (
         <span className="absolute left-0 top-0 text-[11px] font-mono
                          text-[var(--color-text-muted)] pointer-events-none"
-              title="纵轴按对数：等距离 = 等百分比。一天 +177% 会把线性轴上的其余部分压平">
+              title={t('sh.cc.logTitle')}>
           log
         </span>
       )}

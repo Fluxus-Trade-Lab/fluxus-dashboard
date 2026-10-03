@@ -2,6 +2,9 @@
 // translations.js. Same rules as that file's header.
 export default {
   en: {
+    'sh.cc.aria': '{n} sessions of price with the 21-day and 50-day averages',
+    'sh.cc.vol': ' · vol {rv}x',
+    'sh.cc.logTitle': 'Log axis: equal distance = equal percentage. One outsized day would flatten the rest of a linear axis.',
     'sh.tc.unavailable': 'Chart unavailable.',
     'sh.tc.offline': 'This browser is offline; the chart is drawn by TradingView over the network.',
     'sh.tc.blocked': 'TradingView\u2019s embed script did not load \u2014 blocked, or its host is unreachable.',
@@ -29,6 +32,9 @@ export default {
     'sh.st.local': 'Kept in this browser only — it does not follow you to another machine, and clearing site data clears it. Where a shortlist should really live is still open in PRODUCT.md.',
   },
   zh: {
+    'sh.cc.aria': '{n} 个交易日的价格，带 21 日和 50 日均线',
+    'sh.cc.vol': ' · 量比 {rv}x',
+    'sh.cc.logTitle': '纵轴按对数：等距离 = 等百分比。线性轴上，一天的暴涨会把其余部分压平。',
     'sh.tc.unavailable': '图表加载不了。',
     'sh.tc.offline': '这个浏览器离线了；图表是 TradingView 联网画的。',
     'sh.tc.blocked': 'TradingView 的嵌入脚本没加载上——被拦了，或者连不上它的服务器。',
