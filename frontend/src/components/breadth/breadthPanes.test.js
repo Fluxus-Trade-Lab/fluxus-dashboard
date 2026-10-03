@@ -26,7 +26,7 @@ describe('softClip', () => {
 })
 
 describe('buildPanes', () => {
-  const r = rows(300, (i) => ({ new_highs: 10, new_lows: i % 50 === 0 ? 60 : 5 + (i % 10) * 2, mcclellan_osc: Math.sin(i / 7) * 50, pct_above_20sma: 50, pct_above_20sma_sp500: i > 290 ? 60 : null }))
+  const r = rows(300, (i) => ({ new_highs_common: 10, new_lows_common: i % 50 === 0 ? 60 : 5 + (i % 10) * 2, mcclellan_osc: Math.sin(i / 7) * 50, pct_above_20sma: 50, pct_above_20sma_sp500: i > 290 ? 60 : null }))
   it('absolute ruler: oversold = lowest 10% of the window, episodes merged and dated', () => {
     const p = buildPanes(r, { indicator: 'nhnl', window: 250, pct: 0.1 })
     expect(p.dates.length).toBe(250)
@@ -49,6 +49,14 @@ describe('buildPanes', () => {
     const none = buildPanes(r, { indicator: 'mco', pool: 'sp500', window: 20 })
     expect(none.poolNote).toMatch(/no S&P 500 series/)
     expect(none.raw.filter(Number.isFinite).length).toBe(20)
+  })
+  it('new highs − lows reads the common-stock pool and never the old SPAC-inclusive count', () => {
+    // 2026-10-02 real values: old 44/31 (+13), common 7/27 (−20) -- opposite signs
+    const both = buildPanes([{ date: '2026-10-02', spx_close: 1, new_highs: 44, new_lows: 31, new_highs_common: 7, new_lows_common: 27 }], { indicator: 'nhnl', window: 5 })
+    expect(both.raw).toEqual([-20])
+    const oldOnly = buildPanes([{ date: '2026-08-27', spx_close: 1, new_highs: 44, new_lows: 31 }], { indicator: 'nhnl', window: 5 })
+    expect(oldOnly.raw).toEqual([null])
+    expect(INDICATORS.nhnl.note).toMatch(/common stocks only/)
   })
   it('empty rows do not throw', () => {
     const p = buildPanes([], {})

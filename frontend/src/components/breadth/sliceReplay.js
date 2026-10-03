@@ -67,6 +67,7 @@ export function sliceToDate(replay, date) {
       pct_above_20sma: last.pct_above_20sma,
       advances: last.advances, declines: last.declines,
       new_highs: last.new_highs, new_lows: last.new_lows,
+      new_highs_common: last.new_highs_common, new_lows_common: last.new_lows_common,
       ad_line: last.ad_line, mcclellan_osc: last.mcclellan_osc,
       // Nasdaq-100 pool (T-0923-03) -- the standard reading; mcclellan_osc
       // above is the legacy full-universe column, kept for continuity.

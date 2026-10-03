@@ -20,9 +20,16 @@ const num = (v) => (Number.isFinite(v) ? v : null)
 
 /** The indicators the panes can show, each over the pool columns it has. */
 export const INDICATORS = {
+  // Common stocks only (SPAC / ETF / closed-end fund / preferred excluded) --
+  // the standard pool, and the one the engine votes on and the morning read
+  // prints. Until 2026-10-03 this pane drew the older SPAC-inclusive count and
+  // the two disagreed in sign on 2026-10-02 (old 44 − 31 = +13, common
+  // 7 − 27 = −20), so the page said "more highs" here and "more lows" above.
+  // Andy 2026-10-03: 「该切换的应该更改」. No fallback to the old count: a
+  // series that splices two pools would draw a jump that is not in the market.
   nhnl: { label: '52-week highs − lows', unit: 'names', zero: true,
-    pools: { all: (r) => (num(r.new_highs) != null && num(r.new_lows) != null ? r.new_highs - r.new_lows : null) },
-    note: 'raw counts (SPAC included) — the common-stock series starts 2026-08-28, too short to chart' },
+    pools: { all: (r) => (num(r.new_highs_common) != null && num(r.new_lows_common) != null ? r.new_highs_common - r.new_lows_common : null) },
+    note: 'common stocks only (SPAC, ETF, closed-end fund, preferred excluded); this series starts 2026-08-28 — the older SPAC-inclusive count is no longer charted' },
   mco: { label: 'McClellan oscillator', unit: '', zero: true,
     pools: { all: (r) => num(r.mcclellan_osc) },
     note: 'all-market pool; the Nasdaq-100 version is pending (T-0923-03)' },
