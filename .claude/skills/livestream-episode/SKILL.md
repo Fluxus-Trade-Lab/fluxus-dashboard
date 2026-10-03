@@ -46,7 +46,7 @@ owner: ops
 
 ## Dashboard 截图
 
-Python Playwright（`.venv`，chromium 已装）headless 拍 `https://fluxus-dashboard.vercel.app/#/<页>`，1600×900、2x、`color_scheme="dark"`，等 networkidle + 3.5 秒；页：`dashboard`（Market State）、`rotation`（Themes）、`groups`、`screener`、`breadth`。拍完检查无 blur（锁页会糊）。屏幕上不能有会员名、持仓股数、金额。
+Python Playwright（`.venv`，chromium 已装）headless 拍 `https://fluxus-dashboard.vercel.app/#/<页>`，1600×900、2x、`color_scheme="dark"`，等 networkidle + 3.5 秒；页：`dashboard`（Market State）、`rotation`（Themes）、`groups`、`breadth`（`screener` 暂不上直播，见 gotcha）。拍完检查无 blur（锁页会糊）。屏幕上不能有会员名、持仓股数、金额。
 
 ## 讲稿形状（Studio Q 写，OPS 合成）
 
@@ -59,4 +59,5 @@ Python Playwright（`.venv`，chromium 已装）headless 拍 `https://fluxus-das
 照 `kanban-page` 的深色规范，但提词卡是**纵向六段长页**（直播时从上往下滚），不是看板：大字号、每段一个色带、图片可点开全屏。固定链接，每场一页。工人没有 Artifact 工具——**发布永远由 OPS 代发**。
 
 ## gotcha（追加在这里）
+- 2026-10-03：Andy「screener页面UI还没有准备好」——**Screener 页不上直播**，直到他或 UI Claire 说可以。直播只开 Market State（#/dashboard、#/breadth）与 Themes（#/rotation）；挑票用最近一期复盘的领先名字在图表软件里看。上直播前每个要开的页面都先问一句「这页能见人吗」。
 - 2026-10-03：守护进程工人写的提词卡，案例数据三处错（盘中价当收盘、反弹当上涨、漏一个低点）。之后**案例数字一律 OPS 现场复算**，工人只写讲稿。
