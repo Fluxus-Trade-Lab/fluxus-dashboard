@@ -59,6 +59,11 @@ def case_block(key, c):
             f'<p class="wrap">一句话收：{E(c.get("wrap","").replace("一句话收：",""))}</p>'
             f'<div class="src">出处：{E(c.get("source",""))}</div></section>')
 
+recap = ''
+if D.get('recap_points'):
+    rows = ''.join(f'<tr><td>{E(r["pt"])}</td><td class="w">{E(r["where"])}</td><td class="w b">{E(r["book"])}</td></tr>' for r in D['recap_points'])
+    recap = (f'<section class="recap" id="recap"><h2>{E(D.get("recap_title","本周五复盘的要点 → 今晚讲在哪"))}</h2>'
+             f'<div class="tw"><table><thead><tr><th>复盘要点（10/2 周五）</th><th>讲在哪一段</th><th>对应书</th></tr></thead><tbody>{rows}</tbody></table></div></section>')
 segs_html, nav = [], []
 for s in D['segments']:
     sid = s['id']
@@ -130,6 +135,11 @@ ol.ops{{margin:0;padding-left:24px}} ol.ops li{{margin:6px 0}}
 .src{{font-size:13px;color:var(--mute)}}
 details.qa{{background:var(--card2);border-radius:8px;padding:8px 12px;margin:6px 0}}
 details.qa summary{{cursor:pointer;font-weight:500}} details.qa p{{margin:8px 0 4px}}
+section.recap{{background:var(--card);border-radius:14px;padding:16px 18px;margin:0 0 22px;border-left:5px solid var(--ok)}}
+section.recap h2{{margin:0 0 10px;font-size:22px;font-weight:900}}
+.tw{{overflow-x:auto}} table{{border-collapse:collapse;width:100%;font-size:16px}}
+th{{text-align:left;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--mute);font-weight:500;padding:6px 8px;border-bottom:1px solid var(--line)}}
+td{{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}} td.w{{white-space:nowrap;color:var(--sub);font-size:14px}} td.b{{color:var(--mute)}}
 dialog{{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}}
 dialog::backdrop{{background:rgba(0,0,0,.85)}}
 dialog img{{max-width:96vw;max-height:88vh;display:block;border-radius:8px}}
@@ -140,7 +150,8 @@ dialog p{{color:#ddd;text-align:center;margin:6px 0 0;font-size:14px}}
 <div class="top"><div class="eyebrow">FLUXUS 会员直播 · 01 · 2026-10-03 周六 · 读 10/2 周五收盘</div>
 <h1>直播 01 提词卡 · 先看环境（第 0–2 章）</h1>
 <p class="lede">六段，从上往下讲。每段：一句目标 → 讲稿 → 要点 → 画面 → 操作 → 问观众 → 过渡。点图放大。案例数字全部按日线收盘价复核（10-03 JST）。</p></div>
-<nav class="toc">{"".join(nav)}</nav>
+<nav class="toc"><a href="#recap">复盘要点</a>{"".join(nav)}</nav>
+{recap}
 {"".join(segs_html)}
 <p class="src">讲稿：Studio Q 按书 CH00–02 写，图号以书为准（0-14 NVDA、1-1 QQQ 2022、2-1 森林到树木）；三问＝§1.2 红绿灯，四问＝§1.7 环境。案例图与截图：OPS 10-03 生成，dashboard 为线上 10/2 收盘读数。</p>
 </div>

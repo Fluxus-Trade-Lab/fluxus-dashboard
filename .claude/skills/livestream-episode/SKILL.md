@@ -17,6 +17,7 @@ owner: ops
 | T−1 天 | OPS | 案例候选给 Andy 挑（每段 2–3 个，带图） |
 | T−1 天 | Studio Q | 详细讲稿 JSON（见下「讲稿形状」） |
 | T−0 上午 | OPS | 合成提词卡（讲稿 + 案例图 + dashboard 截图）发 Artifact，链接固定 |
+| T−0 上午 | OPS | **读最近一期每日复盘**（`~/Documents/Trading/01_Market_Reports_Daily/<YYYY-MM>/<D>/pack/content_ZH.json`：title / big_picture / state_line / led / lagged / rules / tomorrow），挑 5–6 个要点写进讲稿 JSON 的 `recap_points`（要点 · 讲在哪一段 · 对应书），并把它们织进 ①冷开场、②族群例子、④实操、⑥下周看什么。复盘里的组合数字（R、现金、年内收益）不进提词卡。Andy 10-03：「查看本周五的复盘recap文件。看看我们的准备围绕着这些要点。」 |
 | T−30 分 | Andy | OBS 六步（策划页「你：OBS 设置」卡） |
 | 直播 | Andy | 每换一段按 OBS 章节标记热键 |
 | T+24h | OPS | 转写（mlx-whisper）、按 6 段出时间轴与中英字幕；Andy 上传 Whop + YouTube 不公开 |
