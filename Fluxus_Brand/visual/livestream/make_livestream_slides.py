@@ -18,7 +18,7 @@ Andy 2026-10-03：「每一张卡片会是类似于KEYnoteSlide……KeYTakeaway
 用法：python3 make_livestream_slides.py --content <ep.json> --outdir <dir> [--pdf <deck.pdf>]
 图片路径相对 content JSON 所在目录。
 """
-import argparse, html, json, os, sys
+import argparse, html, json, os, subprocess, sys, time
 from pathlib import Path
 
 # 版式常量与渲染函数来自同目录的 make_livestream_cards.py；脚本被拷到别处时用 FLUXUS_CARDS_DIR 指回去
@@ -135,7 +135,12 @@ def render(D, base, outdir):
         else:
             raise SystemExit(f'unknown slide type {t}')
         name = f'{n+1:02d}_{t}.png'
-        C._render(page(body, meta), outdir / name, C.W, C.H)
+        for attempt in range(3):  # 本机 Chrome headless 偶发退出码 2（10-03 连撞两次），重试即过
+            try:
+                C._render(page(body, meta), outdir / name, C.W, C.H); break
+            except subprocess.CalledProcessError:
+                if attempt == 2: raise
+                time.sleep(2)
         files.append(outdir / name)
         print(name)
     return files
