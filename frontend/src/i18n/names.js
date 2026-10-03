@@ -6,9 +6,12 @@
 import dashboardNames from './names/dashboard'
 import rotationNames from './names/rotation'
 import screenerNames from './names/screener'
+import watchlistNames from './names/watchlist'
+import modelbooksNames from './names/modelbooks'
+import libraryNames from './names/library'
 
 // Per-page additions live in ./names/*.js so parallel edits never collide.
-export const NAME_PARTS = { dashboardNames, rotationNames, screenerNames }
+export const NAME_PARTS = { dashboardNames, rotationNames, screenerNames, watchlistNames, modelbooksNames, libraryNames }
 
 const BASE_NAMES = {
   '52-Week High Leaders': '52周新高领涨股',
