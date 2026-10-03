@@ -8,7 +8,7 @@
 
 〔标题槽 · 工作标题：**Breadth is the worst since the dot-com era. I'm still long semis. Here's where I'd stop.**〕
 
-The median stock is sitting about 16% below its one-year high. @ConnorJBates_ called it the weakest reading since the dot-com bubble. The same week, the semiconductor ETF made a new high.
+The median stock is sitting about 16% below its one-year high. @ConnorJBates_ called it the weakest reading since the dot-com bubble. The same week, the semiconductor ETF (SMH) was up 16% from early August, within about 6% of its June high.
 
 Both of those are true. Over the past two weeks I've argued both sides of this in my own Discord — once to dismiss the breadth worry, once to say it's exactly the thing that could end the trade. This is the version where I put the two sides next to each other, and then write down what would make me change my mind. As far as I can tell, nobody arguing about breadth on X has done that last part.
 
@@ -56,15 +56,17 @@ The index is growing earnings at almost 30%. More than half the sectors in it ar
 
 @ConnorJBates_ put the other half of this into numbers on September 30: the breadth damage is concentrated in IWM, RSP, XLU, ITB and XLF. Inside semis, software and cybersecurity, breadth isn't bad at all.
 
-〔数据槽 · 我们自己的半导体组内宽度序列（请 RND Linda 现算）——把上面这句从别人的说法换成我们的读数〕
+Our own numbers agree. We track 120 semiconductor stocks. On October 1, 74% of them were above their 50-day average. For the whole market it was 25%. On the 200-day, it was 65% against 36%.
+
+But the 50-day lead is new. Before September 18, semis were behind the market on that ruler, by as much as 42 points. And in the 43 sessions from August 3, only one of the 120 made a new 52-week high. The median stock is still 31.5% below its high. This is a recovery from a drawdown, not a new-high market.
 
 So the question isn't "is breadth bad." It's whether the car I'm sitting in is one of the ones still being pulled.
 
 ## Why I'm still long semis: the chart
 
-Semis made a new high on September 22. When they lead, they really lead.
+Semis are up 16% since August 3. SOXX and SMH moved almost together, +16.1% and +15.6%. When they lead, they really lead.
 
-What I watch isn't the index, it's the rotation underneath it. Over the last month the money has moved from one sub-theme to the next — CPUs first (AMD, ARM, INTC), then memory (MU, SNDK), then photonics, then equipment (LRCX, KLAC, AMAT on September 29), and on October 1, the small semis: TSEM, FORM and SMTC broke out to new highs. A group that rotates internally can keep going a long time. It's also why the easiest way to hold it is SOXX itself.
+What I watch isn't the index, it's the rotation underneath it. Over the last month the money has moved from one sub-theme to the next — CPUs first (AMD, ARM, INTC), then memory (MU, SNDK), then photonics, then equipment (LRCX, KLAC, AMAT on September 29), and on October 1, the small semis: TSEM, FORM and SMTC broke out. A group that rotates internally can keep going a long time. It's also why the easiest way to hold it is SOXX itself.
 
 On the pullbacks, the anchored VWAP from SOXX's all-time high has acted as support. MU wasn't extended on ATR from its 50-day when I looked on September 22. And on the September 28 gap-down, I could see put sellers in semis stepping in — they usually put in the low of the day.
 
