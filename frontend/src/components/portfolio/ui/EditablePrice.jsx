@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { fmtCur } from '../lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 export default function EditablePrice({ value, onChange, title }) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState('')
+  const { t: tr } = useLanguage()
 
   if (editing) {
     return (
@@ -35,7 +37,7 @@ export default function EditablePrice({ value, onChange, title }) {
     <span
       onClick={() => { setDraft(String(value || '')); setEditing(true) }}
       className="cursor-pointer border-b border-dashed border-[var(--color-input-border)] hover:border-[var(--color-text-secondary)]"
-      title={title ? `${title}\nClick to edit` : 'Click to edit'}
+      title={title ? `${title}\n${tr('pf.edit.click')}` : tr('pf.edit.click')}
     >
       {fmtCur(value)}
     </span>

@@ -191,9 +191,9 @@ export default function Layout() {
           capital: result.startingCapital,
           dailyPrices: result.dailyPrices,
         })
-        dispatch({ type: 'SET_FETCH_STATUS', status: `Imported ${result.trades?.length || 0} trades.` })
+        dispatch({ type: 'SET_FETCH_STATUS', status: tr('pf.status.imported', { n: result.trades?.length || 0 }) })
       } catch (err) {
-        dispatch({ type: 'SET_FETCH_STATUS', status: 'Import failed: ' + err.message })
+        dispatch({ type: 'SET_FETCH_STATUS', status: tr('pf.status.importFailed', { error: err.message }) })
       }
     }
     reader.readAsText(file)
@@ -219,9 +219,9 @@ export default function Layout() {
         capital: result.startingCapital,
         dailyPrices: result.dailyPrices,
       })
-      dispatch({ type: 'SET_FETCH_STATUS', status: `Loaded sample: ${result.trades?.length || 0} trades.` })
+      dispatch({ type: 'SET_FETCH_STATUS', status: tr('pf.status.sampleLoaded', { n: result.trades?.length || 0 }) })
     } catch (err) {
-      dispatch({ type: 'SET_FETCH_STATUS', status: 'Failed to load sample: ' + err.message })
+      dispatch({ type: 'SET_FETCH_STATUS', status: tr('pf.status.sampleFailed', { error: err.message }) })
     }
   }
 
@@ -281,7 +281,7 @@ export default function Layout() {
       {/* The page frame goes above the working header, not instead of it —
           PortfolioHeader carries the account switcher, the privacy mask and
           the sync state, all of which have to keep working. */}
-      <PageHeader group="book" title="Portfolio" />
+      <PageHeader group="book" title={tr('nav.portfolio')} />
 
       <PortfolioHeader
         portfolioValue={totalPortfolioValue}
@@ -313,11 +313,11 @@ export default function Layout() {
         {showResetConfirm && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-[var(--color-surface)] rounded-lg p-6 w-80 shadow-xl">
-              <div className="font-bold mb-2">Reset All Data?</div>
-              <div className="text-[13px] text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
+              <div className="font-bold mb-2">{tr('pf.reset.title')}</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)] mb-4">{tr('pf.reset.body')}</div>
               <div className="flex gap-2">
-                <Button variant="danger" onClick={() => { dispatch({ type: 'RESET_ALL' }); setShowResetConfirm(false) }}>Yes, Reset</Button>
-                <Button variant="ghost" onClick={() => setShowResetConfirm(false)}>Cancel</Button>
+                <Button variant="danger" onClick={() => { dispatch({ type: 'RESET_ALL' }); setShowResetConfirm(false) }}>{tr('pf.reset.yes')}</Button>
+                <Button variant="ghost" onClick={() => setShowResetConfirm(false)}>{tr('pf.btn.cancel')}</Button>
               </div>
             </div>
           </div>
@@ -328,16 +328,16 @@ export default function Layout() {
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-[var(--color-surface)] rounded-lg p-6 w-[600px] max-h-[80vh] shadow-xl flex flex-col">
               <div className="font-bold mb-2 flex justify-between">
-                <span>Export Data</span>
+                <span>{tr('pf.export.title')}</span>
                 <button onClick={() => setExportData(null)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-[17px]">&times;</button>
               </div>
-              <div className="text-[13px] text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)] mb-2">{tr('pf.export.body')}</div>
               <div className="flex gap-2 mb-2">
                 <Button onClick={() => {
                   navigator.clipboard.writeText(exportData)
-                  dispatch({ type: 'SET_FETCH_STATUS', status: 'Copied to clipboard!' })
-                }}>Copy</Button>
-                <Button variant="ghost" onClick={() => downloadFile(exportData, `portfolio_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv')}>Download Again</Button>
+                  dispatch({ type: 'SET_FETCH_STATUS', status: tr('pf.export.copied') })
+                }}>{tr('pf.export.copy')}</Button>
+                <Button variant="ghost" onClick={() => downloadFile(exportData, `portfolio_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv')}>{tr('pf.export.again')}</Button>
               </div>
               <textarea readOnly value={exportData} className="flex-1 min-h-[300px] p-2.5 rounded-3xl text-[11px] font-mono resize-y whitespace-pre overflow-auto" />
             </div>
@@ -391,20 +391,20 @@ export default function Layout() {
                 className="inline-flex items-center gap-1.5 hover:text-[var(--color-text-secondary)]"
               >
                 <span>{showSplitNotices ? '▾' : '▸'}</span>
-                <span>Split adjustments · {adjusts} auto-applied{straddles ? ` · ⚠ ${straddles} to verify` : ''}</span>
+                <span>{tr('pf.split.summary', { n: adjusts })}{straddles ? tr('pf.split.toVerify', { n: straddles }) : ''}</span>
               </button>
               {showSplitNotices && (
                 <div className="mt-2 px-3 py-2 bg-[var(--color-surface-raised)] rounded-3xl leading-6">
                   {uniq.map((s, i) => (
                     <span key={i} className="mr-3">
                       {s.straddle
-                        ? `⚠ ${s.ticker}: split straddles a trade — verify manually`
-                        : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
+                        ? tr('pf.split.straddle', { ticker: s.ticker })
+                        : tr('pf.split.adjusted', { ticker: s.ticker, ratio: s.ratioLabel })}
                     </span>
                   ))}
                   <div className="mt-2">
-                    <button onClick={handleSuggestSplits} className="text-[var(--color-accent)] hover:underline mr-3">⤓ split-table suggestions</button>
-                    <button onClick={handleFreezeSnapshot} className="text-[var(--color-accent)] hover:underline">📌 freeze snapshot</button>
+                    <button onClick={handleSuggestSplits} className="text-[var(--color-accent)] hover:underline mr-3">{tr('pf.split.suggest')}</button>
+                    <button onClick={handleFreezeSnapshot} className="text-[var(--color-accent)] hover:underline">{tr('pf.split.freeze')}</button>
                   </div>
                 </div>
               )}

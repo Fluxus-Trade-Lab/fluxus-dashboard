@@ -30,6 +30,6 @@ export default function LegStateBadge({ state }) {
   // was the same reading twice, in the widest column of a dense table. The
   // name stays reachable on hover — dropped from sight, not from the record.
   return (
-    <Squares n={n} of={OF} title={`${label} — ${n} of ${OF} trims taken`} />
+    <Squares n={n} of={OF} title={tr('pf.leg.title', { label, n, of: OF })} />
   )
 }

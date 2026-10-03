@@ -3,21 +3,23 @@ import { usePortfolio } from '../context/PortfolioContext'
 import { fetchQuotes, fetchBatchHistory, fetchHistory } from '../services/priceService'
 import { todayStr } from '../lib/portfolioFormat'
 import { prevWeekday } from '../../../lib/tradingDate'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 export function usePrices() {
   const { state, dispatch } = usePortfolio()
+  const { t: tr } = useLanguage()
 
   /** Fetch current quotes for all open tickers */
   const refreshOpenPositions = useCallback(async () => {
     if (!state.gasUrl) {
-      dispatch({ type: 'SET_LOADING', loading: false, status: 'Set your GAS proxy URL in Settings first.' })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.needUrl') })
       return
     }
 
     const openTickers = [...new Set(state.trades.filter(t => !t.isClosed).map(t => t.ticker))]
     if (!openTickers.length) return
 
-    dispatch({ type: 'SET_LOADING', loading: true, status: `Fetching ${openTickers.length} quotes...` })
+    dispatch({ type: 'SET_LOADING', loading: true, status: tr('pf.status.fetchingQuotes', { n: openTickers.length }) })
 
     try {
       const quotes = await fetchQuotes(openTickers, state.gasUrl)
@@ -36,16 +38,16 @@ export function usePrices() {
       })
 
       dispatch({ type: 'SET_DAILY_PRICES', prices: newPrices })
-      dispatch({ type: 'SET_LOADING', loading: false, status: `Updated ${Object.keys(quotes).length} tickers.` })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.updated', { n: Object.keys(quotes).length }) })
     } catch (e) {
-      dispatch({ type: 'SET_LOADING', loading: false, status: `Refresh failed: ${e.message}` })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.refreshFailed', { error: e.message }) })
     }
-  }, [state.gasUrl, state.trades, dispatch])
+  }, [state.gasUrl, state.trades, dispatch, tr])
 
   /** Fetch full candle history for all tickers + SPY benchmark. Powers the equity curve. */
   const fetchFullHistory = useCallback(async () => {
     if (!state.gasUrl) {
-      dispatch({ type: 'SET_LOADING', loading: false, status: 'Set your GAS proxy URL in Settings first.' })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.needUrl') })
       return
     }
 
@@ -57,7 +59,7 @@ export function usePrices() {
     )
     const today = todayStr()
 
-    dispatch({ type: 'SET_LOADING', loading: true, status: `Loading history for ${allTickers.length} tickers...` })
+    dispatch({ type: 'SET_LOADING', loading: true, status: tr('pf.status.loadingHistory', { n: allTickers.length }) })
 
     try {
       // Batch fetch all tickers + SPY in one GAS call
@@ -83,11 +85,11 @@ export function usePrices() {
       }
 
       const priceCount = Object.keys(newPrices).length
-      dispatch({ type: 'SET_LOADING', loading: false, status: `Loaded ${priceCount} price points for ${tickersWithBenchmark.length} tickers.` })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.historyLoaded', { points: priceCount, n: tickersWithBenchmark.length }) })
     } catch (e) {
-      dispatch({ type: 'SET_LOADING', loading: false, status: `History fetch failed: ${e.message}` })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.historyFailed', { error: e.message }) })
     }
-  }, [state.gasUrl, state.trades, dispatch])
+  }, [state.gasUrl, state.trades, dispatch, tr])
 
   /** Ensure prices exist for weight-based position sizing */
   const getPriceForSizing = useCallback(async (tickers, date) => {
@@ -105,7 +107,7 @@ export function usePrices() {
 
     if (!state.gasUrl) return
 
-    dispatch({ type: 'SET_LOADING', loading: true, status: `Fetching prices for sizing...` })
+    dispatch({ type: 'SET_LOADING', loading: true, status: tr('pf.status.sizingFetch') })
 
     try {
       // Fetch a 7-day window around the target date
@@ -123,9 +125,9 @@ export function usePrices() {
       dispatch({ type: 'SET_DAILY_PRICES', prices: newPrices })
       dispatch({ type: 'SET_LOADING', loading: false, status: '' })
     } catch (e) {
-      dispatch({ type: 'SET_LOADING', loading: false, status: `Sizing fetch failed: ${e.message}` })
+      dispatch({ type: 'SET_LOADING', loading: false, status: tr('pf.status.sizingFailed', { error: e.message }) })
     }
-  }, [state.gasUrl, state.dailyPrices, dispatch])
+  }, [state.gasUrl, state.dailyPrices, dispatch, tr])
 
   return { refreshOpenPositions, fetchFullHistory, getPriceForSizing }
 }

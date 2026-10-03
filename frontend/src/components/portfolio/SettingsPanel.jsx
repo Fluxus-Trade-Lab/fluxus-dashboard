@@ -3,9 +3,12 @@ import { usePortfolio } from './context/PortfolioContext'
 import { testConnection, pullFromSheets } from './services/sheetsSync'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
+import { useLanguage } from '../../i18n/LanguageContext'
+import { rich } from '../screener/richText'
 
 export default function SettingsPanel({ onClose }) {
   const { state, dispatch } = usePortfolio()
+  const { t: tr } = useLanguage()
   const [capitalInput, setCapitalInput] = useState(String(state.startingCapital))
   const [testResult, setTestResult] = useState(null)
   const [testing, setTesting] = useState(false)
@@ -39,27 +42,27 @@ export default function SettingsPanel({ onClose }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-accent)]/20 p-5 mt-4">
       <div className="font-semibold mb-3 text-[13px] flex justify-between">
-        <span>Settings</span>
+        <span>{tr('pf.btn.settings')}</span>
         <button onClick={onClose} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-[17px] leading-none">&times;</button>
       </div>
 
       <div className="flex gap-3 items-end flex-wrap">
         <InputField
-          label="Google Sheets Sync URL"
+          label={tr('pf.set.url')}
           value={state.gasUrl}
           onChange={e => dispatch({ type: 'SET_GAS_URL', url: e.target.value })}
           placeholder="https://script.google.com/macros/s/..."
           className="w-[360px]"
         />
         <InputField
-          label="Sync Token"
+          label={tr('pf.set.token')}
           value={state.syncToken}
           onChange={e => dispatch({ type: 'SET_SYNC_TOKEN', token: e.target.value })}
-          placeholder="your-secret-token"
+          placeholder={tr('pf.set.tokenPh')}
           className="w-[180px]"
         />
         <InputField
-          label="Starting Capital"
+          label={tr('pf.set.capital')}
           type="number"
           value={capitalInput}
           onChange={e => setCapitalInput(e.target.value)}
@@ -69,17 +72,17 @@ export default function SettingsPanel({ onClose }) {
           const v = parseFloat(capitalInput)
           if (v > 0) dispatch({ type: 'SET_CAPITAL', capital: v })
         }}>
-          Update
+          {tr('pf.set.update')}
         </Button>
       </div>
 
       {state.gasUrl && state.syncToken && (
         <div className="flex gap-2 mt-3">
           <Button variant="ghost" onClick={handleTest} disabled={testing}>
-            {testing ? 'Testing...' : 'Test Connection'}
+            {testing ? tr('pf.set.testing') : tr('pf.set.test')}
           </Button>
           <Button variant="ghost" onClick={handleForcePull}>
-            Force Pull
+            {tr('pf.set.forcePull')}
           </Button>
         </div>
       )}
@@ -87,18 +90,17 @@ export default function SettingsPanel({ onClose }) {
       {testResult && (
         <div className={`mt-2 text-[13px] ${testResult.ok ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-loss)]'}`}>
           {testResult.ok
-            ? `Connected — ${testResult.stockTradeCount} stock trades, ${testResult.optionsTradeCount} options trades`
-            : `Failed: ${testResult.error}`}
+            ? tr('pf.set.connected', { stock: testResult.stockTradeCount, options: testResult.optionsTradeCount })
+            : tr('pf.set.failed', { error: testResult.error })}
         </div>
       )}
 
       <div className="mt-3 text-[11px] text-[var(--color-text-muted)] space-y-1">
         <p>
-          Set up the Google Sheet "Fluxus Portfolio 2026 web" with tabs: Stock Trades, Options Trades, Meta.
-          Deploy <code className="bg-[var(--color-border)] px-1 rounded">Code.gs</code> as a web app, then paste the URL and token above.
+          {rich(tr('pf.set.help1'), { code: <code className="bg-[var(--color-border)] px-1 rounded">Code.gs</code> })}
         </p>
         <p>
-          Data syncs automatically. Changes push to Sheets within 2 seconds. On page load, data is pulled from Sheets.
+          {tr('pf.set.help2')}
         </p>
       </div>
     </div>

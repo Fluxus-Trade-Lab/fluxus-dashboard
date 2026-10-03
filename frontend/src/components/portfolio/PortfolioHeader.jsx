@@ -18,9 +18,9 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
           {t('pf.title')}
           {state.gasUrl && state.syncToken && (
             <span className="text-[13px]" title={
-              state.syncStatus === 'success' ? `Synced ${state.lastSyncTime ? new Date(state.lastSyncTime).toLocaleTimeString() : ''}` :
-              state.syncStatus === 'syncing' ? 'Syncing...' :
-              state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
+              state.syncStatus === 'success' ? t('pf.sync.synced', { time: state.lastSyncTime ? new Date(state.lastSyncTime).toLocaleTimeString() : '' }) :
+              state.syncStatus === 'syncing' ? t('pf.sync.syncing') :
+              state.syncStatus === 'error' ? t('pf.sync.failed') : t('pf.sync.not')
             }>
               {/* Connected / failed is a two-pole reading, which is the one case
                   the charter licenses the pair for — and a filled grey dot on
@@ -51,10 +51,10 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         <StatCard label={t('pf.stat.return')} value={fmtPct(totalReturnPct)} colorClass={clr(totalReturnPct)} />
         <StatCard label={t('pf.stat.cash')} value={pm ? fmtPct(cashPct) : fmtCur(cashAvailable)} />
         <StatCard
-          label="Names"
+          label={t('pf.stat.names')}
           value={openCount}
           colorClass={openCount >= 14 ? 'text-[var(--color-loss)]' : openCount >= 12 ? 'text-[var(--color-signal-caution)]' : ''}
-          sub={openCount >= 14 ? '⚠ greed zone — stop adding' : openCount >= 12 ? 'heat building' : undefined}
+          sub={openCount >= 14 ? t('pf.stat.greed') : openCount >= 12 ? t('pf.stat.heat') : undefined}
         />
       </div>
 

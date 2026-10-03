@@ -7,11 +7,13 @@ import CapitalAtRiskWidget from '../ui/CapitalAtRiskWidget'
 import TickerLink from '../../ticker/TickerLink'
 import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 export default function ExposureTab({ openTrades, mergedHoldingsData, performanceData,
                                      capitalEfficiency, enriched, heatData, sectorData,
                                      dailyPrices, spyHistory, portfolioValue }) {
   const { state } = usePortfolio()
+  const { t: tr } = useLanguage()
   const pm = state.privacyMode
 
   // Capital deployment over time: cash % of equity, with cumulative return overlaid.
@@ -69,15 +71,15 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
   }, [openTrades])
 
   const DETAIL_HEADERS = [
-    { label: 'Ticker', key: 'ticker' },
-    { label: 'Dir', key: 'direction' },
-    { label: 'Entry', key: 'avgEntry' },
-    { label: 'Last', key: 'lastPrice' },
-    { label: 'Wt%', key: 'weight' },
-    { label: 'P/L%', key: 'totalReturnPct' },
-    { label: 'Qty', key: 'totalQty' },
-    { label: 'Mkt Val', key: 'marketVal' },
-    { label: 'P/L $', key: 'totalPL' },
+    { label: tr('pf.col.ticker'), key: 'ticker' },
+    { label: tr('pf.col.direction'), key: 'direction' },
+    { label: tr('pf.col.entryPrice'), key: 'avgEntry' },
+    { label: tr('pf.col.lastPrice'), key: 'lastPrice' },
+    { label: tr('pf.col.weight'), key: 'weight' },
+    { label: tr('pf.exp.col.plPct'), key: 'totalReturnPct' },
+    { label: tr('pf.col.currentQty'), key: 'totalQty' },
+    { label: tr('pf.col.marketVal'), key: 'marketVal' },
+    { label: tr('pf.exp.col.plUsd'), key: 'totalPL' },
   ]
 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' })
@@ -114,7 +116,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
   // position closed and React tore the tab down — the same conditional-hook
   // bug that took out the Screener page on 2026-08-09.
   if (openTrades.length === 0) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">{tr('pf.exp.noOpen')}</div>
   }
 
   // Privacy-aware currency
@@ -125,15 +127,15 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       {deployData.length > 0 && (
         <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-semibold text-[13px]">Capital Deployment</span>
-            <span className="text-[13px] text-[var(--color-text-muted)]">How hard the capital worked over time</span>
+            <span className="font-semibold text-[13px]">{tr('pf.exp.deploy.title')}</span>
+            <span className="text-[13px] text-[var(--color-text-muted)]">{tr('pf.exp.deploy.sub')}</span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {[
-              ['Return on deployed', ce?.returnOnDeployed != null ? ce.returnOnDeployed.toFixed(1) + '%' : '—', 'P&L per $1 at risk'],
-              ['vs total capital', ce?.totalReturnPct != null ? '+' + ce.totalReturnPct.toFixed(1) + '%' : '—', 'return on full base'],
-              ['Avg leverage', lev ? (lev.avg / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
-              ['Peak leverage', lev ? (lev.peak / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
+              [tr('pf.exp.deploy.rod'), ce?.returnOnDeployed != null ? ce.returnOnDeployed.toFixed(1) + '%' : '—', tr('pf.exp.deploy.rodSub')],
+              [tr('pf.exp.deploy.vsTotal'), ce?.totalReturnPct != null ? '+' + ce.totalReturnPct.toFixed(1) + '%' : '—', tr('pf.exp.deploy.vsTotalSub')],
+              [tr('pf.exp.deploy.avgLev'), lev ? (lev.avg / 100).toFixed(2) + '×' : '—', tr('pf.exp.deploy.levSub')],
+              [tr('pf.exp.deploy.peakLev'), lev ? (lev.peak / 100).toFixed(2) + '×' : '—', tr('pf.exp.deploy.levSub')],
             ].map(([l, v, sub]) => (
               <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
                 <div className="text-[13px] text-[var(--color-text-muted)]">{l}</div>
@@ -153,20 +155,20 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               />
               <ReferenceLine y={0} stroke="var(--color-text-muted)" />
               <ReferenceLine y={100} stroke="var(--color-border)" strokeDasharray="4 4" />
-              <Line type="monotone" dataKey="cashPct" name="Cash %" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} />
-              <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} />
+              <Line type="monotone" dataKey="cashPct" name={tr('pf.exp.deploy.cashPct')} stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} />
+              <Line type="monotone" dataKey="returnPct" name={tr('pf.exp.deploy.cumRet')} stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} />
             </LineChart>
           </ResponsiveContainer>
           <div className="flex gap-4 mt-2 text-[13px] text-[var(--color-text-muted)]">
-            <span><span style={{ color: 'var(--color-text-muted)' }}>■</span> Cash % of equity</span>
-            <span><span style={{ color: 'var(--color-text-bold)' }}>■</span> Cumulative return %</span>
-            <span className="ml-auto">100% = fully in cash · below 0 = on margin</span>
+            <span><span style={{ color: 'var(--color-text-muted)' }}>■</span> {tr('pf.exp.deploy.cashOfEquity')}</span>
+            <span><span style={{ color: 'var(--color-text-bold)' }}>■</span> {tr('pf.exp.deploy.cumRet')}</span>
+            <span className="ml-auto">{tr('pf.exp.deploy.legendNote')}</span>
           </div>
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[13px]">Holdings</div>
+          <div className="font-semibold mb-3 text-[13px]">{tr('pf.exp.holdings')}</div>
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
               <Pie
@@ -195,7 +197,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       </div>
 
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[13px]">Detail</div>
+        <div className="font-semibold mb-3 text-[13px]">{tr('pf.exp.detail')}</div>
         <table className="w-full border-collapse text-[13px]">
           <thead>
             <tr>
@@ -222,12 +224,12 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                       <TickerLink symbol={g.ticker} />
                       {g.isGroup && (
                         <span className="ml-1 text-[11px] text-[var(--color-text-muted)]">
-                          campaign · {g.trades.length} layers
+                          {tr('pf.exp.campaignLayers', { n: g.trades.length })}
                         </span>
                       )}
                     </td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
-                      <span className={'text-[var(--color-text-secondary)]'}>{g.direction.toUpperCase()}</span>
+                      <span className={'text-[var(--color-text-secondary)]'}>{g.direction === 'long' ? tr('pf.dir.long') : g.direction === 'short' ? tr('pf.dir.short') : g.direction.toUpperCase()}</span>
                     </td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(g.avgEntry)}</td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(g.lastPrice)}</td>
@@ -244,7 +246,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                         <TickerLink symbol={t.ticker} className="text-[var(--color-text-muted)]" />
                       </td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)]">
-                        <span className={'text-[var(--color-text-secondary)]'}>{t.direction.toUpperCase()}</span>
+                        <span className={'text-[var(--color-text-secondary)]'}>{t.direction === 'long' ? tr('pf.dir.long') : t.direction === 'short' ? tr('pf.dir.short') : t.direction.toUpperCase()}</span>
                       </td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(t.entryPrice)}</td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(t.lastPrice)}</td>

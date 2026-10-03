@@ -1,4 +1,5 @@
 import PageHeader from './PageHeader'
+import { useLanguage } from '../i18n/LanguageContext'
 
 /**
  * A page that exists in the rail before it exists as a page.
@@ -10,10 +11,11 @@ import PageHeader from './PageHeader'
  * than a spinner, a 404, or a page quietly missing from the menu.
  */
 export default function Placeholder({ group, title, blurb, willHold = [], source }) {
+  const { t } = useLanguage()
   return (
     <div>
       <PageHeader group={group} title={title} blurb={blurb}
-                  meta={['not built yet', 'the slot is reserved, not missing']} />
+                  meta={[t('mem.ph.notBuilt'), t('mem.ph.reservedNotMissing')]} />
 
       {/* The gold hatch that used to fill this went out with the v3 charter,
           along with every other colour nobody had declared. A dashed edge on
@@ -22,7 +24,7 @@ export default function Placeholder({ group, title, blurb, willHold = [], source
                       max-w-[70ch]">
         <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-3">
-          Reserved
+          {t('mem.ph.reserved')}
         </div>
         {willHold.length > 0 && (
           <ul className="m-0 pl-4 space-y-1.5 text-[13px] leading-relaxed
@@ -32,7 +34,7 @@ export default function Placeholder({ group, title, blurb, willHold = [], source
         )}
         {source && (
           <p className="text-[11px] text-[var(--color-text-muted)] mt-4 mb-0">
-            Data it will read: <span className="font-mono">{source}</span>
+            {t('mem.ph.source')} <span className="font-mono">{source}</span>
           </p>
         )}
       </div>

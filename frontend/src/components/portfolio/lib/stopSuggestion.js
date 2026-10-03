@@ -9,7 +9,10 @@
  * @param {{state: string, stopPrice: number, entryPrice: number, direction: string}} trade
  * @param {{ema10?: number, ema20?: number, wk_ema10?: number, wk_ema20?: number}} ema
  * @param {{atr: number}} stats
- * @returns {{suggestedStop: number|null, basis: string, rationale: string}|null}
+ * @returns {{suggestedStop: number|null, basis: string, rationale: string, why: {key: string, vars?: object}}|null}
+ *
+ * `rationale` is the English sentence; `why` is the same sentence as an i18n
+ * key (parts/portfolio.js) so the page can print it in the reader's language.
  */
 export function suggest(trade, ema, stats) {
   if (trade.state === 'CLOSED') return null
@@ -19,6 +22,7 @@ export function suggest(trade, ema, stats) {
       suggestedStop: trade.stopPrice,
       basis: 'csv-initial',
       rationale: 'Initial risk stop from trade entry',
+      why: { key: 'pf.stop.why.initial' },
     }
   }
 
@@ -28,6 +32,7 @@ export function suggest(trade, ema, stats) {
       suggestedStop: null,
       basis: 'no-data',
       rationale: 'No weekly-20EMA data — set manually',
+      why: { key: 'pf.stop.why.noData' },
     }
   }
 
@@ -41,12 +46,14 @@ export function suggest(trade, ema, stats) {
         suggestedStop: round2(wk20Stop),
         basis: 'wk20ema',
         rationale: `wk-20EMA ($${round2(wk20)}) − 0.25×ATR buffer`,
+        why: { key: 'pf.stop.why.wk20Long', vars: { wk20: round2(wk20) } },
       }
     }
     return {
       suggestedStop: trade.entryPrice,
       basis: 'breakeven',
       rationale: 'wk-20EMA below entry — hold breakeven floor',
+      why: { key: 'pf.stop.why.beLong' },
     }
   }
 
@@ -57,12 +64,14 @@ export function suggest(trade, ema, stats) {
       suggestedStop: round2(wk20Stop),
       basis: 'wk20ema',
       rationale: `wk-20EMA ($${round2(wk20)}) + 0.25×ATR buffer`,
+      why: { key: 'pf.stop.why.wk20Short', vars: { wk20: round2(wk20) } },
     }
   }
   return {
     suggestedStop: trade.entryPrice,
     basis: 'breakeven',
     rationale: 'wk-20EMA above entry — hold breakeven floor',
+    why: { key: 'pf.stop.why.beShort' },
   }
 }
 

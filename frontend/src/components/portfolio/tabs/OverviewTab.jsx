@@ -194,7 +194,7 @@ export default function OverviewTab({
       }
 
       return {
-        month: `Last ${days}D`, totalTrades: tds.length,
+        month: tr('pf.ov.lastNd', { n: days }), totalTrades: tds.length,
         monthlyRetPct: periodRetPct,
         returnPct: tds.length ? tds.reduce((s, x) => s + x.retPct, 0) / tds.length : 0,
         winPct: tds.length ? (wins.length / tds.length) * 100 : 0,
@@ -206,7 +206,7 @@ export default function OverviewTab({
         avgHoldLoss: losses.length ? losses.reduce((s, x) => s + x.holdingDays, 0) / losses.length : 0,
       }
     })
-  }, [enrichedTrades, performanceData])
+  }, [enrichedTrades, performanceData, tr])
 
   return (
     <div className="overflow-x-hidden">
@@ -365,7 +365,7 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                     <div className="flex gap-1">
                       {!t.isClosed && (
-                        <button onClick={() => onTrim(t)} className="bg-transparent border border-[var(--color-input-border)] rounded px-2 py-0.5 text-[11px] cursor-pointer hover:bg-[var(--color-hover-bg)]">Trim</button>
+                        <button onClick={() => onTrim(t)} className="bg-transparent border border-[var(--color-input-border)] rounded px-2 py-0.5 text-[11px] cursor-pointer hover:bg-[var(--color-hover-bg)]">{tr('pf.ov.trim')}</button>
                       )}
                       <button onClick={() => dispatch({ type: 'DELETE_TRADE', id: t.id })} className="bg-transparent border border-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-[var(--color-loss)] hover:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]">&times;</button>
                     </div>
@@ -404,7 +404,7 @@ export default function OverviewTab({
                 className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[var(--color-text-secondary)] text-[var(--color-text-secondary)]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
                 aria-pressed={showMA20}
               >
-                20d MA
+                {tr('pf.ov.ma20')}
               </button>
               {hasSPY && (
                 <Button variant="ghost" onClick={fetchFullHistory} disabled={state.loading}>
@@ -452,9 +452,9 @@ export default function OverviewTab({
                                   color: 'var(--color-text-muted)' }}
                     itemStyle={{ fontSize: 11, padding: 0, lineHeight: 1.35 }} />
                   <Legend />
-                  <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name="Portfolio" />
+                  <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name={tr('pf.chart.portfolio')} />
                   {showMA20 && (
-                    <Line type="monotone" dataKey="ma20" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
+                    <Line type="monotone" dataKey="ma20" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name={tr('pf.ov.ma20')} connectNulls />
                   )}
                   {hasSPY && (
                     <Line type="monotone" dataKey="SPY" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
@@ -464,7 +464,7 @@ export default function OverviewTab({
             </div>
             </>
           ) : (
-            <div className="text-center py-10 text-[var(--color-text-muted)] text-[13px] rounded-3xl">Need trades to build equity curve.</div>
+            <div className="text-center py-10 text-[var(--color-text-muted)] text-[13px] rounded-3xl">{tr('pf.ov.needTrades')}</div>
           )}
         </div>
 
@@ -517,9 +517,9 @@ export default function OverviewTab({
                     <tr className="font-bold border-t-2 border-[var(--color-border)]">
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)]"
                           title={ytdStats.basis === 'ytd'
-                            ? `${ytdStats.year} year to date — the equity curve chained from the last close of ${Number(ytdStats.year) - 1}; trades closed in ${ytdStats.year} only`
-                            : `The curve does not reach back to ${Number(ytdStats.year) - 1}, so this is inception to date`}>
-                        {ytdStats.basis === 'ytd' ? `${ytdStats.year} YTD` : 'Since start'}
+                            ? tr('pf.ov.ytdTitle', { year: ytdStats.year, prev: Number(ytdStats.year) - 1 })
+                            : tr('pf.ov.sinceStartTitle', { prev: Number(ytdStats.year) - 1 })}>
+                        {ytdStats.basis === 'ytd' ? tr('pf.ov.ytd', { year: ytdStats.year }) : tr('pf.ov.sinceStart')}
                       </td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(ytdStats.portfolioRetPct)}`}>{fmtPct(ytdStats.portfolioRetPct)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{ytdStats.totalTrades}</td>

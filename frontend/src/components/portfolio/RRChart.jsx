@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, Cell, ResponsiveContainer } from 'recharts'
 import { rMultiple } from './lib/diagnosticsR'
 import { toJstDate } from '../../lib/tradingDate'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * RR chart — every closed trade by its R-multiple (realizedPL ÷ initial risk).
@@ -9,6 +10,7 @@ import { toJstDate } from '../../lib/tradingDate'
  * a floor of small losses with a few towering right-tail winners.
  */
 export default function RRChart({ enrichedTrades }) {
+  const { t: tr } = useLanguage()
   const { data, avgWin, avgLoss, sumR, wr } = useMemo(() => {
     const rows = (enrichedTrades || [])
       .filter(t => t.isClosed)
@@ -35,12 +37,12 @@ export default function RRChart({ enrichedTrades }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-semibold text-[13px]">Every trade by R-multiple</span>
+        <span className="font-semibold text-[13px]">{tr('pf.rr.title')}</span>
         <span className="text-[13px] text-[var(--color-text-muted)]">
-          {data.length} trades · {wr.toFixed(0)}% win · +{sumR.toFixed(0)}R · avg win +{avgWin.toFixed(1)}R / loss {avgLoss.toFixed(1)}R
+          {tr('pf.rr.read', { n: data.length, wr: wr.toFixed(0), sum: sumR.toFixed(0), win: avgWin.toFixed(1), loss: avgLoss.toFixed(1) })}
         </span>
       </div>
-      <div className="text-[11px] text-[var(--color-text-muted)] mb-2">Blue = win, red = loss · profit ÷ initial risk (1R)</div>
+      <div className="text-[11px] text-[var(--color-text-muted)] mb-2">{tr('pf.rr.legend')}</div>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} margin={{ top: 5, right: 8, left: -10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" vertical={false} />
@@ -49,7 +51,7 @@ export default function RRChart({ enrichedTrades }) {
           <Tooltip
             cursor={{ fill: 'var(--color-border-light)' }}
             contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
-            formatter={(v) => [`${v}R`, 'R-multiple']}
+            formatter={(v) => [`${v}R`, tr('pf.rr.tipName')]}
             labelFormatter={(i) => data[i]?.ticker + ' · ' + data[i]?.exit}
           />
           <ReferenceLine y={0} stroke="var(--color-text-muted)" />

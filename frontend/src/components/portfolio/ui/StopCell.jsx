@@ -1,5 +1,6 @@
 import EditablePrice from './EditablePrice'
 import { stopNotMoved, stopBufferPct } from '../lib/stopDiscipline'
+import { useLanguage } from '../../../i18n/LanguageContext'
 
 /**
  * One column, four things, and only one of them shouting.
@@ -32,6 +33,8 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
   const nudge = stopNotMoved(trade)
   const buffer = stopBufferPct(trade)
   const crossed = buffer != null && buffer < 0
+  const { t: tr } = useLanguage()
+  const why = suggestion?.why ? tr(suggestion.why.key, suggestion.why.vars) : suggestion?.rationale
 
   return (
     <div className="flex flex-col gap-0.5">
@@ -40,11 +43,11 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
           is exactly here", which is a different sentence. */}
       <div className="flex items-baseline gap-1 flex-wrap">
         <EditablePrice value={stopPrice} onChange={onChange}
-                       title={suggestion?.basis === 'no-data' ? suggestion.rationale : undefined} />
+                       title={suggestion?.basis === 'no-data' ? why : undefined} />
         {buffer != null && (
           <span className="text-[11px] tabular-nums text-[var(--color-text-muted)] whitespace-nowrap"
-                title="How far price can move against you before the current stop is hit.">
-            · {crossed ? `crossed ${Math.abs(buffer).toFixed(1)}%` : `${buffer.toFixed(1)}%`}
+                title={tr('pf.stop.bufferTitle')}>
+            · {crossed ? tr('pf.stop.crossed', { pct: Math.abs(buffer).toFixed(1) }) : `${buffer.toFixed(1)}%`}
           </span>
         )}
       </div>
@@ -52,10 +55,8 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
       {nudge && (
         <div className="text-[11px] font-medium tabular-nums"
              style={{ color: 'var(--color-refused)' }}
-             title={`Up ${trade.rr.toFixed(1)}R and the stop is still at entry risk. `
-                    + `Moving it does NOT change this trade's R — the denominator is `
-                    + `locked to the initial stop ($${initialStop?.toFixed(2)}).`}>
-          {trade.rr.toFixed(1)}R · stop not moved
+             title={tr('pf.stop.nudgeTitle', { r: trade.rr.toFixed(1), init: initialStop?.toFixed(2) })}>
+          {tr('pf.stop.notMoved', { r: trade.rr.toFixed(1) })}
         </div>
       )}
 
@@ -64,21 +65,20 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
         <div className="text-[11px] tabular-nums leading-[1.5] text-[var(--color-text-muted)]">
           {showSuggestion && (
             <>
-              <span title={suggestion.rationale}>sug ${sug.toFixed(2)} </span>
+              <span title={why}>{tr('pf.stop.sug', { price: sug.toFixed(2) })} </span>
               <button onClick={() => onChange(sug)}
                       className="text-[var(--color-accent)] hover:underline cursor-pointer">
-                Accept
+                {tr('pf.stop.accept')}
               </button>
             </>
           )}
           {trailed && (
             <span className="opacity-0 transition-opacity group-hover:opacity-100
                              group-focus-within:opacity-100 whitespace-nowrap"
-                  title={`Locked at entry — 1R anchored here. Current stop is trailed ${
-                    stopPrice > initialStop ? 'up' : 'down'
-                  } by $${Math.abs(stopPrice - initialStop).toFixed(2)}.`}>
+                  title={tr(stopPrice > initialStop ? 'pf.stop.initTitleUp' : 'pf.stop.initTitleDown',
+                            { amt: Math.abs(stopPrice - initialStop).toFixed(2) })}>
               {showSuggestion && <span className="opacity-40"> · </span>}
-              init ${initialStop.toFixed(2)}
+              {tr('pf.stop.init', { price: initialStop.toFixed(2) })}
             </span>
           )}
         </div>

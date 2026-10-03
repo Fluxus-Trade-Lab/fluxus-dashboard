@@ -354,11 +354,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* Reserved. The rail entry, the title and the frame are real from day
               one; a slot that appears only once it is full was never reserved.
               Each says what it will hold and which file it will read. */}
-          {current === 'rs-live' && <Placeholder group="market" title="RS Live Tracker"
-            blurb="Every theme against SPY, one bar each, sorted, refreshed through the session. One object on the page and nothing else."
-            willHold={['One horizontal bar per theme, ranked by relative strength',
-                       'Intraday refresh, with the time of the last one printed',
-                       'Member count beside each name — a theme of one stock is one stock']}
+          {current === 'rs-live' && <Placeholder group="market" title={t('nav.rs-live')}
+            blurb={t('mem.rsLive.blurb')}
+            willHold={[t('mem.rsLive.hold.bars'),
+                       t('mem.rsLive.hold.refresh'),
+                       t('mem.rsLive.hold.count')]}
             source="data/output/groups.json" />}
 
           {/* RS Rotation lives inside Themes now (the trajectory layer);
@@ -405,11 +405,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                        t('lib.hold.news.failure'),
                        t('lib.hold.news.flow')]} />}
 
-          {current === 'masterclass' && <Placeholder group="course" title="Swing Trading Masterclass"
-            blurb="Sixteen lessons, beginner first, English with Chinese subtitles. Already written; not yet wired into this app."
-            willHold={['16 lessons plus a four-part epilogue',
-                       'Two gears throughout — foundational and advanced',
-                       'Drafted in full 2026-07-12; lives in ~/Documents/SwingMasterclass']} />}
+          {current === 'masterclass' && <Placeholder group="course" title={t('nav.masterclass')}
+            blurb={t('mem.mc.blurb')}
+            willHold={[t('mem.mc.hold.lessons'),
+                       t('mem.mc.hold.gears'),
+                       t('mem.mc.hold.drafted')]} />}
         </main>
       )}
 

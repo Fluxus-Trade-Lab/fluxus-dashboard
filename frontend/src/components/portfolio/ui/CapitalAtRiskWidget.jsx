@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import { aggregate } from '../lib/openRisk'
 import { fmtCur, MASK } from '../lib/portfolioFormat'
+import { useLanguage } from '../../../i18n/LanguageContext'
+import { rich } from '../../screener/richText'
 
 const FIXED_R = 2500
 
@@ -38,15 +40,18 @@ const LIMITS = { perTradeTarget: 0.25, perTradeMax: 0.47, bookMax: 3.0 }
  */
 export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm = false }) {
   const data = useMemo(() => aggregate(openTrades, FIXED_R), [openTrades])
+  const { t: tr } = useLanguage()
+  // One key per count form; the count picks the key, the sentence stays whole.
+  const pl = (base, n) => tr(`${base}.${n === 1 ? 'one' : 'other'}`, { n })
 
   if (!data.perTrade.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
-          Open risk
+          {tr('pf.risk.title')}
         </div>
         <div className="text-center py-8 text-[var(--color-text-muted)] text-[13px]">
-          No open positions — nothing is at risk.
+          {tr('pf.risk.empty')}
         </div>
       </div>
     )
@@ -68,10 +73,10 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
         <span className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
-          Open risk · what can be lost
+          {tr('pf.risk.head')}
         </span>
         <span className="text-[11px] text-[var(--color-text-secondary)]">
-          Bars are distance to stop, not position size
+          {tr('pf.risk.barsAre')}
         </span>
       </div>
 
@@ -85,20 +90,21 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
           {pm ? MASK : riskPct != null ? `${riskPct.toFixed(2)}%` : fmtCur(data.totalRiskDollars)}
           <span className="text-[11px] font-normal tracking-[.16em] uppercase
                            text-[var(--color-text-muted)] ml-2"
-                style={{ fontFamily: 'var(--font-mono)' }}>at risk</span>
+                style={{ fontFamily: 'var(--font-mono)' }}>{tr('pf.risk.atRisk')}</span>
         </div>
         <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
-          {data.perTrade.length} position{data.perTrade.length === 1 ? '' : 's'} in {names} name
-          {names === 1 ? '' : 's'}, {pm ? MASK : fmtCur(data.totalRiskDollars)} between here and
-          every stop.{' '}
-          <b className="text-[var(--color-text)]">Size is the decision; the rest is the market's.</b>
+          {rich(tr('pf.risk.summary', {
+            positions: pl('pf.risk.nPositions', data.perTrade.length),
+            names: pl('pf.risk.nNames', names),
+            amount: pm ? MASK : fmtCur(data.totalRiskDollars),
+          }), {}, 'text-[var(--color-text)]')}
         </p>
       </div>
 
       {data.totalLockedDollars > 0 && (
         <div className="flex items-baseline justify-between mt-2 text-[11px]">
           <span className="text-[var(--color-text-muted)]">
-            Locked-in gain — {data.lockedCount} stop{data.lockedCount === 1 ? '' : 's'} above entry
+            {pl('pf.risk.locked', data.lockedCount)}
           </span>
           <span className="text-[var(--color-profit)] font-semibold tabular-nums">
             {pm ? MASK : fmtCur(data.totalLockedDollars)}
@@ -136,48 +142,47 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
             </div>
           )
         })}
-        {hiddenCount > 0 && <Hidden rows={data.perTrade.slice(10)} pm={pm} />}
+        {hiddenCount > 0 && <Hidden rows={data.perTrade.slice(10)} pm={pm} tr={tr} />}
       </div>
 
       <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-3 pt-3
                     border-t border-[var(--color-border-light)] mb-0">
         <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
-          Method
+          {tr('pf.risk.method')}
         </span>
-        Bars are scaled to the largest single risk on the book, so the widest one is the trade that
-        would hurt most{!pm && worstPct != null && (
-          <> — {worst.ticker} at <b>{worstPct.toFixed(2)}%</b> of capital</>
-        )}. A position with a stop above entry has no risk left in it and is drawn as locked-in
-        gain instead, which is why some bars point at a profit.
-        {markDate && (
-          <> Marks are struck at the <b>{markDate}</b> close, so anything that moved after it is
-          not in these numbers.</>
-        )}
+        {rich(tr('pf.risk.methodBody'), {
+          worst: !pm && worstPct != null
+            ? rich(tr('pf.risk.methodWorst', { ticker: worst.ticker, pct: worstPct.toFixed(2) }))
+            : null,
+        })}
+        {markDate && rich(tr('pf.risk.methodMarks', { date: markDate }))}
       </p>
 
       {riskPct != null && (
         <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
           <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
-            Against the rule
+            {tr('pf.risk.rule')}
           </span>
-          Book risk <b className={riskPct > LIMITS.bookMax ? 'text-[var(--color-signal-caution)]'
-                                                            : 'text-[var(--color-text)]'}>
-            {riskPct.toFixed(2)}%
-          </b> against a {LIMITS.bookMax.toFixed(0)}% ceiling —{' '}
-          {riskPct > LIMITS.bookMax
-            ? <b className="text-[var(--color-signal-caution)]">over by {(riskPct - LIMITS.bookMax).toFixed(2)} points.</b>
-            : <>{(LIMITS.bookMax - riskPct).toFixed(2)} points of room.</>}
-          {worstPct != null && (
-            <> Largest single risk <b className={worstPct > LIMITS.perTradeMax
+          {rich(tr('pf.risk.rule.book', { ceiling: LIMITS.bookMax.toFixed(0) }), {
+            book: <b className={riskPct > LIMITS.bookMax ? 'text-[var(--color-signal-caution)]'
+                                                         : 'text-[var(--color-text)]'}>
+              {riskPct.toFixed(2)}%
+            </b>,
+            verdict: riskPct > LIMITS.bookMax
+              ? <b className="text-[var(--color-signal-caution)]">{tr('pf.risk.rule.over', { n: (riskPct - LIMITS.bookMax).toFixed(2) })}</b>
+              : tr('pf.risk.rule.room', { n: (LIMITS.bookMax - riskPct).toFixed(2) }),
+          })}
+          {worstPct != null && rich(tr('pf.risk.rule.largest', { target: LIMITS.perTradeTarget }), {
+            worst: <b className={worstPct > LIMITS.perTradeMax
                   ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text)]'}>
                 {worstPct.toFixed(2)}%
-              </b> against a {LIMITS.perTradeTarget}% target
-              {worstPct > LIMITS.perTradeMax
-                ? <> — <b className="text-[var(--color-signal-caution)]">past the {LIMITS.perTradeMax}%
-                    top of the band</b>, which is the sizing leak the H1 audit named.</>
-                : <> and a {LIMITS.perTradeMax}% band top.</>}
-            </>
-          )}
+              </b>,
+            tail: worstPct > LIMITS.perTradeMax
+              ? rich(tr('pf.risk.rule.tailOver'), {
+                  past: <b className="text-[var(--color-signal-caution)]">{tr('pf.risk.rule.past', { max: LIMITS.perTradeMax })}</b>,
+                })
+              : tr('pf.risk.rule.tailOk', { max: LIMITS.perTradeMax }),
+          })}
         </p>
       )}
     </div>
@@ -191,19 +196,19 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
  * summing their risk can legitimately come to nothing. Printing "$0.00 of the
  * total" for that case looks like a broken number rather than a true one.
  */
-function Hidden({ rows, pm }) {
+function Hidden({ rows, pm, tr }) {
   const risky = rows.filter(r => r.atRisk)
   const risk = risky.reduce((s, r) => s + r.riskDollars, 0)
   const n = rows.length
+  const form = n === 1 ? 'one' : 'other'
+  const amt = pm ? MASK : fmtCur(risk)
   return (
     <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
-      {n} more position{n === 1 ? '' : 's'} below the tenth, not drawn —{' '}
       {risky.length === 0
-        ? <>none of {n === 1 ? 'it' : 'them'} has any open risk left.</>
-        : <>
-            {risky.length === n ? (n === 1 ? 'it carries' : 'they carry') : `${risky.length} of them carry`}{' '}
-            {pm ? MASK : fmtCur(risk)} of the total.
-          </>}
+        ? tr(`pf.risk.hidden.none.${form}`, { n })
+        : risky.length === n
+          ? tr(`pf.risk.hidden.all.${form}`, { n, amt })
+          : tr('pf.risk.hidden.some', { n, k: risky.length, amt })}
     </div>
   )
 }
