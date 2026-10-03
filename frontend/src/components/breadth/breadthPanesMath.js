@@ -33,16 +33,39 @@ export const INDICATORS = {
   // Andy 2026-10-03: 「应该above 20-DAY, ABOVE 50-DAY ABOVE-200 DAY都放在market state的图里面」.
   // One pane, three lines; the 20-day is the primary series (oversold cut and
   // σ read it), the 50 and 200 ride along as overlays.
-  kma: { label: '% above 20 / 50 / 200-day', unit: '%', zero: false, range: [0, 100], lines: [50],
+  kma: { label: '% above 20 / 50 / 200-day', primary: '% above 20-day', unit: '%', zero: false, range: [0, 100], lines: [50],
     pools: { all: (r) => num(r.pct_above_20sma), sp500: (r) => num(r.pct_above_20sma_sp500) },
     extra: [
       { key: 'p50', label: '50-day', pools: { all: (r) => num(r.pct_above_50sma), sp500: (r) => num(r.pct_above_50sma_sp500) } },
       { key: 'p200', label: '200-day', pools: { all: (r) => num(r.pct_above_200sma), sp500: (r) => num(r.pct_above_200sma_sp500) } },
     ],
     note: 'share of stocks above each moving average' },
-  mco: { label: 'McClellan oscillator', unit: '', zero: true,
+  // Andy 2026-10-03 选 A: the Advanced fold's separate NDX oscillator chart
+  // came off the page, so the NDX line rides here as an overlay (from 09-23).
+  mco: { label: 'McClellan oscillator', primary: 'All market', unit: '', zero: true,
     pools: { all: (r) => num(r.mcclellan_osc) },
-    note: 'all-market pool; the Nasdaq-100 version is pending (T-0923-03)' },
+    extra: [{ key: 'ndx', label: 'NDX', pools: { all: (r) => num(r.mcclellan_osc_ndx) } }],
+    note: 'all-market pool; the Nasdaq-100 line starts 2026-09-23' },
+  // The three series below lived only as separate charts in Advanced breadth
+  // until 2026-10-03 (Andy 选 A: 「信息一条不少」, the duplicate charts went).
+  msi: { label: 'McClellan summation (NDX)', primary: 'Summation', unit: '', zero: true,
+    pools: { all: (r) => num(r.mcclellan_summation_ndx) },
+    // its 10-day average (mcclellan_summation_ndx_ma10) is shipped all-null
+    // as of 2026-10-02, so it is not drawn — a legend for a missing line misleads
+    note: 'Nasdaq-100 summation index, from 2026-09-23' },
+  // Stockbee's own ratio is the one that votes; the older point-to-point count
+  // rides dashed so the history does not vanish — two lines, never spliced.
+  ratio: { label: 'Up/down ratio · 5 / 10-day (Stockbee)', primary: '5-day', unit: '', zero: false, lines: [1],
+    pools: { all: (r) => num(r.ratio_5d_stockbee) },
+    extra: [
+      { key: 'r10', label: '10-day', pools: { all: (r) => num(r.ratio_10d_stockbee) } },
+      { key: 'old5', label: '5-day, old count', dash: true, pools: { all: (r) => num(r.ratio_5d) } },
+    ],
+    note: 'Stockbee ratios from 2026-09-11; the older count dashed' },
+  q25: { label: 'Quarterly ±25% spread (Stockbee)', primary: 'Stockbee', unit: 'names', zero: true,
+    pools: { all: (r) => (num(r.up_25pct_qtr_stockbee) != null && num(r.down_25pct_qtr_stockbee) != null ? r.up_25pct_qtr_stockbee - r.down_25pct_qtr_stockbee : null) },
+    extra: [{ key: 'old', label: 'old count', dash: true, pools: { all: (r) => (num(r.up_25pct_qtr) != null && num(r.down_25pct_qtr) != null ? r.up_25pct_qtr - r.down_25pct_qtr : null) } }],
+    note: 'stocks up 25%+ in a quarter minus those down 25%+; the older count dashed' },
   p20: { label: '% above the 20-day', unit: '%', zero: false, lines: [50],
     pools: { all: (r) => num(r.pct_above_20sma), sp500: (r) => num(r.pct_above_20sma_sp500) },
     note: 'TradersLab reads its 21 EMA cousin at 25 oversold / 75 overbought' },
@@ -106,7 +129,7 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
   // overlays (kma): absolute ruler only, same pool as the primary when it has one
   const extras = scale === 'z' ? [] : (ind.extra ?? []).map((e) => {
     const rd = (pool !== 'all' && e.pools[pool]) || e.pools.all
-    return { key: e.key, label: e.label, values: all.slice(s).map((r) => rd(r)) }
+    return { key: e.key, label: e.label, dash: e.dash, values: all.slice(s).map((r) => rd(r)) }
   })
   const raw = rawFull.slice(s)
   const finite = value.filter(Number.isFinite)

@@ -75,7 +75,8 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
   const idx = p.index.filter(Number.isFinite)
   const lo1 = Math.min(...idx), hi1 = Math.max(...idx)
   const y1 = (v) => T + (1 - (v - lo1) / (hi1 - lo1 || 1)) * H1
-  const fin = p.value.filter(Number.isFinite)
+  // overlays count toward the scale, so a second line is never drawn off the pane
+  const fin = [p.value, ...(p.extras ?? []).map((e) => e.values)].flat().filter(Number.isFinite)
   let lo2 = fin.length ? Math.min(...fin) : -1, hi2 = fin.length ? Math.max(...fin) : 1
   if (p.indicator.zero) { lo2 = Math.min(lo2, 0); hi2 = Math.max(hi2, 0) }
   if (p.indicator.range && scale === 'abs') { [lo2, hi2] = p.indicator.range }
@@ -84,6 +85,8 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
   const y2 = (v) => top2 + (1 - (v - lo2) / (hi2 - lo2 || 1)) * H2
   const path = (arr, yf) => { let d = '', pen = false; arr.forEach((v, j) => { if (!Number.isFinite(v)) { pen = false; return } d += `${pen ? 'L' : 'M'}${x(j).toFixed(1)} ${yf(v).toFixed(1)}`; pen = true }); return d }
   const fmt = (v, d = 0) => (v == null ? '—' : Number(v).toFixed(scale === 'z' ? 2 : d))
+  // ratios live near 1, so they keep two decimals; counts and percents round
+  const tagNum = (v) => (Math.abs(v) < 10 && v % 1 ? v.toFixed(2) : `${Math.round(v)}`)
   const last = p.value.at(-1), lastIdx = p.index.at(-1)
   const months = []
   let lastM = ''
@@ -161,18 +164,18 @@ export default function BreadthPanes({ rows, loadingFull, bare = false, initialI
             const c = EXTRA_INK[i % EXTRA_INK.length], lv = e.values.at(-1)
             return (
               <g key={e.key}>
-                <path d={path(e.values, y2)} fill="none" stroke={c} strokeWidth="1.4" strokeDasharray={EXTRA_DASH[i % EXTRA_DASH.length]} />
-                {Number.isFinite(lv) && <Tag y={Math.min(Math.max(y2(lv), top2 + 8), H - BOTTOM - 8)} text={`${Math.round(lv)}`} tone={i ? 'muted' : 'accent'} />}
+                <path d={path(e.values, y2)} fill="none" stroke={c} strokeWidth="1.4" strokeDasharray={e.dash == null ? EXTRA_DASH[i % EXTRA_DASH.length] : e.dash ? '6 3' : ''} />
+                {Number.isFinite(lv) && <Tag y={Math.min(Math.max(y2(lv), top2 + 8), H - BOTTOM - 8)} text={tagNum(lv)} tone={i ? 'muted' : 'accent'} />}
               </g>
             )
           })}
           {(p.extras ?? []).length
             ? <text x={L + 4} y={top2 + 11} fontSize="11">
-                <tspan style={{ fill: 'var(--color-text)' }}>% above 20-day</tspan>
+                <tspan style={{ fill: 'var(--color-text)' }}>{p.indicator.primary ?? p.indicator.label}</tspan>
                 {p.extras.map((e, i) => <tspan key={e.key} dx="10" style={{ fill: EXTRA_INK[i % EXTRA_INK.length] }}>{e.label}</tspan>)}
               </text>
             : <text x={L + 4} y={top2 + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{p.indicator.label}{scale === 'z' ? ' · σ' : ''}</text>}
-          {Number.isFinite(last) && <Tag y={Math.min(Math.max(y2(last), top2 + 8), H - BOTTOM - 8)} text={scale === 'z' ? `${last.toFixed(2)}σ` : (p.extras ?? []).length ? `${Math.round(last)}` : `${fmt(last, last % 1 ? 1 : 0)}`} tone={(p.extras ?? []).length ? 'ink' : 'accent'} />}
+          {Number.isFinite(last) && <Tag y={Math.min(Math.max(y2(last), top2 + 8), H - BOTTOM - 8)} text={scale === 'z' ? `${last.toFixed(2)}σ` : (p.extras ?? []).length ? tagNum(last) : `${fmt(last, last % 1 ? 1 : 0)}`} tone={(p.extras ?? []).length ? 'ink' : 'accent'} />}
           {/* months */}
           {months.map(([j, m], i) => (i > 0 || window <= 250) && (
             <text key={m} x={x(j)} y={H - 8} fontSize="10" style={{ fill: 'var(--color-text-muted)' }}>{m.slice(5) === '01' ? m.slice(0, 4) : m.slice(5)}</text>

@@ -149,11 +149,19 @@ describe('BreadthPage — minimal (2026-10-03)', () => {
     expect(today.textContent).toContain(last.ad_line.toLocaleString())
   })
 
-  it('keeps the Stockbee rulers inside Advanced breadth: the four readings in words', () => {
+  it('Advanced breadth drops the panels that repeated the main screen (Andy 选 A, 2026-10-03)', () => {
     renderPage()
     fireEvent.click(screen.getByText('Advanced breadth').closest('button'))
-    for (const l of [/^Up 4% \/ Down 4%/, /^5-day \/ 10-day ratio/, /^Quarterly breadth \(25%\+\)/, 'T2108']) {
-      expect(screen.getAllByText(l).length).toBeGreaterThan(0)
+    for (const gone of [/^% above 20 \/ 50 \/ 200 SMA$/i, /^Up\/down ratio · 5D \/ 10D/i, /^Quarterly ±25% spread · Stockbee/i, /^Quarterly breadth \(25%\+\)/, /^5-day \/ 10-day ratio/]) {
+      expect(screen.queryAllByText(gone)).toHaveLength(0)
+    }
+    expect(screen.getByText('Advanced breadth').closest('button').textContent).toMatch(/[34]/)
+  })
+
+  it('moves the three series only Advanced had into the main chart\'s indicator menu', () => {
+    renderPage()
+    for (const l of ['McClellan summation (NDX)', 'Up/down ratio · 5 / 10-day (Stockbee)', 'Quarterly ±25% spread (Stockbee)']) {
+      expect(screen.getByRole('button', { name: l })).toBeInTheDocument()
     }
   })
 })

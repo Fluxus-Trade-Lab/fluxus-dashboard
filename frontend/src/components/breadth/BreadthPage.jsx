@@ -1,13 +1,9 @@
 import { useMemo } from 'react'
 import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
-import MarketStateSummary from './MarketStateSummary'
 import RotationPanel from './RotationPanel'
 import BenchmarkPanel from './BenchmarkPanel'
 import CorrectionRiskPanel from './CorrectionRiskPanel'
-import RatioChart from './RatioChart'
-import SpreadChart from './SpreadChart'
-import BreadthCharts from './BreadthCharts'
 import BreadthTable from './BreadthTable'
 import { useMarketLight } from '../../hooks/useMarketLight'
 import MarketStateMin from './MarketStateMin'
@@ -32,6 +28,13 @@ import Reference from '../Reference'
  * Off the page (files kept): MorningRead (the six annotated steps), the
  * HowToRead block, the time machine, and the three internal panels — the
  * engine's votes, the conditions catalog, the board & chain.
+ *
+ * Advanced fold, 2026-10-03 (Andy: 「必须要有CORRECTION RISK和style rotation，
+ * 以及archive里面的raw counts。其他的我觉得是重复/多余的」, then 选 A after the
+ * audit): the % above / McClellan charts and the Stockbee rulers repeated the
+ * main screen and came off; the summation, 5/10-day ratio and quarterly ±25%
+ * series moved into the main chart's indicator menu. Benchmarks stays — its
+ * five danger warnings are on no other surface.
  */
 export default function BreadthPage({ data }) {
   const { data: ml } = useMarketLight()
@@ -74,14 +77,8 @@ export default function BreadthPage({ data }) {
                       themes={groups.themes} groupsHistory={gh.data} universe={universeByTicker} />
 
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-2">
-        <Reference label="Advanced breadth" count={6}>
+        <Reference label="Advanced breadth" count={mh && !mh.stale ? 4 : 3}>
           <div className="space-y-4">
-            <BreadthCharts data={breadth} />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <RatioChart rows={rows} />
-              <SpreadChart rows={rows} />
-            </div>
-            <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} lastRow={rows[rows.length - 1]} />
             <CorrectionRiskPanel session={session} />
             <RotationPanel />
             {mh && !mh.stale && <BenchmarkPanel mh={mh} verdict={verdict} t2108={t2108Overlay} signals={data?.signals} />}
