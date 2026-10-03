@@ -1592,6 +1592,14 @@ def main():
                        _read_out('ep_stockbee.json'), _read_out('ep_qullamaggie.json'),
                        key=_os.environ.get('FINNHUB_API_KEY'))
         _emit(ledger, OUTPUT_DIR / 'news_pool.json', json.dumps(_np, indent=1, ensure_ascii=False))
+        # Daily archive beside the 2026-08-14..10-02 backfill (news_pool_backfill.py),
+        # so the history the backfill started keeps growing. Same document.
+        try:
+            _np_hist = Path('data/history/news_pool')
+            _np_hist.mkdir(parents=True, exist_ok=True)
+            _emit(ledger, _np_hist / f"{_np['as_of']}.json", json.dumps(_np, indent=1, ensure_ascii=False))
+        except Exception:
+            logger.exception("news_pool history archive failed - news_pool.json unaffected")
         ledger.note('news_pool', 'ok' if _np['finnhub'] == 'ok' else 'degraded',
                     finnhub=_np['finnhub'], **_np['counts'])
         logger.info("Saved news_pool.json - %s (finnhub %s)", _np['counts'], _np['finnhub'])

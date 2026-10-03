@@ -1,0 +1,69 @@
+# News pool backfill -- one-off, manual only (T-1003-83 follow-up).
+# Andy 2026-10-04: 「选A」 -- fill past sessions with the FINNHUB_API_KEY already
+# stored in this repo's secrets, so the key never leaves GitHub.
+# Reads each session's lists from git history (needs full history), asks Finnhub
+# for that session's earnings calendar and headlines, writes
+# data/history/news_pool/<session>.json. Headline/link/source only (public repo).
+# Safe to re-run: each session's file is rewritten, nothing else is touched.
+name: News Pool Backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'First session (YYYY-MM-DD)'
+        required: true
+        default: '2026-08-14'
+      end:
+        description: 'Last session (YYYY-MM-DD)'
+        required: true
+        default: '2026-10-02'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-pool-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements.txt
+
+      - name: Backfill
+        run: python -m pipeline.tools.news_pool_backfill --start "${{ github.event.inputs.start }}" --end "${{ github.event.inputs.end }}"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history/news_pool/
+          git diff --staged --quiet && exit 0
+          git commit -m "data: news_pool backfill ${{ github.event.inputs.start }}..${{ github.event.inputs.end }}"
+          for i in 1 2 3; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase origin main
+          done
+          exit 1
