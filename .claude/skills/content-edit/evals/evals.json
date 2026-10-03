@@ -1,0 +1,8 @@
+[
+  {"prompt": "任务 owner=mia type=content：Andy 说退款政策要改成购买后不退款，Fluxus_Brand/site/ 下三份稿要按原话改", "should_trigger": true, "skill": "content-edit"},
+  {"prompt": "署名角标要从 Fluxus 统一改成 @Fluxus_Z，00_SETUP.md 三处 welcome email 落款怎么改", "should_trigger": true, "skill": "content-edit"},
+  {"prompt": "这句结账页英文句 Andy 已经回了可以用，要不要再问一遍", "should_trigger": true, "skill": "content-edit"},
+  {"prompt": "今天内容台备稿三档降级选哪条当 C1", "should_trigger": false, "skill": "content-edit"},
+  {"prompt": "Discord 今天的消息写成一条 X thread 草稿", "should_trigger": false, "skill": "content-edit"},
+  {"prompt": "周检报告里契约行滞留几条，核一遍", "should_trigger": false, "skill": "content-edit"}
+]
