@@ -21,14 +21,14 @@ const H2 = H - T - H1 - GAP - BOTTOM
 
 function Seg({ items, value, onChange, label }) {
   return (
-    <span className="inline-flex items-center gap-1.5">
+    <span className="inline-flex items-center gap-1.5 max-w-full">
       {label && <span className="text-[11px] font-mono uppercase tracking-[.08em] text-[var(--color-text-muted)]">{label}</span>}
-      <span className="inline-flex border border-[var(--color-border)] rounded-md overflow-hidden">
+      <span className="inline-flex max-w-full border border-[var(--color-border)] rounded-md overflow-x-auto">
         {items.map((it) => (
           <button key={it.key} type="button" disabled={!!it.disabled} title={it.title}
                   aria-pressed={value === it.key}
                   onClick={() => !it.disabled && onChange(it.key)}
-                  className={`text-[11px] font-mono px-2.5 py-1 border-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-45
+                  className={`shrink-0 whitespace-nowrap text-[11px] font-mono px-2.5 py-1 border-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-45
                               ${value === it.key ? 'bg-[var(--color-text)] text-[var(--color-surface)]' : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
             {it.label}
           </button>
@@ -39,8 +39,14 @@ function Seg({ items, value, onChange, label }) {
 }
 
 /** TradersLab-style value tag on the right edge of a pane. */
+// 20-day ink, 50-day accent, 200-day muted + dashed: told apart by colour AND
+// stroke, since this theme's accent is itself a blue (chart-for-andy: never
+// two greys, never two blues).
+const EXTRA_INK = ['var(--color-accent)', 'var(--color-text-muted)']
+const EXTRA_DASH = ['', '6 3']
+
 function Tag({ y, text, tone = 'ink' }) {
-  const fill = tone === 'pos' ? 'var(--color-took)' : tone === 'neg' ? 'var(--color-refused)' : tone === 'accent' ? 'var(--color-accent)' : 'var(--color-text)'
+  const fill = tone === 'pos' ? 'var(--color-took)' : tone === 'neg' ? 'var(--color-refused)' : tone === 'accent' ? 'var(--color-accent)' : tone === 'muted' ? 'var(--color-text-muted)' : 'var(--color-text)'
   const w = Math.max(30, text.length * 6.6 + 8)
   return (
     <g>
@@ -50,8 +56,10 @@ function Tag({ y, text, tone = 'ink' }) {
   )
 }
 
-export default function BreadthPanes({ rows, loadingFull }) {
-  const [indicator, setIndicator] = useState('nhnl')
+// `bare` (Market State minimal, Andy 2026-10-03 「少注解」「做到极简」): no subtitle,
+// no explanatory footer, no pending pool tab, no episodes fold — data and controls only.
+export default function BreadthPanes({ rows, loadingFull, bare = false, initialIndicator = 'nhnl' }) {
+  const [indicator, setIndicator] = useState(initialIndicator)
   const [pool, setPool] = useState('all')
   const [scale, setScale] = useState('abs')
   const [window, setWindow] = useState(250)
@@ -70,6 +78,7 @@ export default function BreadthPanes({ rows, loadingFull }) {
   const fin = p.value.filter(Number.isFinite)
   let lo2 = fin.length ? Math.min(...fin) : -1, hi2 = fin.length ? Math.max(...fin) : 1
   if (p.indicator.zero) { lo2 = Math.min(lo2, 0); hi2 = Math.max(hi2, 0) }
+  if (p.indicator.range && scale === 'abs') { [lo2, hi2] = p.indicator.range }
   if (scale === 'z') { lo2 = -3.4; hi2 = 3.4 }
   const top2 = T + H1 + GAP
   const y2 = (v) => top2 + (1 - (v - lo2) / (hi2 - lo2 || 1)) * H2
@@ -93,10 +102,10 @@ export default function BreadthPanes({ rows, loadingFull }) {
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-2">
         <div className="text-[13px] font-semibold text-[var(--color-text)]">
           Index over breadth
-          <span className="ml-2 text-[11px] font-normal text-[var(--color-text-muted)]">S&amp;P 500 close above · {p.indicator.label} below · one time axis</span>
+          {!bare && <span className="ml-2 text-[11px] font-normal text-[var(--color-text-muted)]">S&amp;P 500 close above · {p.indicator.label} below · one time axis</span>}
         </div>
         <Seg label="Pool" value={pool} onChange={setPool}
-             items={POOLS.map((q) => ({ key: q.key, label: q.pending ? `${q.label} · pending` : q.note ? `${q.label} · 9 sessions` : q.label,
+             items={POOLS.filter((q) => !(bare && q.pending)).map((q) => ({ key: q.key, label: q.pending ? `${q.label} · pending` : q.note && !bare ? `${q.label} · 9 sessions` : q.label,
                disabled: !!q.pending, title: q.pending ? `data layer ${q.pending}` : q.note }))} />
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-2">
@@ -147,8 +156,23 @@ export default function BreadthPanes({ rows, loadingFull }) {
                     fill={v >= 0 ? 'var(--color-took)' : 'var(--color-refused)'} />
             ))
             : <path d={path(p.value, y2)} fill="none" stroke="var(--color-text)" strokeWidth="1.4" />}
-          <text x={L + 4} y={top2 + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{p.indicator.label}{scale === 'z' ? ' · σ' : ''}</text>
-          {Number.isFinite(last) && <Tag y={Math.min(Math.max(y2(last), top2 + 8), H - BOTTOM - 8)} text={scale === 'z' ? `${last.toFixed(2)}σ` : `${fmt(last, last % 1 ? 1 : 0)}`} tone="accent" />}
+          {/* overlays (kma): one colour per average, each tagged with its last value */}
+          {(p.extras ?? []).map((e, i) => {
+            const c = EXTRA_INK[i % EXTRA_INK.length], lv = e.values.at(-1)
+            return (
+              <g key={e.key}>
+                <path d={path(e.values, y2)} fill="none" stroke={c} strokeWidth="1.4" strokeDasharray={EXTRA_DASH[i % EXTRA_DASH.length]} />
+                {Number.isFinite(lv) && <Tag y={Math.min(Math.max(y2(lv), top2 + 8), H - BOTTOM - 8)} text={`${Math.round(lv)}`} tone={i ? 'muted' : 'accent'} />}
+              </g>
+            )
+          })}
+          {(p.extras ?? []).length
+            ? <text x={L + 4} y={top2 + 11} fontSize="11">
+                <tspan style={{ fill: 'var(--color-text)' }}>% above 20-day</tspan>
+                {p.extras.map((e, i) => <tspan key={e.key} dx="10" style={{ fill: EXTRA_INK[i % EXTRA_INK.length] }}>{e.label}</tspan>)}
+              </text>
+            : <text x={L + 4} y={top2 + 11} fontSize="11" style={{ fill: 'var(--color-text-secondary)' }}>{p.indicator.label}{scale === 'z' ? ' · σ' : ''}</text>}
+          {Number.isFinite(last) && <Tag y={Math.min(Math.max(y2(last), top2 + 8), H - BOTTOM - 8)} text={scale === 'z' ? `${last.toFixed(2)}σ` : (p.extras ?? []).length ? `${Math.round(last)}` : `${fmt(last, last % 1 ? 1 : 0)}`} tone={(p.extras ?? []).length ? 'ink' : 'accent'} />}
           {/* months */}
           {months.map(([j, m], i) => (i > 0 || window <= 250) && (
             <text key={m} x={x(j)} y={H - 8} fontSize="10" style={{ fill: 'var(--color-text-muted)' }}>{m.slice(5) === '01' ? m.slice(0, 4) : m.slice(5)}</text>
@@ -165,14 +189,14 @@ export default function BreadthPanes({ rows, loadingFull }) {
       </div>
       {/* the long form of all this lives on the tooltip — the page keeps one line
           (Andy 09-23: 「你的文字太多了」), but nothing self-made goes unstated */}
-      <p className="m-0 mt-1.5 text-[11px] text-[var(--color-text-muted)]"
+      {!bare && <p className="m-0 mt-1.5 text-[11px] text-[var(--color-text-muted)]"
          title={`${p.poolNote ? p.poolNote + ' ' : ''}${p.indicator.note}. ${p.rule}`}>
         Grey = oversold episodes · accent = last 15 sessions · hover for values
         {p.poolNote ? ' · pool note ↑' : ''}{loadingFull ? ' · loading the full archive' : ''}
         <span className="ml-1 underline decoration-dotted cursor-help">how this is cut</span>
-      </p>
+      </p>}
 
-      {p.episodes.length > 0 && (
+      {!bare && p.episodes.length > 0 && (
         <details className="mt-2 text-[13px]">
           <summary className="cursor-pointer text-[var(--color-text-secondary)]">
             Oversold episodes in this window <span className="font-mono text-[var(--color-text-muted)]">{p.episodes.length}</span> — and what the index did over the next {20} sessions

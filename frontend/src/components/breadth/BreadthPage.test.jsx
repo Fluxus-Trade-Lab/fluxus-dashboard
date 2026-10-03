@@ -53,69 +53,57 @@ const withFetch = (payloads) => { resetMarketLightCache(); return vi.stubGlobal(
   return Promise.resolve({ ok: !!hit, json: () => Promise.resolve(hit ? hit[1] : null) })
 }) }
 
-describe('BreadthPage — the morning walk (09-23)', () => {
+describe('BreadthPage — minimal (2026-10-03)', () => {
+  // Andy 2026-10-03: 「重点是数据呈现，少注解和状态判断」「做到极简」; preview
+  // artifact Mf9ZEf6kYwVNSp3sR9GMNb 「对。market time machine 这个功能先下线。」
   it('mounts on the real file without throwing', () => {
     expect(() => renderPage()).not.toThrow()
   })
 
-  it('leads with the verdict, then ch.7 §7.2\'s six steps in order', () => {
+  it('lays out data sections in the book\'s order, with no step numbers or questions', () => {
     renderPage()
-    expect(screen.getByText('Today')).toBeInTheDocument()
-    const steps = [...document.querySelectorAll('section[aria-label^="Step"] h2')].map((h) => h.textContent)
-    expect(steps).toEqual(['① · Index', '② · Breadth', '③ · RS leadership', '④ · RS themes', '⑤ · News & events', '⑥ · Your book'])
-    // the old second verdict is gone from the page
-    expect(screen.queryByText(/signals say no/)).not.toBeInTheDocument()
+    const secs = [...document.querySelectorAll('h2')].map((h) => h.textContent)
+    const order = ['Index', 'Breadth', 'Leaders', 'Themes', 'Cross-asset'].map((t) => secs.indexOf(t))
+    expect(order.every((i) => i >= 0)).toBe(true)
+    expect([...order].sort((x, y) => x - y)).toEqual(order)
   })
 
-  it('says "not measured" — never a zero — until market_light.json exists', () => {
+  it('carries no book citations, internal notes or the time machine', () => {
     renderPage()
-    expect(screen.getByText(/Today's aggression — not measured/)).toBeInTheDocument()
-    expect(screen.getByText(/The light — not measured/)).toBeInTheDocument()
+    const text = document.body.textContent
+    for (const gone of ['FOUNDATIONS', 'Foundations ch', '§', 'What changed', 'synthetic', 'a scan count',
+      'awaiting Andy', 'Your book', 'How to read this', 'Votes', 'Conditions catalog', 'Board & chain']) {
+      expect(text, gone).not.toContain(gone)
+    }
+    // TimeMachineBar renders 'Market Time Machine' (CSS uppercases it) -- case-blind on purpose
+    expect(text).not.toMatch(/time machine/i)
   })
 
-  it('reads a red light as AVOID and fades steps ②–⑥, from a contract-shaped file', async () => {
-    withFetch({ market_light: ML })
+  it('shows the verdict with the readings it is made of', async () => {
+    withFetch({ market_light: { ...ML, verdict: 'avoid', qqq: { light: 'green', checks_passed: 3 }, brightness: { ...ML.brightness, breadth: { env: 'MIXED' } } } })
     renderPage()
-    expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
-    expect(screen.getByText(/The light is red — 1 of 3 checks/)).toBeInTheDocument()
-    // the in-between state stays legible (Studio Q: don't hide the 24.8%) — the
-    // light tile prints the count itself, and says "red" beside it
-    const lightTile = screen.getByText(/The light · 10\/20/).closest('div').parentElement
-    expect(lightTile.textContent).toContain('1/3')
-    expect(lightTile.textContent).toContain('red')
-    expect(lightTile.getAttribute('title')).toMatch(/in-between counts as red/)
-    expect(screen.getByText(/the course says skip the rest today/)).toBeInTheDocument()
-    // the trend-day count is off the main screen (course marks it for deletion)
-    expect(screen.queryByText('Sessions vs 21-day line')).not.toBeInTheDocument()
-    // L6B.2 (the seven-gear throttle) left the course on 09-20 — Andy: 「L6B.2 --L6B.6全部删除」 — and left the page with it
-    expect(screen.queryByText('7 / 7')).not.toBeInTheDocument()
-    expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
+    expect(await screen.findByText('avoid')).toBeInTheDocument()
+    const strip = screen.getByText('avoid').parentElement
+    expect(strip.textContent).toContain('SPY')
+    expect(strip.textContent).toContain('1/3')
+    expect(strip.textContent).toContain('QQQ')
+    expect(strip.textContent).toContain('Leaders')
+    expect(strip.textContent).toContain('1/2')
+    expect(strip.textContent).toContain('MIXED')
     vi.unstubAllGlobals()
   })
 
-  it('keeps the board rows, now inside the Board & chain fold', () => {
+  it('leads new highs with the High-Low Index from the real file', () => {
     renderPage()
-    fireEvent.click(screen.getByText('Board & chain').closest('button'))
-    for (const row of breadth.state_board.rows) {
-      const n = screen.queryAllByText(new RegExp(`^${row.key}$`, 'i')).length
-      // Andy's §1.10 cut (09-23): these two rows stay computed, not shown
-      if (['selling pressure', 'index repair'].includes(row.key)) expect(n).toBe(0)
-      else expect(n).toBeGreaterThan(0)
-    }
+    const last = breadth.history.rows.at(-1)
+    const tile = screen.getByText('High-Low Index').parentElement
+    expect(tile.textContent).toContain(String(Math.round(last.high_low_index)))
+    expect(tile.textContent).toContain(`${last.new_highs_common} highs · ${last.new_lows_common} lows`)
   })
 
-  it('shows the votes as evidence first, with the engine\'s own call kept and labelled', () => {
+  it('folds the advanced breadth closed by default and opens it on click', () => {
     renderPage()
-    fireEvent.click(screen.getByText('Votes').closest('button'))
-    expect(screen.getByText(/evidence for Q3, not a call/)).toBeInTheDocument()
-    expect(screen.getByText(/confirming ·/)).toBeInTheDocument()
-    expect(screen.getByText(/engine’s own reading — for reference, not today’s call/)).toBeInTheDocument()
-    expect(screen.getByText(breadth.verdict.guidance)).toBeInTheDocument()
-  })
-
-  it('folds the reference rows closed by default and opens one on click', () => {
-    renderPage()
-    const btn = screen.getByText('Archive').closest('button')
+    const btn = screen.getByText('Advanced breadth').closest('button')
     expect(btn).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(btn)
     expect(btn).toHaveAttribute('aria-expanded', 'true')
@@ -129,10 +117,9 @@ describe('BreadthPage — the morning walk (09-23)', () => {
       json: () => Promise.resolve(String(url).includes('correction_risk') ? cr : String(url).includes('tick_cycle') ? tc : null),
     }))
     renderPage()
-    fireEvent.click(screen.getByText('Correction risk').closest('button'))
+    fireEvent.click(screen.getByText('Advanced breadth').closest('button'))
     const ts = cr.ts_dimension.today
-    const prob = `${(ts.prob_3d * 100).toFixed(1)}%`
-    const probEl = await screen.findByText(prob)
+    const probEl = await screen.findByText(`${(ts.prob_3d * 100).toFixed(1)}%`)
     const line = probEl.parentElement.textContent
     expect(line).toContain(ts.n_cell_3d.toLocaleString())
     expect(line).toContain(`${(cr.base_rate * 100).toFixed(1)}%`)
@@ -143,21 +130,10 @@ describe('BreadthPage — the morning walk (09-23)', () => {
     vi.unstubAllGlobals()
   })
 
-  it('keeps the Mastery folds and drops the merged ones', () => {
+  it('pins today as the archive\'s first row, bold, with the A/D line', () => {
     renderPage()
-    for (const l of ['Breadth, advanced', 'Votes', 'Board & chain', 'Correction risk', 'Style rotation', 'Benchmarks', 'Archive']) {
-      expect(screen.getByText(l)).toBeInTheDocument()
-    }
-    for (const gone of ['Series', 'Ratio and spread', 'Market monitor', 'Classic breadth', 'Danger signals']) {
-      expect(screen.queryByText(gone)).not.toBeInTheDocument()
-    }
-  })
-
-  it('pins today as the archive\'s first row, bold, with the A/D line the tiles used to carry', () => {
-    renderPage()
-    fireEvent.click(screen.getByText('Archive').closest('button'))
+    fireEvent.click(screen.getByText('Advanced breadth').closest('button'))
     const today = document.querySelector('tr.today')
-    expect(today.className).toMatch(/\btoday\b/)
     expect(today.className).toMatch(/sticky/)
     expect(today.className).toMatch(/font-semibold/)
     const last = breadth.history.rows.at(-1)
@@ -166,9 +142,16 @@ describe('BreadthPage — the morning walk (09-23)', () => {
     expect(screen.getByText('A/D line')).toBeInTheDocument()
     expect(today.textContent).toContain(last.ad_line.toLocaleString())
   })
+
+  it('keeps the Stockbee rulers inside Advanced breadth: the four readings in words', () => {
+    renderPage()
+    fireEvent.click(screen.getByText('Advanced breadth').closest('button'))
+    for (const l of [/^Up 4% \/ Down 4%/, /^5-day \/ 10-day ratio/, /^Quarterly breadth \(25%\+\)/, 'T2108']) {
+      expect(screen.getAllByText(l).length).toBeGreaterThan(0)
+    }
+  })
 })
 
-/* The three Correction risk charts, on the real payloads. */
 import { CondGrid, StateBars, TickEvidence } from './CorrectionRiskPanel'
 
 describe('Correction risk charts', () => {
@@ -207,126 +190,3 @@ describe('Correction risk charts', () => {
 /* Andy 09-11: 「原有的数据它可能只是以不同的前端形式而呈现了。是不是这样子」 — every
    field the old VerdictBanner printed has to reach the page. The 09-11 rebuild
    dropped five; this pins all seven columns so it cannot happen quietly again. */
-describe('nothing the old verdict banner printed is lost', () => {
-  it('prints all seven engine fields and the warning total', () => {
-    renderPage()
-    fireEvent.click(screen.getByText('Votes').closest('button'))
-    const v = breadth.verdict
-    for (const label of ['Risk level', 'Exposure', 'SPY', 'QQQ', 'Alignment', 'Breadth confirmation', 'Playbook']) {
-      expect(screen.getAllByText(label).length).toBeGreaterThan(0)
-    }
-    for (const val of [v.risk, v.exposure, v.alignment, v.confirmation, v.playbook]) {
-      expect(screen.getAllByText(val).length).toBeGreaterThan(0)
-    }
-    expect(screen.getByText(`${v.warn_total} total warnings`)).toBeInTheDocument()
-  })
-})
-
-/* Andy 09-11: 「如果是有内容被删除了, 那我希望被删除的内容先放在折叠页里面」 — every
-   item the rebuild had deleted is back, in a fold. One assertion per item. */
-describe('deleted content is back, in the folds', () => {
-  it('Stockbee rulers: the four readings in words, with percentiles', () => {
-    renderPage()
-    fireEvent.click(screen.getByText('Stockbee rulers').closest('button'))
-    for (const l of [/^Up 4% \/ Down 4%/, /^5-day \/ 10-day ratio/, /^Quarterly breadth \(25%\+\)/, 'T2108']) {
-      expect(screen.getAllByText(l).length).toBeGreaterThan(0)
-    }
-  })
-
-  it('chain: each link\'s evidence sentence is printed again', () => {
-    renderPage()
-    fireEvent.click(screen.getByText('Board & chain').closest('button'))
-    for (const l of breadth.state_board.chain) {
-      if (l.key === 'index repair') continue   // cut from the page 09-23 (Andy's §1.10 cut)
-      if (l.evidence) expect(screen.getAllByText(l.evidence).length).toBeGreaterThan(0)
-    }
-  })
-
-  it('votes: the sentence that used to head the page sits in the engine block', async () => {
-    const { readMarketState } = await import('../Reading')
-    renderPage()
-    fireEvent.click(screen.getByText('Votes').closest('button'))
-    expect(screen.getByText(readMarketState(breadth.verdict))).toBeInTheDocument()
-  })
-})
-
-/* DATA ALEX's real output (pipeline/screeners/market_light.py @ 640643c4, run
-   on the 2026-09-10 session), not a hand-written shape — so a renamed key on
-   either side turns this red. */
-describe('the course read on DATA ALEX\'s real market_light.json', () => {
-  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
-
-  it('draws the light and the call from the real file', async () => {
-    withFetch({ market_light: real })
-    renderPage()
-    expect((await screen.findAllByText('AVOID')).length).toBeGreaterThan(0)
-    // the trend-day count left the course (Andy 09-11 「ok删除」) and the page with it
-    expect(screen.queryByText('Trend-day count')).not.toBeInTheDocument()
-    // the gear left the course too (Andy 09-20 「L6B.2 --L6B.6全部删除」) and the page with it
-    expect(screen.queryByText(`${real.spy.gear.n} / 7`)).not.toBeInTheDocument()
-    expect(screen.queryByText('Gear · Lesson 6B')).not.toBeInTheDocument()
-    const held = real.brightness.leaders.filter((l) => l.status !== 'broken').length
-    // step ③ is tiles now: the count and its denominator sit in the "Holding the 50-day" tile
-    // step ③ is a table now: one row per leader, with its 50-day state
-    for (const l of real.brightness.leaders) expect(screen.getByText(l.ticker)).toBeInTheDocument()
-    expect(screen.getAllByText(/^holding/).length).toBe(held)
-    expect(screen.getAllByText(/^broken/).length).toBe(real.brightness.leaders.length - held)
-    // only the leaders list carries `provisional`; Q1's scan count is named as such in the verdict line
-    // the list still says it is the pipeline's, not hand-ranked (now a line under the roster)
-    // the list still says it is the pipeline's, not hand-ranked (the table's caption)
-    expect(screen.getByText(/the pipeline’s \(members of 2-week Leading themes\), provisional/)).toBeInTheDocument()
-    expect(screen.queryByText(/10\+ bright/)).not.toBeInTheDocument()
-    // red day: the call is the lesson's own (L6 "sit still"), not the synthetic table
-    expect(screen.queryByText(/combined from Q2 and Q3, not a rule in the lesson text/)).not.toBeInTheDocument()
-    // the four-question table is on the page, with the questions the pipeline cannot answer marked
-    expect(screen.getByText('New highs − lows')).toBeInTheDocument()
-    expect(screen.getByText(/5 EMA is not in the pipeline/)).toBeInTheDocument()
-    vi.unstubAllGlobals()
-  })
-})
-
-/* Studio Q 09-11 (a7bd310b): the page names its method, a green-day call is
-   tagged synthetic, and Q1 stays faded while provisional. */
-describe('Studio Q rulings on the page', () => {
-  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
-
-  it('names the light\'s method — EMA, as Andy ruled on 09-11', async () => {
-    withFetch({ market_light: real })
-    renderPage()
-    expect(await screen.findByText(/the course’s method since Andy ruled EMA on 09-11/)).toBeInTheDocument()
-    vi.unstubAllGlobals()
-  })
-
-  it('tags a green-day verdict as synthetic, and says what it rests on', async () => {
-    const green = { ...real, verdict: 'dim', verdict_pending: null, verdict_synthetic: true,
-      spy: { ...real.spy, light: 'green', checks_passed: 3 },
-      brightness: { ...real.brightness, breadth: { state: 'mixed' } } }
-    withFetch({ market_light: green })
-    renderPage()
-    expect((await screen.findAllByText('DIM')).length).toBeGreaterThan(0)
-    // the word stays on the page; its full rule moved to the tooltip (09-23 prose trim)
-    const syn = screen.getByText(/combined from Q2 and Q3, not a rule in the lesson text/)
-    expect(syn).toBeInTheDocument()
-    expect(syn.getAttribute('title')).toMatch(/either bad → avoid, both good → full/)
-    // the verdict line says what the word rests on
-    expect(screen.getByText(/a scan count, not the lesson/)).toBeInTheDocument()
-    vi.unstubAllGlobals()
-  })
-})
-
-/* Studio Q 09-13: a green day whose verdict is missing says which question lacks
-   data, rather than claiming the rule is unsettled. */
-describe('a green day with a question missing its data', () => {
-  const real = JSON.parse(readFileSync(resolve(process.cwd(), 'src/components/breadth/__fixtures__/market_light.sample.json'), 'utf8'))
-
-  it('names what is not measured', async () => {
-    const green = { ...real, verdict: null, verdict_synthetic: false,
-      verdict_pending: 'green day, Q3 not measured',
-      spy: { ...real.spy, light: 'green', checks_passed: 3 } }
-    withFetch({ market_light: green })
-    renderPage()
-    expect(await screen.findByText(/the call is not measured/)).toBeInTheDocument()
-    expect(screen.getByText(/green day, Q3 not measured/)).toBeInTheDocument()
-    vi.unstubAllGlobals()
-  })
-})

@@ -30,6 +30,16 @@ export const INDICATORS = {
   nhnl: { label: '52-week highs − lows', unit: 'names', zero: true,
     pools: { all: (r) => (num(r.new_highs_common) != null && num(r.new_lows_common) != null ? r.new_highs_common - r.new_lows_common : null) },
     note: 'common stocks only (SPAC, ETF, closed-end fund, preferred excluded); this series starts 2026-08-28 — the older SPAC-inclusive count is no longer charted' },
+  // Andy 2026-10-03: 「应该above 20-DAY, ABOVE 50-DAY ABOVE-200 DAY都放在market state的图里面」.
+  // One pane, three lines; the 20-day is the primary series (oversold cut and
+  // σ read it), the 50 and 200 ride along as overlays.
+  kma: { label: '% above 20 / 50 / 200-day', unit: '%', zero: false, range: [0, 100], lines: [50],
+    pools: { all: (r) => num(r.pct_above_20sma), sp500: (r) => num(r.pct_above_20sma_sp500) },
+    extra: [
+      { key: 'p50', label: '50-day', pools: { all: (r) => num(r.pct_above_50sma), sp500: (r) => num(r.pct_above_50sma_sp500) } },
+      { key: 'p200', label: '200-day', pools: { all: (r) => num(r.pct_above_200sma), sp500: (r) => num(r.pct_above_200sma_sp500) } },
+    ],
+    note: 'share of stocks above each moving average' },
   mco: { label: 'McClellan oscillator', unit: '', zero: true,
     pools: { all: (r) => num(r.mcclellan_osc) },
     note: 'all-market pool; the Nasdaq-100 version is pending (T-0923-03)' },
@@ -93,6 +103,11 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
   const dates = all.slice(s).map((r) => r.date)
   const index = all.slice(s).map((r) => num(r.spx_close))
   const value = zFull.slice(s)
+  // overlays (kma): absolute ruler only, same pool as the primary when it has one
+  const extras = scale === 'z' ? [] : (ind.extra ?? []).map((e) => {
+    const rd = (pool !== 'all' && e.pools[pool]) || e.pools.all
+    return { key: e.key, label: e.label, values: all.slice(s).map((r) => rd(r)) }
+  })
   const raw = rawFull.slice(s)
   const finite = value.filter(Number.isFinite)
   let threshold = null
@@ -114,7 +129,7 @@ export function buildPanes(rows, { indicator = 'nhnl', pool = 'all', scale = 'ab
     return { from: dates[a], to: dates[b], days: b - a + 1, min: value[mi], minRaw: raw[mi], after: ret, partial: e - b < AFTER }
   })
   return {
-    indicator: ind, dates, index, value, raw, threshold, bands, episodes,
+    indicator: ind, dates, index, value, raw, extras, threshold, bands, episodes,
     recentFrom: Math.max(0, value.length - RECENT),
     poolNote,
     rule: scale === 'z'
