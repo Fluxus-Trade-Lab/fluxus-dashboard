@@ -156,6 +156,8 @@ export default {
     'scx.sortedRs': 'Sorted by RS',
     'scx.empty': 'No names at this step.',
     'scx.noFocus': "Today's funnel data is not in.",
+    'scx.loading': 'Loading…',
+    'scx.noData': 'No data for this scan today.',
   },
   zh: {
     'sc.loadingUniverse': '正在加载标的池…',
@@ -296,5 +298,7 @@ export default {
     'scx.sortedRs': '按 RS 排序',
     'scx.empty': '这一步没有票。',
     'scx.noFocus': '今日漏斗数据未到。',
+    'scx.loading': '加载中…',
+    'scx.noData': '这个扫描今天没有数据。',
   },
 }

@@ -5,7 +5,7 @@ import { useThemeHandoff } from '../../hooks/useThemeHandoff'
 import { useChartPick } from '../../hooks/useChartPick'
 import { useMyShortlist } from '../../hooks/useMyShortlist'
 import { useWatchlist } from '../../hooks/useWatchlist'
-import { useHeatingUp } from '../../hooks/useHeatingUp'
+import { useHeatingUpState } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
 import { useGroups } from '../../hooks/useGroups'
 import { useMarketData } from '../../hooks/useMarketData'
@@ -72,8 +72,8 @@ function loadPreset() {
 export default function ScreenerPage() {
   const { universe, all, loading } = useUniverse()
   const groups = useGroups()
-  const heat = useHeatingUp()
-  const { data: market } = useMarketData()
+  const { data: heat, settled: heatSettled } = useHeatingUpState()
+  const { data: market, loading: marketLoading } = useMarketData()
   const { data: watchlist } = useWatchlist()
   const { doc } = useFocusDay()
   const myShortlist = useMyShortlist()
@@ -216,18 +216,24 @@ export default function ScreenerPage() {
     return m
   }, [heat])
 
+  // status: 'ok' | 'loading' | 'missing'. A scan whose file is not in must
+  // never fall back to the whole universe under its own title.
   const scans = useMemo(() => SCAN_DEFS.map((d) => {
-    if (d.key === 'all') return { ...d, count: universe?.length ?? null, set: null, loaded: Boolean(universe) }
+    if (d.key === 'all') {
+      return { ...d, count: universe?.length ?? null, set: null, loaded: Boolean(universe),
+               status: universe ? 'ok' : 'loading' }
+    }
     if (d.key === 'confluence') {
       const loaded = Boolean(heat?.rows)
       return { ...d, loaded, count: loaded ? heatByTicker.size : null,
-               set: loaded ? new Set(heatByTicker.keys()) : null }
+               set: loaded ? new Set(heatByTicker.keys()) : null,
+               status: loaded ? 'ok' : heatSettled ? 'missing' : 'loading' }
     }
     const json = market?.[d.key]
-    if (!json) return { ...d, count: null, set: null, loaded: false }
+    if (!json) return { ...d, count: null, set: null, loaded: false, status: marketLoading ? 'loading' : 'missing' }
     const set = scanTickers(json, d.container)
-    return { ...d, count: set.size, set, loaded: true }
-  }), [universe, heat, heatByTicker, market])
+    return { ...d, count: set.size, set, loaded: true, status: 'ok' }
+  }), [universe, heat, heatByTicker, heatSettled, market, marketLoading])
   const customScan = scans.find((s) => s.key === scan) ?? scans[0]
 
   const themeRows = useMemo(
@@ -239,6 +245,7 @@ export default function ScreenerPage() {
     if (!universe) return []
     const themeSet = themeRows.length ? new Set(themeRows.flatMap((t) => t.tickers ?? [])) : null
     const q = search.trim().toUpperCase()
+    if (!customScan.loaded) return []
     const tickers = customScan.set ? [...customScan.set] : universe.map((r) => r.ticker)
     const out = []
     for (const tk of tickers) {
@@ -298,6 +305,10 @@ export default function ScreenerPage() {
   }
 
   const funnel = preset === 'funnel'
+  const needsGroups = states.size > 0 || themes.size > 0
+  const customStatus = customScan.status !== 'ok' ? customScan.status
+    : needsGroups && groups.loading ? 'loading'
+    : needsGroups && groups.error ? 'missing' : 'ok'
   const rows = funnel ? funnelRows : customRows
   const title = funnel
     ? `${activeScan?.label ?? ''} · ${tr(`scx.step.${step}`)}`
@@ -361,12 +372,13 @@ export default function ScreenerPage() {
               handoff={handoff}
               search={search} onSearch={setSearch}
               receipt=""
-              wideNote={themeWide != null && scan !== 'all' && themeWide > 0
+              wideNote={customStatus === 'ok' && themeWide != null && scan !== 'all' && themeWide > 0
                 ? { n: themeWide, onWiden: () => setScan('all') } : null} />
           </div>
         )}
 
-        <ResultsTable title={title} rows={rows} n={topN} setN={setTopN} onChart={onChart} />
+        <ResultsTable title={title} rows={rows} n={topN} setN={setTopN} onChart={onChart}
+                      status={funnel ? 'ok' : customStatus} />
       </section>
 
       {chartOpen && (

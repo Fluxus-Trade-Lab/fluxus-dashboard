@@ -20,9 +20,14 @@ export const FORBIDDEN = {
   en: ['§', 'course', 'pipeline', 'not built yet', 'PRODUCT.md'],
 }
 
+// per-test fetch override: (name) => 'missing' | 'hang' | undefined
+let override = null
 function serve(url) {
   const u = String(url).split('?')[0]
   const name = u.split('/').pop()
+  const o = override?.(name)
+  if (o === 'hang') return new Promise(() => {})
+  if (o === 'missing') return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
   const file = u.includes('/data/output/') ? resolve(OUT, u.split('/data/output/')[1])
     : resolve(PUB, name)
   if (!existsSync(file)) return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
@@ -33,11 +38,12 @@ function serve(url) {
 // whole-page mounts on the real files; under a full parallel run they need room
 vi.setConfig({ testTimeout: 30000 })
 
-afterEach(() => { cleanup(); localStorage.clear(); vi.unstubAllGlobals() })
+afterEach(() => { cleanup(); localStorage.clear(); vi.unstubAllGlobals(); override = null })
 
-export async function mountPage(lang, which, props = {}, keep = false) {
+export async function mountPage(lang, which, props = {}, keep = false, seed = {}) {
   if (!keep) vi.resetModules()
   if (!keep) localStorage.clear()
+  for (const [k, v] of Object.entries(seed)) localStorage.setItem(k, v)
   localStorage.setItem('fluxus-lang', lang)
   vi.stubGlobal('fetch', serve)
   vi.stubGlobal('requestAnimationFrame', (f) => setTimeout(f, 0))
@@ -282,5 +288,40 @@ describe('dictionary', () => {
         for (const w of FORBIDDEN[lang]) expect(v.toLowerCase(), `${lang} ${k}`).not.toContain(w.toLowerCase())
       }
     }
+  })
+})
+
+describe('custom screen while a scan file is not in', () => {
+  const custom = (scan) => ({ 'screener-preset': 'custom', 'screener-query': JSON.stringify({ scan }) })
+  const dataRows = (c) => c.container.querySelectorAll('[data-testid="results"] tbody tr[data-row]').length
+  const state = (c) => c.container.querySelector('[data-testid="table-state"]')?.getAttribute('data-state')
+
+  it('shows a loading row, not the universe, while the file is in flight', async () => {
+    override = (name) => (name === 'vcp.json' ? 'hang' : undefined)
+    const c = await mountPage('zh', 'screener', {}, false, custom('vcp'))
+    expect(state(c)).toBe('loading')
+    expect(dataRows(c)).toBe(0)
+    expect(c.container.textContent).toContain('加载中…')
+  })
+
+  it('shows no data, not the universe, when the file failed', async () => {
+    override = (name) => (name === 'vcp.json' ? 'missing' : undefined)
+    const c = await mountPage('en', 'screener', {}, false, custom('vcp'))
+    expect(state(c)).toBe('missing')
+    expect(dataRows(c)).toBe(0)
+    expect(c.container.textContent).toContain('No data for this scan today.')
+  })
+
+  it('the same for the confluence ledger', async () => {
+    override = (name) => (name === 'heating_up.json' ? 'missing' : undefined)
+    const c = await mountPage('zh', 'screener', {}, false, custom('confluence'))
+    expect(state(c)).toBe('missing')
+    expect(dataRows(c)).toBe(0)
+  })
+
+  it('a loaded scan still lists its names', async () => {
+    const c = await mountPage('zh', 'screener', {}, false, custom('vcp'))
+    expect(state(c)).toBeUndefined()
+    expect(dataRows(c)).toBeGreaterThan(0)
   })
 })

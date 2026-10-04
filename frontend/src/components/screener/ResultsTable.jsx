@@ -61,9 +61,10 @@ function AddButton({ row }) {
   )
 }
 
-export default function ResultsTable({ title, rows, n, setN, onChart }) {
+export default function ResultsTable({ title, rows, n, setN, onChart, status = 'ok' }) {
   const { t, lang } = useLanguage()
-  const shown = rows.slice(0, n)
+  const ready = status === 'ok'
+  const shown = ready ? rows.slice(0, n) : []
   const rest = rows.length - shown.length
   const th = 'px-2 py-1.5 text-[11px] font-medium tracking-[0.04em] text-[var(--color-text-muted)] whitespace-nowrap border-b border-[var(--color-border-light)]'
   const td = 'px-2 py-2 border-b border-[var(--color-border-light)] align-top'
@@ -73,7 +74,7 @@ export default function ResultsTable({ title, rows, n, setN, onChart }) {
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
         <div className="text-[13px]">
           <b className="text-[var(--color-text-bold)]">{title}</b>{' '}
-          <span className="font-mono text-[var(--color-text-muted)]" data-testid="row-count">{shown.length} / {rows.length}</span>
+          {ready && <span className="font-mono text-[var(--color-text-muted)]" data-testid="row-count">{shown.length} / {rows.length}</span>}
         </div>
         <TopN n={n} setN={setN} />
       </div>
@@ -120,14 +121,17 @@ export default function ResultsTable({ title, rows, n, setN, onChart }) {
                 <td className={`${td} text-right`}><AddButton row={r} /></td>
               </tr>
             ))}
-            {!rows.length && (
-              <tr><td colSpan={10} className="py-6 text-center text-[13px] text-[var(--color-text-muted)]">{t('scx.empty')}</td></tr>
+            {(!ready || !rows.length) && (
+              <tr><td colSpan={10} data-testid="table-state" data-state={ready ? 'empty' : status}
+                      className="py-6 text-center text-[13px] text-[var(--color-text-muted)]">
+                {t(status === 'loading' ? 'scx.loading' : status === 'missing' ? 'scx.noData' : 'scx.empty')}
+              </td></tr>
             )}
           </tbody>
         </table>
       </div>
       <div className="flex justify-between items-center mt-2.5 text-[13px] text-[var(--color-text-muted)]">
-        <span data-testid="more">{rest > 0 ? t('scx.more', { n: rest }) : ''}</span>
+        <span data-testid="more">{ready && rest > 0 ? t('scx.more', { n: rest }) : ''}</span>
         <span>{t('scx.sortedRs')}</span>
       </div>
     </div>
