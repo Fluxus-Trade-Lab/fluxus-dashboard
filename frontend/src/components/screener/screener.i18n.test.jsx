@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, act, fireEvent } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
 import { LanguageProvider } from '../../i18n/LanguageContext'
 import ScanBar from './ScanBar'
-import StockTable from './StockTable'
+import ResultsTable from './ResultsTable'
 
 /* Andy 2026-10-03: 「整个网页需要有完整的中文和英文界面，而非个别地方才有中文或者英文」.
-   In Chinese mode the Screener speaks Chinese: interface words, the funnel's
-   market vocabulary, theme / industry names, and the zh note from focus.json.
+   In Chinese mode the Screener speaks Chinese: the custom bar, the results
+   table the page renders (ResultsTable), theme names, and the zh note.
    Tickers and numbers stay as they are. */
 
 const focusDoc = {
@@ -34,12 +34,12 @@ const scans = [
   { key: 'all', label: 'All', count: 2548, loaded: true },
   { key: 'confluence', label: 'Confluence', count: 50, loaded: true },
 ]
-const rows = [{
-  ticker: 'TEAM', inUniverse: true, heat: { score: 7.5, screeners: [{ name: 'momentum_97', hits: 2, last_date: '2026-10-02' }] },
-  state: 'Improving', ind: 'Software - Application', indState: 'Leading', home: 'Cloud Software', homeKind: 'theme',
-  homeRibbon: null, rs1: 80, rs3: 90, rs6: 70, accel: 0.5, h52: -0.06, relVol: 1.2, vol5050: 1.1,
-  indPct: 90, perf1w: 0.02, sector: 'Technology', tq: 2, tqOf: 5,
-}]
+// a row as the page builds it for the table it actually renders (ResultsTable)
+const row = (lang) => ({
+  t: 'TEAM', rs: 97, group: 'Cloud Software', gstate: 'Improving', heat: 7.5,
+  e21: 0.48, s50: 2.66, m1: -3.5, hi: -6.1, note: focusDoc.notes.TEAM[lang], flagged: false,
+  entry: { group: 'Cloud Software', group_state: 'Improving', rs_1m: 80 },
+})
 
 async function mount(lang) {
   localStorage.setItem('fluxus-lang', lang)
@@ -54,13 +54,11 @@ async function mount(lang) {
                  themes={[{ group: 'Cloud Software', members: 30 }]} chosen={new Set(['Cloud Software'])}
                  onTheme={() => {}} handoff={['Cloud Software']} search="" onSearch={() => {}}
                  receipt="1" wideNote={{ n: 12, onWiden: () => {} }} />
-        <StockTable rows={rows} defaultSort="heat" />
+        <ResultsTable title="t" rows={[row(lang)]} n={10} setN={() => {}} showHeat defaultSort="heat" />
       </LanguageProvider>,
     )
   })
   await act(async () => { await new Promise((r) => setTimeout(r, 0)) })
-  const caret = c.container.querySelector('button[aria-label="展开证据"], button[aria-label="show evidence"]')
-  await act(async () => { fireEvent.click(caret) })
   return c.container
 }
 
@@ -73,11 +71,14 @@ describe('Screener in Chinese', () => {
     // the funnel panel's strings left with the panel (2026-10-04 merge); the
     // merged page is covered by merged.test.jsx
     for (const zh of ['云软件',
-      '不限', '不设', '已收窄到你在主题页上比较的那个主题', '去掉扫描', '改善', '综合动量 97', '科技 · 应用软件', 'TEAM 个股页 →']) {
+      '不限', '不设', '已收窄到你在主题页上比较的那个主题', '去掉扫描', '改善',
+      '代码', '热度', '主题', '离 21EMA', '离 50 日线', '1 月', '离 52 周高', '一句话', '+ 短名单', '全部',
+      '榜上同组五只里回踩最深。', '0.48 ATR', '−3.5%']) {
       expect(text, zh).toContain(zh)
     }
     for (const en of ['Cloud Software',
-      'any', 'none', 'Narrowed', 'drop the scan', 'Improving', 'tear-sheet', 'Technology']) {
+      'any', 'none', 'Narrowed', 'drop the scan', 'Improving', 'Ticker', 'Heat', 'From 21EMA', 'Shortlist',
+      'The deepest pullback']) {
       expect(text, en).not.toContain(en)
     }
     expect(text).toContain('TEAM')
@@ -88,7 +89,8 @@ describe('Screener in Chinese', () => {
     const text = (await mount('en')).textContent
     for (const en of ['Cloud Software',
       'any', 'Narrowed to the theme you were comparing on Themes — Cloud Software.', 'drop the scan',
-      'Improving', 'momentum_97', 'Technology · Software - Application', 'TEAM tear-sheet →']) {
+      'Improving', 'Ticker', 'Heat', 'Theme', 'From 21EMA', 'From 50-day', 'From 52w high', 'Note', '+ Shortlist',
+      'The deepest pullback of the five in its group.']) {
       expect(text, en).toContain(en)
     }
   })
