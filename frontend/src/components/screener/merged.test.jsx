@@ -259,3 +259,15 @@ describe("Today's List", () => {
     expect(han).toEqual([])
   })
 })
+
+describe('dictionary', () => {
+  it('the merge\'s own keys exist in both languages and carry no internal wording', () => {
+    const own = (lang) => Object.entries(translations[lang]).filter(([k]) => /^(scx|tlx)\./.test(k))
+    expect(own('en').map(([k]) => k).sort()).toEqual(own('zh').map(([k]) => k).sort())
+    for (const lang of ['en', 'zh']) {
+      for (const [k, v] of own(lang)) {
+        for (const w of FORBIDDEN[lang]) expect(v.toLowerCase(), `${lang} ${k}`).not.toContain(w.toLowerCase())
+      }
+    }
+  })
+})
