@@ -1,0 +1,7 @@
+[
+  {"prompt": "任务 type=data：claire 报 ANDG 的 rs_rating=1 却 group_pctile=100，两个 RS 读数方向相反，查一下成因", "should_trigger": true, "skill": "data-anomaly"},
+  {"prompt": "tickers/*.json 的 next_earnings 全是空对象，抽查四只都空，是代码 bug 还是供应商没给", "should_trigger": true, "skill": "data-anomaly"},
+  {"prompt": "前端说 shortlist 里某个席位的数字和昨天不一样，帮我核一下 data/output 这两天的值到底哪边对", "should_trigger": true, "skill": "data-anomaly"},
+  {"prompt": "dashboard 今天停在前一天的数据，cron 是不是又挂了", "should_trigger": false, "skill": "data-anomaly"},
+  {"prompt": "EATZ 退市了，细分行业名单和配色要清掉，三份镜像同步", "should_trigger": false, "skill": "data-anomaly"}
+]
