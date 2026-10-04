@@ -90,3 +90,13 @@ export function manualCards(trayNames = [], doc, universeByTicker = {}) {
   }
   return out
 }
+
+/**
+ * 我的短名单 — the one list both pages count (Andy 2026-10-04, plan A): the
+ * tray names plus the file's manual cards, deduped, minus what was removed
+ * here. Today's List renders it; the Screener's header chip counts it. Both
+ * go through this function so the two numbers cannot disagree.
+ */
+export function myShortlist(trayNames = [], dropped = [], doc, universeByTicker = {}) {
+  return manualCards(trayNames, doc, universeByTicker).filter((c) => !dropped.includes(c.ticker))
+}

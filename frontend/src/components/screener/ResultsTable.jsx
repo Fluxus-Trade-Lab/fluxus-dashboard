@@ -1,6 +1,7 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import { dataName } from '../../i18n/names'
 import { useShortlist } from '../../hooks/useShortlist'
+import { useMyShortlist } from '../../hooks/useMyShortlist'
 import { word } from './richText'
 
 /**
@@ -45,8 +46,9 @@ function TopN({ n, setN }) {
 
 function AddButton({ row }) {
   const { t } = useLanguage()
-  const { has, add, remove } = useShortlist()
-  const on = has(row.t)
+  const { add, remove } = useShortlist()
+  // on = on 我的短名单 as Today's List shows it, including the file's own names
+  const on = useMyShortlist().includes(row.t)
   return (
     <button type="button" aria-pressed={on} data-add={row.t}
             title={t(on ? 'scx.removeT' : 'scx.addT')}

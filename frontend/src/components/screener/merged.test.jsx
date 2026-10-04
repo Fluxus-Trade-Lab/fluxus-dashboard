@@ -164,15 +164,27 @@ describe('one shortlist', () => {
 
   it('+ 短名单 toggles and the header chip counts it', async () => {
     const c = await mountPage('zh', 'screener')
-    const first = c.container.querySelector('[data-add]')
+    const chip = () => c.container.querySelector('[data-testid="shortlist-chip"]')
+    const n0 = Number(chip().textContent.match(/\d+/)[0])
+    expect(chip().getAttribute('href')).toBe('#/watchlist/shortlist')
+    const first = [...c.container.querySelectorAll('[data-add]')].find((b) => b.getAttribute('aria-pressed') === 'false')
     const tk = first.getAttribute('data-add')
-    expect(c.container.querySelector('[data-testid="shortlist-chip"]').textContent).toBe('短名单 0 →')
-    expect(c.container.querySelector('[data-testid="shortlist-chip"]').getAttribute('href')).toBe('#/watchlist/shortlist')
     await click(first)
     expect(c.container.querySelector(`[data-add="${tk}"]`).textContent).toBe('✓ 已加')
-    expect(c.container.querySelector('[data-testid="shortlist-chip"]').textContent).toBe('短名单 1 →')
+    expect(chip().textContent).toBe(`短名单 ${n0 + 1} →`)
     await click(c.container.querySelector(`[data-add="${tk}"]`))
-    expect(c.container.querySelector('[data-testid="shortlist-chip"]').textContent).toBe('短名单 0 →')
+    expect(chip().textContent).toBe(`短名单 ${n0} →`)
+  })
+
+  it('the header chip and 我的短名单 show the same number on the real data', async () => {
+    const s = await mountPage('zh', 'screener')
+    const chipN = Number(s.container.querySelector('[data-testid="shortlist-chip"]').textContent.match(/\d+/)[0])
+    cleanup()
+    const c = await mountPage('zh', 'watchlist', { zone: 'shortlist' }, true)
+    const head = [...c.container.querySelectorAll('h2')].find((h) => h.textContent.startsWith('我的短名单'))
+    const mineN = Number(head.textContent.replace('我的短名单', '').trim() || 0)
+    expect(chipN).toBe(mineN)
+    expect(mineN).toBeGreaterThan(0)   // the file's manual names count, not only this browser's
   })
 })
 

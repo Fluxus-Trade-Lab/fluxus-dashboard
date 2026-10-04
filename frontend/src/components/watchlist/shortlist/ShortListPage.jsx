@@ -4,7 +4,7 @@ import { MarkGlyph, MARK_KINDS } from './CardChart'
 import { useShortlistFile } from '../../../hooks/useShortlistFile'
 import { useShortlist } from '../../../hooks/useShortlist'
 import { useUniverse } from '../../../hooks/useUniverse'
-import { manualCards } from './manualCards'
+import { myShortlist } from './manualCards'
 import { buildLedger, tally } from './ledger'
 import { credentials, pushOne, record, state as syncState } from './sync'
 import { inLang } from '../../../i18n/fieldLang'
@@ -319,8 +319,7 @@ function Body({ data }) {
      from the Sheet's manual list (not the tray) has nothing in `trayNames`
      for `remove` to delete, which is exactly why `dropped` exists: it is the
      local suppression for a membership the Sheet still owns (§七, 09-11). */
-  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker)
-    .filter((c) => !dropped.includes(c.ticker)),
+  const mine = useMemo(() => myShortlist(trayNames, dropped, data, uniByTicker),
     [trayNames, data, uniByTicker, dropped])
   const docWithMine = useMemo(() => ({ ...data, cards: [...(data.cards ?? []), ...mine] }),
     [data, mine])

@@ -3,7 +3,7 @@ import PageHeader from '../PageHeader'
 import PickedChart from '../ticker/PickedChart'
 import { useThemeHandoff } from '../../hooks/useThemeHandoff'
 import { useChartPick } from '../../hooks/useChartPick'
-import { useShortlist } from '../../hooks/useShortlist'
+import { useMyShortlist } from '../../hooks/useMyShortlist'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
@@ -76,7 +76,7 @@ export default function ScreenerPage() {
   const { data: market } = useMarketData()
   const { data: watchlist } = useWatchlist()
   const { doc } = useFocusDay()
-  const shortlist = useShortlist()
+  const myShortlist = useMyShortlist()
   const { t: tr, lang } = useLanguage()
   const { pick: chartPick, symbol: charted } = useChartPick()
 
@@ -315,7 +315,7 @@ export default function ScreenerPage() {
              className="inline-flex items-baseline gap-1 rounded-full border border-[var(--color-border)]
                         bg-[var(--color-surface)] px-3 py-1 text-[13px] no-underline text-[var(--color-text)]
                         hover:bg-[var(--color-hover-bg)]">
-            {tr('scx.shortlistChip', { n: shortlist.names.length })}
+            {tr('scx.shortlistChip', { n: myShortlist.length })}
           </a>,
         ]} />
 
