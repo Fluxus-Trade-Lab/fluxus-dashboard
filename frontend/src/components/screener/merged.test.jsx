@@ -346,3 +346,42 @@ describe('custom 可交易 gate', () => {
   })
 
 })
+
+describe('results table sorting', () => {
+  const tickers = (c) => [...c.container.querySelectorAll('[data-testid="results"] tbody tr[data-row]')].map((r) => r.getAttribute('data-row'))
+  const head = (c, k) => c.container.querySelector(`th[data-sort="${k}"]`)
+
+  it('opens on RS descending; a header sorts, a second press flips; aria-sort follows', async () => {
+    const c = await mountPage('zh', 'screener')
+    await click(c.container.querySelector('[data-step="setup"]'))
+    const rows = FOCUS.setups.pullback.rows
+    const rsTop = [...rows].sort((a, b) => (b.rs ?? -1) - (a.rs ?? -1) || a.t.localeCompare(b.t)).slice(0, 10).map((r) => r.t)
+    expect(tickers(c)).toEqual(rsTop)
+    expect(head(c, 'rs').getAttribute('aria-sort')).toBe('descending')
+    expect(head(c, 'e21').getAttribute('aria-sort')).toBeNull()
+
+    for (const [k, field] of [['e21', 'ema21_atr'], ['s50', 'sma50_atr'], ['m1', 'perf_1m'], ['hi', 'hi52']]) {
+      await click(head(c, k).querySelector('button'))
+      expect(head(c, k).getAttribute('aria-sort')).toBe('descending')
+      expect(head(c, 'rs').getAttribute('aria-sort')).toBeNull()
+      const want = rows.filter((r) => r[field] != null).sort((a, b) => b[field] - a[field] || a.t.localeCompare(b.t)).slice(0, 10).map((r) => r.t)
+      expect(tickers(c), k).toEqual(want)
+      await click(head(c, k).querySelector('button'))
+      expect(head(c, k).getAttribute('aria-sort')).toBe('ascending')
+      const up = rows.filter((r) => r[field] != null).sort((a, b) => a[field] - b[field] || a.t.localeCompare(b.t)).slice(0, 10).map((r) => r.t)
+      expect(tickers(c), `${k} asc`).toEqual(up)
+    }
+  })
+
+  it('共振 shows a 热度 column and opens on it, descending', async () => {
+    const heat = json(OUT, 'heating_up.json')
+    const c = await mountPage('zh', 'screener', {}, false, { 'screener-preset': 'custom', 'screener-query': JSON.stringify({ scan: 'confluence' }) })
+    expect(head(c, 'heat')).not.toBeNull()
+    expect(head(c, 'heat').getAttribute('aria-sort')).toBe('descending')
+    const scores = tickers(c).map((t) => heat.rows.find((r) => r.ticker === t)?.score ?? -Infinity)
+    expect(scores).toEqual([...scores].sort((a, b) => b - a))
+    // other scans have no heat column
+    const v = await mountPage('zh', 'screener', {}, false, { 'screener-preset': 'custom', 'screener-query': JSON.stringify({ scan: 'vcp' }) })
+    expect(head(v, 'heat')).toBeNull()
+  })
+})

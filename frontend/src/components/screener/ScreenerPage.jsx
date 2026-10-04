@@ -130,6 +130,12 @@ export default function ScreenerPage() {
     return m
   }, [groups.industries, groups.themes])
 
+  const heatByTicker = useMemo(() => {
+    const m = new Map()
+    for (const r of heat?.rows ?? []) m.set(r.ticker, r)
+    return m
+  }, [heat])
+
   /** a table row from a universe row: home group (theme, else industry) and its state */
   const fromUniverse = (ticker, from) => {
     const u = byTicker.get(ticker)
@@ -139,7 +145,7 @@ export default function ScreenerPage() {
     const gstate = home ? groupState.get(`${kind}|${home}`) ?? null : null
     const note = noteFor(doc, ticker, lang)
     return {
-      t: ticker, rs: u?.rs_rating ?? null, group: home, gstate,
+      t: ticker, rs: u?.rs_rating ?? null, group: home, gstate, heat: heatByTicker.get(ticker)?.score ?? null,
       waterState: kind === 'theme' ? gstate : null,
       e21: u?.ema21_atr_dist ?? null, s50: u?.sma50_atr_dist ?? null,
       m1: u?.perf_1m == null ? null : u.perf_1m * 100,
@@ -154,7 +160,7 @@ export default function ScreenerPage() {
     const g = c.theme ?? c.ind ?? null
     const note = noteFor(doc, c.t, lang)
     return {
-      t: c.t, rs: c.rs ?? null, group: g?.name ?? null, gstate: g?.state ?? null,
+      t: c.t, rs: c.rs ?? null, group: g?.name ?? null, gstate: g?.state ?? null, heat: heatByTicker.get(c.t)?.score ?? null,
       waterState: c.theme?.state ?? null,
       e21: c.ema21_atr ?? null, s50: c.sma50_atr ?? null, m1: c.perf_1m ?? null, hi: c.hi52 ?? null,
       note, flagged: isFlagged(note), from,
@@ -194,7 +200,7 @@ export default function ScreenerPage() {
     return (activeScan.tickers ?? []).map((tk) => fromUniverse(tk, activeScan.from))
   // fromCard/fromUniverse close over the lookups listed here
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [doc, activeScan, step, all, byTicker, groups.stocks, groupState, lang])
+  }, [doc, activeScan, step, all, byTicker, groups.stocks, groupState, heatByTicker, lang])
 
   const counts = useMemo(() => {
     if (!doc || !activeScan) return {}
@@ -213,12 +219,6 @@ export default function ScreenerPage() {
   }, [funnelBase, water])
 
   // ── custom screen ─────────────────────────────────────────────────────
-  const heatByTicker = useMemo(() => {
-    const m = new Map()
-    for (const r of heat?.rows ?? []) m.set(r.ticker, r)
-    return m
-  }, [heat])
-
   // status: 'ok' | 'loading' | 'missing'. A scan whose file is not in must
   // never fall back to the whole universe under its own title.
   const scans = useMemo(() => SCAN_DEFS.map((d) => {
@@ -281,7 +281,7 @@ export default function ScreenerPage() {
     for (const g of gates) kept = kept.filter(GATES[g].test)
     return kept.map((r) => fromUniverse(r.ticker, null)).sort(byRs)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preState, states, gates, GATES, byTicker, groups.stocks, groupState, doc, lang])
+  }, [preState, states, gates, GATES, byTicker, groups.stocks, groupState, heatByTicker, doc, lang])
 
   const themeWide = useMemo(() => {
     if (!themes.size || customRows.length || !themeRows.length || !universe?.length) return null
@@ -383,7 +383,10 @@ export default function ScreenerPage() {
           </div>
         )}
 
-        <ResultsTable title={title} rows={rows} n={topN} setN={setTopN} onChart={onChart}
+        <ResultsTable key={funnel ? `f|${activeScan?.key}` : `c|${scan}`}
+                      title={title} rows={rows} n={topN} setN={setTopN} onChart={onChart}
+                      showHeat={!funnel && scan === 'confluence'}
+                      defaultSort={!funnel && scan === 'confluence' ? 'heat' : 'rs'}
                       status={funnel ? 'ok' : customStatus} />
       </section>
 

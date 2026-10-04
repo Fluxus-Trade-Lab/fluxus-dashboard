@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { dataName } from '../../i18n/names'
 import { useShortlist } from '../../hooks/useShortlist'
@@ -61,14 +62,44 @@ function AddButton({ row }) {
   )
 }
 
-export default function ResultsTable({ title, rows, n, setN, onChart, status = 'ok' }) {
+/** Sorts by one column; missing values sink to the bottom in either direction. */
+export function sortRows(rows, key, dir) {
+  const sign = dir === 'asc' ? 1 : -1
+  return [...rows].sort((a, b) => {
+    const x = a[key], y = b[key]
+    if (x == null && y == null) return a.t.localeCompare(b.t)
+    if (x == null) return 1
+    if (y == null) return -1
+    return (x - y) * sign || a.t.localeCompare(b.t)
+  })
+}
+
+export default function ResultsTable({ title, rows, n, setN, onChart, status = 'ok', showHeat = false, defaultSort = 'rs' }) {
   const { t, lang } = useLanguage()
-  const ready = status === 'ok'
-  const shown = ready ? rows.slice(0, n) : []
-  const rest = rows.length - shown.length
+  const [sort, setSort] = useState({ key: defaultSort, dir: 'desc' })
   const th = 'px-2 py-1.5 text-[11px] font-medium tracking-[0.04em] text-[var(--color-text-muted)] whitespace-nowrap border-b border-[var(--color-border-light)]'
   const td = 'px-2 py-2 border-b border-[var(--color-border-light)] align-top'
   const num = 'text-right font-mono tabular-nums whitespace-nowrap'
+  const ready = status === 'ok'
+  const sorted = useMemo(() => sortRows(rows, sort.key, sort.dir), [rows, sort])
+  const shown = ready ? sorted.slice(0, n) : []
+  const pressSort = (key) => setSort((s) => (s.key === key
+    ? { key, dir: s.dir === 'desc' ? 'asc' : 'desc' } : { key, dir: 'desc' }))
+  const sortable = (k, children) => {
+    const on = sort.key === k
+    return (
+      <th key={k} className={`${th} text-right`} data-sort={k}
+          aria-sort={on ? (sort.dir === 'desc' ? 'descending' : 'ascending') : undefined}>
+        <button type="button" onClick={() => pressSort(k)}
+                className={`bg-transparent border-0 p-0 cursor-pointer font-inherit text-inherit tracking-inherit
+                            hover:text-[var(--color-text)] ${on ? 'text-[var(--color-text-bold)]' : ''}`}>
+          {children}{on ? (sort.dir === 'desc' ? ' ↓' : ' ↑') : ''}
+        </button>
+      </th>
+    )
+  }
+  const cols = showHeat ? 11 : 10
+  const rest = rows.length - shown.length
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -84,12 +115,13 @@ export default function ResultsTable({ title, rows, n, setN, onChart, status = '
             <tr>
               <th className={`${th} text-right`}>#</th>
               <th className={`${th} text-left`}>{t('scx.col.ticker')}</th>
-              <th className={`${th} text-right`}>RS</th>
+              {showHeat && sortable('heat', t('scx.col.heat'))}
+              {sortable('rs', 'RS')}
               <th className={`${th} text-left`}>{t('scx.col.theme')}</th>
-              <th className={`${th} text-right`}>{t('scx.col.e21')}</th>
-              <th className={`${th} text-right`}>{t('scx.col.s50')}</th>
-              <th className={`${th} text-right`}>{t('scx.col.m1')}</th>
-              <th className={`${th} text-right`}>{t('scx.col.hi')}</th>
+              {sortable('e21', t('scx.col.e21'))}
+              {sortable('s50', t('scx.col.s50'))}
+              {sortable('m1', t('scx.col.m1'))}
+              {sortable('hi', t('scx.col.hi'))}
               <th className={`${th} text-left`}>{t('scx.col.note')}</th>
               <th className={th} />
             </tr>
@@ -104,6 +136,7 @@ export default function ResultsTable({ title, rows, n, setN, onChart, status = '
                     {r.t}
                   </button>
                 </td>
+                {showHeat && <td className={`${td} ${num}`}>{r.heat == null ? '—' : r.heat}</td>}
                 <td className={`${td} ${num}`}>{r.rs ?? '—'}</td>
                 <td className={`${td} min-w-[150px]`}>
                   <span className="text-[var(--color-text)]">{r.group ? dataName(r.group, lang) : '—'}</span>
@@ -122,7 +155,7 @@ export default function ResultsTable({ title, rows, n, setN, onChart, status = '
               </tr>
             ))}
             {(!ready || !rows.length) && (
-              <tr><td colSpan={10} data-testid="table-state" data-state={ready ? 'empty' : status}
+              <tr><td colSpan={cols} data-testid="table-state" data-state={ready ? 'empty' : status}
                       className="py-6 text-center text-[13px] text-[var(--color-text-muted)]">
                 {t(status === 'loading' ? 'scx.loading' : status === 'missing' ? 'scx.noData' : 'scx.empty')}
               </td></tr>
@@ -132,7 +165,7 @@ export default function ResultsTable({ title, rows, n, setN, onChart, status = '
       </div>
       <div className="flex justify-between items-center mt-2.5 text-[13px] text-[var(--color-text-muted)]">
         <span data-testid="more">{ready && rest > 0 ? t('scx.more', { n: rest }) : ''}</span>
-        <span>{t('scx.sortedRs')}</span>
+        <span>{sort.key === 'rs' && sort.dir === 'desc' ? t('scx.sortedRs') : ''}</span>
       </div>
     </div>
   )
