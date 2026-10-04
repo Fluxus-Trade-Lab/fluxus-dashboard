@@ -30,7 +30,7 @@ export const FOCUS_SETUPS = ['pullback', 'ep', 'vcp']
  */
 export const PANEL_SCANS = [
   'true_market_leaders', 'liquid_leaders',
-  'ma_reclaim', 'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break',
+  'ma_reclaim', 'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break', 'liquid_leader_pullback',
   'vcs', 'anticipation',
   'pp_today', 'pp_2plus_10d', 'morales_pp_10d',
   'weekly_momentum_97', 'bullish_4pct', 'weekly_20_gainers',

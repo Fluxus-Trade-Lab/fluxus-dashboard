@@ -39,6 +39,13 @@ describe('panelScans', () => {
     for (const k of ['stop_hit', 'll_break', 'extended', 'ep_stockbee', 'ep_qullamaggie']) expect(keys).not.toContain(k)
   })
 
+  it('includes Liquid Leader Pullback with its tickers', () => {
+    const p = panelScans(WL).find((x) => x.key === 'liquid_leader_pullback')
+    const raw = WL.zones.flatMap((z) => z.panels).find((x) => x.key === 'liquid_leader_pullback')
+    expect(p.tickers.length).toBe(raw.tickers.length)
+    expect(p.tickers.length).toBeGreaterThan(0)
+  })
+
   it('carries each panel\'s tickers as the file lists them', () => {
     const tml = WL.zones.flatMap((z) => z.panels).find((p) => p.key === 'true_market_leaders')
     expect(panelScans(WL).find((p) => p.key === 'true_market_leaders').tickers).toEqual(tml.tickers.map((r) => r.ticker))
