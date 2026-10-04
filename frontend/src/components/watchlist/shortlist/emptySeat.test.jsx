@@ -49,7 +49,8 @@ describe('an empty seat', () => {
   it('admits it cannot tell, while the field has not shipped', () => {
     const t = text(draw({ seat: 'entry', why: '今日无 EP' }))
     expect(t).toContain('不知道是哪一种')
-    expect(t).toContain('empty_reason')
+    // the DATA_CONTRACTS citation left the page with the 2026-10-04 merge (no § on screen)
+    expect(t).not.toContain('empty_reason')
     // and it must not have picked one of the three and sounded sure
     expect(t).not.toContain('是没测')
     expect(t).not.toContain('跑了，一个都没有')

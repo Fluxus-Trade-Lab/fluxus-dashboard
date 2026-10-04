@@ -30,6 +30,9 @@ function serve(url) {
   return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(body) })
 }
 
+// whole-page mounts on the real files; under a full parallel run they need room
+vi.setConfig({ testTimeout: 30000 })
+
 afterEach(() => { cleanup(); localStorage.clear(); vi.unstubAllGlobals() })
 
 export async function mountPage(lang, which, props = {}, keep = false) {
@@ -189,5 +192,70 @@ describe('copy', () => {
     const all = (await walkScreener('zh')).join('\n')
     for (const w of ['课程漏斗', '自定义', '可交易', '形态', '资格', '过闸', '水域', '市场环境', '市场状态 →',
       '收着做', '龙头TML', '+ 短名单']) expect(all, w).toContain(w)
+  })
+})
+
+/** every text on Today's List, with every card's history opened */
+async function walkTodaysList(lang, zone = 'shortlist') {
+  const c = await mountPage(lang, 'watchlist', { zone })
+  const seen = grab(c.container)
+  for (const b of [...c.container.querySelectorAll('button')].filter((x) => /\(\d+/.test(x.textContent))) {
+    await click(b)
+  }
+  return { c, seen: grab(c.container, seen) }
+}
+
+describe("Today's List", () => {
+  it('has no 晨报 tab: the page is 今日六席 + 我的短名单', async () => {
+    for (const zone of [undefined, 'shortlist']) {
+      const { c } = await walkTodaysList('zh', zone)
+      const buttons = [...c.container.querySelectorAll('button')].map((b) => b.textContent.trim())
+      expect(buttons).not.toContain(translations.zh['wl2.tab.morning'])
+      expect(buttons).not.toContain(translations.zh['wl2.tab.shortlist'])
+      const heads = [...c.container.querySelectorAll('h2')].map((h) => h.textContent.trim())
+      expect(heads[0]).toBe('今日六席')
+      expect(heads[1]).toMatch(/^我的短名单/)
+    }
+  })
+
+  it('an old zone route does not throw and lands on the shortlist view', async () => {
+    const wl = json(OUT, 'watchlist.json')
+    for (const z of [...wl.zones.map((x) => x.key), 'nonsense']) {
+      const c = await mountPage('en', 'watchlist', { zone: z })
+      expect(c.container.textContent).toContain('Today’s six seats')
+    }
+  })
+
+  it('+ 短名单 on the Screener lands in 我的短名单', async () => {
+    const mineHead = (c) => [...c.container.querySelectorAll('h2')].find((h) => h.textContent.startsWith('我的短名单'))
+    const mineText = (c) => {
+      let out = '', el = mineHead(c).parentElement.nextElementSibling
+      while (el) { out += el.textContent; el = el.nextElementSibling }
+      return out
+    }
+    const before = await mountPage('zh', 'watchlist', { zone: 'shortlist' })
+    const n0 = Number(mineHead(before).textContent.replace('我的短名单', '').trim() || 0)
+    const had = mineText(before)
+    cleanup()
+    const s = await mountPage('zh', 'screener', {}, true)
+    const btn = [...s.container.querySelectorAll('[data-add]')].find((b) => !had.includes(b.getAttribute('data-add')))
+    const tk = btn.getAttribute('data-add')
+    await click(btn)
+    cleanup()
+    const c = await mountPage('zh', 'watchlist', { zone: 'shortlist' }, true)
+    expect(mineHead(c).textContent.trim()).toBe(`我的短名单 ${n0 + 1}`)
+    expect(mineText(c), `${tk} under 我的短名单`).toContain(tk)
+  })
+
+  for (const lang of ['zh', 'en']) {
+    it(`no internal wording on Today's List (${lang})`, async () => {
+      const all = (await walkTodaysList(lang)).seen.join('\n')
+      for (const w of FORBIDDEN[lang]) expect(all.toLowerCase(), w).not.toContain(w.toLowerCase())
+    })
+  }
+
+  it("English mode prints no Chinese on Today's List", async () => {
+    const han = (await walkTodaysList('en')).seen.filter((x) => HAN.test(x))
+    expect(han).toEqual([])
   })
 })

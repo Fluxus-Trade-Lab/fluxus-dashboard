@@ -174,7 +174,6 @@ const UNKNOWN_EMPTY = {
 export function EmptySeat({ seat, label }) {
   const { t, lang } = useLanguage()
   const state = EMPTY_STATE[seat.empty_reason] ?? UNKNOWN_EMPTY
-  const known = state !== UNKNOWN_EMPTY
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] px-5 py-5">
       <div className="flex items-baseline gap-2 flex-wrap">
@@ -196,12 +195,6 @@ export function EmptySeat({ seat, label }) {
           <p className="m-0 mt-1.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
             {t(`wl2.empty.${state.key}.body`)}
             {seat.excluded_n != null && <>{' '}{t('wl2.empty.excluded', { n: seat.excluded_n })}</>}
-            {!known && (
-              <span className="font-mono text-[11px] text-[var(--color-text-muted)]">
-                {' '}{rich(t('wl2.empty.asked'),
-                  { a: <code>empty_reason</code>, b: <code>excluded_n</code> })}
-              </span>
-            )}
           </p>
         </div>
       </div>
@@ -300,7 +293,7 @@ export default function ShortListPage() {
   if (failed) {
     return (
       <p className="text-[13px] text-[var(--color-text-muted)] mt-4">
-        {t('wl2.sl.missing')}
+        {t('tlx.missing')}
       </p>
     )
   }
@@ -391,37 +384,37 @@ function Body({ data }) {
       </div>
       <Legend legend={inLang(data, 'legend', lang)} />
 
-      {/* The loop's other half is missing, and the page has to say so — a mark
-          that looks saved but feeds nothing is worse than no button at all. */}
-      {/* Three states, three sentences. A mark that looks saved and feeds
-          nothing is worse than no button, so this says which of the three is
-          true rather than one hedge covering all of them. */}
-      <p className="m-0 mt-3 text-[11px] font-mono leading-relaxed
-                    text-[var(--color-text-muted)]">
-        {sync.kind === 'synced' ? (
-          <>{tx('wl2.sl.synced')}</>
-        ) : sync.kind === 'off' ? (
-          <>{rich(tx('wl2.sl.off'), {}, 'font-semibold')}</>
-        ) : (
-          <>
-            {rich(tx('wl2.sl.unsent', { n: sync.unsent }), {}, 'font-semibold')}{' '}
-            {sync.lastError === 'action-not-implemented'
-              ? rich(tx('wl2.sl.notImpl'), { code: <code>shortlist_upsert</code> })
-              : rich(tx('wl2.sl.lastErr'),
-                  { code: <code>{sync.lastError ?? tx('wl2.sl.unknown')}</code> })}
-          </>
-        )}
+      {/* Marks: one line of state, no explanation (Andy 2026-10-04: labels,
+          numbers and state words only). */}
+      <p className="m-0 mt-3 text-[11px] font-mono text-[var(--color-text-muted)]" data-testid="sync-state">
+        {sync.kind === 'synced' ? tx('tlx.sync.synced')
+          : sync.kind === 'off' ? tx('tlx.sync.local')
+          : tx('tlx.sync.unsent', { n: sync.unsent })}
       </p>
+
+      <h2 className="text-[13px] font-mono uppercase tracking-[.2em]
+                     text-[var(--color-text-muted)] mt-7 mb-3">{tx('wl2.sl.seats')}</h2>
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+        {seats.map((s) => {
+          const label = seatLabel(tx, s.seat)
+          const card = s.ticker ? byTicker[s.ticker] : null
+          if (!card) return <EmptySeat key={s.seat} seat={s} label={label} />
+          return (
+            <NameCard key={s.seat} card={card} seat={s} seatLabel={label}
+                      verdictOf={inLang(card, 'verdict', lang)} entry={entryOf(card.ticker)}
+                      onMark={(v) => setMark(data.date, card.ticker, v)}
+                      onNote={(v) => setNote(data.date, card.ticker, v)} />
+          )
+        })}
+      </div>
 
       <div className="flex items-baseline gap-4 flex-wrap mt-7 mb-2">
         <h2 className="m-0 text-[13px] font-mono uppercase tracking-[.2em]
-                       text-[var(--color-text-muted)]">{tx('wl2.sl.mine')} {mine.length || ''}</h2>
+                       text-[var(--color-text-muted)]">{tx('tlx.mine')} {mine.length || ''}</h2>
         <AddName known={known} onAdd={(tk) => add(tk, uniByTicker[tk] ?? {}, '手工加入')} />
-        {mine.length > 0 && (
-          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-            {tx('wl2.sl.viaChart')}
-          </span>
-        )}
+        <a href="#/screener" className="ml-auto text-[13px] no-underline text-[var(--color-accent)] hover:underline">
+          {tx('tlx.fromScreener')}
+        </a>
       </div>
       {stale && (
         /* right names, wrong clock — the tray already knew to say this, and it
@@ -443,28 +436,10 @@ function Body({ data }) {
         </div>
       ) : (
         <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-muted)]">
-          {tx('wl2.sl.emptyMine')}
+          {tx('tlx.emptyMine')}
         </p>
       )}
 
-      <h2 className="text-[13px] font-mono uppercase tracking-[.2em]
-                     text-[var(--color-text-muted)] mt-7 mb-1">{tx('wl2.sl.seats')}</h2>
-      <p className="m-0 mb-3 text-[11px] text-[var(--color-text-secondary)]">
-        {rich(tx('wl2.sl.seatsIntro'), {}, 'font-semibold')}
-      </p>
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
-        {seats.map((s) => {
-          const label = seatLabel(tx, s.seat)
-          const card = s.ticker ? byTicker[s.ticker] : null
-          if (!card) return <EmptySeat key={s.seat} seat={s} label={label} />
-          return (
-            <NameCard key={s.seat} card={card} seat={s} seatLabel={label}
-                      verdictOf={inLang(card, 'verdict', lang)} entry={entryOf(card.ticker)}
-                      onMark={(v) => setMark(data.date, card.ticker, v)}
-                      onNote={(v) => setNote(data.date, card.ticker, v)} />
-          )
-        })}
-      </div>
     </div>
   )
 }

@@ -61,6 +61,6 @@ describe('ShortListPage mounting before its file lands', () => {
     let c
     await act(async () => { c = render(<LanguageProvider><ShortListPage /></LanguageProvider>) })
     await act(async () => { await new Promise((r) => setTimeout(r, 20)) })
-    expect(c.container.textContent).toContain('shortlist.json 还没有')
+    expect(c.container.textContent).toContain('今日名单数据未到')   // 2026-10-04: no 还没 / file names on screen
   })
 })

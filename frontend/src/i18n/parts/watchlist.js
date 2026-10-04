@@ -160,6 +160,18 @@ export default {
     'wl2.nc.remove': 'remove',
     'wl2.nc.histPanels': 'scans it appeared on',
     'wl2.nc.histEvents': 'screener hits, last three months (P: = preset)',
+
+    // Today's List after the merge (Andy 2026-10-04): labels and states only
+    'tlx.mine': 'My shortlist',
+    'tlx.fromScreener': 'Add from the Screener →',
+    'tlx.emptyMine': 'Empty. Press “+ Shortlist” in the Screener table, or type a ticker above.',
+    'tlx.missing': "Today's List data is not in.",
+    'tlx.sync.synced': '✗ / ★ / notes synced to the Google Sheet',
+    'tlx.sync.local': '✗ / ★ / notes saved on this device',
+    'tlx.sync.unsent': '{n} marks not synced',
+    'tlx.noChart': 'No chart for this name.',
+    'tlx.noReadings': 'No readings.',
+    'tlx.noVerdict': 'No verdict.',
   },
   zh: {
     'wl2.tab.morning': '晨报',
@@ -308,5 +320,16 @@ export default {
     'wl2.nc.remove': '移出',
     'wl2.nc.histPanels': '上过哪些格',
     'wl2.nc.histEvents': '近三月筛选器命中（P: = 预设）',
+
+    'tlx.mine': '我的短名单',
+    'tlx.fromScreener': '从选股器加 →',
+    'tlx.emptyMine': '空。在选股器的表里点「+ 短名单」，或在上面输入代码。',
+    'tlx.missing': '今日名单数据未到。',
+    'tlx.sync.synced': '✗ / ★ / 备注已同步到 Google 表格',
+    'tlx.sync.local': '✗ / ★ / 备注存在本机',
+    'tlx.sync.unsent': '{n} 条标记未同步',
+    'tlx.noChart': '这只票没有图。',
+    'tlx.noReadings': '没有读数。',
+    'tlx.noVerdict': '无判词。',
   },
 }

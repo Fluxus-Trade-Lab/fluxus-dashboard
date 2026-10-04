@@ -65,25 +65,9 @@ const DATA_ZH = new Set([
 ].filter(Boolean))
 
 describe("Today's List in Chinese", () => {
-  it('morning tab: Chinese steps, gates and panel names, no interface English', async () => {
-    const all = (await mount('zh')).join('\n')
-    for (const zh of ['晨报', '短名单', '水域', '脚印', '位置', '入场', '出场', '别这么用：',
-      '只在领先 / 改善的主题里找票', '结构转折', '排除医疗保健', '市值 ≥ $1B', '日成交额 ≥ $20M',
-      '破位区除外', '收复均线', '口袋支点', '只减不买', '主题是领先或改善', '收盘价/SPY']) {
-      expect(all, zh).toContain(zh)
-    }
-    for (const en of ['Short List', 'exclude healthcare', 'except trouble', '$1B cap', 'M/day traded',
-      'MA Reclaim', 'Pocket Pivot', '(today)', 'Leading or Improving', 'Leading / Improving',
-      'Industry ranks in the top 20', 'the healthcare view', 'close/SPY', 'Themes 页', 'momentum',
-      'precision', 'Delayed-EP', 'Liquid Leader Pullback', 'Extended ≥7']) {
-      expect(all, en).not.toContain(en)
-    }
-    expect(all).toContain('SPY')   // tickers and the trade's proper nouns stay Latin
-  })
-
   it('short list tab: Chinese seats, readings and buttons', async () => {
     const all = (await mount('zh', 'shortlist')).join('\n')
-    for (const zh of ['今日六席', '我的名单', '在烧 · 今天谁在堆叠信号', '✗ 今天不要', '★ 关注', '备注',
+    for (const zh of ['今日六席', '我的短名单', '在烧 · 今天谁在堆叠信号', '✗ 今天不要', '★ 关注', '备注',
       '量比', '合流日', '热度', '收起历史', '上过哪些格']) {
       expect(all, zh).toContain(zh)
     }
@@ -95,11 +79,6 @@ describe("Today's List in Chinese", () => {
 })
 
 describe("Today's List in English", () => {
-  it('morning tab prints no Chinese at all', async () => {
-    const han = (await mount('en')).filter((x) => HAN.test(x))
-    expect(han).toEqual([])
-  })
-
   it('short list tab prints Chinese only where the file does', async () => {
     const han = (await mount('en', 'shortlist')).filter((x) => HAN.test(x) && !DATA_ZH.has(x))
     expect(han).toEqual([])
@@ -114,23 +93,16 @@ describe("Today's List in English", () => {
     expect(han).toEqual([])
   })
 
-  it('keeps the strings English mode always printed', async () => {
-    const all = (await mount('en')).join('\n')
-    for (const en of ['Short List', 'exclude healthcare', '$1B cap · $20M/day traded · ADR ≥ 3.5% except trouble',
-      'Pocket Pivot (Morales/Kacher, 10D)', 'MA Reclaim (close crossed up the 21EMA / 50SMA)']) {
-      expect(all, en).toContain(en)
-    }
-  })
 })
 
 describe('zone detail route', () => {
-  // #/watchlist/<zone> threw "Cannot access 'view' before initialization":
-  // ZoneDetail was handed `view` before the const was declared (on main since before 10-04).
-  it('opens a zone page without throwing, in both languages', async () => {
+  // The zone pages left with the 晨报 tab (Andy 2026-10-04, plan A): an old
+  // #/watchlist/<zone> link lands on the shortlist view instead of throwing.
+  it('an old zone link opens the shortlist view, in both languages', async () => {
     const key = FILES['watchlist.json'].zones[0].key
     for (const lang of ['en', 'zh']) {
       const seen = await mount(lang, key)
-      expect(seen.length).toBeGreaterThan(0)
+      expect(seen.join('\n')).toContain(lang === 'zh' ? '今日六席' : 'Today’s six seats')
     }
   })
 })

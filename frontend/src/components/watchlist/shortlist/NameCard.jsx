@@ -4,7 +4,7 @@ import { pctFromReading, fmtPct, fmtAtr, fmtPctl } from './scales'
 import { inLang } from '../../../i18n/fieldLang'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import { dataName } from '../../../i18n/names'
-import { rich, word } from '../../screener/richText'
+import { word } from '../../screener/richText'
 import { panelName, panelNameFromLabel } from '../panelName'
 
 /* The tray stores where a name was taken from; a hand-typed name is stored
@@ -127,15 +127,8 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
                style={{ backgroundImage:
                  'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
             <p className="m-0 text-[13px] leading-snug text-[var(--color-text-bold)]">
-              {t('wl2.nc.noChart.head')}
-            </p>
-            <p className="m-0 mt-1.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
-              {rich(t('wl2.nc.noChart.body'), {
-                upsert: <code className="font-mono">shortlist_upsert</code>,
-                universe: <code className="font-mono">universe.json</code> })}
-              {card.inUniverse === false && (
-                <b className="font-semibold">{' '}{t('wl2.nc.noChart.notInUniverse')}</b>
-              )}
+              {t('tlx.noChart')}
+              {card.inUniverse === false && <>{' '}{t('tlx.noReadings')}</>}
             </p>
           </div>
         )}
@@ -150,7 +143,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
         </p>
       ) : card.source === 'manual' ? (
         <p className="m-0 mt-3 text-[13px] leading-snug text-[var(--color-text-muted)] italic">
-          {t('wl2.nc.noVerdict')}
+          {t('tlx.noVerdict')}
         </p>
       ) : null}
 
