@@ -2,6 +2,9 @@
 // translations.js. Same rules as that file's header.
 export default {
   en: {
+    'sh.fresh.title': 'Newest session in the data is {date}. One session is published each weekday.',
+    'sh.fresh.behind': 'weekdays behind',
+    'sh.fresh.newest': '· newest {date}',
     'sh.footer.updated': 'Last updated: {ts}',
     'sh.footer.cached': 'Cached',
     'sh.cc.aria': '{n} sessions of price with the 21-day and 50-day averages',
@@ -34,6 +37,9 @@ export default {
     'sh.st.local': 'Kept in this browser only — it does not follow you to another machine, and clearing site data clears it. Where a shortlist should really live is still open in PRODUCT.md.',
   },
   zh: {
+    'sh.fresh.title': '数据里最新的交易日是 {date}。每个工作日更新一次。',
+    'sh.fresh.behind': '个工作日未更新',
+    'sh.fresh.newest': '· 最新 {date}',
     'sh.footer.updated': '最后更新：{ts}',
     'sh.footer.cached': '缓存',
     'sh.cc.aria': '{n} 个交易日的价格，带 21 日和 50 日均线',

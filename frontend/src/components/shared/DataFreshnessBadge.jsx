@@ -1,4 +1,5 @@
 import { freshness } from './dataFreshness'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * The page saying how old it is, when it is old.
@@ -14,13 +15,15 @@ import { freshness } from './dataFreshness'
  * that: nothing on the page can be acted on until it is fixed.
  */
 export default function DataFreshnessBadge({ sessionDate }) {
+  const { lang, t } = useLanguage()
   const f = freshness(sessionDate)
   if (!f) return null
 
   const alarm = f.level === 'alarm'
-  const nice = new Intl.DateTimeFormat('en-US', {
-    month: 'short', day: 'numeric', timeZone: 'UTC',
-  }).format(new Date(`${f.date}T00:00:00Z`))
+  const d = new Date(`${f.date}T00:00:00Z`)
+  const nice = lang === 'zh'
+    ? `${d.getUTCMonth() + 1}月${d.getUTCDate()}日`
+    : new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(d)
 
   return (
     <span
@@ -31,11 +34,10 @@ export default function DataFreshnessBadge({ sessionDate }) {
         border: `1px ${alarm ? 'solid' : 'dashed'} ${
           alarm ? 'var(--color-refused)' : 'var(--color-border)'}`,
       }}
-      title={`Newest session on file is ${f.date}. The nightly job publishes one `
-             + `session a weekday; this page shows what the file holds, never more.`}>
+      title={t('sh.fresh.title', { date: f.date })}>
       <b className="font-semibold tabular-nums">{f.behind}</b>
-      <span>weekdays behind</span>
-      <span style={{ opacity: 0.6 }}>· newest {nice}</span>
+      <span>{t('sh.fresh.behind')}</span>
+      <span style={{ opacity: 0.6 }}>{t('sh.fresh.newest', { date: nice })}</span>
     </span>
   )
 }
