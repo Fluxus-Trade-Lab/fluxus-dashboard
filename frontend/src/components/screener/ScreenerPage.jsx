@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
+import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import PickedChart from '../ticker/PickedChart'
 import { useThemeHandoff } from '../../hooks/useThemeHandoff'
 import { useChartPick } from '../../hooks/useChartPick'
@@ -334,6 +335,8 @@ export default function ScreenerPage() {
                         hover:bg-[var(--color-hover-bg)]">
             {tr('scx.shortlistChip', { n: myShortlist.length })}
           </a>,
+          // the same badge every page wears: silent while fresh, a count of weekdays once behind
+          <DataFreshnessBadge key="fresh" sessionDate={doc?.asof ?? heat?.as_of?.slice(0, 10)} />,
         ]} />
 
       <MarketStrip market={doc?.market} />

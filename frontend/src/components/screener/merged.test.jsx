@@ -28,6 +28,7 @@ function serve(url) {
   const o = override?.(name)
   if (o === 'hang') return new Promise(() => {})
   if (o === 'missing') return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
+  if (o && typeof o === 'object') return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(o) })
   const file = u.includes('/data/output/') ? resolve(OUT, u.split('/data/output/')[1])
     : resolve(PUB, name)
   if (!existsSync(file)) return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
@@ -383,5 +384,18 @@ describe('results table sorting', () => {
     // other scans have no heat column
     const v = await mountPage('zh', 'screener', {}, false, { 'screener-preset': 'custom', 'screener-query': JSON.stringify({ scan: 'vcp' }) })
     expect(head(v, 'heat')).toBeNull()
+  })
+})
+
+describe('page header', () => {
+  it('wears the shared freshness badge: silent on a fresh file, a weekday count on a stale one', async () => {
+    const today = new Date().toISOString().slice(0, 10)
+    override = (name) => (name === 'focus.json' ? { ...FOCUS, asof: today } : undefined)
+    const fresh = await mountPage('en', 'screener')
+    expect(fresh.container.querySelector('header').textContent).not.toContain('weekdays behind')
+    cleanup()
+    override = (name) => (name === 'focus.json' ? { ...FOCUS, asof: '2026-09-01' } : undefined)
+    const stale = await mountPage('en', 'screener')
+    expect(stale.container.querySelector('header').textContent).toContain('weekdays behind')
   })
 })
