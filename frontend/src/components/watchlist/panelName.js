@@ -10,10 +10,9 @@ import { translations } from '../../i18n/translations'
  * adds tomorrow still shows up rather than vanishing.
  */
 export function panelName(t, lang, key, label) {
-  if (lang === 'zh') {
-    const z = t(`wl2.panel.${key}`)
-    if (z !== `wl2.panel.${key}`) return z
-  }
+  // checked against the dictionary first, so a key zh simply does not
+  // override is not reported as a missing translation
+  if (lang === 'zh' && `wl2.panel.${key}` in translations.zh) return t(`wl2.panel.${key}`)
   const v = t(`wlp.${key}`)
   return v === `wlp.${key}` ? (label ?? key) : v
 }

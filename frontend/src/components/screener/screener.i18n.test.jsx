@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { render, act, fireEvent } from '@testing-library/react'
 import { LanguageProvider } from '../../i18n/LanguageContext'
-import FunnelPanel from './funnel/FunnelPanel'
 import ScanBar from './ScanBar'
 import StockTable from './StockTable'
 
@@ -49,7 +48,6 @@ async function mount(lang) {
   await act(async () => {
     c = render(
       <LanguageProvider>
-        <FunnelPanel siteDate="2026-10-02" />
         <ScanBar scans={scans} scan="confluence" onScan={() => {}}
                  stateCounts={{ Leading: 3 }} states={new Set()} onToggleState={() => {}}
                  gates={new Set()} gateCounts={{ liquid: 1, exHealth: 1 }} onToggleGate={() => {}}
@@ -72,13 +70,14 @@ describe('Screener in Chinese', () => {
   it('prints the interface in Chinese, tickers and numbers untouched', async () => {
     const box = await mount('zh')
     const text = box.textContent
-    for (const zh of ['今天的漏斗', '绿灯 3/3', '收着做', '多空分歧', '受损 37.5', '减仓 / 精挑', '市场环境档位',
-      '主题：领先 1', '重点名单', '今天做哪种形态', '榜上同组五只里回踩最深。', '大盘这句是中文。', '云软件',
+    // the funnel panel's strings left with the panel (2026-10-04 merge); the
+    // merged page is covered by merged.test.jsx
+    for (const zh of ['云软件',
       '不限', '不设', '已收窄到你在主题页上比较的那个主题', '去掉扫描', '改善', '综合动量 97', '科技 · 应用软件', 'TEAM 个股页 →']) {
       expect(text, zh).toContain(zh)
     }
-    for (const en of ['green', 'Damaged', 'Reduced / selective', 'Focus', 'setup', 'Leading 1', 'Cloud Software',
-      'any', 'none', 'Narrowed', 'drop the scan', 'Improving', 'tear-sheet', 'The deepest pullback', 'Technology']) {
+    for (const en of ['Cloud Software',
+      'any', 'none', 'Narrowed', 'drop the scan', 'Improving', 'tear-sheet', 'Technology']) {
       expect(text, en).not.toContain(en)
     }
     expect(text).toContain('TEAM')
@@ -87,10 +86,9 @@ describe('Screener in Chinese', () => {
 
   it('English stays as it was', async () => {
     const text = (await mount('en')).textContent
-    for (const en of ['green 3/3', 'dim', 'MIXED 0', 'Damaged 37.5', 'Reduced / selective', 'Cloud Software',
+    for (const en of ['Cloud Software',
       'any', 'Narrowed to the theme you were comparing on Themes — Cloud Software.', 'drop the scan',
-      'Improving', 'momentum_97', 'Technology · Software - Application', 'TEAM tear-sheet →',
-      'The deepest pullback of the five in its group.']) {
+      'Improving', 'momentum_97', 'Technology · Software - Application', 'TEAM tear-sheet →']) {
       expect(text, en).toContain(en)
     }
   })
