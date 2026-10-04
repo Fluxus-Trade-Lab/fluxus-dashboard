@@ -204,6 +204,8 @@
 
 - [10-04] [RND Linda] **台账字段的功能性诊断闭合**：Rebase 换号时四个 commit sha 字段跟着变，`audit_universe_population` 当场被判假 STALE——freshness() 拿记录的 sha 去跑 `git log <sha>..HEAD`，指到已删 main 的旧号，系统误判有人在之后修过这条闸。诊断完整链条三层：①先证明字节无损（新加 `src_sha256` 字段，测量时记录的哈希与旧号、新号上源码的哈希三者逐字相同）②设计五层前提拒收（同一 src_sha256、不同 commit、字段错配、重复观测各有闸）③多条阳性对照验证（缺失条件时对应失败）。从人工台账同步升到机械无误判的诊断能力递进；82%→88% 杀死率的提升本质是防护边界从『人工追踪』升到『机械验证』。出处 T-1004-31 · f2904bf05 · `data/research/audit_mutation_ledger.json` · `data/research/night_reports/2026-10-04.md` §四
 
+- [10-04] [OPS] **系统每日诊断的数据交付时间纪律**：dailypage.json 自动生成 heartbeat 健康指标（plan_at/age_min/schedule_errors 等），确保每日 JST 00:01 新鲜数据可用；schedule_errors 从有「超时」降到清零展示系统自我纠正能力。诊断的可信度来自每日如此的重复验收一致，而非单次检查——时间纪律是系统对消费端（早班决策、dashboard 更新）的承诺，无人值守自动兑现。从『应急查一次』升到『每日定时诊断』的成熟度递进。出处 T-1004-48 · 9e187dee
+
 - [09-20] [Marketing Steve] **档位功能下线** · Market State 页撤掉七档显示（课程 L6B 已删）；主屏从二列变单列。91 行代码删除，新用户学习曲线平一档。出处 0756d133 · [frontend/src/components/breadth/CourseRead.jsx](../../../frontend/src/components/breadth/CourseRead.jsx)
 
 - [09-19] [Marketing Steve] **蹭位榜/高收藏表选票链接从手打脚本化**｜09-16/09-17 两班各手打错过一次状态 id，算上 09-10/09-11 同形坑已是第 3/4 次——触发三次律，工具化不再人工。脚本直接从 posts/*.jsonl 批量取 url/dt 拼链接、按 ET 算距今小时数，找不到的 id 原样报错让问题浮现。出处 a8415835
