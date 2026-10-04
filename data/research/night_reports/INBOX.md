@@ -411,3 +411,4 @@
 - [2026-10-03] Discord→X 生成端：2026-10-01 草稿已出（83 条消息 → 7 条推文，commit c21d9ae83）
 - [2026-10-03] 🔴 **数据哨兵**：07:00 JST 死线班（T-1003-24）· `audit_schedule_windows` 核：20:20Z 槽迟到 101min（历史 p50 251/max 281）、21:20Z 槽迟到 41min（p50 147/max 186），均未到 600min 丢弃阈值，判「迟到中」非 A_infra；dashboard 停在 2026-10-01（最近完成交易日本应是 2026-10-02）。按近两天同形状（自然触发大概率压过死线），07:02 JST（ET 18:02，合法发布时段内）主动 dispatch run `37070273234`，07:21 JST `success`，market data commit `b9fdf507f` 落 main，`market_health.json` spy 最新 candle 追到 2026-10-02（最近完成交易日），`stale: false`；`universe.json` 5618 行，quality status ok，tradeable 2505/excluded 2809，无截断迹象。`audit_archives` 11 violations/2 warnings 均为「归档差一个 session」的已知正常滞后（下一班追平），非真实缺口。**死线状态：安全**——07:22 JST 判断，距 08:30 死线尚余约 68 分钟。
 - [10-03] 📰 每日复盘 2026-10-02：已出（中英 PDF · 对照组纯字幕 EN PDF · Substack 逐页图 · X 素材）· 闸全绿 · 递送单 T-1003-47（runtime=app）
+- [10-04] 📰 周复盘 2026-W40：已出（中英 PDF 9/7 页 + 下周观察名单独立 PDF 中英 3/2 页 · Substack 逐页图）· 闸全绿 · 字幕撞 429 改本机 ASR 出稿 · 递送单 T-1004-51（runtime=app）
