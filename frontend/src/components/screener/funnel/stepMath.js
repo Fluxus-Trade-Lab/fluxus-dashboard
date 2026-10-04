@@ -38,13 +38,19 @@ export const PANEL_SCANS = [
 
 export const isWater = (state) => state === 'Leading' || state === 'Improving'
 
+/** The gate focus.json states; used only when that file is absent (same as build_cards.py GATE). */
+export const FALLBACK_GATE = { cap: 1e9, dollar_vol: 20e6, adr: 3.5 }
+
+/** one universe row against the stated gate */
+export const passesGate = (u, gate) => (u.market_cap ?? 0) >= gate.cap
+  && dollarVol(u) >= gate.dollar_vol && (u.adr_pct ?? 0) >= gate.adr
+
 const dollarVol = (u) => u.sb_avg_dollar_vol_20 ?? (u.avg_volume ?? 0) * (u.close ?? 0)
 
 /** universe rows that pass the file's stated gate (cap, $ volume, ADR) */
 export function rowsPassingGate(universeRows, gate) {
   if (!universeRows || !gate) return []
-  return universeRows.filter((u) => (u.market_cap ?? 0) >= gate.cap
-    && dollarVol(u) >= gate.dollar_vol && (u.adr_pct ?? 0) >= gate.adr)
+  return universeRows.filter((u) => passesGate(u, gate))
 }
 
 /** the cards of one focus.json setup at one step */

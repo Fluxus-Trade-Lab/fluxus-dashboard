@@ -157,7 +157,7 @@ function Divider() {
 export default function ScanBar({
   scans, scan, onScan,
   stateCounts, states, onToggleState,
-  gates, gateCounts, onToggleGate,
+  gates, gateCounts, onToggleGate, gateVars,
   themes, chosen, onTheme, handoff,
   search, onSearch,
   receipt, hiddenNote, gateNote, gateOn, wideNote,
@@ -231,7 +231,7 @@ export default function ScanBar({
                 : tr('sc.bar.anyGate')}>
           {['liquid', 'exHealth'].map((g) => (
             <Item key={g} on={gates?.has(g)} onClick={() => onToggleGate(g)}
-                  n={gateCounts?.[g] ?? null} title={tr(`scr.gate.${g}.why`)}>
+                  n={gateCounts?.[g] ?? null} title={tr(`scr.gate.${g}.why`, gateVars)}>
               {tr(`scr.gate.${g}`)}
             </Item>
           ))}

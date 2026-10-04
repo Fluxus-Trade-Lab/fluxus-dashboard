@@ -17,7 +17,7 @@ import { StepBar, ScanList } from './funnel/FunnelSteps'
 import { useFocusDay } from './funnel/useFocusDay'
 import { PENDING_SETUPS, noteFor, isFlagged } from './funnel/funnelMath'
 import {
-  FOCUS_SETUPS, DEFAULT_STEP, isWater, rowsPassingGate, setupCards, stepCounts, panelScans, byRs,
+  FOCUS_SETUPS, DEFAULT_STEP, FALLBACK_GATE, passesGate, isWater, rowsPassingGate, setupCards, stepCounts, panelScans, byRs,
 } from './funnel/stepMath'
 import { panelName } from '../watchlist/panelName'
 import { useLanguage } from '../../i18n/LanguageContext'
@@ -40,11 +40,14 @@ const QUERY_KEY = 'screener-query'
 const PRESET_KEY = 'screener-preset'
 const STATE_WORDS = ['Leading', 'Weakening', 'Improving', 'Lagging']
 
-/** Reads the pipeline's own verdicts; see useUniverse for why nothing is re-derived. */
-const GATES = {
-  liquid: { test: (r) => r.tradeable === true },
+/** The custom bar's two gates. 「可交易」 is the same gate as the funnel's first
+ *  step — focus.json rule.gate (cap, $ volume, ADR) — so both halves of the
+ *  page mean one thing by it. */
+const makeGates = (rule, byTicker) => ({
+  liquid: { test: (r) => { const u = byTicker.get(r.ticker); return Boolean(u) && passesGate(u, rule) } },
   exHealth: { test: (r) => r.sector !== 'Healthcare' },
-}
+})
+const GATE_KEYS = ['liquid', 'exHealth']
 
 /** Pending scans the scan list draws dashed. `liquidLeader` is left out: the
  *  Liquid Leaders panel now supplies it, so it is live under the panel's name. */
@@ -58,7 +61,7 @@ function loadQuery() {
       states: Array.isArray(q.states) ? q.states.filter((s) => STATE_WORDS.includes(s)) : [],
       themes: Array.isArray(q.themes) ? q.themes.filter((x) => typeof x === 'string')
         : typeof q.theme === 'string' && q.theme ? [q.theme] : [],
-      gates: Array.isArray(q.gates) ? q.gates.filter((g) => g in GATES) : [],
+      gates: Array.isArray(q.gates) ? q.gates.filter((g) => GATE_KEYS.includes(g)) : [],
     }
   } catch {
     return { scan: 'confluence', states: [], themes: [], gates: [] }
@@ -258,6 +261,9 @@ export default function ScreenerPage() {
     return out
   }, [universe, customScan, themeRows, search, groups.stocks, byTicker])
 
+  const gateRule = doc?.rule?.gate ?? FALLBACK_GATE
+  const GATES = useMemo(() => makeGates(gateRule, byTicker), [gateRule, byTicker])
+  const gateVars = { cap: gateRule.cap / 1e9, vol: gateRule.dollar_vol / 1e6, adr: gateRule.adr }
   const statesLoaded = !groups.loading && !groups.error
   const stateCounts = useMemo(() => {
     if (!statesLoaded) return null
@@ -268,14 +274,14 @@ export default function ScreenerPage() {
   const gateCounts = useMemo(() => ({
     liquid: preState.filter(GATES.liquid.test).length,
     exHealth: preState.filter(GATES.exHealth.test).length,
-  }), [preState])
+  }), [preState, GATES])
 
   const customRows = useMemo(() => {
     let kept = states.size ? preState.filter((r) => r.state && states.has(r.state)) : preState
     for (const g of gates) kept = kept.filter(GATES[g].test)
     return kept.map((r) => fromUniverse(r.ticker, null)).sort(byRs)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preState, states, gates, byTicker, groups.stocks, groupState, doc, lang])
+  }, [preState, states, gates, GATES, byTicker, groups.stocks, groupState, doc, lang])
 
   const themeWide = useMemo(() => {
     if (!themes.size || customRows.length || !themeRows.length || !universe?.length) return null
@@ -360,7 +366,7 @@ export default function ScreenerPage() {
             <ScanBar
               scans={scans.map((s) => ({ ...s, label: tr(`sc.scan.${s.key}`) }))} scan={scan} onScan={setScan}
               stateCounts={stateCounts} states={states} onToggleState={toggle(setStates)}
-              gates={gates} gateCounts={gateCounts} onToggleGate={toggle(setGates)}
+              gates={gates} gateCounts={gateCounts} onToggleGate={toggle(setGates)} gateVars={gateVars}
               themes={groups.themes} chosen={themes}
               onTheme={(name) => setThemes((cur) => {
                 const next = new Set(cur)

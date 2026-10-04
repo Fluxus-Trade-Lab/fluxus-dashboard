@@ -86,6 +86,11 @@ async function walkScreener(lang) {
   grab(c.container, seen)
   await click(c.container.querySelector('[data-preset="custom"]'))
   grab(c.container, seen)
+  // open every dropdown of the custom bar: its items carry title tooltips,
+  // and a tooltip is copy too (grab reads title / aria-label / placeholder)
+  for (const b of [...c.container.querySelectorAll('button[aria-haspopup]')]) {
+    await click(b); grab(c.container, seen); await click(b)
+  }
   return seen
 }
 
@@ -324,4 +329,20 @@ describe('custom screen while a scan file is not in', () => {
     expect(state(c)).toBeUndefined()
     expect(dataRows(c)).toBeGreaterThan(0)
   })
+})
+
+describe('custom 可交易 gate', () => {
+  it('its tooltip states focus.json rule.gate, in both languages', async () => {
+    const g = FOCUS.rule.gate
+    const want = [`$${g.cap / 1e9}B`, `$${g.dollar_vol / 1e6}M`, `${g.adr}%`]
+    for (const lang of ['zh', 'en']) {
+      const c = await mountPage(lang, 'screener', {}, false, { 'screener-preset': 'custom' })
+      for (const b of c.container.querySelectorAll('button[aria-haspopup]')) await click(b)
+      const titles = [...c.container.querySelectorAll('[title]')].map((e) => e.getAttribute('title'))
+      const tip = titles.find((x) => want.every((w) => x.includes(w)))
+      expect(tip, `${lang}: ${want.join(' ')}`).toBeTruthy()
+      cleanup()
+    }
+  })
+
 })
